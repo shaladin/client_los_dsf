@@ -59,18 +59,21 @@ import { DocChecklistDetailComponent } from "./doc-checklist/doc-checklist-detai
 import { DocChecklistRequestForApprovalComponent } from "./doc-checklist/doc-checklist-request-for-approval/doc-checklist-request-for-approval.component";
 import { DocChecklistApprovalPagingComponent } from "./doc-checklist/doc-checklist-approval-paging/doc-checklist-approval-paging.component";
 import { DocChecklistApprovalDetailComponent } from "./doc-checklist/doc-checklist-approval-detail/doc-checklist-approval-detail.component";
+import { PreGoLiveOplPagingComponent } from './pre-go-live-opl/pre-go-live-opl-paging/pre-go-live-opl-paging.component';
+import { PreGoLiveOplDetailComponent } from './pre-go-live-opl/pre-go-live-opl-detail/pre-go-live-opl-detail.component';
+import { PreGoLiveOplService } from "./pre-go-live-opl/pre-go-live-opl.service";
 import { AssetAllocationPagingComponent } from "./asset-allocation/asset-allocation-paging/asset-allocation-paging.component";
 import { AssetAllocationDetailComponent } from "./asset-allocation/asset-allocation-detail/asset-allocation-detail.component";
 
 export const customCurrencyMaskConfig = {     
-  align: "left",     
-  allowNegative: true,     
-  allowZero: true,     
-  decimal: ".",     
-  precision: 2,     
-  prefix: "",     
-  suffix: "",     
-  thousands: ",",     
+  align: "left",
+  allowNegative: true,
+  allowZero: true,
+  decimal: ".",
+  precision: 2,
+  prefix: "",
+  suffix: "",
+  thousands: ",",
   nullable: false,
   inputMode: CurrencyMaskInputMode.NATURAL };
 
@@ -133,11 +136,14 @@ export const customCurrencyMaskConfig = {
     DocChecklistRequestForApprovalComponent,
     DocChecklistApprovalPagingComponent,
     DocChecklistApprovalDetailComponent,
+    PreGoLiveOplPagingComponent,
+    PreGoLiveOplDetailComponent,
     AssetAllocationPagingComponent,
     AssetAllocationDetailComponent
   ],
   providers: [
-    NGXToastrService
+    NGXToastrService,
+    PreGoLiveOplService
   ],
   entryComponents: [
     CreateDoMultiAssetComponent,

@@ -13,6 +13,8 @@ import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-cust-company-main-data',
@@ -30,7 +32,7 @@ export class CustCompanyMainDataComponent implements OnInit {
   @Input() identifier: any;
   @Input() custDataCompanyObj: CustDataCompanyObj = new CustDataCompanyObj();
   @Input() custType: any;
-  @Input() bizTemplateCode : string = "";
+  @Input() bizTemplateCode: string = "";
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
   AppObj: AppObj = new AppObj();
   AppId: number;
@@ -60,8 +62,7 @@ export class CustCompanyMainDataComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params['AppId'];
     });
@@ -69,7 +70,7 @@ export class CustCompanyMainDataComponent implements OnInit {
 
   ngOnInit() {
 
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
     this.parentForm.addControl(this.identifier, this.fb.group({
@@ -80,7 +81,7 @@ export class CustCompanyMainDataComponent implements OnInit {
       MrCompanyTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
       NumOfEmp: [0],
       IsAffiliated: [false],
-      EstablishmentDt: ['',[Validators.required]],
+      EstablishmentDt: ['', [Validators.required]],
       TaxIdNo: ['', [Validators.required, Validators.maxLength(50)]],
       IsVip: [false]
     }));
@@ -211,13 +212,13 @@ export class CustCompanyMainDataComponent implements OnInit {
     this.http.post<AppObj>(URLConstant.GetAppById, AppObj).subscribe(
       (response) => {
         this.AppObj = response;
-        
+
         if (this.AppObj.BizTemplateCode != CommonConstant.FCTR) {
           this.InputLookupCustomerObj.isReadonly = false;
         }
 
         this.InputLookupCustomerObj.isReady = true;
-      }, 
+      },
       (error) => {
       }
     );

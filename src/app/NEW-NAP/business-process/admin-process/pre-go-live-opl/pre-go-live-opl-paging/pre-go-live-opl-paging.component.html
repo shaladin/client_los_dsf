@@ -1,0 +1,11 @@
+<div *ngIf="IsAddToTemp">
+  <div class="col-md-12">
+    <div class="text-right">
+      <button type="button" class="btn btn-raised btn-primary" (click)="Next()" translate>
+        Next
+      </button>
+    </div>
+  </div>
+</div>
+<lib-ucaddtotemp *ngIf="IsReady" [tempPagingObj]="ucTempPagingObj" (callback)="getCallBack($event)"
+  (getSelected)="getSelectedCallback($event)"></lib-ucaddtotemp>

@@ -17,6 +17,7 @@ import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-doc-checklist-approval-detail',
@@ -103,18 +104,18 @@ export class DocChecklistApprovalDetailComponent implements OnInit {
       (response) => {
       },
       (error) => {
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/DocChecklist/Approval/Paging"], { "BizTemplateCode": this.bizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DOC_CHECK_LIST_APPRV_PAGING], { "BizTemplateCode": this.bizTemplateCode });
       }
     )
   }
 
 
   onApprovalSubmited(event) {
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/DocChecklist/Approval/Paging"], { "BizTemplateCode": this.bizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DOC_CHECK_LIST_APPRV_PAGING], { "BizTemplateCode": this.bizTemplateCode });
   }
 
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/DocChecklist/Approval/Paging"], { "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DOC_CHECK_LIST_APPRV_PAGING], { "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
   }
 
 

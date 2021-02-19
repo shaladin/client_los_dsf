@@ -171,7 +171,7 @@
             "type": "link",
             "position": "center",
             "property": "MouCustNo",
-            "path": "/View/Mou/CustView",
+            "path": "VIEW_MOU_CUST",
             "target": "_blank",
             "param": [
                 {
@@ -219,7 +219,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Mou/Request/Detail",
+                                "path": "MOU_REQ_DETAIL",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
@@ -253,7 +253,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Mou/Request/Detail",
+                                "path": "MOU_REQ_DETAIL",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {

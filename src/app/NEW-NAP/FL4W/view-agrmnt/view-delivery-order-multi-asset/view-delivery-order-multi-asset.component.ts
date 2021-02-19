@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 @Component({
   selector: 'app-view-delivery-order-multi-asset',
   templateUrl: './view-delivery-order-multi-asset.component.html'
@@ -14,6 +15,7 @@ export class ViewDeliveryOrderMultiAssetComponent implements OnInit {
   AppId: number;
   GetListDeliveryOrderHByAppIdAgrmntId: string;
 
+  readonly CancelLink: string = NavigationConstant.NAP_FL4W_VIEW_DO_DETAIL;
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {

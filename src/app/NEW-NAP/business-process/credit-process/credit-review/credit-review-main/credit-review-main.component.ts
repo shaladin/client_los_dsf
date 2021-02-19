@@ -1,24 +1,24 @@
 import { ApplicationRef, Component, OnInit, ViewChild } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'environments/environment';
 import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
 import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-credit-review-main',
@@ -37,20 +37,19 @@ export class CreditReviewMainComponent implements OnInit {
   ReturnHandlingHId: number = 0;
   ReturnHandlingDId: number = 0;
   BizTemplateCode: string = "";
-  arrValue = []; 
   InputObj: UcInputRFAObj;
   private createComponent: UcapprovalcreateComponent;
   responseListTypeCodes: Array<any>;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
-    if (content) { 
+    if (content) {
       // initially setter gets called with undefined
       this.createComponent = content;
     }
   }
   ApprovalCreateOutput: any;
   IsReady: boolean;
-  apvAmt:number;
-  AppNo : string;
+  apvAmt: number;
+  AppNo: string;
   dmsObj: DMSObj;
   appNo: string;
   custNo: string;
@@ -67,7 +66,7 @@ export class CreditReviewMainComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private ref: ApplicationRef,
-    private router: Router) {
+    private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -80,8 +79,8 @@ export class CreditReviewMainComponent implements OnInit {
 
   FormObj = this.fb.group({
     arr: this.fb.array([]),
-     Reason: [''],
-     Notes: ['']
+    Reason: [''],
+    Notes: ['']
   });
 
   InitData() {
@@ -91,13 +90,12 @@ export class CreditReviewMainComponent implements OnInit {
     this.AppStepIndex = 0;
     this.CustTypeCode = "";
     this.Arr = this.FormObj.get('arr') as FormArray;
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.ManualDeviationData = new Array();
     this.isExistedManualDeviationData = false;
     this.isReturnOn = false;
   }
 
-  viewProdMainInfoObj;
   AppStepIndex: number = 0;
   AppStep = {
     "CUST": 0,
@@ -113,25 +111,23 @@ export class CreditReviewMainComponent implements OnInit {
   DDLRecommendation;
   DDLReasonReturn;
   async ngOnInit() {
-    this.arrValue.push(this.appId);
     this.ClaimTask();
     this.InitData();
-    this.viewProdMainInfoObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
 
     await this.GetAppNo();
     var appObj = new AppObj();
     appObj.AppNo = this.AppNo;
     await this.http.post(URLConstant.GetListDeviationTypeByAppNo, appObj).toPromise().then(
       (response) => {
-          this.responseListTypeCodes = response['ApvTypecodes'];
+        this.responseListTypeCodes = response['ApvTypecodes'];
       });
 
     await this.GetAppCustData();
     await this.BindDDLRecommendation();
     await this.BindDDLReasonReturn();
-     await this.BindCreditAnalysisItemFormObj();
-     await this.BindAppvAmt();
-     await this.GetExistingCreditReviewData(); 
+    await this.BindCreditAnalysisItemFormObj();
+    await this.BindAppvAmt();
+    await this.GetExistingCreditReviewData();
     this.InitDms();
     this.initInputApprovalObj();
   }
@@ -139,7 +135,7 @@ export class CreditReviewMainComponent implements OnInit {
   async InitDms() {
     this.isDmsReady = false;
     this.dmsObj = new DMSObj();
-    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
@@ -151,10 +147,10 @@ export class CreditReviewMainComponent implements OnInit {
       (response) => {
         this.appNo = response[0]['AppNo'];
         this.custNo = response[1]['CustNo'];
-        if(this.custNo != null && this.custNo != ''){
+        if (this.custNo != null && this.custNo != '') {
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
         }
-        else{
+        else {
           this.dmsObj.MetadataParent = null;
         }
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
@@ -173,7 +169,7 @@ export class CreditReviewMainComponent implements OnInit {
           this.isDmsReady = true;
         }
       }
-    );    
+    );
   }
 
 
@@ -339,7 +335,7 @@ export class CreditReviewMainComponent implements OnInit {
     }
     this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationDataNew, apiObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router, ["Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
 
@@ -367,21 +363,21 @@ export class CreditReviewMainComponent implements OnInit {
     this.ref.tick();
     this.ManualDeviationData = ev;
     let manualDevList = []
-    if(this.ManualDeviationData.length > 0){
-      for(let i=0;i< this.ManualDeviationData.length;i++){
+    if (this.ManualDeviationData.length > 0) {
+      for (let i = 0; i < this.ManualDeviationData.length; i++) {
 
         var Attributes = []
-        var attribute1= { 
-          "AttributeName" : "ApvAt",
-          "AttributeValue": this.ManualDeviationData[ this.ManualDeviationData.length -1].ApvAt
+        var attribute1 = {
+          "AttributeName": "ApvAt",
+          "AttributeValue": this.ManualDeviationData[this.ManualDeviationData.length - 1].ApvAt
         };
         Attributes.push(attribute1);
-        
+
         let TypeCode = {
-          "TypeCode" : this.ManualDeviationData[this.ManualDeviationData.length -1].MrDeviationType,
-          "Attributes" : Attributes,
+          "TypeCode": this.ManualDeviationData[this.ManualDeviationData.length - 1].MrDeviationType,
+          "Attributes": Attributes,
         };
-    
+
         manualDevList.push(TypeCode);
       }
     }
@@ -412,41 +408,41 @@ export class CreditReviewMainComponent implements OnInit {
 
 
   ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
 
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+      () => {
       });
   }
 
-  initInputApprovalObj(manualDevList = null){  
-    
-    this.InputObj = new UcInputRFAObj(); 
+  initInputApprovalObj(manualDevList = null) {
+
+    this.InputObj = new UcInputRFAObj();
     var Attributes = []
-    var attribute1= { 
-      "AttributeName" : "Approval Amount",
+    var attribute1 = {
+      "AttributeName": "Approval Amount",
       "AttributeValue": this.apvAmt
     };
     Attributes.push(attribute1);
-    
+
     var listTypeCode = [];
     var TypeCode = {
-      "TypeCode" : "CRD_APV_CF_TYPE",
-      "Attributes" : Attributes,
+      "TypeCode": "CRD_APV_CF_TYPE",
+      "Attributes": Attributes,
     };
     listTypeCode.push(TypeCode);
 
-    if(this.responseListTypeCodes.length > 0){
+    if (this.responseListTypeCodes.length > 0) {
       listTypeCode = listTypeCode.concat(this.responseListTypeCodes);
     }
-    if(manualDevList != null){
-     listTypeCode = listTypeCode.concat(manualDevList);
+    if (manualDevList != null) {
+      listTypeCode = listTypeCode.concat(manualDevList);
     }
 
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = listTypeCode;
@@ -464,7 +460,7 @@ export class CreditReviewMainComponent implements OnInit {
     this.InputObj.TrxNo = this.AppNo
     this.IsReady = true;
   }
-  cancel(){ 
-    AdInsHelper.RedirectUrl(this.router,["Nap/CreditProcess/CreditReview/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+  cancel() {
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
   }
 }

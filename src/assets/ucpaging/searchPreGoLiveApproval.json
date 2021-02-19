@@ -145,7 +145,7 @@
                         "position": "center",
                         "property": "AgrmntNo",
                         "target": "_blank",
-                        "path": "/View/AgrmntView",
+                        "path": "VIEW_AGRMNT",
                         "param": [
                         {
                             "type": "AgrmntId",
@@ -168,7 +168,7 @@
                         "position": "center",
                         "property": "AgrmntNo",
                         "target" : "_blank",
-                        "path": "/View/AgrmntView",
+                        "path": "VIEW_AGRMNT",
                         "param": [
                         {
                             "type": "AgrmntId",
@@ -191,7 +191,7 @@
                         "position": "center",
                         "property": "AgrmntNo",
                         "target" : "_blank",
-                        "path": "/View/AgrmntView",
+                        "path": "VIEW_AGRMNT",
                         "param": [
                         {
                             "type": "AgrmntId",
@@ -214,7 +214,7 @@
                         "position": "center",
                         "property": "AgrmntNo",
                         "target" : "_blank",
-                        "path": "/View/AgrmntView",
+                        "path": "VIEW_AGRMNT",
                         "param": [
                         {
                             "type": "AgrmntId",
@@ -237,7 +237,7 @@
                         "position": "center",
                         "property": "AgrmntNo",
                         "target" : "_blank",
-                        "path": "/View/AgrmntView",
+                        "path": "VIEW_AGRMNT",
                         "param": [
                         {
                             "type": "AgrmntId",

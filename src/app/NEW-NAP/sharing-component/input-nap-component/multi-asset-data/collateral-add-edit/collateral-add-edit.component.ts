@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -22,7 +22,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { LookupTaxCityIssuerComponent } from './lookup-tax-city-issuer/lookup-tax-city-issuer.component';
 import { LookupCollateralComponent } from './lookup-collateral/lookup-collateral.component';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
@@ -30,6 +29,8 @@ import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppAssetAttrCustomObj } from 'app/shared/model/AppAsset/AppAssetAttrCustom.Model';
 import { AppCollateralAttrCustomObj } from 'app/shared/model/AppCollateralAttrCustom.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-collateral-add-edit',
@@ -176,7 +177,7 @@ export class CollateralAddEditComponent implements OnInit {
   appAssetId: number;
   AppCollateralAttrObj: any;
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver, private modalService: NgbModal) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService) {
     this.getListAppAssetData = URLConstant.GetListAppAssetData;
     this.getListVendorEmp = URLConstant.GetListVendorEmpByVendorIdAndPosition;
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -238,7 +239,7 @@ export class CollateralAddEditComponent implements OnInit {
         });
         this.collateralPortionHandler();
       }
-    ).catch((error) => {
+    ).catch(() => {
     });
   }
 
@@ -487,7 +488,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.inputAddressObjForLoc.showAllPhn = false;
     this.appCollateralObj = new AppCollateralObj();
     
-    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
     if (this.mode == 'editColl') {
@@ -900,7 +901,7 @@ export class CollateralAddEditComponent implements OnInit {
           TaxCityIssuer: response.DistrictCode
         });
       }
-    ).catch((error) => {
+    ).catch(() => {
     });
   }
 

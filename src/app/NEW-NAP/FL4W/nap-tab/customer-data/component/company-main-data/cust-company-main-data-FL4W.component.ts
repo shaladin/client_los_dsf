@@ -6,12 +6,12 @@ import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
 import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-cust-company-main-data-FL4W',
@@ -47,21 +47,19 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
   IdTypeObj: any;
   CompanyTypeObj: any;
   CustModelObj: any;
-  custModelReqObj= {
+  custModelReqObj = {
     MrCustTypeCode: ""
   };
 
 
   constructor(
-    private fb: FormBuilder, 
-    private http: HttpClient,
-    private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private fb: FormBuilder,
+    private http: HttpClient, private cookieService: CookieService) {
 
-     }
+  }
 
-  async ngOnInit() : Promise<void> {
-    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+  async ngOnInit(): Promise<void> {
+    var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
     this.parentForm.addControl(this.identifier, this.fb.group({
@@ -70,9 +68,9 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
       CustModelCode: ['', [Validators.required]],
       CompanyBrandName: ['', Validators.maxLength(100)],
       MrCompanyTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
-      NumOfEmp: [0,[Validators.min(0)]],
+      NumOfEmp: [0, [Validators.min(0)]],
       IsAffiliated: [false],
-      EstablishmentDt: ['',[Validators.required]],
+      EstablishmentDt: ['', [Validators.required]],
       TaxIdNo: ['', [Validators.required, Validators.maxLength(50)]],
       IsVip: [false]
     }));
@@ -89,7 +87,7 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
     });
     this.InputLookupCustomerObj.isReadonly = true;
 
-    var custObj = {CustId: event.CustId};
+    var custObj = { CustId: event.CustId };
     this.http.post(URLConstant.GetCustCompanyForCopyByCustId, custObj).subscribe(
       (response) => {
         this.CopyCustomer(response);
@@ -97,8 +95,8 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
       });
   }
 
-  CopyCustomer(response){
-    if(response["CustObj"] != undefined){
+  CopyCustomer(response) {
+    if (response["CustObj"] != undefined) {
       this.parentForm.controls[this.identifier].patchValue({
         CustNo: response["CustObj"].CustNo,
         CustModelCode: response["CustObj"].MrCustModelCode,
@@ -106,33 +104,33 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
         IsVip: response["CustObj"].IsVip
       });
       this.InputLookupCustomerObj.nameSelect = response["CustObj"].CustName;
-      this.InputLookupCustomerObj.jsonSelect = {CustName: response["CustObj"].CustName};
+      this.InputLookupCustomerObj.jsonSelect = { CustName: response["CustObj"].CustName };
       this.selectedCustNo = response["CustObj"].CustNo;
     }
 
-    if(response["CustCompanyObj"] != undefined){
+    if (response["CustCompanyObj"] != undefined) {
       this.parentForm.controls[this.identifier].patchValue({
         IndustryTypeCode: response["CustCompanyObj"].IndustryTypeCode,
         CompanyBrandName: response["CustCompanyObj"].CompanyBrandName,
-        MrCompanyTypeCode: response["CustCompanyObj"].MrCompanyTypeCode,		
+        MrCompanyTypeCode: response["CustCompanyObj"].MrCompanyTypeCode,
         NumOfEmp: response["CustCompanyObj"].NumOfEmp,
         IsAffiliated: response["CustCompanyObj"].IsAffiliated,
         EstablishmentDt: formatDate(response["CustCompanyObj"].EstablishmentDt, 'yyyy-MM-dd', 'en-US')
       });
-      
+
       this.setIndustryTypeName(response["CustCompanyObj"].IndustryTypeCode);
-    }    
+    }
   }
 
-  
-  GetIndustryType(event){
+
+  GetIndustryType(event) {
     this.parentForm.controls[this.identifier].patchValue({
       IndustryTypeCode: event.IndustryTypeCode
     });
   }
 
 
-  setCriteriaLookupCustomer(custTypeCode){
+  setCriteriaLookupCustomer(custTypeCode) {
     var arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
@@ -143,18 +141,18 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
     this.InputLookupCustomerObj.addCritInput = arrCrit;
   }
 
-  setIndustryTypeName(industryTypeCode){
+  setIndustryTypeName(industryTypeCode) {
     this.refIndustryObj.IndustryTypeCode = industryTypeCode;
 
     this.http.post(URLConstant.GetRefIndustryTypeByCode, this.refIndustryObj).subscribe(
       (response) => {
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
-        this.InputLookupIndustryTypeObj.jsonSelect = response;     
+        this.InputLookupIndustryTypeObj.jsonSelect = response;
       });
   }
 
-  bindCustData(){
-    if(this.custDataCompanyObj.AppCustObj != undefined){
+  bindCustData() {
+    if (this.custDataCompanyObj.AppCustObj != undefined) {
       this.parentForm.controls[this.identifier].patchValue({
         CustNo: this.custDataCompanyObj.AppCustObj.CustNo,
         CustModelCode: this.custDataCompanyObj.AppCustObj.MrCustModelCode,
@@ -162,27 +160,27 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
         IsVip: this.custDataCompanyObj.AppCustObj.IsVip
       });
       this.InputLookupCustomerObj.nameSelect = this.custDataCompanyObj.AppCustObj.CustName;
-      this.InputLookupCustomerObj.jsonSelect = {CustName: this.custDataCompanyObj.AppCustObj.CustName};
-      if(this.custDataCompanyObj.AppCustObj.CustNo != undefined && this.custDataCompanyObj.AppCustObj.CustNo != ""){
+      this.InputLookupCustomerObj.jsonSelect = { CustName: this.custDataCompanyObj.AppCustObj.CustName };
+      if (this.custDataCompanyObj.AppCustObj.CustNo != undefined && this.custDataCompanyObj.AppCustObj.CustNo != "") {
         this.InputLookupCustomerObj.isReadonly = true;
       }
     }
-    
-    if(this.custDataCompanyObj.AppCustCompanyObj != undefined){
+
+    if (this.custDataCompanyObj.AppCustCompanyObj != undefined) {
       this.parentForm.controls[this.identifier].patchValue({
         IndustryTypeCode: this.custDataCompanyObj.AppCustCompanyObj.IndustryTypeCode,
         CompanyBrandName: this.custDataCompanyObj.AppCustCompanyObj.CompanyBrandName,
-        MrCompanyTypeCode: this.custDataCompanyObj.AppCustCompanyObj.MrCompanyTypeCode,		
+        MrCompanyTypeCode: this.custDataCompanyObj.AppCustCompanyObj.MrCompanyTypeCode,
         NumOfEmp: this.custDataCompanyObj.AppCustCompanyObj.NumOfEmp,
         IsAffiliated: this.custDataCompanyObj.AppCustCompanyObj.IsAffiliated,
         EstablishmentDt: formatDate(this.custDataCompanyObj.AppCustCompanyObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US')
       });
-      
+
       this.setIndustryTypeName(this.custDataCompanyObj.AppCustCompanyObj.IndustryTypeCode);
     }
   }
 
-  initLookup(){
+  initLookup() {
     this.InputLookupCustomerObj = new InputLookupObj();
     this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
@@ -201,12 +199,12 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
     this.InputLookupIndustryTypeObj.required = true;
   }
 
-  async bindCompanyTypeObj(){
+  async bindCompanyTypeObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCompanyType;
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
       (response) => {
         this.CompanyTypeObj = response[CommonConstant.ReturnObj];
-        if(this.CompanyTypeObj.length > 0  && (this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == "")){
+        if (this.CompanyTypeObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == "")) {
           this.parentForm.controls[this.identifier].patchValue({
             MrCompanyTypeCode: this.CompanyTypeObj[0].Key
           });
@@ -215,12 +213,12 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
     );
   }
 
-  async bindCustModelObj(){
+  async bindCustModelObj() {
     this.custModelReqObj.MrCustTypeCode = CommonConstant.CustTypeCompany;
     await this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
       (response) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
-        if(this.CustModelObj.length > 0  && (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "")){
+        if (this.CustModelObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "")) {
           this.parentForm.controls[this.identifier].patchValue({
             CustModelCode: this.CustModelObj[0].Key
           });

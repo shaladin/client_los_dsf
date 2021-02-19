@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
@@ -24,7 +25,6 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   ApvReqId: number = 0;
   mrCustTypeCode: string;
   viewObj: string;
-  arrValue = [];
   type: string;
   inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
   ManualDeviationData;
@@ -65,7 +65,6 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
     await this.getApp();
     await this.GetCrdRvwCustInfoByAppId();
@@ -88,7 +87,7 @@ export class CreditApprovalCrDetailComponent implements OnInit {
       (response) => {
       },
       (error) => {
-        AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApprovalCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       }
     )
   }
@@ -143,7 +142,7 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   }
   
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApprovalCr/Paging"], { "BizTemplateCode": this.BizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
   }
   //#endregion
 }

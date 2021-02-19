@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
@@ -10,6 +9,8 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-list-company',
@@ -27,7 +28,7 @@ export class ListCompanyComponent implements OnInit {
   GetAppCustDuplicateCheckUrl = this.LOSUrl + URLConstant.GetAppCustDuplicateCheck;
   GetCustDataByAppId = URLConstant.GetCustDataByAppId;
   AddAppDupCheckCustUrl = this.LOSUrl + URLConstant.AddAppDupCheckCust;
-  AppCustObj: AppCustObj; 
+  AppCustObj: AppCustObj;
   AppCustCompanyObj: AppCustCompanyObj;
   AppCustAddrObj: AppCustAddrObj;
   RowVersion: any;
@@ -39,8 +40,8 @@ export class ListCompanyComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
-    private router: Router,
-  ) { 
+    private router: Router, private cookieService: CookieService
+  ) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -73,9 +74,9 @@ export class ListCompanyComponent implements OnInit {
           "MrIdTypeCode": this.AppCustObj.MrIdTypeCode,
           "IdNo": this.AppCustObj.IdNo,
           "TaxIdNo": this.AppCustObj.TaxIdNo,
-          "BirthDt" : this.AppCustCompanyObj.EstablishmentDt,
-          "MotherMaidenName" : "-",
-          "MobilePhnNo1" : "-",
+          "BirthDt": this.AppCustCompanyObj.EstablishmentDt,
+          "MotherMaidenName": "-",
+          "MobilePhnNo1": "-",
           "RowVersion": this.RowVersion,
           "AppId": this.AppId
         }
@@ -105,7 +106,7 @@ export class ListCompanyComponent implements OnInit {
   // }
   //   this.http.post(this.AddAppDupCheckCustUrl, AppDupCheckObj).subscribe(
   //     response => {
-  //       this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId } });
+  //       this.router.navigate(["/Nap/AddProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId } });
   //     });
   // }
 
@@ -119,42 +120,46 @@ export class ListCompanyComponent implements OnInit {
   // }
   //   this.http.post(this.AddAppDupCheckCustUrl, AppDupCheckObj).subscribe(
   //     response => {
-  //       this.router.navigate(["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId } });
+  //       this.router.navigate(["/Nap/AddProcess/AppDupCheck/ApplicantExistingData/Company"], { queryParams: { "AppId": this.AppId } });
   //     });
   // }
 
   SelectCust(item) {
-    var AppDupCheckObj = {"AppId": this.AppId, 
-    "CustNo":item.CustNo};
+    var AppDupCheckObj = {
+      "AppId": this.AppId,
+      "CustNo": item.CustNo
+    };
     this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       response => {
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_APP_EXIST_DATA_COY], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
       });
   }
 
-  NewCustomer(){
-    var AppDupCheckObj = {"AppId": this.AppId, 
-    "CustNo": this.AppCustObj.CustNo, RowVersion: ""};
+  NewCustomer() {
+    var AppDupCheckObj = {
+      "AppId": this.AppId,
+      "CustNo": this.AppCustObj.CustNo, RowVersion: ""
+    };
     this.http.post(URLConstant.EditCustNoAppCust, AppDupCheckObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/ApplicantExistingData/Company"], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_APP_EXIST_DATA_COY], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
       });
   }
 
-  ClaimTask(){
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+  ClaimTask() {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
 
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
-    
+
       });
   }
 
   back() {
     var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
-    AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/AppDupCheck/Paging"], { "BizTemplateCode": BizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_PAGING], { "BizTemplateCode": BizTemplateCode });
   }
 }

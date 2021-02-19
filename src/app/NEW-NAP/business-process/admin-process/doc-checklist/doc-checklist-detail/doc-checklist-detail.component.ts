@@ -18,6 +18,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
 import { DocChecklist } from '../../../../../shared/model/DocChecklist/DocChecklist.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-doc-checklist-detail',
@@ -65,6 +66,7 @@ export class DocChecklistDetailComponent implements OnInit {
   dmsAppObj: DMSObj;
   mouCustNo: any;
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_DOC_CHECK_LIST_PAGING;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -130,7 +132,7 @@ export class DocChecklistDetailComponent implements OnInit {
     }
     this.http.post(URLConstant.EditAppTc, this.ListAppTCObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/DocChecklist/RequestApproval"], { "AppId": this.AppId, "TaskListId": this.TaskListId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DOC_CHECK_LIST_REQ_APPRV], { "AppId": this.AppId, "TaskListId": this.TaskListId });
         this.toastr.successMessage(response['message']);
 
       });
@@ -178,7 +180,7 @@ export class DocChecklistDetailComponent implements OnInit {
 
     this.http.post(URLConstant.SubmitDocChecklist, this.DocChecklistObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/AdminProcess/DocChecklist/Paging"], {});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DOC_CHECK_LIST_PAGING], {});
         this.toastr.successMessage(response['message']);
       });
 

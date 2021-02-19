@@ -43,7 +43,7 @@ export class BackdoorComponent implements OnInit {
   ngOnInit() {
     // this.UploadViewlink = this.DMSURL(this.custObj,"Upload,View");
     // this.Uploadlink = this.DMSURL(this.custObj,"Upload");
-    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.dmsObj = new DMSObj();
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;

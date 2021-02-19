@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import { LeadForRejectObj } from 'app/shared/model/LeadForRejectObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-lead-update',
@@ -58,7 +60,7 @@ export class LeadUpdateComponent implements OnInit {
           response => {
             this.toastr.successMessage(response["Message"]);
             this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-              this.router.navigate(['/Lead/LeadUpdate/Paging']);
+              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_UPDATE_PAGING],{});
           });
           }
         );

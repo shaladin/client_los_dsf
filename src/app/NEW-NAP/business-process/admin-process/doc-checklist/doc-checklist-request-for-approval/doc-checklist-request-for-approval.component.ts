@@ -12,6 +12,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { RFADocChecklist } from '../../../../../shared/model/DocChecklist/RFADocChecklist.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 @Component({
   selector: 'app-doc-checklist-request-for-approval',
   templateUrl: './doc-checklist-request-for-approval.component.html'
@@ -77,13 +78,13 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
       this.RFADocChecklist.RowVersion = "";
       this.RFADocChecklist.RequestRFAObj = this.ApprovalCreateOutput
       this.http.post(URLConstant.CreateRFADocChecklist, this.RFADocChecklist).subscribe((response) => {
-        this.router.navigateByUrl('/Nap/AdminProcess/DocChecklist/Paging?BizTemplateCode=' + localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE));
+        this.router.navigateByUrl(NavigationConstant.NAP_ADM_PRCS_DOC_CHECK_LIST_PAGING + '?BizTemplateCode=' + localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE));
       });
     }
   }
 
   Cancel() {
-    this.router.navigateByUrl('/Nap/AdminProcess/DocChecklist/Detail?AppId=' + this.AppId + '&TaskListId=' + this.TaskListId);
+    this.router.navigateByUrl(NavigationConstant.NAP_ADM_PRCS_DOC_CHECK_LIST_DETAIL + '?AppId=' + this.AppId + '&TaskListId=' + this.TaskListId);
   }
 
   async GetAppData() {

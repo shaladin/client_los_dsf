@@ -7,6 +7,7 @@ import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { OutstandingTcObj } from 'app/shared/model/OutstandingTcObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
@@ -14,6 +15,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-outstanding-tc-detail',
@@ -27,12 +29,12 @@ export class OutstandingTcDetailComponent implements OnInit {
   appTC: any;
   outstandingTcObj: any;
   BizTemplateCode: any;
-  dmsObj : DMSObj = new DMSObj();
+  dmsObj: DMSObj = new DMSObj();
   custNo: string = "";
   appNo: string = "";
-  mouCustNo: string ="";
+  mouCustNo: string = "";
   isDmsReady: boolean;
-  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService) {
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.BizTemplateCode = params["BizTemplateCode"];
@@ -52,9 +54,9 @@ export class OutstandingTcDetailComponent implements OnInit {
     ];
     this.InitDms();
   }
-  async InitDms(){
+  async InitDms() {
     this.dmsObj = new DMSObj();
-    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
@@ -67,16 +69,16 @@ export class OutstandingTcDetailComponent implements OnInit {
         this.custNo = response[0]['CustNo'];
         var mouCustId = response[1]['MouCustId'];
         this.appNo = response[1]['AppNo'];
-        if(this.custNo != null && this.custNo != ''){
+        if (this.custNo != null && this.custNo != '') {
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
         }
-        else{
+        else {
           this.dmsObj.MetadataParent = null;
         }
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-        if(mouCustId != null && mouCustId != ''){
-          var mouObj = {MouCustId : mouCustId };
+        if (mouCustId != null && mouCustId != '') {
+          var mouObj = { MouCustId: mouCustId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
             (response) => {
               this.mouCustNo = response['MouCustNo'];
@@ -84,7 +86,7 @@ export class OutstandingTcDetailComponent implements OnInit {
               this.isDmsReady = true;
             });
         }
-        else{
+        else {
           this.isDmsReady = true;
         }
       }
@@ -119,12 +121,12 @@ export class OutstandingTcDetailComponent implements OnInit {
     this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/OutstandingTC/Paging"], { BizTemplateCode: this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_OUTSTANDING_TC_PAGING], { BizTemplateCode: this.BizTemplateCode });
       }
     );
   }
 
   Back() {
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/OutstandingTC/Paging"], { BizTemplateCode: this.BizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_OUTSTANDING_TC_PAGING], { BizTemplateCode: this.BizTemplateCode });
   }
 }

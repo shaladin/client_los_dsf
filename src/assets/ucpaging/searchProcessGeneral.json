@@ -126,7 +126,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Nap/AdminProcess/PurchaseOrder/PO",
+                    "path": "NAP_ADM_PRCS_PO_PO_EXT",
                     "param": [
                         {
                             "type": "AgrmntId",

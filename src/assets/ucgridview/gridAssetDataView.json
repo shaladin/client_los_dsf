@@ -61,7 +61,7 @@
             "position": "left",
             "property" : "FullAssetName",
             "target" : "_blank",
-            "path": "/Nap/ViewAsset",
+            "path": "NAP_VIEW_ASSET",
             "param": [
                 {
                     "type": "AppAssetId",

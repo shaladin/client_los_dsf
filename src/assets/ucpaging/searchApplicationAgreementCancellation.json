@@ -76,7 +76,7 @@
       "position": "center",
       "property": "AppNo",
       "target": "_blank",
-      "path": "/View/AppView",
+      "path": "VIEW_APP",
       "param": [
         {
           "type": "AppId",
@@ -89,7 +89,7 @@
       "position": "center",
       "property": "AgrmntNo",
       "target": "_blank",
-      "path": "/View/AgrmntView",
+      "path": "VIEW_AGRMNT",
       "param": [
         {
           "type": "AgrmntId",
@@ -125,7 +125,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "/Nap/AdminProcess/AgreementCancellation/Detail",
+                "path": "NAP_ADM_PRCS_AGRMNT_CANCEL_DETAIL",
                 "icon": "ft-edit-2",
                 "param": [
                   {

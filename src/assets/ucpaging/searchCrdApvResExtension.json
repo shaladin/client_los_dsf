@@ -107,7 +107,7 @@
       "position": "center",
       "property": "AppNo",
       "target": "_blank",
-      "path": "/View/AppView",
+      "path": "VIEW_APP",
       "param": [
         {
           "type": "AppId",
@@ -147,7 +147,7 @@
       "action": [
         {
           "type": "edit",
-          "path": "/Nap/AddProcess/CreditApprovalResultExt/Detail",
+          "path": "NAP_ADD_PRCS_CRD_APPRVL_RES_EXT_DETAIL",
           "param": [
             {
               "type": "AppId",

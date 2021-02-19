@@ -102,7 +102,7 @@
             "position": "center",
             "property": "ApplicationNo",
             "target": "_blank",
-            "path": "/View/AppView",
+            "path": "VIEW_APP",
             "param": [
                 {
                     "type": "AppId",
@@ -130,7 +130,7 @@
                                 "position": "center",
                                 "property": "AggrementNo",
                                 "target": "_blank",
-                                "path": "/View/AgrmntView",
+                                "path": "VIEW_AGRMNT",
                                 "param": [
                                     {
                                         "type": "AgrmntId",
@@ -153,7 +153,7 @@
                                 "position": "center",
                                 "property": "AggrementNo",
                                 "target": "_blank",
-                                "path": "/View/AgrmntView",
+                                "path": "VIEW_AGRMNT",
                                 "param": [
                                     {
                                         "type": "AgrmntId",
@@ -176,7 +176,7 @@
                                 "position": "center",
                                 "property": "AggrementNo",
                                 "target": "_blank",
-                                "path": "/View/AgrmntView",
+                                "path": "VIEW_AGRMNT",
                                 "param": [
                                     {
                                         "type": "AgrmntId",
@@ -199,7 +199,7 @@
                                 "position": "center",
                                 "property": "AggrementNo",
                                 "target": "_blank",
-                                "path": "/View/AgrmntView",
+                                "path": "VIEW_AGRMNT",
                                 "param": [
                                     {
                                         "type": "AgrmntId",
@@ -222,7 +222,7 @@
                                 "position": "center",
                                 "property": "AggrementNo",
                                 "target": "_blank",
-                                "path": "/View/AgrmntView",
+                                "path": "VIEW_AGRMNT",
                                 "param": [
                                     {
                                         "type": "AgrmntId",
@@ -258,7 +258,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Nap/AdminProcess/DocPrint/View",
+                    "path": "NAP_ADM_PRCS_NAP_DOC_PRINT_VIEW",
                     "param": [
                         {
                             "type": "AgrmntId",

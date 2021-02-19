@@ -11,6 +11,8 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletionCheckingObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-cust-completion-detail-personal',
@@ -18,7 +20,7 @@ import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletion
   styleUrls: ['./cust-completion-detail-personal.component.scss']
 })
 export class CustCompletionDetailPersonalComponent implements OnInit {
-  
+
   @ViewChild('viewMainInfo') ucViewMainProd: UcviewgenericComponent;
   AppId: number;
   AppCustId: number;
@@ -32,7 +34,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   IsCompletion: boolean = false;
   isCompletionCheck: boolean = true;
-  isCompleteCustStep:object = {};
+  isCompleteCustStep: object = {};
   CustStep = {
     "Detail": 1,
     "Address": 2,
@@ -41,7 +43,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
     "Emergency": 5,
     "Financial": 6,
     "Other": 7,
-  }  
+  }
   ValidationMessages = {
     "Detail": "Please complete required data in tab \"Customer Detail\"",
     "Address": "Please add Legal & Residence Address in tab \"Address Information\"",
@@ -51,6 +53,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
     "Financial": "Please complete required data in tab \"Financial Data\"",
     "Other": "Please complete required data in tab \"Other Attribute\"",
   }
+  ReturnHandlingHId: number = 0;
   constructor(
     private http: HttpClient,
     private location: Location,
@@ -70,6 +73,9 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
       }
+      if (params["ReturnHandlingHId"] != null) {
+        this.ReturnHandlingHId = params["ReturnHandlingHId"];
+      }
     });
   }
 
@@ -82,15 +88,15 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
         environment: environment.losR3Web
       }
     ];
-    
+
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
       animation: true
     })
 
-    this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
+    this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
       (response) => {
-        if(response.AppCustPersonalObj.MrMaritalStatCode != null && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried) this.IsMarried = true;
+        if (response.AppCustPersonalObj.MrMaritalStatCode != null && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried) this.IsMarried = true;
         this.CustModelCode = response.AppCustObj.MrCustModelCode;
         this.AppCustPersonalId = response.AppCustPersonalObj.AppCustPersonalId;
         this.IsCompletion = response.AppCustObj.IsCompletion;
@@ -99,12 +105,17 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
 
     // set default isComplete untuk all step ke false jika belum ada defaultnya
     Object.keys(this.CustStep).forEach(stepName => {
-      if(typeof(this.isCompleteCustStep[stepName]) == 'undefined') this.isCompleteCustStep[stepName] = false;
+      if (typeof (this.isCompleteCustStep[stepName]) == 'undefined') this.isCompleteCustStep[stepName] = false;
     });
   }
-  
+
   Back() {
-    this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "BizTemplateCode": this.BizTemplateCode } });
+    if (this.ReturnHandlingHId != 0) {
+      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "ReturnHandlingHId": this.ReturnHandlingHId, "BizTemplateCode": this.BizTemplateCode } });
+    }
+    else {
+      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "BizTemplateCode": this.BizTemplateCode } });
+    }
   }
 
   EnterTab(type: string) {
@@ -134,38 +145,36 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
     this.stepper.to(this.stepIndex);
   }
 
-  GetEvent(event: any, Step: string){
-    if(event!=null){
+  GetEvent(event: any, Step: string) {
+    if (event != null) {
 
       // set isComplete currStep jika ada event nya
-      if(typeof(event.IsComplete) != 'undefined') {
+      if (typeof (event.IsComplete) != 'undefined') {
         Object.keys(this.CustStep).forEach(stepName => {
-          if(this.CustStep[stepName] == this.stepIndex) 
+          if (this.CustStep[stepName] == this.stepIndex)
             this.isCompleteCustStep[stepName] = event.IsComplete;
         });
       }
-      if(event.Key == "Detail"){
+      if (event.Key == "Detail") {
         this.CustModelCode = event.CustModelCode;
       }
     }
-    if(Step == 'Save')
-    {
+    if (Step == 'Save') {
       this.Save();
     }
-    else
-    {
+    else {
       this.EnterTab(Step);
       this.ucViewMainProd.initiateForm();
-    }    
+    }
   }
   completionCheckingObj: AppCustCompletionCheckingObj = new AppCustCompletionCheckingObj();
-  Save(){
-    this.http.post(URLConstant.SaveAppCustCompletion, {AppCustId: this.AppCustId}).subscribe(
+  Save() {
+    this.http.post(URLConstant.SaveAppCustCompletion, { AppCustId: this.AppCustId }).subscribe(
       (response) => {
         this.completionCheckingObj.IsCompleted = response["IsCompleted"];
         this.completionCheckingObj.InCompletedStep = response["InCompletedStep"];
         if (this.completionCheckingObj.IsCompleted != true) {
-          let errorMsg = typeof this.ValidationMessages[this.completionCheckingObj.InCompletedStep] != 'undefined' ? this.ValidationMessages[this.completionCheckingObj.InCompletedStep] : 'To continue please click "Save & Continue" in tab '+this.completionCheckingObj.InCompletedStep;
+          let errorMsg = typeof this.ValidationMessages[this.completionCheckingObj.InCompletedStep] != 'undefined' ? this.ValidationMessages[this.completionCheckingObj.InCompletedStep] : 'To continue please click "Save & Continue" in tab ' + this.completionCheckingObj.InCompletedStep;
           this.toastr.warningMessage(errorMsg);
           this.EnterTab(this.completionCheckingObj.InCompletedStep);
         }
@@ -173,7 +182,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
           this.Back();
         }
-        
+
       },
       (error) => {
         console.log(error);

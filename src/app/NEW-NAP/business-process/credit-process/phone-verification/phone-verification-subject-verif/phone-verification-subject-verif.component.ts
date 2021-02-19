@@ -8,7 +8,9 @@ import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
 import { VerifResulHDetailObj } from 'app/shared/model/VerfResultH/VerifResulHDetailObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 
 
@@ -54,7 +56,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   saveVerfResultHDetailUrl: any;
   getPhnNumberUrl: any;
   custId: number;
-  viewObj: any;
   VerfResultAfterAddObj: any;
   appId: number;
   returnHandlingHId: number;
@@ -107,7 +108,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   isQuestionLoaded: boolean = true;
   subjectRelation: string;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
 
     this.route.queryParams.subscribe(params => {
       this.appId = params["AppId"];
@@ -148,7 +149,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     this.setPhnObj();
     this.appObj.AppId = this.appId;
     this.verfResHObj.VerfResultHId = this.verfResultHId;
-    this.viewObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     this.bindResultObj();
     this.bindSubjectRelationObj();
     this.GetPhoneNumber(this.phnObj);
@@ -183,10 +183,10 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
           if (activeButton == "save") {
             if (this.isReturnHandling == false) {
-              this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&WfTaskListId=" + this.wfTaskListId);
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT], { AppId: this.appId, WfTaskListId: this.wfTaskListId });
             }
             if (this.isReturnHandling == true) {
-              this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT], { AppId: this.appId, ReturnHandlingHId: this.returnHandlingHId, WfTaskListId: this.wfTaskListId });
             }
           }
           else {
@@ -202,7 +202,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
   setPhoneVerifData() {
 
-    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
+    var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     var todaydate = new Date();
     businessDt.setHours(todaydate.getHours(), todaydate.getMinutes(), todaydate.getSeconds());
     var usertimezone = businessDt.getTimezoneOffset() * 60000;
@@ -451,10 +451,10 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
   Cancel() {
     if (this.isReturnHandling == false) {
-      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&WfTaskListId=" + this.wfTaskListId);
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT], { AppId: this.appId, WfTaskListId: this.wfTaskListId });
     }
     if (this.isReturnHandling == true) {
-      this.router.navigateByUrl("/Nap/CreditProcess/PhoneVerification/Subject?AppId=" + this.appId + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT], { AppId: this.appId, ReturnHandlingHId: this.returnHandlingHId, WfTaskListId: this.wfTaskListId });
     }
   }
 
@@ -504,7 +504,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
           this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].setValidators([Validators.required]);
           this.PhoneDataForm.controls["QuestionObjs"]["controls"][i]["controls"]["VerfQuestionAnswerList"]["controls"][j]["controls"]["ResultGrp"]["controls"]["Answer"].updateValueAndValidity();
         }
-      }  
+      }
     }
     else {
       for (let i = 0; i < this.PhoneDataForm.controls["QuestionObjs"]["controls"].length; i++) {

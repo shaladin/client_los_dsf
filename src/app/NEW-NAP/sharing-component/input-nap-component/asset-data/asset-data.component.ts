@@ -32,7 +32,7 @@ import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 export class AssetDataComponent implements OnInit {
   @Input() AppId: any;
   @Input() showCancel: boolean = true;
-  @Input() BizTemplateCode: string = "";
+  @Input() BizTemplateCode: string = "OPL";
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   BranchManagerName: string = "-";
@@ -59,6 +59,8 @@ export class AssetDataComponent implements OnInit {
   deleteAppAssetObj: AppAssetObj = new AppAssetObj();
   IsIntegrator: boolean = false;
   indexChassis: number = 0;
+  isAddressObjDelvReady: boolean = false;
+  isAddressObjLocReady: boolean = false;
 
   AssetDataForm = this.fb.group({
     /* AppAsset Value that in form*/
@@ -129,7 +131,6 @@ export class AssetDataComponent implements OnInit {
     DelivAreaCode4: ['', Validators.maxLength(50)],
     DelivCity: ['', Validators.maxLength(50)],
     DelivZipcode: ['', Validators.maxLength(50)],
-    DelivOwnership: [''],
     LocationAddr: [''],
     LocationAreaCode1: ['', Validators.maxLength(50)],
     LocationAreaCode2: ['', Validators.maxLength(50)],
@@ -137,7 +138,6 @@ export class AssetDataComponent implements OnInit {
     LocationAreaCode4: ['', Validators.maxLength(50)],
     LocationCity: ['', Validators.maxLength(50)],
     LocationZipcode: ['', Validators.maxLength(50)],
-    LocationOwnership: [''],
 
     LocationAddrType: [''],
     DelivAddrType: [''],
@@ -309,14 +309,10 @@ export class AssetDataComponent implements OnInit {
     this.inputAddressObjForDeliv = new InputAddressObj();
     this.inputAddressObjForDeliv.showSubsection = false;
     this.inputAddressObjForDeliv.showAllPhn = false;
-    this.inputAddressObjForDeliv.showOwnership = true;
 
     this.inputAddressObjForLoc = new InputAddressObj();
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
-    if(this.BizTemplateCode === "OPL") {
-      this.inputAddressObjForLoc.showOwnership = true;
-    }
 
     this.items = this.AssetDataForm.get('items') as FormArray;
     this.isOnlookup = false;
@@ -340,11 +336,24 @@ export class AssetDataComponent implements OnInit {
       await this.GetAppCustCoy();
     }
     await this.GetListAddr();
-    this.AssetConditionChanged();
+    if(this.BizTemplateCode !== CommonConstant.OPL){
+      this.AssetConditionChanged();
+    }
     this.AssetDataForm.removeControl("AssetAccessoriesObjs");
     this.AssetDataForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
 
-    await this.getAllAssetData();
+    if(this.BizTemplateCode === "OPL") {
+      this.AssetDataForm.controls.DownPaymentAmt.clearValidators();
+      this.AssetDataForm.controls.MrUserRelationshipCode.clearValidators();
+      this.AssetDataForm.controls.MrOwnerRelationshipCode.clearValidators();
+      this.AssetDataForm.controls.selectedDpType.clearValidators();
+      this.AssetDataForm.controls.MrIdTypeCode.clearValidators();
+      await this.getListAllAssetData();
+    }
+    else {
+      await this.getAllAssetData();
+    }
+
     this.GenerataAppAssetAttr(false);
     var appObj = {
       ProdOfferingCode: this.AppObj.ProdOfferingCode,
@@ -413,7 +422,6 @@ export class AssetDataComponent implements OnInit {
 
     this.inputAddressObjForDeliv.showSubsection = false;
     this.inputAddressObjForDeliv.showAllPhn = false;
-    this.inputAddressObjForDeliv.showOwnership = true;
     this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = "";
     this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = null;
     this.inputAddressObjForDeliv.default = null;
@@ -421,7 +429,6 @@ export class AssetDataComponent implements OnInit {
 
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
-    this.inputAddressObjForLoc.showOwnership = true;
     this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = "";
     this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = null;
     this.inputAddressObjForLoc.default = null;
@@ -476,7 +483,6 @@ export class AssetDataComponent implements OnInit {
 
     this.inputAddressObjForDeliv.showSubsection = false;
     this.inputAddressObjForDeliv.showAllPhn = false;
-    this.inputAddressObjForDeliv.showOwnership = true;
     this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = this.allAssetDataObj.AppCollateralRegistrationObj.DelivZipcode;
     this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.allAssetDataObj.AppCollateralRegistrationObj.DelivZipcode };
     this.delivAddrObj = new AddrObj();
@@ -486,13 +492,11 @@ export class AssetDataComponent implements OnInit {
     this.delivAddrObj.AreaCode3 = this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode3;
     this.delivAddrObj.AreaCode4 = this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode4;
     this.delivAddrObj.City = this.allAssetDataObj.AppCollateralRegistrationObj.DelivCity;
-    this.delivAddrObj.MrHouseOwnershipCode = this.allAssetDataObj.AppCollateralRegistrationObj.DelivOwnership;
     this.inputAddressObjForDeliv.default = this.delivAddrObj;
     this.inputAddressObjForDeliv.inputField = this.inputFieldDelivAddrObj;
 
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
-    this.inputAddressObjForLoc.showOwnership = true;
     this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode;
     this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode };
     this.locationAddrObj = new AddrObj();
@@ -502,7 +506,6 @@ export class AssetDataComponent implements OnInit {
     this.locationAddrObj.AreaCode3 = this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode3;
     this.locationAddrObj.AreaCode4 = this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode4;
     this.locationAddrObj.City = this.allAssetDataObj.AppCollateralRegistrationObj.LocationCity;
-    this.locationAddrObj.MrHouseOwnershipCode = this.allAssetDataObj.AppCollateralRegistrationObj.LocationOwnership;
     this.inputAddressObjForLoc.default = this.locationAddrObj;
     this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
 
@@ -603,9 +606,6 @@ export class AssetDataComponent implements OnInit {
 
   async SaveForm() {
     var assetForm = this.AssetDataForm.getRawValue();
-    var confirmMsg = "";
-    this.isValidOk = true;
-    await this.CheckValidation();
 
     // if (this.CheckValidationObj != null) {
     //   if (this.CheckValidationObj.MinManufYear != 0) {
@@ -640,6 +640,9 @@ export class AssetDataComponent implements OnInit {
     // }
 
     if(this.BizTemplateCode !== "OPL") {
+      var confirmMsg = "";
+      this.isValidOk = true;
+      await this.CheckValidation();
       if (this.AssetDataForm.controls.selectedDpType.value == 'AMT') {
         if (this.AssetDataForm.controls.DownPaymentAmt.value < 0) {
           this.toastr.warningMessage(ExceptionConstant.DOWN_PAYMENT_MUST_MORE_THAN + "0.");
@@ -777,54 +780,79 @@ export class AssetDataComponent implements OnInit {
         }
       }
 
-      if (this.appAssetObj.ResponseAppAssetObj != null && this.appAssetObj.ResponseAppAssetObj != undefined) {
-        this.allAssetDataObj.AppCollateralObj.RowVersion = this.appAssetObj.ResponseAppCollateralObj.RowVersion;
-        if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null ) this.allAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.appAssetObj.ResponseAppCollateralRegistrationObj.RowVersion;
-        this.allAssetDataObj.AppAssetObj.RowVersion = this.appAssetObj.ResponseAppAssetObj.RowVersion;
-        if (this.appAssetObj.ResponseAdminHeadSupp != null) this.allAssetDataObj.AppAssetSupplEmpAdminObj.RowVersion = this.appAssetObj.ResponseAdminHeadSupp.RowVersion;
-        if (this.appAssetObj.ResponseSalesPersonSupp != null) this.allAssetDataObj.AppAssetSupplEmpSalesObj.RowVersion = this.appAssetObj.ResponseSalesPersonSupp.RowVersion;
-        if (this.appAssetObj.ResponseBranchManagerSupp != null) this.allAssetDataObj.AppAssetSupplEmpManagerObj.RowVersion = this.appAssetObj.ResponseBranchManagerSupp.RowVersion;
-      }
-      if (this.IntegratorCheckBySystemGsValue == "0") {
-        if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
-          if (confirm("Chassis No not filled, submit data without Integrator ?")) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-              (response) => {
-                this.toastr.successMessage(response["message"]);
-                this.outputTab.emit();
-              });
-          }
+      if(this.BizTemplateCode !== "OPL") {
+        if (this.appAssetObj.ResponseAppAssetObj != null && this.appAssetObj.ResponseAppAssetObj != undefined) {
+          this.allAssetDataObj.AppCollateralObj.RowVersion = this.appAssetObj.ResponseAppCollateralObj.RowVersion;
+          if (this.appAssetObj.ResponseAppCollateralRegistrationObj != null ) this.allAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.appAssetObj.ResponseAppCollateralRegistrationObj.RowVersion;
+          this.allAssetDataObj.AppAssetObj.RowVersion = this.appAssetObj.ResponseAppAssetObj.RowVersion;
+          if (this.appAssetObj.ResponseAdminHeadSupp != null) this.allAssetDataObj.AppAssetSupplEmpAdminObj.RowVersion = this.appAssetObj.ResponseAdminHeadSupp.RowVersion;
+          if (this.appAssetObj.ResponseSalesPersonSupp != null) this.allAssetDataObj.AppAssetSupplEmpSalesObj.RowVersion = this.appAssetObj.ResponseSalesPersonSupp.RowVersion;
+          if (this.appAssetObj.ResponseBranchManagerSupp != null) this.allAssetDataObj.AppAssetSupplEmpManagerObj.RowVersion = this.appAssetObj.ResponseBranchManagerSupp.RowVersion;
         }
-        else if (!this.IsIntegrator) {
-          if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value) {
-            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-              (response) => {
-                this.toastr.successMessage(response["message"]);
-                this.outputTab.emit();
-              });
-          }
-          else {
-            if (confirm("Submit data without Integrator ?")) {
+        if (this.IntegratorCheckBySystemGsValue == "0") {
+          if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
+            if (confirm("Chassis No not filled, submit data without Integrator ?")) {
               this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
                 (response) => {
                   this.toastr.successMessage(response["message"]);
                   this.outputTab.emit();
-                });
+                }
+              );
             }
           }
+          else if (!this.IsIntegrator) {
+            if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value) {
+              this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+                (response) => {
+                  this.toastr.successMessage(response["message"]);
+                  this.outputTab.emit();
+                }
+              );
+            }
+            else {
+              if (confirm("Submit data without Integrator ?")) {
+                this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+                  (response) => {
+                    this.toastr.successMessage(response["message"]);
+                    this.outputTab.emit();
+                  }
+                );
+              }
+            }
+          }
+          else if (this.IsIntegrator) {
+            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
+                  (response) => {
+                  });
+                this.outputTab.emit();
+              }
+            );
+          }
         }
-        else if (this.IsIntegrator) {
+        else {
           this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
-              this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
-                (response) => {
-                });
-              this.outputTab.emit();
-            });
+              if(this.isListAsset === true) {
+                this.outputTab.emit();
+              }
+              else if(this.isListAsset === false) {
+                if(this.mode === "Add") {
+                  this.listAsset.push(this.allAssetDataObj);
+                }
+                else if(this.mode === "Edit") {
+                  this.listAsset[this.index] = this.allAssetDataObj;
+                }
+                this.isListAsset = true;
+              }
+            }
+          );
         }
       }
-      else {
+      else if(this.BizTemplateCode === "OPL") {
         this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
@@ -863,7 +891,6 @@ export class AssetDataComponent implements OnInit {
     var ChassisNoValue = this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value;
     await this.http.post(URLConstant.GetAppAssetFromThirdPartyResultHByTrxTypeCodeAndTrxNoAndChassisNoForFraudChecking, { TrxNo: this.AppObj.AppNo, TrxTypeCode: "APP", ChassisNo: ChassisNoValue }).toPromise().then(
       (response) => {
-        console.log(response);
         if (response["AppAssetObject"]["SerialNo1"] != null) {
           this.currentChassisNo = response["AppAssetObject"]["SerialNo1"];
         }
@@ -950,7 +977,6 @@ export class AssetDataComponent implements OnInit {
         //     }
         //   }
         // }
-
       });
   }
 
@@ -985,23 +1011,10 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.VendorEmpId = this.AssetDataForm.controls.SalesPersonId.value;
     this.allAssetDataObj.AppAssetSupplEmpAdminObj.VendorEmpId = this.AssetDataForm.controls.AdminHeadId.value;
     this.allAssetDataObj.AppAssetSupplEmpManagerObj.VendorEmpId = this.AssetDataForm.controls.BranchManagerId.value;
-    for (var i = 0; i < this.items.length; i++) {
-      if (this.items.controls[i] != null) {
-        this.allAssetDataObj.AppAssetObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
-      }
-    }
-
+    
     this.allAssetDataObj.AppAssetObj.SupplName = this.AssetDataForm.controls.SupplName.value;
     this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.AssetDataForm.controls.AssetPriceAmt.value;
-    if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG') {
-      // this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100;
-      this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = assetForm.DownPaymentPrctg;
-      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm.AssetPriceAmt * assetForm.DownPaymentPrctg / 100;
-    }
-    else {
-      this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm.DownPaymentAmt;
-      this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = (assetForm.DownPaymentAmt / assetForm.AssetPriceAmt) * 100;
-    }
+    
     this.allAssetDataObj.AppAssetObj.MinDownPaymentPrcnt = this.CheckValidationObj && this.CheckValidationObj.DPMin ? this.CheckValidationObj.DPMin : 0;
     this.allAssetDataObj.AppAssetObj.MaxDownPaymentPrcnt = this.CheckValidationObj && this.CheckValidationObj.DPMax ? this.CheckValidationObj.DPMax : 0;
     this.allAssetDataObj.AppAssetObj.AssetNotes = this.AssetDataForm.controls.AssetNotes.value;
@@ -1014,7 +1027,8 @@ export class AssetDataComponent implements OnInit {
     if(this.AssetDataForm.controls.ExpectedDelivDt.value !== null) {
       this.allAssetDataObj.AppAssetObj.ExpectedDelivDt = this.AssetDataForm.controls.ExpectedDelivDt.value;
     }
-    if(this.AssetDataForm.controls.IsNeedReplacementCar.value !== null) {this.allAssetDataObj.AppAssetObj.IsNeedReplacementCar = this.AssetDataForm.controls.IsNeedReplacementCar.value;
+    if(this.AssetDataForm.controls.IsNeedReplacementCar.value !== null) {
+      this.allAssetDataObj.AppAssetObj.IsNeedReplacementCar = this.AssetDataForm.controls.IsNeedReplacementCar.value;
     }
 
     this.allAssetDataObj.AppAssetObj.AssetSeqNo = this.AssetDataForm.controls.AssetSeqNo.value;
@@ -1081,12 +1095,6 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.AssetDataForm.controls.MrAssetConditionCode.value;
     this.allAssetDataObj.AppCollateralObj.MrCollateralUsageCode = this.AssetDataForm.controls.MrAssetUsageCode.value;
 
-    for (var i = 0; i < this.items.length; i++) {
-      if (this.items.controls[i] != null) {
-        this.allAssetDataObj.AppCollateralObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
-      }
-    }
-
     this.allAssetDataObj.AppCollateralObj.CollateralValueAmt = this.AssetDataForm.controls.AssetPriceAmt.value;
     this.allAssetDataObj.AppCollateralObj.AssetTypeCode = this.AssetDataForm.controls.AssetTypeCode.value;
     this.allAssetDataObj.AppCollateralObj.AssetCategoryCode = this.AssetDataForm.controls.AssetCategoryCode.value;
@@ -1100,6 +1108,28 @@ export class AssetDataComponent implements OnInit {
     this.allAssetDataObj.AppCollateralRegistrationObj.MrOwnerRelationshipCode = this.AssetDataForm.controls.MrOwnerRelationshipCode.value;
 
     if(this.BizTemplateCode !== "OPL") {
+      for (var i = 0; i < this.items.length; i++) {
+        if (this.items.controls[i] != null) {
+          this.allAssetDataObj.AppAssetObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
+        }
+      }
+
+      if (this.AssetDataForm.controls.selectedDpType.value == 'PRCTG') {
+        // this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls.AssetPriceAmt.value * this.AssetDataForm.controls.DownPaymentPrctg.value / 100;
+        this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = assetForm.DownPaymentPrctg;
+        this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm.AssetPriceAmt * assetForm.DownPaymentPrctg / 100;
+      }
+      else {
+        this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm.DownPaymentAmt;
+        this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = (assetForm.DownPaymentAmt / assetForm.AssetPriceAmt) * 100;
+      }
+      
+      for (var i = 0; i < this.items.length; i++) {
+        if (this.items.controls[i] != null) {
+          this.allAssetDataObj.AppCollateralObj["SerialNo" + (i + 1)] = this.items.controls[i]["controls"]["SerialNoValue"].value;
+        }
+      }
+
       this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAddr = this.AssetDataForm.controls["ownerData"]["controls"].Addr.value;
       this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode1 = this.AssetDataForm.controls["ownerData"]["controls"].AreaCode1.value;
       this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode2 = this.AssetDataForm.controls["ownerData"]["controls"].AreaCode2.value;
@@ -1117,8 +1147,6 @@ export class AssetDataComponent implements OnInit {
       this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode4 = this.AssetDataForm.controls["delivData"]["controls"].AreaCode4.value;
       this.allAssetDataObj.AppCollateralRegistrationObj.DelivCity = this.AssetDataForm.controls["delivData"]["controls"].City.value;
       this.allAssetDataObj.AppCollateralRegistrationObj.DelivZipcode = this.AssetDataForm.controls["delivDataZipcode"]["controls"].value.value;
-      this.allAssetDataObj.AppCollateralRegistrationObj.DelivOwnership = this.AssetDataForm.controls["delivData"]["controls"].MrHouseOwnershipCode.value;
-      this.allAssetDataObj.AppCollateralRegistrationObj.LocationOwnership = this.AssetDataForm.controls["locationData"]["controls"].MrHouseOwnershipCode.value;
     }
     
     this.allAssetDataObj.AppCollateralRegistrationObj.LocationAddr = this.AssetDataForm.controls["locationData"]["controls"].Addr.value;
@@ -1213,8 +1241,7 @@ export class AssetDataComponent implements OnInit {
       //this.GetVendorEmpSupervisi();
 
       var temp: any;
-      temp = this.EmpObj.filter(
-        emp => emp.VendorEmpId == event.target.value);
+      temp = this.EmpObj.filter(emp => emp.VendorEmpId == event.target.value);
       this.AssetDataForm.patchValue({
         SalesPersonId: temp[0].VendorEmpId,
         SalesPersonName: temp[0].VendorEmpName,
@@ -1440,142 +1467,6 @@ export class AssetDataComponent implements OnInit {
       (response) => {
         this.appAssetObj = response;
 
-        if(this.BizTemplateCode === "OPL") {
-          this.allAssetDataObj = new AllAssetDataObj();
-
-          this.allAssetDataObj.AppAssetObj.AppAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
-          this.allAssetDataObj.AppAssetObj.AppId = this.appAssetObj.ResponseAppAssetObj.AppId;
-          this.allAssetDataObj.AppAssetObj.FullAssetName = this.appAssetObj.ResponseAppAssetObj.FullAssetName;
-          this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.appAssetObj.ResponseAppAssetObj.MrAssetConditionCode;
-          this.allAssetDataObj.AppAssetObj.MrAssetUsageCode = this.appAssetObj.ResponseAppAssetObj.MrAssetUsageCode;
-      
-          this.allAssetDataObj.AppAssetObj.SupplName = this.appAssetObj.ResponseAppAssetObj.SupplName;
-          this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.appAssetObj.ResponseAppAssetObj.AssetPriceAmt;
-          this.allAssetDataObj.AppAssetObj.AssetNotes = this.appAssetObj.ResponseAppAssetObj.AssetNotes;
-          this.allAssetDataObj.AppAssetObj.Color = this.appAssetObj.ResponseAppAssetObj.Color;
-          this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer;
-          this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.appAssetObj.ResponseAppAssetObj.TaxIssueDt;
-          this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.appAssetObj.ResponseAppAssetObj.ManufacturingYear;
-          this.allAssetDataObj.AppAssetObj.Discount = this.appAssetObj.ResponseAppAssetObj.DiscountAmt;
-
-          if(this.appAssetObj.ResponseAssetDataOplObj != null) {
-            this.allAssetDataObj.AppAssetObj.ExpectedDelivDt = this.appAssetObj.ResponseAssetDataOplObj.ExpectedDeliveryDt;
-            this.allAssetDataObj.AppAssetObj.IsNeedReplacementCar = this.appAssetObj.ResponseAssetDataOplObj.IsNeedReplacementCar;
-
-            this.allAssetDataObj.AppCollateralRegistrationObj.DelivAddr = this.appAssetObj.ResponseAssetDataOplObj.DlvryAddr;
-            this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode1 = this.appAssetObj.ResponseAssetDataOplObj.DlvryAreaCode1;
-            this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode2 = this.appAssetObj.ResponseAssetDataOplObj.DlvryAreaCode2;
-            this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode3 = this.appAssetObj.ResponseAssetDataOplObj.DlvryAreaCode3;
-            this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode4 = this.appAssetObj.ResponseAssetDataOplObj.DlvryAreaCode4;
-            this.allAssetDataObj.AppCollateralRegistrationObj.DelivCity = this.appAssetObj.ResponseAssetDataOplObj.DlvryCity;
-            this.allAssetDataObj.AppCollateralRegistrationObj.DelivZipcode = this.appAssetObj.ResponseAssetDataOplObj.DlvryZipcode;
-            
-            this.allAssetDataObj.AppCollateralRegistrationObj.LocationAddr = this.appAssetObj.ResponseAssetDataOplObj.LocationAddr;
-            this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode1 = this.appAssetObj.ResponseAssetDataOplObj.LocationAreaCode1;
-            this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode2 = this.appAssetObj.ResponseAssetDataOplObj.LocationAreaCode2;
-            this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode3 = this.appAssetObj.ResponseAssetDataOplObj.LocationAreaCode3;
-            this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode4 = this.appAssetObj.ResponseAssetDataOplObj.LocationAreaCode4;
-            this.allAssetDataObj.AppCollateralRegistrationObj.LocationCity = this.appAssetObj.ResponseAssetDataOplObj.LocationCity;
-            this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode = this.appAssetObj.ResponseAssetDataOplObj.LocationZipcode;
-          }
-      
-          this.allAssetDataObj.AppAssetObj.AssetSeqNo = this.appAssetObj.ResponseAppAssetObj.AssetSeqNo;
-          this.allAssetDataObj.AppAssetObj.FullAssetCode = this.appAssetObj.ResponseAppAssetObj.FullAssetCode;
-          this.allAssetDataObj.AppAssetObj.AssetStat = this.appAssetObj.ResponseAppAssetObj.AssetStat;
-          this.allAssetDataObj.AppCollateralObj.CollateralStat = this.appAssetObj.ResponseAppAssetObj.AssetStat;
-          this.allAssetDataObj.AppCollateralObj.AppAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
-          
-          if (this.appAssetObj.ResponseAppCollateralObj != null) {
-            this.allAssetDataObj.AppCollateralObj.IsMainCollateral = this.appAssetObj.ResponseAppCollateralObj.IsMainCollateral;
-          }
-          else {
-            this.allAssetDataObj.AppCollateralObj.IsMainCollateral = true;
-          }
-
-          this.allAssetDataObj.AppAssetObj.AssetTypeCode = this.appAssetObj.ResponseAppAssetObj.AssetTypeCode;
-          this.allAssetDataObj.AppAssetObj.AssetCategoryCode = this.appAssetObj.ResponseAppAssetObj.AssetCategoryCode;
-          this.allAssetDataObj.AppAssetObj.SupplCode = this.appAssetObj.ResponseAppAssetObj.SupplCode;
-
-          if (this.appAssetObj.ResponseBranchManagerSupp != null) {
-            this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpName;
-            this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpNo;
-            this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = this.appAssetObj.ResponseBranchManagerSupp.MrSupplEmpPositionCode;
-          }
-
-          if (this.appAssetObj.ResponseAdminHeadSupp != null) {
-            this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = this.appAssetObj.ResponseAdminHeadSupp.SupplEmpName;
-            this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = this.appAssetObj.ResponseAdminHeadSupp.SupplEmpNo;
-            this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = this.appAssetObj.ResponseAdminHeadSupp.MrSupplEmpPositionCode;
-          }
-
-          if (this.appAssetObj.ResponseSalesPersonSupp != null) {
-            this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.appAssetObj.ResponseSalesPersonSupp.SupplEmpName;
-            this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.appAssetObj.ResponseSalesPersonSupp.SupplEmpNo;
-            this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = this.appAssetObj.ResponseSalesPersonSupp.MrSupplEmpPositionCode;
-          }
-
-          this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer;
-          this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.appAssetObj.ResponseAppAssetObj.TaxIssueDt;
-          this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.appAssetObj.ResponseAppAssetObj.ManufacturingYear;
-      
-          this.allAssetDataObj.AppCollateralObj.AppId = this.appAssetObj.ResponseAppAssetObj.AppId;
-          this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = this.appAssetObj.ResponseAppAssetObj.AssetSeqNo;
-          this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.appAssetObj.ResponseAppAssetObj.FullAssetCode;
-          this.allAssetDataObj.AppCollateralObj.FullAssetName = this.appAssetObj.ResponseAppAssetObj.FullAssetName;
-          this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.appAssetObj.ResponseAppAssetObj.MrAssetConditionCode;
-          this.allAssetDataObj.AppCollateralObj.MrCollateralUsageCode = this.appAssetObj.ResponseAppAssetObj.MrAssetUsageCode;
-
-          this.allAssetDataObj.AppCollateralObj.CollateralValueAmt = this.appAssetObj.ResponseAppAssetObj.AssetPriceAmt;
-          this.allAssetDataObj.AppCollateralObj.AssetTypeCode = this.appAssetObj.ResponseAppAssetObj.AssetTypeCode;
-          this.allAssetDataObj.AppCollateralObj.AssetCategoryCode = this.appAssetObj.ResponseAppAssetObj.AssetCategoryCode;
-          this.allAssetDataObj.AppCollateralObj.ManufacturingYear = this.appAssetObj.ResponseAppAssetObj.ManufacturingYear;
-
-          this.allAssetDataObj.AppAssetAccessoryObjs = new Array<AppAssetAccessoryObj>();
-          this.allAssetDataObj.AppCollateralAccessoryObjs = new Array<AppCollateralAccessoryObj>();
-          this.allAssetDataObj.AppCollateralAttrObj = new Array<AppCollateralAttrObj>();
-          this.allAssetDataObj.AppAssetAttrObj = new Array<AppAssetAttrObj>();
-      
-          for (let i = 0; i < this.appAssetObj.ResponseAppAssetAccessoryObjs.length; i++) {
-            var appAssetAccObj = new AppAssetAccessoryObj();
-            var appCollateralAccObj = new AppCollateralAccessoryObj();
-            appAssetAccObj.AssetAccessoryCode = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].AssetAccessoryCode;
-            appAssetAccObj.AssetAccessoryName = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].AssetAccessoryName;
-            appAssetAccObj.SupplCode = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].SupplCode;
-            appAssetAccObj.SupplName = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].SupplName;
-            appAssetAccObj.AccessoryPriceAmt = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].AccessoryPriceAmt;
-            appAssetAccObj.DownPaymentAmt = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].DownPaymentAmt;
-            appAssetAccObj.AccessoryNotes = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].AccessoryNotes;
-      
-            appCollateralAccObj.CollateralAccessoryCode = appAssetAccObj.AssetAccessoryCode;
-            appCollateralAccObj.CollateralAccessoryName = appAssetAccObj.AssetAccessoryName;
-            appCollateralAccObj.AccessoryPriceAmt = appAssetAccObj.AccessoryPriceAmt;
-            appCollateralAccObj.DownPaymentAmt = appAssetAccObj.DownPaymentAmt;
-            appCollateralAccObj.AccessoryNotes = appAssetAccObj.AccessoryNotes;
-      
-            this.allAssetDataObj.AppAssetAccessoryObjs.push(appAssetAccObj);
-            this.allAssetDataObj.AppCollateralAccessoryObjs.push(appCollateralAccObj);
-          }
-
-          if (this.AppAssetAttrObj != null) {
-            for (let i = 0; i < this.appAssetObj.ResponseAppAssetAttrObjs.length; i++) {
-              var appAssetAttrObj = new AppAssetAttrObj();
-              var appCollAttrcObj = new AppCollateralAttrObj();
-              appAssetAttrObj.AssetAttrName = this.appAssetObj.ResponseAppAssetAttrObjs[i].AssetAttrName;
-              appAssetAttrObj.AssetAttrCode = this.appAssetObj.ResponseAppAssetAttrObjs[i].AssetAttrCode;
-              appAssetAttrObj.AttrValue = this.appAssetObj.ResponseAppAssetAttrObjs[i].AttrValue;
-      
-              appCollAttrcObj.CollateralAttrName = appAssetAttrObj.AssetAttrName;
-              appCollAttrcObj.CollateralAttrCode = appAssetAttrObj.AssetAttrCode;
-              appCollAttrcObj.AttrValue = appAssetAttrObj.AttrValue;
-      
-              this.allAssetDataObj.AppAssetAttrObj.push(appAssetAttrObj);
-              this.allAssetDataObj.AppCollateralAttrObj.push(appCollAttrcObj);
-            }
-          }
-
-          this.listAsset.push(this.allAssetDataObj);
-        }
-
         if (this.appAssetObj.ResponseAppAssetObj != null) {
           let mode = this.appAssetObj.ResponseAppAssetObj.AppAssetId != 0 ? "edit" : "add";
           this.AssetDataForm.patchValue({
@@ -1684,19 +1575,158 @@ export class AssetDataComponent implements OnInit {
           this.GetProvDistrict();
           this.bindAccessories();
           this.updateValueDownPaymentPrctg();
-        }
-
-        if (this.appAssetObj != null) {
-          for (var i = 0; i < this.items.length; i++) {
-            if (this.items.controls[i] != null) {
-              this.items.controls[i]["controls"]["SerialNoValue"].value = this.appAssetObj["SerialNo" + (i + 1)];
-
-
-
+  
+          if (this.appAssetObj != null) {
+            for (var i = 0; i < this.items.length; i++) {
+              if (this.items.controls[i] != null) {
+                this.items.controls[i]["controls"]["SerialNoValue"].value = this.appAssetObj["SerialNo" + (i + 1)];
+              }
             }
           }
         }
-      });
+      }
+    );
+  }
+
+  async getListAllAssetData() {
+    this.appData = new AppDataObj();
+    this.appData.AppId = this.AppId;
+    await this.http.post(URLConstant.GetListAllAssetDataByAppId, this.appData).toPromise().then(
+      (response) => {
+        this.appAssetObj = response["ReturnObject"];
+
+        if (this.appAssetObj != null) {
+          for(let i = 0; i < this.appAssetObj.length; i++) {
+            this.allAssetDataObj = new AllAssetDataObj();
+
+            this.allAssetDataObj.AppAssetObj.AppAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
+            this.allAssetDataObj.AppAssetObj.AppId = this.appAssetObj.ResponseAppAssetObj.AppId;
+            this.allAssetDataObj.AppAssetObj.FullAssetName = this.appAssetObj.ResponseAppAssetObj.FullAssetName;
+            this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.appAssetObj.ResponseAppAssetObj.MrAssetConditionCode;
+            this.allAssetDataObj.AppAssetObj.MrAssetUsageCode = this.appAssetObj.ResponseAppAssetObj.MrAssetUsageCode;
+        
+            this.allAssetDataObj.AppAssetObj.SupplName = this.appAssetObj.ResponseAppAssetObj.SupplName;
+            this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.appAssetObj.ResponseAppAssetObj.AssetPriceAmt;
+            this.allAssetDataObj.AppAssetObj.AssetNotes = this.appAssetObj.ResponseAppAssetObj.AssetNotes;
+            this.allAssetDataObj.AppAssetObj.Color = this.appAssetObj.ResponseAppAssetObj.Color;
+            this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer;
+            this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.appAssetObj.ResponseAppAssetObj.TaxIssueDt;
+            this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.appAssetObj.ResponseAppAssetObj.ManufacturingYear;
+            this.allAssetDataObj.AppAssetObj.Discount = this.appAssetObj.ResponseAppAssetObj.DiscountAmt;
+
+            if(this.appAssetObj.ResponseAssetDataOplObj != null) {
+              this.allAssetDataObj.AppAssetObj.ExpectedDelivDt = this.appAssetObj.ResponseAssetDataOplObj.ExpectedDeliveryDt;
+              this.allAssetDataObj.AppAssetObj.IsNeedReplacementCar = this.appAssetObj.ResponseAssetDataOplObj.IsNeedReplacementCar;
+
+              this.allAssetDataObj.AppCollateralRegistrationObj.DelivAddr = this.appAssetObj.ResponseAssetDataOplObj.DlvryAddr;
+              this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode1 = this.appAssetObj.ResponseAssetDataOplObj.DlvryAreaCode1;
+              this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode2 = this.appAssetObj.ResponseAssetDataOplObj.DlvryAreaCode2;
+              this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode3 = this.appAssetObj.ResponseAssetDataOplObj.DlvryAreaCode3;
+              this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode4 = this.appAssetObj.ResponseAssetDataOplObj.DlvryAreaCode4;
+              this.allAssetDataObj.AppCollateralRegistrationObj.DelivCity = this.appAssetObj.ResponseAssetDataOplObj.DlvryCity;
+              this.allAssetDataObj.AppCollateralRegistrationObj.DelivZipcode = this.appAssetObj.ResponseAssetDataOplObj.DlvryZipcode;
+              
+              this.allAssetDataObj.AppCollateralRegistrationObj.LocationAddr = this.appAssetObj.ResponseAssetDataOplObj.LocationAddr;
+              this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode1 = this.appAssetObj.ResponseAssetDataOplObj.LocationAreaCode1;
+              this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode2 = this.appAssetObj.ResponseAssetDataOplObj.LocationAreaCode2;
+              this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode3 = this.appAssetObj.ResponseAssetDataOplObj.LocationAreaCode3;
+              this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode4 = this.appAssetObj.ResponseAssetDataOplObj.LocationAreaCode4;
+              this.allAssetDataObj.AppCollateralRegistrationObj.LocationCity = this.appAssetObj.ResponseAssetDataOplObj.LocationCity;
+              this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode = this.appAssetObj.ResponseAssetDataOplObj.LocationZipcode;
+            }
+        
+            this.allAssetDataObj.AppAssetObj.AssetSeqNo = this.appAssetObj.ResponseAppAssetObj.AssetSeqNo;
+            this.allAssetDataObj.AppAssetObj.FullAssetCode = this.appAssetObj.ResponseAppAssetObj.FullAssetCode;
+            this.allAssetDataObj.AppAssetObj.AssetStat = this.appAssetObj.ResponseAppAssetObj.AssetStat;
+            this.allAssetDataObj.AppCollateralObj.CollateralStat = this.appAssetObj.ResponseAppAssetObj.AssetStat;
+            this.allAssetDataObj.AppCollateralObj.AppAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
+
+            this.allAssetDataObj.AppAssetObj.AssetTypeCode = this.appAssetObj.ResponseAppAssetObj.AssetTypeCode;
+            this.allAssetDataObj.AppAssetObj.AssetCategoryCode = this.appAssetObj.ResponseAppAssetObj.AssetCategoryCode;
+            this.allAssetDataObj.AppAssetObj.SupplCode = this.appAssetObj.ResponseAppAssetObj.SupplCode;
+
+            if (this.appAssetObj.ResponseBranchManagerSupp != null) {
+              this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpName;
+              this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpNo;
+              this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = this.appAssetObj.ResponseBranchManagerSupp.MrSupplEmpPositionCode;
+            }
+
+            if (this.appAssetObj.ResponseAdminHeadSupp != null) {
+              this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = this.appAssetObj.ResponseAdminHeadSupp.SupplEmpName;
+              this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = this.appAssetObj.ResponseAdminHeadSupp.SupplEmpNo;
+              this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = this.appAssetObj.ResponseAdminHeadSupp.MrSupplEmpPositionCode;
+            }
+
+            if (this.appAssetObj.ResponseSalesPersonSupp != null) {
+              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.appAssetObj.ResponseSalesPersonSupp.SupplEmpName;
+              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.appAssetObj.ResponseSalesPersonSupp.SupplEmpNo;
+              this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = this.appAssetObj.ResponseSalesPersonSupp.MrSupplEmpPositionCode;
+            }
+
+            this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer;
+            this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.appAssetObj.ResponseAppAssetObj.TaxIssueDt;
+            this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.appAssetObj.ResponseAppAssetObj.ManufacturingYear;
+        
+            this.allAssetDataObj.AppCollateralObj.AppId = this.appAssetObj.ResponseAppAssetObj.AppId;
+            this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = this.appAssetObj.ResponseAppAssetObj.AssetSeqNo;
+            this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.appAssetObj.ResponseAppAssetObj.FullAssetCode;
+            this.allAssetDataObj.AppCollateralObj.FullAssetName = this.appAssetObj.ResponseAppAssetObj.FullAssetName;
+            this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.appAssetObj.ResponseAppAssetObj.MrAssetConditionCode;
+            this.allAssetDataObj.AppCollateralObj.MrCollateralUsageCode = this.appAssetObj.ResponseAppAssetObj.MrAssetUsageCode;
+
+            this.allAssetDataObj.AppCollateralObj.CollateralValueAmt = this.appAssetObj.ResponseAppAssetObj.AssetPriceAmt;
+            this.allAssetDataObj.AppCollateralObj.AssetTypeCode = this.appAssetObj.ResponseAppAssetObj.AssetTypeCode;
+            this.allAssetDataObj.AppCollateralObj.AssetCategoryCode = this.appAssetObj.ResponseAppAssetObj.AssetCategoryCode;
+            this.allAssetDataObj.AppCollateralObj.ManufacturingYear = this.appAssetObj.ResponseAppAssetObj.ManufacturingYear;
+
+            this.allAssetDataObj.AppAssetAccessoryObjs = new Array<AppAssetAccessoryObj>();
+            this.allAssetDataObj.AppCollateralAccessoryObjs = new Array<AppCollateralAccessoryObj>();
+            this.allAssetDataObj.AppCollateralAttrObj = new Array<AppCollateralAttrObj>();
+            this.allAssetDataObj.AppAssetAttrObj = new Array<AppAssetAttrObj>();
+        
+            for (let i = 0; i < this.appAssetObj.ResponseAppAssetAccessoryObjs.length; i++) {
+              var appAssetAccObj = new AppAssetAccessoryObj();
+              var appCollateralAccObj = new AppCollateralAccessoryObj();
+              appAssetAccObj.AssetAccessoryCode = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].AssetAccessoryCode;
+              appAssetAccObj.AssetAccessoryName = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].AssetAccessoryName;
+              appAssetAccObj.SupplCode = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].SupplCode;
+              appAssetAccObj.SupplName = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].SupplName;
+              appAssetAccObj.AccessoryPriceAmt = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].AccessoryPriceAmt;
+              appAssetAccObj.DownPaymentAmt = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].DownPaymentAmt;
+              appAssetAccObj.AccessoryNotes = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].AccessoryNotes;
+        
+              appCollateralAccObj.CollateralAccessoryCode = appAssetAccObj.AssetAccessoryCode;
+              appCollateralAccObj.CollateralAccessoryName = appAssetAccObj.AssetAccessoryName;
+              appCollateralAccObj.AccessoryPriceAmt = appAssetAccObj.AccessoryPriceAmt;
+              appCollateralAccObj.DownPaymentAmt = appAssetAccObj.DownPaymentAmt;
+              appCollateralAccObj.AccessoryNotes = appAssetAccObj.AccessoryNotes;
+        
+              this.allAssetDataObj.AppAssetAccessoryObjs.push(appAssetAccObj);
+              this.allAssetDataObj.AppCollateralAccessoryObjs.push(appCollateralAccObj);
+            }
+
+            if (this.AppAssetAttrObj != null) {
+              for (let i = 0; i < this.appAssetObj.ResponseAppAssetAttrObjs.length; i++) {
+                var appAssetAttrObj = new AppAssetAttrObj();
+                var appCollAttrcObj = new AppCollateralAttrObj();
+                appAssetAttrObj.AssetAttrName = this.appAssetObj.ResponseAppAssetAttrObjs[i].AssetAttrName;
+                appAssetAttrObj.AssetAttrCode = this.appAssetObj.ResponseAppAssetAttrObjs[i].AssetAttrCode;
+                appAssetAttrObj.AttrValue = this.appAssetObj.ResponseAppAssetAttrObjs[i].AttrValue;
+        
+                appCollAttrcObj.CollateralAttrName = appAssetAttrObj.AssetAttrName;
+                appCollAttrcObj.CollateralAttrCode = appAssetAttrObj.AssetAttrCode;
+                appCollAttrcObj.AttrValue = appAssetAttrObj.AttrValue;
+        
+                this.allAssetDataObj.AppAssetAttrObj.push(appAssetAttrObj);
+                this.allAssetDataObj.AppCollateralAttrObj.push(appCollAttrcObj);
+              }
+            }
+
+            this.listAsset.push(this.allAssetDataObj);
+          }
+        }
+      }
+    );
   }
 
   initLookup() {
@@ -1891,8 +1921,10 @@ export class AssetDataComponent implements OnInit {
     await this.http.post(URLConstant.GetAppById, this.appObj).toPromise().then(
       (response) => {
         this.AppObj = response;
-        this.GetProdOfferingAssetCond();
         this.OfficeCode = this.AppObj.OriOfficeCode;
+        if(this.BizTemplateCode != CommonConstant.OPL){
+          this.GetProdOfferingAssetCond();
+        }          
       }
     );
   }
@@ -2037,7 +2069,6 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetAssetMaster(assetMasterObj) {
-    console.log("BOOM GOT CALLED")
     this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, assetMasterObj).subscribe(
       (response) => {
         this.AssetMasterObj = response;
@@ -2054,7 +2085,6 @@ export class AssetDataComponent implements OnInit {
   }
 
   AssetConditionChanged(mode: string = "add") {
-    console.log("ASSET CONDITION");
     if (this.AssetConditionObj != null) {
       var filter: any;
       filter = this.AssetConditionObj.filter(
@@ -2095,7 +2125,6 @@ export class AssetDataComponent implements OnInit {
     this.delivAddrObj.AreaCode3 = this.appAssetObj.ResponseAppCollateralRegistrationObj.DelivAreaCode3;
     this.delivAddrObj.AreaCode4 = this.appAssetObj.ResponseAppCollateralRegistrationObj.DelivAreaCode4;
     this.delivAddrObj.City = this.appAssetObj.ResponseAppCollateralRegistrationObj.DelivCity;
-    this.delivAddrObj.MrHouseOwnershipCode = this.appAssetObj.ResponseAppCollateralRegistrationObj.DelivOwnership;
 
     this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = this.appAssetObj.ResponseAppCollateralRegistrationObj.DelivZipcode;
     this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.DelivZipcode };
@@ -2114,10 +2143,6 @@ export class AssetDataComponent implements OnInit {
     this.locationAddrObj.AreaCode3 = this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode3;
     this.locationAddrObj.AreaCode4 = this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationAreaCode4;
     this.locationAddrObj.City = this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationCity;
-
-    if(this.BizTemplateCode === "OPL") {
-    this.locationAddrObj.MrHouseOwnershipCode = this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationOwnership;
-    }
 
     this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode;
     this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.appAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode };
@@ -2340,7 +2365,6 @@ export class AssetDataComponent implements OnInit {
         DelivAreaCode4: this.AddrObj[0].AreaCode4,
         DelivCity: this.AddrObj[0].City,
         DelivZipcode: this.AddrObj[0].Zipcode,
-        DelivOwnership: this.AddrObj[0].MrHouseOwnershipCode
       });
       this.delivAddrObj = new AddrObj();
       this.delivAddrObj.Addr = this.AddrObj[0].Addr;
@@ -2349,7 +2373,6 @@ export class AssetDataComponent implements OnInit {
       this.delivAddrObj.AreaCode3 = this.AddrObj[0].AreaCode3;
       this.delivAddrObj.AreaCode4 = this.AddrObj[0].AreaCode4;
       this.delivAddrObj.City = this.AddrObj[0].City;
-      this.delivAddrObj.MrHouseOwnershipCode = this.AddrObj[0].MrHouseOwnershipCode;
 
       this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = this.AssetDataForm.controls.DelivZipcode.value;
       this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AssetDataForm.controls.DelivZipcode.value };
@@ -2380,13 +2403,6 @@ export class AssetDataComponent implements OnInit {
       this.locationAddrObj.AreaCode3 = this.AddrObj[0].AreaCode3;
       this.locationAddrObj.AreaCode4 = this.AddrObj[0].AreaCode4;
       this.locationAddrObj.City = this.AddrObj[0].City;
-
-      if(this.BizTemplateCode === "OPL") {
-        this.AssetDataForm.patchValue({
-          LocationOwnership: this.AddrObj[0].MrHouseOwnershipCode
-        });
-        this.locationAddrObj.MrHouseOwnershipCode = this.AddrObj[0].MrHouseOwnershipCode;
-      }
 
       this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.AssetDataForm.controls.LocationZipcode.value;
       this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AssetDataForm.controls.LocationZipcode.value };
@@ -2496,6 +2512,7 @@ export class AssetDataComponent implements OnInit {
         invalid.push(name);
       }
     }
+    console.log(invalid);
   }
 
   GenerataAppAssetAttr(isRefresh: boolean) {
