@@ -1,12 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { environment } from 'environments/environment';
-import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
   selector: 'app-mou-view',
@@ -24,7 +20,6 @@ export class MouViewComponent implements OnInit {
   IsResponseProcessed: boolean = false;
   isListedCustFactoring: boolean;
   IsReady: boolean = false;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   MouCustNo: string;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
@@ -39,17 +34,8 @@ export class MouViewComponent implements OnInit {
   }
   
   ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.mouCustObj = new MouCustObj();
-    this.mouCustObj.MouCustId = this.MouCustId;
-
+    this.mouCustObj.MouCustId = this.MouCustId;    
     this.http.post(this.getMouCustByIdUrl, this.mouCustObj).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
@@ -59,16 +45,6 @@ export class MouViewComponent implements OnInit {
         this.IsResponseProcessed = true;
         this.IsReady = true;
       });
-  }
-
-  GetCallBack(event) {
-    if (event.Key == "customer") {
-      var custObj = { CustNo: this.resultData['CustNo'] };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        });
-    }
   }
 
   isDetail: boolean;

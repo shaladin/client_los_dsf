@@ -11,7 +11,9 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-nap-from-mou-detail',
@@ -23,12 +25,13 @@ export class NapFromMouDetailComponent implements OnInit {
   ProductOfferingIdentifier;
   ProductOfferingNameIdentifier;
   MouCustId: number;
+  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute, private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["MouCustId"];
@@ -94,7 +97,7 @@ export class NapFromMouDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     console.log("nap from mou")
-    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
 
     this.MakeLookUpObj();
@@ -139,7 +142,7 @@ export class NapFromMouDetailComponent implements OnInit {
   }
 
   async GetLead() {
-    await this.http.post(URLConstant.GetMouCustById, {MouCustId : this.MouCustId}).toPromise().then(
+    await this.http.post(URLConstant.GetMouCustById, { MouCustId: this.MouCustId }).toPromise().then(
       (response) => {
         this.MouCustObj = response as MouCustObj;
         this.NapAppForm.patchValue({
@@ -186,18 +189,7 @@ export class NapFromMouDetailComponent implements OnInit {
     this.http.post(URLConstant.AddAppFromMou, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        // if (this.bizTemplateCode == CommonConstant.CF4W) {
-        //   this.router.navigate(["Nap/ConsumerFinance/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
-        // }
-        // if (this.bizTemplateCode == CommonConstant.FL4W) {
-        //   this.router.navigate(["Nap/FinanceLeasing/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
-        // }
-        // if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
-        //   this.router.navigate(["Nap/CFRefinancing/Add/Detail"], { queryParams: { "AppId": response["AppId"] } });
-        // }
-        // if (this.bizTemplateCode == CommonConstant.FCTR) {
-          AdInsHelper.RedirectUrl(this.router,["Nap/Factoring/Add/Detail"], { "AppId": response["AppId"] });
-        //}
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FCTR_ADD_DETAIL], { "AppId": response["AppId"] });
       });
 
   }

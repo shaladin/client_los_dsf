@@ -1,0 +1,47 @@
+{
+    "title": "",
+    "subsection": [
+        {
+            "subSectionId": "MainInfoId",
+            "subSectionTitle": "Main Information",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "callback",
+                    "key": "Application",
+                    "label": "Application No",
+                    "property": "AppNo"
+                },
+                {
+                    "type": "text",
+                    "label": "Original Office",
+                    "property": "OriOfficeName"
+                },
+                {
+                    "type": "text",
+                    "label": "Customer Name",
+                    "property": "CustName"
+                },
+                {
+                    "type": "callback",
+                    "key": "ProdOffering",
+                    "label": "Product Offering",
+                    "property": "ProdOfferingName"
+                },
+                {
+                    "type": "text",
+                    "label": "Rental Period (In Months)",
+                    "property": "RentalPeriod"
+                },
+                {
+                    "type": "text",
+                    "label": "Total Asset",
+                    "property": "TotalAsset"
+                }
+            ],
+            "querystring": {
+                "name": "viewOplMainInfo"
+            }
+        }
+    ]
+}  

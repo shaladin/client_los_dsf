@@ -10,6 +10,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-app-add-detail',
@@ -23,13 +24,10 @@ export class AppAddDetailComponent implements OnInit {
   appId: number;
   wfTaskListId: number;
   mode: string;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
   IsMultiAsset: string;
   ListAsset: any;
- 
-
   AppStep = {
     "NEW": 1,
     "CUST": 1,
@@ -49,6 +47,8 @@ export class AppAddDetailComponent implements OnInit {
   });
   OnFormReturnInfo = false;
 
+  readonly CancelLink: string = NavigationConstant.NAP_CF2W_PAGING;
+  readonly BackLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -69,22 +69,6 @@ export class AppAddDetailComponent implements OnInit {
   ngOnInit() {
     //this.ClaimTask();
     this.AppStepIndex = 0;
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
     this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
@@ -107,7 +91,7 @@ export class AppAddDetailComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/CF2W/Paging"], {});
+    AdInsHelper.RedirectUrl(this.router,[this.CancelLink], {});
   }
 
   MakeViewReturnInfoObj() {
@@ -192,7 +176,7 @@ export class AppAddDetailComponent implements OnInit {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,["/Nap/CF2W/Paging"], { LobCode: "CF2W" });
+        AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { LobCode: "CF2W" });
       })
   }
 
@@ -209,22 +193,5 @@ export class AppAddDetailComponent implements OnInit {
         (response) => {
         })
     }
-  }
-
-  // ClaimTask(){
-  //   var currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
-  //   var wfClaimObj = new AppObj();
-  //   wfClaimObj.AppId = this.appId;
-  //   wfClaimObj.Username = currentUserContext["UserName"];
-  //   wfClaimObj.WfTaskListId = this.wfTaskListId;
-
-  //   this.http.post(AdInsConstant.ClaimTaskNap, wfClaimObj).subscribe(
-  //     (response) => {
-    
-  //     });
-  // }
-
-  GetCallback(ev){ 
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 }

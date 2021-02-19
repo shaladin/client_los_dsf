@@ -11,7 +11,7 @@
             "label": "Application No",
             "property": "AppNo",
             "name": "AppNo",
-            "path" : "/View/AppView", 
+            "path" : "VIEW_APP", 
             "target" : "_blank", 
             "param" : [ 
                 {
@@ -52,7 +52,7 @@
             "property": "MouCustNo",
             "name": "MouCustNo",
             "isHide": true,
-            "path": "/View/Mou/CustView",
+            "path": "VIEW_MOU_CUST",
             "target": "_blank",
             "param": [
               {

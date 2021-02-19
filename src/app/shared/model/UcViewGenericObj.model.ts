@@ -1,7 +1,9 @@
+import { NavigationConstant } from "../constant/NavigationConstant";
 
 export class UcViewGenericObj {
     viewInput: string;
     viewEnvironment: string;
+    navigationConst: any;
     ddlEnvironments: Array<EnviObj>;
     whereValue: Array<WhereValueObj>;
 
@@ -10,6 +12,7 @@ export class UcViewGenericObj {
         this.viewEnvironment = "";
         this.ddlEnvironments = new Array<EnviObj>();
         this.whereValue = new Array<WhereValueObj>();
+        this.navigationConst = NavigationConstant;
     }
 }
 

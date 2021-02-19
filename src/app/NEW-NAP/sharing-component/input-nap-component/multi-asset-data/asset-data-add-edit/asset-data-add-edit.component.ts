@@ -10,7 +10,6 @@ import { environment } from 'environments/environment';
 import { VendorEmpObj } from 'app/shared/model/VendorEmp.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AllAssetDataObj } from 'app/shared/model/AllAssetDataObj.Model';
 import { RefCoyObj } from 'app/shared/model/RefCoyObj.Model';
@@ -34,6 +33,8 @@ import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AppAssetAccessoryObj } from 'app/shared/model/AppAssetAccessoryObj.model';
 import { AppCollateralAccessoryObj } from 'app/shared/model/AppCollateralAccessoryObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-asset-data-add-edit',
@@ -222,7 +223,7 @@ export class AssetDataAddEditComponent implements OnInit {
   LastRequestedDate: any = "";
   indexChassis: number = 0;
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService) {
     this.getListAppAssetData = URLConstant.GetListAppAssetData;
     this.getListVendorEmp = URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition;
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -620,6 +621,7 @@ export class AssetDataAddEditComponent implements OnInit {
       }
     }
   }
+  readonly AssetUsed: string = CommonConstant.AssetConditionUsed;
   async ngOnInit(): Promise<void> {
     this.AssetDataForm.updateValueAndValidity();
 
@@ -660,6 +662,7 @@ export class AssetDataAddEditComponent implements OnInit {
             TaxIssueDt: datePipe.transform(this.returnAppAssetObj.TaxIssueDt, "yyyy-MM-dd")
           });
 
+          this.ChangeAssetCondition();
           this.updateValueDownPaymentPrctg();
           this.appAssetAccessoriesObjs = response["ResponseAppAssetAccessoryObjs"];
 
@@ -817,13 +820,14 @@ export class AssetDataAddEditComponent implements OnInit {
         var assetCond = response[1];
         var assetType = response[2];
         var assetSchm = response[3];
-        var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+        let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
         if (this.mode != 'editAsset') {
           this.AssetDataForm.patchValue({
             MrAssetConditionCode: assetCond["CompntValue"],
             MrAssetConditionCodeView: assetCond["CompntValue"]
           });
+          this.ChangeAssetCondition();
         }
 
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
@@ -908,6 +912,7 @@ export class AssetDataAddEditComponent implements OnInit {
               MrAssetConditionCode: this.returnAssetConditionObj[0].Key
             }
           )
+          this.ChangeAssetCondition();
         }
 
         this.UcAddressHandler();
@@ -974,7 +979,7 @@ export class AssetDataAddEditComponent implements OnInit {
           TaxCityIssuer: response.DistrictCode
         });
       }
-    ).catch((error) => {
+    ).catch(() => {
     });
   }
 
@@ -1404,7 +1409,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
 
   initLookupSuppAcc() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputLookupAccSupObj = new InputLookupObj();
     this.InputLookupAccSupObj.urlJson = "./assets/uclookup/NAP/lookupSupplier.json";
     this.InputLookupAccSupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
@@ -1636,4 +1641,12 @@ export class AssetDataAddEditComponent implements OnInit {
     );
   }
 
+  ChangeAssetCondition(){
+    if(this.AssetDataForm.controls.MrAssetConditionCode.value == CommonConstant.AssetConditionUsed){
+      this.AssetDataForm.controls.TaxCityIssuer.setValidators([Validators.required]);
+    }else{
+      this.AssetDataForm.controls.TaxCityIssuer.clearValidators();
+    }
+    this.AssetDataForm.controls.TaxCityIssuer.updateValueAndValidity();
+  }
 }

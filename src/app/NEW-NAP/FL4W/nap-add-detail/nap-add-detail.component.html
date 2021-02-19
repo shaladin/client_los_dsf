@@ -3,13 +3,12 @@
     <div class="px-3">
       <div class="form-action pull-right">
         <button *ngIf="ReturnHandlingHId > 0" type="button" class="btn btn-raised btn-warning margin-r-5"
-          [routerLink]="['/Nap/AddProcess/ReturnHandling/EditAppPaging']" [queryParams]="{BizTemplateCode:'FL4W'}" translate>
+          [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:'FL4W'}" translate>
           <i class="ft-x"></i> Cancel
         </button>
         </div>
         </div>
-    <!-- <lib-ucviewgeneric [viewInput]="viewProdMainInfoObj" (callback)="GetCallback($event)"> </lib-ucviewgeneric> -->
-    <ng-template #FL4WMainInfoContainer></ng-template>
+        <app-app-main-info [AppId]="appId" #viewAppMainInfo></app-app-main-info>
     <div class="card-body">
       <div class="px-3">
         <div class="card" *ngIf="ReturnHandlingHId > 0">

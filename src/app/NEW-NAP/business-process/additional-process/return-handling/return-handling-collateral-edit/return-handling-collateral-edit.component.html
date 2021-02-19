@@ -1,5 +1,5 @@
 <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Edit Collateral</h4>
-<app-app-main-info [arrValue]="arrValue"></app-app-main-info>
+<app-app-main-info [AppId]="appId"></app-app-main-info>
 <div class="card">
   <div class="card-body">
     <div class="px-3">
@@ -57,7 +57,7 @@
             </table>
           </div>
           <div class="form-actions right">
-            <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Nap/AddProcess/ReturnHandlingCollateral/Paging']" [queryParams]="{BizTemplateCode: BizTemplateCode}">
+            <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode: BizTemplateCode}">
               <i class="ft-x"></i> Cancel
           </button> 
             <button type="submit" class="btn btn-raised btn-primary">

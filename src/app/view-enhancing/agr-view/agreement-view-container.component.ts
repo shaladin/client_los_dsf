@@ -2,12 +2,14 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { CookieService } from 'ngx-cookie';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+
 
 @Component({
   selector: 'app-agreement-view-container',
@@ -53,8 +55,7 @@ export class AgreementViewContainerComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient,
-    private fb: FormBuilder
+    private http: HttpClient, private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params["AgrmntId"] != null) {
@@ -73,7 +74,7 @@ export class AgreementViewContainerComponent implements OnInit {
   async InitDms() {
     this.isDmsReady = false;
     this.dmsObj = new DMSObj();
-    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
@@ -92,22 +93,22 @@ export class AgreementViewContainerComponent implements OnInit {
           (response) => {
             let appNo = response[0]['AppNo'];
             let custNo = response[1]['CustNo'];
-            if(custNo != null && custNo != ''){
+            if (custNo != null && custNo != '') {
               this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
             }
             this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, appNo));
             let mouId = response[0]['MouCustId'];
-            if(mouId != null && mouId != ""){
-              let mouObj = {MouCustId : mouId};
+            if (mouId != null && mouId != "") {
+              let mouObj = { MouCustId: mouId };
               this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-                result =>{
+                result => {
                   let mouCustNo = result['MouCustNo'];
                   this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
                   this.isDmsReady = true;
                 }
               )
             }
-            else{
+            else {
               this.isDmsReady = true;
             }
           }

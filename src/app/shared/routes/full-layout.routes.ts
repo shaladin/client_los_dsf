@@ -1,43 +1,44 @@
 import { Routes, RouterModule } from '@angular/router';
 import { BackdoorComponent } from 'app/backdoor/backdoor.component';
+import { PathConstant } from '../constant/PathConstant';
 
 //Route for content layout with sidebar, navbar and footer.
 
 export const Full_ROUTES: Routes = [
   {
-    path: 'dashboard',
+    path: PathConstant.LR_DASHBOARD,
     loadChildren: './dashboard/dashboard.module#DashboardModule'
   },
   {
-    path: 'forms',
+    path: PathConstant.LR_FORMS,
     loadChildren: './forms/forms.module#FormModule'
   },
   {
-    path: 'components',
+    path: PathConstant.LR_COMPNT,
     loadChildren: './components/ui-components.module#UIComponentsModule'
   },
   {
-    path: 'notification',
+    path: PathConstant.LR_NOTIF,
     loadChildren: './notification/notification.module#NotificationModule'
   },
   {
-    path: 'pages',
+    path: PathConstant.LR_PAGES,
     loadChildren: './pages/full-pages/full-pages.module#FullPagesModule'
   },
   {
-    path: 'Mou',
+    path: PathConstant.LR_MOU,
     loadChildren: './MOU/mou.module#MouModule'
   },
   {
-    path: 'Nap',
+    path: PathConstant.LR_NAP,
     loadChildren: './NEW-NAP/nap.module#NapModule'
   },
   {
-    path: 'Lead',
+    path: PathConstant.LR_LEAD,
     loadChildren: './lead/lead.module#LeadModule'
   },
   {
-    path: 'Inquiry',
+    path: PathConstant.LR_INQUIRY,
     loadChildren: './inquiry/inquiry.module#InquiryModule'
   },
   // {
@@ -45,18 +46,18 @@ export const Full_ROUTES: Routes = [
   //   loadChildren: './view/view.module#ViewModule'
   // },
   {
-    path: 'Lead',
-    loadChildren: './lead/lead.module#LeadModule'
-  },
-  {
-    path: 'Integration',
+    path: PathConstant.LR_INTEGRATION,
     loadChildren: './integration/integration.module#IntegrationModule'
   },
   {
-    path: 'Backdoor',
+    path: PathConstant.LR_BACKDOOR,
     component: BackdoorComponent,
     data: {
       title: 'Backdoor Component'
     }
+  },
+  {
+    path: 'requisitiondecision',
+    loadChildren: './requisition-decision/requisition-decision.module#RequisitionDecisionModule'
   }
 ];

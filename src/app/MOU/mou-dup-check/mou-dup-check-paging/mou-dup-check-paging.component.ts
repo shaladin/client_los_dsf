@@ -6,6 +6,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-mou-dup-check-paging',
@@ -17,7 +19,7 @@ export class MouDupCheckPagingComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router, private cookieService: CookieService
   ) {
   }
 
@@ -30,23 +32,23 @@ export class MouDupCheckPagingComponent implements OnInit {
   }
 
   NextScreen(event) {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: event.RowObj.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
 
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == false) {
-      AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/SimilarPersonal"],{"MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DUP_CHECK_SIMILAR_PERSONAL], { "MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId });
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == true) {
-      AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/ExistingPersonal"],{ "MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DUP_CHECK_EXIST_PERSONAL], { "MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId });
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == false) {
-      AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/SimilarCompany"],{"MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DUP_CHECK_SIMILAR_COY], { "MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId });
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == true) {
-      AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/ExistingCompany"],{"MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DUP_CHECK_EXIST_COY], { "MouCustId": event.RowObj.MouCustId, "WfTaskListId": event.RowObj.WfTaskListId });
     }
   }
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -8,11 +7,11 @@ import { forkJoin } from 'rxjs';
 import { AppLoanPurposeObj } from 'app/shared/model/AppLoanPurpose.Model';
 import { VendorBankAccObj } from 'app/shared/model/VendorBankAcc.Model';
 import { PurchaseOrderHObj } from 'app/shared/model/PurchaseOrderHObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { PurchaseOrderDObj } from 'app/shared/model/PurchaseOrderDObj.Model';
 import { DatePipe, formatDate } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { Console } from '@angular/core/src/console';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-po-entry',
@@ -39,9 +38,8 @@ export class PoEntryComponent implements OnInit {
 
   constructor(
     private httpClient: HttpClient,
-    private toastr: NGXToastrService,
     private fb: FormBuilder,
-    public activeModal: NgbActiveModal
+    public activeModal: NgbActiveModal, private cookieService: CookieService
   ) {
     this.AppLoanPurposeList = new Array<AppLoanPurposeObj>();
     this.VendorBankAcc = new VendorBankAccObj();
@@ -60,27 +58,27 @@ export class PoEntryComponent implements OnInit {
   ngOnInit() {
     this.arrValue.push(this.AgrmntId);
     var datePipe = new DatePipe("en-US");
-    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = new Date(context["BusinessDt"]);
-    if(!this.PurchaseOrderHId || this.PurchaseOrderHId == 0){
+    if (!this.PurchaseOrderHId || this.PurchaseOrderHId == 0) {
       let getAppLoanPurpose = this.httpClient.post(URLConstant.GetAppLoanPurposeByAppIdSupplCode, { AppId: this.AppId, SupplCode: this.SupplCode }).toPromise();
       let getListBankAcc = this.httpClient.post(URLConstant.GetListVendorBankAccByVendorCode, { VendorCode: this.SupplCode }).toPromise();
       forkJoin([getAppLoanPurpose, getListBankAcc]).toPromise().then(
         (response) => {
           this.AppLoanPurposeList = response[0]["listResponseAppLoanPurpose"] as Array<AppLoanPurposeObj>;
           this.vendorBankAccList = response[1]["ReturnObject"];
-          this.vendorBankAccList.sort((a,b) => {return (a["IsDefault"] === b["IsDefault"]) ? 0 : a["IsDefault"]? -1 : 1});
+          this.vendorBankAccList.sort((a, b) => { return (a["IsDefault"] === b["IsDefault"]) ? 0 : a["IsDefault"] ? -1 : 1 });
           console.log("vendorBankAccList: " + JSON.stringify(this.vendorBankAccList));
           var isDefaultFound = false;
           var totalDisburse = 0;
           for (const item of this.vendorBankAccList) {
-            if(item["IsDefault"]){
+            if (item["IsDefault"]) {
               this.VendorBankAcc = item as VendorBankAccObj;
               isDefaultFound = true;
               break;
             }
           }
-          if(isDefaultFound){
+          if (isDefaultFound) {
             this.VendorBankAcc = this.vendorBankAccList[0] as VendorBankAccObj;
           }
           for (const loan of this.AppLoanPurposeList) {
@@ -98,16 +96,16 @@ export class PoEntryComponent implements OnInit {
         }
       );
     }
-    else{
+    else {
       let getPurchaseOrderHId = this.httpClient.post(URLConstant.GetPurchaseOrderByPurchaseOrderHIdForNewPO, { PurchaseOrderHId: this.PurchaseOrderHId }).toPromise();
       let getListBankAcc = this.httpClient.post(URLConstant.GetListVendorBankAccByVendorCode, { VendorCode: this.SupplCode }).toPromise();
       forkJoin([getPurchaseOrderHId, getListBankAcc]).toPromise().then(
         (response) => {
           this.vendorBankAccList = response[1]["ReturnObject"];
           this.PurchaseOrderH = response[0] as PurchaseOrderHObj;
-          this.vendorBankAccList.sort((a,b) => {return (a["IsDefault"] === b["IsDefault"]) ? 0 : a["IsDefault"]? -1 : 1});
+          this.vendorBankAccList.sort((a, b) => { return (a["IsDefault"] === b["IsDefault"]) ? 0 : a["IsDefault"] ? -1 : 1 });
           for (const item of this.vendorBankAccList) {
-            if(item["BankAccountNo"] == this.PurchaseOrderH.BankAccNo){
+            if (item["BankAccountNo"] == this.PurchaseOrderH.BankAccNo) {
               this.VendorBankAcc = item as VendorBankAccObj;
               break;
             }
@@ -137,7 +135,7 @@ export class PoEntryComponent implements OnInit {
               (response) => {
                 var a = formatDate(this.AppData["ApvDt"], 'yyyy-MM-dd', 'en-US');
                 this.Date = new Date(a);
-                    this.Date.setDate(this.Date.getDate() + parseInt(response["CompntValue"]));
+                this.Date.setDate(this.Date.getDate() + parseInt(response["CompntValue"]));
 
                 this.ExpirationDate = formatDate(this.Date, 'yyyy-MM-dd', 'en-US');
                 this.PODetailForm.patchValue({
@@ -158,10 +156,10 @@ export class PoEntryComponent implements OnInit {
     );
   }
 
-  BankAccHandler(){
+  BankAccHandler() {
     var value = this.PODetailForm.controls["BankAccNo"].value;
     for (const item of this.vendorBankAccList) {
-      if(item["BankAccountNo"] == value){
+      if (item["BankAccountNo"] == value) {
         this.VendorBankAcc = item as VendorBankAccObj;
         break;
       }
@@ -240,7 +238,7 @@ export class PoEntryComponent implements OnInit {
       requestPurchaseOrderH.BankBranch = this.VendorBankAcc.BankCode;
       requestPurchaseOrderH.BankAccNo = this.VendorBankAcc.BankAccountNo;
       requestPurchaseOrderH.BankAccName = this.VendorBankAcc.BankAccountName;
-      requestPurchaseOrderH.Notes =this.PODetailForm.controls.Notes.value;
+      requestPurchaseOrderH.Notes = this.PODetailForm.controls.Notes.value;
       requestPurchaseOrderH.NumOfExtension = this.PurchaseOrderH.NumOfExtension;
       requestPurchaseOrderH.MouNo = this.PurchaseOrderH.MouNo;
 
@@ -259,7 +257,7 @@ export class PoEntryComponent implements OnInit {
         this.activeModal.close(response);
       }
     ).catch(
-      (error) => {
+      () => {
       }
     );
 

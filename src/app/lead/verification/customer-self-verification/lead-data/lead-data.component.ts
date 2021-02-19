@@ -17,6 +17,7 @@ import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Mode
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-lead-data',
@@ -518,15 +519,7 @@ export class LeadDataComponent implements OnInit {
         this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            if(this.originPage == "teleVerif"){
-              AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
-            }
-            else if(this.typePage == "edit"){
-              AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
-            }
-            else{
-              AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
-            }
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CONTENT_PAGE_SELF_VERIF], { LeadId: this.LeadId, WfTaskListId: this.WfTaskListId, LobCode: this.returnLobCode });
           }
         );
         }
@@ -538,7 +531,7 @@ export class LeadDataComponent implements OnInit {
       this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CONTENT_PAGE_SELF_VERIF], { LeadId: this.LeadId, WfTaskListId: this.WfTaskListId, LobCode: this.returnLobCode });
         });
     } 
   }
@@ -556,28 +549,15 @@ export class LeadDataComponent implements OnInit {
         this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            // if(this.originPage == "teleVerif"){
-            // AdInsHelper.RedirectUrl(this.router,["/Lead/TeleVerif/Paging"],{});
-
-            // }
-            // else if(this.typePage == "update"){
-            // AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
-            // }
-            // else{
-            // AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
-            // }
             if(this.originPage == "teleVerif"){
-              // AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
 
               this.outputPage.emit({ pageType: "submit"});
             }
             else if(this.typePage == "edit"){
-              // AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
 
               this.outputPage.emit({ pageType: "submit"});
             }
             else{
-              // AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
               this.outputPage.emit({ pageType: "submit"});
             }     
           }
@@ -591,27 +571,14 @@ export class LeadDataComponent implements OnInit {
         this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            // if(this.originPage == "teleVerif"){
-            // AdInsHelper.RedirectUrl(this.router,["/Lead/TeleVerif/Paging"],{});
-
-            // }
-            // else if(this.typePage == "update"){
-            // AdInsHelper.RedirectUrl(this.router,["/Lead/LeadUpdate/Paging"],{});
-            // }
-            // else{
-            // AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
-            // }
             if(this.originPage == "teleVerif"){
-              // AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
               this.outputPage.emit({ pageType: "submit"});
             }
             else if(this.typePage == "edit"){
-              // AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
 
               this.outputPage.emit({ pageType: "submit"});
             }
             else{
-              // AdInsHelper.RedirectUrl(this.router,["/pages/Submit?reason=submit"],{});
               this.outputPage.emit({ pageType: "submit"});
             }     
           }
@@ -628,7 +595,7 @@ export class LeadDataComponent implements OnInit {
       this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["/Lead/Lead/Paging"],{});
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_PAGING],{});
         });
     }
     this.editLeadObj = new LeadObj();

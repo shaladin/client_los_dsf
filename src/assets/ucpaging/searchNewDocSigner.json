@@ -74,7 +74,7 @@
             "position": "center",
             "property": "AppNo",
             "target": "_blank",
-            "path" : "/View/AppView", 
+            "path" : "VIEW_APP", 
             "param" : [ 
                 {
                     "type" : "AppId", 
@@ -105,7 +105,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Nap/AdminProcess/NewDocumentSigner/Detail",
+                    "path": "NAP_ADM_PRCS_NAP_CFNA_DOC_SIGNER_DETAIL",
                     "param": [
                         {
                             "type": "AppId",

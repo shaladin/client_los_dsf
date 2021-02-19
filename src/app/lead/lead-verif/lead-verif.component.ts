@@ -7,6 +7,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { Router } from '@angular/router';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-lead-verif',
@@ -65,7 +67,7 @@ export class LeadVerifComponent implements OnInit {
       }
     );
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/Lead/Verif']);
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_VERIF],{});
     });
   }
 }

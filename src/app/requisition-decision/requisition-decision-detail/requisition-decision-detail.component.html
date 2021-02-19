@@ -1,0 +1,318 @@
+<!-- First Detail -->
+<div class="container-fluid" *ngIf="!IsSecondDetail">
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+
+        <div class="card-head">
+          <div class="card-header header-title">
+            <div class="row">
+              <div class="col-md-8">
+                <h4 class="card-title" id="horz-layout-colored-controls" translate>
+                  REQUISITION DECISION DETAIL
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+  
+          <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)">
+          </lib-ucviewgeneric>
+  
+          <div class="px-3">
+            <lib-ucSubsection [id]="'ListOfAssetId'" [title]="'List Of Asset'" [panel]="'ListOfAsset'">
+            </lib-ucSubsection>
+            <div class="form-body" id="ListOfAsset">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th>
+                      <span class="thead-header" translate>Asset Seq No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>App Asset No</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Asset Name</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Asset Condition</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Decision</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Asset Otr Price</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Discount Asset</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Asset Price After Dicsount</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Supplier Branch Name</span>
+                    </th>
+                    <th>
+                      <span class="thead-header" translate>Action</span>
+                    </th>
+                  </tr>
+                </thead>
+  
+                <tbody>
+                  <tr *ngIf="ListOfAsset.length === 0">
+                    <td colspan="100%">No Data Available</td>
+                  </tr>
+                  <tr *ngFor="let item of ListOfAsset; let i = index">
+                    <td>{{item.AssetSeqNo}}</td>
+                    <td>
+                      <a [routerLink]="['/View/AppAsset']" target="_blank"
+                        [queryParams]="{ AppId: AppId, AppAssetId: item.AppAssetId }">
+                        {{item.AppAssetNo}}
+                      </a>
+                    </td>
+                    <td class="align-left">{{item.AssetName}}</td>
+                    <td class="align-left">{{item.AssetCondition}}</td>
+                    <td class="align-left">{{item.Decision}}</td>
+                    <td class="text-right">{{item.AssetPriceAmt | number:'1.2-2':'en-US'}}</td>
+                    <td class="text-right">{{item.DiscountAmt | number:'1.2-2':'en-US'}}</td>
+                    <td class="text-right">
+                      {{item.AssetPriceAmt - item.DiscountAmt | number:'1.2-2':'en-US'}}
+                    </td>
+                    <td class="align-left">{{item.SupplBranchName}}</td>
+                    <td>
+                      <a class="success p-0" (click)="ChangeDetail(i, item.AppAssetId)">
+                        <i class="ft-edit-2 font-medium-3 mr-2"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <lib-ucSubsection [id]="'SummDecisionId'" [title]="'Summary Decision'" [panel]="'SummDecision'">
+            </lib-ucSubsection>
+            <div class="form-body" id="SummDecision">
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Total Purchase Asset</label>
+                <label class="col-md-3 adins-label">{{TotalPurchaseAsset}}</label>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-3 adins-label">Total Use Existing Stock</label>
+                <label class="col-md-3 adins-label">{{TotalUseExistingStock}}</label>
+              </div>
+            </div>
+
+            <div class="text-right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" translate
+                (click)="CancelToPaging()">
+                <i class="fa fa-arrow-circle-left"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary" (click)="Submit()">
+                <i class="fa fa-arrow-circle-right"></i> Submit
+              </button>
+            </div>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Second Detail -->
+<div class="container-fluid" *ngIf="IsSecondDetail">
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+
+        <div class="card-head">
+          <div class="card-header header-title">
+            <div class="row">
+              <div class="col-md-8">
+                <h4 class="card-title" id="horz-layout-colored-controls" translate>
+                  REQUISITION DECISION ASSET DETAIL
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+  
+          <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)">
+          </lib-ucviewgeneric>
+  
+          <div class="px-3">
+            <form class="form form-horizontal" [formGroup]="ReqDecForm" #enjiForm="ngForm"
+              (ngSubmit)="ReqDecForm.valid && SaveForm()">
+
+              <lib-ucSubsection [id]="'AssetInfoId'" [title]="'Asset Information'" [panel]="'AssetInfo'">
+              </lib-ucSubsection>
+              <div class="form-body" id="AssetInfo">
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Asset No</label>
+                  <label class="col-md-3 adins-label">
+                    <a [routerLink]="['/View/AppAsset']" target="_blank"
+                      [queryParams]="{ AppId: AppId, AppAssetId: AppAssetId }">
+                      {{AssetInfoObj.AppAssetNo}}
+                    </a>
+                  </label>
+                </div>
+                
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Asset Name</label>
+                  <label class="col-md-3 adins-label">{{AssetInfoObj.AsetName}}</label>
+                </div>
+                
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Asset Condition</label>
+                  <label class="col-md-3 adins-label">{{AssetInfoObj.AssetCondition}}</label>
+                </div>
+                
+                <div class="form-group row">
+                  <label class="col-md-3 adins-required-label">Decision</label>
+                  <div class="col-md-3">
+                    <select class="form-control" formControlName="Decision" style="width: 100%;"
+                      (change)="OnChangedDdl($event)">
+                      <option value="PURCHASE">Purchase Asset</option>
+                      <option value="EXISTING" disabled>Use Existing Stock</option>
+                    </select>
+                    <lib-uc-show-errors [control]="ReqDecForm.controls.Decision"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+
+                <div *ngIf="IsExisting">
+                  <div class="form-group row">
+                    <label class="col-md-3 adins-label">Asset Number</label>
+                    <div class="col-md-3">
+                      <lib-uclookupgeneric [lookupInput]="InputLookupAssetObj"
+                        [identifier]="'lookupAsset'" [enjiForm]='enjiForm' [parentForm]='ReqDecForm'
+                        (lookup)="SetAsset($event)">
+                      </lib-uclookupgeneric>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group row">
+                    <label class="col-md-3 adins-label">Chasis No</label>
+                    <label class="col-md-3 adins-label">{{ChasisNo}}</label>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-3 adins-label">Engine No</label>
+                    <label class="col-md-3 adins-label">{{EngineNo}}</label>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-3 adins-label">License Plate No</label>
+                    <label class="col-md-3 adins-label">{{LicensePlateNo}}</label>
+                  </div>
+                </div>
+                
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Asset Usage</label>
+                  <label class="col-md-3 adins-label">{{AssetInfoObj.AssetUsage}}</label>
+                </div>
+                
+                <div class="form-group row">
+                  <label class="col-md-3 adins-required-label">Manufacturing Year</label>
+                  <div class="col-md-3">
+                    <input type="number" class="form-control" formControlName="ManYear"
+                      [ngClass]="{ 'border-danger': enjiForm.submitted && ReqDecForm.controls.ManYear.invalid }">
+                    <lib-uc-show-errors [control]="ReqDecForm.controls.ManYear"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">BPKB City Issuer</label>
+                  <label class="col-md-3 adins-label">{{AssetInfoObj.BpkbCityIssuer}}</label>
+                </div>
+                
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Color</label>
+                  <label class="col-md-3 adins-label">{{AssetInfoObj.Color}}</label>
+                </div>
+                
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Expected Delivery Date</label>
+                  <label class="col-md-3 adins-label">{{AssetInfoObj.ExpectedDlvryDt | date: 'dd-MMM-yyyy'}}</label>
+                </div>
+                
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Notes</label>
+                  <div class="col-md-3">
+                    <textarea cols="30" rows="3" class="form-control" formControlName="Notes">
+                    </textarea>
+                  </div>
+                </div>
+              </div>
+
+              <lib-ucSubsection [id]="'AssetAttrId'" [title]="'Asset Attribute'" [panel]="'AssetAttr'">
+              </lib-ucSubsection>
+              <div class="form-body" id="AssetAttr">
+                <div class="form-group row" *ngFor="let item of AttributeList">
+                  <label class="col-md-3 adins-label">{{item.AssetAttrName}}</label>
+                  <label class="col-md-3 adins-label">{{item.AttrValue}}</label>
+                </div>
+              </div>
+  
+              <lib-ucSubsection [id]="'AccessoriesId'" [title]="'Accessories'" [panel]="'Accessories'">
+              </lib-ucSubsection>
+              <div class="form-body" id="Accessories">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th>
+                        <span class="thead-header" translate>No</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Accessory Name</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Accessory Price</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Notes</span>
+                      </th>
+                    </tr>
+                  </thead>
+    
+                  <tbody>
+                    <tr *ngIf="AccessoriesList.length === 0">
+                      <td colspan="100%">No Data Available</td>
+                    </tr>
+                    <tr *ngFor="let item of AccessoriesList; let i = index">
+                      <td>{{i+1}}</td>
+                      <td class="align-left">{{item.AssetAccessoryName}}</td>
+                      <td class="text-right">{{item.AccessoryPriceAmt | number:'1.2-2':'en-US'}}</td>
+                      <td class="align-left">{{item.AccessoryNotes}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+  
+              <div class="form-actions right">
+                <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
+                  translate>
+                  <i class="fa fa-arrow-circle-left"></i> Cancel
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="fa fa-arrow-circle-right"></i> Save
+                </button>
+              </div>
+  
+            </form>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

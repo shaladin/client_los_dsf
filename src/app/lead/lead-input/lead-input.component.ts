@@ -6,6 +6,7 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-lead-input',
@@ -15,6 +16,8 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 export class LeadInputComponent implements OnInit {
   @ViewChild(UcpagingComponent) ucpaging;
   inputPagingObj: UcPagingObj;
+
+  readonly AddLink: string = NavigationConstant.LEAD_INPUT_MAIN_INFO;
   constructor(private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {

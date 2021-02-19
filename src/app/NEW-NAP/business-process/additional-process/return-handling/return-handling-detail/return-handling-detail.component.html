@@ -3,7 +3,7 @@
       <h4 class="card-title" translate> Return Handling </h4>
     </div>
     <div class="card-body">
-        <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
+        <app-app-main-info [AppId]="appId"></app-app-main-info>
         <div class="px-3">
             <form class="form form-horizontal" [formGroup]="ReturnHandlingForm" (ngSubmit)="ReturnHandlingForm.valid && AddTask()"
                 #enjiForm="ngForm">
@@ -85,7 +85,7 @@
                             </table>
                         </div>
                         <div class="form-actions right">
-                            <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Nap/AddProcess/ReturnHandling/Paging']" [queryParams]="{BizTemplateCode: lobCode}">
+                            <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode: lobCode}">
                               <i class="ft-x"></i> Cancel
                             </button>            
                             <button type="button" class="btn btn-raised btn-primary" (click)="SubmitAll()">

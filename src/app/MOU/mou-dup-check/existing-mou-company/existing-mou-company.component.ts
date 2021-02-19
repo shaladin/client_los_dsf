@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-existing-mou-company',
@@ -212,12 +213,12 @@ export class ExistingMouCompanyComponent implements OnInit {
     this.http.post(URLConstant.SubmitMouDupCheck, appDupCheckObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["Message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/Paging"],{});    
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DUP_CHECK_PAGING],{});
       });
   }
 
   Back() {
-    AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/Paging"],{});    
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DUP_CHECK_PAGING],{});
   }
 
   OpenView(key: string, value: number) {

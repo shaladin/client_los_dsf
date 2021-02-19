@@ -1,19 +1,19 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators, FormArray } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AppReservedFundObj } from 'app/shared/model/AppReservedFundObj.model';
 import { AllAppReservedFundObj } from 'app/shared/model/AllAppReservedFundObj.model';
-import { environment } from 'environments/environment';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: "reserved-fund",
@@ -62,7 +62,7 @@ export class ReservedFundComponent implements OnInit {
   maxAllocatedRefundAmt: number = 0;
   // totalExpenseAmt: number = 0;
 
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["WfTaskListId"] != null) {
         this.allAppReservedFundObj.WfTaskIdListId = params["WfTaskListId"];
@@ -109,7 +109,6 @@ export class ReservedFundComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN + "Max Allocated Amount");
       }
       else {
-        // var lobCode = localStorage.getItem(CommonConstant.USER_ACCESS);
         var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
         this.setAppReservedFundData();
         this.http.post(this.addEditRsvFundUrl, this.allAppReservedFundObj).subscribe(
@@ -118,7 +117,7 @@ export class ReservedFundComponent implements OnInit {
             if (this.allAppReservedFundObj.ReturnHandlingHId != 0 || this.allAppReservedFundObj.ReturnHandlingHId != undefined) {
               this.outputTab.emit(this.allAppReservedFundObj);
             } else {
-              AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CommissionReservedFund/Paging"],{ "BizTemplateCode": lobCode});
+              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ "BizTemplateCode": lobCode});
             }
           }
         );
@@ -283,9 +282,6 @@ export class ReservedFundComponent implements OnInit {
 
   calculated() {
     this.totalRsvFundAmt = 0;
-    var appObj = {
-      AppId: this.ReturnHandlingHObj.AppId,
-    };
     for (let i = 0; i < this.RsvForm.controls["ReservedFundObjs"].value.length; i++) {
       var temp: number = +this.RsvForm.controls["ReservedFundObjs"].value[i].ReservedFundAmt;
       //temp = this.RsvForm.controls["ReservedFundAmt" + i].value.replace(/\D/g, "");

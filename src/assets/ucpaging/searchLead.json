@@ -119,7 +119,7 @@
             "type" : "link",
             "position" : "center",
             "property" : "LeadNo",
-            "path" : "/View/Lead",
+            "path" : "VIEW_LEAD",
             "target": "_blank",
             "param" : [
                 {
@@ -159,7 +159,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Lead/LeadInput/MainInfo",
+                    "path": "LEAD_INPUT_MAIN_INFO",
                     "param": [
                         {
                             "type": "LeadId",

@@ -9,6 +9,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-purchase-order-detail',
@@ -35,6 +36,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
   lobCode: string;
   TaskListId: string;
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT;
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params["AgrmntId"] != null) {
@@ -149,7 +151,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     this.http.post(URLConstant.SubmitPurchaseOrder, POObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PurchaseOrder/PO"],{ "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT],{ "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId });
         
       });
   }

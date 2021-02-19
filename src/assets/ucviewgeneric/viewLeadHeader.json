@@ -11,7 +11,7 @@
           "label": "Lead No.",
           "property": "LeadNo",
           "name": "LeadNo",
-          "path": "/View/Lead",
+          "path": "VIEW_LEAD",
           "target" : "_blank",
           "param": [
             {

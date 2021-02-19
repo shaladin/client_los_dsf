@@ -6,13 +6,14 @@ import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { MouCustCompanyDataObj } from 'app/shared/model/MouCustCompanyDataObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-mou-cust-company-main',
@@ -57,15 +58,14 @@ export class MouCustCompanyMainComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params['mouCustId'];
     });
   }
 
   ngOnInit() {
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
     this.parentForm.addControl(this.identifier, this.fb.group({
@@ -77,7 +77,7 @@ export class MouCustCompanyMainComponent implements OnInit {
       MrCompanyTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
       NumOfEmp: [0],
       IsAffiliated: [false],
-      EstablishmentDt: ['',[Validators.required]],
+      EstablishmentDt: ['', [Validators.required]],
       TaxIdNo: ['', [Validators.required, Validators.maxLength(50)]],
       IsVip: [false]
     }));

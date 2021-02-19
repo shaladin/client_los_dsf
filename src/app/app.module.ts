@@ -32,6 +32,8 @@ import { RolePickService } from 'app/shared/rolepick/rolepick.service';
 import { GrowlModule } from 'primeng/primeng';
 import { TreeViewModule } from '@progress/kendo-angular-treeview';
 import { BackdoorComponent } from './backdoor/backdoor.component';
+import { CookieModule } from 'ngx-cookie';
+
 export function createTranslateLoader(http: HttpClient) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -67,6 +69,8 @@ export function createTranslateLoader(http: HttpClient) {
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyBr5_picK8YJK7fFR2CPzTVMj6GG1TtRGo'
         }),
+        CookieModule.forRoot(),
+        // CookieModule.forRoot({ path: "", secure: true, httpOnly: false, sameSite: "strict" }),
         StorageServiceModule,
         MatDialogModule,
         BrowserAnimationsModule,

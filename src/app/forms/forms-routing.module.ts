@@ -14,101 +14,102 @@ import { InputGroupsComponent } from './elements/input-groups/input-groups.compo
 import { InputGridComponent } from './elements/input-grid/input-grid.component';
 import { ArchwizardComponent } from './archwizard/archwizard.component';
 import { ReportComponent } from './report/report.component';
+import { PathConstant } from 'app/shared/constant/PathConstant';
 
 const routes: Routes = [
   {
     path: '',    
     children: [
       {
-        path: 'basic',
+        path: PathConstant.BASIC,
         component: BasicComponent,
         data: {
           title: 'Basic Forms'
         }
       },
       {
-        path: 'horizontal',
+        path: PathConstant.HORIZONTAL,
         component: HorizontalComponent,
         data: {
           title: 'Horizontal Forms'
         }
       },
       {
-        path: 'hidden-labels',
+        path: PathConstant.HIDDEN_LABELS,
         component: HiddenLabelsComponent,
         data: {
           title: 'Hidden Labels'
         }
       },
       {
-        path: 'form-actions',
+        path: PathConstant.FORM_ACTIONS,
         component: FormActionsComponent,
         data: {
           title: 'Form Actions'
         }
       },
       {
-        path: 'bordered',
+        path: PathConstant.BORDERED,
         component: BorderedComponent,
         data: {
           title: 'Bordered Forms'
         }
       },
       {
-        path: 'striped-rows',
+        path: PathConstant.STRIPED_ROWS,
         component: StripedRowsComponent,
         data: {
           title: 'Striped Rows'
         }
       },
       {
-        path: 'inputs',
+        path: PathConstant.INPUTS,
         component: InputsComponent,
         data: {
           title: 'Inputs'
         }
       },
       {
-        path: 'input-groups',
+        path: PathConstant.INPUT_GROUPS,
         component: InputGroupsComponent,
         data: {
           title: 'Input Groups'
         }
       },
       {
-        path: 'input-grid',
+        path: PathConstant.INPUT_GRID,
         component: InputGridComponent,
         data: {
           title: 'Input Grid'
         }
       },
       {
-        path: 'validation',
+        path: PathConstant.VALIDATION,
         component: ValidationFormsComponent,
         data: {
           title: 'Validation Forms'
         }
       }, 
       {
-        path: 'wizard',
+        path: PathConstant.WIZARD,
         component: WizardFormsComponent,
         data: {
           title: 'Wizard Forms'
         }
       },
       {
-        path: 'ngx',
+        path: PathConstant.NGX,
         loadChildren: './ngx-wizard/ngx-wizard.module#NGXFormWizardModule'
       },
       {
-        path: 'archwizard',
+        path: PathConstant.ARCHWIZARD,
         component: ArchwizardComponent,
         data: {
           title: 'Angular Wizard Forms'
         }
       },
       {
-        path: 'Report',
+        path: PathConstant.REPORT,
         component: ReportComponent,
         data: {
           title: 'Report'

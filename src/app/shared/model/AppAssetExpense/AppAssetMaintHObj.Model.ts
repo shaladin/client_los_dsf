@@ -8,6 +8,8 @@ export class AppAssetMaintHObj {
   ServiceObjs: Array<AppAssetMaintDObj>;
   SparepartObjs: Array<AppAssetMaintDObj>;
   RowVersion: string;
+  AppAssetMaintBehaviourCode: string;
+  IsAddable: boolean;
 
   constructor() {
     this.AppAssetId = 0;
@@ -16,7 +18,8 @@ export class AppAssetMaintHObj {
     this.TotalSparepartAmt = 0;
     this.ServiceObjs = new Array<AppAssetMaintDObj>();
     this.SparepartObjs = new Array<AppAssetMaintDObj>();
-
+    this.AppAssetMaintBehaviourCode = "";
+    this.IsAddable = false;
     this.RowVersion = "";
   }
 }

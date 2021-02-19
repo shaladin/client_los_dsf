@@ -5,33 +5,34 @@ import { ApplicationViewComponent } from './application-view/application-view.co
 import { InvoiceViewComponent } from '../business-process/admin-process/invoice/invoice-view/invoice-view.component';
 import { ViewCollateralDataComponent } from '../sharing-component/view-app-component/view-collateral-data/view-collateral-data.component';
 import { PurchaseOrderViewComponent } from './purchase-order-view/purchase-order-view.component';
+import { PathConstant } from 'app/shared/constant/PathConstant';
 const routes: Routes = [
   {
     path: '',
     children: [
       {
-        path: 'AppView',
+        path: PathConstant.APP_VIEW,
         component: ApplicationViewComponent,
         data: {
           title: 'Document'
         }
       },
       {
-        path: 'AppView/CollateralDataView',
+        path: PathConstant.APP_VIEW_COLL_DATA_VIEW,
         component: ViewCollateralDataComponent,
         data: {
           title: 'Document'
         }
       },
       {
-        path: 'AgrmntView',
+        path: PathConstant.AGRMNT_VIEW,
         component: AgreementViewContainerComponent,
         data: {
           title: 'Agreement View'
         }
       },
       {
-        path: 'POView',
+        path: PathConstant.PO_VIEW,
         component: PurchaseOrderViewComponent,
         data: {
           title: 'Purchase Order View'
