@@ -388,4 +388,8 @@ export class PathConstant {
     public static VIEW_FOU_SRVY_TASK = "Survey/SurveyTask";
     public static VIEW_FOU_SRVY_ORDER = "Survey/SurveyOrder";
     //#endregion
+
+    //#region FOU-View-Module
+    public static REQUISITION_DECISION = "requisitiondecision";
+    //#endregion
 }
