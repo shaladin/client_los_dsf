@@ -865,7 +865,6 @@ export class AssetDataComponent implements OnInit {
         }
       }
       else if(this.BizTemplateCode === "OPL") {
-        console.log("LALALA")
         this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
