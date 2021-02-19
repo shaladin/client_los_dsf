@@ -12,7 +12,7 @@
     <app-app-main-info [AppId]="appId" #viewAppMainInfo></app-app-main-info>
     <div class="card-body">
       <div class="px-3">
-        <lib-ucSubsection *ngIf="ReturnHandlingHId > 0" [id]="'formReturnInfoId'" [title]="'Credit Analysis'"
+        <lib-ucSubsection *ngIf="ReturnHandlingHId > 0" [id]="'formReturnInfoId'" [title]="'Return Handling'"
           [panel]="'formReturnInfo'">
         </lib-ucSubsection>
         <div class="form-body" *ngIf="ReturnHandlingHId > 0 && OnFormReturnInfo" [id]="'formReturnInfo'">
