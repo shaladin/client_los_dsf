@@ -40,7 +40,7 @@
     "@adins/ucsearch": "^2.0.52",
     "@adins/ucthingstodo": "^1.0.4",
     "@adins/ucupload": "^1.7.3",
-    "@adins/ucviewgeneric": "^2.0.63",
+    "@adins/ucviewgeneric": "^2.0.64",
     "@agm/core": "1.0.0-beta.5",
     "@angular/animations": "^7.2.16",
     "@angular/cdk": "^7.3.7",
