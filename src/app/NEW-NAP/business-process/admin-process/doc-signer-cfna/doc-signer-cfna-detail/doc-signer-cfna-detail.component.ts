@@ -43,6 +43,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
   BizTemplateCode: string;
   isHidden: boolean;
   isSupplierExists: boolean;
+  isViewReady: boolean = false;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_NAP_CFNA_DOC_SIGNER_PAGING;
   constructor(private fb: FormBuilder, private http: HttpClient,
