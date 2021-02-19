@@ -1303,10 +1303,12 @@ export class URLConstant {
   //Document Checklist
   public static SubmitDocChecklist = environment.losUrl + "/DocChecklist/SubmitDocChecklist";
   public static CreateRFADocChecklist = environment.losUrl + "/DocChecklist/CreateRFADocChecklist";
+
   // App Asset View
   public static GetListAppAssetAccessoryByAppAssetId = environment.losUrl + "/AppAssetView/GetListAppAssetAccessoryByAppAssetId";
   public static GetListAppAssetAccessoryAndAppAssetAttrByAppAssetId = environment.losUrl + "/AppAssetView/GetListAppAssetAccessoryAndAppAssetAttrByAppAssetId";
   public static GetAllAssetExpenseData = environment.losUrl + "/AppAssetView/GetAllAssetExpenseData";
+  public static GetListAllAssetExpenseData = environment.losUrl + "/AppAssetView/GetListAllAssetExpenseData";
   public static GetRentalCalculationData = environment.losUrl + "/AppAssetView/GetRentalCalculationData";  
   
   // App Review

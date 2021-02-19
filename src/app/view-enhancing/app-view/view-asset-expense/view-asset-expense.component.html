@@ -1,0 +1,66 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <lib-ucSubsection [id]="'assetDataId'" [title]="'List of Asset'" [panel]="'assetData'">
+        </lib-ucSubsection>
+        <div id="assetData">
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th>
+                  <span class="thead-header" translate>Asset Seq No</span>
+                </th>
+                <th>
+                  <span class="thead-header" translate>App Asset No</span>
+                </th>
+                <th class="text-left">
+                  <span class="thead-header" translate>Asset Name</span>
+                </th>
+                <th class="text-right">
+                  <span class="thead-header" translate>Insurance At Cost</span>
+                </th>
+                <th class="text-right">
+                  <span class="thead-header" translate>Maintenance At Cost</span>
+                </th>
+                <th class="text-right">
+                  <span class="thead-header" translate>Other Expense</span>
+                </th>
+                <th class="text-right">
+                  <span class="thead-header" translate>Fee Capitalized</span>
+                </th>
+                <th class="text-right">
+                  <span class="thead-header" translate>Total Asset Expense</span>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <td colspan="100%" *ngIf="listAsset.length === 0">No Data Available</td>
+              <tr *ngFor="let item of listAsset; let i = index">
+                <td>{{item.AssetSeqNo}}</td>
+                <td>
+                  <a [routerLink]="['/View/AppAsset']" target="_blank"
+                    [queryParams]="{ AppId: AppId, AppAssetId: item.AppAssetObj.AppAssetId }">
+                    {{item.AppAssetNo}}
+                  </a>
+                </td>
+                <td class="text-left">
+                  <a [routerLink]="['/View/AppAsset']" target="_blank"
+                    [queryParams]="{ AppId: AppId, AppAssetId: item.AppAssetObj.AppAssetId }">
+                    {{item.AssetName}} - {{item.Color}} - {{item.AssetCondition}}
+                  </a>
+                </td>
+                <td class="text-right">{{item.TotalInsuranceAmt | number:'.2':'en-US'}}</td>
+                <td class="text-right">{{item.TotalMaintenanceAmt | number:'.2':'en-US'}}</td>
+                <td class="text-right">{{item.TotalExpenseAmt | number:'.2':'en-US'}}</td>
+                <td class="text-right">{{item.TotalFeeAmt | number:'.2':'en-US'}}</td>
+                <td class="text-right">{{item.TotalAssetExpenseAmt | number:'.2':'en-US'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

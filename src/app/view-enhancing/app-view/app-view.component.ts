@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -54,7 +54,7 @@ export class AppViewComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private http: HttpClient,
-    private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
     })
@@ -76,8 +76,8 @@ export class AppViewComponent implements OnInit {
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
     var appObj = { AppId: this.AppId };
 
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj);
-    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj);
+    let getApp = this.http.post(URLConstant.GetAppById, appObj);
+    let getAppCust = this.http.post(URLConstant.GetAppCustByAppId, appObj);
 
     forkJoin([getApp, getAppCust]).subscribe(
       (response) => {

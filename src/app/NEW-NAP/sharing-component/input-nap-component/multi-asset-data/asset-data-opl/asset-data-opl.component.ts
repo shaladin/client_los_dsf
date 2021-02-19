@@ -342,6 +342,10 @@ export class AssetDataOplComponent implements OnInit {
     this.inputAddressObjForLoc.default = this.locationAddrObj;
     this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
 
+    this.AdminHeadObj = this.allAssetDataObj.AppAssetSupplEmpAdminObj;
+    this.SalesPersonObj = this.allAssetDataObj.AppAssetSupplEmpSalesObj;
+    this.BranchManagerObj = this.allAssetDataObj.AppAssetSupplEmpManagerObj;
+
     this.AssetDataForm.patchValue({
       MrAssetConditionCode: this.allAssetDataObj.AppAssetObj.MrAssetConditionCode,
       MrAssetUsageCode: this.allAssetDataObj.AppAssetObj.MrAssetUsageCode,
@@ -926,13 +930,13 @@ export class AssetDataOplComponent implements OnInit {
             this.allAssetDataObj.AppAssetObj.MrAssetUsageCode = this.appAssetObj.ResponseAppAssetObj.MrAssetUsageCode;
         
             this.allAssetDataObj.AppAssetObj.SupplName = this.appAssetObj.ResponseAppAssetObj.SupplName;
-            this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.appAssetObj.ResponseAppAssetObj.AssetPriceAmt;
+            this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.appAssetObj.ResponseAssetDataOplObj.AssetPriceBefDiscAmt;
             this.allAssetDataObj.AppAssetObj.AssetNotes = this.appAssetObj.ResponseAppAssetObj.AssetNotes;
             this.allAssetDataObj.AppAssetObj.Color = this.appAssetObj.ResponseAppAssetObj.Color;
             this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer;
             this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.appAssetObj.ResponseAppAssetObj.TaxIssueDt;
             this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.appAssetObj.ResponseAppAssetObj.ManufacturingYear;
-            this.allAssetDataObj.AppAssetObj.Discount = this.appAssetObj.ResponseAppAssetObj.DiscountAmt;
+            this.allAssetDataObj.AppAssetObj.Discount = this.appAssetObj.ResponseAssetDataOplObj.DiscountAmt;
 
             if(this.appAssetObj.ResponseAssetDataOplObj != null) {
               this.allAssetDataObj.AppAssetObj.ExpectedDelivDt = this.appAssetObj.ResponseAssetDataOplObj.ExpectedDeliveryDt;
@@ -970,17 +974,32 @@ export class AssetDataOplComponent implements OnInit {
               this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpNo;
               this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = this.appAssetObj.ResponseBranchManagerSupp.MrSupplEmpPositionCode;
             }
+            else {
+              this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = "";
+              this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = "";
+              this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = "";
+            }
 
             if (this.appAssetObj.ResponseAdminHeadSupp != null) {
               this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = this.appAssetObj.ResponseAdminHeadSupp.SupplEmpName;
               this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = this.appAssetObj.ResponseAdminHeadSupp.SupplEmpNo;
               this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = this.appAssetObj.ResponseAdminHeadSupp.MrSupplEmpPositionCode;
             }
+            else {
+              this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = "";
+              this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = "";
+              this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = "";
+            }
 
             if (this.appAssetObj.ResponseSalesPersonSupp != null) {
               this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.appAssetObj.ResponseSalesPersonSupp.SupplEmpName;
               this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.appAssetObj.ResponseSalesPersonSupp.SupplEmpNo;
               this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = this.appAssetObj.ResponseSalesPersonSupp.MrSupplEmpPositionCode;
+            }
+            else {
+              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = "";
+              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = "";
+              this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = "";
             }
 
             this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer;

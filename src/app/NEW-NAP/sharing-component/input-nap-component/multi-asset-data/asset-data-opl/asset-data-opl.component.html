@@ -41,7 +41,7 @@
                   <tbody>
                     <td colspan="100%" *ngIf="listAsset.length === 0">No Data Available</td>
                     <tr *ngFor="let item of listAsset; let i = index">
-                      <td>{{i + 1}}</td>
+                      <td>{{item.AppAssetObj.AssetSeqNo}}</td>
                       <td class="text-left">{{item.AppAssetObj.FullAssetName}}</td>
                       <td class="text-right">{{item.AppAssetObj.AssetPriceAmt | number:'.2':'en-US'}}</td>
                       <td class="text-right">{{item.AppAssetObj.Discount | number:'.2':'en-US'}}</td>
