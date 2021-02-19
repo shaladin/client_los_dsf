@@ -368,5 +368,11 @@ export class ApplicationReviewDetailComponent implements OnInit {
     }
     return AppCrdRvwDObjs;
   }
+
+  GetCallBack(ev) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+    }
+  }
   //#endregion
 }
