@@ -17,6 +17,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from '../../../../../../environments/environment';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-asset-allocation-detail',
@@ -32,9 +33,9 @@ export class AssetAllocationDetailComponent implements OnInit {
   InputLookupAssetNumberObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   ListUsedAssetNumber: any;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-
+  requisitionList: any;
   constructor(private fb: FormBuilder, private http: HttpClient,
-    private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
+    private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params['AppId'];
       this.TaskListId = params['TaskListId'];
@@ -65,7 +66,7 @@ export class AssetAllocationDetailComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.TaskListId;
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
