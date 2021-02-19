@@ -168,5 +168,11 @@ export class ApplicationApprovalDetailComponent implements OnInit {
   onCancelClick() {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
   }
+
+  GetCallBack(ev) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+    }
+  }
   //#endregion
 }
