@@ -1,4 +1,4 @@
-import { Routes, RouterModule } from '@angular/router';
+import { Routes } from '@angular/router';
 import { BackdoorComponent } from 'app/backdoor/backdoor.component';
 import { PathConstant } from '../constant/PathConstant';
 
@@ -57,7 +57,7 @@ export const Full_ROUTES: Routes = [
     }
   },
   {
-    path: 'requisitiondecision',
+    path: PathConstant.REQUISITION_DECISION,
     loadChildren: './requisition-decision/requisition-decision.module#RequisitionDecisionModule'
   }
 ];
