@@ -552,6 +552,7 @@ export class CommonConstant {
 
   //CHARACTERISTIC OF CREDIT
   public static CharacteristicOfCreditTypeCredit = "CREDIT";
+  public static CharacteristicOfCreditTypeOther = "OTHER";
 
   //GENERAL SETTING
   public static GSCodeDefLocalNationality = "DEF_LOCAL_NATIONALITY";
