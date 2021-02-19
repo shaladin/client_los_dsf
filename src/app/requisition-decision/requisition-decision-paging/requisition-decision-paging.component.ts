@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-requisition-decision-paging',
@@ -54,7 +55,7 @@ export class RequisitionDecisionPagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.RowObj.ProdOfferingCode, event.RowObj.ProdOfferingVersion);
     }
     if (event.Key == "Edit") {
-      AdInsHelper.RedirectUrl(this.router,["requisitiondecision/detail"], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.REQUISITION_DECISION_DETAIL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
     }
   }
 }

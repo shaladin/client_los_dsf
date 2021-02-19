@@ -377,10 +377,20 @@ export class ApplicationDataComponent implements OnInit {
         var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems[code] = objTemp;
         if (code == CommonConstant.RefMasterTypeCodeCharacteristicCredit && this.NapAppModelForm.value.CharaCredit == "") {
-          this.NapAppModelForm.patchValue({
-            CharaCredit: this.applicationDDLitems['CHARACTERISTIC_OF_CREDIT'][1].Key,
-            MrSlikSecEcoCode: this.defaultSlikSecEcoCode
-          });
+          if(this.BizTemplateCode == CommonConstant.OPL){
+            this.NapAppModelForm.patchValue({
+              CharaCredit: CommonConstant.CharacteristicOfCreditTypeOther,
+              MrSlikSecEcoCode: this.defaultSlikSecEcoCode
+            });
+            this.NapAppModelForm.controls.CharaCredit.disable();
+            this.NapAppModelForm.controls.CharaCredit.updateValueAndValidity();
+          }
+          else{
+            this.NapAppModelForm.patchValue({
+              CharaCredit: this.applicationDDLitems['CHARACTERISTIC_OF_CREDIT'][1].Key,
+              MrSlikSecEcoCode: this.defaultSlikSecEcoCode
+            });
+          }
         }
       });
   }

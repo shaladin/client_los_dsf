@@ -1,1 +1,1 @@
-<lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
+<lib-ucviewgeneric *ngIf="isViewReady" [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>

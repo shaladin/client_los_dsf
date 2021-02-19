@@ -37,6 +37,8 @@ export class PathConstant {
     public static NAP_FROM_MOU = "NapFromMou";
     public static NAP1_FROM_LEAD = "Nap1FromLead";
     public static COMM_RSV_FUND = "CommissionReservedFund";
+    public static PAGING_LOWERCASE = "paging";
+    public static DETAIL_LOWERCASE = "detail";
     //#endregion
 
     //#region Form-Module
@@ -176,6 +178,9 @@ export class PathConstant {
     public static PGL = "PreGoLive";
     public static PGL_PAGING = PathConstant.PGL + "/" + PathConstant.PAGING;
     public static PGL_DETAIL = PathConstant.PGL + "/" + PathConstant.DETAIL;
+    public static PGL_OPL = "pregoliveopl";
+    public static PGL_OPL_PAGING = PathConstant.PGL_OPL + "/" + PathConstant.PAGING_LOWERCASE;
+    public static PGL_OPL_DETAIL = PathConstant.PGL_OPL + "/" + PathConstant.DETAIL_LOWERCASE;
     public static PGL_REQ_APPRVL = PathConstant.PGL + "/RequestApproval";
     public static PGL_APPRVL_PAGING = PathConstant.PGL + "/" + PathConstant.APPRV + "/" + PathConstant.PAGING;
     public static PGL_APPRVL_DETAIL = PathConstant.PGL + "/" + PathConstant.APPRV + "/" + PathConstant.DETAIL;
@@ -264,6 +269,9 @@ export class PathConstant {
     public static APP_RVW = "ApplicationReview";
     public static APP_RVW_PAGING = PathConstant.APP_RVW + "/" + PathConstant.PAGING;
     public static APP_RVW_DETAIL = PathConstant.APP_RVW + "/" + PathConstant.DETAIL;
+    public static APP_APPRV = "ApplicationApproval";
+    public static APP_APPRV_PAGING = PathConstant.APP_APPRV + "/" + PathConstant.PAGING;
+    public static APP_APPRV_DETAIL = PathConstant.APP_APPRV + "/" + PathConstant.DETAIL;
     //#endregion
 
     //#region MOU-Module
@@ -382,5 +390,9 @@ export class PathConstant {
     public static VIEW_FOU_VENDOR_BRANCH = "Vendor/VendorBranch";
     public static VIEW_FOU_SRVY_TASK = "Survey/SurveyTask";
     public static VIEW_FOU_SRVY_ORDER = "Survey/SurveyOrder";
+    //#endregion
+
+    //#region FOU-View-Module
+    public static REQUISITION_DECISION = "requisitiondecision";
     //#endregion
 }

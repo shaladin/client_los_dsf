@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div class="col-md-12" *ngIf="BizTemplateCode !== 'OPL'">
   <div class="card">
     <div class="card-body">
       <div class="px-3">
@@ -257,6 +257,65 @@
             <label class="col-md-4  adinslabel" translate
               *ngIf="AppAssetObj?.ResponseAppCollateralRegistrationObj?.LocationZipcode">{{this.AppAssetObj.ResponseAppCollateralRegistrationObj.LocationZipcode}}</label>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-12" *ngIf="BizTemplateCode === 'OPL'">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <lib-ucSubsection [id]="'assetDataId'" [title]="'List of Asset'" [panel]="'assetData'">
+        </lib-ucSubsection>
+        <div id="assetData">
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th>
+                  <span class="thead-header" translate>Asset Seq No</span>
+                </th>
+                <th>
+                  <span class="thead-header" translate>App Asset No</span>
+                </th>
+                <th class="text-left">
+                  <span class="thead-header" translate>Asset Name</span>
+                </th>
+                <th class="text-right">
+                  <span class="thead-header" translate>Asset Price</span>
+                </th>
+                <th class="text-right">
+                  <span class="thead-header" translate>Discount</span>
+                </th>
+                <th class="text-right">
+                  <span class="thead-header" translate>Asset Price After Discount</span>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <td colspan="100%" *ngIf="listAsset.length === 0">No Data Available</td>
+              <tr *ngFor="let item of listAsset; let i = index">
+                <td>{{item.AppAssetObj.AssetSeqNo}}</td>
+                <td>
+                  <a [routerLink]="['/View/AppAsset']" target="_blank"
+                    [queryParams]="{ AppId: AppId, AppAssetId: item.AppAssetObj.AppAssetId }">
+                    {{item.AppAssetObj.AppAssetNo}}
+                  </a>
+                </td>
+                <td class="text-left">
+                  <a [routerLink]="['/View/AppAsset']" target="_blank"
+                    [queryParams]="{ AppId: AppId, AppAssetId: item.AppAssetObj.AppAssetId }">
+                    {{item.AppAssetObj.FullAssetName}} - {{item.AppAssetObj.Color}} - {{item.AppAssetObj.MrAssetConditionCode}}
+                  </a>
+                </td>
+                <td class="text-right">{{item.AppAssetObj.AssetPriceAmt | number:'.2':'en-US'}}</td>
+                <td class="text-right">{{item.AppAssetObj.Discount | number:'.2':'en-US'}}</td>
+                <td class="text-right">{{item.AppAssetObj.AssetPriceAmt - item.AppAssetObj.Discount | number:'.2':'en-US'}}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

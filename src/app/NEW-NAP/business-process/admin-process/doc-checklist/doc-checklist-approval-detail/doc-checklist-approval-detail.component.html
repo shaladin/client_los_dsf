@@ -4,7 +4,7 @@
       <div class="card-body">
         <div class="px-3">
           <!-- diubah ke yang dulu karena view nya beda, ini mesti diperbaikin jadi pake view generic -->
-          <!-- <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info> -->
+          <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"> </lib-ucviewgeneric>
           <lib-ucSubsection [id]="'tcId'" [title]="'Terms & Conditions'"
                             [panel]="'tc'">
           </lib-ucSubsection>

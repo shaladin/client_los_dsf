@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-app-tc',
@@ -10,16 +10,21 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   styleUrls: []
 })
 export class AppTcComponent implements OnInit {
-
-  @Input() AppId;
+  @Input() AppId: number;
+  @Input() BizTemplateCode: string;
   inputGridObj: InputGridObj;
+
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
-    this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppTc.json";
+    if(this.BizTemplateCode === CommonConstant.OPL) {
+      this.inputGridObj.pagingJson = "./assets/ucgridview/app-view/opl/grid-app-tc-opl.json";
+    }
+    else {
+      this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppTc.json";
+    }
 
-    
     var AppObj = {
       AppId: this.AppId
     }
@@ -31,7 +36,7 @@ export class AppTcComponent implements OnInit {
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response["AppTcs"]
-      });
+      }
+    );
   }
-
 }
