@@ -160,7 +160,8 @@ export const customCurrencyMaskConfig = {
     AssetExpenseAddEditComponent,
     AssetOplMainInfoComponent,
     FinancialDataOplEditComponent,
-    FinancialDataOplComponent
+    FinancialDataOplComponent,
+    AssetDataOplComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,

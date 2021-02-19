@@ -17,6 +17,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class AgrmntFinancialComponent implements OnInit {
 
   @Input() AgrmntId: any;
+  @Input() BizTemplateCode: string = "";
+  
   listSubsidy: Array<AgrmntSubsidyObj> = new Array<AgrmntSubsidyObj>();
   listAgrmntFeeObj : Array<AgrmntFeeObj> = new Array<AgrmntFeeObj>();
   agrmntFinDataObj : AgrmntFinDataObj = new AgrmntFinDataObj();

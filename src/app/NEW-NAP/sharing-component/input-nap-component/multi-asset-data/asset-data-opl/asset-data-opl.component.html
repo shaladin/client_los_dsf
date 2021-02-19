@@ -41,7 +41,7 @@
                   <tbody>
                     <td colspan="100%" *ngIf="listAsset.length === 0">No Data Available</td>
                     <tr *ngFor="let item of listAsset; let i = index">
-                      <td>{{i + 1}}</td>
+                      <td>{{item.AppAssetObj.AssetSeqNo}}</td>
                       <td class="text-left">{{item.AppAssetObj.FullAssetName}}</td>
                       <td class="text-right">{{item.AppAssetObj.AssetPriceAmt | number:'.2':'en-US'}}</td>
                       <td class="text-right">{{item.AppAssetObj.Discount | number:'.2':'en-US'}}</td>
@@ -66,7 +66,7 @@
                   <div class="col-md-2">
                     <select class="form-control" style="width: inherit" (change)="ChangeAssetName($event.target.value)">
                       <option *ngFor="let item of listAsset; let i = index" [value]="i">
-                        {{item.AppAssetObj.FullAssetName}}
+                        {{item.AppAssetObj.AssetSeqNo}} - {{item.AppAssetObj.FullAssetName}}
                       </option>
                     </select>
                   </div>
@@ -262,9 +262,11 @@
   
                   <div class="col-md-6">
                     <div class="form-group row">
-                      <label class="col-md-4 adins-label" translate>Expected Delivery Date</label>
+                      <label class="col-md-4 adins-required-label" translate>Expected Delivery Date</label>
                       <div class="col-md-8">
                         <input type="date" class="form-control adInsInput" formControlName="ExpectedDelivDt">
+                        <lib-uc-show-errors [control]="AssetDataForm.controls.ExpectedDelivDt"
+                          [submit]="enjiForm.submitted"></lib-uc-show-errors>
                       </div>
                     </div>
                   </div>

@@ -10,10 +10,10 @@ export const ROUTES: RouteInfo[] = [
       { Path: '/Nap/MainData/NAP2/Paging', Title: 'New Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
       { Path: '/Nap/ApplicationProcess/ApplicationReview/Paging', Title: 'Application Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
       { Path: '/Nap/ApplicationProcess/ApplicationApproval/Paging', Title: 'Application Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
-      { Path: '/requisitiondecision/paging', Title: 'Requisition Decision', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
-      { Path: '/Nap/AdminProcess/pregoliveopl/paging', Title: 'Pre Golive', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }]},
-      { Path: '/Inquiry/AppInquiry', Title: 'Application Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
-      { Path: '/Inquiry/PurchaseTrackingInquiry', Title: 'Purchase Tracking Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+      { Path: NavigationConstant.REQUISITION_DECISION_PAGING, Title: 'Requisition Decision', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+      { Path: NavigationConstant.NAP_ADM_PRCS_PGL_OPL_PAGING, Title: 'Pre Golive', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }]},
+      { Path: NavigationConstant.APP_INQUIRY, Title: 'Application Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+      { Path: NavigationConstant.PURCHASE_TRACKING_INQUIRY, Title: 'Purchase Tracking Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
     ], Params: []
   },
   {

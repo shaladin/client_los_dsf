@@ -4,6 +4,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
@@ -102,7 +104,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   }
 
   CancelToPaging() {
-    AdInsHelper.RedirectUrl(this.router, ["requisitiondecision/paging"], { BizTemplateCode: "OPL" });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.REQUISITION_DECISION_PAGING], { BizTemplateCode: CommonConstant.OPL });
   }
 
   Submit() {
@@ -118,7 +120,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
       this.http.post(URLConstant.SubmitRequisitionDecision, requestRequisitionDecisionObj).subscribe(
         (response) => {
           this.toastr.successMessage("Submit Requisition Decision Success");
-          this.router.navigate(['../paging'], { relativeTo: this.route });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.REQUISITION_DECISION_PAGING], { BizTemplateCode: CommonConstant.OPL });
         }
       );
     }
