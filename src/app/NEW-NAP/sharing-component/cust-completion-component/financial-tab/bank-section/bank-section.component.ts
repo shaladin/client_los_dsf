@@ -90,6 +90,7 @@ export class BankSectionComponent implements OnInit {
       case "Add":
         this.IsDetail = true;
         this.Mode = "Add";
+        this.CheckDefault();
         break;
       case "Edit":
         this.IsDetail = true;
@@ -109,6 +110,18 @@ export class BankSectionComponent implements OnInit {
     this.OutputObj.emit({ Key: 'IsDetail', Value: this.IsDetail });
   }
 
+  CheckDefault(){
+    if(this.BankAccStmntForm.controls.IsDefault.value){
+      this.BankAccStmntForm.patchValue({
+        IsActive : true
+      });
+      this.BankAccStmntForm.controls.IsActive.disable();
+    }
+    else{
+      this.BankAccStmntForm.controls.IsActive.enable();
+    }
+  }
+
   SetForEdit(BankAccAndStmntObj: AppCustBankAccObj) {
     this.InputLookupBankObj.nameSelect = BankAccAndStmntObj.BankName;
     this.InputLookupBankObj.jsonSelect = { BankName: BankAccAndStmntObj.BankName };
@@ -123,6 +136,8 @@ export class BankSectionComponent implements OnInit {
       IsDefault: BankAccAndStmntObj.IsDefault,
       IsActive: BankAccAndStmntObj.IsActive,
     })
+
+    this.CheckDefault();
 
     if (BankAccAndStmntObj.AppCustBankStmntObjs != undefined) {
       var bankStmnObjs = this.BankAccStmntForm.controls['BankStmntObjs'] as FormArray;
@@ -243,11 +258,6 @@ export class BankSectionComponent implements OnInit {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var bankStmnObjs = this.BankAccStmntForm.controls['BankStmntObjs'] as FormArray;
       bankStmnObjs.removeAt(index);
-
-      this.http.post(URLConstant.DeleteAppCustBankStmnt, this.AppCustBankStmntList[index]).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-        });
     }
   }
 
