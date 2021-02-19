@@ -39,7 +39,7 @@ export class BankSectionComponent implements OnInit {
     BankCode: [''],
     BankBranch: ['', Validators.required],
     BankAccName: ['', Validators.required],
-    BankAccNo: ['', Validators.required],
+    BankAccNo: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     IsDefault: [false],
     IsActive: [false],
     BankStmntObjs: this.fb.array([])
@@ -158,10 +158,10 @@ export class BankSectionComponent implements OnInit {
       this.InputLookupBankObj.isRequired = true;
       this.BankAccStmntForm.controls.BankBranch.setValidators([Validators.required]);
       this.BankAccStmntForm.controls.BankAccName.setValidators([Validators.required]);
-      this.BankAccStmntForm.controls.BankAccNo.setValidators([Validators.required]);
+      this.BankAccStmntForm.controls.BankAccNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       for (let i = 0; i < this.BankAccStmntForm.controls.BankStmntObjs["controls"].length; i++) {
         this.BankAccStmntForm.controls.BankStmntObjs["controls"][i]["controls"]["Month"].setValidators([Validators.required]);
-        this.BankAccStmntForm.controls.BankStmntObjs["controls"][i]["controls"]["Year"].setValidators([Validators.required]);
+        this.BankAccStmntForm.controls.BankStmntObjs["controls"][i]["controls"]["Year"].setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.maxLength(4)]);
         this.BankAccStmntForm.controls.BankStmntObjs["controls"][i]["controls"]["DebitAmt"].setValidators([Validators.required]);
         this.BankAccStmntForm.controls.BankStmntObjs["controls"][i]["controls"]["CreditAmt"].setValidators([Validators.required]);
         this.BankAccStmntForm.controls.BankStmntObjs["controls"][i]["controls"]["BalanceAmt"].setValidators([Validators.required]);
@@ -265,6 +265,14 @@ export class BankSectionComponent implements OnInit {
       this.ListBankStmntObj.push(this.BankStmntObj)
     }
 
+    for (let i = 0; i < this.ListBankStmntObj.length; i++) {
+      for (let j = i + 1; j < this.ListBankStmntObj.length; j++) {
+        if (this.ListBankStmntObj[i]["Month"] == this.ListBankStmntObj[j]["Month"] && this.ListBankStmntObj[i]["Year"] == this.ListBankStmntObj[j]["Year"]) {
+          this.toastr.errorMessage(ExceptionConstant.STATEMENT_WITH_SAME_MONTH_AND_YEAR);
+          return;
+        }
+      }
+    }
     var reqObj = {
       BankAccObj: this.BankAccObj,
       ListBankStmntObj: this.ListBankStmntObj

@@ -33,19 +33,19 @@
                 <thead>
                   <tr class="table-header">
                     <th style="text-align: left;">
-                      <span class="thead-header" name='month' translate>MONTH</span>
+                      <span name='month' translate>MONTH</span>
                     </th>
                     <th style="text-align: left;">
-                      <span class="thead-header" name='year' translate>YEAR</span>
+                      <span name='year' translate>YEAR</span>
                     </th>
                     <th style="text-align: left;">
-                      <span class="thead-header" name='debit' translate>DEBIT (-)</span>
+                      <span name='debit' translate>DEBIT (-)</span>
                     </th>
                     <th style="text-align: left;">
-                      <span class="thead-header" name='credit' translate>CREDIT (+)</span>
+                      <span name='credit' translate>CREDIT (+)</span>
                     </th>
                     <th style="text-align: left;">
-                      <span class="thead-header" name='endingBalance' translate>ENDING BALANCE</span>
+                      <span name='endingBalance' translate>ENDING BALANCE</span>
                     </th>
                   </tr>
                 </thead>
@@ -101,9 +101,8 @@
               <label class="col-md-4 adins-required-label" translate>Account No</label>
               <div class="col-md-8">
                 <input type="text" class="form-control" formControlName="BankAccNo"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls.BankAccNo.invalid}">
-                <lib-uc-show-errors [control]="BankAccStmntForm.controls.BankAccNo" [submit]="enjiForm.submitted">
-                </lib-uc-show-errors>
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls.BankAccNo.invalid }">
+                <lib-uc-show-errors [control]="BankAccStmntForm.controls.BankAccNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
               </div>
             </div>
             <div class="form-group row">
