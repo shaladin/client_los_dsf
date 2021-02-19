@@ -1313,6 +1313,7 @@ export class URLConstant {
   
   // App Review
   public static GetAppRvwSummaryAsset = environment.losUrl + "/ApplicationReview/GetAppRvwSummaryAsset";
+  public static GetApprovalAmount = environment.losUrl + "/ApplicationReview/GetApprovalAmount";
   
   // Requisition Decision
   public static SaveRequisitionDecision = environment.losUrl + "/RequisitionDecision/SaveRequisitionDecision";

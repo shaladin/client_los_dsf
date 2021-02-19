@@ -141,7 +141,7 @@ export class AssetDataOplComponent implements OnInit {
     TaxCityIssuer: [''],
     TaxIssueDt: [''],
     Discount: [0],
-    ExpectedDelivDt: [],
+    ExpectedDelivDt: ['', Validators.required],
     IsNeedReplacementCar: [false],
     ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
 
@@ -913,6 +913,7 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   async getListAllAssetData() {
+    console.log("test");
     this.appData = new AppDataObj();
     this.appData.AppId = this.AppId;
     await this.http.post(URLConstant.GetListAllAssetDataByAppId, this.appData).toPromise().then(
@@ -923,56 +924,56 @@ export class AssetDataOplComponent implements OnInit {
           for(let i = 0; i < this.appAssetObj.length; i++) {
             this.allAssetDataObj = new AllAssetDataObj();
 
-            this.allAssetDataObj.AppAssetObj.AppAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
-            this.allAssetDataObj.AppAssetObj.AppId = this.appAssetObj.ResponseAppAssetObj.AppId;
-            this.allAssetDataObj.AppAssetObj.FullAssetName = this.appAssetObj.ResponseAppAssetObj.FullAssetName;
-            this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.appAssetObj.ResponseAppAssetObj.MrAssetConditionCode;
-            this.allAssetDataObj.AppAssetObj.MrAssetUsageCode = this.appAssetObj.ResponseAppAssetObj.MrAssetUsageCode;
-        
-            this.allAssetDataObj.AppAssetObj.SupplName = this.appAssetObj.ResponseAppAssetObj.SupplName;
-            this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.appAssetObj.ResponseAssetDataOplObj.AssetPriceBefDiscAmt;
-            this.allAssetDataObj.AppAssetObj.AssetNotes = this.appAssetObj.ResponseAppAssetObj.AssetNotes;
-            this.allAssetDataObj.AppAssetObj.Color = this.appAssetObj.ResponseAppAssetObj.Color;
-            this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer;
-            this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.appAssetObj.ResponseAppAssetObj.TaxIssueDt;
-            this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.appAssetObj.ResponseAppAssetObj.ManufacturingYear;
-            this.allAssetDataObj.AppAssetObj.Discount = this.appAssetObj.ResponseAssetDataOplObj.DiscountAmt;
+            this.allAssetDataObj.AppAssetObj.AppAssetId = this.appAssetObj[i].ResponseAppAssetObj.AppAssetId;
+            this.allAssetDataObj.AppAssetObj.AppId = this.appAssetObj[i].ResponseAppAssetObj.AppId;
+            this.allAssetDataObj.AppAssetObj.FullAssetName = this.appAssetObj[i].ResponseAppAssetObj.FullAssetName;
+            this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.appAssetObj[i].ResponseAppAssetObj.MrAssetConditionCode;
+            this.allAssetDataObj.AppAssetObj.MrAssetUsageCode = this.appAssetObj[i].ResponseAppAssetObj.MrAssetUsageCode;
 
-            if(this.appAssetObj.ResponseAssetDataOplObj != null) {
-              this.allAssetDataObj.AppAssetObj.ExpectedDelivDt = this.appAssetObj.ResponseAssetDataOplObj.ExpectedDeliveryDt;
-              this.allAssetDataObj.AppAssetObj.IsNeedReplacementCar = this.appAssetObj.ResponseAssetDataOplObj.IsNeedReplacementCar;
+            this.allAssetDataObj.AppAssetObj.SupplName = this.appAssetObj[i].ResponseAppAssetObj.SupplName;
+            this.allAssetDataObj.AppAssetObj.AssetNotes = this.appAssetObj[i].ResponseAppAssetObj.AssetNotes;
+            this.allAssetDataObj.AppAssetObj.Color = this.appAssetObj[i].ResponseAppAssetObj.Color;
+            this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.appAssetObj[i].ResponseAppAssetObj.TaxCityIssuer;
+            this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.appAssetObj[i].ResponseAppAssetObj.TaxIssueDt;
+            this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.appAssetObj[i].ResponseAppAssetObj.ManufacturingYear;
 
-              this.allAssetDataObj.AppCollateralRegistrationObj.DelivAddr = this.appAssetObj.ResponseAssetDataOplObj.DlvryAddr;
-              this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode1 = this.appAssetObj.ResponseAssetDataOplObj.DlvryAreaCode1;
-              this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode2 = this.appAssetObj.ResponseAssetDataOplObj.DlvryAreaCode2;
-              this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode3 = this.appAssetObj.ResponseAssetDataOplObj.DlvryAreaCode3;
-              this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode4 = this.appAssetObj.ResponseAssetDataOplObj.DlvryAreaCode4;
-              this.allAssetDataObj.AppCollateralRegistrationObj.DelivCity = this.appAssetObj.ResponseAssetDataOplObj.DlvryCity;
-              this.allAssetDataObj.AppCollateralRegistrationObj.DelivZipcode = this.appAssetObj.ResponseAssetDataOplObj.DlvryZipcode;
+            if(this.appAssetObj[i].ResponseAssetDataOplObj != null) {
+              this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.appAssetObj[i].ResponseAssetDataOplObj.AssetPriceBefDiscAmt;
+              this.allAssetDataObj.AppAssetObj.Discount = this.appAssetObj[i].ResponseAssetDataOplObj.DiscountAmt;
+              this.allAssetDataObj.AppAssetObj.ExpectedDelivDt = this.appAssetObj[i].ResponseAssetDataOplObj.ExpectedDeliveryDt;
+              this.allAssetDataObj.AppAssetObj.IsNeedReplacementCar = this.appAssetObj[i].ResponseAssetDataOplObj.IsNeedReplacementCar;
+
+              this.allAssetDataObj.AppCollateralRegistrationObj.DelivAddr = this.appAssetObj[i].ResponseAssetDataOplObj.DlvryAddr;
+              this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode1 = this.appAssetObj[i].ResponseAssetDataOplObj.DlvryAreaCode1;
+              this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode2 = this.appAssetObj[i].ResponseAssetDataOplObj.DlvryAreaCode2;
+              this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode3 = this.appAssetObj[i].ResponseAssetDataOplObj.DlvryAreaCode3;
+              this.allAssetDataObj.AppCollateralRegistrationObj.DelivAreaCode4 = this.appAssetObj[i].ResponseAssetDataOplObj.DlvryAreaCode4;
+              this.allAssetDataObj.AppCollateralRegistrationObj.DelivCity = this.appAssetObj[i].ResponseAssetDataOplObj.DlvryCity;
+              this.allAssetDataObj.AppCollateralRegistrationObj.DelivZipcode = this.appAssetObj[i].ResponseAssetDataOplObj.DlvryZipcode;
               
-              this.allAssetDataObj.AppCollateralRegistrationObj.LocationAddr = this.appAssetObj.ResponseAssetDataOplObj.LocationAddr;
-              this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode1 = this.appAssetObj.ResponseAssetDataOplObj.LocationAreaCode1;
-              this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode2 = this.appAssetObj.ResponseAssetDataOplObj.LocationAreaCode2;
-              this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode3 = this.appAssetObj.ResponseAssetDataOplObj.LocationAreaCode3;
-              this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode4 = this.appAssetObj.ResponseAssetDataOplObj.LocationAreaCode4;
-              this.allAssetDataObj.AppCollateralRegistrationObj.LocationCity = this.appAssetObj.ResponseAssetDataOplObj.LocationCity;
-              this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode = this.appAssetObj.ResponseAssetDataOplObj.LocationZipcode;
+              this.allAssetDataObj.AppCollateralRegistrationObj.LocationAddr = this.appAssetObj[i].ResponseAssetDataOplObj.LocationAddr;
+              this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode1 = this.appAssetObj[i].ResponseAssetDataOplObj.LocationAreaCode1;
+              this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode2 = this.appAssetObj[i].ResponseAssetDataOplObj.LocationAreaCode2;
+              this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode3 = this.appAssetObj[i].ResponseAssetDataOplObj.LocationAreaCode3;
+              this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode4 = this.appAssetObj[i].ResponseAssetDataOplObj.LocationAreaCode4;
+              this.allAssetDataObj.AppCollateralRegistrationObj.LocationCity = this.appAssetObj[i].ResponseAssetDataOplObj.LocationCity;
+              this.allAssetDataObj.AppCollateralRegistrationObj.LocationZipcode = this.appAssetObj[i].ResponseAssetDataOplObj.LocationZipcode;
             }
         
-            this.allAssetDataObj.AppAssetObj.AssetSeqNo = this.appAssetObj.ResponseAppAssetObj.AssetSeqNo;
-            this.allAssetDataObj.AppAssetObj.FullAssetCode = this.appAssetObj.ResponseAppAssetObj.FullAssetCode;
-            this.allAssetDataObj.AppAssetObj.AssetStat = this.appAssetObj.ResponseAppAssetObj.AssetStat;
-            this.allAssetDataObj.AppCollateralObj.CollateralStat = this.appAssetObj.ResponseAppAssetObj.AssetStat;
-            this.allAssetDataObj.AppCollateralObj.AppAssetId = this.appAssetObj.ResponseAppAssetObj.AppAssetId;
+            this.allAssetDataObj.AppAssetObj.AssetSeqNo = this.appAssetObj[i].ResponseAppAssetObj.AssetSeqNo;
+            this.allAssetDataObj.AppAssetObj.FullAssetCode = this.appAssetObj[i].ResponseAppAssetObj.FullAssetCode;
+            this.allAssetDataObj.AppAssetObj.AssetStat = this.appAssetObj[i].ResponseAppAssetObj.AssetStat;
+            this.allAssetDataObj.AppCollateralObj.CollateralStat = this.appAssetObj[i].ResponseAppAssetObj.AssetStat;
+            this.allAssetDataObj.AppCollateralObj.AppAssetId = this.appAssetObj[i].ResponseAppAssetObj.AppAssetId;
 
-            this.allAssetDataObj.AppAssetObj.AssetTypeCode = this.appAssetObj.ResponseAppAssetObj.AssetTypeCode;
-            this.allAssetDataObj.AppAssetObj.AssetCategoryCode = this.appAssetObj.ResponseAppAssetObj.AssetCategoryCode;
-            this.allAssetDataObj.AppAssetObj.SupplCode = this.appAssetObj.ResponseAppAssetObj.SupplCode;
+            this.allAssetDataObj.AppAssetObj.AssetTypeCode = this.appAssetObj[i].ResponseAppAssetObj.AssetTypeCode;
+            this.allAssetDataObj.AppAssetObj.AssetCategoryCode = this.appAssetObj[i].ResponseAppAssetObj.AssetCategoryCode;
+            this.allAssetDataObj.AppAssetObj.SupplCode = this.appAssetObj[i].ResponseAppAssetObj.SupplCode;
 
-            if (this.appAssetObj.ResponseBranchManagerSupp != null) {
-              this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpName;
-              this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpNo;
-              this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = this.appAssetObj.ResponseBranchManagerSupp.MrSupplEmpPositionCode;
+            if (this.appAssetObj[i].ResponseBranchManagerSupp != null) {
+              this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = this.appAssetObj[i].ResponseBranchManagerSupp.SupplEmpName;
+              this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = this.appAssetObj[i].ResponseBranchManagerSupp.SupplEmpNo;
+              this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = this.appAssetObj[i].ResponseBranchManagerSupp.MrSupplEmpPositionCode;
             }
             else {
               this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = "";
@@ -980,10 +981,10 @@ export class AssetDataOplComponent implements OnInit {
               this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = "";
             }
 
-            if (this.appAssetObj.ResponseAdminHeadSupp != null) {
-              this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = this.appAssetObj.ResponseAdminHeadSupp.SupplEmpName;
-              this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = this.appAssetObj.ResponseAdminHeadSupp.SupplEmpNo;
-              this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = this.appAssetObj.ResponseAdminHeadSupp.MrSupplEmpPositionCode;
+            if (this.appAssetObj[i].ResponseAdminHeadSupp != null) {
+              this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = this.appAssetObj[i].ResponseAdminHeadSupp.SupplEmpName;
+              this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = this.appAssetObj[i].ResponseAdminHeadSupp.SupplEmpNo;
+              this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = this.appAssetObj[i].ResponseAdminHeadSupp.MrSupplEmpPositionCode;
             }
             else {
               this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = "";
@@ -991,10 +992,10 @@ export class AssetDataOplComponent implements OnInit {
               this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = "";
             }
 
-            if (this.appAssetObj.ResponseSalesPersonSupp != null) {
-              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.appAssetObj.ResponseSalesPersonSupp.SupplEmpName;
-              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.appAssetObj.ResponseSalesPersonSupp.SupplEmpNo;
-              this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = this.appAssetObj.ResponseSalesPersonSupp.MrSupplEmpPositionCode;
+            if (this.appAssetObj[i].ResponseSalesPersonSupp != null) {
+              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.appAssetObj[i].ResponseSalesPersonSupp.SupplEmpName;
+              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.appAssetObj[i].ResponseSalesPersonSupp.SupplEmpNo;
+              this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = this.appAssetObj[i].ResponseSalesPersonSupp.MrSupplEmpPositionCode;
             }
             else {
               this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = "";
@@ -1002,55 +1003,56 @@ export class AssetDataOplComponent implements OnInit {
               this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = "";
             }
 
-            this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.appAssetObj.ResponseAppAssetObj.TaxCityIssuer;
-            this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.appAssetObj.ResponseAppAssetObj.TaxIssueDt;
-            this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.appAssetObj.ResponseAppAssetObj.ManufacturingYear;
+            this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.appAssetObj[i].ResponseAppAssetObj.TaxCityIssuer;
+            this.allAssetDataObj.AppAssetObj.TaxIssueDt = this.appAssetObj[i].ResponseAppAssetObj.TaxIssueDt;
+            this.allAssetDataObj.AppAssetObj.ManufacturingYear = this.appAssetObj[i].ResponseAppAssetObj.ManufacturingYear;
         
-            this.allAssetDataObj.AppCollateralObj.AppId = this.appAssetObj.ResponseAppAssetObj.AppId;
-            this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = this.appAssetObj.ResponseAppAssetObj.AssetSeqNo;
-            this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.appAssetObj.ResponseAppAssetObj.FullAssetCode;
-            this.allAssetDataObj.AppCollateralObj.FullAssetName = this.appAssetObj.ResponseAppAssetObj.FullAssetName;
-            this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.appAssetObj.ResponseAppAssetObj.MrAssetConditionCode;
-            this.allAssetDataObj.AppCollateralObj.MrCollateralUsageCode = this.appAssetObj.ResponseAppAssetObj.MrAssetUsageCode;
+            this.allAssetDataObj.AppCollateralObj.AppId = this.appAssetObj[i].ResponseAppAssetObj.AppId;
+            this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = this.appAssetObj[i].ResponseAppAssetObj.AssetSeqNo;
+            this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.appAssetObj[i].ResponseAppAssetObj.FullAssetCode;
+            this.allAssetDataObj.AppCollateralObj.FullAssetName = this.appAssetObj[i].ResponseAppAssetObj.FullAssetName;
+            this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.appAssetObj[i].ResponseAppAssetObj.MrAssetConditionCode;
+            this.allAssetDataObj.AppCollateralObj.MrCollateralUsageCode = this.appAssetObj[i].ResponseAppAssetObj.MrAssetUsageCode;
 
-            this.allAssetDataObj.AppCollateralObj.CollateralValueAmt = this.appAssetObj.ResponseAppAssetObj.AssetPriceAmt;
-            this.allAssetDataObj.AppCollateralObj.AssetTypeCode = this.appAssetObj.ResponseAppAssetObj.AssetTypeCode;
-            this.allAssetDataObj.AppCollateralObj.AssetCategoryCode = this.appAssetObj.ResponseAppAssetObj.AssetCategoryCode;
-            this.allAssetDataObj.AppCollateralObj.ManufacturingYear = this.appAssetObj.ResponseAppAssetObj.ManufacturingYear;
+            this.allAssetDataObj.AppCollateralObj.CollateralValueAmt = this.appAssetObj[i].ResponseAppAssetObj.AssetPriceAmt;
+            this.allAssetDataObj.AppCollateralObj.AssetTypeCode = this.appAssetObj[i].ResponseAppAssetObj.AssetTypeCode;
+            this.allAssetDataObj.AppCollateralObj.AssetCategoryCode = this.appAssetObj[i].ResponseAppAssetObj.AssetCategoryCode;
+            this.allAssetDataObj.AppCollateralObj.ManufacturingYear = this.appAssetObj[i].ResponseAppAssetObj.ManufacturingYear;
 
             this.allAssetDataObj.AppAssetAccessoryObjs = new Array<AppAssetAccessoryObj>();
             this.allAssetDataObj.AppCollateralAccessoryObjs = new Array<AppCollateralAccessoryObj>();
             this.allAssetDataObj.AppCollateralAttrObj = new Array<AppCollateralAttrObj>();
             this.allAssetDataObj.AppAssetAttrObj = new Array<AppAssetAttrObj>();
-        
-            for (let i = 0; i < this.appAssetObj.ResponseAppAssetAccessoryObjs.length; i++) {
-              var appAssetAccObj = new AppAssetAccessoryObj();
-              var appCollateralAccObj = new AppCollateralAccessoryObj();
-              appAssetAccObj.AssetAccessoryCode = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].AssetAccessoryCode;
-              appAssetAccObj.AssetAccessoryName = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].AssetAccessoryName;
-              appAssetAccObj.SupplCode = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].SupplCode;
-              appAssetAccObj.SupplName = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].SupplName;
-              appAssetAccObj.AccessoryPriceAmt = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].AccessoryPriceAmt;
-              appAssetAccObj.DownPaymentAmt = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].DownPaymentAmt;
-              appAssetAccObj.AccessoryNotes = this.appAssetObj.ResponseAppAssetAccessoryObjs[i].AccessoryNotes;
-        
-              appCollateralAccObj.CollateralAccessoryCode = appAssetAccObj.AssetAccessoryCode;
-              appCollateralAccObj.CollateralAccessoryName = appAssetAccObj.AssetAccessoryName;
-              appCollateralAccObj.AccessoryPriceAmt = appAssetAccObj.AccessoryPriceAmt;
-              appCollateralAccObj.DownPaymentAmt = appAssetAccObj.DownPaymentAmt;
-              appCollateralAccObj.AccessoryNotes = appAssetAccObj.AccessoryNotes;
-        
-              this.allAssetDataObj.AppAssetAccessoryObjs.push(appAssetAccObj);
-              this.allAssetDataObj.AppCollateralAccessoryObjs.push(appCollateralAccObj);
+            if(this.appAssetObj[i].ResponseAppAssetAccessoryObjs != null){
+              for (let j = 0; j < this.appAssetObj[i].ResponseAppAssetAccessoryObjs.length; j++) {
+                var appAssetAccObj = new AppAssetAccessoryObj();
+                var appCollateralAccObj = new AppCollateralAccessoryObj();
+                appAssetAccObj.AssetAccessoryCode = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].AssetAccessoryCode;
+                appAssetAccObj.AssetAccessoryName = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].AssetAccessoryName;
+                appAssetAccObj.SupplCode = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].SupplCode;
+                appAssetAccObj.SupplName = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].SupplName;
+                appAssetAccObj.AccessoryPriceAmt = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].AccessoryPriceAmt;
+                appAssetAccObj.DownPaymentAmt = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].DownPaymentAmt;
+                appAssetAccObj.AccessoryNotes = this.appAssetObj[i].ResponseAppAssetAccessoryObjs[j].AccessoryNotes;
+          
+                appCollateralAccObj.CollateralAccessoryCode = appAssetAccObj.AssetAccessoryCode;
+                appCollateralAccObj.CollateralAccessoryName = appAssetAccObj.AssetAccessoryName;
+                appCollateralAccObj.AccessoryPriceAmt = appAssetAccObj.AccessoryPriceAmt;
+                appCollateralAccObj.DownPaymentAmt = appAssetAccObj.DownPaymentAmt;
+                appCollateralAccObj.AccessoryNotes = appAssetAccObj.AccessoryNotes;
+          
+                this.allAssetDataObj.AppAssetAccessoryObjs.push(appAssetAccObj);
+                this.allAssetDataObj.AppCollateralAccessoryObjs.push(appCollateralAccObj);
+              }
             }
 
-            if (this.AppAssetAttrObj != null) {
-              for (let i = 0; i < this.appAssetObj.ResponseAppAssetAttrObjs.length; i++) {
+            if (this.appAssetObj[i].ResponseAppAssetAttrObjs != null) {
+              for (let k = 0; k < this.appAssetObj[i].ResponseAppAssetAttrObjs.length; k++) {
                 var appAssetAttrObj = new AppAssetAttrObj();
                 var appCollAttrcObj = new AppCollateralAttrObj();
-                appAssetAttrObj.AssetAttrName = this.appAssetObj.ResponseAppAssetAttrObjs[i].AssetAttrName;
-                appAssetAttrObj.AssetAttrCode = this.appAssetObj.ResponseAppAssetAttrObjs[i].AssetAttrCode;
-                appAssetAttrObj.AttrValue = this.appAssetObj.ResponseAppAssetAttrObjs[i].AttrValue;
+                appAssetAttrObj.AssetAttrName = this.appAssetObj[i].ResponseAppAssetAttrObjs[k].AssetAttrName;
+                appAssetAttrObj.AssetAttrCode = this.appAssetObj[i].ResponseAppAssetAttrObjs[k].AssetAttrCode;
+                appAssetAttrObj.AttrValue = this.appAssetObj[i].ResponseAppAssetAttrObjs[k].AttrValue;
         
                 appCollAttrcObj.CollateralAttrName = appAssetAttrObj.AssetAttrName;
                 appCollAttrcObj.CollateralAttrCode = appAssetAttrObj.AssetAttrCode;

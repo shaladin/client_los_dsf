@@ -45,7 +45,7 @@ export class CommonConstant {
   public static ApvCategoryOfferingValidity = "OFF_VLD_APV"
 
   public static INV_VERF_RESULT_STAT = "INV_VERF_RESULT_STAT";
-
+  public static ApvCategoryApplicaitonApproval = "APP_OPL_APV"
   //CUST TYPE
   public static CustTypePersonal = "PERSONAL";
   public static CustTypeCompany = "COMPANY";
@@ -552,6 +552,7 @@ export class CommonConstant {
 
   //CHARACTERISTIC OF CREDIT
   public static CharacteristicOfCreditTypeCredit = "CREDIT";
+  public static CharacteristicOfCreditTypeOther = "OTHER";
 
   //GENERAL SETTING
   public static GSCodeDefLocalNationality = "DEF_LOCAL_NATIONALITY";
@@ -580,13 +581,14 @@ export class CommonConstant {
   public static SCHM_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV";
   public static SCHM_CODE_APV_PRE_GO_LIVE = "PRE_GLV_APV_CF";
   public static SCHM_CODE_CRD_APV_CF = "CRD_APV_CF";
-
+  public static SCHM_CODE_APV_RENT_APP = "APV_RENT_APP";
 
   public static CAT_CODE_MOU_APV_GENERAL = "MOUC_GEN_APV";
   public static CAT_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV";
   public static CAT_CODE_PRE_GO_LIVE_APV = "PRE_GPV_APV";
   public static CAT_CODE_CRD_APV = "CRD_APV";
-  public static CAT_CODE_DOC_CHCLIST_APV = "DOC_CHCKLIST_APV"; 
+  public static CAT_CODE_DOC_CHCLIST_APV = "DOC_CHCKLIST_APV";
+  public static CAT_CODE_APP_OPL_APV = "APP_OPL_APV";
 
   //TRX_TYPE_CODE
   public static APP_TRX_TYPE_CODE = "APP";
