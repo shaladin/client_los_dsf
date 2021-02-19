@@ -2,7 +2,7 @@
     "title": "",
     "subsection": [
       {
-        "subSectionId": "NewApplication",
+        "subSectionId": "MainInfoId",
         "subSectionTitle": "Main Information",
         "mainInfoPath": "/Generic/GetDataViewBySQL",
         "mainInfo": [
@@ -11,13 +11,12 @@
             "label": "Application No",
             "property": "AppNo",
             "name": "AppNo",
-            "position": "left",
-            "path": "VIEW_APP",
             "target": "_blank",
+            "path": "/View/AppView",
             "param": [
-              { 
+              {
                 "type": "AppId",
-                "property": "AppId" 
+                "property": "AppId"
               }
             ]
           },
@@ -27,7 +26,7 @@
             "property": "MouCustNo",
             "name": "MouCustNo",
             "isHide": true,
-            "path": "VIEW_MOU_CUST",
+            "path": "/View/Mou/CustView",
             "target": "_blank",
             "param": [
               {
@@ -37,20 +36,10 @@
             ]
           },
           {
-            "type": "text",
-            "label": "Original Office",
-            "property": "OriOfficeName"
-          },
-          {
-            "type": "text",
-            "label": "Customer Name",
-            "property": "CustName"
-          },
-          {
             "type": "callback",
-            "key": "ViewProdOffering",
-            "label": "Product Offering",
-            "property": "ProdOfferingName"
+            "label": "Agreement No",
+            "property": "AgrmntNo",
+            "key": "agrmnt"
           },
           {
             "type": "text",
@@ -58,20 +47,25 @@
             "property": "Tenor"
           },
           {
-            "type": "link",
-            "label": "Lead No.",
-            "property": "LeadNo",
-            "name": "LeadNo",
-            "isHide": true,
-            "position": "left",
-            "path": "VIEW_LEAD",
-            "target": "_blank",
-            "param": [
-              { 
-                "type": "LeadId",
-                "property": "LeadId" 
-              }
-            ]
+            "type": "text",
+            "label": "Customer Name",
+            "property": "CustName"
+          },
+          {
+            "type": "text",
+            "label": "Interest Type",
+            "property": "MrInterestTypeName"
+          },
+          {
+            "type": "callback",
+            "label": "Product Offering Name",
+            "key": "ViewProdOffering",
+            "property": "ProdOfferingName"
+          },
+          {
+            "type": "text",
+            "label": "Installment Scheme",
+            "property": "MrInstSchemeName"
           },
           {
             "type": "text",
@@ -90,8 +84,9 @@
           }
         ],
         "querystring": {
-          "name": "viewNapAppMainInformationCFNA"
+          "name": "viewDocSigner"
         }
       }
     ]
   }
+  
