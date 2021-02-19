@@ -149,6 +149,7 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
         this.translate.use(language);
     }
 
+    
     changeModul() {
         var token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
         var url = environment.FoundationR3Web + URLConstant.LoginURLFrontEnd + "?token=" + token;

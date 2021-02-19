@@ -21,12 +21,6 @@ export class PreGoLiveOplDetailComponent implements OnInit {
   ApvDt: string;
   AppId: number;
   WfTaskListId: number;
-
-  RfaLogObj: {
-    RfaNo: any
-  }
-  ListRfaLogObj: any;
-  lengthListRfaLogObj: number;
   
   ListAppAssetId: Array<number> = new Array<number>();
 
@@ -59,8 +53,6 @@ export class PreGoLiveOplDetailComponent implements OnInit {
     }
 
   async ngOnInit() {
-    this.ListRfaLogObj = new Array(this.RfaLogObj);
-
     await this.SetMainInfo();
     await this.SetListItem();
     await this.SetTCInfo();
