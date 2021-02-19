@@ -1325,5 +1325,6 @@ export class URLConstant {
   public static GetListAppAssetFinDataGridByAppId = environment.losUrl + "/AppAssetRentDataOpl/GetListAppAssetFinDataGridByAppId";
 
   //Asset Allocation
-  public static GetAssetAllocationDataByAppId = environment.losUrl + "/AppAssetAllocationOpl/GetAssetAllocationDataByAppId";
+    public static GetAssetAllocationDataByAppId = environment.losUrl + "/AppAssetAllocationOpl/GetAssetAllocationDataByAppId";
+  public static SubmitAssetAllocation = environment.losUrl + "/AppAssetAllocationOpl/SubmitAssetAllocation";
 }

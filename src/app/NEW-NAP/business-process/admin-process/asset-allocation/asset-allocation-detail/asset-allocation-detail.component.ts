@@ -56,7 +56,32 @@ export class AssetAllocationDetailComponent implements OnInit {
   }
 
   SaveForm() {
+    var listAsset = new Array();
+    for (let i = 0; i < this.AssetAllocationForm.controls["ListAsset"].value.length; i++) {
+      var tempAsset = this.AssetAllocationForm.controls["ListAsset"].value.filter(
+        asset => asset.AssetNo == this.AssetAllocationForm.controls["ListAsset"].value[i].AssetNo
+      );
+      if (tempAsset.length > 1) {
+        this.toastr.warningMessage("Asset Number cant duplicate");
+        return;
+      }
 
+      var newAssetAlloc = {
+        AssetNo: this.AssetAllocationForm.controls["ListAsset"].value[i].AssetNo,
+        SerialNo1: this.AssetAllocationForm.controls["ListAsset"].value[i].ChassisNo,
+        SerialNo2: this.AssetAllocationForm.controls["ListAsset"].value[i].EngineNo,
+        SerialNo3: this.AssetAllocationForm.controls["ListAsset"].value[i].LicensePlateNo
+      };
+      listAsset.push(newAssetAlloc);
+    }
+    var reqObj = {
+      AppAssetObjs : listAsset
+    }
+    this.http.post(URLConstant.SubmitAssetAllocation, reqObj).subscribe(
+      (response) => {
+        this.toastr.successMessage("Asset Allocation Saved Successfully");
+      }
+    );
   }
 
   GetCallBack(ev) {
