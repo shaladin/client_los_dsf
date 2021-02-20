@@ -12,6 +12,14 @@
         },
         {
             "type": "textbox",
+            "name": "agr.AGRMNT_NO",
+            "id": "AgrmntNoId",
+            "value": "",
+            "label": "Agreement No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
             "name": "AC.CUST_NAME",
             "id": "CustNameId",
             "value": "",
@@ -33,6 +41,12 @@
             "position": "center",
             "label": "Application No",
             "name": "A.APP_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Agreement No",
+            "name": "agr.AGRMNT_NO"
         },
         {
             "type": "sort",
@@ -66,6 +80,19 @@
                 {
                     "type" : "AppId", 
                     "property" : "AppId" 
+                }
+            ]
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "AgrmntNo",
+            "target": "_blank",
+            "path" : "VIEW_AGRMNT", 
+            "param" : [ 
+                {
+                    "type" : "AgrmntId", 
+                    "property" : "AgrmntId" 
                 }
             ]
         },
