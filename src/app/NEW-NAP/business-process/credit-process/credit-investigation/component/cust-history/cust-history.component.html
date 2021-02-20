@@ -37,8 +37,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngIf="ExstAgrmnt?.length == 0">
-                  <td align="center" colspan="7">No data found</td>
+                <tr *ngIf="ExstAgrmnt == undefined || ExstAgrmnt?.length == 0">
+                  <td align="center" colspan="8">No data found</td>
                 </tr>
                 <tr *ngFor="let item of ExstAgrmnt; let i = index">
                   <td>{{i+1}}</td>
@@ -84,7 +84,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngIf="AppRjct?.length == 0">
+                <tr *ngIf="AppRjct == undefined || AppRjct?.length == 0">
                   <td align="center" colspan="6">No data found</td>
                 </tr>
                 <tr *ngFor="let item of AppRjct; let i = index">
@@ -126,7 +126,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngIf="AppPrcs?.length == 0">
+                <tr *ngIf="AppPrcs == undefined || AppPrcs?.length == 0">
                   <td align="center" colspan="6">No data found</td>
                 </tr>
                 <tr *ngFor="let item of AppPrcs; let i = index">
