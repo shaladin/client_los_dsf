@@ -1,4 +1,4 @@
-import { formatDate } from '@angular/common';
+import { formatDate, DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -10,6 +10,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-legal-doc-detail',
@@ -27,6 +28,7 @@ export class LegalDocDetailComponent implements OnInit {
   UserAccess: Object;
   LegalDocTypeObj: Array<KeyValueObj> = new Array();
   AppCustCompanyLegalDocObj: AppCustCompanyLegalDocObj = new AppCustCompanyLegalDocObj();
+  datePipe = new DatePipe("en-US");
 
   LegalDocForm = this.fb.group({
     AppCustCompanyLegalDocId: [0],
@@ -122,6 +124,11 @@ export class LegalDocDetailComponent implements OnInit {
   }
 
   SaveForm() {
+    if( this.datePipe.transform(this.LegalDocForm.controls.DocDt.value, "yyyy-MM-dd") > this.datePipe.transform(this.BusinessDt, "yyyy-MM-dd") ){
+      this.toastr.warningMessage(ExceptionConstant.ISSUED_DATE_CANNOT_MORE_THAN + this.datePipe.transform(this.BusinessDt, 'MMMM d, y'));
+      return;
+   } 
+
     if (this.AppCustCompanyLegalDoc.AppCustCompanyLegalDocId == 0 && this.ListAppCustCompanyLegalDoc.find(x => x.MrLegalDocTypeCode == this.LegalDocForm.controls.MrLegalDocTypeCode.value)) {
       let ErrorOutput = this.LegalDocTypeObj.find(x => x.Key == this.LegalDocForm.controls.MrLegalDocTypeCode.value);
       this.toastr.warningMessage("There's Already " + ErrorOutput.Value + " Document")
