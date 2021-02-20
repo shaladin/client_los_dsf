@@ -75,7 +75,7 @@
             "position": "center",
             "property": "AppNo",
             "target": "_blank",
-            "path" : "../../View/AppView", 
+            "path" : "BACK_VIEW_APP", 
             "param" : [ 
                 {
                     "type" : "AppId", 
