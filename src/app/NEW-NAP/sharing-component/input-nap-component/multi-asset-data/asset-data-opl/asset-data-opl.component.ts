@@ -913,12 +913,11 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   async getListAllAssetData() {
-    console.log("test");
     this.appData = new AppDataObj();
     this.appData.AppId = this.AppId;
     await this.http.post(URLConstant.GetListAllAssetDataByAppId, this.appData).toPromise().then(
       (response) => {
-        this.appAssetObj = response["ReturnObject"];
+        this.appAssetObj = response[CommonConstant.ReturnObj];
 
         if (this.appAssetObj != null) {
           for(let i = 0; i < this.appAssetObj.length; i++) {
