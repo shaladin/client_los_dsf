@@ -12,7 +12,7 @@
         },
         {
             "type": "textbox",
-            "name": "A.AGRMNT_NO",
+            "name": "agr.AGRMNT_NO",
             "id": "AgrmntNoId",
             "value": "",
             "label": "Agreement No",
@@ -75,7 +75,7 @@
             "position": "center",
             "property": "AppNo",
             "target": "_blank",
-            "path" : "BACK_VIEW_APP", 
+            "path" : "../../View/AppView", 
             "param" : [ 
                 {
                     "type" : "AppId", 
