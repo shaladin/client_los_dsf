@@ -208,6 +208,8 @@
                         [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm'
                         (lookup)="SetBpkbCity($event)">
                       </lib-uclookupgeneric>
+                      <lib-uc-show-errors [control]="AssetDataForm.controls.TaxCityIssuer" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
                     </div>
                   </div>
                   <div class="form-group row">

@@ -527,6 +527,7 @@ export class AssetDataComponent implements OnInit {
       AdminHeadId: this.allAssetDataObj.AppAssetSupplEmpAdminObj.VendorEmpId,
       BranchManagerId: this.allAssetDataObj.AppAssetSupplEmpManagerObj.VendorEmpId
     });
+    this.setValidatorBpkb();
 
     this.priceAfterDiscount = this.allAssetDataObj.AppAssetObj.AssetPriceAmt - this.allAssetDataObj.AppAssetObj.Discount;
 
@@ -1499,6 +1500,7 @@ export class AssetDataComponent implements OnInit {
             IsEditableDp: this.appAssetObj.ResponseAppAssetObj.IsEditableDp,
             selectedDpType: 'AMT'
           });
+          this.setValidatorBpkb();
 
           if (this.appAssetObj.ResponseAppAssetObj.TaxIssueDt != null) {
             this.AssetDataForm.patchValue({
@@ -1885,6 +1887,19 @@ export class AssetDataComponent implements OnInit {
     await this.bindDownPaymentTypeObj();
   }
 
+  setValidatorBpkb(){
+    let MrAssetConditionCode: string = this.AssetDataForm.controls.MrAssetConditionCode.value;
+    if(MrAssetConditionCode == 'USED'){
+      this.AssetDataForm.controls.TaxCityIssuer.setValidators(Validators.required);
+      this.AssetDataForm.controls.TaxIssueDt.setValidators(Validators.required);
+    }else{
+      this.AssetDataForm.controls.TaxCityIssuer.clearValidators();
+      this.AssetDataForm.controls.TaxIssueDt.clearValidators();      
+    }
+    this.AssetDataForm.controls.TaxCityIssuer.updateValueAndValidity();
+    this.AssetDataForm.controls.TaxIssueDt.updateValueAndValidity();
+  }
+
   async bindAssetUsageObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
@@ -1961,6 +1976,7 @@ export class AssetDataComponent implements OnInit {
         this.AssetDataForm.patchValue({
           MrAssetConditionCode: this.assetCondObj.CompntValue
         });
+        this.setValidatorBpkb();
       }
     );
   }
