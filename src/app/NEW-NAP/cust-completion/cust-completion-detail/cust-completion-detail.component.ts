@@ -48,6 +48,7 @@ export class CustCompletionDetailComponent implements OnInit {
       }
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem(CommonConstant.BIZ_TEMPLATE_CODE, this.BizTemplateCode);
       }
       if (params["ReturnHandlingHId"] != null) {
         this.ReturnHandlingHId = params["ReturnHandlingHId"];
@@ -148,7 +149,7 @@ export class CustCompletionDetailComponent implements OnInit {
       this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.CF4W });
+          AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: this.BizTemplateCode });
         }
       )
     }
