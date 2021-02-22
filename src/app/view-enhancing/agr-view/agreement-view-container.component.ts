@@ -187,7 +187,6 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsLoanData = false;
           this.IsInsuranceFL4W = false;
           this.IsLifeInsurance = false;
-          this.IsFinancial = false;
           this.IsTC = false;
           this.IsReservedFund = false;
           this.IsDeliveryOrder = false;
