@@ -43,9 +43,10 @@ export class CommonConstant {
   public static ApvCategoryPackageValidityChecking = "PCKG_VLDT_APV"
   public static ApvCategoryPreGoLive = "PRE_GPV_APV"
   public static ApvCategoryOfferingValidity = "OFF_VLD_APV"
-
   public static INV_VERF_RESULT_STAT = "INV_VERF_RESULT_STAT";
-  public static ApvCategoryApplicaitonApproval = "APP_OPL_APV"
+  public static ApvCategoryApplicaitonApproval = "APP_OPL_APV";
+  public static ApvCategoryDocumentChecklistApproval = "DOC_CHCKLIST_APV";
+
   //CUST TYPE
   public static CustTypePersonal = "PERSONAL";
   public static CustTypeCompany = "COMPANY";

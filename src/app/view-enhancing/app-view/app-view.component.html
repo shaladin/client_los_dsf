@@ -97,7 +97,7 @@
 
             <mat-tab *ngIf="IsFinancial" label="Financial">
               <ng-template matTabContent>
-                <view-financial [AppId]="AppId"></view-financial>
+                <view-financial [BizTemplateCode]="bizTemplateCode" [AppId]="AppId"></view-financial>
               </ng-template>
             </mat-tab>
 
@@ -157,7 +157,7 @@
 
             <mat-tab *ngIf="IsApprovalHist" label="Approval History">
               <ng-template matTabContent>
-                <app-approval-hist [AppNo]="appNo" [AppId]="AppId"></app-approval-hist>
+                <app-approval-hist [BizTemplateCode]="bizTemplateCode" [AppNo]="appNo" [AppId]="AppId"></app-approval-hist>
               </ng-template>
             </mat-tab>
 

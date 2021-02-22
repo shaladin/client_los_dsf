@@ -1220,6 +1220,7 @@ export class URLConstant {
   //APP SCORE GRADE
   public static GetAppScoreGradeByAppIdAndMrScoreTypeCode = environment.losUrl + "/AppScoreGrade/GetAppScoreGradeByAppIdAndMrScoreTypeCode";
   public static GetAppScoreGradeDsrByAppId = environment.losUrl + "/AppScoreGrade/GetAppScoreGradeDsrByAppId";
+  public static GetListAppScoreGradeByAppId = environment.losUrl + "/AppScoreGrade/GetListAppScoreGradeByAppId";
 
   // Authentication
   public static RequestNewPassword = environment.FoundationR3Url + "/Authenticate/RequestNewPassword";
@@ -1309,7 +1310,8 @@ export class URLConstant {
   public static GetListAppAssetAccessoryAndAppAssetAttrByAppAssetId = environment.losUrl + "/AppAssetView/GetListAppAssetAccessoryAndAppAssetAttrByAppAssetId";
   public static GetAllAssetExpenseData = environment.losUrl + "/AppAssetView/GetAllAssetExpenseData";
   public static GetListAllAssetExpenseData = environment.losUrl + "/AppAssetView/GetListAllAssetExpenseData";
-  public static GetRentalCalculationData = environment.losUrl + "/AppAssetView/GetRentalCalculationData";  
+  public static GetRentalCalculationData = environment.losUrl + "/AppAssetView/GetRentalCalculationData";
+  public static GetListAllAssetFinancialData = environment.losUrl + "/AppAssetView/GetListAllAssetFinancialData";
   
   // App Review
   public static GetAppRvwSummaryAsset = environment.losUrl + "/ApplicationReview/GetAppRvwSummaryAsset";

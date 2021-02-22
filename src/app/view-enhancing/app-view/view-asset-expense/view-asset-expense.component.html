@@ -36,7 +36,9 @@
             </thead>
 
             <tbody>
-              <td colspan="100%" *ngIf="listAsset.length === 0">No Data Available</td>
+              <tr *ngIf="listAsset.length === 0">
+                <td colspan="100%">No Data Available</td>
+              </tr>
               <tr *ngFor="let item of listAsset; let i = index">
                 <td>{{item.AssetSeqNo}}</td>
                 <td>
