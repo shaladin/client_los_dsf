@@ -1,0 +1,285 @@
+{
+  "title": "Application Inquiry",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "A.ORI_OFFICE_CODE",
+      "id": "oriOfficeCodeId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "isSelectOne": false,
+      "url": "",
+      "isQueryIn": true,
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "label": "Original Office Name",
+      "items": [],
+      "itemsUrl": []
+    },
+    {
+      "type": "textbox",
+      "name": "C.CUST_NO",
+      "id": "custNoId",
+      "value": "",
+      "label": "Customer No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "A.APP_NO",
+      "id": "appNoId",
+      "value": "",
+      "label": "Application No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "C.CUST_NAME",
+      "id": "custNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "B.AGRMNT_NO",
+      "id": "agrmntNoId",
+      "value": "",
+      "label": "Agreement No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "A.PROD_OFFERING_NAME",
+      "id": "prodOfferingNameId",
+      "value": "",
+      "label": "Product Offering Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "AA.SERIAL_NO_1",
+      "id": "chassisId",
+      "value": "",
+      "label": "Chassis No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "AA.SERIAL_NO_2",
+      "id": "engineId",
+      "value": "",
+      "label": "Engine No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "AA.SERIAL_NO_3",
+      "id": "licensePlateId",
+      "value": "",
+      "label": "License Plate No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "ACA.ADDR",
+      "id": "residenceAddrId",
+      "value": "",
+      "label": "Residence Address",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "datepicker",
+      "name": "A.APP_CREATED_DT",
+      "id": "appDtgte",
+      "value": "",
+      "label": "Application Date >=",
+      "restriction": "gte",
+      "datatype": "date"
+    },
+    {
+      "type": "datepicker",
+      "name": "A.APP_CREATED_DT",
+      "id": "appDtlte",
+      "value": "",
+      "label": "Application Date <=",
+      "restriction": "lte",
+      "datatype": "date"
+    },
+    {
+      "type": "datepicker",
+      "name": "AAO.GO_LIVE_DT",
+      "id": "goLiveDtgte",
+      "value": "",
+      "label": "Go live Date >=",
+      "restriction": "gte",
+      "datatype": "date"
+    },
+    {
+      "type": "datepicker",
+      "name": "AAO.GO_LIVE_DT",
+      "id": "goLiveDtlte",
+      "value": "",
+      "label": "Go Live Date <=",
+      "restriction": "lte",
+      "datatype": "date"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "ISNULL(B.AGRMNT_CURR_STEP,A.APP_CURR_STEP)",
+      "id": "appStepId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "isSelectOne": false,
+      "url": "",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "label": "Current Application Step",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "StatusGrpCode",
+      "criteriaPropValue": "APP_STEP"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "B.AGRMNT_STAT",
+      "id": "agrmntStatId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "isSelectOne": false,
+      "url": "",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "label": "Contract Status",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "StatusGrpCode",
+      "criteriaPropValue": "APP_STAT"
+    }
+  ],
+  "querystring": {
+    "name": "searchAppInquiryOpl"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Application No",
+      "name": "A.APP_NO"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Agreement No",
+      "name": "B.AGRMNT_NO"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Customer No",
+      "name": "C.CUST_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Name",
+      "name": "C.CUST_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Product Offering Name",
+      "name": "A.PROD_OFFERING_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Application Date",
+      "name": "A.APP_CREATED_DT"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "NAP Submitted",
+      "name": "A.IS_APP_INIT_DONE"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Contract Status",
+      "name": "B.AGRMNT_STAT"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Application Step",
+      "name": "ISNULL(B.AGRMNT_CURR_STEP,A.APP_CURR_STEP)"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Residence Addr",
+      "name": "ACA.ADDR"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "callback",
+      "position": "center",
+      "property": "appNo",
+      "key": "application"
+    },
+    {
+      "type": "callback",
+      "position": "center",
+      "property": "agrmntNo",
+      "key": "agreement"
+    },
+    {
+      "type": "callback",
+      "key": "customer",
+      "position": "center",
+      "property": "custNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "custName"
+    },
+    {
+      "type": "callback",
+      "key": "product",
+      "position": "left",
+      "property": "prodOfferingName"
+    },
+    {
+      "type": "date",
+      "position": "center",
+      "property": "appDt"
+    },
+    {
+      "type": "boolean",
+      "position": "center",
+      "property": "isNapSub"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "contractStat"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "appStep"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "address"
+    }
+  ]
+}
