@@ -189,7 +189,6 @@ export class DocumentViewComponent implements OnInit {
   }
 
   Print(item) {
-    console.log("Test");
     try {
       if(this.isDocSignerAvailable){
         this.RdlcReport.ExportFormat = "JPDF";
