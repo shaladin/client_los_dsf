@@ -156,7 +156,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
       }
       DeliveryOrderDs.push(doDetailObj);
     }
-    var DOData = { DeliveryOrderH, DeliveryOrderDs, RefOfficeId: this.context.OfficeId };
+    var DOData = { DeliveryOrderH, DeliveryOrderDs };
 
     if (this.Mode == "add") {
       url = URLConstant.AddDeliveryOrderMultiAsset;
