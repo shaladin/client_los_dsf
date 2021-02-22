@@ -17,6 +17,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 
 export class ViewFinancialComponent implements OnInit {
   @Input() AppId: any;
+  @Input() BizTemplateCode: string = "";
   listSubsidy: Array<AppSubsidyObj> = new Array<AppSubsidyObj>();
   listAppFeeObj: Array<AppFeeObj> = new Array<AppFeeObj>();
   appFinDataObj: AppFinDataObj = new AppFinDataObj();
