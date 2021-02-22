@@ -72,7 +72,7 @@
         },
         {
           "type": "currency",
-          "label": "Plafon Amount",
+          "label": "Plafond Amount",
           "property": "PlafonAmt"
         },
         {
