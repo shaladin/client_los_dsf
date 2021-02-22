@@ -121,7 +121,7 @@ export class DocumentViewComponent implements OnInit {
             }
           }
         }
-        else if(this.BizTemplateCode == CommonConstant.FACTORING || this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA){
+        else if(this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA){
           if(appCust.MrCustTypeCode == CommonConstant.CustTypePersonal){
             if(agrmntSigner.AppCustPersonalId && agrmntSigner.AppCustPersonalId > 0 && agrmntSigner.MfEmpNo1){
               this.isDocSignerAvailable = true;
@@ -189,6 +189,7 @@ export class DocumentViewComponent implements OnInit {
   }
 
   Print(item) {
+    console.log("Test");
     try {
       if(this.isDocSignerAvailable){
         this.RdlcReport.ExportFormat = "JPDF";
