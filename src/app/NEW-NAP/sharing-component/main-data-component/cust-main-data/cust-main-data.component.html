@@ -251,7 +251,7 @@
               </div>
             </div>
           </div>
-          <div class="row" *ngIf="custMainDataMode == 'SHAREHOLDER'">
+          <div class="row" *ngIf="custMainDataMode == CustMainDataMgmntShrholder">
             <div class="col-md-6" *ngIf="MrCustTypeCode == 'PERSONAL'">
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Job Position</label>
@@ -294,7 +294,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" [hidden]="custMainDataMode == CustMainDataMgmntShrholder">
               <div class="form-group row">
                 <label class="col-md-4" translate>Is Signer</label>
                 <div class="col-md-8">
