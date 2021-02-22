@@ -69,7 +69,7 @@
             "type": "text",
             "label": "Application Status",
             "property": "Stat"
-          },{},
+          },
           {
             "type": "text",
             "label": "Application Current Step",
