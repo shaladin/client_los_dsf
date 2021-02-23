@@ -52,7 +52,8 @@ export class FinancialCompanyComponent implements OnInit {
     TotalAsset: [0],
     LongTermLiablts: [0],
     CurrRatio: [0],
-    RowVersion: ['']
+    RowVersion: [''],
+    AttrList: this.fb.array ([])
   })
 
   constructor(private fb: FormBuilder,

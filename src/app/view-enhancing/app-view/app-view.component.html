@@ -97,7 +97,7 @@
 
             <mat-tab *ngIf="IsFinancial" label="Financial">
               <ng-template matTabContent>
-                <view-financial [BizTemplateCode]="bizTemplateCode" [AppId]="AppId"></view-financial>
+                <view-financial [AppId]="AppId" [BizTemplateCode]="bizTemplateCode"></view-financial>
               </ng-template>
             </mat-tab>
 

@@ -43,7 +43,7 @@
                 },
                 {
                     "type": "text",
-                    "label": "Customer Model Code",
+                    "label": "Customer Model",
                     "property": "CustModelCode"
                 }
             ],
