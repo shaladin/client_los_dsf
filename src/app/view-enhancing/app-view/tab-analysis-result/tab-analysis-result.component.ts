@@ -23,6 +23,7 @@ export class TabAnalysisResultComponent implements OnInit {
   ResponseCreditInvestigationData: any;
   ResponseCreditReviewData: any;
   ResponseAppReviewData: any;
+  ResponseAppReviewInfo: any;
   isFormOnCreditInvestigation: boolean;
   isFormOnCreditReview: boolean;
   isFormOnAppReview: boolean;
@@ -77,6 +78,18 @@ export class TabAnalysisResultComponent implements OnInit {
         if (this.ResponseAppReviewData.AppCrdRvwHId != 0) {
           this.isFormOnAppReview = true;
         }
+      }
+    );
+  }
+
+  async GetAppReviewInfo() {
+    var obj = {
+      AppId: this.appId
+    };
+    await this.http.post(URLConstant.GetListAppScoreGradeByAppId, obj).toPromise().then(
+      (response) => {
+        this.ResponseAppReviewInfo = response[CommonConstant.ReturnObj];
+        this.isFormOnAppReviewInfo = true;
       }
     );
   }

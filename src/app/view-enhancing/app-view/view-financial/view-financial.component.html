@@ -1,152 +1,156 @@
-<lib-ucSubsection [id]="'FinData_SubsidyId'" [title]="'Subsidy'" [panel]="'FinData_Subsidy'">
-</lib-ucSubsection>
-<div id="FinData_Subsidy">
-  <table class="table table-responsive-md text-center table-hover">
-    <thead>
-      <tr class="table-header">
-        <th style="text-align: left;"><span class="thead-header" name="MrSubsidyFromTypeName" translate>From Type
-            Name
+<div *ngIf="BizTemplateCode !== 'OPL'">
+  <lib-ucSubsection [id]="'FinData_SubsidyId'" [title]="'Subsidy'" [panel]="'FinData_Subsidy'">
+  </lib-ucSubsection>
+  <div id="FinData_Subsidy">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: left;"><span class="thead-header" name="MrSubsidyFromTypeName" translate>From Type
+              Name
+            </span>
+          </th>
+          <th style="text-align: left;"><span class="thead-header" name="MrSubsidyFromValueName" translate>From Value
+              Name
+            </span>
+          </th>
+          <th style="text-align: left;"><span class="thead-header" name="MrSubsidyAllocName" translate>Subsidy
+              Allocation
+            </span>
+          </th>
+          <th style="text-align: left;"><span class="thead-header" name="MrSubsidySourceName" translate>Subsidy
+            Source
           </span>
-        </th>
-        <th style="text-align: left;"><span class="thead-header" name="MrSubsidyFromValueName" translate>From Value
-            Name
-          </span>
-        </th>
-        <th style="text-align: left;"><span class="thead-header" name="MrSubsidyAllocName" translate>Subsidy
-            Allocation
-          </span>
-        </th>
-        <th style="text-align: left;"><span class="thead-header" name="MrSubsidySourceName" translate>Subsidy
-          Source
-        </span>
-        </th>
-        <th style="text-align: left;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>Subsidy
-            Value Type
-          </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="SubsidyAmt" translate>Subsidy Value
-          </span>
-        </th>
-      </tr>
-    </thead>
-    <tbody *ngIf = "listSubsidy == undefined">
-      <tr>
-        <td colspan="100%">No Data Available</td>
-      </tr>
-    </tbody>
-    <tbody *ngIf = "listSubsidy != undefined">
-      <tr *ngFor="let item of listSubsidy; let i = index">
-        <td style="text-align: left;">{{item.MrSubsidyFromTypeName}}</td>
-        <td style="text-align: left;">{{item.MrSubsidyFromValueName}}</td>
-        <td style="text-align: left;">{{item.MrSubsidyAllocName}}</td>
-        <td style="text-align: left;">{{item.MrSubsidySourceName}}</td>
-        <td style="text-align: left;">{{item.MrSubsidyValueTypeName}}</td>
-        <td style="text-align: right;">{{item.SubsidyAmt | number : '1.2-2' }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<lib-ucSubsection [id]="'feeId'" [title]="'Fee'" [panel]="'fee'">
-</lib-ucSubsection>
-<div class="form-body" id="fee">
-  <div class="form-group row">
-    <div class="col-md-12" *ngFor="let item of listAppFeeObj">
-      <div class="row">
-        <div class="col-md-3">
-          <label class="adInsLabel" style="text-align: right;"> {{item.FeeTypeName}} </label>
-        </div>
-        <div class="col-md-3">
-          <label class="adInsLabel" style="text-align: right;"> {{item.AppFeeAmt | number:'.2':'en-US'}} </label>
-        </div>
-        <div class="col-md-3">
-          <label class="adInsLabel" style="text-align: right;"> {{item.FeeTypeName + ' Capitalized Amount'}} </label>
-        </div>
-        <div class="col-md-3">
-          <label class="adInsLabel" style="text-align: right;"> {{item.FeeCapitalizeAmt | number:'.2':'en-US'}} </label>
+          </th>
+          <th style="text-align: left;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>Subsidy
+              Value Type
+            </span>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="SubsidyAmt" translate>Subsidy Value
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf = "listSubsidy == undefined">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+      <tbody *ngIf = "listSubsidy != undefined">
+        <tr *ngFor="let item of listSubsidy; let i = index">
+          <td style="text-align: left;">{{item.MrSubsidyFromTypeName}}</td>
+          <td style="text-align: left;">{{item.MrSubsidyFromValueName}}</td>
+          <td style="text-align: left;">{{item.MrSubsidyAllocName}}</td>
+          <td style="text-align: left;">{{item.MrSubsidySourceName}}</td>
+          <td style="text-align: left;">{{item.MrSubsidyValueTypeName}}</td>
+          <td style="text-align: right;">{{item.SubsidyAmt | number : '1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <lib-ucSubsection [id]="'feeId'" [title]="'Fee'" [panel]="'fee'">
+  </lib-ucSubsection>
+  <div class="form-body" id="fee">
+    <div class="form-group row">
+      <div class="col-md-12" *ngFor="let item of listAppFeeObj">
+        <div class="row">
+          <div class="col-md-3">
+            <label class="adInsLabel" style="text-align: right;"> {{item.FeeTypeName}} </label>
+          </div>
+          <div class="col-md-3">
+            <label class="adInsLabel" style="text-align: right;"> {{item.AppFeeAmt | number:'.2':'en-US'}} </label>
+          </div>
+          <div class="col-md-3">
+            <label class="adInsLabel" style="text-align: right;"> {{item.FeeTypeName + ' Capitalized Amount'}} </label>
+          </div>
+          <div class="col-md-3">
+            <label class="adInsLabel" style="text-align: right;"> {{item.FeeCapitalizeAmt | number:'.2':'en-US'}} </label>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<lib-ucSubsection [id]="'financialDataId'" [title]="'Financial Data'" [panel]="'financialData'">
-</lib-ucSubsection>
-<div class="form-body" id="financialData">
-  <div class="form-group row">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Total Asset Price </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.TotalAssetPriceAmt | number:'.2':'en-US'}} </label>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-        </div>
-        <div class="col-md-6">
+  
+  <lib-ucSubsection [id]="'financialDataId'" [title]="'Financial Data'" [panel]="'financialData'">
+  </lib-ucSubsection>
+  <div class="form-body" id="financialData">
+    <div class="form-group row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Asset Price </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.TotalAssetPriceAmt | number:'.2':'en-US'}} </label>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Total Fee </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.TotalFeeAmt | number:'.2':'en-US'}} </label>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+          </div>
+          <div class="col-md-6">
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Total Fee Capitalized </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.TotalFeeCptlzAmt | number:'.2':'en-US'}} </label>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Total Insurance Premi </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.TotalInsCustAmt | number:'.2':'en-US'}} </label>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Fee </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.TotalFeeAmt | number:'.2':'en-US'}} </label>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Total Insurance Premi Capitalized </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel">{{appFinDataObj?.InsCptlzAmt | number:'.2':'en-US'}} </label>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Total Life Insurance Premi </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.TotalLifeInsCustAmt | number:'.2':'en-US'}} </label>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Fee Capitalized </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.TotalFeeCptlzAmt | number:'.2':'en-US'}} </label>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Total Life Insurance Premi Capitalized </label>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Insurance Premi </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.TotalInsCustAmt | number:'.2':'en-US'}} </label>
+          </div>
         </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.LifeInsCptlzAmt | number:'.2':'en-US'}} </label>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Insurance Premi Capitalized </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel">{{appFinDataObj?.InsCptlzAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Life Insurance Premi </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.TotalLifeInsCustAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Life Insurance Premi Capitalized </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.LifeInsCptlzAmt | number:'.2':'en-US'}} </label>
+          </div>
         </div>
       </div>
     </div>
@@ -163,14 +167,14 @@
           <label class="adInsLabel"> {{appFinDataObj?.DownPaymentGrossAmt | number:'.2':'en-US'}} </label>
         </div>
       </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> TDP </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.TotalDownPaymentNettAmt | number:'.2':'en-US'}} </label>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> TDP </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.TotalDownPaymentNettAmt | number:'.2':'en-US'}} </label>
+          </div>
         </div>
       </div>
     </div>
@@ -184,226 +188,364 @@
           <label class="adInsLabel"> {{appFinDataObj?.DownPaymentNettAmt | number:'.2':'en-US'}} </label>
         </div>
       </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> TDP Paid at MF </label>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> TDP Paid at MF </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.TdpPaidCoyAmt | number:'.2':'en-US'}} </label>
+          </div>
         </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.TdpPaidCoyAmt | number:'.2':'en-US'}} </label>
+      </div>
+    </div>
+    <br>
+    <div class="form-group row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> NTF </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.NtfAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> First Installment Type </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appObj?.FirstInstTypeName}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Effective Rate to Customer </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.EffectiveRatePrcnt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Standard Rate </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.StdEffectiveRatePrcnt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Flat Rate to Customer </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.FlatRatePrcnt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+          </div>
+          <div class="col-md-6">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Installment Amount </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.InstAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Num of Inst </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appObj?.NumOfInst}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Grace Period </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.GracePeriodTypeName != null ? appFinDataObj?.GracePeriodTypeName + ' / ' + appFinDataObj?.GracePeriod + ' Installment' : '-'}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Rounding </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.RoundingAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="appFinDataObj?.MrInstSchemeCode == 'BL'">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Balloon Value Amount </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.BalloonValueAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="appFinDataObj?.MrInstSchemeCode == 'STLS' || appFinDataObj?.MrInstSchemeCode == 'STCM'">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Cummulative Tenor </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.CummulativeTenor}} </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="form-group row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total Interest </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.TotalInterestAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Diff Rate Amount </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.DiffRateAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Total AR </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.TotalAr | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="adInsLabel"> Gross Yield </label>
+          </div>
+          <div class="col-md-6">
+            <label class="adInsLabel"> {{appFinDataObj?.GrossYieldPrcnt | number:'.2':'en-US'}}%</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromTypeName" translate>
+              No
+            </span>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromValueName" translate>
+            Installment Amount  
+            </span>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="MrSubsidyAllocName" translate>
+            Principal Amount
+            </span>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>
+            Interest Amount
+            </span>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="SubsidyPrcnt" translate>
+            Os Principal Amount
+          </span>
+          </th>
+          <th style="text-align: center;"><span class="thead-header" name="SubsidyAmt" translate>
+            Os Interest Amount  
+          </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf = "listInstallment.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+      <tbody *ngIf = "listInstallment.length > 0">
+        <tr *ngFor="let item of listInstallment; let i = index">
+          <td style="text-align: center;">{{item.InstSeqNo}}</td>
+          <td style="text-align: right;">{{item.InstAmt | number : '1.2-2'}}</td>
+          <td style="text-align: right;">{{item.PrincipalAmt | number : '1.2-2'}}</td>
+          <td style="text-align: right;">{{item.InterestAmt| number : '1.2-2'}}</td>
+          <td style="text-align: right;">{{item.OsPrincipalAmt| number : '1.2-2'}}</td>
+          <td style="text-align: right;">{{item.OsInterestAmt| number : '1.2-2'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div *ngIf="BizTemplateCode === 'OPL'">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+
+          <lib-ucSubsection [id]="'assetDataId'" [title]="'List of Asset'" [panel]="'assetData'">
+          </lib-ucSubsection>
+          <div id="assetData">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th>
+                    <span class="thead-header" translate>Asset Seq No</span>
+                  </th>
+                  <th>
+                    <span class="thead-header" translate>App Asset No</span>
+                  </th>
+                  <th class="text-left">
+                    <span class="thead-header" translate>Asset Name</span>
+                  </th>
+                  <th class="text-right">
+                    <span class="thead-header" translate>Asset Value</span>
+                  </th>
+                  <th class="text-right">
+                    <span class="thead-header" translate>Residual Value (% / Amt)</span>
+                  </th>
+                  <th class="text-right">
+                    <span class="thead-header" translate>Asset Expense</span>
+                  </th>
+                  <th class="text-right">
+                    <span class="thead-header" translate>Margin (% / Amt)</span>
+                  </th>
+                  <th class="text-right">
+                    <span class="thead-header" translate>Rental Amount</span>
+                  </th>
+                  <th class="text-right">
+                    <span class="thead-header" translate>Gross Yield (%)</span>
+                  </th>
+                </tr>
+              </thead>
+  
+              <tbody>
+                <tr *ngIf="listAsset?.length === 0">
+                  <td colspan="100%">No Data Available</td>
+                </tr>
+                <tr *ngFor="let item of listAsset; let i = index">
+                  <td>{{item.AssetSeqNo}}</td>
+                  <td>
+                    <a [routerLink]="['/View/AppAsset']" target="_blank"
+                      [queryParams]="{ AppId: AppId, AppAssetId: item.AppAssetObj.AppAssetId }">
+                      {{item.AppAssetNo}}
+                    </a>
+                  </td>
+                  <td class="text-left">
+                    <a [routerLink]="['/View/AppAsset']" target="_blank"
+                      [queryParams]="{ AppId: AppId, AppAssetId: item.AppAssetObj.AppAssetId }">
+                      {{item.AssetName}} - {{item.Color}} - {{item.AssetCondition}}
+                    </a>
+                  </td>
+                  <td class="text-right">{{item.AssetValue | number:'.2':'en-US'}}</td>
+                  <td class="text-right">{{item.ResidualValueAmt.ResidualValuePrcnt | number:'.6':'en-US'}}% / {{item.ResidualValueAmt | number:'.2':'en-US'}}</td>
+                  <td class="text-right">{{item.AssetExpense | number:'.2':'en-US'}}</td>
+                  <td class="text-right">{{item.MarginPrcnt | number:'.6':'en-US'}}% / {{item.MarginAmt | number:'.2':'en-US'}}</td>
+                  <td class="text-right">{{item.RentAmt | number:'.2':'en-US'}}</td>
+                  <td class="text-right">{{item.GrossYieldPrcnt | number:'.6':'en-US'}}%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <lib-ucSubsection [id]="'SummaryId'" [title]="'Summary'" [panel]="'Summary'">
+          </lib-ucSubsection>
+          <div id="Summary">
+            <div class="form-group row">
+              <label class="col-md-3 adins-label">Rental Period</label>
+              <label class="col-md-3 adins-label text-right">{{listAsset[0].Tenor}} / {{listAsset[0].FirstInstType}}</label>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-3 adins-label">Total # of Asset</label>
+              <label class="col-md-3 adins-label text-right">{{listAsset[0].TotalAsset}}</label>
+            </div>
+            
+            <div class="form-group row">
+              <label class="col-md-3 adins-label">Total Asset Value</label>
+              <label class="col-md-3 adins-label text-right">{{TotalAssetValue | number:'.2':'en-US'}}</label>
+              <label class="col-md-3 adins-label">Total Rental Amount per Period</label>
+              <label class="col-md-3 adins-label text-right">{{TotalRentAmt | number:'.2':'en-US'}}</label>
+            </div>
+            
+            <div class="form-group row">
+              <label class="col-md-3 adins-label">Total Asset Residual Value (% / Amt)</label>
+              <label class="col-md-3 adins-label text-right">{{TotalAssetResidualValuePrcnt | number:'.6':'en-US'}}% / {{TotalAssetResidualValueAmt | number:'.2':'en-US'}}</label>
+              <label class="col-md-3 adins-label">Total Rental Amount + VAT per Period</label>
+              <label class="col-md-3 adins-label text-right">{{TotalRentAfterVatAmt | number:'.2':'en-US'}}</label>
+            </div>
+            
+            <div class="form-group row">
+              <label class="col-md-3 adins-label">Total Depreciation (% / Amt)</label>
+              <label class="col-md-3 adins-label text-right">{{TotalDepreciationPrcnt | number:'.6':'en-US'}}% / {{TotalDepreciationAmt | number:'.2':'en-US'}} (Hardcode)</label>
+              <label class="col-md-3 adins-label">Gross Yield</label>
+              <label class="col-md-3 adins-label text-right">{{GrossYieldPrcnt | number:'.6':'en-US'}}%</label>
+            </div>
+            
+            <div class="form-group row">
+              <label class="col-md-3 adins-label">Total Asset Expense</label>
+              <label class="col-md-3 adins-label text-right">{{TotalAssetExpense | number:'.2':'en-US'}}</label>
+            </div>
+            
+            <div class="form-group row">
+              <label class="col-md-3 adins-label"><b>Total Cost Before Margin</b></label>
+              <label class="col-md-3 adins-label text-right"><b>{{TotalCostBeforeMargin | number:'.2':'en-US'}}</b></label>
+              <label class="col-md-3 adins-label">Fee Non Capitalized</label>
+              <label class="col-md-3 adins-label text-right">{{FeeNonCapitalized | number:'.2':'en-US'}}</label>
+            </div>
+            
+            <div class="form-group row">
+              <label class="col-md-3 adins-label">Total Margin Amount (% / Amt)</label>
+              <label class="col-md-3 adins-label text-right">{{TotalMarginPrcnt | number:'.6':'en-US'}}% / {{TotalMarginAmt | number:'.2':'en-US'}} (Hardcode)</label>
+              <label class="col-md-3 adins-label">Total Security Deposit</label>
+              <label class="col-md-3 adins-label text-right">{{TotalSecurityDepositAmt | number:'.2':'en-US'}}</label>
+            </div>
+            
+            <div class="form-group row">
+              <label class="col-md-3 adins-label"><b>Total Cost After Margin</b></label>
+              <label class="col-md-3 adins-label text-right"><b>{{TotalCostAfterMargin | number:'.2':'en-US'}}</b></label>
+              <label class="col-md-3 adins-label"><b>Total Paid In Advance</b></label>
+              <label class="col-md-3 adins-label text-right"><b>{{TotalPaidInAdvance | number:'.2':'en-US'}}</b></label>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
-  <br>
-  <div class="form-group row">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> NTF </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.NtfAmt | number:'.2':'en-US'}} </label>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> First Installment Type </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appObj?.FirstInstTypeName}} </label>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Effective Rate to Customer </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.EffectiveRatePrcnt | number:'.2':'en-US'}} </label>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Standard Rate </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.StdEffectiveRatePrcnt | number:'.2':'en-US'}} </label>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Flat Rate to Customer </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.FlatRatePrcnt | number:'.2':'en-US'}} </label>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-        </div>
-        <div class="col-md-6">
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Installment Amount </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.InstAmt | number:'.2':'en-US'}} </label>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Num of Inst </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appObj?.NumOfInst}} </label>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Grace Period </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.GracePeriodTypeName != null ? appFinDataObj?.GracePeriodTypeName + ' / ' + appFinDataObj?.GracePeriod + ' Installment' : '-'}} </label>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Rounding </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.RoundingAmt | number:'.2':'en-US'}} </label>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6" *ngIf="appFinDataObj?.MrInstSchemeCode == 'BL'">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Balloon Value Amount </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.BalloonValueAmt | number:'.2':'en-US'}} </label>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6" *ngIf="appFinDataObj?.MrInstSchemeCode == 'STLS' || appFinDataObj?.MrInstSchemeCode == 'STCM'">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Cummulative Tenor </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.CummulativeTenor}} </label>
-        </div>
-      </div>
-    </div>
-  </div>
-  <br>
-  <div class="form-group row">
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Total Interest </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.TotalInterestAmt | number:'.2':'en-US'}} </label>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Diff Rate Amount </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.DiffRateAmt | number:'.2':'en-US'}} </label>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Total AR </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.TotalAr | number:'.2':'en-US'}} </label>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="adInsLabel"> Gross Yield </label>
-        </div>
-        <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.GrossYieldPrcnt | number:'.2':'en-US'}}%</label>
-        </div>
-      </div>
-    </div>
-  </div>
-  <br>
-  <table class="table table-responsive-md text-center table-hover">
-    <thead>
-      <tr class="table-header">
-        <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromTypeName" translate>
-            No
-          </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromValueName" translate>
-          Installment Amount  
-          </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="MrSubsidyAllocName" translate>
-          Principal Amount
-          </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>
-          Interest Amount
-          </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="SubsidyPrcnt" translate>
-          Os Principal Amount
-        </span>
-        </th>
-        <th style="text-align: center;"><span class="thead-header" name="SubsidyAmt" translate>
-          Os Interest Amount  
-        </span>
-        </th>
-      </tr>
-    </thead>
-    <tbody *ngIf = "listInstallment.length == 0">
-      <tr>
-        <td colspan="100%">No Data Available</td>
-      </tr>
-    </tbody>
-    <tbody *ngIf = "listInstallment.length > 0">
-      <tr *ngFor="let item of listInstallment; let i = index">
-        <td style="text-align: center;">{{item.InstSeqNo}}</td>
-        <td style="text-align: right;">{{item.InstAmt | number : '1.2-2'}}</td>
-        <td style="text-align: right;">{{item.PrincipalAmt | number : '1.2-2'}}</td>
-        <td style="text-align: right;">{{item.InterestAmt| number : '1.2-2'}}</td>
-        <td style="text-align: right;">{{item.OsPrincipalAmt| number : '1.2-2'}}</td>
-        <td style="text-align: right;">{{item.OsInterestAmt| number : '1.2-2'}}</td>
-      </tr>
-    </tbody>
-  </table>
 </div>

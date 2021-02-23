@@ -35,17 +35,19 @@ export class AppAssetViewFinancialDataComponent implements OnInit {
       (response) => {
         this.RentalCalculationObj = response;
         
-        this.RentAmtAndVat = this.RentalCalculationObj.RentalAmt + this.RentalCalculationObj.RentalVatAmt;
-        this.TotalRentAmtAndVat = this.RentalCalculationObj.Tenor * this.RentAmtAndVat;
-        this.TotalAssetExpense = this.RentalCalculationObj.TotalInsuranceAmt + this.RentalCalculationObj.TotalMaintAmt + this.RentalCalculationObj.TotalOthExpenseAmt + this.RentalCalculationObj.TotalFeeAmt;
-        this.FeeNonCapitalized = this.RentalCalculationObj.TotalFeeAmt - this.RentalCalculationObj.TotalFeeCapitalizedAmt;
-        this.TotalCostAfterMargin = this.RentalCalculationObj.TotalCostBeforeMargin + this.RentalCalculationObj.MarginAmt;
-        
-        if(this.RentalCalculationObj.FirstInstType === "Advance") {
-          this.TotalPaidInAdvance = this.FeeNonCapitalized + this.RentalCalculationObj.SecurityDepositAmt + this.RentAmtAndVat;
-        }
-        else if(this.RentalCalculationObj.FirstInstType === "Arrear") {
-          this.TotalPaidInAdvance = this.FeeNonCapitalized + this.RentalCalculationObj.SecurityDepositAmt;
+        if(this.RentalCalculationObj !== null) {
+          this.RentAmtAndVat = this.RentalCalculationObj.RentalAmt + this.RentalCalculationObj.RentalVatAmt;
+          this.TotalRentAmtAndVat = this.RentalCalculationObj.Tenor * this.RentAmtAndVat;
+          this.TotalAssetExpense = this.RentalCalculationObj.TotalInsuranceAmt + this.RentalCalculationObj.TotalMaintAmt + this.RentalCalculationObj.TotalOthExpenseAmt + this.RentalCalculationObj.TotalFeeAmt;
+          this.FeeNonCapitalized = this.RentalCalculationObj.TotalFeeAmt - this.RentalCalculationObj.TotalFeeCapitalizedAmt;
+          this.TotalCostAfterMargin = this.RentalCalculationObj.TotalCostBeforeMargin + this.RentalCalculationObj.MarginAmt;
+          
+          if(this.RentalCalculationObj.FirstInstType === "Advance") {
+            this.TotalPaidInAdvance = this.FeeNonCapitalized + this.RentalCalculationObj.SecurityDepositAmt + this.RentAmtAndVat;
+          }
+          else if(this.RentalCalculationObj.FirstInstType === "Arrear") {
+            this.TotalPaidInAdvance = this.FeeNonCapitalized + this.RentalCalculationObj.SecurityDepositAmt;
+          }
         }
       }
     );
