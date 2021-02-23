@@ -28,6 +28,8 @@ import { DupCheckMdSubjMatchComponent } from './app-dup-check-main-data/dup-chec
 import { PathConstant } from 'app/shared/constant/PathConstant';
 import { ReturnHandlingEditNap4Component } from './return-handling/return-handling-edit-nap4/return-handling-edit-nap4.component';
 import { ReturnHandlingNewEditAppPagingComponent } from './return-handling/return-handling-new-edit-app-paging/return-handling-new-edit-app-paging.component';
+import { AdditionalTcPagingComponent } from './additional-tc/additional-tc-paging/additional-tc-paging.component';
+import { AdditionalTcDetailComponent } from './additional-tc/additional-tc-detail/additional-tc-detail.component';
 
 const routes: Routes = [
   {
@@ -205,17 +207,37 @@ const routes: Routes = [
       {
         path: PathConstant.APP_DUP_CHECK_MAIN_DATA_PAGING,
         component: DupCheckMdPagingComponent,
-        data: { title: 'App Duplicate Check' }
+        data: {
+          title: 'App Duplicate Check'
+        }
       },
       {
         path: PathConstant.APP_DUP_CHECK_MAIN_DATA_SUBJ_LIST,
         component: DupCheckMdSubjListComponent,
-        data: { title: 'App Duplicate Check Subject List' }
+        data: {
+          title: 'App Duplicate Check Subject List'
+        }
       },
       {
         path: PathConstant.APP_DUP_CHECK_MAIN_DATA_SUBJ_MATCH,
         component: DupCheckMdSubjMatchComponent,
-        data: { title: 'App Duplicate Check Subject Match' }
+        data: {
+          title: 'App Duplicate Check Subject Match'
+        }
+      },
+      {
+        path: PathConstant.ADD_TC_PAGING,
+        component: AdditionalTcPagingComponent,
+        data: {
+          title: 'Additional TC'
+        }
+      },
+      {
+        path: PathConstant.ADD_TC_DETAIL,
+        component: AdditionalTcDetailComponent,
+        data: {
+          title: 'Additional TC'
+        }
       },
     ]
   }

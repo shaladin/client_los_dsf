@@ -4,6 +4,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
@@ -70,7 +71,7 @@ export class PreGoLiveOplPagingComponent implements OnInit {
       AdInsHelper.OpenAppViewByAppId(event.RowObj.AppId);
     }
     else if(event.Key === "AppAsset") {
-      window.open(environment.losR3Web + "/View/AppAsset?AppId=" + event.RowObj.AppId + "&AppAssetId=" + event.RowObj.AppAssetId, "_blank");
+      window.open(environment.losR3Web + NavigationConstant.VIEW_APP_ASSET + "?AppId=" + event.RowObj.AppId + "&AppAssetId=" + event.RowObj.AppAssetId, "_blank");
     }
     else if(event.Key === "ProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.RowObj.ProdOfferingCode,event.RowObj.ProdOfferingVersion); 
@@ -84,7 +85,7 @@ export class PreGoLiveOplPagingComponent implements OnInit {
       }
       else {
         if(this.IsAppNoSame) {
-          AdInsHelper.RedirectUrl(this.router,["Nap/AdminProcess/pregoliveopl/detail"], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_OPL_DETAIL], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
         }
         else {
           this.toastr.errorMessage("Application No Must Same!");

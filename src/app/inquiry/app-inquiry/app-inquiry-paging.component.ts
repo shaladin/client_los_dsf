@@ -14,7 +14,6 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 })
 export class AppInquiryPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
-  link: string;
   BizTemplateCode: string;
   isReady: boolean = false;
 

@@ -785,6 +785,7 @@ export class URLConstant {
   // APP CUST OTHER INFO
   public static AddEditCustCompletionOtherInfo = environment.losUrl + "/AppCustOtherInfo/AddEditCustCompletionOtherInfo";
   public static GetAppCustOtherInfoByAppCustId = environment.losUrl + "/AppCustOtherInfo/GetAppCustOtherInfoByAppCustId"
+  
   // APP TC
   public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
   public static GetListExistingTCbyAppId = environment.losUrl + "/AppTc/GetListExistingTCbyAppId";
@@ -792,6 +793,7 @@ export class URLConstant {
   public static DeleteAppTc = environment.losUrl + "/AppTc/DeleteAppTc";
   public static DeleteRangeAppTc = environment.losUrl + "/AppTc/DeleteRangeAppTc";
   public static EditAdditionalTcNew = environment.losUrl + "/AppTc/EditAdditionalTcNew";
+  public static AddEditAdditionalTc = environment.losUrl + "/AppTc/AddEditAdditionalTc";
 
   // App Asset
   public static GetAppAssetListByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetListByAgrmntId";

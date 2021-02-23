@@ -1,0 +1,49 @@
+{
+    "title": "",
+    "subsection": [
+        {
+            "subSectionId": "MainInfoId",
+            "subSectionTitle": "Main Information",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "callback",
+                    "key": "Application",
+                    "label": "Application No",
+                    "property": "AppNo"
+                },
+                {
+                  "type": "currency",
+                  "position": "right",
+                  "label": "Rental Amount (Monthly)",
+                  "property": "RentAmt"
+                },
+                {
+                    "type": "callback",
+                    "key": "Agreement",
+                    "label": "Agreement No",
+                    "property": "AgrmntNo"
+                },
+                {
+                    "type": "text",
+                    "label": "Rental Period (In Months)",
+                    "property": "RentalPeriod"
+                },
+                {
+                    "type": "text",
+                    "label": "Customer Name",
+                    "property": "CustName"
+                },
+                {
+                    "type": "callback",
+                    "key": "ProdOffering",
+                    "label": "Product Offering",
+                    "property": "ProdOfferingName"
+                }
+            ],
+            "querystring": {
+                "name": "viewAdditionalTcMainInfo"
+            }
+        }
+    ]
+}  
