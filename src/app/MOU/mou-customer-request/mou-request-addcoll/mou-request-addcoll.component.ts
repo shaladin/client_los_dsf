@@ -24,6 +24,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { MouCustObjForAddTrxData } from 'app/shared/model/MouCustObjForAddTrxData.Model';
 import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-mou-request-addcoll',
@@ -1056,11 +1057,29 @@ export class MouRequestAddcollComponent implements OnInit {
         
         if(gsNeedCheckBySystem != undefined){
           this.isNeedCheckBySystem = gsNeedCheckBySystem.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
         }
 
         if(gsUseDigitalization != undefined){
           this.isUseDigitalization = gsUseDigitalization.GsValue;
-        }      
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
+        } 
+
+        if(this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0"){
+          this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
+          this.thirdPartyObj.TrxTypeCode = CommonConstant.MOU_TRX_TYPE_CODE;
+          this.thirdPartyObj.TrxNo = this.returnMouCust["MouCustNo"];
+          this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_ASSET;
+          this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+            (response) => {
+              if (response != null) {
+                this.latestReqDtCheckIntegrator = response['ReqDt'];
+                this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+              }
+            });
+        }
       });
   }
   HitAPI() {

@@ -24,6 +24,8 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { String } from 'typescript-string-operations';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-job-tab',
@@ -170,10 +172,14 @@ export class JobTabComponent implements OnInit {
         
         if(gsNeedCheckBySystem != undefined){
           this.IsIntegratorCheckBySystem = gsNeedCheckBySystem.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
         }
 
         if(gsUseDigitalization != undefined){
           this.IsUseDigitalization = gsUseDigitalization.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
         }
       },
       (error) => {

@@ -23,6 +23,7 @@ import { AppAssetAttrObj } from 'app/shared/model/AppAssetAttrObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-asset-data',
@@ -611,10 +612,14 @@ export class AssetDataComponent implements OnInit {
         
         if(gsNeedCheckBySystem != undefined){
           this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
         }
 
         if(gsUseDigitalization != undefined){
           this.IsUseDigitalization = gsUseDigitalization.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
         }
 
         if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {

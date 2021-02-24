@@ -28,6 +28,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
 import { AppCollateralAttrCustomObj } from 'app/shared/model/AppCollateralAttrCustom.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-collateral-detail',
@@ -215,10 +216,14 @@ export class CollateralDetailComponent implements OnInit {
         
         if(gsNeedCheckBySystem != undefined){
           this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
         }
 
         if(gsUseDigitalization != undefined){
           this.IsUseDigitalization = gsUseDigitalization.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
         }
 
         if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {

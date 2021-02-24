@@ -32,6 +32,7 @@ import { MouCustObjForAddTrxData } from 'app/shared/model/MouCustObjForAddTrxDat
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-mou-cust-tab',
@@ -1422,10 +1423,14 @@ export class MouCustTabComponent implements OnInit {
         
         if(gsNeedCheckBySystem != undefined){
           this.isNeedCheckBySystem = gsNeedCheckBySystem.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
         }
 
         if(gsUseDigitalization != undefined){
           this.isUseDigitalization = gsUseDigitalization.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
         }
         this.mouObj = new MouCustObj();
         this.mouObj.MouCustId = this.MouCustId;

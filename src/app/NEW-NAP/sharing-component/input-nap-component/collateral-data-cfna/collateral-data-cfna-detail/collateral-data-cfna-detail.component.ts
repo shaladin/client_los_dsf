@@ -26,6 +26,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppCollateralAttrCustomObj } from 'app/shared/model/AppCollateralAttrCustom.Model';
 import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-collateral-data-cfna-detail',
@@ -919,10 +920,14 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         
         if(gsNeedCheckBySystem != undefined){
           this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
         }
 
         if(gsUseDigitalization != undefined){
           this.IsUseDigitalization = gsUseDigitalization.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
         }
       }
     );

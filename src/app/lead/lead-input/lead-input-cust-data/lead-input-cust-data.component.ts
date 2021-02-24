@@ -30,6 +30,8 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { String } from 'typescript-string-operations';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-lead-input-cust-data',
@@ -235,11 +237,16 @@ export class LeadInputCustDataComponent implements OnInit {
         
         if(gsNeedCheckBySystem != undefined){
           this.isNeedCheckBySystem = gsNeedCheckBySystem.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
         }
 
         if(gsUseDigitalization != undefined){
           this.isUseDigitalization = gsUseDigitalization.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
         }
+        
         this.leadObj = new LeadObj();
         this.leadObj.LeadId = this.LeadId;
         this.http.post(this.getLeadByLeadId, this.leadObj).subscribe(

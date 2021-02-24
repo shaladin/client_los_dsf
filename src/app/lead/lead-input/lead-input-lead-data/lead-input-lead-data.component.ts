@@ -19,6 +19,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ThirdPartyRsltHObj } from 'app/shared/model/ThirdPartyRsltHObj.Model';
 import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { String } from 'typescript-string-operations';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 
 @Component({
@@ -228,10 +230,14 @@ export class LeadInputLeadDataComponent implements OnInit {
 
         if(gsNeedCheckBySystem != undefined){
           this.isNeedCheckBySystem = gsNeedCheckBySystem.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
         }
 
         if(gsUseDigitalization != undefined){
           this.isUseDigitalization = gsUseDigitalization.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
         }
 
         this.leadObj = new LeadObj();
