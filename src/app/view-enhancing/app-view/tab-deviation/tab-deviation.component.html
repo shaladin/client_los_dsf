@@ -1,3 +1,82 @@
-<p>
-  tab-deviation works!
-</p>
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+
+          <lib-ucSubsection [id]="'viewAutoDeviationId'" [title]="'Automatic Deviation'" [panel]="'viewAutoDeviation'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewAutoDeviation">
+            <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortAutoDeviationData($event)">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header">No.</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="DeviationType">Deviation Type</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="OriValue">Original Value</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="CurrValue">Current Value</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="AppvAt">Approval At</span>
+                  </th>
+                  <th><span translate class="thead-header" mat-sort-header="Notes">Notes</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf = "AutoDeviationData?.length == 0">
+                  <td colspan="100%">No Data Available</td>
+                </tr>
+                <tr *ngFor="let item of AutoDeviationData; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.DeviationType }}</td>
+                  <td>{{ item.OriValue }}</td>
+                  <td>{{ item.CurrValue }}</td>
+                  <td>{{ item.AppvAt }}</td>
+                  <td *ngIf="item.Notes != null">{{ item.Notes }}</td>
+                  <td *ngIf="item.Notes == null"> - </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <lib-ucSubsection [id]="'viewManualDeviationId'" [title]="'Manual Deviation'" [panel]="'viewManualDeviation'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewManualDeviation">
+            <table class="table table-responsive-md text-center table-hover" matSort (matSortChange)="sortManualDeviationData($event)">
+              <thead>
+                <tr class="table-header">
+                  <th>
+                    <span translate class="thead-header" mat-sort-header="SeqNo"> No.</span>
+                  </th>
+                  <th>
+                    <span translate class="thead-header" mat-sort-header="DeviationCategory">Deviation Criteria</span>
+                  </th>
+                  <th>
+                    <span translate class="thead-header" mat-sort-header="ApvAt">Approval At</span>
+                  </th>
+                  <th>
+                    <span translate class="thead-header" mat-sort-header="Notes">Notes</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="ManualDeviationData?.length == 0">
+                  <td colspan="100%">No Data Available</td>
+                </tr>
+                <tr *ngFor="let item of ManualDeviationData; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td style="text-align: left;">{{ item.DeviationCategory }}</td>
+                  <td>{{ item.ApvAt }}</td>
+                  <td>{{ item.Notes }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

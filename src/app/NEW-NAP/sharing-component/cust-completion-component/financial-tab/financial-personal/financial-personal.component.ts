@@ -40,7 +40,8 @@ export class FinancialPersonalComponent implements OnInit {
     SpouseMonthlyIncomeAmt: [0],
     TotalIncomeAmt: [0],
     NettIncomeAmt: [0],
-    RowVersion: ['']
+    RowVersion: [''],
+    AttrList: this.fb.array([])
   })
 
   constructor(private fb: FormBuilder,

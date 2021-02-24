@@ -155,6 +155,9 @@ export class PathConstant {
     public static APP_DUP_CHECK_MAIN_DATA_PAGING = PathConstant.APP_DUP_CHECK_MAIN_DATA + "/" + PathConstant.PAGING;
     public static APP_DUP_CHECK_MAIN_DATA_SUBJ_LIST = PathConstant.APP_DUP_CHECK_MAIN_DATA + "/SubjList";
     public static APP_DUP_CHECK_MAIN_DATA_SUBJ_MATCH = PathConstant.APP_DUP_CHECK_MAIN_DATA + "/SubjMatch";
+    public static ADD_TC = "addtc";
+    public static ADD_TC_PAGING = PathConstant.ADD_TC + "/" + PathConstant.PAGING_LOWERCASE;
+    public static ADD_TC_DETAIL = PathConstant.ADD_TC + "/" + PathConstant.DETAIL_LOWERCASE;
     //#endregion
 
     //#region Nap-Admin-Prcs
