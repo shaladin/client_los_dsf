@@ -120,11 +120,6 @@ export class JobTabComponent implements OnInit {
     this.BusinessDt = this.UserAccess.BusinessDt;
     this.GetGeneralSetting();
     await this.InitLookup();
-    this.http.post(URLConstant.GetAppById, { AppId: this.appId }).subscribe(
-      (response) => {
-        this.bizTemplateCode = response["BizTemplateCode"];
-      });
-    await this.GetThirdPartyResultHByTrxTypeCodeAndTrxNo();
     this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
       (response) => {
         this.IsCustomer = response.AppCustObj.IsCustomer;
@@ -181,6 +176,8 @@ export class JobTabComponent implements OnInit {
         }else{
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
         }
+
+        this.GetThirdPartyResultHByTrxTypeCodeAndTrxNo();
       },
       (error) => {
         console.log(error);
@@ -498,6 +495,7 @@ export class JobTabComponent implements OnInit {
         if(response['MouCustId'] != null){
           this.mouCustId = response['MouCustId'];
         }
+        this.bizTemplateCode = response["BizTemplateCode"];
         if(this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0"){
           this.http.post(URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo, { TrxTypeCode: CommonConstant.APP_TRX_TYPE_CODE, TrxNo: response["AppNo"] }).subscribe(
             (response) => {
