@@ -37,6 +37,7 @@ export class NavigationConstant {
   //#region CustCompletion
   public static NAP_CUST_COMPL_PAGING = PathConstant.LR_NAP + "/" + PathConstant.NAP_CUST_COMPL + "/" + PathConstant.PAGING; //"Nap/CustCompletion/Paging"
   public static NAP_CUST_COMPL_DETAIL = PathConstant.LR_NAP + "/" + PathConstant.NAP_CUST_COMPL + "/" + PathConstant.DETAIL; //"Nap/CustCompletion/Detail"
+  public static NAP_CUST_COMPL_OPL_DETAIL = PathConstant.LR_NAP + "/" + PathConstant.NAP_CUST_COMPL + "/" + PathConstant.OPL_DETAIL_LOWERCASE; //"Nap/CustCompletion/opl/detail"
   //#endregion
 
   //#region AddProcess
@@ -60,6 +61,7 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_COLL_EDIT; //'/Nap/AddProcess/ReturnHandlingCollateral/Edit'
   public static NAP_ADD_PRCS_RETURN_HANDLING_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_PAGING; //'/Nap/AddProcess/ReturnHandling/Paging'
   public static NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_EDIT_APP_PAGING; //'Nap/AddProcess/ReturnHandling/EditAppPaging'
+  public static NAP_ADD_PRCS_RETURN_HANDLING_EDIT_CUST_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_EDIT_CUST_PAGING; //'Nap/AddProcess/ReturnHandling/editcustpaging'
   public static NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_COMM_RSV_FUND_PAGING; //"/Nap/AddProcess/ReturnHandling/CommissionReservedFund/Paging"
   public static NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_PHN_VRF_PAGING; //"/Nap/AddProcess/ReturnHandlingPhoneVerif/Paging"
   public static NAP_ADD_PRCS_RETURN_HANDLING_SRVY = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_SRVY; //"/Nap/AddProcess/ReturnHandling/Survey"

@@ -1,103 +1,109 @@
 <div class="card">
-    <div class="card-header">
-      <h4 class="card-title" translate> Return Handling </h4>
+  <div class="card-header">
+    <h4 class="card-title" translate> Return Handling </h4>
+  </div>
+  <div class="card-body">
+    <div *ngIf="lobCode === 'OPL'">
+      <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)">
+      </lib-ucviewgeneric>
     </div>
-    <div class="card-body">
-        <app-app-main-info [AppId]="appId"></app-app-main-info>
-        <div class="px-3">
-            <form class="form form-horizontal" [formGroup]="ReturnHandlingForm" (ngSubmit)="ReturnHandlingForm.valid && AddTask()"
-                #enjiForm="ngForm">
-                <div class="form-body">
-                    <lib-ucSubsection [id]="'returnInfoId'" [title]="'Return Information'" [panel]="'returnInformation'">
-                    </lib-ucSubsection>
-                    <div id="returnInformation">
-                        <div class="form-group row">
-                            <label class="col-md-2" translate>Return By</label>
-                            <label class="col-md-4" translate>{{returnHandlingHObj?.ReturnBy}}</label>
-                            <label class="col-md-2" translate>Return Notes</label>
-                            <label class="col-md-4" translate>{{returnHandlingHObj?.ReturnNotes}}</label>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-2 adins-required-label" for="task" translate>Task</label>
-                            <div class="col-md-4">
-                                <select class="form-control" id="task" formControlName="MrReturnTaskCode"
-                                [ngClass]="{ 'is-invalid': enjiForm.submitted && ReturnHandlingForm.controls.MrReturnTaskCode.invalid }">
-                                <option *ngFor="let item of taskObj" [value]="item.Key">
-                                    {{item.Value}}
-                                </option>
-                                </select>
-                                <lib-uc-show-errors [control]="ReturnHandlingForm.controls.MrReturnTaskCode" [submit]="enjiForm.submitted"></lib-uc-show-errors> 
-                            </div>    
-                            <label class="col-md-2 adins-required-label" for="notes" translate>Task Notes</label>
-                            <div class="col-md-4">
-                                <textarea rows="5" id="notes" class="form-control" formControlName="ReturnHandlingNotes" 
-                                [ngClass]="{ 'is-invalid': enjiForm.submitted && ReturnHandlingForm.controls.ReturnHandlingNotes.invalid }"></textarea>
-                                <lib-uc-show-errors [control]="ReturnHandlingForm.controls.ReturnHandlingNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                            </div>                
-                        </div>
-                        <div class="form-actions right">
-                            <button type="submit" class="btn btn-raised btn-primary">
-                              <i class="fa fa-check-square-o"></i> Add
-                            </button>
-                        </div>
-                        <div class="form-group row">
-                            <table class="table table-responsive-md text-center table-hover">
-                              <thead>
-                                <tr class="table-header">
-                                  <th style="text-align: center;">
-                                    <span class="thead-header" translate>No</span>
-                                  </th>
-                                  <th style="text-align: center;">
-                                    <span class="thead-header" translate>Task</span>
-                                  </th>
-                                  <th style="text-align: center;">
-                                    <span class="thead-header" translate>Task Notes</span>
-                                  </th>
-                                  <th style="text-align: center;">
-                                    <span class="thead-header" translate>Task Status</span>
-                                  </th>
-                                  <th style="text-align: center;">
-                                    <span class="thead-header" translate>Request</span>
-                                  </th>
-                                  <th style="text-align: center;">
-                                    <span class="thead-header" translate>Delete</span>
-                                  </th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr *ngFor="let item of returnHandlingDObjs; let i = index">
-                                  <td style="text-align: center;">{{i + 1}}</td>
-                                  <td style="text-align: center;">{{item.ReturnTaskName}}</td>
-                                  <td style="text-align: center;">{{item.ReturnHandlingNotes}}</td>
-                                  <td style="text-align: center;">{{item.ReturnStatName}}</td>
-                                  <td>
-                                    <a class="success p-0" (click)="Submit(item, i)" [hidden]="item.ReturnStat == 'REQ' || item.ReturnStat == 'DONE'">
-                                        <i class="font-medium-3 ft-edit-2 mr-2"></i>
-                                      </a>
-                                  </td>
-                                  <td>
-                                    <a class="danger p-0" (click)="Delete(item, i)" [hidden]="item.ReturnStat == 'REQ' || item.ReturnStat == 'DONE'">
-                                        <i class="font-medium-3 ft-trash-2 mr-2"></i>
-                                      </a>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                        </div>
-                        <div class="form-actions right">
-                            <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode: lobCode}">
-                              <i class="ft-x"></i> Cancel
-                            </button>            
-                            <button type="button" class="btn btn-raised btn-primary" (click)="SubmitAll()">
-                              <i class="far fa-check-square"></i> Save
-                            </button>
-                            <!-- <button type="button" class="btn btn-raised btn-primary" (click)="Test()">
-                              <i class="fa fa-check-square-o"></i> Test
-                            </button> -->
-                        </div>
-                    </div>
-                </div>
-            </form>
+    <div *ngIf="lobCode !== 'OPL'">
+      <app-app-main-info [AppId]="appId"></app-app-main-info>
+    </div>
+    <div class="px-3">
+      <form class="form form-horizontal" [formGroup]="ReturnHandlingForm" (ngSubmit)="ReturnHandlingForm.valid && AddTask()"
+        #enjiForm="ngForm">
+        <div class="form-body">
+          <lib-ucSubsection [id]="'returnInfoId'" [title]="'Return Information'" [panel]="'returnInformation'">
+          </lib-ucSubsection>
+          <div id="returnInformation">
+            <div class="form-group row">
+              <label class="col-md-2" translate>Return By</label>
+              <label class="col-md-4" translate>{{returnHandlingHObj?.ReturnBy}}</label>
+              <label class="col-md-2" translate>Return Notes</label>
+              <label class="col-md-4" translate>{{returnHandlingHObj?.ReturnNotes}}</label>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-2 adins-required-label" for="task" translate>Task</label>
+              <div class="col-md-4">
+                <select class="form-control" id="task" formControlName="MrReturnTaskCode"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ReturnHandlingForm.controls.MrReturnTaskCode.invalid }">
+                  <option *ngFor="let item of taskObj" [value]="item.Key">
+                    {{item.Value}}
+                  </option>
+                </select>
+                <lib-uc-show-errors [control]="ReturnHandlingForm.controls.MrReturnTaskCode" [submit]="enjiForm.submitted"></lib-uc-show-errors> 
+              </div>    
+              <label class="col-md-2 adins-required-label" for="notes" translate>Task Notes</label>
+              <div class="col-md-4">
+                <textarea rows="5" id="notes" class="form-control" formControlName="ReturnHandlingNotes" 
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ReturnHandlingForm.controls.ReturnHandlingNotes.invalid }"></textarea>
+                <lib-uc-show-errors [control]="ReturnHandlingForm.controls.ReturnHandlingNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>                
+            </div>
+            <div class="form-actions right">
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="fa fa-check-square-o"></i> Add
+              </button>
+            </div>
+            <div class="form-group row">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th style="text-align: center;">
+                      <span class="thead-header" translate>No</span>
+                    </th>
+                    <th style="text-align: center;">
+                      <span class="thead-header" translate>Task</span>
+                    </th>
+                    <th style="text-align: center;">
+                      <span class="thead-header" translate>Task Notes</span>
+                    </th>
+                    <th style="text-align: center;">
+                      <span class="thead-header" translate>Task Status</span>
+                    </th>
+                    <th style="text-align: center;">
+                      <span class="thead-header" translate>Request</span>
+                    </th>
+                    <th style="text-align: center;">
+                      <span class="thead-header" translate>Delete</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of returnHandlingDObjs; let i = index">
+                    <td style="text-align: center;">{{i + 1}}</td>
+                    <td style="text-align: center;">{{item.ReturnTaskName}}</td>
+                    <td style="text-align: center;">{{item.ReturnHandlingNotes}}</td>
+                    <td style="text-align: center;">{{item.ReturnStatName}}</td>
+                    <td>
+                      <a class="success p-0" (click)="Submit(item, i)" [hidden]="item.ReturnStat == 'REQ' || item.ReturnStat == 'DONE'">
+                          <i class="font-medium-3 ft-edit-2 mr-2"></i>
+                        </a>
+                    </td>
+                    <td>
+                      <a class="danger p-0" (click)="Delete(item, i)" [hidden]="item.ReturnStat == 'REQ' || item.ReturnStat == 'DONE'">
+                          <i class="font-medium-3 ft-trash-2 mr-2"></i>
+                        </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode: lobCode}">
+                <i class="ft-x"></i> Cancel
+              </button>            
+              <button type="button" class="btn btn-raised btn-primary" (click)="SubmitAll()">
+                <i class="far fa-check-square"></i> Save
+              </button>
+              <!-- <button type="button" class="btn btn-raised btn-primary" (click)="Test()">
+                <i class="fa fa-check-square-o"></i> Test
+              </button> -->
+            </div>
+          </div>
         </div>
+      </form>
     </div>
+  </div>
 </div>
