@@ -67,6 +67,7 @@ export class JobTabComponent implements OnInit {
   isUcAddrReady: boolean = false
   MrCustModelDescr: string = "Employee";
   IsIntegratorCheckBySystem: string = "0";
+  IsUseDigitalization: string;
   IsCustomer: boolean = false;
   BusinessDt: Date;
   UserAccess: any;
@@ -155,9 +156,25 @@ export class JobTabComponent implements OnInit {
   }
 
   async GetGeneralSetting() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GSCodeIntegratorCheckBySystem }).toPromise().then(
+    var generalSettingObj = new GeneralSettingObj();
+
+    generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
+
+    await this.http.post<GeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, generalSettingObj).toPromise().then(
       (response) => {
-        this.IsIntegratorCheckBySystem = response.GsValue;
+        var returnGeneralSettingObj = response;
+
+        var gsNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        
+        if(gsNeedCheckBySystem != undefined){
+          this.IsIntegratorCheckBySystem = gsNeedCheckBySystem.GsValue;
+        }
+
+        if(gsUseDigitalization != undefined){
+          this.IsUseDigitalization = gsUseDigitalization.GsValue;
+        }
       },
       (error) => {
         console.log(error);
@@ -242,7 +259,7 @@ export class JobTabComponent implements OnInit {
   }
 
   SaveForm() {
-    if (this.IsIntegratorCheckBySystem == "0" && this.mouCustId == 0 && this.bizTemplateCode != CommonConstant.FCTR) {
+    if (this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0" && this.mouCustId == 0 && this.bizTemplateCode != CommonConstant.FCTR) {
       if (this.IsCustomer) {
         if (!this.IsNeedIntegrator) {
           if (confirm("Do you want to submit this data without Integrator ?")) {
@@ -475,17 +492,18 @@ export class JobTabComponent implements OnInit {
         if(response['MouCustId'] != null){
           this.mouCustId = response['MouCustId'];
         }
-        this.http.post(URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo, { TrxTypeCode: CommonConstant.APP_TRX_TYPE_CODE, TrxNo: response["AppNo"] }).subscribe(
-          (response) => {
-            if (response["ThirdPartyRsltHId"] != 0 && response["ThirdPartyRsltHId"] != null) {
-              this.requestedDate = response["ReqDt"];
+        if(this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0"){
+          this.http.post(URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo, { TrxTypeCode: CommonConstant.APP_TRX_TYPE_CODE, TrxNo: response["AppNo"] }).subscribe(
+            (response) => {
+              if (response["ThirdPartyRsltHId"] != 0 && response["ThirdPartyRsltHId"] != null) {
+                this.requestedDate = response["ReqDt"];
+              }
+            },
+            (error) => {
+              console.log(error);
             }
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-
+          );
+        }
       },
       (error) => {
         console.log(error);

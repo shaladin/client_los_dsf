@@ -43,7 +43,8 @@ export class MouRequestAddcollComponent implements OnInit {
   latestReqDtCheckIntegrator: any;
   generalSettingObj: GeneralSettingObj;
   returnGeneralSettingObj: any;
-  isNeedCheckBySystem: string = "0";
+  isNeedCheckBySystem: string;
+  isUseDigitalization: string;
   thirdPartyRsltHId: any = "";
   @ViewChild('LookupCollateral') set content(content: UclookupgenericComponent) {
     if (content) { // initially setter gets called with undefined
@@ -167,13 +168,15 @@ export class MouRequestAddcollComponent implements OnInit {
         this.thirdPartyObj.TrxTypeCode = CommonConstant.MOU_TRX_TYPE_CODE;
         this.thirdPartyObj.TrxNo = this.returnMouCust["MouCustNo"];
         this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_ASSET;
-        this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-          (response) => {
-            if (response != null) {
-              this.latestReqDtCheckIntegrator = response['ReqDt'];
-              this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-            }
-          });
+        if(this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0"){
+          this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+            (response) => {
+              if (response != null) {
+                this.latestReqDtCheckIntegrator = response['ReqDt'];
+                this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+              }
+            });
+        }
       });
 
     var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship };
@@ -1016,7 +1019,7 @@ export class MouRequestAddcollComponent implements OnInit {
       this.toastr.errorMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
       return;
     }
-    if (this.isNeedCheckBySystem == "0") {
+    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
       if (!this.IsCalledIntegrator) {
         if (confirm("Continue without integrator ?")) {
           this.ResponseMouAddColl.emit({ StatusCode: "200" });
@@ -1042,11 +1045,22 @@ export class MouRequestAddcollComponent implements OnInit {
   }
   GetGS() {
     this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.GsCode = "INTEGRATOR_CHECK_BY_SYSTEM";
-    this.http.post(URLConstant.GetGeneralSettingByCode, this.generalSettingObj).subscribe(
+    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);    
+    this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
       (response) => {
         this.returnGeneralSettingObj = response;
-        this.isNeedCheckBySystem = this.returnGeneralSettingObj.GsValue;
+
+        var gsNeedCheckBySystem = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        
+        if(gsNeedCheckBySystem != undefined){
+          this.isNeedCheckBySystem = gsNeedCheckBySystem.GsValue;
+        }
+
+        if(gsUseDigitalization != undefined){
+          this.isUseDigitalization = gsUseDigitalization.GsValue;
+        }      
       });
   }
   HitAPI() {
