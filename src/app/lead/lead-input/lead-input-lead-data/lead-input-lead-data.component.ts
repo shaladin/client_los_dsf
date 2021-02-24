@@ -225,7 +225,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         var gsUseDigitalization = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
         
         if(gsLobKta != undefined){
-          this.lobKta = gsLobKta.GsValue;
+          this.lobKta = gsLobKta.GsValue.split(",");
         }
 
         if(gsNeedCheckBySystem != undefined){
