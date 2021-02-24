@@ -19,6 +19,7 @@ import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 
 @Component({
   selector: 'app-credit-review-cfna',
@@ -41,6 +42,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   dmsObj: DMSObj;
   appNo: any;
   custNo: string;
+  IsUseDigitalization: string;
 
   // ReturnForm = this.fb.group({
   //   ReturnReason: [''],
@@ -137,6 +139,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
     await this.GetExistingCreditReviewData();
     this.initInputApprovalObj();
     await this.InitDms();
+    await this.GetIsUseDigitalization();
   }
 
   ngAfterViewInit() {
@@ -465,5 +468,15 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   }
   cancel(){ 
     AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+  }
+
+  async GetIsUseDigitalization() {
+    var generalSettingObj = new GeneralSettingObj();
+    generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
+    await this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).toPromise().then(
+      (response) => {
+        this.IsUseDigitalization = response["GsValue"];
+      }
+    )
   }
 }

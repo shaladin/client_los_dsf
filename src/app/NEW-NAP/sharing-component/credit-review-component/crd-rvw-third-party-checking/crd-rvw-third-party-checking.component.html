@@ -1,51 +1,53 @@
-<lib-ucSubsection [id]="'ThirdPartyId'" [title]="'Third Party Checking'" [panel]="'ThirdParty'">
-</lib-ucSubsection>
-<div id="ThirdParty">
-  <div class="card-body">
-    <div class="row">
-      <div class="col-md-6 ">
-        <div class="row">
-          <div class="col-md-6">
-            <label class="label-control"> Dukcapil </label>
+<div *ngIf="IsUseDigitalization == '1'">
+  <lib-ucSubsection [id]="'ThirdPartyId'" [title]="'Third Party Checking'" [panel]="'ThirdParty'">
+  </lib-ucSubsection>
+  <div id="ThirdParty">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6 ">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Dukcapil </label>
+            </div>
+            <div class="col-md-6 ">
+              <label class="label-control"> {{ThirdPartyDukcapilRsltObj?.Result}} : {{ThirdPartyDukcapilRsltObj?.DiffItem}}</label>
+            </div>
           </div>
-          <div class="col-md-6 ">
-            <label class="label-control"> {{ThirdPartyDukcapilRsltObj?.Result}} : {{ThirdPartyDukcapilRsltObj?.DiffItem}}</label>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Rapindo </label>
+            </div>
+            <div class="col-md-6 ">
+              <label class="label-control"> Data Exist: {{RapindoDataObj.DataExist}}, Active: {{RapindoDataObj.DataActive}}, Not Active: {{RapindoDataObj.DataNoActive}} </label>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <label class="label-control"> Rapindo </label>
-          </div>
-          <div class="col-md-6 ">
-            <label class="label-control"> Data Exist: {{RapindoDataObj.DataExist}}, Active: {{RapindoDataObj.DataActive}}, Not Active: {{RapindoDataObj.DataNoActive}} </label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <label class="label-control"> Profind </label>
-          </div>
-          <div class="col-md-6 ">
-            <!-- <label class="label-control"> {{ThirdPartyProfindRsltObj.}} </label> -->
-          </div>
-        </div>
-      </div>
-  
-      <div class="col-md-6 ">
-        <div class="row">
-          <div class="col-md-6">
-            <label class="label-control"> Pefindo </label>
-          </div>
-          <div class="col-md-6 ">
-            <label class="label-control"> Score: {{ThirdPartyPefindoRsltObj?.Score}}, B2: {{ThirdPartyPefindoRsltObj?.Risk}}, Trend: {{ThirdPartyPefindoRsltObj?.Trend}} </label>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Profind </label>
+            </div>
+            <div class="col-md-6 ">
+              <!-- <label class="label-control"> {{ThirdPartyProfindRsltObj.}} </label> -->
+            </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-6">
-            <label class="label-control"> SLIK </label>
+    
+        <div class="col-md-6 ">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> Pefindo </label>
+            </div>
+            <div class="col-md-6 ">
+              <label class="label-control"> Score: {{ThirdPartyPefindoRsltObj?.Score}}, B2: {{ThirdPartyPefindoRsltObj?.Risk}}, Trend: {{ThirdPartyPefindoRsltObj?.Trend}} </label>
+            </div>
           </div>
-          <div class="col-md-6 ">
-            <label class="label-control"> Data Exist in {{ThirdPartySlikRsltObj?.DebtorCount}}, Lancar: {{ThirdPartySlikRsltObj?.PerformingCount}} </label>
-            <label class="label-control"> Dalam Perhation Khusus: {{ThirdPartySlikRsltObj?.SpecialMentionCount}} </label>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control"> SLIK </label>
+            </div>
+            <div class="col-md-6 ">
+              <label class="label-control"> Data Exist in {{ThirdPartySlikRsltObj?.DebtorCount}}, Lancar: {{ThirdPartySlikRsltObj?.PerformingCount}} </label>
+              <label class="label-control"> Dalam Perhation Khusus: {{ThirdPartySlikRsltObj?.SpecialMentionCount}} </label>
+            </div>
           </div>
         </div>
       </div>

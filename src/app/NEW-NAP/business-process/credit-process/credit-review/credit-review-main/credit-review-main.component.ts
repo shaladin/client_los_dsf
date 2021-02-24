@@ -19,6 +19,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 
 @Component({
   selector: 'app-credit-review-main',
@@ -54,6 +55,7 @@ export class CreditReviewMainComponent implements OnInit {
   appNo: string;
   custNo: string;
   isDmsReady: boolean = false;
+  IsUseDigitalization: string;
 
   // ReturnForm = this.fb.group({
   //   ReturnReason: [''],
@@ -110,7 +112,7 @@ export class CreditReviewMainComponent implements OnInit {
   ResponseExistCreditReview;
   DDLRecommendation;
   DDLReasonReturn;
-  async ngOnInit() {
+  async ngOnInit() : Promise<void> {
     this.ClaimTask();
     this.InitData();
 
@@ -130,6 +132,7 @@ export class CreditReviewMainComponent implements OnInit {
     await this.GetExistingCreditReviewData();
     this.InitDms();
     this.initInputApprovalObj();
+    await this.GetIsUseDigitalization();
   }
 
   async InitDms() {
@@ -462,5 +465,15 @@ export class CreditReviewMainComponent implements OnInit {
   }
   cancel() {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+  }
+
+  async GetIsUseDigitalization() {
+    var generalSettingObj = new GeneralSettingObj();
+    generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
+    await this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).toPromise().then(
+      (response) => {
+        this.IsUseDigitalization = response["GsValue"];
+      }
+    )
   }
 }

@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { ThirdPartyDukcapilRsltObj } from 'app/shared/model/ThirdPartyData/ThirdPartyDukcapilRsltObj.Model';
 import { ThirdPartyPefindoRsltObj } from 'app/shared/model/ThirdPartyData/ThirdPartyPefindoRsltObj.Model';
 import { ThirdPartyProfindRsltObj } from 'app/shared/model/ThirdPartyData/ThirdPartyProfindRsltObj.Model';
@@ -18,13 +20,18 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
 
   @Input() CrdRvwCustInfoId: number;
   @Input() AppNo: string = "";
+  IsUseDigitalization: string;
 
   constructor(
     private http: HttpClient,
     private modalService: NgbModal,) { }
 
-  async ngOnInit() {
-    await this.GetCrdRvwThirdPartyData();
+  async ngOnInit() : Promise<void> {
+    await this.GetIsUseDigitalization();
+
+    if(this.IsUseDigitalization == "1"){
+      await this.GetCrdRvwThirdPartyData();
+    }
   }
 
   ThirdPartyDukcapilRsltObj: ThirdPartyDukcapilRsltObj = new ThirdPartyDukcapilRsltObj();
@@ -61,4 +68,16 @@ export class CrdRvwThirdPartyCheckingComponent implements OnInit {
       }
     )
   }
+
+  async GetIsUseDigitalization() {
+    var generalSettingObj = new GeneralSettingObj();
+    generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
+    await this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).toPromise().then(
+      (response) => {
+        this.IsUseDigitalization = response["GsValue"];
+      }
+    )
+  }
+  
 }
+

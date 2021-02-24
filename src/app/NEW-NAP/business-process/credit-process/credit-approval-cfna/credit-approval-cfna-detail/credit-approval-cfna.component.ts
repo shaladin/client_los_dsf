@@ -17,6 +17,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 
 @Component({
   selector: 'app-credit-approval-cfna',
@@ -43,6 +44,7 @@ export class CreditApprovalCfnaComponent implements OnInit {
   isDmsReady: boolean;
   appNo: any;
   custNo: any;
+  IsUseDigitalization: string;
 
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private cookieService: CookieService) {
@@ -78,6 +80,7 @@ export class CreditApprovalCfnaComponent implements OnInit {
     await this.getApp();
     await this.initInputApprovalObj();
     await this.InitDms();
+    await this.GetIsUseDigitalization();
   }
 
   async InitDms() {
@@ -192,5 +195,15 @@ export class CreditApprovalCfnaComponent implements OnInit {
     this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.IsReady = true;
+  }
+
+  async GetIsUseDigitalization() {
+    var generalSettingObj = new GeneralSettingObj();
+    generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
+    await this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).toPromise().then(
+      (response) => {
+        this.IsUseDigitalization = response["GsValue"];
+      }
+    )
   }
 }
