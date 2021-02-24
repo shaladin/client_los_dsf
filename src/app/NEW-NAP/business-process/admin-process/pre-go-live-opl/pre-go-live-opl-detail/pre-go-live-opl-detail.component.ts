@@ -5,6 +5,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
@@ -74,11 +75,11 @@ export class PreGoLiveOplDetailComponent implements OnInit {
         this.preGoLiveOplService.clearList();
       }
       else{
-        AdInsHelper.RedirectUrl(this.router, ["Nap/AdminProcess/pregoliveopl/paging"], { BizTemplateCode: "OPL" });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_OPL_PAGING], { BizTemplateCode: "OPL" });
       }
     }
     else{
-      AdInsHelper.RedirectUrl(this.router, ["Nap/AdminProcess/pregoliveopl/paging"], { BizTemplateCode: "OPL" });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_OPL_PAGING], { BizTemplateCode: "OPL" });
     }
   }
 
@@ -101,7 +102,7 @@ export class PreGoLiveOplDetailComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router, ["Nap/AdminProcess/pregoliveopl/paging"], { BizTemplateCode: "OPL" });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_OPL_PAGING], { BizTemplateCode: "OPL" });
   }
 
   SaveForm() {
@@ -115,7 +116,7 @@ export class PreGoLiveOplDetailComponent implements OnInit {
     this.http.post(URLConstant.SubmitPreGoLive, requestPreGoLiveObj).subscribe(
       (response: any) => {
         this.toastr.successMessage("");
-        AdInsHelper.RedirectUrl(this.router, ["Nap/AdminProcess/pregoliveopl/paging"], { BizTemplateCode: "OPL" });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_OPL_PAGING], { BizTemplateCode: "OPL" });
       }
     );
   }

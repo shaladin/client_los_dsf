@@ -155,6 +155,9 @@ export class PathConstant {
     public static APP_DUP_CHECK_MAIN_DATA_PAGING = PathConstant.APP_DUP_CHECK_MAIN_DATA + "/" + PathConstant.PAGING;
     public static APP_DUP_CHECK_MAIN_DATA_SUBJ_LIST = PathConstant.APP_DUP_CHECK_MAIN_DATA + "/SubjList";
     public static APP_DUP_CHECK_MAIN_DATA_SUBJ_MATCH = PathConstant.APP_DUP_CHECK_MAIN_DATA + "/SubjMatch";
+    public static ADD_TC = "addtc";
+    public static ADD_TC_PAGING = PathConstant.ADD_TC + "/" + PathConstant.PAGING_LOWERCASE;
+    public static ADD_TC_DETAIL = PathConstant.ADD_TC + "/" + PathConstant.DETAIL_LOWERCASE;
     //#endregion
 
     //#region Nap-Admin-Prcs
@@ -269,6 +272,9 @@ export class PathConstant {
     public static APP_RVW = "ApplicationReview";
     public static APP_RVW_PAGING = PathConstant.APP_RVW + "/" + PathConstant.PAGING;
     public static APP_RVW_DETAIL = PathConstant.APP_RVW + "/" + PathConstant.DETAIL;
+    public static APP_APPRV = "ApplicationApproval";
+    public static APP_APPRV_PAGING = PathConstant.APP_APPRV + "/" + PathConstant.PAGING;
+    public static APP_APPRV_DETAIL = PathConstant.APP_APPRV + "/" + PathConstant.DETAIL;
     //#endregion
 
     //#region MOU-Module
@@ -387,5 +393,9 @@ export class PathConstant {
     public static VIEW_FOU_VENDOR_BRANCH = "Vendor/VendorBranch";
     public static VIEW_FOU_SRVY_TASK = "Survey/SurveyTask";
     public static VIEW_FOU_SRVY_ORDER = "Survey/SurveyOrder";
+    //#endregion
+
+    //#region FOU-View-Module
+    public static REQUISITION_DECISION = "requisitiondecision";
     //#endregion
 }

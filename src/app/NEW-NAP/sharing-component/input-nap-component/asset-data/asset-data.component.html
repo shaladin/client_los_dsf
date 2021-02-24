@@ -208,6 +208,8 @@
                         [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm'
                         (lookup)="SetBpkbCity($event)">
                       </lib-uclookupgeneric>
+                      <lib-uc-show-errors [control]="AssetDataForm.controls.TaxCityIssuer" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
                     </div>
                   </div>
                   <div class="form-group row">
@@ -616,7 +618,7 @@
                   <tbody>
                     <td colspan="100%" *ngIf="listAsset.length === 0">No Data Available</td>
                     <tr *ngFor="let item of listAsset; let i = index">
-                      <td>{{i + 1}}</td>
+                      <td>{{item.AppAssetObj.AssetSeqNo}}</td>
                       <td class="text-left">{{item.AppAssetObj.FullAssetName}}</td>
                       <td class="text-right">{{item.AppAssetObj.AssetPriceAmt | number:'.2':'en-US'}}</td>
                       <td class="text-right">{{item.AppAssetObj.Discount | number:'.2':'en-US'}}</td>

@@ -39,7 +39,8 @@ import { CalcInsAddCvgObj } from '../../../../../shared/model/InsuranceOpl/CalcI
 import { AppAssetInsMainCvgOplObj } from '../../../../../shared/model/AppAssetExpense/AppAssetInsMainCvgOplObj.Model';
 import { AppAssetInsFeeOplObj } from '../../../../../shared/model/AppAssetExpense/AppAssetInsFeeOplObj.Model';
 import { AppAssetInsAddCvgOplObj } from '../../../../../shared/model/AppAssetExpense/AppAssetInsAddCvgOplObj.Model';
-
+import { AdInsHelper } from '../../../../../shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-asset-expense-add-edit',
@@ -112,7 +113,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
   showGenerate: boolean = false;
   isGenerate: boolean = false;
   isCalculate: boolean = false;
-  businessDt: Date = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
+  businessDt: Date = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
   isLookupDisable: boolean = false;
   maintBehaCode: string = "";
   InsuranceDataForm = this.fb.group({
@@ -169,7 +170,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppAssetId"] != null) this.AppAssetId = params["AppAssetId"];
     })

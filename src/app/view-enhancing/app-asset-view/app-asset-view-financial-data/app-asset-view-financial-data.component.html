@@ -33,7 +33,7 @@
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label">Residual Value (% / Amt)</label>
-                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj.ResidualValuePrcnt}}% / {{RentalCalculationObj.ResidualValueAmt | number:'1.2-2':'en-US'}}</label>
+                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj.ResidualValuePrcnt | number:'.6':'en-US'}}% / {{RentalCalculationObj.ResidualValueAmt | number:'1.2-2':'en-US'}}</label>
                 <label class="col-md-3 adins-label">Rental Amount + VAT</label>
                 <label class="col-md-3 adins-label text-right">{{RentAmtAndVat | number:'1.2-2':'en-US'}}</label>
               </div>
@@ -47,9 +47,9 @@
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label">COF Interest (% / Amt)</label>
-                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj.CofInterestPrcnt}}% p.a / {{RentalCalculationObj.CofInterestAmt | number:'1.2-2':'en-US'}}</label>
+                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj.CofInterestPrcnt | number:'.6':'en-US'}}% p.a / {{RentalCalculationObj.CofInterestAmt | number:'1.2-2':'en-US'}}</label>
                 <label class="col-md-3 adins-label">Gross Yield (%)</label>
-                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj.GrossYieldPrcnt}}%</label>
+                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj.GrossYieldPrcnt | number:'.6':'en-US'}}%</label>
               </div>
               
               <div class="form-group row">

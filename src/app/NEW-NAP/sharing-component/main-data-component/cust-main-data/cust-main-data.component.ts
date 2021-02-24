@@ -80,6 +80,7 @@ export class CustMainDataComponent implements OnInit {
   readonly MasterMaritalStat = CommonConstant.RefMasterTypeCodeMaritalStat;
   readonly MasterCompanyType = CommonConstant.RefMasterTypeCodeCompanyType;
   readonly MasterJobPosition = CommonConstant.RefMasterTypeCodeJobPosition;
+  readonly CustMainDataMgmntShrholder = CommonConstant.CustMainDataModeMgmntShrholder;
 
   constructor(
     private fb: FormBuilder,
@@ -372,6 +373,11 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.controls.TaxIdNo.clearValidators();
       this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
     } else {
+      if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
+        this.CustMainDataForm.patchValue({
+          IsSigner: false,
+        });
+      }
       this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
 

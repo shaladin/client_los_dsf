@@ -785,6 +785,7 @@ export class URLConstant {
   // APP CUST OTHER INFO
   public static AddEditCustCompletionOtherInfo = environment.losUrl + "/AppCustOtherInfo/AddEditCustCompletionOtherInfo";
   public static GetAppCustOtherInfoByAppCustId = environment.losUrl + "/AppCustOtherInfo/GetAppCustOtherInfoByAppCustId"
+  
   // APP TC
   public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
   public static GetListExistingTCbyAppId = environment.losUrl + "/AppTc/GetListExistingTCbyAppId";
@@ -792,6 +793,7 @@ export class URLConstant {
   public static DeleteAppTc = environment.losUrl + "/AppTc/DeleteAppTc";
   public static DeleteRangeAppTc = environment.losUrl + "/AppTc/DeleteRangeAppTc";
   public static EditAdditionalTcNew = environment.losUrl + "/AppTc/EditAdditionalTcNew";
+  public static AddEditAdditionalTc = environment.losUrl + "/AppTc/AddEditAdditionalTc";
 
   // App Asset
   public static GetAppAssetListByAgrmntId = environment.losUrl + "/AppAsset/GetAppAssetListByAgrmntId";
@@ -1220,6 +1222,7 @@ export class URLConstant {
   //APP SCORE GRADE
   public static GetAppScoreGradeByAppIdAndMrScoreTypeCode = environment.losUrl + "/AppScoreGrade/GetAppScoreGradeByAppIdAndMrScoreTypeCode";
   public static GetAppScoreGradeDsrByAppId = environment.losUrl + "/AppScoreGrade/GetAppScoreGradeDsrByAppId";
+  public static GetListAppScoreGradeByAppId = environment.losUrl + "/AppScoreGrade/GetListAppScoreGradeByAppId";
 
   // Authentication
   public static RequestNewPassword = environment.FoundationR3Url + "/Authenticate/RequestNewPassword";
@@ -1303,14 +1306,18 @@ export class URLConstant {
   //Document Checklist
   public static SubmitDocChecklist = environment.losUrl + "/DocChecklist/SubmitDocChecklist";
   public static CreateRFADocChecklist = environment.losUrl + "/DocChecklist/CreateRFADocChecklist";
+
   // App Asset View
   public static GetListAppAssetAccessoryByAppAssetId = environment.losUrl + "/AppAssetView/GetListAppAssetAccessoryByAppAssetId";
   public static GetListAppAssetAccessoryAndAppAssetAttrByAppAssetId = environment.losUrl + "/AppAssetView/GetListAppAssetAccessoryAndAppAssetAttrByAppAssetId";
   public static GetAllAssetExpenseData = environment.losUrl + "/AppAssetView/GetAllAssetExpenseData";
-  public static GetRentalCalculationData = environment.losUrl + "/AppAssetView/GetRentalCalculationData";  
+  public static GetListAllAssetExpenseData = environment.losUrl + "/AppAssetView/GetListAllAssetExpenseData";
+  public static GetRentalCalculationData = environment.losUrl + "/AppAssetView/GetRentalCalculationData";
+  public static GetListAllAssetFinancialData = environment.losUrl + "/AppAssetView/GetListAllAssetFinancialData";
   
   // App Review
   public static GetAppRvwSummaryAsset = environment.losUrl + "/ApplicationReview/GetAppRvwSummaryAsset";
+  public static GetApprovalAmount = environment.losUrl + "/ApplicationReview/GetApprovalAmount";
   
   // Requisition Decision
   public static SaveRequisitionDecision = environment.losUrl + "/RequisitionDecision/SaveRequisitionDecision";

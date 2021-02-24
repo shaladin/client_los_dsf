@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroup, ValidatorFn } from '@angular/forms';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -35,6 +35,8 @@ import { AppCollateralAccessoryObj } from 'app/shared/model/AppCollateralAccesso
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { AppAssetAttrCustomObj } from 'app/shared/model/AppAsset/AppAssetAttrCustom.Model';
+import { AppAssetAttrObj } from 'app/shared/model/AppAssetAttrObj.Model';
 
 @Component({
   selector: 'app-asset-data-add-edit',
@@ -126,6 +128,13 @@ export class AssetDataAddEditComponent implements OnInit {
   items: FormArray;
   SerialNoList: any;
   originalAssetAccs: Array<AppAssetAccessoryObj>;
+  assetTypeCompntValue: string;
+  AppAssetAttrObj: any;
+  isDiffWithRefAttr: boolean;
+  appAssetAttrObjs: Array<AppAssetAttrCustomObj>;
+  ListAttrAnswer = [];
+  isAssetAttrReady: boolean = false;
+
 
   InputLookupAccObj: any;
   InputLookupAccSupObj: any;
@@ -201,6 +210,7 @@ export class AssetDataAddEditComponent implements OnInit {
     DownPaymentAmt: [''],
     items: this.fb.array([]),
     AssetAccessoriesObjs: this.fb.array([]),
+    AppAssetAttrObjs: this.fb.array([])
   });
 
   appObj = {
@@ -820,6 +830,7 @@ export class AssetDataAddEditComponent implements OnInit {
         var assetCond = response[1];
         var assetType = response[2];
         var assetSchm = response[3];
+        this.assetTypeCompntValue = assetType["CompntValue"];
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
         if (this.mode != 'editAsset') {
@@ -829,6 +840,7 @@ export class AssetDataAddEditComponent implements OnInit {
           });
           this.ChangeAssetCondition();
         }
+        this.GenerataAppAssetAttr(false);
 
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
           AssetTypeCode: assetType["CompntValue"]
@@ -971,6 +983,97 @@ export class AssetDataAddEditComponent implements OnInit {
     );
   }
 
+  GenerataAppAssetAttr(isRefresh: boolean) {
+    var GenObj =
+    {
+      AppAssetId: this.AppAssetId,
+      AssetTypeCode: this.assetTypeCompntValue,
+      AttrTypeCode: CommonConstant.AttrTypeCodeTrx,
+      IsRefresh: isRefresh
+    };
+    this.http.post(URLConstant.GenerateAppAssetAttr, GenObj).subscribe(
+      (response) => {
+        this.AppAssetAttrObj = response['ResponseAppAssetAttrObjs'];
+        if (response['IsDiffWithRefAttr']) {
+          this.isDiffWithRefAttr = true;
+          this.toastr.warningMessage(ExceptionConstant.REF_ATTR_CHANGE);
+        }
+
+        this.GenerateAppAssetAttrForm();
+      });
+  }
+
+  GenerateAppAssetAttrForm() {
+    if (this.AppAssetAttrObj != null) {
+      this.appAssetAttrObjs = new Array<AppAssetAttrCustomObj>();
+      for (let i = 0; i < this.AppAssetAttrObj.length; i++) {
+        this.ListAttrAnswer.push([]);
+        var appAssetAttrObj = new AppAssetAttrCustomObj();
+        appAssetAttrObj.AssetAttrCode = this.AppAssetAttrObj[i].AttrCode;
+        appAssetAttrObj.AssetAttrName = this.AppAssetAttrObj[i].AttrName;
+        appAssetAttrObj.AttrValue = this.AppAssetAttrObj[i].AttrValue;
+        appAssetAttrObj.AttrInputType = this.AppAssetAttrObj[i].AttrInputType;
+        appAssetAttrObj.AttrLength = this.AppAssetAttrObj[i].AttrLength;
+        if (this.AppAssetAttrObj[i].AttrQuestionValue != null) {
+          this.ListAttrAnswer[i].push(this.AppAssetAttrObj[i].AttrQuestionValue);
+          if (appAssetAttrObj.AttrValue == null) {
+            appAssetAttrObj.AttrValue = this.AppAssetAttrObj[i].AttrQuestionValue[0]
+          }
+        }
+        else {
+          this.ListAttrAnswer[i].push("");
+        }
+        this.appAssetAttrObjs.push(appAssetAttrObj);
+
+      }
+      var listAppAssetAttrs = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;
+      while (listAppAssetAttrs.length !== 0) {
+        listAppAssetAttrs.removeAt(0);
+      }
+      for (let j = 0; j < this.appAssetAttrObjs.length; j++) {
+        listAppAssetAttrs.push(this.addGroupAppAssetAttr(this.appAssetAttrObjs[j], j));
+      }
+      this.isAssetAttrReady = true;
+    }
+
+  }
+
+  addGroupAppAssetAttr(appAssetAttrObj: AppAssetAttrCustomObj, i: number) {
+    let ListValidator: Array<ValidatorFn> = this.setValidators(appAssetAttrObj);
+
+    return this.setFbGroupAssetAttribute(appAssetAttrObj, i, ListValidator);
+  }
+
+  private setFbGroupAssetAttribute(appAssetAttrObj: AppAssetAttrCustomObj, i: number, ListValidator: Array<ValidatorFn>) {
+    let tempFB = this.fb.group({
+      No: [i],
+      AssetAttrCode: [appAssetAttrObj.AssetAttrCode],
+      AssetAttrName: [appAssetAttrObj.AssetAttrName],
+      AttrInputType: [appAssetAttrObj.AttrInputType],
+      AttrValue: [appAssetAttrObj.AttrValue]
+    });
+    if (ListValidator.length > 0) {
+      tempFB.get("AttrValue").setValidators(ListValidator);
+    }
+
+    return tempFB;
+  }
+
+  private setValidators(appAssetAttrObjs: AppAssetAttrCustomObj) {
+    let ListValidator: Array<ValidatorFn> = new Array<ValidatorFn>();
+
+    if (appAssetAttrObjs.AttrLength != null && appAssetAttrObjs.AttrLength != 0) {
+      ListValidator.push(Validators.maxLength(appAssetAttrObjs.AttrLength));
+    }
+
+    return ListValidator;
+  }
+
+  refreshAttr() {
+    this.isAssetAttrReady = false;
+    this.GenerataAppAssetAttr(true);
+  }
+
   showModalTaxCityIssuer() {
     const modalTaxCityIssuer = this.modalService.open(LookupTaxCityIssuerComponent);
     modalTaxCityIssuer.result.then(
@@ -981,6 +1084,27 @@ export class AssetDataAddEditComponent implements OnInit {
       }
     ).catch(() => {
     });
+  }
+
+  setAssetAttr(){
+    this.allAssetDataObj.AppAssetAttrObj = new Array<AppAssetAttrObj>();
+
+    if (this.AppAssetAttrObj != null) {
+      for (let i = 0; i < this.AssetDataForm.controls["AppAssetAttrObjs"].value.length; i++) {
+        var appAssetAttrObj = new AppAssetAttrObj();
+        var appCollAttrcObj = new AppCollateralAttrObj();
+        appAssetAttrObj.AssetAttrName = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AssetAttrName;
+        appAssetAttrObj.AssetAttrCode = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AssetAttrCode;
+        appAssetAttrObj.AttrValue = this.AssetDataForm.controls["AppAssetAttrObjs"].value[i].AttrValue;
+
+        appCollAttrcObj.CollateralAttrName = appAssetAttrObj.AssetAttrName;
+        appCollAttrcObj.CollateralAttrCode = appAssetAttrObj.AssetAttrCode;
+        appCollAttrcObj.AttrValue = appAssetAttrObj.AttrValue;
+
+        this.allAssetDataObj.AppAssetAttrObj.push(appAssetAttrObj);
+        this.allAssetDataObj.AppCollateralAttrObj.push(appCollAttrcObj);
+      }
+    }
   }
 
   setSupplierInfo() {
@@ -1218,6 +1342,7 @@ export class AssetDataAddEditComponent implements OnInit {
       this.setAssetLocation();
       this.setCollateralAttribute();
       this.setAppAccessoryForSave();
+      this.setAssetAttr();
       this.allAssetDataObj.AppAssetObj.AppAssetId = 0;
 
       if (this.allAssetDataObj.AppAssetObj.DownPaymentAmt > this.allAssetDataObj.AppAssetObj.AssetPriceAmt) {
@@ -1281,6 +1406,7 @@ export class AssetDataAddEditComponent implements OnInit {
       this.setAssetLocation();
       this.setCollateralAttribute();
       this.setAppAccessoryForSave();
+      this.setAssetAttr();
       this.allAssetDataObj.AppCollateralObj.RowVersion = this.returnAppCollateralObj.RowVersion;
       this.allAssetDataObj.AppCollateralRegistrationObj.RowVersion = this.returnAppCollateralRegistObj.RowVersion;
       this.allAssetDataObj.AppAssetObj.AppAssetId = this.AppAssetId;

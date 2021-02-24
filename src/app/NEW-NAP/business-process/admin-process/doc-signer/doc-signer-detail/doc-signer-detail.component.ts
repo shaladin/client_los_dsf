@@ -56,12 +56,14 @@ export class DocSignerDetailComponent implements OnInit {
     MrJobPositionSupplBranchEmpName: [''],
     MrJobPositionMfEmpNo1Name: [''],
     MrJobPositionMfEmpNo2Name: [''],
-    MrJobPositionMgmntShrholder1Code: ['']
+    MrJobPositionMgmntShrholder1Code: [''],
+    MrJobPositionMgmntShrholder1Name: [''],
   });
 
   async ngOnInit() {
     await this.getAllData();
     this.setLookupObj();
+    await this.setDefaultShareholder();
   }
 
   async getAllData() {
@@ -109,7 +111,7 @@ export class DocSignerDetailComponent implements OnInit {
 
           this.inputLookupOfficeEmp1Obj.isReady = true;
           this.inputLookupOfficeEmp2Obj.isReady = true;
-          this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
+          // this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
 
           this.agrmntSignerObj.AgrmntSignerId = this.ResponseAgrmntSignerObj.AgrmntSignerId;
           this.agrmntSignerObj.SupplBranchEmpNo = this.ResponseAgrmntSignerObj.SupplBranchEmpNo;
@@ -136,6 +138,23 @@ export class DocSignerDetailComponent implements OnInit {
             MrJobPositionMgmntShrholder1Name: this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder1Name,
             MrJobPositionMgmntShrholder2Name: this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder2Name,
             MrJobPositionMgmntShrholder3Name: this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder3Name,
+          })
+        }
+      });
+  }
+
+  async setDefaultShareholder() {
+    if (this.mode = "edit") return;
+    this.inputLookupAppCustCompanyShareHolder1Obj.isReady = false;
+    await this.http.post(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.AppId, IsShareholder: true }).toPromise().then(
+      (response) => {
+        console.log(response);
+        if (response["ListAppCustObj"].length > 0) {
+          this.inputLookupAppCustCompanyShareHolder1Obj.jsonSelect = { MgmntShrholderName: response["ListAppCustObj"][0].CustName };
+          this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
+          this.DocSignerForm.patchValue({
+            MrJobPositionMgmntShrholder1Code: response["ListAppCustObj"][0].MrJobPositionCode,
+            MrJobPositionMgmntShrholder1Name: response["ListAppCustObj"][0].MrJobPositionCodeDesc,
           })
         }
       });
@@ -252,6 +271,7 @@ export class DocSignerDetailComponent implements OnInit {
     if (event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
     this.DocSignerForm.patchValue({
       MrJobPositionMgmntShrholder1Code: tempJobCode,
+      MrJobPositionMgmntShrholder1Name: event.MrJobPositionCodeDesc,
     })
   }
 

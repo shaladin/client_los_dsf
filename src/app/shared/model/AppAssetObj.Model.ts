@@ -41,6 +41,7 @@ export class AppAssetObj {
   RsvField4: string;
   RsvField5: string;
   InsAssetCoveredByDesc: string;
+  AppAssetNo: string;
   Discount: number;
   ExpectedDelivDt: Date;
   IsNeedReplacementCar: boolean;

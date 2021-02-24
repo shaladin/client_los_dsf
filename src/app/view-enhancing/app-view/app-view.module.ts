@@ -47,6 +47,7 @@ import { SharedModule } from "app/shared/shared.module";
 import { TabDeviationComponent } from './tab-deviation/tab-deviation.component';
 import { FraudDetectionDataModule } from "app/NEW-NAP/business-process/credit-process/credit-review/fraud-detection-data/fraud-detection-data.module";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
+import { ViewAssetExpenseComponent } from './view-asset-expense/view-asset-expense.component';
 
 @NgModule({
     imports: [
@@ -100,6 +101,7 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
         ViewSurveyTaskListComponent,
         ViewAssetDataComponent,
         TabDeviationComponent,
+        ViewAssetExpenseComponent,
     ],
     entryComponents: [
         UclookupgenericComponent,

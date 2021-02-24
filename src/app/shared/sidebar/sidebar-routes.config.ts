@@ -9,13 +9,20 @@ export const ROUTES: RouteInfo[] = [
     Submenu: [
       { Path: '/Nap/MainData/NAP2/Paging', Title: 'New Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
       { Path: '/Nap/ApplicationProcess/ApplicationReview/Paging', Title: 'Application Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
-      { Path: '/Nap/AdminProcess/DocChecklist/Paging', Title: 'Document Checklist', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
-      { Path: '/Nap/AdminProcess/DocChecklist/Approval/Paging', Title: 'Document Checklist Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
-      { Path: '/Nap/AdminProcess/AssetAllocation/Paging', Title: 'Asset Allocation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
-      { Path: '/requisitiondecision/paging', Title: 'Requisition Decision', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
-      { Path: '/Nap/AdminProcess/pregoliveopl/paging', Title: 'Pre Golive', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }]},
-      { Path: '/Inquiry/AppInquiry', Title: 'Application Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
-      { Path: '/Inquiry/PurchaseTrackingInquiry', Title: 'Purchase Tracking Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+        { Path: '/Nap/ApplicationProcess/ApplicationApproval/Paging', Title: 'Application Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+        { Path: '/Nap/AdminProcess/DocChecklist/Paging', Title: 'Document Checklist', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+        { Path: '/Nap/AdminProcess/DocChecklist/Approval/Paging', Title: 'Document Checklist Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+        { Path: '/Nap/AdminProcess/AssetAllocation/Paging', Title: 'Asset Allocation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+      { Path: NavigationConstant.REQUISITION_DECISION_PAGING, Title: 'Requisition Decision', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+      { Path: NavigationConstant.NAP_ADM_PRCS_PGL_OPL_PAGING, Title: 'Pre Golive', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }]},
+      { Path: NavigationConstant.APP_INQUIRY, Title: 'Application Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+      { Path: NavigationConstant.PURCHASE_TRACKING_INQUIRY, Title: 'Purchase Tracking Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+      {
+        Path: '', Title: 'Additional Process', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+        Submenu: [
+          { Path: NavigationConstant.NAP_ADD_PRCS_ADD_TC_PAGING, Title: 'Additional TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }]},
+        ], Params: []
+      },
     ], Params: []
   },
   {

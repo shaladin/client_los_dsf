@@ -45,7 +45,7 @@ export class AttrContentComponentComponent implements OnInit {
 
             var parentFormGroup = new Object();
              
-            if(this.RefAttrList.length > 0){
+            if(this.RefAttrList != null){
               for (const refAttr of this.RefAttrList) { 
                 this.AttrContent = new AttrContent();
                 let isUpdateValue = false;

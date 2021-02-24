@@ -96,7 +96,7 @@ export class AdInsHelper {
 
   public static OpenAppViewByAppId(AppId) {
     var token = localStorage.getItem("Token");
-    window.open(environment.losR3Web + NavigationConstant.VIEW_APP + "/View/AppView?AppId=" + AppId + "&Token=" + token, "_blank");
+    window.open(environment.losR3Web + NavigationConstant.VIEW_APP + "?AppId=" + AppId + "&Token=" + token, "_blank");
   }
   public static OpenPhoneVerifViewByAppId(AppId, VerfResultHId, Name) {
     var token = localStorage.getItem("Token");

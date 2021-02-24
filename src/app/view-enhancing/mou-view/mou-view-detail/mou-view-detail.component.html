@@ -11,47 +11,47 @@
       <label class="col-md-2 adInsLabel" translate>Plafond Amount</label>
       <label style="align-items: left;" class="col-md-4 adInsLabel" translate>{{PlafondAmt | number}} </label>
       
-      <label class="col-md-2 adInsLabel" translate>Revolving</label>
-      <label *ngIf="IsRevolving == true" class="col-md-4 adInsLabel" translate>Yes </label>
-      <label *ngIf="IsRevolving == false" class="col-md-4 adInsLabel" translate>No </label>
+      <label class="col-md-2 adInsLabel" translate>Realisation Amount</label>
+      <label style="align-items: left;" class="col-md-4 adInsLabel" translate>{{RealisationAmt | number}} </label>
     </div>
 
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
+      <label class="col-md-2 adInsLabel" translate>Revolving</label>
+      <label *ngIf="IsRevolving == true" class="col-md-4 adInsLabel" translate>Yes </label>
+      <label *ngIf="IsRevolving == false" class="col-md-4 adInsLabel" translate>No </label>
+
       <label class="col-md-2 adInsLabel" translate>Recourse Type</label>
       <label *ngIf="MrRecourseTypeCode == 'WITH_RECOURSE'" class="col-md-4 adInsLabel" translate>With Recourse </label>
       <label *ngIf="MrRecourseTypeCode == 'WITHOUT_RECOURSE'" class="col-md-4 adInsLabel" translate>Without Recourse </label>
-      
-      <label class="col-md-2 adInsLabel" translate>Is Disclosed</label>
-      <label *ngIf="IsDisclosed == true" class="col-md-4 adInsLabel" translate>Yes </label>
-      <label *ngIf="IsDisclosed == false" class="col-md-4 adInsLabel" translate>No </label>
     </div>
     
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
+      <label class="col-md-2 adInsLabel" translate>Is Disclosed</label>
+      <label *ngIf="IsDisclosed == true" class="col-md-4 adInsLabel" translate>Yes </label>
+      <label *ngIf="IsDisclosed == false" class="col-md-4 adInsLabel" translate>No </label>
+
       <label class="col-md-2 adInsLabel" translate>WoP</label>
       <label  *ngIf="WopCode == 'AD'" class="col-md-4 adInsLabel" translate>Auto Debit </label>
       <label  *ngIf="WopCode == 'CA'" class="col-md-4 adInsLabel" translate>Cash </label>
       <label  *ngIf="WopCode == 'PICK'" class="col-md-4 adInsLabel" translate>Pick-Up </label>
       <label  *ngIf="WopCode == 'BT'" class="col-md-4 adInsLabel" translate>Bank Transfer </label>
       <label  *ngIf="WopCode == 'PDC'" class="col-md-4 adInsLabel" translate>{{WopCode}} </label>
+    </div>
 
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Paid By</label>
       <label class="col-md-4 adInsLabel" translate>{{MrPaidByCode}}</label>
-    </div>
 
-    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Installment Type / Calculate Method</label>
       <label class="col-md-4 adInsLabel" translate>{{MrInstTypeCode + ' / ' + SingleInstCalcMthd}}</label>
-
-      <label class="col-md-2 adInsLabel" translate>TOP</label>
-      <label style="align-items: left;" class="col-md-4 adInsLabel" translate>{{TopDays}} days </label>
     </div>
 
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
+      <label class="col-md-2 adInsLabel" translate>TOP</label>
+      <label style="align-items: left;" class="col-md-4 adInsLabel" translate>{{TopDays}} days </label>
+
       <label class="col-md-2 adInsLabel" translate>Tenor From</label>
       <label class="col-md-4 adInsLabel" translate>{{TenorFrom}} &nbsp;&nbsp;&nbsp;&nbsp; to &nbsp;&nbsp;&nbsp;&nbsp; {{TenorTo}}</label>
-      
-      <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
-      <label class="col-md-4 adInsLabel" translate>{{PayFreqCode}}</label>
     </div>
 
     <div *ngIf="MouType == 'GENERAL'" class="form-group row">
@@ -77,24 +77,28 @@
       <label *ngIf="MrFirstInstTypeCode == 'AR' && MouType == 'GENERAL'" class="col-md-4 adInsLabel" translate>Arrear </label>      
     </div>
     
-    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">      
+      <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
+      <label class="col-md-4 adInsLabel" translate>{{PayFreqCode}}</label>
+
       <label class="col-md-2 adInsLabel" translate>Interest Rate (%)</label>
       <label class="col-md-4 adInsLabel" translate>{{InterestRatePrcnt}}%</label>
-      
-      <label class="col-md-2 adInsLabel" translate>Retention (%)</label>
-      <label class="col-md-4 adInsLabel" translate>{{RetentionPrcnt}}%</label>
     </div>
     
-    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">      
+      <label class="col-md-2 adInsLabel" translate>Retention (%)</label>
+      <label class="col-md-4 adInsLabel" translate>{{RetentionPrcnt}}%</label>
+
       <label class="col-md-2 adInsLabel" translate>Listed Customer Factoring</label>
       <label *ngIf="IsListedCust == true" class="col-md-4 adInsLabel" translate>Yes </label>
       <label *ngIf="IsListedCust == false" class="col-md-4 adInsLabel" translate>No </label>
-      
+    </div>
+          
+    <div *ngIf="MouType == 'FACTORING'" class="form-group row">  
       <label class="col-md-2 adInsLabel" translate>Notes</label>
       <label *ngIf="Notes == '' || Notes == null" class="col-md-4 adInsLabel" translate>-</label>
       <label *ngIf="Notes != '' && Notes != null" class="col-md-4 adInsLabel" translate>{{Notes}}</label>
     </div>
-    
     <!-- <div *ngIf="MouType == 'GENERAL'" class="form-group">
       <label class="col-md-2 adInsLabel" translate>Insured By</label>
       <label class="col-md-2 adInsLabel" translate>Company</label>

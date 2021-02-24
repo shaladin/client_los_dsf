@@ -25,6 +25,8 @@ import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
 import { ApplicationReviewPagingComponent } from "./application-review/application-review-paging/application-review-paging.component";
 import { ApplicationReviewDetailComponent } from "./application-review/application-review-detail/application-review-detail.component";
 import { ApplicationProcessSharingRoutingModule } from "./application-process-routing.module";
+import { ApplicationApprovalDetailComponent } from "./application-approval/application-approval-detail/application-approval-detail.component";
+import { ApplicationApprovalPagingComponent } from "./application-approval/application-approval-paging/application-approval-paging.component";
 
 
 
@@ -76,7 +78,9 @@ export const customCurrencyMaskConfig = {
   ],
   declarations: [
     ApplicationReviewPagingComponent,
-    ApplicationReviewDetailComponent
+    ApplicationReviewDetailComponent,
+    ApplicationApprovalPagingComponent,
+    ApplicationApprovalDetailComponent
   ],
   providers: [
     NGXToastrService

@@ -1,9 +1,9 @@
 
 <div class="card-body">
   <div class="px-3" *ngIf="IsReady">
-    <lib-ucSubsection [id]="'OutstandingAmountInfoId'" [title]="'Outstanding Amount'" [panel]="'OutstandingAmountInfo'">
+    <lib-ucSubsection [id]="'OutstandingAmountInfo' + exposureType + 'Id'" [title]="'Outstanding Amount'" [panel]="'OutstandingAmountInfo' + exposureType">
     </lib-ucSubsection>
-    <div id="OutstandingAmountInfo">
+    <div [id]="'OutstandingAmountInfo' + exposureType">
       <div class="row">
         <div class="col-md-6 ">
           <div class="row">
@@ -37,9 +37,9 @@
       </div>
     </div>
     
-    <lib-ucSubsection [id]="'MaximumAmountInfoId'" [title]="'Maximum Amount'" [panel]="'MaximumAmountInfo'">
+    <lib-ucSubsection [id]="'MaximumAmountInfo' + exposureType + 'Id'" [title]="'Maximum Amount'" [panel]="'MaximumAmountInfo' + exposureType">
     </lib-ucSubsection>
-    <div id="MaximumAmountInfo">
+    <div [id]="'MaximumAmountInfo' + exposureType">
       <div class="row">
         <div class="col-md-6 ">
           <div class="row">
@@ -81,9 +81,9 @@
       </div>
     </div>
 
-    <lib-ucSubsection [id]="'NumberOfInfoId'" [title]="'Number Of'" [panel]="'NumberOfInfo'">
+    <lib-ucSubsection [id]="'NumberOfInfo' + exposureType + 'Id'" [title]="'Number Of'" [panel]="'NumberOfInfo' + exposureType">
     </lib-ucSubsection>
-    <div id="NumberOfInfo">
+    <div [id]="'NumberOfInfo' + exposureType">
       <div class="row">
         <div class="col-md-6 ">
           <div class="row">
@@ -173,16 +173,20 @@
       </div>
     </div>
 
-    <lib-ucSubsection [id]="'BucketInfoId'" [title]="'Bucket'" [panel]="'BucketInfo'">
+    <lib-ucSubsection [id]="'BucketInfo' + exposureType + 'Id'" [title]="'Bucket'" [panel]="'BucketInfo' + exposureType">
     </lib-ucSubsection>
-    <div id="BucketInfo">
+    <div [id]="'BucketInfo' + exposureType">
       <table class="table table-responsive-md text-center table-hover">
         <tr class="table-header">
           <th style="text-align: left;">
-            <span class="thead-header" name='Bucket' translate>Bucket</span>
+            <span name='Bucket' translate>
+              <label class="label-control"> Bucket </label>
+            </span>
           </th>
           <td style="text-align: right;" *ngFor="let item of ListCrdRvwCustBucketObj; let i = index;">
-            <span class="thead-header" translate>{{item.BucketRange}}</span>
+            <span translate>
+              <label class="label-control"> {{item.BucketRange}} </label>
+            </span>
           </td>
         </tr>
         <tr>
@@ -192,9 +196,9 @@
       </table>
     </div>
 
-    <lib-ucSubsection [id]="'ApplicationAgreementListInfoId'" [title]="'Application / Agreement List'" [panel]="'ApplicationAgreementListInfo'">
+    <lib-ucSubsection [id]="'ApplicationAgreementListInfo' + exposureType + 'Id'" [title]="'Application / Agreement List'" [panel]="'ApplicationAgreementListInfo' + exposureType">
     </lib-ucSubsection>
-    <div id="ApplicationAgreementListInfo">
+    <div [id]="'ApplicationAgreementListInfo' + exposureType">
       <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">

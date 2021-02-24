@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "1.0.0-658",
+  "version": "1.0.0-673",
   "license": "",
   "scripts": {
     "ng": "ng",
@@ -11,7 +11,7 @@
     "demo": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=demo_env --base-href /LOS_DEMO/",
     "integration": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=integration_env --base-href /LOS_INTEGRATION/",
     "stresstest": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=test_env --base-href /LOS_FE/",
-    "OPL": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=OPL --base-href /ROS_FE/",
+    "OPL": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=OPL --aot --base-href /ROS_FE/",
     "version:patch": "npm version prerelease -m UpVersion && git push origin HEAD:master --follow-tags --force",
     "test": "ng test",
     "lint": "ng lint",
@@ -40,7 +40,7 @@
     "@adins/ucsearch": "^2.0.52",
     "@adins/ucthingstodo": "^1.0.4",
     "@adins/ucupload": "^1.7.3",
-    "@adins/ucviewgeneric": "^2.0.63",
+    "@adins/ucviewgeneric": "^2.0.64",
     "@agm/core": "1.0.0-beta.5",
     "@angular/animations": "^7.2.16",
     "@angular/cdk": "^7.3.7",

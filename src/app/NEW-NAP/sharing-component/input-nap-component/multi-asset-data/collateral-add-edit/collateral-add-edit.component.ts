@@ -703,6 +703,9 @@ export class CollateralAddEditComponent implements OnInit {
         this.collateralTypeHandler();
         this.AddCollForm.removeControl("AssetAccessoriesObjs");
         this.AddCollForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
+        this.AddCollForm.patchValue({
+            AssetCategoryCode: this.returnAppCollateralObj.AssetCategoryCode
+        });
         this.inputLookupObj = new InputLookupObj();
         this.inputLookupObj.isReady = false;
         this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";

@@ -1,0 +1,66 @@
+{
+    "component": [
+        {
+            "type": "textbox",
+            "name": "TC_CODE",
+            "id": "TcCodeId",
+            "value": "",
+            "label": "TC Code",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "TC_NAME",
+            "id": "TcNameId",
+            "value": "",
+            "label": "TC Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+  "querystring": {
+    "name": "lookupRefTc"
+  },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "TERM AND CONDITION CODE",
+            "name": "TC_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "TERM AND CONDITION NAME",
+            "name": "TC_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "TcCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "TcName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "TcCode"
+                }
+            ]
+        }
+    ],
+    "propertyId": "TcCode",
+    "propertyName": "TcName"
+}
