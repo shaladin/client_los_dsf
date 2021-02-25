@@ -78,14 +78,8 @@ export class CustCompletionOplDetailPersonalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustCompletionPersonalData.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-opl-main-info.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      }
-    ];
 
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,

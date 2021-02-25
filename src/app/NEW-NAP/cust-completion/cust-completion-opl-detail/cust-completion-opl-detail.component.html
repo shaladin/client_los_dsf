@@ -1,14 +1,38 @@
 <div class="col-md-12 text-left">
   <div class="card">
+
+    <div class="card-head">
+      <div class="card-header header-title">
+        <div class="row">
+          <div class="col-md-8">
+            <h4 class="card-title" id="horz-layout-colored-controls" translate>
+              CUSTOMER DATA COMPLETION
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="ucSearch-Button-Right pr-3 pt-2" style="right:0px; top:0px">
+      <button type="button" class="btn btn-raised btn-warning" (click)="buttonBackOnClick()">
+        <i class="fa fa-arrow-left"></i> Back
+      </button>
+    </div>
+
+    <br>
+
     <div class="card-body">
+
       <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)">
       </lib-ucviewgeneric>
-      <div class="ucSearch-Button-Right pr-3 pt-2" style="right:0px; top:0px">
-        <button type="button" class="btn btn-raised btn-warning" (click)="buttonBackOnClick()">
-          <i class="fa fa-arrow-left"></i> Back
-        </button>
-      </div>
+
       <div class="px-3">
+        <lib-ucSubsection [id]="'MainInformationId'" [title]="'Main Information'" [panel]="'MainInformation'">
+        </lib-ucSubsection>
+        <div [id]="'MainInformation'">
+          <lib-ucgridview [gridInput]="inputGridObj" [additionalObj]="addObj"></lib-ucgridview>
+        </div>
+
         <div class="card" *ngIf="ReturnHandlingHId > 0">
           <lib-ucSubsection [id]="'formReturnInfoId'" [title]="'Return Handling'" [panel]="'formReturnInfo'">
           </lib-ucSubsection>
@@ -37,7 +61,7 @@
             </form>
           </div>
         </div>
-        <lib-ucgridview [gridInput]="inputGridObj" [additionalObj]="addObj"></lib-ucgridview>
+
         <div class="text-right py-2">
           <button *ngIf="ReturnHandlingHId == 0" type="button" (click)="buttonSubmitOnClick()"
             class="btn btn-raised btn-primary" translate>
@@ -49,6 +73,7 @@
           </button>
         </div>
       </div>
+
     </div>
   </div>
 </div>

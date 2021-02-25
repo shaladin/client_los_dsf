@@ -121,11 +121,6 @@
                                         "type": "BizTemplateCode",
                                         "property": "BizTemplateCode",
                                         "isAddProp": true
-                                    },
-                                    {
-                                        "type": "ReturnHandlingHId",
-                                        "property": "ReturnHandlingHId",
-                                        "isAddProp": true
                                     }
                                 ]
                             }
@@ -158,11 +153,6 @@
                                     {
                                         "type": "BizTemplateCode",
                                         "property": "BizTemplateCode",
-                                        "isAddProp": true
-                                    },
-                                    {
-                                        "type": "ReturnHandlingHId",
-                                        "property": "ReturnHandlingHId",
                                         "isAddProp": true
                                     }
                                 ]

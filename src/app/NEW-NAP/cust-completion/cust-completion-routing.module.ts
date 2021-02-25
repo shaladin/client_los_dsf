@@ -50,14 +50,14 @@ const routes: Routes = [
       },
       {
         path: PathConstant.CUST_COMPL_OPL_PRSNL,
-        component: CustCompletionOplDetailCompanyComponent,
+        component: CustCompletionOplDetailPersonalComponent,
         data: {
           title: 'Cust Completion Detail Personal'
         }
       },
       {
         path: PathConstant.CUST_COMPL_OPL_COY,
-        component: CustCompletionOplDetailPersonalComponent,
+        component: CustCompletionOplDetailCompanyComponent,
         data: {
           title: 'Cust Completion Detail Company'
         }

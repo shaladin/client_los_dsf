@@ -68,7 +68,7 @@ export class CustCompletionOplDetailComponent implements OnInit {
       this.addObj["ReturnHandlingHId"] = this.ReturnHandlingHId;
     }
     else {
-      this.inputGridObj.pagingJson = "./assets/ucgridview/gridCustCompletionData.json";
+      this.inputGridObj.pagingJson = "./assets/ucgridview/new-nap/cust-completion/grid-cust-completion-data-opl.json";
     }
     this.addObj["WfTaskListId"] = this.wfTaskListId;
     this.addObj["BizTemplateCode"] = this.BizTemplateCode;
