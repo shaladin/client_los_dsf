@@ -30,6 +30,8 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { String } from 'typescript-string-operations';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-lead-input-cust-data',
@@ -121,6 +123,7 @@ export class LeadInputCustDataComponent implements OnInit {
   getGeneralSettingByCode: string;
   returnGeneralSettingObj: any;
   isNeedCheckBySystem: string;
+  isUseDigitalization: string;
   leadObj: LeadObj;
   returnLeadObj: Object;
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
@@ -224,11 +227,26 @@ export class LeadInputCustDataComponent implements OnInit {
 
 
     this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.GsCode = "INTEGRATOR_CHECK_BY_SYSTEM";
-    this.http.post(this.getGeneralSettingByCode, this.generalSettingObj).subscribe(
+    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
+    this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
       (response) => {
         this.returnGeneralSettingObj = response;
-        this.isNeedCheckBySystem = this.returnGeneralSettingObj.GsValue;
+        var gsNeedCheckBySystem = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        
+        if(gsNeedCheckBySystem != undefined){
+          this.isNeedCheckBySystem = gsNeedCheckBySystem.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
+        }
+
+        if(gsUseDigitalization != undefined){
+          this.isUseDigitalization = gsUseDigitalization.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
+        }
+        
         this.leadObj = new LeadObj();
         this.leadObj.LeadId = this.LeadId;
         this.http.post(this.getLeadByLeadId, this.leadObj).subscribe(
@@ -240,35 +258,37 @@ export class LeadInputCustDataComponent implements OnInit {
             this.thirdPartyObj.TrxTypeCode = CommonConstant.LEAD_TRX_TYPE_CODE;
             this.thirdPartyObj.TrxNo = this.leadNo;
             this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
-            this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-              (response) => {
-                this.latestReqDtCheckIntegrator = response['ReqDt'];
-                this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-                this.reqLatestJson = JSON.parse(response['ReqJson']);
-                if (this.reqLatestJson != null && this.reqLatestJson != "") {
-                  //   this.latestCheckChassisNo = this.reqLatestJson['AppAssetObj'][0]['SerialNo1'];
-                  this.latestCustDataObj = new LeadCustCompareObj();
-                  this.latestCustDataObj.CustName = this.reqLatestJson['CustName'];
-                  this.latestCustDataObj.Gender = this.reqLatestJson['Gender'];
-                  this.latestCustDataObj.BirthPlace = this.reqLatestJson['BirthPlace'];
-                  this.latestCustDataObj.BirthDt = formatDate(new Date(this.reqLatestJson['BirthDt']), 'yyyy-MM-dd', 'en-US');
-                  this.latestCustDataObj.MaritalStatus = this.reqLatestJson['MaritalStatus'];
-                  this.latestCustDataObj.CustPhnNo = this.reqLatestJson['CustPhnNo'];
-                  this.latestCustDataObj.CustEmail = this.reqLatestJson['CustEmail'];
-                  this.latestCustDataObj.IdNo = this.reqLatestJson['IdNo'];
-                  this.latestCustDataObj.IdType = this.reqLatestJson['IdType'];
-                  this.latestCustDataObj.TaxNo = this.reqLatestJson['TaxNo'];
-                  this.latestCustDataObj.Profession = this.reqLatestJson['Profession'];
-                  this.latestCustDataObj.HomeAddr = this.reqLatestJson['HomeAddr'];
-                  this.latestCustDataObj.HomeRt = this.reqLatestJson['HomeRt'];
-                  this.latestCustDataObj.HomeRw = this.reqLatestJson['HomeRw'];
-                  this.latestCustDataObj.HomeZipCode = this.reqLatestJson['HomeZipCode'];
-                  this.latestCustDataObj.HomeKelurahan = this.reqLatestJson['HomeKelurahan'];
-                  this.latestCustDataObj.HomeKecamatan = this.reqLatestJson['HomeKecamatan'];
-                  this.latestCustDataObj.HomeCity = this.reqLatestJson['HomeCity'];
+            if(this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0"){
+              this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+                (response) => {
+                  this.latestReqDtCheckIntegrator = response['ReqDt'];
+                  this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+                  this.reqLatestJson = JSON.parse(response['ReqJson']);
+                  if (this.reqLatestJson != null && this.reqLatestJson != "") {
+                    //   this.latestCheckChassisNo = this.reqLatestJson['AppAssetObj'][0]['SerialNo1'];
+                    this.latestCustDataObj = new LeadCustCompareObj();
+                    this.latestCustDataObj.CustName = this.reqLatestJson['CustName'];
+                    this.latestCustDataObj.Gender = this.reqLatestJson['Gender'];
+                    this.latestCustDataObj.BirthPlace = this.reqLatestJson['BirthPlace'];
+                    this.latestCustDataObj.BirthDt = formatDate(new Date(this.reqLatestJson['BirthDt']), 'yyyy-MM-dd', 'en-US');
+                    this.latestCustDataObj.MaritalStatus = this.reqLatestJson['MaritalStatus'];
+                    this.latestCustDataObj.CustPhnNo = this.reqLatestJson['CustPhnNo'];
+                    this.latestCustDataObj.CustEmail = this.reqLatestJson['CustEmail'];
+                    this.latestCustDataObj.IdNo = this.reqLatestJson['IdNo'];
+                    this.latestCustDataObj.IdType = this.reqLatestJson['IdType'];
+                    this.latestCustDataObj.TaxNo = this.reqLatestJson['TaxNo'];
+                    this.latestCustDataObj.Profession = this.reqLatestJson['Profession'];
+                    this.latestCustDataObj.HomeAddr = this.reqLatestJson['HomeAddr'];
+                    this.latestCustDataObj.HomeRt = this.reqLatestJson['HomeRt'];
+                    this.latestCustDataObj.HomeRw = this.reqLatestJson['HomeRw'];
+                    this.latestCustDataObj.HomeZipCode = this.reqLatestJson['HomeZipCode'];
+                    this.latestCustDataObj.HomeKelurahan = this.reqLatestJson['HomeKelurahan'];
+                    this.latestCustDataObj.HomeKecamatan = this.reqLatestJson['HomeKecamatan'];
+                    this.latestCustDataObj.HomeCity = this.reqLatestJson['HomeCity'];
+                  }
                 }
-              }
-            );
+              );
+            }
           }
         );
       }
@@ -1020,7 +1040,7 @@ export class LeadInputCustDataComponent implements OnInit {
   }
 
   checkIntegrator() {
-    if (this.isNeedCheckBySystem == "0") {
+    if (this.isUseDigitalization == '1' && this.isNeedCheckBySystem == "0") {
       this.leadInputObj = new LeadInputObj();
       this.setLeadCust();
       this.setLeadCustPersonal();
@@ -1092,7 +1112,7 @@ export class LeadInputCustDataComponent implements OnInit {
     console.log(inputLeadString);
     console.log(inputLeadString != latestCustDataString);
 
-    if (this.isNeedCheckBySystem == "0" && inputLeadString != latestCustDataString) {
+    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && inputLeadString != latestCustDataString) {
       if (confirm("Recent Customer Main Data and Legal Address different with previous data. Are you sure want to submit without fraud check again?")) {
         return true;
       }

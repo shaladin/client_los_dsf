@@ -563,6 +563,9 @@ export class CommonConstant {
   public static GSCodeIntegratorCheckBySystem = "INTEGRATOR_CHECK_BY_SYSTEM";
   public static GSCodeInputOPLFeeType = "INPOPLFEETYPE";
   public static GSCodeInputOPLFeeBehaviour = "INPOPLFEETBHV";
+  public static GSCodeIsUseDigitalization = "IS_USE_DIGITALIZATION";
+  public static GSCodeLobKta = "LOB_KTA";
+
 
   //Serial Item
   public static Chassis_No = "Chassis No";

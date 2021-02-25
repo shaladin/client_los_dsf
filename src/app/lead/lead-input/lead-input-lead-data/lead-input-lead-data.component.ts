@@ -19,6 +19,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ThirdPartyRsltHObj } from 'app/shared/model/ThirdPartyRsltHObj.Model';
 import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { String } from 'typescript-string-operations';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 
 @Component({
@@ -40,6 +42,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   firstInstObj: RefMasterObj;
   returnFirstInstObj: any;
   isNeedCheckBySystem: string;
+  isUseDigitalization: string;
   checkRapindoUrl: string;
   latestReqDtCheckRapindo: string;
   getThirdPartyResultHByTrxTypeCodeAndTrxNo: string;
@@ -209,14 +212,34 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/Lead/lookupAsset.json";
 
     this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.ListGsCode.push("LOB_KTA");
-    this.generalSettingObj.ListGsCode.push("INTEGRATOR_CHECK_BY_SYSTEM");
+    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeLobKta);
+    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
 
     this.http.post(this.getListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
       (response) => {
         this.returnGeneralSettingObj = response;
-        this.lobKta = this.returnGeneralSettingObj["ResponseGeneralSettingObj"][0].GsValue.split(',');
-        this.isNeedCheckBySystem = this.returnGeneralSettingObj["ResponseGeneralSettingObj"][1].GsValue;
+
+        var gsLobKta = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeLobKta);
+        var gsNeedCheckBySystem = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        
+        if(gsLobKta != undefined){
+          this.lobKta = gsLobKta.GsValue.split(",");
+        }
+
+        if(gsNeedCheckBySystem != undefined){
+          this.isNeedCheckBySystem = gsNeedCheckBySystem.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
+        }
+
+        if(gsUseDigitalization != undefined){
+          this.isUseDigitalization = gsUseDigitalization.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
+        }
+
         this.leadObj = new LeadObj();
         this.leadObj.LeadId = this.LeadId;
         this.http.post(this.getLeadByLeadId, this.leadObj).subscribe(
@@ -228,16 +251,18 @@ export class LeadInputLeadDataComponent implements OnInit {
             this.thirdPartyObj.TrxTypeCode = CommonConstant.LEAD_TRX_TYPE_CODE;
             this.thirdPartyObj.TrxNo = this.leadNo;
             this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_ASSET;
-            this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-              (response) => {
-                this.latestReqDtCheckRapindo = response['ReqDt'];
-                this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-                this.reqLatestJson = JSON.parse(response['ReqJson']);
-                if (this.reqLatestJson != null && this.reqLatestJson != "") {
-                  this.latestCheckChassisNo = this.reqLatestJson['AppAssetObj'][0]['SerialNo1'];
+            if(this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0"){
+              this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+                (response) => {
+                  this.latestReqDtCheckRapindo = response['ReqDt'];
+                  this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+                  this.reqLatestJson = JSON.parse(response['ReqJson']);
+                  if (this.reqLatestJson != null && this.reqLatestJson != "") {
+                    this.latestCheckChassisNo = this.reqLatestJson['AppAssetObj'][0]['SerialNo1'];
+                  }
                 }
-              }
-            );
+              );
+            }
             if (this.lobKta.includes(this.returnLobCode) == true) {
               this.LeadDataForm.controls['NTFAmt'].setValidators([Validators.required]);
 
@@ -844,7 +869,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   confirmFraudCheck() {
-    if (this.isNeedCheckBySystem == "0") {
+    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
       if (!this.isAlreadySubmittedByIntegrator && this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 == "" && confirm("Submit without integrator?")) {
         return true;
       }
@@ -1019,7 +1044,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     }
   }
   checkRapindo() {
-    if (this.isNeedCheckBySystem == "0") {
+    if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
       if (this.LeadDataForm.controls.items.value[0]['SerialNoLabel'] == CommonConstant.Chassis_No && this.LeadDataForm.controls.items.value[0]['SerialNoValue'] != "") {
 
         this.leadInputLeadDataObj = new LeadInputLeadDataObj();
