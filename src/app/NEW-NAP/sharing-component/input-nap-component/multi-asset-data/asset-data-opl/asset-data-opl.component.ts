@@ -412,12 +412,11 @@ export class AssetDataOplComponent implements OnInit {
     this.allAssetDataObj = this.listAsset[this.index];
     this.allAssetDataObj.BizTemplateCode = CommonConstant.OPL;
     this.allAssetDataObj.Copy = "Yes";
+    this.allAssetDataObj.CopyNumber = this.units;
     this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        for(let i = 0; i < this.units; i++) {
-          this.listAsset.push(this.listAsset[this.index]);
-        }
+        this.getListAllAssetData();
       }
     );
   }
@@ -917,6 +916,7 @@ export class AssetDataOplComponent implements OnInit {
     this.appData.AppId = this.AppId;
     await this.http.post(URLConstant.GetListAllAssetDataByAppId, this.appData).toPromise().then(
       (response) => {
+        this.listAsset = [];
         this.appAssetObj = response[CommonConstant.ReturnObj];
 
         if (this.appAssetObj != null) {
@@ -975,9 +975,9 @@ export class AssetDataOplComponent implements OnInit {
               this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = this.appAssetObj[i].ResponseBranchManagerSupp.MrSupplEmpPositionCode;
             }
             else {
-              this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = "";
-              this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = "";
-              this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = "";
+              this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = "-";
+              this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = "-";
+              this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = "-";
             }
 
             if (this.appAssetObj[i].ResponseAdminHeadSupp != null) {
@@ -986,9 +986,9 @@ export class AssetDataOplComponent implements OnInit {
               this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = this.appAssetObj[i].ResponseAdminHeadSupp.MrSupplEmpPositionCode;
             }
             else {
-              this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = "";
-              this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = "";
-              this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = "";
+              this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = "-";
+              this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = "-";
+              this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = "-";
             }
 
             if (this.appAssetObj[i].ResponseSalesPersonSupp != null) {
@@ -997,9 +997,9 @@ export class AssetDataOplComponent implements OnInit {
               this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = this.appAssetObj[i].ResponseSalesPersonSupp.MrSupplEmpPositionCode;
             }
             else {
-              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = "";
-              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = "";
-              this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = "";
+              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = "-";
+              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = "-";
+              this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = "-";
             }
 
             this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.appAssetObj[i].ResponseAppAssetObj.TaxCityIssuer;
