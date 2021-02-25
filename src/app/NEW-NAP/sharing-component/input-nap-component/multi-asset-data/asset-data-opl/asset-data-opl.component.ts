@@ -244,32 +244,28 @@ export class AssetDataOplComponent implements OnInit {
   AddAsset() {
     this.mode = "Add";
     this.salesSupervisor = "";
-    this.InputLookupSupplierObj.jsonSelect = null;
+    this.InputLookupSupplierObj.jsonSelect = "";
     this.InputLookupSupplierObj.nameSelect = "";
 
-    this.InputLookupAssetObj.jsonSelect = null;
+    this.InputLookupAssetObj.jsonSelect = "";
     this.InputLookupAssetObj.nameSelect = "";
 
-    this.InputLookupCityIssuerObj.jsonSelect = null;
+    this.InputLookupCityIssuerObj.jsonSelect = "";
     this.InputLookupCityIssuerObj.nameSelect = "";
 
     this.inputAddressObjForDeliv.showSubsection = false;
     this.inputAddressObjForDeliv.showAllPhn = false;
     this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = "";
-    this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = null;
+    this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = "";
     this.inputAddressObjForDeliv.default = null;
     this.inputAddressObjForDeliv.inputField = this.inputFieldDelivAddrObj;
 
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
     this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = "";
-    this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = null;
+    this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = "";
     this.inputAddressObjForLoc.default = null;
     this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
-
-    this.AdminHeadObj = null;
-    this.SalesPersonObj = null;
-    this.BranchManagerObj = null;
 
     this.AssetDataForm.patchValue({
       MrAssetConditionCode: "",
@@ -305,13 +301,13 @@ export class AssetDataOplComponent implements OnInit {
 
     this.allAssetDataObj = this.listAsset[this.index];
 
-    this.InputLookupSupplierObj.jsonSelect = null;
+    this.InputLookupSupplierObj.jsonSelect = { VendorName: this.allAssetDataObj.AppAssetObj.SupplName };
     this.InputLookupSupplierObj.nameSelect = this.allAssetDataObj.AppAssetObj.SupplName;
 
-    this.InputLookupAssetObj.jsonSelect = null;
+    this.InputLookupAssetObj.jsonSelect = { FullAssetName: this.allAssetDataObj.AppAssetObj.FullAssetName };
     this.InputLookupAssetObj.nameSelect = this.allAssetDataObj.AppAssetObj.FullAssetName;
 
-    this.InputLookupCityIssuerObj.jsonSelect = null;
+    this.InputLookupCityIssuerObj.jsonSelect = { DistrictName: this.allAssetDataObj.AppAssetObj.TaxCityIssuer };
     this.InputLookupCityIssuerObj.nameSelect = this.allAssetDataObj.AppAssetObj.TaxCityIssuer;
 
     this.inputAddressObjForDeliv.showSubsection = false;
@@ -341,10 +337,6 @@ export class AssetDataOplComponent implements OnInit {
     this.locationAddrObj.City = this.allAssetDataObj.AppCollateralRegistrationObj.LocationCity;
     this.inputAddressObjForLoc.default = this.locationAddrObj;
     this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
-
-    this.AdminHeadObj = this.allAssetDataObj.AppAssetSupplEmpAdminObj;
-    this.SalesPersonObj = this.allAssetDataObj.AppAssetSupplEmpSalesObj;
-    this.BranchManagerObj = this.allAssetDataObj.AppAssetSupplEmpManagerObj;
 
     this.AssetDataForm.patchValue({
       MrAssetConditionCode: this.allAssetDataObj.AppAssetObj.MrAssetConditionCode,
@@ -398,7 +390,7 @@ export class AssetDataOplComponent implements OnInit {
       this.http.post(URLConstant.DeleteAppAsset, this.deleteAppAssetObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.listAsset.splice(index, 1);
+          this.getListAllAssetData();
         }
       );
     }
@@ -1064,6 +1056,8 @@ export class AssetDataOplComponent implements OnInit {
 
             this.listAsset.push(this.allAssetDataObj);
           }
+
+          console.log(this.listAsset);
         }
       }
     );

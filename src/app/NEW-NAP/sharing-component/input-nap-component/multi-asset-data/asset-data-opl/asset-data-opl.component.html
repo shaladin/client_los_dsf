@@ -39,7 +39,9 @@
                   </thead>
   
                   <tbody>
-                    <td colspan="100%" *ngIf="listAsset.length === 0">No Data Available</td>
+                    <tr *ngIf="listAsset.length === 0">
+                      <td colspan="100%">No Data Available</td>
+                    </tr>
                     <tr *ngFor="let item of listAsset; let i = index">
                       <td>{{item.AppAssetObj.AssetSeqNo}}</td>
                       <td class="text-left">{{item.AppAssetObj.FullAssetName}}</td>
@@ -71,7 +73,7 @@
                     </select>
                   </div>
                   <div class="col-md-2">
-                    <input min="1" class="form-control" type="number" [(ngModel)]="units" name="unit">
+                    <input min="1" value="1" class="form-control" type="number" [(ngModel)]="units" name="unit">
                   </div>
                   <label class="col-md-1" translate>Unit</label>
                   <button type="button" class="btn btn-raised btn-primary" (click)="CopyAsset()" translate>
