@@ -244,6 +244,7 @@ export class AssetDataOplComponent implements OnInit {
   AddAsset() {
     this.mode = "Add";
     this.salesSupervisor = "";
+
     this.InputLookupSupplierObj.jsonSelect = "";
     this.InputLookupSupplierObj.nameSelect = "";
 
@@ -266,6 +267,10 @@ export class AssetDataOplComponent implements OnInit {
     this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = "";
     this.inputAddressObjForLoc.default = null;
     this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
+    
+    this.AdminHeadObj = null;
+    this.SalesPersonObj = null;
+    this.BranchManagerObj = null;
 
     this.AssetDataForm.patchValue({
       MrAssetConditionCode: "",
@@ -301,8 +306,12 @@ export class AssetDataOplComponent implements OnInit {
 
     this.allAssetDataObj = this.listAsset[this.index];
 
-    this.InputLookupSupplierObj.jsonSelect = { VendorName: this.allAssetDataObj.AppAssetObj.SupplName };
-    this.InputLookupSupplierObj.nameSelect = this.allAssetDataObj.AppAssetObj.SupplName;
+    this.AdminHeadObj = null;
+    this.SalesPersonObj = null;
+    this.BranchManagerObj = null;
+    this.vendorObj.VendorCode = this.allAssetDataObj.AppAssetObj.SupplCode;
+    this.GetVendor();
+    this.GetVendorEmpList();
 
     this.InputLookupAssetObj.jsonSelect = { FullAssetName: this.allAssetDataObj.AppAssetObj.FullAssetName };
     this.InputLookupAssetObj.nameSelect = this.allAssetDataObj.AppAssetObj.FullAssetName;
@@ -401,16 +410,18 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   CopyAsset() {
-    this.allAssetDataObj = this.listAsset[this.index];
-    this.allAssetDataObj.BizTemplateCode = CommonConstant.OPL;
-    this.allAssetDataObj.Copy = "Yes";
-    this.allAssetDataObj.CopyNumber = this.units;
-    this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.getListAllAssetData();
-      }
-    );
+    if(this.units !== 0) {
+      this.allAssetDataObj = this.listAsset[this.index];
+      this.allAssetDataObj.BizTemplateCode = CommonConstant.OPL;
+      this.allAssetDataObj.Copy = "Yes";
+      this.allAssetDataObj.CopyNumber = this.units;
+      this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.getListAllAssetData();
+        }
+      );
+    }
   }
 
   Cancel() {
@@ -914,6 +925,8 @@ export class AssetDataOplComponent implements OnInit {
         if (this.appAssetObj != null) {
           for(let i = 0; i < this.appAssetObj.length; i++) {
             this.allAssetDataObj = new AllAssetDataObj();
+            
+            this.allAssetDataObj.VendorEmpId = this.appAssetObj[i].ResponseSalesPersonSupp.AppAssetSupplEmpId;
 
             this.allAssetDataObj.AppAssetObj.AppAssetId = this.appAssetObj[i].ResponseAppAssetObj.AppAssetId;
             this.allAssetDataObj.AppAssetObj.AppId = this.appAssetObj[i].ResponseAppAssetObj.AppId;
