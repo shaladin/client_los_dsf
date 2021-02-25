@@ -277,11 +277,8 @@ export class JobTabComponent implements OnInit {
         this.SubmitData();
       }
     }
-    else if (this.IsIntegratorCheckBySystem == "1" || this.mouCustId > 0) {
-      this.SubmitData();
-    }
     else{
-      this.toastr.warningMessage("GS "+CommonConstant.GSCodeIntegratorCheckBySystem+"Is Not Setup");
+      this.SubmitData();
     }
   }
 
