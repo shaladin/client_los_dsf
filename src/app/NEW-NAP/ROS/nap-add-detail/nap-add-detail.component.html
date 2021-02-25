@@ -223,7 +223,7 @@
 </div>
 
 <!-- Setelah diedit -->
-<div class="col-md-12 text-left">
+<!-- <div class="col-md-12 text-left">
   <div class="card">
     <div class="px-3">
       <div class="form-action pull-right">
@@ -267,7 +267,7 @@
         </div>
         <div id="stepperPersonal" class="bs-stepper">
           <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
-            <!-- your steps here -->
+            // your steps here
             <div class="step" data-target="#application-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="application-tab"
                 id="application-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('APP')">
@@ -310,7 +310,7 @@
           </div>
           <br><br>
           <div class="bs-stepper-content">
-            <!-- your steps content here -->
+            // your steps content here
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL'" [appId]="appId" [BizTemplateCode]="BizTemplateCode"
                 [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
@@ -337,7 +337,7 @@
         </div>
         <div id="stepperCompany" class="bs-stepper">
           <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
-            <!-- your steps here -->
+            // your steps here
             <div class="step" data-target="#application-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="application-tab"
                 id="application-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('APP')">
@@ -380,7 +380,7 @@
           </div>
           <br><br>
           <div class="bs-stepper-content">
-            <!-- your steps content here -->
+            // your steps content here
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY'" [appId]="appId" [BizTemplateCode]="BizTemplateCode"
                 [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
@@ -424,4 +424,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

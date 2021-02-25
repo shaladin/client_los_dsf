@@ -40,22 +40,22 @@ export class NapAddDetailComponent implements OnInit {
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   arrValue = [];
 
-  // AppStep = {
-  //   "APP": 1,
-  //   "ASSET": 2,
-  //   "INS": 3,
-  //   "LFI": 4,
-  //   "FIN": 5,
-  //   "TC": 6,
-  // };
-
   AppStep = {
     "APP": 1,
     "ASSET": 2,
-    "EXPENSE": 3,
-    "FIN": 4,
-    "TC": 5,
+    "INS": 3,
+    "LFI": 4,
+    "FIN": 5,
+    "TC": 6,
   };
+
+  // AppStep = {
+  //   "APP": 1,
+  //   "ASSET": 2,
+  //   "EXPENSE": 3,
+  //   "FIN": 4,
+  //   "TC": 5,
+  // };
 
   ResponseReturnInfoObj: ReturnHandlingDObj;
   FormReturnObj = this.fb.group({
@@ -132,21 +132,21 @@ export class NapAddDetailComponent implements OnInit {
       this.stepperMode = CommonConstant.CustTypePersonal;
       document.getElementById('stepperPersonal').style.display = 'block';
       document.getElementById('stepperCompany').style.display = 'none';
-      // this.AppStep = {
-      //   "APP": 1,
-      //   "ASSET": 2,
-      //   "INS": 3,
-      //   "LFI": 4,
-      //   "FIN": 5,
-      //   "TC": 6,
-      // };
       this.AppStep = {
         "APP": 1,
         "ASSET": 2,
-        "EXPENSE": 3,
-        "FIN": 4,
-        "TC": 5,
+        "INS": 3,
+        "LFI": 4,
+        "FIN": 5,
+        "TC": 6,
       };
+      // this.AppStep = {
+      //   "APP": 1,
+      //   "ASSET": 2,
+      //   "EXPENSE": 3,
+      //   "FIN": 4,
+      //   "TC": 5,
+      // };
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
         linear: false,
@@ -155,21 +155,21 @@ export class NapAddDetailComponent implements OnInit {
       this.stepperMode = CommonConstant.CustTypeCompany;
       document.getElementById('stepperPersonal').style.display = 'none';
       document.getElementById('stepperCompany').style.display = 'block';
-      // this.AppStep = {
-      //   "APP": 1,
-      //   "ASSET": 2,
-      //   "INS": 3,
-      //   "LFI": 4,
-      //   "FIN": 5,
-      //   "TC": 6,
-      // };
       this.AppStep = {
         "APP": 1,
         "ASSET": 2,
-        "EXPENSE": 3,
-        "FIN": 4,
-        "TC": 5,
+        "INS": 3,
+        "LFI": 4,
+        "FIN": 5,
+        "TC": 6,
       };
+      // this.AppStep = {
+      //   "APP": 1,
+      //   "ASSET": 2,
+      //   "EXPENSE": 3,
+      //   "FIN": 4,
+      //   "TC": 5,
+      // };
     }
   }
 
@@ -219,27 +219,27 @@ export class NapAddDetailComponent implements OnInit {
   ChangeTab(AppStep) {
     this.IsSavedTC = false;
     switch (AppStep) {
-      // case CommonConstant.AppStepCust:
-      //   this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
-      //   break;
-      // case CommonConstant.AppStepGuar:
-      //   this.AppStepIndex = this.AppStep[CommonConstant.AppStepGuar];
-      //   break;
+      case CommonConstant.AppStepCust:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
+        break;
+      case CommonConstant.AppStepGuar:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepGuar];
+        break;
       case CommonConstant.AppStepApp:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepApp];
         break;
       case CommonConstant.AppStepAsset:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepAsset];
         break;
-      case CommonConstant.AppStepExpense:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepExpense];
+      // case CommonConstant.AppStepExpense:
+      //   this.AppStepIndex = this.AppStep[CommonConstant.AppStepExpense];
+      //   break;
+      case CommonConstant.AppStepIns:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepIns];
         break;
-      // case CommonConstant.AppStepIns:
-      //   this.AppStepIndex = this.AppStep[CommonConstant.AppStepIns];
-      //   break;
-      // case CommonConstant.AppStepLIns:
-      //   this.AppStepIndex = this.AppStep[CommonConstant.AppStepLIns];
-      //   break;
+      case CommonConstant.AppStepLIns:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepLIns];
+        break;
       case CommonConstant.AppStepFin:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepFin];
         break;
