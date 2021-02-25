@@ -68,22 +68,29 @@ export class DocumentViewComponent implements OnInit {
     this.isDocSignerAvailable = false;
   }
   ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocument.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "ApplicationNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "AggrementNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
+    if (this.BizTemplateCode == CommonConstant.OPL) {
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformationAgrmnt.json";
+      this.viewGenericObj.viewEnvironment = environment.losUrl;
+    }
+    else {
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocument.json";
+      this.viewGenericObj.viewEnvironment = environment.losUrl;
+      this.viewGenericObj.ddlEnvironments = [
+        {
+          name: "ApplicationNo",
+          environment: environment.losR3Web
+        },
+        {
+          name: "AggrementNo",
+          environment: environment.losR3Web
+        },
+        {
+          name: "MouCustNo",
+          environment: environment.losR3Web
+        },
+      ];
+    }
+
 
     this.GetListAgrmntDocByAgrmntId();
 
@@ -109,7 +116,7 @@ export class DocumentViewComponent implements OnInit {
       (response) => {
         const appCust = response[0] as AppCustObj;
         const agrmntSigner = response[1] as AgrmntSignerObj;
-        if(this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W){
+        if (this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W || this.BizTemplateCode == CommonConstant.OPL){
           if(appCust.MrCustTypeCode == CommonConstant.CustTypePersonal){
             if(agrmntSigner.AppCustPersonalId && agrmntSigner.AppCustPersonalId > 0 && agrmntSigner.MfEmpNo1 && agrmntSigner.SupplBranchEmpNo){
               this.isDocSignerAvailable = true;

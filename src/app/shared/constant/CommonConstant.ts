@@ -98,6 +98,7 @@ export class CommonConstant {
   public static AppStepRef = "REF";
   public static AppStepApp = "APP";
   public static AppStepAsset = "ASSET";
+  public static AppStepExpense = "EXPENSE";
   public static AppStepIns = "INS";
   public static AppStepLIns = "LFI";
   public static AppStepFin = "FIN";
@@ -469,6 +470,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeReturnTaskCFNA = "RETURN_TASK_CFNA";
   public static RefMasterTypeCodeReturnTaskCFRFN4W = "RETURN_TASK_CFRFN4W";
   public static RefMasterTypeCodeReturnTaskFL4W = "RETURN_TASK_FL4W";
+  public static RefMasterTypeCodeReturnTaskOPL = "RETURN_TASK_OPL";
   public static RefMasterTypeCodeVerfSubjRelation = "VERF_SUBJ_RELATION";
   public static RefMasterTypeCodeCrdRvwAnalysisItem = "CRD_RVW_ANALYSIS_ITEM";
   public static RefMasterTypeCodeCrdInvstgAnalysisItem = "CRD_INVSTG_ANALYSIS_ITEM";

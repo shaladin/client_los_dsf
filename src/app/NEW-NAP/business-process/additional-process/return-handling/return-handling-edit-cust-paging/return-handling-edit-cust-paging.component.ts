@@ -11,11 +11,11 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
-  selector: 'app-return-handling-edit-app-paging',
-  templateUrl: './return-handling-edit-app-paging.component.html',
+  selector: 'app-return-handling-edit-cust-paging',
+  templateUrl: './return-handling-edit-cust-paging.component.html',
   styleUrls: []
 })
-export class ReturnHandlingEditAppPagingComponent implements OnInit {
+export class ReturnHandlingEditCustPagingComponent implements OnInit {
   inputPagingObj: any;
   userAccess: any;
   BizTemplateCode: string;
@@ -35,10 +35,10 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
     this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingApp.json";
+    this.inputPagingObj._url = "./assets/ucpaging/new-nap/business-process/additional-process/return-handling/search-return-handling-edit-cust-paging.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingApp.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/new-nap/business-process/additional-process/return-handling/search-return-handling-edit-cust-paging.json";
     this.inputPagingObj.ddlEnvironments = [
       {
         name: "a.ORI_OFFICE_CODE",
@@ -54,7 +54,7 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "EDIT_APP_" + this.BizTemplateCode;
+    critObj.value = "EDIT_CUST_" + this.BizTemplateCode;
     critObjs.push(critObj);
 
     return critObjs;
@@ -62,20 +62,8 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
 
   GetCallback(ev) {
     if (ev.Key == "Edit") {
-      if (this.BizTemplateCode == CommonConstant.CF4W) {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
-      }
-      if (this.BizTemplateCode == CommonConstant.FL4W) {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
-      }
-      if (this.BizTemplateCode == CommonConstant.CFRFN4W) {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
-      }
-      if (this.BizTemplateCode == CommonConstant.CFNA) {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
-      }
-      if (this.BizTemplateCode == CommonConstant.OPL) {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ROS_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
+      if (this.BizTemplateCode === CommonConstant.OPL) {
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CUST_COMPL_OPL_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
       }
     }
     if (ev.Key == "ViewProdOffering") {

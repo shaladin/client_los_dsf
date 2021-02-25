@@ -10,6 +10,9 @@ import { CustCompletionComponentModule } from "../sharing-component/cust-complet
 import { CustCompletionDetailPersonalComponent } from './cust-completion-detail/cust-completion-detail-personal/cust-completion-detail-personal.component';
 import { CustCompletionDetailCompanyComponent } from './cust-completion-detail/cust-completion-detail-company/cust-completion-detail-company.component';
 import { MainDataComponentModule } from "../sharing-component/main-data-component/main-data-component.module";
+import { CustCompletionOplDetailComponent } from './cust-completion-opl-detail/cust-completion-opl-detail.component';
+import { CustCompletionOplDetailCompanyComponent } from './cust-completion-opl-detail/cust-completion-opl-detail-company/cust-completion-opl-detail-company.component';
+import { CustCompletionOplDetailPersonalComponent } from './cust-completion-opl-detail/cust-completion-opl-detail-personal/cust-completion-opl-detail-personal.component';
 
 
 @NgModule({
@@ -17,7 +20,10 @@ import { MainDataComponentModule } from "../sharing-component/main-data-componen
         CustCompletionPagingComponent,
         CustCompletionDetailComponent,
         CustCompletionDetailPersonalComponent,
-        CustCompletionDetailCompanyComponent
+        CustCompletionDetailCompanyComponent,
+        CustCompletionOplDetailComponent,
+        CustCompletionOplDetailCompanyComponent,
+        CustCompletionOplDetailPersonalComponent
     ],
     imports: [
         CommonModule,

@@ -23,6 +23,7 @@ export class AllAssetDataObj {
   VendorEmpId: number;
   BizTemplateCode: string;
   Copy: string;
+  CopyNumber: number;
   RowVersion: any;
 
   constructor() {
@@ -40,6 +41,7 @@ export class AllAssetDataObj {
     this.VendorEmpId = 0;
     this.BizTemplateCode = "";
     this.Copy = "No";
+    this.CopyNumber = 0;
     this.IsAppAssetAccessoryChanged = false;
   }
 }

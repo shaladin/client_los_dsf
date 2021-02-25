@@ -35,8 +35,8 @@ export class LeadMonitoringReviewComponent implements OnInit {
 
   cancel(ev) {
     var wfObj = new WorkflowApiObj();
-    wfObj.TaskListId = ev.TaskListId;
-    wfObj.TransactionNo = ev.UploadNo;
+    wfObj.TaskListId = ev.RowObj.TaskListId;
+    wfObj.TransactionNo = ev.RowObj.UploadNo;
     wfObj.ListValue = { "Status": "RJC" };
     this.httpClient.post(URLConstant.CancelUpload, wfObj).subscribe(
       response => {
