@@ -1069,8 +1069,6 @@ export class AssetDataOplComponent implements OnInit {
 
             this.listAsset.push(this.allAssetDataObj);
           }
-
-          console.log(this.listAsset);
         }
       }
     );
