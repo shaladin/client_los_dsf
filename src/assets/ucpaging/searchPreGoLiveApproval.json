@@ -126,128 +126,15 @@
     ],
     "bodyList": [
         {
-            "type": "action",
+            "type": "link",
             "position": "center",
-            "action": [
+            "property": "AgrmntNo",
+            "target" : "_blank", 
+            "path" : "VIEW_AGRMNT", 
+            "param" : [ 
                 {
-                "type": "switch",
-                "case": [
-                    {
-                    "conditions": [
-                        {
-                        "property": "BizTemplateCode",
-                        "value": "CF4W",
-                        "restriction": "EQ"
-                        }
-                    ],
-                    "result": {
-                        "type": "link",
-                        "position": "center",
-                        "property": "AgrmntNo",
-                        "target": "_blank",
-                        "path": "VIEW_AGRMNT",
-                        "param": [
-                        {
-                            "type": "AgrmntId",
-                            "property": "AgrmntId"
-                        }
-                        ]
-                    },
-                    "isHide": false
-                    },
-                    {
-                    "conditions": [
-                        {
-                        "property": "BizTemplateCode",
-                        "value": "FL4W",
-                        "restriction": "EQ"
-                        }
-                    ],
-                    "result": {
-                        "type": "link",
-                        "position": "center",
-                        "property": "AgrmntNo",
-                        "target" : "_blank",
-                        "path": "VIEW_AGRMNT",
-                        "param": [
-                        {
-                            "type": "AgrmntId",
-                            "property": "AgrmntId"
-                        }
-                        ]
-                    },
-                    "isHide": false
-                    },
-                    {
-                    "conditions": [
-                        {
-                        "property": "BizTemplateCode",
-                        "value": "CFRFN4W",
-                        "restriction": "EQ"
-                        }
-                    ],
-                    "result": {
-                        "type": "link",
-                        "position": "center",
-                        "property": "AgrmntNo",
-                        "target" : "_blank",
-                        "path": "VIEW_AGRMNT",
-                        "param": [
-                        {
-                            "type": "AgrmntId",
-                            "property": "AgrmntId"
-                        }
-                        ]
-                    },
-                    "isHide": false
-                    },
-                    {
-                    "conditions": [
-                        {
-                        "property": "BizTemplateCode",
-                        "value": "FACTORING",
-                        "restriction": "EQ"
-                        }
-                    ],
-                    "result": {
-                        "type": "link",
-                        "position": "center",
-                        "property": "AgrmntNo",
-                        "target" : "_blank",
-                        "path": "VIEW_AGRMNT",
-                        "param": [
-                        {
-                            "type": "AgrmntId",
-                            "property": "AgrmntId"
-                        }
-                        ]
-                    },
-                    "isHide": false
-                    },
-                    {
-                    "conditions": [
-                        {
-                        "property": "BizTemplateCode",
-                        "value": "CFNA",
-                        "restriction": "EQ"
-                        }
-                    ],
-                    "result": {
-                        "type": "link",
-                        "position": "center",
-                        "property": "AgrmntNo",
-                        "target" : "_blank",
-                        "path": "VIEW_AGRMNT",
-                        "param": [
-                        {
-                            "type": "AgrmntId",
-                            "property": "AgrmntId"
-                        }
-                        ]
-                    },
-                    "isHide": false
-                    }
-                ]
+                    "type": "AgrmntId",
+                    "property": "AgrmntId"
                 }
             ]
         },
