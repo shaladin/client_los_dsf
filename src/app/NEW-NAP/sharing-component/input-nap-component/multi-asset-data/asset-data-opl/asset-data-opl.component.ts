@@ -420,6 +420,7 @@ export class AssetDataOplComponent implements OnInit {
       this.copyAppAssetObj.AssetPriceAmt = this.allAssetDataObj.AppAssetObj.AssetPriceAmt;
       this.copyAppAssetObj.ManufacturingYear = this.allAssetDataObj.AppAssetObj.ManufacturingYear;
       this.copyAppAssetObj.Color = this.allAssetDataObj.AppAssetObj.Color;
+      this.copyAppAssetObj.MrAssetConditionCode = this.allAssetDataObj.AppAssetObj.MrAssetConditionCode;
       this.copyAppAssetObj.BizTemplateCode = CommonConstant.OPL;
       this.copyAppAssetObj.CopyNumber = this.units;
       this.http.post(URLConstant.CopyAppAsset, this.copyAppAssetObj).subscribe(
