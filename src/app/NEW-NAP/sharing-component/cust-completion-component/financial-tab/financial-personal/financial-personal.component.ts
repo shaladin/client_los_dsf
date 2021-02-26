@@ -40,8 +40,7 @@ export class FinancialPersonalComponent implements OnInit {
     SpouseMonthlyIncomeAmt: [0],
     TotalIncomeAmt: [0],
     NettIncomeAmt: [0],
-    RowVersion: [''],
-    AttrList: this.fb.array([])
+    RowVersion: ['']
   })
 
   constructor(private fb: FormBuilder,
@@ -138,7 +137,9 @@ export class FinancialPersonalComponent implements OnInit {
   }
 
   SaveForm() {
-    this.SetAttrContent();
+    if(this.FinancialForm['controls']['AttrList'] != undefined){
+      this.SetAttrContent();
+    }
     this.AppCustPersonalFinData = this.FinancialForm.value;
     this.AppCustPersonalFinData.AppCustPersonalId = this.AppCustPersonalId;
 
