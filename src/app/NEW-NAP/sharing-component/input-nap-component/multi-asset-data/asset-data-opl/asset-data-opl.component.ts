@@ -48,7 +48,8 @@ export class AssetDataOplComponent implements OnInit {
   InputLookupAcceObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   InputLookupSupplObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   
-  deleteAppAssetObj: AppAssetObj = new AppAssetObj();
+  deleteAppAssetObj: AppAssetObj;
+  copyAppAssetObj: AppAssetObj;
   allAssetDataObj: AllAssetDataObj;
   generalSettingObj: GeneralSettingObj = new GeneralSettingObj();
   
@@ -394,6 +395,7 @@ export class AssetDataOplComponent implements OnInit {
   Delete(index: any) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.allAssetDataObj = this.listAsset[index];
+      this.deleteAppAssetObj = new AppAssetObj();
       this.deleteAppAssetObj.AppAssetId = this.allAssetDataObj.AppAssetObj.AppAssetId;
       this.deleteAppAssetObj.AppId = this.allAssetDataObj.AppAssetObj.AppId;
       this.http.post(URLConstant.DeleteAppAsset, this.deleteAppAssetObj).subscribe(
@@ -412,10 +414,15 @@ export class AssetDataOplComponent implements OnInit {
   CopyAsset() {
     if(this.units !== 0) {
       this.allAssetDataObj = this.listAsset[this.index];
-      this.allAssetDataObj.BizTemplateCode = CommonConstant.OPL;
-      this.allAssetDataObj.Copy = "Yes";
-      this.allAssetDataObj.CopyNumber = this.units;
-      this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+      this.copyAppAssetObj = new AppAssetObj();
+      this.copyAppAssetObj.AppId = this.allAssetDataObj.AppAssetObj.AppId;
+      this.copyAppAssetObj.FullAssetCode = this.allAssetDataObj.AppAssetObj.FullAssetCode;
+      this.copyAppAssetObj.AssetPriceAmt = this.allAssetDataObj.AppAssetObj.AssetPriceAmt;
+      this.copyAppAssetObj.ManufacturingYear = this.allAssetDataObj.AppAssetObj.ManufacturingYear;
+      this.copyAppAssetObj.Color = this.allAssetDataObj.AppAssetObj.Color;
+      this.copyAppAssetObj.BizTemplateCode = CommonConstant.OPL;
+      this.copyAppAssetObj.CopyNumber = this.units;
+      this.http.post(URLConstant.CopyAppAsset, this.copyAppAssetObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.getListAllAssetData();

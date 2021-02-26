@@ -6,7 +6,6 @@ import { AppCollateralAccessoryObj } from "./AppCollateralAccessoryObj.Model";
 import { AppCollateralAttrObj } from "./AppCollateralAttrObj.Model";
 import { AppAssetAttrObj } from "./AppAssetAttrObj.Model";
 
-
 export class AllAssetDataObj {
   AppAssetObj: AppAssetObj;
   AppAssetAccessoryObjs: any;
@@ -22,8 +21,6 @@ export class AllAssetDataObj {
   IsAppAssetAccessoryChanged: boolean;
   VendorEmpId: number;
   BizTemplateCode: string;
-  Copy: string;
-  CopyNumber: number;
   RowVersion: any;
 
   constructor() {
@@ -40,8 +37,6 @@ export class AllAssetDataObj {
     this.LOBCode = "";
     this.VendorEmpId = 0;
     this.BizTemplateCode = "";
-    this.Copy = "No";
-    this.CopyNumber = 0;
     this.IsAppAssetAccessoryChanged = false;
   }
 }
