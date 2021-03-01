@@ -16,9 +16,13 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   styleUrls: []
 })
 export class ReturnHandlingEditAppPagingComponent implements OnInit {
-
+  inputPagingObj: any;
+  userAccess: any;
   BizTemplateCode: string;
-  constructor(private route: ActivatedRoute, private router: Router, private cookieService: CookieService) {
+
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -27,8 +31,6 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
     });
   }
 
-  inputPagingObj;
-  userAccess;
   ngOnInit() {
     this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
@@ -62,7 +64,6 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
     if (ev.Key == "Edit") {
       if (this.BizTemplateCode == CommonConstant.CF4W) {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
-
       }
       if (this.BizTemplateCode == CommonConstant.FL4W) {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
@@ -72,6 +73,9 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
       }
       if (this.BizTemplateCode == CommonConstant.CFNA) {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
+      }
+      if (this.BizTemplateCode == CommonConstant.OPL) {
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ROS_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
       }
     }
     if (ev.Key == "ViewProdOffering") {

@@ -8,16 +8,22 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+
 @Component({
   selector: 'app-return-handling-survey',
   templateUrl: './return-handling-survey.component.html',
   styleUrls: []
 })
 export class ReturnHandlingSurveyComponent implements OnInit {
-
   BizTemplateCode: string;
+  TrxNo: any;
+  TrxType: any = "APP";
+  inputPagingObj: any;
+  userAccess: any;
+  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
 
-  constructor(private route: ActivatedRoute, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -25,11 +31,7 @@ export class ReturnHandlingSurveyComponent implements OnInit {
       }
     });
   }
-  TrxNo: any;
-  TrxType: any = "APP";
-  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
-  inputPagingObj;
-  userAccess;
+
   ngOnInit() {
     this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.inputPagingObj = new UcPagingObj();
@@ -71,5 +73,4 @@ export class ReturnHandlingSurveyComponent implements OnInit {
       }
     }
   }
-
 }

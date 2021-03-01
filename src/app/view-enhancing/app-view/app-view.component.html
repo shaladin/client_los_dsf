@@ -131,7 +131,7 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsFraudDetectionResult" label="Fraud Detection Result">
+            <mat-tab *ngIf="IsFraudDetectionResult && IsUseDigitalization == '1'" label="Fraud Detection Result">
               <ng-template matTabContent>
                 <app-view-fraud-detection-result [appId]="AppId" [mrCustTypeCode]="CustType" [isView]=true></app-view-fraud-detection-result>
               </ng-template>

@@ -109,7 +109,7 @@ export class AdditionalTcDetailComponent implements OnInit {
       Mandatory = "No"
     }
 
-    this.InputLookupTcObj.jsonSelect = this.TcObj;
+    this.InputLookupTcObj.jsonSelect = { TcName: this.TcObj.TcName };
     this.InputLookupTcObj.idSelect = this.TcObj.TcCode;
     this.InputLookupTcObj.nameSelect = this.TcObj.TcName;
 

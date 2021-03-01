@@ -30,6 +30,7 @@ import { ReturnHandlingEditNap4Component } from './return-handling/return-handli
 import { ReturnHandlingNewEditAppPagingComponent } from './return-handling/return-handling-new-edit-app-paging/return-handling-new-edit-app-paging.component';
 import { AdditionalTcPagingComponent } from './additional-tc/additional-tc-paging/additional-tc-paging.component';
 import { AdditionalTcDetailComponent } from './additional-tc/additional-tc-detail/additional-tc-detail.component';
+import { ReturnHandlingEditCustPagingComponent } from './return-handling/return-handling-edit-cust-paging/return-handling-edit-cust-paging.component';
 
 const routes: Routes = [
   {
@@ -237,6 +238,13 @@ const routes: Routes = [
         component: AdditionalTcDetailComponent,
         data: {
           title: 'Additional TC'
+        }
+      },
+      {
+        path: PathConstant.RETURN_HANDLING_EDIT_CUST_PAGING,
+        component: ReturnHandlingEditCustPagingComponent,
+        data: {
+          title: 'Return Handling Edit Customer'
         }
       },
     ]

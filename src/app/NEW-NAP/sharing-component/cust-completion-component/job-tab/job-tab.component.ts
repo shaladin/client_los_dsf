@@ -24,6 +24,8 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { String } from 'typescript-string-operations';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-job-tab',
@@ -67,6 +69,7 @@ export class JobTabComponent implements OnInit {
   isUcAddrReady: boolean = false
   MrCustModelDescr: string = "Employee";
   IsIntegratorCheckBySystem: string = "0";
+  IsUseDigitalization: string;
   IsCustomer: boolean = false;
   BusinessDt: Date;
   UserAccess: any;
@@ -117,11 +120,6 @@ export class JobTabComponent implements OnInit {
     this.BusinessDt = this.UserAccess.BusinessDt;
     this.GetGeneralSetting();
     await this.InitLookup();
-    this.http.post(URLConstant.GetAppById, { AppId: this.appId }).subscribe(
-      (response) => {
-        this.bizTemplateCode = response["BizTemplateCode"];
-      });
-    await this.GetThirdPartyResultHByTrxTypeCodeAndTrxNo();
     this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
       (response) => {
         this.IsCustomer = response.AppCustObj.IsCustomer;
@@ -155,9 +153,31 @@ export class JobTabComponent implements OnInit {
   }
 
   async GetGeneralSetting() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GSCodeIntegratorCheckBySystem }).toPromise().then(
+    var generalSettingObj = new GeneralSettingObj();
+
+    generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
+
+    await this.http.post<GeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, generalSettingObj).toPromise().then(
       (response) => {
-        this.IsIntegratorCheckBySystem = response.GsValue;
+        var returnGeneralSettingObj = response;
+
+        var gsNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        
+        if(gsNeedCheckBySystem != undefined){
+          this.IsIntegratorCheckBySystem = gsNeedCheckBySystem.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
+        }
+
+        if(gsUseDigitalization != undefined){
+          this.IsUseDigitalization = gsUseDigitalization.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
+        }
+
+        this.GetThirdPartyResultHByTrxTypeCodeAndTrxNo();
       },
       (error) => {
         console.log(error);
@@ -242,7 +262,7 @@ export class JobTabComponent implements OnInit {
   }
 
   SaveForm() {
-    if (this.IsIntegratorCheckBySystem == "0" && this.mouCustId == 0 && this.bizTemplateCode != CommonConstant.FCTR) {
+    if (this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0" && this.mouCustId == 0 && this.bizTemplateCode != CommonConstant.FCTR) {
       if (this.IsCustomer) {
         if (!this.IsNeedIntegrator) {
           if (confirm("Do you want to submit this data without Integrator ?")) {
@@ -257,11 +277,8 @@ export class JobTabComponent implements OnInit {
         this.SubmitData();
       }
     }
-    else if (this.IsIntegratorCheckBySystem == "1" || this.mouCustId > 0) {
-      this.SubmitData();
-    }
     else{
-      this.toastr.warningMessage("GS "+CommonConstant.GSCodeIntegratorCheckBySystem+"Is Not Setup");
+      this.SubmitData();
     }
   }
 
@@ -475,17 +492,19 @@ export class JobTabComponent implements OnInit {
         if(response['MouCustId'] != null){
           this.mouCustId = response['MouCustId'];
         }
-        this.http.post(URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo, { TrxTypeCode: CommonConstant.APP_TRX_TYPE_CODE, TrxNo: response["AppNo"] }).subscribe(
-          (response) => {
-            if (response["ThirdPartyRsltHId"] != 0 && response["ThirdPartyRsltHId"] != null) {
-              this.requestedDate = response["ReqDt"];
+        this.bizTemplateCode = response["BizTemplateCode"];
+        if(this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0"){
+          this.http.post(URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo, { TrxTypeCode: CommonConstant.APP_TRX_TYPE_CODE, TrxNo: response["AppNo"] }).subscribe(
+            (response) => {
+              if (response["ThirdPartyRsltHId"] != 0 && response["ThirdPartyRsltHId"] != null) {
+                this.requestedDate = response["ReqDt"];
+              }
+            },
+            (error) => {
+              console.log(error);
             }
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-
+          );
+        }
       },
       (error) => {
         console.log(error);

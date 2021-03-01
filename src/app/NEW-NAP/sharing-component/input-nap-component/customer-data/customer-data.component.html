@@ -104,10 +104,10 @@
             [parentForm]="CustDataForm" [identifier]="'custGrpMember'"></app-cust-grp-member>
         </div>
       </div>
-      <lib-ucSubsection *ngIf="this.isNeedCheckBySystem == '0'" [id]="'integratorDataId'"
+      <lib-ucSubsection *ngIf="this.isUseDigitalization == '1' && this.isNeedCheckBySystem == '0'" [id]="'integratorDataId'"
         [title]="'Fraud Checking Customer'" [panel]="'fraudCheckingCust'">
       </lib-ucSubsection>
-      <div *ngIf="this.isNeedCheckBySystem == '0'" id="fraudCheckingCust">
+      <div *ngIf="this.isUseDigitalization == '1' && this.isNeedCheckBySystem == '0'" id="fraudCheckingCust">
         <div class="form-group row">
           <label class="col-md-3 adins-required-label" translate>Integrator Checking</label>
           <div class="col-md-4">
@@ -189,10 +189,10 @@
             [parentForm]="CustDataCompanyForm" [identifier]="'custGrpMemberCompany'"></app-cust-grp-member>
         </div>
       </div>
-      <lib-ucSubsection *ngIf="this.isNeedCheckBySystem == '0'" [id]="'integratorDataId'"
+      <lib-ucSubsection *ngIf="this.isUseDigitalization == '1' && this.isNeedCheckBySystem == '0'" [id]="'integratorDataId'"
       [title]="'Fraud Checking Customer'" [panel]="'fraudCheckingCust'">
     </lib-ucSubsection>
-    <div *ngIf="this.isNeedCheckBySystem == '0'" id="fraudCheckingCust">
+    <div *ngIf="this.isUseDigitalization == '1' && this.isNeedCheckBySystem == '0'" id="fraudCheckingCust">
       <div class="form-group row">
         <label class="col-md-3 adins-required-label" translate>Integrator Checking</label>
         <div class="col-md-4">

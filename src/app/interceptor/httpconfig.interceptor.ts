@@ -77,7 +77,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         }
 
         if (token != "") {
-            request = request.clone({ headers: request.headers.set('Authorization', token) });
+            request = request.clone({ headers: request.headers.set('AdInsKey', token) });
         }
 
         if (!request.headers.has('Content-Type')) {

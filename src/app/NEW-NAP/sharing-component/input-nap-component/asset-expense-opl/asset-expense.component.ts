@@ -2,14 +2,10 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder } from '@angular/forms';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-asset-expense',
@@ -29,7 +25,10 @@ export class AssetExpenseComponent implements OnInit {
   AppAssetId: number;
   isEdit: boolean = false;
   isReady: boolean = false;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
+
+  constructor(private route: ActivatedRoute,
+    private http: HttpClient,
+    private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.AppId = params["AppId"];
@@ -61,20 +60,19 @@ export class AssetExpenseComponent implements OnInit {
     this.http.post(URLConstant.GetListAppAssetExpenseByAppId, this.appAssetObj).subscribe(
       (response) => {
         this.listAppAssetObj = response;
-        console.log(this.listAppAssetObj);
         var DetailForGridAsset = {
           Data: this.listAppAssetObj.AssetExpenseObjs
         }
 
         this.gridAssetDataObj.resultData = DetailForGridAsset;
         this.isReady = true;
-      });
+      }
+    );
   }
 
   next() {
     var x = this.listAppAssetObj.AssetExpenseObjs.filter(w => w.TotalAssetExpense == 0)
-    if (x.length > 0)
-    {
+    if (x.length > 0) {
       this.toastr.warningMessage("Please Input Asset Expense For All Asset");
       return;
     }
@@ -89,9 +87,7 @@ export class AssetExpenseComponent implements OnInit {
   }
 
   test() {
-
     this.AppAssetId = this.listAppAssetObj.AssetExpenseObjs[0].AppAssetId;
-      this.isEdit = true;
-
+    this.isEdit = true;
   }
 }

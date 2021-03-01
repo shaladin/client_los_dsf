@@ -23,6 +23,7 @@ import { AppAssetAttrObj } from 'app/shared/model/AppAssetAttrObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-asset-data',
@@ -286,6 +287,7 @@ export class AssetDataComponent implements OnInit {
 
   generalSettingObj: GeneralSettingObj = new GeneralSettingObj();
   IntegratorCheckBySystemGsValue: string = "1";
+  IsUseDigitalization: string;
   LastRequestedDate: any = "";
   
   constructor(
@@ -598,11 +600,29 @@ export class AssetDataComponent implements OnInit {
   
   async GetGS() {
     this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.GsCode = "INTEGRATOR_CHECK_BY_SYSTEM";
-    await this.http.post(URLConstant.GetGeneralSettingByCode, this.generalSettingObj).toPromise().then(
+    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
+
+    await this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
       (response) => {
-        this.IntegratorCheckBySystemGsValue = response["GsValue"];
-        if (this.IntegratorCheckBySystemGsValue == "0") {
+        var returnGeneralSettingObj = response;
+
+        var gsNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        
+        if(gsNeedCheckBySystem != undefined){
+          this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
+        }
+
+        if(gsUseDigitalization != undefined){
+          this.IsUseDigitalization = gsUseDigitalization.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
+        }
+
+        if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
           this.GetThirdPartyResultH();
         }
       }
@@ -794,7 +814,7 @@ export class AssetDataComponent implements OnInit {
           if (this.appAssetObj.ResponseSalesPersonSupp != null) this.allAssetDataObj.AppAssetSupplEmpSalesObj.RowVersion = this.appAssetObj.ResponseSalesPersonSupp.RowVersion;
           if (this.appAssetObj.ResponseBranchManagerSupp != null) this.allAssetDataObj.AppAssetSupplEmpManagerObj.RowVersion = this.appAssetObj.ResponseBranchManagerSupp.RowVersion;
         }
-        if (this.IntegratorCheckBySystemGsValue == "0") {
+        if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
           if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
             if (confirm("Chassis No not filled, submit data without Integrator ?")) {
               this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(

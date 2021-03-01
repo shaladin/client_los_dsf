@@ -48,7 +48,8 @@ export class AssetDataOplComponent implements OnInit {
   InputLookupAcceObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   InputLookupSupplObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   
-  deleteAppAssetObj: AppAssetObj = new AppAssetObj();
+  deleteAppAssetObj: AppAssetObj;
+  copyAppAssetObj: AppAssetObj;
   allAssetDataObj: AllAssetDataObj;
   generalSettingObj: GeneralSettingObj = new GeneralSettingObj();
   
@@ -244,29 +245,30 @@ export class AssetDataOplComponent implements OnInit {
   AddAsset() {
     this.mode = "Add";
     this.salesSupervisor = "";
-    this.InputLookupSupplierObj.jsonSelect = null;
+
+    this.InputLookupSupplierObj.jsonSelect = "";
     this.InputLookupSupplierObj.nameSelect = "";
 
-    this.InputLookupAssetObj.jsonSelect = null;
+    this.InputLookupAssetObj.jsonSelect = "";
     this.InputLookupAssetObj.nameSelect = "";
 
-    this.InputLookupCityIssuerObj.jsonSelect = null;
+    this.InputLookupCityIssuerObj.jsonSelect = "";
     this.InputLookupCityIssuerObj.nameSelect = "";
 
     this.inputAddressObjForDeliv.showSubsection = false;
     this.inputAddressObjForDeliv.showAllPhn = false;
     this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = "";
-    this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = null;
+    this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = "";
     this.inputAddressObjForDeliv.default = null;
     this.inputAddressObjForDeliv.inputField = this.inputFieldDelivAddrObj;
 
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
     this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = "";
-    this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = null;
+    this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = "";
     this.inputAddressObjForLoc.default = null;
     this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
-
+    
     this.AdminHeadObj = null;
     this.SalesPersonObj = null;
     this.BranchManagerObj = null;
@@ -305,13 +307,17 @@ export class AssetDataOplComponent implements OnInit {
 
     this.allAssetDataObj = this.listAsset[this.index];
 
-    this.InputLookupSupplierObj.jsonSelect = null;
-    this.InputLookupSupplierObj.nameSelect = this.allAssetDataObj.AppAssetObj.SupplName;
+    this.AdminHeadObj = null;
+    this.SalesPersonObj = null;
+    this.BranchManagerObj = null;
+    this.vendorObj.VendorCode = this.allAssetDataObj.AppAssetObj.SupplCode;
+    this.GetVendor();
+    this.GetVendorEmpList();
 
-    this.InputLookupAssetObj.jsonSelect = null;
+    this.InputLookupAssetObj.jsonSelect = { FullAssetName: this.allAssetDataObj.AppAssetObj.FullAssetName };
     this.InputLookupAssetObj.nameSelect = this.allAssetDataObj.AppAssetObj.FullAssetName;
 
-    this.InputLookupCityIssuerObj.jsonSelect = null;
+    this.InputLookupCityIssuerObj.jsonSelect = { DistrictName: this.allAssetDataObj.AppAssetObj.TaxCityIssuer };
     this.InputLookupCityIssuerObj.nameSelect = this.allAssetDataObj.AppAssetObj.TaxCityIssuer;
 
     this.inputAddressObjForDeliv.showSubsection = false;
@@ -341,10 +347,6 @@ export class AssetDataOplComponent implements OnInit {
     this.locationAddrObj.City = this.allAssetDataObj.AppCollateralRegistrationObj.LocationCity;
     this.inputAddressObjForLoc.default = this.locationAddrObj;
     this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
-
-    this.AdminHeadObj = this.allAssetDataObj.AppAssetSupplEmpAdminObj;
-    this.SalesPersonObj = this.allAssetDataObj.AppAssetSupplEmpSalesObj;
-    this.BranchManagerObj = this.allAssetDataObj.AppAssetSupplEmpManagerObj;
 
     this.AssetDataForm.patchValue({
       MrAssetConditionCode: this.allAssetDataObj.AppAssetObj.MrAssetConditionCode,
@@ -393,12 +395,13 @@ export class AssetDataOplComponent implements OnInit {
   Delete(index: any) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.allAssetDataObj = this.listAsset[index];
+      this.deleteAppAssetObj = new AppAssetObj();
       this.deleteAppAssetObj.AppAssetId = this.allAssetDataObj.AppAssetObj.AppAssetId;
       this.deleteAppAssetObj.AppId = this.allAssetDataObj.AppAssetObj.AppId;
       this.http.post(URLConstant.DeleteAppAsset, this.deleteAppAssetObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          this.listAsset.splice(index, 1);
+          this.getListAllAssetData();
         }
       );
     }
@@ -409,17 +412,19 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   CopyAsset() {
-    this.allAssetDataObj = this.listAsset[this.index];
-    this.allAssetDataObj.BizTemplateCode = CommonConstant.OPL;
-    this.allAssetDataObj.Copy = "Yes";
-    this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        for(let i = 0; i < this.units; i++) {
-          this.listAsset.push(this.listAsset[this.index]);
+    if(this.units !== 0) {
+      this.allAssetDataObj = this.listAsset[this.index];
+      this.copyAppAssetObj = new AppAssetObj();
+      this.copyAppAssetObj.AppAssetId = this.allAssetDataObj.AppAssetObj.AppAssetId;
+      this.copyAppAssetObj.BizTemplateCode = CommonConstant.OPL;
+      this.copyAppAssetObj.count = this.units;
+      this.http.post(URLConstant.CopyAppAsset, this.copyAppAssetObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.getListAllAssetData();
         }
-      }
-    );
+      );
+    }
   }
 
   Cancel() {
@@ -917,11 +922,14 @@ export class AssetDataOplComponent implements OnInit {
     this.appData.AppId = this.AppId;
     await this.http.post(URLConstant.GetListAllAssetDataByAppId, this.appData).toPromise().then(
       (response) => {
+        this.listAsset = [];
         this.appAssetObj = response[CommonConstant.ReturnObj];
 
         if (this.appAssetObj != null) {
           for(let i = 0; i < this.appAssetObj.length; i++) {
             this.allAssetDataObj = new AllAssetDataObj();
+            
+            this.allAssetDataObj.VendorEmpId = this.appAssetObj[i].ResponseSalesPersonSupp.AppAssetSupplEmpId;
 
             this.allAssetDataObj.AppAssetObj.AppAssetId = this.appAssetObj[i].ResponseAppAssetObj.AppAssetId;
             this.allAssetDataObj.AppAssetObj.AppId = this.appAssetObj[i].ResponseAppAssetObj.AppId;
@@ -975,9 +983,9 @@ export class AssetDataOplComponent implements OnInit {
               this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = this.appAssetObj[i].ResponseBranchManagerSupp.MrSupplEmpPositionCode;
             }
             else {
-              this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = "";
-              this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = "";
-              this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = "";
+              this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = "-";
+              this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = "-";
+              this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = "-";
             }
 
             if (this.appAssetObj[i].ResponseAdminHeadSupp != null) {
@@ -986,9 +994,9 @@ export class AssetDataOplComponent implements OnInit {
               this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = this.appAssetObj[i].ResponseAdminHeadSupp.MrSupplEmpPositionCode;
             }
             else {
-              this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = "";
-              this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = "";
-              this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = "";
+              this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = "-";
+              this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = "-";
+              this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = "-";
             }
 
             if (this.appAssetObj[i].ResponseSalesPersonSupp != null) {
@@ -997,9 +1005,9 @@ export class AssetDataOplComponent implements OnInit {
               this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = this.appAssetObj[i].ResponseSalesPersonSupp.MrSupplEmpPositionCode;
             }
             else {
-              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = "";
-              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = "";
-              this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = "";
+              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = "-";
+              this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = "-";
+              this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = "-";
             }
 
             this.allAssetDataObj.AppAssetObj.TaxCityIssuer = this.appAssetObj[i].ResponseAppAssetObj.TaxCityIssuer;

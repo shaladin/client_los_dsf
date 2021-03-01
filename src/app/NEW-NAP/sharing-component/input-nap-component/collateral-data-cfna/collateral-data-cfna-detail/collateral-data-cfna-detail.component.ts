@@ -26,6 +26,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppCollateralAttrCustomObj } from 'app/shared/model/AppCollateralAttrCustom.Model';
 import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-collateral-data-cfna-detail',
@@ -122,6 +123,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   isDiffWithRefAttr: boolean = false;
   generalSettingObj: any;
   IntegratorCheckBySystemGsValue: string = "1";
+  IsUseDigitalization: string;
   currentChassisNo: string = "";
   LastRequestedDate: string = "";
   indexChassis: number = 0  ;
@@ -906,10 +908,27 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
 
   async GetGS() {
     this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.GsCode = "INTEGRATOR_CHECK_BY_SYSTEM";
-    await this.http.post(URLConstant.GetGeneralSettingByCode, this.generalSettingObj).toPromise().then(
+    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
+
+    await this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
       (response) => {
-        this.IntegratorCheckBySystemGsValue = response["GsValue"];
+        var returnGeneralSettingObj = response;
+
+        var gsNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        
+        if(gsNeedCheckBySystem != undefined){
+          this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
+        }
+
+        if(gsUseDigitalization != undefined){
+          this.IsUseDigitalization = gsUseDigitalization.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
+        }
       }
     );
   }
@@ -1110,7 +1129,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.listAppCollateralDocObj.AppCollateralDocObj.push(this.appCollateralDoc);
     }
     this.appCollateralDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
-    if (this.IntegratorCheckBySystemGsValue == "0") {
+    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
       if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {  
         if (confirm("Chassis No not filled, submit data without Integrator ?")) {
             this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
