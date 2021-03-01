@@ -415,14 +415,9 @@ export class AssetDataOplComponent implements OnInit {
     if(this.units !== 0) {
       this.allAssetDataObj = this.listAsset[this.index];
       this.copyAppAssetObj = new AppAssetObj();
-      this.copyAppAssetObj.AppId = this.allAssetDataObj.AppAssetObj.AppId;
-      this.copyAppAssetObj.FullAssetCode = this.allAssetDataObj.AppAssetObj.FullAssetCode;
-      this.copyAppAssetObj.AssetPriceAmt = this.allAssetDataObj.AppAssetObj.AssetPriceAmt;
-      this.copyAppAssetObj.ManufacturingYear = this.allAssetDataObj.AppAssetObj.ManufacturingYear;
-      this.copyAppAssetObj.Color = this.allAssetDataObj.AppAssetObj.Color;
-      this.copyAppAssetObj.MrAssetConditionCode = this.allAssetDataObj.AppAssetObj.MrAssetConditionCode;
+      this.copyAppAssetObj.AppAssetId = this.allAssetDataObj.AppAssetObj.AppAssetId;
       this.copyAppAssetObj.BizTemplateCode = CommonConstant.OPL;
-      this.copyAppAssetObj.CopyNumber = this.units;
+      this.copyAppAssetObj.count = this.units;
       this.http.post(URLConstant.CopyAppAsset, this.copyAppAssetObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
