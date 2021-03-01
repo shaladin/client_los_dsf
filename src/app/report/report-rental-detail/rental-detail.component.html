@@ -1,0 +1,46 @@
+<div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="px-3">
+            <lib-ucSubsection [id]="'ReportGroup'" [title]="'Report Group'" [panel]="'dReportGroup'">
+            </lib-ucSubsection>
+            <div id="dReportGroup">
+                <label class="col-md-3">Report Group By</label>
+                <span class="col-md-3">
+                    <select (change)="setPaging($event.target.value)">
+                        <option value="Default">Select One</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Supplier">Supplier Branch</option>
+                        <option value="Product">Product</option>
+                        <option value="BrandType">Brand Type Model</option>
+                    </select>
+                </span>
+            </div>
+            </div>
+        </div>
+    </div>
+  </div>       
+</div>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>                                
+          
+            <div *ngIf="mode == 'Supplier'">
+                <app-rental-detail-supplier></app-rental-detail-supplier>
+            </div>
+        
+            <div *ngIf="mode == 'Product'">
+                <app-rental-detail-product></app-rental-detail-product>
+            </div>
+
+            <div *ngIf="mode == 'Marketing'">
+                <app-rental-detail-marketing></app-rental-detail-marketing>
+            </div>
+
+            <div *ngIf="mode == 'BrandType'">
+                <app-rental-detail-brand-type-model></app-rental-detail-brand-type-model>
+            </div>
+
+
+

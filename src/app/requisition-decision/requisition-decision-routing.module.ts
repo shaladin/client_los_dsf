@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '',
     children: [
       { path: PathConstant.PAGING_LOWERCASE, component: RequisitionDecisionPagingComponent, data: { title: 'Requisition Decision Paging' } },
-      { path: PathConstant.DETAIL_LOWERCASE, component: RequisitionDecisionDetailComponent, data: { title: 'Requisition Decision Detail' } }
+      { path: PathConstant.DETAIL_LOWERCASE, component: RequisitionDecisionDetailComponent, data: { title: 'Requisition Decision Detail' } },
     ]
   }
 ]

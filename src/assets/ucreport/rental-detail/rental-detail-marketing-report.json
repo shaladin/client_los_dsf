@@ -1,0 +1,61 @@
+{
+    "title": "REPORT RENTAL DETAIL MARKETING",
+    "reportName": "RENTAL DETAIL MARKETING REPORT",
+    "reportTemplateName": "RentalDetailMarketing.rdlc",
+    "component": [
+      {
+        "type": "dropdown",
+        "label": "Office Name",
+        "name": "OfficeCode",
+        "datatype": "text",
+        "isFromURL": true,
+        "isSelectOne": true,
+        "url": "",
+        "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "",
+        "criteriaPropValue": "",
+        "isReportParam": false,
+        "isProviderParam": true
+      },
+      {
+        "type": "dropdown",
+        "label": "Marketing Officer",
+        "name": "MarketingOff",
+        "datatype": "text",
+        "isFromURL": true,
+        "isSelectOne": true,
+        "url": "",
+        "path": "/RefEmp/GetListKvpMarketingEmpForPaging",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "",
+        "criteriaPropValue": "",
+        "isReportParam": false,
+        "isProviderParam": true
+      },
+      {
+        "type": "datepicker",
+        "label": "Period From",
+        "name": "PeriodFrom",
+        "datatype": "date",
+        "value": "BD-10",
+        "restriction": "gte",
+        "isReportParam": true,
+        "isProviderParam": true
+      },
+      {
+        "type": "datepicker",
+        "label": "Period To",
+        "name": "PeriodTo",
+        "datatype": "date",
+        "value": "BD+10",
+        "restriction": "lte",
+        "isReportParam": true,
+        "isProviderParam": true
+      }
+    ],
+    "exportTypeList": [
+    ]
+  }

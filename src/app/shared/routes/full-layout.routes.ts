@@ -59,5 +59,9 @@ export const Full_ROUTES: Routes = [
   {
     path: PathConstant.REQUISITION_DECISION,
     loadChildren: './requisition-decision/requisition-decision.module#RequisitionDecisionModule'
+  },
+  {
+    path: PathConstant.REPORT,
+    loadChildren: './report/report.module#ReportModule'
   }
 ];
