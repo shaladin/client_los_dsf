@@ -1,4 +1,4 @@
-<div class="row text-left">
+<div class="row text-left" *ngIf="isReady">
   <div class="col-md-12">
     <div class="card">
       <div class="card-body">
@@ -67,7 +67,7 @@
                       {{i + 1}}
                     </td>
                     <td [formGroupName]="i" class="text-center">
-                      {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["AssetName"].value}}
+                      {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["AppAssetNo"].value}}
                     </td>
                     <td [formGroupName]="i" class="text-center">
                       {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["AssetName"].value}}
@@ -79,12 +79,12 @@
                       {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["DeliveryDt"].value | date: 'dd-MM-yyyy'}}
                     </td>
                     <td [formGroupName]="i" class="text-center">
-                      <!--<lib-uclookupgeneric [enjiForm]="enjiForm"
-            [lookupInput]="dictAccLookup[AssetAllocationForm.controls['ListAsset']['controls'][i]['controls'].No.value]"
+                      <lib-uclookupgeneric [enjiForm]="enjiForm"
+            [lookupInput]="dictAssetNumber[AssetAllocationForm.controls['ListAsset']['controls'][i]['controls'].No.value]"
             [parentForm]="AssetAllocationForm"
-            [identifier]="'lookupAccObj' + AssetAllocationForm.controls['ListAsset']['controls'][i]['controls'].No.value"
-            (lookup)="SetAssetNumber(i,$event)"></lib-uclookupgeneric>-->
-                      []
+            [identifier]="'lookupAssetNumberObj' + AssetAllocationForm.controls['ListAsset']['controls'][i]['controls'].No.value"
+            (lookup)="SetAssetNumber(i,$event)"></lib-uclookupgeneric>
+                      
                     </td>
                     <td [formGroupName]="i" class="text-center">
                       {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["StockAssetName"].value}} {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["ManuYearAssetNumber"].value}} - {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["ColorAssetNumber"].value}}
@@ -134,7 +134,7 @@
             </div>
             <div class="form-actions right">
               <button type="button" class="btn btn-raised btn-warning mr-1"
-                      (click)="test()" translate>
+                      (click)="backToPaging()" translate>
                 <i class="ft-x"></i> Cancel
               </button>
               <button type="submit" class="btn btn-raised btn-primary" translate>

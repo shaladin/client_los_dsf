@@ -1334,4 +1334,8 @@ export class URLConstant {
   //Asset Allocation
     public static GetAssetAllocationDataByAppId = environment.losUrl + "/AppAssetAllocationOpl/GetAssetAllocationDataByAppId";
   public static SubmitAssetAllocation = environment.losUrl + "/AppAssetAllocationOpl/SubmitAssetAllocation";
+
+   //API AMS
+  public static AmsUrl = "http://r3impl-appsvr/AMS";
+  public static GetAssetStockPagingFromAms = "/Api/Integration/GetAssetStockPaging";
 }
