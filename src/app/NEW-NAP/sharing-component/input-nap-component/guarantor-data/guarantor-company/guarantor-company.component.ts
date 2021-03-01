@@ -58,7 +58,7 @@ export class GuarantorCompanyComponent implements OnInit {
 
   CompanyForm = this.fb.group({
     MrCustRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
-    TaxIdNo: ['', [Validators.required, Validators.maxLength(50)]],
+    TaxIdNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]],
     MrCompanyTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
     ContactName: ['', [Validators.maxLength(500)]],
     MrJobPositionCode: ['', [Validators.maxLength(50)]],
@@ -449,7 +449,7 @@ export class GuarantorCompanyComponent implements OnInit {
   ClearForm() {
     this.CompanyForm = this.fb.group({
       MrCustRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
-      TaxIdNo: ['', [Validators.required, Validators.maxLength(50)]],
+      TaxIdNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]],
       MrCompanyTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
       ContactName: ['', [Validators.maxLength(500)]],
       MrJobPositionCode: ['', [Validators.maxLength(50)]],

@@ -75,7 +75,7 @@ export class CustShareholderComponent implements OnInit {
     BirthPlace: ['', Validators.maxLength(200)],
     BirthDt: ['', Validators.required],
     IdNo: ['', Validators.maxLength(50)],
-    TaxIdNo: ['', Validators.maxLength(50)],
+    TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]],
     IdExpiredDt: [''],
     MobilePhnNo: ['', Validators.maxLength(50)],
     Email: ['', Validators.maxLength(50)],
@@ -179,9 +179,7 @@ export class CustShareholderComponent implements OnInit {
     this.CustShareholderForm.controls.IdExpiredDt.enable();
     this.CustShareholderForm.controls.MrCompanyTypeCode.enable();
     this.CustShareholderForm.controls.EstablishmentDt.enable();
-    this.CustShareholderForm.controls.TaxIdNo.enable();
     this.isCust = false;
-
   }
 
   JobPositionChanged(event) {
@@ -292,7 +290,7 @@ export class CustShareholderComponent implements OnInit {
       BirthPlace: ['', Validators.maxLength(200)],
       BirthDt: ['', Validators.required],
       IdNo: ['', Validators.maxLength(50)],
-      TaxIdNo: ['', Validators.maxLength(50)],
+      TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]],
       IdExpiredDt: [''],
       MobilePhnNo: ['', Validators.maxLength(50)],
       Email: ['', [Validators.maxLength(50), Validators.email]],
