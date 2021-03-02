@@ -432,7 +432,7 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   Save() {
-    this.toastr.successMessage("");
+    this.toastr.successMessage("Save Asset Data Success!");
     this.outputTab.emit();
   }
 

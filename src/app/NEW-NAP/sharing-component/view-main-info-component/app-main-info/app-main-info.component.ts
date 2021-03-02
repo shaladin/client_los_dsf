@@ -34,9 +34,14 @@ export class AppMainInfoComponent implements OnInit {
         this.AppObj = response;
         if (this.AppObj.BizTemplateCode == CommonConstant.CF4W) {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-        } else if (this.AppObj.BizTemplateCode == CommonConstant.FL4W) {
+        }
+        else if (this.AppObj.BizTemplateCode == CommonConstant.FL4W) {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
-        } else {
+        }
+        else if (this.AppObj.BizTemplateCode == CommonConstant.OPL) {
+          this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-opl-main-info.json";
+        }
+        else {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfo.json";
         }
         this.viewGenericObj.viewEnvironment = environment.losUrl;

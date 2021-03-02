@@ -62,12 +62,12 @@ export class ReturnHandlingDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-    this.ClaimTask();
-    await this.bindTaskObj();
-    await this.getReturnHandling();
     if(this.lobCode === CommonConstant.OPL) {
       await this.SetMainInfo();
     }
+    this.ClaimTask();
+    await this.bindTaskObj();
+    await this.getReturnHandling();
   }
 
   async SetMainInfo() {
