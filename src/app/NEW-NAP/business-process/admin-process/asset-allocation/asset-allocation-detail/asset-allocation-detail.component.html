@@ -112,22 +112,22 @@
                   <tr class="table-header">
                     <th class="text-left">Seq No</th>
                     <th class="text-left">Requested Asset Name</th>
-                    <th class="text-right">Asset Requisition No</th>
-                    <th class="text-right">PO Date</th>
-                    <th class="text-right">Asset Activation Date</th>
-                    <th class="text-right">Accessories / Available Status</th>
-                    <th class="text-right">Take Over App No</th>
+                    <th class="text-left">Asset Requisition No</th>
+                    <th class="text-center">PO Date</th>
+                    <th class="text-center">Asset Activation Date</th>
+                    <th class="text-left">Accessories / Available Status</th>
+                    <th class="text-left">Take Over Agreement No</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of requisitionList?.AppAssetFinDataGridObjs; let i = index;">
                     <td class="text-left">{{i+1}}</td>
                     <td class="text-left">{{item.FullAssetName}}</td>
-                    <td class="text-right">{{item.SecurityDepositAmt | number:'.2':'en-US'}}</td>
-                    <td class="text-right">{{item.TotalCostAmt | number:'.2':'en-US'}}</td>
-                    <td class="text-right">{{item.MarginAmt | number:'.2':'en-US'}}</td>
-                    <td class="text-right">{{item.TotalCostAfterMarginAmt | number:'.2':'en-US'}}</td>
-                    <td class="text-right">{{item.RentAmt | number:'.2':'en-US'}}</td>
+                    <td class="text-left">{{item.SecurityDepositAmt | number:'.2':'en-US'}}</td>
+                    <td class="text-center">{{item.TotalCostAmt | number:'.2':'en-US'}}</td>
+                    <td class="text-center">{{item.MarginAmt | number:'.2':'en-US'}}</td>
+                    <td class="text-left">{{item.TotalCostAfterMarginAmt | number:'.2':'en-US'}}</td>
+                    <td class="text-left">{{item.RentAmt | number:'.2':'en-US'}}</td>
                   </tr>
                 </tbody>
               </table>

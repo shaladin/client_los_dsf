@@ -3,6 +3,14 @@
   "component": [
     {
       "type": "textbox",
+      "name": "AgrmntNo",
+      "id": "agrNo",
+      "value": "",
+      "label": "Agreement No",
+      "placeholder": "Agreement No"
+    },
+    {
+      "type": "textbox",
       "name": "PurchaseOrderNo",
       "id": "poNo",
       "value": "",
@@ -35,6 +43,12 @@
       "position": "left",
       "label": "Asset Number",
       "name": "AssetNo"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Agreement No",
+      "name": "AgrmntNo"
     },
     {
       "type": "sort",
@@ -89,6 +103,11 @@
       "type": "text",
       "position": "left",
       "property": "AssetNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "AgrmntNo"
     },
     {
       "type": "text",
