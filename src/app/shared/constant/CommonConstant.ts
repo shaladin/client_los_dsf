@@ -103,7 +103,7 @@ export class CommonConstant {
   public static AppStepLIns = "LFI";
   public static AppStepFin = "FIN";
   public static AppStepTC = "TC";
-  public static AppStepUplDoc = "UPD";
+  public static AppStepUplDoc = "UPL_DOC";
   public static AppStepColl = "COLL";
   public static AppStepInvoice = "INVOICE";
   public static AppStepOther = "OTH";
@@ -128,6 +128,7 @@ export class CommonConstant {
   public static AppStepPGLV = "PGLV";
   public static AppStepCSR = "CSR";
   public static AppStepAssetExpense = "AEX";
+  public static AppStepCustCmpltn = "CMPLTN";
   public static FL4W = "FL4W";
   public static CF4W = "CF4W";
   public static FCTR = "FCTR";
