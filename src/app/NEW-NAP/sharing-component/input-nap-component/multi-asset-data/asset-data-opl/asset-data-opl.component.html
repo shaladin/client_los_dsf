@@ -82,7 +82,8 @@
                 </div>
               
                 <div class="form-actions right">
-                  <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+                  <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
+                    translate *ngIf="showCancel">
                     <i class="ft-x"></i> Cancel
                   </button>
                   <button type="button" class="btn btn-raised btn-primary" (click)="Save()" translate>
