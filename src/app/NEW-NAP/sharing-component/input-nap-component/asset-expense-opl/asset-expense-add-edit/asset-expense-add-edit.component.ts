@@ -608,6 +608,9 @@ export class AssetExpenseAddEditComponent implements OnInit {
 
   GenerateMainAndAddCvgTable() {
     var ManufYearDiff = this.businessDt.getFullYear() - this.appAssetObj.ManufacturingYear;
+    if (ManufYearDiff < 0) {
+      ManufYearDiff = 0;
+    }
     var yearCount = this.InsuranceDataForm.controls.InsLength.value;
     var noOfYear = Math.ceil(this.InsuranceDataForm.controls.InsLength.value / 12);
 
@@ -638,6 +641,9 @@ export class AssetExpenseAddEditComponent implements OnInit {
 
   GenerateMainAndAddCvgTableFromDB(appInsMainCvgObj: Array<AppAssetInsMainCvgOplObj>) {
     var ManufYearDiff = this.businessDt.getFullYear() - this.appAssetObj.ManufacturingYear;
+    if (ManufYearDiff < 0) {
+      ManufYearDiff = 0;
+    }
     (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray) = this.fb.array([]);
     for (let i = 0; i < appInsMainCvgObj.length; i++) {
       (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray).push(this.addGroupFromDB(appInsMainCvgObj[i], ManufYearDiff));
