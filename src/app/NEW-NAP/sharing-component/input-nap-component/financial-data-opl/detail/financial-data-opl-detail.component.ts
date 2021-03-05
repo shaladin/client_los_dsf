@@ -75,6 +75,7 @@ export class FinancialDataOplEditComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.getAllRefMaster();
+    await this.getAssetFinDataRule();
     await this.getAssetFinData();
     //this.FinancialDataForm.controls["SecurityDepositAmt"].disable();
   }
@@ -88,7 +89,6 @@ export class FinancialDataOplEditComponent implements OnInit {
         this.AppFinDataObj = response;
         this.FinancialDataForm.patchValue({
           SecurityDepositAmt: this.AppFinDataObj.AppAssetRentDataOplObj.SecurityDepositAmt,
-          ResidualValuePrcnt: this.AppFinDataObj.AppAssetRentDataOplObj.ResidualValuePrcnt,
           ResidualValueAmt: this.AppFinDataObj.AppAssetRentDataOplObj.ResidualValueAmt,
           TotalInsuranceAtCostAmt: this.AppFinDataObj.AppAssetRentDataOplObj.TotalInsuranceAmt,
           TotalMaintenanceAtCostAmt: this.AppFinDataObj.AppAssetRentDataOplObj.TotalMaintAmt,
@@ -96,7 +96,6 @@ export class FinancialDataOplEditComponent implements OnInit {
           TotalFeeCapitalizedAmt: this.AppFinDataObj.AppAssetRentDataOplObj.TotalFeeCapitalized,
           TotalOthExpenseAmt: this.AppFinDataObj.AppAssetRentDataOplObj.TotalOthExpenseAmt,
           TotalOperatingCostAmt: this.AppFinDataObj.AppAssetRentDataOplObj.TotalCostAmt,
-          OperatingMarginPrcnt: this.AppFinDataObj.AppAssetRentDataOplObj.MarginPrcnt,
           OperatingMarginAmt: this.AppFinDataObj.AppAssetRentDataOplObj.MarginAmt,
           RentAmt: this.AppFinDataObj.AppAssetRentDataOplObj.RentAmt,
           VatAmt: this.AppFinDataObj.AppAssetRentDataOplObj.VatAmt,
@@ -112,7 +111,38 @@ export class FinancialDataOplEditComponent implements OnInit {
           PayFreqVal: this.AppFinDataObj.PayFreqVal,
           MrPayFreqTypeCode: this.AppFinDataObj.MrPayFreqTypeCode
         });
+
+        if (this.AppFinDataObj.AppAssetRentDataOplObj.IsDataExist) {
+          this.FinancialDataForm.patchValue({
+            ResidualValuePrcnt: this.AppFinDataObj.AppAssetRentDataOplObj.ResidualValuePrcnt,
+            OperatingMarginPrcnt: this.AppFinDataObj.AppAssetRentDataOplObj.MarginPrcnt,
+            CofPrcnt: this.AppFinDataObj.AppAssetRentDataOplObj.CofInterestPrnct,
+            CofAmt: this.AppFinDataObj.AppAssetRentDataOplObj.CofInterestAmt
+          });
+        }
         this.isReady = true;
+      });
+  }
+
+  AppFinDataRuleObj: any;
+  async getAssetFinDataRule() {
+    var appAssetObj = {
+      AppAssetId: this.AppAssetId,
+    };
+    await this.http.post(URLConstant.GetFinancialRuleOpl, appAssetObj).toPromise().then(
+      (response) => {
+        this.AppFinDataRuleObj = response;
+        this.FinancialDataForm.patchValue({
+          ResidualValuePrcnt: this.AppFinDataRuleObj.ResultResidualValueRule.ResidualValuePrcnt,
+          CofPrcnt: this.AppFinDataRuleObj.ResultFinancialOplRule.FlatInterestRate,
+          OperatingMarginPrcnt: this.AppFinDataRuleObj.ResultFinancialOplRule.MarginRate,
+          OperatingType: "PRCNT"
+        });
+        if (this.AppFinDataRuleObj.ResultFinancialOplRule.MarginRateBhv == "LOCK") {
+          this.FinancialDataForm.controls["OperatingMarginPrcnt"].disable();
+          this.FinancialDataForm.controls["OperatingType"].disable();
+          this.FinancialDataForm.controls["OperatingMarginAmt"].disable();
+        }
       });
   }
 
@@ -210,7 +240,7 @@ export class FinancialDataOplEditComponent implements OnInit {
         FeeAmt: this.FinancialDataForm.controls.TotalFeeAmt.value,
         FeeCapitalizedAmt: this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value,
         //CofAmt: this.FinancialDataForm.controls.CofAmt.value,
-        CofAmt: 500000,
+        CofAmt: this.FinancialDataForm.controls.CofPrcnt.value * (this.FinancialDataForm.controls.TotalAccessoriesPriceAmt.value + this.FinancialDataForm.controls.TotalInsuranceAtCostAmt.value + this.FinancialDataForm.controls.TotalMaintenanceAtCostAmt.value + this.FinancialDataForm.controls.TotalOthExpenseAmt.value + this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value),
         DepreciationAmt: this.FinancialDataForm.controls.DepreciationAmt.value,
 
         MarginType: this.FinancialDataForm.controls.OperatingType.value,
@@ -234,7 +264,8 @@ export class FinancialDataOplEditComponent implements OnInit {
             MarginPrcnt: this.CalculatedObj.MarginPrcnt,
             RentAmt: this.CalculatedObj.RentAmt,
             TotalRentAmt: this.CalculatedObj.TotalRentAmt,
-            GrossYieldPrcnt: this.CalculatedObj.GrossYieldPrcnt
+            GrossYieldPrcnt: this.CalculatedObj.GrossYieldPrcnt,
+            CofAmt: this.FinancialDataForm.controls.CofPrcnt.value * (this.FinancialDataForm.controls.TotalAccessoriesPriceAmt.value + this.FinancialDataForm.controls.TotalInsuranceAtCostAmt.value + this.FinancialDataForm.controls.TotalMaintenanceAtCostAmt.value + this.FinancialDataForm.controls.TotalOthExpenseAmt.value + this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value)
           });
           if (this.FinancialDataForm.controls.RentalPeriodCode.value == "AD") {
             this.FinancialDataForm.patchValue({
