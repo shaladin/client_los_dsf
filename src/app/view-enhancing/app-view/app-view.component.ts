@@ -10,6 +10,7 @@ import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 
 @Component({
   selector: 'app-app-view',
@@ -50,6 +51,8 @@ export class AppViewComponent implements OnInit {
   dmsObj: DMSObj;
   appNo: any;
   custNo: any;
+  IsUseDigitalization: string;
+
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
 
   constructor(private route: ActivatedRoute,
@@ -63,6 +66,7 @@ export class AppViewComponent implements OnInit {
   async ngOnInit() {
     this.arrValue.push(this.AppId);
     this.GetApp();
+    this.GetIsUseDigitalization();
     this.viewAppMainInfo.ReloadUcViewGeneric();
     await this.InitDms();
   }
@@ -205,5 +209,17 @@ export class AppViewComponent implements OnInit {
     // this.mainInfoContainer.clear();
     // const component = this.mainInfoContainer.createComponent(componentFactory);
     // component.instance.arrValue = this.arrValue;
+  }
+
+  GetIsUseDigitalization() {
+
+    var generalSettingObj = new GeneralSettingObj();
+    generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
+    this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).subscribe(
+      (response) => {
+        this.IsUseDigitalization = response["GsValue"];
+        console.log(this.IsUseDigitalization); 
+      }
+    )
   }
 }

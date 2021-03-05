@@ -36,7 +36,7 @@ export class AppMainInfoComponent implements OnInit {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
         }
         else if (this.AppObj.BizTemplateCode == CommonConstant.OPL) {
-          this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
+          this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-opl-main-info.json";
         }
         else {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfo.json";

@@ -137,7 +137,9 @@ export class FinancialPersonalComponent implements OnInit {
   }
 
   SaveForm() {
-    this.SetAttrContent();
+    if(this.FinancialForm['controls']['AttrList'] != undefined){
+      this.SetAttrContent();
+    }
     this.AppCustPersonalFinData = this.FinancialForm.value;
     this.AppCustPersonalFinData.AppCustPersonalId = this.AppCustPersonalId;
 

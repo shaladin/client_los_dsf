@@ -4,7 +4,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -13,13 +12,12 @@ import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
 import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
-import { RFAPreGoLiveObj } from 'app/shared/model/RFAPreGoLiveObj.Model';
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
-import { ToastrService } from 'ngx-toastr';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { CookieService } from 'ngx-cookie';
 
@@ -43,20 +41,16 @@ export class ApplicationReviewDetailComponent implements OnInit {
 
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
   readonly CustTypeCompany: string = CommonConstant.CustTypeCompany;
-  
+
   readonly CaptureStatReq: string = CommonConstant.CaptureStatReq;
   readonly CaptureStatScs: string = CommonConstant.CaptureStatScs;
   readonly CaptureStatFail: string = CommonConstant.CaptureStatFail;
 
   FormObj = this.fb.group({
     arr: this.fb.array([]),
-    AppvAmt: [''],
-    CreditScoring: [''],
-    // Reason: ['', Validators.required],
-    // ReasonDesc: [""],
-    // Approver: ['', Validators.required],
-    // ApproverDesc: [""],
-    // Notes: ['', Validators.required]
+    Reason: [''],
+    ReasonDesc: [''],
+    Notes: [''],
   });
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
@@ -65,7 +59,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    public toastr: ToastrService, private cookieService: CookieService
+    public toastr: NGXToastrService, private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -78,7 +72,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
 
   }
 
-  initData(){
+  initData() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.Arr = this.FormObj.get('arr') as FormArray;
@@ -101,7 +95,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
 
   //#region Get Local Data
   ManualDeviationData: Array<DeviationResultObj> = new Array<DeviationResultObj>();
-  BindManualDeviationData(ev){
+  BindManualDeviationData(ev) {
     console.log(ev);
     this.ManualDeviationData = ev;
   }
@@ -111,27 +105,27 @@ export class ApplicationReviewDetailComponent implements OnInit {
       ApproverDesc: ev.target.selectedOptions[0].text
     });
   }
-  
+
   onChangeReason(ev) {
     this.FormObj.patchValue({
       ReasonDesc: ev.target.selectedOptions[0].text
     });
   }
   //#endregion
-  
+
   //#region Get API Data
   appNo: string = "";
   async GetAppNo() {
     let obj = { AppId: this.appId };
     await this.http.post<NapAppModel>(URLConstant.GetAppById, obj).toPromise().then(
       async (response) => {
-        if (response != undefined){
+        if (response != undefined) {
           this.appNo = response.AppNo;
           await this.GetCreditScoring(response.AppNo);
         }
       });
   }
-  
+
   async ClaimTask() {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
@@ -142,7 +136,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
       (response) => {
       });
   }
-  
+
   async GetCreditScoring(appNo: string) {
     let obj = { ScoringResultH: { TrxSourceNo: appNo } };
     await this.http.post(URLConstant.GetLatestScoringResultHByTrxSourceNo, obj).toPromise().then(
@@ -161,7 +155,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
   }
 
   //#region DDL Data
-  DDLData: {[id: string]: Array<{Key:string, Value: string}>} = {};
+  DDLData: { [id: string]: Array<{ Key: string, Value: string }> } = {};
   readonly DDLRecomendation: string = "RECOMENDED";
   async BindDDLRecommendation() {
     let Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
@@ -208,7 +202,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
         this.PlafondAmt = response["ApvAmt"];
       });
   }
-  
+
   async BindCreditAnalysisItemFormObj() {
     let refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCrdRvwAnalysisItem };
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
@@ -244,17 +238,20 @@ export class ApplicationReviewDetailComponent implements OnInit {
       Notes: ""
     });
 
-    // if (!this.isReturnOn) {
-    //   this.isReturnOn = true;
-    //   this.FormObj.controls.Approver.clearValidators();
-    // } else {
-    //   this.isReturnOn = false;
-    //   this.FormObj.controls.Approver.setValidators([Validators.required]);
-    // }
-    // this.FormObj.controls.Approver.updateValueAndValidity();
+    //if (!this.isReturnOn) {
+    //  this.isReturnOn = true;;
+    //  this.FormObj.controls.Reason.setValidators([Validators.required]);
+    //  this.FormObj.controls.Notes.setValidators([Validators.required]);
+    //} else {
+    //  this.isReturnOn = false;
+    //  this.FormObj.controls.Reason.clearValidators()
+    //  this.FormObj.controls.Notes.clearValidators()
+    //}
+    //this.FormObj.controls.Reason.updateValueAndValidity();
+    //this.FormObj.controls.Notes.updateValueAndValidity();
 
   }
-  
+
   PlafondAmt: number = 0;
   initInputApprovalObj() {
     //this.PlafondAmt = 1000000;
@@ -290,8 +287,8 @@ export class ApplicationReviewDetailComponent implements OnInit {
   }
 
   //#region Submit
-  SaveForm() { 
-    let RFAPreGoLive = null;
+  SaveForm() {
+    let ApprovalCreateOutput = this.createComponent.output();
     let temp = this.FormObj.value;
     let tempAppCrdRvwObj = new AppCrdRvwHObj();
     tempAppCrdRvwObj.AppId = this.appId;
@@ -302,57 +299,50 @@ export class ApplicationReviewDetailComponent implements OnInit {
       tempAppCrdRvwObj.RowVersion = this.ResponseExistCreditReview.RowVersion;
     }
     tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
-
-    if (!this.isReturnOn){
-      let ApprovalCreateOutput = this.createComponent.output();
-      if(ApprovalCreateOutput != undefined){
-        RFAPreGoLive = new RFAPreGoLiveObj();
-        // this.RFAPreGoLive.TransactionNo = this.AgrmntNo;
-        // this.RFAPreGoLive.Notes = this.MainInfoForm.controls.Notes.value;
-        // this.RFAPreGoLive.ApprovedBy = this.MainInfoForm.controls.ApprovedBy.value;
-        // this.RFAPreGoLive.Reason = this.MainInfoForm.controls.Reason.value;
-        RFAPreGoLive.TaskListId = this.wfTaskListId;
-        RFAPreGoLive.RowVersion = "";
-        RFAPreGoLive.RequestRFAObj = ApprovalCreateOutput;
-      }else{
-        return this.toastr.warning('Input RFA Data First!');
+    var flagId = 0;
+    if (!this.isReturnOn) {
+      if (ApprovalCreateOutput == undefined) {
+        return this.toastr.warningMessage('Failed to Get RFA Object');
+      }
+      else {
+        flagId = 1;
       }
     }
 
     let apiObj = {
       appCrdRvwHObj: tempAppCrdRvwObj,
-      ApprovedById: temp.Approver,
+      ApprovedById: flagId,
       Reason: temp.ReasonDesc,
       Notes: temp.Notes,
       WfTaskListId: this.wfTaskListId,
       RowVersion: "",
       AppId: this.appId,
       ListDeviationResultObjs: this.ManualDeviationData,
-      RequestRFAObj: RFAPreGoLive.RequestRFAObj
+      RequestRFAObj: ApprovalCreateOutput
     };
-    console.log(apiObj);
     this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_RVW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
 
-  ReCaptureCreditReviewData(){    
+  ReCaptureCreditReviewData() {
     let workflowApiObj = new WorkflowApiObj();
     workflowApiObj.TaskListId = this.wfTaskListId;
     this.http.post(URLConstant.CrdRvwDataReCapture, workflowApiObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+        this.toastr.successMessage(response["Message"]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_RVW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
 
-  ReCaptureDataR2(){    
+  ReCaptureDataR2() {
     this.http.post(URLConstant.ReCaptureDataR2, { AppNo: this.appNo, CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RowVersion: this.crdRvwCustInfoObj.RowVersion }).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_RVW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
-  
+
   BindAppCrdRvwDObj(objArr: any) {
     let AppCrdRvwDObjs = new Array();
     for (let i = 0; i < objArr.length; i++) {

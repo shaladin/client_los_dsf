@@ -28,6 +28,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
 import { AppCollateralAttrCustomObj } from 'app/shared/model/AppCollateralAttrCustom.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-collateral-detail',
@@ -134,6 +135,7 @@ export class CollateralDetailComponent implements OnInit {
   isDiffWithRefAttr: boolean;
   AppCustData: AppCustObj;
   IntegratorCheckBySystemGsValue: string = "0";
+  IsUseDigitalization: string;
   constructor(private fb: FormBuilder, private http: HttpClient, private toastr: NGXToastrService) { }
 
   async ngOnInit() {
@@ -202,11 +204,29 @@ export class CollateralDetailComponent implements OnInit {
   }
   async GetGS() {
     this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.GsCode = "INTEGRATOR_CHECK_BY_SYSTEM";
-    await this.http.post(URLConstant.GetGeneralSettingByCode, this.generalSettingObj).toPromise().then(
+    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
+
+    await this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
       (response) => {
-        this.IntegratorCheckBySystemGsValue = response["GsValue"];
-        if (this.IntegratorCheckBySystemGsValue == "0") {
+        var returnGeneralSettingObj = response;
+
+        var gsNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        
+        if(gsNeedCheckBySystem != undefined){
+          this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
+        }
+
+        if(gsUseDigitalization != undefined){
+          this.IsUseDigitalization = gsUseDigitalization.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
+        }
+
+        if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
           this.GetThirdPartyResultH();
         }
       }
@@ -1051,7 +1071,7 @@ export class CollateralDetailComponent implements OnInit {
     }
     this.appCollateralDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;
     if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
-      if (this.IntegratorCheckBySystemGsValue != "0") {
+      if (this.IsUseDigitalization == "0" || this.IntegratorCheckBySystemGsValue == "1") {
         if (this.mode == 'add') {
           this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(
             (response) => {
@@ -1068,7 +1088,7 @@ export class CollateralDetailComponent implements OnInit {
             });
         }
       }
-      else if (this.IntegratorCheckBySystemGsValue == "0") {
+      else if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
         if (this.IsIntegrator && this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value != "") {
           if (this.mode == 'add') {
             this.http.post(URLConstant.AddEditAllCollateralDataFactoring, this.appCollateralDataObj).subscribe(

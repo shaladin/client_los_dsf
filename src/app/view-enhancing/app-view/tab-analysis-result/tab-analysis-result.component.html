@@ -66,11 +66,11 @@
             <label class="adInsLabel"> Analysis By </label>
           </div>
           <div class="col-md-8">
-            <label class="adInsLabel"> {{ResponseCreditReviewData?.CrdAnalystEmpNoDesc}} </label>
+            <label class="adInsLabel"> {{ResponseAppReviewData.CrdAnalystEmpNoDesc}} </label>
           </div>
         </div>
 
-        <div *ngFor="let item of ResponseAppReviewData?.appCrdRvwDObjs" class="form-group row">
+        <div *ngFor="let item of ResponseAppReviewData.appCrdRvwDObjs" class="form-group row">
           <div class="form-group col-md-4">
             <label class="adInsLabel"> {{item.AnalysisItemName}} </label>
           </div>
@@ -84,7 +84,14 @@
     <lib-ucSubsection *ngIf="isFormOnAppReviewInfo" [id]="'AppReviewInfoId'" [title]="'Application Review Info'" [panel]="'AppReviewInfo'">
     </lib-ucSubsection>
     <div *ngIf="isFormOnAppReviewInfo" class="form-body" [id]="'AppReviewInfo'">
-      
+      <div *ngFor="let item of ResponseAppReviewInfo" class="form-group row">
+        <div class="form-group col-md-4">
+          <label class="adInsLabel"> {{item.ScoreTypeDescr}} </label>
+        </div>
+        <div class="col-md-8">
+          <label class="adInsLabel"> {{item.ScoreValue}} </label>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -43,9 +43,10 @@ export class CommonConstant {
   public static ApvCategoryPackageValidityChecking = "PCKG_VLDT_APV"
   public static ApvCategoryPreGoLive = "PRE_GPV_APV"
   public static ApvCategoryOfferingValidity = "OFF_VLD_APV"
-
   public static INV_VERF_RESULT_STAT = "INV_VERF_RESULT_STAT";
-  public static ApvCategoryApplicaitonApproval = "APP_OPL_APV"
+  public static ApvCategoryApplicaitonApproval = "APP_OPL_APV";
+  public static ApvCategoryDocumentChecklistApproval = "DOC_CHCKLIST_APV";
+
   //CUST TYPE
   public static CustTypePersonal = "PERSONAL";
   public static CustTypeCompany = "COMPANY";
@@ -97,6 +98,7 @@ export class CommonConstant {
   public static AppStepRef = "REF";
   public static AppStepApp = "APP";
   public static AppStepAsset = "ASSET";
+  public static AppStepExpense = "EXPENSE";
   public static AppStepIns = "INS";
   public static AppStepLIns = "LFI";
   public static AppStepFin = "FIN";
@@ -393,6 +395,7 @@ export class CommonConstant {
   // RETURN HANDLING
   public static ModeResultHandling = "ReturnHandling";
   public static ReturnHandlingEditApp = "RTN_EDIT_APP";
+  public static ReturnHandlingEditCust = "RTN_EDIT_CUST";
   public static ReturnHandlingEditNAP4 = "RTN_EDIT_NAP4";
   public static ReturnHandlingAddPhnVerf = "RTN_ADD_PHN_VERF";
   public static ReturnHandlingEditComRsvFnd = "RTN_EDIT_COM_RSV_FND";
@@ -468,6 +471,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeReturnTaskCFNA = "RETURN_TASK_CFNA";
   public static RefMasterTypeCodeReturnTaskCFRFN4W = "RETURN_TASK_CFRFN4W";
   public static RefMasterTypeCodeReturnTaskFL4W = "RETURN_TASK_FL4W";
+  public static RefMasterTypeCodeReturnTaskOPL = "RETURN_TASK_OPL";
   public static RefMasterTypeCodeVerfSubjRelation = "VERF_SUBJ_RELATION";
   public static RefMasterTypeCodeCrdRvwAnalysisItem = "CRD_RVW_ANALYSIS_ITEM";
   public static RefMasterTypeCodeCrdInvstgAnalysisItem = "CRD_INVSTG_ANALYSIS_ITEM";
@@ -560,6 +564,9 @@ export class CommonConstant {
   public static GSCodeIntegratorCheckBySystem = "INTEGRATOR_CHECK_BY_SYSTEM";
   public static GSCodeInputOPLFeeType = "INPOPLFEETYPE";
   public static GSCodeInputOPLFeeBehaviour = "INPOPLFEETBHV";
+  public static GSCodeIsUseDigitalization = "IS_USE_DIGITALIZATION";
+  public static GSCodeLobKta = "LOB_KTA";
+
 
   //Serial Item
   public static Chassis_No = "Chassis No";

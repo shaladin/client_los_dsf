@@ -7,6 +7,7 @@ import { HttpClient } from "@angular/common/http";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CommonConstant } from "../../shared/constant/CommonConstant";
 
 @Component({
   selector: "app-inquiry-paging",
@@ -14,7 +15,6 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 })
 export class AppInquiryPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
-  link: string;
   BizTemplateCode: string;
   isReady: boolean = false;
 
@@ -30,29 +30,49 @@ export class AppInquiryPagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = "./assets/ucpaging/searchAppInquiry.json";
+    if (this.BizTemplateCode == CommonConstant.OPL) {
+      this.inputPagingObj._url = "./assets/ucpaging/searchAppInquiryOpl.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppInquiryOpl.json";
+      this.inputPagingObj.ddlEnvironments = [
+        {
+          name: "A.ORI_OFFICE_CODE",
+          environment: environment.FoundationR3Url
+        },
+        {
+          name: "ISNULL(B.AGRMNT_CURR_STEP,A.APP_CURR_STEP)",
+          environment: environment.FoundationR3Url
+        },
+        {
+          name: "B.AGRMNT_STAT",
+          environment: environment.FoundationR3Url
+        }
+      ];
+    }
+    else {
+      this.inputPagingObj._url = "./assets/ucpaging/searchAppInquiry.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppInquiry.json";
+      this.inputPagingObj.ddlEnvironments = [
+        {
+          name: "A.ORI_OFFICE_CODE",
+          environment: environment.FoundationR3Url
+        },
+        {
+          name: "A.APP_STAT",
+          environment: environment.FoundationR3Url
+        },
+        {
+          name: "ISNULL(B.AGRMNT_CURR_STEP,A.APP_CURR_STEP)",
+          environment: environment.FoundationR3Url
+        },
+        {
+          name: "B.AGRMNT_STAT",
+          environment: environment.FoundationR3Url
+        }
+      ];
+    }
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppInquiry.json";
 
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "A.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      },
-      {
-        name: "A.APP_STAT",
-        environment: environment.FoundationR3Url
-      },
-      {
-        name: "ISNULL(B.AGRMNT_CURR_STEP,A.APP_CURR_STEP)",
-        environment: environment.FoundationR3Url
-      },
-      {
-        name: "B.AGRMNT_STAT",
-        environment: environment.FoundationR3Url
-      }
-    ];
     this.inputPagingObj.addCritInput = new Array();
 
     var critLobObj = new CriteriaObj();

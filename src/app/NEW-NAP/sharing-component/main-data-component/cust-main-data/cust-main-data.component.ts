@@ -80,6 +80,7 @@ export class CustMainDataComponent implements OnInit {
   readonly MasterMaritalStat = CommonConstant.RefMasterTypeCodeMaritalStat;
   readonly MasterCompanyType = CommonConstant.RefMasterTypeCodeCompanyType;
   readonly MasterJobPosition = CommonConstant.RefMasterTypeCodeJobPosition;
+  readonly CustMainDataMgmntShrholder = CommonConstant.CustMainDataModeMgmntShrholder;
 
   constructor(
     private fb: FormBuilder,
@@ -102,7 +103,7 @@ export class CustMainDataComponent implements OnInit {
     MrIdTypeCode: ['', Validators.required],
     IdNo: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     IdExpiredDt: [''],
-    TaxIdNo: ['', Validators.pattern("^[0-9]+$")],
+    TaxIdNo: ['', [Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]],
     MrGenderCode: ['', Validators.required],
     BirthPlace: ['', Validators.required],
     BirthDt: ['', Validators.required],
@@ -369,10 +370,15 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.controls.Email1.setValidators([Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]);
       this.CustMainDataForm.controls.MrCompanyTypeCode.clearValidators();
       this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
-      this.CustMainDataForm.controls.TaxIdNo.clearValidators();
+      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]);
       this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
     } else {
-      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+      if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
+        this.CustMainDataForm.patchValue({
+          IsSigner: false,
+        });
+      }
+      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]);
       this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
 
       this.CustMainDataForm.controls.MrCompanyTypeCode.setValidators(Validators.required);

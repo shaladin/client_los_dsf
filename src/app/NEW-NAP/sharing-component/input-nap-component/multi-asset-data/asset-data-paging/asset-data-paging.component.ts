@@ -9,6 +9,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-asset-data-paging',
@@ -39,6 +40,7 @@ export class AssetDataPagingComponent implements OnInit {
   appObj: any;
   generalSettingObj: GeneralSettingObj;
   IntegratorCheckBySystemGsValue: string = "1";
+  IsUseDigitalization: string;
   LastRequestedDate: any;
   IsCalledIntegrator: boolean = false;
   thirdPartyRsltHId: any;
@@ -59,22 +61,24 @@ export class AssetDataPagingComponent implements OnInit {
   }
 
   async GetThirdPartyResultH() {
-    this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
-      (response) => {
-        this.appObj = response;
-        if(response['MouCustId'] != null){
-          this.mouCustId = response['MouCustId'];
-        }
-        this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, { TrxNo: this.appObj["AppNo"], TrxTypeCode: "APP", FraudCheckType: "ASSET" }).toPromise().then(
-          (response) => {
-            if (response["ThirdPartyRsltHId"] != null) {
-              this.LastRequestedDate = response["ReqDt"];
-              this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-            }
+    if(this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0"){
+      this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
+        (response) => {
+          this.appObj = response;
+          if(response['MouCustId'] != null){
+            this.mouCustId = response['MouCustId'];
           }
-        );
-      }
-    );
+          this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, { TrxNo: this.appObj["AppNo"], TrxTypeCode: "APP", FraudCheckType: "ASSET" }).toPromise().then(
+            (response) => {
+              if (response["ThirdPartyRsltHId"] != null) {
+                this.LastRequestedDate = response["ReqDt"];
+                this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+              }
+            }
+          );
+        }
+      );
+    }
   }
 
   HitAPI() {
@@ -109,10 +113,29 @@ export class AssetDataPagingComponent implements OnInit {
 
   async GetGS() {
     this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.GsCode = "INTEGRATOR_CHECK_BY_SYSTEM";
-    await this.http.post(URLConstant.GetGeneralSettingByCode, this.generalSettingObj).toPromise().then(
+    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
+
+    await this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
       (response) => {
-        this.IntegratorCheckBySystemGsValue = response["GsValue"];
+        var returnGeneralSettingObj = response;
+
+        var gsNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        
+        if(gsNeedCheckBySystem != undefined){
+          this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
+        }
+
+        if(gsUseDigitalization != undefined){
+          this.IsUseDigitalization = gsUseDigitalization.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
+        }
+        
+        this.GetThirdPartyResultH();
       }
     );
   }
@@ -257,7 +280,6 @@ export class AssetDataPagingComponent implements OnInit {
         this.gridAppCollateralObj.resultData = DetailForGridCollateral;
       });
     this.GetGS();
-    this.GetThirdPartyResultH();
   }
 
   getGridCollateral() {
@@ -290,7 +312,7 @@ export class AssetDataPagingComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.MIN_1_ASSET);
       return;
     }
-    if (this.IntegratorCheckBySystemGsValue == "0") {
+    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
       
       if (!this.IsCalledIntegrator) {
         if (confirm("Submit without Integrator ? ")) {

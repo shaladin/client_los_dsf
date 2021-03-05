@@ -257,7 +257,7 @@
                 </div>
 
               </div>
-              <div *ngIf="IntegratorCheckBySystemGsValue == '0'">
+              <div *ngIf="IsUseDigitalization == '1' && IntegratorCheckBySystemGsValue == '0'">
               <lib-ucSubsection [id]="'FraudCheckingId'" [title]="'Fraud Checking'" [panel]="'fraudChecking'">
               </lib-ucSubsection>
               <div [id]="fraudChecking">

@@ -38,6 +38,9 @@ import { DupCheckMdSubjMatchComponent } from "./app-dup-check-main-data/dup-chec
 import { SharedModule } from "app/shared/shared.module";
 import { ReturnHandlingEditNap4Component } from './return-handling/return-handling-edit-nap4/return-handling-edit-nap4.component';
 import { ReturnHandlingNewEditAppPagingComponent } from './return-handling/return-handling-new-edit-app-paging/return-handling-new-edit-app-paging.component';
+import { AdditionalTcPagingComponent } from './additional-tc/additional-tc-paging/additional-tc-paging.component';
+import { AdditionalTcDetailComponent } from './additional-tc/additional-tc-detail/additional-tc-detail.component';
+import { ReturnHandlingEditCustPagingComponent } from './return-handling/return-handling-edit-cust-paging/return-handling-edit-cust-paging.component';
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -95,6 +98,9 @@ export const customCurrencyMaskConfig = {
     DupCheckMdSubjMatchComponent,
     ReturnHandlingEditNap4Component,
     ReturnHandlingNewEditAppPagingComponent,
+    AdditionalTcPagingComponent,
+    AdditionalTcDetailComponent,
+    ReturnHandlingEditCustPagingComponent,
   ],
   providers: [
     NGXToastrService

@@ -39,6 +39,9 @@ export class PathConstant {
     public static COMM_RSV_FUND = "CommissionReservedFund";
     public static PAGING_LOWERCASE = "paging";
     public static DETAIL_LOWERCASE = "detail";
+    public static PERSONAL_LOWERCASE = "personal";
+    public static COY_LOWERCASE = "company";
+    public static OPL_LOWERCASE = "opl";
     //#endregion
 
     //#region Form-Module
@@ -87,6 +90,9 @@ export class PathConstant {
     //#region Nap-Cust-Compl
     public static CUST_COMPL_PRSNL = PathConstant.DETAIL + "/" + PathConstant.PERSONAL;
     public static CUST_COMPL_COY = PathConstant.DETAIL + "/" + PathConstant.COY;
+    public static OPL_DETAIL_LOWERCASE = PathConstant.OPL_LOWERCASE + "/" + PathConstant.DETAIL_LOWERCASE;
+    public static CUST_COMPL_OPL_PRSNL = PathConstant.OPL_LOWERCASE + "/" + PathConstant.DETAIL_LOWERCASE + "/" + PathConstant.PERSONAL_LOWERCASE;
+    public static CUST_COMPL_OPL_COY = PathConstant.OPL_LOWERCASE + "/" + PathConstant.DETAIL_LOWERCASE + "/" + PathConstant.COY_LOWERCASE;
     //#endregion
 
     //#region Nap-FL4W
@@ -133,6 +139,7 @@ export class PathConstant {
     public static RETURN_HANDLING_DETAIL = PathConstant.RETURN_HANDLING + "/" + PathConstant.DETAIL;
     public static RETURN_HANDLING_COMM_RSV_FUND_PAGING = PathConstant.RETURN_HANDLING + "/" + PathConstant.COMM_RSV_FUND + "/" + PathConstant.PAGING;
     public static RETURN_HANDLING_EDIT_APP_PAGING = PathConstant.RETURN_HANDLING + "/EditAppPaging";
+    public static RETURN_HANDLING_EDIT_CUST_PAGING = PathConstant.RETURN_HANDLING + "/editcustpaging";
     public static RETURN_HANDLING_SRVY = PathConstant.RETURN_HANDLING + "/Survey";
     public static APP_DUP_CHECK = "AppDupCheck";
     public static APP_EXIST_DATA = "ApplicantExistingData";
@@ -155,6 +162,9 @@ export class PathConstant {
     public static APP_DUP_CHECK_MAIN_DATA_PAGING = PathConstant.APP_DUP_CHECK_MAIN_DATA + "/" + PathConstant.PAGING;
     public static APP_DUP_CHECK_MAIN_DATA_SUBJ_LIST = PathConstant.APP_DUP_CHECK_MAIN_DATA + "/SubjList";
     public static APP_DUP_CHECK_MAIN_DATA_SUBJ_MATCH = PathConstant.APP_DUP_CHECK_MAIN_DATA + "/SubjMatch";
+    public static ADD_TC = "addtc";
+    public static ADD_TC_PAGING = PathConstant.ADD_TC + "/" + PathConstant.PAGING_LOWERCASE;
+    public static ADD_TC_DETAIL = PathConstant.ADD_TC + "/" + PathConstant.DETAIL_LOWERCASE;
     //#endregion
 
     //#region Nap-Admin-Prcs

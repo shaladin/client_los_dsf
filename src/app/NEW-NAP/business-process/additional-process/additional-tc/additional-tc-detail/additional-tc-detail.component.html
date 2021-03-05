@@ -1,0 +1,144 @@
+<div class="container-fluid">
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+
+        <div class="card-head">
+          <div class="card-header header-title">
+            <div class="row">
+              <div class="col-md-8">
+                <h4 class="card-title" id="horz-layout-colored-controls" translate>
+                  ADDITIONAL TC
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <div class="card-body">
+          <form class="form form-horizontal" [formGroup]="TcForm" #enjiForm="ngForm"
+            (ngSubmit)="TcForm.valid && SaveForm()">
+  
+            <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)">
+            </lib-ucviewgeneric>
+
+            <div class="px-3">
+              <div *ngIf="!IsSecondDetail">
+                <lib-ucSubsection [id]="'ListTCId'" [title]="'List TC'" [panel]="'ListTC'">
+                </lib-ucSubsection>
+                <div class="form-body" id="ListTC">
+                  <div class="text-right">
+                    <button type="button" class="btn btn-raised btn-primary" (click)="AddTc()">
+                      Add
+                    </button>
+                  </div>
+
+                  <table class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr class="table-header">
+                        <th>
+                          <span class="thead-header" translate>Term & Condition Name</span>
+                        </th>
+                        <th>
+                          <span class="thead-header" translate>Prior To</span>
+                        </th>
+                        <th>
+                          <span class="thead-header" translate>Mandatory</span>
+                        </th>
+                        <th>
+                          <span class="thead-header" translate>Edit</span>
+                        </th>
+                      </tr>
+                    </thead>
+      
+                    <tbody>
+                      <tr *ngIf="ListTc.length === 0">
+                        <td colspan="100%">No Data Available</td>
+                      </tr>
+                      <tr *ngFor="let item of ListTc; let i = index">
+                        <td class="text-left">{{item.TcName}}</td>
+                        <td>{{item.PriorTo}}</td>
+                        <td>{{item.IsMandatory ? "Yes" : "No"}}</td>
+                        <td>
+                          <a class="success p-0" (click)="EditTc(i, item.AppTcId)" *ngIf="!item.IsChecked">
+                            <i class="ft-edit-2 font-medium-3 mr-2"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="text-right">
+                  <button type="button" class="btn btn-raised btn-warning mr-1" translate
+                    (click)="BackToPaging()">
+                    <i class="fa fa-arrow-circle-left"></i> Back
+                  </button>
+                </div>
+              </div>
+
+              <div class="px-3" *ngIf="IsSecondDetail">
+  
+                <lib-ucSubsection [id]="'AssetInfoId'" [title]="'Asset Information'" [panel]="'AssetInfo'">
+                </lib-ucSubsection>
+                <div class="form-body" id="AssetInfo">
+                  <div class="form-group row">
+                    <label class="col-md-3 adins-label">Term & Condition Name</label>
+                    <div class="col-md-3">
+                      <lib-uclookupgeneric [lookupInput]="InputLookupTcObj"
+                        [identifier]="'lookupTc'" [enjiForm]='enjiForm' [parentForm]='TcForm'
+                        (lookup)="SetTc($event)">
+                      </lib-uclookupgeneric>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-3 adins-required-label">Prior To</label>
+                    <div class="col-md-3">
+                      <select class="form-control" formControlName="PriorTo" style="width: 100%;">
+                        <option value="APP">App</option>
+                      </select>
+                      <lib-uc-show-errors [control]="TcForm.controls.Prior"
+                        [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-md-3 adins-required-label" translate>Mandatory</label>
+                    <div class="col-md-3">
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Mandatory" value="Yes" checked
+                          (change)="changeMandatory($event.target.value)" formControlName="Mandatory">
+                        <label class="form-check-label" for="YesRadio">Yes</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="Mandatory" value="No"
+                          (change)="changeMandatory($event.target.value)" formControlName="Mandatory">
+                        <label class="form-check-label" for="NoRadio">No</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="form-actions right">
+                  <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
+                    translate>
+                    <i class="fa fa-arrow-circle-left"></i> Cancel
+                  </button>
+                  <button type="submit" class="btn btn-raised btn-primary">
+                    <i class="fa fa-arrow-circle-right"></i> Save
+                  </button>
+                </div>
+      
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

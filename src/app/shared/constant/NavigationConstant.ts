@@ -7,8 +7,10 @@ export class NavigationConstant {
   public static DASHBOARD = "/" + PathConstant.LR_DASHBOARD + "/" + PathConstant.DASHBOARD; //'/Dashboard/Dash-Board'
   public static BACK_TO_REQ_PASSWORD = '..' + "/" + PathConstant.CONTENT_PAGE_REQ_PASSWORD; //'../RequestPassword'
   public static BACK_TO_PAGING = '..' + "/" + PathConstant.PAGING; //'../Paging'
+  public static BACK_TO_PAGING_LOWERCASE = '..' + "/" + PathConstant.PAGING_LOWERCASE; //'../paging'
   public static BACK_TO_PAGING2 = '../' + '../' + PathConstant.PAGING; //'../../Paging'
   public static BACK_TO_DETAIL = '..' + "/" + PathConstant.DETAIL; //'../Detail'
+  public static BACK_TO_DETAIL_LOWERCASE = '..' + "/" + PathConstant.DETAIL_LOWERCASE; //'../detail'
   public static BACK_TO_DETAIL_COY = '..' + "/" + PathConstant.DETAIL + "/" + PathConstant.COY; //'../Detail/Company'
   public static BACK_TO_DETAIL_PERSONAL = '..' + "/" + PathConstant.DETAIL + "/" + PathConstant.PERSONAL; //'../Detail/Personal'
   public static BACK_TO_MAIN = '..' + "/" + PathConstant.MAIN; //'../Main'
@@ -35,6 +37,7 @@ export class NavigationConstant {
   //#region CustCompletion
   public static NAP_CUST_COMPL_PAGING = PathConstant.LR_NAP + "/" + PathConstant.NAP_CUST_COMPL + "/" + PathConstant.PAGING; //"Nap/CustCompletion/Paging"
   public static NAP_CUST_COMPL_DETAIL = PathConstant.LR_NAP + "/" + PathConstant.NAP_CUST_COMPL + "/" + PathConstant.DETAIL; //"Nap/CustCompletion/Detail"
+  public static NAP_CUST_COMPL_OPL_DETAIL = PathConstant.LR_NAP + "/" + PathConstant.NAP_CUST_COMPL + "/" + PathConstant.OPL_DETAIL_LOWERCASE; //"Nap/CustCompletion/opl/detail"
   //#endregion
 
   //#region AddProcess
@@ -58,9 +61,12 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_COLL_EDIT; //'/Nap/AddProcess/ReturnHandlingCollateral/Edit'
   public static NAP_ADD_PRCS_RETURN_HANDLING_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_PAGING; //'/Nap/AddProcess/ReturnHandling/Paging'
   public static NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_EDIT_APP_PAGING; //'Nap/AddProcess/ReturnHandling/EditAppPaging'
+  public static NAP_ADD_PRCS_RETURN_HANDLING_EDIT_CUST_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_EDIT_CUST_PAGING; //'Nap/AddProcess/ReturnHandling/editcustpaging'
   public static NAP_ADD_PRCS_RETURN_HANDLING_COMM_RSV_FUND_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_COMM_RSV_FUND_PAGING; //"/Nap/AddProcess/ReturnHandling/CommissionReservedFund/Paging"
   public static NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_PHN_VRF_PAGING; //"/Nap/AddProcess/ReturnHandlingPhoneVerif/Paging"
   public static NAP_ADD_PRCS_RETURN_HANDLING_SRVY = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_SRVY; //"/Nap/AddProcess/ReturnHandling/Survey"
+  public static NAP_ADD_PRCS_ADD_TC_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.ADD_TC_PAGING; //"/Nap/AddProcess/addtc/paging"
+  public static NAP_ADD_PRCS_ADD_TC_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.ADD_TC_DETAIL; //"/Nap/AddProcess/addtc/detail"
   //#endregion
 
   //#region AdminProcess
@@ -208,6 +214,7 @@ export class NavigationConstant {
   //#region NAP-VIEW
   public static VIEW_APP = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_APP; //'/View/AppView'
   public static BACK_VIEW_APP = '../../' + NavigationConstant.VIEW_APP; //'../../View/AppView'
+  public static VIEW_APP_ASSET = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_APP_ASSET; //'/View/AppAsset'
   public static VIEW_AGRMNT = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_AGRMNT; //"/View/AgrmntView"
   public static VIEW_CUST_EXPSR = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_CUST_EXPSR; //"/View/CustExposureView"
   public static VIEW_LEAD = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_LEAD; //"/View/Lead"
@@ -276,6 +283,8 @@ export class NavigationConstant {
   public static NAP_APP_PRCS_HEADER = PathConstant.LR_NAP + "/" + PathConstant.NAP_APP_PRCS; //'Nap/ApplicationProcess'
   public static NAP_APP_PRCS_CRD_APPRV_PAGING = "/" + NavigationConstant.NAP_APP_PRCS_HEADER+"/"+PathConstant.APP_APPRV_PAGING; //"/Nap/ApplicationProcess/ApplicationApproval/Paging"
   public static NAP_APP_PRCS_CRD_APPRV_DETAIL = "/" + NavigationConstant.NAP_APP_PRCS_HEADER + "/" + PathConstant.APP_APPRV_DETAIL; //"/Nap/ApplicationProcess/ApplicationApproval/Detail"
+  public static NAP_APP_PRCS_CRD_RVW_PAGING = "/" + NavigationConstant.NAP_APP_PRCS_HEADER + "/" + PathConstant.APP_RVW_PAGING; //"/Nap/ApplicationProcess/ApplicationReview/Paging"
+  public static NAP_APP_PRCS_CRD_RVW_DETAIL = "/" + NavigationConstant.NAP_APP_PRCS_HEADER + "/" + PathConstant.APP_RVW_DETAIL; //"/Nap/ApplicationProcess/ApplicationReview/Detail"
   //end
 
   //#region REQUISITION DECISION

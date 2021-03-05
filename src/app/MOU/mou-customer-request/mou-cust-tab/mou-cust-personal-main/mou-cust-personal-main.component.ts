@@ -74,7 +74,7 @@ export class MouCustPersonalMainComponent implements OnInit {
       BirthPlace: ['', [Validators.required, Validators.maxLength(100)]],
       BirthDt: ['', [Validators.required]],
       MrNationalityCode: ['', Validators.maxLength(50)],
-      TaxIdNo: ['', [Validators.maxLength(50)]],
+      TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]],
       MobilePhnNo1: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       MrEducationCode: ['', Validators.maxLength(50)],
       MobilePhnNo2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
@@ -344,11 +344,11 @@ export class MouCustPersonalMainComponent implements OnInit {
       });
     }
     if (this.parentForm.controls[this.identifier]['controls'].MrIdTypeCode.value == "NPWP") {
-      this.parentForm.controls[this.identifier]['controls'].TaxIdNo.setValidators([Validators.required]);
+      this.parentForm.controls[this.identifier]['controls'].TaxIdNo.setValidators([Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]);
       this.parentForm.controls[this.identifier]['controls'].TaxIdNo.updateValueAndValidity();
     }
     else {
-      this.parentForm.controls[this.identifier]['controls'].TaxIdNo.clearValidators();
+      this.parentForm.controls[this.identifier]['controls'].TaxIdNo.setValidators([Validators.maxLength(50), Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]);
       this.parentForm.controls[this.identifier]['controls'].TaxIdNo.updateValueAndValidity();
     }
     var idExpiredDate = this.parentForm.controls[this.identifier].get("IdExpiredDt");
