@@ -288,7 +288,8 @@ export class ApplicationReviewDetailComponent implements OnInit {
 
   //#region Submit
   SaveForm() {
-    let ApprovalCreateOutput = this.createComponent.output();
+    let ApprovalCreateOutput
+    
     let temp = this.FormObj.value;
     let tempAppCrdRvwObj = new AppCrdRvwHObj();
     tempAppCrdRvwObj.AppId = this.appId;
@@ -301,6 +302,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
     tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
     var flagId = 0;
     if (!this.isReturnOn) {
+      ApprovalCreateOutput = this.createComponent.output();
       if (ApprovalCreateOutput == undefined) {
         return this.toastr.warningMessage('Failed to Get RFA Object');
       }
@@ -320,7 +322,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
       ListDeviationResultObjs: this.ManualDeviationData,
       RequestRFAObj: ApprovalCreateOutput
     };
-    this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
+    this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationDataNew, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_RVW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
