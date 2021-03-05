@@ -103,7 +103,7 @@ export class CustMainDataComponent implements OnInit {
     MrIdTypeCode: ['', Validators.required],
     IdNo: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     IdExpiredDt: [''],
-    TaxIdNo: ['', [Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]],
+    TaxIdNo: ['', [Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
     MrGenderCode: ['', Validators.required],
     BirthPlace: ['', Validators.required],
     BirthDt: ['', Validators.required],
@@ -370,7 +370,7 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.controls.Email1.setValidators([Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]);
       this.CustMainDataForm.controls.MrCompanyTypeCode.clearValidators();
       this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
-      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]);
+      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
       this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
     } else {
       if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
@@ -378,7 +378,7 @@ export class CustMainDataComponent implements OnInit {
           IsSigner: false,
         });
       }
-      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]);
+      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
       this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
 
       this.CustMainDataForm.controls.MrCompanyTypeCode.setValidators(Validators.required);

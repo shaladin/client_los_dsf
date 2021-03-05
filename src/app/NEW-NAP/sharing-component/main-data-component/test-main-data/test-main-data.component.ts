@@ -64,7 +64,7 @@ export class TestMainDataComponent implements OnInit {
     MrIdTypeCode: ['', Validators.required],
     IdNo: ['', Validators.required],
     IdExpiredDt: [''],
-    TaxIdNo: ['', [Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]],
+    TaxIdNo: ['', [Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
     MrGenderCode: ['', Validators.required],
     BirthPlace: ['', Validators.required],
     BirthDt: ['', Validators.required],
@@ -217,9 +217,9 @@ export class TestMainDataComponent implements OnInit {
       this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrMaritalStatCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.IdNo.setValidators(Validators.required);
-      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]);
+      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
     } else {
-      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]);
+      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
       this.CustMainDataForm.controls.MotherMaidenName.clearValidators();
       this.CustMainDataForm.controls.BirthDt.clearValidators();
       this.CustMainDataForm.controls.BirthPlace.clearValidators();

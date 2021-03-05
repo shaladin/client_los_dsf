@@ -95,7 +95,7 @@ export class CustomerDataComponent implements OnInit {
     MotherName: ['', [Validators.required]],
     IdNo: [''],
     MrMaritalStatCode: ['', [Validators.required]],
-    Npwp: ['', Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")],
+    Npwp: ['', Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)],
     Email: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")]],
     MobilePhone1: [''],
     MobilePhone2: [''],
