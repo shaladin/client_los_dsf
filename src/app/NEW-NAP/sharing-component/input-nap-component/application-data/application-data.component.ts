@@ -684,7 +684,7 @@ export class ApplicationDataComponent implements OnInit {
       if (this.isIncludeMailingAddress) obj['appCustMailingAddr'] = this.getMailingAddrForSave();
       this.http.post(url, obj).subscribe(
         (response) => {
-          this.toastr.successMessage('Save Application Data');
+          this.toastr.successMessage('Save Application Data Success!');
           this.outputTab.emit();
         });
     }

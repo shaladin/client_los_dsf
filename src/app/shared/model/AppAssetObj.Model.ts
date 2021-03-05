@@ -46,7 +46,7 @@ export class AppAssetObj {
   ExpectedDelivDt: Date;
   IsNeedReplacementCar: boolean;
   BizTemplateCode: string;
-  CopyNumber: number;
+  count: number;
   RowVersion: string;
 
   SerialNo1Label: string;
@@ -93,7 +93,7 @@ export class AppAssetObj {
     this.ExpectedDelivDt = new Date();
     this.IsNeedReplacementCar = false;
     this.BizTemplateCode = "";
-    this.CopyNumber = 0;
+    this.count = 0;
     this.RowVersion = "";
   }
 }

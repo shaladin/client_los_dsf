@@ -142,7 +142,7 @@ export class AssetDataOplComponent implements OnInit {
     TaxCityIssuer: [''],
     TaxIssueDt: [''],
     Discount: [0],
-    ExpectedDelivDt: ['', Validators.required],
+    ExpectedDelivDt: [''],
     IsNeedReplacementCar: [false],
     ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
 
@@ -206,6 +206,7 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    console.log("TEST ASSET");
     this.isListAsset = true;
 
     this.inputAddressObjForDeliv = new InputAddressObj();
@@ -415,13 +416,9 @@ export class AssetDataOplComponent implements OnInit {
     if(this.units !== 0) {
       this.allAssetDataObj = this.listAsset[this.index];
       this.copyAppAssetObj = new AppAssetObj();
-      this.copyAppAssetObj.AppId = this.allAssetDataObj.AppAssetObj.AppId;
-      this.copyAppAssetObj.FullAssetCode = this.allAssetDataObj.AppAssetObj.FullAssetCode;
-      this.copyAppAssetObj.AssetPriceAmt = this.allAssetDataObj.AppAssetObj.AssetPriceAmt;
-      this.copyAppAssetObj.ManufacturingYear = this.allAssetDataObj.AppAssetObj.ManufacturingYear;
-      this.copyAppAssetObj.Color = this.allAssetDataObj.AppAssetObj.Color;
+      this.copyAppAssetObj.AppAssetId = this.allAssetDataObj.AppAssetObj.AppAssetId;
       this.copyAppAssetObj.BizTemplateCode = CommonConstant.OPL;
-      this.copyAppAssetObj.CopyNumber = this.units;
+      this.copyAppAssetObj.count = this.units;
       this.http.post(URLConstant.CopyAppAsset, this.copyAppAssetObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
@@ -436,7 +433,7 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   Save() {
-    this.toastr.successMessage("");
+    this.toastr.successMessage("Save Asset Data Success!");
     this.outputTab.emit();
   }
 

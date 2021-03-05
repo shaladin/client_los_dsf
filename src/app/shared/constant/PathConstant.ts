@@ -227,6 +227,9 @@ export class PathConstant {
     public static DOC_CHECK_LIST_APPRV = PathConstant.DOC_CHECK_LIST + "/" + PathConstant.APPRV;
     public static DOC_CHECK_LIST_APPRV_PAGING = PathConstant.DOC_CHECK_LIST_APPRV + "/" + PathConstant.PAGING;
     public static DOC_CHECK_LIST_APPRV_DETAIL = PathConstant.DOC_CHECK_LIST_APPRV + "/" + PathConstant.DETAIL;
+    public static ASSET_ALLOC = "AssetAllocation";
+    public static ASSET_ALLOC_PAGING = PathConstant.ASSET_ALLOC + "/" + PathConstant.PAGING;
+    public static ASSET_ALLOC_DETAIL = PathConstant.ASSET_ALLOC + "/" + PathConstant.DETAIL;
     //#endregion
     
     //#region Nap-Crd-Prcs

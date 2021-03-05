@@ -363,6 +363,7 @@ export class URLConstant {
   public static GetListRefMasterByRefMasterTypeCodes = environment.FoundationR3Url + "/RefMaster/GetListRefMasterByRefMasterTypeCodes";
   public static GetRefMasterByRefMasterTypeCodeAndMasterCode = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCodeAndMasterCode"
   public static GetListActiveRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterByRefMasterTypeCode"
+  public static GetListActiveRefMasterByRefMasterCodeAndMappingCodes = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterByRefMasterCodeAndMappingCodes"
 
   //REF ATTR
   public static GetListActiveRefAttrByAttrGroup = environment.FoundationR3Url + "/RefAttr/GetListActiveRefAttrByAttrGroup"
@@ -1330,4 +1331,12 @@ export class URLConstant {
   public static GetAppFinDataOplByAppAssetId = environment.losUrl + "/AppAssetRentDataOpl/GetAppFinDataOplByAppAssetId";
   public static AddEditFinDataOpl = environment.losUrl + "/AppAssetFinancialDataOpl/SubmitFinancialDataOpl";
   public static GetListAppAssetFinDataGridByAppId = environment.losUrl + "/AppAssetRentDataOpl/GetListAppAssetFinDataGridByAppId";
+
+  //Asset Allocation
+    public static GetAssetAllocationDataByAppId = environment.losUrl + "/AppAssetAllocationOpl/GetAssetAllocationDataByAppId";
+  public static SubmitAssetAllocation = environment.losUrl + "/AppAssetAllocationOpl/SubmitAssetAllocation";
+
+   //API AMS
+  public static AmsUrl = "http://r3impl-appsvr/AMS";
+  public static GetAssetStockPagingFromAms = "/Api/Integration/GetAssetStockPaging";
 }
