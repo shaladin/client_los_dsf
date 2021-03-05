@@ -19,7 +19,7 @@
   },
   "private": true,
   "dependencies": {
-    "@adins/uc-show-errors": "^1.0.4",
+    "@adins/uc-show-errors": "^1.0.6",
     "@adins/uc-subsection": "^1.0.5",
     "@adins/ucaddress": "^1.0.53",
     "@adins/ucaddtotemp": "^1.0.17",
@@ -90,7 +90,7 @@
     "font-awesome": "^4.7.0",
     "i": "^0.3.6",
     "intl": "1.2.5",
-    "jquery": "^3.5.1",
+    "jquery": "^3.6.0",
     "ng-chartist": "1.1.1",
     "ng2-charts": "1.6.0",
     "ng2-dragula": "2.1.0",
