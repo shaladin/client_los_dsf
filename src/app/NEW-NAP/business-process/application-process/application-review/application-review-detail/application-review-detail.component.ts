@@ -17,7 +17,7 @@ import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
-import { ToastrService } from 'ngx-toastr';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { CookieService } from 'ngx-cookie';
 
@@ -59,7 +59,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    public toastr: ToastrService, private cookieService: CookieService
+    public toastr: NGXToastrService, private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -238,17 +238,17 @@ export class ApplicationReviewDetailComponent implements OnInit {
       Notes: ""
     });
 
-    if (!this.isReturnOn) {
-      this.isReturnOn = true;;
-      this.FormObj.controls.Reason.setValidators([Validators.required]);
-      this.FormObj.controls.Notes.setValidators([Validators.required]);
-    } else {
-      this.isReturnOn = false;
-      this.FormObj.controls.Reason.clearValidators()
-      this.FormObj.controls.Notes.clearValidators()
-    }
-    this.FormObj.controls.Reason.updateValueAndValidity();
-    this.FormObj.controls.Notes.updateValueAndValidity();
+    //if (!this.isReturnOn) {
+    //  this.isReturnOn = true;;
+    //  this.FormObj.controls.Reason.setValidators([Validators.required]);
+    //  this.FormObj.controls.Notes.setValidators([Validators.required]);
+    //} else {
+    //  this.isReturnOn = false;
+    //  this.FormObj.controls.Reason.clearValidators()
+    //  this.FormObj.controls.Notes.clearValidators()
+    //}
+    //this.FormObj.controls.Reason.updateValueAndValidity();
+    //this.FormObj.controls.Notes.updateValueAndValidity();
 
   }
 
@@ -300,17 +300,20 @@ export class ApplicationReviewDetailComponent implements OnInit {
       tempAppCrdRvwObj.RowVersion = this.ResponseExistCreditReview.RowVersion;
     }
     tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
-
+    var flagId = 0;
     if (!this.isReturnOn) {
       ApprovalCreateOutput = this.createComponent.output();
       if (ApprovalCreateOutput == undefined) {
-        return this.toastr.warning('Failed to Get RFA Object');
+        return this.toastr.warningMessage('Failed to Get RFA Object');
+      }
+      else {
+        flagId = 1;
       }
     }
 
     let apiObj = {
       appCrdRvwHObj: tempAppCrdRvwObj,
-      ApprovedById: temp.Approver,
+      ApprovedById: flagId,
       Reason: temp.ReasonDesc,
       Notes: temp.Notes,
       WfTaskListId: this.wfTaskListId,
@@ -321,7 +324,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
     };
     this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationDataNew, apiObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_RVW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
 
@@ -330,14 +333,15 @@ export class ApplicationReviewDetailComponent implements OnInit {
     workflowApiObj.TaskListId = this.wfTaskListId;
     this.http.post(URLConstant.CrdRvwDataReCapture, workflowApiObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+        this.toastr.successMessage(response["Message"]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_RVW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
 
   ReCaptureDataR2() {
     this.http.post(URLConstant.ReCaptureDataR2, { AppNo: this.appNo, CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RowVersion: this.crdRvwCustInfoObj.RowVersion }).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_RVW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
 
