@@ -142,7 +142,7 @@ export class AssetDataOplComponent implements OnInit {
     TaxCityIssuer: [''],
     TaxIssueDt: [''],
     Discount: [0],
-    ExpectedDelivDt: ['', Validators.required],
+    ExpectedDelivDt: [''],
     IsNeedReplacementCar: [false],
     ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
 
@@ -206,6 +206,7 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    console.log("TEST ASSET");
     this.isListAsset = true;
 
     this.inputAddressObjForDeliv = new InputAddressObj();
