@@ -41,6 +41,8 @@ import { DocChecklistApprovalPagingComponent } from './doc-checklist/doc-checkli
 import { DocChecklistApprovalDetailComponent } from './doc-checklist/doc-checklist-approval-detail/doc-checklist-approval-detail.component';
 import { PreGoLiveOplPagingComponent } from './pre-go-live-opl/pre-go-live-opl-paging/pre-go-live-opl-paging.component';
 import { PreGoLiveOplDetailComponent } from './pre-go-live-opl/pre-go-live-opl-detail/pre-go-live-opl-detail.component';
+import { AssetAllocationPagingComponent } from './asset-allocation/asset-allocation-paging/asset-allocation-paging.component';
+import { AssetAllocationDetailComponent } from './asset-allocation/asset-allocation-detail/asset-allocation-detail.component';
 
 const routes: Routes = [
   {
@@ -324,6 +326,20 @@ const routes: Routes = [
         component: DocChecklistApprovalDetailComponent,
         data: {
           title: 'Document Checklist Detail For Approval'
+        }
+      },
+      {
+        path: 'AssetAllocation/Paging',
+        component: AssetAllocationPagingComponent,
+        data: {
+          title: 'Asset Allocation Paging'
+        }
+      },
+      {
+        path: 'AssetAllocation/Detail',
+        component: AssetAllocationDetailComponent,
+        data: {
+          title: 'Asset Allocation Detail'
         }
       }
     ]
