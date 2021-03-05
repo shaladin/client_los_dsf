@@ -144,7 +144,7 @@
               <div class="form-group row">
                 <label class="col-md-3 adins-required-label" translate>First Installment Type</label>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" (change)="FirstInstChange()"
+                  <select class="form-control adInsInput" style="width: auto"
                     formControlName="MrFirstInstTypeCode" required
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.MrFirstInstTypeCode.invalid }">
                     <option *ngFor="let it of returnFirstInstObj " [value]="it.Key">
