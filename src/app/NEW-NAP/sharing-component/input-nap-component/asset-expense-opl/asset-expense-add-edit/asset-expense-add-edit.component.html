@@ -77,15 +77,8 @@
                   </lib-uc-show-errors>
                 </div>
 
-                <label class="col-md-2 adins-required-label" for="insLength" translate>Insurance Length</label>
-                <div class="col-md-4">
-                  <input type="text" id="insLength" min="minInsLength" max="maxInsLength"
-                         class="form-control adInsInput width-25-per" formControlName="InsLength"
-                         (change)="InsLengthChanged()"
-                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsLength.invalid}">
-                  <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsLength" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
+                <label class="col-md-2" for="insLength" translate>Insurance Length</label>
+                <label class="col-md-4" for="insLength" translate>{{InsuranceDataForm.controls.InsLength.value}}</label>
               </div>
               <div class="form-group row">
                 <label class="col-md-2" for="notes" translate>Insurance Notes</label>

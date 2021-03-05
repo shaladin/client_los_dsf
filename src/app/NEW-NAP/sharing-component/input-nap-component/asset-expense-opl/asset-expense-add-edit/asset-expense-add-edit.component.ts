@@ -1154,7 +1154,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
   }
 
   CoverPeriodChanged(event) {
-    this.setInsLengthDefaultValue(event.target.value);
+    //this.setInsLengthDefaultValue(event.target.value);
     this.isGenerate = false;
     this.isCalculate = false;
   }
@@ -1274,7 +1274,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
       });
     }
 
-    this.setInsLengthValidator(coverPeriod);
+    //this.setInsLengthValidator(coverPeriod);
   }
 
   setInsLengthValidator(coverPeriod) {
@@ -1330,7 +1330,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
   }
 
   InsuredByChanged(event) {
-    this.setInsLength();
+    //this.setInsLength();
     this.setValidator(event.target.value);
   }
 
@@ -1403,7 +1403,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
       this.InsuranceDataForm.controls.InsAssetPaidBy.updateValueAndValidity();
       this.InsuranceDataForm.controls.InsAssetCoverPeriod.setValidators([Validators.required, Validators.maxLength(50)]);
       this.InsuranceDataForm.controls.InsAssetCoverPeriod.updateValueAndValidity();
-      this.setInsLengthValidator(this.InsuranceDataForm.controls.InsAssetCoverPeriod.value);
+      //this.setInsLengthValidator(this.InsuranceDataForm.controls.InsAssetCoverPeriod.value);
       this.InsuranceDataForm.controls.Notes.setValidators(Validators.maxLength(4000));
       this.InsuranceDataForm.controls.Notes.updateValueAndValidity();
       this.InsuranceDataForm.controls.InsAssetRegion.setValidators([Validators.required, Validators.maxLength(50)]);
@@ -1434,7 +1434,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
       this.InsuranceDataForm.controls.InsAssetPaidBy.updateValueAndValidity();
       this.InsuranceDataForm.controls.InsAssetCoverPeriod.setValidators([Validators.required, Validators.maxLength(50)]);
       this.InsuranceDataForm.controls.InsAssetCoverPeriod.updateValueAndValidity();
-      this.setInsLengthValidator(this.InsuranceDataForm.controls.InsAssetCoverPeriod.value);
+      //this.setInsLengthValidator(this.InsuranceDataForm.controls.InsAssetCoverPeriod.value);
       this.InsuranceDataForm.controls.Notes.setValidators(Validators.maxLength(4000));
       this.InsuranceDataForm.controls.Notes.updateValueAndValidity();
       this.InsuranceDataForm.controls.InsAssetRegion.setValidators([Validators.required, Validators.maxLength(50)]);
@@ -1472,6 +1472,9 @@ export class AssetExpenseAddEditComponent implements OnInit {
     await this.http.post(URLConstant.GetAssetExpenseDataByAppAssetId, reqObj).toPromise().then(
       (response) => {
         this.appObj = response["AppObj"];
+        this.InsuranceDataForm.patchValue({
+          InsLength: this.appObj.Tenor
+        });
         this.appAssetObj = response["AppAssetObj"];
         if (response["AppAssetMaintHObj"] != null) {
           this.InsuranceDataForm.patchValue({
@@ -1818,8 +1821,10 @@ export class AssetExpenseAddEditComponent implements OnInit {
   }
 
   async bindInsAssetCoverPeriodObj() {
-    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsCoverPeriod };
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
+    var ListMapCodes = new Array<string>();
+    ListMapCodes.push("OPL");
+    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsCoverPeriod, MappingCodes: ListMapCodes };
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterCodeAndMappingCodes, refMasterObj).toPromise().then(
       (response) => {
         this.insAssetCoverPeriodObj = response[CommonConstant.ReturnObj];
         if (this.insAssetCoverPeriodObj.length > 0 && this.isInsDataExist) {
@@ -1828,7 +1833,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
             InsAssetCoverPeriod: this.insAssetCoverPeriodObj[idxTemp].Key
           });
 
-          this.setInsLengthDefaultValue(this.insAssetCoverPeriodObj[idxTemp].Key);
+          //this.setInsLengthDefaultValue(this.insAssetCoverPeriodObj[idxTemp].Key);
         }
       }
     );
