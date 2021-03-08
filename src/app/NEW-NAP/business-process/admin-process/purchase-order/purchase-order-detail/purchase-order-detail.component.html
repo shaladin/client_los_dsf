@@ -97,7 +97,8 @@
                                     </label>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-6">Down Payment Nett </label>
+                                    <label *ngIf="lobCode != 'FL4W'" class="col-md-6">Down Payment Nett </label>
+                                    <label *ngIf="lobCode == 'FL4W'" class="col-md-6">Security Deposit Nett </label>
                                     <label
                                         class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.DownPaymentNettAmt | number}}
                                     </label>
