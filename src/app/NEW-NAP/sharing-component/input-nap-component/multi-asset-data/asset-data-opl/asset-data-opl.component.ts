@@ -423,7 +423,7 @@ export class AssetDataOplComponent implements OnInit {
       this.allAssetDataObj = this.listAsset[index];
       this.deleteAppAssetObj = new AppAssetObj();
       this.deleteAppAssetObj.AppAssetId = this.allAssetDataObj.AppAssetObj.AppAssetId;
-      this.deleteAppAssetObj.AppId = this.allAssetDataObj.AppAssetObj.AppId;
+      this.deleteAppAssetObj.AppId = this.AppId;
       this.http.post(URLConstant.DeleteAppAsset, this.deleteAppAssetObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
@@ -441,6 +441,7 @@ export class AssetDataOplComponent implements OnInit {
     if(this.units !== 0) {
       this.allAssetDataObj = this.listAsset[this.index];
       this.copyAppAssetObj = new AppAssetObj();
+      this.copyAppAssetObj.AppId = this.AppId;
       this.copyAppAssetObj.AppAssetId = this.allAssetDataObj.AppAssetObj.AppAssetId;
       this.copyAppAssetObj.BizTemplateCode = CommonConstant.OPL;
       this.copyAppAssetObj.count = this.units;
