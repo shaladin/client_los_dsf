@@ -78,6 +78,11 @@
           },
           {
             "type": "text",
+            "label": "Customer Model",
+            "property": "MrCustModelDescr"
+          },
+          {
+            "type": "text",
             "label": "Application Status",
             "property": "Stat"
           },
