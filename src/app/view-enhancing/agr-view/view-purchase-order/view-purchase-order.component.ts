@@ -14,17 +14,14 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class ViewPurchaseOrderComponent implements OnInit {
 
   @Input() agrmntId: number = 0;
+  @Input() BizTemplateCode: string;
   ResponseAgrmntFinDataData: any;
   ResponseAppAssetData: any;
   ResponsePurchaseOrderHData: any;
   ResponseAppLoanPurposeWithSupplierNameObj: any;
   
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private http: HttpClient,
-    private fb: FormBuilder,
-    private toastr: NGXToastrService,
   ) { }
 
   async ngOnInit() {

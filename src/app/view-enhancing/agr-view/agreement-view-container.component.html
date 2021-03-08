@@ -105,7 +105,7 @@
 
             <mat-tab *ngIf="IsPurchaseOrder" label="Purchase Order">
               <ng-template matTabContent>
-                <app-view-purchase-order [agrmntId]="AgrmntId"></app-view-purchase-order>
+                <app-view-purchase-order [agrmntId]="AgrmntId" [BizTemplateCode]="BizTemplateCode"></app-view-purchase-order>
               </ng-template>
             </mat-tab>
 

@@ -43,29 +43,31 @@
             </div>
           </div>
         </div>
-        <lib-ucSubsection [id]="'viewSupplInfoId'" [title]="'Supplier Information'" [panel]="'viewSupplInfo'">
-        </lib-ucSubsection>
-        <div class="form-body" id="viewSupplInfo">
-          <div class="row">
-            <div class="col-md-6 ">
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Supplier Name </label>
-                <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.SupplName}} </label>
+        <div *ngIf="BizTemplateCode != 'CFNA'">
+          <lib-ucSubsection [id]="'viewSupplInfoId'" [title]="'Supplier Information'" [panel]="'viewSupplInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" id="viewSupplInfo">
+            <div class="row">
+              <div class="col-md-6 ">
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Supplier Name </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.SupplName}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Address </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.SupplAddr}} </label>
+                </div>
+                <div class="row">
+                  <label class="col-md-6 adInsLabel"> Supplier Bank Account </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.BankName }} -
+                    {{ ResponsePurchaseOrderHData?.BankAccName }} - {{ ResponsePurchaseOrderHData?.BankAccNo}} </label>
+                </div>
               </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Address </label>
-                <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.SupplAddr}} </label>
-              </div>
-              <div class="row">
-                <label class="col-md-6 adInsLabel"> Supplier Bank Account </label>
-                <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.BankName }} -
-                  {{ ResponsePurchaseOrderHData?.BankAccName }} - {{ ResponsePurchaseOrderHData?.BankAccNo}} </label>
-              </div>
-            </div>
-            <div class="col-md-6 ">
-              <div class="row">
-                <!-- <label class="col-md-6 adInsLabel"> MOU </label>
-                <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.MouNo}} </label> -->
+              <div class="col-md-6 ">
+                <div class="row">
+                  <!-- <label class="col-md-6 adInsLabel"> MOU </label>
+                  <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.MouNo}} </label> -->
+                </div>
               </div>
             </div>
           </div>
