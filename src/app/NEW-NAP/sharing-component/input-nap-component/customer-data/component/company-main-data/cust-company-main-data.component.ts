@@ -15,6 +15,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { CustomPatternObj } from 'app/shared/model/LibraryObj/CustomPatternObj.model';
 
 @Component({
   selector: 'app-cust-company-main-data',
@@ -25,8 +26,7 @@ import { CookieService } from 'ngx-cookie';
 })
 
 export class CustCompanyMainDataComponent implements OnInit {
-
-  @Input() appId;
+  @Input() appId: number;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
@@ -58,7 +58,6 @@ export class CustCompanyMainDataComponent implements OnInit {
   UserAccess: any;
   MaxDate: Date;
 
-
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -69,7 +68,6 @@ export class CustCompanyMainDataComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
@@ -82,7 +80,7 @@ export class CustCompanyMainDataComponent implements OnInit {
       NumOfEmp: [0],
       IsAffiliated: [false],
       EstablishmentDt: ['', [Validators.required]],
-      TaxIdNo: ['', [Validators.required, Validators.maxLength(50)]],
+      TaxIdNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
       IsVip: [false]
     }));
 
@@ -103,7 +101,8 @@ export class CustCompanyMainDataComponent implements OnInit {
       (response) => {
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);
-      });
+      }
+    );
   }
 
   CopyCustomer(response) {
@@ -134,13 +133,11 @@ export class CustCompanyMainDataComponent implements OnInit {
     }
   }
 
-
   GetIndustryType(event) {
     this.parentForm.controls[this.identifier].patchValue({
       IndustryTypeCode: event.IndustryTypeCode
     });
   }
-
 
   setCriteriaLookupCustomer(custTypeCode) {
     var arrCrit = new Array();
@@ -160,8 +157,8 @@ export class CustCompanyMainDataComponent implements OnInit {
       (response) => {
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
         this.InputLookupIndustryTypeObj.jsonSelect = response;
-      });
-
+      }
+    );
   }
 
   bindCustData() {
@@ -219,8 +216,7 @@ export class CustCompanyMainDataComponent implements OnInit {
 
         this.InputLookupCustomerObj.isReady = true;
       },
-      (error) => {
-      }
+      (error) => { }
     );
   }
 
@@ -254,7 +250,5 @@ export class CustCompanyMainDataComponent implements OnInit {
         }
       }
     );
-  }
-  test() {
   }
 }

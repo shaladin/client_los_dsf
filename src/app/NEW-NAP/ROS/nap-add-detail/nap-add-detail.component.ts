@@ -62,8 +62,6 @@ export class NapAddDetailComponent implements OnInit {
     ReturnExecNotes: ['']
   });
   OnFormReturnInfo = false;
-  
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
 
   readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
   constructor(
@@ -114,12 +112,6 @@ export class NapAddDetailComponent implements OnInit {
       );
     }
     this.MakeViewReturnInfoObj();
-    this.SetMainInfo();
-  }
-
-  SetMainInfo() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-opl-main-info.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
   }
 
   stepperMode: string = CommonConstant.CustTypeCompany;
@@ -250,7 +242,7 @@ export class NapAddDetailComponent implements OnInit {
       default:
         break;
     }
-    if (AppStep == CommonConstant.AppStepUplDoc)
+    if (AppStep == CommonConstant.AppStepTC)
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
@@ -259,20 +251,17 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   NextStep(Step) {
-    if (this.ReturnHandlingHId > 0) {
-
-    }
-    else {
+    if (this.ReturnHandlingHId === 0) {
       this.UpdateAppStep(Step);
     }
 
-    this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.next();
     }
     else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany.next();
     }
+    this.ChangeTab(Step);
   }
 
   UpdateAppStep(Step: string) {
@@ -289,14 +278,14 @@ export class NapAddDetailComponent implements OnInit {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ROS_PAGING], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ROS_PAGING], { BizTemplateCode: CommonConstant.OPL }); //Diganti ROS Bila Sudah Siap
         }
       )
     }
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ROS_PAGING], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ROS_PAGING], { BizTemplateCode: CommonConstant.OPL }); //Diganti ROS Bila Sudah Siap
   }
 
   Submit() {
