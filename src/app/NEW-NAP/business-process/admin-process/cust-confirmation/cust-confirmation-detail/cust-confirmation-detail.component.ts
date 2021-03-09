@@ -88,7 +88,6 @@ export class CustConfirmationDetailComponent implements OnInit {
   async GetVerfResult(IsAdded: boolean = false) {
     await this.http.post(URLConstant.GetVerfResultHsByTrxRefNo, { TrxRefNo: this.AgrmntNo }).toPromise().then(
       async (response) => {
-        console.log(response);
         this.VerfResultList = response["responseVerfResultHCustomObjs"];
         this.CustCnfrmObj.Phone = "-";
         this.CustCnfrmObj.MrCustCnfrmResultCode = "-";
@@ -131,7 +130,7 @@ export class CustConfirmationDetailComponent implements OnInit {
         this.verfResultObj.LobName = this.appObj.LobCode;
         this.verfResultObj.Notes = "-";
         this.verfResultObj.ListSubject = ListSubj;
-        console.log(this.verfResultObj);
+        // console.log(this.verfResultObj);
         await this.http.post(URLConstant.AddVerfResultAndVerfResultH, this.verfResultObj).toPromise().then(
           async () => {
             await this.GetVerfResult(true);
