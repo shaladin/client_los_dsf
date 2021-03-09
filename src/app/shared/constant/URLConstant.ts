@@ -1335,7 +1335,7 @@ export class URLConstant {
   public static CalculateFinancialOpl = environment.losUrl + "/AppFinData/CalculateFinancialOpl";
   public static GetFinancialRuleOpl = environment.losUrl + "/AppAssetFinancialDataOpl/GetFinancialRuleOpl";
   public static CalculateCOFOpl = environment.losUrl + "/AppFinData/CalculateCOFOpl";
-}
+
 
   //Asset Allocation
   public static GetAssetAllocationDataByAppId = environment.losUrl + "/AppAssetAllocationOpl/GetAssetAllocationDataByAppId";
