@@ -200,9 +200,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
     let Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
     await this.http.post(URLConstant.GetListActiveRefReason, Obj).toPromise().then(
       (response) => {
-        console.log(response);
         this.DDLData[this.DDLRecomendation] = response[CommonConstant.ReturnObj];
-        console.log(this.DDLData);
       });
   }
 
@@ -329,8 +327,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
     this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
     this.InputObj.TrxNo = this.appNo;
-    console.log(this.DDLData[this.DDLRecomendation]);
-    console.log(this.InputObj);
   }
 
   //#region Submit
@@ -350,14 +346,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
     if (!this.isReturnOn) {
       let ApprovalCreateOutput = this.createComponent.output();
       if (ApprovalCreateOutput != undefined) {
-        // RFAPreGoLive = new RFAPreGoLiveObj();
-        // // this.RFAPreGoLive.TransactionNo = this.AgrmntNo;
-        // // this.RFAPreGoLive.Notes = this.MainInfoForm.controls.Notes.value;
-        // // this.RFAPreGoLive.ApprovedBy = this.MainInfoForm.controls.ApprovedBy.value;
-        // // this.RFAPreGoLive.Reason = this.MainInfoForm.controls.Reason.value;
-        // RFAPreGoLive.TaskListId = this.wfTaskListId;
-        // RFAPreGoLive.RowVersion = "";
-        // RFAPreGoLive.RequestRFAObj = ApprovalCreateOutput;
         RFAPreGoLive = ApprovalCreateOutput;
       } else {
         return this.toastr.warning('Input RFA Data First!');
@@ -375,11 +363,10 @@ export class CreditReviewCrDetailComponent implements OnInit {
       ListDeviationResultObjs: this.ManualDeviationData,
       RequestRFAObj: RFAPreGoLive
     };
-    console.log(apiObj);
-    // this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
-    //   (response) => {
-    //     AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
-    //   });
+    this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
+      (response) => {
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+      });
   }
 
   ReCaptureCreditReviewData() {
