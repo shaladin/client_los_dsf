@@ -93,7 +93,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
     this.initData();
     await this.ClaimTask();
     await this.GetAppNo();
-    await this.GetListDeviation
+    await this.GetListDeviation();
     await this.BindDDLRecommendation();
     await this.BindDDLReasonReturn();
     await this.BindCreditAnalysisItemFormObj();
@@ -363,6 +363,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
       ListDeviationResultObjs: this.ManualDeviationData,
       RequestRFAObj: RFAPreGoLive
     };
+    // console.log(apiObj);
     this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
