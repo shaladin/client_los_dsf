@@ -29,12 +29,12 @@
             <div class="form-group row">
               <label class="col-md-5">Customer No</label>
               <a  href="javascript:void(0);" (click)="OpenView('cust')" *ngIf="CustNo != null && CustNo != ''" class="col-md-7">{{CustNo}}</a>
-              <label *ngIf="agrmntObj.CustNo == null || agrmntObj.CustNo == ''" class="col-md-7">-</label>
+              <label *ngIf="CustNo == null || CustNo == ''" class="col-md-7">-</label>
             </div>
             <div class="form-group row">
               <label class="col-md-5">Customer Name</label>
-              <label *ngIf="agrmntObj.CustName != null" class="col-md-7">{{CustName}}</label>
-              <label *ngIf="agrmntObj.CustName == null" class="col-md-7">-</label>
+              <label *ngIf="CustName != ''" class="col-md-7">{{CustName}}</label>
+              <label *ngIf="CustName == ''" class="col-md-7">-</label>
             </div>
             <div class="form-group row">
               <label class="col-md-5 adins-required-label">Notes</label>
