@@ -12,9 +12,9 @@ export class URLConstant {
   public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
   public static GetAssetTypeByCode = environment.FoundationR3Url + "/AssetType/GetAssetTypeByCode";
 
-
   // APPROVAL
   public static GetApprovalScreenViewInfo = environment.FoundationR3Url + "/Approval/GetApprovalScreenViewInfo";
+  
   // APP Application
   public static AddApp = environment.losUrl + "/Application/AddApp";
   public static AddAppMaindata = environment.losUrl + "/Application/AddAppMainData";
@@ -363,6 +363,7 @@ export class URLConstant {
   public static GetListRefMasterByRefMasterTypeCodes = environment.FoundationR3Url + "/RefMaster/GetListRefMasterByRefMasterTypeCodes";
   public static GetRefMasterByRefMasterTypeCodeAndMasterCode = environment.FoundationR3Url + "/RefMaster/GetRefMasterByRefMasterTypeCodeAndMasterCode"
   public static GetListActiveRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterByRefMasterTypeCode"
+  public static GetListActiveRefMasterByRefMasterCodeAndMappingCodes = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterByRefMasterCodeAndMappingCodes"
 
   //REF ATTR
   public static GetListActiveRefAttrByAttrGroup = environment.FoundationR3Url + "/RefAttr/GetListActiveRefAttrByAttrGroup"
@@ -538,7 +539,6 @@ export class URLConstant {
   public static DeleteAppLifeIns = environment.losUrl + "/AppLifeIns/DeleteAppLifeIns";
   public static AddEditAppLifeInsH = environment.losUrl + "/AppLifeIns/AddEditAppLifeInsH";
 
-
   // MOU CUST SCORING
   public static GetMouCustScoreByMouCustId = environment.losUrl + "/MouCustScoring/GetMouCustScoreByMouCustId";
 
@@ -581,7 +581,6 @@ export class URLConstant {
   public static GetMouShareholderDuplicateCheck = environment.losUrl + "/MouCustDupCheck/GetMouShareholderDuplicateCheck";
   public static EditCustNoMouCust = environment.losUrl + "/MouCustDupCheck/EditCustNoMouCust";
   public static SubmitMouDupCheck = environment.losUrl + "/MouCustDupCheck/SubmitMouDupCheck";
-
 
   // MOU CUST FCTR
   public static AddMouCustFctr = environment.losUrl + "/MouCustFctr/AddMouCustFctr";
@@ -739,7 +738,6 @@ export class URLConstant {
   // LEAD CUST PERSONAL JOB DATA
   public static GetLeadCustPersonalJobDataByLeadCustPersonalId = environment.losUrl + "/LeadCustPersonalJobData/GetLeadCustPersonalJobDataByLeadCustPersonalId";
 
-
   // CUST DATA PERSONAL
   public static AddEditCustDataPersonal = environment.losUrl + "/AppCust/AddEditCustDataPersonal";
   public static GetCustDataByAppId = environment.losUrl + "/AppCust/GetCustDataByAppId";
@@ -814,6 +812,7 @@ export class URLConstant {
   public static CheckAssetValidationRule = environment.losUrl + "/AppAsset/CheckAssetValidationRule";
   public static DeleteAppAsset = environment.losUrl + "/AppAsset/DeleteAppAsset";
   public static GenerateAppAssetAttr = environment.losUrl + "/AppAsset/GenerateAppAssetAttr";
+  
   //Asset Doc List
   public static GetAppAssetDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
   public static GetListAppCollateralForDOView = environment.losUrl + "/AppCollateralDoc/GetListAppCollateralForDOView";
@@ -987,6 +986,7 @@ export class URLConstant {
   public static GetListAppCustAddrDataForCopyByAppCustId = environment.losUrl + "/AppCustAddr/GetListAppCustAddrDataForCopyByAppCustId";
   public static GetListAppCustAddrDataForCopyByAppId = environment.losUrl + "/AppCustAddr/GetListAppCustAddrDataForCopyByAppId";
   public static GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode = environment.losUrl + "/AppCustAddr/GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode";
+  
   //App Fee
   public static GetListAppFeeByAppId = environment.losUrl + "/AppFee/GetListAppFeeByAppId";
 
@@ -1034,11 +1034,12 @@ export class URLConstant {
   public static GetFraudDukcapilByTrxNoAndTrxType = environment.losUrl + "/Dukcapil/GetFraudDukcapilByTrxNoAndTrxType"
 
   //CUSTOMER DUPLICATE CHECKING
-
   public static GetCustomerAndNegativeCustDuplicateCheck = environment.FoundationR3Url + "/CustDuplicateCheck/GetCustomerAndNegativeCustDuplicateCheck";
+  
   // ASSET NEGATIVE DUPLICATE CHECK
   public static GetAssetNegativeDuplicateCheck = environment.FoundationR3Url + "/AssetNegative/GetAssetNegativeDuplicateCheck";
   public static GetAssetNegativeDuplicateCheckByListOfAsset = environment.FoundationR3Url + "/AssetNegative/GetAssetNegativeDuplicateCheckByListOfAsset"
+  
   //App Duplicate Checking
   public static GetCustomerDuplicateCheck = environment.FoundationR3Url + "/CustDuplicateCheck/GetCustomerDuplicateCheck";
   public static GetNegativeCustomerDuplicateCheck = environment.FoundationR3Url + "/CustDuplicateCheck/GetNegativeCustomerDuplicateCheck";
@@ -1072,6 +1073,7 @@ export class URLConstant {
   public static GetAssetTypeById = environment.FoundationR3Url + "/AssetType/GetAssetTypeById";
   public static GetListAssetTypeByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueActiveByCode";
   public static GetListSerialNoLabelByAssetTypeCode = environment.FoundationR3Url + "/AssetType/GetListSerialNoLabelByAssetTypeCode"
+  
   //App Crd Invstg
   public static AddAppCrdInvstg = environment.losUrl + "/AppCrdInvstgH/AddAppCrdInvstg";
   public static AddEditAppCrdInvstg = environment.losUrl + "/AppCrdInvstgH/AddEditAppCrdInvstg";
@@ -1128,6 +1130,7 @@ export class URLConstant {
   public static GetPhoneNumberByIdSourceAppIdAndSubject = environment.losUrl + "/PhoneVerif/GetPhoneNumberByIdSourceAppIdAndSubject";
   public static GetVerfQuestionListByAppIdAndSubjectForPhoneVerif = environment.losUrl + "/PhoneVerif/GetVerfQuestionListByAppIdAndSubjectForPhoneVerif";
   public static AddReturnHandlingFromPhoneVerif = environment.losUrl + "/PhoneVerif/AddReturnHandlingFromPhoneVerif";
+  
   // App Cust
   public static GetAppCustByAppId = environment.losUrl + "/AppCust/GetAppCustByAppId";
   public static AddNegativeCustByAppId = environment.losUrl + "/AppCust/AddNegativeCustByAppId";
@@ -1257,7 +1260,6 @@ export class URLConstant {
   public static GetLatestListScoringResultHAndResultDByTrxSourceNo = environment.FoundationR3Url + "/CreditScoring/GetLatestListScoringResultHAndResultDByTrxSourceNo";
   public static GetListNegativeCustByCustNo = environment.FoundationR3Url + "/NegativeCust/GetListNegativeCustByCustNo";
 
-
   // New Approval R3
   public static CreateNewRFA = "/Approval/CreateNewRFA";
   public static CreateJumpRFA = "/Approval/CreateJumpRFA";
@@ -1331,6 +1333,19 @@ export class URLConstant {
   public static AddEditFinDataOpl = environment.losUrl + "/AppAssetFinancialDataOpl/SubmitFinancialDataOpl";
   public static GetListAppAssetFinDataGridByAppId = environment.losUrl + "/AppAssetRentDataOpl/GetListAppAssetFinDataGridByAppId";
   public static CalculateFinancialOpl = environment.losUrl + "/AppFinData/CalculateFinancialOpl";
-    public static GetFinancialRuleOpl = environment.losUrl + "/AppAssetFinancialDataOpl/GetFinancialRuleOpl";
+  public static GetFinancialRuleOpl = environment.losUrl + "/AppAssetFinancialDataOpl/GetFinancialRuleOpl";
   public static CalculateCOFOpl = environment.losUrl + "/AppFinData/CalculateCOFOpl";
+}
+
+  //Asset Allocation
+  public static GetAssetAllocationDataByAppId = environment.losUrl + "/AppAssetAllocationOpl/GetAssetAllocationDataByAppId";
+  public static SubmitAssetAllocation = environment.losUrl + "/AppAssetAllocationOpl/SubmitAssetAllocation";
+
+   //API AMS
+  public static AmsUrl = "http://r3impl-appsvr/AMS";
+  public static amsUrl = "http://r3impl-appsvr.ad-ins.com/AMS";
+  public static GetAssetStockPagingFromAms = "/Api/Integration/GetAssetStockPaging";
+
+  // ASSET (AMS)
+  public static GetAssetByAssetNo = URLConstant.amsUrl + "/Asset/GetAssetByAssetNo";
 }

@@ -62,6 +62,8 @@ import { DocChecklistApprovalDetailComponent } from "./doc-checklist/doc-checkli
 import { PreGoLiveOplPagingComponent } from './pre-go-live-opl/pre-go-live-opl-paging/pre-go-live-opl-paging.component';
 import { PreGoLiveOplDetailComponent } from './pre-go-live-opl/pre-go-live-opl-detail/pre-go-live-opl-detail.component';
 import { PreGoLiveOplService } from "./pre-go-live-opl/pre-go-live-opl.service";
+import { AssetAllocationPagingComponent } from "./asset-allocation/asset-allocation-paging/asset-allocation-paging.component";
+import { AssetAllocationDetailComponent } from "./asset-allocation/asset-allocation-detail/asset-allocation-detail.component";
 
 export const customCurrencyMaskConfig = {     
   align: "left",
@@ -135,7 +137,9 @@ export const customCurrencyMaskConfig = {
     DocChecklistApprovalPagingComponent,
     DocChecklistApprovalDetailComponent,
     PreGoLiveOplPagingComponent,
-    PreGoLiveOplDetailComponent
+    PreGoLiveOplDetailComponent,
+    AssetAllocationPagingComponent,
+    AssetAllocationDetailComponent
   ],
   providers: [
     NGXToastrService,

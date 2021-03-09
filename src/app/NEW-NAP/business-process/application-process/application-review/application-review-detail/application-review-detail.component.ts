@@ -288,7 +288,8 @@ export class ApplicationReviewDetailComponent implements OnInit {
 
   //#region Submit
   SaveForm() {
-    let ApprovalCreateOutput = this.createComponent.output();
+    let ApprovalCreateOutput
+    
     let temp = this.FormObj.value;
     let tempAppCrdRvwObj = new AppCrdRvwHObj();
     tempAppCrdRvwObj.AppId = this.appId;
@@ -301,6 +302,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
     tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
     var flagId = 0;
     if (!this.isReturnOn) {
+      ApprovalCreateOutput = this.createComponent.output();
       if (ApprovalCreateOutput == undefined) {
         return this.toastr.warningMessage('Failed to Get RFA Object');
       }
