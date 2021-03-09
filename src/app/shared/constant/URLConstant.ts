@@ -1331,5 +1331,6 @@ export class URLConstant {
   public static AddEditFinDataOpl = environment.losUrl + "/AppAssetFinancialDataOpl/SubmitFinancialDataOpl";
   public static GetListAppAssetFinDataGridByAppId = environment.losUrl + "/AppAssetRentDataOpl/GetListAppAssetFinDataGridByAppId";
   public static CalculateFinancialOpl = environment.losUrl + "/AppFinData/CalculateFinancialOpl";
-  public static GetFinancialRuleOpl = environment.losUrl + "/AppAssetFinancialDataOpl/GetFinancialRuleOpl";
+    public static GetFinancialRuleOpl = environment.losUrl + "/AppAssetFinancialDataOpl/GetFinancialRuleOpl";
+  public static CalculateCOFOpl = environment.losUrl + "/AppFinData/CalculateCOFOpl";
 }

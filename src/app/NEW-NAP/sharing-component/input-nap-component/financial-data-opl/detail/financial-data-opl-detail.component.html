@@ -10,6 +10,10 @@
             </lib-ucSubsection>
             <div id="rentalCalc">
               <div class="form-actions right">
+                <button type="button" name="add" id="add" (click)="CalculateCOF()"
+                        class="btn btn-raised btn-primary mr-1">
+                  Calculate COF
+                </button>
                 <button type="button" name="add" id="add" (click)="CalculateRental(true)"
                         class="btn btn-raised btn-primary mr-1">
                   Calculate Rental
@@ -92,7 +96,7 @@
               </div>
               <div class="form-group row">
                 <label class="col-md-3 adInsLabel" translate>Asset Expense</label>
-                <label class="col-md-3 text-right adInsLabel" translate>{{this.FinancialDataForm.controls.TotalOthExpenseAmt.value | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 text-right adInsLabel" translate>{{this.FinancialDataForm.controls.TotalInsuranceAtCostAmt.value + this.FinancialDataForm.controls.TotalMaintenanceAtCostAmt.value + this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value + this.FinancialDataForm.controls.TotalOthExpenseAmt.value | number:'.2':'en-US'}}</label>
                 <label class="col-md-3 adInsLabel" translate>Gross Yield (%)</label>
                 <label class="col-md-3 text-right adInsLabel" translate>{{this.FinancialDataForm.controls.GrossYieldPrcnt.value| number:'.2':'en-US'}}</label>
               </div>
