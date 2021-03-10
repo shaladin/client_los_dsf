@@ -111,12 +111,6 @@
     {
       "type": "sort",
       "position": "center",
-      "label": "Transaction No",
-      "name": "vApv.TRX_NO"
-    },
-    {
-      "type": "sort",
-      "position": "center",
       "label": "Request By",
       "name": "vApv.REQUEST_BY"
     },
