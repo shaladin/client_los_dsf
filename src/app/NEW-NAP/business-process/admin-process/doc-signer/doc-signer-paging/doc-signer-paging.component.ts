@@ -20,6 +20,7 @@ export class DocSignerPagingComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
       }
   });
   }
