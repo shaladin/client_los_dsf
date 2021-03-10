@@ -16,6 +16,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class ViewAgrmntDocumentComponent implements OnInit {
 
   @Input() agrmntId: any;
+  @Input() BizTemplateCode: string;
 
   agrmntObj = {
     AgrmntId: 0,
