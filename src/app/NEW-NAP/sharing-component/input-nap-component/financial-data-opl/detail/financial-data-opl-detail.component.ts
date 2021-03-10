@@ -13,6 +13,7 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { formatDate } from '@angular/common';
+import { AdInsConstant } from '../../../../../shared/AdInstConstant';
 
 @Component({
   selector: 'app-fin-data-opl-detail',
@@ -36,6 +37,7 @@ export class FinancialDataOplEditComponent implements OnInit {
     TotalOthExpenseAmt: [0, Validators.required],
     CofAmt: [0, Validators.required],
     CofPrcnt: [0, Validators.required],
+    CofPrincipal: [0],
     TotalOperatingCostAmt: [0, Validators.required],
     OperatingType: [''],
     OperatingMarginPrcnt: [0, Validators.required],
@@ -44,10 +46,18 @@ export class FinancialDataOplEditComponent implements OnInit {
     VatAmt: [0, Validators.required],
     GrossYieldPrcnt: [0, Validators.required],
     RentalPeriod: [0],
-    RentalPeriodCode:[''],
+    RentalPeriodCode: [''],
     RentalPeriodName: [''],
     TotalAssetPrice: [0],
     DepreciationAmt: [0, Validators.required],
+    DiscAmt: [0],
+
+    AssetPriceAmt: [0],
+    TotalAccessoriesPriceAmt: [0],
+    PayFreqCode: [''],
+    MrPayFreqTypeCode: [''],
+    PayFreqVal: [0],
+    TotalRentAmt: [0],
 
     RoundingAmt: [0],
     InterestPrnct: [0],
@@ -68,8 +78,9 @@ export class FinancialDataOplEditComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.getAllRefMaster();
+    await this.getAssetFinDataRule();
     await this.getAssetFinData();
-    this.FinancialDataForm.controls["SecurityDepositAmt"].disable();
+    //this.FinancialDataForm.controls["SecurityDepositAmt"].disable();
   }
   AppFinDataObj: any;
   async getAssetFinData() {
@@ -81,7 +92,6 @@ export class FinancialDataOplEditComponent implements OnInit {
         this.AppFinDataObj = response;
         this.FinancialDataForm.patchValue({
           SecurityDepositAmt: this.AppFinDataObj.AppAssetRentDataOplObj.SecurityDepositAmt,
-          ResidualValuePrcnt: this.AppFinDataObj.AppAssetRentDataOplObj.ResidualValuePrcnt,
           ResidualValueAmt: this.AppFinDataObj.AppAssetRentDataOplObj.ResidualValueAmt,
           TotalInsuranceAtCostAmt: this.AppFinDataObj.AppAssetRentDataOplObj.TotalInsuranceAmt,
           TotalMaintenanceAtCostAmt: this.AppFinDataObj.AppAssetRentDataOplObj.TotalMaintAmt,
@@ -89,7 +99,6 @@ export class FinancialDataOplEditComponent implements OnInit {
           TotalFeeCapitalizedAmt: this.AppFinDataObj.AppAssetRentDataOplObj.TotalFeeCapitalized,
           TotalOthExpenseAmt: this.AppFinDataObj.AppAssetRentDataOplObj.TotalOthExpenseAmt,
           TotalOperatingCostAmt: this.AppFinDataObj.AppAssetRentDataOplObj.TotalCostAmt,
-          OperatingMarginPrcnt: this.AppFinDataObj.AppAssetRentDataOplObj.MarginPrcnt,
           OperatingMarginAmt: this.AppFinDataObj.AppAssetRentDataOplObj.MarginAmt,
           RentAmt: this.AppFinDataObj.AppAssetRentDataOplObj.RentAmt,
           VatAmt: this.AppFinDataObj.AppAssetRentDataOplObj.VatAmt,
@@ -98,9 +107,47 @@ export class FinancialDataOplEditComponent implements OnInit {
           RentalPeriodCode: this.AppFinDataObj.MrFirstInstTypeCode,
           RentalPeriodName: this.AppFinDataObj.MrFirstInstTypeName,
           TotalAssetPrice: this.AppFinDataObj.TotalAssetPriceAmt,
-          DepreciationAmt: 0
+          DepreciationAmt: this.AppFinDataObj.TotalAssetPriceAmt - this.AppFinDataObj.AppAssetRentDataOplObj.ResidualValueAmt,
+          AssetPriceAmt: this.AppFinDataObj.AssetPriceAmt,
+          TotalAccessoriesPriceAmt: this.AppFinDataObj.TotalAccessoriesPriceAmt,
+          PayFreqCode: this.AppFinDataObj.PayFreqCode,
+          PayFreqVal: this.AppFinDataObj.PayFreqVal,
+          MrPayFreqTypeCode: this.AppFinDataObj.MrPayFreqTypeCode,
+          DiscAmt: this.AppFinDataObj.DiscAmt
         });
+
+        if (this.AppFinDataObj.AppAssetRentDataOplObj.IsDataExist) {
+          this.FinancialDataForm.patchValue({
+            ResidualValuePrcnt: this.AppFinDataObj.AppAssetRentDataOplObj.ResidualValuePrcnt,
+            OperatingMarginPrcnt: this.AppFinDataObj.AppAssetRentDataOplObj.MarginPrcnt,
+            CofPrcnt: this.AppFinDataObj.AppAssetRentDataOplObj.CofInterestPrnct,
+            CofAmt: this.AppFinDataObj.AppAssetRentDataOplObj.CofInterestAmt
+          });
+        }
         this.isReady = true;
+      });
+  }
+
+  AppFinDataRuleObj: any;
+  async getAssetFinDataRule() {
+    var appAssetObj = {
+      AppAssetId: this.AppAssetId,
+    };
+    await this.http.post(URLConstant.GetFinancialRuleOpl, appAssetObj).toPromise().then(
+      (response) => {
+        this.AppFinDataRuleObj = response;
+        this.FinancialDataForm.patchValue({
+          ResidualValuePrcnt: this.AppFinDataRuleObj.ResultResidualValueRule.ResidualValuePrcnt,
+          CofPrcnt: this.AppFinDataRuleObj.ResultFinancialOplRule.FlatInterestRate,
+          OperatingMarginPrcnt: this.AppFinDataRuleObj.ResultFinancialOplRule.MarginRate,
+          OperatingType: "PRCNT",
+          CofPrincipal: this.AppFinDataRuleObj.CofPrincipalObj.CofPrincipalAmt
+        });
+        if (this.AppFinDataRuleObj.ResultFinancialOplRule.MarginRateBhv == "LOCK") {
+          this.FinancialDataForm.controls["OperatingMarginPrcnt"].disable();
+          this.FinancialDataForm.controls["OperatingType"].disable();
+          this.FinancialDataForm.controls["OperatingMarginAmt"].disable();
+        }
       });
   }
 
@@ -113,11 +160,10 @@ export class FinancialDataOplEditComponent implements OnInit {
   }
 
   updateResiduAmt() {
-    //this.FinancialDataForm.patchValue({
-    //  ResidualValueAmt: this.AppFinDataObj.TotalAssetOtrPriceAmt * this.FinancialDataForm.controls.ResidualValuePrcnt.value / 100
-    //});
+    this.FinancialDataForm.patchValue({
+      ResidualValueAmt: (this.FinancialDataForm.controls.TotalAssetPrice.value + this.FinancialDataForm.controls.DiscAmt.value) * this.FinancialDataForm.controls.ResidualValuePrcnt.value / 100
+    });
     this.allCalculate();
-    console.log("awaw");
   }
   updateInterestAmt() {
     //this.FinancialDataForm.patchValue({
@@ -133,16 +179,16 @@ export class FinancialDataOplEditComponent implements OnInit {
   }
 
   updateResiduPrctg() {
-    //if (this.AppFinDataObj.TotalAssetOtrPriceAmt == 0) {
-    //  this.FinancialDataForm.patchValue({
-    //    ResidualValuePrcnt: 0
-    //  });
-    //}
-    //else {
-    //  this.FinancialDataForm.patchValue({
-    //    ResidualValuePrcnt: this.FinancialDataForm.controls.ResidualValueAmt.value * 100 / this.AppFinDataObj.TotalAssetOtrPriceAmt
-    //  });
-    //}
+    if (this.FinancialDataForm.controls.TotalAssetPrice.value + this.FinancialDataForm.controls.DiscAmt.value == 0) {
+      this.FinancialDataForm.patchValue({
+        ResidualValuePrcnt: 0
+      });
+    }
+    else {
+      this.FinancialDataForm.patchValue({
+        ResidualValuePrcnt: this.FinancialDataForm.controls.ResidualValueAmt.value * 100 / (this.FinancialDataForm.controls.TotalAssetPrice.value + this.FinancialDataForm.controls.DiscAmt.value)
+      });
+    }
     this.allCalculate();
   }
   updateInterestPrctg() {
@@ -173,9 +219,9 @@ export class FinancialDataOplEditComponent implements OnInit {
   }
 
   calculateDepresiasi() {
-    //this.FinancialDataForm.patchValue({
-    //  DepreciationAmt: this.AppFinDataObj.TotalAssetPriceAftrDiscAmt - this.FinancialDataForm.controls.ResidualValueAmt.value
-    //});
+    this.FinancialDataForm.patchValue({
+      DepreciationAmt: this.FinancialDataForm.controls.TotalAssetPrice.value - this.FinancialDataForm.controls.ResidualValueAmt.value
+    });
   }
   calculateOperatingCost() {
     //this.FinancialDataForm.patchValue({
@@ -190,80 +236,175 @@ export class FinancialDataOplEditComponent implements OnInit {
 
   CalculatedObj: any;
   CalculateRental(isRental: boolean) {
-    //var listFee = new Array();
-    //for (let i = 0; i < this.FinancialDataForm.controls["AssetFeeOplObjs"].value.length; i++) {
-    //  var newFee = {
-    //    FeeAmt: this.FinancialDataForm.controls["AssetFeeOplObjs"].value[i].FeeAmt,
-    //    CapitalizedAmt: this.FinancialDataForm.controls["AssetFeeOplObjs"].value[i].CapitalizedAmt
-    //  };
-    //  listFee.push(newFee);
-    //}
+    if (this.isCalculateCof == false) {
+      this.toastr.warningMessage("Please Calculate COF First");
+    }
+    else {
+      var cashFlow = new Array();
+      this.CashFlowItemObj.forEach((o) => {
+        var amt = {
+          MrCashFlowItemCode : "",
+          InitialAmt : 0
+        };
+        if (o.Key == CommonConstant.CashFlowItemMasterCodeFeeCptlz) {
+          amt.InitialAmt = this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value;
+          amt.MrCashFlowItemCode = CommonConstant.CashFlowItemMasterCodeFeeCptlz;
+        }
+        else if (o.Key == CommonConstant.CashFlowItemMasterCodeInstallment) {
+          amt.InitialAmt = 0;
+          amt.MrCashFlowItemCode = CommonConstant.CashFlowItemMasterCodeInstallment;
+        }
+        else if (o.Key == CommonConstant.CashFlowItemMasterCodeInsurance) {
+          amt.InitialAmt = this.FinancialDataForm.controls.TotalInsuranceAtCostAmt.value;
+          amt.MrCashFlowItemCode = CommonConstant.CashFlowItemMasterCodeInsurance;
+        }
+        else if (o.Key == CommonConstant.CashFlowItemMasterCodeMaint) {
+          amt.InitialAmt = this.FinancialDataForm.controls.TotalMaintenanceAtCostAmt.value;
+          amt.MrCashFlowItemCode = CommonConstant.CashFlowItemMasterCodeMaint;
+        }
+        else if (o.Key == CommonConstant.CashFlowItemMasterCodeReplaceCar) {
+          var rc = this.AppFinDataObj.AppAssetOthExpenseOplObjs.find(f => f.MrOthExpenseTypeOplCode == CommonConstant.OtherExpenseMasterCodeExpRc);
+          if (rc != null) {
+            amt.InitialAmt = rc.OthExpenseAmt;
+            amt.MrCashFlowItemCode = CommonConstant.CashFlowItemMasterCodeReplaceCar;
+          }
+        }
+        else if (o.Key == CommonConstant.CashFlowItemMasterCodeStnk) {
+          var stnk = this.AppFinDataObj.AppAssetOthExpenseOplObjs.find(f => f.MrOthExpenseTypeOplCode == CommonConstant.OtherExpenseMasterCodeExpStn);
+          if (stnk != null) {
+            amt.InitialAmt = stnk.OthExpenseAmt;
+            amt.MrCashFlowItemCode = CommonConstant.CashFlowItemMasterCodeStnk;
+          }
+        }
+        else if (o.Key == CommonConstant.CashFlowItemMasterCodeOdb) {
+          var obd = this.AppFinDataObj.AppAssetOthExpenseOplObjs.find(f => f.MrOthExpenseTypeOplCode == CommonConstant.OtherExpenseMasterCodeExpOdb);
+          if (obd != null) {
+            amt.InitialAmt = obd.OthExpenseAmt;
+            amt.MrCashFlowItemCode = CommonConstant.CashFlowItemMasterCodeOdb;
+          }
+        }
+        cashFlow.push(amt);
+      });
+      if (isRental == true) {
+        var CalculateRentalObj = {
+          AccessoriesPriceAmt: this.FinancialDataForm.controls.TotalAccessoriesPriceAmt.value,
+          InsuranceAmt: this.FinancialDataForm.controls.TotalInsuranceAtCostAmt.value,
+          MaintenanceAmt: this.FinancialDataForm.controls.TotalMaintenanceAtCostAmt.value,
+          OthExpenseAmt: this.FinancialDataForm.controls.TotalOthExpenseAmt.value,
+          FeeAmt: this.FinancialDataForm.controls.TotalFeeAmt.value,
+          FeeCapitalizedAmt: this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value,
+          CofAmt: this.FinancialDataForm.controls.CofAmt.value,
+          //CofAmt: this.FinancialDataForm.controls.CofPrcnt.value * (this.FinancialDataForm.controls.TotalAccessoriesPriceAmt.value + this.FinancialDataForm.controls.TotalInsuranceAtCostAmt.value + this.FinancialDataForm.controls.TotalMaintenanceAtCostAmt.value + this.FinancialDataForm.controls.TotalOthExpenseAmt.value + this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value),
+          DepreciationAmt: this.FinancialDataForm.controls.DepreciationAmt.value,
 
-    //var listExpense = new Array();
-    //for (let i = 0; i < this.FinancialDataForm.controls["AssetExpenseOplObjs"].value.length; i++) {
-    //  var newExpense = {
-    //    ExpenseAmt: this.FinancialDataForm.controls["AssetExpenseOplObjs"].value[i].ExpenseAmt
-    //  };
-    //  listExpense.push(newExpense);
-    //}
+          MarginType: this.FinancialDataForm.controls.OperatingType.value,
+          MarginAmt: this.FinancialDataForm.controls.OperatingMarginAmt.value,
+          MarginPrcnt: this.FinancialDataForm.controls.OperatingMarginPrcnt.value,
+          RentalPeriod: this.FinancialDataForm.controls.RentalPeriod.value,
+          PayFreqVal: this.FinancialDataForm.controls.PayFreqVal.value,
+          PayFreqTypeCode: this.FinancialDataForm.controls.MrPayFreqTypeCode.value,
+          IsCalculateRental: true,
+          TotalAssetPriceAmt: this.FinancialDataForm.controls.TotalAssetPrice.value,
+          RentalType: this.FinancialDataForm.controls.RentalPeriodCode.value,
+          ResidualValueAmt: this.FinancialDataForm.controls.ResidualValueAmt.value,
+          AppCashFlowItemObjs: cashFlow
+        };
+        this.http.post(URLConstant.CalculateFinancialOpl, CalculateRentalObj).subscribe(
+          (response) => {
+            this.CalculatedObj = response;
+            console.log(response);
+            this.FinancialDataForm.patchValue({
+              TotalOperatingCostAmt: this.CalculatedObj.TotalCost,
+              OperatingMarginAmt: this.CalculatedObj.MarginAmt,
+              OperatingMarginPrcnt: this.CalculatedObj.MarginPrcnt,
+              RentAmt: this.CalculatedObj.RentAmt,
+              TotalRentAmt: this.CalculatedObj.TotalRentAmt,
+              GrossYieldPrcnt: this.CalculatedObj.GrossYieldPrcnt
+            });
+            if (this.FinancialDataForm.controls.RentalPeriodCode.value == "AD") {
+              this.FinancialDataForm.patchValue({
+                CustomerPaidAtCostAmt: this.CalculatedObj.RentAmt + this.FinancialDataForm.controls.TotalFeeAmt.value + this.FinancialDataForm.controls.SecurityDepositAmt.value
+              });
+            }
+            else {
+              this.FinancialDataForm.patchValue({
+                CustomerPaidAtCostAmt: this.CalculatedObj.RentAmt
+              });
+            }
+          }
+        );
+      }
+      else {
+        var CalculateObj = {
+          AccessoriesPriceAmt: this.FinancialDataForm.controls.TotalAccessoriesPriceAmt.value,
+          InsuranceAmt: this.FinancialDataForm.controls.TotalInsuranceAtCostAmt.value,
+          MaintenanceAmt: this.FinancialDataForm.controls.TotalMaintenanceAtCostAmt.value,
+          OthExpenseAmt: this.FinancialDataForm.controls.TotalOthExpenseAmt.value,
+          FeeAmt: this.FinancialDataForm.controls.TotalFeeAmt.value,
+          FeeCapitalizedAmt: this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value,
+          CofAmt: this.FinancialDataForm.controls.CofAmt.value,
+          //CofAmt: 500000,
+          DepreciationAmt: this.FinancialDataForm.controls.DepreciationAmt.value,
 
-    //var CalculateObj = {
-    //  RentalPeriod: this.AppFinDataObj.RentalPeriod,
-    //  TotalCostAfterMarginAmt: this.FinancialDataForm.controls.TotalCostAfterMarginAmt.value,
-    //  RoundingAmt: this.FinancialDataForm.controls.RoundingAmt.value,
-      
-    //  RentalType: this.AppFinDataObj.RentalType,
-    //  TotalFeeAmt: this.FinancialDataForm.controls.TotalFeeAmt.value,
-    //  TotalFeeCapitalizedAmt: this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value,
-
-    //  ResidualValueAmt: this.FinancialDataForm.controls.ResidualValueAmt.value,
-    //  TotalAssetPriceAftrDiscAmt: this.AppFinDataObj.TotalAssetPriceAftrDiscAmt,
-    //  TotalInsuranceAtCostAmt: this.FinancialDataForm.controls.TotalInsuranceAtCostAmt.value,
-    //  TotalMaintenanceAtCostAmt: this.FinancialDataForm.controls.TotalMaintenanceAtCostAmt.value,
-    //  TotalExpenseAmt: this.FinancialDataForm.controls.TotalExpenseAmt.value,
-    //  InterestAmt: this.FinancialDataForm.controls.InterestAmt.value,
-    //  DepreciationAmt: this.FinancialDataForm.controls.DepreciationAmt.value,
-    //  TotalOperatingCostAmt: this.FinancialDataForm.controls.TotalOperatingCostAmt.value,
-    //  OperatingMarginAmt: this.FinancialDataForm.controls.OperatingMarginAmt.value,
-    //  FeeObjs: listFee,
-    //  ExpenseObjs: listExpense,
-
-    //  MrPayFreqTypeCode: this.AppFinDataObj.MrPayFreqTypeCode,
-    //  PayFreqVal: this.AppFinDataObj.PayFreqVal,
-    //};
-    this.FinancialDataForm.patchValue({
-      RentAmt: 10000000,
-      RentAmtFullTenor: 10000000,
-      VatAmt: 10000000,
-      VatAmtFullTenor: 10000000,
-      RentAfterVatAmtFullTenor: 10000000,
-      GrossYieldPrcnt: 10,
-      CustomerPaidAtCost: 10000000,
-      SecurityDepositAmt: 10000000,
-      CustomerPaidAtCostAmt: 10000000
-
-    });
-    this.isCalculate = true;
-    //this.http.post(URLConstant.CalculateFinancialOpl, CalculateObj).subscribe(
-    //  (response) => {
-    //    this.CalculatedObj = response;
-    //    console.log(response);
-    //    this.FinancialDataForm.patchValue({
-    //      RentAmt: this.CalculatedObj.RentAmt,
-    //      RentAmtFullTenor: this.CalculatedObj.RentAmtFullTenor,
-    //      VatAmt: this.CalculatedObj.VatAmt,
-    //      VatAmtFullTenor: this.CalculatedObj.VatAmtFullTenor,
-    //      RentAfterVatAmt: this.CalculatedObj.RentAfterVatAmt,
-    //      RentAfterVatAmtFullTenor: this.CalculatedObj.RentAfterVatAmtFullTenor,
-    //      GrossYieldPrcnt: this.CalculatedObj.GrossYieldPrcnt,
-    //      CustomerPaidAtCost: this.CalculatedObj.CustomerPaidAtCost,
-    //      SecurityDepositAmt: this.CalculatedObj.SecurityDepositAmt,
-    //      CustomerPaidAtCostAmt: this.CalculatedObj.CustomerPaidAtCost
-
-    //    });
-    //    this.isCalculate = true;
-    //  }
-    //);
+          RentAmt: this.FinancialDataForm.controls.RentAmt.value,
+          RentalPeriod: this.FinancialDataForm.controls.RentalPeriod.value,
+          PayFreqVal: this.FinancialDataForm.controls.PayFreqVal.value,
+          PayFreqTypeCode: this.FinancialDataForm.controls.MrPayFreqTypeCode.value,
+          IsCalculateRental: false,
+          TotalAssetPriceAmt: this.FinancialDataForm.controls.TotalAssetPrice.value,
+          RentalType: this.FinancialDataForm.controls.RentalPeriodCode.value,
+          ResidualValueAmt: this.FinancialDataForm.controls.ResidualValueAmt.value,
+          AppCashFlowItemObjs: cashFlow
+        };
+        this.http.post(URLConstant.CalculateFinancialOpl, CalculateObj).subscribe(
+          (response) => {
+            this.CalculatedObj = response;
+            console.log(response);
+            this.FinancialDataForm.patchValue({
+              TotalOperatingCostAmt: this.CalculatedObj.TotalCost,
+              OperatingMarginAmt: this.CalculatedObj.MarginAmt,
+              OperatingMarginPrcnt: this.CalculatedObj.MarginPrcnt,
+              RentAmt: this.CalculatedObj.RentAmt,
+              TotalRentAmt: this.CalculatedObj.TotalRentAmt,
+              GrossYieldPrcnt: this.CalculatedObj.GrossYieldPrcnt
+            });
+            if (this.FinancialDataForm.controls.RentalPeriodCode.value == "AD") {
+              this.FinancialDataForm.patchValue({
+                CustomerPaidAtCostAmt: this.CalculatedObj.RentAmt + this.FinancialDataForm.controls.TotalFeeAmt.value + this.FinancialDataForm.controls.SecurityDepositAmt.value
+              });
+            }
+            else {
+              this.FinancialDataForm.patchValue({
+                CustomerPaidAtCostAmt: this.CalculatedObj.RentAmt
+              });
+            }
+          }
+        );
+      }
+      this.isCalculate = true;
+    }
+  }
+  CalculatedCofObj: any;
+  CalculateCOF() {
+    var CalculateRentalObj = {
+      CofPrincipalAmt: this.FinancialDataForm.controls.CofPrincipal.value,
+      CofPrcnt: this.FinancialDataForm.controls.CofPrcnt.value,
+      RentalPeriod: this.FinancialDataForm.controls.RentalPeriod.value,
+      PayFreqVal: this.FinancialDataForm.controls.PayFreqVal.value,
+      PayFreqTypeCode: this.FinancialDataForm.controls.MrPayFreqTypeCode.value,
+      RentalType: this.FinancialDataForm.controls.RentalPeriodCode.value,
+      ResidualValueAmt: this.FinancialDataForm.controls.ResidualValueAmt.value
+    };
+    this.http.post(URLConstant.CalculateCOFOpl, CalculateRentalObj).subscribe(
+      (response) => {
+        this.CalculatedCofObj = response;
+        console.log(response);
+        this.FinancialDataForm.patchValue({
+          CofAmt: this.CalculatedCofObj.CofAmt
+        });
+        this.isCalculateCof = true;
+      }
+    );
   }
   //Get Ref Master
   refMasterObj = {
@@ -272,6 +413,7 @@ export class FinancialDataOplEditComponent implements OnInit {
   getAllRefMaster() {
     this.getRefMasterResidualType();
     this.getRefMasterOperatingMarginType();
+    this.getRefMasterCashFlowItem();
   }
 
   ResidualTypeObj: any;
@@ -306,6 +448,16 @@ export class FinancialDataOplEditComponent implements OnInit {
     );
   }
 
+  CashFlowItemObj: any;
+  getRefMasterCashFlowItem() {
+    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCashflowItem;
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+      (response) => {
+        this.CashFlowItemObj = response[CommonConstant.ReturnObj];
+      }
+    );
+  }
+
   //Other
   ChangeResidualType() {
     if (this.FinancialDataForm.controls.ResidualType.value == "AMT") {
@@ -329,11 +481,14 @@ export class FinancialDataOplEditComponent implements OnInit {
   }
 
   SaveForm(formDirective: FormGroupDirective) {
-    var FinOplObj = this.setAssetFinData();
-    if (this.isCalculate == false) {
-      this.toastr.warningMessage("Please Calculate");
+    if (this.isCalculateCof == false) {
+      this.toastr.warningMessage("Please Calculate COF First");
+    }
+    else if (this.isCalculate == false) {
+      this.toastr.warningMessage("Please Calculate Rental or Margin First");
     }
     else {
+      var FinOplObj = this.setAssetFinData();
       this.http.post(URLConstant.AddEditFinDataOpl, FinOplObj).subscribe(
         (response) => {
           formDirective.resetForm();
@@ -352,39 +507,6 @@ export class FinancialDataOplEditComponent implements OnInit {
   isFeeDupe: boolean = false;
   isExpenseDupe: boolean = false;
   setAssetFinData() {
-    //var listFee = new Array();
-    //for (let i = 0; i < this.FinancialDataForm.controls["AssetFeeOplObjs"].value.length; i++) {
-    //  var tempFee = this.FinancialDataForm.controls["AssetFeeOplObjs"].value.filter(
-    //    fee => fee.FeeTypeOplCode == this.FinancialDataForm.controls["AssetFeeOplObjs"].value[i].FeeTypeOplCode
-    //  );
-    //  if (tempFee.length > 1) {
-    //    this.isFeeDupe = true;
-    //    break;
-    //  }
-
-    //  var newFee = {
-    //    FeeTypeOplCode: this.FinancialDataForm.controls["AssetFeeOplObjs"].value[i].FeeTypeOplCode,
-    //    FeeAmt: this.FinancialDataForm.controls["AssetFeeOplObjs"].value[i].FeeAmt,
-    //    CapitalizedAmt: this.FinancialDataForm.controls["AssetFeeOplObjs"].value[i].CapitalizedAmt
-    //  };
-    //  listFee.push(newFee);
-    //}
-
-    //var listExpense = new Array();
-    //for (let i = 0; i < this.FinancialDataForm.controls["AssetExpenseOplObjs"].value.length; i++) {
-    //  var tempExpense = this.FinancialDataForm.controls["AssetExpenseOplObjs"].value.filter(
-    //    expe => expe.ExpenseTypeOplCode == this.FinancialDataForm.controls["AssetExpenseOplObjs"].value[i].ExpenseTypeOplCode
-    //  );
-    //  if (tempExpense.length > 1) {
-    //    this.isExpenseDupe = true;
-    //    break;
-    //  }
-    //  var newExpense = {
-    //    ExpenseTypeOplCode: this.FinancialDataForm.controls["AssetExpenseOplObjs"].value[i].ExpenseTypeOplCode,
-    //    ExpenseAmt: this.FinancialDataForm.controls["AssetExpenseOplObjs"].value[i].ExpenseAmt
-    //  };
-    //  listExpense.push(newExpense);
-    //}
     var RentData = {
       AppAssetId: this.AppAssetId,
       SecurityDepositAmt: this.FinancialDataForm.controls.SecurityDepositAmt.value,
@@ -406,31 +528,34 @@ export class FinancialDataOplEditComponent implements OnInit {
     };
 
     var RentSchdls = new Array();
-    for (let i = 0; i < this.FinancialDataForm.controls["RentalPeriod"].value; i++) {
+    for (let i = 0; i < this.CalculatedCofObj.ListRentSchdlOpl.length; i++) {
       var rentSchdl = {
         AppAssetId: this.AppAssetId,
-        SeqNo: i + 1,
-        RentAmt: 10000000,
-        RentAmtExclVat: 10000000,
-        VatAmt: 10000000,
-        WithholdingTaxAmt: 10000000,
-        CostAmt: 10000000,
-        MarginAmt: 10000000,
-        CofPrincipal: 10000000,
-        CofInterest: 10000000
+        SeqNo: this.CalculatedCofObj.ListRentSchdlOpl[i].SeqNo,
+        RentAmt: this.FinancialDataForm.controls.RentAmt.value * 1.1,
+        RentAmtExclVat: this.FinancialDataForm.controls.RentAmt.value,
+        VatAmt: this.FinancialDataForm.controls.RentAmt.value / 1.1,
+        WithholdingTaxAmt: 0,
+        CostAmt: this.FinancialDataForm.controls.TotalOperatingCostAmt.value / this.FinancialDataForm.controls.RentalPeriod.value,
+        MarginAmt: this.FinancialDataForm.controls.OperatingMarginAmt.value,
+        CofPrincipal: this.CalculatedCofObj.ListRentSchdlOpl[i].CofPrincipalAmt,
+        CofInterest: this.CalculatedCofObj.ListRentSchdlOpl[i].CofInterest,
       };
       RentSchdls.push(rentSchdl);
     }
 
     var FinOplObj = {
       AppAssetRentDataOplObj: RentData,
-      AppAssetRentSchdlOplObjs: RentSchdls
+      AppAssetRentSchdlOplObjs: RentSchdls,
+      AppCashFlowItemObjs: this.CalculatedObj.AppCashFlowItemObjs
     };
     return FinOplObj;
   }
 
   isCalculate: boolean = false;
+  isCalculateCof: boolean = false;
   changeCalculate() {
     this.isCalculate = false;
+    this.isCalculateCof = false;
   }
 }
