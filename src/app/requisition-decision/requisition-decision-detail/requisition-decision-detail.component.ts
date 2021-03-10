@@ -32,6 +32,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   LicensePlateNo: string = "-";
 
   AssetInfoObj: any;
+  AssetObj: any;
 
   ListOfAsset: Array<any> = new Array<any>();
   AttributeList: Array<any> = new Array<any>();
@@ -64,11 +65,11 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // this.InputLookupAssetObj.urlJson = "./assets/uclookup/Lead/lookupAsset.json";
+    this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    // this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
-    // this.InputLookupAssetObj.pagingJson = "./assets/uclookup/Lead/lookupAsset.json";
-    // this.InputLookupAssetObj.genericJson = "./assets/uclookup/Lead/lookupAsset.json";
+    this.InputLookupAssetObj.urlEnviPaging = URLConstant.AmsUrl;
+    this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
+    this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetObj.isRequired = true;
 
     await this.SetMainInfo();
@@ -163,9 +164,9 @@ export class RequisitionDecisionDetailComponent implements OnInit {
       AssetNo: event.AssetNo
     });
 
-    // this.ChasisNo = event.ChasisNo;
-    // this.EngineNo = event.EngineNo;
-    // this.LicensePlateNo = event.LicensePlateNo;
+    this.ChasisNo = event.SerialNo1;
+    this.EngineNo = event.SerialNo2;
+    this.LicensePlateNo = event.SerialNo3;
   }
 
   ChangeDecision(decisionCode: string) {
@@ -177,11 +178,21 @@ export class RequisitionDecisionDetailComponent implements OnInit {
           AssetNo: this.AssetInfoObj.AssetNo
         });
   
-        this.InputLookupAssetObj.nameSelect = this.AssetInfoObj.AssetNo;
+        this.InputLookupAssetObj.jsonSelect = { AssetNo: this.AssetInfoObj.AssetNo };
+        this.InputLookupAssetObj.idSelect = this.AssetInfoObj.AssetNo;
 
-        // this.ChasisNo = ChasisNo (Belum Tau Dapat Dari Mana);
-        // this.EngineNo = EngineNo (Belum Tau Dapat Dari Mana);
-        // this.LicensePlateNo = LicensePlateNo (Belum Tau Dapat Dari Mana);
+        var requestAssetNo = {
+          AssetNo: this.AssetInfoObj.AssetNo
+        };
+
+        this.http.post(URLConstant.GetAssetByAssetNo, requestAssetNo).subscribe(
+          (response: any) => {
+            this.AssetObj = response;
+            this.ChasisNo = this.AssetObj.SerialNo1;
+            this.EngineNo = this.AssetObj.SerialNo2;
+            this.LicensePlateNo = this.AssetObj.SerialNo3;
+          }
+        );
       }
 
       this.IsExisting = true;
