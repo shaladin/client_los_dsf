@@ -14,7 +14,7 @@
     </div>
     
     <div class="ucSearch-Button-Right pr-3 pt-2" style="right:0px; top:0px">
-      <button type="button" class="btn btn-raised btn-warning" (click)="buttonBackOnClick()">
+      <button type="button" class="btn btn-raised btn-warning" (click)="buttonBackOnClick()" translate>
         <i class="fa fa-arrow-left"></i> Back
       </button>
     </div>
@@ -42,13 +42,13 @@
               <div class="form-body">
                 <div class="form-group row">
                   <div class="form-group col-md-2">
-                    <label class="adInsLabel">Return Notes</label>
+                    <label class="adInsLabel" translate>Return Notes</label>
                   </div>
                   <div class="col-md-4">
                     <label class="adInsLabel">{{ ResponseReturnInfoObj.ReturnHandlingNotes }}</label>
                   </div>
                   <div class="form-group col-md-2">
-                    <label class="adInsLabel">Return Execution Notes</label>
+                    <label class="adInsLabel" translate>Return Execution Notes</label>
                   </div>
                   <div class="col-md-4">
                     <textarea type="textarea" row="5" class="form-control" formControlName="ReturnExecNotes"
@@ -68,7 +68,7 @@
             Submit
           </button>
           <button *ngIf="ReturnHandlingHId > 0" type="button" (click)="Submit()"
-            class="btn btn-raised btn-primary">
+            class="btn btn-raised btn-primary" translate>
             <i class="far fa-check-square"></i> Submit
           </button>
         </div>

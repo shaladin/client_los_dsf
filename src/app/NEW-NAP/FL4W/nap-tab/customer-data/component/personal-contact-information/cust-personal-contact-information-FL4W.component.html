@@ -9,23 +9,23 @@
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
-        <th style="text-align: left;"><span class="thead-header" translate>NAME
-        </span>
+        <th style="text-align: left;">
+          <span class="thead-header" translate>NAME</span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" translate>ID NO.
-        </span>
+        <th style="text-align: center;">
+          <span class="thead-header" translate>ID NO.</span>
         </th>
-        <th style="text-align: left;"><span class="thead-header" translate>CUST RELATIONSHIP
-        </span>
+        <th style="text-align: left;">
+          <span class="thead-header" translate>CUST RELATIONSHIP</span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" translate>MOBILE PHONE
-        </span>
+        <th style="text-align: center;">
+          <span class="thead-header" translate>MOBILE PHONE</span>
         </th>
-        <th style="text-align: left;"><span class="thead-header" translate>GENDER
-        </span>
+        <th style="text-align: left;">
+          <span class="thead-header" translate>GENDER</span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" translate>EMERGENCY CONTACT
-        </span>
+        <th style="text-align: center;">
+          <span class="thead-header" translate>EMERGENCY CONTACT</span>
         </th>
         <th><span translate class="thead-header" name='action'>ACTION</span></th>
       </tr>
@@ -59,8 +59,8 @@
   </table>
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
-      <h4 class="modal-title"> {{mode}} Contact Information</h4>
-      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <h4 class="modal-title" translate> {{mode}} Contact Information</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -203,7 +203,7 @@
                     </select>
                     <div class="input-group-append">
                         <span class="input-group-btn">
-                            <button class="btn btn-raised btn-primary" type="button" (click)="copyFromChanged()">
+                            <button class="btn btn-raised btn-primary" type="button" (click)="copyFromChanged()" translate>
                                 <i class="fa fa-check-square-o"></i>Copy
                             </button>
                         </span>
@@ -228,12 +228,12 @@
                           </option>
                         </select>
                         <div class="input-group-append">
-                            <span class="input-group-btn">
-                                <button class="btn btn-raised btn-primary" type="button" (click)="copyFromChanged()">
-                                    <i class="fa fa-check-square-o"></i>Copy
-                                </button>
-                            </span>
-                          </div>
+                          <span class="input-group-btn">
+                              <button class="btn btn-raised btn-primary" type="button" (click)="copyFromChanged()" translate>
+                                  <i class="fa fa-check-square-o"></i>Copy
+                              </button>
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>

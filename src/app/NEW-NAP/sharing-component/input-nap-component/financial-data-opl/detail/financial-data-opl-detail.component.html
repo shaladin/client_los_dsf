@@ -4,18 +4,18 @@
       <app-asset-opl-main-info [AppAssetId]="AppAssetId"></app-asset-opl-main-info>
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="FinancialDataForm" #formDirective="ngForm" (ngSubmit)="FinancialDataForm.valid && SaveForm(formDirective)"
-              #enjiForm="ngForm">
+          #enjiForm="ngForm">
           <div class="form-body">
             <lib-ucSubsection [id]="'rentalcalcId'" [title]="'Rental Calculation'" [panel]="'rentalCalc'">
             </lib-ucSubsection>
             <div id="rentalCalc">
               <div class="form-actions right">
-                <button type="button" name="add" id="add" (click)="CalculateRental(true)"
-                        class="btn btn-raised btn-primary mr-1">
+                <button type="button" name="add" id="add" (click)="CalculateRental(true)" translate
+                  class="btn btn-raised btn-primary mr-1">
                   Calculate Rental
                 </button>
-                <button type="button" name="add" id="add" (click)="CalculateRental(false)"
-                        class="btn btn-raised btn-primary">
+                <button type="button" name="add" id="add" (click)="CalculateRental(false)" translate
+                  class="btn btn-raised btn-primary">
                   Calculate Margin
                 </button>
               </div>
@@ -26,7 +26,7 @@
                 <div class="col-md-3">
                   <mat-radio-group formControlName="OperatingType" name="OperatingType" (change)="ChangeOperatingType()">
                     <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of OperatingMarginObj"
-                                      [value]="item.Key">
+                      [value]="item.Key">
                       {{item.Value}}
                     </mat-radio-button>
                   </mat-radio-group>
@@ -38,13 +38,13 @@
                 <label class="col-md-3 adInsLabel" translate>Margin (%/Amt)</label>
                 <div class="col-md-1" style="border-right: 1px solid grey">
                   <input type="" currencyMask id="operatingMarginPrcnt" class="form-control" formControlName="OperatingMarginPrcnt" (focusout)="updateOperatingMarginAmt()"
-                         [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.OperatingMarginPrcnt.invalid}">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.OperatingMarginPrcnt.invalid}">
                   <lib-uc-show-errors [control]="FinancialDataForm.controls.OperatingMarginPrcnt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
                 <div class="col-md-2">
                   <input type="" currencyMask id="operatingMarginAmt" class="form-control" formControlName="OperatingMarginAmt" (focusout)="updateOperatingMarginPrctg()"
-                         [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.OperatingMarginAmt.invalid}">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.OperatingMarginAmt.invalid}">
                   <lib-uc-show-errors [control]="FinancialDataForm.controls.OperatingMarginAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -54,7 +54,7 @@
                 <div class="col-md-3">
                   <mat-radio-group formControlName="ResidualType" name="ResidualType" (change)="ChangeResidualType()">
                     <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of ResidualTypeObj"
-                                      [value]="item.Key">
+                        [value]="item.Key">
                       {{item.Value}}
                     </mat-radio-button>
                   </mat-radio-group>
@@ -66,20 +66,20 @@
                 <label class="col-md-3 adInsLabel" translate>Residual Value (%/Amt)</label>
                 <div class="col-md-1" style="border-right: 1px solid grey">
                   <input type="" currencyMask id="residualValuePrcnt" class="form-control" formControlName="ResidualValuePrcnt" (focusout)="updateResiduAmt()"
-                         [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.ResidualValuePrcnt.invalid}">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.ResidualValuePrcnt.invalid}">
                   <lib-uc-show-errors [control]="FinancialDataForm.controls.ResidualValuePrcnt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
                 <div class="col-md-2">
                   <input type="" currencyMask id="residualValueAmt" class="form-control" formControlName="ResidualValueAmt" (focusout)="updateResiduPrctg()"
-                         [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.ResidualValueAmt.invalid}">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.ResidualValueAmt.invalid}">
                   <lib-uc-show-errors [control]="FinancialDataForm.controls.ResidualValueAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
                 <label class="col-md-3 adInsLabel" translate>Rental Amount (Per Period)</label>
                 <div class="col-md-3">
                   <input type="" currencyMask id="rentAmt" class="form-control" formControlName="RentAmt"
-                         [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.RentAmt.invalid}">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.RentAmt.invalid}">
                   <lib-uc-show-errors [control]="FinancialDataForm.controls.RentAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -112,7 +112,7 @@
                 <label class="col-md-3 adInsLabel" translate>Security Deposit</label>
                 <div class="col-md-3">
                   <input type="" currencyMask id="securityDepositAmt" class="form-control" formControlName="SecurityDepositAmt"
-                         [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.SecurityDepositAmt.invalid}">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.SecurityDepositAmt.invalid}">
                   <lib-uc-show-errors [control]="FinancialDataForm.controls.SecurityDepositAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -123,11 +123,10 @@
               </div>
             </div>
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
-                      translate>
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
                 <i class="ft-x"></i> Cancel
               </button>
-              <button type="submit" class="btn btn-raised btn-primary">
+              <button type="submit" class="btn btn-raised btn-primary" translate>
                 <i class="far fa-check-square"></i> Save
               </button>
             </div>

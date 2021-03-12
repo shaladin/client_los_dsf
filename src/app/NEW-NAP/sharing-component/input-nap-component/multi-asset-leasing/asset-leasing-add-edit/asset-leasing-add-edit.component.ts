@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
@@ -96,7 +96,8 @@ export class AssetLeasingAddEditComponent implements OnInit {
   headAppAssetSupplEmpObj: any;
   appAssetSupplEmpBranchObj: any;
   branchAppAssetSupplEmpObj: any;
-
+  items: FormArray;
+  SerialNoList: any;
 
   AssetDataForm = this.fb.group({
     SupplName:[''],
@@ -144,6 +145,7 @@ export class AssetLeasingAddEditComponent implements OnInit {
     OwnerMobilePhn:[''],
 
     LocationAddrType: [''],
+    items: this.fb.array([])
   });
 
   appObj = {
@@ -151,7 +153,10 @@ export class AssetLeasingAddEditComponent implements OnInit {
   };
   inputAddressObjForLoc: InputAddressObj;
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
+  constructor(private route: ActivatedRoute,
+    private http: HttpClient,
+    private toastr: NGXToastrService,
+    private fb: FormBuilder) { 
     this.getListAppAssetData = URLConstant.GetListAppAssetData;
     this.getListVendorEmp = URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition;
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -248,7 +253,6 @@ copyToLocationAddr() {
           BranchManagerNo: response[CommonConstant.ReturnObj][0]['Key'],
           BranchManagerName: response[CommonConstant.ReturnObj][0]['Value'] 
         });
-      
     });
 
     this.salesObj = new VendorEmpObj();
@@ -261,7 +265,6 @@ copyToLocationAddr() {
           SalesPersonNo: response[CommonConstant.ReturnObj][0]['Key'],
           SalesPersonName: response[CommonConstant.ReturnObj][0]['Value']
         });
-      
     });
 
     this.adminHeadObj = new VendorEmpObj();
@@ -274,7 +277,6 @@ copyToLocationAddr() {
           AdminHeadNo: response[CommonConstant.ReturnObj][0]['Key'],
           AdminHeadName: response[CommonConstant.ReturnObj][0]['Value'] 
         });
-      
     });
   }
 
@@ -360,6 +362,29 @@ copyToLocationAddr() {
             AssetCategoryCode: this.returnAppAssetObj.AssetCategoryCode,
           });
 
+          this.items = this.AssetDataForm.get('items') as FormArray;
+          this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { AssetTypeCode: this.returnAppAssetObj.AssetTypeCode }).subscribe(
+            (response: any) => {
+              while (this.items.length) {
+                this.items.removeAt(0);
+              }
+
+              this.SerialNoList = response[CommonConstant.ReturnObj];
+              for (let i = 0; i < this.SerialNoList.length; i++) {
+                let eachDataDetail = this.fb.group({
+                  SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
+                  SerialNoValue: [''],
+                  IsMandatory: [this.SerialNoList[i].IsMandatory]
+                }) as FormGroup;
+                this.items.push(eachDataDetail);
+                if (this.items.controls[i]['controls']['IsMandatory'].value == true) {
+                  this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
+                  this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+                }
+              }
+            }
+          );
+
           this.reqAssetMasterObj = new AssetMasterObj();
           this.reqAssetMasterObj.FullAssetCode = this.returnAppAssetObj.FullAssetCode;
           this.http.post(this.getAssetMasterForLookupEmployee, this.reqAssetMasterObj).subscribe(
@@ -444,7 +469,6 @@ copyToLocationAddr() {
                     });
                 });
               });
-
             });
         });
 

@@ -35,7 +35,7 @@
                   <div [formGroupName]="i">    
                     <div class="form-group row">
                       <div class="form-group col-md-4 adins-required">
-                        <label class="adInsLabel">{{item.controls.Question.value}}</label>
+                        <label class="adInsLabel" translate>{{item.controls.Question.value}}</label>
                       </div>
                       <div class="col-md-8">
                         <input type="text" class="form-control adInsInput width-50-per" formControlName="Answer">
@@ -54,14 +54,14 @@
 
                 <div class="form-group row">
                   <div class="form-group col-md-2">
-                    <label class="adInsLabel">Approval Amount</label>
+                    <label class="adInsLabel" translate>Approval Amount</label>
                   </div>
                   <div class="col-md-4">
                     <label class="adInsLabel">{{FormObj.controls.AppvAmt.value | number:'.2':'en-US'}}</label>
                   </div>
 
                   <div class="form-group col-md-2">
-                    <label class="adInsLabel">Credit Scoring</label>
+                    <label class="adInsLabel" translate>Credit Scoring</label>
                   </div>
                   <div class="col-md-4">
                     <label class="adInsLabel">{{FormObj.controls.CreditScoring.value}}</label>
@@ -70,7 +70,7 @@
 
                 <div class="form-group row adins-required">
                   <div class="form-group col-md-2">
-                    <label class="adInsLabel">Recommendation</label>
+                    <label class="adInsLabel" translate>Recommendation</label>
                   </div>
                   <div class="col-md-4">
                     <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
@@ -85,7 +85,7 @@
                   </div>
 
                   <div class="form-group col-md-2">
-                    <label class="adInsLabel">Approver</label>
+                    <label class="adInsLabel" translate>Approver</label>
                   </div>
                   <div class="col-md-4">
                     <lib-ucapproveby [apvBaseUrl]="apvBaseUrl" [parentForm]="FormObj" [identifier]="'Approver'"
@@ -98,7 +98,7 @@
 
                 <div class="form-group row adins-required">
                   <div class="form-group col-md-2">
-                    <label class="adInsLabel">Notes</label>
+                    <label class="adInsLabel" translate>Notes</label>
                   </div>
                   <div class="col-md-4">
                     <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
@@ -116,7 +116,7 @@
               <div *ngIf="isReturnOn" class="form-body" [id]="'formReturnCreditReview'">
                 <div class="form-group row adins-required">
                   <div class="form-group col-md-2">
-                    <label class="adInsLabel">Return Reason</label>
+                    <label class="adInsLabel" translate>Return Reason</label>
                   </div>
                   <div class="col-md-4">
                     <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
@@ -133,7 +133,7 @@
 
                 <div class="form-group row adins-required">
                   <div class="form-group col-md-2">
-                    <label class="adInsLabel">Return Notes</label>
+                    <label class="adInsLabel" translate>Return Notes</label>
                   </div>
                   <div class="col-md-4">
                     <textarea type="textarea" row="5" class="form-control" formControlName="Notes"

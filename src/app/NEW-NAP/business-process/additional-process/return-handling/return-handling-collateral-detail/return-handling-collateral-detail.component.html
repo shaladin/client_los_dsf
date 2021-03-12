@@ -3,7 +3,7 @@
     <div class="card-body">
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="CollateralDataForm" (ngSubmit)="CollateralDataForm.valid && SaveForm()"
-              #enjiForm="ngForm">
+          #enjiForm="ngForm">
           <div class="form-body">
             <lib-ucSubsection [id]="'assetDataId'" [title]="'Asset Attribute'" [panel]="'assetData'">
             </lib-ucSubsection>
@@ -12,7 +12,7 @@
                 <label class="col-md-2  adins-required-label" translate>Collateral Type</label>
                 <div class="col-md-4">
                   <select class="form-control" id="assetType" formControlName="AssetTypeCode" (change)="AssetTypeChanged($event.target.value)"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.AssetTypeCode.invalid }">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.AssetTypeCode.invalid }">
                     <option *ngFor="let item of AssetTypeDllObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
@@ -28,7 +28,7 @@
                 <label class="col-md-2  adins-required-label" translate>Collateral Price</label>
                 <div class="col-md-4">
                   <input type="" currencyMask id="assetPriceAmt" class="form-control" formControlName="CollateralValueAmt"
-                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.CollateralValueAmt.invalid}">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.CollateralValueAmt.invalid}">
                   <lib-uc-show-errors [control]="CollateralDataForm.controls.CollateralValueAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
@@ -40,7 +40,7 @@
                 <label class="col-md-2  adins-required-label" translate>Collateral Condition</label>
                 <div class="col-md-4">
                   <select class="form-control" id="assetCondition" formControlName="MrCollateralConditionCode"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.MrCollateralConditionCode.invalid }">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.MrCollateralConditionCode.invalid }">
                     <option *ngFor="let item of AssetConditionObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
@@ -84,13 +84,12 @@
                     <lib-uc-show-errors [control]="CollateralDataForm.controls.SerialNo5" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
-
               </div>
               <div class="form-group row">
                 <label class="col-md-2  adins-required-label" translate>Collateral Usage</label>
                 <div class="col-md-4">
                   <select class="form-control" id="assetUsage" formControlName="MrCollateralUsageCode"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.MrCollateralUsageCode.invalid }">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.MrCollateralUsageCode.invalid }">
                     <option *ngFor="let item of AssetUsageObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
@@ -108,13 +107,13 @@
                 <label class="col-md-2  adins-required-label" translate>Portion Percentage</label>
                 <div class="col-md-4">
                   <input type="" currencyMask id="assetPrcnt" class="form-control" formControlName="CollateralPrcnt" [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }"
-                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.CollateralPrcnt.invalid}">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.CollateralPrcnt.invalid}">
                   <lib-uc-show-errors [control]="CollateralDataForm.controls.CollateralPrcnt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <label class="col-md-2" translate>Collateral Notes</label>
                 <div class="col-md-4">
                   <textarea type="text" class="form-control adInsInput" formControlName="CollateralNotes"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.CollateralNotes.invalid }"></textarea>
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.CollateralNotes.invalid }"></textarea>
                   <lib-uc-show-errors [control]="CollateralDataForm.controls.CollateralNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
@@ -158,7 +157,7 @@
                 <label class="col-md-2  adInsLabel" translate>Id Type </label>
                 <div class="col-md-4">
                   <select class="form-control" id="idType" formControlName="MrIdTypeCode"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.MrIdTypeCode.invalid }">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.MrIdTypeCode.invalid }">
                     <option *ngFor="let item of IdTypeObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
@@ -169,7 +168,7 @@
                 <label class="col-md-2  adInsLabel" translate>Owner Relationship </label>
                 <div class="col-md-4">
                   <select class="form-control" id="userRelationship" formControlName="MrOwnerRelationshipCode"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.MrOwnerRelationshipCode.invalid }">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CollateralDataForm.controls.MrOwnerRelationshipCode.invalid }">
                     <option *ngFor="let item of OwnerRelationObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
@@ -191,7 +190,7 @@
                     </select>
                     <div class="input-group-append">
                       <span class="input-group-btn">
-                        <button class="btn btn-raised btn-primary" type="button" (click)="copyToOwnerAddr()">
+                        <button class="btn btn-raised btn-primary" type="button" (click)="copyToOwnerAddr()" translate>
                           <i class="fa fa-check-square-o"></i>Copy
                         </button>
                       </span>
@@ -212,7 +211,6 @@
                 <input type="text" class="form-control" formControlName="OwnerMobilePhnNo">
               </div>
             </div>
-
 
             <lib-ucSubsection [id]="'locationDataId'" [title]="'Collateral Location'" [panel]="'locationData'">
             </lib-ucSubsection>
@@ -244,10 +242,10 @@
               </div>
             </div>
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{AppId: AppId, ReturnHandlingHId: returnHandlingHId, WfTaskListId: wfTaskListId}">
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{AppId: AppId, ReturnHandlingHId: returnHandlingHId, WfTaskListId: wfTaskListId}" translate>
                 <i class="ft-x"></i> Cancel
             </button> 
-              <button type="submit" class="btn btn-raised btn-primary">
+              <button type="submit" class="btn btn-raised btn-primary" translate>
                 <i class="far fa-check-square"></i> Save
               </button>
               <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
@@ -262,4 +260,3 @@
     </div>
   </div>
 </div>
-

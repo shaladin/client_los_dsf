@@ -121,7 +121,7 @@
                 <div class="col-md-4">
                   <button type="button" class="btn btn-raised btn-success mr-1"
                     [disabled]="LeadDataForm.value.items.length > 0 && LeadDataForm.value.items[0]['SerialNoValue'] == ''"
-                    (click)="checkRapindo()">
+                    (click)="checkRapindo()" translate>
                     <i class="fa fa-check-square-o"></i> Hit Rapindo
                   </button>
                   <label *ngIf="this.thirdPartyRsltHId != null && this.thirdPartyRsltHId != '' " translate>Requested At {{this.latestReqDtCheckRapindo | date: 'dd-MMMM-yyyy hh:mm:ss'}}</label>
@@ -188,7 +188,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <button type="button" class="btn btn-raised btn-primary mr-1" (click)="calculateNonKta()">
+                <button type="button" class="btn btn-raised btn-primary mr-1" (click)="calculateNonKta()" translate>
                   <i class="fa fa-check-square-o"></i> Calculate
                 </button>
               </div>

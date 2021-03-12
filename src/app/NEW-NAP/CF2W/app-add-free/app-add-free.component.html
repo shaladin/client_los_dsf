@@ -1,69 +1,69 @@
 <div class="row text-left">
-    <div class="col-md-12">
-      <div class="card">
-  
-        <div class="card-header header-title">
-          <div class="row">
-          </div>
+  <div class="col-md-12">
+    <div class="card">
+
+      <div class="card-header header-title">
+        <div class="row">
         </div>
-  
-        <div class="card-body">
-          <div class="px-3">
-  
-            <form class="form form-horizontal" [formGroup]="NapAppForm" (ngSubmit)="NapAppForm.valid && SaveForm()"
-              #enjiForm="ngForm">
-              <!-- Main Info -->
-              <div class="form-body">
-                <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Add Application </h4>
-  
-                <!-- <div class="form-group row adins-required">
-                  <label class="col-md-3 adInsLabel">Office </label>
-                  <div class="col-md-9">
-                    <select class="form-control adInsInput" style="width: auto" formControlName="OriOfficeCode"
-                      (change)="ChangeValueOffice($event)"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppForm.controls.OriOfficeCode.invalid }">
-                      <option *ngFor="let it of officeItems" value="{{it.Key}}">
-                        {{it.Value}} </option>
-                    </select>
-                  </div>
-                </div> -->
-                <div class="form-group row">
-                  <label class="col-md-3 adInsLabel">Copy Application From </label>
-                  <div class="col-md-9">
-                    <lib-uclookupgeneric [lookupInput]="inputLookupObjCopyProduct" [parentForm]='NapAppForm'
-                      [enjiForm]='enjiForm' [identifier]="'ProductOfferingIdentifier'"
-                      (lookup)="getLookupAppResponseCopy($event)">
-                    </lib-uclookupgeneric>
-                  </div>
+      </div>
+
+      <div class="card-body">
+        <div class="px-3">
+
+          <form class="form form-horizontal" [formGroup]="NapAppForm" (ngSubmit)="NapAppForm.valid && SaveForm()"
+            #enjiForm="ngForm">
+            <!-- Main Info -->
+            <div class="form-body">
+              <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Add Application </h4>
+
+              <!-- <div class="form-group row adins-required">
+                <label class="col-md-3 adInsLabel">Office </label>
+                <div class="col-md-9">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="OriOfficeCode"
+                    (change)="ChangeValueOffice($event)"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppForm.controls.OriOfficeCode.invalid }">
+                    <option *ngFor="let it of officeItems" value="{{it.Key}}">
+                      {{it.Value}} </option>
+                  </select>
                 </div>
-                <div class="form-group row adins-required">
-                  <label class="col-md-3 adInsLabel">Product Offering Name </label>
-                  <div class="col-md-9">
-                    <lib-uclookupgeneric [lookupInput]="inputLookupObjName" [parentForm]='NapAppForm'
-                      [enjiForm]='enjiForm' [identifier]="'ProductOfferingNameIdentifier'"
-                      (lookup)="getLookupAppResponseName($event)">
-                    </lib-uclookupgeneric>
-                  </div>
-                </div>
-                <div class="form-group row adins">
-                  <label class="col-md-3 adInsLabel">Currency </label>
-                  <label class="col-md-9 adInsLabel">{{NapAppForm.controls.CurrCode.value}} </label>
+              </div> -->
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>Copy Application From </label>
+                <div class="col-md-9">
+                  <lib-uclookupgeneric [lookupInput]="inputLookupObjCopyProduct" [parentForm]='NapAppForm'
+                    [enjiForm]='enjiForm' [identifier]="'ProductOfferingIdentifier'"
+                    (lookup)="getLookupAppResponseCopy($event)">
+                  </lib-uclookupgeneric>
                 </div>
               </div>
-  
-              <div class="form-actions right">
-                <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{LobCode:'CF2W'}" translate>
-                  <i class="fa fa-arrow-circle-left"></i> Cancel
-                </button>
-                <button type="submit" class="btn btn-raised btn-primary">
-                  <i class="fa fa-check-square-o"></i> Next
-                </button>
+              <div class="form-group row adins-required">
+                <label class="col-md-3 adInsLabel" translate>Product Offering Name </label>
+                <div class="col-md-9">
+                  <lib-uclookupgeneric [lookupInput]="inputLookupObjName" [parentForm]='NapAppForm'
+                    [enjiForm]='enjiForm' [identifier]="'ProductOfferingNameIdentifier'"
+                    (lookup)="getLookupAppResponseName($event)">
+                  </lib-uclookupgeneric>
+                </div>
               </div>
-  
-            </form>
-  
-          </div>
+              <div class="form-group row adins">
+                <label class="col-md-3 adInsLabel" translate>Currency </label>
+                <label class="col-md-9 adInsLabel">{{NapAppForm.controls.CurrCode.value}} </label>
+              </div>
+            </div>
+
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{LobCode:'CF2W'}" translate>
+                <i class="fa fa-arrow-circle-left"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary" translate>
+                <i class="fa fa-check-square-o"></i> Next
+              </button>
+            </div>
+
+          </form>
+
         </div>
       </div>
     </div>
   </div>
+</div>

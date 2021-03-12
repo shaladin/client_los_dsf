@@ -27,12 +27,16 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   IsSecondDetail: boolean = false;
   IsExisting: boolean = false;
 
-  ChasisNo: string = "-";
-  EngineNo: string = "-";
-  LicensePlateNo: string = "-";
+  SerialNo1: string = "-";
+  SerialNo2: string = "-";
+  SerialNo3: string = "-";
+  SerialNo4: string = "-";
+  SerialNo5: string = "-";
+  AssetTypeCode: string = "";
 
   AssetInfoObj: any;
   AssetObj: any;
+  AssetTypeObj: any;
 
   ListOfAsset: Array<any> = new Array<any>();
   AttributeList: Array<any> = new Array<any>();
@@ -163,10 +167,32 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     this.ReqDecForm.patchValue({
       AssetNo: event.AssetNo
     });
+    
+    var requestAssetNo = {
+      AssetNo: event.AssetNo
+    };
 
-    this.ChasisNo = event.SerialNo1;
-    this.EngineNo = event.SerialNo2;
-    this.LicensePlateNo = event.SerialNo3;
+    // this.SerialNo1 = event.SerialNo1;
+    // this.SerialNo2 = event.SerialNo2;
+    // this.SerialNo3 = event.SerialNo3;
+
+    this.http.post(URLConstant.GetAssetByAssetNo, requestAssetNo).subscribe(
+      (response: any) => {
+        this.AssetObj = response;
+        this.AssetTypeCode = this.AssetObj.AssetTypeCode;
+        this.SerialNo1 = this.AssetObj.SerialNo1;
+        this.SerialNo2 = this.AssetObj.SerialNo2;
+        this.SerialNo3 = this.AssetObj.SerialNo3;
+        this.SerialNo4 = this.AssetObj.SerialNo4;
+        this.SerialNo5 = this.AssetObj.SerialNo5;
+      }
+    );
+
+    this.http.post(URLConstant.GetAssetTypeByCode, { AssetTypeCode: this.AssetTypeCode }).subscribe(
+      (response: any) => {
+        this.AssetTypeObj = response;
+      }
+    );
   }
 
   ChangeDecision(decisionCode: string) {
@@ -188,9 +214,18 @@ export class RequisitionDecisionDetailComponent implements OnInit {
         this.http.post(URLConstant.GetAssetByAssetNo, requestAssetNo).subscribe(
           (response: any) => {
             this.AssetObj = response;
-            this.ChasisNo = this.AssetObj.SerialNo1;
-            this.EngineNo = this.AssetObj.SerialNo2;
-            this.LicensePlateNo = this.AssetObj.SerialNo3;
+            this.AssetTypeCode = this.AssetObj.AssetTypeCode;
+            this.SerialNo1 = this.AssetObj.SerialNo1;
+            this.SerialNo2 = this.AssetObj.SerialNo2;
+            this.SerialNo3 = this.AssetObj.SerialNo3;
+            this.SerialNo4 = this.AssetObj.SerialNo4;
+            this.SerialNo5 = this.AssetObj.SerialNo5;
+          }
+        );
+
+        this.http.post(URLConstant.GetAssetTypeByCode, { AssetTypeCode: this.AssetTypeCode }).subscribe(
+          (response: any) => {
+            this.AssetTypeObj = response;
           }
         );
       }

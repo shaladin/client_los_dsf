@@ -39,11 +39,11 @@
     <lib-ucgridview [gridInput]="InputGridObj" (callback)="GetCallback($event)"></lib-ucgridview>
   </div>
   <div class="pull-right margin-15">
-    <button type="button" (click)="Continue()" class="btn btn-raised btn-primary">
+    <button type="button" (click)="Continue()" class="btn btn-raised btn-primary" translate>
       <i class="far fa-check-square"></i> Save & Continue
     </button>
   </div>
 </div>
 <div *ngIf="IsDetail">
-<app-legal-doc-detail [AppCustCompanyId]="AppCustCompanyId" [ListAppCustCompanyLegalDoc]="ListLegalDoc" [AppCustCompanyLegalDoc]="AppCustCompanyLegalDoc" (OutputTab)="GetEvent()"></app-legal-doc-detail>
+  <app-legal-doc-detail [AppCustCompanyId]="AppCustCompanyId" [ListAppCustCompanyLegalDoc]="ListLegalDoc" [AppCustCompanyLegalDoc]="AppCustCompanyLegalDoc" (OutputTab)="GetEvent()"></app-legal-doc-detail>
 </div>

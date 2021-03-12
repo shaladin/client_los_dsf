@@ -59,8 +59,8 @@
   </table>
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
-      <h4 class="modal-title"> {{mode}} Contact Information</h4>
-      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <h4 class="modal-title" translate> {{mode}} Contact Information</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -212,7 +212,7 @@
                         </select>
                         <div class="input-group-append">
                             <span class="input-group-btn">
-                                <button class="btn btn-raised btn-primary" type="button" (click)="copyFromChanged()">
+                                <button class="btn btn-raised btn-primary" type="button" (click)="copyFromChanged()" translate>
                                     <i class="fa fa-check-square-o"></i>Copy
                                 </button>
                             </span>

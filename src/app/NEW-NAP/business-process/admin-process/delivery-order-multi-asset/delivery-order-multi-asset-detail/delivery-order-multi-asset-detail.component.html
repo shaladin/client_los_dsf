@@ -89,7 +89,7 @@
               </table>
             </div>
             <div class="col-md-12" style="padding: 0; text-align: right">
-              <button type="submit" class="btn btn-raised btn-primary">
+              <button type="submit" class="btn btn-raised btn-primary" translate>
                 <i class="ft-plus-circle"></i> Create DO
               </button>
             </div>
@@ -175,13 +175,13 @@
               </mat-tab>
             </mat-tab-group>
             <div class="form-actions right">
-              <button type="button" (click)="Back()" class="btn btn-raised btn-warning">
+              <button type="button" (click)="Back()" class="btn btn-raised btn-warning" translate>
                 <i class="ft-x"></i> Cancel
               </button>
-              <button type="submit" class="btn btn-raised btn-primary mr-1 ml-1">
+              <button type="submit" class="btn btn-raised btn-primary mr-1 ml-1" translate>
                 <i class="far fa-check-square"></i> Save
               </button>
-              <button type="button" class="btn btn-raised btn-primary" (click)="DOSubmitHandler()" *ngIf="isFinal">
+              <button type="button" class="btn btn-raised btn-primary" (click)="DOSubmitHandler()" *ngIf="isFinal" translate>
                 <i class="far fa-check-square"></i> Submit
               </button>
             </div>
