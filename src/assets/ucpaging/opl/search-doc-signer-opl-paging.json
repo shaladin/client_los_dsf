@@ -1,0 +1,188 @@
+{
+    "title": "DOCUMENT SIGNER",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "AP.APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "Application No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AP.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AP.PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "Prod Offering Name",
+            "placeholder": "Placeholder"
+        },
+        {
+          "type": "dropdown",
+          "name": "AP.ORI_OFFICE_CODE",
+          "id": "OfficeNameId",
+          "value": "Office",
+          "placeholder": "Placeholder",
+          "isFromURL": true,
+          "isSelectOne": false,
+          "isQueryIn" : true,
+          "url": "",
+          "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
+          "label": "Office",
+          "items": [],
+          "itemsUrl": []
+        },
+        {
+          "type": "dropdown",
+          "name": "WTL.CLAIM_STAT",
+          "id": "ActiveStatusId",
+          "label": "Task Claim Status",
+          "value": "",
+          "placeholder": "Placeholder",
+          "isFromURL": false,
+          "isSelectOne": false,
+          "items": [
+            {
+              "key": "CLAIMED",
+              "value": "CLAIMED"
+            },
+            {
+              "key": "UNCLAIMED",
+              "value": "UNCLAIMED"
+            }
+          ],
+          "itemsUrl": []
+        },
+        {
+          "type": "textbox",
+          "name": "WTL.USERNAME",
+          "id": "claimById",
+          "value": "",
+          "label": "Claim By",
+          "placeholder": "Placeholder"
+        }
+    ],
+  "querystring": {
+    "name": "searchDocSignerWithWF"
+  },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "SLA",
+        "name": "SlaColor"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Claim By",
+        "name": "ClaimBy"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Office",
+        "name": "a.ORI_OFFICE_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Application No",
+        "name": "a.APP_NO"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Customer Name",
+        "name": "ac.CUST_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Product Offering Name",
+        "name": "a.PROD_OFFERING_NAME"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Action"
+      }
+    ],
+    "bodyList": [
+        {
+          "type": "sla",
+          "position": "center",
+          "property": "SlaColor"
+        },
+        {
+          "type": "text",
+          "position": "left",
+          "property": "ClaimBy"
+        },
+        {
+          "type": "text",
+          "position": "left",
+          "property": "OfficeName"
+        },
+        {
+          "type": "link",
+          "position": "center",
+          "property": "AppNo",
+          "target": "_blank",
+          "path": "VIEW_APP",
+          "param": [
+            {
+              "type": "AppId",
+              "property": "AppId"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "position": "left",
+          "property": "CustName"
+        },
+        {
+          "type": "callback",
+          "key": "ViewProdOffering",
+          "position": "left",
+          "property": "ProdOfferingName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "NAP_ADM_PRCS_NAP_DOC_SIGNER_DETAIL",
+                    "param": [
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        },
+                        {
+                            "type": "AgrmntId",
+                            "property": "AgrmntId"
+                        },
+                        {
+                            "type": "BizTemplateCode",
+                            "property": "BizTemplateCode"
+                        },
+                        {
+                          "type": "WfTaskListId",
+                          "property": "WfTaskListId"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
