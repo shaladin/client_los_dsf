@@ -7,13 +7,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Installment Type</label>
+              <label translate>Installment Type</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.InstTypeName.value}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Invoice Date</label>
+              <label translate>Invoice Date</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.InvcDt.value | date : 'dd-MMM-yyyy'}}</label>
@@ -25,13 +25,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Installment Scheme</label>
+              <label translate>Installment Scheme</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.InstSchemeName.value}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Maturity Date</label>
+              <label translate>Maturity Date</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.MaturityDate.value | date: 'dd-MMM-yyyy'}}</label>
@@ -43,13 +43,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Num Of Inst</label>
+              <label translate>Num Of Inst</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.NumOfInst.value}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label class="adins-required-label">Estimation Effective Date</label>
+              <label class="adins-required-label" translate>Estimation Effective Date</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="date" class="form-control" formControlName="EstEffDt" (focusout)="EstEffDtFocusOut($event)"
@@ -65,13 +65,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Total Invoice Amount</label>
+              <label translate>Total Invoice Amount</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalInvcAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Retention Amount / Percent</label>
+              <label translate>Retention Amount / Percent</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{(ParentForm.controls.TotalRetentionAmt.value | number : '1.2-2') + ' / ' + (ParentForm.controls.RetentionPrcnt.value | number : '1.2-2')}}</label>
@@ -83,13 +83,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Total Fee</label>
+              <label translate>Total Fee</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalFeeAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Total Fee Capitalized</label>
+              <label translate>Total Fee Capitalized</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalFeeCptlzAmt.value | number : '1.2-2'}}</label>
@@ -101,13 +101,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Total Insurance</label>
+              <label translate>Total Insurance</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalInsCustAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Total Insurance Capitalized</label>
+              <label translate>Total Insurance Capitalized</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.InsCptlzAmt.value | number : '1.2-2'}}</label>
@@ -120,13 +120,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>NTF</label>
+              <label translate>NTF</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.NtfAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Rounding</label>
+              <label translate>Rounding</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="RoundingAmt"
@@ -142,7 +142,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Rate Type</label>
+              <label translate>Rate Type</label>
             </div>
             <div class="col-md-3 form-inline">
               <select formControlName="RateType" class="form-control full-width" (change)="SetNeedReCalculate(true)">
@@ -153,7 +153,7 @@
               </lib-uc-show-errors>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Total Interest</label>
+              <label translate>Total Interest</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalInterestAmt.value | number : '1.2-2'}}</label>
@@ -165,7 +165,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Effective Rate</label>
+              <label translate>Effective Rate</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <div class="row">
@@ -188,7 +188,7 @@
               </div>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Total AR</label>
+              <label translate>Total AR</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalAR.value | number : '1.2-2'}}</label>
@@ -201,7 +201,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Gross Yield</label>
+              <label translate>Gross Yield</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '1.2-2'}}%</label>
@@ -213,7 +213,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Grace Period</label>
+              <label translate>Grace Period</label>
             </div>
             <div class="col-md-1 form-inline form-inline-right">
               <input type="number" class="form-control full-width" formControlName="GracePeriod"

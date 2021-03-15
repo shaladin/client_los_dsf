@@ -9,15 +9,15 @@
             <div class="form-body">
               <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Add Application </h4>
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Mou No </label>
+                <label class="col-md-3 adInsLabel" translate>Mou No </label>
                 <label class="col-md-9 adInsLabel"><a href="javascript: void(0);" (click)="openView()">{{MouCustObj?.MouCustNo}}</a></label>
               </div>
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Office </label>
+                <label class="col-md-3 adInsLabel" translate>Office </label>
                 <label class="col-md-9 adInsLabel">{{NapAppForm.controls.OriOfficeName.value}} </label>
               </div>
               <div class="form-group row adins-required">
-                <label class="col-md-3 adInsLabel">Product Offering Name </label>
+                <label class="col-md-3 adInsLabel" translate>Product Offering Name </label>
                 <div class="col-md-9">
                   <lib-uclookupgeneric [lookupInput]="inputLookupObjName" [parentForm]='NapAppForm'
                     [enjiForm]='enjiForm' [identifier]="'ProductOfferingNameIdentifier'"
@@ -26,7 +26,7 @@
                 </div>
               </div>
               <div class="form-group row adins">
-                <label class="col-md-3 adInsLabel">Currency </label>
+                <label class="col-md-3 adInsLabel" translate>Currency </label>
                 <label class="col-md-9 adInsLabel">{{NapAppForm.controls.CurrCode.value}} </label>
               </div>
             </div>
@@ -34,10 +34,10 @@
               <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode: bizTemplateCode}" translate>
                 <i class="fa fa-arrow-circle-left"></i> Cancel
               </button>
-              <button type="submit" class="btn btn-raised btn-primary">
+              <button type="submit" class="btn btn-raised btn-primary" translate>
                 <i class="fa fa-check-square"></i> Next
               </button>
-              <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
+              <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()" translate>
                 <i class="fa fa-check-square-o"></i> test
               </button> -->
             </div>

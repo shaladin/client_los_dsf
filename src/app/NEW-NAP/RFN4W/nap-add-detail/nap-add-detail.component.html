@@ -3,8 +3,7 @@
     <div class="px-3">
       <div class="form-action pull-right">
         <button *ngIf="ReturnHandlingHId > 0" type="button" class="btn btn-raised btn-warning margin-r-5"
-          [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:'CFRFN4W'}"
-          translate>
+          [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:'CFRFN4W'}" translate>
           <i class="ft-x"></i> Cancel
         </button>
       </div>
@@ -21,13 +20,13 @@
             <div class="form-body">
               <div class="form-group row">
                 <div class="form-group col-md-2">
-                  <label class="adInsLabel">Return Notes</label>
+                  <label class="adInsLabel" translate>Return Notes</label>
                 </div>
                 <div class="col-md-4">
                   <label class="adInsLabel">{{ ResponseReturnInfoObj.ReturnHandlingNotes }}</label>
                 </div>
                 <div class="form-group col-md-2">
-                  <label class="adInsLabel">Return Execution Notes</label>
+                  <label class="adInsLabel" translate>Return Execution Notes</label>
                 </div>
                 <div class="col-md-4">
                   <textarea type="textarea" row="5" class="form-control" formControlName="ReturnExecNotes"
@@ -121,7 +120,7 @@
             <div class="line"></div>
             <div class="step" data-target="#upload-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
-                      [disabled]="!(AppStepIndex >= 10)" (click)="ChangeTab('UPD')">
+                      [disabled]="!(AppStepIndex >= 10)" (click)="ChangeTab('UPL_DOC')">
                 <span class="bs-stepper-circle">{{custType == 'PERSONAL' ? 10 : 9}}</span>
                 <span class="bs-stepper-label">Upload Document</span>
               </button>
@@ -168,7 +167,7 @@
                 (outputCancel)="Cancel()" [showCancel]="showCancel"></app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="NextStep('UPD')"
+              <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="NextStep('UPL_DOC')"
                 (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
@@ -189,7 +188,7 @@
       <div class="px-3">
         <div class="form-action pull-right">
           <button *ngIf="ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="Submit()"
-            class="btn btn-raised btn-primary">
+            class="btn btn-raised btn-primary" translate>
             <i class="far fa-check-square"></i> Submit
           </button>
         </div>

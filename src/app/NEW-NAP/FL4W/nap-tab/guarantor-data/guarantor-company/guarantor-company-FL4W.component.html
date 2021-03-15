@@ -9,21 +9,21 @@
               </lib-ucSubsection>
               <div *ngIf="tempCustNo!= null">
                 <div class="form-group row">
-                  <label class="col-md-2">Customer No</label>
+                  <label class="col-md-2" translate>Customer No</label>
                   <label class="col-md-4">{{this.tempCustNo}}</label>
                 </div>
               </div>
               <div class="row" id="mainData">
                 <div class="col-md-6">
                   <div class="form-group row adins-required">
-                    <label class="col-md-4 adInsLabel">Guarantor Name </label>
+                    <label class="col-md-4 adInsLabel" translate>Guarantor Name </label>
                     <div class="col-md-8">
                       <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]="CompanyForm" [enjiForm]="enjiForm"
                         [identifier]="'LookupGuarantor'" (lookup)="lookupGuarantor($event)"></lib-uclookupgeneric>
                     </div>
                   </div>
                   <div class="form-group row adins-required">
-                    <label class="col-md-4 adInsLabel">Company Type </label>
+                    <label class="col-md-4 adInsLabel" translate>Company Type </label>
                     <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrCompanyTypeCode"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MrCompanyTypeCode.invalid }">
@@ -35,7 +35,7 @@
                     </div>
                   </div>
                   <div class="class=form-group row ">
-                    <label class="col-md-4 adInsLabel">Lessee Relationship </label>
+                    <label class="col-md-4 adInsLabel" translate>Lessee Relationship </label>
                     <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrCustRelationshipCode"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MrCustRelationshipCode.invalid }">
@@ -63,7 +63,7 @@
                     </div>
                   </div>
                   <div class="form-group row adins-required">
-                    <label class="col-md-4 adInsLabel">Industry Type </label>
+                    <label class="col-md-4 adInsLabel" translate>Industry Type </label>
                     <div class="col-md-8">
                       <lib-uclookupgeneric *ngIf="inputLookupObj1.isReady" [lookupInput]="inputLookupObj1" [parentForm]="CompanyForm" [enjiForm]="enjiForm"
                         [identifier]="'lookupIndustryType'" (lookup)="handleOutput1($event)"></lib-uclookupgeneric>
@@ -75,7 +75,7 @@
               </lib-ucSubsection>
               <div id="legalDoc">
                 <div class="form-actions right">
-                  <button type="button" name="add" id="add" (click)="addLegalDoc()" class="btn btn-raised btn-primary">
+                  <button type="button" name="add" id="add" (click)="addLegalDoc()" class="btn btn-raised btn-primary" translate>
                     Add
                   </button>
                 </div>
@@ -153,7 +153,7 @@
               <div class="row" id="contactInfo">
                 <div class="col-md-6">
                     <div class="form-group row">
-                      <label class="col-md-4 adInsLabel">Contact Name </label>
+                      <label class="col-md-4 adInsLabel" translate>Contact Name </label>
                       <div class="col-md-8">
                         <input type="text" class="form-control adInsInput width-100-per" formControlName="ContactName"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.ContactName.invalid }">
@@ -162,7 +162,7 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-md-4 adins-required-label">Mobile Phone 1</label>
+                      <label class="col-md-4 adins-required-label" translate>Mobile Phone 1</label>
                       <div class="col-md-8">
                         <input type="text" class="form-control adInsInput width-100-per" formControlName="MobilePhnNo1"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MobilePhnNo1.invalid }">
@@ -171,7 +171,7 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-md-4 adInsLabel">Mobile Phone 2</label>
+                      <label class="col-md-4 adInsLabel" translate>Mobile Phone 2</label>
                       <div class="col-md-8">
                         <input type="text" class="form-control adInsInput width-100-per" formControlName="MobilePhnNo2"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MobilePhnNo2.invalid }">
@@ -180,7 +180,7 @@
                       </div>
                     </div> 
                     <div class="form-group row">
-                      <label class="col-md-4 adInsLabel">Email </label>
+                      <label class="col-md-4 adInsLabel" translate>Email </label>
                       <div class="col-md-8">
                         <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="text" class="form-control" formControlName="ContactEmail"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.ContactEmail.invalid }">
@@ -191,7 +191,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group row">
-                    <label class="col-md-4 adins-required-label">Position </label>
+                    <label class="col-md-4 adins-required-label" translate>Position </label>
                     <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrJobPositionCode"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MrJobPositionCode.invalid }">
@@ -203,7 +203,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4  adins-required-label">Phone No 1 </label>
+                    <label class="col-md-4  adins-required-label" translate>Phone No 1 </label>
                     <div class="col-md-8">
                       <div class="form-group row">
                         <div class="col-md-4" style="border-right: 1px solid grey">
@@ -228,7 +228,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4 adInsLabel">Phone No 2 </label>
+                    <label class="col-md-4 adInsLabel" translate>Phone No 2 </label>
                     <div class="col-md-8">
                       <div class="form-group row ">
                         <div class="col-md-4" style="border-right: 1px solid grey">
@@ -253,7 +253,7 @@
                     </div>
                   </div> 
                   <div class="form-group row">
-                    <label class="col-md-4 adInsLabel">Fax </label>
+                    <label class="col-md-4 adInsLabel" translate>Fax </label>
                     <div class="col-md-8">
                       <div class="form-group row ">
                         <div class="col-md-4" style="border-right: 1px solid grey">
@@ -282,7 +282,7 @@
                 <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
                   <i class="ft-x"></i> Cancel
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary" >
+                <button type="submit" class="btn btn-raised btn-primary" translate>
                   <i class="far fa-check-square"></i> Save
                 </button>
               </div>

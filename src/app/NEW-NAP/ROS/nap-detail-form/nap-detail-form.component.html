@@ -3,8 +3,7 @@
     <div class="px-3">
       <div class="form-action pull-right">
         <button *ngIf="ReturnHandlingHId > 0" type="button" class="btn btn-raised btn-warning margin-r-5"
-          [routerLink]="['/Nap/AddProcess/ReturnHandling/EditAppPaging']" [queryParams]="{BizTemplateCode:'CF4W'}"
-          translate>
+          [routerLink]="['/Nap/AddProcess/ReturnHandling/EditAppPaging']" [queryParams]="{BizTemplateCode:'CF4W'}" translate>
           <i class="ft-x"></i> Cancel
         </button>
       </div>
@@ -22,13 +21,13 @@
               <div class="form-body">
                 <div class="form-group row">
                   <div class="form-group col-md-2">
-                    <label class="adInsLabel">Return Notes</label>
+                    <label class="adInsLabel" translate>Return Notes</label>
                   </div>
                   <div class="col-md-4">
                     <label class="adInsLabel">{{ ResponseReturnInfoObj.ReturnHandlingNotes }}</label>
                   </div>
                   <div class="form-group col-md-2">
-                    <label class="adInsLabel">Return Execution Notes</label>
+                    <label class="adInsLabel" translate>Return Execution Notes</label>
                   </div>
                   <div class="col-md-4">
                     <textarea type="textarea" row="5" class="form-control" formControlName="ReturnExecNotes"
@@ -189,9 +188,12 @@
               </app-application-data>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
-              <app-asset-data *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && isReady" [AppId]=appId
+              <!-- <app-asset-data *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && isReady" [AppId]=appId
                 [BizTemplateCode]="bizTemplateCode" [showCancel]="showCancel" (outputTab)="NextStep('AEX')"
-                (outputCancel)="Cancel()"></app-asset-data>
+                (outputCancel)="Cancel()"></app-asset-data> -->
+              <app-multi-asset-data *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && isReady"[AppId]=appId
+                [BizTemplateCode]="bizTemplateCode" [showCancel]="showCancel" (outputTab)="NextStep('AEX')"
+                (outputCancel)="Cancel()"></app-multi-asset-data>
             </div>
             <div id="expense-tab" class="content" role="tabpanel" aria-labelledby="expense-tab-trigger">
               <app-asset-expense *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY'" [AppId]="appId"
@@ -225,7 +227,7 @@
       <div class="px-3">
         <div class="form-action pull-right">
           <button *ngIf="ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="Submit()"
-            class="btn btn-raised btn-primary">
+            class="btn btn-raised btn-primary" translate>
             <i class="far fa-check-square"></i> Submit
           </button>
         </div>

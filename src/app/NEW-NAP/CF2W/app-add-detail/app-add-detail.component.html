@@ -10,17 +10,15 @@
           <form class="form form-horizontal" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid"
             #enjiForm="ngForm">
             <div class="form-body">
-
               <div class="form-group row">
                 <div class="form-group col-md-2">
-                  <label class="adInsLabel">Return Notes</label>
+                  <label class="adInsLabel" translate>Return Notes</label>
                 </div>
                 <div class="col-md-4">
                   <label class="adInsLabel">{{ ResponseReturnInfoObj.ReturnHandlingNotes }}</label>
                 </div>
-
                 <div class="form-group col-md-2">
-                  <label class="adInsLabel">Return Execution Notes</label>
+                  <label class="adInsLabel" translate>Return Execution Notes</label>
                 </div>
                 <div class="col-md-4">
                   <textarea type="textarea" row="5" class="form-control" formControlName="ReturnExecNotes"
@@ -29,7 +27,6 @@
                   </lib-uc-show-errors>
                 </div>
               </div>
-
             </div>
           </form>
         </div>
@@ -165,7 +162,7 @@
     [routerLink]="[BackLink]" translate>
     <i class="fa fa-check-square-o"></i> Back
   </button>
-  <button *ngIf="mode == 'ReturnHandling'" type="button" (click)="Submit()" class="btn btn-raised btn-primary">
+  <button *ngIf="mode == 'ReturnHandling'" type="button" (click)="Submit()" class="btn btn-raised btn-primary" translate>
     <i class="fa fa-check-square-o"></i> Submit Return Handling
   </button>
 </div>

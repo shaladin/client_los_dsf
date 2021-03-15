@@ -48,7 +48,8 @@ export class AssetDataOplComponent implements OnInit {
   InputLookupAcceObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   InputLookupSupplObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   
-  deleteAppAssetObj: AppAssetObj = new AppAssetObj();
+  deleteAppAssetObj: AppAssetObj;
+  copyAppAssetObj: AppAssetObj;
   allAssetDataObj: AllAssetDataObj;
   generalSettingObj: GeneralSettingObj = new GeneralSettingObj();
   
@@ -141,7 +142,7 @@ export class AssetDataOplComponent implements OnInit {
     TaxCityIssuer: [''],
     TaxIssueDt: [''],
     Discount: [0],
-    ExpectedDelivDt: ['', Validators.required],
+    ExpectedDelivDt: [''],
     IsNeedReplacementCar: [false],
     ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
 
@@ -273,6 +274,10 @@ export class AssetDataOplComponent implements OnInit {
     this.BranchManagerObj = null;
 
     this.AssetDataForm.patchValue({
+      FullAssetName: "",
+      FullAssetCode: "",
+      AssetTypeCode: "",
+      AssetCategoryCode: "",
       MrAssetConditionCode: "",
       MrAssetUsageCode: "",
       ManufacturingYear: "",
@@ -282,9 +287,18 @@ export class AssetDataOplComponent implements OnInit {
       IsNeedReplacementCar: false,
       AssetNotes: "",
       Color: "",
-      SalesPersonId: "",
-      AdminHeadId: "",
-      BranchManagerId: ""
+      SalesPersonId: 0,
+      SalesPersonName: "",
+      SalesPersonNo: "",
+      SalesPersonPositionCode: "",
+      AdminHeadId: 0,
+      AdminHeadName: "",
+      AdminHeadNo: "",
+      AdminHeadPositionCode: "",
+      BranchManagerId: 0,
+      BranchManagerName: "",
+      BranchManagerNo: "",
+      BranchManagerPositionCode: ""
     });
 
     this.AssetDataForm.removeControl("AssetAccessoriesObjs");
@@ -300,7 +314,7 @@ export class AssetDataOplComponent implements OnInit {
     this.isListAsset = false;
   }
 
-  Edit(index: any) {
+  async Edit(index: any) {
     this.mode = "Edit";
     this.index = index;
 
@@ -310,7 +324,7 @@ export class AssetDataOplComponent implements OnInit {
     this.SalesPersonObj = null;
     this.BranchManagerObj = null;
     this.vendorObj.VendorCode = this.allAssetDataObj.AppAssetObj.SupplCode;
-    this.GetVendor();
+    await this.GetVendor();
     this.GetVendorEmpList();
 
     this.InputLookupAssetObj.jsonSelect = { FullAssetName: this.allAssetDataObj.AppAssetObj.FullAssetName };
@@ -348,6 +362,10 @@ export class AssetDataOplComponent implements OnInit {
     this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
 
     this.AssetDataForm.patchValue({
+      FullAssetName: this.allAssetDataObj.AppAssetObj.FullAssetName,
+      FullAssetCode: this.allAssetDataObj.AppAssetObj.FullAssetCode,
+      AssetTypeCode: this.allAssetDataObj.AppAssetObj.AssetTypeCode,
+      AssetCategoryCode: this.allAssetDataObj.AppAssetObj.AssetCategoryCode,
       MrAssetConditionCode: this.allAssetDataObj.AppAssetObj.MrAssetConditionCode,
       MrAssetUsageCode: this.allAssetDataObj.AppAssetObj.MrAssetUsageCode,
       ManufacturingYear: this.allAssetDataObj.AppAssetObj.ManufacturingYear,
@@ -357,9 +375,18 @@ export class AssetDataOplComponent implements OnInit {
       IsNeedReplacementCar: this.allAssetDataObj.AppAssetObj.IsNeedReplacementCar,
       AssetNotes: this.allAssetDataObj.AppAssetObj.AssetNotes,
       Color: this.allAssetDataObj.AppAssetObj.Color,
-      SalesPersonId: this.allAssetDataObj.VendorEmpId,
+      SalesPersonId: this.allAssetDataObj.AppAssetSupplEmpSalesObj.VendorEmpId,
+      SalesPersonName: this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName,
+      SalesPersonNo: this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo,
+      SalesPersonPositionCode: this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode,
       AdminHeadId: this.allAssetDataObj.AppAssetSupplEmpAdminObj.VendorEmpId,
-      BranchManagerId: this.allAssetDataObj.AppAssetSupplEmpManagerObj.VendorEmpId
+      AdminHeadName: this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName,
+      AdminHeadNo: this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo,
+      AdminHeadPositionCode: this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode,
+      BranchManagerId: this.allAssetDataObj.AppAssetSupplEmpManagerObj.VendorEmpId,
+      BranchManagerName: this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName,
+      BranchManagerNo: this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo,
+      BranchManagerPositionCode: this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode
     });
 
     this.priceAfterDiscount = this.allAssetDataObj.AppAssetObj.AssetPriceAmt - this.allAssetDataObj.AppAssetObj.Discount;
@@ -394,8 +421,9 @@ export class AssetDataOplComponent implements OnInit {
   Delete(index: any) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.allAssetDataObj = this.listAsset[index];
+      this.deleteAppAssetObj = new AppAssetObj();
       this.deleteAppAssetObj.AppAssetId = this.allAssetDataObj.AppAssetObj.AppAssetId;
-      this.deleteAppAssetObj.AppId = this.allAssetDataObj.AppAssetObj.AppId;
+      this.deleteAppAssetObj.AppId = this.AppId;
       this.http.post(URLConstant.DeleteAppAsset, this.deleteAppAssetObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
@@ -412,10 +440,12 @@ export class AssetDataOplComponent implements OnInit {
   CopyAsset() {
     if(this.units !== 0) {
       this.allAssetDataObj = this.listAsset[this.index];
-      this.allAssetDataObj.BizTemplateCode = CommonConstant.OPL;
-      this.allAssetDataObj.Copy = "Yes";
-      this.allAssetDataObj.CopyNumber = this.units;
-      this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+      this.copyAppAssetObj = new AppAssetObj();
+      this.copyAppAssetObj.AppId = this.AppId;
+      this.copyAppAssetObj.AppAssetId = this.allAssetDataObj.AppAssetObj.AppAssetId;
+      this.copyAppAssetObj.BizTemplateCode = CommonConstant.OPL;
+      this.copyAppAssetObj.count = this.units;
+      this.http.post(URLConstant.CopyAppAsset, this.copyAppAssetObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.getListAllAssetData();
@@ -429,7 +459,7 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   Save() {
-    this.toastr.successMessage("");
+    this.toastr.successMessage("Save Asset Data Success!");
     this.outputTab.emit();
   }
 
@@ -660,7 +690,8 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   Back() {
-    this.isListAsset = true;
+    // this.isListAsset = true;
+    this.findInvalidControls();
   }
 
   async SaveForm() {
@@ -1474,5 +1505,16 @@ export class AssetDataOplComponent implements OnInit {
         this.allAssetDataObj.AppCollateralAttrObj.push(appCollAttrcObj);
       }
     }
+  }
+
+  public findInvalidControls() {
+    const invalid = [];
+    const controls = this.AssetDataForm.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
+    }
+    console.log(invalid);
   }
 }

@@ -77,7 +77,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         }
 
         if (token != "") {
-            request = request.clone({ headers: request.headers.set('Authorization', token) });
+            request = request.clone({ headers: request.headers.set('AdInsKey', token) });
         }
 
         if (!request.headers.has('Content-Type')) {
@@ -111,18 +111,18 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             map((event: HttpEvent<any>) => {
                 if (event instanceof HttpResponse) {
                     //Ini Error kalau sudah masuk sampai ke Back End
-                    if (event.body.StatusCode != undefined) {
-                        if (event.body.StatusCode != '200' && event.body.StatusCode != "001" && event.body.StatusCode != "002") {
+                    if (event.body.HeaderObj != undefined) {
+                        if (event.body.HeaderObj.StatusCode != undefined && event.body.HeaderObj.StatusCode != '200' && event.body.HeaderObj.StatusCode != "001" && event.body.HeaderObj.StatusCode != "002") {
 
-                            if (event.body.StatusCode == '400') {
-                                for (var i = 0; i < event.body.ErrorMessages.length; i++) {
-                                    this.toastr.error(event.body.ErrorMessages[i].Message, 'Status: ' + event.body.StatusCode, { "tapToDismiss": true });
+                            if (event.body.HeaderObj.StatusCode == '400') {
+                                for (var i = 0; i < event.body.HeaderObj.ErrorMessages.length; i++) {
+                                    this.toastr.error(event.body.HeaderObj.ErrorMessages[i].Message, 'Status: ' + event.body.HeaderObj.StatusCode, { "tapToDismiss": true });
                                 }
                             } else {
                                 let data = {};
                                 data = {
-                                    reason: event.body.Message ? event.body.Message : '',
-                                    status: event.body.StatusCode
+                                    reason: event.body.HeaderObj.Message ? event.body.HeaderObj.Message : '',
+                                    status: event.body.HeaderObj.StatusCode
                                 };
                                 this.toastr.error(data['reason'], 'Status: ' + data['status'], { "tapToDismiss": true });
                                 console.log(event.body);

@@ -233,8 +233,7 @@
         </button>
       </div>
     </div>
-    <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)">
-    </lib-ucviewgeneric>
+    <app-app-main-info [AppId]="appId" #viewAppMainInfo></app-app-main-info>
     <div class="card-body">
       <div class="px-3">
         <div class="card" *ngIf="ReturnHandlingHId > 0">
@@ -246,13 +245,13 @@
               <div class="form-body">
                 <div class="form-group row">
                   <div class="form-group col-md-2">
-                    <label class="adInsLabel">Return Notes</label>
+                    <label class="adInsLabel" translate>Return Notes</label>
                   </div>
                   <div class="col-md-4">
                     <label class="adInsLabel">{{ ResponseReturnInfoObj.ReturnHandlingNotes }}</label>
                   </div>
                   <div class="form-group col-md-2">
-                    <label class="adInsLabel">Return Execution Notes</label>
+                    <label class="adInsLabel" translate>Return Execution Notes</label>
                   </div>
                   <div class="col-md-4">
                     <textarea type="textarea" row="5" class="form-control" formControlName="ReturnExecNotes"
@@ -318,16 +317,16 @@
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-multi-asset-data *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL'" [AppId]="appId" [BizTemplateCode]="BizTemplateCode"
-                [showCancel]="showCancel" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()"></app-multi-asset-data>
+                [showCancel]="showCancel" (outputTab)="NextStep('EXPENSE')" (outputCancel)="Cancel()"></app-multi-asset-data>
             </div>
             <div id="expense-tab" class="content" role="tabpanel" aria-labelledby="expense-tab-trigger">
               <app-asset-expense *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL'" [AppId]="appId"
-                [showCancel]="showCancel" (outputTab)="NextStep('EXPENSE')" (outputCancel)="Cancel()"></app-asset-expense>
+                [showCancel]="showCancel" (outputValue)="NextStep('FIN')" (outputCancel)="Cancel()"></app-asset-expense>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL'" [AppId]="appId"
+              <app-financial-data-opl *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL'" [AppId]="appId"
                 [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
-              </app-financial-data>
+              </app-financial-data-opl>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 5 && stepperMode == 'PERSONAL'" [AppId]="appId"
@@ -388,16 +387,16 @@
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-multi-asset-data *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY'" [AppId]="appId" [BizTemplateCode]="BizTemplateCode"
-                [showCancel]="showCancel" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()"></app-multi-asset-data>
+                [showCancel]="showCancel" (outputTab)="NextStep('EXPENSE')" (outputCancel)="Cancel()"></app-multi-asset-data>
             </div>
             <div id="expense-tab" class="content" role="tabpanel" aria-labelledby="expense-tab-trigger">
               <app-asset-expense *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY'" [AppId]="appId"
-                [showCancel]="showCancel" (outputTab)="NextStep('EXPENSE')" (outputCancel)="Cancel()"></app-asset-expense>
+                [showCancel]="showCancel" (outputValue)="NextStep('FIN')" (outputCancel)="Cancel()"></app-asset-expense>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [AppId]="appId"
+              <app-financial-data-opl *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [AppId]="appId"
                 [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
-              </app-financial-data>
+              </app-financial-data-opl>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY'" [AppId]="appId"
@@ -417,7 +416,7 @@
       <div class="px-3">
         <div class="form-action pull-right">
           <button *ngIf="ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="Submit()"
-            class="btn btn-raised btn-primary">
+            class="btn btn-raised btn-primary" translate>
             <i class="far fa-check-square"></i> Submit
           </button>
         </div>

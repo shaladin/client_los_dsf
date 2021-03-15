@@ -1,177 +1,177 @@
 <div class="row text-left">
-    <div class="col-md-12">
-      <div class="card">
-  
-        <div class="card-header header-title">
-          <div class="row">
-          </div>
+  <div class="col-md-12">
+    <div class="card">
+
+      <div class="card-header header-title">
+        <div class="row">
         </div>
-  
-        <div class="card-body">
-          <div class="px-3">
-  
-            <form class="form form-horizontal" [formGroup]="NapAppForm" (ngSubmit)="NapAppForm.valid"
-              #enjiForm="ngForm">
-              <!-- Main Info -->
-              <div class="form-body">
-                <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Add Application </h4>
-  
-                <!-- <div class="form-group row adins-required">
-                  <label class="col-md-3 adInsLabel">Office </label>
+      </div>
+
+      <div class="card-body">
+        <div class="px-3">
+
+          <form class="form form-horizontal" [formGroup]="NapAppForm" (ngSubmit)="NapAppForm.valid"
+            #enjiForm="ngForm">
+            <!-- Main Info -->
+            <div class="form-body">
+              <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Add Application </h4>
+
+              <!-- <div class="form-group row adins-required">
+                <label class="col-md-3 adInsLabel">Office </label>
+                <div class="col-md-9">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="OriOfficeCode"
+                    (change)="ChangeValueOffice($event)"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppForm.controls.OriOfficeCode.invalid }">
+                    <option *ngFor="let it of officeItems" value="{{it.Key}}">
+                      {{it.Value}} </option>
+                  </select>
+                </div>
+              </div> -->
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>Copy Application From </label>
+                <div class="col-md-9">
+                  <lib-uclookupgeneric [lookupInput]="inputLookupObjCopyProduct" [parentForm]='NapAppForm'
+                    [enjiForm]='enjiForm' [identifier]="'ProductOfferingIdentifier'"
+                    (lookup)="getLookupAppResponseCopy($event)">
+                  </lib-uclookupgeneric>
+                </div>
+              </div>
+              <div class="form-group row adins-required">
+                <label class="col-md-3 adInsLabel" translate>Product Offering Name </label>
+                <div class="col-md-9">
+                  <lib-uclookupgeneric [lookupInput]="inputLookupObjName" [parentForm]='NapAppForm'
+                    [enjiForm]='enjiForm' [identifier]="'ProductOfferingNameIdentifier'"
+                    (lookup)="getLookupProductOfferingName($event)">
+                  </lib-uclookupgeneric>
+                </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-md-3 adInsLabel" translate>Supplier Branch Name</label>
                   <div class="col-md-9">
-                    <select class="form-control adInsInput" style="width: auto" formControlName="OriOfficeCode"
-                      (change)="ChangeValueOffice($event)"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppForm.controls.OriOfficeCode.invalid }">
-                      <option *ngFor="let it of officeItems" value="{{it.Key}}">
-                        {{it.Value}} </option>
-                    </select>
-                  </div>
-                </div> -->
-                <div class="form-group row">
-                  <label class="col-md-3 adInsLabel">Copy Application From </label>
-                  <div class="col-md-9">
-                    <lib-uclookupgeneric [lookupInput]="inputLookupObjCopyProduct" [parentForm]='NapAppForm'
-                      [enjiForm]='enjiForm' [identifier]="'ProductOfferingIdentifier'"
-                      (lookup)="getLookupAppResponseCopy($event)">
+                    <lib-uclookupgeneric width-75-per [lookupInput]="inputLookupSupplierObj" [identifier]="'lookupSupplierBranch'"
+                      [enjiForm]='enjiForm' [parentForm]='NapAppForm' (lookup)="SetSupplierBranch($event)">
                     </lib-uclookupgeneric>
                   </div>
                 </div>
-                <div class="form-group row adins-required">
-                  <label class="col-md-3 adInsLabel">Product Offering Name </label>
-                  <div class="col-md-9">
-                    <lib-uclookupgeneric [lookupInput]="inputLookupObjName" [parentForm]='NapAppForm'
-                      [enjiForm]='enjiForm' [identifier]="'ProductOfferingNameIdentifier'"
-                      (lookup)="getLookupProductOfferingName($event)">
-                    </lib-uclookupgeneric>
-                  </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-md-3 adInsLabel" translate>Supplier Branch Name</label>
-                    <div class="col-md-9">
-                      <lib-uclookupgeneric width-75-per [lookupInput]="inputLookupSupplierObj" [identifier]="'lookupSupplierBranch'"
-                        [enjiForm]='enjiForm' [parentForm]='NapAppForm' (lookup)="SetSupplierBranch($event)">
-                      </lib-uclookupgeneric>
-                    </div>
-                  </div>
-                <div class="form-group row">
-                  <label class="col-md-3 adInsLabel" translate>Asset</label>
-                  <div class="col-md-9">
-                    <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupAssetObj" [identifier]="'lookupAsset'"
-                      [enjiForm]='enjiForm' [parentForm]='NapAppForm' (lookup)="SetAsset($event)">
-                    </lib-uclookupgeneric>
-                  </div>
-                </div>
-                <div class="form-group row adins">
-                  <label class="col-md-3 adInsLabel">Currency </label>
-                  <label class="col-md-9 adInsLabel">{{NapAppForm.controls.CurrCode.value}} </label>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>Asset</label>
+                <div class="col-md-9">
+                  <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupAssetObj" [identifier]="'lookupAsset'"
+                    [enjiForm]='enjiForm' [parentForm]='NapAppForm' (lookup)="SetAsset($event)">
+                  </lib-uclookupgeneric>
                 </div>
               </div>
-  
-              <div class="form-actions right">
-                <button type="submit" (click)="generateData()" class="btn btn-raised btn-primary mr-1">
-                  <i class="fa fa-check-square-o"></i> Generate
-                </button>
-                <button type="button" class="btn btn-raised btn-warning" [routerLink]="[CancelLink]" [queryParams]="{LobCode:'CF2W'}" translate>
-                  <i class="fa fa-arrow-circle-left"></i> Cancel
-                </button>
+              <div class="form-group row adins">
+                <label class="col-md-3 adInsLabel" translate>Currency </label>
+                <label class="col-md-9 adInsLabel">{{NapAppForm.controls.CurrCode.value}} </label>
               </div>
+            </div>
 
-              <div class="fixedNap" *ngIf="returnDtFixedNAPObj != undefined">
-                <table class="table table-responsive-md text-center table-hover">
-                  <thead>
-                    <tr class="table-header">
-                      <th style="text-align: left;"><span class="thead-header" name='otr' translate>OTR
-                      </span>
-                      </th>
-                      <th style="text-align: left;"><span class="thead-header" name='dp' translate>DP
-                      </span>
-                      </th>
-                      <th style="text-align: left;"><span class="thead-header" name='tenor' translate>Tenor
-                      </span>
-                      </th>
-                      <th style="text-align: left;"><span class="thead-header" name='effRate' translate>Effective Rate
-                      </span>
-                      </th>
-                      <th style="text-align: left;"><span class="thead-header" name='firstInstallmentType' translate>First Installment Type
-                      </span>
-                      </th>
-                      <th style="text-align: left;"><span class="thead-header" name='insPackage' translate>Insurance Package
-                      </span>
-                       </th>
-                      <th style="text-align: left;"><span class="thead-header" name='lifeInsCoverSubject' translate>Life Insurance Cover Subject
-                      </span>
-                      </th>
+            <div class="form-actions right">
+              <button type="submit" (click)="generateData()" class="btn btn-raised btn-primary mr-1" translate>
+                <i class="fa fa-check-square-o"></i> Generate
+              </button>
+              <button type="button" class="btn btn-raised btn-warning" [routerLink]="[CancelLink]" [queryParams]="{LobCode:'CF2W'}" translate>
+                <i class="fa fa-arrow-circle-left"></i> Cancel
+              </button>
+            </div>
 
-                      <!-- <th style="text-align: left;"><span class="thead-header" name='supplEffRate' translate>Supply Effective Rate
-                        </span>
+            <div class="fixedNap" *ngIf="returnDtFixedNAPObj != undefined">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th style="text-align: left;"><span class="thead-header" name='otr' translate>OTR
+                    </span>
+                    </th>
+                    <th style="text-align: left;"><span class="thead-header" name='dp' translate>DP
+                    </span>
+                    </th>
+                    <th style="text-align: left;"><span class="thead-header" name='tenor' translate>Tenor
+                    </span>
+                    </th>
+                    <th style="text-align: left;"><span class="thead-header" name='effRate' translate>Effective Rate
+                    </span>
+                    </th>
+                    <th style="text-align: left;"><span class="thead-header" name='firstInstallmentType' translate>First Installment Type
+                    </span>
+                    </th>
+                    <th style="text-align: left;"><span class="thead-header" name='insPackage' translate>Insurance Package
+                    </span>
                       </th>
-                      <th style="text-align: left;"><span class="thead-header" name='dpType' translate>DP Type
-                        </span>
-                      </th>
-                      <th style="text-align: left;"><span class="thead-header" name='editableDP' translate>Editable DP
-                      </span>
-                      </th>
-                      <th style="text-align: left;"><span class="thead-header" name='gracePeriod' translate>Grace Period
-                        </span>
-                      </th>
-                      <th style="text-align: left;"><span class="thead-header" name='gracePeriodType' translate>Grace Period Type
-                        </span>
-                      </th>
-                      <th style="text-align: left;"><span class="thead-header" name='insAdmFee' translate>Insurance Admin Fee
-                        </span>
-                      </th>
-                      <th style="text-align: left;"><span class="thead-header" name='lifeInsCover' translate>Life Insurance Cover
-                      </span>
-                      </th>
-                      <th style="text-align: left;"><span class="thead-header" name='lifeInsco' translate>Life Insco
-                        </span>
-                      </th>
-                      <th style="text-align: left;"><span class="thead-header" name='lifeInsPaymentMethod' translate>Life Insurance Payment Method
-                        </span>
-                      </th> -->
-                      <th style="text-align: left;"><span class="thead-header" translate>Action
-                        </span>
-                      </th> 
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let item of returnDtFixedNAPObj">
-                      <td style="text-align: left;">{{item.OTR}}</td>
-                      <td style="text-align: left;">{{item.DP}}</td>
-                      <td style="text-align: left;">{{item.Tenor}}</td>
-                      <td style="text-align: left;">{{item.EffRate}}</td>
-                      <td style="text-align: left;">{{item.FirstInstallmentType}}</td>
-                      <td style="text-align: left;">{{item.InsPackage}}</td>
-                      <td style="text-align: left;">{{item.LifeInsCoverSubject}}</td>
+                    <th style="text-align: left;"><span class="thead-header" name='lifeInsCoverSubject' translate>Life Insurance Cover Subject
+                    </span>
+                    </th>
 
-                      <!-- <td style="text-align: left;">{{item.SupplEffRate}}</td>
-                      <td style="text-align: left;">{{item.DPType}}</td>
-                      <td style="text-align: left;">{{item.EditableDP}}</td>
-                      <td style="text-align: left;">{{item.GracePeriod}}</td>
-                      <td style="text-align: left;">{{item.GracePeriodType}}</td>
-                      <td style="text-align: left;">{{item.InsAdmFee}}</td>
-                      <td style="text-align: left;">{{item.LifeInsCover}}</td>
-                      <td style="text-align: left;">{{item.LifeInsco}}</td>
-                      <td style="text-align: left;">{{item.LifeInsPaymentMethod}}</td>-->
-                      <td style="text-align: center;"> 
-                        <a (click)="editItem(item)">
-                          <i class="fa fa-pen"></i>
-                        </a>
-                        <!-- &nbsp;&nbsp;&nbsp;
-                        <a *ngIf="item.MrCustAddrTypeCode != 'Legal Address'"
-                          (click)="deleteItem(item)">
-                          <i class="fa fa-trash"></i>
-                        </a> -->
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-  
-            </form>
-  
-          </div>
+                    <!-- <th style="text-align: left;"><span class="thead-header" name='supplEffRate' translate>Supply Effective Rate
+                      </span>
+                    </th>
+                    <th style="text-align: left;"><span class="thead-header" name='dpType' translate>DP Type
+                      </span>
+                    </th>
+                    <th style="text-align: left;"><span class="thead-header" name='editableDP' translate>Editable DP
+                    </span>
+                    </th>
+                    <th style="text-align: left;"><span class="thead-header" name='gracePeriod' translate>Grace Period
+                      </span>
+                    </th>
+                    <th style="text-align: left;"><span class="thead-header" name='gracePeriodType' translate>Grace Period Type
+                      </span>
+                    </th>
+                    <th style="text-align: left;"><span class="thead-header" name='insAdmFee' translate>Insurance Admin Fee
+                      </span>
+                    </th>
+                    <th style="text-align: left;"><span class="thead-header" name='lifeInsCover' translate>Life Insurance Cover
+                    </span>
+                    </th>
+                    <th style="text-align: left;"><span class="thead-header" name='lifeInsco' translate>Life Insco
+                      </span>
+                    </th>
+                    <th style="text-align: left;"><span class="thead-header" name='lifeInsPaymentMethod' translate>Life Insurance Payment Method
+                      </span>
+                    </th> -->
+                    <th style="text-align: left;"><span class="thead-header" translate>Action
+                      </span>
+                    </th> 
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of returnDtFixedNAPObj">
+                    <td style="text-align: left;">{{item.OTR}}</td>
+                    <td style="text-align: left;">{{item.DP}}</td>
+                    <td style="text-align: left;">{{item.Tenor}}</td>
+                    <td style="text-align: left;">{{item.EffRate}}</td>
+                    <td style="text-align: left;">{{item.FirstInstallmentType}}</td>
+                    <td style="text-align: left;">{{item.InsPackage}}</td>
+                    <td style="text-align: left;">{{item.LifeInsCoverSubject}}</td>
+
+                    <!-- <td style="text-align: left;">{{item.SupplEffRate}}</td>
+                    <td style="text-align: left;">{{item.DPType}}</td>
+                    <td style="text-align: left;">{{item.EditableDP}}</td>
+                    <td style="text-align: left;">{{item.GracePeriod}}</td>
+                    <td style="text-align: left;">{{item.GracePeriodType}}</td>
+                    <td style="text-align: left;">{{item.InsAdmFee}}</td>
+                    <td style="text-align: left;">{{item.LifeInsCover}}</td>
+                    <td style="text-align: left;">{{item.LifeInsco}}</td>
+                    <td style="text-align: left;">{{item.LifeInsPaymentMethod}}</td>-->
+                    <td style="text-align: center;"> 
+                      <a (click)="editItem(item)">
+                        <i class="fa fa-pen"></i>
+                      </a>
+                      <!-- &nbsp;&nbsp;&nbsp;
+                      <a *ngIf="item.MrCustAddrTypeCode != 'Legal Address'"
+                        (click)="deleteItem(item)">
+                        <i class="fa fa-trash"></i>
+                      </a> -->
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </form>
+
         </div>
       </div>
     </div>
   </div>
+</div>

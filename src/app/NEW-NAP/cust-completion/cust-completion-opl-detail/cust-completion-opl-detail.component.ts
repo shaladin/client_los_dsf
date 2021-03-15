@@ -81,11 +81,12 @@ export class CustCompletionOplDetailComponent implements OnInit {
     if (this.ReturnHandlingHId > 0) {
       var obj = {
         ReturnHandlingHId: this.ReturnHandlingHId,
-        MrReturnTaskCode: CommonConstant.ReturnHandlingEditNAP4
+        MrReturnTaskCode: CommonConstant.ReturnHandlingEditCust
       }
       this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
         (response) => {
           this.ResponseReturnInfoObj = response;
+          console.log("Isi dari ResponseReturnInfoObj: ", this.ResponseReturnInfoObj);
           this.FormReturnObj.patchValue({
             ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
           });

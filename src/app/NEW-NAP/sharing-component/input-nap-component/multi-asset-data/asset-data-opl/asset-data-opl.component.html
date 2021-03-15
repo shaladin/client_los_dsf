@@ -82,7 +82,8 @@
                 </div>
               
                 <div class="form-actions right">
-                  <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+                  <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
+                    translate *ngIf="showCancel">
                     <i class="ft-x"></i> Cancel
                   </button>
                   <button type="button" class="btn btn-raised btn-primary" (click)="Save()" translate>
@@ -135,7 +136,7 @@
                     </lib-uc-show-errors>
                   </div>
                   <!-- Sales Supervisor -->
-                  <label class="col-md-2 adInsLabel">Sales Supervisor </label>
+                  <label class="col-md-2 adInsLabel" translate>Sales Supervisor </label>
                   <label class="col-md-4 adInsLabel" *ngIf="salesSupervisor">{{salesSupervisor}} </label>
                   <label class="col-md-4 adInsLabel" *ngIf="!salesSupervisor"> -  </label>
                 </div>
@@ -264,7 +265,7 @@
   
                   <div class="col-md-6">
                     <div class="form-group row">
-                      <label class="col-md-4 adins-required-label" translate>Expected Delivery Date</label>
+                      <label class="col-md-4" translate>Expected Delivery Date</label>
                       <div class="col-md-8">
                         <input type="date" class="form-control adInsInput" formControlName="ExpectedDelivDt">
                         <lib-uc-show-errors [control]="AssetDataForm.controls.ExpectedDelivDt"
@@ -356,7 +357,7 @@
                 <div id="accessoriesData">
                   <div class="form-actions right">
                     <button type="button" name="add" id="add" (click)="addAccessories()"
-                      class="btn btn-raised btn-primary">
+                      class="btn btn-raised btn-primary" translate>
                       <i class="ft-plus-circle"></i> Add
                     </button>
                   </div>
@@ -437,7 +438,7 @@
                         </select>
                         <div class="input-group-append">
                           <span class="input-group-btn">
-                            <button class="btn btn-raised btn-primary" type="button" (click)="copyToDelivAddr()">
+                            <button class="btn btn-raised btn-primary" type="button" (click)="copyToDelivAddr()" translate>
                               <i class="fa fa-check-square-o"></i>Copy
                             </button>
                           </span>
@@ -470,7 +471,7 @@
                         </select>
                         <div class="input-group-append">
                           <span class="input-group-btn">
-                            <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
+                            <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()" translate>
                               <i class="fa fa-check-square-o"></i>Copy
                             </button>
                           </span>
@@ -491,7 +492,7 @@
                     (click)="Back()" translate>
                     <i class="ft-x"></i> Cancel
                   </button>
-                  <button type="submit" class="btn btn-raised btn-primary">
+                  <button type="submit" class="btn btn-raised btn-primary" translate>
                     <i class="far fa-check-square"></i> Save
                   </button>
                 </div>

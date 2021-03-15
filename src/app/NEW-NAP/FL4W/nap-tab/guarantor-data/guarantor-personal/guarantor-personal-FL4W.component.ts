@@ -67,7 +67,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     MrNationalityCode: ['', [Validators.required, Validators.maxLength(50)]],
     BirthPlace: ['', [Validators.required, Validators.maxLength(200)]],
     BirthDt: ['', [Validators.required]],
-    TaxIdNo: ['', [Validators.maxLength(50)]],
+    TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
     MrReligionCode: ['', [Validators.maxLength(50)]],
     MobilePhnNo: ['', [Validators.required, Validators.maxLength(50)]],
     CountryCode: ['']
@@ -556,7 +556,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
       MrNationalityCode: ['', [Validators.required, Validators.maxLength(50)]],
       BirthPlace: ['', [Validators.required, Validators.maxLength(200)]],
       BirthDt: ['', [Validators.required]],
-      TaxIdNo: ['', [Validators.maxLength(50)]],
+      TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
       MrReligionCode: ['', [Validators.maxLength(50)]],
       MobilePhnNo: ['', [Validators.required, Validators.maxLength(50)]],
       CountryCode: ['']

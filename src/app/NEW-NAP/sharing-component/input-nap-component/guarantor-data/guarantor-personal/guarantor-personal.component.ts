@@ -64,7 +64,7 @@ export class GuarantorPersonalComponent implements OnInit {
     MrNationalityCode: ['', [Validators.required, Validators.maxLength(50)]],
     BirthPlace: ['', [Validators.required, Validators.maxLength(200)]],
     BirthDt: ['', [Validators.required]],
-    TaxIdNo: ['', [Validators.maxLength(50)]],
+    TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
     MrReligionCode: ['', [Validators.maxLength(50)]],
     MobilePhnNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     CountryCode: ['']
@@ -541,7 +541,7 @@ export class GuarantorPersonalComponent implements OnInit {
       MrNationalityCode: ['', [Validators.required, Validators.maxLength(50)]],
       BirthPlace: ['', [Validators.required, Validators.maxLength(200)]],
       BirthDt: ['', [Validators.required]],
-      TaxIdNo: ['', [Validators.maxLength(50)]],
+      TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
       MrReligionCode: ['', [Validators.maxLength(50)]],
       MobilePhnNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       CountryCode: ['']
@@ -562,11 +562,11 @@ export class GuarantorPersonalComponent implements OnInit {
       this.PersonalForm.controls.IdExpDt.clearValidators();
       this.PersonalForm.controls.IdExpDt.updateValueAndValidity();
       if (this.PersonalForm.controls.MrIdTypeCode.value == "NPWP") {
-        this.PersonalForm.controls.TaxIdNo.setValidators([Validators.required]);
+        this.PersonalForm.controls.TaxIdNo.setValidators([Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
         this.PersonalForm.controls.TaxIdNo.updateValueAndValidity();
       }
       else {
-        this.PersonalForm.controls.TaxIdNo.clearValidators();
+        this.PersonalForm.controls.TaxIdNo.setValidators([Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
         this.PersonalForm.controls.TaxIdNo.updateValueAndValidity();
       }
     }

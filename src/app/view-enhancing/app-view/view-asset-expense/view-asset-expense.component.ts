@@ -32,7 +32,7 @@ export class ViewAssetExpenseComponent implements OnInit {
 
   async GetListAllAssetExpenseData() {
     var requestAppId = {
-      AppId: this.AppId
+      Id: this.AppId
     };
 
     await this.http.post(URLConstant.GetListAllAssetExpenseData, requestAppId).toPromise().then(

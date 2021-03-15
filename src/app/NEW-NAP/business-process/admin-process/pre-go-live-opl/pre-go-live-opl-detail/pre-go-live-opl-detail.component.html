@@ -46,13 +46,13 @@
                         <span class="thead-header" translate>Stock Asset Name</span>
                       </th>
                       <th>
-                        <span class="thead-header" translate>Chasis No</span>
+                        <span class="thead-header" translate>Serial No 1</span>
                       </th>
                       <th>
-                        <span class="thead-header" translate>Engine No</span>
+                        <span class="thead-header" translate>Serial No 2</span>
                       </th>
                       <th>
-                        <span class="thead-header" translate>License Plate No</span>
+                        <span class="thead-header" translate>Serial No 3</span>
                       </th>
                       <th>
                         <span class="thead-header" translate>Rental Per Period</span>
@@ -88,7 +88,7 @@
                 </table>
 
                 <div class="form-group row">
-                  <label class="col-md-3 adins-required-label">Effective Date</label>
+                  <label class="col-md-3 adins-required-label" translate>Effective Date</label>
                   <div class="col-md-3">
                     <input type="date" [min]="ApvDt" class="form-control" formControlName="EffDt"
                       [ngClass]="{ 'border-danger': enjiForm.submitted && PreGoLiveForm.controls.EffDt.invalid }">
@@ -99,7 +99,7 @@
                 </div>
 
                 <div class="form-group row">
-                  <label class="col-md-3 adins-label">Notes</label>
+                  <label class="col-md-3 adins-label" translate>Notes</label>
                   <div class="col-md-3">
                     <textarea cols="30" rows="3" class="form-control" formControlName="Notes"
                       [ngClass]="{ 'border-danger': enjiForm.submitted && PreGoLiveForm.controls.Notes.invalid }">
@@ -111,7 +111,7 @@
               <lib-ucSubsection [id]="'TermConditionsId'" [title]="'Term & Conditions'" [panel]="'TermConditions'">
               </lib-ucSubsection>
               <div class="form-body" id="TermConditions">
-                <app-term-conditions [AppId]="AppId" [parentForm]="PreGoLiveForm"
+                <app-term-conditions [AppId]="AppId" [parentForm]="PreGoLiveForm" 
                   [enjiForm]="enjiForm">
                 </app-term-conditions>
               </div>
@@ -121,7 +121,7 @@
                   (click)="Cancel()">
                   <i class="fa fa-arrow-circle-left"></i> Cancel
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary">
+                <button type="submit" class="btn btn-raised btn-primary" translate>
                   <i class="fa fa-check-square-o"></i> Submit
                 </button>
               </div>

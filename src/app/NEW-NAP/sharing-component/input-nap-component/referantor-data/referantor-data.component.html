@@ -14,7 +14,7 @@
               <!-- <h4 class="form-section card-title" translate><i class="ft-file-text"></i> Referantor </h4> -->
 
               <div class="form-group row">
-                <label class="col-md-2 adInsLabel">Referantor </label>
+                <label class="col-md-2 adInsLabel" translate>Referantor </label>
                 <div class="col-md-10">
                   <mat-checkbox color="primary" formControlName="CheckBoxAppReferantor" (change)="TurnReferantor()"></mat-checkbox>
                 </div>
@@ -22,7 +22,7 @@
 
               <div [hidden]="!ReferantorOn">
                 <div class="form-group row adins-required">
-                  <label class="col-md-2 adInsLabel">Referantor Name </label>
+                  <label class="col-md-2 adInsLabel" translate>Referantor Name </label>
                   <div class="col-md-5">
                     <lib-uclookupgeneric *ngIf="inputLookupObj.isReady" [lookupInput]="inputLookupObj" [parentForm]='NapAppReferantorForm'
                       [enjiForm]='enjiForm' [identifier]="'ProductOfferingIdentifier'"
@@ -32,15 +32,15 @@
                 </div>
 
                 <div class="form-group row" [hidden]="appReferantorObj.MrReferantorType == null">
-                  <label class="col-md-2 adInsLabel">Referantor Type</label>
-                  <label class="col-md-5 adInsLabel" *ngIf="appReferantorObj.MrReferantorType == 'AGENCY_COMPANY'">
+                  <label class="col-md-2 adInsLabel" translate>Referantor Type</label>
+                  <label class="col-md-5 adInsLabel" translate *ngIf="appReferantorObj.MrReferantorType == 'AGENCY_COMPANY'">
                     Agency Company </label>
-                  <label class="col-md-5 adInsLabel" *ngIf="appReferantorObj.MrReferantorType == 'AGENCY_PERSONAL'">
+                  <label class="col-md-5 adInsLabel" translate *ngIf="appReferantorObj.MrReferantorType == 'AGENCY_PERSONAL'">
                     Agency Personal </label>
                 </div>
 
                 <div class="form-group row adins-required" *ngIf="NpwpOn">
-                  <label class="col-md-2 adInsLabel">Account Bank</label>
+                  <label class="col-md-2 adInsLabel" translate>Account Bank</label>
                   <div class="col-md-10">
                     <select class="form-control adInsInput" style="width: auto" formControlName="AccountBank"
                       ng-disabled="!ReferantorOn" (change)="ChangeValueBank($event)"
@@ -62,7 +62,7 @@
 
                     <div class="row">
                       <div class="col-md-2 form-inline">
-                        <label> NPWP No </label>
+                        <label translate> NPWP No </label>
                       </div>
                       <div class="col-md-4 form-inline">
                         <label> {{appReferantorObj.TaxIdNo}} </label>
@@ -71,7 +71,7 @@
 
                     <div class="row">
                       <div class="col-md-2 form-inline">
-                        <label> NPWP Name </label>
+                        <label translate> NPWP Name </label>
                       </div>
                       <div class="col-md-4 form-inline">
                         <label> {{appReferantorObj.TaxIdName}} </label>
@@ -80,7 +80,7 @@
 
                     <div class="row">
                       <div class="col-md-2 form-inline">
-                        <label> Address </label>
+                        <label translate> Address </label>
                       </div>
                       <div class="col-md-4 form-inline">
                         <label *ngIf="appReferantorObj.TaxIdAddr != null"> {{appReferantorObj.TaxIdAddr}} </label>
@@ -90,7 +90,7 @@
 
                     <div class="row">
                       <div class="col-md-2 form-inline">
-                        <label> RT / RW </label>
+                        <label translate> RT / RW </label>
                       </div>
                       <div class="col-md-4 form-inline">
                         <label *ngIf="appReferantorObj.TaxIdAreaCode4 != null"> {{appReferantorObj.TaxIdAreaCode4}} &nbsp; </label>
@@ -102,7 +102,7 @@
 
                     <div class="row">
                       <div class="col-md-2 form-inline">
-                        <label> Kelurahan </label>
+                        <label translate> Kelurahan </label>
                       </div>
                       <div class="col-md-4 form-inline">
                         <label *ngIf="appReferantorObj.TaxIdAreaCode2 != null"> {{appReferantorObj.TaxIdAreaCode2}} </label>
@@ -112,7 +112,7 @@
 
                     <div class="row">
                       <div class="col-md-2 form-inline">
-                        <label> Kecamatan </label>
+                        <label translate> Kecamatan </label>
                       </div>
                       <div class="col-md-4 form-inline">
                         <label *ngIf="appReferantorObj.TaxIdAreaCode1 != null"> {{appReferantorObj.TaxIdAreaCode1}} </label>
@@ -122,7 +122,7 @@
 
                     <div class="row">
                       <div class="col-md-2 form-inline">
-                        <label> City </label>
+                        <label translate> City </label>
                       </div>
                       <div class="col-md-4 form-inline">
                         <label *ngIf="appReferantorObj.TaxIdCity != null"> {{appReferantorObj.TaxIdCity}} </label>
@@ -132,7 +132,7 @@
 
                     <div class="row">
                       <div class="col-md-2 form-inline">
-                        <label> Zip Code </label>
+                        <label translate> Zip Code </label>
                       </div>
                       <div class="col-md-4 form-inline">
                         <label *ngIf="appReferantorObj.TaxIdZipcode != null"> {{appReferantorObj.TaxIdZipcode}} </label>
@@ -151,10 +151,10 @@
               <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
                 <i class="ft-x"></i> Cancel
               </button>
-              <button type="submit" class="btn btn-raised btn-primary">
+              <button type="submit" class="btn btn-raised btn-primary" translate>
                 <i class="far fa-check-square"></i> Save
               </button>
-              <!-- <button type="submit" (click)="ClickSave('next')" class="btn btn-raised btn-primary">
+              <!-- <button type="submit" (click)="ClickSave('next')" class="btn btn-raised btn-primary" translate>
                 <i class="fa fa-check-square-o"></i> Next
               </button> -->
             </div>

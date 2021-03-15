@@ -9,7 +9,10 @@ export const ROUTES: RouteInfo[] = [
     Submenu: [
       { Path: '/Nap/MainData/NAP2/Paging', Title: 'New Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
       { Path: '/Nap/ApplicationProcess/ApplicationReview/Paging', Title: 'Application Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
-      { Path: '/Nap/ApplicationProcess/ApplicationApproval/Paging', Title: 'Application Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+        { Path: '/Nap/ApplicationProcess/ApplicationApproval/Paging', Title: 'Application Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+        { Path: '/Nap/AdminProcess/DocChecklist/Paging', Title: 'Document Checklist', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+        { Path: '/Nap/AdminProcess/DocChecklist/Approval/Paging', Title: 'Document Checklist Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+        { Path: '/Nap/AdminProcess/AssetAllocation/Paging', Title: 'Asset Allocation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
       { Path: NavigationConstant.REQUISITION_DECISION_PAGING, Title: 'Requisition Decision', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
       { Path: NavigationConstant.NAP_ADM_PRCS_PGL_OPL_PAGING, Title: 'Pre Golive', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }]},
       { Path: NavigationConstant.APP_INQUIRY, Title: 'Application Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
@@ -296,8 +299,7 @@ export const ROUTES: RouteInfo[] = [
       //{ Path: NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING, Title: 'Credit Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
       //{ Path: NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_PAGING, Title: 'Customer Confirmation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
       // { Path: '/Nap/AdminProcess/DocumentSignerRos/Paging', Title: 'Document Signer', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
-      { Path: '/Nap/AdminProcess/DocChecklist/Paging', Title: 'Document Checklist', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
-      { Path: '/Nap/AdminProcess/DocChecklist/Approval/Paging', Title: 'Document Checklist Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+
       //{ Path: '/Nap/AdminProcess/NewPurchaseOrder/Paging', Title: 'Purchase Order', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
       //{ Path: NavigationConstant.NAP_ADM_PRCS_PGL_PAGING, Title: 'Pre Go Live', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
       //{ Path: NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING, Title: 'Pre Go Live Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },

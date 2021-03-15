@@ -34,7 +34,7 @@ export class AppAssetViewAssetInfoComponent implements OnInit {
 
   async SetAccessoriesList() {
     var requestAppAssetId = {
-      AppAssetId: this.AppAssetId
+      Id: this.AppAssetId
     };
 
     await this.http.post(URLConstant.GetListAppAssetAccessoryByAppAssetId, requestAppAssetId).toPromise().then(

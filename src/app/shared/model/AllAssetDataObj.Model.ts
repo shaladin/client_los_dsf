@@ -6,7 +6,6 @@ import { AppCollateralAccessoryObj } from "./AppCollateralAccessoryObj.Model";
 import { AppCollateralAttrObj } from "./AppCollateralAttrObj.Model";
 import { AppAssetAttrObj } from "./AppAssetAttrObj.Model";
 
-
 export class AllAssetDataObj {
   AppAssetObj: AppAssetObj;
   AppAssetAccessoryObjs: any;

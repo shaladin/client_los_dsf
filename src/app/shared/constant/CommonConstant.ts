@@ -103,7 +103,7 @@ export class CommonConstant {
   public static AppStepLIns = "LFI";
   public static AppStepFin = "FIN";
   public static AppStepTC = "TC";
-  public static AppStepUplDoc = "UPD";
+  public static AppStepUplDoc = "UPL_DOC";
   public static AppStepColl = "COLL";
   public static AppStepInvoice = "INVOICE";
   public static AppStepOther = "OTH";
@@ -128,6 +128,7 @@ export class CommonConstant {
   public static AppStepPGLV = "PGLV";
   public static AppStepCSR = "CSR";
   public static AppStepAssetExpense = "AEX";
+  public static AppStepCustCmpltn = "CMPLTN";
   public static FL4W = "FL4W";
   public static CF4W = "CF4W";
   public static FCTR = "FCTR";
@@ -395,6 +396,7 @@ export class CommonConstant {
   // RETURN HANDLING
   public static ModeResultHandling = "ReturnHandling";
   public static ReturnHandlingEditApp = "RTN_EDIT_APP";
+  public static ReturnHandlingEditCust = "RTN_EDIT_CUST";
   public static ReturnHandlingEditNAP4 = "RTN_EDIT_NAP4";
   public static ReturnHandlingAddPhnVerf = "RTN_ADD_PHN_VERF";
   public static ReturnHandlingEditComRsvFnd = "RTN_EDIT_COM_RSV_FND";
@@ -495,6 +497,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeCustExpsrType = "CUST_EXPSR_TYPE";
   public static RefMasterTypeCodeResidualType = "RESIDUAL_TYPE";
   public static RefMasterTypeCodeOperatingMargin = "OPERATING_MARGIN_TYPE";
+  public static RefMasterTypeCodeCashflowItem = "CASHFLOW_ITEM";
   //RATE TYPE
   public static RateTypeFlat = "FLT";
   public static RateTypeEffective = "EFCTV";
@@ -637,4 +640,18 @@ export class CommonConstant {
   //MOU TYPE
   public static MOU_TYPE_GENERAL = "GENERAL";
   public static MOU_TYPE_FACTORING = "FACTORING";
+
+  //Cashflow Item Type
+  public static CashFlowItemMasterCodeFeeCptlz = "CASHFLOW_FEE_CPTLZ";
+  public static CashFlowItemMasterCodeInstallment = "CASHFLOW_INSTALLMENT";
+  public static CashFlowItemMasterCodeInsurance = "CASHFLOW_INSURANCE";
+  public static CashFlowItemMasterCodeMaint = "CASHFLOW_MAINT";
+  public static CashFlowItemMasterCodeReplaceCar = "CASHFLOW_REPLACE_CAR";
+  public static CashFlowItemMasterCodeStnk = "CASHFLOW_STNK";
+  public static CashFlowItemMasterCodeOdb = "CASHFLOW_ODB";
+
+  //oth expense opl
+  public static OtherExpenseMasterCodeExpStn = "EXP_STN";
+  public static OtherExpenseMasterCodeExpOdb = "ODB";
+  public static OtherExpenseMasterCodeExpRc = "RC";
 }

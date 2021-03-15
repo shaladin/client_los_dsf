@@ -15,6 +15,8 @@
           </div>
         </div>
 
+        <br>
+
         <div class="card-body">
           <form class="form form-horizontal" [formGroup]="TcForm" #enjiForm="ngForm"
             (ngSubmit)="TcForm.valid && SaveForm()">
@@ -83,7 +85,7 @@
                 </lib-ucSubsection>
                 <div class="form-body" id="AssetInfo">
                   <div class="form-group row">
-                    <label class="col-md-3 adins-label">Term & Condition Name</label>
+                    <label class="col-md-3 adins-label" translate>Term & Condition Name</label>
                     <div class="col-md-3">
                       <lib-uclookupgeneric [lookupInput]="InputLookupTcObj"
                         [identifier]="'lookupTc'" [enjiForm]='enjiForm' [parentForm]='TcForm'
@@ -93,7 +95,7 @@
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-3 adins-required-label">Prior To</label>
+                    <label class="col-md-3 adins-required-label" translate>Prior To</label>
                     <div class="col-md-3">
                       <select class="form-control" formControlName="PriorTo" style="width: 100%;">
                         <option value="APP">App</option>
@@ -126,7 +128,7 @@
                     translate>
                     <i class="fa fa-arrow-circle-left"></i> Cancel
                   </button>
-                  <button type="submit" class="btn btn-raised btn-primary">
+                  <button type="submit" class="btn btn-raised btn-primary" translate>
                     <i class="fa fa-arrow-circle-right"></i> Save
                   </button>
                 </div>
