@@ -19,7 +19,7 @@
                     <lib-uc-show-errors [control]="appForm.controls.SalesOfficerName" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
-                  <label class="col-md-2 adInsLabel">Sales Supervisor </label>
+                  <label class="col-md-2 adInsLabel" translate>Sales Supervisor </label>
                   <label class="col-md-4 adInsLabel">{{appForm.controls.SalesHeadName.value}} </label>
                 </div>
                 <div class="form-group row">
@@ -112,9 +112,8 @@
                 </div>
 
                 <div class="form-group row">
-                  <label class="col-md-2 adInsLabel">Num of Installment</label>
-                  <label class="col-md-4 adInsLabel">{{appForm.controls.NumOfInst.value}} </label>
-
+                  <label class="col-md-2 adInsLabel" translate>Num of Installment</label>
+                  <label class="col-md-4 adInsLabel">{{appForm.controls.NumOfInst.value}}</label>
                   <label class="col-md-2  adInsLabel" translate>Installment Scheme</label>
                   <div class="col-md-4">
                     <select class="form-control adInsInput" style="width: auto" formControlName="MrSalesRecommendCode"
@@ -126,7 +125,6 @@
                     </lib-uc-show-errors>
                   </div>
                 </div>
-
 
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Customer Notification By</label>
@@ -150,9 +148,7 @@
                     </lib-uc-show-errors>
                   </div>
                 </div>
-
               </div>
-
 
               <lib-ucSubsection [id]="'assetId'" [title]="'Asset'" [panel]="'asset'">
               </lib-ucSubsection>
@@ -206,7 +202,6 @@
                       [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='appForm'
                       (lookup)="SetBpkbCity($event)">
                     </lib-uclookupgeneric>
-
                   </div>
                 </div>
 
@@ -243,7 +238,6 @@
                   </div>
                 </div>
               </div>
-
 
               <lib-ucSubsection [id]="'assetOwnerAndUserId'" [title]="'Asset Owner and User'"
                 [panel]="'assetOwnerAndUser'">
@@ -325,14 +319,15 @@
                     </select>
                   </div>
                   <div class="col-md-2">
-                    <button type="button" class="btn btn-raised btn-primary" (click)="copyToOwnerAddr()">
+                    <button type="button" class="btn btn-raised btn-primary" (click)="copyToOwnerAddr()" translate>
                       <i class="fa fa-check-square-o"></i> Copy
                     </button>
                   </div>
                 </div>
 
                 <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForOwner"
-                [enjiForm]="enjiForm" [identifier]="'ownerAddress'" [UCAddrForm]="appForm"></lib-ucaddress>
+                  [enjiForm]="enjiForm" [identifier]="'ownerAddress'" [UCAddrForm]="appForm">
+                </lib-ucaddress>
                 <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [title]="'Customer Address'" [UCAddrForm]="appForm"
                   [enjiForm]="enjiForm" [identifier]="'ownerAddress'" [default]="ownerAddrObj"
                   [inputField]="inputFieldOwnerAddrObj" [showAllPhn]="false" [showFax]="false">
@@ -357,7 +352,6 @@
                 </div>
               </div>
 
-
               <lib-ucSubsection [id]="'assetLocationId'" [title]="'Asset Location'" [panel]="'assetLocation'">
               </lib-ucSubsection>
               <div id="assetLocation">
@@ -371,7 +365,7 @@
                     </select>
                   </div>
                   <div class="col-md-2">
-                    <button type="button" class="btn btn-raised btn-primary" (click)="copyToLocationAddr()">
+                    <button type="button" class="btn btn-raised btn-primary" (click)="copyToLocationAddr()" translate>
                       <i class="fa fa-check-square-o"></i> Copy
                     </button>
                   </div>
@@ -398,7 +392,6 @@
                 </div>
               </div>
 
-
               <lib-ucSubsection [id]="'lifeInsuranceId'" [title]="'Life Insurance'" [panel]="'lifeInsurance'">
               </lib-ucSubsection>
               <div id="lifeInsurance">
@@ -408,7 +401,6 @@
                     <input type="checkbox" class="border-primary" formControlName="Tenor">
                   </div>
                 </div>
-
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Life Insurance Amount</label>
                   <div class="col-md-4">
@@ -420,7 +412,6 @@
                   </div>
                 </div>
               </div>
-
 
             <!-- FEE -> nama form control belum sesuai -->
               <lib-ucSubsection [id]="'feesId'" [title]="'Fees'" [panel]="'fees'">
@@ -445,8 +436,8 @@
                     <lib-uc-show-errors [control]="appForm.controls.Tenor" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
-
                 </div>
+
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Survey Fee</label>
                   <div class="col-md-2">
@@ -643,7 +634,6 @@
                   <div class="col-md-4">
                     <input type="text" class="form-control adInsInput" formControlName="EffectiveRatePrcnt"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.EffectiveRatePrcnt.invalid}">
-
                     <lib-uc-show-errors [control]="appForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
@@ -654,7 +644,6 @@
                   <div class="col-md-4">
                     <input type="text" class="form-control adInsInput" formControlName="FlatRatePrcnt"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.FlatRatePrcnt.invalid}">
-
                     <lib-uc-show-errors [control]="appForm.controls.FlatRatePrcnt" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
@@ -662,14 +651,11 @@
 
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Installment Amount</label>
-                  <div class="col-md-4">
-                     
-                  </div>
+                  <div class="col-md-4"></div>
                 </div>
 
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Grace Period</label>
-
                   <div class="col-md-1 form-inline form-inline-right">
                     <input type="text" class="form-control full-width" formControlName="GracePeriod"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.GracePeriod.invalid}">
@@ -684,7 +670,6 @@
                       [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
-
                 </div>
 
                 <div class="form-group row">
@@ -704,32 +689,18 @@
                     <label class="adInsLabel" translate></label>
                   </div>
                 </div>
-
-
-
               </div>
-
-
-
-
             </div>
 
-
-
-
-
-
-
-
             <!-- <div class="form-actions right" style="text-align: right;">
-                          <button type="button" class="btn btn-raised btn-warning mr-1"
-                              [routerLink]="['/Lead/LeadUpdate/Paging']" translate>
-                              <i class="ft-x"></i> Back
-                          </button>
-                          <button type="submit" class="btn btn-raised btn-primary" translate>
-                              <i class="fa fa-check-square-o"></i> Submit
-                          </button>
-                      </div> -->
+                <button type="button" class="btn btn-raised btn-warning mr-1"
+                    [routerLink]="['/Lead/LeadUpdate/Paging']" translate>
+                    <i class="ft-x"></i> Back
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary" translate>
+                    <i class="fa fa-check-square-o"></i> Submit
+                </button>
+            </div> -->
           </form>
         </div>
       </div>

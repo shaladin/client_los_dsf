@@ -1,8 +1,8 @@
 <form class="form form-horizontal" [formGroup]="BankAccStmntForm" (ngSubmit)="BankAccStmntForm.valid && SaveForm(enjiForm)"
   #enjiForm="ngForm">
   <span class="mr-1 pull-right" *ngIf="!IsDetail">
-    <button type="button" class="addButton" (click)="CustBankHandler('Add')" style="margin-right: 0!important;"
-      translate>
+    <button type="button" class="addButton" (click)="CustBankHandler('Add')"
+      style="margin-right: 0!important;" translate>
       <i class="ft-plus-circle"></i> Add
     </button>
   </span>
@@ -121,7 +121,7 @@
           </div>
         </div>
         <div class="col-md-12" style="text-align: right; margin-top: 10px;">
-          <button type="button" name="add" id="add" (click)="AddRowCustBankStmnt()" class="btn btn-raised btn-primary">
+          <button type="button" name="add" id="add" (click)="AddRowCustBankStmnt()" class="btn btn-raised btn-primary" translate>
             Add New Row
           </button>
         </div>
@@ -190,10 +190,12 @@
             </tbody>
           </table>
           <div class="form-actions right">
-            <button type="button" (click)="CustBankHandler('Cancel')" class="btn btn-raised btn-warning mr-1">
+            <button type="button" (click)="CustBankHandler('Cancel')" translate
+              class="btn btn-raised btn-warning mr-1">
               <i class="ft-x"></i> Cancel
             </button>
-            <button type="submit" (click)="formValidate.scrollIfFormHasErrors(BankAccStmntForm)" class="btn btn-raised btn-primary">
+            <button type="submit" (click)="formValidate.scrollIfFormHasErrors(BankAccStmntForm)" translate
+              class="btn btn-raised btn-primary">
               <i class="fa fa-check-square"></i> Save
             </button>
           </div>

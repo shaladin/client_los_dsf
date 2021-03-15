@@ -65,19 +65,19 @@
     {
       "type": "sort",
       "position": "left",
-      "label": "Chassis No",
+      "label": "Serial No 1",
       "name": "SerialNo1"
     },
     {
       "type": "sort",
       "position": "left",
-      "label": "Engine No",
+      "label": "Serial No 2",
       "name": "SerialNo2"
     },
     {
       "type": "sort",
       "position": "left",
-      "label": "License Plate No",
+      "label": "Serial No 3",
       "name": "SerialNo3"
     },
     {

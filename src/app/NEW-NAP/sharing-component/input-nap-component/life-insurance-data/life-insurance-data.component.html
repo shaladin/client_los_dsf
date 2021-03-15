@@ -9,7 +9,7 @@
               </lib-ucSubsection>
               <div id="lifeinsInfo">
                 <div class="form-group row">
-                  <label class="col-md-6 adins-required-label">Is Cover Life Insurance</label>
+                  <label class="col-md-6 adins-required-label" translate>Is Cover Life Insurance</label>
                   <div class="col-md-6">
                     <mat-checkbox color="primary" formControlName="IsChecked" (change)="checked()">
                     </mat-checkbox>
@@ -17,7 +17,7 @@
                 </div>
                 <div *ngIf='show'>
                   <div class="class=form-group row adins-required">
-                    <label class="col-md-6 adInsLabel">Life Insco Branch Name </label>
+                    <label class="col-md-6 adInsLabel" translate>Life Insco Branch Name </label>
                     <div class="col-md-6">
                       <select class="form-control adInsInput" formControlName="LifeInscoBranchName" style="width:50%" (change)="InscoBranchChanged($event)">
                         <option value="">-Select One-</option>
@@ -44,7 +44,7 @@
                   </div>
                   <br>
                   <div class="class=form-group row adins-required">
-                    <label class="col-md-6 adInsLabel">Capitalized Premium Percentage </label>
+                    <label class="col-md-6 adInsLabel" translate>Capitalized Premium Percentage </label>
                     <div class="col-md-5">
                       <input *ngIf="LifeInsForm.controls.MrLifeInsPaidMethodCode.value == 'IN_ADV_CPTLZ_MIX'" type="" currencyMask id="paidInAdvPrcnt" [options]="{min: 1, max:99, suffix:' %'}" class="form-control" formControlName="PaidInAdvPrcnt" style="width:25%">
                       <input *ngIf="LifeInsForm.controls.MrLifeInsPaidMethodCode.value != 'IN_ADV_CPTLZ_MIX'" type="" currencyMask id="paidInAdvPrcnt" [options]="{suffix:' %'}" class="form-control" formControlName="PaidInAdvPrcnt" style="width:25%" readonly>
@@ -53,7 +53,7 @@
                   </div>
                   <br>
                   <div class="form-group row">
-                    <label class="col-md-6 adInsLabel">Notes </label>
+                    <label class="col-md-6 adInsLabel" translate>Notes </label>
                     <div class="col-md-6">
                       <textarea class="form-control adInsInput width-75-per" formControlName="NewCoverNotes">
                       <lib-uc-show-errors [control]="LifeInsForm.controls.NewCoverNotes" [submit]="enjiForm.submitted">
@@ -99,7 +99,7 @@
                 </lib-ucSubsection>
                 <div id="lifeInsFee">
                   <div class="class=form-group row adins-required">
-                    <label class="col-md-6 adInsLabel">Admin Fee Amount </label>
+                    <label class="col-md-6 adInsLabel" translate>Admin Fee Amount </label>
                     <div class="col-md-4">
                       <input type="" class="form-control full-width" currencyMask id="CustAdminFeeAmt" formControlName="CustAdminFeeAmt">
                       <lib-uc-show-errors [control]="LifeInsForm.controls.CustAdminFeeAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
@@ -111,7 +111,7 @@
                 <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
                   <i class="ft-x"></i> Cancel
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary">
+                <button type="submit" class="btn btn-raised btn-primary" translate>
                   <i class="far fa-check-square"></i> Save
                 </button>
               </div>

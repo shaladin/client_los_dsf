@@ -41,7 +41,7 @@
                   </select>
                   <div class="input-group-append">
                     <span class="input-group-btn">
-                      <button class="btn btn-raised btn-primary" type="button" (click)="copyToResidence()">
+                      <button class="btn btn-raised btn-primary" type="button" (click)="copyToResidence()" translate>
                         <i class="fa fa-check-square-o"></i>Copy
                       </button>
                     </span>
@@ -69,7 +69,7 @@
                   </select>
                   <div class="input-group-append">
                     <span class="input-group-btn">
-                      <button class="btn btn-raised btn-primary" type="button" (click)="copyToMailing()">
+                      <button class="btn btn-raised btn-primary" type="button" (click)="copyToMailing()" translate>
                         <i class="fa fa-check-square-o"></i>Copy
                       </button>
                     </span>
@@ -104,12 +104,12 @@
         <button *ngIf="cancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
           <i class="ft-x"></i> Cancel
         </button>
-        <button type="submit" class="btn btn-raised btn-primary">
+        <button type="submit" class="btn btn-raised btn-primary" translate>
           <i class="far fa-check-square"></i> Save
         </button>
         <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
-                  <i class="fa fa-check-square-o"></i> test
-                </button> -->
+          <i class="fa fa-check-square-o"></i> test
+        </button> -->
       </div>
     </form>
   </div>
@@ -140,7 +140,7 @@
                   </select>
                   <div class="input-group-append">
                     <span class="input-group-btn">
-                      <button class="btn btn-raised btn-primary" type="button" (click)="copyToMailingCompany()">
+                      <button class="btn btn-raised btn-primary" type="button" (click)="copyToMailingCompany()" translate>
                         <i class="fa fa-check-square-o"></i>Copy
                       </button>
                     </span>
@@ -170,15 +170,15 @@
         </div>
       </div>
       <div class="form-actions right">
-        <button *ngIf="cancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"   translate>
+        <button *ngIf="cancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
           <i class="ft-x"></i> Cancel
         </button>
-        <button type="submit" class="btn btn-raised btn-primary">
+        <button type="submit" class="btn btn-raised btn-primary" translate>
           <i class="far fa-check-square"></i> Save
         </button>
         <!-- <button type="button" class="btn btn-raised btn-primary" (click)="testCompany()">
-                  <i class="fa fa-check-square-o"></i> test
-                </button> -->
+          <i class="fa fa-check-square-o"></i> test
+        </button> -->
       </div>
     </form>
   </div>

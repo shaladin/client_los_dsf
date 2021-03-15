@@ -11,26 +11,26 @@
             </lib-ucSubsection>
             <div id="custMain">
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Customer No</label>
+                <label class="col-md-3 adInsLabel" translate>Customer No</label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustNo != ''">{{AppCustObj?.CustNo}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustNo == ''">- </label>
-                <label class="col-md-3 adInsLabel">NPWP</label>
+                <label class="col-md-3 adInsLabel" translate>NPWP</label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.TaxIdNo != ''">{{AppCustObj?.TaxIdNo}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.TaxIdNo == ''">- </label>
               </div>
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Customer Name</label>
+                <label class="col-md-3 adInsLabel" translate>Customer Name</label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustName != ''">{{AppCustObj?.CustName}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustName == ''">- </label>
-                <label class="col-md-3 adInsLabel">ID No</label>
+                <label class="col-md-3 adInsLabel" translate>ID No</label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.IdNo != ''">{{AppCustObj?.IdNo}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.IdNo == ''">- </label>
               </div>
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Gender</label>
+                <label class="col-md-3 adInsLabel" translate>Gender</label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustPersonalObj?.MrGenderCode != ''">{{AppCustPersonalObj?.MrGenderCode}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustPersonalObj?.MrGenderCode == ''">- </label>
-                <label class="col-md-3 adInsLabel">Birth Place / Date</label>
+                <label class="col-md-3 adInsLabel" translate>Birth Place / Date</label>
                 <label class="col-md-3 adInsLabel">{{AppCustPersonalObj?.BirthPlace}} / {{AppCustPersonalObj?.BirthDt | date: 'dd-MM-yyyy'}} </label>
               </div>
             </div>
@@ -41,36 +41,36 @@
             </lib-ucSubsection>
             <div id="addr">
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Address</label>
+                <label class="col-md-3 adInsLabel" translate>Address</label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.Addr != ''">{{AppCustAddrObj?.Addr}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.Addr == ''">- </label>
               </div>
 
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">RT / RW</label>
+                <label class="col-md-3 adInsLabel" translate>RT / RW</label>
                 <label class="col-md-3 adInsLabel">{{AppCustAddrObj?.AreaCode4}} / {{AppCustAddrObj?.AreaCode3}} </label>
               </div>
 
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Zipcode</label>
+                <label class="col-md-3 adInsLabel" translate>Zipcode</label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.Zipcode != ''">{{AppCustAddrObj?.Zipcode}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.Zipcode == ''">- </label>
               </div>
 
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Kelurahan</label>
+                <label class="col-md-3 adInsLabel" translate>Kelurahan</label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.AreaCode2 != ''">{{AppCustAddrObj?.AreaCode2}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.AreaCode2 == ''">- </label>
               </div>
 
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Kecamatan</label>
+                <label class="col-md-3 adInsLabel" translate>Kecamatan</label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.AreaCode1 != ''">{{AppCustAddrObj?.AreaCode1}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.AreaCode1 == ''">- </label>
               </div>
 
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">City </label>
+                <label class="col-md-3 adInsLabel" translate>City </label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.City != ''">{{AppCustAddrObj?.City}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustAddrObj?.City == ''">- </label>
               </div>
@@ -320,7 +320,7 @@
     </div>
     <br>
     <div class="pull-right">
-      <button type="button" class="btn btn-raised btn-warning mr-1 margin-r-5" (click)="back()">
+      <button type="button" class="btn btn-raised btn-warning mr-1 margin-r-5" (click)="back()" translate>
         <i class="ft-x"></i> Cancel
       </button>
     </div>

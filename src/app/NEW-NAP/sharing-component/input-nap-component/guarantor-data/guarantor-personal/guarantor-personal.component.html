@@ -11,7 +11,7 @@
   
               <div *ngIf="tempCustNo!= null">
                 <div class="form-group row">
-                  <label class="col-md-2">Customer No</label>
+                  <label class="col-md-2" translate>Customer No</label>
                   <label class="col-md-4">{{this.tempCustNo}}</label>
                 </div>
               </div>
@@ -20,7 +20,7 @@
                 <!-- left --> 
                 <div class="col-md-6 ">
                   <div class="form-group row adins-required">
-                    <label class="col-md-4 adInsLabel">Guarantor Name </label>
+                    <label class="col-md-4 adInsLabel" translate>Guarantor Name </label>
                     <div class="col-md-8">
                       <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]="PersonalForm"
                         [enjiForm]="enjiForm" [identifier]="'LookupGuarantor'" (lookup)="lookupGuarantor($event)">
@@ -28,7 +28,7 @@
                     </div>
                   </div>
                   <div class="form-group row adins-required">
-                    <label class="col-md-4 adInsLabel">Id Type </label>
+                    <label class="col-md-4 adInsLabel" translate>Id Type </label>
                     <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto"
                         formControlName="MrIdTypeCode" (change)="ChangeIdType()"
@@ -42,7 +42,7 @@
                     </div>
                   </div>
                   <div class="form-group row adins-required">
-                    <label class="col-md-4 adInsLabel">ID No </label>
+                    <label class="col-md-4 adInsLabel" translate>ID No </label>
                     <div class="col-md-8">
                       <input type="text" class="form-control adInsInput width-100-per" formControlName="IdNo"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.IdNo.invalid}">
@@ -51,10 +51,10 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4 adInsLabel"
+                    <label class="col-md-4 adInsLabel" translate
                       *ngIf="PersonalForm.controls.MrIdTypeCode.value == 'EKTP' || PersonalForm.controls.MrIdTypeCode.value == 'NPWP'">ID
                       Expired Date </label>
-                    <label class="col-md-4 adins-required-label"
+                    <label class="col-md-4 adins-required-label" translate
                       *ngIf="PersonalForm.controls.MrIdTypeCode.value != 'EKTP' && PersonalForm.controls.MrIdTypeCode.value != 'NPWP'">ID
                       Expired Date </label>
                     <div class="col-md-8">
@@ -70,7 +70,7 @@
                     </div>
                   </div>
                   <div class="form-group row adins-required">
-                    <label class="col-md-4 adInsLabel">Birth Place</label>
+                    <label class="col-md-4 adInsLabel" translate>Birth Place</label>
                     <div class="col-md-8">
                       <input type="text" class="form-control adInsInput width-100-per" formControlName="BirthPlace"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.BirthPlace.invalid}">
@@ -79,7 +79,7 @@
                     </div>
                   </div>
                   <div class="form-group row adins-required">
-                    <label class="col-md-4 adInsLabel">Birth Date </label>
+                    <label class="col-md-4 adInsLabel" translate>Birth Date </label>
                     <div class="col-md-8">
                       <input type="date" class="form-control" formControlName="BirthDt"
                         max="{{Max17YO | date:'yyyy-MM-dd'}}"
@@ -91,7 +91,7 @@
                   <div class="form-group row">
                     <label class="col-md-4 adInsLabel" *ngIf="PersonalForm.controls.MrIdTypeCode.value != 'NPWP'">NPWP
                     </label>
-                    <label class="col-md-4 adins-required-label"
+                    <label class="col-md-4 adins-required-label" translate
                       *ngIf="PersonalForm.controls.MrIdTypeCode.value == 'NPWP'">NPWP </label>
                     <div class="col-md-8">
                       <input type="text" class="form-control" formControlName="TaxIdNo"
@@ -101,7 +101,7 @@
                     </div>
                   </div>
                   <div class="form-group row adins-required">
-                    <label class="col-md-4 adInsLabel">Mobile Phone </label>
+                    <label class="col-md-4 adInsLabel" translate>Mobile Phone </label>
                     <div class="col-md-8">
                       <input type="text" class="form-control" formControlName="MobilePhnNo"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && PersonalForm.controls.MobilePhnNo.invalid}">
@@ -113,7 +113,7 @@
                 <!-- right -->
                 <div class="col-md-6 ">
                   <div class="form-group row adins-required">
-                    <label class="col-md-4 adInsLabel">Customer Relationship </label>
+                    <label class="col-md-4 adInsLabel" translate>Customer Relationship </label>
                     <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto"
                         formControlName="MrCustRelationshipCode"
@@ -142,7 +142,7 @@
                     </div>
                   </div>
                   <div class="form-group row ">
-                    <label class="col-md-4">Marital Status </label>
+                    <label class="col-md-4" translate>Marital Status </label>
                     <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto"
                         formControlName="MrMaritalStatCode">
@@ -154,7 +154,7 @@
                     </div>
                   </div>
                   <div class="form-group row adins-required">
-                    <label class="col-md-4 adInsLabel">Nationality </label>
+                    <label class="col-md-4 adInsLabel" translate>Nationality </label>
                     <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto"
                         formControlName="MrNationalityCode"
@@ -170,7 +170,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4 adInsLabel">Country </label>
+                    <label class="col-md-4 adInsLabel" translate>Country </label>
                     <div class="col-md-8">
                       <lib-uclookupgeneric *ngIf="!isLocal" [lookupInput]="inputLookupObj1" [parentForm]="PersonalForm"
                         [enjiForm]="enjiForm" [identifier]="'LookupCountry'" (lookup)="lookupCountry($event)">
@@ -179,7 +179,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4 adInsLabel">Religion </label>
+                    <label class="col-md-4 adInsLabel" translate>Religion </label>
                     <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto"
                         formControlName="MrReligionCode"
@@ -204,10 +204,10 @@
                 <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
                   <i class="ft-x"></i> Cancel
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary">
+                <button type="submit" class="btn btn-raised btn-primary" translate>
                   <i class="far fa-check-square"></i> Save
                 </button>
-                <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()">
+                <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()" translate>
                   <i class="fa fa-check-square-o"></i> Test
                 </button> -->
               </div>

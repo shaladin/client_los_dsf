@@ -9,20 +9,20 @@
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
-        <th style="text-align: left;"><span class="thead-header" name="ShareholderName" translate>SHAREHOLDER NAME
-        </span>
+        <th style="text-align: left;">
+          <span class="thead-header" name="ShareholderName" translate>SHAREHOLDER NAME</span>
         </th>
-        <th style="text-align: left;"><span class="thead-header" name="JobPosition" translate>JOB POSITION
-        </span>
+        <th style="text-align: left;">
+          <span class="thead-header" name="JobPosition" translate>JOB POSITION</span>
         </th>
-        <th style="text-align: left;"><span class="thead-header" name="Type" translate>TYPE
-        </span>
+        <th style="text-align: left;">
+          <span class="thead-header" name="Type" translate>TYPE</span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="NPWP" translate>NPWP
-        </span>
+        <th style="text-align: center;">
+          <span class="thead-header" name="NPWP" translate>NPWP</span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="Share" translate>SHARE (%)
-        </span>
+        <th style="text-align: center;">
+          <span class="thead-header" name="Share" translate>SHARE (%)</span>
         </th>
         <th><span translate class="thead-header" name='action'>ACTION</span></th>
       </tr>
@@ -52,8 +52,8 @@
   </table>
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
-      <h4 class="modal-title">{{title}}</h4>
-      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <h4 class="modal-title" translate>{{title}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
         <span aria-hidden="true">&times;</span>
       </button>
     </div>

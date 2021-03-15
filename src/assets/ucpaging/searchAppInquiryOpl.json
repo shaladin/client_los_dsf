@@ -63,7 +63,7 @@
       "name": "AA.SERIAL_NO_1",
       "id": "chassisId",
       "value": "",
-      "label": "Chassis No",
+      "label": "Serial No 1",
       "placeholder": "Placeholder"
     },
     {
@@ -71,7 +71,7 @@
       "name": "AA.SERIAL_NO_2",
       "id": "engineId",
       "value": "",
-      "label": "Engine No",
+      "label": "Serial No 2",
       "placeholder": "Placeholder"
     },
     {
@@ -79,7 +79,7 @@
       "name": "AA.SERIAL_NO_3",
       "id": "licensePlateId",
       "value": "",
-      "label": "License Plate No",
+      "label": "Serial No 3",
       "placeholder": "Placeholder"
     },
     {

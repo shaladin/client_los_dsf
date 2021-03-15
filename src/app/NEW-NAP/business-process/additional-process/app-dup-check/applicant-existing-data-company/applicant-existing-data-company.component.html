@@ -17,16 +17,16 @@
             </lib-ucSubsection>
             <div id="custMain">
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Customer No</label>  
+                <label class="col-md-3 adInsLabel" translate>Customer No</label>  
                 <a href="javascript:void(0);" (click)="OpenView('cust', AppCustObj.CustNo)" class="label-control col-md-3" *ngIf="AppCustObj?.CustNo != ''">{{AppCustObj.CustNo}}</a>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustNo == ''">- </label>
-                <label class="col-md-3 adInsLabel">NPWP</label>
+                <label class="col-md-3 adInsLabel" translate>NPWP</label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.TaxIdNo != ''">{{AppCustObj?.TaxIdNo}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.TaxIdNo == ''">- </label>
               </div>
 
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Customer Name</label>
+                <label class="col-md-3 adInsLabel" translate>Customer Name</label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustName != ''">{{AppCustObj?.CustName}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="AppCustObj?.CustName == ''">- </label>
               </div>
@@ -153,7 +153,7 @@
             <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate>
               <i class="ft-x"></i> Cancel
             </button>
-            <button type="button" (click)="Submit()" class="btn btn-raised btn-primary">
+            <button type="button" (click)="Submit()" class="btn btn-raised btn-primary" translate>
               <i class="far fa-check-square"></i> Save
             </button>
           </div>

@@ -13,7 +13,7 @@
             </lib-ucSubsection>
             <div class="form-body" id="addApp">
               <div class="form-group row adins-required">
-                <label class="col-md-4 adInsLabel">Office </label>
+                <label class="col-md-4 adInsLabel" translate>Office </label>
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="OriOfficeCode"
                     (change)="ChangeValueOffice($event)"
@@ -25,7 +25,7 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-4 adInsLabel">Copy Application From </label>
+                <label class="col-md-4 adInsLabel" translate>Copy Application From </label>
                 <div class="col-md-4">
                   <lib-uclookupgeneric [lookupInput]="inputLookupObjCopyProduct" [parentForm]='NapAppForm'
                     [enjiForm]='enjiForm' [identifier]="'ProductOfferingIdentifier'" #LookupCopyProduct
@@ -35,7 +35,7 @@
               </div>
               <div class="form-group row">
                 <div class="col-md-4 adins-required">
-                  <label class="adInsLabel">Product Offering Name </label>
+                  <label class="adInsLabel" translate>Product Offering Name </label>
                 </div>
                 <div class="col-md-4" *ngIf="!isCopyData">
                   <lib-uclookupgeneric [lookupInput]="inputLookupObjName" [parentForm]='NapAppForm'
@@ -46,7 +46,7 @@
                 <label class="col-md-4 adInsLabel" *ngIf="isCopyData">{{NapAppForm.controls.ProdOfferingName.value}} </label>
               </div>
               <div class="form-group row">
-                <label class="col-md-4 adInsLabel">Currency </label>
+                <label class="col-md-4 adInsLabel" translate>Currency </label>
                 <label class="col-md-4 adInsLabel">{{NapAppForm.controls.CurrCode.value}} </label>
               </div>
             </div>

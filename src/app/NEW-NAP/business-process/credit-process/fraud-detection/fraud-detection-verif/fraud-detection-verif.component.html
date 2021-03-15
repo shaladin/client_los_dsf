@@ -9,24 +9,24 @@
           <div class="form-body">
             <h4 class="form-section card-title" translate>Verification Notes </h4>
             <div class="form-group row">
-              <label class="col-md-3 adInsLabel">Verify By</label>
+              <label class="col-md-3 adInsLabel" translate>Verify By</label>
               <label class="col-md-3 adInsLabel">{{verfUser}} </label>
             </div>
 
             <div class="form-group row">
-              <label class="col-md-3 adInsLabel">Verify Date</label>
+              <label class="col-md-3 adInsLabel" translate>Verify Date</label>
               <label class="col-md-3 adInsLabel">{{verfDt | date}} </label>
             </div>
 
             <div class="form-group row">
-              <label class="col-md-3 adInsLabel">Verify Notes</label>
+              <label class="col-md-3 adInsLabel" translate>Verify Notes</label>
               <div class="col-md-3">
                 <textarea class="form-control adInsInput width-75-per" [(ngModel)]="verfNotes" rows="3"></textarea>
               </div>
             </div>
             <div class="button-right">
-              <button type="button" class="btn btn-raised btn-warning mr-1"
-                      (click)="cancel()" translate>
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()"
+                translate>
                 <i class="ft-x"></i> Cancel
               </button>
               <button type="button" (click)="submit()" class="btn btn-raised btn-primary" translate>
@@ -37,6 +37,6 @@
         </div>
       </div>
     </div>
-    <br />
+    <br/>
   </div>
 </div>
