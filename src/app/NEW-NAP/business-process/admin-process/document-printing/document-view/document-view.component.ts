@@ -174,7 +174,7 @@ export class DocumentViewComponent implements OnInit {
 
   GetListAgrmntDocByAgrmntId() {
     var obj = {
-      AgrmntId: this.AgrmntId,
+      Id: this.AgrmntId,
     }
     this.http.post(URLConstant.GetListAgrmntDocByAgrmntId, obj).subscribe(
       (response) => {
