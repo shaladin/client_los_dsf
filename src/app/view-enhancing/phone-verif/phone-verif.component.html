@@ -7,13 +7,13 @@
       </lib-ucSubsection>
       <div id="verificationModule" *ngIf="verifResultObj">
         <div>
-          <label class="col-md-3">Verification No</label>
+          <label class="col-md-3" translate>Verification No</label>
           <label class="col-md-3">{{verifResultObj.VerfResultNo}}</label>
-          <label class="col-md-3">Verification By</label>
+          <label class="col-md-3" translate>Verification By</label>
           <label class="col-md-3">{{verifResultObj.EmpName}}</label>
         </div>
         <div>
-          <label class="col-md-3">Verification Date</label>
+          <label class="col-md-3" translate>Verification Date</label>
           <label class="col-md-3" *ngIf="verifResultHObj">{{verifResultHObj.VerfDt | date: 'dd-MM-yyyy'}}</label>
         </div>
       </div>
@@ -21,29 +21,29 @@
       </lib-ucSubsection>
       <div id="subjectInformation" *ngIf="verifResultHObj">
         <div>
-          <label class="col-md-3">Subject Type</label>
+          <label class="col-md-3" translate>Subject Type</label>
           <label class="col-md-3">{{verifResultHObj.MrVerfObjectCode}}</label>
-          <label class="col-md-3">Result Status</label>
+          <label class="col-md-3" translate>Result Status</label>
           <label class="col-md-3">{{verifResultHObj.MrVerfResultHStatName}}</label>
         </div>
         <div>
-          <label class="col-md-3">Subject Name</label>
+          <label class="col-md-3" translate>Subject Name</label>
           <label class="col-md-3">{{subjectName}}</label>
-          <label class="col-md-3">Time</label>
+          <label class="col-md-3" translate>Time</label>
           <label class="col-md-3">{{verifResultHObj.VerfDt | date:'HH:mm'}}</label>
         </div>
         <div>
-          <label class="col-md-3">Subject Relation</label>
+          <label class="col-md-3" translate>Subject Relation</label>
           <label class="col-md-3">{{verifResultHObj.MrVerfSubjectRelationName}}</label>
         </div>
         <div *ngIf="!isViewSubDetail">
         <table class="table table-responsive-md text-center table-hover">
           <thead>
             <tr class="table-header">
-              <th class="text-left">Phone No</th>
-              <th class="text-left">Status</th>
-              <th class="text-left">Notes</th>
-              <th class="text-left">View</th>
+              <th translate class="text-left">Phone No</th>
+              <th translate class="text-left">Status</th>
+              <th translate class="text-left">Notes</th>
+              <th translate class="text-left">View</th>
             </tr>
           </thead>
           <tbody>
@@ -73,11 +73,11 @@
           </lib-ucSubsection>
           <div id="detailVerifSubj">
             <div>
-              <label class="col-md-3">Phone Number</label>
+              <label class="col-md-3" translate>Phone Number</label>
               <label class="col-md-3">{{verifResultHDetailObj[0].Phn}}</label>
             </div>
             <div>
-              <label class="col-md-3">Status</label>
+              <label class="col-md-3" translate>Status</label>
               <label class="col-md-3">{{verifResultHDetailObj[0].MrVerfResultHStatName}}</label>
             </div>
             <div *ngIf="listVerifResultDObj">
@@ -88,10 +88,9 @@
                   <table class="table table-responsive-md text-center table-hover">
                     <thead>
                       <tr class="table-header">
-                        <th class="text-left">Question</th>
-                        <th class="text-left">Answer</th>
-                        <th class="text-left">Notes</th>
-
+                        <th translate class="text-left">Question</th>
+                        <th translate class="text-left">Answer</th>
+                        <th translate class="text-left">Notes</th>
                       </tr>
                     </thead>
                     <tbody *ngIf="item.VerResultList">
@@ -112,4 +111,3 @@
     </div>
   </div>
 </div>
-

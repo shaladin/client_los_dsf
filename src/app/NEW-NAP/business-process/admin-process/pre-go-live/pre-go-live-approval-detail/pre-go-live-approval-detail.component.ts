@@ -116,12 +116,12 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       });
 
     var Obj = {
-      AgrmntNo: this.TrxNo,
+      TrxNo: this.TrxNo, // AgrmntNo
       RowVersion: ""
     }
 
 
-    this.http.post(URLConstant.GetAgrmntByAppIdGetAgrmntByAgrmntNo, Obj).subscribe(
+    this.http.post(URLConstant.GetAgrmntByAgrmntNo, Obj).subscribe(
       (response) => {
         this.result = response;
         this.AgrmntNo = this.result.AgrmntNo;

@@ -94,7 +94,7 @@ export class ViewFinancialComponent implements OnInit {
 
   async GetListAllAssetFinancialData() {
     var requestAppId = {
-      AppId: this.AppId
+      Id: this.AppId
     };
 
     await this.http.post(URLConstant.GetListAllAssetFinancialData, requestAppId).toPromise().then(

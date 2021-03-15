@@ -11,45 +11,45 @@
             </lib-ucSubsection>
             <div class="form-body" id="Ins">
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Paid By</label>
+                <label class="col-md-3 adins-label" translate>Paid By</label>
                 <label class="col-md-3 adins-label">{{InsuranceObj.PaidBy}} (Hardcode)</label>
-                <label class="col-md-3 adins-label">Payment Period to Insco</label>
+                <label class="col-md-3 adins-label" translate>Payment Period to Insco</label>
                 <label class="col-md-3 adins-label">{{InsuranceObj.PaymentPeriod}} (Hardcode)</label>
               </div>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Asset Region</label>
+                <label class="col-md-3 adins-label" translate>Asset Region</label>
                 <label class="col-md-3 adins-label">{{InsuranceObj.AssetRegion}}</label>
-                <label class="col-md-3 adins-label">Insco Branch Name</label>
+                <label class="col-md-3 adins-label" translate>Insco Branch Name</label>
                 <label class="col-md-3 adins-label">{{InsuranceObj.InscoBranchName}} (Hardcode)</label>
               </div>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Coverage Amount</label>
+                <label class="col-md-3 adins-label" translate>Coverage Amount</label>
                 <label class="col-md-3 adins-label text-right">{{InsuranceObj.CoverageAmt | number:'1.2-2':'en-US'}}</label>
-                <label class="col-md-3 adins-label">Cover Period</label>
+                <label class="col-md-3 adins-label" translate>Cover Period</label>
                 <label class="col-md-3 adins-label">{{InsuranceObj.CoverPeriod}}</label>
               </div>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Insurance Notes</label>
+                <label class="col-md-3 adins-label" translate>Insurance Notes</label>
                 <label class="col-md-3 adins-label">{{InsuranceObj.InsuranceNotes}}</label>
-                <label class="col-md-3 adins-label">Insurance Length</label>
+                <label class="col-md-3 adins-label" translate>Insurance Length</label>
                 <label class="col-md-3 adins-label">{{InsuranceObj.InsuranceLength}}</label>
               </div>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Main Coverage</label>
+                <label class="col-md-3 adins-label" translate>Main Coverage</label>
                 <label class="col-md-3 adins-label">{{InsuranceObj.MainCoverage}}</label>
               </div>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Additional Coverage</label>
+                <label class="col-md-3 adins-label" translate>Additional Coverage</label>
                 <label class="col-md-3 adins-label">{{InsuranceObj.AdditionalCoverage}}</label>
               </div>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Total Premi</label>
+                <label class="col-md-3 adins-label" translate>Total Premi</label>
                 <label class="col-md-3 adins-label text-right">{{InsuranceObj.TotalPremi | number:'1.2-2':'en-US'}} (Hardcode)</label>
               </div>
             </div>
@@ -58,7 +58,7 @@
             </lib-ucSubsection>
             <div class="form-body" id="Maint">
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Package Name</label>
+                <label class="col-md-3 adins-label" translate>Package Name</label>
                 <label class="col-md-3 adins-label">{{MaintenanceObj.MaintPackage}}</label>
               </div>
 
@@ -102,19 +102,19 @@
                     <td colspan="100%">No Data Available</td>
                   </tr>
                   <tr *ngFor="let item of MaintenanceObj.AppAssetMaintDObjsForSparepart">
-                    <td class="align-left">{{item.Sparepart}}</td>
+                    <td class="align-left" translate>{{item.Sparepart}}</td>
                     <td class="text-right">{{item.FeeAmt | number:'1.2-2':'en-US'}}</td>
                   </tr>
                 </tbody>
               </table>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Total Service Amount</label>
+                <label class="col-md-3 adins-label" translate>Total Service Amount</label>
                 <label class="col-md-3 adins-label text-right">{{MaintenanceObj.TotalServiceAmt | number:'1.2-2':'en-US'}}</label>
               </div>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Total Sparepart Amount</label>
+                <label class="col-md-3 adins-label" translate>Total Sparepart Amount</label>
                 <label class="col-md-3 adins-label text-right">{{MaintenanceObj.TotalSparepartAmt | number:'1.2-2':'en-US'}}</label>
               </div>
             </div>
@@ -146,7 +146,7 @@
               </table>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Total Other Expense</label>
+                <label class="col-md-3 adins-label" translate>Total Other Expense</label>
                 <label class="col-md-3 adins-label text-right">{{ExpenseAmt | number:'1.2-2':'en-US'}}</label>
               </div>
             </div>
@@ -186,17 +186,17 @@
               </table>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Total Fee Amount Before VAT</label>
+                <label class="col-md-3 adins-label" translate>Total Fee Amount Before VAT</label>
                 <label class="col-md-3 adins-label text-right">{{FeeAmt | number:'1.2-2':'en-US'}}</label>
               </div>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Total VAT Amount</label>
+                <label class="col-md-3 adins-label" translate>Total VAT Amount</label>
                 <label class="col-md-3 adins-label text-right">{{VatAmt | number:'1.2-2':'en-US'}}</label>
               </div>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Total Fee Capitalized Amount</label>
+                <label class="col-md-3 adins-label" translate>Total Fee Capitalized Amount</label>
                 <label class="col-md-3 adins-label text-right">{{FeeCapitalizedAmt | number:'1.2-2':'en-US'}}</label>
               </div>
             </div>
@@ -205,27 +205,27 @@
             </lib-ucSubsection>
             <div class="form-body" id="Summ">
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Insurance At Cost</label>
+                <label class="col-md-3 adins-label" translate>Insurance At Cost</label>
                 <label class="col-md-3 adins-label text-right">{{InsuranceAmt | number:'1.2-2':'en-US'}}</label>
               </div>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Maintenance At Cost</label>
+                <label class="col-md-3 adins-label" translate>Maintenance At Cost</label>
                 <label class="col-md-3 adins-label text-right">{{MaintenanceAmt | number:'1.2-2':'en-US'}}</label>
               </div>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Expense</label>
+                <label class="col-md-3 adins-label" translate>Expense</label>
                 <label class="col-md-3 adins-label text-right">{{ExpenseAmt | number:'1.2-2':'en-US'}}</label>
               </div>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Fee Capitalized</label>
+                <label class="col-md-3 adins-label" translate>Fee Capitalized</label>
                 <label class="col-md-3 adins-label text-right">{{FeeCapitalizedAmt | number:'1.2-2':'en-US'}}</label>
               </div>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label"><b>Asset Expense</b></label>
+                <label class="col-md-3 adins-label" translate><b>Asset Expense</b></label>
                 <label class="col-md-3 adins-label text-right"><b>{{AssetExpenseAmt | number:'1.2-2':'en-US'}}</b></label>
               </div>
             </div>

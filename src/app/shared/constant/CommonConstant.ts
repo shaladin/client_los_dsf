@@ -497,6 +497,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeCustExpsrType = "CUST_EXPSR_TYPE";
   public static RefMasterTypeCodeResidualType = "RESIDUAL_TYPE";
   public static RefMasterTypeCodeOperatingMargin = "OPERATING_MARGIN_TYPE";
+  public static RefMasterTypeCodeCashflowItem = "CASHFLOW_ITEM";
   //RATE TYPE
   public static RateTypeFlat = "FLT";
   public static RateTypeEffective = "EFCTV";
@@ -639,4 +640,18 @@ export class CommonConstant {
   //MOU TYPE
   public static MOU_TYPE_GENERAL = "GENERAL";
   public static MOU_TYPE_FACTORING = "FACTORING";
+
+  //Cashflow Item Type
+  public static CashFlowItemMasterCodeFeeCptlz = "CASHFLOW_FEE_CPTLZ";
+  public static CashFlowItemMasterCodeInstallment = "CASHFLOW_INSTALLMENT";
+  public static CashFlowItemMasterCodeInsurance = "CASHFLOW_INSURANCE";
+  public static CashFlowItemMasterCodeMaint = "CASHFLOW_MAINT";
+  public static CashFlowItemMasterCodeReplaceCar = "CASHFLOW_REPLACE_CAR";
+  public static CashFlowItemMasterCodeStnk = "CASHFLOW_STNK";
+  public static CashFlowItemMasterCodeOdb = "CASHFLOW_ODB";
+
+  //oth expense opl
+  public static OtherExpenseMasterCodeExpStn = "EXP_STN";
+  public static OtherExpenseMasterCodeExpOdb = "ODB";
+  public static OtherExpenseMasterCodeExpRc = "RC";
 }

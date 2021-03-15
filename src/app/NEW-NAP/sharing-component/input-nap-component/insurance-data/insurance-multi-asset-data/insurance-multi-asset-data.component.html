@@ -256,7 +256,7 @@
                     </div>
                   </div>
                   <div class="form-actions right">
-                    <button type="button" class="btn btn-raised btn-primary" (click)="GenerateInsurance()">
+                    <button type="button" class="btn btn-raised btn-primary" (click)="GenerateInsurance()" translate>
                       <i class="fa fa-check-square-o"></i> Generate Insurance
                     </button>
                   </div>
@@ -304,7 +304,7 @@
                       </select>
                     </div>
                     <div class="col-md-6">
-                      <button type="button" class="btn btn-raised btn-primary" (click)="ApplyToCoverage()">
+                      <button type="button" class="btn btn-raised btn-primary" (click)="ApplyToCoverage()" translate>
                         <i class="fa fa-check-square-o"></i> Apply To All
                       </button>
                     </div>
@@ -327,7 +327,7 @@
                     </div>
                   </div>
                   <div class="form-actions right">
-                    <button type="button" class="btn btn-raised btn-primary" (click)="CalculateInsurance()">
+                    <button type="button" class="btn btn-raised btn-primary" (click)="CalculateInsurance()" translate>
                       <i class="fa fa-check-square-o"></i> Calculate Insurance
                     </button>
                   </div>
@@ -523,12 +523,11 @@
               <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
                 <i class="ft-x"></i> Cancel
               </button>
-              <button type="submit" class="btn btn-raised btn-primary">
+              <button type="submit" class="btn btn-raised btn-primary" translate>
                 <i class="far fa-check-square"></i> Save
               </button>
             </div>
           </form>
-
           <br>
         </form>
         <form [hidden]="PageState != 'Paging'" class="form form-horizontal" [formGroup]="AppInsForm"
@@ -556,7 +555,7 @@
               translate>
               <i class="ft-x"></i> Cancel
             </button>
-            <button type="submit" class="btn btn-raised btn-primary">
+            <button type="submit" class="btn btn-raised btn-primary" translate>
               <i class="far fa-check-square"></i> Save
             </button>
           </div>

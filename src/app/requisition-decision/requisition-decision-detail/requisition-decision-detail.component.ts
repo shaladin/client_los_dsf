@@ -27,11 +27,16 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   IsSecondDetail: boolean = false;
   IsExisting: boolean = false;
 
-  ChasisNo: string = "-";
-  EngineNo: string = "-";
-  LicensePlateNo: string = "-";
+  SerialNo1: string = "-";
+  SerialNo2: string = "-";
+  SerialNo3: string = "-";
+  SerialNo4: string = "-";
+  SerialNo5: string = "-";
+  AssetTypeCode: string = "";
 
   AssetInfoObj: any;
+  AssetObj: any;
+  AssetTypeObj: any;
 
   ListOfAsset: Array<any> = new Array<any>();
   AttributeList: Array<any> = new Array<any>();
@@ -64,11 +69,11 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // this.InputLookupAssetObj.urlJson = "./assets/uclookup/Lead/lookupAsset.json";
+    this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    // this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
-    // this.InputLookupAssetObj.pagingJson = "./assets/uclookup/Lead/lookupAsset.json";
-    // this.InputLookupAssetObj.genericJson = "./assets/uclookup/Lead/lookupAsset.json";
+    this.InputLookupAssetObj.urlEnviPaging = URLConstant.AmsUrl;
+    this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
+    this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetObj.isRequired = true;
 
     await this.SetMainInfo();
@@ -141,7 +146,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     this.ReqDecForm.controls.ManYear.disable();
 
     var requestAppAssetId = {
-      AppAssetId: this.AppAssetId
+      Id: this.AppAssetId
     };
 
     this.http.post(URLConstant.GetListAppAssetAccessoryAndAppAssetAttrByAppAssetId, requestAppAssetId).subscribe(
@@ -162,10 +167,32 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     this.ReqDecForm.patchValue({
       AssetNo: event.AssetNo
     });
+    
+    var requestAssetNo = {
+      AssetNo: event.AssetNo
+    };
 
-    // this.ChasisNo = event.ChasisNo;
-    // this.EngineNo = event.EngineNo;
-    // this.LicensePlateNo = event.LicensePlateNo;
+    // this.SerialNo1 = event.SerialNo1;
+    // this.SerialNo2 = event.SerialNo2;
+    // this.SerialNo3 = event.SerialNo3;
+
+    this.http.post(URLConstant.GetAssetByAssetNo, requestAssetNo).subscribe(
+      (response: any) => {
+        this.AssetObj = response;
+        this.AssetTypeCode = this.AssetObj.AssetTypeCode;
+        this.SerialNo1 = this.AssetObj.SerialNo1;
+        this.SerialNo2 = this.AssetObj.SerialNo2;
+        this.SerialNo3 = this.AssetObj.SerialNo3;
+        this.SerialNo4 = this.AssetObj.SerialNo4;
+        this.SerialNo5 = this.AssetObj.SerialNo5;
+      }
+    );
+
+    this.http.post(URLConstant.GetAssetTypeByCode, { AssetTypeCode: this.AssetTypeCode }).subscribe(
+      (response: any) => {
+        this.AssetTypeObj = response;
+      }
+    );
   }
 
   ChangeDecision(decisionCode: string) {
@@ -177,11 +204,30 @@ export class RequisitionDecisionDetailComponent implements OnInit {
           AssetNo: this.AssetInfoObj.AssetNo
         });
   
-        this.InputLookupAssetObj.nameSelect = this.AssetInfoObj.AssetNo;
+        this.InputLookupAssetObj.jsonSelect = { AssetNo: this.AssetInfoObj.AssetNo };
+        this.InputLookupAssetObj.idSelect = this.AssetInfoObj.AssetNo;
 
-        // this.ChasisNo = ChasisNo (Belum Tau Dapat Dari Mana);
-        // this.EngineNo = EngineNo (Belum Tau Dapat Dari Mana);
-        // this.LicensePlateNo = LicensePlateNo (Belum Tau Dapat Dari Mana);
+        var requestAssetNo = {
+          AssetNo: this.AssetInfoObj.AssetNo
+        };
+
+        this.http.post(URLConstant.GetAssetByAssetNo, requestAssetNo).subscribe(
+          (response: any) => {
+            this.AssetObj = response;
+            this.AssetTypeCode = this.AssetObj.AssetTypeCode;
+            this.SerialNo1 = this.AssetObj.SerialNo1;
+            this.SerialNo2 = this.AssetObj.SerialNo2;
+            this.SerialNo3 = this.AssetObj.SerialNo3;
+            this.SerialNo4 = this.AssetObj.SerialNo4;
+            this.SerialNo5 = this.AssetObj.SerialNo5;
+          }
+        );
+
+        this.http.post(URLConstant.GetAssetTypeByCode, { AssetTypeCode: this.AssetTypeCode }).subscribe(
+          (response: any) => {
+            this.AssetTypeObj = response;
+          }
+        );
       }
 
       this.IsExisting = true;

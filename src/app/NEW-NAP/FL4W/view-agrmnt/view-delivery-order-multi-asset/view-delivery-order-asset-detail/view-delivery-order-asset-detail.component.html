@@ -2,6 +2,7 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-body">
+
         <div class="card-header header-title">
           <div class="row">
             <div class="col-md-8">
@@ -10,24 +11,53 @@
             </div>
           </div>
         </div>
+
         <div class="px-3">
+
           <lib-ucSubsection [title]="'ASSET INFORMATION'" [panel]="'AssetPanel'">
           </lib-ucSubsection>
           <div id="AssetPanel">
-            <div class="form-group row">
+            <!-- <div class="form-group row">
               <label class="col-md-3 adInsLabel" translate>Serial No 1</label>
               <label class="col-md-3 adInsLabel" translate>{{assetData?.ResponseAppCollateralObj?.SerialNo1 }} </label>
               <label class="col-md-3 adInsLabel" translate>Lisence Plate No</label>
               <label class="col-md-3 adInsLabel" translate>{{assetData?.ResponseAppCollateralObj?.SerialNo3 }} </label>
+            </div> -->
+            
+            <div class="form-group row">
+              <div *ngIf="AssetTypeObj?.SerialNo1Label">
+                <label class="col-md-3 adInsLabel" translate>{{AssetTypeObj?.SerialNo1Label}}</label>
+                <label class="col-md-3 adInsLabel" translate>{{assetData?.ResponseAppCollateralObj?.SerialNo1 }} </label>
+              </div>
+              <div *ngIf="AssetTypeObj?.SerialNo2Label">
+                <label class="col-md-3 adInsLabel" translate>{{AssetTypeObj?.SerialNo2Label}}</label>
+                <label class="col-md-3 adInsLabel" translate>{{assetData?.ResponseAppCollateralObj?.SerialNo2 }} </label>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <div *ngIf="AssetTypeObj?.SerialNo3Label">
+                <label class="col-md-3 adInsLabel" translate>{{AssetTypeObj?.SerialNo3Label}}</label>
+                <label class="col-md-3 adInsLabel" translate>{{assetData?.ResponseAppCollateralObj?.SerialNo3 }} </label>
+              </div>
+              <div *ngIf="AssetTypeObj?.SerialNo4Label">
+                <label class="col-md-3 adInsLabel" translate>{{AssetTypeObj?.SerialNo4Label}}</label>
+                <label class="col-md-3 adInsLabel" translate>{{assetData?.ResponseAppCollateralObj?.SerialNo4 }} </label>
+              </div>
             </div>
             <div class="form-group row">
-              <label class="col-md-3 adInsLabel" translate>Serial No 2</label>
-              <label class="col-md-3 adInsLabel" translate>{{assetData?.ResponseAppCollateralObj?.SerialNo2}} </label>
+              <!-- <label class="col-md-3 adInsLabel" translate>Serial No 2</label>
+              <label class="col-md-3 adInsLabel" translate>{{assetData?.ResponseAppCollateralObj?.SerialNo2}} </label> -->
+              <div *ngIf="AssetTypeObj?.SerialNo5Label">
+                <label class="col-md-3 adInsLabel" translate>{{AssetTypeObj?.SerialNo5Label}}</label>
+                <label class="col-md-3 adInsLabel" translate>{{assetData?.ResponseAppCollateralObj?.SerialNo5}} </label>
+              </div>
               <label class="col-md-3 adInsLabel" translate>Manufacturing Year</label>
               <label class="col-md-3 adInsLabel" translate>{{assetData?.ResponseAppCollateralObj?.ManufacturingYear}}
               </label>
             </div>
           </div>
+
           <lib-ucSubsection [title]="'MAIN DOCUMENT LETTER'" [panel]="'DocPanel'">
           </lib-ucSubsection>
           <div id="DocPanel">
@@ -35,46 +65,52 @@
               <label class="col-md-3 adInsLabel" translate>Temporary Registration Letter No</label>
               <label class="col-md-3 adInsLabel" translate>{{assetData?.ResponseAppAssetObj?.TempRegisLettNo}} </label>
               <label class="col-md-3 adInsLabel" translate>Temporary Registration Letter Date</label>
-              <label class="col-md-3 adInsLabel"
-                translate>{{assetData?.ResponseAppAssetObj?.TempRegisLettDt  | date: 'dd-MMM-yyyy'}} </label>
+              <label class="col-md-3 adInsLabel" translate>{{assetData?.ResponseAppAssetObj?.TempRegisLettDt  | date: 'dd-MMM-yyyy'}} </label>
             </div>
           </div>
         
-        <lib-ucSubsection [title]="'Asset Document'" [panel]="'assetDocument'">
-        </lib-ucSubsection>
-        <div id="assetDocument">
-          <table class="table table-responsive-md text-center table-hover">
-            <thead>
-              <tr class="table-header">
-                <th class="text-left"><span class="thead-header" translate>Document Name
-                  </span> </th>
-                <th class="text-center"><span class="thead-header" translate>Value Needed
-                  </span> </th>
-                <th class="text-center"><span class="thead-header" translate>Mandatory
-                  </span> </th>
-                <th class="text-center"><span class="thead-header" translate>Document No
-                  </span> </th>
-                <th class="text-left"><span class="thead-header" translate>Notes
-                  </span> </th>
-              </tr>
-            </thead>
-            <tbody>
-              <ng-container *ngFor="let item of doList">
-                <tr>
-                  <td class="text-left">{{item.DocName}}</td>
-                  <td *ngIf="item.IsValueNeeded == true" class="text-center">Yes</td>
-                  <td *ngIf="item.IsValueNeeded == false" class="text-center">No</td>
-                  <td *ngIf="item.IsMandatory == true" class="text-center">Yes</td>
-                  <td *ngIf="item.IsMandatory == false" class="text-center">No</td>
-                  <td class="text-center">{{item.DocNo}}</td>
-                  <td class="text-left">{{item.Notes}}</td>
+          <lib-ucSubsection [title]="'Asset Document'" [panel]="'assetDocument'">
+          </lib-ucSubsection>
+          <div id="assetDocument">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th class="text-left">
+                    <span class="thead-header" translate>Document Name</span>
+                  </th>
+                  <th class="text-center">
+                    <span class="thead-header" translate>Value Needed</span>
+                  </th>
+                  <th class="text-center">
+                    <span class="thead-header" translate>Mandatory</span>
+                  </th>
+                  <th class="text-center">
+                    <span class="thead-header" translate>Document No</span>
+                  </th>
+                  <th class="text-left">
+                    <span class="thead-header" translate>Notes</span>
+                  </th>
                 </tr>
-              </ng-container>
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let item of doList">
+                  <tr>
+                    <td class="text-left">{{item.DocName}}</td>
+                    <td *ngIf="item.IsValueNeeded == true" class="text-center">Yes</td>
+                    <td *ngIf="item.IsValueNeeded == false" class="text-center">No</td>
+                    <td *ngIf="item.IsMandatory == true" class="text-center">Yes</td>
+                    <td *ngIf="item.IsMandatory == false" class="text-center">No</td>
+                    <td class="text-center">{{item.DocNo}}</td>
+                    <td class="text-left">{{item.Notes}}</td>
+                  </tr>
+                </ng-container>
+              </tbody>
+            </table>
+          </div>
+
         </div>
+
       </div>
     </div>
   </div>
-</div>
 </div>

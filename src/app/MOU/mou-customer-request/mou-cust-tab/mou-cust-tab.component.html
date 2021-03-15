@@ -39,7 +39,7 @@
                   </select>
                   <div class="input-group-append">
                     <span class="input-group-btn">
-                      <button class="btn btn-raised btn-primary" type="button" (click)="copyToResidence()">
+                      <button class="btn btn-raised btn-primary" type="button" (click)="copyToResidence()" translate>
                         <i class="fa fa-check-square-o"></i>Copy
                       </button>
                     </span>
@@ -64,7 +64,7 @@
                   </select>
                   <div class="input-group-append">
                     <span class="input-group-btn">
-                      <button class="btn btn-raised btn-primary" type="button" (click)="copyToMailing()">
+                      <button class="btn btn-raised btn-primary" type="button" (click)="copyToMailing()" translate>
                         <i class="fa fa-check-square-o"></i>Copy
                       </button>
                     </span>
@@ -100,7 +100,7 @@
               <label class="col-md-3 adins-required-label" translate>Integrator Checking</label>
               <div class="col-md-4">
                 <button type="button" class="btn btn-raised btn-success mr-1" [disabled]="!CustDataForm.valid"
-                  (click)="checkIntegrator()">
+                  (click)="checkIntegrator()" translate>
                   <i class="fa fa-check-square-o"></i> Hit Integrator
                 </button>
                 <label *ngIf="this.thirdPartyRsltHId != null && this.thirdPartyRsltHId != '' " translate>Requested At
@@ -113,7 +113,7 @@
               translate>
               <i class="ft-x"></i> Cancel
             </button>
-            <button type="submit" class="btn btn-raised btn-primary">
+            <button type="submit" class="btn btn-raised btn-primary" translate>
               <i class="fa fa-check-square"></i> Save
             </button>
           </div>
