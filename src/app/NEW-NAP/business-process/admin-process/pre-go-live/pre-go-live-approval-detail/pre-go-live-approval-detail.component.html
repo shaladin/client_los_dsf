@@ -15,9 +15,9 @@
               <div class="col-md-4 blue">
                 <label id="AppNo" translate><a href="javascript:void(0);" (click)="OpenView('app')">{{AppNo}}</a></label>
               </div>
-              <label class="col-md-2 adInsLabel" *ngIf="result4.BizTemplateCode != 'CFNA'" translate>Num Of Asset</label>
-              <div class="col-md-4" *ngIf="result4.BizTemplateCode != 'CFNA'">
-                <label id="NumOfAsset" translate>{{NumOfAsset}}</label>
+              <label class="col-md-2 adInsLabel" *ngIf="result4?.BizTemplateCode != 'CFNA'" [hidden]="result4?.BizTemplateCode == 'FCTR'" translate>Num Of Asset</label>
+              <div class="col-md-4" *ngIf="result4?.BizTemplateCode != 'CFNA'">
+                <label [hidden]="result4?.BizTemplateCode == 'FCTR'" id="NumOfAsset" translate>{{NumOfAsset}}</label>
               </div>
             </div>
 
@@ -59,9 +59,9 @@
               <div class="col-md-4">
                 <label id="CustName" translate>{{CustName}}</label>
               </div>
-              <label *ngIf="result4.BizTemplateCode != 'CFRFN4W' && result4.BizTemplateCode != 'CFNA'" class="col-md-2 adInsLabel" translate>Delivery Date</label>
-              <div class="col-md-4" *ngIf="result4.BizTemplateCode != 'CFRFN4W' && result4.BizTemplateCode != 'CFNA'">
-                <label id="DeliveryDt" translate>{{DeliveryDt}}</label>
+              <label *ngIf="result4?.BizTemplateCode != 'CFRFN4W' && result4?.BizTemplateCode != 'CFNA'" [hidden]="result4?.BizTemplateCode == 'FCTR'" class="col-md-2 adInsLabel" translate>Delivery Date</label>
+              <div class="col-md-4" *ngIf="result4?.BizTemplateCode != 'CFRFN4W' && result4?.BizTemplateCode != 'CFNA'">
+                <label id="DeliveryDt" [hidden]="result4?.BizTemplateCode == 'FCTR'" translate>{{DeliveryDt}}</label>
               </div>
             </div>
 

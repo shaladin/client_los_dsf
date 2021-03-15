@@ -41,14 +41,12 @@
                     <th><span translate class="thead-header">Stock Asset Name</span></th>
                     <th>
                       <span translate class="thead-header">
-                        Chassis No
-                        / Engine No
+                        Serial No 1 / Serial No 2
                       </span>
                     </th>
                     <th>
                       <span translate class="thead-header">
-                        License
-                        Plate No
+                        Serial No 3
                       </span>
                     </th>
                     <th><span translate class="thead-header">Asset Location</span></th>
@@ -80,11 +78,11 @@
                     </td>
                     <td [formGroupName]="i" class="text-center">
                       <lib-uclookupgeneric [enjiForm]="enjiForm"
-            [lookupInput]="dictAssetNumber[AssetAllocationForm.controls['ListAsset']['controls'][i]['controls'].No.value]"
-            [parentForm]="AssetAllocationForm"
-            [identifier]="'lookupAssetNumberObj' + AssetAllocationForm.controls['ListAsset']['controls'][i]['controls'].No.value"
-            (lookup)="SetAssetNumber(i,$event)"></lib-uclookupgeneric>
-                      
+                        [lookupInput]="dictAssetNumber[AssetAllocationForm.controls['ListAsset']['controls'][i]['controls'].No.value]"
+                        [parentForm]="AssetAllocationForm"
+                        [identifier]="'lookupAssetNumberObj' + AssetAllocationForm.controls['ListAsset']['controls'][i]['controls'].No.value"
+                        (lookup)="SetAssetNumber(i,$event)">
+                      </lib-uclookupgeneric>
                     </td>
                     <td [formGroupName]="i" class="text-center">
                       {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["StockAssetName"].value}} {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["ManuYearAssetNumber"].value}} - {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["ColorAssetNumber"].value}}
@@ -110,13 +108,13 @@
               <table class="table table-responsive-md text-center table-hover">
                 <thead>
                   <tr class="table-header">
-                    <th class="text-left">Seq No</th>
-                    <th class="text-left">Requested Asset Name</th>
-                    <th class="text-left">Asset Requisition No</th>
-                    <th class="text-center">PO Date</th>
-                    <th class="text-center">Asset Activation Date</th>
-                    <th class="text-left">Accessories / Available Status</th>
-                    <th class="text-left">Take Over Agreement No</th>
+                    <th translate class="text-left">Seq No</th>
+                    <th translate class="text-left">Requested Asset Name</th>
+                    <th translate class="text-left">Asset Requisition No</th>
+                    <th translate class="text-center">PO Date</th>
+                    <th translate class="text-center">Asset Activation Date</th>
+                    <th translate class="text-left">Accessories / Available Status</th>
+                    <th translate class="text-left">Take Over Agreement No</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -133,8 +131,8 @@
               </table>
             </div>
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-warning mr-1"
-                      (click)="backToPaging()" translate>
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="backToPaging()"
+                translate>
                 <i class="ft-x"></i> Cancel
               </button>
               <button type="submit" class="btn btn-raised btn-primary" translate>

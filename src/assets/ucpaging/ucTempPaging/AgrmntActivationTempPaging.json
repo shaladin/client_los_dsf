@@ -21,12 +21,6 @@
         },
         {
             "type": "sort",
-            "position": "right",
-            "label": "Down Payment Amount",
-            "name": "DOWN_PAYMENT_AMT"
-        },
-        {
-            "type": "sort",
             "position": "center",
             "label": "Serial No 1",
             "name": "SERIAL_NO_1"
@@ -54,11 +48,6 @@
             "type": "decimal",
             "position": "right",
             "property": "AssetPriceAmt"
-        },
-        {
-            "type": "decimal",
-            "position": "right",
-            "property": "DownPaymentAmt"
         },
         {
             "type": "text",

@@ -882,7 +882,7 @@ export class URLConstant {
   public static GetAgrmntByAgrmntId = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntId";
   public static GetAgrmntByCustNo = environment.losUrl + "/Agrmnt/GetAgrmntByCustNo";
   public static GetAgrmntByAppId = environment.losUrl + "/Agrmnt/GetAgrmntByAppId";
-  public static GetAgrmntByAppIdGetAgrmntByAgrmntNo = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntNo";
+  public static GetAgrmntByAgrmntNo = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntNo";
   public static GetAgrmtSummaryByAgrmntId = environment.losUrl + "/Agrmnt/GetAgrmtSummaryByAgrmntId";
 
   //AGRMNT Commission
@@ -1276,6 +1276,8 @@ export class URLConstant {
   public static GetRefReasonActive = "/Approval/GetRefReasonActive";
   public static GetCanChangeMinFinalLevel = "/Approval/GetCanChangeMinFinalLevel";
   public static GetTaskHistory = "/Approval/GetTaskHistory";
+  public static ReturnLevel = "/Approval/ReturnLevel";
+  public static ContinueToLevel = "/Approval/ContinueToLevel";
 
   // Digitalization
   public static DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO = environment.losUrl + "/Digitalization/DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO";
@@ -1332,6 +1334,10 @@ export class URLConstant {
   public static GetAppFinDataOplByAppAssetId = environment.losUrl + "/AppAssetRentDataOpl/GetAppFinDataOplByAppAssetId";
   public static AddEditFinDataOpl = environment.losUrl + "/AppAssetFinancialDataOpl/SubmitFinancialDataOpl";
   public static GetListAppAssetFinDataGridByAppId = environment.losUrl + "/AppAssetRentDataOpl/GetListAppAssetFinDataGridByAppId";
+  public static CalculateFinancialOpl = environment.losUrl + "/AppFinData/CalculateFinancialOpl";
+  public static GetFinancialRuleOpl = environment.losUrl + "/AppAssetFinancialDataOpl/GetFinancialRuleOpl";
+  public static CalculateCOFOpl = environment.losUrl + "/AppFinData/CalculateCOFOpl";
+
 
   //Asset Allocation
   public static GetAssetAllocationDataByAppId = environment.losUrl + "/AppAssetAllocationOpl/GetAssetAllocationDataByAppId";

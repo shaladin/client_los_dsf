@@ -4,7 +4,7 @@
   <div class="card-body">
     <div class="px-3">
       <form class="form form-horizontal" [formGroup]="ReturnHandlingForm" (ngSubmit)="ReturnHandlingForm.valid && SaveForm()"
-            #enjiForm="ngForm">
+        #enjiForm="ngForm">
         <div class="form-body">
           <div *ngIf="returnHandlingDObj">
             <lib-ucSubsection [id]="'returnInformationId'" [title]="'Return Information'" [panel]="'returnInformation'">
@@ -70,7 +70,7 @@
                   <label class="col-md-4  adInsLabel" translate>Is Need Update Application</label>
                   <div class="col-md-8">
                     <select class="form-control" id="isAnyUpdate" formControlName="IsAnyUpdate" (change)="CheckState($event.target.value)"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && ReturnHandlingForm.controls.IsAnyUpdate.invalid }" style="width:50%">
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && ReturnHandlingForm.controls.IsAnyUpdate.invalid }" style="width:50%">
                       <option value="">-Select One-</option>
                       <option value="YES">Yes</option>
                       <option value="NO">No</option>
@@ -102,11 +102,10 @@
             </div>
           </div>
           <div class="form-actions right">
-            <button type="button" class="btn btn-raised btn-warning mr-1 margin-r-5" (click)="back()">
+            <button type="button" class="btn btn-raised btn-warning mr-1 margin-r-5" (click)="back()" translate>
               <i class="ft-x"></i> Cancel
             </button>
-
-            <button type="submit" class="btn btn-raised btn-primary">
+            <button type="submit" class="btn btn-raised btn-primary" translate>
               <i class="far fa-check-square"></i> Save
             </button>
           </div>

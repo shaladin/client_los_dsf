@@ -154,7 +154,7 @@
                 </div>
                 <div class="input-group-append">
                   <span class="input-group-btn">
-                    <button class="btn btn-raised btn-primary" type="button" (click)="copyToCollateralOwnerAddr()">
+                    <button class="btn btn-raised btn-primary" type="button" (click)="copyToCollateralOwnerAddr()" translate>
                       <i class="fa fa-check-square-o"></i>Copy
                     </button>
                   </span>
@@ -181,7 +181,7 @@
               </lib-ucSubsection>
               <div [id]="assetAttr">
                 <div class="form-actions right">
-                  <button type="button" name="refreshAttr" id="add" (click)="refreshAttr()"
+                  <button type="button" name="refreshAttr" id="add" (click)="refreshAttr()" translate
                     class="btn btn-raised btn-primary">
                     Refresh Attribute
                   </button>
@@ -232,7 +232,6 @@
               </div>
             <!-- </div> -->
 
-
             <lib-ucSubsection [id]="'collLocId'" [title]="'Collateral Location'" [panel]="'collLoc'">
             </lib-ucSubsection>
             <div id="collLoc">
@@ -248,7 +247,7 @@
                 </div>
                 <div class="input-group-append">
                   <span class="input-group-btn">
-                    <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
+                    <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()" translate>
                       <i class="fa fa-check-square-o"></i>Copy
                     </button>
                   </span>

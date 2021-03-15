@@ -74,7 +74,7 @@ export class AgreementViewContainerComponent implements OnInit {
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
-    var agrObj = { AgrmntId: this.AgrmntId };
+    var agrObj = { Id: this.AgrmntId };
 
     await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj).subscribe(
       (response) => {
@@ -122,7 +122,7 @@ export class AgreementViewContainerComponent implements OnInit {
 
   async GetAgrmnt() {
     var agrmntObj = {
-      AgrmntId: this.AgrmntId,
+      Id: this.AgrmntId,
     };
     this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
       (response) => {

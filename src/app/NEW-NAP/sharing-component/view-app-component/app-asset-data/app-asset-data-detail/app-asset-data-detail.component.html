@@ -1,9 +1,10 @@
 <div class="modal-header">
-  <h4 class="modal-title">Asset Detail</h4>
+  <h4 class="modal-title" translate>Asset Detail</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
+
 <div class="modal-body">
   <lib-ucSubsection [id]="'SupplierInfoId'" [title]="'SUPPLIER INFO'" [panel]="'SupplierInfoSection'"></lib-ucSubsection>
   <div id="SupplierInfoSection">
@@ -18,6 +19,7 @@
           <label class="col-md-9 adInsLabel">{{branchManagerName == null ? '-' : branchManagerName}}</label>
         </div>
       </div>
+
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
         <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
           <label class="col-md-3 adInsLabel" translate>Sales Person Name</label>
@@ -30,6 +32,7 @@
       </div>
     </div>
   </div>
+
   <lib-ucSubsection [id]="'AssetInfoId'" [title]="'ASSET INFO'" [panel]="'AssetInfoSection'"></lib-ucSubsection>
   <div id="AssetInfoSection">
     <div class="col-md-12">
@@ -43,6 +46,7 @@
           <label class="col-md-9 adInsLabel">{{appAsset?.DownPaymentAmt | number:'.2':'en-US'}}</label>
         </div>
       </div>
+
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
         <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
           <label class="col-md-3 adInsLabel" translate>Asset Price</label>
@@ -53,26 +57,55 @@
           <label class="col-md-9 adInsLabel">{{appAsset?.MrAssetUsageCode}}</label>
         </div>
       </div>
+
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
         <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
           <label class="col-md-3 adInsLabel" translate>Asset Condition</label>
           <label class="col-md-9 adInsLabel">{{appAsset?.MrAssetConditionCode}}</label>
         </div>
-        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
-          <label class="col-md-3 adInsLabel" translate>Chassis No</label>
+        <!-- <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+          <label class="col-md-3 adInsLabel" translate>Nomor Rangka</label>
           <label class="col-md-9 adInsLabel">{{appAsset?.ChassisNo}}</label>
+        </div> -->
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;" *ngIf="AssetTypeObj?.SerialNo1Label">
+          <label class="col-md-3 adInsLabel">{{AssetTypeObj?.SerialNo1Label}}</label>
+          <label class="col-md-9 adInsLabel">{{appAsset?.SerialNo1}}</label>
         </div>
       </div>
-      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+
+      <!-- <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
         <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
-          <label class="col-md-3 adInsLabel" translate>License Plate No</label>
+          <label class="col-md-3 adInsLabel" translate>Nomor Pokisi</label>
           <label class="col-md-9 adInsLabel">{{appAsset?.LicensePlateNo}}</label>
         </div>
         <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
-          <label class="col-md-3 adInsLabel" translate>Engine No</label>
+          <label class="col-md-3 adInsLabel" translate>Nomor Mesin</label>
           <label class="col-md-9 adInsLabel">{{appAsset?.EngineNo}}</label>
         </div>
+      </div> -->
+
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;" *ngIf="AssetTypeObj?.SerialNo2Label">
+          <label class="col-md-3 adInsLabel">{{AssetTypeObj?.SerialNo2Label}}</label>
+          <label class="col-md-9 adInsLabel">{{appAsset?.SerialNo2}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;" *ngIf="AssetTypeObj?.SerialNo3Label">
+          <label class="col-md-3 adInsLabel">{{AssetTypeObj?.SerialNo3Label}}</label>
+          <label class="col-md-9 adInsLabel">{{appAsset?.SerialNo3}}</label>
+        </div>
       </div>
+
+      <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;" *ngIf="AssetTypeObj?.SerialNo4Label">
+          <label class="col-md-3 adInsLabel">{{AssetTypeObj?.SerialNo4Label}}</label>
+          <label class="col-md-9 adInsLabel">{{appAsset?.SerialNo4}}</label>
+        </div>
+        <div class="col-md-12" style="padding: 0; margin-bottom: 5px;" *ngIf="AssetTypeObj?.SerialNo5Label">
+          <label class="col-md-3 adInsLabel">{{AssetTypeObj?.SerialNo5Label}}</label>
+          <label class="col-md-9 adInsLabel">{{appAsset?.SerialNo5}}</label>
+        </div>
+      </div>
+
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
         <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
           <label class="col-md-3 adInsLabel" translate>Manufacturing Year</label>
@@ -85,6 +118,7 @@
       </div>
     </div>
   </div>
+
   <lib-ucSubsection [id]="'AssetUserId'" [title]="'ASSET USER'" [panel]="'AssetUserSection'"></lib-ucSubsection>
   <div id="AssetUserSection">
     <div class="col-md-12">
@@ -98,6 +132,7 @@
       </div>
     </div>
   </div>
+
   <lib-ucSubsection [id]="'AssetLocationId'" [title]="'ASSET LOCATION'" [panel]="'AssetLocationSection'"></lib-ucSubsection>
   <div id="AssetLocationSection">
     <div class="col-md-12">
@@ -111,6 +146,7 @@
           <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.LocationZipcode}}</label>
         </div>
       </div>
+
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
         <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
           <label class="col-md-3 adInsLabel" translate>RT / RW</label>
@@ -121,6 +157,7 @@
           <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.LocationAreaCode2}}</label>
         </div>
       </div>
+
       <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
         <!-- <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
           <label class="col-md-3 adInsLabel" translate>RW</label>
@@ -135,6 +172,7 @@
           <label class="col-md-9 adInsLabel">{{appCollateralRegistration?.LocationCity}}</label>
         </div>
       </div>
+
       <!-- <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
         <div class="col-md-12" style="padding: 0; margin-bottom: 5px;">
           <label class="col-md-3 adInsLabel" translate>City</label>
@@ -144,6 +182,7 @@
     </div>
   </div>
 </div>
+
 <div class="modal-footer">
   <button type="button" class="btn btn-warning btn-raised" (click)="activeModal.dismiss('0')">Cancel</button>
 </div>

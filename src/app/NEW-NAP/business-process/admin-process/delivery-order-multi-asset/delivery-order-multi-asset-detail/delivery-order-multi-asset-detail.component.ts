@@ -134,7 +134,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     this.dmsAppObj.Role = currentUserContext.RoleCode;
     this.dmsAppObj.ViewCode = CommonConstant.DmsViewCodeApp;
 
-    var agrObj = { AgrmntId: this.agrmntId };
+    var agrObj = { Id: this.agrmntId };
     var appObj = { AppId: this.appId };
 
     let getAgr = await this.httpClient.post(URLConstant.GetAgrmntByAgrmntId, agrObj)

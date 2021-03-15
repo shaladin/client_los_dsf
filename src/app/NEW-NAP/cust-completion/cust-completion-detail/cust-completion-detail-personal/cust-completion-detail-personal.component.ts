@@ -27,7 +27,6 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
   WfTaskListId: number;
   AppCustPersonalId: number;
   stepIndex: number = 1;
-  BizTemplateCode: string;
   CustModelCode: string;
   IsMarried: boolean = false;
   private stepper: Stepper;
@@ -70,9 +69,6 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       if (params['WfTaskListId'] != null) {
         this.WfTaskListId = params['WfTaskListId'];
       }
-      if (params['BizTemplateCode'] != null) {
-        this.BizTemplateCode = params['BizTemplateCode'];
-      }
       if (params["ReturnHandlingHId"] != null) {
         this.ReturnHandlingHId = params["ReturnHandlingHId"];
       }
@@ -111,10 +107,10 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
 
   Back() {
     if (this.ReturnHandlingHId != 0) {
-      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "ReturnHandlingHId": this.ReturnHandlingHId, "BizTemplateCode": this.BizTemplateCode } });
+      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "ReturnHandlingHId": this.ReturnHandlingHId} });
     }
     else {
-      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "BizTemplateCode": this.BizTemplateCode } });
+      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId} });
     }
   }
 

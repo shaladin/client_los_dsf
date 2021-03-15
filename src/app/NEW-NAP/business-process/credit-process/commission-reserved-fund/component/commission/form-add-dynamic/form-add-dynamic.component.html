@@ -20,7 +20,7 @@
                 <div class="form-group row">
                   <!-- Content Name -->
                   <div class="col-md-2 adins-required">
-                    <label class="adInsLabel">{{FormInputObj['labelName']}} Name</label>
+                    <label class="adInsLabel" translate>{{FormInputObj['labelName']}} Name</label>
                   </div>
                   <div class="col-md-4">
                     <div class="row">
@@ -48,13 +48,13 @@
                 <div class="form-group row"
                   *ngIf="item.controls.ContentName.value != '' && FormInputObj['content'] == 'SupplierEmployee'">
                   <div class="form-group col-md-2">
-                    <label class="adInsLabel"> Supplier Position</label>
+                    <label class="adInsLabel" translate> Supplier Position</label>
                   </div>
                   <div class="col-md-4">
                     <label class="adInsLabel"> {{item.controls.MrSupplEmpPositionCodeDesc.value}} </label>
                   </div>
                   <div class="form-group col-md-2">
-                    <label class="adInsLabel"> Supplier Name</label>
+                    <label class="adInsLabel" translate> Supplier Name</label>
                   </div>
                   <div class="col-md-4">
                     <label class="adInsLabel"> {{FormInputObj['dictSuppl'][item.controls.SupplCode.value]}} </label>
@@ -64,7 +64,7 @@
                   <div class="form-group row">
                     <!-- Bank Account -->
                     <div class="col-md-2 adins-required">
-                      <label class="adInsLabel">Bank Account</label>
+                      <label class="adInsLabel" translate>Bank Account</label>
                     </div>
                     <div class="col-md-4">
                       <select class="form-control full-width adInsInput" formControlName="BankAccountNo"
@@ -78,7 +78,7 @@
                     </div>
 
                     <!-- Tax Amount -->
-                    <label class="col-md-2 adInsLabel">Tax Amount </label>
+                    <label class="col-md-2 adInsLabel" translate>Tax Amount </label>
                     <div class="col-md-4" style="text-align: right;">
                           <label class="adInsLabel" currencyMask *ngIf="item.controls.TotalTaxAmount.value != ''">
                             {{item.controls.TotalTaxAmount.value | number:'.2':'en-US'}} </label>
@@ -89,20 +89,20 @@
                   <div class="form-group row">
                     <!-- Total Commission Amount -->
                     <div class="col-md-2">
-                      <label class="adInsLabel">Total Commission Amount</label>
+                      <label class="adInsLabel" translate>Total Commission Amount</label>
                     </div>
                     <div class="col-md-4" style="text-align: right;">
-                          <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value != ''">
-                            {{item.controls.TotalCommisionAmount.value | number:'.2':'en-US'}} </label>
-                          <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
+                      <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value != ''">
+                        {{item.controls.TotalCommisionAmount.value | number:'.2':'en-US'}} </label>
+                      <label class="adInsLabel" *ngIf="item.controls.TotalCommisionAmount.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
                     </div>
 
                     <!-- VAT Amount -->
-                    <label class="col-md-2 adInsLabel">VAT Amount </label>
+                    <label class="col-md-2 adInsLabel" translate>VAT Amount </label>
                     <div class="col-md-4" style="text-align: right;">
-                          <label class="adInsLabel" *ngIf="item.controls.TotalVATAmount.value != ''">
-                            {{item.controls.TotalVATAmount.value | number:'.2':'en-US'}} </label>
-                          <label class="adInsLabel" *ngIf="item.controls.TotalVATAmount.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
+                      <label class="adInsLabel" *ngIf="item.controls.TotalVATAmount.value != ''">
+                        {{item.controls.TotalVATAmount.value | number:'.2':'en-US'}} </label>
+                      <label class="adInsLabel" *ngIf="item.controls.TotalVATAmount.value == ''"> {{ 0 | number:'.2':'en-US' }} </label>
                     </div>
                   </div>
 
@@ -114,7 +114,7 @@
                           <div *ngFor="let ruleItem of item.controls.ListAllocated.controls; let idx = index">
                             <div class="form-group row" [formGroupName]="idx"
                               *ngIf="ruleItem.controls.TotalListAllocatedDivided.value > idx">
-                              <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFromDesc.value}}
+                              <label class="col-md-4 adInsLabel" translate> {{ruleItem.controls.AllocationFromDesc.value}}
                               </label>
                               <div class="col-md-8" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
                                 <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
@@ -136,7 +136,7 @@
                           <div *ngFor="let ruleItem of item.controls.ListAllocated.controls; let idx = index">
                             <div class="form-group row" [formGroupName]="idx"
                               *ngIf="ruleItem.controls.TotalListAllocatedDivided.value <= idx">
-                              <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFromDesc.value}}
+                              <label class="col-md-4 adInsLabel" translate> {{ruleItem.controls.AllocationFromDesc.value}}
                               </label>
                               <div class="col-md-8" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
                                 <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
