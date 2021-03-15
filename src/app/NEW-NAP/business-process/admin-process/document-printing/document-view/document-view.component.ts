@@ -103,7 +103,7 @@ export class DocumentViewComponent implements OnInit {
     this.pageSize = 10;
     this.apiUrl = environment.losUrl + URLConstant.GetPagingObjectBySQL;
 
-    this.http.post(URLConstant.GetAgrmntByAgrmntId, { AgrmntId: this.AgrmntId }).pipe(
+    this.http.post(URLConstant.GetAgrmntByAgrmntId, { Id: this.AgrmntId }).pipe(
       map((response) => {
         return response;
       }),

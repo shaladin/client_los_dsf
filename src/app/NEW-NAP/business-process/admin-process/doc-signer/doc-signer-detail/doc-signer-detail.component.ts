@@ -72,7 +72,11 @@ export class DocSignerDetailComponent implements OnInit {
       AgrmntId: this.AgrmntId
     }
 
-    await this.http.post(URLConstant.GetAgrmntByAgrmntId, obj).toPromise().then(
+    var agrmntObj = {
+      Id: this.AgrmntId
+    }
+
+    await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).toPromise().then(
       (response) => {
         this.result2 = response;
         this.OfficeCode = this.result2.OfficeCode;
