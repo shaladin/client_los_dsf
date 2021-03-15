@@ -18,6 +18,7 @@ import { forkJoin } from 'rxjs';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AgrmntSignerObj } from 'app/shared/model/AgrmntSignerObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-document-view',
@@ -53,6 +54,7 @@ export class DocumentViewComponent implements OnInit {
   BizTemplateCode: string;
   isDocSignerAvailable: boolean;
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_NAP_DOC_PRINT_PAGING;
   constructor(private http: HttpClient,
     private route: ActivatedRoute, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -66,22 +68,29 @@ export class DocumentViewComponent implements OnInit {
     this.isDocSignerAvailable = false;
   }
   ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocument.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "ApplicationNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "AggrementNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
+    if (this.BizTemplateCode == CommonConstant.OPL) {
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformationAgrmnt.json";
+      this.viewGenericObj.viewEnvironment = environment.losUrl;
+    }
+    else {
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocument.json";
+      this.viewGenericObj.viewEnvironment = environment.losUrl;
+      this.viewGenericObj.ddlEnvironments = [
+        {
+          name: "ApplicationNo",
+          environment: environment.losR3Web
+        },
+        {
+          name: "AggrementNo",
+          environment: environment.losR3Web
+        },
+        {
+          name: "MouCustNo",
+          environment: environment.losR3Web
+        },
+      ];
+    }
+
 
     this.GetListAgrmntDocByAgrmntId();
 
@@ -107,7 +116,7 @@ export class DocumentViewComponent implements OnInit {
       (response) => {
         const appCust = response[0] as AppCustObj;
         const agrmntSigner = response[1] as AgrmntSignerObj;
-        if(this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W){
+        if (this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W || this.BizTemplateCode == CommonConstant.OPL){
           if(appCust.MrCustTypeCode == CommonConstant.CustTypePersonal){
             if(agrmntSigner.AppCustPersonalId && agrmntSigner.AppCustPersonalId > 0 && agrmntSigner.MfEmpNo1 && agrmntSigner.SupplBranchEmpNo){
               this.isDocSignerAvailable = true;

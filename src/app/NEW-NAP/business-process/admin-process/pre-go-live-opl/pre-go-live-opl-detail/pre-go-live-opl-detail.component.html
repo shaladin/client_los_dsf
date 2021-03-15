@@ -1,0 +1,136 @@
+<div class="container-fluid">
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+
+        <div class="card-head">
+          <div class="card-header header-title">
+            <div class="row">
+              <div class="col-md-8">
+                <h4 class="card-title" id="horz-layout-colored-controls" translate>
+                  PRE GOLIVE DETAIL
+                </h4>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+  
+          <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)">
+          </lib-ucviewgeneric>
+  
+          <div class="px-3">
+            <form class="form form-horizontal" [formGroup]="PreGoLiveForm" #enjiForm="ngForm"
+              (ngSubmit)="PreGoLiveForm.valid && SaveForm()">
+
+              <lib-ucSubsection [id]="'PreGoLiveSelectedAssetId'" [title]="'Pre Golive Selected Asset'" [panel]="'PreGoLiveSelectedAsset'">
+              </lib-ucSubsection>
+              <div class="form-body" id="PreGoLiveSelectedAsset">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th>
+                        <span class="thead-header" translate>Seq No</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>App Asset No</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Requested Asset Name</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Asset Number</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Stock Asset Name</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Chasis No</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Engine No</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>License Plate No</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Rental Per Period</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Delivery Date</span>
+                      </th>
+                    </tr>
+                  </thead>
+    
+                  <tbody>
+                    <tr *ngIf="ListItem.length === 0">
+                      <td colspan="100%">No Data Available</td>
+                    </tr>
+                    <tr *ngFor="let item of ListItem">
+                      <td>{{item.AssetSeqNo}}</td>
+                      <td>
+                        <a [routerLink]="['/View/AppAsset']" target="_blank"
+                          [queryParams]="{ AppId: AppId, AppAssetId: item.AppAssetId }">
+                          {{item.AppAssetNo}}
+                        </a>
+                      </td>
+                      <td class="align-left">{{item.RequestedAssetName}}</td>
+                      <td>{{item.AssetNo}}</td>
+                      <td class="align-left">{{item.StockAssetName}}</td>
+                      <td>{{item.ChasisNo}}</td>
+                      <td>{{item.EngineNo}}</td>
+                      <td>{{item.LicensePlateNo}}</td>
+                      <td class="text-right">{{item.RentalPerPeriod | number:'1.2-2':'en-US'}}</td>
+                      <td>{{item.DlvryDt | date: 'dd-MMM-yyyy'}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div class="form-group row">
+                  <label class="col-md-3 adins-required-label">Effective Date</label>
+                  <div class="col-md-3">
+                    <input type="date" [min]="ApvDt" class="form-control" formControlName="EffDt"
+                      [ngClass]="{ 'border-danger': enjiForm.submitted && PreGoLiveForm.controls.EffDt.invalid }">
+                    <lib-uc-show-errors [control]="PreGoLiveForm.controls.EffDt"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Notes</label>
+                  <div class="col-md-3">
+                    <textarea cols="30" rows="3" class="form-control" formControlName="Notes"
+                      [ngClass]="{ 'border-danger': enjiForm.submitted && PreGoLiveForm.controls.Notes.invalid }">
+                    </textarea>
+                  </div>
+                </div>
+              </div>
+  
+              <lib-ucSubsection [id]="'TermConditionsId'" [title]="'Term & Conditions'" [panel]="'TermConditions'">
+              </lib-ucSubsection>
+              <div class="form-body" id="TermConditions">
+                <app-term-conditions [AppId]="AppId" [parentForm]="PreGoLiveForm"
+                  [enjiForm]="enjiForm">
+                </app-term-conditions>
+              </div>
+  
+              <div class="form-actions right">
+                <button type="button" class="btn btn-raised btn-warning mr-1" translate
+                  (click)="Cancel()">
+                  <i class="fa fa-arrow-circle-left"></i> Cancel
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary">
+                  <i class="fa fa-check-square-o"></i> Submit
+                </button>
+              </div>
+  
+            </form>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

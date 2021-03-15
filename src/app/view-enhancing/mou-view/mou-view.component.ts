@@ -7,6 +7,10 @@ import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-mou-view',
@@ -24,9 +28,13 @@ export class MouViewComponent implements OnInit {
   IsResponseProcessed: boolean = false;
   isListedCustFactoring: boolean;
   IsReady: boolean = false;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-
-  constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router) {
+  UploadViewlink: string;
+  Uploadlink: string;
+  Viewlink: string;
+  dmsObj: DMSObj;
+  MouCustNo: string;
+  
+  constructor(private http: HttpClient, private route: ActivatedRoute, private cookieService: CookieService) {
     this.getMouCustByIdUrl = URLConstant.GetMouCustById;
     this.route.queryParams.subscribe(params => {
       if (params["MouCustId"] != null)
@@ -36,37 +44,34 @@ export class MouViewComponent implements OnInit {
     });
 
   }
-  
+
   ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
-
     this.http.post(this.getMouCustByIdUrl, this.mouCustObj).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
         this.MrMouTypeCode = this.resultData['MrMouTypeCode'];
         this.MrCustTypeCode = this.resultData['MrCustTypeCode'];
+        this.MouCustNo = this.resultData['MouCustNo'];
+        let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+        this.dmsObj = new DMSObj();
+        this.dmsObj.User = currentUserContext.UserName;
+        this.dmsObj.Role = currentUserContext.RoleCode;
+        this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
+
+        if(this.resultData['CustNo'] != null && this.resultData['CustNo'] != ""){
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
+        }
+        else{
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['ApplicantNo']));
+        }
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+
         this.IsResponseProcessed = true;
         this.IsReady = true;
       });
-  }
-
-  GetCallBack(event) {
-    if (event.Key == "customer") {
-      var custObj = { CustNo: this.resultData['CustNo'] };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        });
-    }
   }
 
   isDetail: boolean;

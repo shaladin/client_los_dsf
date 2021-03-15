@@ -3,6 +3,7 @@ import { DatePipe, formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -11,14 +12,20 @@ import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { ResponseJobDataPersonalObj } from 'app/shared/model/ResponseJobDataPersonalObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
+import { String } from 'typescript-string-operations';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-job-tab',
@@ -26,8 +33,9 @@ import { environment } from 'environments/environment';
   styleUrls: ['./job-tab.component.scss']
 })
 export class JobTabComponent implements OnInit {
-
+  requestedDate: any = "";
   private ucLookupProfession: UclookupgenericComponent;
+  mouCustId: number=0;
   @ViewChild('LookupProfession') set content(content: UclookupgenericComponent) {
     if (content) { // initially setter gets called with undefined
       this.ucLookupProfession = content;
@@ -60,9 +68,12 @@ export class JobTabComponent implements OnInit {
   ArrAddCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   isUcAddrReady: boolean = false
   MrCustModelDescr: string = "Employee";
+  IsIntegratorCheckBySystem: string = "0";
+  IsUseDigitalization: string;
+  IsCustomer: boolean = false;
   BusinessDt: Date;
   UserAccess: any;
-
+  bizTemplateCode : string ="";
   JobDataForm = this.fb.group({
     MrProfessionCode: ['', Validators.required],
     IndustryTypeCode: [Validators.required],
@@ -87,19 +98,34 @@ export class JobTabComponent implements OnInit {
     PrevJobNotes: [''],
     OthBizNotes: [''],
   })
-
+  IsNeedIntegrator: boolean = false;
   constructor(private fb: FormBuilder,
     private http: HttpClient,
+    private route: ActivatedRoute,
     private toastr: NGXToastrService,
-    public formValidate: FormValidateService) {
+    public formValidate: FormValidateService, private cookieService: CookieService) {
+    this.route.queryParams.subscribe(params => {
+
+      if (params['AppCustId'] != null) {
+        this.AppCustId = params['AppCustId'];
+      }
+      if (params['AppId'] != null) {
+        this.appId = params['AppId'];
+      }
+    });
   }
 
   async ngOnInit() {
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = this.UserAccess.BusinessDt;
-
+    this.GetGeneralSetting();
     await this.InitLookup();
-    this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel}).subscribe(
+    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
+      (response) => {
+        this.IsCustomer = response.AppCustObj.IsCustomer;
+      }
+    );
+    this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel }).subscribe(
       (response) => {
         this.MrCustModelDescr = response.Descr;
         this.CheckCustModel();
@@ -124,6 +150,39 @@ export class JobTabComponent implements OnInit {
     this.InputOthBizAddrObj.inputField = this.InputFieldOthBizObj;
 
     this.GetData();
+  }
+
+  async GetGeneralSetting() {
+    var generalSettingObj = new GeneralSettingObj();
+
+    generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
+
+    await this.http.post<GeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, generalSettingObj).toPromise().then(
+      (response) => {
+        var returnGeneralSettingObj = response;
+
+        var gsNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        
+        if(gsNeedCheckBySystem != undefined){
+          this.IsIntegratorCheckBySystem = gsNeedCheckBySystem.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
+        }
+
+        if(gsUseDigitalization != undefined){
+          this.IsUseDigitalization = gsUseDigitalization.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
+        }
+
+        this.GetThirdPartyResultHByTrxTypeCodeAndTrxNo();
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   GetData() {
@@ -198,12 +257,12 @@ export class JobTabComponent implements OnInit {
       });
   }
 
-  CheckCustModel(){
-    if(this.CustModelCode == CommonConstant.CustModelEmployee){
+  CheckCustModel() {
+    if (this.CustModelCode == CommonConstant.CustModelEmployee) {
       this.JobDataForm.controls.MrJobPositionCode.setValidators([Validators.required]);
       this.JobDataForm.controls.MrJobStatCode.setValidators([Validators.required]);
       this.JobDataForm.controls.EmploymentEstablishmentDt.setValidators([Validators.required]);
-    }else if(this.CustModelCode == CommonConstant.CustModelProfessional){
+    } else if (this.CustModelCode == CommonConstant.CustModelProfessional) {
       this.JobDataForm.controls.EmploymentEstablishmentDt.setValidators([Validators.required]);
     }
     this.JobDataForm.controls.MrJobPositionCode.updateValueAndValidity();
@@ -212,6 +271,27 @@ export class JobTabComponent implements OnInit {
   }
 
   SaveForm() {
+    if (this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0" && this.mouCustId == 0 && this.bizTemplateCode != CommonConstant.FCTR) {
+      if (this.IsCustomer) {
+        if (!this.IsNeedIntegrator) {
+          if (confirm("Do you want to submit this data without Integrator ?")) {
+            this.SubmitData();
+          }
+        }
+        else {
+          this.SubmitData();
+        }
+      }
+      else {
+        this.SubmitData();
+      }
+    }
+    else{
+      this.SubmitData();
+    }
+  }
+
+  SubmitData() {
     this.JobDataObj.MrProfessionCode = this.JobDataForm.controls.MrProfessionCode.value;
     this.JobDataObj.IndustryTypeCode = this.JobDataForm.controls.IndustryTypeCode.value;
     this.JobDataObj.CoyName = this.JobDataForm.controls.CoyName.value;
@@ -317,13 +397,11 @@ export class JobTabComponent implements OnInit {
     this.http.post(URLConstant.AddEditAppCustPersonalJobData, requestObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.OutputTab.emit({IsComplete: true});
+        this.OutputTab.emit({ IsComplete: true });
       },
       error => {
         console.log(error);
       });
-
-
   }
 
   SetCriteriaAndRequired(CustModelCode: string, isChange: boolean = false) {
@@ -410,6 +488,7 @@ export class JobTabComponent implements OnInit {
   }
 
   GetProfession(event) {
+    console.log(event);
     this.JobDataForm.patchValue({
       MrProfessionCode: event.ProfessionCode
     });
@@ -419,5 +498,146 @@ export class JobTabComponent implements OnInit {
     this.JobDataForm.patchValue({
       IndustryTypeCode: event.IndustryTypeCode
     });
+  }
+  GetThirdPartyResultHByTrxTypeCodeAndTrxNo() {
+    this.http.post(URLConstant.GetAppById, { AppId: this.appId }).subscribe(
+      (response) => {
+        if(response['MouCustId'] != null){
+          this.mouCustId = response['MouCustId'];
+        }
+        this.bizTemplateCode = response["BizTemplateCode"];
+        if(this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0"){
+          this.http.post(URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo, { TrxTypeCode: CommonConstant.APP_TRX_TYPE_CODE, TrxNo: response["AppNo"] }).subscribe(
+            (response) => {
+              if (response["ThirdPartyRsltHId"] != 0 && response["ThirdPartyRsltHId"] != null) {
+                this.requestedDate = response["ReqDt"];
+              }
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  FlaggingIsNeedIntegrator() {
+    this.JobDataObj.MrProfessionCode = this.JobDataForm.controls.MrProfessionCode.value;
+    this.JobDataObj.IndustryTypeCode = this.JobDataForm.controls.IndustryTypeCode.value;
+    this.JobDataObj.CoyName = this.JobDataForm.controls.CoyName.value;
+    this.JobDataObj.MrJobPositionCode = this.JobDataForm.controls.MrJobPositionCode.value;
+    this.JobDataObj.MrJobStatCode = this.JobDataForm.controls.MrJobStatCode.value;
+    this.JobDataObj.MrCoyScaleCode = this.JobDataForm.controls.MrCoyScaleCode.value;
+    this.JobDataObj.EmploymentEstablishmentDt = this.JobDataForm.controls.EmploymentEstablishmentDt.value;
+    this.JobDataObj.NumOfEmployee = this.JobDataForm.controls.NumOfEmployee.value;
+    this.JobDataObj.JobTitleName = this.JobDataForm.controls.JobTitleName.value;
+    this.JobDataObj.IsMfEmp = this.JobDataForm.controls.IsMfEmp.value;
+    this.JobDataObj.MrInvestmentTypeCode = this.JobDataForm.controls.MrInvestmentTypeCode.value;
+    this.JobDataObj.ProfessionalNo = this.JobDataForm.controls.ProfessionalNo.value;
+    this.JobDataObj.PrevCoyName = this.JobDataForm.controls.PrevCoyName.value;
+    this.JobDataObj.PrevEmploymentDt = this.JobDataForm.controls.PrevEmploymentDt.value;
+    this.JobDataObj.OthBizName = this.JobDataForm.controls.OthBizName.value;
+    this.JobDataObj.OthBizType = this.JobDataForm.controls.OthBizType.value;
+    this.JobDataObj.OthBizIndustryTypeCode = this.JobDataForm.controls.OthBizIndustryTypeCode.value;
+    this.JobDataObj.OthBizJobPosition = this.JobDataForm.controls.OthBizJobPosition.value;
+    this.JobDataObj.OthBizEstablishmentDt = this.JobDataForm.controls.OthBizEstablishmentDt.value
+
+    if (this.CustModelCode != CommonConstant.CustModelNonProfessional) {
+      this.JobDataAddrObj.Addr = this.JobDataForm.controls["JobAddr"]["controls"]["Addr"].value;
+      this.JobDataAddrObj.MrCustAddrTypeCode = CommonConstant.AddrTypeJob;
+      this.JobDataAddrObj.AreaCode4 = this.JobDataForm.controls["JobAddr"]["controls"]["AreaCode4"].value;
+      this.JobDataAddrObj.AreaCode3 = this.JobDataForm.controls["JobAddr"]["controls"]["AreaCode3"].value;
+      this.JobDataAddrObj.PhnArea1 = this.JobDataForm.controls["JobAddr"]["controls"]["PhnArea1"].value;
+      this.JobDataAddrObj.Phn1 = this.JobDataForm.controls["JobAddr"]["controls"]["Phn1"].value;
+      this.JobDataAddrObj.PhnExt1 = this.JobDataForm.controls["JobAddr"]["controls"]["PhnExt1"].value;
+      this.JobDataAddrObj.PhnArea2 = this.JobDataForm.controls["JobAddr"]["controls"]["PhnArea2"].value;
+      this.JobDataAddrObj.Phn2 = this.JobDataForm.controls["JobAddr"]["controls"]["Phn2"].value;
+      this.JobDataAddrObj.PhnExt2 = this.JobDataForm.controls["JobAddr"]["controls"]["PhnExt2"].value;
+      this.JobDataAddrObj.PhnArea3 = this.JobDataForm.controls["JobAddr"]["controls"]["PhnArea3"].value;
+      this.JobDataAddrObj.Phn3 = this.JobDataForm.controls["JobAddr"]["controls"]["Phn3"].value;
+      this.JobDataAddrObj.PhnExt3 = this.JobDataForm.controls["JobAddr"]["controls"]["PhnExt3"].value;
+      this.JobDataAddrObj.FaxArea = this.JobDataForm.controls["JobAddr"]["controls"]["FaxArea"].value;
+      this.JobDataAddrObj.Fax = this.JobDataForm.controls["JobAddr"]["controls"]["Fax"].value;
+      this.JobDataAddrObj.SubZipcode = this.JobDataForm.controls["JobAddr"]["controls"]["SubZipcode"].value;
+      this.JobDataAddrObj.AreaCode2 = this.JobDataForm.controls["JobAddr"]["controls"]["AreaCode2"].value;
+      this.JobDataAddrObj.AreaCode1 = this.JobDataForm.controls["JobAddr"]["controls"]["AreaCode1"].value;
+      this.JobDataAddrObj.City = this.JobDataForm.controls["JobAddr"]["controls"]["City"].value;
+      this.JobDataAddrObj.Zipcode = this.JobDataForm.controls["JobAddrZipcode"]["value"].value;
+      this.JobDataAddrObj.RowVersion = this.JobAddrObj.RowVersion;
+
+      this.OthBizDataAddrObj.Addr = this.JobDataForm.controls["OthBizAddr"]["controls"]["Addr"].value;
+      this.OthBizDataAddrObj.MrCustAddrTypeCode = CommonConstant.AddrTypeOthBiz;
+      this.OthBizDataAddrObj.AreaCode4 = this.JobDataForm.controls["OthBizAddr"]["controls"]["AreaCode4"].value;
+      this.OthBizDataAddrObj.AreaCode3 = this.JobDataForm.controls["OthBizAddr"]["controls"]["AreaCode3"].value;
+      this.OthBizDataAddrObj.PhnArea1 = this.JobDataForm.controls["OthBizAddr"]["controls"]["PhnArea1"].value;
+      this.OthBizDataAddrObj.Phn1 = this.JobDataForm.controls["OthBizAddr"]["controls"]["Phn1"].value;
+      this.OthBizDataAddrObj.PhnExt1 = this.JobDataForm.controls["OthBizAddr"]["controls"]["PhnExt1"].value;
+      this.OthBizDataAddrObj.PhnArea2 = this.JobDataForm.controls["OthBizAddr"]["controls"]["PhnArea2"].value;
+      this.OthBizDataAddrObj.Phn2 = this.JobDataForm.controls["OthBizAddr"]["controls"]["Phn2"].value;
+      this.OthBizDataAddrObj.PhnExt2 = this.JobDataForm.controls["OthBizAddr"]["controls"]["PhnExt2"].value;
+      this.OthBizDataAddrObj.PhnArea3 = this.JobDataForm.controls["OthBizAddr"]["controls"]["PhnArea3"].value;
+      this.OthBizDataAddrObj.Phn3 = this.JobDataForm.controls["OthBizAddr"]["controls"]["Phn3"].value;
+      this.OthBizDataAddrObj.PhnExt3 = this.JobDataForm.controls["OthBizAddr"]["controls"]["PhnExt3"].value;
+      this.OthBizDataAddrObj.FaxArea = this.JobDataForm.controls["OthBizAddr"]["controls"]["FaxArea"].value;
+      this.OthBizDataAddrObj.Fax = this.JobDataForm.controls["OthBizAddr"]["controls"]["Fax"].value;
+      this.OthBizDataAddrObj.SubZipcode = this.JobDataForm.controls["OthBizAddr"]["controls"]["SubZipcode"].value;
+      this.OthBizDataAddrObj.AreaCode2 = this.JobDataForm.controls["OthBizAddr"]["controls"]["AreaCode2"].value;
+      this.OthBizDataAddrObj.AreaCode1 = this.JobDataForm.controls["OthBizAddr"]["controls"]["AreaCode1"].value;
+      this.OthBizDataAddrObj.City = this.JobDataForm.controls["OthBizAddr"]["controls"]["City"].value;
+      this.OthBizDataAddrObj.Zipcode = this.JobDataForm.controls["OthBizAddrZipcode"]["value"].value;
+      this.OthBizDataAddrObj.RowVersion = this.OthBizAddrObj.RowVersion;
+
+      this.PrevJobDataAddrObj.Addr = this.JobDataForm.controls["PrevJobAddr"]["controls"]["Addr"].value;
+      this.PrevJobDataAddrObj.MrCustAddrTypeCode = CommonConstant.AddrTypePrevJob;
+      this.PrevJobDataAddrObj.AreaCode4 = this.JobDataForm.controls["PrevJobAddr"]["controls"]["AreaCode4"].value;
+      this.PrevJobDataAddrObj.AreaCode3 = this.JobDataForm.controls["PrevJobAddr"]["controls"]["AreaCode3"].value;
+      this.PrevJobDataAddrObj.PhnArea1 = this.JobDataForm.controls["PrevJobAddr"]["controls"]["PhnArea1"].value;
+      this.PrevJobDataAddrObj.Phn1 = this.JobDataForm.controls["PrevJobAddr"]["controls"]["Phn1"].value;
+      this.PrevJobDataAddrObj.PhnExt1 = this.JobDataForm.controls["PrevJobAddr"]["controls"]["PhnExt1"].value;
+      this.PrevJobDataAddrObj.PhnArea2 = this.JobDataForm.controls["PrevJobAddr"]["controls"]["PhnArea2"].value;
+      this.PrevJobDataAddrObj.Phn2 = this.JobDataForm.controls["PrevJobAddr"]["controls"]["Phn2"].value;
+      this.PrevJobDataAddrObj.PhnExt2 = this.JobDataForm.controls["PrevJobAddr"]["controls"]["PhnExt2"].value;
+      this.PrevJobDataAddrObj.PhnArea3 = this.JobDataForm.controls["PrevJobAddr"]["controls"]["PhnArea3"].value;
+      this.PrevJobDataAddrObj.Phn3 = this.JobDataForm.controls["PrevJobAddr"]["controls"]["Phn3"].value;
+      this.PrevJobDataAddrObj.PhnExt3 = this.JobDataForm.controls["PrevJobAddr"]["controls"]["PhnExt3"].value;
+      this.PrevJobDataAddrObj.FaxArea = this.JobDataForm.controls["PrevJobAddr"]["controls"]["FaxArea"].value;
+      this.PrevJobDataAddrObj.Fax = this.JobDataForm.controls["PrevJobAddr"]["controls"]["Fax"].value;
+      this.PrevJobDataAddrObj.SubZipcode = this.JobDataForm.controls["PrevJobAddr"]["controls"]["SubZipcode"].value;
+      this.PrevJobDataAddrObj.AreaCode2 = this.JobDataForm.controls["PrevJobAddr"]["controls"]["AreaCode2"].value;
+      this.PrevJobDataAddrObj.AreaCode1 = this.JobDataForm.controls["PrevJobAddr"]["controls"]["AreaCode1"].value;
+      this.PrevJobDataAddrObj.City = this.JobDataForm.controls["PrevJobAddr"]["controls"]["City"].value;
+      this.PrevJobDataAddrObj.Zipcode = this.JobDataForm.controls["PrevJobAddrZipcode"]["value"].value;
+      this.PrevJobDataAddrObj.RowVersion = this.PrevJobAddrObj.RowVersion;
+    }
+    let requestObj = {
+      AppId: this.appId,
+      AppCustId: this.AppCustId,
+      MrCustModelCode: this.CustModelCode,
+      JobDataObj: this.JobDataObj,
+      JobDataAddrObj: this.JobDataAddrObj,
+      PrevJobAddrObj: this.PrevJobDataAddrObj,
+      OthBizAddrObj: this.OthBizDataAddrObj
+    }
+    this.hitAPIIntegrator(requestObj);
+
+  }
+
+  hitAPIIntegrator(requestObj: any) {
+    this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudChecking, requestObj).subscribe(
+      (response) => {
+        console.log(response);
+        this.GetThirdPartyResultHByTrxTypeCodeAndTrxNo()
+        this.IsNeedIntegrator = true;
+        this.toastr.successMessage("Success with Integrator Checking.");
+
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }

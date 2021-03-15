@@ -72,7 +72,7 @@
             "position": "center",
             "property": "ApplicationNo",
             "target": "_blank",
-            "path" : "/View/AppView", 
+            "path" : "VIEW_APP", 
             "param" : [ 
                 {
                     "type" : "AppId", 
@@ -97,7 +97,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Nap/AdminProcess/InvoiceVerif/Detail",
+                    "path": "NAP_ADM_PRCS_INVOICE_VERIF_DETAIL",
                     "param": [
                         {
                             "type": "AppId",

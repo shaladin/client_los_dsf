@@ -2,7 +2,7 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-body">
-        <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
+        <app-app-main-info [AppId]="AppId"></app-app-main-info>
         <div class="px-3">
           <div class="form-body">
             <div class="row" [formGroup]="AgrmntActForm">
@@ -96,7 +96,7 @@
           </div>
           <form>
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Nap/AdminProcess/AgrmntActivation/Paging']"
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
               [queryParams]="{BizTemplateCode: this.BizTemplateCode}" translate>
                 <i class="ft-x"></i> Cancel
               </button>

@@ -16,6 +16,15 @@ import { CrdRvwBankStmntComponent } from "./crd-rvw-bank-stmnt/crd-rvw-bank-stmn
 import { CrdRvwRapindoComponent } from "./crd-rvw-rapindo/crd-rvw-rapindo.component";
 import { CrdRvwDukcapilHistComponent } from "./crd-rvw-dukcapil-hist/crd-rvw-dukcapil-hist.component";
 import { CrdRvwCmoInfoComponent } from "./crd-rvw-cmo-info/crd-rvw-cmo-info.component";
+import { CrdRvwCustPersonalInfoComponent } from './crd-rvw-cust-info/crd-rvw-cust-personal-info/crd-rvw-cust-personal-info.component';
+import { CrdRvwCustCompanyInfoComponent } from './crd-rvw-cust-info/crd-rvw-cust-company-info/crd-rvw-cust-company-info.component';
+import { CrdRvwBankStatementComponent } from './crd-rvw-cust-info/component/crd-rvw-bank-statement/crd-rvw-bank-statement.component';
+import { CrdRvwNegCheckListComponent } from './crd-rvw-cust-info/component/crd-rvw-neg-check-list/crd-rvw-neg-check-list.component';
+import { CrdRvwDiffWithMasterCustComponent } from './crd-rvw-cust-info/component/crd-rvw-diff-with-master-cust/crd-rvw-diff-with-master-cust.component';
+import { CrdRvwDiffWithInProcessAppComponent } from './crd-rvw-cust-info/component/crd-rvw-diff-with-in-process-app/crd-rvw-diff-with-in-process-app.component';
+import { CrdRvwLegalDocComponent } from './crd-rvw-legal-doc/crd-rvw-legal-doc.component';
+import { CrdRvwTableCustComponent } from './crd-rvw-fam-guar/crd-rvw-table-cust/crd-rvw-table-cust.component';
+import { AppRvwSummaryAssetComponent } from "./app-rvw-summary-asset/app-rvw-summary-asset.component";
 
 @NgModule({
     exports: [
@@ -31,7 +40,9 @@ import { CrdRvwCmoInfoComponent } from "./crd-rvw-cmo-info/crd-rvw-cmo-info.comp
         CrdRvwIncomeExpenseComponent, 
         CrdRvwBankStmntComponent, 
         CrdRvwRapindoComponent,
-        CrdRvwDukcapilHistComponent
+        CrdRvwDukcapilHistComponent,
+    CrdRvwLegalDocComponent,
+    AppRvwSummaryAssetComponent
     ],
     imports: [
         CommonModule,
@@ -51,7 +62,16 @@ import { CrdRvwCmoInfoComponent } from "./crd-rvw-cmo-info/crd-rvw-cmo-info.comp
         CrdRvwIncomeExpenseComponent, 
         CrdRvwBankStmntComponent, 
         CrdRvwRapindoComponent,
-        CrdRvwDukcapilHistComponent
+        CrdRvwDukcapilHistComponent,
+        CrdRvwCustPersonalInfoComponent,
+        CrdRvwCustCompanyInfoComponent,
+        CrdRvwBankStatementComponent,
+        CrdRvwNegCheckListComponent,
+        CrdRvwDiffWithMasterCustComponent,
+        CrdRvwDiffWithInProcessAppComponent,
+        CrdRvwLegalDocComponent,
+      CrdRvwTableCustComponent,
+      AppRvwSummaryAssetComponent
     ],
     providers: [
         NGXToastrService

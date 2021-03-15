@@ -1,17 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { FormArray, FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MouCustLglReviewObj } from 'app/shared/model/MouCustLglReviewObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustTcComponent } from 'app/MOU/mou-customer-request/mou-cust-tc/mou-cust-tc.component';
 import { environment } from 'environments/environment';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-legal-review-detail',
@@ -19,7 +21,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
   providers: [NGXToastrService]
 })
 export class LegalReviewDetailComponent implements OnInit {
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+
   MouCustId: number;
   WfTaskListId: any;
   GetListActiveRefMasterUrl: string = URLConstant.GetListActiveRefMaster;
@@ -45,12 +47,18 @@ export class LegalReviewDetailComponent implements OnInit {
   EditListMouCustTc: string = URLConstant.EditListMouCustTc;
   @ViewChild("MouTc") public mouTc: MouCustTcComponent;
   responseMouObj: Array<any> = new Array<any>();
+  UploadViewlink: string;
+  Uploadlink: string;
+  Viewlink: string;
+  dmsObj: DMSObj;
+
+  readonly CancelLink: string = NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService, private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['MouCustId'] != null) this.MouCustId = params['MouCustId'];
@@ -65,19 +73,20 @@ export class LegalReviewDetailComponent implements OnInit {
 
     this.items = this.LegalForm.get('items') as FormArray;
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.mouCustObj = new MouCustObj();
-    this.mouCustObj.MouCustId = this.MouCustId;
+    this.mouCustObj.MouCustId = this.MouCustId;    
     this.http.post(URLConstant.GetMouCustById, this.mouCustObj).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
+        let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+        this.dmsObj = new DMSObj();
+        this.dmsObj.User = currentUserContext.UserName;
+        this.dmsObj.Role = currentUserContext.RoleCode;
+        this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+
       }
     );
     var mouObj = { "MouCustId": this.MouCustId };
@@ -108,10 +117,10 @@ export class LegalReviewDetailComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+      () => {
       });
   }
 
@@ -148,21 +157,10 @@ export class LegalReviewDetailComponent implements OnInit {
       this.http.post(this.AddEditRangeMouCustLglReview, mouObj).subscribe(
         response => {
           this.toastr.successMessage(response['message']);
-          AdInsHelper.RedirectUrl(this.router,["/Mou/CustomerLegalReview/Paging"],{});
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{});
 
         });
       this.mouTc.Save();
-    }
-
-  }
-
-  GetCallBack(event) {
-    if (event.Key == "customer") {
-      var custObj = { CustNo: this.resultData['CustNo'] };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        });
     }
   }
 }

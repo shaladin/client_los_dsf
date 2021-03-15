@@ -2,7 +2,7 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-body">
-        <div class="card-header header-title">
+        <div class="card-header header-title" style="margin-bottom: 10px;">
           <div class="row">
             <div class="col-md-8">
               <h4 class="card-title" id="horz-layout-colored-controls" translate> Delivery Order </h4>
@@ -90,7 +90,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let item of DeliveryOrderForm.controls.items['controls']; let i = index" [formGroupName]="i">
+                  <tr *ngFor="let item of DeliveryOrderForm.controls.items['controls']; let i = index"
+                    [formGroupName]="i">
                     <td>{{item.controls.AssetDocName.value}}</td>
                     <td *ngIf="item.controls.IsValueNeeded.value==true">Yes</td>
                     <td *ngIf="item.controls.IsValueNeeded.value==false">No</td>
@@ -172,16 +173,29 @@
                 </div>
               </div>
             </div>
-            <lib-ucSubsection [id]="'TCListId'" [title]="'Term & Conditions'" [panel]="'TCList'">
-            </lib-ucSubsection>
-            <div id="TCList">
-              <app-term-conditions [AppId]="AppId" [parentForm]="DeliveryOrderForm" [enjiForm]="enjiForm">
 
-              </app-term-conditions>
-            </div>
+            <mat-tab-group>
+              <mat-tab label="Term & Conditions">
+                <ng-template matTabContent>
+                  <app-term-conditions [AppId]="AppId" [parentForm]="DeliveryOrderForm" [enjiForm]="enjiForm">
+                  </app-term-conditions>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="App Document">
+                <ng-template matTabContent>
+                  <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsAppObj"></app-dms-iframe>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="Agreement Document">
+                <ng-template matTabContent>
+                  <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
+                </ng-template>
+              </mat-tab>
+
+            </mat-tab-group>
             <div class="form-actions right">
               <button type="button" class="btn btn-raised btn-warning mr-1"
-                [routerLink]="['/Nap/AdminProcess/DeliveryOrder/Paging']" translate>
+                [routerLink]="[CancelLink]" translate>
                 <i class="ft-x"></i> Cancel
               </button>
               <button type="submit" class="btn btn-raised btn-primary" translate>
@@ -194,3 +208,4 @@
       </div>
     </div>
   </div>
+</div>

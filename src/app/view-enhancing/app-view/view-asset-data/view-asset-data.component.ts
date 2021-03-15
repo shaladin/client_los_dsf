@@ -1,32 +1,33 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AllAssetDataObj } from 'app/shared/model/AllAssetDataObj.Model';
 
 @Component({
   selector: "view-asset-data",
   templateUrl: "./view-asset-data.component.html"
 })
 export class ViewAssetDataComponent implements OnInit {
-
   getAppUrl: any;
   getAllAssetDataUrl: any;
   @Input() appId: number = 0;
+  @Input() BizTemplateCode: string = "";
   appAssetId: number = 0;
   appObj = {
     AppId: 0,
     AppAssetId: 0
   };
-
   AppObj: any;
   AppAssetObj: any;
   totalRsvFund: number = 0;
   totalHalfResponseAppAssetAttrObjs: number = 0;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router) {
+  listAsset: Array<any> = new Array<any>();
+  allAssetDataObj: AllAssetDataObj;
 
+  constructor(private route: ActivatedRoute,
+    private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
      if (params['AppId'] != null) {
        this.appId = params['AppId'];
@@ -48,27 +49,58 @@ export class ViewAssetDataComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    if (this.appAssetId != 0)
-    {
+    if (this.appAssetId != 0) {
       this.initSingleAssetUrl();
       this.appObj.AppAssetId = this.appAssetId;
     }
-    else
+    else {
       this.initUrl();
+    }
 
     this.appObj.AppId = this.appId;
-    await this.GetAllAssetData();
 
+    if(this.BizTemplateCode === CommonConstant.OPL) {
+      await this.GetListAllAssetData();
+    }
+    else {
+      await this.GetAllAssetData();
+    }
   }
 
   async GetAllAssetData() {
     await this.http.post(this.getAllAssetDataUrl, this.appObj).toPromise().then(
       (response) => {
         this.AppAssetObj = response;
-        if(this.AppAssetObj.ResponseAppAssetAttrObjs != null)
+        if(this.AppAssetObj.ResponseAppAssetAttrObjs != null) {
           this.totalHalfResponseAppAssetAttrObjs = Math.ceil(this.AppAssetObj.ResponseAppAssetAttrObjs.length/2);
-      });
-
+        }
+      }
+    );
   }
 
+  async GetListAllAssetData() {
+    await this.http.post(URLConstant.GetListAllAssetDataByAppId, this.appObj).toPromise().then(
+      (response) => {
+        this.AppAssetObj = response["ReturnObject"];
+
+        if (this.AppAssetObj != null) {
+          for(let i = 0; i < this.AppAssetObj.length; i++) {
+            this.allAssetDataObj = new AllAssetDataObj();
+
+            this.allAssetDataObj.AppAssetObj.AppAssetId = this.AppAssetObj.ResponseAppAssetObj.AppAssetId;
+            this.allAssetDataObj.AppAssetObj.AppId = this.AppAssetObj.ResponseAppAssetObj.AppId;
+            this.allAssetDataObj.AppAssetObj.AssetSeqNo = this.AppAssetObj.ResponseAppAssetObj.AssetSeqNo;
+            this.allAssetDataObj.AppAssetObj.AppAssetNo = this.AppAssetObj.ResponseAssetDataOplObj.AppAssetNo;
+            this.allAssetDataObj.AppAssetObj.FullAssetName = this.AppAssetObj.ResponseAppAssetObj.FullAssetName;
+            this.allAssetDataObj.AppAssetObj.Color = this.AppAssetObj.ResponseAppAssetObj.Color;
+            this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.AppAssetObj.ResponseAppAssetObj.MrAssetConditionCode;
+            this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.AppAssetObj.ResponseAssetDataOplObj.AssetPriceBefDiscAmt;
+            this.allAssetDataObj.AppAssetObj.Discount = this.AppAssetObj.ResponseAssetDataOplObj.DiscountAmt;
+
+            this.listAsset.push(this.allAssetDataObj);
+          }
+        }
+      }
+    );
+  }
 }

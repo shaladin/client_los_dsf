@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -17,6 +16,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 @Component({
   selector: 'app-guarantor-personal',
   templateUrl: './guarantor-personal.component.html',
@@ -50,7 +51,7 @@ export class GuarantorPersonalComponent implements OnInit {
   tempCustNo: string;
   inputAddressObjForPersonal: InputAddressObj;
 
-  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal) {
+  constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal, private cookieService: CookieService) {
   }
 
   PersonalForm = this.fb.group({
@@ -63,7 +64,7 @@ export class GuarantorPersonalComponent implements OnInit {
     MrNationalityCode: ['', [Validators.required, Validators.maxLength(50)]],
     BirthPlace: ['', [Validators.required, Validators.maxLength(200)]],
     BirthDt: ['', [Validators.required]],
-    TaxIdNo: ['', [Validators.maxLength(50)]],
+    TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]],
     MrReligionCode: ['', [Validators.maxLength(50)]],
     MobilePhnNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
     CountryCode: ['']
@@ -107,11 +108,11 @@ export class GuarantorPersonalComponent implements OnInit {
           });
           this.tempCustNo = this.resultData.AppGuarantorObj.CustNo;
           this.setAddrLegalObj();
-          this.clearExpDt();      
-        });  
-   
+          this.clearExpDt();
+        });
+
       await this.setCountryName(this.resultData.AppGuarantorPersonalObj.CountryCode);
-    
+
       // if (this.resultData.AppGuarantorObj.CustNo) {
       //   this.tempCustNo = this.resultData.AppGuarantorObj.CustNo;
       //   this.inputLookupObj.isReadonly = true;
@@ -152,27 +153,27 @@ export class GuarantorPersonalComponent implements OnInit {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReligion,
       RowVersion: ""
     }
-    
+
     var AppCust = {
       AppId: this.AppId,
       RowVersion: ""
     }
     this.http.post(URLConstant.GetAppCustByAppId, AppCust).subscribe(
-      (response) => { 
-        if( response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){ 
+      (response) => {
+        if (response["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
           var refCustRelObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarPersonalRelationship,
-            ReserveField1: CommonConstant.CustTypePersonal,
+            MappingCode: CommonConstant.CustTypePersonal,
             RowVersion: ""
           }
-        }else{
+        } else {
           var refCustRelObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
-            ReserveField1: CommonConstant.CustTypePersonal,
+            MappingCode: CommonConstant.CustTypePersonal,
             RowVersion: ""
           }
-        } 
-        this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
+        }
+        this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refCustRelObj).subscribe(
           (response) => {
             this.MrCustRelationshipCode = response[CommonConstant.ReturnObj];
             if (this.mode != "edit") {
@@ -196,7 +197,7 @@ export class GuarantorPersonalComponent implements OnInit {
         this.ChangeIdType();
         this.clearExpDt();
       }
-    ); 
+    );
     this.http.post(URLConstant.GetListActiveRefMaster, genderObj).subscribe(
       (response) => {
         this.MrGenderCode = response[CommonConstant.ReturnObj];
@@ -214,7 +215,7 @@ export class GuarantorPersonalComponent implements OnInit {
           this.PersonalForm.patchValue({
             MrMaritalStatCode: this.MrMaritalStatCode[0].MasterCode
           });
-        }else if(  this.resultData.AppGuarantorPersonalObj.MrMaritalStatCode == null){
+        } else if (this.resultData.AppGuarantorPersonalObj.MrMaritalStatCode == null) {
           this.PersonalForm.patchValue({
             MrMaritalStatCode: ""
           });
@@ -222,7 +223,7 @@ export class GuarantorPersonalComponent implements OnInit {
       }
     );
 
-    var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality]};
+    var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
     this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
         this.NationalityObj = response[CommonConstant.ReturnObj];
@@ -235,7 +236,7 @@ export class GuarantorPersonalComponent implements OnInit {
           this.PersonalForm.patchValue({
             MrReligionCode: this.MrReligionCode[0].MasterCode
           });
-        }else if(  this.resultData.AppGuarantorPersonalObj.MrReligionCode == null){
+        } else if (this.resultData.AppGuarantorPersonalObj.MrReligionCode == null) {
           this.PersonalForm.patchValue({
             MrReligionCode: ""
           });
@@ -249,7 +250,7 @@ export class GuarantorPersonalComponent implements OnInit {
   MaxDate: Date;
   Max17YO: Date;
   getDate() {
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.Max17YO = new Date(this.UserAccess.BusinessDt);
     this.Max17YO.setFullYear(this.MaxDate.getFullYear() - 17);
@@ -271,10 +272,10 @@ export class GuarantorPersonalComponent implements OnInit {
   }
 
   setCountryName(countryCode) {
-    this.http.post(URLConstant.GetRefCountryByCountryCode, {CountryCode: countryCode}).subscribe(
+    this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: countryCode }).subscribe(
       (response) => {
         this.inputLookupObj1.nameSelect = response["CountryName"];
-        this.inputLookupObj1.jsonSelect = { CountryName: response["CountryName"]};
+        this.inputLookupObj1.jsonSelect = { CountryName: response["CountryName"] };
         if (countryCode == "LOCAL") {
           this.selectedNationalityCountryName = response["CountryName"];
           this.isLocal = true;
@@ -288,24 +289,27 @@ export class GuarantorPersonalComponent implements OnInit {
     console.log("HELEP")
     if (ev.target.value == "LOCAL") {
       var idx = ev.target.selectedIndex - 1;
-      this.selectedNationalityCountryCode = this.NationalityObj[idx].ReserveField1;
-      this.selectedNationalityCountryName = this.NationalityObj[idx].ReserveField2;
+      var setCountry = this.NationalityObj[idx].DefaultValue.split(';');
+      this.selectedNationalityCountryCode = setCountry[0];
+      this.selectedNationalityCountryName = setCountry[1] ? setCountry[1] : setCountry[0];
+
       this.isLocal = true;
     } else {
       var foreign = this.NationalityObj.find(x => x["MasterCode"] == ev.target.value);
-      this.inputLookupObj1.nameSelect = foreign.ReserveField2;
-      this.inputLookupObj1.jsonSelect =  { CountryName: foreign.ReserveField2};
-      this.selectedNationalityCountryCode = foreign.ReserveField1;
+      var setCountry = foreign.DefaultValue.split(';');
+      this.inputLookupObj1.nameSelect = setCountry[1] ? setCountry[1] : setCountry[0];
+      this.inputLookupObj1.jsonSelect = { CountryName: setCountry[1] ? setCountry[1] : setCountry[0] };
+      this.selectedNationalityCountryCode = setCountry[0];
       this.isLocal = false;
     }
   }
 
-  setCriteriaLookupCustomer(custTypeCode){
+  setCriteriaLookupCustomer(custTypeCode) {
     var arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'MR_CUST_TYPE_CODE';
+    critObj.propName = 'C.MR_CUST_TYPE_CODE';
     critObj.value = custTypeCode;
     arrCrit.push(critObj);
     this.inputLookupObj.addCritInput = arrCrit;
@@ -392,9 +396,10 @@ export class GuarantorPersonalComponent implements OnInit {
         if (this.resultData.MrNationalityCode == "LOCAL") {
           this.isLocal = true;
           var idx = 1;
-          this.selectedNationalityCountryCode = this.NationalityObj[idx].ReserveField1;
-          this.selectedNationalityCountryName = this.NationalityObj[idx].ReserveField2;
-          this.inputLookupObj1.nameSelect = this.NationalityObj[idx].ReserveField2;
+          var setCountry = this.NationalityObj[idx].DefaultValue.split(';');
+          this.selectedNationalityCountryCode = setCountry[0];
+          this.selectedNationalityCountryName = setCountry[1] ? setCountry[1] : setCountry[0];
+          this.inputLookupObj1.nameSelect = setCountry[1] ? setCountry[1] : setCountry[0];
         }
         this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(
           (response) => {
@@ -403,20 +408,20 @@ export class GuarantorPersonalComponent implements OnInit {
         );
       });
 
-      this.PersonalForm.controls["MobilePhnNo"].disable();
-      this.PersonalForm.controls["MrMaritalStatCode"].disable();
-      this.PersonalForm.controls["MrNationalityCode"].disable();
-      this.PersonalForm.controls["MrReligionCode"].disable();
-      this.PersonalForm.controls["MrGenderCode"].disable();
-      this.PersonalForm.controls["BirthPlace"].disable();
-      this.PersonalForm.controls["BirthDt"].disable();
-      this.PersonalForm.controls["IdNo"].disable();
-      this.PersonalForm.controls["IdExpDt"].disable();
-      this.PersonalForm.controls["MrIdTypeCode"].disable();
-      this.PersonalForm.controls["TaxIdNo"].disable();
-      this.PersonalForm.controls["AddrObj"]["controls"].Addr.disable();
-      this.PersonalForm.controls["AddrObj"]["controls"].AreaCode3.disable();
-      this.PersonalForm.controls["AddrObj"]["controls"].AreaCode4.disable();
+    this.PersonalForm.controls["MobilePhnNo"].disable();
+    this.PersonalForm.controls["MrMaritalStatCode"].disable();
+    this.PersonalForm.controls["MrNationalityCode"].disable();
+    this.PersonalForm.controls["MrReligionCode"].disable();
+    this.PersonalForm.controls["MrGenderCode"].disable();
+    this.PersonalForm.controls["BirthPlace"].disable();
+    this.PersonalForm.controls["BirthDt"].disable();
+    this.PersonalForm.controls["IdNo"].disable();
+    this.PersonalForm.controls["IdExpDt"].disable();
+    this.PersonalForm.controls["MrIdTypeCode"].disable();
+    this.PersonalForm.controls["TaxIdNo"].disable();
+    this.PersonalForm.controls["AddrObj"]["controls"].Addr.disable();
+    this.PersonalForm.controls["AddrObj"]["controls"].AreaCode3.disable();
+    this.PersonalForm.controls["AddrObj"]["controls"].AreaCode4.disable();
   }
 
   // CountryCode="";
@@ -447,7 +452,7 @@ export class GuarantorPersonalComponent implements OnInit {
     if (this.tempCustNo != null) {
       this.guarantorPersonalObj.AppGuarantorObj.CustNo = this.tempCustNo;
     }
-    
+
     this.guarantorPersonalObj.AppGuarantorObj.GuarantorName = this.inputLookupObj.nameSelect;
     this.guarantorPersonalObj.AppGuarantorObj.MrGuarantorTypeCode = CommonConstant.GuarantorTypeCodePersonal;
     this.guarantorPersonalObj.AppGuarantorObj.TaxIdNo = this.PersonalForm.controls.TaxIdNo.value;
@@ -473,7 +478,7 @@ export class GuarantorPersonalComponent implements OnInit {
     this.guarantorPersonalObj.AppGuarantorPersonalObj.IdExpDt = this.PersonalForm.controls.IdExpDt.value;
     if (this.guarantorPersonalObj.AppGuarantorPersonalObj.MrIdTypeCode != CommonConstant.MrIdTypeCodeEKTP) {
       var a = new Date(this.guarantorPersonalObj.AppGuarantorPersonalObj.IdExpDt);
-      var Business_Date = localStorage.getItem(CommonConstant.BUSINESS_DATE);
+      var Business_Date = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE));
       var datePipe = new DatePipe("en-US");
       var value = datePipe.transform(Business_Date, "yyyy-MM-dd");
       var businessDt = new Date(value);
@@ -536,7 +541,7 @@ export class GuarantorPersonalComponent implements OnInit {
       MrNationalityCode: ['', [Validators.required, Validators.maxLength(50)]],
       BirthPlace: ['', [Validators.required, Validators.maxLength(200)]],
       BirthDt: ['', [Validators.required]],
-      TaxIdNo: ['', [Validators.maxLength(50)]],
+      TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]],
       MrReligionCode: ['', [Validators.maxLength(50)]],
       MobilePhnNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       CountryCode: ['']
@@ -557,11 +562,11 @@ export class GuarantorPersonalComponent implements OnInit {
       this.PersonalForm.controls.IdExpDt.clearValidators();
       this.PersonalForm.controls.IdExpDt.updateValueAndValidity();
       if (this.PersonalForm.controls.MrIdTypeCode.value == "NPWP") {
-        this.PersonalForm.controls.TaxIdNo.setValidators([Validators.required]);
+        this.PersonalForm.controls.TaxIdNo.setValidators([Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]);
         this.PersonalForm.controls.TaxIdNo.updateValueAndValidity();
       }
       else {
-        this.PersonalForm.controls.TaxIdNo.clearValidators();
+        this.PersonalForm.controls.TaxIdNo.setValidators([Validators.maxLength(50), Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]);
         this.PersonalForm.controls.TaxIdNo.updateValueAndValidity();
       }
     }

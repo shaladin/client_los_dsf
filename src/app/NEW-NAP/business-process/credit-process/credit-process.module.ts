@@ -51,9 +51,17 @@ import { CreditApprovalCfnaPagingComponent } from './credit-approval-cfna/credit
 import { CommissionCfnaComponent } from './commission-reserved-fund/component/commission-cfna/commission-cfna.component';
 import { CreditReviewComponent } from "./credit-review-prototype/credit-review-paging/credit-review-paging.component";
 import { CreditReviewDetailPersonalComponent } from "./credit-review-prototype/credit-review-detail-personal/credit-review-detail-personal.component";
+import { SharedModule } from "app/shared/shared.module";
 import { CreditReviewCrDetailComponent } from './credit-review-cr/credit-review-cr-detail/credit-review-cr-detail.component';
 import { CreditReviewCrPagingComponent } from './credit-review-cr/credit-review-cr-paging/credit-review-cr-paging.component';
-import { CreditReviewComponentModule } from "app/NEW-NAP/sharing-component/credit-review-component/credit-review-component.module";
+import { CreditReviewComponentModule } from "app/NEW-NAP/sharing-component/credit-review-component/credit-review-component.module";;
+import { CreditApprovalCrDetailComponent } from './credit-approval-cr/credit-approval-cr-detail/credit-approval-cr-detail.component';
+import { CreditApprovalCrPagingComponent } from './credit-approval-cr/credit-approval-cr-paging/credit-approval-cr-paging.component';
+import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
+import { UcapprovalcreateModule } from "@adins/ucapprovalcreate";
+import { UcapprovalR3Module } from "@adins/ucapproval-r3";
+import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
+import { FraudDetectionDataModule } from "./credit-review/fraud-detection-data/fraud-detection-data.module";
 
 
 
@@ -94,8 +102,14 @@ export const customCurrencyMaskConfig = {
     UcviewgenericModule,
     ViewAppComponentModule,
     ViewMainInfoComponentModule,
+    SharedModule,
     CreditReviewComponentModule,
-    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    UcapprovalcreateModule,
+    UcapprovalHistoryModule,
+    UcapprovalR3Module,
+    UcapprovalgeneralinfoModule,
+    FraudDetectionDataModule
   ],
   declarations: [
     CreditApprovalPagingComponent,
@@ -134,7 +148,9 @@ export const customCurrencyMaskConfig = {
     CreditReviewComponent,
     CreditReviewDetailPersonalComponent,
     CreditReviewCrDetailComponent,
-    CreditReviewCrPagingComponent
+    CreditReviewCrPagingComponent,
+    CreditApprovalCrDetailComponent,
+    CreditApprovalCrPagingComponent,
   ],
   providers: [
     NGXToastrService

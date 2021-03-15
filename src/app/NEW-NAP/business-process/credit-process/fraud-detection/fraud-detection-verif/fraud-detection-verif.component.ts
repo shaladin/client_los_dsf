@@ -2,26 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { LeadObj } from 'app/shared/model/Lead.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
-import { FraudDukcapilObj } from 'app/shared/model/FraudDukcapilObj.Model';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
-import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
-import { AppDupCheckObj } from 'app/shared/model/AppDupCheckCust/AppDupCheckObj.Model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NegativeCustObj } from 'app/shared/model/NegativeCust.Model';
-import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/NegativeAssetCheckForMultiAssetObj.Model';
-import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
-import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { NegativeAssetObj } from 'app/shared/model/NegativeAssetObj.Model';
 import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCustomerObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-fraud-detection-verif',
@@ -64,7 +56,6 @@ export class FraudDetectionVerifComponent implements OnInit {
   GetNegativeCustomerDuplicateCheckUrl = URLConstant.GetNegativeCustomerDuplicateCheck;
   ListNegativeCust: Array<NegativeCustObj> = new Array<NegativeCustObj>();
   viewObj: string;
-  arrValue = [];
 
   respAppDupCheck: any;
   respNegativeCust: any;
@@ -79,9 +70,7 @@ export class FraudDetectionVerifComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
-    private router: Router,
-    private modalService: NgbModal
-  ) {
+    private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.appId = params['AppId'];
@@ -98,15 +87,14 @@ export class FraudDetectionVerifComponent implements OnInit {
       this.claimTask();
 
     this.getApp();
-    this.arrValue.push(this.appId);
     this.viewObj = "./assets/ucviewgeneric/viewCreditInvestigationInfo.json";
-    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.verfUser = context[CommonConstant.USER_NAME];
     this.verfDt = context[CommonConstant.BUSINESS_DT];
     this.verfCode = context[CommonConstant.EMP_NO];
   }
 
-  getApp(){
+  getApp() {
     var appObj = {
       AppId: this.appId,
     };
@@ -120,7 +108,7 @@ export class FraudDetectionVerifComponent implements OnInit {
 
   cancel() {
     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
-    AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/FraudDetection/Paging"], { BizTemplateCode: lobCode });
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_FRAUD_DETECTION_PAGING], { BizTemplateCode: lobCode });
   }
 
   submit() {
@@ -136,19 +124,19 @@ export class FraudDetectionVerifComponent implements OnInit {
     this.http.post(this.addAppFraudVerf, verfObj).subscribe(
       response => {
         var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
-        AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/FraudDetection/Paging"], { "BizTemplateCode": BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_FRAUD_DETECTION_PAGING], { "BizTemplateCode": BizTemplateCode });
       });
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = {
       pWFTaskListID: this.WfTaskListId,
       pUserID: currentUserContext[CommonConstant.USER_NAME],
       isLoading: false
     };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+      () => {
       });
   }
 }

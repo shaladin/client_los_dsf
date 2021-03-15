@@ -1,38 +1,50 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SurveyViewModule } from './survey-view-prototype/survey-view.module';
+import { PathConstant } from 'app/shared/constant/PathConstant';
 
 const routes: Routes = [
     {
         path: '',
         children: [
             {
-                path: 'AppView',
+                path: PathConstant.VIEW_APP,
                 loadChildren: './app-view/app-view.module#AppViewModule'
             },
             {
-                path: 'AgrmntView',
+                path: PathConstant.VIEW_AGRMNT,
                 loadChildren: './agr-view/agr-view.module#AgrViewModule'
             },
             {
-                path: 'POView',
+                path: PathConstant.VIEW_PO,
                 loadChildren: './purchase-order-view/purchase-order-view.module#POViewModule'
             },
             {
-                path: 'Lead',
+                path: PathConstant.VIEW_LEAD,
                 loadChildren: './lead-view/lead-view.module#LeadViewModule'
             },
             {
-                path: 'Mou/CustView',
+                path: PathConstant.VIEW_MOU_CUST,
                 loadChildren: './mou-view/mou-view.module#MouViewModule'
             },
             {
-                path: 'SurveyView',
+                path: PathConstant.VIEW_SRVY,
                 loadChildren: './survey-view-prototype/survey-view.module#SurveyViewModule'
             },
             {
-                path: 'CustExposureView',
+                path: PathConstant.VIEW_CUST_EXPSR,
                 loadChildren: './cust-exposure-view/cust-exposure-view.module#CustExposureViewModule'
+            },
+            {
+                path: PathConstant.VIEW_PHN_VERIF,
+                loadChildren: './phone-verif/phone-verif-view.module#PhoneVerifViewModule'
+            },
+            {
+                path: PathConstant.VIEW_PURCHASE_TRACKING,
+                loadChildren: './purchase-tracking-view/purchase-tracking-view.module#PurchaseTrackingViewModule'
+            },
+            {
+                path: PathConstant.VIEW_APP_ASSET,
+                loadChildren: './app-asset-view/app-asset-view.module#AppAssetViewModule'
             }
         ]
     }

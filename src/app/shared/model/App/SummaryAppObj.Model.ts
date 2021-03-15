@@ -4,7 +4,7 @@ import { AppCustAddrObj } from "../AppCustAddrObj.Model";
 import { AppCustPersonalJobDataObj } from "../AppCustPersonalJobDataObj.Model";
 import { AppGuarantorObj } from "../AppGuarantorObj.Model";
 import { AppObj } from "./App.Model";
-import { AppAssetObj } from "../AppAssetObj.model";
+import { AppAssetObj } from "../AppAssetObj.Model";
 import { AppFinDataObj } from "../AppFinData/AppFinData.Model";
 import { AssetTypeSerialNoLabelObj } from "../SerialNo/AssetTypeSerialNoLabelObj.Model";
 import { AppCollateralObj } from "../AppCollateralObj.Model";

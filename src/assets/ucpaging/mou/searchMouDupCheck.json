@@ -86,7 +86,7 @@
             "position": "center",
             "property": "MouCustNo",
             "target": "_blank",
-            "path": "/",
+            "path": "VIEW_MOU_CUST",
             "param": [
                 {
                     "type": "MouCustId",

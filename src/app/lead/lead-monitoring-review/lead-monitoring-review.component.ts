@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-lead-monitoring-review',
@@ -34,14 +35,14 @@ export class LeadMonitoringReviewComponent implements OnInit {
 
   cancel(ev) {
     var wfObj = new WorkflowApiObj();
-    wfObj.TaskListId = ev.TaskListId;
-    wfObj.TransactionNo = ev.UploadNo;
+    wfObj.TaskListId = ev.RowObj.TaskListId;
+    wfObj.TransactionNo = ev.RowObj.UploadNo;
     wfObj.ListValue = { "Status": "RJC" };
     this.httpClient.post(URLConstant.CancelUpload, wfObj).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          AdInsHelper.RedirectUrl(this.router,["/Lead/ReviewMonitoring/Paging"],{});
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_RVW_MONITORING_PAGING],{});
       }); 
       }
     );

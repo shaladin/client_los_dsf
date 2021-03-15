@@ -1,3 +1,9 @@
-<app-asset-data-paging [showCancel]="showCancel" *ngIf="mode == 'paging'" [AppId]="AppId" (outputValue)="terimaValue($event)" (outputCancel)="Cancel()"> </app-asset-data-paging>
-<app-asset-data-add-edit *ngIf="mode == 'addAsset' || mode =='editAsset'" [mode] = "this.mode" [AppAssetId]="this.AppAssetId" [AppId]="AppId" (assetValue)="terimaValue($event)"> </app-asset-data-add-edit>
-<app-collateral-add-edit *ngIf="mode == 'addColl' || mode =='editColl'" [mode] = "this.mode" [AppId]="AppId" [AppCollateralId]="this.AppCollateralId" (collValue)="terimaValue($event)"> </app-collateral-add-edit>
+<div *ngIf="BizTemplateCode !== 'OPL'">
+    <app-asset-data-paging [showCancel]="showCancel" *ngIf="mode == 'paging'" [AppId]="AppId" (outputValue)="terimaValue($event)" (outputCancel)="Cancel()"></app-asset-data-paging>
+    <app-asset-data-add-edit *ngIf="mode == 'addAsset' || mode =='editAsset'" [mode] = "this.mode" [AppAssetId]="this.AppAssetId" [AppId]="AppId" (assetValue)="terimaValue($event)"></app-asset-data-add-edit>
+    <app-collateral-add-edit *ngIf="mode == 'addColl' || mode =='editColl'" [mode] = "this.mode" [AppId]="AppId" [AppCollateralId]="this.AppCollateralId" (collValue)="terimaValue($event)"></app-collateral-add-edit>
+</div>
+
+<div *ngIf="BizTemplateCode === 'OPL'">
+    <app-asset-data-opl [showCancel]="showCancel" [AppId]="AppId" (outputCancel)="Cancel()" (outputTab)="getOutputTab()"></app-asset-data-opl>
+</div>

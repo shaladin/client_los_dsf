@@ -1,5 +1,15 @@
-<lib-ucSubsection [id]="'FamGuarId'" [title]="'Family Guarantor'" [panel]="'FamGuar'">
+<lib-ucSubsection [id]="'FamShrGuarId'" [title]="Title + ' and Guarantor'" [panel]="'FamShrGuar'">
 </lib-ucSubsection>
-<div id="FamGuar">
-  <label>Family Guarantor</label>
+<div id="FamShrGuar" *ngIf="isReady">
+  <div class="row">
+    <div class="col-md-6" *ngIf="crdRvwCustInfoObj.MrCustTypeCode == CustTypePersonal">
+      <app-crd-rvw-table-cust [CustType]="RelationTypeFamily" [ListAppCust]="ListAppCustFamily" [DictCrdRvwExposure]="DictCrdRvwExposure" [DictCrdRvwGuarantorExposure]="DictCrdRvwGuarantorExposure" [DictCrdRvwExposureHId]="DictCrdRvwExposureHId"></app-crd-rvw-table-cust>
+    </div>
+    <div class="col-md-6" *ngIf="crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany">
+      <app-crd-rvw-table-cust [CustType]="RelationTypeShrholder" [ListAppCust]="ListAppCustShareholder" [DictCrdRvwExposure]="DictCrdRvwExposure" [DictCrdRvwGuarantorExposure]="DictCrdRvwGuarantorExposure" [DictCrdRvwExposureHId]="DictCrdRvwExposureHId"></app-crd-rvw-table-cust>
+    </div>
+    <div class="col-md-6">
+      <app-crd-rvw-table-cust [CustType]="RelationTypeGuarantor" [ListAppCust]="ListAppCustGuarantor" [DictCrdRvwExposure]="DictCrdRvwExposure" [DictCrdRvwGuarantorExposure]="DictCrdRvwGuarantorExposure" [DictCrdRvwExposureHId]="DictCrdRvwExposureHId"></app-crd-rvw-table-cust>
+    </div>
+  </div>
 </div>

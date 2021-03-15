@@ -3,22 +3,24 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { HttpClient } from '@angular/common/http';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-agr-main-info',
   templateUrl: './agr-main-info.component.html'
 })
 export class AgrMainInfoComponent implements OnInit {
-
-
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   @Input() arrValue = [];
+  isReady: boolean = false;
  
   constructor(
-    private router: Router ) { }
+    private router: Router,
+    private http: HttpClient ) { }
 
-  ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfo.json";
+  async ngOnInit() {
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.whereValue = this.arrValue;
     this.viewGenericObj.ddlEnvironments = [
@@ -31,6 +33,22 @@ export class AgrMainInfoComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
+
+    await this.http.post(URLConstant.GetAgrmntByAgrmntId, { AgrmntId: this.arrValue[0] }).subscribe(
+      async response => {
+        let appId = response['AppId'];
+        await this.http.post(URLConstant.GetAppById, { AppId: appId }).subscribe(
+          (response) => {
+            if(response['BizTemplateCode'] == CommonConstant.FL4W){
+              this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrFL4WMainInfo.json";
+            }
+            else{
+              this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfo.json";
+            }
+            this.isReady = true;
+          });
+      }
+    );
   }
   
   GetCallBack(ev: any){

@@ -4,7 +4,7 @@
       <div class="px-3">
         <div class="form-body">
           <h4 class="form-section card-title" translate>MOU View</h4>
-          <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
+          <app-mou-main-info [MouCustId]="MouCustId"></app-mou-main-info>
           <mat-tab-group>
             <mat-tab label="MoU Detail">
               <ng-template matTabContent>
@@ -48,7 +48,7 @@
             </mat-tab>
             <mat-tab *ngIf="IsReady" label="Approval History">
               <ng-template matTabContent>
-                <app-mou-view-approval-history [MouCustId]="MouCustId"></app-mou-view-approval-history>
+                <app-mou-view-approval-history [MouCustNo]="MouCustNo" [MouCustId]="MouCustId"></app-mou-view-approval-history>
               </ng-template>
             </mat-tab>
           

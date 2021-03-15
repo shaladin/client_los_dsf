@@ -48,6 +48,7 @@ import { NapCustMainDataComponent } from "./nap-cust-main-data/nap-cust-main-dat
 import { NapDetailFormComponent } from "./nap-detail-form/nap-detail-form.component";
 import { MainDataComponentModule } from "../sharing-component/main-data-component/main-data-component.module";
 import { NewNapCustModule } from "../sharing-component/new-input-nap/new-nap-cust.module";
+import { SharedModule } from "app/shared/shared.module";
 
  
 export const customCurrencyMaskConfig = {     
@@ -87,7 +88,8 @@ export const customCurrencyMaskConfig = {
     ViewMainInfoComponentModule,
     MainDataComponentModule,
     NewNapCustModule,
-    NgxCurrencyModule.forRoot(customCurrencyMaskConfig)
+    NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
+    SharedModule
   ],
   declarations: [
     DummyComponent, 

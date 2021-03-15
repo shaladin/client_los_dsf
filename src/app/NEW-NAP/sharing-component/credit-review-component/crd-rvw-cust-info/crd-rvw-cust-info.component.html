@@ -1,5 +1,140 @@
 <lib-ucSubsection [id]="'CustInfoId'" [title]="'Customer Information'" [panel]="'CustInfo'">
 </lib-ucSubsection>
 <div id="CustInfo">
-  <label>Customer Information</label>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row" style="font-weight: bold;">
+          <div class="col-md-6">
+            <label class="label-control"> Capture Status:  </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwCustInfoObj.CaptureStat}} </label>
+          </div>
+        </div>
+      </div>      
+      <div class="col-md-6">
+        <div class="row" style="font-weight: bold;">
+          <div class="col-md-6">
+            <label class="label-control"> As of Date:  </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwCustInfoObj.AsOfDate | date: 'dd/MM/yyyy'}} </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <app-crd-rvw-cust-personal-info *ngIf="crdRvwCustInfoObj.MrCustTypeCode != CustTypeCompany" (ngModelForBankAcc)="ClickLinkBankStatement(BankStatementContent)" (ngModelForNegCheckList)="ClickLinkNegativeCheckingList(NegCheckListContent)" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-cust-personal-info>
+        <app-crd-rvw-cust-company-info *ngIf="crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" (ngModelForBankAcc)="ClickLinkBankStatement(BankStatementContent)" (ngModelForNegCheckList)="ClickLinkNegativeCheckingList(NegCheckListContent)" [crdRvwCustInfoObj]="crdRvwCustInfoObj"></app-crd-rvw-cust-company-info>
+      </div>
+      <div class="col-md-6 ">
+        <div class="row">
+          <div class="col-md-12">
+            <label class="label-control"> 
+              <a class="font-weight-bold" (click)="ClickLinkViewCustExposure()"> Exposure .000 (#Active / OS Principal / OS AR) </a>
+             </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> Customer </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{CustCrdRvwExposureObj.ActiveAgrmnt}} / {{CustCrdRvwExposureObj.OsPrincipalAmt}} / {{CustCrdRvwExposureObj.OsArBalance}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> Customer Group </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{CustGroupCrdRvwExposureObj.ActiveAgrmnt}} / {{CustGroupCrdRvwExposureObj.OsPrincipalAmt}} / {{CustGroupCrdRvwExposureObj.OsArBalance}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> Obligor </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{ObligorCrdRvwExposureObj.ActiveAgrmnt}} / {{ObligorCrdRvwExposureObj.OsPrincipalAmt}} / {{ObligorCrdRvwExposureObj.OsArBalance}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <br>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> #App Submit / Reject / Approved / In Process </label>
+          </div>
+          <div class="col-md-6">
+            <!-- <label class="label-control"> {{CustCrdRvwExposureObj.}} / {{CustCrdRvwExposureObj.}} /
+              {{CustCrdRvwExposureObj.}} / {{CustCrdRvwExposureObj.}} </label> -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> #Agr Repo / WO / Paid Off </label>
+          </div>
+          <div class="col-md-6">
+            <label class="label-control"> {{CustCrdRvwExposureObj.AgrmntRepossess}} / {{CustCrdRvwExposureObj.AgrmntWrittenOff}} /
+              {{CustCrdRvwExposureObj.AgrmntPaidOff}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-10">
+                <label class="label-control"> #Agr FPD (Last {{CustCrdRvwExposureObj.SpanOfMonth != null ? CustCrdRvwExposureObj.SpanOfMonth : 0}} month / All) </label>
+              </div>
+              <div class="col-md-2">
+                <span id="FpdIndicator" style="float: right;">
+                  <i [ngClass]="CustCrdRvwExposureObj.FpdIndicator == null ? 'far fa-circle' : CustCrdRvwExposureObj.FpdIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+                    [ngStyle]="{'color': CustCrdRvwExposureObj.FpdIndicator == null ? '' : CustCrdRvwExposureObj.FpdIndicator != whiteIndicator ? CustCrdRvwExposureObj.FpdIndicator : ''}" class="font-medium-3 tooltips">
+                    <span class="tooltipstext">
+                      <span *ngIf="CustCrdRvwExposureObj.FpdIndicatorDescr != null && CustCrdRvwExposureObj.FpdIndicatorDescr != ''"> {{CustCrdRvwExposureObj.FpdIndicatorDescr}} </span>
+                      <span *ngIf="CustCrdRvwExposureObj.FpdIndicatorDescr == null || CustCrdRvwExposureObj.FpdIndicatorDescr == ''"> No Data </span>
+                    </span>
+                  </i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label class="label-control"> {{CustCrdRvwExposureObj.AgrmntFpd}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> Current Overdue </label>
+          </div>
+          <div class="col-md-6">
+            <label class="label-control"> {{CustCrdRvwExposureObj.TotalAgrmntOverdue}} / {{CustCrdRvwExposureObj.MaxOverdueDays}} / {{CustCrdRvwExposureObj.MaxOverdueAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+<ng-template #BankStatementContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title"></h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-crd-rvw-bank-statement [ListAppCustBankAccObjs]="ListAppCustBankAccObjs"></app-crd-rvw-bank-statement>
+</ng-template>
+<ng-template #NegCheckListContent let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title"></h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <app-crd-rvw-neg-check-list [ListNegCust]="ListNegCust"></app-crd-rvw-neg-check-list>
+</ng-template>

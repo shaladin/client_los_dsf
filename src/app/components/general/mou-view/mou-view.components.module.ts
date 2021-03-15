@@ -10,34 +10,36 @@ import { MouViewFeeComponent } from './mou-view-fee/mou-view-fee.component';
 import { MouViewLegalComponent } from './mou-view-legal/mou-view-legal.component';
 import { MouViewSurveyComponent } from './mou-view-survey/mou-view-survey.component';
 import { MouViewTcComponent } from './mou-view-tc/mou-view-tc.component';
-import { MouViewAnalysisResultComponent } from './mou-view-analysis-result/mou-view-analysis-result.component';
+import { MouViewThirdPartyComponent } from 'app/view/mou-view/mou-view-third-party/mou-view-third-party.component';
+import { UcapprovalgeneralinfoModule } from '@adins/ucapprovalgeneralinfo';
 
 @NgModule({
     imports: [
         CommonModule,
         UcSubsectionModule,
         UcviewgenericModule,
-        UcgridviewModule
+        UcgridviewModule,
+        UcapprovalgeneralinfoModule
     ],
     declarations: [
         MouViewAddcollComponent,
         MouViewDetailComponent,
         MouViewDocComponent,
         MouViewFeeComponent,
+        MouViewThirdPartyComponent,
         MouViewLegalComponent,
         MouViewSurveyComponent,
         MouViewTcComponent,
-        MouViewAnalysisResultComponent
     ],
     exports: [
         MouViewAddcollComponent,
         MouViewDetailComponent,
         MouViewDocComponent,
         MouViewFeeComponent,
+        MouViewThirdPartyComponent,
         MouViewLegalComponent,
         MouViewSurveyComponent,
-        MouViewTcComponent,
-        MouViewAnalysisResultComponent
+        MouViewTcComponent
     ]
 })
 export class MouViewComponentsModule { }

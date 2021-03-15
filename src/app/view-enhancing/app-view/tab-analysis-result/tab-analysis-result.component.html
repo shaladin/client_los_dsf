@@ -1,4 +1,4 @@
-<div class="col-md-12 text-left">
+<div class="col-md-12 text-left" *ngIf="BizTemplateCode !== 'OPL'">
   <div class="card">
     <lib-ucSubsection *ngIf="isFormOnCreditInvestigation" [id]="'formCreditInvestigationId'" [title]="'Credit Investigation Analysis'" [panel]="'formCreditInvestigation'">
     </lib-ucSubsection>
@@ -52,5 +52,46 @@
       </div>
     </div>
 
+  </div>
+</div>
+
+<div class="col-md-12 text-left" *ngIf="BizTemplateCode === 'OPL'">
+  <div class="card">
+    <lib-ucSubsection *ngIf="isFormOnAppReview" [id]="'AppReviewAnalysisId'" [title]="'Application Review Analysis'" [panel]="'AppReviewAnalysis'">
+    </lib-ucSubsection>
+    <div *ngIf="isFormOnAppReview" class="form-body" [id]="'AppReviewAnalysis'">
+      <div class="form-body">
+        <div class="form-group row">
+          <div class="form-group col-md-4">
+            <label class="adInsLabel"> Analysis By </label>
+          </div>
+          <div class="col-md-8">
+            <label class="adInsLabel"> {{ResponseAppReviewData.CrdAnalystEmpNoDesc}} </label>
+          </div>
+        </div>
+
+        <div *ngFor="let item of ResponseAppReviewData.appCrdRvwDObjs" class="form-group row">
+          <div class="form-group col-md-4">
+            <label class="adInsLabel"> {{item.AnalysisItemName}} </label>
+          </div>
+          <div class="col-md-8">
+            <label class="adInsLabel"> {{item.AnalysisResult}} </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <lib-ucSubsection *ngIf="isFormOnAppReviewInfo" [id]="'AppReviewInfoId'" [title]="'Application Review Info'" [panel]="'AppReviewInfo'">
+    </lib-ucSubsection>
+    <div *ngIf="isFormOnAppReviewInfo" class="form-body" [id]="'AppReviewInfo'">
+      <div *ngFor="let item of ResponseAppReviewInfo" class="form-group row">
+        <div class="form-group col-md-4">
+          <label class="adInsLabel"> {{item.ScoreTypeDescr}} </label>
+        </div>
+        <div class="col-md-8">
+          <label class="adInsLabel"> {{item.ScoreValue}} </label>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

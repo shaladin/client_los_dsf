@@ -1,0 +1,169 @@
+{
+    "title": "Purchase Tracking Inquiry",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "A.ORI_OFFICE_CODE",
+            "id": "OriOfficeCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "",
+            "isQueryIn":true,
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office Name",
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "AC.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "A.APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "Application No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AGR.AGRMNT_NO",
+            "id": "AgrmntNoId",
+            "value": "",
+            "label": "Agreement No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "AAO.APP_ASSET_NO",
+            "id": "AgrmntNoId",
+            "value": "",
+            "label": "App Asset No",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "name": "searchPurchaseTrackingInquiry"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Office Name",
+            "name": "A.ORI_OFFICE_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Application No",
+            "name": "A.APP_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Agreement No",
+            "name": "AGR.AGRMNT_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "AC.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "App Asset No",
+            "name": "AAO.APP_ASSET_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Asset Name",
+            "name": "AA.FULL_ASSET_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Expected Delivery Date",
+            "name": "AAO.EXPECTED_DLVRY_DT"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Asset Allocation Date",
+            "name": "AAAO.ASSET_ALLOCATION_DT"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "View Tracking"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OriOfficeName"
+        },
+        {
+            "type": "callback",
+            "position": "center",
+            "property": "AppNo",
+            "key": "Application"
+        },
+        {
+            "type": "callback",
+            "position": "center",
+            "property": "AgrmntNo",
+            "key": "Agreement"
+        },
+        {
+            "type": "callback",
+            "position": "left",
+            "property": "CustName",
+            "key": "Customer"
+        },
+        {
+            "type": "callback",
+            "position": "center",
+            "property": "AppAssetNo",
+            "key": "AppAsset"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "FullAssetName"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "ExpectedDlvryDt"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "AssetAllocationDt"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type" : "callback",
+                    "icon" : "ft-edit-2",
+                    "key" : "View"
+                }
+            ]
+        }
+    ]
+}  

@@ -15,9 +15,8 @@
         </div>
         <div class="px-3">
 
-          <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
+          <app-app-main-info [AppId]="AppId" #viewAppMainInfo></app-app-main-info>
 
-          <ng-template #mainInfoContainerA></ng-template>
           <mat-tab-group (selectedTabChange)="tabChangeEvent($event)">
             <mat-tab *ngIf="IsCustomer" label="Customer">
               <ng-template matTabContent>
@@ -104,6 +103,12 @@
               </ng-template>
             </mat-tab>
 
+            <mat-tab label="Document">
+              <ng-template matTabContent>
+                <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
+              </ng-template>
+            </mat-tab>
+
             <mat-tab *ngIf="IsCommission" label="Commission">
               <ng-template matTabContent>
                 <app-tab-commission [appId]="AppId"></app-tab-commission>
@@ -148,7 +153,7 @@
 
             <mat-tab *ngIf="IsApprovalHist" label="Approval History">
               <ng-template matTabContent>
-                <app-approval-hist [AppId]="AppId"></app-approval-hist>
+                <app-approval-hist [AppNo]="appNo"  [AppId]="AppId"></app-approval-hist>
               </ng-template>
             </mat-tab>           
 

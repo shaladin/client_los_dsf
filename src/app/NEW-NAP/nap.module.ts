@@ -6,6 +6,7 @@ import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { MatRadioModule } from "@angular/material";
 import { UcSubsectionModule } from "@adins/uc-subsection";
 import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-app-component.module";
+import { SharedModule } from "app/shared/shared.module";
 
 @NgModule({
     declarations: [],
@@ -16,6 +17,7 @@ import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-c
         AdInsModule,
         UcSubsectionModule,
         ViewAppComponentModule,
+        SharedModule
     ],
     exports: [],
     providers: [

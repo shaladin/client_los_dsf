@@ -73,6 +73,13 @@ import { GuarantorComponent } from "./guarantor-data/guarantor.component";
 import { GuarantorCompanyComponent } from "./guarantor-data/guarantor-company/guarantor-company.component";
 import { GuarantorPersonalComponent } from "./guarantor-data/guarantor-personal/guarantor-personal.component";
 import { GuarantorPagingComponent } from "./guarantor-data/guarantor-paging/guarantor-paging.component";
+import { SharedModule } from "app/shared/shared.module";
+import { AssetExpenseComponent } from "./asset-expense-opl/asset-expense.component";
+import { AssetExpenseAddEditComponent } from "./asset-expense-opl/asset-expense-add-edit/asset-expense-add-edit.component";
+import { AssetOplMainInfoComponent } from "./asset-opl-main-info/asset-opl-main-info.component";
+import { FinancialDataOplEditComponent } from "./financial-data-opl/detail/financial-data-opl-detail.component";
+import { FinancialDataOplComponent } from "./financial-data-opl/financial-data-opl.component";
+import { AssetDataOplComponent } from "./multi-asset-data/asset-data-opl/asset-data-opl.component";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -148,7 +155,13 @@ export const customCurrencyMaskConfig = {
     ApplicationDataFL4WComponent,
     CollateralDataCfnaComponent,
     CollateralDataCfnaPagingComponent,
-    CollateralDataCfnaDetailComponent
+    CollateralDataCfnaDetailComponent,
+    AssetExpenseComponent,
+    AssetExpenseAddEditComponent,
+    AssetOplMainInfoComponent,
+    FinancialDataOplEditComponent,
+    FinancialDataOplComponent,
+    AssetDataOplComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,
@@ -163,7 +176,8 @@ export const customCurrencyMaskConfig = {
     MatSelectModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     CustSharingComponentModule,
-    UcaddtotempModule
+    UcaddtotempModule,
+
   ],
   declarations: [
     CustomerDataComponent,
@@ -196,7 +210,7 @@ export const customCurrencyMaskConfig = {
     SubsidyComponent,
     SubsidyAddEditComponent,
     FeeComponent,
-    TcDataComponent, // sementara nanti dicross check sama term-conditions
+    TcDataComponent, // sementara nanti dicross check sama term-conditions,
     SchmRegulerFixComponent,
     SchmStepUpStepDownNormalComponent,
     SchmStepUpStepDownLeasingComponent,
@@ -230,7 +244,13 @@ export const customCurrencyMaskConfig = {
     MultiAssetLeasingComponent,
     AssetLeasingPagingComponent,
     AssetLeasingAddEditComponent,
-    CollateralLeasingAddEditComponent
+    CollateralLeasingAddEditComponent,
+    AssetExpenseComponent,
+    AssetExpenseAddEditComponent,
+    AssetOplMainInfoComponent,
+    FinancialDataOplEditComponent,
+    FinancialDataOplComponent,
+    AssetDataOplComponent
   ],
   entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent],
   providers: [

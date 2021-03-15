@@ -13,6 +13,8 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-nap-add',
@@ -78,13 +80,14 @@ export class NapAddComponent implements OnInit {
     RsvField5: ['']
   });
 
+  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   constructor(private fb: FormBuilder, private router: Router,
-    private http: HttpClient, private toastr: NGXToastrService) { }
+    private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) { }
 
   isCopyData: boolean = false;
   ngOnInit() {
     // Lookup Obj
-    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.MakeLookUpObj();
     this.GetOfficeDDL();
@@ -230,7 +233,7 @@ export class NapAddComponent implements OnInit {
     this.http.post(url, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["Nap/ConsumerFinance/Add/Detail"], { "AppId": response["AppId"] });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CF4W_ADD_DETAIL], { "AppId": response["AppId"] });
       });
   }
 

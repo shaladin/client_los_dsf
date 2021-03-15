@@ -7,11 +7,11 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { formatDate } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-cust-personal-main-data-FL4W',
@@ -59,14 +59,12 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient,
-    private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private http: HttpClient, private cookieService: CookieService) {
 
   }
 
   async ngOnInit(): Promise<void> {
-    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
     this.parentForm.addControl(this.identifier, this.fb.group({
@@ -80,7 +78,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
       BirthPlace: ['', [Validators.required, Validators.maxLength(100)]],
       BirthDt: ['', Validators.required],
       MrNationalityCode: ['', Validators.maxLength(50)],
-      TaxIdNo: ['', [Validators.maxLength(50)]],
+      TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]],
       MobilePhnNo1: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
       MrEducationCode: ['', Validators.maxLength(50)],
       MobilePhnNo2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
@@ -175,7 +173,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'MR_CUST_TYPE_CODE';
+    critObj.propName = 'C.MR_CUST_TYPE_CODE';
     critObj.value = custTypeCode;
     arrCrit.push(critObj);
     this.InputLookupCustomerObj.addCritInput = arrCrit;
@@ -403,14 +401,16 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   ChangeNationality(ev) {
     if (this.parentForm.controls[this.identifier]['controls'].MrNationalityCode.value == "LOCAL") {
       var idx = ev.target.selectedIndex - 1;
-      this.selectedNationalityCountryCode = this.NationalityObj[idx].ReserveField1;
-      this.selectedNationalityCountryName = this.NationalityObj[idx].ReserveField2;
+      var setCountry = this.NationalityObj[idx].DefaultValue.split(';');
+      this.selectedNationalityCountryCode = setCountry[0];
+      this.selectedNationalityCountryName = setCountry[1] ? setCountry[1] : setCountry[0] ;
       this.isLocal = true;
     } else {
       var foreign = this.NationalityObj.find(x => x["MasterCode"] == ev.target.value);
-      this.InputLookupCountryObj.nameSelect = foreign.ReserveField2;
-      this.InputLookupCountryObj.jsonSelect =  { CountryName: foreign.ReserveField2};
-      this.selectedNationalityCountryCode = foreign.ReserveField1;
+      var setCountry = foreign.DefaultValue.split(';');
+      this.InputLookupCountryObj.nameSelect = setCountry[1] ? setCountry[1] : setCountry[0];
+      this.InputLookupCountryObj.jsonSelect =  { CountryName: setCountry[1] ? setCountry[1] : setCountry[0]};
+      this.selectedNationalityCountryCode = setCountry[0];
       this.isLocal = false;
     }
   }

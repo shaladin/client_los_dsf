@@ -1,9 +1,9 @@
 <div class="col-md-12 text-left">
   <div class="card">
-    <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)" #viewMainProd> </lib-ucviewgeneric>
+    <app-app-main-info [AppId]="appId" #viewAppMainInfo></app-app-main-info>
     <div class="card-body">
       <div class="px-3">
-        <lib-ucSubsection *ngIf="mode == 'ReturnHandling'" [id]="'formReturnInfoId'" [title]="'Credit Analysis'"
+        <lib-ucSubsection *ngIf="mode == 'ReturnHandling'" [id]="'formReturnInfoId'" [title]="'Return Handling'"
           [panel]="'formReturnInfo'">
         </lib-ucSubsection>
         <div class="form-body" *ngIf="mode == 'ReturnHandling' && OnFormReturnInfo" [id]="'formReturnInfo'">
@@ -223,6 +223,14 @@
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
             </div>
+            <div class="line"></div>
+            <div class="step" data-target="#upload-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
+                      [disabled]="!(AppStepIndex >= 8)" (click)="ChangeTab('UPD')">
+                <span class="bs-stepper-circle">8</span>
+                <span class="bs-stepper-label">Upload Document</span>
+              </button>
+            </div>
           </div>
           <br><br>
           <div class="bs-stepper-content">
@@ -259,7 +267,10 @@
               </app-financial-data-fctr>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 9 && stepperMode == 'COMPANY'" [AppId]="appId" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
+              <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="NextStep('UPD')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
+            </div>
+            <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
+              <app-dms-iframe *ngIf="AppStepIndex == 10 && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="mode != 'ReturnHandling'" [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>
@@ -269,11 +280,11 @@
 </div>
 
 <div class="form-actions pull-right">
-  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning" [routerLink]="['../../Paging']" translate>
+  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning" [routerLink]="[CancelLink]" translate>
     <i class="fa fa-check-square-o"></i> Cancel
   </button>
   <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning"
-    [routerLink]="['Nap/AdditionalProcess/ReturnHandling/EditAppPaging']" translate>
+    [routerLink]="[BackLink]" translate>
     <i class="fa fa-check-square-o"></i> Back
   </button>
   <button *ngIf="mode == 'ReturnHandling'" type="button" (click)="Submit()" class="btn btn-raised btn-primary">

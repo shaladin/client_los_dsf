@@ -64,7 +64,7 @@ export class TestMainDataComponent implements OnInit {
     MrIdTypeCode: ['', Validators.required],
     IdNo: ['', Validators.required],
     IdExpiredDt: [''],
-    TaxIdNo: [''],
+    TaxIdNo: ['', [Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]],
     MrGenderCode: ['', Validators.required],
     BirthPlace: ['', Validators.required],
     BirthDt: ['', Validators.required],
@@ -167,7 +167,7 @@ export class TestMainDataComponent implements OnInit {
       (response) => {
         this.IdTypeObj = response[CommonConstant.RefMasterObjs];
         if (this.IdTypeObj.length > 0) {
-          let idxDefault = this.IdTypeObj.findIndex(x => x["ReserveField2"] == CommonConstant.DEFAULT);
+          let idxDefault = this.IdTypeObj.findIndex(x => x["IsDefaultValue"]);
           this.CustMainDataForm.patchValue({
             MrIdTypeCode: this.IdTypeObj[idxDefault]["MasterCode"]
           });
@@ -217,9 +217,9 @@ export class TestMainDataComponent implements OnInit {
       this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.MrMaritalStatCode.setValidators(Validators.required);
       this.CustMainDataForm.controls.IdNo.setValidators(Validators.required);
-      this.CustMainDataForm.controls.TaxIdNo.clearValidators();
+      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]);
     } else {
-      this.CustMainDataForm.controls.TaxIdNo.setValidators(Validators.required);
+      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]);
       this.CustMainDataForm.controls.MotherMaidenName.clearValidators();
       this.CustMainDataForm.controls.BirthDt.clearValidators();
       this.CustMainDataForm.controls.BirthPlace.clearValidators();
@@ -235,7 +235,7 @@ export class TestMainDataComponent implements OnInit {
 
   resetInput() {
     this.CustMainDataForm.reset();
-    let idxDefault = this.IdTypeObj.findIndex(x => x["ReserveField2"] == CommonConstant.DEFAULT);
+    let idxDefault = this.IdTypeObj.findIndex(x => x["IsDefaultValue"]);
     this.CustMainDataForm.patchValue({
       MrCustTypeCode: this.MrCustTypeCode
     });

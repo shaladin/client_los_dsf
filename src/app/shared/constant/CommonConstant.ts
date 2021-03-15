@@ -13,6 +13,8 @@ export class CommonConstant {
   public static DEFAULT = 'DEF';
 
   //Application Item
+  public static MENU = "Menu";
+  public static ENVIRONMENT_MODULE = 'EnvironmentModule';
   public static USER_ACCESS = "UserAccess";
   public static USER_NAME = "UserName";
   public static USER_NAME_LOCAL_STORAGE = "Username";
@@ -22,8 +24,7 @@ export class CommonConstant {
   public static PAGE_ACCESS = "PageAccess";
   public static BUSINESS_DT = "BusinessDt";
   public static BUSINESS_DATE = "BusinessDate";
-  public static TOKEN = "Token";
-  public static LOCAL_IP = "LocalIp";
+  public static TOKEN = "XSRF-TOKEN";
   public static BIZ_TEMPLATE_CODE = "BizTemplateCode";
   public static BUSINESS_DATE_RAW = "BusinessDateRaw";
   public static VERSION = "Version";
@@ -41,8 +42,10 @@ export class CommonConstant {
   public static ApvCategoryCreditApproval = "CRD_APV"
   public static ApvCategoryPackageValidityChecking = "PCKG_VLDT_APV"
   public static ApvCategoryPreGoLive = "PRE_GPV_APV"
-
+  public static ApvCategoryOfferingValidity = "OFF_VLD_APV"
   public static INV_VERF_RESULT_STAT = "INV_VERF_RESULT_STAT";
+  public static ApvCategoryApplicaitonApproval = "APP_OPL_APV";
+  public static ApvCategoryDocumentChecklistApproval = "DOC_CHCKLIST_APV";
 
   //CUST TYPE
   public static CustTypePersonal = "PERSONAL";
@@ -57,7 +60,7 @@ export class CommonConstant {
   public static CustMainDataModeGuarantor = "GUARANTOR";
   public static CustMainDataModeFamily = "FAMILY";
   public static CustMainDataModeMgmntShrholder = "SHAREHOLDER";
-  
+
 
   //CUST PERSONAL RELATIONSHIP
   public static SelfCustomer = "SELF";
@@ -77,7 +80,6 @@ export class CommonConstant {
   public static LeadStepReject = "RJC";
   public static LeadStepSelfVerification = "SVR";
 
-
   //ASSET CONDITION 
   public static AssetConditionUsed = "USED";
   public static AssetConditionNew = "NEW";
@@ -96,10 +98,12 @@ export class CommonConstant {
   public static AppStepRef = "REF";
   public static AppStepApp = "APP";
   public static AppStepAsset = "ASSET";
+  public static AppStepExpense = "EXPENSE";
   public static AppStepIns = "INS";
   public static AppStepLIns = "LFI";
   public static AppStepFin = "FIN";
   public static AppStepTC = "TC";
+  public static AppStepUplDoc = "UPD";
   public static AppStepColl = "COLL";
   public static AppStepInvoice = "INVOICE";
   public static AppStepOther = "OTH";
@@ -123,6 +127,7 @@ export class CommonConstant {
   public static AppStepCNFR = "CNFR";
   public static AppStepPGLV = "PGLV";
   public static AppStepCSR = "CSR";
+  public static AppStepAssetExpense = "AEX";
   public static FL4W = "FL4W";
   public static CF4W = "CF4W";
   public static FCTR = "FCTR";
@@ -190,8 +195,8 @@ export class CommonConstant {
 
   // PRODUCT BEHAVIOUR
   public static ProductBehaviourLock = "LOCK";
-  public static ProductBehaviourDefault= "DEFAULT";
-  
+  public static ProductBehaviourDefault = "DEFAULT";
+
   //VERIFICATION
   public static VerificationNew = "NEW";
   public static VerificationFail = "FAIL";
@@ -211,9 +216,9 @@ export class CommonConstant {
 
   //APP CUST 
   public static AttrGroupCustCompanyOther = "CUST_COMPANY_OTH"
-  public static AttrGroupCustPersonalOther= "CUST_PERSONAL_OTH"
+  public static AttrGroupCustPersonalOther = "CUST_PERSONAL_OTH"
   public static AttrGroupCustCompanyFinData = "CUST_COMPANY_FINDATA"
-  public static AttrGroupCustPersonalFinData= "CUST_PERSONAL_FINDATA"
+  public static AttrGroupCustPersonalFinData = "CUST_PERSONAL_FINDATA"
 
   //Interest Type
   public static InterestTypeFixed = "FIXED";
@@ -330,12 +335,14 @@ export class CommonConstant {
   public static RefProdCompntLob = "LOB";
   public static RefProdCompntCurr = "CURR";
   public static RefProdCompntPayFreq = "PAYFREQ";
-  public static RefProdCompntProdType = "PROD_TYPE";
+    public static RefProdCompntProdType = "PROD_TYPE";
+  public static RefProdCompntDocChecklist = "DOC_CHKLST_APV";
 
   // REF REASON TYPE CODE
   public static RefReasonTypeCodeAppAgrCncl = "APP_AGR_CNCL";
   public static RefReasonTypeCodePreGlvApv = "PRE_GLV_APV";
   public static RefReasonTypeCodeCrdReview = "CRD_REVIEW";
+  public static RefReasonTypeDocChecklist = "DCK_LIST";
 
   // INST TYPE
   public static SINGLE_INST_TYPE = "SINGLE";
@@ -389,6 +396,8 @@ export class CommonConstant {
   // RETURN HANDLING
   public static ModeResultHandling = "ReturnHandling";
   public static ReturnHandlingEditApp = "RTN_EDIT_APP";
+  public static ReturnHandlingEditCust = "RTN_EDIT_CUST";
+  public static ReturnHandlingEditNAP4 = "RTN_EDIT_NAP4";
   public static ReturnHandlingAddPhnVerf = "RTN_ADD_PHN_VERF";
   public static ReturnHandlingEditComRsvFnd = "RTN_EDIT_COM_RSV_FND";
   public static ReturnHandlingAddColtr = "RTN_ADD_COLTR";
@@ -426,7 +435,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeRecourseType = "RECOURSE_TYPE";
   public static RefMasterTypeCodePaidBy = "PAID_BY";
   public static RefMasterTypeCodeInstType = "INST_TYPE";
-  public static RefMasterTypeCodeSingleInstCalcMethod = "SINGLE_INST_CALC_METHOD"; 
+  public static RefMasterTypeCodeSingleInstCalcMethod = "SINGLE_INST_CALC_METHOD";
   public static RefMasterTypeCodeGender = "GENDER";
   public static RefMasterTypeCodeMaritalStat = "MARITAL_STAT";
   public static RefMasterTypeCodeCustModel = "CUST_MODEL";
@@ -454,9 +463,16 @@ export class CommonConstant {
   public static RefMasterTypeCodeInsAddCvgType = "INS_ADD_CVG_TYPE";
   public static RefMasterTypeCodeInsCoverPeriod = "INS_COVER_PERIOD";
   public static RefMasterTypeCodePayPeriodToInsco = "PAY_PERIOD_TO_INSCO";
+  public static RefMasterTypeCodeOtherExpenseOpl = "OTH_EXPENSE_OPL";
+  public static RefMasterTypeCodeFeeTypeOpl = "FEE_TYPE_OPL";
+  public static RefMasterTypeCodeInpFeeTypeOpl = "INP_FEE_TYPE_OPL";
   public static RefMasterTypeCodeLifeInsPayMethod = "LIFE_INS_PAY_METHOD";
   public static RefMasterTypeCodeLifeInscoBranch = "LIFE_INSCO_BRANCH";
-  public static RefMasterTypeCodeReturnTask = "RETURN_TASK";
+  public static RefMasterTypeCodeReturnTaskCF4W = "RETURN_TASK_CF4W";
+  public static RefMasterTypeCodeReturnTaskCFNA = "RETURN_TASK_CFNA";
+  public static RefMasterTypeCodeReturnTaskCFRFN4W = "RETURN_TASK_CFRFN4W";
+  public static RefMasterTypeCodeReturnTaskFL4W = "RETURN_TASK_FL4W";
+  public static RefMasterTypeCodeReturnTaskOPL = "RETURN_TASK_OPL";
   public static RefMasterTypeCodeVerfSubjRelation = "VERF_SUBJ_RELATION";
   public static RefMasterTypeCodeCrdRvwAnalysisItem = "CRD_RVW_ANALYSIS_ITEM";
   public static RefMasterTypeCodeCrdInvstgAnalysisItem = "CRD_INVSTG_ANALYSIS_ITEM";
@@ -468,8 +484,8 @@ export class CommonConstant {
   public static RefMasterTypeCodeSubsidyFromType = "SUBSIDY_FROM_TYPE";
   public static RefMasterTypeCodePoItemCode = "PO_ITEM_CODE";
   public static RefMasterTypeCodeFinDataCalcBaseOn = "FIN_DATA_CALC_BASE_ON";
-  public static RefMasterReservedField2NonFee = "NON_FEE";
-  public static RefMasterReservedField2Fee = "FEE";
+  public static PurchaseOrderItemTypeNonFee = "NON_FEE";
+  public static PurchaseOrderItemTypeFee = "FEE";
   public static RefProdCompFirstInstType = "FIRSTINSTTYPE";
   public static RefProdCompAssetCond = "ASSETCOND";
   public static RefMasterTypeCodeProvisionSource = "PROVISION_SOURCE";
@@ -478,7 +494,9 @@ export class CommonConstant {
   public static RefMasterTypeStepUpStepDownInputTypePrcnt = "PRCNT";
   public static RefMasterTypeCodeSalutation = "SALUTATION";
   public static RefMasterTypeCodePaymentType = "PAYMENT_TYPE";
-
+  public static RefMasterTypeCodeCustExpsrType = "CUST_EXPSR_TYPE";
+  public static RefMasterTypeCodeResidualType = "RESIDUAL_TYPE";
+  public static RefMasterTypeCodeOperatingMargin = "OPERATING_MARGIN_TYPE";
   //RATE TYPE
   public static RateTypeFlat = "FLT";
   public static RateTypeEffective = "EFCTV";
@@ -533,16 +551,92 @@ export class CommonConstant {
 
   // Negative Customer Source Code
   public static NegCustSourceCodeConfins = "CONFINS";
-  
+
   //ASSET ATTRIBUTE
   public static AttrTypeCodeTrx = "TRX";
 
   //CHARACTERISTIC OF CREDIT
   public static CharacteristicOfCreditTypeCredit = "CREDIT";
+  public static CharacteristicOfCreditTypeOther = "OTHER";
 
   //GENERAL SETTING
   public static GSCodeDefLocalNationality = "DEF_LOCAL_NATIONALITY";
   public static GSCodeAppDataOfficer = "APP_DATA_OFFICER_CODE";
+  public static GSCodeIntegratorCheckBySystem = "INTEGRATOR_CHECK_BY_SYSTEM";
+  public static GSCodeInputOPLFeeType = "INPOPLFEETYPE";
+  public static GSCodeInputOPLFeeBehaviour = "INPOPLFEETBHV";
+  public static GSCodeIsUseDigitalization = "IS_USE_DIGITALIZATION";
+  public static GSCodeLobKta = "LOB_KTA";
 
 
+  //Serial Item
+  public static Chassis_No = "Chassis No";
+  // Cust Type  
+  public static WhiteIndicator = "WHITE";
+  public static NoData = "No Data";
+  public static MaritalStatusMarried = "MARRIED";
+  public static ExposureCustTypeCode = "CUST_EXPSR";
+  public static ExposureCustGroupTypeCode = "CUST_GRP_EXPSR";
+  public static ExposureObligorTypeCode = "CUST_OBLGR_EXPSR";
+
+  // Role Type
+  public static RoleCustData = "CUST";
+  public static RoleFamilyData = "SPOUSE";
+  public static RoleGuarantorData = "GUARANTOR";
+  public static RoleShareholder = "SHAREHOLDER";
+  //Approval
+  public static SCHM_CODE_MOU_APV_GENERAL = "MOUC_GEN_APV";
+  public static SCHM_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV";
+  public static SCHM_CODE_APV_PRE_GO_LIVE = "PRE_GLV_APV_CF";
+  public static SCHM_CODE_CRD_APV_CF = "CRD_APV_CF";
+  public static SCHM_CODE_APV_RENT_APP = "APV_RENT_APP";
+
+  public static CAT_CODE_MOU_APV_GENERAL = "MOUC_GEN_APV";
+  public static CAT_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV";
+  public static CAT_CODE_PRE_GO_LIVE_APV = "PRE_GPV_APV";
+  public static CAT_CODE_CRD_APV = "CRD_APV";
+  public static CAT_CODE_DOC_CHCLIST_APV = "DOC_CHCKLIST_APV";
+  public static CAT_CODE_APP_OPL_APV = "APP_OPL_APV";
+
+  //TRX_TYPE_CODE
+  public static APP_TRX_TYPE_CODE = "APP";
+  public static MOU_TRX_TYPE_CODE = "MOU";
+  public static LEAD_TRX_TYPE_CODE = "LEAD";
+
+  //FRAUD CHECK TYPE
+  public static FRAUD_CHCK_ASSET = "ASSET";
+  public static FRAUD_CHCK_CUST = "CUST";
+  //DMS
+  public static DmsKey = "PHL7KV8RR0VG30K4";
+  public static DmsIV = "0G7HFV96AVWXUQ51";
+  public static DmsNoCust = "No Customer";
+  public static DmsNoApp = "No Application";
+  public static DmsNoAgr = "No Agreement";
+  public static DmsMouId = "Mou Id";
+  public static DmsLeadId = "Lead Id";
+  public static DmsOverideSecurity = "OverideSecurity";
+  public static DmsOverideUpload = "Upload";
+  public static DmsOverideView = "View";
+  public static DmsOverideUploadView = "Upload,View";
+  public static DmsViewCodeCust = "ConfinsCust";
+  public static DmsViewCodeApp = "ConfinsApp";
+  public static DmsViewCodeAgr = "ConfinsAgr";
+  public static DmsViewCodeMou = "ConfinsMou";
+  public static DmsViewCodeLead = "ConfinsLead";
+
+  public static DefaultSlikSecEcoCode = "930000";
+
+  // CrdRvw
+  public static CrdRvwRelationTypeCustomer = "Customer";
+  public static CrdRvwRelationTypeFamily = "Family";
+  public static CrdRvwRelationTypeShrholder = "Shareholder";
+  public static CrdRvwRelationTypeGuarantor = "Guarantor";
+
+  public static CaptureStatReq = "REQ";
+  public static CaptureStatScs = "SCS";
+  public static CaptureStatFail = "FAIL";
+
+  //MOU TYPE
+  public static MOU_TYPE_GENERAL = "GENERAL";
+  public static MOU_TYPE_FACTORING = "FACTORING";
 }

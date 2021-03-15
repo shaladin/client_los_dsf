@@ -16,6 +16,8 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 
 @Component({
@@ -161,6 +163,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   //  list: []
   //}] = [{ list: [] }];
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
@@ -231,7 +234,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.http.post(this.AddEditAllCollateralDataUrl, this.allCollateralDataObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigateByUrl("/Nap/AdditionalProcess/ReturnHandlingCollateral/Edit?AppId=" + this.AppId + "&ReturnHandlingHId=" + this.returnHandlingHId + "&WfTaskListId=" + this.wfTaskListId);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT], { "AppId": this.AppId, "ReturnHandlingHId": this.returnHandlingHId, "WfTaskListId": this.wfTaskListId });
       });
 
   }

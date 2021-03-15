@@ -2,18 +2,18 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
-import { UcviewgenericComponent } from '@adins/ucviewgeneric';
-import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -21,14 +21,11 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
   providers: [NGXToastrService]
 })
 export class NapAddDetailComponent implements OnInit {
-
-  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
   private stepperPersonal: Stepper;
   private stepperCompany: Stepper;
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
   IsMultiAsset: string;
@@ -36,21 +33,28 @@ export class NapAddDetailComponent implements OnInit {
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
   custType: string = CommonConstant.CustTypeCompany;
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
+  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   BizTemplateCode: string = CommonConstant.OPL;
+  @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
+  arrValue = [];
+
+  // AppStep = {
+  //   "APP": 1,
+  //   "ASSET": 2,
+  //   "INS": 3,
+  //   "LFI": 4,
+  //   "FIN": 5,
+  //   "TC": 6,
+  // };
 
   AppStep = {
-    "NEW": 1,
-    "CUST": 1,
-    "GUAR": 2,
-    "APP": 3,
-    "ASSET": 5,
-    "INS": 6,
-    "LFI": 7,
-    "FIN": 8,
-    "TC": 9,
+    "APP": 1,
+    "ASSET": 2,
+    "EXPENSE": 3,
+    "FIN": 4,
+    "TC": 5,
   };
 
   ResponseReturnInfoObj: ReturnHandlingDObj;
@@ -59,12 +63,13 @@ export class NapAddDetailComponent implements OnInit {
   });
   OnFormReturnInfo = false;
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    private toastr: NGXToastrService) {
+    private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -83,25 +88,9 @@ export class NapAddDetailComponent implements OnInit {
   ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 1;
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-
+    this.arrValue.push(this.appId);
     // this.ChangeStepper();
 
     if (this.ReturnHandlingHId > 0) {
@@ -119,7 +108,8 @@ export class NapAddDetailComponent implements OnInit {
             this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
             this.ChooseStep(this.AppStepIndex);
           }
-        });
+        }
+      );
     }
     this.MakeViewReturnInfoObj();
   }
@@ -134,16 +124,20 @@ export class NapAddDetailComponent implements OnInit {
       this.stepperMode = CommonConstant.CustTypePersonal;
       document.getElementById('stepperPersonal').style.display = 'block';
       document.getElementById('stepperCompany').style.display = 'none';
+      // this.AppStep = {
+      //   "APP": 1,
+      //   "ASSET": 2,
+      //   "INS": 3,
+      //   "LFI": 4,
+      //   "FIN": 5,
+      //   "TC": 6,
+      // };
       this.AppStep = {
-        "NEW": 1,
-        "CUST": 1,
-        "GUAR": 2,
-        "APP": 3,
-        "ASSET": 5,
-        "INS": 6,
-        "LFI": 7,
-        "FIN": 8,
-        "TC": 9,
+        "APP": 1,
+        "ASSET": 2,
+        "EXPENSE": 3,
+        "FIN": 4,
+        "TC": 5,
       };
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
@@ -153,16 +147,20 @@ export class NapAddDetailComponent implements OnInit {
       this.stepperMode = CommonConstant.CustTypeCompany;
       document.getElementById('stepperPersonal').style.display = 'none';
       document.getElementById('stepperCompany').style.display = 'block';
+      // this.AppStep = {
+      //   "APP": 1,
+      //   "ASSET": 2,
+      //   "INS": 3,
+      //   "LFI": 4,
+      //   "FIN": 5,
+      //   "TC": 6,
+      // };
       this.AppStep = {
-        "NEW": 1,
-        "CUST": 1,
-        "GUAR": 2,
-        "APP": 3,
-        "ASSET": 5,
-        "INS": 6,
-        "LFI": 7,
-        "FIN": 7,
-        "TC": 8,
+        "APP": 1,
+        "ASSET": 2,
+        "EXPENSE": 3,
+        "FIN": 4,
+        "TC": 5,
       };
     }
   }
@@ -188,7 +186,8 @@ export class NapAddDetailComponent implements OnInit {
             ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
           });
           this.OnFormReturnInfo = true;
-        });
+        }
+      );
     }
   }
 
@@ -205,30 +204,34 @@ export class NapAddDetailComponent implements OnInit {
         }
         else
           this.IsMultiAsset = 'False';
-      })
+      }
+    )
   }
 
   ChangeTab(AppStep) {
     this.IsSavedTC = false;
     switch (AppStep) {
-      case CommonConstant.AppStepCust:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
-        break;
-      case CommonConstant.AppStepGuar:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepGuar];
-        break;
+      // case CommonConstant.AppStepCust:
+      //   this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
+      //   break;
+      // case CommonConstant.AppStepGuar:
+      //   this.AppStepIndex = this.AppStep[CommonConstant.AppStepGuar];
+      //   break;
       case CommonConstant.AppStepApp:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepApp];
         break;
       case CommonConstant.AppStepAsset:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepAsset];
         break;
-      case CommonConstant.AppStepIns:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepIns];
+      case CommonConstant.AppStepExpense:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepExpense];
         break;
-      case CommonConstant.AppStepLIns:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepLIns];
-        break;
+      // case CommonConstant.AppStepIns:
+      //   this.AppStepIndex = this.AppStep[CommonConstant.AppStepIns];
+      //   break;
+      // case CommonConstant.AppStepLIns:
+      //   this.AppStepIndex = this.AppStep[CommonConstant.AppStepLIns];
+      //   break;
       case CommonConstant.AppStepFin:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepFin];
         break;
@@ -243,87 +246,76 @@ export class NapAddDetailComponent implements OnInit {
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
-      
-     this.ucViewMainProd.initiateForm();
+
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   NextStep(Step) {
-    if (this.ReturnHandlingHId > 0) {
-
-    } else {
+    if (this.ReturnHandlingHId === 0) {
       this.UpdateAppStep(Step);
     }
 
-    this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.next();
-    } else if (this.custType == CommonConstant.CustTypeCompany) {
+    }
+    else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany.next();
     }
-    this.ucViewMainProd.initiateForm();
+    this.ChangeTab(Step);
   }
 
   UpdateAppStep(Step: string) {
     this.NapObj.AppCurrStep = Step;
-    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
-      (response) => {
-      }
-    )
+    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(() => {})
   }
 
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     if (this.ReturnHandlingHId > 0) {
       this.IsSavedTC = true;
-    } else {
+    }
+    else {
       this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,["/Nap/ROS/Paging"], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
-        })
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ROS_PAGING], { BizTemplateCode: CommonConstant.OPL }); //Diganti ROS Bila Sudah Siap
+        }
+      )
     }
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/ROS/Paging"], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ROS_PAGING], { BizTemplateCode: CommonConstant.OPL }); //Diganti ROS Bila Sudah Siap
   }
 
   Submit() {
     if (this.ReturnHandlingHId > 0) {
-      if (!this.IsSavedTC) {
-        this.toastr.warningMessage(ExceptionConstant.SAVE_TC_DATA);
-      }
-      else {
-        var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
-        ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
-        ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
-        ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
-        ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
-        ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
-        ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
-        ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
+      var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+      ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
+      ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
+      ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
+      ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
+      ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
+      ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
+      ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-        this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.FL4W }); //Diganti ROS Bila Sudah Siap
-
-          }
-        )
-      }
+      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING], { BizTemplateCode: CommonConstant.OPL }); //Diganti ROS Bila Sudah Siap
+        }
+      )
     }
   }
 
   ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new AppObj();
     wfClaimObj.AppId = this.appId;
     wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
     wfClaimObj.WfTaskListId = this.wfTaskListId;
 
-    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
-      () => {
-      });
+    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(() => { });
   }
 
   CheckCustType(ev: string) {
@@ -332,7 +324,12 @@ export class NapAddDetailComponent implements OnInit {
     this.NextStep(CommonConstant.AppStepGuar);
   }
 
-  GetCallback(ev) { 
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+  GetCallBack(event: any) {
+    if(event.Key === "Application") {
+      AdInsHelper.OpenAppViewByAppId(event.ViewObj.AppId);
+    }
+    else if (event.Key === "ProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.ViewObj.ProdOfferingCode, event.ViewObj.ProdOfferingVersion);
+    }
   }
 }

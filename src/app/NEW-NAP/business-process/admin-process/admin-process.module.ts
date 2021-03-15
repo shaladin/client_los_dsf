@@ -48,16 +48,30 @@ import { NewPurchaseOrderDetailComponent } from './new-purchase-order/new-purcha
 import { PoEntryComponent } from './new-purchase-order/new-purchase-order-detail/po-entry/po-entry.component';
 import { DocSignerCfnaComponent } from './doc-signer-cfna/doc-signer-cfna.component';
 import { DocSignerCfnaDetailComponent } from './doc-signer-cfna/doc-signer-cfna-detail/doc-signer-cfna-detail.component';
+import { UcapprovalcreateModule } from '@adins/ucapprovalcreate';
+import { UcapprovalR3Module } from '@adins/ucapproval-r3';
+import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
+import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
+import { MatTabsModule } from "@angular/material";
+import { SharedModule } from "app/shared/shared.module";
+import { DocChecklistPagingComponent } from "./doc-checklist/doc-checklist-paging/doc-checklist-paging.component";
+import { DocChecklistDetailComponent } from "./doc-checklist/doc-checklist-detail/doc-checklist-detail.component";
+import { DocChecklistRequestForApprovalComponent } from "./doc-checklist/doc-checklist-request-for-approval/doc-checklist-request-for-approval.component";
+import { DocChecklistApprovalPagingComponent } from "./doc-checklist/doc-checklist-approval-paging/doc-checklist-approval-paging.component";
+import { DocChecklistApprovalDetailComponent } from "./doc-checklist/doc-checklist-approval-detail/doc-checklist-approval-detail.component";
+import { PreGoLiveOplPagingComponent } from './pre-go-live-opl/pre-go-live-opl-paging/pre-go-live-opl-paging.component';
+import { PreGoLiveOplDetailComponent } from './pre-go-live-opl/pre-go-live-opl-detail/pre-go-live-opl-detail.component';
+import { PreGoLiveOplService } from "./pre-go-live-opl/pre-go-live-opl.service";
 
 export const customCurrencyMaskConfig = {     
-  align: "left",     
-  allowNegative: true,     
-  allowZero: true,     
-  decimal: ".",     
-  precision: 2,     
-  prefix: "",     
-  suffix: "",     
-  thousands: ",",     
+  align: "left",
+  allowNegative: true,
+  allowZero: true,
+  decimal: ".",
+  precision: 2,
+  prefix: "",
+  suffix: "",
+  thousands: ",",
   nullable: false,
   inputMode: CurrencyMaskInputMode.NATURAL };
 
@@ -70,7 +84,13 @@ export const customCurrencyMaskConfig = {
     ProcessComponentModule,
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     AdInsModule,
-    UcaddtotempModule
+    UcaddtotempModule,
+    UcapprovalcreateModule,
+    UcapprovalR3Module,
+    UcapprovalHistoryModule,
+    UcapprovalgeneralinfoModule,
+    MatTabsModule,
+    SharedModule
   ],
   declarations: [
     PurchaseOrderPagingComponent,
@@ -108,10 +128,18 @@ export const customCurrencyMaskConfig = {
     NewPurchaseOrderDetailComponent,
     PoEntryComponent,
     DocSignerCfnaComponent,
-    DocSignerCfnaDetailComponent
+    DocSignerCfnaDetailComponent,
+    DocChecklistPagingComponent,
+    DocChecklistDetailComponent,
+    DocChecklistRequestForApprovalComponent,
+    DocChecklistApprovalPagingComponent,
+    DocChecklistApprovalDetailComponent,
+    PreGoLiveOplPagingComponent,
+    PreGoLiveOplDetailComponent
   ],
   providers: [
-    NGXToastrService
+    NGXToastrService,
+    PreGoLiveOplService
   ],
   entryComponents: [
     CreateDoMultiAssetComponent,

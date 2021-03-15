@@ -16,35 +16,34 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ErrorDialogService } from 'app/error-dialog/error-dialog.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { RequestCriteriaObj } from 'app/shared/model/RequestCriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
     count = 0;
-    constructor(public errorDialogService: ErrorDialogService, private spinner: NgxSpinnerService, private router: Router, public toastr: ToastrService) { }
+    constructor(public errorDialogService: ErrorDialogService, private spinner: NgxSpinnerService, private router: Router, public toastr: ToastrService, private cookieService: CookieService) { }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         console.log(request);
         if (request.method == "POST" && (request.body == null || request.body.isLoading == undefined || request.body.isLoading == true)) {
             this.spinner.show();
         }
-        
         if (request.url != "./assets/i18n/en.json") {
             this.count++;
         }
 
-        var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+        var currentUserContext = AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS) ? JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS)) : null;
         var token: string = "";
         var myObj;
         let today = new Date();
         var businessDt = formatDate(today, 'yyyy-MM-dd', 'en-US');
 
-        var checkSession = AdInsHelper.CheckSessionTimeout();
+        var checkSession = AdInsHelper.CheckSessionTimeout(this.cookieService);
         if (checkSession == "1") {
             // this.errorDialogService.openDialog(AdInsErrorMessage.SessionTimeout);
             this.spinner.hide();
-            this.router.navigate(["/pages/login"]);
+            this.router.navigate([NavigationConstant.PAGES_LOGIN]);
         }
 
         if (request.url.includes("Add") || request.url.includes("Edit") || request.url.includes("Delete")) {
@@ -55,14 +54,13 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         }
 
         //Ini kalau buat Login belom punya Current User Contexts
-        
+
         if (currentUserContext != null) {
-            token = localStorage.getItem(CommonConstant.TOKEN);
+            token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
             myObj = new Object();
             if (request.body != null) {
                 myObj = request.body;
             }
-            myObj["Ip"] = localStorage.getItem(CommonConstant.LOCAL_IP);
             myObj["RequestDateTime"] = businessDt;
         }
         else {
@@ -70,18 +68,16 @@ export class HttpConfigInterceptor implements HttpInterceptor {
             if (request.body != null) {
                 myObj = request.body;
             }
-            myObj["Ip"] = localStorage.getItem(CommonConstant.LOCAL_IP);
             myObj["RequestDateTime"] = businessDt;
-            token = localStorage.getItem(CommonConstant.TOKEN);
+            token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
         }
-        
-        if(token==null)
-        {
-            token="";
+
+        if (token == null) {
+            token = "";
         }
 
         if (token != "") {
-            request = request.clone({ headers: request.headers.set('Authorization', token) });
+            request = request.clone({ headers: request.headers.set('AdInsKey', token) });
         }
 
         if (!request.headers.has('Content-Type')) {
@@ -93,8 +89,12 @@ export class HttpConfigInterceptor implements HttpInterceptor {
         request = request.clone({ headers: request.headers.set('Access-Control-Allow-Credentials', 'true') });
         request = request.clone({ headers: request.headers.set('Access-Control-Allow-Methods', 'POST') });
         request = request.clone({ headers: request.headers.set('Access-Control-Allow-Headers', 'Content-Type,Accept,Authorization') });
+        request = request.clone({ headers: request.headers.set('X-Content-Type-Options', 'nosniff') });
+        request = request.clone({ headers: request.headers.set('Cache-Control', 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0') });
+        request = request.clone({ headers: request.headers.set('Pragma', 'no-cache') });
+        request = request.clone({ headers: request.headers.set('Expires', '0') });
         request = request.clone({ body: myObj });
-        AdInsHelper.InsertLog(request.url, "API", request.body);
+        AdInsHelper.InsertLog(this.cookieService, request.url, "API", request.body);
         console.log(JSON.stringify(request.body));
         // if (request.url.includes("Add") || request.url.includes("Edit") || request.url.includes("Delete")) {
         //     var q = "AddQueue";
@@ -112,13 +112,13 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 if (event instanceof HttpResponse) {
                     //Ini Error kalau sudah masuk sampai ke Back End
                     if (event.body.StatusCode != undefined) {
-                      if (event.body.StatusCode != '200' && event.body.StatusCode != "001" && event.body.StatusCode != "002") {
-                            
+                        if (event.body.StatusCode != '200' && event.body.StatusCode != "001" && event.body.StatusCode != "002") {
+
                             if (event.body.StatusCode == '400') {
                                 for (var i = 0; i < event.body.ErrorMessages.length; i++) {
                                     this.toastr.error(event.body.ErrorMessages[i].Message, 'Status: ' + event.body.StatusCode, { "tapToDismiss": true });
                                 }
-                            }else {
+                            } else {
                                 let data = {};
                                 data = {
                                     reason: event.body.Message ? event.body.Message : '',
@@ -127,19 +127,9 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                                 this.toastr.error(data['reason'], 'Status: ' + data['status'], { "tapToDismiss": true });
                                 console.log(event.body);
                             }
-                            
+
                             return;
                         }
-                    }
-                    else {
-                        //Kalau pake Http Get yang bukan ke Backend sendiri g punya token, jadi g boleh asal di replace
-                        // if (event.body.token == undefined) {
-                        //     localStorage.setItem("Token", localStorage.getItem("Token"));
-                        // }
-                        // else {
-                        //     localStorage.setItem("Token", event.body.token);
-                        // }
-
                     }
                 }
 
@@ -168,7 +158,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                 }
 
                 if (request.method == "POST") {
-                    AdInsHelper.ClearPageAccessLog();
+                    AdInsHelper.ClearPageAccessLog(this.cookieService);
                 }
                 if (this.count == 0) {
                     this.spinner.hide();

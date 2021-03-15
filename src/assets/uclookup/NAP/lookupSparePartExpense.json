@@ -1,0 +1,67 @@
+{
+  "title": "Lookup Sparepart",
+  "component": [
+    {
+      "type": "textbox",
+      "name": "MASTER_CODE",
+      "id": "accessoryCode",
+      "value": "",
+      "label": "Sparepart Code",
+      "placeholder": "Sparepart Code"
+    },
+    {
+      "type": "textbox",
+      "name": "DESCR",
+      "id": "accessoryName",
+      "value": "",
+      "label": "Sparepart Name",
+      "placeholder": "Sparepart Name"
+    }
+  ],
+  "querystring": {
+    "name": "lookupSparePartExpense"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Sparepart Code",
+      "name": "SparePartCode"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Sparepart Name",
+      "name": "SparePartName"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Select"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "center",
+      "property": "SparePartCode"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "SparePartName"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "select",
+          "property": "SparePartCode"
+        }
+      ]
+    }
+  ],
+  "propertyId": "SparePartCode",
+  "propertyName": "SparePartName"
+}

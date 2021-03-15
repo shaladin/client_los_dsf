@@ -1,0 +1,50 @@
+<div class="modal-body">
+  <div class="pl-3 mb-2 mt-2">
+    <h4 class="card-title ucSearch-title" translate> Difference with master customer </h4>
+  </div>
+  <div class="px-3" id="DiffCust">    
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: left;">
+            <span  name='CustData' translate>Customer Data</span>
+          </th>
+          <th style="text-align: left;">
+            <span  name='IsDiff' translate>Is Different</span>
+          </th>
+          <th style="text-align: left;">
+            <span  name='AppData' translate>Application Data</span>
+          </th>
+          <th style="text-align: left;">
+            <span  name='MasterData' translate>Master Data</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf="ListCrdRvwDiffAppToMasterCustObj.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr *ngFor="let item of ListCrdRvwDiffAppToMasterCustObj; let i = index">
+          <td style="text-align: left;">{{item.Field}}</td>
+          <td style="text-align: left;">
+            <span id="IsDiffIndicator{{i}}" style="float: left;">
+              <i [ngStyle]="{'color': item.IsDifference ? 'RED' : 'GREEN'}"
+                class="font-medium-3 fa fa-circle tooltips">
+                <span [ngClass]="'tooltipstext'" *ngIf="item.IsDifference">
+                  Different
+                </span>
+                <span [ngClass]="'tooltipstext'" *ngIf="!item.IsDifference">
+                  Not Different
+                </span>
+              </i>
+            </span>
+          </td>
+          <td style="text-align: left;">{{item.AppValue}}</td>
+          <td style="text-align: left;">{{item.MasterValue}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

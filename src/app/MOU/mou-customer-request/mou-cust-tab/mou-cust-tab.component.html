@@ -19,9 +19,12 @@
       #enjiForm="ngForm">
       <div class="form-body">
         <div *ngIf="isBindDataDone == true">
-          <app-mou-cust-personal-main (isMarried)="MaritalChanged($event)"  (callbackCopyCust)="CopyCustomer($event)" (spouseObj)="GenderChanged($event)" [MouCustId]="MouCustId" [IsSpouseExist]="IsSpouseExist"
-            [custDataPersonalObj]="custDataPersonalObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm" [identifier]="'PersonalMain'"></app-mou-cust-personal-main>
-            <lib-ucaddress [addressObj]="inputAddrLegalPersonalObj" [enjiForm]="enjiForm" [identifier]="'legalAddr'" [UCAddrForm]="CustDataForm"></lib-ucaddress>
+          <app-mou-cust-personal-main (isMarried)="MaritalChanged($event)" (callbackCopyCust)="CopyCustomer($event)"
+            (spouseObj)="GenderChanged($event)" [MouCustId]="MouCustId" [IsSpouseExist]="IsSpouseExist"
+            [custDataPersonalObj]="custDataPersonalObj" [enjiForm]="enjiForm" [parentForm]="CustDataForm"
+            [identifier]="'PersonalMain'"></app-mou-cust-personal-main>
+          <lib-ucaddress [addressObj]="inputAddrLegalPersonalObj" [enjiForm]="enjiForm" [identifier]="'legalAddr'"
+            [UCAddrForm]="CustDataForm"></lib-ucaddress>
           <lib-ucSubsection [id]="'residenceAddrId'" [title]="'Residence Address'" [panel]="'residenceAddr'">
           </lib-ucSubsection>
           <div id="residenceAddr">
@@ -44,7 +47,8 @@
                 </div>
               </div>
             </div>
-            <lib-ucaddress [addressObj]="inputAddrResidenceObj" [enjiForm]="enjiForm" [identifier]="'residenceAddr'" [UCAddrForm]="CustDataForm"></lib-ucaddress>
+            <lib-ucaddress [addressObj]="inputAddrResidenceObj" [enjiForm]="enjiForm" [identifier]="'residenceAddr'"
+              [UCAddrForm]="CustDataForm"></lib-ucaddress>
           </div>
           <lib-ucSubsection [id]="'mailingAddrId'" [title]="'Mailing Address'" [panel]="'mailingAddr'">
           </lib-ucSubsection>
@@ -68,7 +72,8 @@
                 </div>
               </div>
             </div>
-            <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForMailing"  [enjiForm]="enjiForm" [identifier]="'mailingAddr'" [UCAddrForm]="CustDataForm"></lib-ucaddress>
+            <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForMailing" [enjiForm]="enjiForm"
+              [identifier]="'mailingAddr'" [UCAddrForm]="CustDataForm"></lib-ucaddress>
           </div>
           <app-mou-cust-personal-contact-info (callbackCopyAddr)="copyToContactPersonAddr($event)"
             (callbackSubmit)="getCustContactInformation($event)" [isMarried]="isMarried" [spouseGender]="spouseGender"
@@ -83,18 +88,36 @@
             [MouCustPersonalJobDataObj]="custDataPersonalObj.MouCustPersonalJobDataObj" [enjiForm]="enjiForm"
             [parentForm]="CustDataForm" [identifier]="'jobData'"></app-mou-cust-job-data>
           <app-mou-cust-socmed [MouCustSocmedObjs]="custDataPersonalObj.MouCustSocmedObjs" [enjiForm]="enjiForm"
-            [parentForm]="CustDataForm" [identifier]="'socmed'"></app-mou-cust-socmed>  
+            [parentForm]="CustDataForm" [identifier]="'socmed'"></app-mou-cust-socmed>
           <app-mou-cust-grp-mbr [MouCustGrpObjs]="custDataPersonalObj.MouCustGrpObjs" [enjiForm]="enjiForm"
             [parentForm]="CustDataForm" [identifier]="'custGrpMember'"></app-mou-cust-grp-mbr>
+
+          <lib-ucSubsection *ngIf="this.isUseDigitalization == '1' && this.isNeedCheckBySystem == '0'" [id]="'integratorDataId'"
+            [title]="'Fraud Checking Customer'" [panel]="'fraudCheckingCust'">
+          </lib-ucSubsection>
+          <div *ngIf="this.isUseDigitalization == '1' && this.isNeedCheckBySystem == '0'" id="fraudCheckingCust">
+            <div class="form-group row">
+              <label class="col-md-3 adins-required-label" translate>Integrator Checking</label>
+              <div class="col-md-4">
+                <button type="button" class="btn btn-raised btn-success mr-1" [disabled]="!CustDataForm.valid"
+                  (click)="checkIntegrator()">
+                  <i class="fa fa-check-square-o"></i> Hit Integrator
+                </button>
+                <label *ngIf="this.thirdPartyRsltHId != null && this.thirdPartyRsltHId != '' " translate>Requested At
+                  {{this.latestReqDtCheckIntegrator | date: 'dd-MMMM-yyyy hh:mm:ss'}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions right">
+            <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
+              translate>
+              <i class="ft-x"></i> Cancel
+            </button>
+            <button type="submit" class="btn btn-raised btn-primary">
+              <i class="fa fa-check-square"></i> Save
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="form-actions right">
-        <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
-          <i class="ft-x"></i> Cancel
-        </button>
-        <button type="submit" class="btn btn-raised btn-primary">
-          <i class="fa fa-check-square"></i> Save
-        </button>
       </div>
     </form>
   </div>
@@ -106,7 +129,8 @@
           <app-mou-cust-company-main (callbackCopyCust)="CopyCustomerCompany($event)"
             [custDataCompanyObj]="custDataCompanyObj" [enjiForm]="enjiFormCompany" [parentForm]="CustDataCompanyForm"
             [identifier]="'companyMainData'" [MouCustId]="MouCustId"></app-mou-cust-company-main>
-            <lib-ucaddress [addressObj]="inputAddrLegalCompanyObj" [enjiForm]="enjiForm" [identifier]="'legalAddrCompany'" [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
+          <lib-ucaddress [addressObj]="inputAddrLegalCompanyObj" [enjiForm]="enjiForm" [identifier]="'legalAddrCompany'"
+            [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
           <lib-ucSubsection [id]="'mailingAddrCompanyId'" [title]="'Mailing Address'" [panel]="'mailingAddrCompany'">
           </lib-ucSubsection>
           <div id="mailingAddrCompany">
@@ -129,9 +153,11 @@
                 </div>
               </div>
             </div>
-            <lib-ucaddress [addressObj]="inputAddrMailingCompanyObj" [enjiForm]="enjiForm" [identifier]="'mailingAddrCompany'" [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
+            <lib-ucaddress [addressObj]="inputAddrMailingCompanyObj" [enjiForm]="enjiForm"
+              [identifier]="'mailingAddrCompany'" [UCAddrForm]="CustDataCompanyForm"></lib-ucaddress>
           </div>
-          <app-mou-cust-mgmnt-shrholder (callbackSubmit)="getMouCustShareholder($event)" [listShareholder]="listShareholder">
+          <app-mou-cust-mgmnt-shrholder (callbackSubmit)="getMouCustShareholder($event)"
+            [listShareholder]="listShareholder">
           </app-mou-cust-mgmnt-shrholder>
           <app-mou-cust-company-contact-info (callbackSubmit)="getMouCustCompanyContactPerson($event)"
             [listContactPersonCompany]="listContactPersonCompany"></app-mou-cust-company-contact-info>
@@ -146,6 +172,22 @@
             [parentForm]="CustDataCompanyForm" [identifier]="'custGrpMemberCompany'"></app-mou-cust-grp-mbr>
         </div>
       </div>
+      <lib-ucSubsection *ngIf="this.isUseDigitalization == '1' && this.isNeedCheckBySystem == '0'" [id]="'integratorDataId'"
+      [title]="'Fraud Checking Customer'" [panel]="'fraudCheckingCust'">
+    </lib-ucSubsection>
+    <div *ngIf="this.isUseDigitalization == '1' && this.isNeedCheckBySystem == '0'" id="fraudCheckingCust">
+      <div class="form-group row">
+        <label class="col-md-3 adins-required-label" translate>Integrator Checking</label>
+        <div class="col-md-4">
+          <button type="button" class="btn btn-raised btn-success mr-1" [disabled]="!CustDataCompanyForm.valid"
+            (click)="checkIntegrator()">
+            <i class="fa fa-check-square-o"></i> Hit Integrator
+          </button>
+          <label *ngIf="this.thirdPartyRsltHId != null && this.thirdPartyRsltHId != '' " translate>Requested At
+            {{this.latestReqDtCheckIntegrator | date: 'dd-MMMM-yyyy hh:mm:ss'}}</label>
+        </div>
+      </div>
+    </div>
       <div class="form-actions right">
         <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
           <i class="ft-x"></i> Cancel

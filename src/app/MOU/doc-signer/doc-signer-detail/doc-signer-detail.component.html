@@ -3,7 +3,7 @@
 <div class="col-md-12">
     <div class="card">
       <div class="card-body">
-        <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
+        <app-mou-main-info [MouCustId]="MouCustId"></app-mou-main-info>
         <div class="px-3">
             <div class="customerData">
                 <form class="form form-horizontal" [formGroup]="MouCustSignerForm" (ngSubmit)="MouCustSignerForm.valid && SaveForm()"
@@ -137,7 +137,7 @@
                     </div>
                 </div>
                 <div class="form-actions right" style="text-align: right;">
-                    <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Mou/DocSigner/Paging']"
+                    <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
                       translate>
                       <i class="ft-x"></i> Cancel
                     </button>

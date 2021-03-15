@@ -3,14 +3,14 @@
     <tr class="table-header">
       <th class="text-center"><span translate class="thead-header" name='InvoiceNo'>INVOICE NO</span></th>
       <th class="text-center"><span translate class="thead-header" name='InvoiceDueDt'>INVOICE DATE</span></th>
-      <th class="text-center"><span translate class="thead-header" name='CustomerFactoringName'>CUSTOMER NAME</span></th>
-      <th class="text-center"><span translate class="thead-header" name='InvoiceAmt'>INVOICE AMOUNT</span></th>
+      <th class="text-left"><span translate class="thead-header" name='CustomerFactoringName'>CUSTOMER NAME</span></th>
+      <th class="text-right"><span translate class="thead-header" name='InvoiceAmt'>INVOICE AMOUNT</span></th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let item of invoiceDataList">
       <td class="text-center"><a (click)="ToDetail(item.AppInvoiceFctrId)">{{item.InvoiceNo}}</a></td>
-      <td class="text-left">{{item.InvoiceDueDt | date: 'yyyy-MM-dd' }}</td>
+      <td class="text-center">{{item.InvoiceDueDt | date: 'yyyy-MM-dd' }}</td>
       <td class="text-left">{{item.CustomerFactoringName}}</td>
       <td class="text-right" >{{item.InvoiceAmt | number:'.2':'en-US' }}</td>
     </tr>

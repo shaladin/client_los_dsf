@@ -1,5 +1,4 @@
 export class BaseObj {
-    Ip: string;
     Latitude: string;
     Longitude: string;
     UserName: string;
@@ -8,6 +7,5 @@ export class BaseObj {
     LastPageAccess: string;
     LastPageAccessTime: string;
     RequestObject: any;
-    LocalIp:string;
   }
   

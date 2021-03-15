@@ -1,6 +1,6 @@
 <div class="col-md-12 text-left">
   <div class="card">
-    <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
+    <app-app-main-info [AppId]="appId"></app-app-main-info>
 
     <mat-tab-group mat-align-tabs="center" *ngIf="BizTemplateCode != 'ROS'">
 
@@ -32,9 +32,12 @@
         </ng-template>
       </mat-tab>
 
-      <mat-tab label="Fraud Detection Data">
+      <mat-tab *ngIf="IsUseDigitalization == '1'" label="Fraud Detection Data">
         <ng-template matTabContent>
-          <app-view-fraud-detection-result [appId]=appId [mrCustTypeCode]="CustTypeCode"></app-view-fraud-detection-result>
+          <!-- <app-view-fraud-detection-result [appId]=appId [mrCustTypeCode]="CustTypeCode">
+          </app-view-fraud-detection-result> -->
+          <app-fraud-detection-data [AppId]="appId"></app-fraud-detection-data>
+          
         </ng-template>
       </mat-tab>
 
@@ -56,6 +59,13 @@
         </ng-template>
       </mat-tab>
 
+
+      <mat-tab label="Document">
+        <ng-template matTabContent>
+          <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
+        </ng-template>
+      </mat-tab>
+      
     </mat-tab-group>
 
     <mat-tab-group mat-align-tabs="center" *ngIf="BizTemplateCode == 'ROS'">
@@ -73,13 +83,14 @@
         </ng-template>
       </mat-tab>
 
+
     </mat-tab-group>
 
     <div class="card-body">
       <div class="px-3">
 
-        <form class="form form-horizontal" [formGroup]="FormObj" (ngSubmit)="FormObj.valid && SaveForm()"
-              #enjiForm="ngForm">
+        <form class="form form-horizontal" [formGroup]="FormObj" (ngSubmit)="FormObj.valid &&SaveForm()"
+          #enjiForm="ngForm">
           <div class="form-body">
 
             <lib-ucSubsection [id]="'formCreditAnalysisId'" [title]="'Credit Analysis'" [panel]="'formCreditAnalysis'">
@@ -102,72 +113,10 @@
                 </div>
               </div>
             </div>
-
-            <lib-ucSubsection *ngIf="!isReturnOn" [id]="'formRequestForAppvId'" [title]="'Request For Approval'"
-                              [panel]="'formRequestForAppv'">
-            </lib-ucSubsection>
-            <div *ngIf="!isReturnOn" class="form-body" [id]="'formRequestForAppv'">
-
-              <div class="form-group row">
-                <div class="form-group col-md-2">
-                  <label class="adInsLabel">Approval Amount</label>
-                </div>
-                <div class="col-md-4">
-                  <label class="adInsLabel">{{FormObj.controls.AppvAmt.value | number:'.2':'en-US'}}</label>
-                </div>
-
-                <div class="form-group col-md-2">
-                  <label class="adInsLabel">Credit Scoring</label>
-                </div>
-                <div class="col-md-4">
-                  <label class="adInsLabel">{{FormObj.controls.CreditScoring.value}}</label>
-                </div>
-              </div>
-
-              <div class="form-group row adins-required">
-                <div class="form-group col-md-2">
-                  <label class="adInsLabel">Recommendation</label>
-                </div>
-                <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
-                          (change)="onChangeReason($event)"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Reason.invalid}">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let it of DDLRecommendation" value="{{it.Key}}">
-                      {{it.Value}}
-                    </option>
-                  </select>
-                  <lib-uc-show-errors [control]="Reason" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </div>
-
-                <div class="form-group col-md-2">
-                  <label class="adInsLabel">Approver</label>
-                </div>
-                <div class="col-md-4">
-                  <lib-ucapproveby [apvBaseUrl]="apvBaseUrl" [parentForm]="FormObj" [identifier]="'Approver'"
-                                   [schemeCode]="'CRD_APV_CF'" [enjiForm]="enjiForm" [isRequired]="'true'"
-                                   (onChange)="onChangeApprover($event)">
-                  </lib-ucapproveby>
-                  <lib-uc-show-errors [control]="Approver" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </div>
-              </div>
-
-              <div class="form-group row adins-required">
-                <div class="form-group col-md-2">
-                  <label class="adInsLabel">Notes</label>
-                </div>
-                <div class="col-md-4">
-                  <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Notes.invalid}"></textarea>
-                  <lib-uc-show-errors [control]="Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                </div>
-
-              </div>
-
-            </div>
-
+            <br>
+            <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady && !isReturnOn" #ApprovalComponent></lib-ucapprovalcreate>
             <lib-ucSubsection *ngIf="isReturnOn" [id]="'formReturnCreditReviewId'" [title]="'Return Credit Review'"
-                              [panel]="'formReturnCreditReview'">
+              [panel]="'formReturnCreditReview'">
             </lib-ucSubsection>
             <div *ngIf="isReturnOn" class="form-body" [id]="'formReturnCreditReview'">
               <div class="form-group row adins-required">
@@ -176,8 +125,8 @@
                 </div>
                 <div class="col-md-4">
                   <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
-                          (change)="onChangeReason($event)"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Reason.invalid}">
+                    (change)="onChangeReason($event)"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Reason.invalid}">
                     <option value="">-Select One-</option>
                     <option *ngFor="let it of DDLReasonReturn" value="{{it.Key}}">
                       {{it.Value}}
@@ -194,7 +143,7 @@
                 </div>
                 <div class="col-md-4">
                   <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Notes.invalid}"></textarea>
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Notes.invalid}"></textarea>
                   <lib-uc-show-errors [control]="Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
 
@@ -202,18 +151,14 @@
 
             </div>
           </div>
-
           <div class="form-actions right">
             <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
-              <i  class="ft-x"></i> {{isReturnOn ? 'Cancel Return' : 'Return'}} 
+              <i class="ft-x"></i> {{isReturnOn ? 'Cancel Return' : 'Return'}}
             </button>
-            <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1"
-                    [routerLink]="['../Paging']" [queryParams]="{BizTemplateCode:BizTemplateCode}" translate>
+            <button *ngIf="!isReturnOn" type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()"
+              translate>
               <i class="ft-x"></i> Cancel
             </button>
-            <!-- <button type="button" (click)="CheckDeviationData()" class="btn btn-raised btn-primary" translate>
-            <i class="fa fa-check-square-o"></i> Check
-          </button> -->
             <button type="submit" class="btn btn-raised btn-primary" translate>
               <i class="far fa-check-square"></i> Save
             </button>

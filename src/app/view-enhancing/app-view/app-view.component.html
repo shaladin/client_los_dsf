@@ -1,9 +1,8 @@
-
 <div class="row text-left">
   <div class="col-md-12">
     <div class="card">
-
       <div class="card-body">
+
         <div class="card-header header-title" style="margin-bottom: 10px;">
           <div class="row">
             <div class="col-md-8">
@@ -13,8 +12,9 @@
             </div>
           </div>
         </div>
+
         <div class="px-3">
-          <ng-template #mainInfoContainerA></ng-template>
+          <app-app-main-info [AppId]="AppId" #viewAppMainInfo></app-app-main-info>
           <mat-tab-group (selectedTabChange)="tabChangeEvent($event)">
             <mat-tab *ngIf="IsCustomer" label="Customer">
               <ng-template matTabContent>
@@ -49,7 +49,13 @@
 
             <mat-tab *ngIf="IsAsset" label="Asset">
               <ng-template matTabContent>
-                <view-asset-data [appId]="AppId"></view-asset-data>
+                <view-asset-data [BizTemplateCode]="bizTemplateCode" [appId]="AppId"></view-asset-data>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsAssetExpense" label="Asset Expense">
+              <ng-template matTabContent>
+                <app-view-asset-expense [AppId]="AppId"></app-view-asset-expense>
               </ng-template>
             </mat-tab>
 
@@ -91,13 +97,19 @@
 
             <mat-tab *ngIf="IsFinancial" label="Financial">
               <ng-template matTabContent>
-                <view-financial [AppId]="AppId"></view-financial>
+                <view-financial [AppId]="AppId" [BizTemplateCode]="bizTemplateCode"></view-financial>
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsTC" label="TC">
               <ng-template matTabContent>
-                <app-app-tc [AppId]="AppId"></app-app-tc>
+                <app-app-tc [BizTemplateCode]="bizTemplateCode" [AppId]="AppId"></app-app-tc>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Document">
+              <ng-template matTabContent>
+                <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
               </ng-template>
             </mat-tab>
 
@@ -119,7 +131,7 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsFraudDetectionResult" label="Fraud Detection Result">
+            <mat-tab *ngIf="IsFraudDetectionResult && IsUseDigitalization == '1'" label="Fraud Detection Result">
               <ng-template matTabContent>
                 <app-view-fraud-detection-result [appId]="AppId" [mrCustTypeCode]="CustType" [isView]=true></app-view-fraud-detection-result>
               </ng-template>
@@ -131,26 +143,31 @@
               </ng-template>
             </mat-tab> -->
 
-            <!-- <mat-tab label="Deviation">
+            <mat-tab *ngIf="IsDeviation" label="Deviation">
               <ng-template matTabContent>
                 <app-tab-deviation [AppId]="AppId" [Type]='View'></app-tab-deviation>
               </ng-template>
-            </mat-tab> -->
+            </mat-tab>
 
             <mat-tab *ngIf="IsAnalysisResult" label="Analysis Result">
               <ng-template matTabContent>
-                <app-tab-analysis-result [appId]="AppId"></app-tab-analysis-result>
+                <app-tab-analysis-result [BizTemplateCode]="bizTemplateCode" [appId]="AppId"></app-tab-analysis-result>
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsApprovalHist" label="Approval History">
               <ng-template matTabContent>
-                <app-approval-hist [AppId]="AppId"></app-approval-hist>
+                <app-approval-hist [BizTemplateCode]="bizTemplateCode" [AppNo]="appNo" [AppId]="AppId"></app-approval-hist>
               </ng-template>
-            </mat-tab>           
+            </mat-tab>
 
+            <mat-tab *ngIf="IsPefindoResult" label="Pefindo Result">
+              <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
           </mat-tab-group>
         </div>
+
       </div>
     </div>
   </div>

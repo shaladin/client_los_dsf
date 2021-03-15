@@ -1,0 +1,56 @@
+<div *ngIf="isPaging">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <div class="form-body">
+          <lib-ucSubsection [id]="'subjectListId'" [title]="'List of Asset'" [panel]="'subjectList'">
+          </lib-ucSubsection>
+          <div id="subjectList">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th class="text-left">No</th>
+                  <th class="text-left">Asset Name</th>
+                  <th class="text-right">Security Deposit</th>
+                  <th class="text-right">Total Cost</th>
+                  <th class="text-right">Margin</th>
+                  <th class="text-right">Total Cost After Margin</th>
+                  <th class="text-right">Rental Amount (Monthly)</th>
+                  <th class="text-center">Entry Financial Data</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of AppAssetFinDataObj?.AppAssetFinDataGridObjs; let i = index;">
+                  <td class="text-left">{{i+1}}</td>
+                  <td class="text-left">{{item.FullAssetName}}</td>
+                  <td class="text-right">{{item.SecurityDepositAmt | number:'.2':'en-US'}}</td>
+                  <td class="text-right">{{item.TotalCostAmt | number:'.2':'en-US'}}</td>
+                  <td class="text-right">{{item.MarginAmt | number:'.2':'en-US'}}</td>
+                  <td class="text-right">{{item.TotalCostAfterMarginAmt | number:'.2':'en-US'}}</td>
+                  <td class="text-right">{{item.RentAmt | number:'.2':'en-US'}}</td>
+                  <td class="text-center">
+                    <a class="success p-0" (click)="Edit(item.AppAssetId)">
+                      <i class="ft-edit-2 font-medium-3 mr-2 px-2"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="button-right">
+            <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
+              <i class="ft-x"></i> Cancel
+            </button>
+            <button type="button" class="btn btn-raised btn-primary" (click)="Next()">
+              <i class="far fa-check-square"></i> Save
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="!isPaging">
+  <app-fin-data-opl-detail [AppAssetId]="AppAssetId" (OutputGoPaging)="BackPaging()"></app-fin-data-opl-detail>
+</div>

@@ -1,0 +1,41 @@
+{
+    "title": "Application Asset View",
+    "subsection": [
+        {
+            "subSectionId": "MainInfoId",
+            "subSectionTitle": "Main Information",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "callback",
+                    "key": "Application",
+                    "label": "Application No",
+                    "property": "AppNo"
+                },
+                {
+                    "type": "text",
+                    "label": "App Asset No",
+                    "property": "AppAssetNo"
+                },
+                {
+                    "type": "text",
+                    "label": "Customer Name",
+                    "property": "CustName"
+                },
+                {
+                    "type": "text",
+                    "label": "Asset Name",
+                    "property": "FullAssetName"
+                },
+                {
+                    "type": "text",
+                    "label": "Asset No",
+                    "property": "AssetNo"
+                }
+            ],
+            "querystring": {
+                "name": "viewAppAssetMainInfo"
+            }
+        }
+    ]
+}  

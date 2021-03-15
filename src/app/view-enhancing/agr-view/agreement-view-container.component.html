@@ -70,13 +70,19 @@
 
             <mat-tab *ngIf="IsFinancial" label="Financial">
               <ng-template matTabContent>
-                <app-agrmnt-financial [AgrmntId]="AgrmntId"></app-agrmnt-financial>
+                <app-agrmnt-financial [AgrmntId]="AgrmntId" [BizTemplateCode]="BizTemplateCode"></app-agrmnt-financial>
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsTC" label="Term and Conditions">
               <ng-template matTabContent >
                 <app-app-tc [AppId]="AppId"></app-app-tc>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab label="Agreement Document">
+              <ng-template matTabContent>
+                <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
               </ng-template>
             </mat-tab>
 

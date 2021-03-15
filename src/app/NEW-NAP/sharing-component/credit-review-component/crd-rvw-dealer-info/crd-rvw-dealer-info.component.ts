@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CrdRvwDealerObj } from 'app/shared/model/CreditReview/CrdRvwDealerObj.Model';
 
 @Component({
   selector: 'app-crd-rvw-dealer-info',
@@ -7,11 +10,25 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CrdRvwDealerInfoComponent implements OnInit {
 
-  @Input() CrdRvwCustInfoId: number;
+  @Input() CrdRvwCustInfoId: number = 0;
 
-  constructor() { }
+  constructor(
+    // private route: ActivatedRoute,
+    private http: HttpClient,
+    // private fb: FormBuilder,
+    // private router: Router
+  ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.GetCrdRvwDealerByCrdRvwCustInfoId();
   }
 
+  crdRvwDealerObj: CrdRvwDealerObj = new CrdRvwDealerObj();
+  async GetCrdRvwDealerByCrdRvwCustInfoId() {
+    await this.http.post<CrdRvwDealerObj>(URLConstant.GetCrdRvwDealerByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.CrdRvwCustInfoId }).toPromise().then(
+      (response) => {
+        this.crdRvwDealerObj = response;
+      }
+    );
+  }
 }

@@ -91,7 +91,7 @@
             "label": "Mou No",
             "property": "MouCustNo",
             "name": "MouCustNo",
-            "path": "/View/Mou/CustView",
+            "path": "VIEW_MOU_CUST",
             "target": "_blank",
             "param": [
               {

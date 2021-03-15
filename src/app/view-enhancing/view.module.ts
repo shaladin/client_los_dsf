@@ -16,10 +16,11 @@ import { UcgridviewModule, UcgridviewComponent } from "@adins/ucgridview";
 import { UcapprovalhistModule, UcapprovalhistComponent } from "@adins/ucapprovalhist";
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { ViewRoutingModule } from "./view-routing.module";
-import { MainInfoComponent } from "./mou-main-info/main-info.component";
 import { ViewInsuranceDetailComponent } from "./agr-view/view-insurance-detail/view-insurance-detail.component";
 import { AppInsuranceDetailComponent } from "./app-view/app-insurance/app-insurance-detail/app-insurance-detail.component";
 import { LeadMainInfoComponent } from "./lead-main-info/lead-main-info.component";
+import { FraudDetectionDataModule } from "app/NEW-NAP/business-process/credit-process/credit-review/fraud-detection-data/fraud-detection-data.module";
+import { MouMainInfoComponent } from './mou-main-info/mou-main-info.component';
 
 @NgModule({
   imports: [
@@ -40,13 +41,14 @@ import { LeadMainInfoComponent } from "./lead-main-info/lead-main-info.component
     UcSubsectionModule,
     SharingComponentModule,
     UcapprovalhistModule,
-    UcShowErrorsModule
+    UcShowErrorsModule,
+    FraudDetectionDataModule
   ],
   declarations: [
-    MainInfoComponent,
     ViewInsuranceDetailComponent,
     AppInsuranceDetailComponent,
-    LeadMainInfoComponent
+    LeadMainInfoComponent,
+    MouMainInfoComponent,
   ],
   entryComponents: [
     UclookupgenericComponent,
@@ -54,6 +56,9 @@ import { LeadMainInfoComponent } from "./lead-main-info/lead-main-info.component
     UcgridviewComponent,
     UcapprovalhistComponent,
     AppInsuranceDetailComponent
+  ],
+  exports: [
+    MouMainInfoComponent
   ]
 
 })

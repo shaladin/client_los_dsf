@@ -14,7 +14,7 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { FraudDukcapilObj } from 'app/shared/model/FraudDukcapilObj.Model';
 import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { NegativeAssetCheckForMultiAssetObj } from 'app/shared/model/NegativeAssetCheckForMultiAssetObj.Model';
 import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';

@@ -168,7 +168,7 @@
             "type": "link",
             "position": "center",
             "property": "LeadNo",
-            "path": "../../View/",
+            "path": "BACK_TO_VIEW",
             "target": "_blank",
             "param": [
                 {
@@ -229,7 +229,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Lead/FraudVerif/Page",
+                                "path": "LEAD_FRAUD_VERIF_PAGE",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
@@ -255,7 +255,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Lead/FraudVerif/Page",
+                                "path": "LEAD_FRAUD_VERIF_PAGE",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {

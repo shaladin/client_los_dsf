@@ -1,0 +1,33 @@
+<div class="container-fluid">
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+
+          <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="getCallBack($event)"></lib-ucviewgeneric>
+
+          <mat-tab-group *ngIf="isReady">
+            <mat-tab *ngIf="IsAssetDetail" label="Asset Detail">
+              <ng-template matTabContent>
+                <app-app-asset-view-asset-detail [AppAssetId]="AppAssetId" [BizTemplateCode]="BizTemplateCode"></app-app-asset-view-asset-detail>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsAssetExpense" label="Asset Expense">
+              <ng-template matTabContent>
+                <app-app-asset-view-asset-expense [AppAssetId]="AppAssetId" [BizTemplateCode]="BizTemplateCode"></app-app-asset-view-asset-expense>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsFinancialData" label="Financial Data">
+              <ng-template matTabContent>
+                <app-app-asset-view-financial-data [AppAssetId]="AppAssetId" [BizTemplateCode]="BizTemplateCode"></app-app-asset-view-financial-data>
+              </ng-template>
+            </mat-tab>
+          </mat-tab-group>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

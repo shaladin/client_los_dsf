@@ -1,5 +1,47 @@
-<lib-ucSubsection [id]="'AdditionalCollateralId'" [title]="'Additional Collateral'" [panel]="'AdditionalCollateral'">
+<lib-ucSubsection [id]="'AdditionalCollateralId'" [title]="'Additional Collateral Information'" [panel]="'AdditionalCollateral'">
 </lib-ucSubsection>
 <div id="AdditionalCollateral">
-  <label>Additional Collateral</label>
+  <div class="card-body">
+    <!-- <div class="px-3">     -->
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th style="text-align: center;">
+              <span  name='No' translate>Collateral Seq No</span>
+            </th>
+            <th style="text-align: left;">
+              <span  name='FullAssetName' translate>Full Asset Name</span>
+            </th>
+            <th style="text-align: left;">
+              <span  name='CollVal' translate>Collateral Value</span>
+            </th>
+            <th style="text-align: right;">
+              <span  name='CollAmt_Prcnt' translate>Collateral Amount/Percentage</span>
+            </th>
+            <th style="text-align: left;">
+              <span  name='TotalUsagePrcnt' translate>Total Usage Percentage</span>
+            </th>
+            <th style="text-align: left;">
+              <span  name='Insurance' translate>Insurance</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="ListCrdRvwCollateralObj.length == 0">
+          <tr>
+            <td colspan="100%">No Data Available</td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr *ngFor="let item of ListCrdRvwCollateralObj; let i = index">
+            <td style="text-align: center;">{{i+1}}</td>
+            <td style="text-align: left;">{{item.CollateralName}}</td>
+            <td style="text-align: left;">{{item.CollateralValue}}</td>
+            <td style="text-align: right;">{{item.CollateralPortionAmt}} / {{item.CollateralPortionPrcnt}}%</td>
+            <td style="text-align: left;">{{item.CollateralTotalUsage}}%</td>
+            <td style="text-align: left;">{{item.Insurance}}</td>
+          </tr>
+        </tbody>
+      </table>
+    <!-- </div> -->
+  </div>
 </div>

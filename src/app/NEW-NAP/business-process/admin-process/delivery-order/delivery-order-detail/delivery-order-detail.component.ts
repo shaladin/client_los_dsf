@@ -3,7 +3,6 @@ import { Validators, FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DeliveryOrderObj } from 'app/shared/model/DeliveryOrderObj.Model';
 import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
 import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocObj.Model';
@@ -14,6 +13,11 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { forkJoin } from 'rxjs';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-delivery-order-detail',
@@ -48,9 +52,17 @@ export class DeliveryOrderDetailComponent implements OnInit {
   PurchaseOrderDt: Date = new Date();
   listItem: FormArray;
   SerialNoList: any;
+  isDmsReady: boolean;
+  dmsObj: DMSObj;
+  agrNo: string;
+  custNo: string;
+  appNo: string;
+  dmsAppObj: DMSObj;
+  mouCustNo: string;
 
+  readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_DO_PAGING;
   constructor(private fb: FormBuilder, private http: HttpClient,
-    private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
+    private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params['AppId'];
       this.AgrmntId = params['AgrmntId'];
@@ -75,10 +87,10 @@ export class DeliveryOrderDetailComponent implements OnInit {
     listItem: this.fb.array([])
   })
 
-  ngOnInit() {
+  async ngOnInit() {
     this.claimTask();
     this.arrValue.push(this.AgrmntId);
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
     var appAssetobj = {
@@ -145,8 +157,6 @@ export class DeliveryOrderDetailComponent implements OnInit {
                 }
                 this.items.push(assetDocumentDetail);
               }
-
-
             }
           }
         );
@@ -178,9 +188,68 @@ export class DeliveryOrderDetailComponent implements OnInit {
           });
       }
     );
+    await this.InitDms();
   }
+
+  async InitDms() {
+    this.isDmsReady = false;
+    this.dmsObj = new DMSObj();
+    this.dmsAppObj = new DMSObj();
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
+
+    this.dmsAppObj.User = currentUserContext.UserName;
+    this.dmsAppObj.Role = currentUserContext.RoleCode;
+    this.dmsAppObj.ViewCode = CommonConstant.DmsViewCodeApp;
+
+    var agrObj = { AgrmntId: this.AgrmntId };
+    var appObj = { AppId: this.AppId };
+
+    let getAgr = await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
+    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj)
+    forkJoin([getAgr, getAppCust, getApp]).subscribe(
+      (response) => {
+        this.agrNo = response[0]['AgrmntNo'];
+        this.custNo = response[1]['CustNo'];
+        this.appNo = response[2]['AppNo'];
+        let mouId = response[2]['MouCustId'];
+
+        if (this.custNo != null && this.custNo != '') {
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+          this.dmsAppObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        }
+        else {
+          this.dmsAppObj.MetadataParent = null;
+        }
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
+
+        this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+        if (mouId != null && mouId != "") {
+          let mouObj = { MouCustId: mouId };
+          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            result => {
+              this.mouCustNo = result['MouCustNo'];
+              this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
+              this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
+              this.isDmsReady = true;
+            }
+          )
+        }
+        else {
+          this.isDmsReady = true;
+        }
+      }
+    );
+  }
+
   SaveForm() {
-    var businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
+    var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     // if (Date.parse(this.DeliveryOrderForm.value.TCList[0].PromisedDt) < this.businessDt.getTime()) {
     //   this.toastr.errorMessage("Promised Date Must Bigger Than Business Date")
     //   return;
@@ -275,13 +344,13 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.http.post(URLConstant.SubmitDeliveryOrderData, this.deliveryOrderObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/DeliveryOrder/Paging"], {});
+        AdInsHelper.RedirectUrl(this.router,[this.CancelLink], {});
       }
     );
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.TaskListId;
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];

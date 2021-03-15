@@ -12,6 +12,10 @@ import { CustomizerComponent } from 'app/shared/customizer/customizer.component'
 import { NotificationSidebarComponent } from 'app/shared/notification-sidebar/notification-sidebar.component';
 import { ToggleFullscreenDirective } from "app/shared/directives/toggle-fullscreen.directive";
 import { ContextMenuModule } from 'ngx-contextmenu';
+import { DmsIframeComponent } from './dms-iframe/dms-iframe.component';
+import { AppModule } from 'app/app.module';
+import { SafePipe } from './pipe/safepipe';
+import { CookieModule } from 'ngx-cookie';
 
 
 @NgModule({
@@ -24,14 +28,17 @@ import { ContextMenuModule } from 'ngx-contextmenu';
         NotificationSidebarComponent,
         ToggleFullscreenDirective,
         NgbModule,
-        TranslateModule
+        TranslateModule,
+        DmsIframeComponent,
+        SafePipe
     ],
     imports: [
         RouterModule,
         CommonModule,
         NgbModule,
         TranslateModule,
-        ContextMenuModule.forRoot()
+        ContextMenuModule.forRoot(),
+        CookieModule.forRoot()
     ],
     declarations: [
         FooterComponent,
@@ -39,7 +46,9 @@ import { ContextMenuModule } from 'ngx-contextmenu';
         SidebarComponent,
         CustomizerComponent,
         NotificationSidebarComponent,
-        ToggleFullscreenDirective
+        ToggleFullscreenDirective,
+        DmsIframeComponent,
+        SafePipe,
     ]
 })
 export class SharedModule { }

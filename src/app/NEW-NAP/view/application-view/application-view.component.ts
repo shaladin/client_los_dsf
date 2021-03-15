@@ -16,7 +16,7 @@ export class ApplicationViewComponent implements OnInit {
   arrValue = [];
   CustType: string = "";
   AppCustObj: any;
-  @ViewChild("mainInfoContainerA", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
+  @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   IsCustomer : boolean = true;
   IsGuarantor : boolean = true;
   IsReferantor : boolean = true;
@@ -39,6 +39,7 @@ export class ApplicationViewComponent implements OnInit {
   IsApprovalHist: boolean = true;
   IsFraudDetectionMulti: boolean = true;
   bizTemplateCode : string = "";
+  appNo: string;
   constructor(private route: ActivatedRoute, private http: HttpClient,  private componentFactoryResolver: ComponentFactoryResolver) { 
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -48,9 +49,7 @@ export class ApplicationViewComponent implements OnInit {
   ngOnInit() {
     this.arrValue.push(this.AppId);
     this.GetApp();
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AppMainInfoComponent);
-    const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.arrValue = this.arrValue;
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   GetApp() {
@@ -59,6 +58,7 @@ export class ApplicationViewComponent implements OnInit {
     };
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response) => {
+        this.appNo = response['AppNo'];
         this.bizTemplateCode = response["BizTemplateCode"];
         this.CustType = response["MrCustTypeCode"];
 
@@ -115,9 +115,7 @@ export class ApplicationViewComponent implements OnInit {
     if(tabChangeEvent.index == 0){
       this.GetApp();
     }
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AppMainInfoComponent);
-    this.mainInfoContainer.clear();
-    const component = this.mainInfoContainer.createComponent(componentFactory);
-    component.instance.arrValue = this.arrValue;
+
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 }

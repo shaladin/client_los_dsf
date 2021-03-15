@@ -15,8 +15,8 @@
               <div class="col-md-4 blue">
                 <label id="AppNo" translate><a href="javascript:void(0);" (click)="OpenView('app')">{{AppNo}}</a></label>
               </div>
-              <label class="col-md-2 adInsLabel" translate>Num Of Asset</label>
-              <div class="col-md-4">
+              <label class="col-md-2 adInsLabel" *ngIf="result4.BizTemplateCode != 'CFNA'" translate>Num Of Asset</label>
+              <div class="col-md-4" *ngIf="result4.BizTemplateCode != 'CFNA'">
                 <label id="NumOfAsset" translate>{{NumOfAsset}}</label>
               </div>
             </div>
@@ -44,12 +44,12 @@
             </div>
 
             <div class="form-group row">
-              <label class="col-md-2 adInsLabel" translate>Lead No</label>
-              <div class="col-md-4 blue">
+              <label *ngIf="LeadNo != null && LeadNo != ''" class="col-md-2 adInsLabel" translate>Lead No</label>
+              <div   *ngIf="LeadNo != null && LeadNo != ''" class="col-md-4 blue">
                 <label id="LeadNo" translate><a href="javascript:void(0);" (click)="OpenView('lead')">{{LeadNo}}</a></label>
               </div>
-              <label class="col-md-2 adInsLabel" translate>Mou No</label>
-              <div class="col-md-4 blue">
+              <label *ngIf="MouNo != null && MouNo != ''" class="col-md-2 adInsLabel" translate>Mou No</label>
+              <div   *ngIf="MouNo != null && MouNo != ''" class="col-md-4 blue">
                 <label id="MouNo" translate><a href="javascript:void(0);" (click)="OpenView('mou')">{{MouNo}}</a></label>
               </div>
             </div>
@@ -59,8 +59,8 @@
               <div class="col-md-4">
                 <label id="CustName" translate>{{CustName}}</label>
               </div>
-              <label *ngIf="result4.BizTemplateCode != 'CFRFN4W'" class="col-md-2 adInsLabel" translate>Delivery Date</label>
-              <div class="col-md-4" *ngIf="result4.BizTemplateCode != 'CFRFN4W'">
+              <label *ngIf="result4.BizTemplateCode != 'CFRFN4W' && result4.BizTemplateCode != 'CFNA'" class="col-md-2 adInsLabel" translate>Delivery Date</label>
+              <div class="col-md-4" *ngIf="result4.BizTemplateCode != 'CFRFN4W' && result4.BizTemplateCode != 'CFNA'">
                 <label id="DeliveryDt" translate>{{DeliveryDt}}</label>
               </div>
             </div>
@@ -140,6 +140,6 @@
   </div>
 </div>
 
-<lib-ucapproval [inputObj]="inputObj" [showCancel]="'true'" (onCancel)="onCancelClick()"
-  (nextTask)="onAvailableNextTask()" (result)="onApprovalSubmited()">
-</lib-ucapproval>
+<lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj"  *ngIf="IsReady"></lib-ucapprovalgeneralinfo>
+
+<lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"  (onCancel)="onCancelClick()"></lib-ucapprovalR3>

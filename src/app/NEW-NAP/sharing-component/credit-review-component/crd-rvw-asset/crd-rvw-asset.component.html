@@ -1,5 +1,122 @@
-<lib-ucSubsection [id]="'AssetId'" [title]="'Asset'" [panel]="'Asset'">
+<lib-ucSubsection [id]="'AssetId'" [title]="'Asset Information'" [panel]="'Asset'">
 </lib-ucSubsection>
 <div id="Asset">
-  <label>Asset</label>
+  <div class="card-body" *ngIf="!isMultiAsset">
+    <div class="row">
+      <div class="col-md-6 ">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> Asset Name </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwAssetObj.AssetName}} / {{crdRvwAssetObj.AssetCondition}} / {{crdRvwAssetObj.AssetUsage}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> Asset Price </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwAssetObj.AssetPrice | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-10">
+                <label class="label-control"> Negative Asset </label>
+              </div>
+              <div class="col-md-2">
+                <span id="NegAssetIndicator" style="float: right;">
+                  <i [ngClass]="crdRvwAssetObj.NegativeAssetIndicator == null ? 'far fa-circle' : crdRvwAssetObj.NegativeAssetIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+                    [ngStyle]="{'color': crdRvwAssetObj.NegativeAssetIndicator == null ? white : crdRvwAssetObj.NegativeAssetIndicator != whiteIndicator ? crdRvwAssetObj.NegativeAssetIndicator : white}" class="font-medium-3 tooltips">
+                    <span class="tooltipstext">
+                      <span *ngIf="crdRvwAssetObj.NegativeAssetIndicatorDescr != null && crdRvwAssetObj.NegativeAssetIndicatorDescr != ''"> {{crdRvwAssetObj.NegativeAssetIndicatorDescr}} </span>
+                      <span *ngIf="crdRvwAssetObj.NegativeAssetIndicatorDescr == null || crdRvwAssetObj.NegativeAssetIndicatorDescr == ''"> No Data </span>
+                    </span>
+                  </i>
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control" *ngIf="crdRvwAssetObj.IsNegativeAsset"> Yes </label>
+            <label class="label-control" *ngIf="!crdRvwAssetObj.IsNegativeAsset"> No </label>
+            <label class="label-control"> &nbsp;/ {{crdRvwAssetObj.NegativeAssetNotes}} </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 ">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> DP Amount / Percentage </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwAssetObj.DpAmount | number:'.2':'en-US'}} / {{crdRvwAssetObj.DpPrcnt}}% </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> Insurance </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control"> {{crdRvwAssetObj.Insurance}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label class="label-control"> Is Double Financing </label>
+          </div>
+          <div class="col-md-6 ">
+            <label class="label-control" *ngIf="crdRvwAssetObj.IsDoubleFinancing"> Yes </label>
+            <label class="label-control" *ngIf="!crdRvwAssetObj.IsDoubleFinancing"> No </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body" *ngIf="isMultiAsset">
+    <!-- <div class="px-3">     -->
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th style="text-align: center;">
+              <span  name='No' translate>No</span>
+            </th>
+            <th style="text-align: left;">
+              <span  name='AssetName' translate>Asset Name</span>
+            </th>
+            <th style="text-align: left;">
+              <span  name='AssetPrice' translate>Asset Price</span>
+            </th>
+            <th style="text-align: left;">
+              <span  name='DPAmt_Prcnt' translate>DP Amount/Percentage</span>
+            </th>
+            <th style="text-align: left;">
+              <span  name='Insurance' translate>Insurance</span>
+            </th>
+            <th style="text-align: center;">
+              <span  name='IsDoubleFinancing' translate>Is Double Financing</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="ListCrdRvwAssetObj.length == 0">
+          <tr>
+            <td colspan="100%">No Data Available</td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr *ngFor="let item of ListCrdRvwAssetObj; let i = index">
+            <td style="text-align: center;">{{i+1}}</td>
+            <td style="text-align: left;">{{item.AssetName}}</td>
+            <td style="text-align: left;">{{item.AssetPrice | number:'.2':'en-US'}}</td>
+            <td style="text-align: left;">{{item.DpAmount | number:'.2':'en-US'}} / {{item.DpPrcnt}}%</td>
+            <td style="text-align: left;">{{item.Insurance}}</td>
+            <td style="text-align: center;" *ngIf="item.IsDoubleFinancing">Yes</td>
+            <td style="text-align: center;" *ngIf="!item.IsDoubleFinancing">No</td>
+          </tr>
+        </tbody>
+      </table>
+    <!-- </div> -->
+  </div>
 </div>

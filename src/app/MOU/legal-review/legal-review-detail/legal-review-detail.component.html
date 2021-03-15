@@ -1,32 +1,57 @@
-<form class="form form-horizontal" [formGroup]="LegalForm" #enjiForm="ngForm">
-  <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
-  <app-mou-cust-tc #MouTc [MouCustId]="MouCustId"></app-mou-cust-tc> 
-  <lib-ucSubsection [id]="'Review'" [title]="'Review Result'" [panel]="'ReviewId'"></lib-ucSubsection>
-  <div id="ReviewId">
-    <div formArrayName="items">
-      <div *ngFor="let item of items.controls; let i = index;">
-        <div class="form-group row" [formGroupName]="i">
-          <label class="col-md-4 adins-required-label" translate> {{item.controls.ReviewComponentName.value}} </label>
-          <div class="col-md-7">
-            <input type="text" class="form-control adInsInput" formControlName="values" required
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalForm.controls.items['controls'][i]['controls'].values.invalid}"> 
-            <lib-uc-show-errors  [control]="LegalForm.controls.items['controls'][i]['controls'].values"
-              [submit]="enjiForm.submitted"></lib-uc-show-errors >
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <form class="form form-horizontal" [formGroup]="LegalForm" #enjiForm="ngForm">
+          <div class="px-3">
+            <app-mou-main-info [MouCustId]="MouCustId"></app-mou-main-info>
+            <mat-tab-group>
+              <mat-tab label="Term Condition">
+                <ng-template matTabContent>
+                  <app-mou-cust-tc #MouTc [MouCustId]="MouCustId"></app-mou-cust-tc>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="Document">
+                <ng-template matTabContent>
+                  <app-dms-iframe [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group>
+
+
+            <lib-ucSubsection [id]="'Review'" [title]="'Review Result'" [panel]="'ReviewId'"></lib-ucSubsection>
+            <div id="ReviewId">
+              <div formArrayName="items">
+                <div *ngFor="let item of items.controls; let i = index;">
+                  <div class="form-group row" [formGroupName]="i">
+                    <label class="col-md-4 adins-required-label" translate> {{item.controls.ReviewComponentName.value}}
+                    </label>
+                    <div class="col-md-7">
+                      <input type="text" class="form-control adInsInput" formControlName="values" required
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalForm.controls.items['controls'][i]['controls'].values.invalid}">
+                      <lib-uc-show-errors [control]="LegalForm.controls.items['controls'][i]['controls'].values"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="float-right">
+              <button type="button" class="btn btn-raised btn-warning mr-1"
+                [routerLink]="[CancelLink]" translate>
+                <i class="ft-x"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="SaveData(LegalForm, false) "
+                translate>
+                <i class="far fa-check-square"></i> Save
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="SaveData(LegalForm, true) "
+                translate>
+                <i class="far fa-check-square"></i> Submit
+              </button>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </div>
-  <div class="float-right">
-    <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Mou/CustomerLegalReview/Paging']"
-      translate>
-      <i class="ft-x"></i> Cancel
-    </button>
-    <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="SaveData(LegalForm, false) " translate>
-      <i class="far fa-check-square" ></i> Save
-    </button>
-    <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="SaveData(LegalForm, true) " translate>
-      <i class="far fa-check-square" ></i> Submit
-    </button>
-  </div>
-</form>

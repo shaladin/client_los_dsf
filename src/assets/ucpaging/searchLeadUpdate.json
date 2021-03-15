@@ -175,7 +175,7 @@
             "type": "link",
             "position": "center",
             "property": "LeadNo",
-            "path": "/View/Lead",
+            "path": "VIEW_LEAD",
             "target": "_blank",
             "param": [
                 {
@@ -237,7 +237,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Lead/LeadInput/Page",
+                                "path": "LEAD_INPUT_PAGE",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
@@ -267,7 +267,7 @@
                             ],
                             "result": {
                                 "type": "url",
-                                "path": "/Lead/LeadInput/Page",
+                                "path": "LEAD_INPUT_PAGE",
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {

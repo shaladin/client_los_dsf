@@ -3,15 +3,13 @@
     <div class="px-3">
       <div class="form-action pull-right">
         <button *ngIf="ReturnHandlingHId > 0" type="button" class="btn btn-raised btn-warning margin-r-5"
-          [routerLink]="['/Nap/AddProcess/ReturnHandling/EditAppPaging']" [queryParams]="{BizTemplateCode:'CFNA'}"
+          [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:'CFNA'}"
           translate>
           <i class="ft-x"></i> Cancel
         </button>
       </div>
     </div>
-    <!-- <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)" #viewMainProd>
-    </lib-ucviewgeneric> -->
-    <ng-template #CFNAMainInfoContainer></ng-template>
+    <app-app-main-info [AppId]="appId" #viewAppMainInfo></app-app-main-info>
     <div class="card-body">
       <div class="px-3">
         <div class="card" *ngIf="ReturnHandlingHId > 0">
@@ -124,6 +122,14 @@
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
             </div>
+            <div class="line"></div>
+            <div class="step" data-target="#upload-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
+                      [disabled]="!(AppStepIndex >= 10)" (click)="ChangeTab('UPD')">
+                <span class="bs-stepper-circle">10</span>
+                <span class="bs-stepper-label">Upload Document</span>
+              </button>
+            </div>
           </div>
           <br><br>
           <div class="bs-stepper-content">
@@ -162,7 +168,10 @@
               <app-financial-data *ngIf="AppStepIndex == 9 && stepperMode == 'PERSONAL'" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 10 && stepperMode == 'PERSONAL'" [AppId]="appId" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>
+              <app-tc-data *ngIf="AppStepIndex == 10 && stepperMode == 'PERSONAL'" [AppId]="appId" (outputTab)="NextStep('UPD')" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>
+            </div>
+            <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
+              <app-dms-iframe *ngIf="AppStepIndex == 11 && stepperMode == 'PERSONAL' && isDmsReady" (outputTab)="LastStepHandler()" [showButton]="ReturnHandlingHId == 0" (outputCancel)="Cancel()" [dmsObj]="dmsObj" ></app-dms-iframe>
             </div>
           </div>
         </div>
@@ -240,6 +249,14 @@
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
             </div>
+            <div class="line"></div>
+            <div class="step" data-target="#upload-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
+                      [disabled]="!(AppStepIndex >= 9)" (click)="ChangeTab('UPD')">
+                <span class="bs-stepper-circle">9</span>
+                <span class="bs-stepper-label">Upload Document</span>
+              </button>
+            </div>
           </div>
           <br><br>
           <div class="bs-stepper-content">
@@ -274,7 +291,10 @@
               <app-financial-data *ngIf="AppStepIndex == 8 && stepperMode == 'COMPANY'" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 9 && stepperMode == 'COMPANY'" [AppId]="appId" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>
+              <app-tc-data *ngIf="AppStepIndex == 9 && stepperMode == 'COMPANY'" [AppId]="appId"  (outputTab)="NextStep('UPD')" (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>
+            </div>
+            <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
+              <app-dms-iframe *ngIf="AppStepIndex == 10 && stepperMode == 'COMPANY' && isDmsReady" (outputTab)="LastStepHandler()" [showButton]="ReturnHandlingHId == 0" (outputCancel)="Cancel()" [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>

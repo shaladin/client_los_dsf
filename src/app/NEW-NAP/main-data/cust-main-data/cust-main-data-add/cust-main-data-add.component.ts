@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, ValidationErrors } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -14,6 +14,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'cust-main-data-add',
@@ -28,7 +30,7 @@ export class CustMainDataAddComponent implements OnInit {
   inputLookupObjName: InputLookupObj = new InputLookupObj();
   officeItems: Array<KeyValueObj> = new Array<KeyValueObj>();
   bizTemplateCode: string;
-  isDisableCopyAppFrom: boolean = true;
+  isCopyData: boolean = false;
   user: any;
 
   NapAppForm = this.fb.group({
@@ -82,17 +84,15 @@ export class CustMainDataAddComponent implements OnInit {
   });
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute,
-    private http: HttpClient, private toastr: NGXToastrService, private spinner: NgxSpinnerService) 
-  { 
+    private http: HttpClient, private toastr: NGXToastrService, private spinner: NgxSpinnerService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) this.bizTemplateCode = params["BizTemplateCode"];
     });
   }
 
-  isCopyData: boolean = false;
   ngOnInit() {
     // Lookup Obj
-    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.MakeLookUpObj();
     this.GetOfficeDDL();
@@ -222,25 +222,28 @@ export class CustMainDataAddComponent implements OnInit {
 
     this.http.post(URLConstant.AddAppMaindata, napAppObj).subscribe(
       (response) => {
-        setTimeout(()=>{ this.spinner.show(); }, 10)
+        setTimeout(() => { this.spinner.show(); }, 10)
         this.toastr.successMessage(response["message"]);
 
         switch(this.bizTemplateCode) {
           case CommonConstant.CF4W :
-            AdInsHelper.RedirectUrl(this.router,["Nap/ConsumerFinance/NAP1"], { "AppId": response["AppId"]});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CF4W_NAP1], { "AppId": response["AppId"]});
           break;
           case CommonConstant.CFRFN4W :
-            AdInsHelper.RedirectUrl(this.router,["Nap/CFRefinancing/NAP1"], { "AppId": response["AppId"]});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response["AppId"]});
           break;
           case CommonConstant.FCTR :
-            AdInsHelper.RedirectUrl(this.router,["Nap/Factoring/NAP1"], { "AppId": response["AppId"]});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FCTR_NAP1], { "AppId": response["AppId"]});
           break;
           case CommonConstant.FL4W :
-            AdInsHelper.RedirectUrl(this.router,["Nap/FinanceLeasing/NAP1"], { "AppId": response["AppId"]});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FL4W_NAP1], { "AppId": response["AppId"]});
           break;
           case CommonConstant.CFNA :
-            AdInsHelper.RedirectUrl(this.router,["Nap/CFNA/NAP1"], { "AppId": response["AppId"]});
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFNA_NAP1], { "AppId": response["AppId"]});
           break;
+          case CommonConstant.OPL:
+            AdInsHelper.RedirectUrl(this.router, ["Nap/OPL/NAP1"], { "AppId": response["AppId"] });
+            break;
         }
       }
     );
@@ -359,7 +362,7 @@ export class CustMainDataAddComponent implements OnInit {
   }
 
   buttonCancelClick(){
-    AdInsHelper.RedirectUrl(this.router,["Nap/MainData/NAP1/Paging"], { "BizTemplateCode": this.bizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
   }
 
 }

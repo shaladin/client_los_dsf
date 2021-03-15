@@ -1,9 +1,9 @@
 <div class="col-md-12 text-left">
+  <app-app-main-info [AppId]="appId"></app-app-main-info>
   <div class="card">
-    <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)"> </lib-ucviewgeneric>
     <div class="card-body">
       <div class="px-3">
-        <lib-ucSubsection *ngIf="mode == 'ReturnHandling'" [id]="'formReturnInfoId'" [title]="'Credit Analysis'"
+        <lib-ucSubsection *ngIf="mode == 'ReturnHandling'" [id]="'formReturnInfoId'" [title]="'Return Handling'"
           [panel]="'formReturnInfo'">
         </lib-ucSubsection>
         <div class="form-body" *ngIf="mode == 'ReturnHandling' && OnFormReturnInfo" [id]="'formReturnInfo'">
@@ -157,12 +157,12 @@
 </div>
 
 <div class="form-actions pull-right">
-  <button type="button" class="btn btn-raised btn-warning" [routerLink]="['/Nap/CF2W/Paging']"
+  <button type="button" class="btn btn-raised btn-warning" [routerLink]="[CancelLink]"
     [queryParams]="{LobCode:'CF2W'}" translate>
     <i class="fa fa-check-square-o"></i> Cancel
   </button>
   <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning"
-    [routerLink]="['Nap/AdditionalProcess/ReturnHandling/EditAppPaging']" translate>
+    [routerLink]="[BackLink]" translate>
     <i class="fa fa-check-square-o"></i> Back
   </button>
   <button *ngIf="mode == 'ReturnHandling'" type="button" (click)="Submit()" class="btn btn-raised btn-primary">

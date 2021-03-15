@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { ReturnHandlingDObj } from '../../../../../shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
+import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 
 
 
@@ -20,20 +21,23 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 })
 export class ReturnHandlingCollateralEditComponent implements OnInit {
 
-  getAppUrl: any;
-  rtnHandlingDUrl: any;
-  editRtnHandlingDUrl: any;
-  getListAppCollateralUrl: any;
+  getAppUrl: string;
+  rtnHandlingDUrl: string;
+  editRtnHandlingDUrl: string;
+  getListAppCollateralUrl: string;
   isReturnHandling: boolean = false;
+  appId: any;
+  returnHandlingHId: any;
+  wfTaskListId: any;
+  appCollateralObj: any;
+  AppObj: any;
+  returnHandlingDObj: any;
+  ReturnHandlingDData: ReturnHandlingDObj;
+  BizTemplateCode: string;
 
   ReturnHandlingForm = this.fb.group({
     ExecNotes: ['', Validators.maxLength(4000)],
   });
-  viewObj: any;
-
-  appId: any;
-  returnHandlingHId: any;
-  wfTaskListId: any;
 
   appObj = {
     AppId: 0,
@@ -47,14 +51,10 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     AppCollateralId: 0,
   };
 
-  appCollateralObj: any;
-  AppObj: any;
-  returnHandlingDObj: any;
-  ReturnHandlingDData: ReturnHandlingDObj;
-  BizTemplateCode: string;
   arrValue = [];
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_PAGING;
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
 
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -80,10 +80,8 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.ClaimTask();
-    this.arrValue.push(this.appId);
     this.initUrl();
     this.appObj.AppId = this.appId;
-    this.viewObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     await this.GetAppData();
     await this.GetAppCollateralData();
     if (this.isReturnHandling == true) {
@@ -101,7 +99,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-          AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/ReturnHandlingCollateral/Paging"], { BizTemplateCode: lobCode });
+          AdInsHelper.RedirectUrl(this.router, [this.CancelLink], { BizTemplateCode: lobCode });
         });
 
     }
@@ -115,7 +113,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     this.http.post(URLConstant.ResumeWorkflow, workflowApiObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/ReturnHandlingCollateral/Paging"], { BizTemplateCode: lobCode });
+        AdInsHelper.RedirectUrl(this.router, [this.CancelLink], { BizTemplateCode: lobCode });
       }
     );
   }
@@ -189,13 +187,13 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     if (this.isReturnHandling == false) {
     }
     if (this.isReturnHandling == true) {
-      AdInsHelper.RedirectUrl(this.router,["/Nap/AdditionalProcess/ReturnHandlingCollateral/Detail"], {  AppId :this.appId, AppCollateralId : AppCollateralId, ReturnHandlingHId : this.returnHandlingHId, WfTaskListId :this.wfTaskListId});
-      
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT], { AppId: this.appId, AppCollateralId: AppCollateralId, ReturnHandlingHId: this.returnHandlingHId, WfTaskListId: this.wfTaskListId });
+
     }
   }
 
   ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];

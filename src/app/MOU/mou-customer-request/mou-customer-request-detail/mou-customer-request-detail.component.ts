@@ -9,9 +9,11 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -27,8 +29,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   refOfficeId: number;
   businessDt: Date;
   mouCustUrl: string;
-  custId : number;
-  custUrl : string;
+  custId: number;
+  custUrl: string;
   RevolvingTypeList: Array<KeyValueObj> = new Array<KeyValueObj>();
 
   MOUMainInfoForm = this.fb.group({
@@ -40,7 +42,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     RefNo: [''],
     IsRevolving: [false],
     CurrCode: [''],
-    PlafondAmt:  ['', [Validators.required, Validators.min(1.00)]],
+    PlafondAmt: ['', [Validators.required, Validators.min(1.00)]],
     RealisationAmt: [0],
     MouStat: ['NEW', [Validators.required]],
     MrMouTypeCode: ['', [Validators.required]],
@@ -61,7 +63,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     private httpClient: HttpClient,
     private fb: FormBuilder,
     private toastr: NGXToastrService,
-    private http: HttpClient
+    private http: HttpClient, private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['mode'] != null) {
@@ -75,13 +77,13 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       }
       if (params['WfTaskListId'] != null) this.WfTaskListId = params['WfTaskListId'];
     });
-   }
+  }
 
   ngOnInit() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode : CommonConstant.MOU_REVOLVING_TYPE}).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.MOU_REVOLVING_TYPE }).subscribe(
       (response) => {
         this.RevolvingTypeList = response[CommonConstant.ReturnObj];
-        if (this.pageType != "edit" ) {
+        if (this.pageType != "edit") {
           this.MOUMainInfoForm.patchValue({
             MrRevolvingTypeCode: this.RevolvingTypeList[0].Key
           });
@@ -92,12 +94,11 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       this.claimTask();
 
     var datePipe = new DatePipe("en-US");
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-    if (currentUserContext != null && currentUserContext != undefined)
-      {
-        this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
-        this.businessDt.setDate(this.businessDt.getDate() - 1);
-      }
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    if (currentUserContext != null && currentUserContext != undefined) {
+      this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
+      this.businessDt.setDate(this.businessDt.getDate() - 1);
+    }
 
     this.inputLookupCust = new InputLookupObj();
     this.inputLookupCust.urlJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
@@ -112,7 +113,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         environment: environment.FoundationR3Url
       }
     ];
-   
+
     var refOffice = new RefOfficeObj();
     refOffice.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.httpClient.post(URLConstant.GetRefOfficeByOfficeCode, refOffice).subscribe(
@@ -120,80 +121,78 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         this.refOfficeId = response.RefOfficeId;
       });
 
-    if(this.pageType == "edit" || this.pageType == "return"){
+    if (this.pageType == "edit" || this.pageType == "return") {
       var mouCust = new MouCustObj();
       mouCust.MouCustId = this.mouCustId;
       this.httpClient.post(URLConstant.GetMouCustById, mouCust).subscribe(
-        (response: any) => { 
+        (response: any) => {
           response["StartDt"] = datePipe.transform(response["StartDt"], "yyyy-MM-dd");
           response["EndDt"] = datePipe.transform(response["EndDt"], "yyyy-MM-dd");
           this.MOUMainInfoForm.patchValue({
             ...response
           });
-          var custObj = { CustNo: response['CustNo'] }; 
+          var custObj = { CustNo: response['CustNo'] };
           this.httpClient.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-            (response: any) => { 
+            (response: any) => {
               this.custId = response['CustId'];
             });
 
-          if(response["MrRevolvingTypeCode"]==null){
+          if (response["MrRevolvingTypeCode"] == null) {
             this.MOUMainInfoForm.controls.MrRevolvingTypeCode.setValue(this.RevolvingTypeList[0].Key);
           }
         });
     }
-    else{
+    else {
       this.MOUMainInfoForm.patchValue({
         MrMouTypeCode: this.mouType
       });
     }
   }
 
-  async claimTask()
-  {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME]};
+  async claimTask() {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       () => {
       });
   }
 
   Back(): void {
-    this.router.navigate(['/Mou/Request/Paging']);
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_REQ_PAGING],{});
   }
 
-  Save(){
+  Save() {
     var mouCustFormData = this.MOUMainInfoForm.value;
-    if(!this.MOUMainInfoForm.controls.IsRevolving.value){
+    if (!this.MOUMainInfoForm.controls.IsRevolving.value) {
       mouCustFormData["MrRevolvingTypeCode"] = null;
     }
 
-    if(this.pageType == "add"){
-      mouCustFormData["RefOfficeId"] = this.refOfficeId;
+    if (this.pageType == "add") {
       this.httpClient.post(URLConstant.AddMouCust, mouCustFormData).subscribe(
         (response: any) => {
           this.toastr.successMessage(response["Message"]);
           var mouCustId = response["MouCustId"];
-          AdInsHelper.RedirectUrl(this.router,["/Mou/Detail", this.mouType],{ mouCustId: mouCustId });    
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustId, MOUType: this.mouType });
         });
     }
-    else if(this.pageType == "edit" || this.pageType == "return"){
+    else if (this.pageType == "edit" || this.pageType == "return") {
       this.httpClient.post(URLConstant.EditMouCust, mouCustFormData).subscribe(
         (response: any) => {
           this.toastr.successMessage(response["Message"]);
           if(this.pageType == "return"){
-            AdInsHelper.RedirectUrl(this.router,["/Mou/Detail", this.mouType],{ mouCustId: mouCustFormData.MouCustId, mode : "return" });    
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustFormData.MouCustId, MOUType: this.mouType, mode : "return" });    
           }
           else{
-            AdInsHelper.RedirectUrl(this.router,["/Mou/Detail", this.mouType],{ mouCustId: mouCustFormData.MouCustId });    
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustFormData.MouCustId, MOUType: this.mouType });    
           }
         });
     }
   }
 
-  OpenView(key: string){
-    if(key == "mou"){
+  OpenView(key: string) {
+    if (key == "mou") {
       AdInsHelper.OpenMOUCustViewByMouCustId(this.mouCustId);
-    }else if( key == "cust"){
+    } else if (key == "cust") {
       AdInsHelper.OpenCustomerViewByCustId(this.custId);
     }
   }

@@ -50,6 +50,10 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_OWNER_DATA)
       return;
     }
+    if(this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x=>x.IsActive == true) == null){
+      this.toastr.warningMessage("At Least 1 Active Signer is Required");
+      return false;
+    }
 
     var totalSharePrcnt = 0;
 

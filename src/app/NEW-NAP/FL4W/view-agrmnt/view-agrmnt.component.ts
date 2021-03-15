@@ -5,12 +5,19 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { forkJoin } from 'rxjs';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 
 @Component({
   selector: 'app-view-agrmnt',
   templateUrl: './view-agrmnt.component.html'
 })
 export class ViewAgrmntComponent implements OnInit {
+  isDmsReady: boolean;
+  dmsObj: DMSObj;
+  appNo: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
@@ -24,7 +31,7 @@ export class ViewAgrmntComponent implements OnInit {
   AgrmntId: number;
   AppId: number;
   MrCustTypeCode: string;
-  ngOnInit() {
+  async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfo.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
@@ -55,5 +62,4 @@ export class ViewAgrmntComponent implements OnInit {
       }
     );
   }
-
 }

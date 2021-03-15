@@ -1,5 +1,5 @@
 {
-    "title": "Applicant Duplicate Checking Paging",
+    "title": "Customer Duplicate Checking Paging",
     "exportExcel": false,
     "component": [
         {
@@ -138,7 +138,7 @@
             "position": "center",
             "property": "AppNo",
             "target": "_blank",
-            "path": "/View/AppView",
+            "path": "VIEW_APP",
             "param": [
                 {
                     "type": "AppId",

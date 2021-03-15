@@ -6,9 +6,11 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'cust-main-data-paging',
@@ -21,13 +23,12 @@ export class CustMainDataPagingComponent implements OnInit {
   arrCrit: Array<CriteriaObj>;
   bizTemplateCode: string;
   userAccess: any;
-  token: string = localStorage.getItem(CommonConstant.TOKEN);
+  token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
     private router: Router,
-    private route: ActivatedRoute) 
-  {
+    private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) this.bizTemplateCode = params["BizTemplateCode"];
     });
@@ -42,7 +43,7 @@ export class CustMainDataPagingComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.arrCrit = new Array();
     this.makeCriteria();
@@ -63,12 +64,12 @@ export class CustMainDataPagingComponent implements OnInit {
   }
 
   AddApp() {
-    if(!this.bizTemplateCode) return;
+    if (!this.bizTemplateCode) return;
     var obj = { OfficeCode: this.userAccess.OfficeCode };
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
-          AdInsHelper.RedirectUrl(this.router,["Nap/MainData/NAP1/Add"],{ "BizTemplateCode": this.bizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP1_ADD], { "BizTemplateCode": this.bizTemplateCode });
         } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
@@ -80,22 +81,25 @@ export class CustMainDataPagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     if (ev.Key == "Edit") {
-      switch(this.bizTemplateCode) {
-        case CommonConstant.CF4W :
-          AdInsHelper.RedirectUrl(this.router,["Nap/ConsumerFinance/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
-        break;
-        case CommonConstant.CFRFN4W :
-          AdInsHelper.RedirectUrl(this.router,["Nap/CFRefinancing/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
-        break;
-        case CommonConstant.FCTR :
-          AdInsHelper.RedirectUrl(this.router,["Nap/Factoring/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
-        break;
-        case CommonConstant.FL4W :
-          AdInsHelper.RedirectUrl(this.router,["Nap/FinanceLeasing/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
-        break;
-        case CommonConstant.CFNA :
-          AdInsHelper.RedirectUrl(this.router,["Nap/CFNA/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
-        break;
+      switch (this.bizTemplateCode) {
+        case CommonConstant.CF4W:
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
+          break;
+        case CommonConstant.CFRFN4W:
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
+          break;
+        case CommonConstant.FCTR:
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
+          break;
+        case CommonConstant.FL4W:
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
+          break;
+        case CommonConstant.CFNA:
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
+          break;
+        case CommonConstant.OPL:
+          AdInsHelper.RedirectUrl(this.router, ["Nap/OPL/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
+          break;
       }
     }
   }

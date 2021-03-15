@@ -3,7 +3,7 @@
     <h4 class="card-title" translate> Credit Approval </h4>
   </div>
   <div class="card-body">
-    <app-app-main-info [arrValue]="arrValue"></app-app-main-info>
+    <app-app-main-info [AppId]="appId"></app-app-main-info>
     <mat-tab-group>
       <!-- <mat-tab label="Summary">
         <ng-template matTabContent>
@@ -30,11 +30,15 @@
           <app-tab-app-data [AppId]=appId></app-tab-app-data>
         </ng-template>
       </mat-tab>
-      <mat-tab label="Fraud Detection Result">
+      <mat-tab *ngIf="IsUseDigitalization == '1'" label="Fraud Detection Data">
         <ng-template matTabContent>
-          <app-fraud-detection-result [appId]=appId [mrCustTypeCode]="CustTypeCode"></app-fraud-detection-result>
+          <!-- <app-view-fraud-detection-result [appId]=appId [mrCustTypeCode]="CustTypeCode">
+          </app-view-fraud-detection-result> -->
+          <app-fraud-detection-data [AppId]="appId"></app-fraud-detection-data>
+          
         </ng-template>
       </mat-tab>
+
       <mat-tab label="Deviation">
         <ng-template matTabContent>
           <app-tab-deviation  [AppId]="appId" [IsEditManualDeviation]="false"></app-tab-deviation>        
@@ -45,13 +49,18 @@
           <app-cust-history [AppId]="appId"></app-cust-history>
         </ng-template>
       </mat-tab>
+      <mat-tab label="Document">
+        <ng-template matTabContent>
+          <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
+        </ng-template>
+      </mat-tab>
       <mat-tab label="Analysis Result">
         <ng-template matTabContent>
           <app-tab-analysis-result [appId]="appId"></app-tab-analysis-result>
         </ng-template>
       </mat-tab>
     </mat-tab-group>
-    <lib-ucapproval [inputObj]="inputObj" [showCancel]="'true'" (onCancel)="onCancelClick()" (nextTask)="onAvailableNextTask()" (result)="onApprovalSubmited($event)">
-    </lib-ucapproval> 
+  <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady"></lib-ucapprovalgeneralinfo>
+  <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)" (onCancel)="onCancelClick()"></lib-ucapprovalR3>
   </div>
 </div>

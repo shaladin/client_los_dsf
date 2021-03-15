@@ -31,6 +31,7 @@ export class MouViewDetailComponent implements OnInit {
 
   WopCode: string;
   PlafondAmt: number;
+  RealisationAmt: number;
   IsRevolving: boolean;
   TopDays: number;
   InterestRatePrcnt: number;
@@ -57,6 +58,7 @@ export class MouViewDetailComponent implements OnInit {
         this.MouCustId = this.mouCust.MouCustId;
         this.CurrCode = this.mouCust.CurrCode;
         this.PlafondAmt = this.mouCust.PlafondAmt;
+        this.RealisationAmt = this.mouCust.RealisationAmt;
         this.IsRevolving = this.mouCust.IsRevolving;
 
         if (this.MouType == CommonConstant.GENERAL)

@@ -12,8 +12,9 @@ import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompany/
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
+import { CookieService } from 'ngx-cookie';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-cc-contact-information-tab',
@@ -44,7 +45,7 @@ export class CcContactInformationTabComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    public formValidate: FormValidateService) {
+    public formValidate: FormValidateService, private cookieService: CookieService) {
 
   }
 
@@ -73,7 +74,7 @@ export class CcContactInformationTabComponent implements OnInit {
   });
 
   async ngOnInit() {
-    let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDate = new Date(formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US'));
 
     this.SetAddrForm();
@@ -218,7 +219,7 @@ export class CcContactInformationTabComponent implements OnInit {
   }
 
   CheckDt(inputDate: Date, type: string) {
-    let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     let MaxDate = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
     let Max17YO = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
     let max17Yodt = new Date(Max17YO);

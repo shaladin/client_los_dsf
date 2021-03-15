@@ -12,7 +12,7 @@
                     "property": "AppNo",
                     "name": "AppNo",
                     "position": "left",
-                    "path": "/test/paging",
+                    "path": "VIEW_APP",
                     "param": [
                         {
                             "property": "AppId"

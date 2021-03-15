@@ -1,9 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { environment } from 'environments/environment';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
@@ -13,6 +11,10 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-return-handling-detail',
@@ -20,27 +22,28 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
   styleUrls: []
 })
 export class ReturnHandlingDetailComponent implements OnInit {
-
   appId: number;
   returnHandlingHId: number;
   wfTaskListId: number;
   lobCode: string;
   viewObj: string;
-  arrValue = [];
   returnHandlingHObj: ReturnHandlingHObj;
   returnHandlingDObjs: Array<ReturnHandlingDObj>;
   taskObj: Array<KeyValueObj>;
-  MrCustTypeCode : string;
+  MrCustTypeCode: string;
   ReturnHandlingForm = this.fb.group({
     MrReturnTaskCode: ['', [Validators.required, Validators.maxLength(50)]],
-    ReturnHandlingNotes: ['',[Validators.required, Validators.maxLength(4000)]]
+    ReturnHandlingNotes: ['', [Validators.required, Validators.maxLength(4000)]]
   });
+  
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
 
-  constructor(private fb: FormBuilder, 
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PAGING;
+  constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -51,21 +54,28 @@ export class ReturnHandlingDetailComponent implements OnInit {
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
       }
-      if(params["MrCustTypeCode"] != null){
+      if (params["MrCustTypeCode"] != null) {
         this.MrCustTypeCode = params["MrCustTypeCode"];
       }
     });
   }
 
-  async ngOnInit() : Promise<void> {
+  async ngOnInit(): Promise<void> {
     this.lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    if(this.lobCode === CommonConstant.OPL) {
+      await this.SetMainInfo();
+    }
     this.ClaimTask();
-    this.arrValue.push(this.appId);
     await this.bindTaskObj();
     await this.getReturnHandling();
   }
 
-  SubmitAll(){
+  async SetMainInfo() {
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-opl-main-info.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
+  }
+
+  SubmitAll() {
     var reqObj = new ReturnHandlingHObj();
     reqObj.WfTaskListId = this.wfTaskListId;
     reqObj.ReturnHandlingHId = this.returnHandlingHId;
@@ -73,11 +83,12 @@ export class ReturnHandlingDetailComponent implements OnInit {
     this.http.post(URLConstant.ResumeReturnHandling, reqObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AddProcess/ReturnHandling/Paging"], { BizTemplateCode: this.lobCode });
-      });
+        AdInsHelper.RedirectUrl(this.router, [this.CancelLink], { BizTemplateCode: this.lobCode });
+      }
+    );
   }
 
-  AddTask(){
+  AddTask() {
     var reqObj = new ReturnHandlingDObj();
     reqObj.ReturnHandlingHId = this.returnHandlingHId;
     reqObj.MrReturnTaskCode = this.ReturnHandlingForm.controls.MrReturnTaskCode.value;
@@ -87,11 +98,12 @@ export class ReturnHandlingDetailComponent implements OnInit {
     this.http.post(URLConstant.AddReturnHandlingD, reqObj).subscribe(
       (response) => {
         this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
-        this.toastr.successMessage(response["message"]); 
-      });
+        this.toastr.successMessage(response["message"]);
+      }
+    );
   }
 
-  Submit(item, i){
+  Submit(item, i) {
     if (confirm("Are you sure to submit this record?")) {
       var reqObj = new ReturnHandlingDObj();
       reqObj.ReturnHandlingDId = item.ReturnHandlingDId;
@@ -104,12 +116,13 @@ export class ReturnHandlingDetailComponent implements OnInit {
       this.http.post(URLConstant.RequestReturnTask, reqObj).subscribe(
         (response) => {
           this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
-          this.toastr.successMessage(response["message"]); 
-        });
+          this.toastr.successMessage(response["message"]);
+        }
+      );
     }
   }
 
-  Delete(item, i){
+  Delete(item, i) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var reqObj = new ReturnHandlingDObj();
       reqObj.ReturnHandlingDId = item.ReturnHandlingDId;
@@ -118,12 +131,13 @@ export class ReturnHandlingDetailComponent implements OnInit {
       this.http.post(URLConstant.DeleteReturnHandlingD, reqObj).subscribe(
         (response) => {
           this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
-          this.toastr.successMessage(response["message"]); 
-        });
+          this.toastr.successMessage(response["message"]);
+        }
+      );
     }
   }
 
-  async getReturnHandling(){
+  async getReturnHandling() {
     var reqObj = new ReturnHandlingHObj();
     reqObj.ReturnHandlingHId = this.returnHandlingHId;
     await this.http.post(URLConstant.GetReturnHandlingWithDetailByReturnHandlingHId, reqObj).toPromise().then(
@@ -136,15 +150,36 @@ export class ReturnHandlingDetailComponent implements OnInit {
           });
           this.ReturnHandlingForm.controls["MrReturnTaskCode"].disable();
         }
-      });
+      }
+    );
   }
 
-  async bindTaskObj(){
-    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReturnTask, ReserveField1: this.lobCode, ReserveField2: this.MrCustTypeCode};
-    await this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refMasterObj).toPromise().then(
+  async bindTaskObj() {
+    let refMasterTypeCode = '';
+    switch (this.lobCode) {
+      case CommonConstant.CF4W:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCF4W;
+        break;
+      case CommonConstant.CFNA:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCFNA;
+        break;
+      case CommonConstant.CFRFN4W:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskCFRFN4W;
+        break;
+      case CommonConstant.FL4W:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskFL4W;
+        break;
+      case CommonConstant.OPL:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskOPL;
+        break;
+    }
+    if (!refMasterTypeCode) return;
+
+    var refMasterObj = { RefMasterTypeCode: refMasterTypeCode, MappingCode: this.MrCustTypeCode };
+    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refMasterObj).toPromise().then(
       (response) => {
         this.taskObj = response[CommonConstant.ReturnObj];
-        if(this.taskObj.length > 0){
+        if (this.taskObj.length > 0) {
           this.ReturnHandlingForm.patchValue({
             MrReturnTaskCode: this.taskObj[0].Key
           });
@@ -153,15 +188,23 @@ export class ReturnHandlingDetailComponent implements OnInit {
     );
   }
 
-  ClaimTask(){
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+  ClaimTask() {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
 
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-    
-      });
+      (response) => { }
+    );
+  }
+
+  GetCallBack(event: any) {
+    if(event.Key === "Application") {
+      AdInsHelper.OpenAppViewByAppId(event.ViewObj.AppId);
+    }
+    else if (event.Key === "ProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.ViewObj.ProdOfferingCode, event.ViewObj.ProdOfferingVersion);
+    }
   }
 }

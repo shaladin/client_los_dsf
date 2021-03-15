@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
 import { environment } from 'environments/environment';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { OutstandingTcObj } from 'app/shared/model/OutstandingTcObj.Model';
 import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
+import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
+import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
+import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
@@ -30,7 +33,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   result5: any;
   result6: any;
   arrValue = [];
-TCList : any;
+  TCList: any;
   AppNo: any;
   NumOfAsset: any;
   Tenor: any;
@@ -48,33 +51,33 @@ TCList : any;
   MouNo: string;
   identifier: string = "TCList";
   IsApvReady: boolean = false;
-  outstandingTcObj : any;
-  listAppTCObj : ListAppTCObj;
-  appTC : AppTCObj;
+  outstandingTcObj: any;
+  listAppTCObj: ListAppTCObj;
+  appTC: AppTCObj;
   count1: number = 0;
-  RfaLogObj: {
-    RfaNo: any
-  }
-  ListRfaLogObj: any = new Array(this.RfaLogObj);
-  inputObj2: any
-  listPreGoLiveAppvrObj: any = new Array(this.inputObj2);
+  ListRfaLogObj: any;
+  listPreGoLiveAppvrObj: Array<any> = new Array<any>();
 
-  MainInfoForm = this.fb.group({
-
-  });
   AppId: any;
   AgrmntId: any;
-  token = localStorage.getItem(CommonConstant.TOKEN);
+  token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   LeadId: string;
   bizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   MouCustId: any;
+  ApvReqId: number;
+  taskId: number;
+  InputApvObj: UcInputApprovalObj;
+  InputApprovalHistoryObj: UcInputApprovalHistoryObj;
+  UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
+  IsReady: boolean = false;
 
-
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AgrmntId = params["AgrmntId"];
       this.AppId = params["AppId"];
       this.TrxNo = params["TrxNo"];
+      this.taskId = params["TaskId"];
+      this.ApvReqId = params["ApvReqId"];
       var obj = {
         taskId: params["TaskId"],
         instanceId: params["InstanceId"],
@@ -107,16 +110,15 @@ TCList : any;
         this.IsApvReady = true;
       });
 
-      this.http.post(URLConstant.GetListTCbyAppId, { AppId: this.AppId }).subscribe(
-        (response) => {
-          this.TCList = response["AppTcs"];
-        });
+    this.http.post(URLConstant.GetListTCbyAppId, { AppId: this.AppId }).subscribe(
+      (response) => {
+        this.TCList = response["AppTcs"];
+      });
 
     var Obj = {
       AgrmntNo: this.TrxNo,
       RowVersion: ""
     }
-
 
 
     this.http.post(URLConstant.GetAgrmntByAppIdGetAgrmntByAgrmntNo, Obj).subscribe(
@@ -136,7 +138,7 @@ TCList : any;
           RefProdCompntCode: CommonConstant.RefProdCompntCodeWayOfFinancing,
           RowVersion: ""
         }
-        this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat, Obj2).subscribe(
+        this.http.post(URLConstant.GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode, Obj2).subscribe(
           (response) => {
             this.result2 = response;
             this.WayOfFinancing = this.result2.CompntValueDesc;
@@ -148,7 +150,7 @@ TCList : any;
           RefProdCompntCode: CommonConstant.RefProdCompntCodePurposeOfFinancing,
           RowVersion: ""
         }
-        this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat, Obj3).subscribe(
+        this.http.post(URLConstant.GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode, Obj3).subscribe(
           (response) => {
             this.result3 = response;
             this.PurposeOfFinancing = this.result3.CompntValueDesc;
@@ -207,87 +209,110 @@ TCList : any;
         );
 
       }
-    ); 
-
+    );
+    this.initInputApprovalObj();
 
   }
-  HoldTask(obj) {
+  HoldTask(obj: ApprovalObj) {
     this.http.post(URLConstant.ApvHoldTaskUrl, obj).subscribe(
-      (response) => {
+      () => {
       },
       (error) => {
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Approval/Paging"],{ "BizTemplateCode": this.bizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
       }
     )
   }
- 
+
   //nanti bakalan ke View, sementara kek gini dlu
 
-  OpenView(key: string){
-    if(key == 'app'){
+  OpenView(key: string) {
+    if (key == 'app') {
       AdInsHelper.OpenAppViewByAppId(this.AppId);
-    }else if(key == 'agrmnt'){
+    } else if (key == 'agrmnt') {
       AdInsHelper.OpenAgrmntViewByAgrmntId(this.AgrmntId);
-    }else if(key == 'lead'){
+    } else if (key == 'lead') {
       AdInsHelper.OpenLeadViewByLeadId(this.LeadId);
-    }else if(key == 'mou'){
+    } else if (key == 'mou') {
       AdInsHelper.OpenMOUCustViewByMouCustId(this.MouCustId);
-    }else if(key == 'cust'){
+    } else if (key == 'cust') {
       var custObj = { CustNo: this.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          AdInsHelper.OpenCustomerViewByCustId (response["CustId"])
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"])
         });
-    }else if(key == 'prod'){
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( this.ProdOfferingCode, this.ProdOfferingVersion); 
+    } else if (key == 'prod') {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(this.ProdOfferingCode, this.ProdOfferingVersion);
     }
   }
 
   onAvailableNextTask() {
 
   }
-  onApprovalSubmited() {  
+  onApprovalSubmited(event) {
     this.outstandingTcObj = new OutstandingTcObj(); 
     this.listAppTCObj = new ListAppTCObj();
     this.listAppTCObj.AppTCObj = new Array();
 
-    for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
+    for (var i = 0; i < this.TCList["length"]; i++) {
       this.appTC = new AppTCObj();
-      this.appTC.AppId = this.MainInfoForm.value.TCList[i].AppId;
-      this.appTC.AppTcId = this.MainInfoForm.value.TCList[i].AppTcId;
-      this.appTC.TcCode = this.MainInfoForm.value.TCList[i].TcCode;
-      this.appTC.TcName = this.MainInfoForm.value.TCList[i].TcName;
-      this.appTC.PriorTo = this.MainInfoForm.value.TCList[i].PriorTo;
-      this.appTC.IsChecked = this.MainInfoForm.getRawValue().TCList[i].IsChecked;
-      this.appTC.ExpiredDt = this.MainInfoForm.getRawValue().TCList[i].ExpiredDt;
-      this.appTC.IsMandatory = this.MainInfoForm.value.TCList[i].IsMandatory;
-      this.appTC.PromisedDt = this.MainInfoForm.getRawValue().TCList[i].PromisedDt;
-      this.appTC.CheckedDt = this.MainInfoForm.value.TCList[i].CheckedDt;
-      this.appTC.Notes = this.MainInfoForm.value.TCList[i].Notes;
+      this.appTC.AppId = this.TCList[i].AppId;
+      this.appTC.AppTcId = this.TCList[i].AppTcId;
+      this.appTC.TcCode = this.TCList[i].TcCode;
+      this.appTC.TcName = this.TCList[i].TcName;
+      this.appTC.PriorTo = this.TCList[i].PriorTo;
+      this.appTC.IsChecked = this.TCList[i].IsChecked;
+      this.appTC.ExpiredDt = this.TCList[i].ExpiredDt;
+      this.appTC.IsMandatory = this.TCList[i].IsMandatory;
+      this.appTC.PromisedDt = this.TCList[i].PromisedDt;
+      this.appTC.CheckedDt = this.TCList[i].CheckedDt;
+      this.appTC.Notes = this.TCList[i].Notes;
       this.listAppTCObj.AppTCObj.push(this.appTC);
     }
 
     this.outstandingTcObj.ListAppTCObj = this.listAppTCObj.AppTCObj;
 
     this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
-      response => {
-        this.toastr.successMessage("Success");
-        AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Approval/Paging"],{ "BizTemplateCode": this.bizTemplateCode });
+      () => {
+        // this.toastr.successMessage("Success");
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
       }
     );
- 
   }
 
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/AdminProcess/PreGoLive/Approval/Paging"],{ "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
   }
 
   openView(custNo) {
-    var link: string;
     var custObj = { CustNo: custNo };
     this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
       response => {
         AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
       });
+  }
+  initInputApprovalObj() {
+    this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
+    this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
+    this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
+    this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
+
+    this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
+    this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
+    this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
+    this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
+
+    this.InputApvObj = new UcInputApprovalObj();
+    this.InputApvObj.TaskId = this.taskId;
+    this.InputApvObj.EnvUrl = environment.FoundationR3Url;
+    this.InputApvObj.PathUrlGetLevelVoting = URLConstant.GetLevelVoting;
+    this.InputApvObj.PathUrlGetPossibleResult = URLConstant.GetPossibleResult;
+    this.InputApvObj.PathUrlSubmitApproval = URLConstant.SubmitApproval;
+    this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
+    this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
+    this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
+    this.InputApvObj.TrxNo = this.AgrmntNo;
+    this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
+    this.InputApvObj.RequestId = this.ApvReqId;
+    this.IsReady = true;
   }
 }

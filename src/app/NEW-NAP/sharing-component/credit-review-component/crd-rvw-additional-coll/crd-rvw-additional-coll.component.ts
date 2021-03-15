@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CrdRvwCollateralObj } from 'app/shared/model/CreditReview/CrdRvwCollateralObj.Model';
 
 @Component({
   selector: 'app-crd-rvw-additional-coll',
@@ -7,11 +10,22 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CrdRvwAdditionalCollComponent implements OnInit {
 
-  @Input() CrdRvwCustInfoId: number;
+  @Input() CrdRvwCustInfoId: number = 0;
   
-  constructor() { }
+  constructor(
+    private http: HttpClient,
+  ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.GetCrdRvwCollateralByCrdRvwCustInfoId();
   }
 
+  ListCrdRvwCollateralObj: Array<CrdRvwCollateralObj> = new Array<CrdRvwCollateralObj>();
+  async GetCrdRvwCollateralByCrdRvwCustInfoId() {
+    await this.http.post<{ ListCrdRvwCollateralObj: Array<CrdRvwCollateralObj> }>(URLConstant.GetCrdRvwCollateralByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.CrdRvwCustInfoId }).toPromise().then(
+      (response) => {
+        this.ListCrdRvwCollateralObj = response.ListCrdRvwCollateralObj;
+      }
+    );
+  }
 }

@@ -13,6 +13,8 @@ import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompany
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-cust-shareholder',
@@ -43,7 +45,7 @@ export class CustShareholderComponent implements OnInit {
   industryTypeObj = {
     IndustryTypeCode: ""
   };
-  
+
   InputLookupCustomerObj: any;
   InputLookupIndustryTypeObj: any;
 
@@ -73,11 +75,11 @@ export class CustShareholderComponent implements OnInit {
     BirthPlace: ['', Validators.maxLength(200)],
     BirthDt: ['', Validators.required],
     IdNo: ['', Validators.maxLength(50)],
-    TaxIdNo: ['', Validators.maxLength(50)],
+    TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]],
     IdExpiredDt: [''],
     MobilePhnNo: ['', Validators.maxLength(50)],
     Email: ['', Validators.maxLength(50)],
-    SharePrcnt: [0, [Validators.min(0),Validators.max(100), Validators.pattern("^[0-9]+$")]],
+    SharePrcnt: [0, [Validators.min(0), Validators.max(100), Validators.pattern("^[0-9]+$")]],
     MrJobPositionCode: ['', Validators.maxLength(50)],
     IsSigner: [false],
     MrCompanyTypeCode: ['', Validators.maxLength(50)],
@@ -87,39 +89,39 @@ export class CustShareholderComponent implements OnInit {
 
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private modalService: NgbModal,) {
+    private modalService: NgbModal, private cookieService: CookieService) {
 
-     }
+  }
 
   UserAccess: any;
   MaxDate: Date;
   Max17YO: Date;
   ngOnInit() {
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.Max17YO = new Date(this.UserAccess.BusinessDt);
-    this.Max17YO.setFullYear(this.MaxDate.getFullYear()-17);
+    this.Max17YO.setFullYear(this.MaxDate.getFullYear() - 17);
 
     this.initLookup();
     this.bindAllRefMasterObj();
   }
 
-  SaveForm(){
+  SaveForm() {
     this.appCustCompanyMgmntShrholderObj = new AppCustCompanyMgmntShrholderObj();
-    if(this.listShareholder == undefined){
+    if (this.listShareholder == undefined) {
       this.listShareholder = new Array<AppCustCompanyMgmntShrholderObj>();
     }
-    if(this.setAppCustCompanyMgmntShrholder() == false) return;
-    if(this.mode == "add"){
-      if(this.checkSharePrcnt(-1) == false){
+    if (this.setAppCustCompanyMgmntShrholder() == false) return;
+    if (this.mode == "add") {
+      if (this.checkSharePrcnt(-1) == false) {
         this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MUST_100);
         return;
       }
-      if(this.appCustCompanyMgmntShrholderObj.MrCustTypeCode == CommonConstant.CustTypePersonal){
-        if(this.appCustCompanyMgmntShrholderObj.IsSigner){
+      if (this.appCustCompanyMgmntShrholderObj.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+        if (this.appCustCompanyMgmntShrholderObj.IsSigner) {
           for (const item of this.listShareholder) {
             item.IsSigner = false;
           }
@@ -127,13 +129,13 @@ export class CustShareholderComponent implements OnInit {
       }
       this.listShareholder.push(this.appCustCompanyMgmntShrholderObj);
     }
-    if(this.mode == "edit"){
-      if(this.checkSharePrcnt(this.currentEditedIndex) == false){
+    if (this.mode == "edit") {
+      if (this.checkSharePrcnt(this.currentEditedIndex) == false) {
         this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MUST_100);
         return;
       }
-      if(this.appCustCompanyMgmntShrholderObj.MrCustTypeCode == CommonConstant.CustTypePersonal){
-        if(this.appCustCompanyMgmntShrholderObj.IsSigner){
+      if (this.appCustCompanyMgmntShrholderObj.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+        if (this.appCustCompanyMgmntShrholderObj.IsSigner) {
           for (const item of this.listShareholder) {
             item.IsSigner = false;
           }
@@ -146,23 +148,23 @@ export class CustShareholderComponent implements OnInit {
     this.clearForm();
   }
 
-  checkSharePrcnt(currentEditedIndex){
+  checkSharePrcnt(currentEditedIndex) {
     var sharePrcnt = this.CustShareholderForm.controls.SharePrcnt.value;
     var totalPrcnt = 0;
 
-    for(let i = 0; i < this.listShareholder.length; i++){
-      if(currentEditedIndex == -1 || currentEditedIndex != i){
+    for (let i = 0; i < this.listShareholder.length; i++) {
+      if (currentEditedIndex == -1 || currentEditedIndex != i) {
         totalPrcnt += this.listShareholder[i].SharePrcnt;
       }
     }
 
-    if(sharePrcnt + totalPrcnt > 100){
+    if (sharePrcnt + totalPrcnt > 100) {
       return false;
     }
     return true;
   }
 
-  CustTypeChanged(event){
+  CustTypeChanged(event) {
     this.setCriteriaLookupCustomer(event.value);
     this.setValidator(event.value);
     this.selectedCustTypeName = this.CustTypeObj.find(x => x.Key == event.value).Value;
@@ -177,40 +179,38 @@ export class CustShareholderComponent implements OnInit {
     this.CustShareholderForm.controls.IdExpiredDt.enable();
     this.CustShareholderForm.controls.MrCompanyTypeCode.enable();
     this.CustShareholderForm.controls.EstablishmentDt.enable();
-    this.CustShareholderForm.controls.TaxIdNo.enable();
     this.isCust = false;
-
   }
 
-  JobPositionChanged(event){
+  JobPositionChanged(event) {
     this.selectedJobPositionName = event.target.options[event.target.options.selectedIndex].text;
   }
 
-  setCriteriaLookupCustomer(custTypeCode){
+  setCriteriaLookupCustomer(custTypeCode) {
     this.initLookup();
     var arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'MR_CUST_TYPE_CODE';
+    critObj.propName = 'C.MR_CUST_TYPE_CODE';
     critObj.value = custTypeCode;
     arrCrit.push(critObj);
     this.InputLookupCustomerObj.addCritInput = arrCrit;
   }
 
-  add(content){
+  add(content) {
     this.mode = "add";
     this.clearForm();
     this.setCriteriaLookupCustomer(this.defaultCustType);
     this.open(content);
   }
 
-  edit(i, content){
+  edit(i, content) {
     this.clearForm();
     this.mode = "edit";
     this.currentEditedIndex = i;
 
-    if(this.listShareholder[i].MrCustTypeCode == CommonConstant.CustTypePersonal){
+    if (this.listShareholder[i].MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.CustShareholderForm.patchValue({
         MrCustTypeCode: this.listShareholder[i].MrCustTypeCode,
         MrGenderCode: this.listShareholder[i].MrGenderCode,
@@ -227,7 +227,7 @@ export class CustShareholderComponent implements OnInit {
         IsSigner: this.listShareholder[i].IsSigner,
         IsGuarantor: this.listShareholder[i].IsGuarantor
       });
-      if(this.listShareholder[i].CustNo != undefined && this.listShareholder[i].CustNo != ""){
+      if (this.listShareholder[i].CustNo != undefined && this.listShareholder[i].CustNo != "") {
         this.InputLookupCustomerObj.isReadonly = true;
         this.CustShareholderForm.controls.MrGenderCode.disable();
         this.CustShareholderForm.controls.MrIdTypeCode.disable();
@@ -244,7 +244,7 @@ export class CustShareholderComponent implements OnInit {
       this.setCriteriaLookupCustomer(this.listShareholder[i].MrCustTypeCode);
     }
 
-    if(this.listShareholder[i].MrCustTypeCode == CommonConstant.CustTypeCompany){
+    if (this.listShareholder[i].MrCustTypeCode == CommonConstant.CustTypeCompany) {
       this.CustShareholderForm.patchValue({
         MrCustTypeCode: this.listShareholder[i].MrCustTypeCode,
         MrCompanyTypeCode: this.listShareholder[i].MrCompanyTypeCode,
@@ -259,7 +259,7 @@ export class CustShareholderComponent implements OnInit {
       this.selectedIndustryTypeCode = this.listShareholder[i].IndustryTypeCode;
       this.setIndustryTypeName(this.listShareholder[i].IndustryTypeCode);
       this.setCriteriaLookupCustomer(this.listShareholder[i].MrCustTypeCode);
-      if(this.listShareholder[i].CustNo != undefined && this.listShareholder[i].CustNo != ""){
+      if (this.listShareholder[i].CustNo != undefined && this.listShareholder[i].CustNo != "") {
         this.InputLookupCustomerObj.isReadonly = true;
         this.CustShareholderForm.controls.MrCompanyTypeCode.disable();
         this.CustShareholderForm.controls.EstablishmentDt.disable();
@@ -269,20 +269,20 @@ export class CustShareholderComponent implements OnInit {
     }
 
     this.InputLookupCustomerObj.nameSelect = this.listShareholder[i].MgmntShrholderName;
-    this.InputLookupCustomerObj.jsonSelect = {CustName: this.listShareholder[i].MgmntShrholderName};
+    this.InputLookupCustomerObj.jsonSelect = { CustName: this.listShareholder[i].MgmntShrholderName };
     this.selectedCustNo = this.listShareholder[i].CustNo;
     this.setValidator(this.listShareholder[i].MrCustTypeCode);
     this.open(content);
   }
 
-  delete(i){
+  delete(i) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.listShareholder.splice(i, 1);
       this.callbackSubmit.emit(this.listShareholder);
     }
   }
 
-  clearForm(){
+  clearForm() {
     this.CustShareholderForm = this.fb.group({
       MrCustTypeCode: [this.defaultCustType, [Validators.required, Validators.maxLength(50)]],
       MrGenderCode: [this.defaultGender, [Validators.required, Validators.maxLength(50)]],
@@ -290,11 +290,11 @@ export class CustShareholderComponent implements OnInit {
       BirthPlace: ['', Validators.maxLength(200)],
       BirthDt: ['', Validators.required],
       IdNo: ['', Validators.maxLength(50)],
-      TaxIdNo: ['', Validators.maxLength(50)],
+      TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]],
       IdExpiredDt: [''],
       MobilePhnNo: ['', Validators.maxLength(50)],
       Email: ['', [Validators.maxLength(50), Validators.email]],
-      SharePrcnt: [0, [Validators.min(0),Validators.max(100)]],
+      SharePrcnt: [0, [Validators.min(0), Validators.max(100)]],
       MrJobPositionCode: [this.defaultJobPosition, Validators.maxLength(50)],
       IsSigner: [false],
       MrCompanyTypeCode: [this.defaultCompanyType, Validators.maxLength(50)],
@@ -313,21 +313,21 @@ export class CustShareholderComponent implements OnInit {
     this.selectedCustNo = event.CustNo;
     this.InputLookupCustomerObj.isReadonly = true;
 
-    var custObj = {CustId: event.CustId};
+    var custObj = { CustId: event.CustId };
     var url;
 
-    if(event.MrCustTypeCode == CommonConstant.CustTypePersonal){
+    if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       url = URLConstant.GetCustPersonalForCopyMgmntShrholderByCustId;
     }
-    if(event.MrCustTypeCode == CommonConstant.CustTypeCompany){
+    if (event.MrCustTypeCode == CommonConstant.CustTypeCompany) {
       url = URLConstant.GetCustCompanyForCopyMgmntShrholderByCustId;
     }
 
     this.http.post(url, custObj).subscribe(
       (response) => {
 
-        if(event.MrCustTypeCode == CommonConstant.CustTypePersonal){
-          if(response["CustObj"] != undefined){
+        if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+          if (response["CustObj"] != undefined) {
             this.CustShareholderForm.patchValue({
               MrCustTypeCode: response["CustObj"].MrCustTypeCode,
               MrIdTypeCode: response["CustObj"].MrIdTypeCode,
@@ -335,8 +335,8 @@ export class CustShareholderComponent implements OnInit {
               TaxIdNo: response["CustObj"].TaxIdNo,
               // IdExpiredDt: response["CustObj"].IdExpiredDt != undefined || response["CustObj"].MrIdTypeCode != CommonConstant.MrIdTypeCodeEKTP ? formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US') : ''
             });
-            if(response["CustObj"].IdExpiredDt){
-              if(response["CustObj"].MrIdTypeCode != CommonConstant.MrIdTypeCodeEKTP){
+            if (response["CustObj"].IdExpiredDt) {
+              if (response["CustObj"].MrIdTypeCode != CommonConstant.MrIdTypeCodeEKTP) {
                 this.CustShareholderForm.patchValue({
                   IdExpiredDt: formatDate(response["CustObj"].IdExpiredDt, 'yyyy-MM-dd', 'en-US')
                 });
@@ -345,7 +345,7 @@ export class CustShareholderComponent implements OnInit {
             this.selectedCustTypeName = this.CustTypeObj.find(x => x.Key == response["CustObj"].MrCustTypeCode).Value;
           }
 
-          if(response["CustPersonalObj"] != undefined){
+          if (response["CustPersonalObj"] != undefined) {
             this.CustShareholderForm.patchValue({
               MrGenderCode: response["CustPersonalObj"].MrGenderCode,
               BirthPlace: response["CustPersonalObj"].BirthPlace,
@@ -355,7 +355,7 @@ export class CustShareholderComponent implements OnInit {
             });
           }
 
-          if(response["CustPersonalJobDataObj"] != undefined){
+          if (response["CustPersonalJobDataObj"] != undefined) {
             this.CustShareholderForm.patchValue({
               MrJobPositionCode: response["CustPersonalJobDataObj"].MrJobPositionCode,
             });
@@ -373,8 +373,8 @@ export class CustShareholderComponent implements OnInit {
 
         }
 
-        if(event.MrCustTypeCode == CommonConstant.CustTypeCompany){
-          if(response["CustObj"] != undefined){
+        if (event.MrCustTypeCode == CommonConstant.CustTypeCompany) {
+          if (response["CustObj"] != undefined) {
             this.CustShareholderForm.patchValue({
               MrCustTypeCode: response["CustObj"].MrCustTypeCode,
               TaxIdNo: response["CustObj"].TaxIdNo
@@ -382,7 +382,7 @@ export class CustShareholderComponent implements OnInit {
             this.selectedCustTypeName = this.CustTypeObj.find(x => x.Key == response["CustObj"].MrCustTypeCode).Value;
 
           }
-          if(response["CustCompanyObj"] != undefined){
+          if (response["CustCompanyObj"] != undefined) {
             this.CustShareholderForm.patchValue({
               MrCompanyTypeCode: response["CustCompanyObj"].MrCompanyTypeCode,
               EstablishmentDt: formatDate(response["CustCompanyObj"].EstablishmentDt, 'yyyy-MM-dd', 'en-US'),
@@ -390,7 +390,7 @@ export class CustShareholderComponent implements OnInit {
           }
           this.selectedJobPositionName = "";
           this.selectedIndustryTypeCode = response["CustCompanyObj"].IndustryTypeCode;
-          this.setIndustryTypeName(response["CustCompanyObj"].IndustryTypeCode); 
+          this.setIndustryTypeName(response["CustCompanyObj"].IndustryTypeCode);
           this.CustShareholderForm.controls.MrCompanyTypeCode.disable();
           this.CustShareholderForm.controls.EstablishmentDt.disable();
           this.CustShareholderForm.controls.TaxIdNo.disable();
@@ -399,9 +399,9 @@ export class CustShareholderComponent implements OnInit {
       });
   }
 
-  setAppCustCompanyMgmntShrholder(){
-    var flag:boolean = true;
-    if(this.CustShareholderForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal){
+  setAppCustCompanyMgmntShrholder() {
+    var flag: boolean = true;
+    if (this.CustShareholderForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal) {
       this.appCustCompanyMgmntShrholderObj.MrCustTypeCode = this.CustShareholderForm.controls.MrCustTypeCode.value;
       this.appCustCompanyMgmntShrholderObj.CustTypeName = this.selectedCustTypeName;
       this.appCustCompanyMgmntShrholderObj.MrGenderCode = this.CustShareholderForm.controls.MrGenderCode.value;
@@ -418,14 +418,14 @@ export class CustShareholderComponent implements OnInit {
       let d2 = new Date(this.MaxDate);
       let d3 = new Date(this.appCustCompanyMgmntShrholderObj.BirthDt);
       let d4 = new Date(this.Max17YO);
-      if(this.appCustCompanyMgmntShrholderObj.MrIdTypeCode != CommonConstant.MrIdTypeCodeEKTP){
-        if(d1<d2){
-          this.toastr.warningMessage( ExceptionConstant.ID_EXPIRED_DATE_CANNOT_LESS_THAN + "Business Date");
+      if (this.appCustCompanyMgmntShrholderObj.MrIdTypeCode != CommonConstant.MrIdTypeCodeEKTP) {
+        if (d1 < d2) {
+          this.toastr.warningMessage(ExceptionConstant.ID_EXPIRED_DATE_CANNOT_LESS_THAN + "Business Date");
           flag = false;
         }
       }
-     
-      if(d3>d4){
+
+      if (d3 > d4) {
         // this.toastr.warningMessage("Birth Date can not be more than " + this.Max17YO);
         this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
         flag = false;
@@ -438,7 +438,7 @@ export class CustShareholderComponent implements OnInit {
       this.appCustCompanyMgmntShrholderObj.IsSigner = this.CustShareholderForm.controls.IsSigner.value;
     }
 
-    if(this.CustShareholderForm.controls.MrCustTypeCode.value == CommonConstant.CustTypeCompany){
+    if (this.CustShareholderForm.controls.MrCustTypeCode.value == CommonConstant.CustTypeCompany) {
       this.appCustCompanyMgmntShrholderObj.MrCustTypeCode = this.CustShareholderForm.controls.MrCustTypeCode.value;
       this.appCustCompanyMgmntShrholderObj.CustTypeName = this.selectedCustTypeName;
       this.appCustCompanyMgmntShrholderObj.MgmntShrholderName = this.CustShareholderForm.controls.lookupCustomerShareholder.value.value;
@@ -454,29 +454,29 @@ export class CustShareholderComponent implements OnInit {
     return flag;
   }
 
-  GetIndustryType(event){
+  GetIndustryType(event) {
     this.selectedIndustryTypeCode = event.IndustryTypeCode;
   }
 
-  setIndustryTypeName(industryTypeCode){
+  setIndustryTypeName(industryTypeCode) {
     this.industryTypeObj.IndustryTypeCode = industryTypeCode;
     this.http.post(URLConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
       (response) => {
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
         this.industryTypeName = response["IndustryTypeName"];
-        this.InputLookupIndustryTypeObj.jsonSelect = response;     
+        this.InputLookupIndustryTypeObj.jsonSelect = response;
       });
   }
 
-  setValidator(custType){
-    if(custType == CommonConstant.CustTypePersonal){
+  setValidator(custType) {
+    if (custType == CommonConstant.CustTypePersonal) {
       this.CustShareholderForm.controls.BirthDt.setValidators(Validators.required);
       this.CustShareholderForm.controls.BirthDt.updateValueAndValidity();
       this.CustShareholderForm.controls.EstablishmentDt.clearValidators();
       this.CustShareholderForm.controls.EstablishmentDt.updateValueAndValidity();
     }
 
-    if(custType == CommonConstant.CustTypeCompany){
+    if (custType == CommonConstant.CustTypeCompany) {
       this.CustShareholderForm.controls.BirthDt.clearValidators();
       this.CustShareholderForm.controls.BirthDt.updateValueAndValidity();
       this.CustShareholderForm.controls.EstablishmentDt.setValidators(Validators.required);
@@ -484,7 +484,7 @@ export class CustShareholderComponent implements OnInit {
     }
   }
 
-  initLookup(){
+  initLookup() {
     this.InputLookupCustomerObj = new InputLookupObj();
     this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
@@ -503,7 +503,7 @@ export class CustShareholderComponent implements OnInit {
 
   }
 
-  bindAllRefMasterObj(){
+  bindAllRefMasterObj() {
     this.bindCustTypeObj();
     this.bindGenderObj();
     this.bindIdTypeObj();
@@ -511,12 +511,12 @@ export class CustShareholderComponent implements OnInit {
     this.bindCompanyTypeObj();
   }
 
-  bindCustTypeObj(){
+  bindCustTypeObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CustTypeObj = response[CommonConstant.ReturnObj];
-        if(this.CustTypeObj.length > 0){
+        if (this.CustTypeObj.length > 0) {
           this.defaultCustType = this.CustTypeObj[0].Key;
           this.defaultCustTypeName = this.CustTypeObj[0].Value;
           this.setValidator(this.CustTypeObj[0].Key);
@@ -525,36 +525,36 @@ export class CustShareholderComponent implements OnInit {
     );
   }
 
-  bindGenderObj(){
+  bindGenderObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
-        if(this.GenderObj.length > 0){
+        if (this.GenderObj.length > 0) {
           this.defaultGender = this.GenderObj[0].Key
         }
       }
     );
   }
 
-  bindIdTypeObj(){
+  bindIdTypeObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.IdTypeObj = response[CommonConstant.ReturnObj];
-        if(this.IdTypeObj.length > 0){
+        if (this.IdTypeObj.length > 0) {
           this.defaultIdType = this.IdTypeObj[0].Key
         }
       }
     );
   }
 
-  bindJobPositionObj(){
+  bindJobPositionObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobPosition;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.JobPositionObj = response[CommonConstant.ReturnObj];
-        if(this.JobPositionObj.length > 0){
+        if (this.JobPositionObj.length > 0) {
           this.defaultJobPosition = this.JobPositionObj[0].Key;
           this.defaultJobPositionName = this.JobPositionObj[0].Value;
         }
@@ -562,12 +562,12 @@ export class CustShareholderComponent implements OnInit {
     );
   }
 
-  bindCompanyTypeObj(){
+  bindCompanyTypeObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCompanyType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CompanyTypeObj = response[CommonConstant.ReturnObj];
-        if(this.CompanyTypeObj.length > 0){
+        if (this.CompanyTypeObj.length > 0) {
           this.defaultCompanyType = this.CompanyTypeObj[0].Key;
         }
       }
@@ -593,13 +593,12 @@ export class CustShareholderComponent implements OnInit {
     }
   }
 
-  cancel()
-  {
+  cancel() {
     this.modalService.dismissAll();
   }
 
-  clearExpDt(){
-    if(this.CustShareholderForm.value.MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP){
+  clearExpDt() {
+    if (this.CustShareholderForm.value.MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP) {
       this.CustShareholderForm.patchValue({
         IdExpiredDt: ''
       });

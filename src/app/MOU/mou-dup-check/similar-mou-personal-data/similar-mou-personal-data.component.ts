@@ -8,6 +8,7 @@ import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-similar-mou-personal-data',
@@ -102,7 +103,7 @@ export class SimilarMouPersonalDataComponent implements OnInit {
     "CustNo":item.CustNo, "ApplicantNo":item.ApplicantNo};
     this.http.post(URLConstant.EditCustNoMouCust, AppDupCheckObj).subscribe(
       response => {
-        AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/ExistingPersonal"],{ "MouCustId": this.MouCustId, "WfTaskListId": this.WfTaskListId });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DUP_CHECK_EXIST_PERSONAL],{ "MouCustId": this.MouCustId, "WfTaskListId": this.WfTaskListId });
       });
   }
 
@@ -110,12 +111,12 @@ export class SimilarMouPersonalDataComponent implements OnInit {
     this.http.post(URLConstant.EditCustNoMouCust, {"MouCustId": this.MouCustId, 
     "CustNo":this.MouCustObj.ApplicantNo, "ApplicantNo":this.MouCustObj.ApplicantNo, RowVersion: ""}).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/ExistingPersonal"],{ "MouCustId": this.MouCustId, "WfTaskListId": this.WfTaskListId });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DUP_CHECK_EXIST_PERSONAL],{ "MouCustId": this.MouCustId, "WfTaskListId": this.WfTaskListId });
       });
   }
 
   back() {
-    AdInsHelper.RedirectUrl(this.router,["/Mou/DuplicateCheck/Paging"],{});
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DUP_CHECK_PAGING],{});
   }
 
 }

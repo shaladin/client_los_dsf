@@ -11,9 +11,7 @@
   <lib-ucgridview [gridInput]="gridAssetDataObj" (callback)="event($event)"></lib-ucgridview>
 </div>
 <div *ngIf="listDataAsset.length > 0" class="form-group row">
-  <div class="col-md-4">
-
-  </div>
+  <div class="col-md-4"></div>
   <label class="col-md-2" translate>Copy Asset</label>
   <div class="col-md-2">
     <select class="form-control" style="width: inherit" [(ngModel)]="selectedAsset" name="selectAsset">
@@ -29,6 +27,23 @@
   <button type="button" class="btn btn-raised btn-primary" (click)="CopyAsset()" translate>
     Copy
   </button>
+</div>
+
+<div *ngIf="IsUseDigitalization == '1' && IntegratorCheckBySystemGsValue == '0' && mouCustId==0">
+  <lib-ucSubsection [id]="'FraudCheckingId'" [title]="'Fraud Checking'" [panel]="'fraudChecking'">
+  </lib-ucSubsection>
+  <div [id]="fraudChecking">
+    <div class="form-group row">
+      <label class="col-md-2" translate>RAPINDO</label>
+      <div class="col-md-8">
+        <button type="button" name="hitAPI" id="add" (click)="HitAPI()" class="btn btn-raised btn-primary">
+          HIT RAPINDO
+        </button>
+        <label *ngIf="thirdPartyRsltHId != '' && thirdPartyRsltHId != null" class="col-md-4" translate>Requested At
+          {{this.LastRequestedDate | date: 'dd-MMMM-yyyy hh:mm:ss'}}</label>
+      </div>
+    </div>
+  </div>
 </div>
 <br>
 <br>

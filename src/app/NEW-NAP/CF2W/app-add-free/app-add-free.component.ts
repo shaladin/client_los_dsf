@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, CheckboxControlValueAccessor } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -11,6 +11,8 @@ import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-app-add-free',
@@ -23,18 +25,20 @@ export class AppAddFreeComponent implements OnInit {
   ProductOfferingIdentifier;
   ProductOfferingNameIdentifier;
   LobCode;
+  
+  readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    private toastr: NGXToastrService
-  ) { 
-      this.route.queryParams.subscribe(params => {
+    private toastr: NGXToastrService, private cookieService: CookieService
+  ) {
+    this.route.queryParams.subscribe(params => {
       if (params["LobCode"] != null) {
         this.LobCode = params["LobCode"];
       }
-     });
+    });
   }
 
   NapAppForm = this.fb.group({
@@ -93,7 +97,7 @@ export class AppAddFreeComponent implements OnInit {
   user;
   ngOnInit() {
     // Lookup Obj
-    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.MakeLookUpObj();
 
@@ -119,7 +123,7 @@ export class AppAddFreeComponent implements OnInit {
   }
 
   arrAddCrit;
-  MakeLookUpObj(){
+  MakeLookUpObj() {
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.urlQryPaging = URLConstant.GetPagingObjectBySQL;
@@ -127,7 +131,7 @@ export class AppAddFreeComponent implements OnInit {
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.isRequired = false;
-    
+
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
@@ -135,7 +139,7 @@ export class AppAddFreeComponent implements OnInit {
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
-    
+
     this.arrAddCrit = new Array();
 
     var addCrit = new CriteriaObj();
@@ -164,20 +168,20 @@ export class AppAddFreeComponent implements OnInit {
       });
   }
 
-  CheckValue(obj){
-    if(obj.MrWopCode == null){
+  CheckValue(obj) {
+    if (obj.MrWopCode == null) {
       obj.MrWopCode = "";
     }
-    if(obj.SalesOfficerNo == null){
+    if (obj.SalesOfficerNo == null) {
       obj.SalesOfficerNo = "";
     }
-    if(obj.MrAppSourceCode == null){
+    if (obj.MrAppSourceCode == null) {
       obj.MrAppSourceCode = "";
     }
-    if(obj.MrCustNotifyOptCode == null){
+    if (obj.MrCustNotifyOptCode == null) {
       obj.MrCustNotifyOptCode = "";
     }
-    if(obj.MrFirstInstTypeCode == null){
+    if (obj.MrFirstInstTypeCode == null) {
       obj.MrFirstInstTypeCode = "";
     }
 
@@ -204,7 +208,7 @@ export class AppAddFreeComponent implements OnInit {
     this.http.post(url, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["Nap/CF2W/Add/Detail"], { "AppId": response["AppId"], "LobCode": this.LobCode });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CF2W_ADD_DETAIL], { "AppId": response["AppId"], "LobCode": this.LobCode });
       });
 
   }
@@ -242,19 +246,19 @@ export class AppAddFreeComponent implements OnInit {
     var tempCurrCode;
     var tempPayFreqCode;
     var tempRefProdTypeCode;
-    this.http.post(url,obj).subscribe(
+    this.http.post(url, obj).subscribe(
       (response) => {
         var temp = response[CommonConstant.ReturnObj];
-        for(var i=0;i<temp.length;i++){
-          if(temp[i].RefProdCompntCode == CommonConstant.RefProdCompntLob){
+        for (var i = 0; i < temp.length; i++) {
+          if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntLob) {
             tempLobCode = temp[i].CompntValue;
-          }else if(temp[i].RefProdCompntCode == CommonConstant.RefProdCompntCurr){
+          } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntCurr) {
             tempCurrCode = temp[i].CompntValue;
-          }else if(temp[i].RefProdCompntCode == CommonConstant.RefProdCompntPayFreq){
+          } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntPayFreq) {
             tempPayFreqCode = temp[i].CompntValue;
-          }else if(temp[i].RefProdCompntCode == CommonConstant.RefProdCompntProdType){
+          } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntProdType) {
             tempRefProdTypeCode = temp[i].CompntValue;
-          }else{
+          } else {
           }
         }
         this.NapAppForm.patchValue({

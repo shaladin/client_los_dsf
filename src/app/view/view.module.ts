@@ -91,10 +91,14 @@ import { AgreementViewContainerComponent } from "./agr-view/agreement-view-conta
 import { AgrMainInfoComponent } from "./agr-main-info/agr-main-info.component";
 import { ListDataCommissionAgrmntComponent } from "./agr-view/view-commission/list-data-commission/list-data-commission.component";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
+import { SharedModule } from "app/shared/shared.module";
+import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
+import { MouMainInfoComponent } from './mou-main-info/mou-main-info.component';
 // import { ShowErrorsComponent } ../NEW-NAP/view/app-view/app-view.componentors.component";
 
 @NgModule({
   imports: [
+    NgbModule,
     ViewRoutingModule,
     CommonModule,
     FormsModule,
@@ -105,7 +109,6 @@ import { AppCustViewComponentsModule } from "app/components/general/app-cust-vie
     UclookupgenericModule,
     UcviewgenericModule,
     UcgridviewModule,
-    NgbModule,
     SharingModule,
     ArchwizardModule,
     ReactiveFormsModule,
@@ -113,7 +116,9 @@ import { AppCustViewComponentsModule } from "app/components/general/app-cust-vie
     SharingComponentModule,
     UcapprovalhistModule,
     UcShowErrorsModule,
-    AppCustViewComponentsModule
+    AppCustViewComponentsModule,
+    SharedModule,
+    UcapprovalHistoryModule
   ],
   declarations: [
     MainInfoComponent,
@@ -191,7 +196,9 @@ import { AppCustViewComponentsModule } from "app/components/general/app-cust-vie
     MouViewApprovalHistoryComponent,
 
     //surveyView prototype
-    SurveyViewComponent
+    SurveyViewComponent,
+
+    MouMainInfoComponent,
   ],
   entryComponents: [
     UclookupgenericComponent,

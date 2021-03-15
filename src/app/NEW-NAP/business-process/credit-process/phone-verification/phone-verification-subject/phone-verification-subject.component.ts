@@ -1,22 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { DatePipe } from '@angular/common';
-import { ReturnHandlingDObj } from '../../../../../shared/model/ReturnHandling/ReturnHandlingDObj.Model';
-import { ReturnHandlingHObj } from '../../../../../shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { replaceAll } from 'chartist';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-
-
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
+import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 
 @Component({
   selector: "phone-verification-subject",
@@ -39,8 +37,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     IsAnyUpdate: [''],
     UpdateNotes: ['', Validators.maxLength(4000)],
     ExecNotes: ['', Validators.maxLength(4000)],
-  });
-  viewObj: any;
+  });;
 
   appId: any;
   returnHandlingHId: any;
@@ -73,8 +70,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   ReturnHandlingDData: ReturnHandlingDObj;
   ReturnHandlingHData: ReturnHandlingHObj;
   OnFormReturnInfo: boolean = false;
-  arrValue = [];
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
 
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -100,13 +96,11 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.arrValue.push(this.appId);
     if (this.wfTaskListId != null || this.wfTaskListId != undefined)
       this.claimTask();
 
     this.initUrl();
     this.appObj.AppId = this.appId;
-    this.viewObj = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
     await this.GetAppData();
     await this.GetVerfResultData();
     await this.GetPhnVerfSubjData();
@@ -121,14 +115,14 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   async SaveForm() {
     if (this.blankCount == 0) {
-      var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
+      var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
       if (this.isReturnHandling == false) {
         this.setReturnHandlingH();
         this.http.post(URLConstant.CompleteAppPhoneVerif, this.ReturnHandlingHData).subscribe(
           (response) => {
 
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/PhoneVerification/Paging"], { "BizTemplateCode": BizTemplateCode });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_PAGING], { "BizTemplateCode": BizTemplateCode });
           });
       }
       if (this.isReturnHandling == true) {
@@ -136,12 +130,12 @@ export class PhoneVerificationSubjectComponent implements OnInit {
         this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { "BizTemplateCode": BizTemplateCode });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING], { "BizTemplateCode": BizTemplateCode });
           });
 
       }
     }
-    else{
+    else {
       this.toastr.warningMessage("Please verify all the subject.");
     }
   }
@@ -176,7 +170,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.http.post(URLConstant.ResumeWorkflow, workflowApiObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { BizTemplateCode: lobCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING], { BizTemplateCode: lobCode });
 
       }
     );
@@ -236,7 +230,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       var value = datePipe.transform(Business_Date, "yyyy-MM-dd");
       var businessDt = new Date(value);
 
-      var useraccess = localStorage.getItem(CommonConstant.USER_ACCESS);
       this.addVerifResultObj = new VerfResultObj();
 
       this.addVerifResultObj.TrxRefNo = this.AppObj.AppNo;
@@ -249,7 +242,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       this.addVerifResultObj.Notes = "-";
 
       await this.http.post(this.addVerfResultUrl, this.addVerifResultObj).toPromise().then(
-        (response) => {
+        () => {
         }
       );
     }
@@ -267,40 +260,51 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   View(VerifResultHid, SubjectName) {
     var link = environment.losR3Web + "/Nap/CreditProcess/PhoneVerification/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName;
-    this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    this.router.navigate([]).then(() => { window.open(link, '_blank'); });
 
     //window.open("/Nap/CreditProcess/PhoneVerification/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName, "_blank");
   }
 
   Verif(VerifResultHid, SubjectName, SubjectType, IdSource, SubjectRelation) {
     if (this.isReturnHandling == false) {
-      AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/PhoneVerification/Subject/Verif"], { "AppId": this.appId, "VerfResultHId": VerifResultHid, "Name": SubjectName, "Type": SubjectType, "Relation": SubjectRelation, "Source": IdSource, "WfTaskListId": this.wfTaskListId });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT_VERIF], { "AppId": this.appId, "VerfResultHId": VerifResultHid, "Name": SubjectName, "Type": SubjectType, "Relation": SubjectRelation, "Source": IdSource, "WfTaskListId": this.wfTaskListId });
 
     }
     if (this.isReturnHandling == true) {
-      AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/PhoneVerification/Subject/Verif"], { "AppId": this.appId, "VerfResultHId": VerifResultHid, "Name": SubjectName, "Type": SubjectType, "Relation": SubjectRelation, "Source": IdSource, "ReturnHandlingHId": this.returnHandlingHId, "WfTaskListId": this.wfTaskListId });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT_VERIF], { "AppId": this.appId, "VerfResultHId": VerifResultHid, "Name": SubjectName, "Type": SubjectType, "Relation": SubjectRelation, "Source": IdSource, "ReturnHandlingHId": this.returnHandlingHId, "WfTaskListId": this.wfTaskListId });
     }
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = {
       pWFTaskListID: this.wfTaskListId,
       pUserID: currentUserContext[CommonConstant.USER_NAME],
       isLoading: false
     };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
+      () => {
       });
   }
 
   back() {
-    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     if (this.isReturnHandling == false) {
-      AdInsHelper.RedirectUrl(this.router, ["/Nap/CreditProcess/PhoneVerification/Paging"], { "BizTemplateCode": BizTemplateCode });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_PAGING], { "BizTemplateCode": BizTemplateCode });
     }
     if (this.isReturnHandling == true) {
-      AdInsHelper.RedirectUrl(this.router, ["/Nap/AdditionalProcess/ReturnHandlingPhoneVerif/Paging"], { "BizTemplateCode": BizTemplateCode });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING], { "BizTemplateCode": BizTemplateCode });
     }
+  }
+
+  required: boolean = false;
+
+  CheckState(value: String){
+    if (value == "YES"){
+      this.ReturnHandlingForm.controls.UpdateNotes.setValidators(Validators.required);
+    }else{
+      this.ReturnHandlingForm.controls.UpdateNotes.clearValidators();
+    }
+    this.ReturnHandlingForm.controls.UpdateNotes.updateValueAndValidity();
   }
 }

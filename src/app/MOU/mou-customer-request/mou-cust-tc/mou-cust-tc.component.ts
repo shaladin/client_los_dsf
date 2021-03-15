@@ -1,15 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder, FormArray, Validators, NgForm } from '@angular/forms';
+import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { map, mergeMap } from 'rxjs/operators';
 import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
 import { DatePipe } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { Router } from '@angular/router';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-mou-cust-tc',
@@ -25,18 +27,19 @@ export class MouCustTcComponent implements OnInit {
   MouCustTcForm = this.fb.group({
     MouCustTcList: this.fb.array([])
   });
+  dmsObj: DMSObj;
+  custNo: string;
+  isDmsReady: boolean = false;
 
   constructor(
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
-    private fb: FormBuilder,
-    private router: Router
-  ) {
+    private fb: FormBuilder, private cookieService: CookieService) {
     this.formSubmitted = false;
   }
 
   ngOnInit() {
-    var context = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDate = new Date(context[CommonConstant.BUSINESS_DT]);
     var datePipe = new DatePipe("en-US");
     var mouObj = new MouCustObj();
@@ -47,7 +50,7 @@ export class MouCustTcComponent implements OnInit {
         mouCustObjData = response;
         return response;
       }),
-      mergeMap((response) => {
+      mergeMap(() => {
         var mouCustClause = new MouCustClauseObj();
         mouCustClause.MouCustId = this.MouCustId;
         return this.httpClient.post(URLConstant.GetMouCustClauseByMouCustId, mouCustClause);
@@ -83,7 +86,7 @@ export class MouCustTcComponent implements OnInit {
             promiseDtValidation = [];
             expiredDtValidation = [];
           }
-          if(item.IsWaived){
+          if (item.IsWaived) {
             promiseDtValidation = [];
             expiredDtValidation = [];
           }
@@ -104,13 +107,13 @@ export class MouCustTcComponent implements OnInit {
             IsWaived: [item.IsWaived],
             RowVersion: ['']
           });
-          if(formGroup.controls.IsChecked.value == true){
+          if (formGroup.controls.IsChecked.value == true) {
             formGroup.controls.IsChecked.disable();
           }
-          if(formGroup.controls.IsWaivable.value == false){
+          if (formGroup.controls.IsWaivable.value == false) {
             formGroup.controls.IsWaived.disable();
           }
-          if(formGroup.controls.IsWaived.value == true){
+          if (formGroup.controls.IsWaived.value == true) {
             formGroup.controls.IsWaived.disable();
             formGroup.controls.IsChecked.disable();
           }
@@ -131,7 +134,7 @@ export class MouCustTcComponent implements OnInit {
         formArray.at(i).get("PromisedDt").clearValidators();
         formArray.at(i).get("PromisedDt").updateValueAndValidity();
       }
-      else{
+      else {
         formArray.at(i).get("PromisedDt").clearValidators();
         formArray.at(i).get("PromisedDt").updateValueAndValidity();
       }
@@ -147,9 +150,9 @@ export class MouCustTcComponent implements OnInit {
     }
   }
 
-  waiveHandler(e, i){
+  waiveHandler(e, i) {
     var formArray = this.MouCustTcForm.get('MouCustTcList') as FormArray;
-    if(e.target.checked == true){
+    if (e.target.checked == true) {
       formArray.at(i).get("PromisedDt").clearValidators();
       formArray.at(i).get("PromisedDt").updateValueAndValidity();
       formArray.at(i).get("ExpiredDt").clearValidators();
@@ -161,7 +164,7 @@ export class MouCustTcComponent implements OnInit {
         IsChecked: false
       });
     }
-    else{
+    else {
       formArray.at(i).get("IsChecked").enable();
       var isChecked = formArray.at(i).get("IsChecked").value;
       if (isChecked) {
@@ -173,7 +176,7 @@ export class MouCustTcComponent implements OnInit {
           formArray.at(i).get("PromisedDt").clearValidators();
           formArray.at(i).get("PromisedDt").updateValueAndValidity();
         }
-        else{
+        else {
           formArray.at(i).get("PromisedDt").clearValidators();
           formArray.at(i).get("PromisedDt").updateValueAndValidity();
         }
@@ -225,8 +228,7 @@ export class MouCustTcComponent implements OnInit {
       this.httpClient.post(URLConstant.EditListMouCustTc, formFinal).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
-          // this.ResponseMouCustTc.emit(response);
-          this.router.navigate(["/Mou/Request/Paging"]);
+          this.ResponseMouCustTc.emit(response);
         });
     }
   }

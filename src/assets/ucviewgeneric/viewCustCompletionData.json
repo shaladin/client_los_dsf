@@ -12,7 +12,7 @@
             "property": "AppNo",
             "name": "AppNo",
             "position": "left",
-            "path": "/View/AppView",
+            "path": "VIEW_APP",
             "target": "_blank",
             "param": [
               { 
@@ -27,9 +27,37 @@
             "property": "OriOfficeName"
           },
           {
-            "type": "text",
-            "label": "Customer Name",
-            "property": "CustName"
+            "type" : "switch", 
+            "case" : [ 
+              {
+                "conditions" : [ 
+                  {
+                    "property" : "BizTemplateCode", 
+                    "value" : "FL4W",
+                    "restriction": "EQ"
+                  }
+                ],
+                  "result" : {
+                    "type": "text",
+                    "label": "Lessee Name",
+                    "property": "CustName"
+                }
+              },
+              {
+                "conditions" : [ 
+                  {
+                    "property" : "BizTemplateCode", 
+                    "value" : "FL4W",
+                    "restriction": "NEQ"
+                  }
+                ],
+                  "result" : {
+                    "type": "text",
+                    "label": "Customer Name",
+                    "property": "CustName"
+                  }
+              }
+            ]
           },
           {
             "type": "callback",
@@ -41,7 +69,7 @@
             "type": "text",
             "label": "Application Status",
             "property": "Stat"
-          },{},
+          },
           {
             "type": "text",
             "label": "Application Current Step",

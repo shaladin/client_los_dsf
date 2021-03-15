@@ -16,6 +16,8 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-emergency-contact-tab',
@@ -60,11 +62,11 @@ export class EmergencyContactTabComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    public formValidate: FormValidateService) {
+    public formValidate: FormValidateService, private cookieService: CookieService) {
   }
 
   ngOnInit() {
-    let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = UserAccess.BusinessDt;
 
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookupCustomer.json";
@@ -101,7 +103,7 @@ export class EmergencyContactTabComponent implements OnInit {
       (response) => {
         this.IdTypeObj = response[CommonConstant.RefMasterObjs];
         if (this.IdTypeObj.length > 0) {
-          let idxDefault = this.IdTypeObj.findIndex(x => x["ReserveField2"] == CommonConstant.DEFAULT);
+          let idxDefault = this.IdTypeObj.findIndex(x => x["IsDefaultValue"]);
           this.EmergencyContactForm.patchValue({
             MrIdTypeCode: this.IdTypeObj[idxDefault]["MasterCode"]
           });
@@ -119,7 +121,7 @@ export class EmergencyContactTabComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship }).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship }).subscribe(
       async (response) => {
         this.MrCustRelationshipObj = response[CommonConstant.ReturnObj];
         if (!this.IsMarried) {
@@ -138,10 +140,10 @@ export class EmergencyContactTabComponent implements OnInit {
       });
   }
 
-  getData(){
-    this.http.post<AppCustEmrgncCntctObj>(URLConstant.GetAppCustEmrgncCntctByAppCustId, {AppCustId: this.AppCustId}).subscribe(
+  getData() {
+    this.http.post<AppCustEmrgncCntctObj>(URLConstant.GetAppCustEmrgncCntctByAppCustId, { AppCustId: this.AppCustId }).subscribe(
       (response) => {
-        if(response.AppCustEmrgncCntctId != 0){
+        if (response.AppCustEmrgncCntctId != 0) {
           this.EmergencyContactForm.patchValue({
             MrIdTypeCode: response.MrIdTypeCode,
             MrGenderCode: response.MrGenderCode,
@@ -154,10 +156,10 @@ export class EmergencyContactTabComponent implements OnInit {
             MobilePhnNo2: response.MobilePhnNo2,
             Email: response.Email
           })
-        }        
-      this.appCustEmrgncCntctObj.RowVersion = response["RowVersion"];
-      this.InputLookupCustObj.nameSelect = response["ContactPersonName"];
-      this.InputLookupCustObj.jsonSelect = { CustName: response["ContactPersonName"] };
+        }
+        this.appCustEmrgncCntctObj.RowVersion = response["RowVersion"];
+        this.InputLookupCustObj.nameSelect = response["ContactPersonName"];
+        this.InputLookupCustObj.jsonSelect = { CustName: response["ContactPersonName"] };
 
       this.UcAddrObj.Addr = response["Addr"];
       this.UcAddrObj.AreaCode1 = response["AreaCode1"];
@@ -177,21 +179,21 @@ export class EmergencyContactTabComponent implements OnInit {
       this.UcAddrObj.PhnExt2 = response["PhnExt2"];
       this.UcAddrObj.PhnExt3 = response["PhnExt3"];
 
-      this.InputUcAddressObj.inputField.inputLookupObj.nameSelect = response["Zipcode"];
-      this.InputUcAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["Zipcode"]};
-      this.InputUcAddressObj.default = this.UcAddrObj;
+        this.InputUcAddressObj.inputField.inputLookupObj.nameSelect = response["Zipcode"];
+        this.InputUcAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["Zipcode"] };
+        this.InputUcAddressObj.default = this.UcAddrObj;
       },
       error => {
         console.log(error);
       });
   }
 
-  ChangeIdType(IdType: string){
+  ChangeIdType(IdType: string) {
     this.EmergencyContactForm.controls.IdExpiredDt.patchValue("");
 
-    if(IdType == "KITAS" || IdType == "SIM"){
+    if (IdType == "KITAS" || IdType == "SIM") {
       this.EmergencyContactForm.controls.IdExpiredDt.setValidators([Validators.required]);
-    }else{
+    } else {
       this.EmergencyContactForm.controls.IdExpiredDt.clearValidators();
     }
 
@@ -311,11 +313,11 @@ export class EmergencyContactTabComponent implements OnInit {
     this.appCustEmrgncCntctObj.PhnExt2 = this.UcAddrObj.PhnExt2;
     this.appCustEmrgncCntctObj.PhnExt3 = this.UcAddrObj.PhnExt3;
     this.appCustEmrgncCntctObj.Zipcode = this.EmergencyContactForm.controls["AddressZipcode"]["controls"].value.value;
-    
+
     this.http.post(URLConstant.AddEditAppCustEmrgncCntct, this.appCustEmrgncCntctObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.OutputTab.emit({IsComplete: true});
+        this.OutputTab.emit({ IsComplete: true });
       },
       error => {
         console.log(error);

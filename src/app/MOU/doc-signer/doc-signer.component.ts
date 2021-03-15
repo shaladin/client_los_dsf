@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DecimalPipe } from '@angular/common';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { UcpagingComponent } from '@adins/ucpaging';
 import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
@@ -19,19 +19,18 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class DocSignerComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj>;
-  user:any;
-  
-  constructor(private router: Router,  private http: HttpClient) { }
+  user: any;
+
+  constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) { }
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
-      AdInsHelper.RedirectUrl(this.router,["/Mou/UnauthorizedPage"],{});
+      AdInsHelper.RedirectUrl(this.router, ["/Mou/UnauthorizedPage"], {});
       return;
     }
-    else
-    {
+    else {
       this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/searchMouCustDocSigner.json";
       this.inputPagingObj.enviromentUrl = environment.losUrl;
@@ -43,36 +42,35 @@ export class DocSignerComponent implements OnInit {
           environment: environment.FoundationR3Url
         }
       ];
-  
+
       this.arrCrit = new Array<CriteriaObj>();
-      
+
       const addCritMouStat = new CriteriaObj();
       addCritMouStat.DataType = 'text';
       addCritMouStat.propName = 'MOU.MOU_STAT';
       addCritMouStat.restriction = AdInsConstant.RestrictionEq;
       addCritMouStat.value = CommonConstant.MouDocSigner;
       this.arrCrit.push(addCritMouStat);
-  
+
       const addCritOfficeCode = new CriteriaObj();
       addCritOfficeCode.DataType = 'text';
       addCritOfficeCode.propName = 'WTL.OFFICE_CODE';
       addCritOfficeCode.restriction = AdInsConstant.RestrictionEq;
       addCritOfficeCode.value = CommonConstant.HeadOffice;
       this.arrCrit.push(addCritOfficeCode);
-  
+
       this.inputPagingObj.addCritInput = this.arrCrit;
     }
   }
 
-  getEvent(event){
-    if(event.Key == "customer"){
-        var link : string;
-        var custObj = { CustNo: event.RowObj.CustNo };
-        this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-          response => {
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-          }
-        );
+  getEvent(event) {
+    if (event.Key == "customer") {
+      var custObj = { CustNo: event.RowObj.CustNo };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        }
+      );
     }
   }
 }

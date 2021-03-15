@@ -5,11 +5,14 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0">
+  <meta http-equiv="expires" content="0">
+  <meta http-equiv="pragma" content="no-cache">
   <title>CONFINS - LOS</title>
   <base href="/">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="assets/fonts/feather/style.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="assets/material/style.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/vendor/pace/themes/black/pace-theme-flash.css" />
   <link rel="stylesheet" type="text/css" href="assets/css/open-sans.css" />
   <!-- TAMBAH CONTOH CHRIS -->
@@ -101,8 +104,7 @@
     }
 
     getLocalIP().then((ipAddr) => {
-      localStorage.setItem("LocalIp",ipAddr);
-      console.log(ipAddr); // 192.168.0.122
+      // localStorage.setItem("LocalIp", ipAddr);
     });
   </script>
 </head>

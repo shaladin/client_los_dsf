@@ -7,12 +7,18 @@ import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper'
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { forkJoin } from 'rxjs';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -24,12 +30,10 @@ export class NapAddDetailComponent implements OnInit {
   custType: string = CommonConstant.CustTypePersonal;
   private stepperPersonal: Stepper;
   private stepperCompany: Stepper;
-  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
   mode: string;
-  viewProdMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   NapObj: AppObj;
   ResponseReturnInfoObj: any;
   OnFormReturnInfo: boolean = false;
@@ -40,6 +44,7 @@ export class NapAddDetailComponent implements OnInit {
   ReturnHandlingHId: number = 0;
   isMainCustMarried: boolean = false;
 
+  @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
   });
@@ -57,9 +62,14 @@ export class NapAddDetailComponent implements OnInit {
     "LFI": 8,
     "FIN": 9,
     "TC": 10,
+    "UPD": 11
   };
+  dmsObj: DMSObj;
+  appNo: string;
+  isDmsReady: boolean = false;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private toastr: NGXToastrService) {
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -76,25 +86,9 @@ export class NapAddDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 1;
-    this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-    this.viewProdMainInfoObj.viewEnvironment = environment.losUrl;
-    this.viewProdMainInfoObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
 
@@ -110,6 +104,9 @@ export class NapAddDetailComponent implements OnInit {
             if (this.NapObj.MrCustTypeCode != null)
               this.custType = this.NapObj.MrCustTypeCode;
 
+            if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
+              this.initDms();
+            }
             this.ChangeStepper();
             this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
             this.ChooseStep(this.AppStepIndex);
@@ -152,6 +149,7 @@ export class NapAddDetailComponent implements OnInit {
         "LFI": 8,
         "FIN": 9,
         "TC": 10,
+        "UPD": 11
       };
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
@@ -174,6 +172,7 @@ export class NapAddDetailComponent implements OnInit {
       "LFI": 8,
       "FIN": 8,
       "TC": 9,
+      "UPD": 10
       };
     }
   }
@@ -184,6 +183,47 @@ export class NapAddDetailComponent implements OnInit {
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany.to(idxStep);
     }
+  }
+  async initDms() {
+    this.isDmsReady = false;
+    this.dmsObj = new DMSObj();
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.dmsObj.User = currentUserContext.UserName;
+    this.dmsObj.Role = currentUserContext.RoleCode;
+    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+    var appObj = { AppId: this.appId };
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj);
+    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+    forkJoin([getApp, getAppCust]).subscribe(
+      response => {
+        this.appNo = response[0]['AppNo'];
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+        let isExisting = response[1]['IsExistingCust'];
+        if (isExisting) {
+          let custNo = response[1]['CustNo'];
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
+        }
+        else {
+          this.dmsObj.MetadataParent = null;
+        }
+
+        let mouId = response[0]['MouCustId'];
+        if (mouId != null && mouId != "") {
+          let mouObj = { MouCustId: mouId };
+          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            result => {
+              let mouCustNo = result['MouCustNo'];
+              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+              this.isDmsReady = true;
+            }
+          )
+        }
+        else {
+          this.isDmsReady = true;
+        }
+      }
+    );
   }
 
   MakeViewReturnInfoObj() {
@@ -254,15 +294,17 @@ export class NapAddDetailComponent implements OnInit {
       case CommonConstant.AppStepTC:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepTC];
         break;
-
+      case CommonConstant.AppStepUplDoc:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepUplDoc];
+        break;
       default:
         break;
     }
-    if (AppStep == CommonConstant.AppStepTC)
+    if (AppStep == CommonConstant.AppStepUplDoc)
       this.IsLastStep = true;
     else
       this.IsLastStep = false;
-      this.ucViewMainProd.initiateForm();
+      this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   NextStep(Step) {
@@ -272,13 +314,16 @@ export class NapAddDetailComponent implements OnInit {
       this.UpdateAppStep(Step);
     }
 
+    if (Step == CommonConstant.AppStepUplDoc) {
+      this.initDms();
+    }
+
     this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.next();
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany.next();
     }
-    this.ucViewMainProd.initiateForm();
   }
 
   UpdateAppStep(Step: string) {
@@ -288,31 +333,36 @@ export class NapAddDetailComponent implements OnInit {
       }
     )
   }
-  
+
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,["/Nap/CFRefinancing/Paging"], {});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFRFN4W_PAGING], {});
       })
   }
 
   Submit() {
     if (this.ReturnHandlingHId > 0) {
       var obj = {
+        WfTaskListId: this.wfTaskListId,
         ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
         ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
         ReturnHandlingExecNotes: this.FormReturnObj.value.ReturnExecNotes,
+        MrReturnTaskCode: this.ResponseReturnInfoObj.MrReturnTaskCode,
+        ReturnStat: this.ResponseReturnInfoObj.ReturnStat,
         RowVersion: this.ResponseReturnInfoObj.RowVersion
       };
 
       this.http.post(URLConstant.EditReturnHandlingD, obj).subscribe(
         (response) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING], { BizTemplateCode: CommonConstant.CFRFN4W });
         })
     }
   }
   ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new AppObj();
     wfClaimObj.AppId = this.appId;
     wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
@@ -323,7 +373,7 @@ export class NapAddDetailComponent implements OnInit {
       });
   }
   Cancel() {
-    this.router.navigate(["Paging"], { relativeTo: this.route.parent, skipLocationChange: true, queryParams: { BizTemplateCode: CommonConstant.CFRFN4W } });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.BACK_TO_PAGING], { BizTemplateCode: CommonConstant.CFRFN4W });
   }
 
   CheckCustType(ev) {
@@ -335,10 +385,6 @@ export class NapAddDetailComponent implements OnInit {
     }else{
       this.NextStep(CommonConstant.AppStepShr);
     }
-  }
-
-  GetCallback(ev) {
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 
   SubmitGuarantor(){

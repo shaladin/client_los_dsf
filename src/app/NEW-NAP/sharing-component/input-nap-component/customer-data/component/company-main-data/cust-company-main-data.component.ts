@@ -13,6 +13,9 @@ import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
+import { CustomPatternObj } from 'app/shared/model/LibraryObj/CustomPatternObj.model';
 
 @Component({
   selector: 'app-cust-company-main-data',
@@ -23,14 +26,13 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 
 export class CustCompanyMainDataComponent implements OnInit {
-
-  @Input() appId;
+  @Input() appId: number;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
   @Input() custDataCompanyObj: CustDataCompanyObj = new CustDataCompanyObj();
   @Input() custType: any;
-  @Input() bizTemplateCode : string = "";
+  @Input() bizTemplateCode: string = "";
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
   AppObj: AppObj = new AppObj();
   AppId: number;
@@ -56,20 +58,17 @@ export class CustCompanyMainDataComponent implements OnInit {
   UserAccess: any;
   MaxDate: Date;
 
-
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params['AppId'];
     });
   }
 
   ngOnInit() {
-
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
     this.parentForm.addControl(this.identifier, this.fb.group({
@@ -80,8 +79,8 @@ export class CustCompanyMainDataComponent implements OnInit {
       MrCompanyTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
       NumOfEmp: [0],
       IsAffiliated: [false],
-      EstablishmentDt: ['',[Validators.required]],
-      TaxIdNo: ['', [Validators.required, Validators.maxLength(50)]],
+      EstablishmentDt: ['', [Validators.required]],
+      TaxIdNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]{2}\.[0-9]{3}\.[0-9]{3}\.[0-9]{1}\-[0-9]{3}\.[0-9]{3}$")]],
       IsVip: [false]
     }));
 
@@ -102,7 +101,8 @@ export class CustCompanyMainDataComponent implements OnInit {
       (response) => {
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);
-      });
+      }
+    );
   }
 
   CopyCustomer(response) {
@@ -133,20 +133,18 @@ export class CustCompanyMainDataComponent implements OnInit {
     }
   }
 
-
   GetIndustryType(event) {
     this.parentForm.controls[this.identifier].patchValue({
       IndustryTypeCode: event.IndustryTypeCode
     });
   }
 
-
   setCriteriaLookupCustomer(custTypeCode) {
     var arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'MR_CUST_TYPE_CODE';
+    critObj.propName = 'C.MR_CUST_TYPE_CODE';
     critObj.value = custTypeCode;
     arrCrit.push(critObj);
     this.InputLookupCustomerObj.addCritInput = arrCrit;
@@ -159,8 +157,8 @@ export class CustCompanyMainDataComponent implements OnInit {
       (response) => {
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
         this.InputLookupIndustryTypeObj.jsonSelect = response;
-      });
-
+      }
+    );
   }
 
   bindCustData() {
@@ -211,15 +209,14 @@ export class CustCompanyMainDataComponent implements OnInit {
     this.http.post<AppObj>(URLConstant.GetAppById, AppObj).subscribe(
       (response) => {
         this.AppObj = response;
-        
+
         if (this.AppObj.BizTemplateCode != CommonConstant.FCTR) {
           this.InputLookupCustomerObj.isReadonly = false;
         }
 
         this.InputLookupCustomerObj.isReady = true;
-      }, 
-      (error) => {
-      }
+      },
+      (error) => { }
     );
   }
 
@@ -253,7 +250,5 @@ export class CustCompanyMainDataComponent implements OnInit {
         }
       }
     );
-  }
-  test() {
   }
 }

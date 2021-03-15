@@ -1,0 +1,176 @@
+{
+    "headerList": [
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Subject",
+            "name": "Subject"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Name",
+            "name": "CustName"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Customer Type",
+            "name": "MrCustTypeDescr"
+        },
+        {
+            "type": "label",
+            "position": "left",
+            "label": "Customer Relationship",
+            "name": "MrCustRelationshipCode"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Customer No",
+            "name": "CustNo"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Applicant No",
+            "name": "ApplicantNo"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Is Complete",
+            "name": "IsCompletion"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action",
+            "name": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "SubjectDescr"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MrCustTypeDescr"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MrCustRelationshipDescr"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ApplicantNo"
+        },
+        {
+            "type" : "boolean",
+            "position" : "center",
+            "property" : "IsCompletion"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "property": "MrCustTypeCode",
+                                    "value": "PERSONAL",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "../detail/personal",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "AppCustId",
+                                        "property": "AppCustId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId",
+                                        "isAddProp": true
+                                    },
+                                    {
+                                        "type": "BizTemplateCode",
+                                        "property": "BizTemplateCode",
+                                        "isAddProp": true
+                                    },
+                                    {
+                                        "type": "ReturnHandlingHId",
+                                        "property": "ReturnHandlingHId",
+                                        "isAddProp": true
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "MrCustTypeCode",
+                                    "value": "COMPANY",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "../detail/company",
+                                "param": [
+                                    {
+                                        "type": "AppId",
+                                        "property": "AppId"
+                                    },
+                                    {
+                                        "type": "AppCustId",
+                                        "property": "AppCustId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId",
+                                        "isAddProp": true
+                                    },
+                                    {
+                                        "type": "BizTemplateCode",
+                                        "property": "BizTemplateCode",
+                                        "isAddProp": true
+                                    },
+                                    {
+                                        "type": "ReturnHandlingHId",
+                                        "property": "ReturnHandlingHId",
+                                        "isAddProp": true
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -40,24 +40,36 @@
             <lib-ucSubsection [id]="'PreGoLiveApprovalHistoryId'" [title]="'PreGoLive Approval History'"
               [panel]="'PreGoLiveApprovalHistory'">
             </lib-ucSubsection>
-            <div *ngIf='IsApvReady' id="PreGoLiveApprovalHistory">
-              <lib-ucapprovalhist [inputObj]="listPreGoLiveAppvrObj">
-              </lib-ucapprovalhist>
+            <div id="PreGoLiveApprovalHistory">
+              <lib-ucapprovalHistory *ngIf="IsApvReady" [InputObj]="InputApprovalHistoryObj">
+              </lib-ucapprovalHistory>
             </div>
-            <lib-ucSubsection [id]="'TCListId'" [title]="'Term and Condition'" [panel]="'TCList'">
-            </lib-ucSubsection>
-            <div id="TCList">
-              <app-term-conditions [AppId]="AppId" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm"
-                (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
-              </app-term-conditions>
-            </div>
+            <mat-tab-group>
+              <mat-tab label="Term & Conditions">
+                <ng-template matTabContent>
+                  <app-term-conditions [AppId]="AppId" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm"
+                  (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
+                </app-term-conditions>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="App Document">
+                <ng-template matTabContent>
+                  <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsAppObj"></app-dms-iframe>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="Agreement Document">
+                <ng-template matTabContent>
+                  <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group>
             <div class="form-actions right">
               <button *ngIf="!IsCheckedAll" type="button" class="btn btn-raised btn-primary mr-1" (click)="RFA()"
                 translate>
                 <i class="fa fa-check-square-o"></i> Request For Approval
               </button>
               <button type="button" class="btn btn-raised btn-warning mr-1"
-                [routerLink]="['/Nap/AdminProcess/PreGoLive/Paging']" translate>
+                [routerLink]="[CancelLink]" translate>
                 <i class="ft-x"></i> Cancel
               </button>
               <button *ngIf="IsCheckedAll" type="submit" class="btn btn-raised btn-primary mr-1" translate>

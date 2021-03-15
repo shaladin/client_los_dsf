@@ -1,0 +1,70 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "AgrMainInformationId",
+        "subSectionTitle": "Main Information",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "link",
+            "label": "Application No",
+            "property": "AppNo",
+            "name": "AppNo",
+            "path": "/View/AppView",
+            "target" : "_blank",
+            "param": [
+              {
+                "type": "AppId",
+                "property": "AppId"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "label": "Number of Asset",
+            "property": "NumOfAsset"
+          },
+          {
+            "type": "link",
+            "label": "Agreement No",
+            "property": "AgrmntNo",
+            "name": "AgrmntNo",
+            "path": "/View/AgrmntView",
+            "target" : "_blank",
+            "param": [
+              {
+                "type": "AgrmntId",
+                "property": "AgrmntId"
+              }
+            ]
+          }, 
+          {
+            "type": "text",
+            "label": "Lessee Name",
+            "property": "CustName"
+          },
+          {
+            "type": "text",
+            "label": "Original Office",
+            "property": "OfficeName"
+          },
+          {
+            "type": "text",
+            "label": "Tenor",
+            "property": "Tenor"
+          },
+          {
+            "type": "callback",
+            "key": "ViewProdOffering",
+            "label": "Product Offering Name",
+            "property": "ProdOfferingName"
+          }
+        ],
+        "querystring": {
+          "name": "viewAgrMainInfo"
+        }
+      }
+    ]
+  }
+  
