@@ -13,6 +13,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -20,6 +23,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 
 export class DocSignerDetailComponent implements OnInit {
+  WfTaskListId: number = 0;
   AppId: number;
   AgrmntId: number;
   ResponseAppAssetObj: any;
@@ -44,11 +48,15 @@ export class DocSignerDetailComponent implements OnInit {
 
   readonly CanceLink: string = NavigationConstant.NAP_ADM_PRCS_NAP_DOC_SIGNER_PAGING;
   constructor(private fb: FormBuilder, private http: HttpClient,
-    private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
+    private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params['AppId'];
       this.AgrmntId = params['AgrmntId'];
       this.BizTemplateCode = params['BizTemplateCode'];
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
+      }
     });
   }
 
@@ -61,9 +69,23 @@ export class DocSignerDetailComponent implements OnInit {
   });
 
   async ngOnInit() {
+    if (this.WfTaskListId != 0) {
+      this.ClaimTask();
+    }
     await this.getAllData();
     this.setLookupObj();
     await this.setDefaultShareholder();
+  }
+
+  ClaimTask() {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    var wfClaimObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
+
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
+      () => {
+      });
   }
 
   async getAllData() {
@@ -97,6 +119,13 @@ export class DocSignerDetailComponent implements OnInit {
               });
           }
         }
+      });
+
+    await this.http.post(URLConstant.GetAgrmntByAgrmntId, obj).toPromise().then(
+      (response) => {
+        this.result2 = response;
+        this.OfficeCode = this.result2.OfficeCode;
+        this.CustNo = this.result2.CustNo;
       });
 
     await this.http.post(URLConstant.GetAppAssetDataByAppId, obj).toPromise().then(
@@ -282,6 +311,7 @@ export class DocSignerDetailComponent implements OnInit {
 
   SaveForm() {
     this.agrmntSignerObj.AgrmntId = this.AgrmntId;
+    this.agrmntSignerObj.WfTaskListId = this.WfTaskListId;
 
     if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
       this.agrmntSignerObj.MrJobPositionMgmntShrholder1Code = this.DocSignerForm.controls.MrJobPositionMgmntShrholder1Code.value;
@@ -294,13 +324,13 @@ export class DocSignerDetailComponent implements OnInit {
       this.http.post(URLConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,[this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, [this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });
         });
     } else {
       this.http.post(URLConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,[this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, [this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });
         });
     }
   }
