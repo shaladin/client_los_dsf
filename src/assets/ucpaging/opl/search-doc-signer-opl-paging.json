@@ -3,7 +3,7 @@
     "component": [
         {
             "type": "textbox",
-            "name": "AP.APP_NO",
+            "name": "a.APP_NO",
             "id": "AppNoId",
             "value": "",
             "label": "Application No",
@@ -11,7 +11,7 @@
         },
         {
             "type": "textbox",
-            "name": "AP.CUST_NAME",
+            "name": "a.CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "Customer Name",
@@ -19,7 +19,7 @@
         },
         {
             "type": "textbox",
-            "name": "AP.PROD_OFFERING_NAME",
+            "name": "a.PROD_OFFERING_NAME",
             "id": "ProdOfferingNameId",
             "value": "",
             "label": "Prod Offering Name",
@@ -27,7 +27,7 @@
         },
         {
           "type": "dropdown",
-          "name": "AP.ORI_OFFICE_CODE",
+          "name": "a.ORI_OFFICE_CODE",
           "id": "OfficeNameId",
           "value": "Office",
           "placeholder": "Placeholder",
