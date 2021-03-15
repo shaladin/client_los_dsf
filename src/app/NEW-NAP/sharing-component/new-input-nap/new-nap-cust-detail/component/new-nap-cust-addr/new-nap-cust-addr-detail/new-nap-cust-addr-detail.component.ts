@@ -50,7 +50,7 @@ export class NewNapCustAddrDetailComponent implements OnInit {
     this.inputAddressObj.showOwnership = true;
     this.isUcAddressReady = true;
 
-    this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCustAddrType, ReserveField1: this.InputObj.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.CustTypePersonal : CommonConstant.CustTypeCompany }).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCustAddrType, MappingCode: this.InputObj.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.CustTypePersonal : CommonConstant.CustTypeCompany }).subscribe(
       async (response) => {
         this.AddressTypeObj = response[CommonConstant.ReturnObj];
         if(this.InputObj.MrCustTypeCode == CommonConstant.CustTypeCompany){

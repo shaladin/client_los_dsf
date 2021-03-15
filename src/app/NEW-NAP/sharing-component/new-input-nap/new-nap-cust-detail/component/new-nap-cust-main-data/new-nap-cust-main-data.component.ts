@@ -275,7 +275,7 @@ export class NewNapCustMainDataComponent implements OnInit {
     await this.GetListActiveRefMaster(this.MasterCompanyType);
     await this.GetListActiveRefMaster(this.MasterJobPosition);
     
-    await this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel, ReserveField1: this.MrCustTypeCode }).toPromise().then(
+    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel, MappingCode: this.MrCustTypeCode }).toPromise().then(
       (response) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
       }
@@ -301,23 +301,23 @@ export class NewNapCustMainDataComponent implements OnInit {
       if (this.ParentForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal) {
         var refCustRelObj = {
           RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
-          ReserveField1: CommonConstant.CustTypePersonal,
+          MappingCode: CommonConstant.CustTypePersonal,
           RowVersion: ""
         }
       } else {
         var refCustRelObj = {
           RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
-          ReserveField1: CommonConstant.CustTypeCompany,
+          MappingCode: CommonConstant.CustTypeCompany,
           RowVersion: ""
         }
       }
-      this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, refCustRelObj).subscribe(
+      this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refCustRelObj).subscribe(
         (response) => {
           this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
         }
       );
     } else {
-      this.http.post(URLConstant.GetListActiveRefMasterWithReserveFieldAll, { RefMasterTypeCode: this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship }).subscribe(
+      this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship }).subscribe(
         async (response) => {
           this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
           if (this.ParentForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMainCustMarried) await this.removeSpouse();
