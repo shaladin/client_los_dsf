@@ -48,7 +48,7 @@ export class NapAddDetailComponent implements OnInit {
     "INS": 5,
     "FIN": 6,
     "TC": 7,
-    "UPD": 8
+    "UPL_DOC": 8
   };
   dmsObj: DMSObj;
   appNo: string;

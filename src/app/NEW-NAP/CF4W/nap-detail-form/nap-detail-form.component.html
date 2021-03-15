@@ -101,7 +101,7 @@
             <div class="line"></div>
             <div class="step" data-target="#upload-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
-                      [disabled]="!(AppStepIndex >= 8)" (click)="ChangeTab('UPD')">
+                      [disabled]="!(AppStepIndex >= 8)" (click)="ChangeTab('UPL_DOC')">
                 <span class="bs-stepper-circle">8</span>
                 <span class="bs-stepper-label">Upload Document</span>
               </button>
@@ -141,7 +141,7 @@
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 7 && stepperMode == 'PERSONAL'" [AppId]="appId"
-                [showCancel]="showCancel" (outputTab)="NextStep('UPD')" (outputCancel)="Cancel()"></app-tc-data>
+                [showCancel]="showCancel" (outputTab)="NextStep('UPL_DOC')" (outputCancel)="Cancel()"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
               <app-dms-iframe *ngIf="AppStepIndex == 8 && stepperMode == 'PERSONAL' && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"  [showButton]="true" [dmsObj]="dmsObj"></app-dms-iframe>
@@ -201,7 +201,7 @@
             <div class="line"></div>
             <div class="step" data-target="#upload-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
-                      [disabled]="!(AppStepIndex >= 7)" (click)="ChangeTab('UPD')">
+                      [disabled]="!(AppStepIndex >= 7)" (click)="ChangeTab('UPL_DOC')">
                 <span class="bs-stepper-circle">7</span>
                 <span class="bs-stepper-label">Upload Document</span>
               </button>
@@ -236,7 +236,7 @@
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY'" [AppId]="appId"
-                [showCancel]="showCancel" (outputTab)="NextStep('UPD')" (outputCancel)="Cancel()"></app-tc-data>
+                [showCancel]="showCancel" (outputTab)="NextStep('UPL_DOC')" (outputCancel)="Cancel()"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
               <app-dms-iframe *ngIf="AppStepIndex == 7 && stepperMode == 'COMPANY' && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"  [showButton]="true" [dmsObj]="dmsObj"></app-dms-iframe>

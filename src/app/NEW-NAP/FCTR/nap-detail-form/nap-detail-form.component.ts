@@ -46,7 +46,7 @@ export class NapDetailFormComponent implements OnInit {
     "INS": 4,
     "FIN": 5,
     "TC": 6,
-    "UPD": 7
+    "UPL_DOC": 7
   };
   isDmsReady: boolean = false;
   dmsObj: DMSObj;
