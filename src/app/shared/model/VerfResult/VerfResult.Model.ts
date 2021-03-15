@@ -11,6 +11,7 @@ export class VerfResultObj {
     LobName: string;
     Notes: string;
     RowVersion: string;
+    ListSubject: Array<string>;
 
     constructor() {
         this.VerfResultId = 0;
@@ -25,5 +26,6 @@ export class VerfResultObj {
         this.LobName = "";
         this.Notes = "";
         this.RowVersion = "";
+        this.ListSubject = Array<string>();
     }
 }
