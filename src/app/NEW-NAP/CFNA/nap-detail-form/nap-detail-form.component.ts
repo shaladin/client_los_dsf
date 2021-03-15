@@ -54,7 +54,7 @@ export class NapDetailFormComponent implements OnInit {
     "LFI": 5,
     "FIN": 6,
     "TC": 7,
-    "UPD": 8,
+    "UPL_DOC": 8,
   };
 
   ResponseReturnInfoObj: ReturnHandlingDObj;
@@ -198,7 +198,7 @@ export class NapDetailFormComponent implements OnInit {
         "LFI": 5,
         "FIN": 6,
         "TC": 7,
-        "UPD": 8,
+        "UPL_DOC": 8,
       };
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
@@ -217,7 +217,7 @@ export class NapDetailFormComponent implements OnInit {
         "LFI": 5,
         "FIN": 5,
         "TC": 6,
-        "UPD": 7,
+        "UPL_DOC": 7,
       };
     }
   }
