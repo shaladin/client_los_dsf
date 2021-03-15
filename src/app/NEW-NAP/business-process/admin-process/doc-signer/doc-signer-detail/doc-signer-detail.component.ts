@@ -134,7 +134,7 @@ export class DocSignerDetailComponent implements OnInit {
         this.SupplCode = this.ResponseAppAssetObj.SupplCode;
       });
 
-    await this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, agrmntObj).toPromise().then(
       (response) => {
         this.ResponseAgrmntSignerObj = response;
         if (this.ResponseAgrmntSignerObj.AgrmntSignerId == 0) {

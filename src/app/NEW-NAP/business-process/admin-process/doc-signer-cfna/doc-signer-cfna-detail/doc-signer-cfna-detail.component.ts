@@ -101,7 +101,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         this.CustNo = this.result2.CustNo;
       });
 
-    await this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, agrmntObj).toPromise().then(
       (response) => {
         this.ResponseAgrmntSignerObj = response;
         if (this.ResponseAgrmntSignerObj.AgrmntSignerId == 0) {

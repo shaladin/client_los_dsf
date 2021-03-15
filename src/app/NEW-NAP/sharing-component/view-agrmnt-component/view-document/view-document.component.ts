@@ -11,9 +11,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class ViewAgrmntDocumentComponent implements OnInit {
   @Input() agrmntId: any;
   agrmntObj = {
-    AgrmntId: 0,
-  };
-  agrmntIdObj = {
     Id: 0,
   };
   AgrmntSignerObj: any;
@@ -28,8 +25,7 @@ export class ViewAgrmntDocumentComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.agrmntObj.AgrmntId = this.agrmntId;
-    this.agrmntIdObj.Id = this.agrmntId;
+    this.agrmntObj.Id = this.agrmntId;
     this.GetAgrmntSigner();
     this.GetAgrmntDoc();
   }
@@ -43,7 +39,7 @@ export class ViewAgrmntDocumentComponent implements OnInit {
   }
 
   GetAgrmntDoc() {
-    this.http.post(URLConstant.GetListAgrmntDocPrintByAgrmntId, this.agrmntIdObj).subscribe(
+    this.http.post(URLConstant.GetListAgrmntDocPrintByAgrmntId, this.agrmntObj).subscribe(
       (response) => {
         this.AgrmntDocObj = response;
       }
