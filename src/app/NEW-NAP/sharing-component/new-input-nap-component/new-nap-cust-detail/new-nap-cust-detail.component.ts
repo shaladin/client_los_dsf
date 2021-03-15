@@ -4,6 +4,7 @@ import { Component, ComponentFactoryResolver, EventEmitter, Input, OnInit, Outpu
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -28,6 +29,7 @@ import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMain
 import { ResponseCustCompanyForCopyObj } from 'app/shared/model/ResponseCustCompanyForCopyObj.Model';
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
+import { CookieService } from 'ngx-cookie';
 import { NewNapCustCompanyContactInfoComponent } from './component/company/new-nap-cust-company-contact-info/new-nap-cust-company-contact-info.component';
 import { NewNapCustCompanyFinDataComponent } from './component/company/new-nap-cust-company-fin-data/new-nap-cust-company-fin-data.component';
 import { NewNapCustCompanyFullDataComponent } from './component/company/new-nap-cust-company-full-data/new-nap-cust-company-full-data.component';
@@ -312,7 +314,8 @@ export class NewNapCustDetailComponent implements OnInit {
     private router: Router,
     private toastr: NGXToastrService,
     public formValidate: FormValidateService,
-    private componentFactoryResolver: ComponentFactoryResolver
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private cookieService: CookieService
   ) { 
     this.custDataPersonalObj = new CustMainDataPersonalObj();
     this.AppCustObj = new AppCustObj();
@@ -348,7 +351,7 @@ export class NewNapCustDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    var userAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = userAccess[CommonConstant.BUSINESS_DT];
     var url = URLConstant.GetAppCustMainDataByAppId;
     var req;
@@ -823,7 +826,7 @@ export class NewNapCustDetailComponent implements OnInit {
 
 
   CheckDt(inputDate: Date, type: string) {
-    let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     let MaxDate = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
     let Max17YO = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
     let max17Yodt = new Date(Max17YO);

@@ -47,7 +47,7 @@ import { ViewAgrmntComponentModule } from "../sharing-component/view-agrmnt-comp
 import { NapCustMainDataComponent } from "./nap-cust-main-data/nap-cust-main-data.component";
 import { NapDetailFormComponent } from "./nap-detail-form/nap-detail-form.component";
 import { MainDataComponentModule } from "../sharing-component/main-data-component/main-data-component.module";
-import { NewNapCustModule } from "../sharing-component/new-input-nap/new-nap-cust.module";
+import { NewNapCustModule } from "../sharing-component/new-input-nap-component/new-nap-cust.module";
 import { SharedModule } from "app/shared/shared.module";
 
  

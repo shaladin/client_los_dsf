@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -18,6 +19,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-new-nap-cust-personal-emergency',
@@ -47,13 +49,14 @@ export class NewNapCustPersonalEmergencyComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    public formValidate: FormValidateService
+    public formValidate: FormValidateService,
+    private cookieService: CookieService
   ) {
     this.IsEmergencySubmitted = false;
    }
 
   ngOnInit() {
-    let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = UserAccess.BusinessDt;
 
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookupCustomer.json";

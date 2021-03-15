@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -13,6 +14,7 @@ import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-new-nap-cust-company-contact-info',
@@ -41,13 +43,14 @@ export class NewNapCustCompanyContactInfoComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    public formValidate: FormValidateService
+    public formValidate: FormValidateService,
+    private cookieService: CookieService
   ) { 
     this.IsContactInfoSubmitted = false;
   }
 
   async ngOnInit() {
-    let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDate = new Date(formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US'));
 
     await this.GetListActiveRefMaster(this.MasterGenderCode);

@@ -5,6 +5,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
@@ -24,6 +25,7 @@ import { ResponseCustCompanyForCopyObj } from 'app/shared/model/ResponseCustComp
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-new-nap-cust-main-data',
@@ -93,7 +95,8 @@ export class NewNapCustMainDataComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private toastr: NGXToastrService,
-    public formValidate: FormValidateService
+    public formValidate: FormValidateService,
+    private cookieService: CookieService
   ) { 
     this.InputAppCustObjMainData = new Object();
     this.ResponseCustType = new EventEmitter<any>();
@@ -107,7 +110,7 @@ export class NewNapCustMainDataComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
 
     await this.initcustMainDataMode();

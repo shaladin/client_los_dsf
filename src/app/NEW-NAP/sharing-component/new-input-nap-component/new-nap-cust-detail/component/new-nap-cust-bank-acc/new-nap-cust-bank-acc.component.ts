@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, NgForm, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -11,6 +12,7 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-new-nap-cust-bank-acc',
@@ -48,7 +50,8 @@ export class NewNapCustBankAccComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    public formValidate: FormValidateService
+    public formValidate: FormValidateService,
+    private cookieService: CookieService
   ) { }
 
   ngOnInit() {
@@ -203,7 +206,7 @@ export class NewNapCustBankAccComponent implements OnInit {
       if (this.BankAccStmntForm.value['BankStmntObjs'].length > 0)
         dateYear = this.BankAccStmntForm.value['BankStmntObjs'][0].Year;
       else {
-        var userAcc = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+        var userAcc = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         var month = new Date(userAcc.BusinessDt).getMonth();
         dateYear = new Date(userAcc.BusinessDt).getFullYear();
         if (month == 0) dateYear--;
