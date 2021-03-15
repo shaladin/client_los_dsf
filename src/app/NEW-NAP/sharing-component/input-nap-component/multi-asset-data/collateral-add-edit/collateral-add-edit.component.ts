@@ -701,6 +701,7 @@ export class CollateralAddEditComponent implements OnInit {
         this.AddCollForm.patchValue({ AssetTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
         }
         this.collateralTypeHandler();
+        this.collateralPortionHandler();
         this.AddCollForm.removeControl("AssetAccessoriesObjs");
         this.AddCollForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
         this.AddCollForm.patchValue({
