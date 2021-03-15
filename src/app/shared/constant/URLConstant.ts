@@ -1276,6 +1276,8 @@ export class URLConstant {
   public static GetRefReasonActive = "/Approval/GetRefReasonActive";
   public static GetCanChangeMinFinalLevel = "/Approval/GetCanChangeMinFinalLevel";
   public static GetTaskHistory = "/Approval/GetTaskHistory";
+  public static ReturnLevel = "/Approval/ReturnLevel";
+  public static ContinueToLevel = "/Approval/ContinueToLevel";
 
   // Digitalization
   public static DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO = environment.losUrl + "/Digitalization/DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO";
