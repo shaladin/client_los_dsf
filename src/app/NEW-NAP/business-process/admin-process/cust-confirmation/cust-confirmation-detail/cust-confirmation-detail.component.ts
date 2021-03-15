@@ -15,6 +15,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 
 @Component({
   selector: 'app-cust-confirmation-detail',
@@ -60,7 +61,7 @@ export class CustConfirmationDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.claimTask();
     this.arrValue.push(this.AgrmntId);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustConfirmInfo.json";
@@ -81,12 +82,12 @@ export class CustConfirmationDetailComponent implements OnInit {
       },
     ];
 
-    this.GetVerfResult();
+    await this.GetVerfResult();
   }
 
-  GetVerfResult(IsAdded: boolean = false) {
-    this.http.post(URLConstant.GetVerfResultHsByTrxRefNo, { TrxRefNo: this.AgrmntNo }).subscribe(
-      (response) => {
+  async GetVerfResult(IsAdded: boolean = false) {
+    await this.http.post(URLConstant.GetVerfResultHsByTrxRefNo, { TrxRefNo: this.AgrmntNo }).toPromise().then(
+      async (response) => {
         this.VerfResultList = response["responseVerfResultHCustomObjs"];
         this.CustCnfrmObj.Phone = "-";
         this.CustCnfrmObj.MrCustCnfrmResultCode = "-";
@@ -100,19 +101,26 @@ export class CustConfirmationDetailComponent implements OnInit {
         this.CustCnfrmObj.AgrmntId = this.AgrmntId;
         if (this.VerfResultList.length == 0) {
           if (!IsAdded) {
-            this.AddNewVerfResult();
+            await this.AddNewVerfResult();
           }
         }
       });
   }
 
-  AddNewVerfResult() {
+  async AddNewVerfResult() {
     var AppObj = {
       AppId: this.AppId
     }
-    this.http.post<AppObj>(URLConstant.GetAppById, AppObj).subscribe(
-      (response) => {
+    await this.http.post<AppObj>(URLConstant.GetAppById, AppObj).toPromise().then(
+      async (response) => {
         this.appObj = response;
+
+        let flag = await this.GetListAppCustFamilyMainDataByAppId();
+
+        let ListSubj: Array<string> = [];
+
+        ListSubj.push(CommonConstant.RoleCustData);
+        if (flag) ListSubj.push(CommonConstant.RoleFamilyData);
 
         this.verfResultObj.TrxRefNo = this.AgrmntNo;
         this.verfResultObj.EmpNo = "-";
@@ -121,12 +129,27 @@ export class CustConfirmationDetailComponent implements OnInit {
         this.verfResultObj.LobCode = this.appObj.LobCode;
         this.verfResultObj.LobName = this.appObj.LobCode;
         this.verfResultObj.Notes = "-";
-        this.http.post(URLConstant.AddVerfResultAndVerfResultH, this.verfResultObj).subscribe(
-          () => {
-            this.GetVerfResult(true);
+        this.verfResultObj.ListSubject = ListSubj;
+        // console.log(this.verfResultObj);
+        await this.http.post(URLConstant.AddVerfResultAndVerfResultH, this.verfResultObj).toPromise().then(
+          async () => {
+            await this.GetVerfResult(true);
           }
         );
       });
+  }
+
+  ListAppCustFamily: Array<AppCustObj> = new Array<AppCustObj>();
+  async GetListAppCustFamilyMainDataByAppId() {
+    let flag: boolean = false;
+    await this.http.post<{ ListAppCustObj: Array<AppCustObj> }>(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.AppId, IsFamily: true }).toPromise().then(
+      (response) => {
+        this.ListAppCustFamily = response.ListAppCustObj;
+        if (this.ListAppCustFamily.findIndex(x => x.MrCustRelationshipCode == CommonConstant.RoleFamilyData) > -1) flag = true;
+      }
+    );
+
+    return flag;
   }
 
   SaveForm() {

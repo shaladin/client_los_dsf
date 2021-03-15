@@ -31,7 +31,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   leadObj: LeadObj = new LeadObj();
   appObj: AppObj = new AppObj();
   RefStatusList: Array<KeyValueObj> = new Array<KeyValueObj>();
-  PhnList: any;
+  PhnList: Array<KeyValueObj> = new Array<KeyValueObj>();
   verfQuestionAnswerObj: VerfQuestionAnswerCustomObj = new VerfQuestionAnswerCustomObj();
   newVerfResultHObj: VerfResultHObj = new VerfResultHObj();
   CustConfirm = this.fb.group({
@@ -77,16 +77,16 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
 
-    this.GetData();
+    await this.GetData();
 
-    this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.Subject, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeVerfSubjRelation }).subscribe(
+    await this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.Subject, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeVerfSubjRelation }).toPromise().then(
       (response) => {
         this.SubjectResponse = response;
       });
 
-    this.http.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { StatusGrpCode: CommonConstant.StatusGrpVerfResultStat }).subscribe(
+    await this.http.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { StatusGrpCode: CommonConstant.StatusGrpVerfResultStat }).toPromise().then(
       (response) => {
         this.RefStatusList = response[CommonConstant.ReturnObj];
         this.CustConfirm.patchValue({
@@ -94,7 +94,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         })
       });
 
-    this.http.post(URLConstant.GetListKeyValueMobilePhnByAppId, { AppId: this.AppId }).subscribe(
+    await this.http.post<Array<KeyValueObj>>(URLConstant.GetListKeyValueMobilePhnByAppId, { AppId: this.AppId }).toPromise().then(
       (response) => {
         this.PhnList = response;
         this.CustConfirm.patchValue({
@@ -102,7 +102,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         })
       });
 
-    this.http.post(URLConstant.GetVerfQuestionAnswerListByAppIdAndSubject, { AppId: this.AppId, Subject: this.Subject }).subscribe(
+    await this.http.post(URLConstant.GetVerfQuestionAnswerListByAppIdAndSubject, { AppId: this.AppId, Subject: this.Subject }).toPromise().then(
       (response) => {
         this.verfQuestionAnswerObj = response[CommonConstant.ReturnObj];
         if (this.verfQuestionAnswerObj != null && this.verfQuestionAnswerObj.VerfQuestionAnswerListObj.length != 0) {
@@ -111,41 +111,72 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       });
   }
 
-  GetData() {
+  async GetData() {
     this.http.post<AgrmntObj>(URLConstant.GetAgrmntByAgrmntId, { Id: this.AgrmntId }).subscribe(
-      (response) => {
+      async (response) => {
         this.agrmntObj = response;
-        this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.agrmntObj.AppId }).subscribe(
+        await this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.agrmntObj.AppId }).toPromise().then(
           (response) => {
             this.appObj = response;
           });
 
         if (this.agrmntObj.LeadId != null) {
-          this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { LeadId: this.agrmntObj.LeadId }).subscribe(
+          await this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { LeadId: this.agrmntObj.LeadId }).toPromise().then(
             (response) => {
               this.leadObj = response;
             });
         }
       });
 
-    this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, { VerfResultHId: this.VerfResultHId }).subscribe(
-      (response) => {
+    await this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, { VerfResultHId: this.VerfResultHId }).toPromise().then(
+      async (response) => {
         this.newVerfResultHObj.VerfResultId = response.VerfResultId;
         this.newVerfResultHObj.VerfSchemeHId = response.VerfSchemeHId;
         this.newVerfResultHObj.MrVerfSubjectRelationCode = response.MrVerfSubjectRelationCode;
         this.newVerfResultHObj.Phn = "-";
         this.newVerfResultHObj.PhnType = "-";
         this.newVerfResultHObj.MrVerfObjectCode = "-";
-        this.GetListVerfResultH(this.newVerfResultHObj.VerfResultId, this.newVerfResultHObj.MrVerfSubjectRelationCode);
+        await this.GetListVerfResultH(this.newVerfResultHObj.VerfResultId, this.newVerfResultHObj.MrVerfSubjectRelationCode);
+      });
+
+    await this.GetListCustData();
+  }
+
+  CustNo: string = "";
+  CustName: string = "";
+  AppCustId: number = 0;
+  async GetListCustData() {
+    await this.http.post(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.AppId }).toPromise().then(
+      (response) => {
+        if (response["ListAppCustObj"].length > 0) {
+          for (let index = 0; index < response["ListAppCustObj"].length; index++) {
+            const element = response["ListAppCustObj"][index];
+            if (this.Subject == CommonConstant.RoleCustData) {
+              if (element.IsCustomer) {
+                this.AppCustId = element.AppCustId;
+                this.CustNo = element.CustNo;
+                this.CustName = element.CustName;
+                break;
+              }
+            } else if (this.Subject == CommonConstant.RoleFamilyData) {
+              if (element.IsFamily && element.MrCustRelationshipCode == CommonConstant.MasteCodeRelationshipSpouse) {
+                this.AppCustId = element.AppCustId;
+                this.CustNo = element.CustNo;
+                this.CustName = element.CustName;
+                break;
+              }
+            }
+          }
+        }
       });
   }
 
-  GetListVerfResultH(id, code) {
+  async GetListVerfResultH(id, code) {
     var verfResultHObj = {
       VerfResultId: id,
       MrVerfSubjectRelationCode: code
     };
-    this.http.post(URLConstant.GetVerfResultHsByVerfResultIdAndSubjRelationCode, verfResultHObj).subscribe(
+    await this.http.post(URLConstant.GetVerfResultHsByVerfResultIdAndSubjRelationCode, verfResultHObj).toPromise().then(
       (response) => {
         this.VerfResultHList = response["responseVerfResultHCustomObjs"];
       });
@@ -324,7 +355,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       AdInsHelper.OpenLeadViewByLeadId(this.leadObj.LeadId);
     }
     else if (key == "cust") {
-      var custObj = { CustNo: this.agrmntObj.CustNo };
+      var custObj = { CustNo: this.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
