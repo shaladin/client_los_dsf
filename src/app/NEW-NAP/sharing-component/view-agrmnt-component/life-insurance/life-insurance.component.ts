@@ -8,23 +8,19 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   styleUrls: []
 })
 export class AgrmntLifeInsuranceComponent implements OnInit {
-
   @Input() agrmntId: any;
-
-
   agrmntObj = {
-    AgrmntId: 0,
+    Id: 0,
   };
-
   AgrmntLifeInsObj: any;
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.agrmntObj.AgrmntId = this.agrmntId;
+    this.agrmntObj.Id = this.agrmntId;
     this.GetAgrmntLifeInsData();
-
   }
+
   GetAgrmntLifeInsData() {
     this.http.post(URLConstant.GetAgrmntLifeInsDataByAgrmntId, this.agrmntObj).subscribe(
       (response) => {
@@ -32,6 +28,4 @@ export class AgrmntLifeInsuranceComponent implements OnInit {
       }
     );
   }
-
-
 }
