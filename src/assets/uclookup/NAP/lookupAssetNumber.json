@@ -1,0 +1,160 @@
+{
+  "title": "Lookup Asset Number",
+  "component": [
+    {
+      "type": "textbox",
+      "name": "AgrmntNo",
+      "id": "agrNo",
+      "value": "",
+      "label": "Agreement No",
+      "placeholder": "Agreement No"
+    },
+    {
+      "type": "textbox",
+      "name": "PurchaseOrderNo",
+      "id": "poNo",
+      "value": "",
+      "label": "Purchase No",
+      "placeholder": "Purchase No"
+    },
+    {
+      "type": "textbox",
+      "name": "AssetNo",
+      "id": "assetNo",
+      "value": "",
+      "label": "Asset Number",
+      "placeholder": "Asset Number"
+    },
+    {
+      "type": "textbox",
+      "name": "FullAssetName",
+      "id": "assetName",
+      "value": "",
+      "label": "Asset Name",
+      "placeholder": "Asset Name"
+    }
+  ],
+  "querystring": {
+    "name": "lookupAssetNumber"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Asset Number",
+      "name": "AssetNo"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Agreement No",
+      "name": "AgrmntNo"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Purchase No",
+      "name": "PurchaseOrderNo"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Asset Name",
+      "name": "FullAssetName"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Serial No 1",
+      "name": "SerialNo1"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Serial No 2",
+      "name": "SerialNo2"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Serial No 3",
+      "name": "SerialNo3"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Color",
+      "name": "Color"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Manufacturing Year",
+      "name": "ManufacturingYear"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Select"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "AssetNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "AgrmntNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "PurchaseOrderNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "FullAssetName"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "SerialNo1"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "SerialNo2"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "SerialNo3"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "Color"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "ManufacturingYear"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "select",
+          "property": "AssetNo"
+        }
+      ]
+    }
+  ],
+  "propertyId": "AssetNo",
+  "propertyName": "FullAssetName"
+}

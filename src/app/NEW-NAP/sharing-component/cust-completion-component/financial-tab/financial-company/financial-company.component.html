@@ -248,7 +248,7 @@
           <app-bank-section [AppCustId]="AppCustId" [AppCustBankAccList]="AppCustBankAccList" (OutputObj)="GetEvent($event)"></app-bank-section>
           <div class="form-actions right" *ngIf="!IsDetail">
             <button type="submit" (click)="formValidate.scrollIfFormHasErrors(FinancialForm)"
-              class="btn btn-raised btn-primary">
+              class="btn btn-raised btn-primary" translate>
               <i class="fa fa-check-square"></i> Save & Continue
             </button>
           </div>

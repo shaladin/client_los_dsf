@@ -118,6 +118,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
     MrOwnerRelationshipCode: [''],
     Notes: [''],
     items: this.fb.array([]),
+    items1: this.fb.array([]),
     ListAttr: this.fb.array([]),
     OwnerRelationship: [''],
     MrIdType: [''],
@@ -128,6 +129,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
   ConditionCodeList: any;
   AgrmntId: any;
   items: any;
+  items1: FormArray;
   appAssetObj: any;
   AppAssetId: any;
   AssetTypeCode: any;
@@ -137,6 +139,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
   listRefAppAttr: any;
   ListAttr: any;
   AddrObj: AddrObj;
+  SerialNoList: any;
 
   AppCollateralId: any;
   inputAddressObjForOwner: InputAddressObj;
@@ -246,6 +249,30 @@ export class CollateralAddEditSingleComponent implements OnInit {
               SerialNo2: AppCollateralObj.SerialNo2,
               SerialNo3: AppCollateralObj.SerialNo3,
             });
+
+            this.items1 = this.AddCollForm.get('items1') as FormArray;
+            this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { AssetTypeCode: AppCollateralObj.AssetTypeCode }).subscribe(
+              (response: any) => {
+                while (this.items1.length) {
+                  this.items1.removeAt(0);
+                }
+  
+                this.SerialNoList = response[CommonConstant.ReturnObj];
+                for (let i = 0; i < this.SerialNoList.length; i++) {
+                  let eachDataDetail = this.fb.group({
+                    SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
+                    SerialNoValue: [''],
+                    IsMandatory: [this.SerialNoList[i].IsMandatory]
+                  }) as FormGroup;
+                  this.items1.push(eachDataDetail);
+                  if (this.items1.controls[i]['controls']['IsMandatory'].value == true) {
+                    this.items1.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
+                    this.items1.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+                  }
+                }
+              }
+            );
+            
             this.inputLookupObj.nameSelect = AppCollateralObj.FullAssetName
             this.changeSerialNoValidators(AppCollateralObj.MrCollateralConditionCode.value);
             var AppCollateralRegistration: any;

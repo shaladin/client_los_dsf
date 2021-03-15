@@ -1,0 +1,147 @@
+<div class="row text-left" *ngIf="isReady">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header header-title">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> Asset Allocation </h4>
+            </div>
+          </div>
+        </div>
+        <br />
+        <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"> </lib-ucviewgeneric>
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="AssetAllocationForm"
+                (ngSubmit)="AssetAllocationForm.valid && SaveForm()" #enjiForm="ngForm">
+            <lib-ucSubsection [id]="'listAssetDataId'" [title]="'List of Asset'" [panel]="'listAssetData'">
+            </lib-ucSubsection>
+            <div id="listAssetData">
+
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th><span translate class="thead-header"><input type="checkbox" class="border-primary" (change)="ChangeAllChecked()" formControlName="IsCheckedAll"></span></th>
+                    <th><span translate class="thead-header">Seq No</span></th>
+                    <th><span translate class="thead-header">App Asset No</span></th>
+                    <th>
+                      <span translate class="thead-header">
+                        Requested
+                        Asset Name
+                      </span>
+                    </th>
+                    <th><span translate class="thead-header">Decision</span></th>
+                    <th>
+                      <span translate class="thead-header">
+                        Expected
+                        Delivery Date
+                      </span>
+                    </th>
+                    <th><span translate class="thead-header">Asset Number</span></th>
+                    <th><span translate class="thead-header">Stock Asset Name</span></th>
+                    <th>
+                      <span translate class="thead-header">
+                        Serial No 1 / Serial No 2
+                      </span>
+                    </th>
+                    <th>
+                      <span translate class="thead-header">
+                        Serial No 3
+                      </span>
+                    </th>
+                    <th><span translate class="thead-header">Asset Location</span></th>
+                  </tr>
+                </thead>
+                <!--<div formArrayName="ListAsset">-->
+                <tbody formArrayName="ListAsset">
+                  <tr *ngIf="AssetAllocationForm.controls['ListAsset']['controls'].length == 0">
+                    <td align="center" colspan="11">No data available</td>
+                  </tr>
+                  <tr *ngFor="let item of AssetAllocationForm.controls['ListAsset'].controls;let i = index">
+                    <td [formGroupName]="i" class="text-center">
+                      <input type="checkbox" class="border-primary" (change)="ChangeChecked(i)" formControlName="IsChecked">
+                    </td>
+                    <td [formGroupName]="i" class="text-center">
+                      {{i + 1}}
+                    </td>
+                    <td [formGroupName]="i" class="text-center">
+                      {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["AppAssetNo"].value}}
+                    </td>
+                    <td [formGroupName]="i" class="text-center">
+                      {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["AssetName"].value}}
+                    </td>
+                    <td [formGroupName]="i" class="text-center">
+                      {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["Decision"].value}}
+                    </td>
+                    <td [formGroupName]="i" class="text-center">
+                      {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["DeliveryDt"].value | date: 'dd-MM-yyyy'}}
+                    </td>
+                    <td [formGroupName]="i" class="text-center">
+                      <lib-uclookupgeneric [enjiForm]="enjiForm"
+                        [lookupInput]="dictAssetNumber[AssetAllocationForm.controls['ListAsset']['controls'][i]['controls'].No.value]"
+                        [parentForm]="AssetAllocationForm"
+                        [identifier]="'lookupAssetNumberObj' + AssetAllocationForm.controls['ListAsset']['controls'][i]['controls'].No.value"
+                        (lookup)="SetAssetNumber(i,$event)">
+                      </lib-uclookupgeneric>
+                    </td>
+                    <td [formGroupName]="i" class="text-center">
+                      {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["StockAssetName"].value}} {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["ManuYearAssetNumber"].value}} - {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["ColorAssetNumber"].value}}
+                    </td>
+                    <td [formGroupName]="i" class="text-center">
+                      {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["ChassisNo"].value}} / {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["EngineNo"].value}}
+                    </td>
+                    <td [formGroupName]="i" class="text-center">
+                      {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["LicensePlateNo"].value}}
+                    </td>
+                    <td [formGroupName]="i" class="text-center">
+                      {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["AssetLocation"].value}}
+                    </td>
+                  </tr>
+                </tbody>
+                <!--</div>-->
+              </table>
+
+            </div>
+            <lib-ucSubsection [id]="'subjectListId'" [title]="'Requisition In Progress'" [panel]="'subjectList'">
+            </lib-ucSubsection>
+            <div id="subjectList">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th translate class="text-left">Seq No</th>
+                    <th translate class="text-left">Requested Asset Name</th>
+                    <th translate class="text-left">Asset Requisition No</th>
+                    <th translate class="text-center">PO Date</th>
+                    <th translate class="text-center">Asset Activation Date</th>
+                    <th translate class="text-left">Accessories / Available Status</th>
+                    <th translate class="text-left">Take Over Agreement No</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of requisitionList?.AppAssetFinDataGridObjs; let i = index;">
+                    <td class="text-left">{{i+1}}</td>
+                    <td class="text-left">{{item.FullAssetName}}</td>
+                    <td class="text-left">{{item.SecurityDepositAmt | number:'.2':'en-US'}}</td>
+                    <td class="text-center">{{item.TotalCostAmt | number:'.2':'en-US'}}</td>
+                    <td class="text-center">{{item.MarginAmt | number:'.2':'en-US'}}</td>
+                    <td class="text-left">{{item.TotalCostAfterMarginAmt | number:'.2':'en-US'}}</td>
+                    <td class="text-left">{{item.RentAmt | number:'.2':'en-US'}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="backToPaging()"
+                translate>
+                <i class="ft-x"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary" translate>
+                <i class="far fa-check-square"></i> Save
+              </button>
+            </div>
+          </form>
+        </div>
+        <!-- <div></div> -->
+      </div>
+    </div>
+  </div>

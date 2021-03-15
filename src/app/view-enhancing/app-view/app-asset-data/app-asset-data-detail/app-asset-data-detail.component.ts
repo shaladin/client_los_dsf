@@ -1,10 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
-import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
-import { AppAssetSupplEmpObj } from 'app/shared/model/AppAssetSupplEmpObj.Model';
 import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -20,14 +16,12 @@ export class AppAssetDataDetailComponent implements OnInit {
   appAsset: any;
   appAssetSupplEmp: any;
   appCollateralRegistration: any;
+  AssetTypeObj: any;
   salesName: string;
   branchManagerName: string;
   adminHeadName: string;
 
-  constructor(
-    private httpClient: HttpClient,
-    public activeModal: NgbActiveModal
-  ) { }
+  constructor(private httpClient: HttpClient, public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
     let getAppAsset = this.httpClient.post(URLConstant.GetAppAssetByAppAssetIdWithSerialNoDefinition, { AppAssetId: this.AppAssetId });
@@ -50,7 +44,13 @@ export class AppAssetDataDetailComponent implements OnInit {
             this.adminHeadName = item.SupplEmpName;
           }
         }
-      });
-  }
+      }
+    );
 
+    this.httpClient.post(URLConstant.GetAssetTypeByCode, { AssetTypeCode: this.appAsset.AssetTypeCode }).subscribe(
+      (response: any) => {
+        this.AssetTypeObj = response;
+      }
+    );
+  }
 }

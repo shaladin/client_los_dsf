@@ -7,7 +7,7 @@
         <div class="col-md-6">
           <div class="row">
             <div class="col-md-6 form-inline">
-              <label>Total {{PriceLabel}}</label>
+              <label translate>Total {{PriceLabel}}</label>
             </div>
             <div class="col-md-6 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalAssetPriceAmt.value | number : '1.2-2'}}</label>
@@ -19,13 +19,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Total Fee</label>
+              <label translate>Total Fee</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalFeeAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Total Fee Capitalized</label>
+              <label translate>Total Fee Capitalized</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalFeeCptlzAmt.value | number : '1.2-2'}}</label>
@@ -37,13 +37,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Total Insurance</label>
+              <label translate>Total Insurance</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalInsCustAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Total Insurance Capitalized</label>
+              <label translate>Total Insurance Capitalized</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.InsCptlzAmt.value | number : '1.2-2'}}</label>
@@ -55,13 +55,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Total Life Insurance</label>
+              <label translate>Total Life Insurance</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalLifeInsCustAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Total Life Insurance Capitalized</label>
+              <label translate>Total Life Insurance Capitalized</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.LifeInsCptlzAmt.value | number : '1.2-2'}}</label>
@@ -75,14 +75,14 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-3 form-inline">
-                <label *ngIf="result.BizTemplateCode != 'FL4W'">DP Asset</label>
-                <label *ngIf="result.BizTemplateCode == 'FL4W'">Security Deposit</label>
+                <label *ngIf="result.BizTemplateCode != 'FL4W'" translate>DP Asset</label>
+                <label *ngIf="result.BizTemplateCode == 'FL4W'" translate>Security Deposit</label>
               </div>
               <div class="col-md-3 form-inline form-inline-right">
                 <label>{{ParentForm.controls.DownPaymentGrossAmt.value | number : '1.2-2'}}</label>
               </div>
               <div class="col-md-3 form-inline">
-                <label>TDP</label>
+                <label translate>TDP</label>
               </div>
               <div class="col-md-3 form-inline form-inline-right">
                 <label>{{ParentForm.controls.TotalDownPaymentNettAmt.value | number : '1.2-2'}}</label>
@@ -94,15 +94,15 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-3 form-inline">
-                <label *ngIf="result.BizTemplateCode != 'FL4W'">DP Asset - Subsidy DP</label>
-                <label *ngIf="result.BizTemplateCode == 'FL4W'">Security Deposit - Subsidy DP</label>
+                <label *ngIf="result.BizTemplateCode != 'FL4W'" translate>DP Asset - Subsidy DP</label>
+                <label *ngIf="result.BizTemplateCode == 'FL4W'" translate>Security Deposit - Subsidy DP</label>
               </div>
               <div class="col-md-3 form-inline form-inline-right">
                 <label>{{ParentForm.controls.DownPaymentNettAmt.value | number : '1.2-2'}}</label>
               </div>
               <!-- <div class="col-md-3 form-inline">
-              <label>TDP Paid at MF</label>
-          </div>
+              <label translate>TDP Paid at MF</label>
+            </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="TdpPaidCoyAmt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.TdpPaidCoyAmt.invalid}"
@@ -110,7 +110,7 @@
                 currencyMask>
               <lib-uc-show-errors [control]="ParentForm.controls.TdpPaidCoyAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
-        </div> -->
+            </div> -->
             </div>
           </div>
         </div>
@@ -120,13 +120,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>NTF</label>
+              <label translate>NTF</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.NtfAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Num of Inst</label>
+              <label translate>Num of Inst</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.NumOfInst.value | number}}</label>
@@ -138,7 +138,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Rate Type</label>
+              <label translate>Rate Type</label>
             </div>
             <div class="col-md-3 form-inline">
               <select formControlName="RateType" class="form-control full-width" (change)="SetNeedReCalculate(true)">
@@ -149,7 +149,7 @@
               </lib-uc-show-errors>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Rounding</label>
+              <label translate>Rounding</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="RoundingAmt"
@@ -165,7 +165,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Effective/Flat Rate</label>
+              <label translate>Effective/Flat Rate</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <div class="row">
@@ -192,13 +192,13 @@
               </div>
             </div>
             <div class="col-md-3 form-inline" *ngIf="result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'">
-              <label>Supplier Rate</label>
+              <label translate>Supplier Rate</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right" *ngIf="result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'">
               <label>{{ParentForm.controls.AppSupplEffectiveRatePrcnt.value | number : '1.2-2'}}</label>
             </div>
             <!-- <div class="col-md-3 form-inline">
-              <label>Effective Rate To Supplier</label>
+              <label translate>Effective Rate To Supplier</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="SupplEffectiveRatePrcnt"
@@ -216,13 +216,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Diff Rate Amount</label>
+              <label translate>Diff Rate Amount</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.DiffRateAmt.value | number : '1.2-2'}}</label>
             </div>
             <!-- <div class="col-md-3 form-inline">
-              <label>Flat Rate To Supplier</label>
+              <label translate>Flat Rate To Supplier</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="SupplFlatRatePrcnt"
@@ -240,7 +240,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Installment Amount</label>
+              <label translate>Installment Amount</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="InstAmt"
@@ -250,7 +250,7 @@
               </lib-uc-show-errors>
             </div>
             <div class="col-md-3 form-inline" *ngIf="result.BizTemplateCode == 'FL4W'">
-              <label>Residual Value Amount</label>
+              <label translate>Residual Value Amount</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right" *ngIf="result.BizTemplateCode == 'FL4W'">
               <input type="" class="form-control full-width" formControlName="ResidualValueAmt"
@@ -267,13 +267,12 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Grace Period</label>
+              <label translate>Grace Period</label>
             </div>
             <div class="col-md-1 form-inline form-inline-right">
               <input type="number" class="form-control full-width" formControlName="GracePeriod"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.GracePeriod.invalid}"
-                (keyup)="SetNeedReCalculate(true)"
-                >
+                (keyup)="SetNeedReCalculate(true)">
               <lib-uc-show-errors [control]="ParentForm.controls.GracePeriod" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
@@ -294,13 +293,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Total Interest</label>
+              <label translate>Total Interest</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalInterestAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Gross Yield</label>
+              <label translate>Gross Yield</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '1.2-2'}}%</label>
@@ -312,7 +311,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Total AR</label>
+              <label translate>Total AR</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalAR.value | number : '1.2-2'}}</label>
@@ -360,7 +359,7 @@
       </table>
     </div>
     <div *ngIf="ParentForm.controls.ListEntryInst['controls'].length > 0" class="form-inline-right">
-      <button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="CalculateAmortization()">
+      <button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="CalculateAmortization()" translate>
         Calculate Amortization
       </button>
     </div>

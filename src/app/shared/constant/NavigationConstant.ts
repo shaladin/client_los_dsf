@@ -111,6 +111,8 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_DOC_CHECK_LIST_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DOC_CHECK_LIST_DETAIL; //'/Nap/AdminProcess/DocChecklist/Detail'
   public static NAP_ADM_PRCS_DOC_CHECK_LIST_APPRV_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DOC_CHECK_LIST_APPRV_PAGING; //'/Nap/AdminProcess/DocChecklist/Approval/Paging'
   public static NAP_ADM_PRCS_DOC_CHECK_LIST_APPRV_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DOC_CHECK_LIST_APPRV_DETAIL; //'/Nap/AdminProcess/DocChecklist/Approval/Detail'
+  public static NAP_ADM_PRCS_ASSET_ALLOC_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.ASSET_ALLOC_PAGING; //'/Nap/AdminProcess/DocChecklist/Approval/Paging'
+  public static NAP_ADM_PRCS_ASSET_ALLOC_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.ASSET_ALLOC_DETAIL;
   //#endregion
 
   //#region CreditProcess
@@ -283,6 +285,8 @@ export class NavigationConstant {
   public static NAP_APP_PRCS_HEADER = PathConstant.LR_NAP + "/" + PathConstant.NAP_APP_PRCS; //'Nap/ApplicationProcess'
   public static NAP_APP_PRCS_CRD_APPRV_PAGING = "/" + NavigationConstant.NAP_APP_PRCS_HEADER+"/"+PathConstant.APP_APPRV_PAGING; //"/Nap/ApplicationProcess/ApplicationApproval/Paging"
   public static NAP_APP_PRCS_CRD_APPRV_DETAIL = "/" + NavigationConstant.NAP_APP_PRCS_HEADER + "/" + PathConstant.APP_APPRV_DETAIL; //"/Nap/ApplicationProcess/ApplicationApproval/Detail"
+  public static NAP_APP_PRCS_CRD_RVW_PAGING = "/" + NavigationConstant.NAP_APP_PRCS_HEADER + "/" + PathConstant.APP_RVW_PAGING; //"/Nap/ApplicationProcess/ApplicationReview/Paging"
+  public static NAP_APP_PRCS_CRD_RVW_DETAIL = "/" + NavigationConstant.NAP_APP_PRCS_HEADER + "/" + PathConstant.APP_RVW_DETAIL; //"/Nap/ApplicationProcess/ApplicationReview/Detail"
   //end
 
   //#region REQUISITION DECISION

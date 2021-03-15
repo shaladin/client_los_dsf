@@ -8,18 +8,18 @@
             </lib-ucSubsection>
             <div id="custMain">
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Customer No</label>
+                <label class="col-md-3 adInsLabel" translate>Customer No</label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.CustNo != ''">{{MouCustObj?.CustNo}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.CustNo == ''">- </label>
-                <label class="col-md-3 adInsLabel">Applicant No</label>
+                <label class="col-md-3 adInsLabel" translate>Applicant No</label>
                 <label class="col-md-3 adInsLabel"
                   *ngIf="MouCustObj?.ApplicantNo != ''">{{MouCustObj.ApplicantNo}}</label>
               </div>
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Customer Name</label>
+                <label class="col-md-3 adInsLabel" translate>Customer Name</label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.CustName != ''">{{MouCustObj?.CustName}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.CustName == ''">- </label>
-                <label class="col-md-3 adInsLabel">NPWP</label>
+                <label class="col-md-3 adInsLabel" translate>NPWP</label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.TaxIdNo != ''">{{MouCustObj?.TaxIdNo}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.TaxIdNo == ''">- </label>
               </div>
@@ -30,41 +30,41 @@
             </lib-ucSubsection>
             <div id="addr">
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Address</label>
+                <label class="col-md-3 adInsLabel" translate>Address</label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.Addr != ''">{{MouCustAddrObj?.Addr}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.Addr == ''">- </label>
-                <label class="col-md-3 adInsLabel">Zipcode</label>
+                <label class="col-md-3 adInsLabel" translate>Zipcode</label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.Zipcode != ''">{{MouCustAddrObj?.Zipcode}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.Zipcode == ''">- </label>
               </div>
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">RT / RW</label>
+                <label class="col-md-3 adInsLabel" translate>RT / RW</label>
                 <label class="col-md-3 adInsLabel">{{MouCustAddrObj?.AreaCode4}} / {{MouCustAddrObj?.AreaCode3}} </label>
-                <label class="col-md-3 adInsLabel">Sub Zipcode </label>
+                <label class="col-md-3 adInsLabel" translate>Sub Zipcode </label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.SubZipcode != ''">{{MouCustAddrObj?.SubZipcode}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.SubZipcode == ''">- </label>
               </div>
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Phone</label>
+                <label class="col-md-3 adInsLabel" translate>Phone</label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.Phn1 != ''">{{MouCustAddrObj?.Phn1}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.Phn1 == ''">- </label>
-                <label class="col-md-3 adInsLabel">Kelurahan</label>
+                <label class="col-md-3 adInsLabel" translate>Kelurahan</label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.AreaCode2 != ''">{{MouCustAddrObj?.AreaCode2}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.AreaCode2 == ''">- </label>
               </div>
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Phone 2</label>
+                <label class="col-md-3 adInsLabel" translate>Phone 2</label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.Phn2 != ''">{{MouCustAddrObj?.Phn2}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.Phn2 == ''">- </label>
-                <label class="col-md-3 adInsLabel">Kecamatan</label>
+                <label class="col-md-3 adInsLabel" translate>Kecamatan</label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.AreaCode1 != ''">{{MouCustAddrObj?.AreaCode1}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.AreaCode1 == ''">- </label>
               </div>
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel">Fax</label>
+                <label class="col-md-3 adInsLabel" translate>Fax</label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.Fax != ''">{{MouCustAddrObj?.Fax}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.Fax == ''">- </label>
-                <label class="col-md-3 adInsLabel">City </label>
+                <label class="col-md-3 adInsLabel" translate>City </label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.City != ''">{{MouCustAddrObj?.City}} </label>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustAddrObj?.City == ''">- </label>
               </div>

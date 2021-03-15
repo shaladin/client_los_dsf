@@ -6,9 +6,8 @@
     <div class="px-3">
       <div class="ucSearch-Button-Right">
         <span class="mr-1">
-          <button type="button" class="backButton" [routerLink]="[CancelLink]"
-            [queryParams]="{AgrmntId:AgrmntId, AppId:AppId, AgrmntNo:AgrmntNo, TaskListId:TaskListId, BizTemplateCode:BizTemplateCode}"
-            translate>
+          <button type="button" class="backButton" [routerLink]="[CancelLink]" translate
+            [queryParams]="{AgrmntId:AgrmntId, AppId:AppId, AgrmntNo:AgrmntNo, TaskListId:TaskListId, BizTemplateCode:BizTemplateCode}">
             <i class="ft-arrow-left"></i> Back
           </button>
         </span>
@@ -19,36 +18,36 @@
         <div class="row">
           <div class="col-md-6">
             <div class="row">
-              <label class="label-control col-md-6">Application No</label>
+              <label class="label-control col-md-6" translate>Application No</label>
               <label class="label-control col-md-6"><a href="javascript:void(0);"
                   (click)="openUrl('application')">{{ AppObj?.AppNo }}</a></label>
             </div>
             <div class="row">
-              <label class="label-control col-md-6">Agreement No</label>
+              <label class="label-control col-md-6" translate>Agreement No</label>
               <label class="label-control col-md-6"><a href="javascript:void(0);"
                   (click)="openUrl('agreement')">{{ AgrmntObj?.AgrmntNo }}</a></label>
             </div>
             <div class="row">
-              <label class="label-control col-md-6">Customer No</label> 
+              <label class="label-control col-md-6" translate>Customer No</label> 
               <label class="label-control col-md-6"><a (click)="openUrl('customer')"style="color: #299699; cursor: pointer;">{{ AgrmntObj?.CustNo }}</a></label>  
             </div>
             <div class="row" *ngIf="AgrmntObj?.LeadId != null">
-              <label class="label-control col-md-6">Lead No</label>
+              <label class="label-control col-md-6" translate>Lead No</label>
               <label class="label-control col-md-6"><a href="javascript:void(0);"
                   (click)="openUrl('lead')">{{ LeadObj?.LeadNo }}</a></label>
             </div>
           </div>
           <div class="col-md-6">
             <div class="row">
-              <label class="label-control col-md-6">Subject</label>
+              <label class="label-control col-md-6" translate>Subject</label>
               <label class="label-control col-md-6">{{ VerfResultHObj?.MrVerfSubjectRelationName }}</label>
             </div>
             <div class="row">
-              <label class="label-control col-md-6">Notes</label>
+              <label class="label-control col-md-6" translate>Notes</label>
               <label class="label-control col-md-6">{{ VerfResultHObj?.Notes }}</label>
             </div>
             <div class="row">
-              <label class="label-control col-md-6">Customer Name</label>
+              <label class="label-control col-md-6" translate>Customer Name</label>
               <label class="label-control col-md-6">{{ AgrmntObj?.CustName }}</label>
             </div>
           </div>
@@ -61,25 +60,25 @@
         <div class="row">
           <div class="col-md-6">
             <div class="row">
-              <label class="label-control col-md-6">Verification No</label>
+              <label class="label-control col-md-6" translate>Verification No</label>
               <label class="label-control col-md-6">{{ VerfResultObj?.VerfResultNo }}</label>
             </div>
             <div class="row">
-              <label class="label-control col-md-6">Date</label>
+              <label class="label-control col-md-6" translate>Date</label>
               <label class="label-control col-md-6">{{ VerfResultObj?.VerfDt | date}}</label>
             </div>
             <div class="row">
-              <label class="label-control col-md-6">Verification By</label>
+              <label class="label-control col-md-6" translate>Verification By</label>
               <label class="label-control col-md-6">{{ VerfResultObj?.EmpName }}</label>
             </div>
           </div>
           <div class="col-md-6">
             <div class="row">
-              <label class="label-control col-md-6">Transaction No</label>
+              <label class="label-control col-md-6" translate>Transaction No</label>
               <label class="label-control col-md-6">{{ VerfResultObj?.TrxRefNo }}</label>
             </div>
             <div class="row" hidden>
-              <label class="label-control col-md-6">Final Score / Result Criteria</label>
+              <label class="label-control col-md-6" translate>Final Score / Result Criteria</label>
               <label class="label-control col-md-6">{{ VerfResultHObj?.Score }}</label>
             </div>
           </div>
@@ -92,21 +91,21 @@
         <div class="row">
           <div class="col-md-6">
             <div class="row">
-              <label class="label-control col-md-6">Subject</label>
+              <label class="label-control col-md-6" translate>Subject</label>
               <label class="label-control col-md-6">{{ VerfResultHObj?.MrVerfSubjectRelationName }}</label>
             </div>
             <div class="row">
-              <label class="label-control col-md-6">Result Status</label>
+              <label class="label-control col-md-6" translate>Result Status</label>
               <label class="label-control col-md-6">{{ VerfResultHObj?.MrVerfResultHStatName }}</label>
             </div>
           </div>
           <div class="col-md-6">
             <div class="row">
-              <label class="label-control col-md-6">Time</label>
+              <label class="label-control col-md-6" translate>Time</label>
               <label class="label-control col-md-6">{{ VerfResultHObj?.VerfDt | date:'mediumTime'}}</label>
             </div>
             <div class="row" hidden>
-              <label class="label-control col-md-6">Score</label>
+              <label class="label-control col-md-6" translate>Score</label>
               <label class="label-control col-md-6">{{ VerfResultHObj?.Score }}</label>
             </div>
           </div>
@@ -148,17 +147,17 @@
         <div id="DetailVerf" class="row">
           <div class="col-md-6">
             <div class="row">
-              <label class="label-control col-md-6">Phone Type</label>
+              <label class="label-control col-md-6" translate>Phone Type</label>
               <label class="label-control col-md-6">{{ VerfResultHObjDetail?.PhnType }}</label>
             </div>
             <div class="row">
-              <label class="label-control col-md-6">Status</label>
+              <label class="label-control col-md-6" translate>Status</label>
               <label class="label-control col-md-6">{{ VerfResultHObjDetail?.MrVerfResultHStatName }}</label>
             </div>
           </div>
           <div class="col-md-6">
             <div class="row">
-              <label class="label-control col-md-6">Phone Number</label>
+              <label class="label-control col-md-6" translate>Phone Number</label>
               <label class="label-control col-md-6">{{ VerfResultHObjDetail?.Phn }}</label>
             </div>
           </div>
@@ -171,8 +170,8 @@
     <div *ngIf="IsVerfDetail">
       <form>
         <div class="form-body" *ngFor="let QuestionGrpList of VerfResultDListObj; let i = index">
-          <h4 class="form-section card-title" translate><i
-              class="ft-file-text"></i>{{QuestionGrpList.VerfQuestionGrpName}}</h4>
+          <h4 class="form-section card-title" translate>
+            <i class="ft-file-text"></i>{{QuestionGrpList.VerfQuestionGrpName}}</h4>
           <div class="form-group row" *ngFor="let QRList of QuestionGrpList.VerResultList; let j = index">
             <label class="col-md-3" translate>{{QRList.VerfQuestionText}} </label>
             <label class="col-md-5" translate>{{QRList.Answer}} </label>
@@ -181,6 +180,5 @@
         </div>
       </form>
     </div>
-
   </div>
 </div>

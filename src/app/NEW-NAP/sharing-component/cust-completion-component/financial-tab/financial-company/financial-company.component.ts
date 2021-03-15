@@ -53,7 +53,6 @@ export class FinancialCompanyComponent implements OnInit {
     LongTermLiablts: [0],
     CurrRatio: [0],
     RowVersion: [''],
-    AttrList: this.fb.array ([])
   })
 
   constructor(private fb: FormBuilder,
@@ -128,7 +127,9 @@ export class FinancialCompanyComponent implements OnInit {
   }
 
   SaveForm() {
-    this.SetAttrContent();
+    if(this.FinancialForm['controls']['AttrList'] != undefined){
+      this.SetAttrContent();
+    }
     this.AppCustCompanyFinData = this.FinancialForm.value;
     this.AppCustCompanyFinData.GrossProfitAmt = this.AppCustCompanyFinData.GrossMonthlyIncomeAmt - this.AppCustCompanyFinData.GrossMonthlyExpenseAmt;
     this.AppCustCompanyFinData.AppCustId = this.AppCustId;

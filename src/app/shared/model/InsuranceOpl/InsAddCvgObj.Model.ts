@@ -1,4 +1,5 @@
 export class InsAddCvgObj {
+  MainCoverageType: string;
   AdditionalCoverageType: string;
   PremiumType: string;
   RateToInsco: number;

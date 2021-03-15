@@ -4,10 +4,10 @@
       <app-asset-opl-main-info [AppAssetId]="AppAssetId"></app-asset-opl-main-info>
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="InsuranceDataForm"
-              (ngSubmit)="InsuranceDataForm.valid && SaveForm()" #enjiForm="ngForm">
+          (ngSubmit)="InsuranceDataForm.valid && SaveForm()" #enjiForm="ngForm">
           <div class="form-body">
             <lib-ucSubsection [id]="'insuranceInfoId'" [title]="'Insurance'"
-                              [panel]="'insuranceInformation'">
+            [panel]="'insuranceInformation'">
             </lib-ucSubsection>
             <div id="insuranceInformation">
               <div class="form-group row">
@@ -16,16 +16,16 @@
                 <label class="col-md-2 adins-required-label" for="coverPeriod" translate>Order Period</label>
                 <div class="col-md-4">
                   <select class="form-control width-75-per" id="coverPeriod" formControlName="InsAssetCoverPeriod"
-                          (change)="CoverPeriodChanged($event)"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsAssetCoverPeriod.invalid }">
+                    (change)="CoverPeriodChanged($event)"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsAssetCoverPeriod.invalid }">
                     <option value="">-Select One-</option>
                     <option *ngFor="let item of insAssetCoverPeriodObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
                   </select>
                   <!--<select class="form-control width-75-per" id="coverPeriod" formControlName="InsAssetCoverPeriod"
-                          (change)="CoverPeriodChanged($event)" *ngIf="this.assetObj.MrAssetOwnerTypeCode == 'INT'"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsAssetCoverPeriod.invalid }">
+                    (change)="CoverPeriodChanged($event)" *ngIf="this.assetObj.MrAssetOwnerTypeCode == 'INT'"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsAssetCoverPeriod.invalid }">
                     <option value="">-Select One-</option>
                     <option value="AN">
                       Annualy
@@ -35,28 +35,28 @@
                     </option>
                   </select>-->
                   <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsAssetCoverPeriod"
-                                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-2 adins-required-label" for="assetRegion" translate>Asset Region</label>
                 <div class="col-md-4">
                   <select class="form-control width-75-per" id="assetRegion" formControlName="InsAssetRegion"
-                          (change)="AssetRegionChanged()"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsAssetRegion.invalid }">
+                    (change)="AssetRegionChanged()"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsAssetRegion.invalid }">
                     <option value="">-Select One-</option>
                     <option *ngFor="let item of insAssetRegionObj" [value]="item.Key">
                       {{item.Value}}
                     </option>
                   </select>
                   <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsAssetRegion"
-                                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <label class="col-md-2 adins-required-label" for="insuredBy" translate>Insco Branch Name</label>
                 <div class="col-md-4">
                   <select class="form-control width-75-per" id="insuredBy" formControlName="InscoBranchCode"
-                          (change)="InscoBranchCodeChanged($event)"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InscoBranchCode.invalid }">
+                    (change)="InscoBranchCodeChanged($event)"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InscoBranchCode.invalid }">
                     <option value="">-Select One-</option>
                     <option *ngFor="let item of inscoBranchObj" [value]="item.Key">
                       {{item.Value}}
@@ -70,34 +70,27 @@
                 <label class="col-md-2 adins-required-label" for="cvgAmt" translate>Coverage Amount</label>
                 <div class="col-md-4">
                   <input type="" currencyMask id="cvgAmt" class="form-control" formControlName="CvgAmt"
-                         [options]="{ allowNegative: false, nullable: false }"
-                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CvgAmt.invalid }"
-                         (ngModelChange)="CvgAmtChanged()">
+                    [options]="{ allowNegative: false, nullable: false }"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CvgAmt.invalid }"
+                    (ngModelChange)="CvgAmtChanged()">
                   <lib-uc-show-errors [control]="InsuranceDataForm.controls.CvgAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
 
-                <label class="col-md-2 adins-required-label" for="insLength" translate>Insurance Length</label>
-                <div class="col-md-4">
-                  <input type="text" id="insLength" min="minInsLength" max="maxInsLength"
-                         class="form-control adInsInput width-25-per" formControlName="InsLength"
-                         (change)="InsLengthChanged()"
-                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsLength.invalid}">
-                  <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsLength" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div>
+                <label class="col-md-2" for="insLength" translate>Insurance Length</label>
+                <label class="col-md-4" for="insLength" translate>{{InsuranceDataForm.controls.InsLength.value}}</label>
               </div>
               <div class="form-group row">
                 <label class="col-md-2" for="notes" translate>Insurance Notes</label>
                 <div class="col-md-4">
                   <textarea rows="5" id="notes" class="form-control" formControlName="Notes"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.Notes.invalid }"></textarea>
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.Notes.invalid }"></textarea>
                   <lib-uc-show-errors [control]="InsuranceDataForm.controls.Notes" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
               <div class="form-actions right">
-                <button type="button" class="btn btn-raised btn-primary" (click)="GenerateInsurance(undefined)">
+                <button type="button" class="btn btn-raised btn-primary" (click)="GenerateInsurance(undefined)" translate>
                   <i class="fa fa-check-square-o"></i> Generate Insurance
                 </button>
               </div>
@@ -105,29 +98,29 @@
                 <div class="form-group row">
                   <label class="col-md-2" for="mainCvg" translate>Main Coverage</label>
                   <div class="col-md-4">
-                    <select class="form-control width-75-per" id="mainCvg" formControlName="InsMainCvgType">
+                    <select class="form-control width-75-per" id="mainCvg" formControlName="InsMainCvgType" (change)="changeMainCvgddl($event)">
                       <option *ngFor="let item of insMainCvgTypeRuleObj" [value]="item.Key">
                         {{item.Value}}
                       </option>
                     </select>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div [hidden]="addDdl.length < 1" class="form-group row">
                   <label class="col-md-2" for="startDt" translate>Additional Coverage</label>
                   <div class="col-md-10">
                     <label formArrayName="InsAddCvgTypes"
-                           *ngFor="let item of InsuranceDataForm.controls.InsAddCvgTypes.controls; let i=index"
-                           class="custom-control display-inline-block">
+                      *ngFor="let item of InsuranceDataForm.controls.InsAddCvgTypes.controls; let i=index"
+                      class="custom-control display-inline-block">
                       <div [formGroupName]="i">
                         <label [hidden]="insAddCvgTypeRuleObj[i].Value == 'Loading'">
-                          <input type="checkbox" class="checkboxLabel" formControlName="Value"> {{insAddCvgTypeRuleObj[i].Value}}
+                          <input type="checkbox" class="checkboxLabel" formControlName="Value"> {{addDdl[i].Value}}
                         </label>
                       </div>
                     </label>
                   </div>
                 </div>
                 <div class="form-actions right">
-                  <button type="button" class="btn btn-raised btn-primary" (click)="CalculateInsurance()">
+                  <button type="button" class="btn btn-raised btn-primary" (click)="CalculateInsurance()" translate>
                     <i class="fa fa-check-square-o"></i> Calculate Insurance
                   </button>
                 </div>
@@ -139,8 +132,7 @@
             </div>
             <div>
               <div *ngIf="isMainPackageReady">
-                <lib-ucSubsection [id]="'maintenanceId'" [title]="'Maintenance'"
-                                  [panel]="'maintenance'">
+                <lib-ucSubsection [id]="'maintenanceId'" [title]="'Maintenance'" [panel]="'maintenance'">
                 </lib-ucSubsection>
                 <div id="maintenance">
                   <div class="form-group row">
@@ -154,8 +146,8 @@
                     </div>
                   </div>
                   <div class="form-actions right" *ngIf="isCanBeAddedMaintenance">
-                    <button type="button" name="add" id="add" (click)="addService()"
-                            class="btn btn-raised btn-primary">
+                    <button type="button" name="add" id="add" (click)="addService()" translate
+                      class="btn btn-raised btn-primary">
                       <i class="ft-plus-circle"></i> Add
                     </button>
                   </div>
@@ -175,20 +167,20 @@
                         <tr *ngFor="let item of InsuranceDataForm.controls['ServiceObjs'].controls;let i = index">
                           <td [formGroupName]="i" class="text-center" *ngIf="!InsuranceDataForm.controls['ServiceObjs']['controls'][i]['controls'].IsLock.value">
                             <lib-uclookupgeneric [enjiForm]="enjiForm"
-                                                 [lookupInput]="dictServiceLookup[InsuranceDataForm.controls['ServiceObjs']['controls'][i]['controls'].No.value]"
-                                                 [parentForm]="InsuranceDataForm"
-                                                 [identifier]="'lookupServiceObj' + InsuranceDataForm.controls['ServiceObjs']['controls'][i]['controls'].No.value"
-                                                 (lookup)="SetService(i,$event)"></lib-uclookupgeneric>
+                              [lookupInput]="dictServiceLookup[InsuranceDataForm.controls['ServiceObjs']['controls'][i]['controls'].No.value]"
+                              [parentForm]="InsuranceDataForm"
+                              [identifier]="'lookupServiceObj' + InsuranceDataForm.controls['ServiceObjs']['controls'][i]['controls'].No.value"
+                              (lookup)="SetService(i,$event)"></lib-uclookupgeneric>
                           </td>
                           <td [formGroupName]="i" *ngIf="InsuranceDataForm.controls['ServiceObjs']['controls'][i]['controls'].IsLock.value">
                             {{InsuranceDataForm.controls['ServiceObjs']['controls'][i]['controls'].ServiceName.value}}
                           </td>
                           <td [formGroupName]="i">
                             <input type="" currencyMask id="serviceAmt{{i}}" class="form-control" (ngModelChange)="calculateService()"
-                                   formControlName="ServiceAmt" [options]="{ nullable: true }"
-                                   [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls['ServiceObjs']['controls'][i]['controls'].ServiceAmt.invalid }">
+                              formControlName="ServiceAmt" [options]="{ nullable: true }"
+                              [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls['ServiceObjs']['controls'][i]['controls'].ServiceAmt.invalid }">
                             <lib-uc-show-errors [control]="InsuranceDataForm.controls['ServiceObjs']['controls'][i]['controls'].ServiceAmt"
-                                                [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                              [submit]="enjiForm.submitted"></lib-uc-show-errors>
                           </td>
                           <td [formGroupName]="i">
                             <a class="danger p-0" (click)="deleteService(i)" *ngIf="!InsuranceDataForm.controls['ServiceObjs']['controls'][i]['controls'].IsLock.value">
@@ -202,8 +194,8 @@
 
                   <!--sparepart-->
                   <div class="form-actions right" *ngIf="isCanBeAddedMaintenance">
-                    <button type="button" name="add" id="add" (click)="addSparePart()"
-                            class="btn btn-raised btn-primary">
+                    <button type="button" name="add" id="add" (click)="addSparePart()" translate
+                      class="btn btn-raised btn-primary">
                       <i class="ft-plus-circle"></i> Add
                     </button>
                   </div>
@@ -223,20 +215,20 @@
                         <tr *ngFor="let item of InsuranceDataForm.controls['SparePartObjs'].controls;let i = index">
                           <td [formGroupName]="i" class="text-center" *ngIf="!InsuranceDataForm.controls['SparePartObjs']['controls'][i]['controls'].IsLock.value">
                             <lib-uclookupgeneric [enjiForm]="enjiForm"
-                                                 [lookupInput]="dictSparePartLookup[InsuranceDataForm.controls['SparePartObjs']['controls'][i]['controls'].No.value]"
-                                                 [parentForm]="InsuranceDataForm"
-                                                 [identifier]="'lookupSparePartObj' + InsuranceDataForm.controls['SparePartObjs']['controls'][i]['controls'].No.value"
-                                                 (lookup)="SetSparePart(i,$event)"></lib-uclookupgeneric>
+                              [lookupInput]="dictSparePartLookup[InsuranceDataForm.controls['SparePartObjs']['controls'][i]['controls'].No.value]"
+                              [parentForm]="InsuranceDataForm"
+                              [identifier]="'lookupSparePartObj' + InsuranceDataForm.controls['SparePartObjs']['controls'][i]['controls'].No.value"
+                              (lookup)="SetSparePart(i,$event)"></lib-uclookupgeneric>
                           </td>
                           <td [formGroupName]="i" *ngIf="InsuranceDataForm.controls['SparePartObjs']['controls'][i]['controls'].IsLock.value">
                             {{InsuranceDataForm.controls['SparePartObjs']['controls'][i]['controls'].SparePartName.value}}
                           </td>
                           <td [formGroupName]="i">
                             <input type="" currencyMask id="sparePartAmt{{i}}" class="form-control" (ngModelChange)="calculateSparepart()"
-                                   formControlName="SparePartAmt" [options]="{ nullable: true }"
-                                   [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls['SparePartObjs']['controls'][i]['controls'].SparePartAmt.invalid }">
+                              formControlName="SparePartAmt" [options]="{ nullable: true }"
+                              [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls['SparePartObjs']['controls'][i]['controls'].SparePartAmt.invalid }">
                             <lib-uc-show-errors [control]="InsuranceDataForm.controls['SparePartObjs']['controls'][i]['controls'].SparePartAmt"
-                                                [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                              [submit]="enjiForm.submitted"></lib-uc-show-errors>
                           </td>
                           <td [formGroupName]="i">
                             <a class="danger p-0" (click)="deleteSparePart(i)" *ngIf="!InsuranceDataForm.controls['SparePartObjs']['controls'][i]['controls'].IsLock.value">
@@ -257,13 +249,12 @@
                   </div>
                 </div>
               </div>
-              <lib-ucSubsection [id]="'expenseId'" [title]="'Other Expense'"
-                                [panel]="'expense'">
+              <lib-ucSubsection [id]="'expenseId'" [title]="'Other Expense'" [panel]="'expense'">
               </lib-ucSubsection>
               <div id="expense">
                 <div class="form-actions right" *ngIf="isExpenseCanAdd">
-                  <button type="button" name="add" id="add" (click)="addOtherExpense()"
-                          class="btn btn-raised btn-primary">
+                  <button type="button" name="add" id="add" (click)="addOtherExpense()" translate
+                    class="btn btn-raised btn-primary">
                     <i class="ft-plus-circle"></i> Add
                   </button>
                 </div>
@@ -290,10 +281,10 @@
                         </td>
                         <td [formGroupName]="i">
                           <input type="" currencyMask id="othExpenseAmt{{i}}" class="form-control" (ngModelChange)="calculateExpense()"
-                                 formControlName="OthExpenseAmt" [options]="{ nullable: true }"
-                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls['OtherExpenseObjs']['controls'][i]['controls'].OthExpenseAmt.invalid }">
+                            formControlName="OthExpenseAmt" [options]="{ nullable: true }"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls['OtherExpenseObjs']['controls'][i]['controls'].OthExpenseAmt.invalid }">
                           <lib-uc-show-errors [control]="InsuranceDataForm.controls['OtherExpenseObjs']['controls'][i]['controls'].OthExpenseAmt"
-                                              [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </td>
                         <td [formGroupName]="i">
                           <a class="danger p-0" (click)="deleteOtherExpense(i)" *ngIf="!InsuranceDataForm.controls['OtherExpenseObjs']['controls'][i]['controls'].IsLock.value">
@@ -309,13 +300,12 @@
                   <label class="col-md-4 text-right" for="paidBy" translate>{{InsuranceDataForm.controls.TotalOthExpenseAmt.value  | number:'.2':'en-US'}}</label>
                 </div>
               </div>
-              <lib-ucSubsection [id]="'feeId'" [title]="'Fee'"
-                                [panel]="'fee'">
+              <lib-ucSubsection [id]="'feeId'" [title]="'Fee'" [panel]="'fee'">
               </lib-ucSubsection>
               <div id="fee">
                 <mat-radio-group formControlName="FeeInputType" name="MrCustTypeCode" (change)="changeInputFee()">
                   <mat-radio-button [disabled]="isInputTypeLock" class="custom-control custom-radio display-inline-block" *ngFor="let item of inpFeeObj"
-                                    [value]="item.Key">
+                    [value]="item.Key">
                     {{item.Value}}
                   </mat-radio-button>
                 </mat-radio-group>
@@ -340,24 +330,24 @@
                         </td>
                         <td [formGroupName]="i">
                           <input type="" currencyMask id="feeTypeAmt{{i}}" class="form-control" (ngModelChange)="calculateChangeVAT(i)"
-                                 formControlName="FeeTypeAmt" [options]="{ nullable: true }"
-                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls['FeeObjs']['controls'][i]['controls'].FeeTypeAmt.invalid }">
+                            formControlName="FeeTypeAmt" [options]="{ nullable: true }"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls['FeeObjs']['controls'][i]['controls'].FeeTypeAmt.invalid }">
                           <lib-uc-show-errors [control]="InsuranceDataForm.controls['FeeObjs']['controls'][i]['controls'].FeeTypeAmt"
-                                              [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </td>
                         <td [formGroupName]="i">
                           <input type="" currencyMask id="vATAmt{{i}}" class="form-control" (ngModelChange)="calculateVAT()"
-                                 formControlName="VATAmt" [options]="{ nullable: true }"
-                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls['FeeObjs']['controls'][i]['controls'].VATAmt.invalid }">
+                            formControlName="VATAmt" [options]="{ nullable: true }"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls['FeeObjs']['controls'][i]['controls'].VATAmt.invalid }">
                           <lib-uc-show-errors [control]="InsuranceDataForm.controls['FeeObjs']['controls'][i]['controls'].VATAmt"
-                                              [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </td>
                         <td [formGroupName]="i">
                           <input type="" currencyMask id="cptlzAmt{{i}}" class="form-control" (ngModelChange)="calculateCptlz()"
-                                 formControlName="CptlzAmt" [options]="{ nullable: true }"
-                                 [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls['FeeObjs']['controls'][i]['controls'].CptlzAmt.invalid }">
+                            formControlName="CptlzAmt" [options]="{ nullable: true }"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls['FeeObjs']['controls'][i]['controls'].CptlzAmt.invalid }">
                           <lib-uc-show-errors [control]="InsuranceDataForm.controls['FeeObjs']['controls'][i]['controls'].CptlzAmt"
-                                              [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </td>
                       </tr>
                     </tbody>
@@ -381,38 +371,32 @@
               <div id="totalPremi">
                 <div class="form-group row">
                   <label class="col-md-4" style="font-size: 90%" translate>Insurance At Cost</label>
-                  <label class="col-md-4 text-right" style="font-size: 90%"
-                         translate>{{InsuranceDataForm.controls.TotalInsInscoAmt.value | number:'.2':'en-US'}}</label>
+                  <label class="col-md-4 text-right" style="font-size: 90%" translate>{{InsuranceDataForm.controls.TotalInsInscoAmt.value | number:'.2':'en-US'}}</label>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-4" style="font-size: 90%" translate>Maintenance At Cost</label>
-                  <label class="col-md-4 text-right" style="font-size: 90%"
-                         translate>{{InsuranceDataForm.controls.TotalServiceAmt.value + InsuranceDataForm.controls.TotalSparepartAmt.value | number:'.2':'en-US'}}</label>
+                  <label class="col-md-4 text-right" style="font-size: 90%" translate>{{InsuranceDataForm.controls.TotalServiceAmt.value + InsuranceDataForm.controls.TotalSparepartAmt.value | number:'.2':'en-US'}}</label>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-4" style="font-size: 90%" translate>Other Expense</label>
-                  <label class="col-md-4 text-right" style="font-size: 90%"
-                         translate>{{InsuranceDataForm.controls.TotalOthExpenseAmt.value | number:'.2':'en-US'}}</label>
+                  <label class="col-md-4 text-right" style="font-size: 90%" translate>{{InsuranceDataForm.controls.TotalOthExpenseAmt.value | number:'.2':'en-US'}}</label>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-4" style="font-size: 90%" translate>Fee Capitalized</label>
-                  <label class="col-md-4 text-right" style="font-size: 90%"
-                         translate>{{InsuranceDataForm.controls.TotalFeeCptlzAmt.value | number:'.2':'en-US'}}</label>
+                  <label class="col-md-4 text-right" style="font-size: 90%" translate>{{InsuranceDataForm.controls.TotalFeeCptlzAmt.value | number:'.2':'en-US'}}</label>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-4" style="font-size: 90%" translate><b>Asset Expense</b></label>
-                  <label class="col-md-4 text-right" style="font-size: 90%"
-                         translate><b>{{InsuranceDataForm.controls.TotalAssetExpense.value | number:'.2':'en-US'}}</b></label>
+                  <label class="col-md-4 text-right" style="font-size: 90%" translate><b>{{InsuranceDataForm.controls.TotalAssetExpense.value | number:'.2':'en-US'}}</b></label>
                 </div>
               </div>
             </div>
           </div>
           <div class="form-actions right">
-            <button type="button"
-                    class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
               <i class="ft-x"></i> Cancel
             </button>
-            <button type="submit" class="btn btn-raised btn-primary">
+            <button type="submit" class="btn btn-raised btn-primary" translate>
               <i class="far fa-check-square"></i> Save
             </button>
           </div>

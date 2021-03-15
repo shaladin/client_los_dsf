@@ -9,20 +9,20 @@
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
-        <th style="text-align: left;"><span class="thead-header" name="BankCode" translate>BANK NAME
-        </span>
+        <th style="text-align: left;">
+          <span class="thead-header" name="BankCode" translate>BANK NAME</span>
         </th>
-        <th style="text-align: left;"><span class="thead-header" name="BankBranch" translate>BANK BRANCH
-        </span>
+        <th style="text-align: left;">
+          <span class="thead-header" name="BankBranch" translate>BANK BRANCH</span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="BankAccNo" translate>ACCOUNT NO.
-        </span>
+        <th style="text-align: center;">
+          <span class="thead-header" name="BankAccNo" translate>ACCOUNT NO.</span>
         </th>
-        <th style="text-align: left;"><span class="thead-header" name="BankAccName" translate>ACCOUNT NAME
-        </span>
+        <th style="text-align: left;">
+          <span class="thead-header" name="BankAccName" translate>ACCOUNT NAME</span>
         </th>
-        <th style="text-align: center;"><span class="thead-header" name="IsBankStmnt" translate>BANK STATEMENT
-        </span>
+        <th style="text-align: center;">
+          <span class="thead-header" name="IsBankStmnt" translate>BANK STATEMENT</span>
         </th>
         <th><span translate class="thead-header" name='action'>ACTION</span></th>
       </tr>
@@ -55,8 +55,8 @@
   </table>
   <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
-      <h4 class="modal-title">Bank Account</h4>
-      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <h4 class="modal-title" translate>Bank Account</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -104,7 +104,7 @@
           </lib-ucSubsection>
           <div id="bankStatement">
             <div class="form-actions right">
-              <button type="button" name="add" id="add" (click)="addBankStmnt()" class="btn btn-raised btn-primary">
+              <button type="button" name="add" id="add" (click)="addBankStmnt()" class="btn btn-raised btn-primary" translate>
                 Add
               </button>
             </div>

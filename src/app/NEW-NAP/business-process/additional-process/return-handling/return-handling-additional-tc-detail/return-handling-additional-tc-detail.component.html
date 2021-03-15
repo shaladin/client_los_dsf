@@ -28,7 +28,7 @@
           </lib-ucSubsection>
           <div id="newTc">
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-primary" (click)="add(content)">
+              <button type="button" class="btn btn-raised btn-primary" (click)="add(content)" translate>
                 <i class="fa fa-check-square-o"></i> Add
               </button>
             </div>
@@ -36,15 +36,15 @@
               <table class="table table-responsive-md text-center table-hover">
                 <thead>
                   <tr class="table-header">
-                    <th class="text-left">No</th>
-                    <th class="text-left">Document Name</th>
-                    <th class="text-left">Required</th>
-                    <th class="text-left">Check</th>
-                    <!-- <th class="text-left">Has Expired Date</th> -->
-                    <th class="text-left">Promised Date</th>
-                    <th class="text-left">Expired Date</th>
-                    <th class="text-left">Notes</th>
-                    <th class="text-center">Action</th>
+                    <th translate class="text-left">No</th>
+                    <th translate class="text-left">Document Name</th>
+                    <th translate class="text-left">Required</th>
+                    <th translate class="text-left">Check</th>
+                    <!-- <th translate class="text-left">Has Expired Date</th> -->
+                    <th translate class="text-left">Promised Date</th>
+                    <th translate class="text-left">Expired Date</th>
+                    <th translate class="text-left">Notes</th>
+                    <th translate class="text-center">Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -91,18 +91,17 @@
             </ng-container>
           </div>
           <div class="form-actions right">
-            <button type="button" class="btn btn-raised btn-warning mr-1"
-              [routerLink]="[CancelLink]"
-              [queryParams]="{BizTemplateCode: BizTemplateCode}">
+            <button type="button" class="btn btn-raised btn-warning mr-1" translate
+              [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode: BizTemplateCode}">
               <i class="ft-x"></i> Cancel
             </button>
             <!-- <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()">
               <i class="ft-x"></i> Cancel
             </button> -->
-            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="SaveAdditionalTCHandler()">
+            <button type="button" class="btn btn-raised btn-primary mr-1" (click)="SaveAdditionalTCHandler()" translate>
               <i class="far fa-check-square"></i> Save
             </button>
-            <button type="submit" class="btn btn-raised btn-primary">
+            <button type="submit" class="btn btn-raised btn-primary" translate>
               <i class="far fa-check-square"></i> Submit
             </button>
           </div>
@@ -110,7 +109,7 @@
       </form>
       <ng-template #content let-c="close" let-d="dismiss">
         <div class="modal-header">
-          <h4 class="modal-title"> {{mode}} New TC</h4>
+          <h4 class="modal-title" translate> {{mode}} New TC</h4>
           <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -136,7 +135,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-6"translate>Notes</label>
+                  <label class="col-md-6" translate>Notes</label>
                   <div class="col-md-6">
                     <textarea type="text" class="form-control adInsInput" formControlName="Notes"></textarea>
                     <lib-uc-show-errors [control]="AddTcForm.controls.Notes" [submit]="enjiForm.submitted">

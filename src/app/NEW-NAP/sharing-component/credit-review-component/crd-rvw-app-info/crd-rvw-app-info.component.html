@@ -6,7 +6,7 @@
       <div class="col-md-6 " *ngIf="BizTemplateCode != 'OPL'">
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> Num of Inst / Tenor </label>
+            <label class="label-control" translate> Num of Inst / Tenor </label>
           </div>
           <div class="col-md-6 ">
             <label class="label-control"> {{crdRvwAppObj.NumOfInst}} / {{crdRvwAppObj.Tenor}} / {{crdRvwAppObj.FirstInstType}} / {{crdRvwAppObj.InstType}} </label>
@@ -14,7 +14,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> Order Information </label>
+            <label class="label-control" translate> Order Information </label>
           </div>
           <div class="col-md-6 ">
             <!-- <label class="label-control"> {{crdRvwAppObj.}} </label> -->
@@ -22,7 +22,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> Life Insured </label>
+            <label class="label-control" translate> Life Insured </label>
           </div>
           <div class="col-md-6 ">
             <label class="label-control"> {{crdRvwAppObj.SubjectLifeIns}} </label>
@@ -34,7 +34,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="row">
-              <div class="col-md-10">
+              <div class="col-md-10" translate>
                 <a class="link" (click)="ClickLinkCreditScoring(CreditScoring)"> Credit Scoring </a>
               </div>
               <div class="col-md-2">
@@ -56,7 +56,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> Tc Received </label>
+            <label class="label-control" translate> Tc Received </label>
           </div>
           <div class="col-md-6 ">
             <label class="label-control"> {{crdRvwAppObj.TcReceived}} </label>
@@ -74,7 +74,7 @@
       <div id="Financial">
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> NTF / AR </label>
+            <label class="label-control" translate> NTF / AR </label>
           </div>
           <div class="col-md-6">
             <label class="label-control"> {{crdRvwAppObj.Ntf | number:'.2':'en-US'}} / {{crdRvwAppObj.Ar | number:'.2':'en-US'}} </label>
@@ -82,7 +82,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> Installment Amount / DSR </label>
+            <label class="label-control" translate> Installment Amount / DSR </label>
           </div>
           <div class="col-md-6">
             <label class="label-control"> {{crdRvwAppObj.InstAmt | number:'.2':'en-US'}} / {{crdRvwAppObj.Dsr}}% </label>
@@ -90,7 +90,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> Effective Rate / Flat Rate / Gross Yield </label>
+            <label class="label-control" translate> Effective Rate / Flat Rate / Gross Yield </label>
           </div>
           <div class="col-md-6">
             <label class="label-control"> {{crdRvwAppObj.EffRate}}% / {{crdRvwAppObj.FlatRate}}% / {{crdRvwAppObj.GrossYield}}% </label>
@@ -98,7 +98,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> Supplier Rate / Standart Rate </label>
+            <label class="label-control" translate> Supplier Rate / Standart Rate </label>
           </div>
           <div class="col-md-6">
             <label class="label-control"> {{crdRvwAppObj.SupplRate}}% / {{crdRvwAppObj.StdRate}}% </label>
@@ -110,7 +110,7 @@
       <div id="IncomeAndExpense">
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control">
+            <label class="label-control" translate>
               <a class="link" (click)="ClickLinkIncomeExpenseDetail(IncomeExpenseDetail)"> Income And Expense </a>
             </label>
           </div>
@@ -119,7 +119,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> Total Income </label>
+            <label class="label-control" translate> Total Income </label>
           </div>
           <div class="col-md-6 ">
             <label class="label-control"> {{crdRvwAppObj.TotalIncome | number:'.2':'en-US'}} </label>
@@ -127,7 +127,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> Total Expense </label>
+            <label class="label-control" translate> Total Expense </label>
           </div>
           <div class="col-md-6 ">
             <label class="label-control"> {{crdRvwAppObj.TotalExpense | number:'.2':'en-US'}} </label>
@@ -137,7 +137,7 @@
           <div class="col-md-6">
             <div class="row">
               <div class="col-md-10">
-                <label class="label-control"> TAC Commission + Reserve Fund </label>
+                <label class="label-control" translate> TAC Commission + Reserve Fund </label>
               </div>
               <div class="col-md-2">
                 <span id="TacIndicator" style="float: right;">
@@ -163,8 +163,8 @@
 
 <ng-template #IncomeExpenseDetail let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title"></h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+    <h4 class="modal-title" translate></h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -173,8 +173,8 @@
 
 <ng-template #CreditScoring let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title"></h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+    <h4 class="modal-title" translate></h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
