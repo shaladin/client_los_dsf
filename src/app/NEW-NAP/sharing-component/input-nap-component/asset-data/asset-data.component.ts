@@ -157,7 +157,7 @@ export class AssetDataComponent implements OnInit {
     RefMasterTypeCode: "",
   };
   appObj = {
-    AppId: 0,
+    Id: 0,
   };
 
   assetCondObj: any;
@@ -1972,9 +1972,8 @@ export class AssetDataComponent implements OnInit {
   }
 
   async GetAppData() {
-    // this.appObj.AppId = this.AppId;
-    var appObj = { Id: this.AppId };
-    await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
+    this.appObj.Id = this.AppId;
+    await this.http.post(URLConstant.GetAppById, this.appObj).toPromise().then(
       (response) => {
         this.AppObj = response;
         this.OfficeCode = this.AppObj.OriOfficeCode;
@@ -2369,7 +2368,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   async GetListAddr() {
-    this.appObj.AppId = this.AppId;
+    this.appObj.Id = this.AppId;
     await this.http.post(URLConstant.GetListAppCustAddrByAppId, this.appObj).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];

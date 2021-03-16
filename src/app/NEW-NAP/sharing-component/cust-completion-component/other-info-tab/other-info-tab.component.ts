@@ -55,8 +55,8 @@ export class OtherInfoTabComponent implements OnInit {
     this.AttrGroup = this.CustTypeCode == CommonConstant.CustTypeCompany ? CommonConstant.AttrGroupCustCompanyOther:CommonConstant.AttrGroupCustPersonalOther;
  
     var AppcustOtherInfo = {
-        AppCustId : this.AppCustId
-      } 
+      Id : this.AppCustId
+    } 
     await this.httpClient.post(URLConstant.GetAppCustOtherInfoByAppCustId, AppcustOtherInfo).toPromise().then(
       (response: any) => {
         this.ResponseCustOtherInfo = response;

@@ -67,7 +67,7 @@ export class CcAddressDetailComponent implements OnInit {
       });
 
     if (this.InputObj.AppCustAddrId != 0) {
-      this.http.post<AppCustAddrObj>(URLConstant.GetAppCustAddrByAppCustAddrId, { AppCustAddrId: this.InputObj.AppCustAddrId }).subscribe(
+      this.http.post<AppCustAddrObj>(URLConstant.GetAppCustAddrByAppCustAddrId, { Id: this.InputObj.AppCustAddrId }).subscribe(
         (response) => {
           this.AddrObj = response;
           this.AddressForm.patchValue({ MrCustAddrTypeCode: response.MrCustAddrTypeCode })
@@ -91,7 +91,7 @@ export class CcAddressDetailComponent implements OnInit {
   }
 
   LoadAddrForCopy() {
-    this.http.post<Array<AppCustAddrObj>>(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { AppCustId: this.InputObj.AppCustId }).subscribe(
+    this.http.post<Array<AppCustAddrObj>>(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { Id: this.InputObj.AppCustId }).subscribe(
       (response) => {
         this.copyAddressFromObj = response;
         this.AddressForm.patchValue({ CopyAddrFrom: response[0]['AppCustAddrId'] });
@@ -103,7 +103,7 @@ export class CcAddressDetailComponent implements OnInit {
       return
     }
 
-    this.http.post(URLConstant.GetAppCustAddrByAppCustAddrId, { AppCustAddrId: this.AddressForm.controls.CopyAddrFrom.value }).subscribe(
+    this.http.post(URLConstant.GetAppCustAddrByAppCustAddrId, { Id: this.AddressForm.controls.CopyAddrFrom.value }).subscribe(
       (response) => {
         this.AddrObj.Addr = response["Addr"];
         this.AddrObj.AreaCode1 = response["AreaCode1"];

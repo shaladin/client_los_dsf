@@ -136,7 +136,7 @@ export class CollateralAddEditComponent implements OnInit {
   SerialNoList: any;
   
   appObj = {
-    AppId: 0,
+    Id: 0,
   };
   isDiffWithRefAttr: any;
   AddCollForm = this.fb.group({
@@ -363,7 +363,7 @@ export class CollateralAddEditComponent implements OnInit {
   }
 
   GetListAddr() {
-    this.appObj.AppId = this.AppId;
+    this.appObj.Id = this.AppId;
     this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
@@ -429,9 +429,10 @@ export class CollateralAddEditComponent implements OnInit {
   }
 
   copyToLocationAddr() {
-    this.appCustAddrObj = new AppCustAddrObj();
-    this.appCustAddrObj.AppCustAddrId = this.AddCollForm.controls["LocationAddrType"].value;
-    this.http.post(this.getAppCustAddrByAppCustAddrId, this.appCustAddrObj).subscribe(
+    // this.appCustAddrObj = new AppCustAddrObj();
+    // this.appCustAddrObj.AppCustAddrId = this.AddCollForm.controls["LocationAddrType"].value;
+    var appCustAddrObj = { Id: this.AddCollForm.controls["LocationAddrType"].value };
+    this.http.post(this.getAppCustAddrByAppCustAddrId, appCustAddrObj).subscribe(
       (response) => {
         this.returnAppCustAddrObj = response;
 
@@ -453,9 +454,10 @@ export class CollateralAddEditComponent implements OnInit {
   }
 
   copyToCollateralOwnerAddr() {
-    this.collOwnerObj = new AppCustAddrObj();
-    this.collOwnerObj.AppCustAddrId = this.AddCollForm.controls["CollateralOwnerAddr"].value;
-    this.http.post(this.getAppCustAddrByAppCustAddrId, this.collOwnerObj).subscribe(
+    // this.collOwnerObj = new AppCustAddrObj();
+    // this.collOwnerObj.AppCustAddrId = this.AddCollForm.controls["CollateralOwnerAddr"].value;
+    var collOwnerObj = { Id: this.AddCollForm.controls["CollateralOwnerAddr"].value };
+    this.http.post(this.getAppCustAddrByAppCustAddrId, collOwnerObj).subscribe(
       (response) => {
         this.returnCollOwnerObj = response;
 
