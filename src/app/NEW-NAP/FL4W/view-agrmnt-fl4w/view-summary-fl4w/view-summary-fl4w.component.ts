@@ -1,9 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
@@ -12,22 +8,19 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   styleUrls: ['./view-summary-fl4w.component.scss']
 })
 export class ViewSummaryFl4wComponent implements OnInit {
-
   @Input() AgrmntId: any;
   totalRsvFund: number;
   agrmntObj = {
-    AgrmntId: 0,
+    Id: 0,
   };
   totalInsPremi: any;
   SummaryObj: any;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
-  }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.agrmntObj.AgrmntId = this.AgrmntId;
+    this.agrmntObj.Id = this.AgrmntId;
     this.GetAgrmntSummary();
-
   }
 
   GetAgrmntSummary() {

@@ -7,6 +7,8 @@ export class UcInputApprovalObj {
     PathUrlGetNextNodeMember: string;
     PathUrlGetReasonActive:string;
     PathUrlGetChangeFinalLevel: string;
+    PathUrlReturnToLevel: string;
+    PathUrlContinueToLevel: string;
     RequestId : number;
     PathUrlGetHistory : string;
     TrxNo: string;
@@ -21,6 +23,8 @@ export class UcInputApprovalObj {
         this.PathUrlGetChangeFinalLevel = "";
         this.RequestId = 0;
         this.PathUrlGetHistory = "";
+        this.PathUrlReturnToLevel= "";
+        this.PathUrlContinueToLevel= "";
         this.TrxNo = "";
     }
 }  

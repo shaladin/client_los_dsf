@@ -39,7 +39,7 @@ export class BankSectionComponent implements OnInit {
     BankCode: [''],
     BankBranch: ['', Validators.required],
     BankAccName: ['', Validators.required],
-    BankAccNo: ['', Validators.required],
+    BankAccNo: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     IsDefault: [false],
     IsActive: [false],
     BankStmntObjs: this.fb.array([])
@@ -90,6 +90,7 @@ export class BankSectionComponent implements OnInit {
       case "Add":
         this.IsDetail = true;
         this.Mode = "Add";
+        this.CheckDefault();
         break;
       case "Edit":
         this.IsDetail = true;
@@ -109,6 +110,18 @@ export class BankSectionComponent implements OnInit {
     this.OutputObj.emit({ Key: 'IsDetail', Value: this.IsDetail });
   }
 
+  CheckDefault(){
+    if(this.BankAccStmntForm.controls.IsDefault.value){
+      this.BankAccStmntForm.patchValue({
+        IsActive : true
+      });
+      this.BankAccStmntForm.controls.IsActive.disable();
+    }
+    else{
+      this.BankAccStmntForm.controls.IsActive.enable();
+    }
+  }
+
   SetForEdit(BankAccAndStmntObj: AppCustBankAccObj) {
     this.InputLookupBankObj.nameSelect = BankAccAndStmntObj.BankName;
     this.InputLookupBankObj.jsonSelect = { BankName: BankAccAndStmntObj.BankName };
@@ -123,6 +136,8 @@ export class BankSectionComponent implements OnInit {
       IsDefault: BankAccAndStmntObj.IsDefault,
       IsActive: BankAccAndStmntObj.IsActive,
     })
+
+    this.CheckDefault();
 
     if (BankAccAndStmntObj.AppCustBankStmntObjs != undefined) {
       var bankStmnObjs = this.BankAccStmntForm.controls['BankStmntObjs'] as FormArray;
@@ -158,10 +173,10 @@ export class BankSectionComponent implements OnInit {
       this.InputLookupBankObj.isRequired = true;
       this.BankAccStmntForm.controls.BankBranch.setValidators([Validators.required]);
       this.BankAccStmntForm.controls.BankAccName.setValidators([Validators.required]);
-      this.BankAccStmntForm.controls.BankAccNo.setValidators([Validators.required]);
+      this.BankAccStmntForm.controls.BankAccNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       for (let i = 0; i < this.BankAccStmntForm.controls.BankStmntObjs["controls"].length; i++) {
         this.BankAccStmntForm.controls.BankStmntObjs["controls"][i]["controls"]["Month"].setValidators([Validators.required]);
-        this.BankAccStmntForm.controls.BankStmntObjs["controls"][i]["controls"]["Year"].setValidators([Validators.required]);
+        this.BankAccStmntForm.controls.BankStmntObjs["controls"][i]["controls"]["Year"].setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.maxLength(4)]);
         this.BankAccStmntForm.controls.BankStmntObjs["controls"][i]["controls"]["DebitAmt"].setValidators([Validators.required]);
         this.BankAccStmntForm.controls.BankStmntObjs["controls"][i]["controls"]["CreditAmt"].setValidators([Validators.required]);
         this.BankAccStmntForm.controls.BankStmntObjs["controls"][i]["controls"]["BalanceAmt"].setValidators([Validators.required]);
@@ -243,11 +258,6 @@ export class BankSectionComponent implements OnInit {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var bankStmnObjs = this.BankAccStmntForm.controls['BankStmntObjs'] as FormArray;
       bankStmnObjs.removeAt(index);
-
-      this.http.post(URLConstant.DeleteAppCustBankStmnt, this.AppCustBankStmntList[index]).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-        });
     }
   }
 
@@ -265,6 +275,14 @@ export class BankSectionComponent implements OnInit {
       this.ListBankStmntObj.push(this.BankStmntObj)
     }
 
+    for (let i = 0; i < this.ListBankStmntObj.length; i++) {
+      for (let j = i + 1; j < this.ListBankStmntObj.length; j++) {
+        if (this.ListBankStmntObj[i]["Month"] == this.ListBankStmntObj[j]["Month"] && this.ListBankStmntObj[i]["Year"] == this.ListBankStmntObj[j]["Year"]) {
+          this.toastr.errorMessage(ExceptionConstant.STATEMENT_WITH_SAME_MONTH_AND_YEAR);
+          return;
+        }
+      }
+    }
     var reqObj = {
       BankAccObj: this.BankAccObj,
       ListBankStmntObj: this.ListBankStmntObj

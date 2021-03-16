@@ -47,7 +47,7 @@ export class ViewAgrmntFl4wComponent implements OnInit {
     ];
 
     var AgrmntObj = {
-      AgrmntId: this.AgrmntId
+      Id: this.AgrmntId
     }
     this.http.post(URLConstant.GetAgrmntByAgrmntId, AgrmntObj).subscribe(
       (response) => {

@@ -116,12 +116,12 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       });
 
     var Obj = {
-      AgrmntNo: this.TrxNo,
+      TrxNo: this.TrxNo, // AgrmntNo
       RowVersion: ""
     }
 
 
-    this.http.post(URLConstant.GetAgrmntByAppIdGetAgrmntByAgrmntNo, Obj).subscribe(
+    this.http.post(URLConstant.GetAgrmntByAgrmntNo, Obj).subscribe(
       (response) => {
         this.result = response;
         this.AgrmntNo = this.result.AgrmntNo;
@@ -201,7 +201,10 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           }
         );
 
-        this.http.post(URLConstant.GetAgrmntFinDataByAgrmntId, Obj5).subscribe(
+        var agrmntObj = {
+          Id: this.result.AgrmntId
+        }
+        this.http.post(URLConstant.GetAgrmntFinDataByAgrmntId, agrmntObj).subscribe(
           (response) => {
             this.result6 = response;
             this.InstAmt = this.result6.InstAmt;
@@ -211,8 +214,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       }
     );
     this.initInputApprovalObj();
-
   }
+
   HoldTask(obj: ApprovalObj) {
     this.http.post(URLConstant.ApvHoldTaskUrl, obj).subscribe(
       () => {
@@ -248,6 +251,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   onAvailableNextTask() {
 
   }
+
   onApprovalSubmited(event) {
     this.outstandingTcObj = new OutstandingTcObj(); 
     this.listAppTCObj = new ListAppTCObj();
@@ -290,6 +294,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
       });
   }
+
   initInputApprovalObj() {
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
@@ -310,6 +315,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
     this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
     this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
+    this.InputApvObj.PathUrlReturnToLevel = URLConstant.ReturnLevel;
+    this.InputApvObj.PathUrlContinueToLevel = URLConstant.ContinueToLevel;
     this.InputApvObj.TrxNo = this.AgrmntNo;
     this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
     this.InputApvObj.RequestId = this.ApvReqId;

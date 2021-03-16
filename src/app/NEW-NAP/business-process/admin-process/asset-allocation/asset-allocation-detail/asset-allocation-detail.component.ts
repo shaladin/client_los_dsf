@@ -117,7 +117,7 @@ export class AssetAllocationDetailComponent implements OnInit {
   }
   isReady: boolean = false;
   async getAssetAllocationData() {
-    var reqObj = { AppId: this.AppId }
+    var reqObj = { Id: this.AppId }
     await this.http.post(URLConstant.GetAssetAllocationDataByAppId, reqObj).toPromise().then(
       (response) => {
         this.ListUsedAssetNumber = response["ListAssetNumber"];

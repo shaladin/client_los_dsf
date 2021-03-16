@@ -112,7 +112,7 @@
             <div class="line"></div>
             <div class="step" data-target="#upload-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
-                      [disabled]="!(AppStepIndex >= 10)" (click)="ChangeTab('UPD')">
+                      [disabled]="!(AppStepIndex >= 10)" (click)="ChangeTab('UPL_DOC')">
                 <span class="bs-stepper-circle">10</span>
                 <span class="bs-stepper-label">Upload Document</span>
               </button>
@@ -153,7 +153,7 @@
               </app-financial-data-fctr>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 9 && stepperMode == 'PERSONAL'" [AppId]="appId" (outputTab)="NextStep('UPD')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
+              <app-tc-data *ngIf="AppStepIndex == 9 && stepperMode == 'PERSONAL'" [AppId]="appId" (outputTab)="NextStep('UPL_DOC')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
               <app-dms-iframe *ngIf="AppStepIndex == 10 && stepperMode == 'PERSONAL' && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="mode != 'ReturnHandling'" [dmsObj]="dmsObj"></app-dms-iframe>
@@ -237,7 +237,7 @@
             <div class="line"></div>
             <div class="step" data-target="#upload-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
-                      [disabled]="!(AppStepIndex >= 10)" (click)="ChangeTab('UPD')">
+                      [disabled]="!(AppStepIndex >= 10)" (click)="ChangeTab('UPL_DOC')">
                 <span class="bs-stepper-circle">10</span>
                 <span class="bs-stepper-label">Upload Document</span>
               </button>
@@ -278,7 +278,7 @@
               </app-financial-data-fctr>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 9 && stepperMode == 'COMPANY'" [AppId]="appId" (outputTab)="NextStep('UPD')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
+              <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="NextStep('UPL_DOC')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
               <app-dms-iframe *ngIf="AppStepIndex == 10 && stepperMode == 'COMPANY' && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="mode != 'ReturnHandling'" [dmsObj]="dmsObj"></app-dms-iframe>

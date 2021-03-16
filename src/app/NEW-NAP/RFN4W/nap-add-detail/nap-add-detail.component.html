@@ -128,7 +128,7 @@
             <div class="line"></div>
             <div class="step" data-target="#upload-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
-                      [disabled]="!(AppStepIndex >= 11)" (click)="ChangeTab('UPD')">
+                      [disabled]="!(AppStepIndex >= 11)" (click)="ChangeTab('UPL_DOC')">
                 <span class="bs-stepper-circle">11</span>
                 <span class="bs-stepper-label">Upload Document</span>
               </button>
@@ -174,7 +174,7 @@
                 (outputCancel)="Cancel()" [showCancel]="showCancel"></app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 10 && stepperMode == 'PERSONAL'" [AppId]="appId" (outputTab)="LastStepHandler()"
+              <app-tc-data *ngIf="AppStepIndex == 10 && stepperMode == 'PERSONAL'" [AppId]="appId" (outputTab)="NextStep('UPL_DOC')"
                 (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
@@ -259,7 +259,7 @@
             <div class="line"></div>
             <div class="step" data-target="#upload-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
-                      [disabled]="!(AppStepIndex >= 10)" (click)="ChangeTab('UPD')">
+                      [disabled]="!(AppStepIndex >= 10)" (click)="ChangeTab('UPL_DOC')">
                 <span class="bs-stepper-circle">10</span>
                 <span class="bs-stepper-label">Upload Document</span>
               </button>
@@ -300,7 +300,7 @@
                 (outputCancel)="Cancel()" [showCancel]="showCancel"></app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 9 && stepperMode == 'COMPANY'" [AppId]="appId" (outputTab)="NextStep('UPD')"
+              <app-tc-data *ngIf="AppStepIndex == 9 && stepperMode == 'COMPANY'" [AppId]="appId" (outputTab)="NextStep('UPL_DOC')"
                 (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">

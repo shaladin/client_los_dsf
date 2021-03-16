@@ -76,6 +76,10 @@ export class DocSignerCfnaDetailComponent implements OnInit {
       AgrmntId: this.AgrmntId
     }
 
+    var agrmntObj = {
+      Id: this.AgrmntId
+    }
+
     await this.http.post(URLConstant.GetAppCustPersonalDataAndSpouseByAppId, obj).toPromise().then(
       (response) => {
         this.ResponseAppCustDataObj = response;
@@ -90,14 +94,14 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         this.SupplCode = this.ResponseAppAssetObj.SupplCode;
       });
 
-    await this.http.post(URLConstant.GetAgrmntByAgrmntId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).toPromise().then(
       (response) => {
         this.result2 = response;
         this.OfficeCode = this.result2.OfficeCode;
         this.CustNo = this.result2.CustNo;
       });
 
-    await this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, agrmntObj).toPromise().then(
       (response) => {
         this.ResponseAgrmntSignerObj = response;
         if (this.ResponseAgrmntSignerObj.AgrmntSignerId == 0) {

@@ -66,7 +66,7 @@ export class NapAddDetailComponent implements OnInit {
     "LFI": 8,
     "FIN": 9,
     "TC": 10,
-    "UPD": 11
+    "UPL_DOC": 11
   };
   dmsObj: DMSObj;
   isDmsReady: boolean = false;
@@ -196,7 +196,7 @@ export class NapAddDetailComponent implements OnInit {
         "LFI": 8,
         "FIN": 9,
         "TC": 10,
-        "UPD": 11
+        "UPL_DOC": 11
       };
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
@@ -219,7 +219,7 @@ export class NapAddDetailComponent implements OnInit {
         "LFI": 8,
         "FIN": 8,
         "TC": 9,
-        "UPD": 10
+        "UPL_DOC": 10
       };
     }
   }

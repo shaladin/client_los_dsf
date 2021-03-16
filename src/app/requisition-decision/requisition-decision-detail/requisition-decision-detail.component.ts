@@ -146,7 +146,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     this.ReqDecForm.controls.ManYear.disable();
 
     var requestAppAssetId = {
-      AppAssetId: this.AppAssetId
+      Id: this.AppAssetId
     };
 
     this.http.post(URLConstant.GetListAppAssetAccessoryAndAppAssetAttrByAppAssetId, requestAppAssetId).subscribe(

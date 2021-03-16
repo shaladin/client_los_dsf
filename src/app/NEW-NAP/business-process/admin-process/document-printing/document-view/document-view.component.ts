@@ -103,13 +103,13 @@ export class DocumentViewComponent implements OnInit {
     this.pageSize = 10;
     this.apiUrl = environment.losUrl + URLConstant.GetPagingObjectBySQL;
 
-    this.http.post(URLConstant.GetAgrmntByAgrmntId, { AgrmntId: this.AgrmntId }).pipe(
+    this.http.post(URLConstant.GetAgrmntByAgrmntId, { Id: this.AgrmntId }).pipe(
       map((response) => {
         return response;
       }),
       mergeMap((response: AgrmntObj) => {
         let getAppCust = this.http.post(URLConstant.GetAppCustByAppId, { AppId: response.AppId });
-        let getAgrmntSigner = this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, { AgrmntId: this.AgrmntId });
+        let getAgrmntSigner = this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, { Id: this.AgrmntId });
         return forkJoin([getAppCust, getAgrmntSigner]);
       })
     ).toPromise().then(
@@ -128,7 +128,7 @@ export class DocumentViewComponent implements OnInit {
             }
           }
         }
-        else if(this.BizTemplateCode == CommonConstant.FACTORING || this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA){
+        else if(this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA){
           if(appCust.MrCustTypeCode == CommonConstant.CustTypePersonal){
             if(agrmntSigner.AppCustPersonalId && agrmntSigner.AppCustPersonalId > 0 && agrmntSigner.MfEmpNo1){
               this.isDocSignerAvailable = true;
@@ -174,7 +174,7 @@ export class DocumentViewComponent implements OnInit {
 
   GetListAgrmntDocByAgrmntId() {
     var obj = {
-      AgrmntId: this.AgrmntId,
+      Id: this.AgrmntId,
     }
     this.http.post(URLConstant.GetListAgrmntDocByAgrmntId, obj).subscribe(
       (response) => {
