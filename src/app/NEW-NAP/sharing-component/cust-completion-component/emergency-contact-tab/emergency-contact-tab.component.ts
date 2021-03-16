@@ -133,7 +133,7 @@ export class EmergencyContactTabComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { Id: this.AppCustId }).subscribe(
       (response) => {
         this.copyAddressFromObj = response;
         this.EmergencyContactForm.patchValue({ CopyAddrFrom: response[0]['AppCustAddrId'] });
@@ -258,7 +258,7 @@ export class EmergencyContactTabComponent implements OnInit {
       return
     }
 
-    this.http.post(URLConstant.GetAppCustAddrByAppCustAddrId, { AppCustAddrId: this.EmergencyContactForm.controls.CopyAddrFrom.value }).subscribe(
+    this.http.post(URLConstant.GetAppCustAddrByAppCustAddrId, { Id: this.EmergencyContactForm.controls.CopyAddrFrom.value }).subscribe(
       (response) => {
         this.UcAddrObj.Addr = response["Addr"];
         this.UcAddrObj.AreaCode1 = response["AreaCode1"];

@@ -214,7 +214,7 @@ export class AssetDataAddEditComponent implements OnInit {
   });
 
   appObj = {
-    AppId: 0,
+    Id: 0,
   };
   inputAddressObjForLoc: InputAddressObj;
   EmpObj: any;
@@ -295,9 +295,8 @@ export class AssetDataAddEditComponent implements OnInit {
     }
   }
 
-
   GetListAddr() {
-    this.appObj.AppId = this.AppId;
+    this.appObj.Id = this.AppId;
     this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
@@ -307,9 +306,10 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   copyToLocationAddr() {
-    this.appCustAddrObj = new AppCustAddrObj();
-    this.appCustAddrObj.AppCustAddrId = this.AssetDataForm.controls["LocationAddrType"].value;
-    this.http.post(this.getAppCustAddrByAppCustAddrId, this.appCustAddrObj).subscribe(
+    // this.appCustAddrObj = new AppCustAddrObj();
+    // this.appCustAddrObj.AppCustAddrId = this.AssetDataForm.controls["LocationAddrType"].value;
+    var appCustAddrObj = { Id: this.AssetDataForm.controls["LocationAddrType"].value };
+    this.http.post(this.getAppCustAddrByAppCustAddrId, appCustAddrObj).subscribe(
       (response) => {
         this.returnAppCustAddrObj = response;
 
