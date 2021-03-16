@@ -89,7 +89,7 @@ export class FraudDetectionPagingComponent implements OnInit {
           }
         );
       } else {
-        var appObj = { AppId: event.RowObj.AppId };
+        var appObj = { Id: event.RowObj.AppId };
         this.http.post(AdInsConstant.SurveyFraudAppCheckingValidationForFraudVerif, appObj).subscribe(
           (response) => {
             var dupCheckErrorMessage = response["DupCheckErrorMessage"];
