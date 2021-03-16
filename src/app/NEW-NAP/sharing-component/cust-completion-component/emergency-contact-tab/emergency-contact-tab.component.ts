@@ -141,7 +141,7 @@ export class EmergencyContactTabComponent implements OnInit {
   }
 
   getData() {
-    this.http.post<AppCustEmrgncCntctObj>(URLConstant.GetAppCustEmrgncCntctByAppCustId, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post<AppCustEmrgncCntctObj>(URLConstant.GetAppCustEmrgncCntctByAppCustId, { Id: this.AppCustId }).subscribe(
       (response) => {
         if (response.AppCustEmrgncCntctId != 0) {
           this.EmergencyContactForm.patchValue({
