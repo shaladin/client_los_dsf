@@ -321,7 +321,7 @@ export class CommissionV2Component implements OnInit {
 
   isAutoGenerate: boolean = true;
   async GetExistingAppCommData() {
-    var objApi = { AppId: this.AppId };
+    var objApi = { Id: this.AppId };
     await this.http.post(URLConstant.GetAppCommissionDataForEditByAppId, objApi).toPromise().then(
       (response) => {
         var tempObj: Array<AppCommissionHObj> = response[CommonConstant.ReturnObj];

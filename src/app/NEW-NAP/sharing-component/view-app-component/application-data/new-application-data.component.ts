@@ -85,7 +85,7 @@ export class NewApplicationDataComponent implements OnInit {
       RowVersion: ""
     };
     var objComm = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     var objTc = {

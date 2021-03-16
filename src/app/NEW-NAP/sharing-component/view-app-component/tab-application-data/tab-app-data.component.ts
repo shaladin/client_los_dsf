@@ -153,7 +153,7 @@ export class TabAppDataComponent implements OnInit {
 
   async GetCommData() {
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppCommissionDataDetailByAppId, obj).toPromise().then(
