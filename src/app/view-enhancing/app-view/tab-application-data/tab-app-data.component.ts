@@ -273,7 +273,7 @@ export class TabAppDataComponent implements OnInit {
 
   async GetCrossData(){
     var obj = {
-      AppID: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetListAppCross, obj).toPromise().then(

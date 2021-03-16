@@ -239,7 +239,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
 
   GetCrossInfoData() {
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     }
     this.http.post(URLConstant.GetListAppCross, obj).subscribe(

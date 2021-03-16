@@ -246,7 +246,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async GetExistingCreditReviewData() {
-    var Obj = { appCrdRvwHObj: { AppId: this.appId } };
+    let Obj = { Id: this.appId };
     await this.http.post(URLConstant.GetAppCrdRvwById, Obj).toPromise().then(
       (response) => {
         this.ResponseExistCreditReview = response["appCrdRvwHObj"];
