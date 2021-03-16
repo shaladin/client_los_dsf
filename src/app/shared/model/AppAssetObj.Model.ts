@@ -1,4 +1,5 @@
 export class AppAssetObj {
+  Id: number;
   AppAssetId: number;
   AppId: number;
   AgrmntId: number;
@@ -55,7 +56,8 @@ export class AppAssetObj {
   SerialNo4Label: string;
   SerialNo5Label: string;
 
-  constructor() {
+    constructor() {
+    this.Id = 0;
     this.AppAssetId = 0;
     this.AppId = 0;
     this.AgrmntId = 0;

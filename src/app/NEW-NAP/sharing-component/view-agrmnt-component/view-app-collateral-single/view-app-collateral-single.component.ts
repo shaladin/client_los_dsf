@@ -51,18 +51,19 @@ export class ViewAppCollateralSingleComponent implements OnInit {
       this.viewGenericObj.whereValue = this.arrValue;
       this.viewUOLObj.whereValue = this.arrValue;
       this.IsReady = true;
-      this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, { AppCollateralId: this.AppCollateralId }).subscribe(
+      this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: this.AppCollateralId }).subscribe(
         (response) => {
           this.AppCollateralDocs = response["AppCollateralDocs"];
         }
       );
     } else {
-      this.http.post<AppCollateralObj>(URLConstant.GetAppCollateralByAgrmntId, { AgrmntId: this.agrmntId }).subscribe(
+      this.http.post<AppCollateralObj>(URLConstant.GetAppCollateralByAgrmntId, { Id: this.agrmntId }).subscribe(
         (response) => {
           this.AppCollateralObj = response;
           this.arrValue.push(this.AppCollateralObj.AppCollateralId);
           this.IsReady = true;
-          this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, this.AppCollateralObj).subscribe(
+
+          this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: this.AppCollateralObj.AppCollateralId }).subscribe(
             (response) => {
               this.AppCollateralDocs = response["AppCollateralDocs"];
             }

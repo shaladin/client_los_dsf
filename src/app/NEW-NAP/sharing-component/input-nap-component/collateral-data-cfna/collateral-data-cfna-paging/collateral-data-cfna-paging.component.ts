@@ -25,7 +25,7 @@ export class CollateralDataCfnaPagingComponent implements OnInit {
 
   GetListAppCollateralByAppId() {
     var AppCollObj = {
-      AppId: this.AppId,
+      Id: this.AppId,
     }
     this.http.post<Array<AppCollateralObj>>(URLConstant.GetListAppCollateralByAppId, AppCollObj).subscribe(
       (response) => {

@@ -22,7 +22,7 @@ export class DocSignerMainInfoComponent implements OnInit {
 
   ngOnInit() {
     this.BizTemplateCode = localStorage.getItem("BizTemplateCode");
-    this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response: AppObj) => {
         if (this.BizTemplateCode == CommonConstant.CFNA) {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocSignerCfna.json";

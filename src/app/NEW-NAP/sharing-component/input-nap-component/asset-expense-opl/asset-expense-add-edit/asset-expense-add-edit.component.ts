@@ -567,11 +567,11 @@ export class AssetExpenseAddEditComponent implements OnInit {
           this.toastr.warningMessage("Please setting rule first.");
           return;
         }
-        //this.sumInsuredAmtObj = new Array<string>();
-        //this.tpl = this.ruleObj.InsRateAddCvgRuleObjs.filter(x => x.AdditionalCoverageType == "TPL");
-        //for (let i = 0; i < this.tpl.length; i++) {
-        //  this.sumInsuredAmtObj.push(this.tpl[i].SumInsuredAmt.toString());
-        //}
+        this.sumInsuredAmtObj = new Array<string>();
+        this.tpl = this.ruleObj.InsRateAddCvgRuleObjs.filter(x => x.AdditionalCoverageType == "TPL");
+        for (let i = 0; i < this.tpl.length; i++) {
+          this.sumInsuredAmtObj.push(this.tpl[i].SumInsuredAmt.toString());
+        }
 
         this.GenerateInsFee(this.ruleObj.InsRateFeeRuleObjs);
         if (appInsMainCvgObj != undefined) {
@@ -628,7 +628,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
       }
 
       obj.Tenor = month;
-      obj.SumInsuredPrcnt = this.ruleObj.Result.SumInsuredPercentage[ManufYearDiff];
+      obj.SumInsuredPrcnt = this.ruleObj.Result.SumInsuredPercentage[i];
       var index = this.ruleObj.InsRateMainCvgRuleObjs.findIndex(x => x.MainCoverageType == this.InsuranceDataForm.controls.InsMainCvgType.value);
       obj.CustMainPremiRate = this.ruleObj.InsRateMainCvgRuleObjs[index].RateToCust;
       obj.InscoMainPremiRate = this.ruleObj.InsRateMainCvgRuleObjs[index].RateToInsco;
@@ -774,13 +774,13 @@ export class AssetExpenseAddEditComponent implements OnInit {
 
         if (o.Key == CommonConstant.MrAddCvgTypeCodeTpl) {
           this.sumInsuredAmtObj = new Array<string>();
-          this.tpl = filtered.filter(x => x.AdditionalCoverageType == "TPL");
-          for (let i = 0; i < this.tpl.length; i++) {
-            this.sumInsuredAmtObj.push(this.tpl[i].SumInsuredAmt.toString());
+          var tempTpl = filtered.filter(x => x.AdditionalCoverageType == "TPL");
+          for (let k = 0; k < tempTpl.length; k++) {
+            this.sumInsuredAmtObj.push(tempTpl[k].SumInsuredAmt.toString());
           }
-          defaultSumInsuredAmt = this.tpl[0].SumInsuredAmt;
-          custAddPremiRate = this.tpl[0].PremiToCust;
-          inscoAddPremiRate = this.tpl[0].PremiToInsco;
+          defaultSumInsuredAmt = tempTpl[0].SumInsuredAmt;
+          custAddPremiRate = tempTpl[0].PremiToCust;
+          inscoAddPremiRate = tempTpl[0].PremiToInsco;
         }
 
         var checkboxValue = false;
@@ -885,13 +885,13 @@ export class AssetExpenseAddEditComponent implements OnInit {
       }
 
       if (o.Key == CommonConstant.MrAddCvgTypeCodeTpl) {
-        this.tpl = this.ruleObj.InsRateAddCvgRuleObjs.filter(x => x.AdditionalCoverageType == "TPL");
-        for (let i = 0; i < this.tpl.length; i++) {
-          this.sumInsuredAmtObj.push(this.tpl[i].SumInsuredAmt.toString());
+        var tempTpl = this.ruleObj.InsRateAddCvgRuleObjs.filter(x => x.AdditionalCoverageType == "TPL");
+        for (let i = 0; i < tempTpl.length; i++) {
+          this.sumInsuredAmtObj.push(tempTpl[i].SumInsuredAmt.toString());
         }
-        defaultSumInsuredAmt = this.tpl[0].SumInsuredAmt;
-        custAddPremiRate = check == undefined ? this.tpl[0].PremiToCust : check.CustAddPremiAmt;
-        inscoAddPremiRate = check == undefined ? this.tpl[0].PremiToInsco : check.InscoAddPremiAmt;
+        defaultSumInsuredAmt = tempTpl[0].SumInsuredAmt;
+        custAddPremiRate = check == undefined ? tempTpl[0].PremiToCust : check.CustAddPremiAmt;
+        inscoAddPremiRate = check == undefined ? tempTpl[0].PremiToInsco : check.InscoAddPremiAmt;
       }
 
       if (o.Key.toString() == CommonConstant.MrAddCvgTypeCodeLoading) {
@@ -978,13 +978,13 @@ export class AssetExpenseAddEditComponent implements OnInit {
         if (o.Key == CommonConstant.MrAddCvgTypeCodeTpl) {
 
           this.sumInsuredAmtObj = new Array<string>();
-          this.tpl = filtered.filter(x => x.AdditionalCoverageType == "TPL");
-          for (let i = 0; i < this.tpl.length; i++) {
-            this.sumInsuredAmtObj.push(this.tpl[i].SumInsuredAmt.toString());
+          var tempTpl = filtered.filter(x => x.AdditionalCoverageType == "TPL");
+          for (let k = 0; k < tempTpl.length; k++) {
+            this.sumInsuredAmtObj.push(tempTpl[k].SumInsuredAmt.toString());
           }
-          defaultSumInsuredAmt = this.tpl[0].SumInsuredAmt;
-          custAddPremiRate = this.tpl[0].PremiToCust;
-          inscoAddPremiRate = this.tpl[0].PremiToInsco;
+          defaultSumInsuredAmt = tempTpl[0].SumInsuredAmt;
+          custAddPremiRate = tempTpl[0].PremiToCust;
+          inscoAddPremiRate = tempTpl[0].PremiToInsco;
           this.dictSumInsured[i] = this.sumInsuredAmtObj;
         }
         var checkboxValue = false;
@@ -995,12 +995,12 @@ export class AssetExpenseAddEditComponent implements OnInit {
               var assetAgeMax = filtered[j].AssetAgeTo;
               console.log("Asset Age Min: " + assetAgeMin);
               console.log("Asset Age Max: " + assetAgeMax);
-              if (this.InsuranceDataForm.controls.AppInsMainCvgs['controls'][i]['controls']['ManufYearDiff'].Value + 1 >= assetAgeMin && this.InsuranceDataForm.controls.AppInsMainCvgs[i]['controls']['ManufYearDiff'].Value + 1 <= assetAgeMax) {
+              if (this.InsuranceDataForm.controls.AppInsMainCvgs['controls'][i]['controls']['ManufYearDiff'].value + 1 >= assetAgeMin && this.InsuranceDataForm.controls.AppInsMainCvgs['controls'][i]['controls']['ManufYearDiff'].value + 1 <= assetAgeMax) {
                 const control = this.fb.group({
                   MrAddCvgTypeCode: o.Key,
                   AddCvgTypeName: o.Value,
                   Value: checkboxValue,
-                  SumInsuredPercentage: this.InsuranceDataForm.controls.AppInsMainCvgs['controls'][i]['controls']['SumInsuredPrcnt'].Value,
+                  SumInsuredPercentage: this.InsuranceDataForm.controls.AppInsMainCvgs['controls'][i]['controls']['SumInsuredPrcnt'].value,
                   SumInsuredAmt: defaultSumInsuredAmt,
                   PremiumType: premiumType,
                   // CustAddPremiRate: custAddPremiRate,
@@ -1030,7 +1030,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
             MrAddCvgTypeCode: o.Key,
             AddCvgTypeName: o.Value,
             Value: checkboxValue,
-            SumInsuredPercentage: this.InsuranceDataForm.controls.AppInsMainCvgs['controls'][i]['controls']['SumInsuredPrcnt'].Value,
+            SumInsuredPercentage: this.InsuranceDataForm.controls.AppInsMainCvgs['controls'][i]['controls']['SumInsuredPrcnt'].value,
             SumInsuredAmt: defaultSumInsuredAmt,
             PremiumType: premiumType,
             CustAddPremiRate: custAddPremiRate,
@@ -1844,7 +1844,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.insAssetRegionObj = response[CommonConstant.ReturnObj];
-        var assetObj = { AppAssetId: this.AppAssetId };
+        var assetObj = { Id: this.AppAssetId };
         if (this.isInsDataExist == false) {
           this.http.post(URLConstant.GetAssetRegionFromRuleByAppAssetId, assetObj).subscribe(
             response => {
@@ -1911,7 +1911,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
 
 
   async getMainPackage() {
-    var packageObj = { AppAssetId: this.AppAssetId };
+    var packageObj = { Id: this.AppAssetId };
     await this.http.post(URLConstant.GetMaintenancePackageByAppAssetId, packageObj).toPromise().then(
       (response) => {
         this.packageTypeRuleObj = response["MaintenancePackageObjs"];
@@ -2185,7 +2185,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
   }
   isExpenseCanAdd: boolean = true;
   async getOtherExpenseFromRule() {
-    var obj = { AppAssetId: this.AppAssetId };
+    var obj = { Id: this.AppAssetId };
     await this.http.post(URLConstant.GetOtherExpenseByAppAssetId, obj).toPromise().then(
       (response) => {
         var expenseObj = response
@@ -2344,7 +2344,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
     var feeObj = this.InsuranceDataForm.controls["FeeObjs"] as FormArray;
     var length = this.InsuranceDataForm.value["FeeObjs"].length;
 
-    var obj = { AppAssetId: this.AppAssetId };
+    var obj = { Id: this.AppAssetId };
     await this.http.post(URLConstant.GetFeeExpenseByAppAssetId, obj).toPromise().then(
       (response) => {
         var res = response;

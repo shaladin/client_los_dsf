@@ -178,7 +178,7 @@ export class SubsidyAddEditCFNAComponent implements OnInit {
           if(insIndex != -1)
           {
             let resAssetIns =  this.http.post<AppObj>(URLConstant.GetAppAssetListForInsuranceByAppId, { AppId: this.AppId });
-            let resCollateralIns = this.http.post<AppObj>(URLConstant.GetAppCollateralListForInsuranceByAppId, { AppId: this.AppId });          
+            let resCollateralIns = this.http.post<AppObj>(URLConstant.GetAppCollateralListForInsuranceByAppId, { Id: this.AppId });          
             forkJoin([resAssetIns, resCollateralIns]).subscribe
             (
               (response) => {

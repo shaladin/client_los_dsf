@@ -24,8 +24,8 @@ export class AppAssetDataDetailFl4wComponent implements OnInit {
 
   ngOnInit() {
     let getAppAsset = this.httpClient.post(URLConstant.GetAppAssetByAppAssetIdWithSerialNoDefinition, { AppAssetId: this.AppAssetId });
-    let getAppAssetSupplEmp = this.httpClient.post(URLConstant.GetListAppAssetSupplEmpByAppAssetId, { AppAssetId: this.AppAssetId });
-    let getAppCollReg = this.httpClient.post(URLConstant.GetAppCollateralRegistrationByAgrmntId, { AgrmntId: this.AgrmntId });
+    let getAppAssetSupplEmp = this.httpClient.post(URLConstant.GetListAppAssetSupplEmpByAppAssetId, { Id: this.AppAssetId });
+    let getAppCollReg = this.httpClient.post(URLConstant.GetAppCollateralRegistrationByAgrmntId, { Id: this.AgrmntId });
     forkJoin([getAppAsset, getAppAssetSupplEmp, getAppCollReg]).subscribe(
       (response: any) => {
         this.appAsset = response[0];

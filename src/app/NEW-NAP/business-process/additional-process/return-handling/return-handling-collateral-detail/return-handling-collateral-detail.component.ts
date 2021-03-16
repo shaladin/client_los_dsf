@@ -105,7 +105,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     RefMasterTypeCode: "",
   };
   appObj = {
-    AppId: 0,
+    Id: 0,
   };
 
   assetMasterObj = {
@@ -153,7 +153,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
 
 
   appCollateralObj = {
-    AppCollateralId: 0,
+    Id: 0,
   };
   inputAddressObjForOwner: InputAddressObj;
   inputAddressObjForLoc: InputAddressObj;
@@ -195,7 +195,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
 
-    this.appCollateralObj.AppCollateralId = this.AppCollateralId;
+    this.appCollateralObj.Id = this.AppCollateralId;
     this.inputFieldOwnerAddrObj = new InputFieldObj();
     this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
     this.inputFieldLocationAddrObj = new InputFieldObj();
@@ -550,7 +550,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   }
 
   GetAppData() {
-    this.appObj.AppId = this.AppId;
+    this.appObj.Id = this.AppId;
     this.http.post(this.getAppUrl, this.appObj).subscribe(
       (response) => {
         this.AppObj = response;
@@ -681,7 +681,6 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.inputFieldOwnerAddrObj = new InputFieldObj();
     this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
 
-
     this.ownerAddrObj = new AddrObj();
     this.ownerAddrObj.Addr = this.appCollateralRegist.OwnerAddr;
     this.ownerAddrObj.AreaCode1 = this.appCollateralRegist.OwnerAreaCode1;
@@ -700,7 +699,6 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.inputFieldLocationAddrObj = new InputFieldObj();
     this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
 
-
     this.locationAddrObj = new AddrObj();
     this.locationAddrObj.Addr = this.appCollateralRegist.LocationAddr;
     this.locationAddrObj.AreaCode1 = this.appCollateralRegist.LocationAreaCode1;
@@ -716,7 +714,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   }
 
   async GetListAddr() {
-    this.appObj.AppId = this.AppId;
+    this.appObj.Id = this.AppId;
     this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];

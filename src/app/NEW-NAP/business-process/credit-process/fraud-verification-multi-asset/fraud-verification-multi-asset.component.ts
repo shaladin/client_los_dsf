@@ -112,7 +112,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     this.appCustPersonalObj = new AppCustPersonalObj();
     this.appCustCompanyObj = new AppCustCompanyObj();
     this.dukcapilObj = new FraudDukcapilObj();
-    var appReqObj = { "AppId": this.AppId }
+    var appReqObj = { "AppId": this.AppId, "Id": this.AppId }
     this.http.post(this.getCustDataByAppId, appReqObj).subscribe(
       response => {
         this.appCustObj = response["AppCustObj"];
@@ -169,7 +169,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   }
 
   getFraudDukcapil() {
-    var fraudDukcapilReqObj = { "IdNo": this.idNo };
+    var fraudDukcapilReqObj = { "TrxNo": this.idNo };
     this.http.post(this.getFraudDukcapilByIdNo, fraudDukcapilReqObj).subscribe(
       response => {
         this.dukcapilObj = response[CommonConstant.ReturnObj];

@@ -149,7 +149,7 @@ export class AssetLeasingAddEditComponent implements OnInit {
   });
 
   appObj = {
-    AppId: 0,
+    Id: 0,
   };
   inputAddressObjForLoc: InputAddressObj;
 
@@ -203,7 +203,7 @@ SetAsset(event) {
 }
 
 GetListAddr() {
-  this.appObj.AppId = this.AppId;
+  this.appObj.Id = this.AppId;
   this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
     (response) => {
       this.AppCustAddrObj = response[CommonConstant.ReturnObj];
@@ -213,9 +213,10 @@ GetListAddr() {
 }
 
 copyToLocationAddr() {
-  this.appCustAddrObj = new AppCustAddrObj();
-  this.appCustAddrObj.AppCustAddrId = this.AssetDataForm.controls["LocationAddrType"].value;
-  this.http.post(this.getAppCustAddrByAppCustAddrId, this.appCustAddrObj).subscribe(
+  // this.appCustAddrObj = new AppCustAddrObj();
+  // this.appCustAddrObj.AppCustAddrId = this.AssetDataForm.controls["LocationAddrType"].value;
+  var appCustAddrObj = { Id: this.AssetDataForm.controls["LocationAddrType"].value };
+  this.http.post(this.getAppCustAddrByAppCustAddrId, appCustAddrObj).subscribe(
     (response) => {
         this.returnAppCustAddrObj = response;
         
@@ -474,12 +475,14 @@ copyToLocationAddr() {
 
         this.appCollateralObj = new AppCollateralObj();
         this.appCollateralObj.AppId = this.AppId;
+        this.appCollateralObj.Id = this.AppId;
         this.http.post(this.getAppCollateralByAppId, this.appCollateralObj).subscribe(
         (response) => {
           this.returnAppCollateralObj = response;
 
           this.appCollateralRegistObj = new AppCollateralRegistrationObj();
           this.appCollateralRegistObj.AppCollateralId = this.returnAppCollateralObj.AppCollateralId;
+          this.appCollateralRegistObj.Id = this.returnAppCollateralObj.AppCollateralId;
           this.http.post(this.getAppCollateralRegistByAppCollateralId, this.appCollateralRegistObj).subscribe(
           (response) => {
             this.returnAppCollateralRegistObj = response;

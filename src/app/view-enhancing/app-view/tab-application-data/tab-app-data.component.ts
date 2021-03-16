@@ -119,7 +119,7 @@ export class TabAppDataComponent implements OnInit {
 
   async GetAppDetailData() {
     var obj = {
-      AppID: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppDetailForAppTabById, obj).toPromise().then(
@@ -153,7 +153,7 @@ export class TabAppDataComponent implements OnInit {
 
   async GetCommData() {
     var obj = {
-      AppID: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppCommissionDataDetailByAppId, obj).toPromise().then(
@@ -216,7 +216,7 @@ export class TabAppDataComponent implements OnInit {
 
 
     var AppObj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
 
     this.http.post(URLConstant.GetListAppCollateralByAppId, AppObj).toPromise().then(
@@ -236,7 +236,7 @@ export class TabAppDataComponent implements OnInit {
 
 
     var AppObj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
 
     this.http.post(URLConstant.GetAppCollateralListForInsuranceByAppId, AppObj).toPromise().then(
@@ -273,7 +273,7 @@ export class TabAppDataComponent implements OnInit {
 
   async GetCrossData(){
     var obj = {
-      AppID: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetListAppCross, obj).toPromise().then(

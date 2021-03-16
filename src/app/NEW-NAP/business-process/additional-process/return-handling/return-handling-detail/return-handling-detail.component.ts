@@ -140,6 +140,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
   async getReturnHandling() {
     var reqObj = new ReturnHandlingHObj();
     reqObj.ReturnHandlingHId = this.returnHandlingHId;
+    reqObj.Id = this.returnHandlingHId;
     await this.http.post(URLConstant.GetReturnHandlingWithDetailByReturnHandlingHId, reqObj).toPromise().then(
       (response) => {
         this.returnHandlingHObj = response["ReturnHandlingHObj"];

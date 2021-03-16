@@ -37,7 +37,7 @@ export class CcAddressPagingComponent implements OnInit {
   }
 
   LoadListCustAddress(){
-    this.http.post<Array<AppCustAddrObj>>(URLConstant.GetListAppCustAddrByAppCustId, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post<Array<AppCustAddrObj>>(URLConstant.GetListAppCustAddrByAppCustId, { Id: this.AppCustId }).subscribe(
       (response) => {
         this.ListAddress = response;
         let idxCompany = this.ListAddress.findIndex(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeCompany);

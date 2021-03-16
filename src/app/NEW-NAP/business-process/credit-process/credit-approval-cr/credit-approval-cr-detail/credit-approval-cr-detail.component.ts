@@ -127,8 +127,9 @@ export class CreditApprovalCrDetailComponent implements OnInit {
 
   //#region Uc Approval 
   async getApp() {
-    let appObj = new AppObj();
-    appObj.AppId = this.appId
+    // let appObj = new AppObj();
+    // appObj.AppId = this.appId
+    var appObj = { Id: this.appId };
     await this.http.post<AppObj>(URLConstant.GetAppById, appObj).toPromise().then(
       (response) => {
         this.AppObj = response;

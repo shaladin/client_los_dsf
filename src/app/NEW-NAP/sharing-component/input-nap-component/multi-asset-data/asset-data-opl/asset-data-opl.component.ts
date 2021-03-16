@@ -59,7 +59,7 @@ export class AssetDataOplComponent implements OnInit {
   ListAttrAnswer = [];
 
   appObj = {
-    AppId: 0,
+    Id: 0,
   };
 
   vendorAccSuppObj = {
@@ -761,7 +761,7 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   async GetAppData() {
-    this.appObj.AppId = this.AppId;
+    this.appObj.Id = this.AppId;
     await this.http.post(URLConstant.GetAppById, this.appObj).toPromise().then(
       (response) => {
         this.AppObj = response;
@@ -937,7 +937,7 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   async GetListAddr() {
-    this.appObj.AppId = this.AppId;
+    this.appObj.Id = this.AppId;
     await this.http.post(URLConstant.GetListAppCustAddrByAppId, this.appObj).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];

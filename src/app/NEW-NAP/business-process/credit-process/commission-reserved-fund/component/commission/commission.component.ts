@@ -100,7 +100,7 @@ export class CommissionComponent implements OnInit {
 
   GetInfoCommission() {
     var objApi = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: "",
     };
     this.http.post(URLConstant.GetAppCommissionDataForEditByAppId, objApi).subscribe(

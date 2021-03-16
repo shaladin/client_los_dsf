@@ -122,7 +122,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     RowVersion: ""
   }
   async initBranchName() {
-    await this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.LifeInscoBranchNameObj.OfficeCode = response["OriOfficeCode"];
       }

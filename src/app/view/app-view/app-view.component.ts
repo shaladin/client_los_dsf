@@ -71,8 +71,9 @@ export class AppViewComponent implements OnInit {
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
     var appObj = { AppId: this.AppId };
+    var appObj1 = { Id: this.AppId };
 
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj)
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj1)
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
     forkJoin([getApp, getAppCust]).subscribe(
       (response) => {
@@ -105,7 +106,7 @@ export class AppViewComponent implements OnInit {
 
   GetApp() {
     var appObj = {
-      AppId: this.AppId,
+      Id: this.AppId,
     };
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response) => {
@@ -123,7 +124,6 @@ export class AppViewComponent implements OnInit {
           this.IsMultiAsset = false;
           this.IsFraudDetectionMulti = false;
           this.IsInsurance = false;
-
         }
         else if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
           this.IsAsset = false;
@@ -159,11 +159,11 @@ export class AppViewComponent implements OnInit {
       }
     );
   }
+
   tabChangeEvent(tabChangeEvent: MatTabChangeEvent) {
     if (tabChangeEvent.index == 0) {
       this.GetApp();
     }
     this.viewAppMainInfo.ReloadUcViewGeneric();
   }
-
 }

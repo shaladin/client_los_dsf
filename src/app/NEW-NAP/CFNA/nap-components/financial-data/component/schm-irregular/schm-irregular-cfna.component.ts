@@ -16,7 +16,6 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
   templateUrl: './schm-irregular-cfna.component.html',
 })
 export class SchmIrregularCFNAComponent implements OnInit {
-
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
   @Input() NumOfInst: number;
@@ -29,17 +28,15 @@ export class SchmIrregularCFNAComponent implements OnInit {
   result: AppObj = new AppObj();
   PriceLabel: string= "Financing Amount";
 
-  constructor(
-    private fb: FormBuilder,
+  constructor(private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService
-  ) { }
+    private toastr: NGXToastrService) { }
 
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.SetEntryInstallment();
-    this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId}).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.result = response;
         if(this.result.BizTemplateCode == CommonConstant.CFRFN4W ){
@@ -186,5 +183,4 @@ export class SchmIrregularCFNAComponent implements OnInit {
     }
     return true;
   }
-
 }
