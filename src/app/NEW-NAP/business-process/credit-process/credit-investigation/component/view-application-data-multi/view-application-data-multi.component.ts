@@ -197,7 +197,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
 
   async GetAppDetailData() {
     var obj = {
-      AppID: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppDetailForAppTabById, obj).toPromise().then(

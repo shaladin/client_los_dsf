@@ -16,11 +16,9 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
   templateUrl: './schm-reguler-fix-FL4W.component.html',
 })
 export class SchmRegulerFixFL4WComponent implements OnInit {
-
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
   @Output() RefreshSubsidy = new EventEmitter();
-
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
@@ -31,17 +29,15 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
   result: AppObj = new AppObj();
   PriceLabel: string = "Asset Price";
 
-  constructor(
-    private fb: FormBuilder,
+  constructor(private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService,
-  ) { }
+    private toastr: NGXToastrService) { }
 
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
-    this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId}).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.result = response;
         if(this.result.BizTemplateCode == CommonConstant.CFRFN4W){

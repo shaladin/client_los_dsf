@@ -59,7 +59,7 @@ export class FraudDetectionPagingComponent implements OnInit {
     }
     else {
       if (event.RowObj.ActCode == "FCR_" + this.BizTemplateCode) {
-        var appObj = { AppId: event.RowObj.AppId };
+        var appObj = { Id: event.RowObj.AppId };
         this.http.post(URLConstant.SurveyFraudAppCheckingValidationForFraudVerif, appObj).subscribe(
           (response) => {
             var dupCheckErrorMessage = response["DupCheckErrorMessage"];

@@ -61,9 +61,10 @@ export class OutstandingTcDetailComponent implements OnInit {
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
     var appObj = { AppId: this.AppId };
+    var appObj1 = { Id: this.AppId };
 
     let getCustNo = this.http.post(URLConstant.GetAppCustByAppId, appObj);
-    let getAppNo = this.http.post(URLConstant.GetAppById, appObj);
+    let getAppNo = this.http.post(URLConstant.GetAppById, appObj1);
     forkJoin([getCustNo, getAppNo]).subscribe(
       (response) => {
         this.custNo = response[0]['CustNo'];

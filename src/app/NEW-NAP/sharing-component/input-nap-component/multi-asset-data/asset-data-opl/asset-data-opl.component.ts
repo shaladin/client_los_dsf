@@ -761,8 +761,9 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   async GetAppData() {
-    this.appObj.AppId = this.AppId;
-    await this.http.post(URLConstant.GetAppById, this.appObj).toPromise().then(
+    // this.appObj.AppId = this.AppId;
+    var appObj = { Id: this.AppId };
+    await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
       (response) => {
         this.AppObj = response;
         this.OfficeCode = this.AppObj.OriOfficeCode;

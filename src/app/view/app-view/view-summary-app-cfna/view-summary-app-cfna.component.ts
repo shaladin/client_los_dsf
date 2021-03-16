@@ -1,10 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SummaryAppObj } from 'app/shared/model/App/SummaryAppObj.Model';
 import { SerialNoObj } from 'app/shared/model/SerialNo/SerialNoObj.Model';
-import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder } from '@angular/forms';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 
@@ -15,13 +12,14 @@ import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 })
 export class ViewSummaryAppCfnaComponent implements OnInit {
   @Input() AppId: number;
+
   SummaryAppObj: SummaryAppObj = new SummaryAppObj();
   SerialNoObjs: Array<SerialNoObj> = new Array<SerialNoObj>();
   LoanObjectData: Array<Object>;
   InputGridColl: InputGridObj;
   IsGridCollReady: boolean;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
+  constructor(private http: HttpClient) {
     this.LoanObjectData = new Array<Object>();
     this.IsGridCollReady = false;
   }
@@ -33,7 +31,7 @@ export class ViewSummaryAppCfnaComponent implements OnInit {
   }
 
   async getSummaryApp() {
-    var reqObj = { AppId: this.AppId };
+    var reqObj = { Id: this.AppId };
     await this.http.post<SummaryAppObj>(URLConstant.GetSummaryAppByAppId, reqObj).subscribe(
       (response) => {
         this.SummaryAppObj = response;
@@ -92,5 +90,4 @@ export class ViewSummaryAppCfnaComponent implements OnInit {
       });
     this.IsGridCollReady = true;
   }
-
 }

@@ -143,8 +143,9 @@ export class CreditReviewMainComponent implements OnInit {
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
     var appObj = { AppId: this.appId };
+    var appObj1 = { Id: this.appId };
 
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj)
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj1)
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
     forkJoin([getApp, getAppCust]).subscribe(
       (response) => {
@@ -178,7 +179,7 @@ export class CreditReviewMainComponent implements OnInit {
 
 
   async GetAppNo() {
-    var obj = { AppId: this.appId };
+    var obj = { Id: this.appId };
     await this.http.post<NapAppModel>(URLConstant.GetAppById, obj).toPromise().then(
       (response) => {
         if (response != undefined) {

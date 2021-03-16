@@ -56,7 +56,7 @@ export class FinancialDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId}).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId}).subscribe(
       (response) => {
         this.AppData = response;
         this.FinDataForm = this.fb.group(

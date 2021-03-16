@@ -194,7 +194,7 @@ export class CustomerDataComponent implements OnInit {
     await this.bindCustTypeObj();
     this.initAddrObj();
     await this.getCustData();
-    await this.http.post(URLConstant.GetAppById, { AppId: this.appId }).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
       (response: AppObj) => {
         this.appData = response;
       }
@@ -288,16 +288,18 @@ export class CustomerDataComponent implements OnInit {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
         }
 
-        if(gsUseDigitalization != undefined){
+        if(gsUseDigitalization != undefined) {
           this.isUseDigitalization = gsUseDigitalization.GsValue;
-        }else{
+        }
+        else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
         }
 
-        this.appObj = new AppObj();
-        this.appObj.AppId = this.appId;
+        // this.appObj = new AppObj();
+        // this.appObj.AppId = this.appId;
+        var appObj = { Id: this.appId };
         if(this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0"){
-          this.http.post(URLConstant.GetAppById, this.appObj).subscribe(
+          this.http.post(URLConstant.GetAppById, appObj).subscribe(
             (response) => {
               this.returnAppObj = response;
   

@@ -66,8 +66,9 @@ export class NapCustMainDataComponent implements OnInit {
   ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 0;
-    this.NapObj.AppId = this.appId;
-    this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
+    // this.NapObj.AppId = this.appId;
+    var appObj = { Id: this.appId };
+    this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;

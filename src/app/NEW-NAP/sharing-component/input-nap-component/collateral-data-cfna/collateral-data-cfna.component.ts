@@ -25,7 +25,7 @@ export class CollateralDataCfnaComponent implements OnInit {
   constructor(private toastr : NGXToastrService, private http: HttpClient) { }
 
   ngOnInit() {
-    this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).pipe(
+    this.http.post(URLConstant.GetAppById, { Id: this.AppId }).pipe(
       map((response: AppObj) => {
         return response;
       }),

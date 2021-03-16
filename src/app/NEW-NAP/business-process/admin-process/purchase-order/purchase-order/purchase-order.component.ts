@@ -82,10 +82,11 @@ export class PurchaseOrderComponent implements OnInit {
 
     var agrObj = { Id: this.AgrmntId };
     var appObj = { AppId: this.AppId };
+    var appObj1 = { Id: this.AppId };
 
     let getAgr = await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj)
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj1)
     forkJoin([getAgr, getAppCust, getApp]).subscribe(
       (response) => {
         this.agrNo = response[0]['AgrmntNo'];

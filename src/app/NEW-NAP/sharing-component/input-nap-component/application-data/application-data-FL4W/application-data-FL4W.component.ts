@@ -255,7 +255,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   resultResponse;
   getAppModelInfo() {
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
 

@@ -29,7 +29,7 @@ export class AppMainInfoComponent implements OnInit {
 
   ngOnInit() {
     this.whereValue.push(this.AppId);
-    this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.AppObj = response;
         if (this.AppObj.BizTemplateCode == CommonConstant.CF4W) {

@@ -233,7 +233,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   resultResponse;
   getAppModelInfo() {
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
 

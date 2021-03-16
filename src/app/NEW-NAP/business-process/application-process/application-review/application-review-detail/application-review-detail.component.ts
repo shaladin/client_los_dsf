@@ -116,7 +116,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
   //#region Get API Data
   appNo: string = "";
   async GetAppNo() {
-    let obj = { AppId: this.appId };
+    let obj = { Id: this.appId };
     await this.http.post<NapAppModel>(URLConstant.GetAppById, obj).toPromise().then(
       async (response) => {
         if (response != undefined) {
