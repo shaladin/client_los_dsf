@@ -72,7 +72,6 @@ export class NewNapCustAddrDetailComponent implements OnInit {
           this.AddressForm.patchValue({ MrCustAddrTypeCode: this.InputObj.InputedAddr.MrCustAddrTypeCode, CustAddrTypeName: this.InputObj.InputedAddr.CustAddrTypeName });
           this.selectedAddrType = this.InputObj.InputedAddr.CustAddrTypeName;
           this.appCustAddrObj.MrCustAddrTypeCode = this.InputObj.InputedAddr.MrCustAddrTypeCode;
-          this.appCustAddrObj.RowVersion = this.InputObj.InputedAddr.RowVersion;
           this.inputAddressObj.inputField.inputLookupObj.nameSelect = this.InputObj.InputedAddr.Zipcode;
           this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: this.InputObj.InputedAddr.Zipcode };
           this.inputAddressObj.default = this.AddrObj;
@@ -103,7 +102,26 @@ export class NewNapCustAddrDetailComponent implements OnInit {
       return
     }
     var copiedAddr = this.InputObj.ListInputedAddr.find(x => x.MrCustAddrTypeCode == this.AddressForm.controls.CopyAddrFrom.value);
-    this.AddrObj = copiedAddr;
+    this.AddrObj = new AddrObj();
+    this.AddrObj.Addr = copiedAddr.Addr;
+    this.AddrObj.AreaCode1 = copiedAddr.AreaCode1;
+    this.AddrObj.AreaCode2 = copiedAddr.AreaCode2;
+    this.AddrObj.AreaCode3 = copiedAddr.AreaCode3;
+    this.AddrObj.AreaCode4 = copiedAddr.AreaCode4;
+    this.AddrObj.City = copiedAddr.City;
+    this.AddrObj.Fax = copiedAddr.Fax;
+    this.AddrObj.FaxArea = copiedAddr.FaxArea;
+    this.AddrObj.Phn1 = copiedAddr.Phn1;
+    this.AddrObj.Phn2 = copiedAddr.Phn2;
+    this.AddrObj.Phn3 = copiedAddr.Phn3;
+    this.AddrObj.PhnArea1 = copiedAddr.PhnArea1;
+    this.AddrObj.PhnArea2 = copiedAddr.PhnArea2;
+    this.AddrObj.PhnArea3 = copiedAddr.PhnArea3;
+    this.AddrObj.PhnExt1 = copiedAddr.PhnExt1;
+    this.AddrObj.PhnExt2 = copiedAddr.PhnExt2;
+    this.AddrObj.PhnExt3 = copiedAddr.PhnExt3;
+    
+
     this.inputAddressObj.inputField.inputLookupObj.nameSelect = copiedAddr.Zipcode;
     this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: copiedAddr.Zipcode };
     this.inputAddressObj.default = this.AddrObj;
@@ -146,38 +164,41 @@ export class NewNapCustAddrDetailComponent implements OnInit {
     }
 
     if(!Flag){
-      this.appCustAddrObj.MrCustAddrTypeCode = this.AddressForm.controls.MrCustAddrTypeCode.value;
-      if(this.appCustAddrObj.MrCustAddrTypeCode != CommonConstant.AddrTypeLegal){
-        this.appCustAddrObj.MrHouseOwnershipCode = this.AddressForm.controls["Address"]["controls"].MrHouseOwnershipCode.value;
+      var addEditedAppCustAddrObj = new AppCustAddrObj();    
+      addEditedAppCustAddrObj.MrCustAddrTypeCode = this.AddressForm.controls.MrCustAddrTypeCode.value;
+
+      if(addEditedAppCustAddrObj.MrCustAddrTypeCode != CommonConstant.AddrTypeLegal){
+        addEditedAppCustAddrObj.MrHouseOwnershipCode = this.AddressForm.controls["Address"]["controls"].MrHouseOwnershipCode.value;
       }
-      this.appCustAddrObj.Addr = this.AddressForm.controls["Address"]["controls"].Addr.value;
-      this.appCustAddrObj.AreaCode1 = this.AddressForm.controls["Address"]["controls"].AreaCode1.value;
-      this.appCustAddrObj.AreaCode2 = this.AddressForm.controls["Address"]["controls"].AreaCode2.value;
-      this.appCustAddrObj.AreaCode3 = this.AddressForm.controls["Address"]["controls"].AreaCode3.value;
-      this.appCustAddrObj.AreaCode4 = this.AddressForm.controls["Address"]["controls"].AreaCode4.value;
-      this.appCustAddrObj.City = this.AddressForm.controls["Address"]["controls"].City.value;
-      this.appCustAddrObj.Zipcode = this.AddressForm.controls["AddressZipcode"]["value"].value;
-      this.appCustAddrObj.SubZipcode = this.AddressForm.controls["Address"]["controls"].SubZipcode.value;
-      this.appCustAddrObj.PhnArea1 = this.AddressForm.controls["Address"]["controls"].PhnArea1.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnArea1.value;
-      this.appCustAddrObj.Phn1 = this.AddressForm.controls["Address"]["controls"].Phn1.value == null ? "" : this.AddressForm.controls["Address"]["controls"].Phn1.value;
-      this.appCustAddrObj.PhnExt1 = this.AddressForm.controls["Address"]["controls"].PhnExt1.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnExt1.value;
-      this.appCustAddrObj.PhnArea2 = this.AddressForm.controls["Address"]["controls"].PhnArea2.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnArea2.value;
-      this.appCustAddrObj.Phn2 = this.AddressForm.controls["Address"]["controls"].Phn2.value == null ? "" : this.AddressForm.controls["Address"]["controls"].Phn2.value;
-      this.appCustAddrObj.PhnExt2 = this.AddressForm.controls["Address"]["controls"].PhnExt2.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnExt2.value;
-      this.appCustAddrObj.PhnArea3 = this.AddressForm.controls["Address"]["controls"].PhnArea3.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnArea3.value;
-      this.appCustAddrObj.Phn3 = this.AddressForm.controls["Address"]["controls"].Phn3.value == null ? "" : this.AddressForm.controls["Address"]["controls"].Phn3.value;
-      this.appCustAddrObj.PhnExt3 = this.AddressForm.controls["Address"]["controls"].PhnExt3.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnExt3.value;
-      this.appCustAddrObj.FaxArea = this.AddressForm.controls["Address"]["controls"].FaxArea.value;
-      this.appCustAddrObj.Fax = this.AddressForm.controls["Address"]["controls"].Fax.value;
-      this.appCustAddrObj.PhoneNo = this.appCustAddrObj.PhnArea1 + " - " + this.appCustAddrObj.Phn1 + " - " + this.appCustAddrObj.PhnExt1;
-      this.appCustAddrObj.PhoneNo2 = this.appCustAddrObj.PhnArea2 + " - " + this.appCustAddrObj.Phn2 + " - " + this.appCustAddrObj.PhnExt2;
-      this.appCustAddrObj.CustAddrTypeName = this.selectedAddrType;
-      this.appCustAddrObj.HouseOwnershipName = this.appCustAddrObj.MrHouseOwnershipCode;
+
+      addEditedAppCustAddrObj.Addr = this.AddressForm.controls["Address"]["controls"].Addr.value;
+      addEditedAppCustAddrObj.AreaCode1 = this.AddressForm.controls["Address"]["controls"].AreaCode1.value;
+      addEditedAppCustAddrObj.AreaCode2 = this.AddressForm.controls["Address"]["controls"].AreaCode2.value;
+      addEditedAppCustAddrObj.AreaCode3 = this.AddressForm.controls["Address"]["controls"].AreaCode3.value;
+      addEditedAppCustAddrObj.AreaCode4 = this.AddressForm.controls["Address"]["controls"].AreaCode4.value;
+      addEditedAppCustAddrObj.City = this.AddressForm.controls["Address"]["controls"].City.value;
+      addEditedAppCustAddrObj.Zipcode = this.AddressForm.controls["AddressZipcode"]["value"].value;
+      addEditedAppCustAddrObj.SubZipcode = this.AddressForm.controls["Address"]["controls"].SubZipcode.value;
+      addEditedAppCustAddrObj.PhnArea1 = this.AddressForm.controls["Address"]["controls"].PhnArea1.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnArea1.value;
+      addEditedAppCustAddrObj.Phn1 = this.AddressForm.controls["Address"]["controls"].Phn1.value == null ? "" : this.AddressForm.controls["Address"]["controls"].Phn1.value;
+      addEditedAppCustAddrObj.PhnExt1 = this.AddressForm.controls["Address"]["controls"].PhnExt1.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnExt1.value;
+      addEditedAppCustAddrObj.PhnArea2 = this.AddressForm.controls["Address"]["controls"].PhnArea2.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnArea2.value;
+      addEditedAppCustAddrObj.Phn2 = this.AddressForm.controls["Address"]["controls"].Phn2.value == null ? "" : this.AddressForm.controls["Address"]["controls"].Phn2.value;
+      addEditedAppCustAddrObj.PhnExt2 = this.AddressForm.controls["Address"]["controls"].PhnExt2.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnExt2.value;
+      addEditedAppCustAddrObj.PhnArea3 = this.AddressForm.controls["Address"]["controls"].PhnArea3.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnArea3.value;
+      addEditedAppCustAddrObj.Phn3 = this.AddressForm.controls["Address"]["controls"].Phn3.value == null ? "" : this.AddressForm.controls["Address"]["controls"].Phn3.value;
+      addEditedAppCustAddrObj.PhnExt3 = this.AddressForm.controls["Address"]["controls"].PhnExt3.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnExt3.value;
+      addEditedAppCustAddrObj.FaxArea = this.AddressForm.controls["Address"]["controls"].FaxArea.value;
+      addEditedAppCustAddrObj.Fax = this.AddressForm.controls["Address"]["controls"].Fax.value;
+      addEditedAppCustAddrObj.PhoneNo = addEditedAppCustAddrObj.PhnArea1 + " - " + addEditedAppCustAddrObj.Phn1 + " - " + addEditedAppCustAddrObj.PhnExt1;
+      addEditedAppCustAddrObj.PhoneNo2 = addEditedAppCustAddrObj.PhnArea2 + " - " + addEditedAppCustAddrObj.Phn2 + " - " + addEditedAppCustAddrObj.PhnExt2;
+      addEditedAppCustAddrObj.CustAddrTypeName = this.selectedAddrType;
+      addEditedAppCustAddrObj.HouseOwnershipName = addEditedAppCustAddrObj.MrHouseOwnershipCode;
 
       if(this.InputObj.Mode == "Edit"){
-        this.InputObj.ListInputedAddr[this.InputObj.EditedIndex] = this.appCustAddrObj;
+        this.InputObj.ListInputedAddr[this.InputObj.EditedIndex] = addEditedAppCustAddrObj;
       }else{
-        this.InputObj.ListInputedAddr.push(this.appCustAddrObj);
+        this.InputObj.ListInputedAddr.push(addEditedAppCustAddrObj);
       }
       this.OutputTab.emit({ IsDetail: false, ListAddress: this.InputObj.ListInputedAddr });
       

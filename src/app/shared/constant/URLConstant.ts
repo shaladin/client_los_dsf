@@ -504,8 +504,8 @@ export class URLConstant {
   public static DeleteAppGuarantor = environment.losUrl + "/AppGuarantor/DeleteAppGuarantor"
   public static GetListAppGuarantorCompanyByAppId = environment.losUrl + "/AppGuarantor/GetListAppGuarantorCompanyByAppId"
   public static GetListAppGuarantorPersonalByAppId = environment.losUrl + "/AppGuarantor/GetListAppGuarantorPersonalByAppId"
-  public static GetListAppGuarantorPersonalForView = environment.losUrl + "/AppGuarantor/GetListAppGuarantorPersonalForView"
-  public static GetListAppGuarantorCompanyForView = environment.losUrl + "/AppGuarantor/GetListAppGuarantorCompanyForView"
+  public static GetListAppGuarantorPersonalForView = environment.losUrl + "/AppCust/GetListAppGuarantorPersonalForView"
+  public static GetListAppGuarantorCompanyForView = environment.losUrl + "/AppCust/GetListAppGuarantorCompanyForView"
 
   // Vendor
   public static GetListVendorBankAccByVendorId = environment.FoundationR3Url + "/VendorBankAcc/GetListVendorBankAccByVendorId";

@@ -8,7 +8,7 @@ export class AppCustPersonalFinDataObj {
     SpouseMonthlyIncomeAmt: number;
     IsJoinIncome: boolean;
     OtherIncomeAmt: number;
-    OtherMonthlyInstAmt: number;
+    OtherMonthlyInstallmentAmt: number;
     TotalIncomeAmt: number;
     NettIncomeAmt: number;
     RowVersion: string;
@@ -24,7 +24,7 @@ constructor() {
         this.IsJoinIncome = false;
         this.RowVersion = "";
         this.OtherIncomeAmt = 0;
-        this.OtherMonthlyInstAmt = 0;
+        this.OtherMonthlyInstallmentAmt = 0;
         this.TotalIncomeAmt = 0;
         this.NettIncomeAmt = 0;
     }

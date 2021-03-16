@@ -74,7 +74,7 @@ export class NewNapCustPersonalFinancialComponent implements OnInit {
             IsJoinIncome: response.IsJoinIncome,
             MonthlyExpenseAmt: response.MonthlyExpenseAmt,
             MonthlyInstallmentAmt: response.MonthlyInstallmentAmt,
-            OtherMonthlyInstAmt: response.OtherMonthlyInstAmt,
+            OtherMonthlyInstAmt: response.OtherMonthlyInstallmentAmt,
             SpouseMonthlyIncomeAmt: response.SpouseMonthlyIncomeAmt,
             RowVersion: response.RowVersion
           });
