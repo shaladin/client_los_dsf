@@ -78,7 +78,7 @@
             "datatype": "date"
         },
         {
-            "type": "textbox",
+            "type": "currency",
             "name": "MC.PLAFOND_AMT",
             "id": "GreaterPlafondAmt",
             "value": "",
@@ -87,7 +87,7 @@
             "datatype": "numeric"
         },
         {
-            "type": "textbox",
+            "type": "currency",
             "name": "MC.PLAFOND_AMT",
             "id": "LessPlafondAmt",
             "value": "",
