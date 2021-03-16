@@ -6,7 +6,7 @@
       <div class="col-md-6 ">
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> Asset Name </label>
+            <label class="label-control" translate> Asset Name </label>
           </div>
           <div class="col-md-6 ">
             <label class="label-control"> {{crdRvwAssetObj.AssetName}} / {{crdRvwAssetObj.AssetCondition}} / {{crdRvwAssetObj.AssetUsage}} </label>
@@ -14,7 +14,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> Asset Price </label>
+            <label class="label-control" translate> Asset Price </label>
           </div>
           <div class="col-md-6 ">
             <label class="label-control"> {{crdRvwAssetObj.AssetPrice | number:'.2':'en-US'}} </label>
@@ -24,7 +24,7 @@
           <div class="col-md-6">
             <div class="row">
               <div class="col-md-10">
-                <label class="label-control"> Negative Asset </label>
+                <label class="label-control" translate> Negative Asset </label>
               </div>
               <div class="col-md-2">
                 <span id="NegAssetIndicator" style="float: right;">
@@ -49,7 +49,7 @@
       <div class="col-md-6 ">
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> DP Amount / Percentage </label>
+            <label class="label-control" translate> DP Amount / Percentage </label>
           </div>
           <div class="col-md-6 ">
             <label class="label-control"> {{crdRvwAssetObj.DpAmount | number:'.2':'en-US'}} / {{crdRvwAssetObj.DpPrcnt}}% </label>
@@ -57,7 +57,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> Insurance </label>
+            <label class="label-control" translate> Insurance </label>
           </div>
           <div class="col-md-6 ">
             <label class="label-control"> {{crdRvwAssetObj.Insurance}} </label>
@@ -65,7 +65,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="label-control"> Is Double Financing </label>
+            <label class="label-control" translate> Is Double Financing </label>
           </div>
           <div class="col-md-6 ">
             <label class="label-control" *ngIf="crdRvwAssetObj.IsDoubleFinancing"> Yes </label>

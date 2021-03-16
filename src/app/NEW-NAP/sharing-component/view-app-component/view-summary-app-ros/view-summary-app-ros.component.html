@@ -6,7 +6,7 @@
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Customer Name </label>
+            <label class="adInsLabel" translate> Customer Name </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{SummaryAppObj?.AppCustObj?.CustName}} - {{SummaryAppObj?.AppCustObj?.IsExistingCust == true ? '(Existing Customer)' : '(New Customer)'}} <i class="fa fa-circle" *ngIf="SummaryAppObj?.NegCustColor != '' && SummaryAppObj?.NegCustColor != null" aria-hidden="true" [ngStyle]="{'color': SummaryAppObj?.NegCustColor}"></i></label>
@@ -14,8 +14,8 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel"> Birth Place/Date </label>
-            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel"> NPWP </label>
+            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel" translate> Birth Place/Date </label>
+            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel" translate> NPWP </label>
           </div>
           <div class="col-md-6">
             <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel">{{SummaryAppObj?.AppCustPersonalObj?.BirthPlace}}, {{SummaryAppObj?.AppCustPersonalObj?.BirthDt  | date: 'dd-MM-yyyy'}} ({{SummaryAppObj?.AppCustObj?.Age}} Years Old) </label>
@@ -24,7 +24,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Address </label>
+            <label class="adInsLabel" translate> Address </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{SummaryAppObj?.AppCustAddrLegalObj?.FullAddr}} </label>
@@ -32,8 +32,8 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel"> Occupation </label>
-            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel"> Industry Type </label>
+            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel" translate> Occupation </label>
+            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel" translate> Industry Type </label>
           </div>
           <div class="col-md-6">
             <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel"> {{SummaryAppObj?.AppCustPersonalJobDataObj?.ProfessionName}} </label>
@@ -42,8 +42,8 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel"> Status </label>
-            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel"> Owner </label>
+            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel" translate> Status </label>
+            <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'COMPANY'" class="adInsLabel" translate> Owner </label>
           </div>
           <div class="col-md-6">
             <label *ngIf="SummaryAppObj?.AppCustObj?.MrCustTypeCode == 'PERSONAL'" class="adInsLabel"> {{SummaryAppObj?.AppCustPersonalObj?.MaritalStatName}} </label>
@@ -54,7 +54,7 @@
       <div class="col-md-6">
         <div *ngIf="SummaryAppObj?.AppCustPersonalObj?.MrMaritalStatCode == 'MARRIED'" class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Spouse </label>
+            <label class="adInsLabel" translate> Spouse </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{SummaryAppObj?.SpouseName}} </label>
@@ -62,7 +62,7 @@
         </div>
         <div class="row" *ngFor="let item of SummaryAppObj?.AppGuarantorObjs; let i=index">
           <div class="col-md-6">
-            <label *ngIf="i == 0" class="adInsLabel"> Guarantor </label>
+            <label *ngIf="i == 0" class="adInsLabel" translate> Guarantor </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{item.GuarantorName + ' - ' + item.CustRelationshipCodeDesc}} <i class="fa fa-circle" aria-hidden="true" [ngStyle]="{'color': item.SLAColor}"></i></label>
@@ -78,14 +78,14 @@
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel" style="font-weight: bold;"> Exposure </label>
+            <label class="adInsLabel" style="font-weight: bold;" translate> Exposure </label>
           </div>
           <div class="col-md-6">
           </div>
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Customer Exposure </label>
+            <label class="adInsLabel" translate> Customer Exposure </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{SummaryAppObj?.CustExposureAmt | number:'.2':'en-US'}} </label>
@@ -93,7 +93,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Customer Group Exposure </label>
+            <label class="adInsLabel" translate> Customer Group Exposure </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{SummaryAppObj?.CustGrpExposureAmt | number:'.2':'en-US'}} </label>
@@ -101,7 +101,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Obligor Exposure </label>
+            <label class="adInsLabel" translate> Obligor Exposure </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{SummaryAppObj?.ObligorExposureAmt | number:'.2':'en-US'}} </label>
@@ -111,14 +111,14 @@
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel" style="font-weight: bold;"> Existing Application / Agreement </label>
+            <label class="adInsLabel" style="font-weight: bold;" translate> Existing Application / Agreement </label>
           </div>
           <div class="col-md-6">
           </div>
         </div>
         <!--<div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> OS AR Agreement </label>
+            <label class="adInsLabel" translate> OS AR Agreement </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{SummaryAppObj?.OsArAgrmntAmt | number:'.2':'en-US'}} </label>
@@ -126,7 +126,7 @@
         </div>-->
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Application Reject </label>
+            <label class="adInsLabel" translate> Application Reject </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{SummaryAppObj?.AppRejectCount}} </label>
@@ -134,7 +134,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Application in Process </label>
+            <label class="adInsLabel" translate> Application in Process </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{SummaryAppObj?.AppInProcessCount}} </label>
@@ -179,7 +179,7 @@
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Rental Period (In Month) - First Installment Type</label>
+            <label class="adInsLabel" translate> Rental Period (In Month) - First Installment Type</label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{SummaryAppObj?.AppObj?.NumOfInst}} - {{SummaryAppObj?.AppObj?.FirstInstTypeName}}</label>
@@ -187,7 +187,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Total Submitted TC </label>
+            <label class="adInsLabel" translate> Total Submitted TC </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{SummaryAppObj?.SubmittedTcCount}}/{{SummaryAppObj?.TotalTcCount}} </label>
@@ -198,7 +198,7 @@
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Sales Officer - Supervisor </label>
+            <label class="adInsLabel" translate> Sales Officer - Supervisor </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{SummaryAppObj?.AppObj?.SalesOfficerName}} -  {{SummaryAppObj?.SalesOfficerSuperVisorName}}</label>
@@ -336,7 +336,7 @@
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Total Security Deposit </label>
+            <label class="adInsLabel" translate> Total Security Deposit </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> Feature Not Yet </label>
@@ -345,7 +345,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Total Operating Margin </label>
+            <label class="adInsLabel" translate> Total Operating Margin </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> Feature Not Yet </label>
@@ -354,7 +354,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Total Rental Amount (Monthly) (Exec.VAT) </label>
+            <label class="adInsLabel" translate> Total Rental Amount (Monthly) (Exec.VAT) </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> Feature Not Yet </label>
@@ -363,7 +363,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Total Rental VAT Amount (Monthly) </label>
+            <label class="adInsLabel" translate> Total Rental VAT Amount (Monthly) </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> Feature Not Yet </label>
@@ -372,7 +372,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Total Rental Amount (Monthly) (Inc.VAT)</label>
+            <label class="adInsLabel" translate> Total Rental Amount (Monthly) (Inc.VAT)</label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> Feature Not Yet </label>
@@ -383,7 +383,7 @@
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Total Operating Cost </label>
+            <label class="adInsLabel" translate> Total Operating Cost </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> Feature Not Yet </label>
@@ -392,7 +392,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Total Cost After Margin </label>
+            <label class="adInsLabel" translate> Total Cost After Margin </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> Feature Not Yet </label>
@@ -401,7 +401,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Total Final Rental (Exec. VAT) </label>
+            <label class="adInsLabel" translate> Total Final Rental (Exec. VAT) </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> Feature Not Yet </label>
@@ -410,7 +410,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Total Final Rental VAT Amount </label>
+            <label class="adInsLabel" translate> Total Final Rental VAT Amount </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> Feature Not Yet </label>
@@ -419,7 +419,7 @@
         </div>
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel"> Total Final Rental (Inc. VAT) </label>
+            <label class="adInsLabel" translate> Total Final Rental (Inc. VAT) </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> Feature Not Yet </label>

@@ -1,9 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
@@ -12,17 +9,15 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   providers: [NGXToastrService]
 })
 export class ViewPurchaseOrderComponent implements OnInit {
-
   @Input() agrmntId: number = 0;
   @Input() BizTemplateCode: string;
   ResponseAgrmntFinDataData: any;
   ResponseAppAssetData: any;
   ResponsePurchaseOrderHData: any;
   ResponseAppLoanPurposeWithSupplierNameObj: any;
+  AssetTypeObj: any;
   
-  constructor(
-    private http: HttpClient,
-  ) { }
+  constructor(private http: HttpClient) { }
 
   async ngOnInit() {
     await this.BindPOData();
@@ -36,6 +31,13 @@ export class ViewPurchaseOrderComponent implements OnInit {
         this.ResponseAppAssetData = response["ResponseAppAssetObj"];
         this.ResponsePurchaseOrderHData = response["ResponsePurchaseOrderHObj"];
         this.ResponseAppLoanPurposeWithSupplierNameObj = response["ResponseAppLoanPurposeWithSupplierNameObj"];
-      });
+      }
+    );
+
+    this.http.post(URLConstant.GetAssetTypeByCode, { AssetTypeCode: this.ResponseAppAssetData.AssetTypeCode }).subscribe(
+      (response: any) => {
+        this.AssetTypeObj = response;
+      }
+    );
   }
 }

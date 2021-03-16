@@ -80,7 +80,7 @@ export class PurchaseOrderComponent implements OnInit {
     this.dmsAppObj.Role = currentUserContext.RoleCode;
     this.dmsAppObj.ViewCode = CommonConstant.DmsViewCodeApp;
 
-    var agrObj = { AgrmntId: this.AgrmntId };
+    var agrObj = { Id: this.AgrmntId };
     var appObj = { AppId: this.AppId };
 
     let getAgr = await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj)

@@ -28,7 +28,7 @@ export class AppAssetViewFinancialDataComponent implements OnInit {
 
   async GetRentalCalculation() {
     var requestAppAssetId = {
-      AppAssetId: this.AppAssetId
+      Id: this.AppAssetId
     };
 
     await this.http.post(URLConstant.GetRentalCalculationData, requestAppAssetId).toPromise().then(

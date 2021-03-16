@@ -9,7 +9,7 @@
               </lib-ucSubsection>
               <div *ngIf="tempCustNo!= null">
                 <div class="form-group row">
-                  <label class="col-md-2">Customer No</label>
+                  <label class="col-md-2" translate>Customer No</label>
                   <label class="col-md-4">{{this.tempCustNo}}</label>
                 </div>
               </div>
@@ -17,14 +17,14 @@
                 <!-- left -->
                 <div class="col-md-6">
                   <div class="form-group row adins-required">
-                    <label class="col-md-4 adInsLabel">Guarantor Name </label>
+                    <label class="col-md-4 adInsLabel" translate>Guarantor Name </label>
                     <div class="col-md-8">
                       <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]="CompanyForm" [enjiForm]="enjiForm"
                                            [identifier]="'LookupGuarantor'" (lookup)="lookupGuarantor($event)"></lib-uclookupgeneric>
                     </div>
                   </div>
                   <div class="form-group row adins-required">
-                    <label class="col-md-4 adInsLabel">Company Type </label>
+                    <label class="col-md-4 adInsLabel" translate>Company Type </label>
                     <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrCompanyTypeCode"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MrCompanyTypeCode.invalid }">
@@ -37,7 +37,7 @@
                     </div>
                   </div>
                   <div class="class=form-group row ">
-                    <label class="col-md-4 adInsLabel">Customer Relationship </label>
+                    <label class="col-md-4 adInsLabel" translate>Customer Relationship </label>
                     <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrCustRelationshipCode"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MrCustRelationshipCode.invalid }">
@@ -67,7 +67,7 @@
                     </div>
                   </div>
                   <div class="form-group row adins-required">
-                    <label class="col-md-4 adInsLabel">Industry Type </label>
+                    <label class="col-md-4 adInsLabel" translate>Industry Type </label>
                     <div class="col-md-8">
                       <lib-uclookupgeneric [lookupInput]="inputLookupObj1" [parentForm]="CompanyForm" [enjiForm]="enjiForm"
                                            [identifier]="'LookupIndustryType'" (lookup)="handleOutput1($event)"></lib-uclookupgeneric>
@@ -83,7 +83,7 @@
                 <div class="col-md-6">
                   <!-- left -->
                   <div class="form-group row" [ngClass]="{'adins-required' : isContactMandatory}">
-                    <label class="col-md-4 adInsLabel">Contact Name </label>
+                    <label class="col-md-4 adInsLabel" translate>Contact Name </label>
                     <div class="col-md-8">
                       <input type="text" class="form-control adInsInput width-100-per" formControlName="ContactName" (focusout)="ChangeContactInfo()"
                              [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.ContactName.invalid }">
@@ -92,7 +92,7 @@
                     </div>
                   </div>
                   <div class="form-group row" [ngClass]="{'adins-required' : isContactMandatory}">
-                    <label class="col-md-4 adInsLabel">Mobile Phone 1</label>
+                    <label class="col-md-4 adInsLabel" translate>Mobile Phone 1</label>
                     <div class="col-md-8">
                       <input type="text" class="form-control adInsInput width-100-per" formControlName="MobilePhnNo1" (focusout)="ChangeContactInfo()"
                              [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MobilePhnNo1.invalid }">
@@ -101,7 +101,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4 adInsLabel">Mobile Phone 2</label>
+                    <label class="col-md-4 adInsLabel" translate>Mobile Phone 2</label>
                     <div class="col-md-8">
                       <input type="text" class="form-control adInsInput width-100-per" formControlName="MobilePhnNo2" (focusout)="ChangeContactInfo()"
                              [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MobilePhnNo2.invalid }">
@@ -110,7 +110,7 @@
                     </div>
                   </div>
                   <div class="form-group row" [ngClass]="{'adins-required' : isContactMandatory}">
-                    <label class="col-md-4 adInsLabel">Email</label>
+                    <label class="col-md-4 adInsLabel" translate>Email</label>
                     <div class="col-md-8">
                       <input type="text" class="form-control" formControlName="ContactEmail" (focusout)="ChangeContactInfo()"
                              [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.ContactEmail.invalid }">
@@ -122,7 +122,7 @@
                 <!-- right -->
                 <div class="col-md-6">
                   <div class="form-group row" [ngClass]="{'adins-required' : isContactMandatory}">
-                    <label class="col-md-4 adInsLabel">Position</label>
+                    <label class="col-md-4 adInsLabel" translate>Position</label>
                     <div class="col-md-8">
                       <select class="form-control adInsInput full-width" style="width: auto" formControlName="MrJobPositionCode" (change)="ChangeContactInfo()"
                               [ngClass]="{ 'is-invalid': enjiForm.submitted && CompanyForm.controls.MrJobPositionCode.invalid }">
@@ -136,9 +136,9 @@
                     </div>
                   </div>
                   <div class="form-group row" [ngClass]="{'adins-required' : isContactMandatory}">
-                    <!-- <label class="col-md-4 adInsLabel" *ngIf="CompanyForm.controls.ContactName.value==''">Phone No 1</label> -->
-                    <!-- <label class="col-md-4 adins-required-label" *ngIf="CompanyForm.controls.ContactName.value!=''">Phone No (Fix Line) 1</label> -->
-                    <label class="col-md-4 adInsLabel">Phone No 1</label>
+                    <!-- <label class="col-md-4 adInsLabel" *ngIf="CompanyForm.controls.ContactName.value==''" translate>Phone No 1</label> -->
+                    <!-- <label class="col-md-4 adins-required-label" *ngIf="CompanyForm.controls.ContactName.value!=''" translate>Phone No (Fix Line) 1</label> -->
+                    <label class="col-md-4 adInsLabel" translate>Phone No 1</label>
                     <div class="col-md-8">
                       <div class="form-group row">
                         <div class="col-md-3" style="border-right: 1px solid grey">
@@ -163,7 +163,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4 adInsLabel">Phone No 2 </label>
+                    <label class="col-md-4 adInsLabel" translate>Phone No 2 </label>
                     <div class="col-md-8">
                       <div class="form-group row ">
                         <div class="col-md-3" style="border-right: 1px solid grey">
@@ -188,7 +188,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4 adInsLabel">Fax </label>
+                    <label class="col-md-4 adInsLabel" translate>Fax </label>
                     <div class="col-md-8">
                       <div class="form-group row ">
                         <div class="col-md-3" style="border-right: 1px solid grey">
@@ -217,7 +217,7 @@
                 <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancel()" translate>
                   <i class="ft-x"></i> Cancel
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary">
+                <button type="submit" class="btn btn-raised btn-primary" translate>
                   <i class="far fa-check-square"></i> Save
                 </button>
               </div>

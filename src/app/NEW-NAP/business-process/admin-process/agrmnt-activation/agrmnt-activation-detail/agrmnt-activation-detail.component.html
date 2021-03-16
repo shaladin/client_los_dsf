@@ -85,7 +85,7 @@
               <div class="col-md-6" *ngFor="let item of AppFees">
                 <div class="row">
                   <div class="col-md-6">
-                    <label>{{item.FeeName}}</label>
+                    <label translate>{{item.FeeName}}</label>
                   </div>
                   <div class="col-md-6">
                     <label>{{item.AppFeeAmt | number}}</label>
@@ -100,7 +100,7 @@
               [queryParams]="{BizTemplateCode: this.BizTemplateCode}" translate>
                 <i class="ft-x"></i> Cancel
               </button>
-              <button type="submit" class="btn btn-raised btn-primary" (click)="Submit()">
+              <button type="submit" class="btn btn-raised btn-primary" (click)="Submit()" translate>
                 <i class="far fa-check-square"></i> Save
               </button>
             </div>

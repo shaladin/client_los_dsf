@@ -25,7 +25,6 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
   WfTaskListId: number;
   AppCustCompanyId: number;
   stepIndex: number = 1;
-  BizTemplateCode: string;
   private stepper: Stepper;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   IsCompletion: boolean = false;
@@ -68,9 +67,6 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
       if (params['WfTaskListId'] != null) {
         this.WfTaskListId = params['WfTaskListId'];
       }
-      if (params['BizTemplateCode'] != null) {
-        this.BizTemplateCode = params['BizTemplateCode'];
-      }
       if (params["ReturnHandlingHId"] != null) {
         this.ReturnHandlingHId = params["ReturnHandlingHId"];
       }
@@ -107,10 +103,10 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
 
   Back() {
     if (this.ReturnHandlingHId != 0) {
-      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "ReturnHandlingHId": this.ReturnHandlingHId, "BizTemplateCode": this.BizTemplateCode } });
+      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "ReturnHandlingHId": this.ReturnHandlingHId} });
     }
     else {
-      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "BizTemplateCode": this.BizTemplateCode } });
+      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId} });
     }
   }
   

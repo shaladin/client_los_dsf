@@ -27,9 +27,9 @@
         </tbody>
     </table>
 </div>
+
 <div class="form-body">
   <form class="form form-horizontal" [formGroup]="tcForm" (ngSubmit)="tcForm.valid && SaveForm()" #enjiForm="ngForm">
-
     <mat-tab-group>
       <mat-tab label="Term & Conditions">
         <ng-template matTabContent>
@@ -46,12 +46,13 @@
           <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
         </ng-template>
       </mat-tab>
-      </mat-tab-group>
+    </mat-tab-group>
+
     <div class="form-actions right">
-      <button type="button" class="btn btn-raised btn-warning mr-1 margin-r-5" (click)="Cancel()">
+      <button type="button" class="btn btn-raised btn-warning mr-1 margin-r-5" (click)="Cancel()" translate>
         <i class="ft-x"></i> Cancel
       </button>
-      <button type="submit" class="btn btn-raised btn-primary">
+      <button type="submit" class="btn btn-raised btn-primary" translate>
         <i class="far fa-check-square"></i> Save
       </button>
     </div>

@@ -13,22 +13,22 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="row">
-                                    <label class="col-md-12"><b>To </b></label>
+                                    <label class="col-md-12" translate><b>To </b></label>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-6">Supplier Name </label>
+                                    <label class="col-md-6" translate>Supplier Name </label>
                                     <label class="col-md-6">{{AssetObj?.VendorObj.VendorName}} </label>
                                 </div>
                                 <div class="row" style="display:none;">
-                                    <label class="col-md-6">Address </label>
+                                    <label class="col-md-6" translate>Address </label>
                                     <label class="col-md-6">{{AssetObj?.VendorAddrObj.Addr}} </label>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-6">Supplier Bank Account No </label>
+                                    <label class="col-md-6" translate>Supplier Bank Account No </label>
                                     <label class="col-md-6">{{AssetObj?.VendorBankAccObj.BankAccountNo}} </label>
                                 </div>
                                 <div class="row" style="display:none;">
-                                    <label class="col-md-6">MoU </label>
+                                    <label class="col-md-6" translate>MoU </label>
                                     <div class="col-md-6">
                                         <select class="form-control" [(ngModel)]="MouNo" name="MouNo">
                                             <option *ngFor="let item of AssetObj?.MouVendorListObj"
@@ -41,14 +41,14 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
-                                    <label class="col-md-12"><b>Send To </b></label>
+                                    <label class="col-md-12" translate><b>Send To </b></label>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-6">Customer Name </label>
+                                    <label class="col-md-6" translate>Customer Name </label>
                                     <label class="col-md-6">{{AssetObj?.AgrmntObj.CustName}} </label>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-6">Address </label>
+                                    <label class="col-md-6" translate>Address </label>
                                     <label class="col-md-6">{{Address}} </label>
                                 </div>
                             </div>
@@ -67,7 +67,7 @@
                                     <th><span translate class="thead-header text-right">DOWN PAYMENT</span></th>
                                     <th><span translate class="thead-header">SERIAL NO. 1</span></th>
                                     <th><span translate class="thead-header">SERIAL NO. 2</span></th>
-                                    <th><span translate class="thead-header">LICENSE PLATE</span></th>
+                                    <th><span translate class="thead-header">SERIAL NO. 3</span></th>
                                     <th><span translate class="thead-header">NOTES</span></th>
                                 </tr>
                             </thead>
@@ -92,42 +92,42 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="row">
-                                    <label class="col-md-6">Total Asset Price </label>
+                                    <label class="col-md-6" translate>Total Asset Price </label>
                                     <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.TotalAssetPriceAmt | number}}
                                     </label>
                                 </div>
                                 <div class="row">
-                                    <label *ngIf="lobCode != 'FL4W'" class="col-md-6">Down Payment Nett </label>
-                                    <label *ngIf="lobCode == 'FL4W'" class="col-md-6">Security Deposit Nett </label>
+                                    <label *ngIf="lobCode != 'FL4W'" class="col-md-6" translate>Down Payment Nett </label>
+                                    <label *ngIf="lobCode == 'FL4W'" class="col-md-6" translate>Security Deposit Nett </label>
                                     <label
                                         class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.DownPaymentNettAmt | number}}
                                     </label>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-6">TDP At Coy </label>
+                                    <label class="col-md-6" translate>TDP At Coy </label>
                                     <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.TdpPaidCoyAmt | number}}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
-                                    <label class="col-md-6">Insurance Premium </label>
+                                    <label class="col-md-6" translate>Insurance Premium </label>
                                     <label class="col-md-6 text-right">{{TotalInsCustAmt | number}}
                                     </label>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-6">Life Insurance Premium </label>
+                                    <label class="col-md-6" translate>Life Insurance Premium </label>
                                     <label class="col-md-6 text-right">{{TotalLifeInsCustAmt | number}}
                                     </label>
                                 </div>
                                 <div *ngIf="AssetObj?.AgrmntObj.MrFirstInstTypeCode == 'AD'" class="row">
-                                    <label class="col-md-6">First Installment Amount </label>
+                                    <label class="col-md-6" translate>First Installment Amount </label>
                                     <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.InstAmt | number}} </label>
                                 </div>
                             </div>
                             <div class="col-md-6" *ngFor="let item of AssetObj?.AgrmntFeeListObj">
                                 <div class="row">
-                                    <label class="col-md-6">{{item.FeeName}} </label>
+                                    <label class="col-md-6" translate>{{item.FeeName}} </label>
                                     <label class="col-md-6 text-right">{{item.AppFeeAmt | number}} </label>
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="row">
-                                            <label class="col-md-6">Total Purchase Order </label>
+                                            <label class="col-md-6" translate>Total Purchase Order </label>
                                             <label class="col-md-6 text-right">{{TotalPurchaseOrderAmt | number}} </label>
                                         </div>
                                     </div>
@@ -175,7 +175,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="row">
-                                    <label class="col-md-6">Additional Notes </label>
+                                    <label class="col-md-6" translate>Additional Notes </label>
                                     <div class="col-md-6">
                                         <textarea class="form-control" [(ngModel)]="Notes" name="Notes"></textarea>
                                     </div>
@@ -183,7 +183,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
-                                    <label class="col-md-6">Expired Date </label>
+                                    <label class="col-md-6" translate>Expired Date </label>
                                     <label class="col-md-6">{{PurchaseOrderExpiredDt | date: 'dd-MMM-yyyy' }}</label>
                                 </div>
                             </div>
@@ -191,9 +191,8 @@
                     </div>
                     <form>
                         <div class="form-actions right">
-                            <button type="button" class="btn btn-raised btn-warning mr-1"
-                                [routerLink]="[CancelLink]" [queryParams]="{AgrmntId:AgrmntId, LobCode: lobCode,AppId:AppId, TaskListId: TaskListId}"
-                                translate>
+                            <button type="button" class="btn btn-raised btn-warning mr-1" translate
+                                [routerLink]="[CancelLink]" [queryParams]="{AgrmntId:AgrmntId, LobCode: lobCode,AppId:AppId, TaskListId: TaskListId}">
                                 <i class="ft-x"></i> Cancel
                             </button>
                             <button type="button" (click)="SaveForm()" class="btn btn-raised btn-primary" translate>

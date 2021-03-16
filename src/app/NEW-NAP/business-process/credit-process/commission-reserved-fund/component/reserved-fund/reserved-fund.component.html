@@ -8,29 +8,29 @@
         <div class="row">
           <div class="col-md-6">
             <div class="row">
-              <label class="col-md-6">Upping Rate</label>
+              <label class="col-md-6" translate>Upping Rate</label>
               <label class="col-md-6" style="text-align: right;">{{uppingRate}}</label>
             </div>
             <div class="row">
-              <label class="col-md-6">Insurance Income</label>
+              <label class="col-md-6" translate>Insurance Income</label>
               <label class="col-md-6" style="text-align: right;">{{insuranceIncome | number:'.2':'en-US'}}</label>
             </div>
             <div class="row">
-              <label class="col-md-6">Life Insurance Income</label>
+              <label class="col-md-6" translate>Life Insurance Income</label>
               <label class="col-md-6" style="text-align: right;">{{lifeInsuranceIncome | number:'.2':'en-US'}}</label>
             </div>
             <div class="row">
-              <label class="col-md-6">Max Allocated Amount</label>
+              <label class="col-md-6" translate>Max Allocated Amount</label>
               <label class="col-md-6" style="text-align: right;">{{maxAllocatedAmt | number:'.2':'en-US'}}</label>
             </div>
             <div class="row">
-              <label class="col-md-6">Remaining Allocated Amount</label>
+              <label class="col-md-6" translate>Remaining Allocated Amount</label>
               <label class="col-md-6" style="text-align: right;">{{remainingAllocatedAmt | number:'.2':'en-US'}}</label>
             </div>
           </div>
           <div class="col-md-6">
             <div *ngFor="let item of appFeeObj" class="row">
-              <label class="col-md-6">{{item.FeeTypeName}}</label>
+              <label class="col-md-6" translate>{{item.FeeTypeName}}</label>
               <label class="col-md-6" style="text-align: right;">{{item.AppFeeAmt | number:'.2':'en-US'}}</label>
             </div>
           </div>
@@ -39,7 +39,7 @@
       </div> -->
 
       <form class="form form-horizontal" [formGroup]="RsvForm" (ngSubmit)="RsvForm.valid && SaveForm()"
-            #enjiForm="ngForm">
+        #enjiForm="ngForm">
         <div class="form-body">
           <div formArrayName="ReservedFundObjs">
             <div *ngFor="let item of RsvForm.controls['ReservedFundObjs']['controls'];let i = index">
@@ -50,9 +50,9 @@
                   <label class="col-md-2  adins-required-label" translate>{{RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MrReservedFundCode.value}}</label>
                   <div class="col-md-4">
                     <input *ngIf="RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MaxAmt.value > 0" type="" currencyMask id="ReservedFundAmt{{i}}" class="form-control" formControlName="ReservedFundAmt" [options]="{ nullable: false }" (change)="InputChanged()"
-                           [ngClass]="{ 'is-invalid': enjiForm.submitted && RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt.invalid }" max="DictRemainingIncomeForm[RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MrReservedFundSourceName.value]">
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt.invalid }" max="DictRemainingIncomeForm[RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MrReservedFundSourceName.value]">
                     <input *ngIf="RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MaxAmt.value <= 0" readonly type="" currencyMask id="ReservedFundAmt{{i}}" class="form-control" formControlName="ReservedFundAmt" [options]="{ nullable: false }" (change)="InputChanged()"
-                           [ngClass]="{ 'is-invalid': enjiForm.submitted && RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt.invalid }" max="DictRemainingIncomeForm[RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MrReservedFundSourceName.value]">
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt.invalid }" max="DictRemainingIncomeForm[RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].MrReservedFundSourceName.value]">
                     <lib-uc-show-errors [control]="RsvForm.controls['ReservedFundObjs']['controls'][i]['controls'].ReservedFundAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
@@ -60,7 +60,7 @@
             </div>
           </div>
           <div class="form-actions right">
-            <button type="button" class="btn btn-raised btn-primary" (click)="calculated()">
+            <button type="button" class="btn btn-raised btn-primary" (click)="calculated()" translate>
               <i class="fa fa-check-square-o"></i> Calculate
             </button>
           </div>
@@ -70,18 +70,18 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="row">
-                  <label class="col-md-6">Total Reserved Fund Amount</label>
+                  <label class="col-md-6" translate>Total Reserved Fund Amount</label>
                   <label class="col-md-6">{{totalRsvFundAmt | number:'.2':'en-US'}}</label>
                 </div>
                 <div class="row">
-                  <label class="col-md-6">Gross Yield</label>
+                  <label class="col-md-6" translate>Gross Yield</label>
                   <label class="col-md-6">{{grossYield | number:'.2':'en-US'}}%</label>
                 </div>
                 <div class="form-actions right">                  
                   <button *ngIf="showCancel" type="button"  class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
                     <i class="ft-x"></i> Cancel
                   </button>
-                  <button type="submit" class="btn btn-raised btn-primary" *ngIf="ReturnHandlingHObj.ReturnHandlingHId <= 0">
+                  <button type="submit" class="btn btn-raised btn-primary" *ngIf="ReturnHandlingHObj.ReturnHandlingHId <= 0" translate>
                     <i class="far fa-check-square"></i> Save
                   </button>
                   <!--<button type="button" class="btn btn-raised btn-primary" (click)="test()">

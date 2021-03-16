@@ -1,15 +1,15 @@
 <form class="form-horizontal" [formGroup]="FormAppSubsidy"
   (ngSubmit)="setSubmitted() && FormAppSubsidy.valid && SaveSubsidy()" #enjiForm="ngForm">
   <div class="modal-header">
-    <h4 class="modal-title">Subsidy Information</h4>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <h4 class="modal-title" translate>Subsidy Information</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')" translate>
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
     <div class="form-body">
       <div class="form-group row">
-        <label class="col-md-4 adInsLabel">Subsidy From Type</label>
+        <label class="col-md-4 adInsLabel" translate>Subsidy From Type</label>
         <div class="col-md-3">
           <select formControlName="fromTypeCode" class="form-control full-width" id="result" name="result"
             (change)="DDLFromTypeCode_OnChange($event);">
@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="form-group row" *ngIf="showFromValue">
-        <label class="col-md-4 adInsLabel">Subsidy From Value</label>
+        <label class="col-md-4 adInsLabel" translate>Subsidy From Value</label>
         <div class="col-md-3">
           <select formControlName="fromValueCode" class="form-control full-width" id="result" name="result"
             (change)="DDLFromValue_OnChange($event);">
@@ -33,7 +33,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-4 adInsLabel">Allocation From</label>
+        <label class="col-md-4 adInsLabel" translate>Allocation From</label>
         <div class="col-md-3">
           <select formControlName="allocCode" class="form-control full-width" id="result" name="result"
             (change)="DDLAllocCode_OnChange($event);">
@@ -44,7 +44,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-4 adInsLabel">Subsidy Source</label>
+        <label class="col-md-4 adInsLabel" translate>Subsidy Source</label>
         <div class="col-md-3">
           <select formControlName="sourceCode" class="form-control full-width" id="result" name="result"
             (change)="DDLSourceCode_OnChange($event);">
@@ -57,7 +57,7 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-4 adInsLabel">Subsidy Value Type</label>
+        <label class="col-md-4 adInsLabel" translate>Subsidy Value Type</label>
         <div class="col-md-3">
           <select formControlName="valueType" class="form-control full-width"
             (change)="DDLValueType_OnChange($event);">
@@ -68,7 +68,7 @@
         </div>
       </div>
       <div class="form-group row" *ngIf="FormAppSubsidy.controls.valueType.value== 'PRCNT'">
-        <label class="col-md-4 adInsLabel">Subsidy Value Percentage</label>
+        <label class="col-md-4 adInsLabel" translate>Subsidy Value Percentage</label>
         <div class="col-md-3">
           <input type="" class="form-control full-width"
             formControlName="subsidyPrcnt" 
@@ -78,7 +78,7 @@
         </div>
       </div>
       <div class="form-group row" *ngIf="FormAppSubsidy.controls.valueType.value== 'AMT'">
-        <label class="col-md-4 adInsLabel">Subsidy Value Amount</label>
+        <label class="col-md-4 adInsLabel" translate>Subsidy Value Amount</label>
         <div class="col-md-3">
           <input type="" class="form-control full-width" formControlName="subsidyAmt"
             [ngClass]="{ 'is-invalid': isSubmitted && FormAppSubsidy.controls.subsidyAmt.invalid}" currencyMask>

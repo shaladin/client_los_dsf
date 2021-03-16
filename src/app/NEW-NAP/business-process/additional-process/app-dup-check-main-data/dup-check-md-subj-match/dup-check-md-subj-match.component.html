@@ -1,8 +1,10 @@
 <div class="card">
   <lib-ucviewgeneric *ngIf="mrCustTypeCode" [viewGenericObj]="viewMainInfoObj" (callback)="viewMainInfoCallback($event)" #viewMainProd> </lib-ucviewgeneric>
   <div class="ucSearch-Button-Right pr-3" style="right:0px">
-    <button *ngIf="!isLock" type="button" class="btn btn-raised btn-primary mr-1" (click)="buttonNewCustOnClick()" translate>New Customer</button>
-    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="buttonCancelOnClick()">
+    <button *ngIf="!isLock" type="button" class="btn btn-raised btn-primary mr-1" (click)="buttonNewCustOnClick()" translate>
+      New Customer
+    </button>
+    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="buttonCancelOnClick()"translate>
       <i class="fa fa-ban"></i> Cancel
     </button>
   </div>

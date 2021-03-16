@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -12,18 +10,15 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
   providers: [NGXToastrService]
 })
 export class ViewAgrmntReservedFundComponent implements OnInit {
-
   @Input() agrmntId: any;
   agrmntObj = {
-    AgrmntId: 0,
+    Id: 0,
   };
-
   AppObj: any;
   RsvFundObj: any;
   totalRsvFund: number = 0;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
-
+  constructor(private http: HttpClient) {
     //this.route.queryParams.subscribe(params => {
     //  if (params['AppId'] != null) {
     //    this.agrmntId = params['AppId'];
@@ -31,9 +26,8 @@ export class ViewAgrmntReservedFundComponent implements OnInit {
     //});
   }
 
-
   ngOnInit() {
-    this.agrmntObj.AgrmntId = this.agrmntId;
+    this.agrmntObj.Id = this.agrmntId;
     this.GetRsvFundData();
   }
 

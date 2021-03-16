@@ -11,33 +11,33 @@
         <div class="form-group row" id="CustConfirmation">
           <div class="col-md-6">
             <div class="form-group row">
-              <label class="col-md-5">Application No</label>
+              <label class="col-md-5" translate>Application No</label>
               <a *ngIf="appObj.AppNo != null" href="javascript:void(0);" (click)="OpenView('app')" class="col-md-7">{{appObj.AppNo}}</a>
               <label *ngIf="appObj.AppNo == null" class="col-md-7">-</label>
             </div>
             <div class="form-group row">
-              <label class="col-md-5">Agreement No</label>
+              <label class="col-md-5" translate>Agreement No</label>
               <a *ngIf="agrmntObj.AgrmntNo != null" href="javascript:void(0);" (click)="OpenView('agrmnt')" class="col-md-7">{{agrmntObj.AgrmntNo}}</a>
               <label *ngIf="agrmntObj.AgrmntNo == null" class="col-md-7">-</label>
             </div>
             <div *ngIf="leadObj.LeadNo != null" class="form-group row">
-              <label class="col-md-5">Lead No</label>
+              <label class="col-md-5" translate>Lead No</label>
               <a *ngIf="leadObj.LeadNo != null" href="javascript:void(0);" (click)="OpenView('lead')"
                 class="col-md-7">{{leadObj.LeadNo}}</a>
               <label *ngIf="leadObj.LeadNo == null" class="col-md-7">-</label>
             </div>
             <div class="form-group row">
-              <label class="col-md-5">Customer No</label>
+              <label class="col-md-5" translate>Customer No</label>
               <a  href="javascript:void(0);" (click)="OpenView('cust')" *ngIf="agrmntObj.CustNo != null && agrmntObj.CustNo != ''" class="col-md-7">{{agrmntObj.CustNo}}</a>
               <label *ngIf="agrmntObj.CustNo == null || agrmntObj.CustNo == ''" class="col-md-7">-</label>
             </div>
             <div class="form-group row">
-              <label class="col-md-5">Customer Name</label>
+              <label class="col-md-5" translate>Customer Name</label>
               <label *ngIf="agrmntObj.CustName != null" class="col-md-7">{{agrmntObj.CustName}}</label>
               <label *ngIf="agrmntObj.CustName == null" class="col-md-7">-</label>
             </div>
             <div class="form-group row">
-              <label class="col-md-5 adins-required-label">Notes</label>
+              <label class="col-md-5 adins-required-label" translate>Notes</label>
               <div class="col-md-7">
                 <textarea class="form-control" formControlName="Notes"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && CustConfirm.controls.Notes.invalid }"></textarea>
@@ -48,11 +48,11 @@
           </div>
             <div class="col-md-6">
               <div class="form-group row">
-                <label class="col-md-4">Subject</label>
+                <label class="col-md-4" translate>Subject</label>
                 <label class="col-md-8">{{SubjectResponse.Descr}}</label>
               </div>
               <div class="form-group row">
-                <label class="col-md-4">Phone</label>
+                <label class="col-md-4" translate>Phone</label>
                 <div class="col-md-8">
                   <select class="form-control" formControlName="Phn"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustConfirm.controls.Phn.invalid }">
@@ -63,7 +63,7 @@
                 </lib-uc-show-errors>
               </div>
               <div class="form-group row">
-                <label class="col-md-4">Result</label>
+                <label class="col-md-4" translate>Result</label>
                 <div class="col-md-8">
                   <select class="form-control" formControlName="MrVerfResultHStatCode" (change)="ResultHandler()"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && CustConfirm.controls.MrVerfResultHStatCode.invalid }">
@@ -134,7 +134,7 @@
             </div>
           </div>
           <div class="form-actions right">
-            <button type="submit" class="btn btn-raised btn-primary" id="saveHistory">
+            <button type="submit" class="btn btn-raised btn-primary" id="saveHistory" translate>
               <i class="far fa-check-square"></i> Save History
             </button>
           </div>
@@ -163,13 +163,12 @@
             </table>
           </div>
           <div class="form-actions right">
-            <button type="button" class="btn btn-raised btn-warning mr-1"
-              [routerLink]="[CancelLink]"
+            <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
               [queryParams]="{AgrmntId:AgrmntId, AppId:AppId, AgrmntNo:agrmntObj.AgrmntNo, TaskListId: TaskListId, BizTemplateCode: BizTemplateCode}"
               translate>
               <i class="ft-x"></i> Cancel
             </button>
-            <button type="submit" class="btn btn-raised btn-primary" translate id="save">
+            <button type="submit" class="btn btn-raised btn-primary" translate id="save" translate>
               <i class="far fa-check-square"></i> Save
             </button>
           </div>

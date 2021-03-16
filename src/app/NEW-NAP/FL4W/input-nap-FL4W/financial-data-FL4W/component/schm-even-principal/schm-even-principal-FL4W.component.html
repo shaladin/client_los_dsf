@@ -7,7 +7,7 @@
         <div class="col-md-6">
           <div class="row">
             <div class="col-md-6 form-inline">
-              <label>Total {{PriceLabel}}</label>
+              <label translate>Total {{PriceLabel}}</label>
             </div>
             <div class="col-md-6 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalAssetPriceAmt.value | number : '1.2-2'}}</label>
@@ -19,13 +19,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Total Fee</label>
+              <label translate>Total Fee</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalFeeAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Total Fee Capitalized</label>
+              <label translate>Total Fee Capitalized</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalFeeCptlzAmt.value | number : '1.2-2'}}</label>
@@ -37,13 +37,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Total Insurance</label>
+              <label translate>Total Insurance</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalInsCustAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Total Insurance Capitalized</label>
+              <label translate>Total Insurance Capitalized</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.InsCptlzAmt.value | number : '1.2-2'}}</label>
@@ -55,13 +55,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Total Life Insurance</label>
+              <label translate>Total Life Insurance</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalLifeInsCustAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Total Life Insurance Capitalized</label>
+              <label translate>Total Life Insurance Capitalized</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.LifeInsCptlzAmt.value | number : '1.2-2'}}</label>
@@ -74,13 +74,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>DP Asset</label>
+              <label translate>DP Asset</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.DownPaymentGrossAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label>TDP</label>
+              <label translate>TDP</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalDownPaymentNettAmt.value | number : '1.2-2'}}</label>
@@ -92,13 +92,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline" style="visibility: hidden;">
-              <label>DP Asset - Subsidy DP</label>
+              <label translate>DP Asset - Subsidy DP</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right" style="visibility: hidden;">
               <label>{{ParentForm.controls.DownPaymentNettAmt.value | number : '1.2-2'}}</label>
             </div>
             <!-- <div class="col-md-3 form-inline">
-              <label>TDP Paid at MF</label>
+              <label translate>TDP Paid at MF</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="TdpPaidCoyAmt" (ngModelChange)="SetNeedReCalculate(true)"
@@ -115,13 +115,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>NTF</label>
+              <label translate>NTF</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.NtfAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Num of Inst</label>
+              <label translate>Num of Inst</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.NumOfInst.value | number}}</label>
@@ -133,7 +133,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Rate Type</label>
+              <label translate>Rate Type</label>
             </div>
             <div class="col-md-3 form-inline">
               <select formControlName="RateType" class="form-control full-width" (change)="SetNeedReCalculate(true)">
@@ -144,7 +144,7 @@
               </lib-uc-show-errors>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Rounding</label>
+              <label translate>Rounding</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="RoundingAmt"
@@ -160,7 +160,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Effective/Flat Rate</label>
+              <label translate>Effective/Flat Rate</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <div class="row">
@@ -187,13 +187,13 @@
               </div>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Supplier Rate</label>
+              <label translate>Supplier Rate</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.SupplEffectiveRatePrcnt.value | number : '1.2-2'}}</label>
             </div>
             <!-- <div class="col-md-3 form-inline">
-              <label>Effective Rate To Supplier</label>
+              <label translate>Effective Rate To Supplier</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="SupplEffectiveRatePrcnt" (ngModelChange)="SetNeedReCalculate(true)"
@@ -210,7 +210,7 @@
         <div class="col-md-12">
           <div class="row"> -->
       <!-- <div class="col-md-3 form-inline">
-              <label>Installment Amount</label>
+              <label translate>Installment Amount</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="InstAmt"
@@ -219,7 +219,7 @@
               </lib-uc-show-errors>
             </div> -->
       <!-- <div class="col-md-3 offset-md-6 form-inline">
-              <label>Diff Rate Amount (Commission Amount)</label>
+              <label translate>Diff Rate Amount (Commission Amount)</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="DiffRateAmt"
@@ -237,7 +237,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Grace Period</label>
+              <label translate>Grace Period</label>
             </div>
             <div class="col-md-1 form-inline form-inline-right">
               <input type="number" class="form-control full-width" formControlName="GracePeriod"
@@ -256,7 +256,7 @@
               </lib-uc-show-errors>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Residual Value Amount</label>
+              <label translate>Residual Value Amount</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="ResidualValueAmt"
@@ -271,12 +271,10 @@
       <div class="row">
         <div class="col-md-12">
           <div class="row">
+            <div class="col-md-3 form-inline"></div>
+            <div class="col-md-3 form-inline"></div>
             <div class="col-md-3 form-inline">
-            </div>
-            <div class="col-md-3 form-inline">
-            </div>
-            <div class="col-md-3 form-inline">
-              <label>Calculate Base</label>
+              <label translate>Calculate Base</label>
             </div>
             <div class="col-md-3 form-inline">
               <select formControlName="CalcBase" class="form-control full-width">
@@ -294,13 +292,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Total Interest</label>
+              <label translate>Total Interest</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalInterestAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Gross Yield</label>
+              <label translate>Gross Yield</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '1.2-2'}}%</label>
@@ -312,13 +310,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label>Total AR</label>
+              <label translate>Total AR</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalAR.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label>Diff Rate Amount</label>
+              <label translate>Diff Rate Amount</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.DiffRateAmt.value | number : '1.2-2'}}</label>
@@ -338,29 +336,23 @@
       <table class="table table-responsive-md text-center table-hover">
         <thead>
           <tr class="table-header">
-            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromTypeName" translate>
-                No
-              </span>
+            <th style="text-align: center;">
+              <span class="thead-header" name="MrSubsidyFromTypeName" translate>No</span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromValueName" translate>
-                Installment Amount
-              </span>
+            <th style="text-align: center;">
+              <span class="thead-header" name="MrSubsidyFromValueName" translate>Installment Amount</span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyAllocName" translate>
-                Principal Amount
-              </span>
+            <th style="text-align: center;">
+              <span class="thead-header" name="MrSubsidyAllocName" translate>Principal Amount</span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>
-                Interest Amount
-              </span>
+            <th style="text-align: center;">
+              <span class="thead-header" name="MrSubsidyValueTypeName" translate>Interest Amount</span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="SubsidyPrcnt" translate>
-                Os Principal Amount
-              </span>
+            <th style="text-align: center;">
+              <span class="thead-header" name="SubsidyPrcnt" translate>Os Principal Amount</span>
             </th>
-            <th style="text-align: center;"><span class="thead-header" name="SubsidyAmt" translate>
-                Os Interest Amount
-              </span>
+            <th style="text-align: center;">
+              <span class="thead-header" name="SubsidyAmt" translate>Os Interest Amount</span>
             </th>
           </tr>
         </thead>

@@ -199,7 +199,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4" translate
+                    <label class="col-md-4" translate 
                       *ngIf="AssetDataForm.controls.MrAssetConditionCode.value != 'USED'">BPKB City Issuer</label>
                     <label class="col-md-4 adins-required-label" translate
                       *ngIf="AssetDataForm.controls.MrAssetConditionCode.value == 'USED'">BPKB City Issuer</label>
@@ -235,14 +235,12 @@
                   </div>
                 </div>
 
-
                 <div class="col-md-6">
                   <div formArrayName="items">
                     <div *ngFor="let item of items.controls; let i = index;">
                       <div class="form-group row" [formGroupName]="i">
-                        <label class="col-md-4 "
-                          [ngClass]="{'adins-required-label': isUsed && item.controls.IsMandatory.value == true}"
-                          translate>
+                        <label class="col-md-4" translate
+                          [ngClass]="{'adins-required-label': isUsed && item.controls.IsMandatory.value == true}">
                           {{item.controls.SerialNoLabel.value}} </label>
                         <div class="col-md-8">
                           <input type="text" class="form-control adInsInput" formControlName="SerialNoValue"
@@ -264,7 +262,7 @@
                 <div class="form-group row">
                   <label class="col-md-2" translate>RAPINDO</label>
                   <div class="col-md-8">
-                    <button type="button" name="hitAPI" id="add" (click)="HitAPI()" class="btn btn-raised btn-primary">
+                    <button type="button" name="hitAPI" id="add" (click)="HitAPI()" class="btn btn-raised btn-primary" translate>
                       HIT RAPINDO
                     </button>
                     <label *ngIf="LastRequestedDate != ''" class="col-md-4" translate>Last Requested At : {{LastRequestedDate | date: 'dd-MMMM-yyyy hh:mm:ss'}}</label>
@@ -278,7 +276,7 @@
                 <div [id]="assetAttr">
                   <div class="form-actions right">
                     <button type="button" name="refreshAttr" id="add" (click)="refreshAttr()"
-                      class="btn btn-raised btn-primary">
+                      class="btn btn-raised btn-primary" translate>
                       Refresh Attribute
                     </button>
                   </div>
@@ -332,7 +330,7 @@
               <div id="accessoriesData">
                 <div class="form-actions right">
                   <button type="button" name="add" id="add" (click)="addAccessories()"
-                    class="btn btn-raised btn-primary">
+                    class="btn btn-raised btn-primary" translate>
                     <i class="ft-plus-circle"></i> Add
                   </button>
                 </div>
@@ -496,7 +494,7 @@
                       </select>
                       <div class="input-group-append">
                         <span class="input-group-btn" *ngIf="!AssetDataForm.controls.SelfOwner.value">
-                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToOwnerAddr()">
+                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToOwnerAddr()" translate>
                             <i class="fa fa-check-square-o"></i>Copy
                           </button>
                         </span>
@@ -540,7 +538,7 @@
                       </select>
                       <div class="input-group-append">
                         <span class="input-group-btn">
-                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()">
+                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()" translate>
                             <i class="fa fa-check-square-o"></i>Copy
                           </button>
                         </span>
@@ -559,11 +557,11 @@
                 </div>
               </div>
               <div class="form-actions right">
-                <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
-                  translate>
+                <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1"
+                  (click)="Cancel()" translate>
                   <i class="ft-x"></i> Cancel
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary">
+                <button type="submit" class="btn btn-raised btn-primary" translate>
                   <i class="far fa-check-square"></i> Save
                 </button>
               </div>

@@ -1,7 +1,7 @@
 <form class="form form-horizontal" [formGroup]="DeliveryOrderForm" #enjiForm="ngForm" novalidate
   (ngSubmit)="enjiForm.form.valid && Save()">
   <div class="modal-header">
-    <h4 class="modal-title">DELIVERY ORDER DETAIL</h4>
+    <h4 class="modal-title" translate>DELIVERY ORDER DETAIL</h4>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -143,10 +143,10 @@
     </div>
   </div>
   <div class="modal-footer"> 
-    <button type="button" class="btn btn-warning btn-raised" (click)="activeModal.dismiss('0')">
+    <button type="button" class="btn btn-warning btn-raised" (click)="activeModal.dismiss('0')" translate>
       <i class="ft-x"></i> Cancel
     </button>
-    <button type="submit" class="btn btn-raised btn-primary">
+    <button type="submit" class="btn btn-raised btn-primary" translate>
       <i class="far fa-check-square"></i> Save
     </button>
   </div>

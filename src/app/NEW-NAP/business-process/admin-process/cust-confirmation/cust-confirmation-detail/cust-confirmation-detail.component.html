@@ -38,7 +38,7 @@
               </td>
               <td>
                 <a class="success p-0" [routerLink]="[DetailLink]"
-                  [queryParams]="{VerfResultHId:item.VerfResultHId, AgrmntId:AgrmntId, AppId:AppId, Subject:'CUST', AgrmntNo:AgrmntNo, TaskListId:TaskListId, BizTemplateCode:BizTemplateCode}">
+                  [queryParams]="{VerfResultHId:item.VerfResultHId, AgrmntId:AgrmntId, AppId:AppId, Subject:item.MrVerfSubjectRelationCode, AgrmntNo:AgrmntNo, TaskListId:TaskListId, BizTemplateCode:BizTemplateCode}">
                   <i class="ft-edit-2 font-medium-3 mr-2"></i>
                 </a>
               </td>
@@ -53,7 +53,7 @@
         </div> -->
         <div class="col-md-1">
           <mat-checkbox color="primary" class="border-primary" [(ngModel)]="CustCnfrmObj.IsSkip"></mat-checkbox>
-          <label>Skip</label>
+          <label translate>Skip</label>
         </div>
       </div>
       <div class="row" *ngIf="CustCnfrmObj.IsSkip">
@@ -65,8 +65,7 @@
 
       <form (ngSubmit)="SaveForm()">
         <div class="form-actions right">
-          <button type="button" class="btn btn-raised btn-warning mr-1"
-            [routerLink]="[CancelLink]"
+          <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
             [queryParams]="{BizTemplateCode: this.BizTemplateCode}" translate>
             <i class="ft-x"></i> Cancel
           </button>
