@@ -153,7 +153,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
 
 
   appCollateralObj = {
-    AppCollateralId: 0,
+    Id: 0,
   };
   inputAddressObjForOwner: InputAddressObj;
   inputAddressObjForLoc: InputAddressObj;
@@ -195,7 +195,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.inputAddressObjForLoc.showSubsection = false;
     this.inputAddressObjForLoc.showAllPhn = false;
 
-    this.appCollateralObj.AppCollateralId = this.AppCollateralId;
+    this.appCollateralObj.Id = this.AppCollateralId;
     this.inputFieldOwnerAddrObj = new InputFieldObj();
     this.inputFieldOwnerAddrObj.inputLookupObj = new InputLookupObj();
     this.inputFieldLocationAddrObj = new InputFieldObj();

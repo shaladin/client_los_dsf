@@ -45,10 +45,12 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   appObj = {
     AppId: 0,
+    Id:0
   };
 
   rtnHandlingDObj = {
     ReturnHandlingDId: 0,
+    Id:0
   };
 
   verfResObj =
@@ -101,6 +103,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
     this.initUrl();
     this.appObj.AppId = this.appId;
+    this.appObj.Id = this.appId;
     await this.GetAppData();
     await this.GetVerfResultData();
     await this.GetPhnVerfSubjData();
@@ -250,6 +253,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   async GetReturnHandlingD() {
     this.rtnHandlingDObj.ReturnHandlingDId = this.returnHandlingHId;
+    this.rtnHandlingDObj.Id = this.returnHandlingHId;
     await this.http.post(this.rtnHandlingDUrl, this.rtnHandlingDObj).toPromise().then(
       (response) => {
         this.returnHandlingDObj = response;

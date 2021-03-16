@@ -443,6 +443,7 @@ export class CollateralLeasingAddEditComponent implements OnInit {
     if (this.mode == 'editColl') {
       this.appCollateralObj = new AppCollateralObj();
       this.appCollateralObj.AppCollateralId = this.AppCollateralId;
+      this.appCollateralObj.Id = this.AppCollateralId;
       this.http.post(this.getAppCollateralByAppCollateralId, this.appCollateralObj).subscribe(
         (response) => {
           this.returnAppCollateralObj = response;
@@ -474,6 +475,7 @@ export class CollateralLeasingAddEditComponent implements OnInit {
 
       this.appCollateralRegistObj = new AppCollateralRegistrationObj();
       this.appCollateralRegistObj.AppCollateralId = this.AppCollateralId;
+      this.appCollateralRegistObj.Id = this.AppCollateralId;
       this.http.post(this.getAppCollateralRegistByAppCollateralId, this.appCollateralRegistObj).subscribe(
         (response) => {
           this.returnAppCollateralRegistObj = response;

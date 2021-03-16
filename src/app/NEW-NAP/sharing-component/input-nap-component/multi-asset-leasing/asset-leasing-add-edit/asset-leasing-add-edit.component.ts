@@ -474,12 +474,14 @@ copyToLocationAddr() {
 
         this.appCollateralObj = new AppCollateralObj();
         this.appCollateralObj.AppId = this.AppId;
+        this.appCollateralObj.Id = this.AppId;
         this.http.post(this.getAppCollateralByAppId, this.appCollateralObj).subscribe(
         (response) => {
           this.returnAppCollateralObj = response;
 
           this.appCollateralRegistObj = new AppCollateralRegistrationObj();
           this.appCollateralRegistObj.AppCollateralId = this.returnAppCollateralObj.AppCollateralId;
+          this.appCollateralRegistObj.Id = this.returnAppCollateralObj.AppCollateralId;
           this.http.post(this.getAppCollateralRegistByAppCollateralId, this.appCollateralRegistObj).subscribe(
           (response) => {
             this.returnAppCollateralRegistObj = response;

@@ -751,6 +751,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
       this.appCollateralObj = new AppCollateralObj();
       this.appCollateralObj.AppAssetId = this.AppAssetId;
+      this.appCollateralObj.Id = this.AppAssetId;
       this.http.post(this.getAppCollateralByAppAssetId, this.appCollateralObj).subscribe(
         (response) => {
           this.returnAppCollateralObj = response;
@@ -758,6 +759,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
           this.appCollateralRegistObj = new AppCollateralRegistrationObj();
           this.appCollateralRegistObj.AppCollateralId = this.returnAppCollateralObj.AppCollateralId;
+          this.appCollateralRegistObj.Id = this.returnAppCollateralObj.AppCollateralId;
           this.http.post(this.getAppCollateralRegistByAppCollateralId, this.appCollateralRegistObj).subscribe(
             (response) => {
               this.returnAppCollateralRegistObj = response;

@@ -55,7 +55,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
   ngOnInit() {
     var datePipe = new DatePipe("en-US");
 
-    this.httpClient.post(URLConstant.GetPurchaseOrderHByAgrmntId, { AgrmntId: this.AgrmntId }).subscribe(
+    this.httpClient.post(URLConstant.GetPurchaseOrderHByAgrmntId, { Id: this.AgrmntId }).subscribe(
       (response) => {
         this.PODt = new Date(response["PurchaseOrderDt"]);
       });

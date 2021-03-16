@@ -20,7 +20,7 @@ export class ViewPurchaseOrderComponent implements OnInit {
   }
 
   async BindPOData(){
-    var obj = { AgrmntId: this.agrmntId };
+    var obj = { Id: this.agrmntId };
     await this.http.post(URLConstant.GetPurchaseOrderHDetailViewByAgrmntId, obj).toPromise().then(
       (response) => {
         this.ResponseAgrmntFinDataData = response["ResponseAgrmntFinDataObj"];

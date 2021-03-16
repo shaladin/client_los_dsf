@@ -20,7 +20,7 @@ export class ViewDeliveryOrderAssetDetailComponent implements OnInit {
   async ngOnInit(){
     this.GetAllAssetDataByAppAssetId = URLConstant.GetAllAssetDataByAppAssetId;
     this.GetListAppCollateralForDOView = URLConstant.GetListAppCollateralForDOView;
-    var assetObj = { "AppAssetId" : this.AppAssetId};
+    var assetObj = { "AppAssetId": this.AppAssetId, "Id": this.AppAssetId};
 
     this.http.post(this.GetAllAssetDataByAppAssetId, assetObj).subscribe((response) => { 
       this.assetData = response;

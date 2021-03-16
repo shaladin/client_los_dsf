@@ -251,6 +251,7 @@ export class CollateralAddEditComponent implements OnInit {
       var listCollateralNo: Array<string> = new Array();
       this.appCollateralObj = new AppCollateralObj();
       this.appCollateralObj.AppId = this.AppId;
+      this.appCollateralObj.Id = this.AppId;
       this.http.post(URLConstant.GetListAppCollateralByAppId, this.appCollateralObj).subscribe(
         (response) => {
           this.listCollateralData = response[CommonConstant.ReturnObj];
@@ -493,6 +494,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.businessDt.setDate(this.businessDt.getDate() - 1);
     if (this.mode == 'editColl') {
       this.appCollateralObj.AppCollateralId = this.AppCollateralId;
+      this.appCollateralObj.Id = this.AppCollateralId;
       this.appAssetId = this.appCollateralObj.AppAssetId;
       this.http.post(this.getAppCollateralByAppCollateralId, this.appCollateralObj).subscribe(
         (response) => {
@@ -534,6 +536,7 @@ export class CollateralAddEditComponent implements OnInit {
 
       this.appCollateralRegistObj = new AppCollateralRegistrationObj();
       this.appCollateralRegistObj.AppCollateralId = this.AppCollateralId;
+      this.appCollateralRegistObj.Id = this.AppCollateralId;
       this.http.post(this.getAppCollateralRegistByAppCollateralId, this.appCollateralRegistObj).subscribe(
         (response) => {
           this.returnAppCollateralRegistObj = response;
@@ -589,7 +592,7 @@ export class CollateralAddEditComponent implements OnInit {
           this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
         });
 
-      this.http.post(URLConstant.GetAppCollateralAttrByAppCollateralId, { AppCollateralId: this.AppCollateralId }).subscribe(
+      this.http.post(URLConstant.GetAppCollateralAttrByAppCollateralId, { Id: this.AppCollateralId }).subscribe(
         (response) => {
           var colObj = {
             AssetRegion: "",

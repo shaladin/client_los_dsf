@@ -27,7 +27,7 @@ export class ViewPurchaseOrderMultiAssetComponent implements OnInit {
 
 
     var PurchaseOrderObj = {
-      AgrmntId: this.agrmntId
+      Id: this.agrmntId
     }
 
     this.http.post(URLConstant.GetListPurchaseOrderHByAgrmntId, PurchaseOrderObj).subscribe(
