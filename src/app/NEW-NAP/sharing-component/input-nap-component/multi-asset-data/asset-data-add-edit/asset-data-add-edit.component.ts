@@ -811,7 +811,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAsset.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAsset.json";
 
-    this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).pipe(
+    this.http.post(URLConstant.GetAppById, { Id: this.AppId }).pipe(
       map((response: AppObj) => {
         this.appData = response;
         return response;

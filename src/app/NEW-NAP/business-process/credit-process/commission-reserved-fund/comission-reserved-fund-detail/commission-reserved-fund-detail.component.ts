@@ -128,8 +128,9 @@ export class CommissionReservedFundDetailComponent implements OnInit {
 
   NapObj: AppObj = new AppObj();
   GetAndUpdateAppStep() {
-    this.NapObj.AppId = this.ReturnHandlingHObj.AppId;
-    this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
+    // this.NapObj.AppId = this.ReturnHandlingHObj.AppId;
+    var appObj = { Id: this.ReturnHandlingHObj.AppId };
+    this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;

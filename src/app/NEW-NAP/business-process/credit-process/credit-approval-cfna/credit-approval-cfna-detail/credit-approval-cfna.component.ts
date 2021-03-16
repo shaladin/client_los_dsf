@@ -91,8 +91,9 @@ export class CreditApprovalCfnaComponent implements OnInit {
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
     var appObj = { AppId: this.appId };
+    var appObj1 = { Id: this.appId };
 
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj)
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj1)
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
     forkJoin([getApp, getAppCust]).subscribe(
       (response) => {
@@ -134,8 +135,9 @@ export class CreditApprovalCfnaComponent implements OnInit {
   }
 
   async getApp() {
-    var appObj = new AppObj();
-    appObj.AppId = this.appId
+    // var appObj = new AppObj();
+    // appObj.AppId = this.appId
+    var appObj = { Id: this.appId };
     await this.http.post<AppObj>(URLConstant.GetAppById, appObj).toPromise().then(
       (response) => {
         this.AppObj = response;

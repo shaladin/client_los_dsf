@@ -11,20 +11,18 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
   templateUrl: './asset-opl-main-info.component.html'
 })
 export class AssetOplMainInfoComponent implements OnInit {
-
   @Input() AppAssetId : number=0;
   isReady: boolean = false;
   AppAssetObj: any;
+
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.http.post(URLConstant.GetAppAssetOplMainInfoByAppAssetId, { AppAssetId: this.AppAssetId }).subscribe(
+    this.http.post(URLConstant.GetAppAssetOplMainInfoByAppAssetId, { Id: this.AppAssetId }).subscribe(
       (response) => {
         this.AppAssetObj = response;
         this.isReady = true;
       }
     );
   }
-
-
 }

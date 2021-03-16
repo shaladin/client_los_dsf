@@ -97,7 +97,8 @@ export class NapAddDetailComponent implements OnInit {
       this.ChooseStep(this.AppStepIndex);    
     }
     else {
-      this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
+      var appObj = { Id: this.appId };
+      this.http.post(URLConstant.GetAppById, appObj).subscribe(
         (response: AppObj) => {
           if (response) {
             this.NapObj = response;
@@ -192,7 +193,8 @@ export class NapAddDetailComponent implements OnInit {
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
     var appObj = { AppId: this.appId };
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj);
+    var appObj1 = { Id: this.appId };
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj1);
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
     forkJoin([getApp, getAppCust]).subscribe(
       response => {

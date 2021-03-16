@@ -1,15 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ControlContainer, FormGroupDirective, NgForm, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
-import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
-import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
-import { CalcStepUpStepDownObj } from 'app/shared/model/AppFinData/CalcStepUpStepDownObj.Model';
 import { CalcEvenPrincipleObj } from 'app/shared/model/AppFinData/CalcEvenPrincipleObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -35,17 +29,15 @@ export class SchmEvenPrincipalFL4WComponent implements OnInit {
   result: AppObj = new AppObj();
   PriceLabel: string = "Asset Price";
 
-  constructor(
-    private fb: FormBuilder,
+  constructor(private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService,
-  ) { }
+    private toastr: NGXToastrService) { }
 
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
-    this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.result = response;
         if (this.result.BizTemplateCode == CommonConstant.CFRFN4W) {
@@ -228,7 +220,6 @@ export class SchmEvenPrincipalFL4WComponent implements OnInit {
     this.SetNeedReCalculate(true);
   }
 
-
   ValidateFee() {
     for (let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++) {
       if (this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
@@ -241,5 +232,6 @@ export class SchmEvenPrincipalFL4WComponent implements OnInit {
   }
 
   test() {
+
   }
 }

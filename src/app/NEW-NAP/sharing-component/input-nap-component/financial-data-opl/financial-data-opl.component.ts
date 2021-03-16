@@ -1,11 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
-
 
 @Component({
   selector: 'app-financial-data-opl',
@@ -21,8 +17,8 @@ export class FinancialDataOplComponent implements OnInit {
   AppAssetFinDataObj: any;
   isAllAssetFinDone: boolean = true;
   isAnyDataAsset: boolean = false;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
-  }
+
+  constructor(private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {
     this.GetAllAssetFinancialData();
@@ -60,7 +56,7 @@ export class FinancialDataOplComponent implements OnInit {
   GetAllAssetFinancialData() {
     this.isAllAssetFinDone = true;
     var appObj = {
-      AppId: this.AppId,
+      Id: this.AppId,
     };
     this.http.post(URLConstant.GetListAppAssetFinDataGridByAppId, appObj).subscribe(
       (response) => {
@@ -73,7 +69,6 @@ export class FinancialDataOplComponent implements OnInit {
               break;
             }
           }
-          console.log(response);
         }
       }
     );

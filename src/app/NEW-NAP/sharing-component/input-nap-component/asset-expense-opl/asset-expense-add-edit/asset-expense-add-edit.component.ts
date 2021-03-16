@@ -1844,7 +1844,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.insAssetRegionObj = response[CommonConstant.ReturnObj];
-        var assetObj = { AppAssetId: this.AppAssetId };
+        var assetObj = { Id: this.AppAssetId };
         if (this.isInsDataExist == false) {
           this.http.post(URLConstant.GetAssetRegionFromRuleByAppAssetId, assetObj).subscribe(
             response => {
@@ -1911,7 +1911,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
 
 
   async getMainPackage() {
-    var packageObj = { AppAssetId: this.AppAssetId };
+    var packageObj = { Id: this.AppAssetId };
     await this.http.post(URLConstant.GetMaintenancePackageByAppAssetId, packageObj).toPromise().then(
       (response) => {
         this.packageTypeRuleObj = response["MaintenancePackageObjs"];
@@ -2185,7 +2185,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
   }
   isExpenseCanAdd: boolean = true;
   async getOtherExpenseFromRule() {
-    var obj = { AppAssetId: this.AppAssetId };
+    var obj = { Id: this.AppAssetId };
     await this.http.post(URLConstant.GetOtherExpenseByAppAssetId, obj).toPromise().then(
       (response) => {
         var expenseObj = response
@@ -2344,7 +2344,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
     var feeObj = this.InsuranceDataForm.controls["FeeObjs"] as FormArray;
     var length = this.InsuranceDataForm.value["FeeObjs"].length;
 
-    var obj = { AppAssetId: this.AppAssetId };
+    var obj = { Id: this.AppAssetId };
     await this.http.post(URLConstant.GetFeeExpenseByAppAssetId, obj).toPromise().then(
       (response) => {
         var res = response;

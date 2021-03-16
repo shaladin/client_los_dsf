@@ -500,7 +500,7 @@ export class JobTabComponent implements OnInit {
     });
   }
   GetThirdPartyResultHByTrxTypeCodeAndTrxNo() {
-    this.http.post(URLConstant.GetAppById, { AppId: this.appId }).subscribe(
+    this.http.post(URLConstant.GetAppById, { Id: this.appId }).subscribe(
       (response) => {
         if(response['MouCustId'] != null){
           this.mouCustId = response['MouCustId'];

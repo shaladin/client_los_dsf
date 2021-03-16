@@ -1,26 +1,15 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators, FormGroupDirective } from '@angular/forms';
+import { FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
-import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
-import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
-import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { environment } from 'environments/environment';
-import { formatDate } from '@angular/common';
-import { AdInsConstant } from '../../../../../shared/AdInstConstant';
 
 @Component({
   selector: 'app-fin-data-opl-detail',
   templateUrl: './financial-data-opl-detail.component.html',
 })
 export class FinancialDataOplEditComponent implements OnInit {
-
   @Input() AppAssetId: number;
   @Input() AppId: number;
   @Output() OutputGoPaging = new EventEmitter();
@@ -70,11 +59,9 @@ export class FinancialDataOplEditComponent implements OnInit {
   });
 
   isReady: boolean = false;
-  constructor(
-    private fb: FormBuilder,
+  constructor(private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService,
-  ) { }
+    private toastr: NGXToastrService) { }
 
   async ngOnInit(): Promise<void> {
     this.getAllRefMaster();
@@ -82,10 +69,11 @@ export class FinancialDataOplEditComponent implements OnInit {
     await this.getAssetFinData();
     //this.FinancialDataForm.controls["SecurityDepositAmt"].disable();
   }
+
   AppFinDataObj: any;
   async getAssetFinData() {
     var appAssetObj = {
-      AppAssetId: this.AppAssetId,
+      Id: this.AppAssetId,
     };
     await this.http.post(URLConstant.GetAppFinDataOplByAppAssetId, appAssetObj).toPromise().then(
       (response) => {
@@ -131,7 +119,7 @@ export class FinancialDataOplEditComponent implements OnInit {
   AppFinDataRuleObj: any;
   async getAssetFinDataRule() {
     var appAssetObj = {
-      AppAssetId: this.AppAssetId,
+      Id: this.AppAssetId,
     };
     await this.http.post(URLConstant.GetFinancialRuleOpl, appAssetObj).toPromise().then(
       (response) => {
@@ -165,12 +153,14 @@ export class FinancialDataOplEditComponent implements OnInit {
     });
     this.allCalculate();
   }
+
   updateInterestAmt() {
     //this.FinancialDataForm.patchValue({
     //  InterestAmt: (this.AppFinDataObj.RentalPeriod / 12) * this.AppFinDataObj.TotalAssetPriceAftrDiscAmt*this.FinancialDataForm.controls.InterestPrnct.value / 100
     //});
     this.allCalculate();
   }
+
   updateOperatingMarginAmt() {
     //this.FinancialDataForm.patchValue({
     //  OperatingMarginAmt: this.FinancialDataForm.controls.TotalOperatingCostAmt.value * this.FinancialDataForm.controls.OperatingMarginPrcnt.value / 100
@@ -191,6 +181,7 @@ export class FinancialDataOplEditComponent implements OnInit {
     }
     this.allCalculate();
   }
+
   updateInterestPrctg() {
     //if (this.AppFinDataObj.TotalAssetPriceAftrDiscAmt == 0) {
     //  this.FinancialDataForm.patchValue({
@@ -204,6 +195,7 @@ export class FinancialDataOplEditComponent implements OnInit {
     //}
     this.allCalculate();
   }
+
   updateOperatingMarginPrctg() {
     //if (this.AppFinDataObj.TotalOperatingCostAmt  == 0) {
     //  this.FinancialDataForm.patchValue({
@@ -223,11 +215,13 @@ export class FinancialDataOplEditComponent implements OnInit {
       DepreciationAmt: this.FinancialDataForm.controls.TotalAssetPrice.value - this.FinancialDataForm.controls.ResidualValueAmt.value
     });
   }
+
   calculateOperatingCost() {
     //this.FinancialDataForm.patchValue({
     //  TotalOperatingCostAmt: this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value + this.FinancialDataForm.controls.TotalInsuranceAtCostAmt.value + this.FinancialDataForm.controls.TotalMaintenanceAtCostAmt.value + this.FinancialDataForm.controls.TotalOthExpenseAmt.value + this.FinancialDataForm.controls.InterestAmt.value + this.FinancialDataForm.controls.DepreciationAmt.value
     //});
   }
+
   calculateCostAfterMargin() {
     //this.FinancialDataForm.patchValue({
     //  TotalCostAfterMarginAmt: this.FinancialDataForm.controls.TotalOperatingCostAmt.value + this.FinancialDataForm.controls.OperatingMarginAmt.value
@@ -384,6 +378,7 @@ export class FinancialDataOplEditComponent implements OnInit {
       this.isCalculate = true;
     }
   }
+
   CalculatedCofObj: any;
   CalculateCOF() {
     var CalculateRentalObj = {
@@ -406,6 +401,7 @@ export class FinancialDataOplEditComponent implements OnInit {
       }
     );
   }
+
   //Get Ref Master
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -469,6 +465,7 @@ export class FinancialDataOplEditComponent implements OnInit {
       this.FinancialDataForm.controls["ResidualValuePrcnt"].enable();
     }
   }
+
   ChangeOperatingType() {
     if (this.FinancialDataForm.controls.OperatingType.value == "AMT") {
       this.FinancialDataForm.controls["OperatingMarginPrcnt"].disable();
@@ -497,7 +494,6 @@ export class FinancialDataOplEditComponent implements OnInit {
         }
       );
     }
-
   }
 
   Cancel() {

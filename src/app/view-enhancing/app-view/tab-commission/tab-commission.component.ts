@@ -42,7 +42,7 @@ export class TabCommissionComponent implements OnInit {
   }
 
   async GetCommissionData() {
-    var obj: object = { AppId: this.appId };
+    var obj: object = { Id: this.appId };
     var url: string = URLConstant.GetAppCommissionDataDetailByAppId;
 
     await this.http.post(url, obj).toPromise().then(

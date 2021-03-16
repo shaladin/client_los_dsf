@@ -62,7 +62,7 @@ export class AssetDataPagingComponent implements OnInit {
 
   async GetThirdPartyResultH() {
     if(this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0"){
-      this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
+      this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
         (response) => {
           this.appObj = response;
           if(response['MouCustId'] != null){
