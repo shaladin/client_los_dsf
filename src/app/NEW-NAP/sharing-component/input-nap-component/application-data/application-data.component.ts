@@ -766,6 +766,7 @@ export class ApplicationDataComponent implements OnInit {
     { Key: "LEGAL", Value: "Legal" },
     { Key: "RESIDENCE", Value: "Residence" }
   ];
+  IsAddrReady: boolean = false;
   async initMailingAddress(){
     this.mailingAddrObj = new AddrObj();
     this.inputAddressObj = new InputAddressObj();
@@ -809,6 +810,7 @@ export class ApplicationDataComponent implements OnInit {
       this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: address.Zipcode };
       this.inputAddressObj.default = this.mailingAddrObj;
     }
+    this.IsAddrReady = true;
   }
 
   getMailingAddrForSave()

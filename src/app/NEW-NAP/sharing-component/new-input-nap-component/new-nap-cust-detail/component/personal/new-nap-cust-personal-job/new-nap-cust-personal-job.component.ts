@@ -96,19 +96,19 @@ export class NewNapCustPersonalJobComponent implements OnInit {
               MrJobPositionCode: response.AppCustPersonalJobDataObj.MrJobPositionCode,
               MrJobStatCode: response.AppCustPersonalJobDataObj.MrJobStatCode,
               MrCoyScaleCode: response.AppCustPersonalJobDataObj.MrCoyScaleCode,
-              EmploymentEstablishmentDt: response.AppCustPersonalJobDataObj.EmploymentEstablishmentDt != null ? formatDate(response.AppCustPersonalJobDataObj.EmploymentEstablishmentDt, 'yyyy-MM-dd', 'en-US') : "",
+              EmploymentEstablishmentDt: response.AppCustPersonalJobDataObj.EmploymentEstablishmentDt != null ? formatDate(response.AppCustPersonalJobDataObj.EmploymentEstablishmentDt, 'yyyy-MM-dd', 'en-US') : null,
               NumOfEmployee: response.AppCustPersonalJobDataObj.NumOfEmployee,
               JobTitleName: response.AppCustPersonalJobDataObj.JobTitleName,
               IsMfEmp: response.AppCustPersonalJobDataObj.IsMfEmp,
               MrInvestmentTypeCode: response.AppCustPersonalJobDataObj.MrInvestmentTypeCode,
               ProfessionalNo: response.AppCustPersonalJobDataObj.ProfessionalNo != "" ? response.AppCustPersonalJobDataObj.ProfessionalNo : "",
               PrevCoyName: response.AppCustPersonalJobDataObj.PrevCoyName != "" ? response.AppCustPersonalJobDataObj.PrevCoyName : "",
-              PrevEmploymentDt: response.AppCustPersonalJobDataObj.PrevEmploymentDt != null ? datePipe.transform(response.AppCustPersonalJobDataObj.PrevEmploymentDt, "yyyy-MM-dd") : "",
+              PrevEmploymentDt: response.AppCustPersonalJobDataObj.PrevEmploymentDt != null ? datePipe.transform(response.AppCustPersonalJobDataObj.PrevEmploymentDt, "yyyy-MM-dd") : null,
               OthBizName: response.AppCustPersonalJobDataObj.OthBizName != "" ? response.AppCustPersonalJobDataObj.OthBizName : "",
               OthBizType: response.AppCustPersonalJobDataObj.OthBizType != "" ? response.AppCustPersonalJobDataObj.OthBizType : "",
               OthBizIndustryTypeCode: response.AppCustPersonalJobDataObj.OthBizIndustryTypeCode != "" ? response.AppCustPersonalJobDataObj.OthBizIndustryTypeCode : "",
               OthBizJobPosition: response.AppCustPersonalJobDataObj.OthBizJobPosition != "" ? response.AppCustPersonalJobDataObj.OthBizJobPosition : "",
-              OthBizEstablishmentDt: response.AppCustPersonalJobDataObj.OthBizEstablishmentDt != null ? datePipe.transform(response.AppCustPersonalJobDataObj.OthBizEstablishmentDt, "yyyy-MM-dd") : "",
+              OthBizEstablishmentDt: response.AppCustPersonalJobDataObj.OthBizEstablishmentDt != null ? datePipe.transform(response.AppCustPersonalJobDataObj.OthBizEstablishmentDt, "yyyy-MM-dd") : null,
               RowVersion: response.AppCustPersonalJobDataObj.RowVersion
             })
             this.InputLookupProfessionObj.nameSelect = response.AppCustPersonalJobDataObj.MrProfessionName;
@@ -130,19 +130,19 @@ export class NewNapCustPersonalJobComponent implements OnInit {
           MrJobPositionCode: custPersonalJobData.MrJobPositionCode,
           MrJobStatCode: custPersonalJobData.MrJobStatCode,
           MrCoyScaleCode: custPersonalJobData.MrCompanyScaleCode,
-          EmploymentEstablishmentDt: custPersonalJobData.EstablishmentDt != null ? formatDate(custPersonalJobData.EstablishmentDt, 'yyyy-MM-dd', 'en-US') : "",
+          EmploymentEstablishmentDt: custPersonalJobData.EstablishmentDt != null ? formatDate(custPersonalJobData.EstablishmentDt, 'yyyy-MM-dd', 'en-US') : null,
           NumOfEmployee: custPersonalJobData.NumOfEmployee,
           JobTitleName: custPersonalJobData.JobTitleName,
           IsMfEmp: custPersonalJobData.IsMfEmp,
           MrInvestmentTypeCode: custPersonalJobData.MrInvestmentTypeCode,
           ProfessionalNo: custPersonalJobData.ProfessionalNo != "" ? custPersonalJobData.ProfessionalNo : "",
           PrevCoyName: custPersonalJobData.PrevCoyName != "" ? custPersonalJobData.PrevCoyName : "",
-          PrevEmploymentDt: custPersonalJobData.PrevEmploymentDt != null ? datePipe.transform(custPersonalJobData.PrevEmploymentDt, "yyyy-MM-dd") : "",
+          PrevEmploymentDt: custPersonalJobData.PrevEmploymentDt != null ? datePipe.transform(custPersonalJobData.PrevEmploymentDt, "yyyy-MM-dd") : null,
           OthBizName: custPersonalJobData.OthBizName != "" ? custPersonalJobData.OthBizName : "",
           OthBizType: custPersonalJobData.OthBizType != "" ? custPersonalJobData.OthBizType : "",
           OthBizIndustryTypeCode: custPersonalJobData.OthBizIndustryTypeCode != "" ? custPersonalJobData.OthBizIndustryTypeCode : "",
           OthBizJobPosition: custPersonalJobData.OthBizJobPosition != "" ? custPersonalJobData.OthBizJobPosition : "",
-          OthBizEstablishmentDt: custPersonalJobData.OthBizEstablishmentDt != null ? datePipe.transform(custPersonalJobData.OthBizEstablishmentDt, "yyyy-MM-dd") : "",
+          OthBizEstablishmentDt: custPersonalJobData.OthBizEstablishmentDt != null ? datePipe.transform(custPersonalJobData.OthBizEstablishmentDt, "yyyy-MM-dd") : null,
         })
         this.InputLookupProfessionObj.nameSelect = custPersonalJobData.MrProfessionName;
         this.InputLookupProfessionObj.jsonSelect = { ProfessionName: custPersonalJobData.MrProfessionName };
@@ -157,22 +157,27 @@ export class NewNapCustPersonalJobComponent implements OnInit {
       this.ParentForm.controls.MrJobPositionCode.setValidators([Validators.required]);
       this.ParentForm.controls.MrJobStatCode.setValidators([Validators.required]);
       this.ParentForm.controls.EmploymentEstablishmentDt.setValidators([Validators.required]);
+      this.ParentForm.controls.CoyName.setValidators([Validators.required]);
     }else if(this.CustModelCode == CommonConstant.CustModelProfessional){
       this.ParentForm.controls.EmploymentEstablishmentDt.setValidators([Validators.required]);
       this.ParentForm.controls.MrJobPositionCode.clearValidators();
       this.ParentForm.controls.MrJobStatCode.clearValidators();
+      this.ParentForm.controls.CoyName.clearValidators();
     }else if(this.CustModelCode == CommonConstant.CustModelNonProfessional){
       this.ParentForm.controls.MrJobPositionCode.clearValidators();
       this.ParentForm.controls.MrJobStatCode.clearValidators();
       this.ParentForm.controls.EmploymentEstablishmentDt.clearValidators();
+      this.ParentForm.controls.CoyName.clearValidators();
     }else if(this.CustModelCode == CommonConstant.CustModelSmallMediumEnterprise){
       this.ParentForm.controls.EmploymentEstablishmentDt.clearValidators();
       this.ParentForm.controls.MrJobPositionCode.setValidators([Validators.required]);
       this.ParentForm.controls.MrJobStatCode.clearValidators();
+      this.ParentForm.controls.CoyName.setValidators([Validators.required]);
     }
     this.ParentForm.controls.MrJobPositionCode.updateValueAndValidity();
     this.ParentForm.controls.MrJobStatCode.updateValueAndValidity();
     this.ParentForm.controls.EmploymentEstablishmentDt.updateValueAndValidity();
+    this.ParentForm.controls.CoyName.updateValueAndValidity();
   }
 
   SetCriteriaAndRequired(CustModelCode: string, isChange: boolean = false) {

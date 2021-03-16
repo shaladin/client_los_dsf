@@ -330,7 +330,7 @@
                 </div>
               </div>
             </div>
-            <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObj" [enjiForm]="enjiForm" [identifier]="'Address'"
+            <lib-ucaddress #UcAddrGrp *ngIf="IsAddrReady" [addressObj]="inputAddressObj" [enjiForm]="enjiForm" [identifier]="'Address'"
               [UCAddrForm]="NapAppModelForm"></lib-ucaddress>
           </div>
 

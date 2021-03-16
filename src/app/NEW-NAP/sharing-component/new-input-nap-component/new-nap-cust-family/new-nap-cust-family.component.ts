@@ -32,12 +32,12 @@ export class NewNapCustFamilyComponent implements OnInit {
   constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
   }
 
-  ngOnInit() {
+  async ngOnInit() : Promise<void> {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucpaging/searchFamilyMainData.json";
 
     this.custMainDataMode = CommonConstant.CustMainDataModeFamily;
-    this.loadGuarantorListData();
+    await this.loadGuarantorListData();
   }
 
   add() {
@@ -46,8 +46,8 @@ export class NewNapCustFamilyComponent implements OnInit {
     this.appCustId = 0;
   }
 
-  saveAndContinue() {
-    this.loadGuarantorListData();
+  async saveAndContinue() {
+    await this.loadGuarantorListData();
     var spouse = this.listFamily.find(x => x.MrCustRelationshipCode == CommonConstant.MasteCodeRelationshipSpouse);
     if((this.listFamily.length == 0 || spouse == null) && this.isMainCustMarried){
       this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_SPOUSE_DATA)
@@ -63,8 +63,8 @@ export class NewNapCustFamilyComponent implements OnInit {
   }
 
   
-  close() {
-    this.loadGuarantorListData();
+  async close() {
+    await this.loadGuarantorListData();
     this.isDetail = false;
   }
 
@@ -90,11 +90,11 @@ export class NewNapCustFamilyComponent implements OnInit {
     }
   }
 
-  loadGuarantorListData() {
+  async loadGuarantorListData() {
     this.custDataObj = new CustDataObj();
     this.custDataObj.AppId = this.appId;
     this.custDataObj.IsFamily = true;
-    this.http.post(URLConstant.GetListAppCustMainDataByAppId, this.custDataObj).subscribe(
+    await this.http.post(URLConstant.GetListAppCustMainDataByAppId, this.custDataObj).toPromise().then(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""

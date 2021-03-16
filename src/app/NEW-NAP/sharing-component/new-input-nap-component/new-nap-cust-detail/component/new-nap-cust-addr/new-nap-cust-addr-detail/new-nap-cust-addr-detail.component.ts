@@ -120,6 +120,7 @@ export class NewNapCustAddrDetailComponent implements OnInit {
     this.AddrObj.PhnExt1 = copiedAddr.PhnExt1;
     this.AddrObj.PhnExt2 = copiedAddr.PhnExt2;
     this.AddrObj.PhnExt3 = copiedAddr.PhnExt3;
+    this.AddrObj.MrHouseOwnershipCode = copiedAddr.MrHouseOwnershipCode;
     
 
     this.inputAddressObj.inputField.inputLookupObj.nameSelect = copiedAddr.Zipcode;

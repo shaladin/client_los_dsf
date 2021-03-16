@@ -580,7 +580,7 @@ export class NewNapCustMainDataComponent implements OnInit {
 
       if (this.inputMode == 'EDIT') {
         this.ParentForm.patchValue({
-          MrCustRelationshipCode: this.isIncludeCustRelation ? CustObj.MrCustRelationshipCode : '',
+          MrCustRelationshipCode: this.isIncludeCustRelation && !IsCopyCust ? CustObj.MrCustRelationshipCode : '',
         })
       }
     }

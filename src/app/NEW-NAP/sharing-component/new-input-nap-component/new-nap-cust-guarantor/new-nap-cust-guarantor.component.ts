@@ -33,11 +33,11 @@ export class NewNapCustGuarantorComponent implements OnInit {
   constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
   }
 
-  ngOnInit() {
+  async ngOnInit() : Promise<void> {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucpaging/searchGuarantorMainData.json";
     this.custMainDataMode = CommonConstant.CustMainDataModeGuarantor;
-    this.loadGuarantorListData();
+    await this.loadGuarantorListData();
   }
 
   add() {
@@ -46,8 +46,8 @@ export class NewNapCustGuarantorComponent implements OnInit {
     this.appCustId = 0; 
   }
 
-  saveAndContinue() {
-    this.loadGuarantorListData();
+  async saveAndContinue() {
+    await this.loadGuarantorListData();
     var spouse = this.listGuarantor.find(x => x.MrCustRelationshipCode == CommonConstant.MasteCodeRelationshipSpouse);
 
     if(spouse != null && !this.isMainCustMarried){
@@ -89,11 +89,11 @@ export class NewNapCustGuarantorComponent implements OnInit {
     }
   }
 
-  loadGuarantorListData() {
+  async loadGuarantorListData() {
     this.custDataObj = new CustDataObj();
     this.custDataObj.AppId = this.appId;
     this.custDataObj.IsGuarantor = true;
-    this.http.post(URLConstant.GetListAppCustMainDataByAppId, this.custDataObj).subscribe(
+    await this.http.post(URLConstant.GetListAppCustMainDataByAppId, this.custDataObj).toPromise().then(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""
@@ -105,8 +105,8 @@ export class NewNapCustGuarantorComponent implements OnInit {
     );
   }
 
-  close() {
-    this.loadGuarantorListData();
+  async close() {
+    await this.loadGuarantorListData();
     this.isDetail = false;
   }
 

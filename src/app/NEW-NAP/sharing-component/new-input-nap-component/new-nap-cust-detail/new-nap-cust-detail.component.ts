@@ -461,6 +461,7 @@ export class NewNapCustDetailComponent implements OnInit {
 
     this.custPersonalEmergencyComponent.CopyCustomerEmergency(e.CustPersonalEmergencyContactObj);
     this.custPersonalFinancialComponent.CopyCustomerFinData(e.CustPersonalFinDataObj, e.CustBankAccObjs, e.CustAttrContentObjs.NewCustAttrContentObjs);
+    this.AppCustBankAccList = e.CustBankAccObjs;
     this.otherInfoComponent.CopyCustOtherInfo(e.CustOtherInfoObj, e.CustAttrContentObjs.NewCustAttrContentObjs);
   }
 
@@ -497,19 +498,19 @@ export class NewNapCustDetailComponent implements OnInit {
       MrJobPositionCode: '',
       MrJobStatCode: '',
       MrCoyScaleCode: '',
-      EmploymentEstablishmentDt: '',
+      EmploymentEstablishmentDt: null,
       NumOfEmployee: '',
       JobTitleName: '',
       IsMfEmp: false,
       MrInvestmentTypeCode: '',
       ProfessionalNo: '',
       PrevCoyName: '',
-      PrevEmploymentDt: '',
+      PrevEmploymentDt: null,
       OthBizName: '',
       OthBizType: '',
       OthBizIndustryTypeCode: '',
       OthBizJobPosition: '',
-      OthBizEstablishmentDt: '',
+      OthBizEstablishmentDt: null,
       JobNotes: '',
       PrevJobNotes: '',
       OthBizNotes: '',
@@ -662,25 +663,64 @@ export class NewNapCustDetailComponent implements OnInit {
 
   //#region CustPersonalJobData
   SetAppCustPersonalJobData(){
-    this.JobDataObj.MrProfessionCode = this.JobDataForm.controls.MrProfessionCode.value;
-    this.JobDataObj.IndustryTypeCode = this.JobDataForm.controls.IndustryTypeCode.value;
-    this.JobDataObj.CoyName = this.JobDataForm.controls.CoyName.value;
-    this.JobDataObj.MrJobPositionCode = this.JobDataForm.controls.MrJobPositionCode.value;
-    this.JobDataObj.MrJobStatCode = this.JobDataForm.controls.MrJobStatCode.value;
-    this.JobDataObj.MrCoyScaleCode = this.JobDataForm.controls.MrCoyScaleCode.value;
-    this.JobDataObj.EmploymentEstablishmentDt = this.JobDataForm.controls.EmploymentEstablishmentDt.value;
-    this.JobDataObj.NumOfEmployee = this.JobDataForm.controls.NumOfEmployee.value;
-    this.JobDataObj.JobTitleName = this.JobDataForm.controls.JobTitleName.value;
-    this.JobDataObj.IsMfEmp = this.JobDataForm.controls.IsMfEmp.value;
-    this.JobDataObj.MrInvestmentTypeCode = this.JobDataForm.controls.MrInvestmentTypeCode.value;
-    this.JobDataObj.ProfessionalNo = this.JobDataForm.controls.ProfessionalNo.value;
-    this.JobDataObj.PrevCoyName = this.JobDataForm.controls.PrevCoyName.value;
-    this.JobDataObj.PrevEmploymentDt = this.JobDataForm.controls.PrevEmploymentDt.value;
-    this.JobDataObj.OthBizName = this.JobDataForm.controls.OthBizName.value;
-    this.JobDataObj.OthBizType = this.JobDataForm.controls.OthBizType.value;
-    this.JobDataObj.OthBizIndustryTypeCode = this.JobDataForm.controls.OthBizIndustryTypeCode.value;
-    this.JobDataObj.OthBizJobPosition = this.JobDataForm.controls.OthBizJobPosition.value;
-    this.JobDataObj.OthBizEstablishmentDt = this.JobDataForm.controls.OthBizEstablishmentDt.value;
+    if(this.CustMainDataForm.controls.MrCustModelCode.value == CommonConstant.CustModelEmployee){
+      this.JobDataObj.MrProfessionCode = this.JobDataForm.controls.MrProfessionCode.value;
+      this.JobDataObj.IndustryTypeCode = this.JobDataForm.controls.IndustryTypeCode.value;
+      this.JobDataObj.CoyName = this.JobDataForm.controls.CoyName.value;
+      this.JobDataObj.EmploymentEstablishmentDt = this.JobDataForm.controls.EmploymentEstablishmentDt.value;
+      this.JobDataObj.MrJobPositionCode = this.JobDataForm.controls.MrJobPositionCode.value;
+      this.JobDataObj.MrCoyScaleCode = this.JobDataForm.controls.MrCoyScaleCode.value;
+      this.JobDataObj.JobTitleName = this.JobDataForm.controls.JobTitleName.value;
+      this.JobDataObj.NumOfEmployee = this.JobDataForm.controls.NumOfEmployee.value;
+      this.JobDataObj.MrJobStatCode = this.JobDataForm.controls.MrJobStatCode.value;
+      this.JobDataObj.IsMfEmp = this.JobDataForm.controls.IsMfEmp.value;
+      this.JobDataObj.PrevCoyName = this.JobDataForm.controls.PrevCoyName.value;
+      this.JobDataObj.PrevEmploymentDt = this.JobDataForm.controls.PrevEmploymentDt.value;
+      this.JobDataObj.OthBizName = this.JobDataForm.controls.OthBizName.value;
+      this.JobDataObj.OthBizType = this.JobDataForm.controls.OthBizType.value;
+      this.JobDataObj.OthBizIndustryTypeCode = this.JobDataForm.controls.OthBizIndustryTypeCode.value;
+      this.JobDataObj.OthBizJobPosition = this.JobDataForm.controls.OthBizJobPosition.value;
+      this.JobDataObj.OthBizEstablishmentDt = this.JobDataForm.controls.OthBizEstablishmentDt.value;
+    }
+
+    if(this.CustMainDataForm.controls.MrCustModelCode.value == CommonConstant.CustModelProfessional){
+      this.JobDataObj.MrProfessionCode = this.JobDataForm.controls.MrProfessionCode.value;
+      this.JobDataObj.IndustryTypeCode = this.JobDataForm.controls.IndustryTypeCode.value;
+      this.JobDataObj.ProfessionalNo = this.JobDataForm.controls.ProfessionalNo.value;
+      this.JobDataObj.EmploymentEstablishmentDt = this.JobDataForm.controls.EmploymentEstablishmentDt.value;
+      this.JobDataObj.JobTitleName = this.JobDataForm.controls.JobTitleName.value;
+      this.JobDataObj.PrevCoyName = this.JobDataForm.controls.PrevCoyName.value;
+      this.JobDataObj.PrevEmploymentDt = this.JobDataForm.controls.PrevEmploymentDt.value;
+      this.JobDataObj.OthBizName = this.JobDataForm.controls.OthBizName.value;
+      this.JobDataObj.OthBizType = this.JobDataForm.controls.OthBizType.value;
+      this.JobDataObj.OthBizIndustryTypeCode = this.JobDataForm.controls.OthBizIndustryTypeCode.value;
+      this.JobDataObj.OthBizJobPosition = this.JobDataForm.controls.OthBizJobPosition.value;
+      this.JobDataObj.OthBizEstablishmentDt = this.JobDataForm.controls.OthBizEstablishmentDt.value;
+    }
+
+    if(this.CustMainDataForm.controls.MrCustModelCode.value == CommonConstant.CustModelSmallMediumEnterprise){
+      this.JobDataObj.MrProfessionCode = this.JobDataForm.controls.MrProfessionCode.value;
+      this.JobDataObj.IndustryTypeCode = this.JobDataForm.controls.IndustryTypeCode.value;
+      this.JobDataObj.CoyName = this.JobDataForm.controls.CoyName.value;
+      this.JobDataObj.EmploymentEstablishmentDt = this.JobDataForm.controls.EmploymentEstablishmentDt.value;
+      this.JobDataObj.MrJobPositionCode = this.JobDataForm.controls.MrJobPositionCode.value;
+      this.JobDataObj.MrCoyScaleCode = this.JobDataForm.controls.MrCoyScaleCode.value;
+      this.JobDataObj.JobTitleName = this.JobDataForm.controls.JobTitleName.value;
+      this.JobDataObj.NumOfEmployee = this.JobDataForm.controls.NumOfEmployee.value;
+      this.JobDataObj.MrInvestmentTypeCode = this.JobDataForm.controls.MrInvestmentTypeCode.value;
+      this.JobDataObj.PrevCoyName = this.JobDataForm.controls.PrevCoyName.value;
+      this.JobDataObj.PrevEmploymentDt = this.JobDataForm.controls.PrevEmploymentDt.value;
+      this.JobDataObj.OthBizName = this.JobDataForm.controls.OthBizName.value;
+      this.JobDataObj.OthBizType = this.JobDataForm.controls.OthBizType.value;
+      this.JobDataObj.OthBizIndustryTypeCode = this.JobDataForm.controls.OthBizIndustryTypeCode.value;
+      this.JobDataObj.OthBizJobPosition = this.JobDataForm.controls.OthBizJobPosition.value;
+      this.JobDataObj.OthBizEstablishmentDt = this.JobDataForm.controls.OthBizEstablishmentDt.value;
+    }
+
+    if(this.CustMainDataForm.controls.MrCustModelCode.value == CommonConstant.CustModelNonProfessional){
+      this.JobDataObj.MrProfessionCode = this.JobDataForm.controls.MrProfessionCode.value;
+    }
+    
     this.JobDataObj.RowVersion = this.JobDataForm.controls.RowVersion.value;
   }
   //#endregion
