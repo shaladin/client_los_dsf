@@ -156,7 +156,7 @@ export class LoanObjectComponent implements OnInit {
   }
 
   async GetAppData() {
-    await this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.AppObj = response;
         this.OfficeCode = this.AppObj.OriOfficeCode;

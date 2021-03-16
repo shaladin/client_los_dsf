@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -40,7 +40,7 @@ export class ApplicationViewComponent implements OnInit {
   IsFraudDetectionMulti: boolean = true;
   bizTemplateCode : string = "";
   appNo: string;
-  constructor(private route: ActivatedRoute, private http: HttpClient,  private componentFactoryResolver: ComponentFactoryResolver) { 
+  constructor(private route: ActivatedRoute, private http: HttpClient) { 
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
     })
@@ -54,7 +54,7 @@ export class ApplicationViewComponent implements OnInit {
 
   GetApp() {
     var appObj = {
-      AppId: this.AppId,
+      Id: this.AppId,
     };
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response) => {
@@ -74,7 +74,6 @@ export class ApplicationViewComponent implements OnInit {
           this.IsMultiAsset = false;
           this.IsFraudDetectionMulti = false;
           this.IsInsurance = false;
-      
         }
         else if(this.bizTemplateCode == CommonConstant.CFRFN4W){
           this.IsAsset = false;
@@ -111,11 +110,11 @@ export class ApplicationViewComponent implements OnInit {
       }
     );
   }
+
   tabChangeEvent( tabChangeEvent : MatTabChangeEvent){
     if(tabChangeEvent.index == 0){
       this.GetApp();
     }
-
     this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 }

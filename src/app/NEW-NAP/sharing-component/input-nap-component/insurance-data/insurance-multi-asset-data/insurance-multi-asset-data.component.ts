@@ -208,7 +208,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       TotalInscoFeeAmt: 0
     });
 
-    var appObj = { AppId: this.appId }
+    var appObj = { Id: this.appId }
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response) => {
         this.BizTemplateCode = response["BizTemplateCode"];

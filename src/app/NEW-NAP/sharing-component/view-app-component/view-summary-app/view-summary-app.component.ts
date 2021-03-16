@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { SummaryAppObj } from 'app/shared/model/App/SummaryAppObj.Model';
@@ -16,21 +14,22 @@ import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 
 export class ViewSummaryAppComponent implements OnInit {
   @Input() AppId: number;
+  
   SummaryAppObj: SummaryAppObj = new SummaryAppObj();
   SerialNoObjs: Array<SerialNoObj> = new Array<SerialNoObj>();
   LoanObjectData: Array<Object>;
   InputGridColl: InputGridObj;
   IsGridCollReady: boolean;
-bizTemplateCode : string = "";
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
-  }
+  bizTemplateCode : string = "";
+
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
      this.getSummaryApp();
   }
 
   getSummaryApp() {
-    var reqObj = { AppId: this.AppId };
+    var reqObj = { Id: this.AppId };
     this.http.post<SummaryAppObj>(URLConstant.GetSummaryAppByAppId, reqObj).subscribe(
       (response) => {
         this.SummaryAppObj = response;
@@ -66,5 +65,4 @@ bizTemplateCode : string = "";
         }
       });
   }
-
 }

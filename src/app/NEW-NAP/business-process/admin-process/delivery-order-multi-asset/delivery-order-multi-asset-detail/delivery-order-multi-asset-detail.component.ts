@@ -136,10 +136,11 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
 
     var agrObj = { Id: this.agrmntId };
     var appObj = { AppId: this.appId };
+    var appObj1 = { Id: this.appId };
 
     let getAgr = await this.httpClient.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
     let getAppCust = await this.httpClient.post(URLConstant.GetAppCustByAppId, appObj)
-    let getApp = await this.httpClient.post(URLConstant.GetAppById, appObj)
+    let getApp = await this.httpClient.post(URLConstant.GetAppById, appObj1)
     forkJoin([getAgr, getAppCust, getApp]).subscribe(
       (response) => {
         this.agrNo = response[0]['AgrmntNo'];

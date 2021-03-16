@@ -50,7 +50,7 @@ export class InvoiceDataComponent implements OnInit {
     this.MouCustLookupObj.pagingJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
     this.MouCustLookupObj.genericJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
 
-    this.httpClient.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
+    this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { MouCustId: response["MouCustId"] }).subscribe(
           (response2) => {

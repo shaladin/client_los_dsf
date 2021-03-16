@@ -91,7 +91,7 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
 
   async GetAppData() {
     var appObj = {
-      AppId: this.AppId,
+      Id: this.AppId,
     };
     await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
       (response) => {

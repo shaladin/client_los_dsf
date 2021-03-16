@@ -550,8 +550,9 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   }
 
   GetAppData() {
-    this.appObj.AppId = this.AppId;
-    this.http.post(this.getAppUrl, this.appObj).subscribe(
+    // this.appObj.AppId = this.AppId;
+    var appObj1 = { Id: this.AppId };
+    this.http.post(this.getAppUrl, appObj1).subscribe(
       (response) => {
         this.AppObj = response;
       }

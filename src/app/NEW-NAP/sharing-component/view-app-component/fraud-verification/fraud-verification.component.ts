@@ -133,7 +133,7 @@ export class FraudVerificationComponent implements OnInit {
   }
 
   getApp(appId : number){
-    var appReqObj = { "AppId": appId };
+    var appReqObj = { "Id": appId };
     this.http.post<AppObj>(this.getAppById, appReqObj).subscribe(
       response => {
         this.appObj = response;

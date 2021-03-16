@@ -227,7 +227,7 @@ export class ApplicationDataComponent implements OnInit {
 
   GetCrossInfoData() {
     var obj = {
-      AppId: this.appId,
+      Id: this.appId,
       RowVersion: ""
     }
     this.http.post(URLConstant.GetListAppCross, obj).subscribe(
@@ -243,7 +243,7 @@ export class ApplicationDataComponent implements OnInit {
   resultResponse;
   getAppModelInfo() {
     var obj = {
-      AppId: this.appId,
+      Id: this.appId,
       RowVersion: ""
     };
     var url = URLConstant.GetAppDetailForTabAddEditAppById;

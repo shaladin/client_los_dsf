@@ -245,7 +245,8 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   async GetAppData() {
-    await this.http.post(this.getAppUrl, this.appObj).toPromise().then(
+    var appObj = { Id: this.appId };
+    await this.http.post(this.getAppUrl, appObj).toPromise().then(
       (response) => {
         this.AppObj = response;
         this.verfResObj.TrxRefNo = this.AppObj.AppNo;

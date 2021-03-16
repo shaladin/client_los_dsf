@@ -116,7 +116,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
   //#region Get API Data
   appNo: string = "";
   async GetAppNo() {
-    let obj = { AppId: this.appId };
+    let obj = { Id: this.appId };
     await this.http.post<NapAppModel>(URLConstant.GetAppById, obj).toPromise().then(
       async (response) => {
         if (response != undefined) {
@@ -177,7 +177,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
 
   ResponseExistCreditReview;
   async GetExistingCreditReviewData() {
-    let Obj = { appCrdRvwHObj: { AppId: this.appId } };
+    let Obj = { Id: this.appId };
     await this.http.post(URLConstant.GetAppCrdRvwById, Obj).toPromise().then(
       (response) => {
         this.ResponseExistCreditReview = response["appCrdRvwHObj"];

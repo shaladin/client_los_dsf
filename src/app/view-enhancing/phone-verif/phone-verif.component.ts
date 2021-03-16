@@ -21,7 +21,7 @@ export class PhoneVerifComponent implements OnInit {
   verfResultHId: number = 0;
 
   appObj = {
-    AppId: 0,
+    Id: 0,
   };
 
   verfResObj = {
@@ -60,7 +60,7 @@ export class PhoneVerifComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.appObj.AppId = this.appId;
+    this.appObj.Id = this.appId;
     this.verfResHObj.VerfResultHId = this.verfResultHId;
     this.arrValue.push(this.appId);
     await this.GetAppData();
