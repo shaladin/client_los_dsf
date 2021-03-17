@@ -145,8 +145,8 @@ export class NapFromLeadDetailComponent implements OnInit {
   async GetLead() {
     var obj = new LeadObj();
     obj.LeadId = this.leadId;
-
-    await this.http.post(URLConstant.GetLeadByLeadId, obj).toPromise().then(
+    var leadObj = { Id: this.leadId };
+    await this.http.post(URLConstant.GetLeadByLeadId, leadObj).toPromise().then(
       (response) => {
         this.leadObj = response as LeadObj;
         this.NapAppForm.patchValue({

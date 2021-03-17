@@ -121,7 +121,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
           });
 
         if (this.agrmntObj.LeadId != null) {
-          await this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { LeadId: this.agrmntObj.LeadId }).toPromise().then(
+          await this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { Id: this.agrmntObj.LeadId }).toPromise().then(
             (response) => {
               this.leadObj = response;
             });

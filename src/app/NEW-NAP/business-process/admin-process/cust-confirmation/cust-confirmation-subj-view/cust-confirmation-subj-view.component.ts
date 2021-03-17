@@ -80,7 +80,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
             this.AppObj = response;
           });
         if (this.AgrmntObj.LeadId != null) {
-          this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { LeadId: this.AgrmntObj.LeadId }).subscribe(
+          this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { Id: this.AgrmntObj.LeadId }).subscribe(
             (response) => {
               this.LeadObj = response;
             });
