@@ -68,7 +68,7 @@ export class DocSignerDetailComponent implements OnInit {
     MrJobPositionMgmntShrholder1Name: [''],
   });
 
-  async ngOnInit() {
+  async ngOnInit() : Promise<void> {
     if (this.WfTaskListId != 0) {
       this.ClaimTask();
     }
@@ -121,12 +121,6 @@ export class DocSignerDetailComponent implements OnInit {
         }
       });
 
-    await this.http.post(URLConstant.GetAgrmntByAgrmntId, obj).toPromise().then(
-      (response) => {
-        this.result2 = response;
-        this.OfficeCode = this.result2.OfficeCode;
-        this.CustNo = this.result2.CustNo;
-      });
 
     await this.http.post(URLConstant.GetAppAssetDataByAppId, obj).toPromise().then(
       (response) => {
