@@ -306,7 +306,6 @@ export class CommissionComponent implements OnInit {
       }
       this.RuleReferantorData.push(listTempObj);
     }
-
   }
 
   ContentObjSupplier = new Array();
@@ -317,7 +316,7 @@ export class CommissionComponent implements OnInit {
     var obj;
     if (content == CommonConstant.ContentSupplier) {
       obj = {
-        AppId: this.AppId,
+        Id: this.AppId,
         RowVersion: ""
       };
       this.http.post<AppAssetDetailObj>(URLConstant.GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppId, obj).subscribe(

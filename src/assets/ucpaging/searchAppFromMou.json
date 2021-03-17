@@ -34,7 +34,7 @@
       "value": "",
       "placeholder": "Placeholder",
       "isFromURL": true,
-      "isSelectOne": false,
+      "ddlType": "all",
       "url": "",
       "path": "/RefMaster/GetListKeyValueActiveByCode",
       "label": "Mou Type",

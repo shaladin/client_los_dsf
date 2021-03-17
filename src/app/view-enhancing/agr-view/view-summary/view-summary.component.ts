@@ -30,7 +30,7 @@ export class ViewAgrmntSummaryComponent implements OnInit {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridInsDataView.json";
     this.inputGridObj.deleteUrl = URLConstant.DeleteAppGuarantor;
-    this.http.post(URLConstant.GetAppAssetListForInsuranceByAgrmntId, { AgrmntId: this.agrmntId }).subscribe(
+    this.http.post(URLConstant.GetAppAssetListForInsuranceByAgrmntId, { Id: this.agrmntId }).subscribe(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""

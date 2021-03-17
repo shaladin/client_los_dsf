@@ -73,7 +73,7 @@ export class NapAddDetailComponent implements OnInit {
     this.ClaimTask();
     this.AppStepIndex = 0;
     this.NapObj = new AppObj();
-    // this.NapObj.AppId = this.appId;
+    this.NapObj.AppId = this.appId;
     var appObj = { Id: this.appId };
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response: AppObj) => {
@@ -105,9 +105,8 @@ export class NapAddDetailComponent implements OnInit {
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    var appObj = { AppId: this.appId };
-    var appObj1 = { Id: this.appId };
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj1);
+    var appObj = { Id: this.appId };
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj);
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
     forkJoin([getApp, getAppCust]).subscribe(
       response => {
@@ -163,7 +162,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   CheckMultiAsset() {
-    var appObj = { AppId: this.appId }
+    var appObj = { Id: this.appId }
     this.http.post(URLConstant.GetAppAssetListByAppId, appObj).subscribe(
       (response) => {
         this.ListAsset = response['ReturnObject'];

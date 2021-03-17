@@ -66,7 +66,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     await this.initBranchName();
     this.LifeInsObj.AppId = this.AppId;
 
-    this.http.post<AppCustObj>(URLConstant.GetAppCustByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post<AppCustObj>(URLConstant.GetAppCustByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         if (response.MrCustTypeCode == CommonConstant.CustTypeCompany) {
           this.LifeInsForm.controls["IsChecked"].disable();

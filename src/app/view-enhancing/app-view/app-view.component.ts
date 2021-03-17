@@ -78,10 +78,9 @@ export class AppViewComponent implements OnInit {
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    var appObj = { AppId: this.AppId };
-    var appObj1 = { Id: this.AppId };
+    var appObj = { Id: this.AppId };
 
-    let getApp = this.http.post(URLConstant.GetAppById, appObj1);
+    let getApp = this.http.post(URLConstant.GetAppById, appObj);
     let getAppCust = this.http.post(URLConstant.GetAppCustByAppId, appObj);
 
     forkJoin([getApp, getAppCust]).subscribe(

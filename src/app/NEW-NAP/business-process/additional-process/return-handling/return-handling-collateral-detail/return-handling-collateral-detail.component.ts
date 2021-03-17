@@ -792,7 +792,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
 
   async GetAppCust() {
     var appObj = {
-      AppId: this.AppId,
+      Id: this.AppId,
     };
     this.http.post(this.getAppCustUrl, appObj).toPromise().then(
       (response) => {

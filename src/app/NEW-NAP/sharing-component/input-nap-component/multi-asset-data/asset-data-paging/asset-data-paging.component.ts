@@ -227,7 +227,8 @@ export class AssetDataPagingComponent implements OnInit {
   }
 
   getListDataForDDLCopy() {
-    this.http.post(URLConstant.GetListAppAssetForCopyByAppId, this.appAssetObj).subscribe(
+    var appAssetObj = { Id: this.AppId };
+    this.http.post(URLConstant.GetListAppAssetForCopyByAppId, appAssetObj).subscribe(
       (response) => {
         this.listDataAsset = response[CommonConstant.ReturnObj];
         if (this.listDataAsset.length > 0) this.selectedAsset = this.listDataAsset[0].Code;
@@ -236,7 +237,8 @@ export class AssetDataPagingComponent implements OnInit {
   }
 
   getListDataAsset() {
-    this.http.post(this.getListAppAssetData, this.appAssetObj).subscribe(
+    var appAssetObj = { Id: this.AppId };
+    this.http.post(this.getListAppAssetData, appAssetObj).subscribe(
       (response) => {
         this.listAppAssetObj = response[CommonConstant.ReturnObj];
 

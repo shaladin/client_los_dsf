@@ -373,7 +373,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
   GetAppCust() {
     var appObj = {
-      AppId: this.AppId,
+      Id: this.AppId,
     };
     this.http.post(this.getAppCustUrl, appObj).subscribe(
       (response) => {
@@ -654,7 +654,8 @@ export class AssetDataAddEditComponent implements OnInit {
 
       this.appAssetObj = new AppAssetObj();
       this.appAssetObj.AppAssetId = this.AppAssetId;
-      await this.http.post(this.getAllAssetDataByAppAssetId, this.appAssetObj).toPromise().then(
+      var appAssetObj = { Id: this.AppAssetId };
+      await this.http.post(this.getAllAssetDataByAppAssetId, appAssetObj).toPromise().then(
         (response) => {
           this.returnAppAssetObj = response["ResponseAppAssetObj"];
           this.AssetDataForm.patchValue({
@@ -675,7 +676,6 @@ export class AssetDataAddEditComponent implements OnInit {
           this.ChangeAssetCondition();
           this.updateValueDownPaymentPrctg();
           this.appAssetAccessoriesObjs = response["ResponseAppAssetAccessoryObjs"];
-
         });
 
       this.reqAssetMasterObj = new AssetMasterObj();
@@ -746,7 +746,6 @@ export class AssetDataAddEditComponent implements OnInit {
                   });
                 });
             });
-
         });
 
       this.appCollateralObj = new AppCollateralObj();

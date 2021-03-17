@@ -94,7 +94,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         })
       });
 
-    await this.http.post<Array<KeyValueObj>>(URLConstant.GetListKeyValueMobilePhnByAppId, { AppId: this.AppId }).toPromise().then(
+    await this.http.post<Array<KeyValueObj>>(URLConstant.GetListKeyValueMobilePhnByAppId, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.PhnList = response;
         this.CustConfirm.patchValue({

@@ -86,7 +86,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     this.appCustPersonalObj = new AppCustPersonalObj();
     this.appCustCompanyObj = new AppCustCompanyObj();
     this.dukcapilObj = new FraudDukcapilObj();
-    var appReqObj = { "AppId": this.appId }
+    var appReqObj = { "AppId": this.appId, "Id": this.appId }
     this.http.post(this.getCustDataByAppId, appReqObj).subscribe(
       response => {
         this.appCustObj = response["AppCustObj"];
@@ -130,7 +130,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
       }
     );
 
-     await this.getAssetNegative(appReqObj);
+    await this.getAssetNegative(appReqObj);
   }
 
   getApp(appId : number){

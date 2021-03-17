@@ -215,7 +215,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         this.textTitle = "Collateral";
       });
 
-    this.appAssetObj.AppId = this.appId;
     this.appAssetObj.Id = this.appId;
     this.http.post(URLConstant.GetAppAssetListForInsuranceByAppId, this.appAssetObj).subscribe(
       (response) => {
@@ -254,7 +253,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
         if (this.listAppCollateralObj[0].TotalCustPremiAmt != null)
           this.TotalPremiumToCust = this.listAppCollateralObj[0].TotalCustPremiAmt;
-
       });
   }
 

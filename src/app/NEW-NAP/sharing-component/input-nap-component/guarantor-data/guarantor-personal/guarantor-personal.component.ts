@@ -155,7 +155,7 @@ export class GuarantorPersonalComponent implements OnInit {
     }
 
     var AppCust = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     }
     this.http.post(URLConstant.GetAppCustByAppId, AppCust).subscribe(
@@ -166,7 +166,8 @@ export class GuarantorPersonalComponent implements OnInit {
             MappingCode: CommonConstant.CustTypePersonal,
             RowVersion: ""
           }
-        } else {
+        }
+        else {
           var refCustRelObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
             MappingCode: CommonConstant.CustTypePersonal,
@@ -183,7 +184,6 @@ export class GuarantorPersonalComponent implements OnInit {
             }
           }
         );
-
       }
     );
     this.http.post(URLConstant.GetListActiveRefMaster, idTypeObj).subscribe(
