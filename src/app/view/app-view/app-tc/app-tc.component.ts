@@ -21,7 +21,7 @@ export class AppTcComponent implements OnInit {
 
     
     var AppObj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
 
     this.http.post(URLConstant.GetListTCbyAppId, AppObj).subscribe(

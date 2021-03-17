@@ -93,7 +93,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   isView: boolean = false;
   GetIncomeInfoObj() {
     var obj = {
-      AppId: this.ReturnHandlingHObj.AppId
+      Id: this.ReturnHandlingHObj.AppId
     };
     this.http.post<AppFinDataObj>(URLConstant.GetAppFinDataWithRuleByAppId, obj).subscribe(
       (response) => {

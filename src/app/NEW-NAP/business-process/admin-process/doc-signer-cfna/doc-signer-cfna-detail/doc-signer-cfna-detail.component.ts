@@ -146,7 +146,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
   }
 
   async setLookupObj() {
-    await this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { AppId: this.AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.inputLookupBranchEmpObj.urlJson = "./assets/uclookup/lookupBranchEmp.json";
         this.inputLookupBranchEmpObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;

@@ -99,7 +99,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
 
     var AppObj = {
-      AppId: this.appId
+      Id: this.appId
     }
 
     this.http.post(URLConstant.GetListExistingTCbyAppId, AppObj).subscribe(
@@ -123,7 +123,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     if (this.isReturnHandling == true) {
       this.MakeViewReturnInfoObj();
     }
-    this.http.post(URLConstant.GetListNewTCbyAppId, { AppId: this.appId }).toPromise().then(
+    this.http.post(URLConstant.GetListNewTCbyAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.listAddTc = response["AppTcs"];
         var fa_apptc = this.ReturnHandlingForm.get("AppTcs") as FormArray;
@@ -352,7 +352,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   }
 
   bindRefTcObj() {
-    this.http.post(URLConstant.GetListTCbyAppId, { appId: this.appId }).subscribe(
+    this.http.post(URLConstant.GetListTCbyAppId, { Id: this.appId }).subscribe(
       (response) => {
         this.listTcCode = response["AppTcs"]
         this.http.post(this.getRefTcUrl, {}).subscribe(

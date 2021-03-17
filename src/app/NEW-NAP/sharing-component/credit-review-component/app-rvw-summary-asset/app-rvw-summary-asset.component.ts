@@ -25,7 +25,7 @@ export class AppRvwSummaryAssetComponent implements OnInit {
   }
 
   async GetAppRvwSummaryAsset() {
-    await this.http.post(URLConstant.GetAppRvwSummaryAsset, { AppId: this.AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetAppRvwSummaryAsset, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.appRvwSummaryAsset = response;
         this.isReady = true;

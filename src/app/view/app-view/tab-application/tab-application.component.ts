@@ -58,7 +58,7 @@ export class TabApplicationComponent implements OnInit {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridLoanObj.json";
 
-    this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { AppId: this.appId }).subscribe(
+    this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.appId }).subscribe(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""

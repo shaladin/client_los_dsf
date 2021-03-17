@@ -79,7 +79,7 @@ export class DocChecklistApprovalDetailComponent implements OnInit {
   async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.http.post(URLConstant.GetListTCbyAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetListTCbyAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.TCList = response["AppTcs"];
       });

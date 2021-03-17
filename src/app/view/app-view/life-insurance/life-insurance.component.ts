@@ -27,7 +27,7 @@ export class LifeInsuranceComponent implements OnInit {
     this.viewGenericObj.whereValue = this.arrValue;
 
     var AppObj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
 
     this.http.post(URLConstant.GetAppLifeInsHByAppId, AppObj).subscribe(

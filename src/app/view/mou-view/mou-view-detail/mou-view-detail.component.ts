@@ -50,7 +50,7 @@ export class MouViewDetailComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {
-    var mouCustObj = { MouCustId: this.MouCustId}
+    var mouCustObj = { Id: this.MouCustId}
     this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.mouCust = response["MouCustObj"];

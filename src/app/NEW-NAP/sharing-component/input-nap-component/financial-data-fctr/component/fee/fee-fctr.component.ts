@@ -47,7 +47,7 @@ export class FeeFctrComponent implements OnInit {
         this.TempProvisionSource = response[CommonConstant.ReturnObj];
       });
 
-    await this.http.post(URLConstant.GetListAppFeeByAppId, { AppId: AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetListAppFeeByAppId, { Id: AppId }).toPromise().then(
       (response) => {
         this.listAppFeeObj = response[CommonConstant.ReturnObj];
         for (let i = 0; i < this.listAppFeeObj.length; i++) {

@@ -173,7 +173,7 @@ export class CommissionComponent implements OnInit {
     var app = new AppObj();
     app = this.ResultAppData;
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       LobCode: this.ResultAppData.LobCode,
       AdminFee: this.AdminFee,
       ProvisionFee: this.ProvisionFee,
@@ -205,7 +205,7 @@ export class CommissionComponent implements OnInit {
   GetAppFeeData() {
     var obj = {
       // AppId: this.AppId,
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     this.http.post(URLConstant.GetListAppFeeByAppId, obj).subscribe(
@@ -330,7 +330,7 @@ export class CommissionComponent implements OnInit {
     } else if (content == CommonConstant.ContentSupplierEmp) {
     } else if (content == CommonConstant.ContentReferantor) {
       obj = {
-        AppId: this.AppId,
+        Id: this.AppId,
         RowVersion: ""
       };
       this.http.post<NapAppReferantorModel>(URLConstant.GetAppReferantorByAppId, obj).subscribe(

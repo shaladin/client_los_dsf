@@ -137,7 +137,7 @@ export class CommissionV2Component implements OnInit {
       TempObj.RefundAmount = element.RefundAmount;
       this.DictRemainingIncomeForm[element.RefundAllocationFrom] = TempObj;
     }
-    await this.http.post(URLConstant.GetListAppReservedFundByAppId, {AppId: this.AppId}).toPromise().then(
+    await this.http.post(URLConstant.GetListAppReservedFundByAppId, {Id: this.AppId}).toPromise().then(
       (response)=>{
         // console.log(response);
         let tempObj: Array<any> = response[CommonConstant.ReturnObj];
@@ -171,7 +171,7 @@ export class CommissionV2Component implements OnInit {
       });
 
     obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post<NapAppReferantorModel>(URLConstant.GetAppReferantorByAppId, obj).toPromise().then(
