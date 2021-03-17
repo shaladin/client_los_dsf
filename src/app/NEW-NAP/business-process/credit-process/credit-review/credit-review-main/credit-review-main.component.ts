@@ -119,7 +119,7 @@ export class CreditReviewMainComponent implements OnInit {
     await this.GetAppNo();
     var appObj = new AppObj();
     appObj.AppNo = this.AppNo;
-    await this.http.post(URLConstant.GetListDeviationTypeByAppNo, appObj).toPromise().then(
+    await this.http.post(URLConstant.GetListDeviationTypeByAppNo, { TrxNo: this.AppNo }).toPromise().then(
       (response) => {
         this.responseListTypeCodes = response['ApvTypecodes'];
       });

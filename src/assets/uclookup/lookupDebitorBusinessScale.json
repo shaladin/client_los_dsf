@@ -1,12 +1,12 @@
 {
-    "sectionTitle": "Debitor Business Scale",
+    "sectionTitle": "Debtor Business Scale",
     "component": [
         {
             "type": "textbox",
             "name": "LBPPMS_BIZ_SCL_CODE",
             "id": "LbppmsBizSclCodeId",
             "value": "",
-            "label": "Debitor Group Code",
+            "label": "Debtor Group Code",
             "placeholder": "Placeholder"
         },
         {
@@ -14,7 +14,7 @@
             "name": "DESCR",
             "id": "DescrId",
             "value": "",
-            "label": "Debitor Business Scale Description",
+            "label": "Debtor Business Scale Description",
             "placeholder": "Placeholder"
         },{
             "type": "textbox",
@@ -43,13 +43,13 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "Debitor Business Scale Code",
+            "label": "Debtor Business Scale Code",
             "name": "LBPPMS_BIZ_SCL_CODE"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Debitor Business Scale Description",
+            "label": "Debtor Business Scale Description",
             "name": "DESCR"
         },
         {

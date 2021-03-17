@@ -97,7 +97,7 @@ export class LegalDocDetailComponent implements OnInit {
 
   ChangeLegalDocType(ev, ForEdit: boolean = false) {
     var idx = ev.selectedIndex;
-    this.http.post(URLConstant.GetDocIsExpDtMandatory, { DocCode: this.LegalDocTypeObj[idx].Key }).subscribe(
+    this.http.post(URLConstant.GetDocIsExpDtMandatory, { Code: this.LegalDocTypeObj[idx].Key }).subscribe(
       (response) => {
         this.IsExpDateMandatory = response["IsExpDtMandatory"];
         if (!ForEdit) {

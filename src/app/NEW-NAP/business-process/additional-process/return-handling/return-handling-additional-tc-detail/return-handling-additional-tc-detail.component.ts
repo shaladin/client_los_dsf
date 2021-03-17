@@ -410,7 +410,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
       this.listAddTc.push(appTcObj);
       this.ReqTCObj.ListAppTcObj = new Array<AppTCObj>();
       this.ReqTCObj.ListAppTcObj.push(appTcObj);
-      this.http.post(URLConstant.GetDocIsExpDtMandatory, { DocCode: appTcObj.TcCode }).subscribe(
+      this.http.post(URLConstant.GetDocIsExpDtMandatory, { Code: appTcObj.TcCode }).subscribe(
         (response) => {
           console.log("IsExpDate: " + JSON.stringify(response));
           if (response["DocCode"]) {
@@ -467,7 +467,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
   async getExpDtMandatory(TcCode) {
     console.log("getExpDtMandatory Code: " + TcCode);
-    await this.http.post(URLConstant.GetDocIsExpDtMandatory, { DocCode: TcCode }).subscribe(
+    await this.http.post(URLConstant.GetDocIsExpDtMandatory, { Code: TcCode }).subscribe(
       (response) => {
         console.log("getExpDtMandatory: " + JSON.stringify(response));
         var isExpDateMandatory = false;

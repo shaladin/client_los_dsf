@@ -1,12 +1,12 @@
 <div class="card">
   <div class="card-body">
+    <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewGenericObj"></lib-ucviewgeneric>
     <div class="px-3">
       <div *ngIf="isMulti">
         <span>
           <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate><i class="ft-arrow-left"></i> Back</button>
         </span>
       </div>
-      <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewGenericObj"></lib-ucviewgeneric>
       <div *ngIf="AppCollateralDocs?.length">
         <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
         </lib-ucSubsection>
@@ -46,7 +46,7 @@
           </table>
         </div>
       </div>
-      <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewUOLObj"></lib-ucviewgeneric>
     </div>
+    <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewUOLObj"></lib-ucviewgeneric>
   </div>
 </div>

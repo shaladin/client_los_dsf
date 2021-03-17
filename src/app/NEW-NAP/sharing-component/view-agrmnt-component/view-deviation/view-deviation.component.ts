@@ -34,7 +34,7 @@ export class ViewDeviationComponent implements OnInit {
       (response) => {
         obj.AppNo = response.AppNo;
         var getListDeviationUrl = URLConstant.GetListDeviationResultByAppNo;
-        this.http.post<Array<DeviationResultObj>>(getListDeviationUrl, obj).subscribe(
+        this.http.post<Array<DeviationResultObj>>(getListDeviationUrl, { TrxNo: response.AppNo }).subscribe(
           (response) => {
             this.deviationResultList = response;
 

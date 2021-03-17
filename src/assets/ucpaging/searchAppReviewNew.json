@@ -9,7 +9,7 @@
             "value": "Office Name",
             "placeholder": "Placeholder",
             "isFromURL": true,
-            "isSelectOne": false,
+            "ddlType": "all",
             "isQueryIn": true,
             "url": "",
             "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",

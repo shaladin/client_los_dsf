@@ -51,7 +51,7 @@
             "placeholder": "Placeholder",
             "datatype": "text",
             "isFromURL": true,
-            "isSelectOne": false,
+            "ddlType": "all",
             "url": "",
             "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "Office Name",

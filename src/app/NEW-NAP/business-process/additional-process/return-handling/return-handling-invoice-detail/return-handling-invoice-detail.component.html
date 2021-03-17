@@ -1,0 +1,125 @@
+<div class="row text-left">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header header-title">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h4 class="card-title" translate> Invoice Verification </h4>
+                    </div>
+                </div>
+            </div><br>
+            <div class="card-body">
+                <form class="form form-horizontal" [formGroup]="RHInvoiceForm"
+                    (ngSubmit)="RHInvoiceForm.valid && SaveForm()" #enjiForm="ngForm">
+                    <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="CallbackHandler($event)">
+                    </lib-ucviewgeneric>
+                    <div class="px-3">
+                        <div *ngIf="!IsDetail">
+                            <lib-ucSubsection [id]="'ReturnInformationId'" [title]="'Return Information'"
+                                [panel]="'ReturnInformation'">
+                            </lib-ucSubsection>
+                            <div id="ReturnInformation">
+                                <div class="form-group row">
+                                    <label class="col-md-2  adInsLabel" translate>Return Notes</label>
+                                    <label class="col-md-4  adinslabel"
+                                        translate>{{this.ReturnHandlingDObj?.ReturnHandlingNotes}}</label>
+                                    <label class="col-md-2  adinslabel" translate>Return Execution Notes</label>
+                                    <div class="col-md-4">
+                                        <textarea type="text" class="form-control adInsInput"
+                                            formControlName="ExecNotes"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <lib-ucSubsection [id]="'ListOfInvoiceId'" [title]="'List Of Invoice'"
+                                [panel]="'ListOfInvoice'">
+                            </lib-ucSubsection>
+                            <div id="ListOfInvoice">
+                                <lib-ucgridview [gridInput]="inputGridObj" (callback)="CallbackHandler($event)">
+                                </lib-ucgridview>
+                            </div>
+                            <div class="form-actions right">
+                                <button type="button" class="btn btn-raised btn-raised btn-warning mr-1"
+                                    (click)="Cancel()">
+                                    <i class="ft-x"></i> Cancel
+                                </button>
+                                <button type="button" class="btn btn-raised btn-primary"
+                                    (click)="SubmitReturnHandling()">
+                                    <i class="fa fa-check-square-o"></i> Save
+                                </button>
+                            </div>
+                        </div>
+                        <div *ngIf="IsDetail">
+                            <div class="form-body">
+                                <lib-ucSubsection [id]="'InvoiceDataId'" [title]="'Invoice Data'"
+                                    [panel]="'InvoiceData'">
+                                </lib-ucSubsection>
+                                <div id="InvoiceData">
+                                    <div class="form-group row">
+                                        <label class="col-md-3 adins-required-label" translate>Invoice No</label>
+                                        <div class="col-md-9">
+                                            <input type="text" class="form-control" formControlName="InvoiceNo"
+                                                [ngClass]="{ 'is-invalid': enjiForm.submitted && RHInvoiceForm.controls.InvoiceNo.invalid }">
+                                            <lib-uc-show-errors [control]="RHInvoiceForm.controls.InvoiceNo"
+                                                [submit]="enjiForm.submitted">
+                                            </lib-uc-show-errors>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-3 adins-required-label" translate>Customer Factoring
+                                        </label>
+                                        <div class="col-md-9">
+                                            <lib-uclookupgeneric *ngIf="!IsDisableCustFctr"
+                                                [lookupInput]="MouCustLookupObj" [parentForm]="RHInvoiceForm"
+                                                [enjiForm]="enjiForm" [identifier]="'LookupCustomerFactoringName'"
+                                                (lookup)=GetLookupMouCust($event)>
+                                            </lib-uclookupgeneric>
+                                            <span *ngIf="IsDisableCustFctr">
+                                                <input type="text" class="form-control"
+                                                    formControlName="CustomerFactoringName"
+                                                    [ngClass]="{ 'is-invalid': enjiForm.submitted && RHInvoiceForm.controls.CustomerFactoringName.invalid }">
+                                                <lib-uc-show-errors
+                                                    [control]="RHInvoiceForm.controls.CustomerFactoringName"
+                                                    [submit]="enjiForm.submitted">
+                                                </lib-uc-show-errors>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-3 adins-required-label" translate>Invoice Amount</label>
+                                        <div class="col-md-9">
+                                            <input type="text" currencyMask class="form-control"
+                                                formControlName="InvoiceAmt"
+                                                [ngClass]="{ 'is-invalid': enjiForm.submitted && RHInvoiceForm.controls.InvoiceAmt.invalid }">
+                                            <lib-uc-show-errors [control]="RHInvoiceForm.controls.InvoiceAmt"
+                                                [submit]="enjiForm.submitted">
+                                            </lib-uc-show-errors>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-3 adins-required-label" translate>Due Date</label>
+                                        <div class="col-md-9">
+                                            <input type="date" class="form-control" formControlName="InvoiceDueDt"
+                                                [ngClass]="{ 'is-invalid': enjiForm.submitted && RHInvoiceForm.controls.InvoiceDueDt.invalid }">
+                                            <lib-uc-show-errors [control]="RHInvoiceForm.controls.InvoiceDueDt"
+                                                [submit]="enjiForm.submitted">
+                                            </lib-uc-show-errors>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions right">
+                                <button type="button" class="btn btn-raised btn-raised btn-warning mr-1"
+                                    (click)="CancelEdit()">
+                                    <i class="ft-x"></i> Cancel
+                                </button>
+                                <button type="submit" class="btn btn-raised btn-primary">
+                                    <i class="fa fa-check-square-o"></i> Save
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
