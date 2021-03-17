@@ -41,6 +41,9 @@ import { ReturnHandlingNewEditAppPagingComponent } from './return-handling/retur
 import { AdditionalTcPagingComponent } from './additional-tc/additional-tc-paging/additional-tc-paging.component';
 import { AdditionalTcDetailComponent } from './additional-tc/additional-tc-detail/additional-tc-detail.component';
 import { ReturnHandlingEditCustPagingComponent } from './return-handling/return-handling-edit-cust-paging/return-handling-edit-cust-paging.component';
+import { ReturnHandlingInvoicePagingComponent } from './return-handling/return-handling-invoice-paging/return-handling-invoice-paging.component';
+import { ReturnHandlingInvoiceDetailComponent } from './return-handling/return-handling-invoice-detail/return-handling-invoice-detail.component';
+import { AdminProcessSharingModule } from "../admin-process/admin-process.module";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -66,7 +69,8 @@ export const customCurrencyMaskConfig = {
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     ViewAppComponentModule,
     SharedModule,
-    MatTabsModule
+    MatTabsModule,
+    AdminProcessSharingModule
   ],
   declarations: [
     CreditApvResultExtPagingComponent,
@@ -101,6 +105,8 @@ export const customCurrencyMaskConfig = {
     AdditionalTcPagingComponent,
     AdditionalTcDetailComponent,
     ReturnHandlingEditCustPagingComponent,
+    ReturnHandlingInvoicePagingComponent,
+    ReturnHandlingInvoiceDetailComponent,
   ],
   providers: [
     NGXToastrService

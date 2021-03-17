@@ -139,7 +139,6 @@ export class ReturnHandlingDetailComponent implements OnInit {
 
   async getReturnHandling() {
     var reqObj = new ReturnHandlingHObj();
-    reqObj.ReturnHandlingHId = this.returnHandlingHId;
     reqObj.Id = this.returnHandlingHId;
     await this.http.post(URLConstant.GetReturnHandlingWithDetailByReturnHandlingHId, reqObj).toPromise().then(
       (response) => {
@@ -147,7 +146,12 @@ export class ReturnHandlingDetailComponent implements OnInit {
         this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
         if (this.returnHandlingHObj.ReturnFromTrxType == CommonConstant.TrxTypeCodePhn) {
           this.ReturnHandlingForm.patchValue({
-            MrReturnTaskCode: "RTN_EDIT_APP"
+            MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
+          });
+          this.ReturnHandlingForm.controls["MrReturnTaskCode"].disable();
+        }else if (this.returnHandlingHObj.ReturnFromTrxType == CommonConstant.VerfTrxTypeCodeInvoice) {
+          this.ReturnHandlingForm.patchValue({
+            MrReturnTaskCode: CommonConstant.ReturnHandlingInvoice
           });
           this.ReturnHandlingForm.controls["MrReturnTaskCode"].disable();
         }
@@ -172,6 +176,9 @@ export class ReturnHandlingDetailComponent implements OnInit {
         break;
       case CommonConstant.OPL:
         refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskOPL;
+        break;
+      case CommonConstant.FCTR:
+        refMasterTypeCode = CommonConstant.RefMasterTypeCodeReturnTaskFCTR;
         break;
     }
     if (!refMasterTypeCode) return;

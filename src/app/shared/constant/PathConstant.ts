@@ -165,6 +165,9 @@ export class PathConstant {
     public static ADD_TC = "addtc";
     public static ADD_TC_PAGING = PathConstant.ADD_TC + "/" + PathConstant.PAGING_LOWERCASE;
     public static ADD_TC_DETAIL = PathConstant.ADD_TC + "/" + PathConstant.DETAIL_LOWERCASE;
+    public static RETURN_HANDLING_INVOICE = "Invoice";
+    public static RETURN_HANDLING_INVOICE_PAGING = PathConstant.RETURN_HANDLING + "/" + PathConstant.RETURN_HANDLING_INVOICE + "/" + PathConstant.PAGING;
+    public static RETURN_HANDLING_INVOICE_DETAIL = PathConstant.RETURN_HANDLING + "/" + PathConstant.RETURN_HANDLING_INVOICE + "/" + PathConstant.DETAIL;
     //#endregion
 
     //#region Nap-Admin-Prcs
