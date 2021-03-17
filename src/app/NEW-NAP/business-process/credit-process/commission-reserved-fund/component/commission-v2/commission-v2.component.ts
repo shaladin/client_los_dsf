@@ -158,7 +158,7 @@ export class CommissionV2Component implements OnInit {
   async GetContentData() {
     var obj;
     obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post<AppAssetDetailObj>(URLConstant.GetAppAssetListAndAppAssetSupplEmpListDistinctSupplierByAppId, obj).toPromise().then(

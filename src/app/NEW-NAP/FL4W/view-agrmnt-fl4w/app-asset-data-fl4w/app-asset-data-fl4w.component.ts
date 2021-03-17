@@ -1,11 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppAssetDataDetailFl4wComponent } from './app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-
 
 @Component({
   selector: 'app-app-asset-data-fl4w',
@@ -16,13 +14,10 @@ export class AppAssetDataFl4wComponent implements OnInit {
   appAssetList: Array<any>;
   AppId: any;
 
-  constructor(
-    private httpClient: HttpClient,
-    private modalService: NgbModal
-  ) { }
+  constructor(private httpClient: HttpClient, private modalService: NgbModal) { }
 
   ngOnInit() {
-    var request = { AgrmntId: this.AgrmntId };
+    var request = { Id: this.AgrmntId };
     this.httpClient.post(URLConstant.GetAppAssetListByAgrmntIdForViewAgrmnt, request).subscribe(
       (response) => {
         this.appAssetList = response[CommonConstant.ReturnObj];
@@ -36,5 +31,4 @@ export class AppAssetDataFl4wComponent implements OnInit {
     modalAssetDetail.result.then().catch((error) => {
     });
   }
-
 }

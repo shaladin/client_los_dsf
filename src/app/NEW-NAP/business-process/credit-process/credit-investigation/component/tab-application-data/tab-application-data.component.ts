@@ -151,7 +151,7 @@ export class TabApplicationDataComponent implements OnInit {
 
   async GetDealerData() {
     var obj = {
-      AppID: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppAssetForDealerDataByAppId, obj).toPromise().then(

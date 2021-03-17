@@ -117,10 +117,10 @@ export class ViewApplicationDataMultiComponent implements OnInit {
   async GetListAssetData() {
     this.appAssetObj = new AppAssetObj();
     this.appAssetObj.AppId = this.AppId
-    await this.http.post(URLConstant.GetAppAssetListByAppId, this.appAssetObj).toPromise().then(
+    var appAssetObj = { Id: this.AppId };
+    await this.http.post(URLConstant.GetAppAssetListByAppId, appAssetObj).toPromise().then(
       (response) => {
         this.ListAssetData = response[CommonConstant.ReturnObj];
-
       });
   }
 
@@ -235,7 +235,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
 
   async GetDealerData() {
     var obj = {
-      AppID: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppAssetForDealerDataByAppId, obj).toPromise().then(
@@ -285,8 +285,8 @@ export class ViewApplicationDataMultiComponent implements OnInit {
   getDealer(appAssetId, content) {
     this.dealerAssetObj = new AppAssetObj();
     this.dealerAssetObj.AppAssetId = appAssetId
-
-    this.http.post(URLConstant.GetAppAssetForDealerDataByAppAssetId, this.dealerAssetObj).toPromise().then(
+    var dealerAssetObj = { Id: appAssetId };
+    this.http.post(URLConstant.GetAppAssetForDealerDataByAppAssetId, dealerAssetObj).toPromise().then(
       (response) => {
         this.AssetDealerData = response;
 

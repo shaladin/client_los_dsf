@@ -57,7 +57,7 @@ export class PurchaseOrderComponent implements OnInit {
   async ngOnInit() {
     this.arrValue.push(this.AgrmntId);
     var appAssetObj = {
-      AgrmntId: this.AgrmntId
+      Id: this.AgrmntId
     }
     this.claimTask();
     this.http.post(URLConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(

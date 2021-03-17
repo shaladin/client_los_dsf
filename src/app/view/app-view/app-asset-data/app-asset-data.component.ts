@@ -16,20 +16,18 @@ export class AppAssetDataComponent implements OnInit {
   appAssetList: Array<any>;
   appCollateralList: Array<any>;
 
-  constructor(
-    private httpClient: HttpClient,
-    private modalService: NgbModal
-  ) { }
+  constructor(private httpClient: HttpClient, private modalService: NgbModal) { }
 
   ngOnInit() {
-    var request = { AppId: this.AppId, Id: this.AppId };
+    var request = { Id: this.AppId };
     let getAppAsset = this.httpClient.post(URLConstant.GetAppAssetListByAppId, request);
     let getAppCollateral = this.httpClient.post(URLConstant.GetViewAppCollateralObjByAppId, request);
     forkJoin([getAppAsset, getAppCollateral]).subscribe(
       (response) => {
         this.appAssetList = response[0][CommonConstant.ReturnObj];
         this.appCollateralList = response[1]["AppCollateralObjs"];
-      });
+      }
+    );
   }
 
   viewDetailHandler(appAssetId){
@@ -39,5 +37,4 @@ export class AppAssetDataComponent implements OnInit {
     modalAssetDetail.result.then().catch((error) => {
     });
   }
-
 }
