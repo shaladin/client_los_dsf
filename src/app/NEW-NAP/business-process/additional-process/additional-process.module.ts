@@ -69,8 +69,7 @@ export const customCurrencyMaskConfig = {
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     ViewAppComponentModule,
     SharedModule,
-    MatTabsModule,
-    AdminProcessSharingModule
+    MatTabsModule
   ],
   declarations: [
     CreditApvResultExtPagingComponent,
