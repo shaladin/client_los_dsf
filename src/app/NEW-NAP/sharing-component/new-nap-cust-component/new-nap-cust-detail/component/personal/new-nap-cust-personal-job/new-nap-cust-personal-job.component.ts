@@ -86,7 +86,7 @@ export class NewNapCustPersonalJobComponent implements OnInit {
   GetData(isCopy: boolean, custPersonalJobData: AppCustPersonalJobDataObj) {
     var datePipe = new DatePipe("en-US");
     if(!isCopy){
-      this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { AppCustId: this.AppCustId }).subscribe(
+      this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustId }).subscribe(
         (response) => {
           if (response.AppCustPersonalJobDataObj != null) {
             this.ParentForm.patchValue({

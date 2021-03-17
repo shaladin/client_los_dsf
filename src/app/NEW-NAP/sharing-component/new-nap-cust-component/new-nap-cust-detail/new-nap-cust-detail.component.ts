@@ -471,7 +471,9 @@ export class NewNapCustDetailComponent implements OnInit {
     this.ListAddress = e.CustAddrObj;
     this.custCompanyContactInfoComponent.CopyCustCompanyContactPerson(e.CustCompanyContactPersonObjs[0]);
     this.custCompanyFinDataComponent.CopyCustomerFinDataCompany(e.CustCompanyFinDataObj, e.CustBankAccObjs, e.CustAttrContentObjs.NewCustAttrContentObjs);
-    this.custCompanyLegalDocComponent.CopyCustLegalDoc(e.CustCompanyLegalDocObjs)
+    this.AppCustBankAccList = e.CustBankAccObjs;
+    this.custCompanyLegalDocComponent.CopyCustLegalDoc(e.CustCompanyLegalDocObjs);
+    this.ListLegalDoc = e.CustCompanyLegalDocObjs;
     this.otherInfoComponent.CopyCustOtherInfo(e.CustOtherInfoObj, e.CustAttrContentObjs.NewCustAttrContentObjs);
   }
 
@@ -1127,14 +1129,14 @@ export class NewNapCustDetailComponent implements OnInit {
     }
     else {
       var addrMessage = "";
-      var addrValidationCompany = {Legal: false, ContactInfo: false};
+      var addrValidationCompany = {Legal: false, Company: false};
       for (const item of this.ListAddress) {
         switch (item.MrCustAddrTypeCode) {
           case CommonConstant.AddrTypeLegal:
             addrValidationCompany.Legal = true;
             break;
-          case CommonConstant.AddrTypeContactInfo:
-            addrValidationCompany.ContactInfo = true;
+          case CommonConstant.AddrTypeCompany:
+            addrValidationCompany.Company = true;
             break;
           default:
             break;
@@ -1144,8 +1146,8 @@ export class NewNapCustDetailComponent implements OnInit {
       if(!addrValidationCompany.Legal){
         addrMessage == "" ? addrMessage += "Legal" : addrMessage += ",Legal";
       }
-      if(!addrValidationCompany.ContactInfo){
-        addrMessage == "" ? addrMessage += "Contact Info" : addrMessage += ",Contact Info";
+      if(!addrValidationCompany.Company){
+        addrMessage == "" ? addrMessage += "Company" : addrMessage += ",Company";
       }
       
       if(addrMessage){

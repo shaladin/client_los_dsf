@@ -77,7 +77,7 @@ export class NewNapCustBankAccComponent implements OnInit {
   }
 
   GetAppCustBankAccList() {
-    this.http.post<Array<AppCustBankAccObj>>(URLConstant.GetAppCustBankAccAndStatementForView, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post<Array<AppCustBankAccObj>>(URLConstant.GetAppCustBankAccAndStatementForView, { Id: this.AppCustId }).subscribe(
       (response) => {
         this.AppCustBankAccList = response["AppCustBankAccList"];
         this.OutputObj.emit({Key: 'IsDetail', Value: false, AppCustBankAccList: this.AppCustBankAccList});

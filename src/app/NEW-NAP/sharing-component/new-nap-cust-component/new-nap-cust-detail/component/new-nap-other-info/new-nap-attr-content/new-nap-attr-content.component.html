@@ -90,9 +90,9 @@
             [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
             translate>{{attr.AttrName}}</label>
           <div class="col-md-9" style="padding-right: 0; display: inline-block;">
-            <lib-uclookupgeneric [lookupInput]="ListInputLookUpObj[0][attr['AttrCode']]"
+            <lib-uclookupgeneric *ngIf="ListInputLookUpObj[0][attr['AttrCode']].isReady" [lookupInput]="ListInputLookUpObj[0][attr['AttrCode']]"
               [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'lookup'+ attr.AttrCode"
-              (lookup)=getLookUp($event,attr.AttrCode)>
+              (lookup)="getLookUp($event,attr.AttrCode)">
             </lib-uclookupgeneric>
             <lib-uc-show-errors
               [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"

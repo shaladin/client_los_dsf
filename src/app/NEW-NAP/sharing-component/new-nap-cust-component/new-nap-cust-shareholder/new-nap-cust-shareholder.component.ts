@@ -61,6 +61,11 @@ export class NewNapCustShareholderComponent implements OnInit {
       return;
     }
 
+    if(this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x=>x.IsActive == true && x.IsSigner == true) == null){
+      this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_ACTIVE_SIGNER);
+      return false;
+    }
+
     var totalSharePrcnt = 0;
 
     for(let i = 0; i < this.listMgmntShrholder.length; i++){

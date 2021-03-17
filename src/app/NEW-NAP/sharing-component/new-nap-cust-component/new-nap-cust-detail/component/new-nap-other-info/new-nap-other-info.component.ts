@@ -48,7 +48,7 @@ export class NewNapOtherInfoComponent implements OnInit {
     this.AttrGroup = this.CustTypeCode == CommonConstant.CustTypeCompany ? CommonConstant.AttrGroupCustCompanyOther:CommonConstant.AttrGroupCustPersonalOther;
  
     var AppcustOtherInfo = {
-        AppCustId : this.AppCustId
+        Id : this.AppCustId
       } 
     await this.httpClient.post(URLConstant.GetAppCustOtherInfoByAppCustId, AppcustOtherInfo).toPromise().then(
       (response: any) => {
@@ -158,6 +158,8 @@ export class NewNapOtherInfoComponent implements OnInit {
         LbppmsBizSclLbppDescr: custOtherInfoObj.LbppmsBizSclLbppDescr
       });
       this.IsLookupReady = true;
+      console.log("copy other info");
+      console.log(custAttrContentObjs);
 
       var othInfoAttrContentObjs = custAttrContentObjs.filter(x => x.AttrGroup == this.AttrGroup);
       this.attrContentComponent.CopyCustAttrContent(othInfoAttrContentObjs);

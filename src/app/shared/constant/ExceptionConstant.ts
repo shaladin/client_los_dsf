@@ -97,6 +97,7 @@ export class ExceptionConstant {
     public static CANT_HAVE_SPOUSE = "Customer cannot have Spouse!";
     public static CANT_HAVE_THE_SAME_GUARANTOR_MEMBER = " cannot have the same name as Guarantor No ";
     public static MUST_INPUT_OWNER_DATA = "Please Input Owner Data in Management/Shareholder!";
+    public static MUST_INPUT_ACTIVE_SIGNER = "At Least 1 Active Signer is Required";
     public static TOTAL_SHARE_MUST_100 = "Total Share % must be 100%";
     public static CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP = "This Customer already self customer for this NAP";
 

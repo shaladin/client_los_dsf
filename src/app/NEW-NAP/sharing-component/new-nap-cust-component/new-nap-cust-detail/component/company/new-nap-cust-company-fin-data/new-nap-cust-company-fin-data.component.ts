@@ -48,7 +48,7 @@ export class NewNapCustCompanyFinDataComponent implements OnInit {
   }
 
   GetFinData(){
-    this.http.post<AppCustCompanyFinDataObj>(URLConstant.GetAppCustCompanyFinDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post<AppCustCompanyFinDataObj>(URLConstant.GetAppCustCompanyFinDataByAppCustId, { Id: this.AppCustId }).subscribe(
       async (response) => {
         if(response.AppCustCompanyFinDataId != 0){
           this.ParentForm.patchValue({

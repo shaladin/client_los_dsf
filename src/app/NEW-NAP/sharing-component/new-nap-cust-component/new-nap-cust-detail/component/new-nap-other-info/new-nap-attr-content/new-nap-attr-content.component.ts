@@ -149,11 +149,13 @@ export class NewNapAttrContentComponent implements OnInit {
           };
           await this.httpClient.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
             (response) => {
-              this.tempLookup[refAttr.AttrCode].jsonSelect = { Descr: response['Descr'] }
+              this.tempLookup[refAttr.AttrCode].jsonSelect = { Descr: response['Descr'] };
+              this.tempLookup[refAttr.AttrCode].nameSelect = response['Descr'];
             });
         } 
       } else {
-        this.tempLookup[this.AttrContent.AttrCode].jsonSelect = { Descr: this.AttrContent.Descr }
+        this.tempLookup[refAttr.AttrCode].jsonSelect = { Descr: this.AttrContent.Descr }
+        this.tempLookup[refAttr.AttrCode].nameSelect = this.AttrContent.Descr;
       } 
       var arrAddCrit = new Array();
       var critAssetObj = new CriteriaObj();
@@ -163,6 +165,7 @@ export class NewNapAttrContentComponent implements OnInit {
       critAssetObj.value = this.AttrContent == undefined || this.AttrContent.MasterCode == undefined ? refAttr.AttrValue : this.AttrContent.MasterCode;   
       arrAddCrit.push(critAssetObj);
       this.tempLookup[refAttr.AttrCode].addCritInput = arrAddCrit;
+      this.tempLookup[refAttr.AttrCode].isReady = true;
     }
   }
 

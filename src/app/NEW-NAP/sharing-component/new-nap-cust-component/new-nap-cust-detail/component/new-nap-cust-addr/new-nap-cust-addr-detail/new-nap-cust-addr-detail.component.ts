@@ -53,10 +53,7 @@ export class NewNapCustAddrDetailComponent implements OnInit {
     this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCustAddrType, MappingCode: this.InputObj.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.CustTypePersonal : CommonConstant.CustTypeCompany }).subscribe(
       async (response) => {
         this.AddressTypeObj = response[CommonConstant.ReturnObj];
-        if(this.InputObj.MrCustTypeCode == CommonConstant.CustTypeCompany){
-          let idxCompany = this.AddressTypeObj.findIndex(x => x.Key == CommonConstant.AddrTypeCompany);
-          if(idxCompany != -1) this.AddressTypeObj.splice(idxCompany, 1)
-        }else{
+        if(this.InputObj.MrCustTypeCode == CommonConstant.CustTypePersonal){
           let idxEmergency = this.AddressTypeObj.findIndex(x => x.Key == CommonConstant.AddrTypeEmergency);
           if(idxEmergency != -1) this.AddressTypeObj.splice(idxEmergency, 1)
         }

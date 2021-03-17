@@ -37,7 +37,7 @@ export class NewNapCustCompanyLegalDocComponent implements OnInit {
 
   LoadListLegalDocData(isFirstInit: boolean){
     if(this.AppCustCompanyId && this.AppCustCompanyId > 0 && isFirstInit){
-      this.http.post(URLConstant.GetAppCustCompanyLegalDocsByAppCustCompanyId, { AppCustCompanyId: this.AppCustCompanyId }).subscribe(
+      this.http.post(URLConstant.GetAppCustCompanyLegalDocsByAppCustCompanyId, { Id: this.AppCustCompanyId }).subscribe(
         (response) => {
           this.InputGridObj.resultData = {
             Data: ""

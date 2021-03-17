@@ -64,7 +64,7 @@ export class NewNapCustPersonalFinancialComponent implements OnInit {
   }
 
   GetFinData(){
-    this.http.post<AppCustPersonalFinDataObj>(URLConstant.GetAppCustPersonalFinDataByAppCustPersonalId, { AppCustPersonalId: this.AppCustPersonalId }).subscribe(
+    this.http.post<AppCustPersonalFinDataObj>(URLConstant.GetAppCustPersonalFinDataByAppCustPersonalId, { Id: this.AppCustPersonalId }).subscribe(
       async (response) => {
         if(response.AppCustPersonalFinDataId != 0){
           await this.ParentForm.patchValue({

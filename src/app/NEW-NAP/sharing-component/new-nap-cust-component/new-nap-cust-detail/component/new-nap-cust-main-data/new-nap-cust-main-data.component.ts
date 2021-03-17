@@ -185,7 +185,7 @@ export class NewNapCustMainDataComponent implements OnInit {
 
   AppCustData: AppCustObj = new AppCustObj();
   GetAppCustMainDataByAppId() {
-    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, { 'AppId': this.appId }).subscribe(
+    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, { 'Id': this.appId }).subscribe(
       async (response) => {
         if (response.AppCustObj) {
           this.AppCustData = response.AppCustObj;
