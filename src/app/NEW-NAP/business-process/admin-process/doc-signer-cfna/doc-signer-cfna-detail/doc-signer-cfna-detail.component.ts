@@ -72,7 +72,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
 
   async getAllData() {
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       AgrmntId: this.AgrmntId
     }
 

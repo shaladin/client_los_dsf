@@ -380,7 +380,7 @@ export class NewNapCustDetailComponent implements OnInit {
             this.InputAppCustObjMainData = response;
   
             if(this.MrCustTypeCode == CommonConstant.CustTypePersonal){
-              await this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, {AppCustId: this.AppCustIdInput}).toPromise().then(
+              await this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, {Id: this.AppCustIdInput}).toPromise().then(
                 (response) => {
                   if(response.AppCustPersonalObj.MrMaritalStatCode != null && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried)
                   {

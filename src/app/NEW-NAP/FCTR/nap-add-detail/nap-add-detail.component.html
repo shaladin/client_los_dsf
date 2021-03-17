@@ -128,7 +128,7 @@
               <app-new-nap-cust-family *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()"></app-new-nap-cust-family>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
-              <app-new-nap-cust-guarantor *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="SubmitGuarantor()" (outputCancel)="Cancel()"></app-new-nap-cust-guarantor>
+              <app-new-nap-cust-guarantor *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()"></app-new-nap-cust-guarantor>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data-factoring *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL'" [AppId]="appId"
@@ -253,7 +253,7 @@
               <app-new-nap-cust-shareholder *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()"></app-new-nap-cust-shareholder>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
-              <app-new-nap-cust-guarantor *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="SubmitGuarantor()" (outputCancel)="Cancel()"></app-new-nap-cust-guarantor>
+              <app-new-nap-cust-guarantor *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()"></app-new-nap-cust-guarantor>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
               <app-application-data-factoring *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [AppId]="appId"

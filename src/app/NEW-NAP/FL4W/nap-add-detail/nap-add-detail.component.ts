@@ -280,11 +280,15 @@ export class NapAddDetailComponent implements OnInit {
     if (this.ReturnHandlingHId > 0) {
       this.IsSavedTC = true;
     } else {
-      this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
+      this.http.post(URLConstant.CreateWorkflowDuplicateCheck, this.NapObj).subscribe(
         (response) => {
-          this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_PAGING], { BizTemplateCode: CommonConstant.FL4W });
-        })
+          this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_PAGING], { BizTemplateCode: CommonConstant.FL4W });
+            })
+        }
+      );
     }
   }
 
@@ -379,14 +383,5 @@ export class NapAddDetailComponent implements OnInit {
     }else{
       this.NextStep(CommonConstant.AppStepShr);
     }
-  }
-
-  SubmitGuarantor(){
-    this.http.post(URLConstant.SubmitNapCust, this.NapObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.NextStep(CommonConstant.AppStepRef);
-      }
-    );
   }
 }

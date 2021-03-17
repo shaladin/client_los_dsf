@@ -29,7 +29,7 @@ export class URLConstant {
   public static GetAppAndAppCustDetailByAgrmntId = environment.losUrl + "/Application/GetAppAndAppCustDetailByAgrmntId";
   public static SubmitNAP = environment.losUrl + "/Application/SubmitNAP";
   public static SubmitNapCustMainData = environment.losUrl + "/Application/SubmitNapCustMainData";
-  public static SubmitNapCust = environment.losUrl + "/Application/SubmitNapCust";
+  public static CreateWorkflowDuplicateCheck = environment.losUrl + "/Application/CreateWorkflowDuplicateCheck";
   public static AddEditAppCF2W = environment.losUrl + "/Application/AddEditAppCF2W";
   public static DataTableFeeAndInsNAP = environment.losUrl + "/Application/DataTableFeeAndInsNAP";
   public static UpdateAppStepByAppId = environment.losUrl + "/Application/UpdateAppStepByAppId";

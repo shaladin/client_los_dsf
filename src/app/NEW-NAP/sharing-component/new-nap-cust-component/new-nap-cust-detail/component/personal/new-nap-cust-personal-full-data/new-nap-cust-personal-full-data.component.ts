@@ -155,7 +155,7 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
   }
 
   GetData() {
-    this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, { Id: this.AppCustId }).subscribe(
       (response) => {
         this.CustFullName = response.AppCustObj.CustName;
         this.ParentForm.patchValue({

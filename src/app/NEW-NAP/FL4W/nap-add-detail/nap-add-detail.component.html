@@ -140,7 +140,7 @@
               <app-new-nap-cust-family *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()"></app-new-nap-cust-family>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
-              <app-new-nap-cust-guarantor *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="SubmitGuarantor()" (outputCancel)="Cancel()"></app-new-nap-cust-guarantor>
+              <app-new-nap-cust-guarantor *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="NextStep('REF')" (outputCancel)="Cancel()"></app-new-nap-cust-guarantor>
             </div>
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
               <app-referantor-data *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL'" [appId]="appId"
@@ -277,7 +277,7 @@
               <app-new-nap-cust-shareholder *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()"></app-new-nap-cust-shareholder>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
-              <app-new-nap-cust-guarantor *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="SubmitGuarantor()" (outputCancel)="Cancel()"></app-new-nap-cust-guarantor>
+              <app-new-nap-cust-guarantor *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="NextStep('REF')" (outputCancel)="Cancel()"></app-new-nap-cust-guarantor>
             </div>
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
               <app-referantor-data *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [appId]="appId"

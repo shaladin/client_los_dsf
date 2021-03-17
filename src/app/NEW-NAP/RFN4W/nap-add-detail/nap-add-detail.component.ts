@@ -337,10 +337,14 @@ export class NapAddDetailComponent implements OnInit {
 
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
+    this.http.post(URLConstant.CreateWorkflowDuplicateCheck, this.NapObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFRFN4W_PAGING], {});
-      })
+        this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
+          (response) => {
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFRFN4W_PAGING], {});
+          })
+      }
+    );
   }
 
   Submit() {
@@ -386,14 +390,5 @@ export class NapAddDetailComponent implements OnInit {
     }else{
       this.NextStep(CommonConstant.AppStepShr);
     }
-  }
-
-  SubmitGuarantor(){
-    this.http.post(URLConstant.SubmitNapCust, this.NapObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.NextStep(CommonConstant.AppStepRef);
-      }
-    );
   }
 }
