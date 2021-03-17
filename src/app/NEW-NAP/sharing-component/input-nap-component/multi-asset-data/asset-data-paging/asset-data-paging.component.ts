@@ -268,6 +268,7 @@ export class AssetDataPagingComponent implements OnInit {
 
     this.appCollateralObj = new AppCollateralObj();
     this.appCollateralObj.AppId = this.AppId;
+    this.appCollateralObj.Id = this.AppId;
     this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
       (response) => {
         this.listAppCollateralObj = response[CommonConstant.ReturnObj];
@@ -289,6 +290,7 @@ export class AssetDataPagingComponent implements OnInit {
 
     this.appCollateralObj = new AppCollateralObj();
     this.appCollateralObj.AppId = this.AppId;
+    this.appCollateralObj.Id = this.AppId;
     this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
       (response) => {
         this.listAppCollateralObj = response[CommonConstant.ReturnObj];

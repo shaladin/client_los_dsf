@@ -53,7 +53,7 @@ export class ViewSummaryAppComponent implements OnInit {
           this.InputGridColl = new InputGridObj();
           this.InputGridColl.pagingJson = "./assets/ucgridview/gridAppCollateralView.json";
 
-          this.http.post(URLConstant.GetListAppCollateralByAppId, {AppId: this.AppId}).toPromise().then(
+          this.http.post(URLConstant.GetListAppCollateralByAppId, {Id: this.AppId}).toPromise().then(
             (response) => {
               this.InputGridColl.resultData = {
                 Data: ""

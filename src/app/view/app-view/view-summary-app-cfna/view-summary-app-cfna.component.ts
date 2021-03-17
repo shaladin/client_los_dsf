@@ -76,7 +76,7 @@ export class ViewSummaryAppCfnaComponent implements OnInit {
 
 
     var AppObj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
 
     this.http.post(URLConstant.GetListAppCollateralByAppId, AppObj).toPromise().then(

@@ -20,6 +20,7 @@ export class ViewPhoneVerifComponent implements OnInit {
   @Input() appId: any;
   appObj = {
     AppId: 0,
+    Id:0
   };
 
   AppObj: any;
@@ -42,6 +43,7 @@ export class ViewPhoneVerifComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.initUrl();
     this.appObj.AppId = this.appId;
+    this.appObj.Id = this.appId;
     this.GetPhnVerfSubjData();
 
   }

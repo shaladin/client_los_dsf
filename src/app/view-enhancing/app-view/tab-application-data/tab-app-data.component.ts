@@ -216,7 +216,7 @@ export class TabAppDataComponent implements OnInit {
 
 
     var AppObj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
 
     this.http.post(URLConstant.GetListAppCollateralByAppId, AppObj).toPromise().then(
@@ -236,7 +236,7 @@ export class TabAppDataComponent implements OnInit {
 
 
     var AppObj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
 
     this.http.post(URLConstant.GetAppCollateralListForInsuranceByAppId, AppObj).toPromise().then(

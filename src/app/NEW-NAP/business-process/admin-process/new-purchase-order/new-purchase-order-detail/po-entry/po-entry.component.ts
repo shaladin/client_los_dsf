@@ -97,7 +97,7 @@ export class PoEntryComponent implements OnInit {
       );
     }
     else {
-      let getPurchaseOrderHId = this.httpClient.post(URLConstant.GetPurchaseOrderByPurchaseOrderHIdForNewPO, { PurchaseOrderHId: this.PurchaseOrderHId }).toPromise();
+      let getPurchaseOrderHId = this.httpClient.post(URLConstant.GetPurchaseOrderByPurchaseOrderHIdForNewPO, { Id: this.PurchaseOrderHId }).toPromise();
       let getListBankAcc = this.httpClient.post(URLConstant.GetListVendorBankAccByVendorCode, { VendorCode: this.SupplCode }).toPromise();
       forkJoin([getPurchaseOrderHId, getListBankAcc]).toPromise().then(
         (response) => {

@@ -773,7 +773,7 @@ export class ApplicationDataComponent implements OnInit {
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
     this.inputAddressObj.showSubsection = false;
 
-    await this.http.post(URLConstant.GetListAppCustAddrByAppId, { 'AppId': this.appId }).toPromise().then(
+    await this.http.post(URLConstant.GetListAppCustAddrByAppId, { 'Id': this.appId }).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.copyToMailing(CommonConstant.AddrTypeMailing);

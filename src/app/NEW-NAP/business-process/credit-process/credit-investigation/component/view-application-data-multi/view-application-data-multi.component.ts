@@ -129,6 +129,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
   async GetListCollateralData() {
     this.appCollateralObj = new AppCollateralObj();
     this.appCollateralObj.AppId = this.AppId
+    this.appCollateralObj.Id = this.AppId
     await this.http.post(URLConstant.GetAppCollateralListForInsuranceByAppId, this.appCollateralObj).toPromise().then(
       (response) => {
         this.ListCollateralData = response[CommonConstant.ReturnObj];

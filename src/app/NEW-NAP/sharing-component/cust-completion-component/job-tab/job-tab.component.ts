@@ -187,7 +187,7 @@ export class JobTabComponent implements OnInit {
 
   GetData() {
     var datePipe = new DatePipe("en-US");
-    this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustId }).subscribe(
       (response) => {
         if (response.AppCustPersonalJobDataObj != null) {
           this.JobDataForm.patchValue({

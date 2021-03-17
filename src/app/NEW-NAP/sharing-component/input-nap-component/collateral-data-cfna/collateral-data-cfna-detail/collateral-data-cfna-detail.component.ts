@@ -443,7 +443,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   }
 
   setAppCollateralDoc(AppCollateralId: number = 0) {
-    this.http.post(URLConstant.GetListAppCollateralDocsByAppCollateralId, { AppCollateralId: AppCollateralId }).subscribe(
+    this.http.post(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: AppCollateralId }).subscribe(
       (response) => {
         var AppCollateralDocs = new Array();
         AppCollateralDocs = response["AppCollateralDocs"];

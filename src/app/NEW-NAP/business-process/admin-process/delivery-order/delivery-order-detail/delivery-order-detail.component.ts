@@ -94,7 +94,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.MaxDate = this.UserAccess.BusinessDt;
 
     var appAssetobj = {
-      AgrmntId: this.AgrmntId
+      Id: this.AgrmntId
     }
 
     this.http.post(URLConstant.GetPurchaseOrderHByAgrmntId, appAssetobj).subscribe(

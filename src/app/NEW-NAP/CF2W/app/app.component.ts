@@ -418,9 +418,10 @@ export class AppComponent implements OnInit {
   }
 
   async GetListAddr() {
-    this.appCustAddrObj = new AppCustAddrObj();
-    this.appCustAddrObj.AppId = this.AppId;
-    this.http.post(this.getAppCustAddrUrl, this.appCustAddrObj).toPromise().then(
+    // this.appCustAddrObj = new AppCustAddrObj();
+    // this.appCustAddrObj.AppId = this.AppId;
+    var appCustAddrObj = { Id: this.AppId };
+    this.http.post(this.getAppCustAddrUrl, appCustAddrObj).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.AddrLegalObj = this.AppCustAddrObj.filter(

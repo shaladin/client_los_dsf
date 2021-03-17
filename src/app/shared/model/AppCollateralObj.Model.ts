@@ -1,4 +1,5 @@
 export class AppCollateralObj {
+  Id: number;
   AppCollateralId: number;
   AppId: number;
   AppAssetId: number;
@@ -37,6 +38,7 @@ export class AppCollateralObj {
   InsAssetCoveredByDesc: string;
 
   constructor() {
+    this.Id = 0;
     this.AppCollateralId = 0;
     this.AppId = 0;
     this.AppAssetId = 0;

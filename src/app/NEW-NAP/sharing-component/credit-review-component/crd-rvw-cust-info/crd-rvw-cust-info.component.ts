@@ -66,7 +66,7 @@ export class CrdRvwCustInfoComponent implements OnInit {
 
   ListAppCustBankAccObjs: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
   async GetAppCustBankAccList() {
-    await this.http.post<{ AppCustBankAccList: Array<AppCustBankAccObj> }>(URLConstant.GetAppCustBankAccAndStatementForView, { AppCustId: this.crdRvwCustInfoObj.AppCustId }).toPromise().then(
+    await this.http.post<{ AppCustBankAccList: Array<AppCustBankAccObj> }>(URLConstant.GetAppCustBankAccAndStatementForView, { Id: this.crdRvwCustInfoObj.AppCustId }).toPromise().then(
       (response) => {
         this.ListAppCustBankAccObjs = response.AppCustBankAccList;
       });
