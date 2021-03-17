@@ -25,7 +25,7 @@ import { UcviewgenericComponent } from "@adins/ucviewgeneric";
 import { NapDetailFormComponent } from "./nap-detail-form/nap-detail-form.component";
 import { NapCustMainDataComponent } from "./nap-cust-main-data/nap-cust-main-data.component";
 import { MainDataComponentModule } from "../sharing-component/main-data-component/main-data-component.module";
-import { NewNapCustModule } from "../sharing-component/new-input-nap-component/new-nap-cust.module";
+import { NewNapCustModule } from "../sharing-component/new-nap-cust-component/new-nap-cust.module";
 import { SharedModule } from "app/shared/shared.module";
 import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
 
