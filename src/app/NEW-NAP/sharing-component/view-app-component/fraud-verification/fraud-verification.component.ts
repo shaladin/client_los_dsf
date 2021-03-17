@@ -92,7 +92,7 @@ export class FraudVerificationComponent implements OnInit {
         this.appCustCompanyObj = response["AppCustCompanyObj"];
         this.appCustPersonalObj = response["AppCustPersonalObj"];
         this.idNo = this.appCustObj.IdNo;
-        var fraudDukcapilReqObj = { "IdNo": this.idNo };
+        var fraudDukcapilReqObj = { "TrxNo": this.idNo };
         this.getFraudDukcapil(fraudDukcapilReqObj);
 
         if (this.appCustObj.MrCustTypeCode == CommonConstant.CustTypePersonal) {
@@ -133,7 +133,7 @@ export class FraudVerificationComponent implements OnInit {
   }
 
   getApp(appId : number){
-    var appReqObj = { "AppId": appId };
+    var appReqObj = { "Id": appId };
     this.http.post<AppObj>(this.getAppById, appReqObj).subscribe(
       response => {
         this.appObj = response;
@@ -202,6 +202,7 @@ export class FraudVerificationComponent implements OnInit {
     var negativeAssetCheckForMultiAssetObj = new NegativeAssetCheckForMultiAssetObj();
     negativeAssetCheckForMultiAssetObj.RequestObj = new Array<NegativeAssetCheckObj>();
     appCollateralObj.AppId = this.appId;
+    appCollateralObj.Id = this.appId;
     var listAppCollateral = new Array<AppCollateralObj>();
     await this.http.post(URLConstant.GetListAdditionalCollateralByAppId, appCollateralObj).toPromise().then(
       response => {

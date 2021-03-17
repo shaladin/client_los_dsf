@@ -32,7 +32,7 @@ export class ViewAssetCollateralComponent implements OnInit {
         }
       });
 
-    this.http.post<Array<AppCollateralObj>>(URLConstant.GetListAppCollateralByAgrmntId, {AgrmntId: this.agrmntId}).subscribe(
+    this.http.post<Array<AppCollateralObj>>(URLConstant.GetListAppCollateralByAgrmntId, {Id: this.agrmntId}).subscribe(
       (response) => {
         this.AppCollateralObj = response[CommonConstant.ReturnObj];
       });

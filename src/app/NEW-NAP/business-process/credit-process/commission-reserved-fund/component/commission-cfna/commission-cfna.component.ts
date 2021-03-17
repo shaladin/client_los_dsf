@@ -341,7 +341,7 @@ export class CommissionCfnaComponent implements OnInit {
 
   isAutoGenerate: boolean = true;
   async GetExistingAppCommData() {
-    var objApi = { AppId: this.AppId };
+    var objApi = { Id: this.AppId };
     await this.http.post(URLConstant.GetAppCommissionDataForEditByAppId, objApi).toPromise().then(
       (response) => {
         console.log("response edit comm");

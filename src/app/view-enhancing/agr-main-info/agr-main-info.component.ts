@@ -37,7 +37,7 @@ export class AgrMainInfoComponent implements OnInit {
     await this.http.post(URLConstant.GetAgrmntByAgrmntId, { Id: this.arrValue[0] }).subscribe(
       async response => {
         let appId = response['AppId'];
-        await this.http.post(URLConstant.GetAppById, { AppId: appId }).subscribe(
+        await this.http.post(URLConstant.GetAppById, { Id: appId }).subscribe(
           (response) => {
             if(response['BizTemplateCode'] == CommonConstant.FL4W){
               this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrFL4WMainInfo.json";

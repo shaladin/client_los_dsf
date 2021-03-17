@@ -38,7 +38,7 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
 
   //#region Get data
   async GetCrdRvwCustPersInfoByCrdRvwCustInfoId() {
-    await this.http.post<CrdRvwCustPersInfoObj>(URLConstant.GetCrdRvwCustPersInfoByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
+    await this.http.post<CrdRvwCustPersInfoObj>(URLConstant.GetCrdRvwCustPersInfoByCrdRvwCustInfoId, { Id: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
         this.crdRvwCustPersInfoObj = response;
       }
@@ -47,7 +47,7 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
 
   ListCrdRvwCustPhnStatusObj: Array<CrdRvwCustPhnStatusObj> = new Array<CrdRvwCustPhnStatusObj>();
   async GetListCrdRvwCustPhnStatusByCrdRvwCustInfoId() {
-    await this.http.post<{ ListCrdRvwCustPhnStatusObj: Array<CrdRvwCustPhnStatusObj> }>(URLConstant.GetListCrdRvwCustPhnStatusByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
+    await this.http.post<{ ListCrdRvwCustPhnStatusObj: Array<CrdRvwCustPhnStatusObj> }>(URLConstant.GetListCrdRvwCustPhnStatusByCrdRvwCustInfoId, { Id: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
         this.ListCrdRvwCustPhnStatusObj = response.ListCrdRvwCustPhnStatusObj;
       }
@@ -65,7 +65,7 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
 
   ListCrdRvwDiffAppToMasterCustObj: Array<CrdRvwDiffAppToMasterCustObj> = new Array<CrdRvwDiffAppToMasterCustObj>();
   async GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId() {
-    await this.http.post<{ ListCrdRvwDiffAppToMasterCustObj: Array<CrdRvwDiffAppToMasterCustObj> }>(URLConstant.GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
+    await this.http.post<{ ListCrdRvwDiffAppToMasterCustObj: Array<CrdRvwDiffAppToMasterCustObj> }>(URLConstant.GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId, { Id: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
         this.ListCrdRvwDiffAppToMasterCustObj = response.ListCrdRvwDiffAppToMasterCustObj;
       }

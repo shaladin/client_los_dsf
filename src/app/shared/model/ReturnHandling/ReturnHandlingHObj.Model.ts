@@ -1,4 +1,5 @@
 export class ReturnHandlingHObj {
+    Id: number;
     ReturnHandlingHId: number;
     AppId: number;
     AgrmntId: string;
@@ -12,6 +13,7 @@ export class ReturnHandlingHObj {
 
     constructor() {
         this.RowVersion = ""; 
-        this.ReturnHandlingHId = 0;
+      this.ReturnHandlingHId = 0;
+      this.Id = 0;
     }
 }

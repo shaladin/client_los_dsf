@@ -126,9 +126,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
   }
 
   async bindAnalysisItemObj() {
-
-    var reqObj = { AppId: this.appId };
-
+    var reqObj = { Id: this.appId };
     await this.http.post<AppCrdInvstgHObj>(URLConstant.GetAppCrdInvstgByAppId, reqObj).toPromise().then(
       (response) => {
         this.appCrdInvstgHObj = response;

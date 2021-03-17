@@ -129,6 +129,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
   async GetListCollateralData() {
     this.appCollateralObj = new AppCollateralObj();
     this.appCollateralObj.AppId = this.AppId
+    this.appCollateralObj.Id = this.AppId
     await this.http.post(URLConstant.GetAppCollateralListForInsuranceByAppId, this.appCollateralObj).toPromise().then(
       (response) => {
         this.ListCollateralData = response[CommonConstant.ReturnObj];
@@ -197,7 +198,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
 
   async GetAppDetailData() {
     var obj = {
-      AppID: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppDetailForAppTabById, obj).toPromise().then(
@@ -318,7 +319,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
 
   async GetCommData() {
     var obj = {
-      AppID: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppCommissionDataDetailByAppId, obj).toPromise().then(

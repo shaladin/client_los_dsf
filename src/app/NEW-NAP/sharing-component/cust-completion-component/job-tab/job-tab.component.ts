@@ -186,7 +186,7 @@ export class JobTabComponent implements OnInit {
   }
 
   GetData() {
-    this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustId }).subscribe(
       (response) => {
         if (response.AppCustPersonalJobDataObj != null) {
           this.JobDataForm.patchValue({
@@ -487,7 +487,7 @@ export class JobTabComponent implements OnInit {
     });
   }
   GetThirdPartyResultHByTrxTypeCodeAndTrxNo() {
-    this.http.post(URLConstant.GetAppById, { AppId: this.appId }).subscribe(
+    this.http.post(URLConstant.GetAppById, { Id: this.appId }).subscribe(
       (response) => {
         if(response['MouCustId'] != null){
           this.mouCustId = response['MouCustId'];

@@ -22,7 +22,7 @@ export class AppAssetDataComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    var request = { AppId: this.AppId };
+    var request = { AppId: this.AppId, Id: this.AppId };
     let getAppAsset = this.httpClient.post(URLConstant.GetAppAssetListByAppId, request);
     let getAppCollateral = this.httpClient.post(URLConstant.GetViewAppCollateralObjByAppId, request);
     forkJoin([getAppAsset, getAppCollateral]).subscribe(

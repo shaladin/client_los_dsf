@@ -24,7 +24,7 @@ export class FraudDetectionDataComponent implements OnInit {
     this.GetFraudResult = URLConstant.GetFraudResult;
     this.thirdPartyRsltHObj = new ThirdPartyRsltHObj();
 
-    this.http.post(URLConstant.GetAppById, { "AppId": this.AppId }).subscribe(
+    this.http.post(URLConstant.GetAppById, { "Id": this.AppId }).subscribe(
       (response) => {
         this.thirdPartyRsltHObj.TrxNo = response['AppNo'];
         this.http.post(this.GetFraudResult, this.thirdPartyRsltHObj).subscribe(

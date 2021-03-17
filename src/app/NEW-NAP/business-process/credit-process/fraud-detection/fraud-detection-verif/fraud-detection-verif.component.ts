@@ -96,7 +96,7 @@ export class FraudDetectionVerifComponent implements OnInit {
 
   getApp() {
     var appObj = {
-      AppId: this.appId,
+      Id: this.appId,
     };
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response) => {

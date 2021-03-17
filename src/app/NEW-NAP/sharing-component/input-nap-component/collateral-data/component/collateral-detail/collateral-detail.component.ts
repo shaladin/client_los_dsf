@@ -409,7 +409,7 @@ export class CollateralDetailComponent implements OnInit {
       });
   }
   async getAppData() {
-    await this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId }).toPromise().then(
+    await this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
       async (response) => {
         this.AppNo = response["AppNo"];
         this.bizTemplateCode = response["BizTemplateCode"];
@@ -484,7 +484,7 @@ export class CollateralDetailComponent implements OnInit {
   }
 
   async setAppCollateralDoc(AppCollateralId: number = 0) {
-    await this.http.post(URLConstant.GetListAppCollateralDocsByAppCollateralId, { AppCollateralId: AppCollateralId }).toPromise().then(
+    await this.http.post(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: AppCollateralId }).toPromise().then(
       (response) => {
         var AppCollateralDocs = new Array();
         AppCollateralDocs = response["AppCollateralDocs"];

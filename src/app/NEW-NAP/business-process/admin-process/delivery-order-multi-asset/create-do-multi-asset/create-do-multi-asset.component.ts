@@ -55,7 +55,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
   ngOnInit() {
     var datePipe = new DatePipe("en-US");
 
-    this.httpClient.post(URLConstant.GetPurchaseOrderHByAgrmntId, { AgrmntId: this.AgrmntId }).subscribe(
+    this.httpClient.post(URLConstant.GetPurchaseOrderHByAgrmntId, { Id: this.AgrmntId }).subscribe(
       (response) => {
         this.PODt = new Date(response["PurchaseOrderDt"]);
       });
@@ -73,7 +73,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
         });
     }
     else if (this.Mode == "edit") {
-      var reqDeliveryOrderH = { DeliveryOrderHId: this.DeliveryOrderHId };
+      var reqDeliveryOrderH = { Id: this.DeliveryOrderHId };
       this.httpClient.post(URLConstant.GetDeliveryOrderHByDeliveryOrderHId, reqDeliveryOrderH).pipe(
         map((response) => {
           return response;
@@ -107,7 +107,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
     modalDOAppAsset.result.then(
       (response) => {
         this.spinner.show();
-        var doRequest = { AppId: this.AppId, AgrmntId: this.AgrmntId };
+        var doRequest = { Id: this.AgrmntId };
         this.httpClient.post(URLConstant.GetAssetListForDOMultiAsset, doRequest).subscribe(
           (response) => {
             var doAssetList = response["AssetListForDOMultiAssetObj"];

@@ -239,7 +239,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
 
   GetCrossInfoData() {
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     }
     this.http.post(URLConstant.GetListAppCross, obj).subscribe(
@@ -255,7 +255,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   resultResponse;
   getAppModelInfo() {
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
 
@@ -695,7 +695,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
     this.inputAddressObj.showSubsection = false;
 
-    await this.http.post(URLConstant.GetListAppCustAddrByAppId, { 'AppId': this.AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetListAppCustAddrByAppId, { 'Id': this.AppId }).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.copyToMailing(CommonConstant.AddrTypeMailing);

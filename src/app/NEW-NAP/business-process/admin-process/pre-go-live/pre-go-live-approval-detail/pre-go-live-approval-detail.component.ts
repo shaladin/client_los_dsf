@@ -159,7 +159,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
 
         var Obj4 = {
-          AppId: this.result.AppId,
+          Id: this.result.AppId,
           RowVersion: ""
         }
         this.http.post(URLConstant.GetAppById, Obj4).subscribe(
@@ -190,7 +190,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
 
         var Obj5 = {
-          AgrmntId: this.result.AgrmntId,
+          Id: this.result.AgrmntId,
           RowVersion: ""
         }
         this.http.post(URLConstant.GetDeliveryOrderHByAgrmntId, Obj5).subscribe(

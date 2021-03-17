@@ -44,7 +44,7 @@ export class AppAssetViewComponent implements OnInit {
 
   async GetApp() {
     var appObj = {
-      AppId: this.AppId,
+      Id: this.AppId,
     };
 
     await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
