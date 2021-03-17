@@ -42,7 +42,7 @@ export class CrdRvwCustCompanyInfoComponent implements OnInit {
   //#region Get
   ListCrdRvwCustPhnStatusObj: Array<CrdRvwCustPhnStatusObj> = new Array<CrdRvwCustPhnStatusObj>();
   async GetListCrdRvwCustPhnStatusByCrdRvwCustInfoId() {
-    await this.http.post<{ ListCrdRvwCustPhnStatusObj: Array<CrdRvwCustPhnStatusObj> }>(URLConstant.GetListCrdRvwCustPhnStatusByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
+    await this.http.post<{ ListCrdRvwCustPhnStatusObj: Array<CrdRvwCustPhnStatusObj> }>(URLConstant.GetListCrdRvwCustPhnStatusByCrdRvwCustInfoId, { Id: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
         this.ListCrdRvwCustPhnStatusObj = response.ListCrdRvwCustPhnStatusObj;
       }
@@ -51,7 +51,7 @@ export class CrdRvwCustCompanyInfoComponent implements OnInit {
 
   crdRvwCustCoyInfoObj: CrdRvwCustCoyInfoObj = new CrdRvwCustCoyInfoObj();
   async GetCrdRvwCustCoyInfoByCrdRvwCustInfoId() {
-    await this.http.post<CrdRvwCustCoyInfoObj>(URLConstant.GetCrdRvwCustCoyInfoByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
+    await this.http.post<CrdRvwCustCoyInfoObj>(URLConstant.GetCrdRvwCustCoyInfoByCrdRvwCustInfoId, { Id: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
         this.crdRvwCustCoyInfoObj = response;
       }
@@ -60,7 +60,7 @@ export class CrdRvwCustCompanyInfoComponent implements OnInit {
   
   ListCrdRvwDiffAppToMasterCustObj: Array<CrdRvwDiffAppToMasterCustObj> = new Array<CrdRvwDiffAppToMasterCustObj>();
   async GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId() {
-    await this.http.post<{ ListCrdRvwDiffAppToMasterCustObj: Array<CrdRvwDiffAppToMasterCustObj> }>(URLConstant.GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
+    await this.http.post<{ ListCrdRvwDiffAppToMasterCustObj: Array<CrdRvwDiffAppToMasterCustObj> }>(URLConstant.GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId, { Id: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
         this.ListCrdRvwDiffAppToMasterCustObj = response.ListCrdRvwDiffAppToMasterCustObj;
       }

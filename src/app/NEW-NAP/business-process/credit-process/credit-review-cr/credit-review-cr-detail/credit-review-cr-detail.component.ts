@@ -106,7 +106,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   responseListTypeCodes: Array<any> = new Array();
   async GetListDeviation(){    
-    await this.http.post(URLConstant.GetListDeviationTypeByAppNo, {AppNo: this.appNo}).toPromise().then(
+    await this.http.post(URLConstant.GetListDeviationTypeByAppNo, {TrxNo: this.appNo}).toPromise().then(
       (response) => {
         this.responseListTypeCodes = response['ApvTypecodes'];
       });
@@ -261,7 +261,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   isShow: boolean = false;
   async GetCrdRvwCustInfoByAppId() {
-    await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { AppId: this.appId }).toPromise().then(
+    await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.crdRvwCustInfoObj = response;
         this.isShow = true;

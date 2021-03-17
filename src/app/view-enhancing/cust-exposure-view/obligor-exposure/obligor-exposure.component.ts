@@ -59,7 +59,7 @@ export class ObligorExposureComponent implements OnInit {
 
   ListCrdRvwCustBucketObj: Array<CrdRvwCustBucketObj> = new Array<CrdRvwCustBucketObj>();
   async GetListCrdRvwCustBucketByCrdRvwExposureDId() {
-    await this.http.post<{ ListCrdRvwCustBucketObj: Array<CrdRvwCustBucketObj> }>(URLConstant.GetListCrdRvwCustBucketByCrdRvwExposureDId, { CrdRvwExposureDId: this.ExposureDObj.CrdRvwExposureDId }).toPromise().then(
+    await this.http.post<{ ListCrdRvwCustBucketObj: Array<CrdRvwCustBucketObj> }>(URLConstant.GetListCrdRvwCustBucketByCrdRvwExposureDId, { Id: this.ExposureDObj.CrdRvwExposureDId }).toPromise().then(
       (response) => {
         // console.log(response);
         this.ListCrdRvwCustBucketObj = response.ListCrdRvwCustBucketObj;
@@ -83,7 +83,7 @@ export class ObligorExposureComponent implements OnInit {
   }
 
   async GetListCrdRvwAppAgrHistByCrdRvwExposureHId() {
-    await this.http.post<{ ListCrdRvwAppAgrHistObj: Array<CrdRvwAppAgrHistObj> }>(URLConstant.GetListCrdRvwAppAgrHistByCrdRvwExposureHId, { CrdRvwExposureHId: this.exposureHObj.CrdRvwExposureHId }).toPromise().then(
+    await this.http.post<{ ListCrdRvwAppAgrHistObj: Array<CrdRvwAppAgrHistObj> }>(URLConstant.GetListCrdRvwAppAgrHistByCrdRvwExposureHId, { Id: this.exposureHObj.CrdRvwExposureHId }).toPromise().then(
       (response) => {
         console.log(response);
         for (let index = 0; index < response.ListCrdRvwAppAgrHistObj.length; index++) {

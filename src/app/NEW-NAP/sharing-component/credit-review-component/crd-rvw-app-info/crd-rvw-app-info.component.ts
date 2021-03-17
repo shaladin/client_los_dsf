@@ -33,7 +33,7 @@ export class CrdRvwAppInfoComponent implements OnInit {
   }
 
   async GetCrdRvwAppByCrdRvwCustInfoId() {
-    await this.http.post<CrdRvwAppObj>(URLConstant.GetCrdRvwAppByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.CrdRvwCustInfoId }).toPromise().then(
+    await this.http.post<CrdRvwAppObj>(URLConstant.GetCrdRvwAppByCrdRvwCustInfoId, { Id: this.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
         this.crdRvwAppObj = response;
       }
@@ -42,7 +42,7 @@ export class CrdRvwAppInfoComponent implements OnInit {
   
   crdRvwCustInfoIncomeAndExpenseDetailsObj: CrdRvwCustInfoIncomeAndExpenseDetailsObj = new CrdRvwCustInfoIncomeAndExpenseDetailsObj();
   async GetCrdRvwCustInfoIncomeAndExpenseDetails(){
-    await this.http.post<CrdRvwCustInfoIncomeAndExpenseDetailsObj>(URLConstant.GetCrdRvwCustInfoIncomeAndExpenseDetails, { AppId: this.appId }).toPromise().then(
+    await this.http.post<CrdRvwCustInfoIncomeAndExpenseDetailsObj>(URLConstant.GetCrdRvwCustInfoIncomeAndExpenseDetails, { Id: this.appId }).toPromise().then(
       (response) => {
         this.crdRvwCustInfoIncomeAndExpenseDetailsObj = response;
       }

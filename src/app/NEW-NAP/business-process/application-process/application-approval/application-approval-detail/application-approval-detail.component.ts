@@ -97,7 +97,7 @@ export class ApplicationApprovalDetailComponent implements OnInit {
   crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   isShow: boolean = false;
   async GetCrdRvwCustInfoByAppId() {
-    await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { AppId: this.appId }).toPromise().then(
+    await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.crdRvwCustInfoObj = response;
         this.isShow = true;

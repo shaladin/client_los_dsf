@@ -45,7 +45,7 @@ export class CustExposureViewComponent implements OnInit {
   //#region Get Data  
   CrdRvwExposureHObj: CrdRvwExposureHObj = new CrdRvwExposureHObj();
   async GetCrdRvwExposureHandDByCrdRvwExposureHId() {
-    await this.http.post<CrdRvwExposureHObj>(URLConstant.GetCrdRvwExposureHandDByCrdRvwExposureHId, { CrdRvwExposureHId: this.CrdRvwExposureHId }).toPromise().then(
+    await this.http.post<CrdRvwExposureHObj>(URLConstant.GetCrdRvwExposureHandDByCrdRvwExposureHId, { Id: this.CrdRvwExposureHId }).toPromise().then(
       (response) => {
         this.CrdRvwExposureHObj = response;
       }
