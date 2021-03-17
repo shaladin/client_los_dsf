@@ -48,7 +48,7 @@ export class ViewSummaryAppCfnaComponent implements OnInit {
 
   async GetLoanObjectData(){
     var obj = {
-      AppID: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetListAppLoanPurposeByAppId, obj).toPromise().then(

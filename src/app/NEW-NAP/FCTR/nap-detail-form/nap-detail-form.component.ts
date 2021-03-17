@@ -177,7 +177,7 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   CheckMultiAsset() {
-    var appObj = { AppId: this.appId }
+    var appObj = { Id: this.appId }
     this.http.post(URLConstant.GetAppAssetListByAppId, appObj).subscribe(
       (response) => {
         this.ListAsset = response['ReturnObject'];

@@ -107,7 +107,7 @@ export class ReferantorDataComponent implements OnInit {
 
     // Check Data App Id
     var obj = {
-      AppId: this.appId,
+      Id: this.appId,
       RowVersion: "",
     }
 

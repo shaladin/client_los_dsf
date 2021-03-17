@@ -33,7 +33,7 @@ export class ViewInsuranceComponent implements OnInit {
 
   getInsuranceData() {
     if (this.AppId != 0 && this.AppId != null && this.AppId != undefined) {
-      var reqObj = { AppId: this.AppId };
+      var reqObj = { Id: this.AppId };
       this.http.post(URLConstant.GetInsuranceDataByAppIdForView, reqObj).subscribe(
         (response) => {
           this.appInsuranceObj = response["AppInsuranceObj"];
@@ -55,8 +55,8 @@ export class ViewInsuranceComponent implements OnInit {
         });
     }
     else {
-      var reqAssetObj = { AppAssetId: this.AppAssetId };
-      this.http.post(URLConstant.GetInsuranceDataByAppIdForView, reqAssetObj).subscribe(
+      var reqAssetObj = { Id: this.AppAssetId };
+      this.http.post(URLConstant.GetInsuranceDataByAppAssetIdForView, reqAssetObj).subscribe(
         (response) => {
           this.appInsuranceObj = response["AppInsuranceObj"];
           this.appInsObjObj = response["AppInsObjObj"];

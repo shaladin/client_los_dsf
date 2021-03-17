@@ -241,7 +241,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   }
 
   async BindAppvAmt() {
-    var Obj = { AppId: this.appId };
+    var Obj = { Id: this.appId };
     await this.http.post(URLConstant.GetAppFinDataByAppId, Obj).toPromise().then(
       (response) => {
         this.apvAmt = response["ApvAmt"]

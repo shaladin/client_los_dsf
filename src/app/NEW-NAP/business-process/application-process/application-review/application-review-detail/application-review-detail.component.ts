@@ -193,7 +193,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
   }
 
   async BindAppvAmt() {
-    let Obj = { AppId: this.appId };
+    let Obj = { Id: this.appId };
     await this.http.post(URLConstant.GetApprovalAmount, Obj).toPromise().then(
       (response) => {
         this.FormObj.patchValue({

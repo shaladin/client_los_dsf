@@ -1488,7 +1488,8 @@ export class AssetDataComponent implements OnInit {
   async getAllAssetData() {
     this.appData = new AppDataObj();
     this.appData.AppId = this.AppId;
-    await this.http.post(URLConstant.GetAllAssetDataByAppId, this.appData).toPromise().then(
+    var appData = { Id: this.AppId };
+    await this.http.post(URLConstant.GetAllAssetDataByAppId, appData).toPromise().then(
       (response) => {
         this.appAssetObj = response;
 
@@ -1617,7 +1618,8 @@ export class AssetDataComponent implements OnInit {
   async getListAllAssetData() {
     this.appData = new AppDataObj();
     this.appData.AppId = this.AppId;
-    await this.http.post(URLConstant.GetListAllAssetDataByAppId, this.appData).toPromise().then(
+    var appData = { Id: this.AppId };
+    await this.http.post(URLConstant.GetListAllAssetDataByAppId, appData).toPromise().then(
       (response) => {
         this.appAssetObj = response[CommonConstant.ReturnObj];
 

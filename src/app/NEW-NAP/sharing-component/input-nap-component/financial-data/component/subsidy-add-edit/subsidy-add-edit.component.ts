@@ -67,7 +67,7 @@ export class SubsidyAddEditComponent implements OnInit {
   }
 
   GetAppSubsidy() {
-    this.http.post<AppSubsidyObj>(URLConstant.GetAppSubsidyByAppSubsidyId, { AppSubsidyId: this.AppSubsidyId }).subscribe(
+    this.http.post<AppSubsidyObj>(URLConstant.GetAppSubsidyByAppSubsidyId, { Id: this.AppSubsidyId }).subscribe(
       (response) => {
         var subdObj = response;
 
@@ -99,7 +99,7 @@ export class SubsidyAddEditComponent implements OnInit {
   }
 
   LoadSubsidyMaxRule() {
-    this.http.post(URLConstant.GetRuleSubsidyMax, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetRuleSubsidyMax, { Id: this.AppId }).subscribe(
       (response) => {
         this.subsidyMaxRuleObj = response["ResultSubsidyMaxRuleObj"];
       }
@@ -152,7 +152,7 @@ export class SubsidyAddEditComponent implements OnInit {
   }
 
   LoadDDLFromTypeCode() {
-    this.http.post(URLConstant.GetListSubsidyFromTypeCode, { AppId: this.AppId}).subscribe(
+    this.http.post(URLConstant.GetListSubsidyFromTypeCode, { Id: this.AppId}).subscribe(
       (response) => {
         this.FromTypeCodeOptions = response[CommonConstant.ReturnObj];
 
@@ -178,7 +178,7 @@ export class SubsidyAddEditComponent implements OnInit {
         let insIndex = this.FromTypeCodeOptions.findIndex(x => x.Key == CommonConstant.SubsidyFromTypeIns);
         if(insIndex != -1)
         {
-          let resAssetIns =  this.http.post<AppObj>(URLConstant.GetAppAssetListForInsuranceByAppId, { AppId: this.AppId });
+          let resAssetIns =  this.http.post<AppObj>(URLConstant.GetAppAssetListForInsuranceByAppId, { Id: this.AppId });
           let resCollateralIns = this.http.post<AppObj>(URLConstant.GetAppCollateralListForInsuranceByAppId, { Id: this.AppId });          
           forkJoin([resAssetIns, resCollateralIns]).subscribe
           (

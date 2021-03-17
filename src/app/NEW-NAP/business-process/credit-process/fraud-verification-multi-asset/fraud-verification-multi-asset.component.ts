@@ -193,7 +193,8 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     this.negativeAssetCheckForMultiAssetObj = new NegativeAssetCheckForMultiAssetObj();
     this.negativeAssetCheckForMultiAssetObj.RequestObj = new Array<NegativeAssetCheckObj>();
     this.appAssetObj.AppId = this.AppId;
-    this.http.post(this.getAppAssetListByAppIdUrl, this.appAssetObj).subscribe(
+    var appAssetObj = { Id: this.AppId };
+    this.http.post(this.getAppAssetListByAppIdUrl, appAssetObj).subscribe(
       response => {
         this.listAssetData = response[CommonConstant.ReturnObj];
 

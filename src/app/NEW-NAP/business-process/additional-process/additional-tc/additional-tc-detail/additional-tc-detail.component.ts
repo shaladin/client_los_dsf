@@ -69,7 +69,7 @@ export class AdditionalTcDetailComponent implements OnInit {
 
   async SetListTc() {
     var requestAppId = {
-      AppId: this.AppId
+      Id: this.AppId
     };
 
     await this.http.post(URLConstant.GetListTCbyAppId, requestAppId).toPromise().then(

@@ -346,7 +346,8 @@ copyToLocationAddr() {
     if(this.mode == 'editAsset'){
       this.appAssetObj = new AppAssetObj();
       this.appAssetObj.AppAssetId = this.AppAssetId;
-      this.http.post(this.getAppAssetByAppAssetId, this.appAssetObj).subscribe(
+      var appAssetObj = { Id: this.AppAssetId };
+      this.http.post(this.getAppAssetByAppAssetId, appAssetObj).subscribe(
       (response) => {
           this.returnAppAssetObj = response;
           this.AssetDataForm.patchValue({ 

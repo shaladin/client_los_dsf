@@ -16,9 +16,12 @@ export class ViewAssetDataComponent implements OnInit {
   @Input() BizTemplateCode: string = "";
   appAssetId: number = 0;
   appObj = {
-    AppId: 0,
-    AppAssetId: 0
+    Id: 0
   };
+  appAssetObj = {
+    Id: 0
+  };
+  
   AppObj: any;
   AppAssetObj: any;
   totalRsvFund: number = 0;
@@ -26,8 +29,7 @@ export class ViewAssetDataComponent implements OnInit {
   listAsset: Array<any> = new Array<any>();
   allAssetDataObj: AllAssetDataObj;
 
-  constructor(private route: ActivatedRoute,
-    private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
      if (params['AppId'] != null) {
        this.appId = params['AppId'];
@@ -49,26 +51,26 @@ export class ViewAssetDataComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    if (this.appAssetId != 0) {
-      this.initSingleAssetUrl();
-      this.appObj.AppAssetId = this.appAssetId;
-    }
-    else {
-      this.initUrl();
-    }
-
-    this.appObj.AppId = this.appId;
+    this.appObj.Id = this.appId;
 
     if(this.BizTemplateCode === CommonConstant.OPL) {
       await this.GetListAllAssetData();
     }
     else {
-      await this.GetAllAssetData();
+      if (this.appAssetId != 0) {
+        this.initSingleAssetUrl();
+        this.appAssetObj.Id = this.appAssetId;
+        await this.GetAllAssetData(this.appAssetObj);
+      }
+      else {
+        this.initUrl();
+        await this.GetAllAssetData(this.appObj);
+      }
     }
   }
 
-  async GetAllAssetData() {
-    await this.http.post(this.getAllAssetDataUrl, this.appObj).toPromise().then(
+  async GetAllAssetData(obj: any) {
+    await this.http.post(this.getAllAssetDataUrl, obj).toPromise().then(
       (response) => {
         this.AppAssetObj = response;
         if(this.AppAssetObj.ResponseAppAssetAttrObjs != null) {

@@ -35,7 +35,7 @@ export class AppInsuranceComponent implements OnInit {
     if(this.BizTemplateCode == CommonConstant.FCTR){
       this.isFCTR = true;
     }
-    this.httpClient.post(URLConstant.GetListAppInsObjByAppIdForView, { AppId: this.AppId }).subscribe(
+    this.httpClient.post(URLConstant.GetListAppInsObjByAppIdForView, { Id: this.AppId }).subscribe(
       (response: any) => {
         this.appInsObjs = response.LoanAppInsObjects;
         this.appCollObjs = response.CollateralAppInsObjects;

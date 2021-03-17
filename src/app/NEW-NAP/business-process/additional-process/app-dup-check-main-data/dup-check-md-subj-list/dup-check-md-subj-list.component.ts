@@ -64,7 +64,7 @@ export class DupCheckMdSubjListComponent implements OnInit {
   }
 
   getSubjectList() {
-    this.http.post(URLConstant.MD_GetSubjectDuplicateCheckByAppId, { "AppId": this.appId }).subscribe(
+    this.http.post(URLConstant.MD_GetSubjectDuplicateCheckByAppId, { "Id": this.appId }).subscribe(
       (response) => {
         let keyProp: string = 'ListSubject';
         if (!response[keyProp] || response[keyProp].length <= 0) return;

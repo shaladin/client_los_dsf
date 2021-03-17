@@ -640,7 +640,7 @@ export class ApplicationDataComponent implements OnInit {
       });
     }
     if (this.BizTemplateCode == CommonConstant.CFNA) {
-      this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { AppId: this.appId }).subscribe(
+      this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.appId }).subscribe(
         (response) => {
           if (response["listResponseAppLoanPurpose"] && response["listResponseAppLoanPurpose"].length > 0) {
             var tempAppObj = this.GetAppObjValue();

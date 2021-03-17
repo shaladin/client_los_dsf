@@ -78,7 +78,7 @@ export class TabAnalysisResultComponent implements OnInit {
 
   async GetAppReviewInfo() {
     var obj = {
-      AppId: this.appId
+      Id: this.appId
     };
     await this.http.post(URLConstant.GetListAppScoreGradeByAppId, obj).toPromise().then(
       (response) => {

@@ -98,6 +98,10 @@ export class DocSignerDetailComponent implements OnInit {
       Id: this.AgrmntId
     }
 
+    var appObj = {
+      Id: this.AppId
+    }
+
     await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).toPromise().then(
       (response) => {
         this.result2 = response;
@@ -111,7 +115,7 @@ export class DocSignerDetailComponent implements OnInit {
         if (this.ResponseAppCustObj.AppCustObj != undefined) {
           this.MrCustTypeCode = this.ResponseAppCustObj.AppCustObj.MrCustTypeCode;
           if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-            this.http.post(URLConstant.GetAppCustPersonalDataAndSpouseByAppId, obj).toPromise().then(
+            this.http.post(URLConstant.GetAppCustPersonalDataAndSpouseByAppId, appObj).toPromise().then(
               (response) => {
                 this.ResponseAppCustDataObj = response;
                 this.CustFullName = this.ResponseAppCustDataObj.CustFullName;
@@ -122,7 +126,7 @@ export class DocSignerDetailComponent implements OnInit {
       });
 
 
-    await this.http.post(URLConstant.GetAppAssetDataByAppId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppAssetDataByAppId, appObj).toPromise().then(
       (response) => {
         this.ResponseAppAssetObj = response;
         this.SupplCode = this.ResponseAppAssetObj.SupplCode;

@@ -43,7 +43,7 @@ export class FeeCFNAComponent implements OnInit {
 
   async LoadAppFeeData(AppId : number)
   {
-    await this.http.post(URLConstant.GetListAppFeeByAppId, { AppId: AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetListAppFeeByAppId, { Id: AppId }).toPromise().then(
       (response) => {
         this.listAppFeeObj = response[CommonConstant.ReturnObj];
 

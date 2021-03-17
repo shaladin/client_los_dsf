@@ -948,7 +948,8 @@ export class AssetDataOplComponent implements OnInit {
   async getListAllAssetData() {
     this.appData = new AppDataObj();
     this.appData.AppId = this.AppId;
-    await this.http.post(URLConstant.GetListAllAssetDataByAppId, this.appData).toPromise().then(
+    var appData = { Id: this.AppId };
+    await this.http.post(URLConstant.GetListAllAssetDataByAppId, appData).toPromise().then(
       (response) => {
         this.listAsset = [];
         this.appAssetObj = response[CommonConstant.ReturnObj];

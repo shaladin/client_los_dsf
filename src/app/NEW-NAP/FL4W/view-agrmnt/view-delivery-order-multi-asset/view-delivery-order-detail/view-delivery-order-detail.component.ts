@@ -32,8 +32,9 @@ export class ViewDeliveryOrderDetailComponent implements OnInit {
   async ngOnInit(){
     this.GetListAppAssetByDOHId = URLConstant.GetListAppAssetByDOHId;
     this.GetDeliveryOrderHByDeliveryOrderHId = URLConstant.GetDeliveryOrderHByDeliveryOrderHId;
-    var doObj = new DeliveryOrderHObj();
-    doObj.DeliveryOrderHId = this.DOHId;
+    // var doObj = new DeliveryOrderHObj();
+    // doObj.DeliveryOrderHId = this.DOHId;
+    var doObj = { Id: this.DOHId };
     this.http.post(this.GetListAppAssetByDOHId, doObj).subscribe(
       (response) => { 
        this.assetDetailList = response[CommonConstant.ReturnObj];

@@ -534,7 +534,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   async loadData() {
-    var obj = { AppId: this.AppId };
+    var obj = { Id: this.AppId };
     var appObj = { Id: this.AppId };
 
     await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
