@@ -15,8 +15,10 @@ import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-return-handling-invoice-detail',
@@ -53,7 +55,8 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private router: Router,
-    private toastr: NGXToastrService) {
+    private toastr: NGXToastrService,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -69,6 +72,7 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ClaimTask();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewInvoiceVerif.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
@@ -101,6 +105,17 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
 
     this.MakeViewReturnInfoObj();
     this.GetListInvoice();
+  }
+
+  ClaimTask() {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    var wfClaimObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
+
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
+      (response) => { }
+    );
   }
 
   MakeViewReturnInfoObj() {
