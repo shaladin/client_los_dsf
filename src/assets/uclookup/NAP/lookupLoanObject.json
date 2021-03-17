@@ -24,7 +24,7 @@
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": false,
-            "isSelectOne": false,
+            "ddlType": "all",
             "url": "",
             "label": "Active Status",
             "items": [
