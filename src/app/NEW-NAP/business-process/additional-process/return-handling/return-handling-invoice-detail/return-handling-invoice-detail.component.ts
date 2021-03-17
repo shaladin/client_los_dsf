@@ -5,10 +5,12 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppInvoiceFctrObj } from 'app/shared/model/AppInvoiceFctrObj.Model';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
@@ -88,6 +90,14 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
     this.MouCustLookupObj.urlEnviPaging = environment.losUrl;
     this.MouCustLookupObj.pagingJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
     this.MouCustLookupObj.genericJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
+    this.MouCustLookupObj.addCritInput = new Array();
+
+    var addCrit = new CriteriaObj();
+    addCrit.DataType = "numeric";
+    addCrit.propName = "A.APP_ID";
+    addCrit.restriction = AdInsConstant.RestrictionIn;
+    addCrit.listValue = [this.AppId];
+    this.MouCustLookupObj.addCritInput.push(addCrit);
 
     this.MakeViewReturnInfoObj();
     this.GetListInvoice();
@@ -130,20 +140,6 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
   }
 
   GetAppInvoiceFctrData(AppInvoiceFctrId: number) {
-    this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-      (response) => {
-        this.http.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { MouCustId: response["MouCustId"] }).subscribe(
-          (response2) => {
-            if (response2["length"] > 0) {
-              this.IsDisableCustFctr = false;
-              this.RHInvoiceForm.controls.CustomerFactoringName.clearValidators();
-              this.RHInvoiceForm.controls.CustomerFactoringName.updateValueAndValidity();
-            } else {
-              this.IsDisableCustFctr = true;
-            }
-          });
-      });
-
     this.http.post(URLConstant.GetAppInvoiceFctrByAppInvoiceFctrId, { AppInvoiceFctrId: AppInvoiceFctrId }).subscribe(
       (response: AppInvoiceFctrObj) => {
         this.RHInvoiceForm.patchValue({
@@ -155,6 +151,23 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
           RowVersion: response.RowVersion
         })
       });
+
+    
+      this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
+        (response) => {
+          this.http.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { MouCustId: response["MouCustId"] }).subscribe(
+            (response2) => {
+              if (response2["length"] > 0) {
+                this.IsDisableCustFctr = false;
+                this.RHInvoiceForm.controls.CustomerFactoringName.clearValidators();
+                this.RHInvoiceForm.controls.CustomerFactoringName.updateValueAndValidity();
+                this.MouCustLookupObj.nameSelect = this.RHInvoiceForm.controls.CustomerFactoringName.value;
+                this.MouCustLookupObj.jsonSelect = { CustName: this.RHInvoiceForm.controls.CustomerFactoringName.value };
+              } else {
+                this.IsDisableCustFctr = true;
+              }
+            });
+        });
   }
 
   SaveForm() {
@@ -192,5 +205,11 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_INVOICE_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
+  }
+
+  GetLookupMouCust(event: any){
+    this.RHInvoiceForm.patchValue({
+      CustomerFactoringName: event.CustName
+    });
   }
 }
