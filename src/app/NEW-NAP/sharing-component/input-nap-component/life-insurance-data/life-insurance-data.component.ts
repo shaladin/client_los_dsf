@@ -73,7 +73,7 @@ export class LifeInsuranceDataComponent implements OnInit {
         }
       });
 
-    this.http.post<LifeInsObj>(URLConstant.GetAppLifeInsHByAppId, this.LifeInsObj).subscribe(
+    this.http.post<LifeInsObj>(URLConstant.GetAppLifeInsHByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.result = response;
         this.AppLifeInsHId = this.result.AppLifeInsHId;
@@ -328,7 +328,7 @@ export class LifeInsuranceDataComponent implements OnInit {
         });
     } else {
       this.LifeInsObj.AppLifeInsHId = this.AppLifeInsHId;
-      this.http.post(URLConstant.DeleteAppLifeIns, this.LifeInsObj).subscribe(
+      this.http.post(URLConstant.DeleteAppLifeIns, { Id: this.AppLifeInsHId }).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
           // this.wizard.goToNextStep()

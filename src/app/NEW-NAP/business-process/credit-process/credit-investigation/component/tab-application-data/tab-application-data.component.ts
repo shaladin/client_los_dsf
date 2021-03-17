@@ -101,7 +101,7 @@ export class TabApplicationDataComponent implements OnInit {
 
   async GetReferantorData() {
     var obj = {
-      AppID: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppReferantorForAppsData, obj).toPromise().then(
@@ -201,7 +201,7 @@ export class TabApplicationDataComponent implements OnInit {
 
 
     var AppObj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
 
     this.http.post(URLConstant.GetListTCbyAppId, AppObj).toPromise().then(

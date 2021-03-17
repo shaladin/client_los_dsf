@@ -235,7 +235,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async BindAppvAmt() {
-    var Obj = { AppId: this.appId };
+    var Obj = { Id: this.appId };
     await this.http.post(URLConstant.GetAppFinDataByAppId, Obj).toPromise().then(
       (response) => {
         // this.FormObj.patchValue({

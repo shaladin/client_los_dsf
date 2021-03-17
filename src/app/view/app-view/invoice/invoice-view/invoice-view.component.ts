@@ -26,7 +26,7 @@ export class InvoiceViewComponent implements OnInit {
 
   GetListInvoiceData() {
     var obj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
     var getListUrl = URLConstant.GetListAppInvoiceFctrByAppId;
     this.http.post(getListUrl, obj).subscribe(

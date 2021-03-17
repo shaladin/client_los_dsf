@@ -106,7 +106,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
 
     // Check Data App Id
     var obj = {
-      AppId: this.appId,
+      Id: this.appId,
       RowVersion: "",
     }
 

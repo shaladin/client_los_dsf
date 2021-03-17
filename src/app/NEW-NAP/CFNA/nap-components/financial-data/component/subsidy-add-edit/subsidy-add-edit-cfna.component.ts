@@ -67,7 +67,7 @@ export class SubsidyAddEditCFNAComponent implements OnInit {
     }
 
     GetAppSubsidy(){
-      this.http.post<AppSubsidyObj>(URLConstant.GetAppSubsidyByAppSubsidyId, { AppSubsidyId: this.AppSubsidyId }).subscribe(
+      this.http.post<AppSubsidyObj>(URLConstant.GetAppSubsidyByAppSubsidyId, { Id: this.AppSubsidyId }).subscribe(
         (response) => {
           var subdObj = response;
 
@@ -100,7 +100,7 @@ export class SubsidyAddEditCFNAComponent implements OnInit {
 
     LoadSubsidyMaxRule()
     {
-      this.http.post(URLConstant.GetRuleSubsidyMax, { AppId: this.AppId }).subscribe(
+      this.http.post(URLConstant.GetRuleSubsidyMax, { Id: this.AppId }).subscribe(
         (response) => {
           this.subsidyMaxRuleObj = response["ResultSubsidyMaxRuleObj"];
         }
@@ -153,7 +153,7 @@ export class SubsidyAddEditCFNAComponent implements OnInit {
     }
   
     LoadDDLFromTypeCode() {
-      this.http.post(URLConstant.GetListSubsidyFromTypeCode, { AppId: this.AppId}).subscribe(
+      this.http.post(URLConstant.GetListSubsidyFromTypeCode, { Id: this.AppId}).subscribe(
         (response) => {
           this.FromTypeCodeOptions = response[CommonConstant.ReturnObj];
           var idxToDelete = 0;

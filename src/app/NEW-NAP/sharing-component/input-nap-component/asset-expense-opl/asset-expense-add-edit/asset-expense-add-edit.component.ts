@@ -1468,7 +1468,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
   }
   isInsDataExist: boolean = false;
   async getInsuranceData() {
-    var reqObj = { AppAssetId: this.AppAssetId }
+    var reqObj = { Id: this.AppAssetId }
     await this.http.post(URLConstant.GetAssetExpenseDataByAppAssetId, reqObj).toPromise().then(
       (response) => {
         this.appObj = response["AppObj"];

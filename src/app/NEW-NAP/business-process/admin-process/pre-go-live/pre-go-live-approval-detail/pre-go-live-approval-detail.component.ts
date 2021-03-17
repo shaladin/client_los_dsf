@@ -110,7 +110,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         this.IsApvReady = true;
       });
 
-    this.http.post(URLConstant.GetListTCbyAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetListTCbyAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.TCList = response["AppTcs"];
       });

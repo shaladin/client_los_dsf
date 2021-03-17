@@ -142,7 +142,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
   async GetLifeInsData() {
     this.lifeInsObj = new LifeInsObj();
     this.lifeInsObj.AppId = this.AppId
-    await this.http.post(URLConstant.GetAppLifeInsHByAppId, this.lifeInsObj).toPromise().then(
+    await this.http.post(URLConstant.GetAppLifeInsHByAppId, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.LifeInsuranceData = response;
 
@@ -185,7 +185,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
 
   async GetReferantorData() {
     var obj = {
-      AppID: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppReferantorForAppsData, obj).toPromise().then(
@@ -266,7 +266,7 @@ export class ViewApplicationDataMultiComponent implements OnInit {
 
 
     var AppObj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
 
     this.http.post(URLConstant.GetListTCbyAppId, AppObj).toPromise().then(

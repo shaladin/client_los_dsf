@@ -49,7 +49,7 @@ export class ViewReservedFundComponent implements OnInit {
   }
 
   GetRsvFundData() {
-    this.http.post(this.getAppRsvFundUrl, this.appObj).subscribe(
+    this.http.post(this.getAppRsvFundUrl, { Id: this.appId }).subscribe(
       (response) => {
         this.RsvFundObj = response[CommonConstant.ReturnObj];
         if (this.RsvFundObj != null) {

@@ -53,7 +53,7 @@ export class MouCustTcComponent implements OnInit {
       mergeMap(() => {
         var mouCustClause = new MouCustClauseObj();
         mouCustClause.MouCustId = this.MouCustId;
-        return this.httpClient.post(URLConstant.GetMouCustClauseByMouCustId, mouCustClause);
+        return this.httpClient.post(URLConstant.GetMouCustClauseByMouCustId, { Id: this.MouCustId });
       }),
       mergeMap((response) => {
         var mouCustClause = response;

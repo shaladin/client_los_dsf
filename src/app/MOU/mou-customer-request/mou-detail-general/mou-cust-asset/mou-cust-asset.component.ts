@@ -59,7 +59,7 @@ export class MouCustAssetComponent implements OnInit {
     var mouAsset = new MouCustAssetObj();
     mouAsset.MouCustId = this.MouCustId;
 
-    this.httpClient.post(URLConstant.GetMouCustAssetByMouCustId, mouAsset).subscribe(
+    this.httpClient.post(URLConstant.GetMouCustAssetByMouCustId, { Id: this.MouCustId }).subscribe(
       (response: any) => {
 
         this.IsAssetSelected = false;

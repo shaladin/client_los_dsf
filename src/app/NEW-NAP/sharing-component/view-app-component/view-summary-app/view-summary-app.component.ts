@@ -44,7 +44,7 @@ export class ViewSummaryAppComponent implements OnInit {
         }
 
         if(this.SummaryAppObj.AppObj.BizTemplateCode == "CFRFN4W"){
-          this.http.post(URLConstant.GetListAppLoanPurposeByAppId, {AppID: this.AppId, RowVersion: ""}).toPromise().then(
+          this.http.post(URLConstant.GetListAppLoanPurposeByAppId, {Id: this.AppId, RowVersion: ""}).toPromise().then(
             (response) => {
               this.LoanObjectData = response["listResponseAppLoanPurpose"];
             }

@@ -35,7 +35,7 @@ export class TabReferantorComponent implements OnInit {
 
   async GetReferantorData(){
     var obj = {
-      AppId: this.appId,
+      Id: this.appId,
       RowVersion: ""
     }
 

@@ -25,7 +25,7 @@ export class ViewAppScoreGradeDsrComponent implements OnInit {
   }
 
   getAppScoreGradeDsr() {
-    var reqObj = { AppId: this.AppId };
+    var reqObj = { Id: this.AppId };
     this.http.post<AppScoreGradeDsrObj>(URLConstant.GetAppScoreGradeDsrByAppId, reqObj).subscribe(
       (response) => {
         this.AppScoreGradeDsrObj = response;

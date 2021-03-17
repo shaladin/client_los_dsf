@@ -63,7 +63,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
 
     this.GetListVerifStatus();
     var request = {
-      AppId: this.AppId
+      Id: this.AppId
     }
 
     this.httpClient.post(URLConstant.GetMouCustByAppId, request).subscribe((response) => {

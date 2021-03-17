@@ -30,7 +30,7 @@ export class TabApplicationComponent implements OnInit {
     }
 
     if (this.BizTemplateCode == CommonConstant.FCTR) {
-      await this.http.post(URLConstant.GetAppFctrByAppId, {AppId: this.appId}).toPromise().then(
+      await this.http.post(URLConstant.GetAppFctrByAppId, {Id: this.appId}).toPromise().then(
       (response) => {
         if(response["MrInstTypeCode"] == CommonConstant.SINGLE_INST_TYPE){
           this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationFactoringSingleInfo.json";
@@ -74,7 +74,7 @@ export class TabApplicationComponent implements OnInit {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridLoanObj.json";
 
-    await this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { AppId: this.appId }).toPromise().then(
+    await this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""

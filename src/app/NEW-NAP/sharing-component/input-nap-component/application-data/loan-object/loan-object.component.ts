@@ -78,7 +78,7 @@ export class LoanObjectComponent implements OnInit {
     this.MainInfoForm.controls.FinancingAmount.disable();
 
     var obj = {
-      AppLoanPurposeId: this.AppLoanPurposeId
+      Id: this.AppLoanPurposeId
     };
 
     await this.http.post(URLConstant.GetAppLoanPurposeByAppLoanPurposeId, obj).toPromise().then(response => {
@@ -346,7 +346,7 @@ export class LoanObjectComponent implements OnInit {
   deleteLoanObject(AppLoanPurposeId) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var obj = {
-        AppLoanPurposeId: AppLoanPurposeId
+        Id: AppLoanPurposeId
       };
 
       this.http.post(URLConstant.DeleteAppLoanPurpose, obj).subscribe(response => {
@@ -358,7 +358,7 @@ export class LoanObjectComponent implements OnInit {
 
   loadDataTable() {
     var obj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
     this.http.post(URLConstant.GetListAppLoanPurposeByAppId, obj).subscribe(
       (response) => {

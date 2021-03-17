@@ -63,7 +63,7 @@ export class SubsidyComponent implements OnInit {
   deleteSubsidy(obj)
   {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-        this.http.post(URLConstant.DeleteSubsidy, { AppSubsidyId : obj.AppSubsidyId }).subscribe(
+        this.http.post(URLConstant.DeleteSubsidy, { Id : obj.AppSubsidyId }).subscribe(
           (response) => {
             this.LoadSubsidyDataWithoutRule();
             this.SetNeedReCalculate(true);
@@ -74,7 +74,7 @@ export class SubsidyComponent implements OnInit {
 
   LoadSubsidyData()
   {
-    this.http.post(URLConstant.GetOrInitAppSubsidyByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetOrInitAppSubsidyByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
         this.emitData.emit(this.listSubsidy);
@@ -84,7 +84,7 @@ export class SubsidyComponent implements OnInit {
 
   LoadSubsidyDataWithoutRule()
   {
-    this.http.post(URLConstant.GetListAppSubsidyByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetListAppSubsidyByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidies"];
         this.emitData.emit(this.listSubsidy);

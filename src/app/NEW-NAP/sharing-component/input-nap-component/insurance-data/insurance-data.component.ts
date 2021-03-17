@@ -1359,7 +1359,7 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   async getInsuranceData() {
-    var reqObj = { AppId: this.appId }
+    var reqObj = { Id: this.appId }
     await this.http.post(URLConstant.GetInsuranceDataByAppId, reqObj).toPromise().then(
       (response) => {
         this.appObj = response["AppObj"];
