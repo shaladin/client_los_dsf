@@ -402,7 +402,7 @@ export class CollateralDetailComponent implements OnInit {
   AppCustId: number = 0;
   AppNo: string = "";
   async GetAppCustByAppId() {
-    await this.http.post<AppCustObj>(URLConstant.GetAppCustByAppId, { AppId: this.AppId }).toPromise().then(
+    await this.http.post<AppCustObj>(URLConstant.GetAppCustByAppId, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.AppCustData = response;
         this.AppCustId = response.AppCustId;
@@ -894,7 +894,7 @@ export class CollateralDetailComponent implements OnInit {
 
   GetLegalAddr() {
     this.AppCustAddrObj = new AppCustAddrObj();
-    this.http.post(URLConstant.GetCustDataByAppId, { "AppId": this.AppId }).subscribe(
+    this.http.post(URLConstant.GetCustDataByAppId, { "Id": this.AppId }).subscribe(
       response => {
         this.AppCustAddrObj = response['AppCustAddrLegalObj'];
       }
@@ -909,7 +909,7 @@ export class CollateralDetailComponent implements OnInit {
       this.AppCustObj = new AppCustObj();
       this.AppCustCompanyObj = new AppCustCompanyObj();
 
-      var appObj = { "AppId": this.AppId };
+      var appObj = { "Id": this.AppId };
       this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
         response => {
           this.AppCustObj = response['AppCustObj'];
@@ -951,7 +951,7 @@ export class CollateralDetailComponent implements OnInit {
       this.AppCustCompanyObj = new AppCustCompanyObj();
       this.AppCustAddrObj = new AppCustAddrObj();
 
-      var appObj = { "AppId": this.AppId };
+      var appObj = { "Id": this.AppId };
       this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
         response => {
           this.AppCustObj = response['AppCustObj'];

@@ -108,7 +108,7 @@ export class CustLegalDocComponent implements OnInit {
   add(content) {
     this.mode = "Add";
     this.clearForm();
-    this.http.post(URLConstant.GetDocIsExpDtMandatory, { DocCode: this.LegalDocTypeObj[0].Key }).subscribe(
+    this.http.post(URLConstant.GetDocIsExpDtMandatory, { Code: this.LegalDocTypeObj[0].Key }).subscribe(
       (response) => {
         console.log("GetDocIsExpDtMandatory: " + JSON.stringify(response));
         this.LegalDocForm.patchValue({
@@ -230,7 +230,7 @@ export class CustLegalDocComponent implements OnInit {
     var idx = ev.target.selectedIndex;
     this.selectedLegalDocName = this.LegalDocTypeObj[idx].Value;
     console.log("selectedLegalDocName: " + this.selectedLegalDocName);
-    this.http.post(URLConstant.GetDocIsExpDtMandatory, { DocCode: this.selectedLegalDocName }).subscribe(
+    this.http.post(URLConstant.GetDocIsExpDtMandatory, { Code: this.selectedLegalDocName }).subscribe(
       (response) => {
         this.LegalDocForm.patchValue({
           IsExpDtMandatory: response["IsExpDtMandatory"]

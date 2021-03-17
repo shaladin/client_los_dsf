@@ -88,12 +88,12 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
     let reqObj = {};
     let url = '';
 
-    if(this.isDetail)
-    {
-      reqObj = {AppCustId: this.appCustId, IsForNapCompletionVersion: true};
+    if(this.isDetail) {
+      reqObj = { AppCustId: this.appCustId, IsForNapCompletionVersion: true };
       url = URLConstant.GetCustDataPersonalForViewByAppCustId;
-    } else {
-      reqObj ={AppId: this.appId, IsForNapCompletionVersion: true};
+    }
+    else {
+      reqObj = { AppId: this.appId, IsForNapCompletionVersion: true };
       url = URLConstant.GetCustDataPersonalForViewByAppId;
     }
 

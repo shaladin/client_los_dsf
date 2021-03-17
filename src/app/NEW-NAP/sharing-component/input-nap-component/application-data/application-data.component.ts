@@ -148,7 +148,7 @@ export class ApplicationDataComponent implements OnInit {
     // this.initMailingAddress(); pindah ke dalem getAppModelInfo() karena pas dicheck biz template disini masih undefined
 
     var AppObj = {
-      AppId: this.appId
+      Id: this.appId
     }
 
     var user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));

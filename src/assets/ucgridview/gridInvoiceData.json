@@ -1,0 +1,66 @@
+{
+    "headerList": [
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Invoice No",
+            "name": "InvoiceNo"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Invoice Date",
+            "name": "InvoiceDueDt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Customer Factoring Name",
+            "name": "CustomerFactoringName"
+        },
+        {
+            "type": "label",
+            "position": "right",
+            "label": "Invoice Amount",
+            "name": "InvoiceAmt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action",
+            "name": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "InvoiceNo"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "InvoiceDueDt"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustomerFactoringName"
+        },
+        {
+            "type": "decimal",
+            "position": "right",
+            "property": "InvoiceAmt"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "callback",
+                    "key": "Edit"
+                }
+            ]
+        }
+    ]
+}

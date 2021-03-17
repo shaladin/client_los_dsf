@@ -21,6 +21,7 @@ export class DocSignerMainInfoComponent implements OnInit {
     private http: HttpClient) { }
 
   ngOnInit() {
+    this.BizTemplateCode = localStorage.getItem("BizTemplateCode");
     this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response: AppObj) => {
         if (this.BizTemplateCode == CommonConstant.CFNA) {

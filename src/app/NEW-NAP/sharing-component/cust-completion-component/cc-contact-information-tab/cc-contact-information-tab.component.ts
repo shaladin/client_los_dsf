@@ -94,7 +94,7 @@ export class CcContactInformationTabComponent implements OnInit {
   }
 
   async GetAppCustCompanyContactPersonByAppCustId() {
-    await this.http.post<AppCustCompanyContactPersonObj>(URLConstant.GetAppCustCompanyContactPersonByAppCustId, { "appCustId": this.AppCustId }).toPromise().then(
+    await this.http.post<AppCustCompanyContactPersonObj>(URLConstant.GetAppCustCompanyContactPersonByAppCustId, { "Id": this.AppCustId }).toPromise().then(
       (response) => {
         if (response.AppCustCompanyContactPersonId != 0) {
           this.TempAppCustCompanyContactPersonObj = response;

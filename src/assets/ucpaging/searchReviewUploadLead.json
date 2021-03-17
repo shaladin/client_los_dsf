@@ -10,7 +10,7 @@
       "placeholder": "Placeholder",
       "datatype": "text",
       "isFromURL": true,
-      "isSelectOne": false,
+      "ddlType": "all",
       "url": "",
       "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office Name",
@@ -44,7 +44,7 @@
       "value": "",
       "placeholder": "Placeholder",
       "isFromURL": false,
-      "isSelectOne": false,
+      "ddlType": "all",
       "items": [
         {
           "key": "CLAIMED",

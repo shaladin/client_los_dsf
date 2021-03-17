@@ -42,12 +42,6 @@ export class CreditApvResultExtPagingComponent implements OnInit {
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.value = this.BizTemplateCode;
     this.inputPagingObj.addCritInput.push(critObj);
-
-    critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'WF.ACT_CODE';
-    critObj.value = "PO_" + this.BizTemplateCode;
-    this.inputPagingObj.addCritInput.push(critObj);
   }
 
   getEvent(ev){

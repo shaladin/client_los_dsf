@@ -346,7 +346,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.tempPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/MouExistingCollateralTempPaging.json";
 
-    var appObj = { AppId: this.AppId }
+    var appObj = { Id: this.AppId }
     this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
       (response) => {
         var custObj = response['AppCustObj'];
@@ -388,7 +388,7 @@ export class CollateralAddEditComponent implements OnInit {
       this.AppCustObj = new AppCustObj();
       this.collOwnerAddrObj = new AppCustAddrObj();
 
-      var appObj = { "AppId": this.AppId };
+      var appObj = { "Id": this.AppId };
       this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
         response => {
           this.AppCustObj = response['AppCustObj'];

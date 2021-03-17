@@ -175,6 +175,7 @@ export class CommonConstant {
   public static VerfResultStatFailed = "FAIL";
   public static TrxTypeCodePhn = "PHN";
   public static VerfTrxTypeCodePhn = "PHN_VERIF";
+  public static VerfTrxTypeCodeInvoice = "INVOICE";
   public static VerfResultStatCodeNew = "NEW";
   public static RtnHandlingReturnStatDone = "DONE";
   public static CrdInvstgStatDone = "DONE";
@@ -344,6 +345,7 @@ export class CommonConstant {
   public static RefReasonTypeCodePreGlvApv = "PRE_GLV_APV";
   public static RefReasonTypeCodeCrdReview = "CRD_REVIEW";
   public static RefReasonTypeDocChecklist = "DCK_LIST";
+  public static RefReasonTypeCodeInvoiceDataVerif = "INVOICE_DATA_VERIF";
 
   // INST TYPE
   public static SINGLE_INST_TYPE = "SINGLE";
@@ -403,6 +405,7 @@ export class CommonConstant {
   public static ReturnHandlingEditComRsvFnd = "RTN_EDIT_COM_RSV_FND";
   public static ReturnHandlingAddColtr = "RTN_ADD_COLTR";
   public static ReturnHandlingAddTc = "RTN_ADD_TC";
+  public static ReturnHandlingInvoice = "RTN_INVOICE_VERF";
   public static ReturnStatNew = "NEW";
   public static ReturnStatRequest = "REQ";
   public static ReturnStatus = "Status";
@@ -474,6 +477,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeReturnTaskCFRFN4W = "RETURN_TASK_CFRFN4W";
   public static RefMasterTypeCodeReturnTaskFL4W = "RETURN_TASK_FL4W";
   public static RefMasterTypeCodeReturnTaskOPL = "RETURN_TASK_OPL";
+  public static RefMasterTypeCodeReturnTaskFCTR = "RETURN_TASK_FCTR";
   public static RefMasterTypeCodeVerfSubjRelation = "VERF_SUBJ_RELATION";
   public static RefMasterTypeCodeCrdRvwAnalysisItem = "CRD_RVW_ANALYSIS_ITEM";
   public static RefMasterTypeCodeCrdInvstgAnalysisItem = "CRD_INVSTG_ANALYSIS_ITEM";

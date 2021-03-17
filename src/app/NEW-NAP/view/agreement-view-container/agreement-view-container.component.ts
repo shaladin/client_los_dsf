@@ -80,9 +80,8 @@ export class AgreementViewContainerComponent implements OnInit {
       (response) => {
         this.agrNo = response['AgrmntNo'];
         this.appId = response['AppId'];
-        let appObj = { AppId: this.appId };
-        var appObj1 = { Id: this.appId };
-        let getApp = this.http.post(URLConstant.GetAppById, appObj1);
+        var appObj = { Id: this.appId };
+        let getApp = this.http.post(URLConstant.GetAppById, appObj);
         let getAppCust = this.http.post(URLConstant.GetAppCustByAppId, appObj);
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));

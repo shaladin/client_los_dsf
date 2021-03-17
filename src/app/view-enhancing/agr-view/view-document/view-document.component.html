@@ -3,22 +3,24 @@
   </lib-ucSubsection>
   <div id="docsigner">
     <div class="px-3">
-      <lib-ucSubsection [id]="'SupplierSignerId'" [title]="'Supplier Signer'"
-          [panel]="'SupplierSigner'"></lib-ucSubsection>
-      <div class="form-body" id="SupplierSigner">
-        <!-- <label class="col-md-4  adInsLabel" translate>Supplier Signer</label> -->
-        <div>
-          <label class="col-md-4  adInsLabel" translate>Supplier Officer Name</label>
-          <label class="col-md-4  adinslabel" translate
-            *ngIf="AgrmntSignerObj?.SupplBranchEmpName">{{this.AgrmntSignerObj.SupplBranchEmpName}}</label>
+      <div *ngIf="BizTemplateCode != 'FCTR'">
+        <lib-ucSubsection [id]="'SupplierSignerId'" [title]="'Supplier Signer'"
+            [panel]="'SupplierSigner'"></lib-ucSubsection>
+        <div class="form-body" id="SupplierSigner">
+          <!-- <label class="col-md-4  adInsLabel" translate>Supplier Signer</label> -->
+          <div>
+            <label class="col-md-4  adInsLabel" translate>Supplier Officer Name</label>
+            <label class="col-md-4  adinslabel" translate
+              *ngIf="AgrmntSignerObj?.SupplBranchEmpName">{{this.AgrmntSignerObj.SupplBranchEmpName}}</label>
+          </div>
+          <div>
+            <label class="col-md-4  adInsLabel" translate>Supplier Officer Position</label>
+            <label class="col-md-4  adinslabel" translate
+              *ngIf="AgrmntSignerObj?.MrJobPositionSupplBranchEmpName">{{this.AgrmntSignerObj.MrJobPositionSupplBranchEmpName}}</label>
+          </div>
         </div>
-        <div>
-          <label class="col-md-4  adInsLabel" translate>Supplier Officer Position</label>
-          <label class="col-md-4  adinslabel" translate
-            *ngIf="AgrmntSignerObj?.MrJobPositionSupplBranchEmpName">{{this.AgrmntSignerObj.MrJobPositionSupplBranchEmpName}}</label>
-        </div>
+        <br>
       </div>
-      <br>
   
       <lib-ucSubsection [id]="'CompanySignerId'" [title]="'Company Signer'"
       [panel]="'CompanySigner'"></lib-ucSubsection> 

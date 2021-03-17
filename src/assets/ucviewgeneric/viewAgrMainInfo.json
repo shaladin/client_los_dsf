@@ -20,10 +20,66 @@
             }
           ]
         },
-        {
-          "type": "text",
-          "label": "Number of Asset",
-          "property": "NumOfAsset"
+        {            
+          "type" : "switch", 
+          "case" : [ 
+            {
+              "conditions": [                  
+                {
+                  "property" : "BizTemplateCode",
+                  "value" : "CF4W",
+                  "restriction" : "EQ"
+                }
+              ],
+              "result": {
+                "type": "text",
+                "label": "Number Of Asset",
+                "property" : "NumOfAsset"
+              }
+            },
+            {
+              "conditions": [                  
+                {
+                  "property" : "BizTemplateCode",
+                  "value" : "CFNA",
+                  "restriction" : "EQ"
+                }
+              ],
+              "result": {
+                "type": "text",
+                "label": "Number Of Collateral",
+                "property" : "NumOfColl"
+              }
+            },
+            {
+              "conditions": [                  
+                {
+                  "property" : "BizTemplateCode",
+                  "value" : "CFRFN4W",
+                  "restriction" : "EQ"
+                }
+              ],
+              "result": {
+                "type": "text",
+                "label": "Number Of Collateral",
+                "property" : "NumOfColl"
+              }
+            },
+            {
+              "conditions": [                  
+                {
+                  "property" : "BizTemplateCode",
+                  "value" : "FCTR",
+                  "restriction" : "EQ"
+                }
+              ],
+              "result": {
+                "type": "text",
+                "label": "Number Of Collateral",
+                "property" : "NumOfColl"
+              }
+            }
+          ]
         },
         {
           "type": "link",

@@ -1,97 +1,97 @@
 {
-    "title": "Lookup Referantor",
-    "component": [
-      {
-        "type": "textbox",
-        "name": "v.VENDOR_CODE",
-        "id": "referantorCode",
-        "value": "",
-        "label": "Referantor Code",
-        "placeholder": "Referantor Code"
-      },
-      {
-        "type": "dropdown",
-        "name": "v.MR_VENDOR_CATEGORY_CODE",
-        "id": "referantorType",
-        "value": "",
-        "label": "Referantor Type",
-        "placeholder": "Referantor Type",
-        "isSelectOne" : false,
-        "items" : [ 
-            {
-                "key" : "AGENCY_PERSONAL",
-                "value" : "Agency Personal"
-            },
-            {
-                "key" : "AGENCY_COMPANY",
-                "value" : "Agency Company"
-            }
-        ]
-      },
-      {
-        "type": "textbox",
-        "name": "v.VENDOR_NAME",
-        "id": "referantorName",
-        "value": "",
-        "label": "Referantor Name",
-        "placeholder": "Referantor Name"
-      }
-    ],
+  "title": "Lookup Referantor",
+  "component": [
+    {
+      "type": "textbox",
+      "name": "v.VENDOR_CODE",
+      "id": "referantorCode",
+      "value": "",
+      "label": "Referantor Code",
+      "placeholder": "Referantor Code"
+    },
+    {
+      "type": "dropdown",
+      "name": "v.MR_VENDOR_CATEGORY_CODE",
+      "id": "referantorType",
+      "value": "",
+      "label": "Referantor Type",
+      "placeholder": "Referantor Type",
+      "ddlType": "all",
+      "items": [
+        {
+          "key": "AGENCY_PERSONAL",
+          "value": "Agency Personal"
+        },
+        {
+          "key": "AGENCY_COMPANY",
+          "value": "Agency Company"
+        }
+      ]
+    },
+    {
+      "type": "textbox",
+      "name": "v.VENDOR_NAME",
+      "id": "referantorName",
+      "value": "",
+      "label": "Referantor Name",
+      "placeholder": "Referantor Name"
+    }
+  ],
   "querystring": {
     "name": "lookupVendor"
   },
-    "headerList": [
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Referantor Code",
+      "name": "ReferantorCode"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Referantor Name",
+      "name": "ReferantorName"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Referantor Type",
+      "name": "ReferantorTypeDesc"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Select"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "center",
+      "property": "ReferantorCode"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "ReferantorName"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "ReferantorTypeDesc"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
         {
-          "type": "sort",
-          "position": "center",
-          "label": "Referantor Code",
-          "name": "ReferantorCode"
-        },
-        {
-          "type": "sort",
-          "position": "left",
-          "label": "Referantor Name",
-          "name": "ReferantorName"
-        },
-        {
-          "type": "sort",
-          "position": "center",
-          "label": "Referantor Type",
-          "name": "ReferantorTypeDesc"
-        },
-        {
-          "type": "label",
-          "position": "center",
-          "label": "Select"
+          "type": "select",
+          "property": "ReferantorName"
         }
-    ],
-    "bodyList": [
-      {
-        "type": "text",
-        "position": "center",
-        "property": "ReferantorCode"
-      },
-      {
-        "type": "text",
-        "position": "left",
-        "property": "ReferantorName"
-      },
-      {
-        "type": "text",
-        "position": "center",
-        "property": "ReferantorTypeDesc"
-      },
-      {
-        "type": "action",
-        "position": "center",
-        "action": [
-          {
-            "type": "select",
-            "property": "ReferantorName"
-          }
-        ]
-      }
-    ],
-    "propertyId": "ReferantorName",
-    "propertyName": "ReferantorName"
-  }
+      ]
+    }
+  ],
+  "propertyId": "ReferantorName",
+  "propertyName": "ReferantorName"
+}

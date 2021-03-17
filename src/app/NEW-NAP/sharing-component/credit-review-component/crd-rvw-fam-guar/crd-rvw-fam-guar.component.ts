@@ -141,7 +141,7 @@ export class CrdRvwFamGuarComponent implements OnInit {
   DictCrdRvwExposureHId: { [Id: string]: number } = {};
   DictCrdRvwGuarantorExposure: { [Id: string]: CrdRvwOvdObj } = {};
   async GetListCrdRvwExposureByCrdRvwCustInfoId() {
-    await this.http.post<{ ListCrdRvwExposureHObj: Array<CrdRvwExposureHObj>, ListCrdRvwOvdObj: Array<CrdRvwOvdObj> }>(URLConstant.GetListCrdRvwExposureByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
+    await this.http.post<{ ListCrdRvwExposureHObj: Array<CrdRvwExposureHObj>, ListCrdRvwOvdObj: Array<CrdRvwOvdObj> }>(URLConstant.GetListCrdRvwExposureByCrdRvwCustInfoId, { Id: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
         for (let index = 0; index < response.ListCrdRvwExposureHObj.length; index++) {
           const element: CrdRvwExposureHObj = response.ListCrdRvwExposureHObj[index];

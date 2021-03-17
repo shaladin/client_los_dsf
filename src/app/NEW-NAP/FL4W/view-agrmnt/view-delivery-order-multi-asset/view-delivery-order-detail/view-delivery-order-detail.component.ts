@@ -39,7 +39,7 @@ export class ViewDeliveryOrderDetailComponent implements OnInit {
        this.assetDetailList = response[CommonConstant.ReturnObj];
       });
 
-    this.http.post(this.GetDeliveryOrderHByDeliveryOrderHId, doObj).subscribe(
+    this.http.post(this.GetDeliveryOrderHByDeliveryOrderHId, { Id: this.DOHId }).subscribe(
       (response) => { 
         this.doData = response;
       });
