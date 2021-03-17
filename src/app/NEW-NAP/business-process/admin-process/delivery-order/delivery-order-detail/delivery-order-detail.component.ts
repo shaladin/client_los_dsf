@@ -205,12 +205,11 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.dmsAppObj.ViewCode = CommonConstant.DmsViewCodeApp;
 
     var agrObj = { Id: this.AgrmntId };
-    var appObj = { AppId: this.AppId };
-    var appObj1 = { Id: this.AppId };
+    var appObj = { Id: this.AppId };
 
     let getAgr = await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj1)
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj)
     forkJoin([getAgr, getAppCust, getApp]).subscribe(
       (response) => {
         this.agrNo = response[0]['AgrmntNo'];

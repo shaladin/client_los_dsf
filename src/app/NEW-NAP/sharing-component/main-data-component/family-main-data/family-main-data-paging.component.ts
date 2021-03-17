@@ -75,7 +75,7 @@ export class FamilyMainDataPagingComponent implements OnInit {
     }    
     if (ev.Key == "delete") {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-        this.http.post(URLConstant.DeleteAppCustMainData, {AppCustId: ev.RowObj.AppCustId}).subscribe(
+        this.http.post(URLConstant.DeleteAppCustMainData, { Id: ev.RowObj.AppCustId }).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             this.loadGuarantorListData();

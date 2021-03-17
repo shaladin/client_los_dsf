@@ -81,7 +81,8 @@ export class GuarantorPagingComponent implements OnInit {
   }
 
   SaveAndContinue() {
-    this.http.post(URLConstant.GetListAppGuarantorPersonalForView, this.guarantorObj).subscribe(
+    var guarantorObj = { Id: this.AppId };
+    this.http.post(URLConstant.GetListAppGuarantorPersonalForView, guarantorObj).subscribe(
       (response) => {
         for (let i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
           if (response[CommonConstant.ReturnObj][i].MrMaritalStatCode == null || response[CommonConstant.ReturnObj][i].MrNationalityCode == null) {
@@ -91,7 +92,6 @@ export class GuarantorPagingComponent implements OnInit {
         }
         this.outputTab.emit();
       });
-
   }
 
   Cancel() {

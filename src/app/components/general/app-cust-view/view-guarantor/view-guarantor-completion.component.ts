@@ -31,12 +31,12 @@ export class GuarantorCompletionComponent implements OnInit {
   }
 
   setValue(){    
-    this.http.post(URLConstant.GetListAppGuarantorPersonalForView, {AppId:this.AppId, IsForNapCompletionVersion: true}).subscribe(
+    this.http.post(URLConstant.GetListAppGuarantorPersonalForView, { Id:this.AppId, IsForNapCompletionVersion: true }).subscribe(
       (response) => {
         this.listAppGuarantorPersonal = response[CommonConstant.ReturnObj];
       });
 
-    this.http.post(URLConstant.GetListAppGuarantorCompanyForView, {AppId:this.AppId, IsForNapCompletionVersion: true}).subscribe(
+    this.http.post(URLConstant.GetListAppGuarantorCompanyForView, { Id:this.AppId, IsForNapCompletionVersion: true }).subscribe(
       (response) => {
         this.listAppGuarantorCompany = response[CommonConstant.ReturnObj];
       });

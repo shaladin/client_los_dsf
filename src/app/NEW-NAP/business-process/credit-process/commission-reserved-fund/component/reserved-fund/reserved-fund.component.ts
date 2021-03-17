@@ -82,7 +82,7 @@ export class ReservedFundComponent implements OnInit {
     this.allAppReservedFundObj = new AllAppReservedFundObj();
     this.initUrl();
     var appObj = {
-      Id: this.ReturnHandlingHObj.AppId,
+      Id: this.ReturnHandlingHObj.AppId
     };
     await this.GetAppCommissionData(appObj);
     this.GetAppRsvFundRule(appObj);

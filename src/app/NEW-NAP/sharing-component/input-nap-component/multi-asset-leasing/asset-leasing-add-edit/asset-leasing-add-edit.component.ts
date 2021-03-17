@@ -283,7 +283,7 @@ copyToLocationAddr() {
 
   GetAppCust() {
     var appObj = {
-      AppId: this.AppId,
+      Id: this.AppId,
     };
     this.http.post(this.getAppCustUrl, appObj).subscribe(
       (response) => {

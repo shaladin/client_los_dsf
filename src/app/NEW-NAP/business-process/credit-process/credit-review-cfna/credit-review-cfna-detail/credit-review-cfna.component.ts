@@ -152,10 +152,9 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    var appObj = { AppId: this.appId };
-    var appObj1 = { Id: this.appId };
+    var appObj = { Id: this.appId };
 
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj1)
+    let getApp = await this.http.post(URLConstant.GetAppById, appObj)
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
     forkJoin([getApp, getAppCust]).subscribe(
       (response) => {
@@ -215,7 +214,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
 
   async GetAppCustData() {
     var obj = {
-      AppId: this.appId,
+      Id: this.appId,
       RowVersion: ""
     };
 

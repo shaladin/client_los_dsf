@@ -164,19 +164,19 @@ export class GuarantorCompanyComponent implements OnInit {
       RowVersion: ""
     }
     var AppCust = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     }
     this.http.post(URLConstant.GetAppCustByAppId, AppCust).subscribe(
       (response) => {
-
         if (response["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
           var refCustRelObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarPersonalRelationship,
             MappingCode: CommonConstant.CustTypeCompany,
             RowVersion: ""
           }
-        } else {
+        }
+        else {
           var refCustRelObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
             MappingCode: CommonConstant.CustTypeCompany,
@@ -194,7 +194,6 @@ export class GuarantorCompanyComponent implements OnInit {
             }
           }
         );
-
       }
     );
 

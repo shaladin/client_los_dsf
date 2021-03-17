@@ -172,7 +172,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     );
 
     var AppCust = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     }
     this.http.post(URLConstant.GetAppCustByAppId, AppCust).subscribe(

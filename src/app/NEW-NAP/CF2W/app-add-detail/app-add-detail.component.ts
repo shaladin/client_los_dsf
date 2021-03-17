@@ -69,8 +69,8 @@ export class AppAddDetailComponent implements OnInit {
   ngOnInit() {
     //this.ClaimTask();
     this.AppStepIndex = 0;
-    // this.NapObj = new AppObj();
-    // this.NapObj.AppId = this.appId;
+    this.NapObj = new AppObj();
+    this.NapObj.AppId = this.appId;
     var appObj = { Id: this.appId };
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response: AppObj) => {

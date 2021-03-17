@@ -32,18 +32,16 @@ export class GuarantorComponent implements OnInit {
   }
 
   setValue(){    
-    this.http.post(URLConstant.GetListAppGuarantorPersonalForView, {AppId:this.AppId}).subscribe(
+    this.http.post(URLConstant.GetListAppGuarantorPersonalForView, { Id:this.AppId }).subscribe(
       (response) => {
         this.listAppGuarantorPersonal = response[CommonConstant.ReturnObj];
-      });
-
-    this.http.post(URLConstant.GetListAppGuarantorCompanyForView, {AppId:this.AppId}).subscribe(
+      }
+    );
+    this.http.post(URLConstant.GetListAppGuarantorCompanyForView, { Id:this.AppId }).subscribe(
       (response) => {
         this.listAppGuarantorCompany = response[CommonConstant.ReturnObj];
-      });
-
-
-
+      }
+    );
   }
   ViewGuarantorPersonal(content,id) {
     this.guarantorPersonalFiltered = this.listAppGuarantorPersonal.filter(

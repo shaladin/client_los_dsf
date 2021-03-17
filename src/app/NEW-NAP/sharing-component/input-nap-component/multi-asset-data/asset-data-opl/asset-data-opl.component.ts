@@ -807,7 +807,7 @@ export class AssetDataOplComponent implements OnInit {
   
   async GetAppCust() {
     var appObj = {
-      AppId: this.AppId,
+      Id: this.AppId,
     };
     await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
       (response) => {
@@ -820,7 +820,7 @@ export class AssetDataOplComponent implements OnInit {
   async GetAppCustPhone() {
     if (typeof (this.AppCustObj) != 'undefined') {
       var appObj = {
-        AppId: this.AppId,
+        Id: this.AppId,
       };
       await this.http.post(URLConstant.GetCustDataByAppId, appObj).toPromise().then(
         (response) => {
@@ -927,7 +927,7 @@ export class AssetDataOplComponent implements OnInit {
 
   async GetAppCustCoy() {
     var appObj = {
-      AppId: this.AppCustObj.AppCustId,
+      Id: this.AppCustObj.AppCustId,
     };
     await this.http.post(URLConstant.GetAppCustCompanyByAppCustId, appObj).toPromise().then(
       (response) => {

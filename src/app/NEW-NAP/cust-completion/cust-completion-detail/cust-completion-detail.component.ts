@@ -111,7 +111,7 @@ export class CustCompletionDetailComponent implements OnInit {
   }
 
   loadCustCompletionListData() {
-    this.http.post(URLConstant.GetListAppCustCompletion, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetListAppCustCompletion, { Id: this.AppId }).subscribe(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""

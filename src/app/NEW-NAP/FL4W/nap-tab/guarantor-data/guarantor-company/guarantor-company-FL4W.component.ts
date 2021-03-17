@@ -151,7 +151,8 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
           }
 
         });
-    } else {
+    }
+    else {
       this.ClearForm();
       this.inputLookupObj1.isReady = true;
     }
@@ -161,10 +162,8 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
       RowVersion: ""
     }
 
-
-
     var AppCust = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     }
     this.http.post(URLConstant.GetAppCustByAppId, AppCust).subscribe(

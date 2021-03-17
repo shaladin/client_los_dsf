@@ -59,7 +59,7 @@ export class ListCompanyComponent implements OnInit {
     this.AppCustCompanyObj = new AppCustCompanyObj();
     this.AppCustAddrObj = new AppCustAddrObj();
 
-    var appObj = { "AppId": this.AppId };
+    var appObj = { "Id": this.AppId };
     this.http.post(this.GetCustDataByAppId, appObj).subscribe(
       response => {
         this.AppCustObj = response['AppCustObj'];

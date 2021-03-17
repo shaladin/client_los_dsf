@@ -684,7 +684,7 @@ export class LeadInputCustDataComponent implements OnInit {
     this.dmsObj.User = "Admin";
     this.dmsObj.Role = "SUPUSR";
     this.dmsObj.ViewCode = "ConfinsLead";
-    // var appObj = { AppId: this.appId };
+    // var appObj = { Id: this.appId };
     // await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
     //   (response)=>{
     //     this.custNo = response['CustNo'];

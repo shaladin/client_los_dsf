@@ -57,7 +57,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   });
 
   appObj = {
-    AppId: 0,
+    Id: 0,
   };
 
   rtnHandlingDObj = {
@@ -116,7 +116,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.ClaimTask();
     this.initUrl();
-    this.appObj.AppId = this.appId;
+    this.appObj.Id = this.appId;
     this.initExistingTc();
     await this.GetAppData();
     this.getCustType();
@@ -318,8 +318,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   }
 
   async GetAppData() {
-    var appObj1 = { Id: this.appId };
-    await this.http.post(this.getAppUrl, appObj1).toPromise().then(
+    await this.http.post(this.getAppUrl, this.appObj).toPromise().then(
       (response) => {
         this.AppObj = response;
       }

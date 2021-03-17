@@ -108,7 +108,7 @@ export class DocumentViewComponent implements OnInit {
         return response;
       }),
       mergeMap((response: AgrmntObj) => {
-        let getAppCust = this.http.post(URLConstant.GetAppCustByAppId, { AppId: response.AppId });
+        let getAppCust = this.http.post(URLConstant.GetAppCustByAppId, { Id: response.AppId });
         let getAgrmntSigner = this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, { Id: this.AgrmntId });
         return forkJoin([getAppCust, getAgrmntSigner]);
       })
