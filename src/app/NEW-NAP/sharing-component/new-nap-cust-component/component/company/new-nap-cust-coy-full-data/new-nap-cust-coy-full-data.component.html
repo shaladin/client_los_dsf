@@ -50,7 +50,7 @@
           <label class="col-md-4 adins-required-label" translate>Industry Type</label>
           <div class="col-md-8"> 
               <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="lookupIndustryTypeObj"   *ngIf="lookupIndustryTypeObj.isReady" [parentForm]="ParentForm" [identifier]="'lookupIndustryType'" (lookup)="GetIndustryType($event)"></lib-uclookupgeneric>
-              <lib-uc-show-errors *ngIf="ParentForm.controls.lookupIndustryType && ParentForm.controls.lookupIndustryType.controls.value.untouched" [control]="ParentForm.controls.lookupIndustryType.controls.value"
+              <lib-uc-show-errors *ngIf="ParentForm.controls.lookupIndustryType && ParentForm.controls.lookupIndustryType['controls']['value']['untouched']" [control]="ParentForm.controls.lookupIndustryType['controls']['value']"
                 [submit]="IsCompanyDataSubmitted"></lib-uc-show-errors>
           </div>
         </div>

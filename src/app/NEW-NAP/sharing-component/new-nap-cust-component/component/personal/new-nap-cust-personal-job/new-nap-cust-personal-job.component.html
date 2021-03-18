@@ -10,7 +10,7 @@
           [lookupInput]="InputLookupProfessionObj" [parentForm]="ParentForm"
           [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
         </lib-uclookupgeneric>
-        <lib-uc-show-errors *ngIf="ParentForm.controls.lookupProfessionData && ParentForm.controls.lookupProfessionData.controls.value.untouched" [control]="ParentForm.controls.lookupProfessionData.controls.value"
+        <lib-uc-show-errors *ngIf="ParentForm.controls.lookupProfessionData && ParentForm.controls.lookupProfessionData['controls']['value']['untouched']" [control]="ParentForm.controls.lookupProfessionData['controls']['value']"
           [submit]="IsJobSubmitted"></lib-uc-show-errors>
       </div>
       <label class="col-md-2 adins-required-label" *ngIf="CustModelCode != 'NONPROF'" translate>Industry
@@ -20,7 +20,7 @@
           [lookupInput]="InputLookupIndustryTypeObj" [parentForm]="ParentForm"
           [identifier]="'lookupIndustryType'" (lookup)="GetIndustryType($event)">
         </lib-uclookupgeneric>
-        <lib-uc-show-errors *ngIf="ParentForm.controls.lookupIndustryType && ParentForm.controls.lookupIndustryType.controls.value.untouched" [control]="ParentForm.controls.lookupIndustryType.controls.value"
+        <lib-uc-show-errors *ngIf="ParentForm.controls.lookupIndustryType && ParentForm.controls.lookupIndustryType['controls']['value']['untouched']" [control]="ParentForm.controls.lookupIndustryType['controls']['value']"
           [submit]="IsJobSubmitted"></lib-uc-show-errors>
       </div>
     </div>
