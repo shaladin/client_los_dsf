@@ -157,7 +157,7 @@ export class AssetDataComponent implements OnInit {
     RefMasterTypeCode: "",
   };
   appObj = {
-    AppId: 0,
+    Id: 0,
   };
 
   assetCondObj: any;
@@ -1488,7 +1488,8 @@ export class AssetDataComponent implements OnInit {
   async getAllAssetData() {
     this.appData = new AppDataObj();
     this.appData.AppId = this.AppId;
-    await this.http.post(URLConstant.GetAllAssetDataByAppId, this.appData).toPromise().then(
+    var appData = { Id: this.AppId };
+    await this.http.post(URLConstant.GetAllAssetDataByAppId, appData).toPromise().then(
       (response) => {
         this.appAssetObj = response;
 
@@ -1617,7 +1618,8 @@ export class AssetDataComponent implements OnInit {
   async getListAllAssetData() {
     this.appData = new AppDataObj();
     this.appData.AppId = this.AppId;
-    await this.http.post(URLConstant.GetListAllAssetDataByAppId, this.appData).toPromise().then(
+    var appData = { Id: this.AppId };
+    await this.http.post(URLConstant.GetListAllAssetDataByAppId, appData).toPromise().then(
       (response) => {
         this.appAssetObj = response[CommonConstant.ReturnObj];
 
@@ -1972,7 +1974,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   async GetAppData() {
-    this.appObj.AppId = this.AppId;
+    this.appObj.Id = this.AppId;
     await this.http.post(URLConstant.GetAppById, this.appObj).toPromise().then(
       (response) => {
         this.AppObj = response;
@@ -2368,7 +2370,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   async GetListAddr() {
-    this.appObj.AppId = this.AppId;
+    this.appObj.Id = this.AppId;
     await this.http.post(URLConstant.GetListAppCustAddrByAppId, this.appObj).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
@@ -2487,7 +2489,7 @@ export class AssetDataComponent implements OnInit {
 
   async GetAppCust() {
     var appObj = {
-      AppId: this.AppId,
+      Id: this.AppId,
     };
     await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
       (response) => {
@@ -2504,7 +2506,7 @@ export class AssetDataComponent implements OnInit {
   async GetAppCustPhone() {
     if (typeof (this.AppCustObj) != 'undefined') {
       var appObj = {
-        AppId: this.AppId,
+        Id: this.AppId,
       };
       await this.http.post(URLConstant.GetCustDataByAppId, appObj).toPromise().then(
         (response) => {
@@ -2551,7 +2553,7 @@ export class AssetDataComponent implements OnInit {
 
   async GetAppCustCoy() {
     var appObj = {
-      AppId: this.AppCustObj.AppCustId,
+      Id: this.AppCustObj.AppCustId,
     };
     await this.http.post(URLConstant.GetAppCustCompanyByAppCustId, appObj).toPromise().then(
       (response) => {

@@ -106,7 +106,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   responseListTypeCodes: Array<any> = new Array();
   async GetListDeviation(){    
-    await this.http.post(URLConstant.GetListDeviationTypeByAppNo, {AppNo: this.appNo}).toPromise().then(
+    await this.http.post(URLConstant.GetListDeviationTypeByAppNo, {TrxNo: this.appNo}).toPromise().then(
       (response) => {
         this.responseListTypeCodes = response['ApvTypecodes'];
       });
@@ -155,7 +155,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   //#region Get API Data
   appNo: string = "";
   async GetAppNo() {
-    let obj = { AppId: this.appId };
+    let obj = { Id: this.appId };
     await this.http.post<NapAppModel>(URLConstant.GetAppById, obj).toPromise().then(
       async (response) => {
         if (response != undefined) {
@@ -216,7 +216,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   ResponseExistCreditReview;
   async GetExistingCreditReviewData() {
-    let Obj = { appCrdRvwHObj: { AppId: this.appId } };
+    let Obj = { Id: this.appId };
     await this.http.post(URLConstant.GetAppCrdRvwById, Obj).toPromise().then(
       (response) => {
         this.ResponseExistCreditReview = response["appCrdRvwHObj"];
@@ -232,7 +232,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   }
 
   async BindAppvAmt() {
-    let Obj = { AppId: this.appId };
+    let Obj = { Id: this.appId };
     await this.http.post(URLConstant.GetAppFinDataByAppId, Obj).toPromise().then(
       (response) => {
         this.FormObj.patchValue({
@@ -261,7 +261,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   isShow: boolean = false;
   async GetCrdRvwCustInfoByAppId() {
-    await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { AppId: this.appId }).toPromise().then(
+    await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.crdRvwCustInfoObj = response;
         this.isShow = true;

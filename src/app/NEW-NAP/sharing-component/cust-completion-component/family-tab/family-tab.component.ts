@@ -39,7 +39,7 @@ export class FamilyTabComponent implements OnInit {
   }
 
   loadFamilyListData() {
-    this.http.post(URLConstant.GetAppCustAndListFamilyByAppId, {AppId: this.AppId}).subscribe(
+    this.http.post(URLConstant.GetAppCustAndListFamilyByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         console.log(response)
         this.inputGridObj.resultData = {

@@ -97,7 +97,7 @@ export class ApplicationApprovalDetailComponent implements OnInit {
   crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   isShow: boolean = false;
   async GetCrdRvwCustInfoByAppId() {
-    await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { AppId: this.appId }).toPromise().then(
+    await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.crdRvwCustInfoObj = response;
         this.isShow = true;
@@ -150,8 +150,9 @@ export class ApplicationApprovalDetailComponent implements OnInit {
 
   //#region Uc Approval 
   async getApp() {
-    let appObj = new AppObj();
-    appObj.AppId = this.appId
+    // let appObj = new AppObj();
+    // appObj.AppId = this.appId
+    var appObj = { Id: this.appId };
     await this.http.post<AppObj>(URLConstant.GetAppById, appObj).toPromise().then(
       (response) => {
         this.AppObj = response;

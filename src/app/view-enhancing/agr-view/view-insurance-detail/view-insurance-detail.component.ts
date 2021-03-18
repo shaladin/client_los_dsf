@@ -41,7 +41,7 @@ export class ViewInsuranceDetailComponent implements OnInit {
   }
 
   getInsuranceData() {
-    var reqAssetObj = { AppAssetId: this.AppAssetId };
+    var reqAssetObj = { Id: this.AppAssetId };
     this.http.post(URLConstant.GetInsuranceDataByAppAssetIdForView, reqAssetObj).subscribe(
       (response) => {
         this.appInsuranceObj = response["AppInsuranceObj"];

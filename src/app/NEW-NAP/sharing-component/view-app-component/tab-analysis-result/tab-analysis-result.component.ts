@@ -34,7 +34,7 @@ export class TabAnalysisResultComponent implements OnInit {
   }
 
   async GetCreditInvestigationData() {
-    var obj = { AppId: this.appId };
+    var obj = { Id: this.appId };
     await this.http.post(URLConstant.GetAppCrdInvstgByAppId, obj).toPromise().then(
       (response) => {
         this.ResponseCreditInvestigationData = response;
@@ -44,7 +44,7 @@ export class TabAnalysisResultComponent implements OnInit {
   }
 
   async GetCreditReviewData() {
-    var obj = { AppCrdRvwHObj: { AppId: this.appId } };
+    let obj = { Id: this.appId };
     await this.http.post(URLConstant.GetAppCrdRvwById, obj).toPromise().then(
       (response) => {
         this.ResponseCreditReviewData = response["appCrdRvwHObj"];

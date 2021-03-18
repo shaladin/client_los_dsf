@@ -106,7 +106,7 @@ export class TabAppDataComponent implements OnInit {
 
   async GetReferantorData() {
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppReferantorForAppsData, obj).toPromise().then(
@@ -119,7 +119,7 @@ export class TabAppDataComponent implements OnInit {
 
   async GetAppDetailData() {
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppDetailForAppTabById, obj).toPromise().then(
@@ -153,7 +153,7 @@ export class TabAppDataComponent implements OnInit {
 
   async GetCommData() {
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppCommissionDataDetailByAppId, obj).toPromise().then(
@@ -173,7 +173,7 @@ export class TabAppDataComponent implements OnInit {
 
   async GetRsvFundData() {
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetListAppReservedFundByAppId, obj).toPromise().then(
@@ -196,7 +196,7 @@ export class TabAppDataComponent implements OnInit {
 
 
     var AppObj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
 
     this.http.post(URLConstant.GetListTCbyAppId, AppObj).toPromise().then(
@@ -216,7 +216,7 @@ export class TabAppDataComponent implements OnInit {
 
 
     var AppObj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
 
     this.http.post(URLConstant.GetListAppCollateralByAppId, AppObj).toPromise().then(
@@ -236,7 +236,7 @@ export class TabAppDataComponent implements OnInit {
 
 
     var AppObj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
 
     this.http.post(URLConstant.GetAppCollateralListForInsuranceByAppId, AppObj).toPromise().then(
@@ -252,7 +252,7 @@ export class TabAppDataComponent implements OnInit {
 
   async GetLoanObjectData(){
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetListAppLoanPurposeByAppId, obj).toPromise().then(
@@ -273,7 +273,7 @@ export class TabAppDataComponent implements OnInit {
 
   async GetCrossData(){
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetListAppCross, obj).toPromise().then(
@@ -293,7 +293,7 @@ export class TabAppDataComponent implements OnInit {
     this.InputGridLifeIns = new InputGridObj();
     this.InputGridLifeIns.pagingJson = "./assets/ucgridview/gridAppLifeInsurance.json";
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post(URLConstant.GetAppLifeInsHByAppId, obj).toPromise().then(
@@ -315,7 +315,7 @@ export class TabAppDataComponent implements OnInit {
   }
 
   async GetFinData(){
-    var reqObj = { AppId: this.AppId };
+    var reqObj = { Id: this.AppId };
     this.http.post(URLConstant.GetFinancialDataByAppIdForView, reqObj).subscribe(
       (response) => {
         this.appFinDataObj = response["AppFinDataObj"];

@@ -86,14 +86,14 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     this.appCustPersonalObj = new AppCustPersonalObj();
     this.appCustCompanyObj = new AppCustCompanyObj();
     this.dukcapilObj = new FraudDukcapilObj();
-    var appReqObj = { "AppId": this.appId }
+    var appReqObj = { "AppId": this.appId, "Id": this.appId }
     this.http.post(this.getCustDataByAppId, appReqObj).subscribe(
       response => {
         this.appCustObj = response["AppCustObj"];
         this.appCustCompanyObj = response["AppCustCompanyObj"];
         this.appCustPersonalObj = response["AppCustPersonalObj"];
         this.idNo = this.appCustObj.IdNo;
-        var fraudDukcapilReqObj = { "IdNo": this.idNo };
+        var fraudDukcapilReqObj = { "TrxNo": this.idNo };
         this.getFraudDukcapil(fraudDukcapilReqObj);
 
         // if (this.appCustObj.MrCustTypeCode == CommonConstant.CustTypePersonal) {
@@ -130,11 +130,11 @@ export class ViewFraudDetectionResultComponent implements OnInit {
       }
     );
 
-     await this.getAssetNegative(appReqObj);
+    await this.getAssetNegative(appReqObj);
   }
 
   getApp(appId : number){
-    var appReqObj = { "AppId": appId };
+    var appReqObj = { "Id": appId };
     this.http.post<AppObj>(this.getAppById, appReqObj).subscribe(
       response => {
         this.appObj = response;
@@ -203,6 +203,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
     var negativeAssetCheckForMultiAssetObj = new NegativeAssetCheckForMultiAssetObj();
     negativeAssetCheckForMultiAssetObj.RequestObj = new Array<NegativeAssetCheckObj>();
     appCollateralObj.AppId = this.appId;
+    appCollateralObj.Id = this.appId;
     var listAppCollateral = new Array<AppCollateralObj>();
     await this.http.post(URLConstant.GetListAdditionalCollateralByAppId, appCollateralObj).toPromise().then(
       response => {

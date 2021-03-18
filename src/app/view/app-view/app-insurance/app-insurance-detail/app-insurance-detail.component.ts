@@ -33,7 +33,7 @@ export class AppInsuranceDetailComponent implements OnInit {
     // this.appInsObj.AppInsObjId = this.AppInsObjId
     this.reqInsuranceDataObj = new RequestInsuranceDataObj();
     this.reqInsuranceDataObj.AppInsObjObj.AppInsObjId = this.AppInsObjId;
-    this.httpClient.post(URLConstant.GetAppInsObjViewDetail, this.reqInsuranceDataObj).subscribe(
+    this.httpClient.post(URLConstant.GetAppInsObjViewDetail, { Id: this.AppInsObjId }).subscribe(
       (response: any) => {
         this.appInsObj = response.appInsObj;
         this.appInsCvgs = response.appInsCvgs;

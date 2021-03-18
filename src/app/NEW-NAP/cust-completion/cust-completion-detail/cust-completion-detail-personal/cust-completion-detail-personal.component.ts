@@ -90,7 +90,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       animation: true
     })
 
-    this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, { Id: this.AppCustId }).subscribe(
       (response) => {
         if (response.AppCustPersonalObj.MrMaritalStatCode != null && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried) this.IsMarried = true;
         this.CustModelCode = response.AppCustObj.MrCustModelCode;
@@ -165,7 +165,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
   }
   completionCheckingObj: AppCustCompletionCheckingObj = new AppCustCompletionCheckingObj();
   Save() {
-    this.http.post(URLConstant.SaveAppCustCompletion, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post(URLConstant.SaveAppCustCompletion, { Id: this.AppCustId }).subscribe(
       (response) => {
         this.completionCheckingObj.IsCompleted = response["IsCompleted"];
         this.completionCheckingObj.InCompletedStep = response["InCompletedStep"];

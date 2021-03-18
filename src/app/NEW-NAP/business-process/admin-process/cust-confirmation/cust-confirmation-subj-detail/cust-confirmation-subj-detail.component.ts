@@ -94,7 +94,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         })
       });
 
-    await this.http.post<Array<KeyValueObj>>(URLConstant.GetListKeyValueMobilePhnByAppId, { AppId: this.AppId }).toPromise().then(
+    await this.http.post<Array<KeyValueObj>>(URLConstant.GetListKeyValueMobilePhnByAppId, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.PhnList = response;
         this.CustConfirm.patchValue({
@@ -115,13 +115,13 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.http.post<AgrmntObj>(URLConstant.GetAgrmntByAgrmntId, { Id: this.AgrmntId }).subscribe(
       async (response) => {
         this.agrmntObj = response;
-        await this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.agrmntObj.AppId }).toPromise().then(
+        await this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.agrmntObj.AppId }).toPromise().then(
           (response) => {
             this.appObj = response;
           });
 
         if (this.agrmntObj.LeadId != null) {
-          await this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { LeadId: this.agrmntObj.LeadId }).toPromise().then(
+          await this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { Id: this.agrmntObj.LeadId }).toPromise().then(
             (response) => {
               this.leadObj = response;
             });

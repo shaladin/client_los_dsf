@@ -1,4 +1,5 @@
 export class AppCollateralRegistrationObj {
+  Id: number;
   AppCollateralRegistrationId: number;
   AppCollateralId: number;
   OwnerName: string;
@@ -36,6 +37,7 @@ export class AppCollateralRegistrationObj {
 
 
   constructor() {
+    this.Id = 0;
     this.AppCollateralRegistrationId = 0;
     this.AppCollateralId = 0;
     this.OwnerName = "";

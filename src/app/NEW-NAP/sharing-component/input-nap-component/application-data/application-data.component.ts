@@ -152,7 +152,7 @@ export class ApplicationDataComponent implements OnInit {
     // this.initMailingAddress(); pindah ke dalem getAppModelInfo() karena pas dicheck biz template disini masih undefined
 
     var AppObj = {
-      AppId: this.appId
+      Id: this.appId
     }
 
     var user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -227,7 +227,7 @@ export class ApplicationDataComponent implements OnInit {
 
   GetCrossInfoData() {
     var obj = {
-      AppId: this.appId,
+      Id: this.appId,
       RowVersion: ""
     }
     this.http.post(URLConstant.GetListAppCross, obj).subscribe(
@@ -243,7 +243,7 @@ export class ApplicationDataComponent implements OnInit {
   resultResponse;
   getAppModelInfo() {
     var obj = {
-      AppId: this.appId,
+      Id: this.appId,
       RowVersion: ""
     };
     var url = URLConstant.GetAppDetailForTabAddEditAppById;
@@ -644,7 +644,7 @@ export class ApplicationDataComponent implements OnInit {
       });
     }
     if (this.BizTemplateCode == CommonConstant.CFNA) {
-      this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { AppId: this.appId }).subscribe(
+      this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.appId }).subscribe(
         (response) => {
           if (response["listResponseAppLoanPurpose"] && response["listResponseAppLoanPurpose"].length > 0) {
             var tempAppObj = this.GetAppObjValue();
@@ -780,7 +780,7 @@ export class ApplicationDataComponent implements OnInit {
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
     this.inputAddressObj.showSubsection = false;
 
-    await this.http.post(URLConstant.GetListAppCustAddrByAppId, { 'AppId': this.appId }).toPromise().then(
+    await this.http.post(URLConstant.GetListAppCustAddrByAppId, { 'Id': this.appId }).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.copyToMailing(CommonConstant.AddrTypeMailing);

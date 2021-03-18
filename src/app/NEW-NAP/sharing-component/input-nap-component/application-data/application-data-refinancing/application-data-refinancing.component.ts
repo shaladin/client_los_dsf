@@ -141,7 +141,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
 
     var user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var AppObj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
     this.http.post(URLConstant.GetAppCustByAppId, AppObj).subscribe(
       (response) => {
@@ -154,7 +154,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
         this.http.post(URLConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
           (response) => {
             this.resMouCustObj = response[CommonConstant.ReturnObj];
-
             // if(this.resMouCustObj.length > 0)
             // {
             //   this.NapAppModelForm.patchValue({ MouCustId: this.resMouCustObj[0].Key });
@@ -217,7 +216,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   }
   GetCrossInfoData() {
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     }
     this.http.post(URLConstant.GetListAppCross, obj).subscribe(
@@ -233,7 +232,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   resultResponse;
   getAppModelInfo() {
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
 

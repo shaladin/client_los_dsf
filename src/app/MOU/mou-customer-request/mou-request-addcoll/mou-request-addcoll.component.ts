@@ -202,7 +202,7 @@ export class MouRequestAddcollComponent implements OnInit {
         this.CollateralPortionTypeChange();
       })
 
-    var mouCustObj = { MouCustId: this.MouCustId }
+    var mouCustObj = { Id: this.MouCustId }
     this.http.post(URLConstant.GetMouCustCollateralByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.listCollateralData = response['ReturnObject'];
@@ -453,7 +453,7 @@ export class MouRequestAddcollComponent implements OnInit {
         AssetCategoryCode: e.AssetCategoryCode
       });
     } else {
-      var collObj = { CollateralNo: e.CollateralNo };
+      var collObj = { TrxNo: e.CollateralNo };
       this.http.post(URLConstant.GetMouCustCollateralDataExistingByCollateralNo, collObj).subscribe(
         (response) => {
 
@@ -768,7 +768,7 @@ export class MouRequestAddcollComponent implements OnInit {
       this.inputAddressObjForLegalAddr.isReadonly = true;
       this.inputAddressObjForLocAddr.isReadonly = true;
     }
-    var collObj = { MouCustCollateralId: MouCustCollId };
+    var collObj = { Id: MouCustCollId };
     this.http.post(URLConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, collObj).subscribe(
       (response) => {
 
@@ -998,7 +998,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
   delete(MouCustCollId) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      var custCollObj = { MouCustCollateralId: MouCustCollId };
+      var custCollObj = { Id: MouCustCollId };
       this.http.post(URLConstant.DeleteMouCustCollateral, custCollObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);

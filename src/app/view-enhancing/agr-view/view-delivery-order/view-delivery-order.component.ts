@@ -41,7 +41,7 @@ export class ViewDeliveryOrderComponent implements OnInit {
   }
 
   async GetDeliveryOrderData() {
-    await this.http.post<{ DeliveryOrderH: DeliveryOrderHObj, AssetData: AppAssetObj }>(URLConstant.GetDeliveryOrderDataForOneAssetByAgrmntId, this.agrmntObj).toPromise().then(
+    await this.http.post<{ DeliveryOrderH: DeliveryOrderHObj, AssetData: AppAssetObj }>(URLConstant.GetDeliveryOrderDataForOneAssetByAgrmntId, { Id: this.agrmntId }).toPromise().then(
       (response) => {
         this.DeliverOrderData = response;
         this.DeliveryDt = formatDate(this.DeliverOrderData.DeliveryOrderH.DeliveryDt, 'yyyy-MM-dd', 'en-US');

@@ -23,7 +23,7 @@ export class CrdRvwLegalDocComponent implements OnInit {
 
   ListLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
   async LoadListLegalDocData() {
-    await this.http.post<{ ListCompanyLegalDoc: Array<AppCustCompanyLegalDocObj> }>(URLConstant.GetAppCustCompanyLegalDocsByAppCustCompanyId, { AppCustCompanyId: this.AppCustCompanyId }).toPromise().then(
+    await this.http.post<{ ListCompanyLegalDoc: Array<AppCustCompanyLegalDocObj> }>(URLConstant.GetAppCustCompanyLegalDocsByAppCustCompanyId, { Id: this.AppCustCompanyId }).toPromise().then(
       (response) => {
         console.log(response);
         this.ListLegalDoc = response.ListCompanyLegalDoc;

@@ -208,14 +208,14 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       TotalInscoFeeAmt: 0
     });
 
-    var appObj = { AppId: this.appId }
+    var appObj = { Id: this.appId }
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response) => {
         this.BizTemplateCode = response["BizTemplateCode"];
         this.textTitle = "Collateral";
       });
 
-    this.appAssetObj.AppId = this.appId;
+    this.appAssetObj.Id = this.appId;
     this.http.post(URLConstant.GetAppAssetListForInsuranceByAppId, this.appAssetObj).subscribe(
       (response) => {
         this.listAppAssetObj = response[CommonConstant.ReturnObj];
@@ -253,12 +253,11 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
         if (this.listAppCollateralObj[0].TotalCustPremiAmt != null)
           this.TotalPremiumToCust = this.listAppCollateralObj[0].TotalCustPremiAmt;
-
       });
   }
 
   GetExistingAppCollateralWithInsurance() {
-    this.http.post(URLConstant.GetListExistingAppCollateralWithInsurance, { AppId: this.appId }).subscribe(
+    this.http.post(URLConstant.GetListExistingAppCollateralWithInsurance, { Id: this.appId }).subscribe(
       (response) => {
         this.existingListAppColl = response["AppCollateralObjs"];
         console.log(response);
@@ -324,6 +323,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   SubmitForm() {
+    this.appAssetObj.Id = this.appId;
     this.http.post(URLConstant.GetAppCollateralListForInsuranceByAppId, this.appAssetObj).subscribe(
       (response) => {
         var isValid = true;

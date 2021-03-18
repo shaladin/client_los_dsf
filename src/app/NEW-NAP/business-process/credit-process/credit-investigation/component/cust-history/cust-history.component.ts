@@ -28,11 +28,11 @@ export class CustHistoryComponent implements OnInit {
   AppPrcs: any;
 
   ngOnInit() {
-    this.http.post(URLConstant.GetCustDataByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetCustDataByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.CustNo = response["AppCustObj"]["CustNo"];
         if(this.CustNo != null && this.CustNo != undefined && this.CustNo != ""){
-          this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
+          this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
             (response: AppObj) => {
               this.http.post(URLConstant.GetAppByCustNoAndIsAppInitDone, { CustNo: this.CustNo,IsAppInitDone: response.IsAppInitDone }).subscribe(
                 (response) => {

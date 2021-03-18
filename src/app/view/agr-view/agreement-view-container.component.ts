@@ -83,7 +83,7 @@ export class AgreementViewContainerComponent implements OnInit {
       (response) => {
         this.agrNo = response['AgrmntNo'];
         this.appId = response['AppId'];
-        let appObj = { AppId: this.appId };
+        var appObj = { Id: this.appId };
         let getApp = this.http.post(URLConstant.GetAppById, appObj);
         let getAppCust = this.http.post(URLConstant.GetAppCustByAppId, appObj);
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
@@ -116,7 +116,7 @@ export class AgreementViewContainerComponent implements OnInit {
   }
 
   async GetAppAndAppCustDetailByAgrmntId() {
-    var obj = { agrmntId: this.AgrmntId };
+    var obj = { Id: this.AgrmntId };
     await this.http.post(URLConstant.GetAppAndAppCustDetailByAgrmntId, obj).toPromise().then(
       (response) => {
         this.ResponseAppDetailData = response;

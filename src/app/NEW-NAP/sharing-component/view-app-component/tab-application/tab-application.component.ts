@@ -45,8 +45,7 @@ export class TabApplicationComponent implements OnInit {
 
   ListCrossAppData
   async GetCrossAppData() {
-    var obj = { AppId: this.appId };
-
+    var obj = { Id: this.appId };
     await this.http.post(URLConstant.GetListAppCross, obj).toPromise().then(
       (response) => {
         this.ListCrossAppData = response[CommonConstant.ReturnObj];
@@ -59,7 +58,7 @@ export class TabApplicationComponent implements OnInit {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridLoanObj.json";
 
-    this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { AppId: this.appId }).subscribe(
+    this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.appId }).subscribe(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""

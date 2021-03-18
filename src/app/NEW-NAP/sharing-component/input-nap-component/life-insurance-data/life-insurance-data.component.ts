@@ -66,14 +66,14 @@ export class LifeInsuranceDataComponent implements OnInit {
     await this.initBranchName();
     this.LifeInsObj.AppId = this.AppId;
 
-    this.http.post<AppCustObj>(URLConstant.GetAppCustByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post<AppCustObj>(URLConstant.GetAppCustByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         if (response.MrCustTypeCode == CommonConstant.CustTypeCompany) {
           this.LifeInsForm.controls["IsChecked"].disable();
         }
       });
 
-    this.http.post<LifeInsObj>(URLConstant.GetAppLifeInsHByAppId, this.LifeInsObj).subscribe(
+    this.http.post<LifeInsObj>(URLConstant.GetAppLifeInsHByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.result = response;
         this.AppLifeInsHId = this.result.AppLifeInsHId;
@@ -122,7 +122,7 @@ export class LifeInsuranceDataComponent implements OnInit {
     RowVersion: ""
   }
   async initBranchName() {
-    await this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.LifeInscoBranchNameObj.OfficeCode = response["OriOfficeCode"];
       }
@@ -328,7 +328,7 @@ export class LifeInsuranceDataComponent implements OnInit {
         });
     } else {
       this.LifeInsObj.AppLifeInsHId = this.AppLifeInsHId;
-      this.http.post(URLConstant.DeleteAppLifeIns, this.LifeInsObj).subscribe(
+      this.http.post(URLConstant.DeleteAppLifeIns, { Id: this.AppLifeInsHId }).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
           // this.wizard.goToNextStep()

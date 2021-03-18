@@ -32,7 +32,7 @@ export class MgmntShrholderComponent implements OnInit {
   }
 
   loadShareholderListData() {
-    this.http.post(URLConstant.GetAppCustAndListShareholderByAppId, {AppId: this.AppId}).subscribe(
+    this.http.post(URLConstant.GetAppCustAndListShareholderByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""

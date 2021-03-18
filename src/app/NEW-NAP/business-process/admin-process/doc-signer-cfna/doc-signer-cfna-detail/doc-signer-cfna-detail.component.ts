@@ -71,16 +71,15 @@ export class DocSignerCfnaDetailComponent implements OnInit {
   }
 
   async getAllData() {
-    var obj = {
-      AppId: this.AppId,
-      AgrmntId: this.AgrmntId
-    }
-
     var agrmntObj = {
       Id: this.AgrmntId
     }
 
-    await this.http.post(URLConstant.GetAppCustPersonalDataAndSpouseByAppId, obj).toPromise().then(
+    var appObj = {
+      Id: this.AppId
+    }
+
+    await this.http.post(URLConstant.GetAppCustPersonalDataAndSpouseByAppId, appObj).toPromise().then(
       (response) => {
         this.ResponseAppCustDataObj = response;
         this.MrCustTypeCode = this.ResponseAppCustDataObj.MrCustTypeCode;
@@ -88,7 +87,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         this.ContactPersonName = this.ResponseAppCustDataObj.ContactPersonName;
       });
 
-    await this.http.post(URLConstant.GetAppAssetDataByAppId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppAssetDataByAppId, appObj).toPromise().then(
       (response) => {
         this.ResponseAppAssetObj = response;
         this.SupplCode = this.ResponseAppAssetObj.SupplCode;
@@ -106,7 +105,8 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         this.ResponseAgrmntSignerObj = response;
         if (this.ResponseAgrmntSignerObj.AgrmntSignerId == 0) {
           this.mode = "add";
-        } else {
+        }
+        else {
           this.mode = "edit";
 
           // this.inputLookupOfficeEmp1Obj.isReady = true;
@@ -146,7 +146,7 @@ export class DocSignerCfnaDetailComponent implements OnInit {
   }
 
   async setLookupObj() {
-    await this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { AppId: this.AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.inputLookupBranchEmpObj.urlJson = "./assets/uclookup/lookupBranchEmp.json";
         this.inputLookupBranchEmpObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;

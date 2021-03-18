@@ -109,7 +109,7 @@ export class CustConfirmationDetailComponent implements OnInit {
 
   async AddNewVerfResult() {
     var AppObj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
     await this.http.post<AppObj>(URLConstant.GetAppById, AppObj).toPromise().then(
       async (response) => {

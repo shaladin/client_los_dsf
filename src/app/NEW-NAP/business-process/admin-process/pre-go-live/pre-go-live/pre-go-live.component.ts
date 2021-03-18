@@ -150,7 +150,7 @@ export class PreGoLiveComponent implements OnInit {
     this.dmsAppObj.ViewCode = CommonConstant.DmsViewCodeApp;
 
     var agrObj = { Id: this.AgrmntId };
-    var appObj = { AppId: this.AppId };
+    var appObj = { Id: this.AppId };
 
     let getAgr = await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)

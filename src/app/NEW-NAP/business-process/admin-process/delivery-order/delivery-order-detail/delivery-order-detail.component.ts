@@ -94,7 +94,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.MaxDate = this.UserAccess.BusinessDt;
 
     var appAssetobj = {
-      AgrmntId: this.AgrmntId
+      Id: this.AgrmntId
     }
 
     this.http.post(URLConstant.GetPurchaseOrderHByAgrmntId, appAssetobj).subscribe(
@@ -205,7 +205,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.dmsAppObj.ViewCode = CommonConstant.DmsViewCodeApp;
 
     var agrObj = { Id: this.AgrmntId };
-    var appObj = { AppId: this.AppId };
+    var appObj = { Id: this.AppId };
 
     let getAgr = await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)

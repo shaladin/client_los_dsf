@@ -325,11 +325,10 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       }
       this.isAssetAttrReady = true;
     }
-    
   }
+  
   addGroupAppCollateralAttr(AppCollateralAttrObjs, i) {
-    
-    if(AppCollateralAttrObjs.AttrInputType == 'L'){
+    if(AppCollateralAttrObjs.AttrInputType == 'L') {
       return this.fb.group({
         No: [i],
         AssetAttrCode: [AppCollateralAttrObjs.CollateralAttrCode],
@@ -338,22 +337,22 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         AttrValue: [AppCollateralAttrObjs.AttrValue]
       })
     }
-    else{
-    return this.fb.group({
-      No: [i],
-      AssetAttrCode: [AppCollateralAttrObjs.CollateralAttrCode],
-      AssetAttrName: [AppCollateralAttrObjs.CollateralAttrName],
-      AttrInputType: [AppCollateralAttrObjs.AttrInputType],
-      AttrValue: [AppCollateralAttrObjs.AttrValue, [Validators.maxLength(AppCollateralAttrObjs.AttrLength)]]
-    })
-  }
+    else {
+      return this.fb.group({
+        No: [i],
+        AssetAttrCode: [AppCollateralAttrObjs.CollateralAttrCode],
+        AssetAttrName: [AppCollateralAttrObjs.CollateralAttrName],
+        AttrInputType: [AppCollateralAttrObjs.AttrInputType],
+        AttrValue: [AppCollateralAttrObjs.AttrValue, [Validators.maxLength(AppCollateralAttrObjs.AttrLength)]]
+      })
+    }
   }
 
   getAppData() {
-    this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response: AppObj) => {
         this.AppData = response;
-        this.http.post(URLConstant.GetAppCustByAppId, { AppId: this.AppId }).toPromise().then(
+        this.http.post(URLConstant.GetAppCustByAppId, { Id: this.AppId }).toPromise().then(
           (response: AppCustObj) => {
             this.AppCustData = response;
             this.criteriaList = new Array();
@@ -444,7 +443,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   }
 
   setAppCollateralDoc(AppCollateralId: number = 0) {
-    this.http.post(URLConstant.GetListAppCollateralDocsByAppCollateralId, { AppCollateralId: AppCollateralId }).subscribe(
+    this.http.post(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: AppCollateralId }).subscribe(
       (response) => {
         var AppCollateralDocs = new Array();
         AppCollateralDocs = response["AppCollateralDocs"];
@@ -945,7 +944,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
 
   GetLegalAddr() {
     this.AppCustAddrObj = new AppCustAddrObj();
-    this.http.post(URLConstant.GetCustDataByAppId, { "AppId": this.AppId }).subscribe(
+    this.http.post(URLConstant.GetCustDataByAppId, { "Id": this.AppId }).subscribe(
       response => {
         this.AppCustAddrObj = response['AppCustAddrLegalObj'];
       }
@@ -960,7 +959,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.AppCustObj = new AppCustObj();
       this.AppCustCompanyObj = new AppCustCompanyObj();
 
-      var appObj = { "AppId": this.AppId };
+      var appObj = { "Id": this.AppId };
       this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
         response => {
           this.AppCustObj = response['AppCustObj'];
@@ -1000,7 +999,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.AppCustCompanyObj = new AppCustCompanyObj();
       this.AppCustAddrObj = new AppCustAddrObj();
 
-      var appObj = { "AppId": this.AppId };
+      var appObj = { "Id": this.AppId };
       this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
         response => {
           this.AppCustObj = response['AppCustObj'];

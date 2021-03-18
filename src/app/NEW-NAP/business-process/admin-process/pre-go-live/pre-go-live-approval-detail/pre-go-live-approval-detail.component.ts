@@ -110,7 +110,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         this.IsApvReady = true;
       });
 
-    this.http.post(URLConstant.GetListTCbyAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetListTCbyAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.TCList = response["AppTcs"];
       });
@@ -159,7 +159,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
 
         var Obj4 = {
-          AppId: this.result.AppId,
+          Id: this.result.AppId,
           RowVersion: ""
         }
         this.http.post(URLConstant.GetAppById, Obj4).subscribe(
@@ -168,7 +168,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
             this.AppNo = this.result4.AppNo;
 
             if (this.result4.LeadId != null || this.result4.LeadId != undefined) {
-              this.http.post(URLConstant.GetLeadByLeadId, { LeadId: this.result4.LeadId }).subscribe(
+              this.http.post(URLConstant.GetLeadByLeadId, { Id: this.result4.LeadId }).subscribe(
                 (response) => {
                   this.LeadNo = response["LeadNo"];
                   this.LeadId = response["LeadId"];
@@ -190,7 +190,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
 
         var Obj5 = {
-          AgrmntId: this.result.AgrmntId,
+          Id: this.result.AgrmntId,
           RowVersion: ""
         }
         this.http.post(URLConstant.GetDeliveryOrderHByAgrmntId, Obj5).subscribe(

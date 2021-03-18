@@ -8,22 +8,23 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   templateUrl: "./view-asset-data.component.html"
 })
 export class ViewAssetDataComponent implements OnInit {
-
   getAppUrl: any;
   getAllAssetDataUrl: any;
   @Input() appId: number = 0;
   appAssetId: number = 0;
   appObj = {
-    AppId: 0,
-    AppAssetId: 0
+    Id: 0
+  };
+  appAssetObj = {
+    Id: 0
   };
 
   AppObj: any;
   AppAssetObj: any;
   totalRsvFund: number = 0;
   totalHalfResponseAppAssetAttrObjs: number = 0;
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
 
+  constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
      if (params['AppId'] != null) {
        this.appId = params['AppId'];
@@ -45,27 +46,26 @@ export class ViewAssetDataComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    if (this.appAssetId != 0)
-    {
+    if (this.appAssetId != 0) {
       this.initSingleAssetUrl();
-      this.appObj.AppAssetId = this.appAssetId;
+      this.appAssetObj.Id = this.appAssetId;
+      await this.GetAllAssetData(this.appAssetObj);
     }
-    else
+    else {
       this.initUrl();
-
-    this.appObj.AppId = this.appId;
-    await this.GetAllAssetData();
-
+      this.appObj.Id = this.appId;
+      await this.GetAllAssetData(this.appObj);
+    }
   }
 
-  async GetAllAssetData() {
-    await this.http.post(this.getAllAssetDataUrl, this.appObj).toPromise().then(
+  async GetAllAssetData(obj: any) {
+    await this.http.post(this.getAllAssetDataUrl, obj).toPromise().then(
       (response) => {
         this.AppAssetObj = response;
-        if(this.AppAssetObj.ResponseAppAssetAttrObjs != null)
+        if(this.AppAssetObj.ResponseAppAssetAttrObjs != null) {
           this.totalHalfResponseAppAssetAttrObjs = Math.ceil(this.AppAssetObj.ResponseAppAssetAttrObjs.length/2);
-      });
-
+        }
+      }
+    );
   }
-
 }

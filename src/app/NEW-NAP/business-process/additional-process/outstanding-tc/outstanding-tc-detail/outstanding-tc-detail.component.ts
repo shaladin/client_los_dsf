@@ -60,7 +60,7 @@ export class OutstandingTcDetailComponent implements OnInit {
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    var appObj = { AppId: this.AppId };
+    var appObj = { Id: this.AppId };
 
     let getCustNo = this.http.post(URLConstant.GetAppCustByAppId, appObj);
     let getAppNo = this.http.post(URLConstant.GetAppById, appObj);
@@ -92,7 +92,6 @@ export class OutstandingTcDetailComponent implements OnInit {
       }
     );
   }
-
 
   SaveForm() {
     this.outstandingTcObj = new OutstandingTcObj();

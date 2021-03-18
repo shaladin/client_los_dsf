@@ -85,7 +85,7 @@ export class CustCompletionOplDetailCompanyComponent implements OnInit {
       animation: true
     })
 
-    this.http.post<ResponseAppCustCompletionCompanyDataObj>(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
+    this.http.post<ResponseAppCustCompletionCompanyDataObj>(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, { Id: this.AppCustId }).subscribe(
       (response) => {
         this.AppCustCompanyId = response.AppCustCompanyObj.AppCustCompanyId;
         this.IsCompletion = response.AppCustObj.IsCompletion;
@@ -153,7 +153,7 @@ export class CustCompletionOplDetailCompanyComponent implements OnInit {
   }
 
   Save() {
-    this.http.post(URLConstant.SaveAppCustCompletion, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post(URLConstant.SaveAppCustCompletion, { Id: this.AppCustId }).subscribe(
       (response) => {
         this.completionCheckingObj.IsCompleted = response["IsCompleted"];
         this.completionCheckingObj.InCompletedStep = response["InCompletedStep"];

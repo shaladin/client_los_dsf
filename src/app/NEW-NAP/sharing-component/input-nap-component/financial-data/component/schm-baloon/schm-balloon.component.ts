@@ -17,11 +17,9 @@ import { String } from 'typescript-string-operations';
   templateUrl: './schm-balloon.component.html',
 })
 export class SchmBalloonComponent implements OnInit {
-
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
   @Output() RefreshSubsidy = new EventEmitter();
-
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -32,18 +30,16 @@ export class SchmBalloonComponent implements OnInit {
   result: AppObj = new AppObj();
   PriceLabel: string = "Asset Price";
 
-  constructor(
-    private fb: FormBuilder,
+  constructor(private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService,
-  ) { }
+    private toastr: NGXToastrService) { }
 
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
 
-    this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId}).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.result = response;
         if(this.result.BizTemplateCode == CommonConstant.CFRFN4W || this.result.BizTemplateCode == CommonConstant.CFNA){
@@ -319,5 +315,4 @@ export class SchmBalloonComponent implements OnInit {
     }
     return true;
   }
-
 }

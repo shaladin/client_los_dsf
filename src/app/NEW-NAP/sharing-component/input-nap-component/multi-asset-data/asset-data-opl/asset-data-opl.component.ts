@@ -59,7 +59,7 @@ export class AssetDataOplComponent implements OnInit {
   ListAttrAnswer = [];
 
   appObj = {
-    AppId: 0,
+    Id: 0,
   };
 
   vendorAccSuppObj = {
@@ -761,7 +761,7 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   async GetAppData() {
-    this.appObj.AppId = this.AppId;
+    this.appObj.Id = this.AppId;
     await this.http.post(URLConstant.GetAppById, this.appObj).toPromise().then(
       (response) => {
         this.AppObj = response;
@@ -807,7 +807,7 @@ export class AssetDataOplComponent implements OnInit {
   
   async GetAppCust() {
     var appObj = {
-      AppId: this.AppId,
+      Id: this.AppId,
     };
     await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
       (response) => {
@@ -820,7 +820,7 @@ export class AssetDataOplComponent implements OnInit {
   async GetAppCustPhone() {
     if (typeof (this.AppCustObj) != 'undefined') {
       var appObj = {
-        AppId: this.AppId,
+        Id: this.AppId,
       };
       await this.http.post(URLConstant.GetCustDataByAppId, appObj).toPromise().then(
         (response) => {
@@ -927,7 +927,7 @@ export class AssetDataOplComponent implements OnInit {
 
   async GetAppCustCoy() {
     var appObj = {
-      AppId: this.AppCustObj.AppCustId,
+      Id: this.AppCustObj.AppCustId,
     };
     await this.http.post(URLConstant.GetAppCustCompanyByAppCustId, appObj).toPromise().then(
       (response) => {
@@ -937,7 +937,7 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   async GetListAddr() {
-    this.appObj.AppId = this.AppId;
+    this.appObj.Id = this.AppId;
     await this.http.post(URLConstant.GetListAppCustAddrByAppId, this.appObj).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
@@ -948,7 +948,8 @@ export class AssetDataOplComponent implements OnInit {
   async getListAllAssetData() {
     this.appData = new AppDataObj();
     this.appData.AppId = this.AppId;
-    await this.http.post(URLConstant.GetListAllAssetDataByAppId, this.appData).toPromise().then(
+    var appData = { Id: this.AppId };
+    await this.http.post(URLConstant.GetListAllAssetDataByAppId, appData).toPromise().then(
       (response) => {
         this.listAsset = [];
         this.appAssetObj = response[CommonConstant.ReturnObj];

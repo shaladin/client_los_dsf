@@ -93,7 +93,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   isView: boolean = false;
   GetIncomeInfoObj() {
     var obj = {
-      AppId: this.ReturnHandlingHObj.AppId
+      Id: this.ReturnHandlingHObj.AppId
     };
     this.http.post<AppFinDataObj>(URLConstant.GetAppFinDataWithRuleByAppId, obj).subscribe(
       (response) => {
@@ -128,8 +128,9 @@ export class CommissionReservedFundDetailComponent implements OnInit {
 
   NapObj: AppObj = new AppObj();
   GetAndUpdateAppStep() {
-    this.NapObj.AppId = this.ReturnHandlingHObj.AppId;
-    this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
+    // this.NapObj.AppId = this.ReturnHandlingHObj.AppId;
+    var appObj = { Id: this.ReturnHandlingHObj.AppId };
+    this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;

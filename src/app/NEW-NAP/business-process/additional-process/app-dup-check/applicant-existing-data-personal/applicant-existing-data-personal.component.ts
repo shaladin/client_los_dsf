@@ -69,7 +69,7 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
     this.listSelectedIdShareholder = new Array();
 
     //Get App Cust Data
-    var appObj = { "AppId": this.AppId };
+    var appObj = { "Id": this.AppId };
     this.http.post(this.GetCustDataByAppId, appObj).subscribe(
       response => {
         this.AppCustObj = response['AppCustObj'];

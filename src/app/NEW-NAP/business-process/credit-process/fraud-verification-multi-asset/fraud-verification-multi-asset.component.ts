@@ -112,7 +112,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     this.appCustPersonalObj = new AppCustPersonalObj();
     this.appCustCompanyObj = new AppCustCompanyObj();
     this.dukcapilObj = new FraudDukcapilObj();
-    var appReqObj = { "AppId": this.AppId }
+    var appReqObj = { "AppId": this.AppId, "Id": this.AppId }
     this.http.post(this.getCustDataByAppId, appReqObj).subscribe(
       response => {
         this.appCustObj = response["AppCustObj"];
@@ -169,7 +169,7 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   }
 
   getFraudDukcapil() {
-    var fraudDukcapilReqObj = { "IdNo": this.idNo };
+    var fraudDukcapilReqObj = { "TrxNo": this.idNo };
     this.http.post(this.getFraudDukcapilByIdNo, fraudDukcapilReqObj).subscribe(
       response => {
         this.dukcapilObj = response[CommonConstant.ReturnObj];
@@ -193,7 +193,8 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     this.negativeAssetCheckForMultiAssetObj = new NegativeAssetCheckForMultiAssetObj();
     this.negativeAssetCheckForMultiAssetObj.RequestObj = new Array<NegativeAssetCheckObj>();
     this.appAssetObj.AppId = this.AppId;
-    this.http.post(this.getAppAssetListByAppIdUrl, this.appAssetObj).subscribe(
+    var appAssetObj = { Id: this.AppId };
+    this.http.post(this.getAppAssetListByAppIdUrl, appAssetObj).subscribe(
       response => {
         this.listAssetData = response[CommonConstant.ReturnObj];
 

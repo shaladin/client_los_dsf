@@ -93,7 +93,8 @@ export class NapDetailFormComponent implements OnInit {
       this.stepper.to(this.AppStepIndex);
     }
     else {
-      this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
+      var appObj = { Id: this.appId };
+      this.http.post(URLConstant.GetAppById, appObj).subscribe(
         (response: AppObj) => {
           if (response) {
             if (response["MrCustTypeCode"] != null)
@@ -121,7 +122,7 @@ export class NapDetailFormComponent implements OnInit {
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    var appObj = { AppId: this.appId };
+    var appObj = { Id: this.appId };
     let getApp = await this.http.post(URLConstant.GetAppById, appObj);
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
     forkJoin([getApp, getAppCust]).subscribe(
@@ -174,7 +175,7 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   CheckMultiAsset() {
-    var appObj = { AppId: this.appId }
+    var appObj = { Id: this.appId }
     this.http.post(URLConstant.GetAppAssetListByAppId, appObj).subscribe(
       (response) => {
         this.ListAsset = response['ReturnObject'];

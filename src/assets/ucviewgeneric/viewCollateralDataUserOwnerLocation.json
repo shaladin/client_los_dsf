@@ -95,27 +95,27 @@
             "type": "text",
             "label": "Address",
             "property": "Addr"
-          },{},
+          },
           {
             "type": "text",
             "label": "RT / RW",
             "property": "RtRw"
-          },{},
+          },
           {
             "type": "text",
             "label": "Kelurahan",
             "property": "Kelurahan"
-          },{},
+          },
           {
             "type": "text",
             "label": "Kecamatan",
             "property": "Kecamatan"
-          },{},
+          },
           {
             "type": "text",
             "label": "City",
             "property": "City"
-          },{},
+          },
           {
             "type": "text",
             "label": "Zip Code",

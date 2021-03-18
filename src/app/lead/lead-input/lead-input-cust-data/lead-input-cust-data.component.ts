@@ -249,7 +249,8 @@ export class LeadInputCustDataComponent implements OnInit {
         
         this.leadObj = new LeadObj();
         this.leadObj.LeadId = this.LeadId;
-        this.http.post(this.getLeadByLeadId, this.leadObj).subscribe(
+        var leadObj = { Id: this.LeadId };
+        this.http.post(this.getLeadByLeadId, leadObj).subscribe(
           (response) => {
             this.returnLeadObj = response;
             this.leadNo = response['LeadNo'];
@@ -684,7 +685,7 @@ export class LeadInputCustDataComponent implements OnInit {
     this.dmsObj.User = "Admin";
     this.dmsObj.Role = "SUPUSR";
     this.dmsObj.ViewCode = "ConfinsLead";
-    // var appObj = { AppId: this.appId };
+    // var appObj = { Id: this.appId };
     // await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
     //   (response)=>{
     //     this.custNo = response['CustNo'];

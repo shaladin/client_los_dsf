@@ -71,7 +71,8 @@ export class AppAddDetailComponent implements OnInit {
     this.AppStepIndex = 0;
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-    this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
+    var appObj = { Id: this.appId };
+    this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;
@@ -112,7 +113,7 @@ export class AppAddDetailComponent implements OnInit {
   }
 
   CheckMultiAsset() {
-    var appObj = { AppId: this.appId }
+    var appObj = { Id: this.appId }
     this.http.post(URLConstant.GetAppAssetListByAppId, appObj).subscribe(
       (response) => {
         this.ListAsset = response['ReturnObject'];

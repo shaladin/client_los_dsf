@@ -242,7 +242,8 @@ export class LeadInputLeadDataComponent implements OnInit {
 
         this.leadObj = new LeadObj();
         this.leadObj.LeadId = this.LeadId;
-        this.http.post(this.getLeadByLeadId, this.leadObj).subscribe(
+        var leadObj = { Id: this.LeadId };
+        this.http.post(this.getLeadByLeadId, leadObj).subscribe(
           (response) => {
             this.returnLeadObj = response;
             this.leadNo = response['LeadNo'];
@@ -323,7 +324,8 @@ export class LeadInputLeadDataComponent implements OnInit {
     if (this.CopyFrom != null) {
       this.reqLeadAssetObj = new LeadAssetObj();
       this.reqLeadAssetObj.LeadId = this.CopyFrom;
-      this.http.post(this.getLeadAssetByLeadId, this.reqLeadAssetObj).subscribe(
+      var reqLeadAssetObj = { Id: this.CopyFrom };
+      this.http.post(this.getLeadAssetByLeadId, reqLeadAssetObj).subscribe(
         (response) => {
           this.resLeadAssetObj = response;
           if (this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
@@ -412,7 +414,8 @@ export class LeadInputLeadDataComponent implements OnInit {
 
       this.reqLeadAppObj = new LeadAppObj();
       this.reqLeadAppObj.LeadId = this.CopyFrom;
-      this.http.post(this.getLeadAppByLeadId, this.reqLeadAppObj).subscribe(
+      var reqLeadAppObj = { Id: this.CopyFrom };
+      this.http.post(this.getLeadAppByLeadId, reqLeadAppObj).subscribe(
         (response) => {
           this.resLeadAppObj = response;
           if (this.resLeadAppObj.LeadAppId != 0) {
@@ -429,7 +432,8 @@ export class LeadInputLeadDataComponent implements OnInit {
     //if (this.typePage == "edit" || this.typePage == "update") {
     this.reqLeadAssetObj = new LeadAssetObj();
     this.reqLeadAssetObj.LeadId = this.LeadId;
-    this.http.post(this.getLeadAssetByLeadId, this.reqLeadAssetObj).subscribe(
+    var reqLeadAssetObj = { Id: this.LeadId };
+    this.http.post(this.getLeadAssetByLeadId, reqLeadAssetObj).subscribe(
       (response) => {
         this.resLeadAssetObj = response;
         if (this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
@@ -518,7 +522,8 @@ export class LeadInputLeadDataComponent implements OnInit {
             });
           this.reqLeadAppObj = new LeadAppObj();
           this.reqLeadAppObj.LeadId = this.LeadId;
-          this.http.post(this.getLeadAppByLeadId, this.reqLeadAppObj).subscribe(
+          var reqLeadAppObj = { Id: this.LeadId };
+          this.http.post(this.getLeadAppByLeadId, reqLeadAppObj).subscribe(
             (response) => {
               this.resLeadAppObj = response;
               this.LeadDataForm.patchValue({
@@ -533,7 +538,8 @@ export class LeadInputLeadDataComponent implements OnInit {
         else
           this.reqLeadAppObj = new LeadAppObj();
         this.reqLeadAppObj.LeadId = this.LeadId;
-        this.http.post(this.getLeadAppByLeadId, this.reqLeadAppObj).subscribe(
+        var reqLeadAppObj = { Id: this.LeadId };
+        this.http.post(this.getLeadAppByLeadId, reqLeadAppObj).subscribe(
           (response) => {
             this.resLeadAppObj = response;
             this.LeadDataForm.patchValue({

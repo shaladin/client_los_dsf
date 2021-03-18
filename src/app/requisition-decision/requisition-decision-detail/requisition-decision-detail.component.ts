@@ -102,7 +102,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
 
   async SetListOfAsset() {
     var requestAppId = {
-      AppId: this.AppId
+      Id: this.AppId
     };
 
     await this.http.post(URLConstant.GetListOfAsset, requestAppId).toPromise().then(

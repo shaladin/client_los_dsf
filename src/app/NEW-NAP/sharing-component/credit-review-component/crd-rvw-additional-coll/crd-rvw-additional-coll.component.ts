@@ -22,7 +22,7 @@ export class CrdRvwAdditionalCollComponent implements OnInit {
 
   ListCrdRvwCollateralObj: Array<CrdRvwCollateralObj> = new Array<CrdRvwCollateralObj>();
   async GetCrdRvwCollateralByCrdRvwCustInfoId() {
-    await this.http.post<{ ListCrdRvwCollateralObj: Array<CrdRvwCollateralObj> }>(URLConstant.GetCrdRvwCollateralByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.CrdRvwCustInfoId }).toPromise().then(
+    await this.http.post<{ ListCrdRvwCollateralObj: Array<CrdRvwCollateralObj> }>(URLConstant.GetCrdRvwCollateralByCrdRvwCustInfoId, { Id: this.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
         this.ListCrdRvwCollateralObj = response.ListCrdRvwCollateralObj;
       }

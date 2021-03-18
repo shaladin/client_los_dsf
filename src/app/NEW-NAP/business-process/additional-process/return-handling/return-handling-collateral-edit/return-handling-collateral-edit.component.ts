@@ -41,10 +41,12 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
 
   appObj = {
     AppId: 0,
+    Id: 0
   };
 
   rtnHandlingDObj = {
     ReturnHandlingDId: 0,
+    Id:0
   };
 
   appCollObj = {
@@ -82,6 +84,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     this.ClaimTask();
     this.initUrl();
     this.appObj.AppId = this.appId;
+    this.appObj.Id = this.appId;
     await this.GetAppData();
     await this.GetAppCollateralData();
     if (this.isReturnHandling == true) {
@@ -131,7 +134,8 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   }
 
   async GetAppData() {
-    await this.http.post(this.getAppUrl, this.appObj).toPromise().then(
+    var appObj1 = { Id: this.appId };
+    await this.http.post(this.getAppUrl, appObj1).toPromise().then(
       (response) => {
 
         this.AppObj = response;
@@ -163,6 +167,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
 
   async GetReturnHandlingD() {
     this.rtnHandlingDObj.ReturnHandlingDId = this.returnHandlingHId;
+    this.rtnHandlingDObj.Id = this.returnHandlingHId;
     await this.http.post(this.rtnHandlingDUrl, this.rtnHandlingDObj).toPromise().then(
       (response) => {
         this.returnHandlingDObj = response;
