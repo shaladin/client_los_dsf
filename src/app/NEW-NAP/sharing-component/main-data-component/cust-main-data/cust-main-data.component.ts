@@ -785,7 +785,7 @@ export class CustMainDataComponent implements OnInit {
           }
           else {
             response["ErrorMessages"].forEach((message: string) => {
-              this.toastr.errorMessage(message["Message"]);
+              this.toastr.warningMessage(message["Message"]);
             });
           }
         }
@@ -801,7 +801,7 @@ export class CustMainDataComponent implements OnInit {
           }
           else {
             response["ErrorMessages"].forEach((message: string) => {
-              this.toastr.errorMessage(message["Message"]);
+              this.toastr.warningMessage(message["Message"]);
             });
           }
         }

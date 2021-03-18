@@ -251,7 +251,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
   SaveForm() {
     var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     // if (Date.parse(this.DeliveryOrderForm.value.TCList[0].PromisedDt) < this.businessDt.getTime()) {
-    //   this.toastr.errorMessage("Promised Date Must Bigger Than Business Date")
+    //   this.toastr.warningMessage("Promised Date Must Bigger Than Business Date")
     //   return;
     // }
     var appAsset = {

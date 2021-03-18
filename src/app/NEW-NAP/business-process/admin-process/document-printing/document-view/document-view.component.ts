@@ -221,15 +221,15 @@ export class DocumentViewComponent implements OnInit {
               this.toastr.successMessage(response['message']);
     
             } else {
-              this.toastr.errorMessage(response['message']);
+              this.toastr.warningMessage(response['message']);
             }
           });
       }
       else{
-        throw new Error(ExceptionConstant.NO_SIGNER_AVAILABLE);
+        this.toastr.warningMessage(ExceptionConstant.NO_SIGNER_AVAILABLE);
       }
     } catch (error) {
-      this.toastr.errorMessage(error);
+      this.toastr.warningMessage(error);
     }
   }
 

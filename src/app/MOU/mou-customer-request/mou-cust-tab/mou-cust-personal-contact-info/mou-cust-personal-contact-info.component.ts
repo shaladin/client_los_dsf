@@ -115,7 +115,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
   SaveForm() {
     var selectedRelationship = this.CustRelationshipObj.find(x => x.Key == this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value);
     if (selectedRelationship == undefined) {
-      this.toastr.errorMessage(ExceptionConstant.CHOOSE_CUST_RELATIONSHIP);
+      this.toastr.warningMessage(ExceptionConstant.CHOOSE_CUST_RELATIONSHIP);
       return;
     }
 

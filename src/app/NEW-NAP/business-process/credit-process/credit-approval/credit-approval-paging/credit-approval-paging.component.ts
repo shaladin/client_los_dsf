@@ -112,7 +112,7 @@ export class CreditApprovalPagingComponent implements OnInit {
       }
     }
     else {
-      this.toastr.errorMessage(String.Format(ExceptionConstant.ERROR_NO_CALLBACK_SETTING, ev.Key));
+      this.toastr.warningMessage(String.Format(ExceptionConstant.ERROR_NO_CALLBACK_SETTING, ev.Key));
     }
   }
 }

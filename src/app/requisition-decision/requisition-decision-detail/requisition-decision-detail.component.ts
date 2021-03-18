@@ -9,7 +9,9 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-requisition-decision-detail',
@@ -49,7 +51,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   ReqDecForm = this.fb.group({
     Decision: ['', [Validators.required]],
     AssetNo: [''],
-    ManYear: [, [Validators.required]],
+    ManYear: [, [Validators.required, Validators.min(1)]],
     Notes: ['', [Validators.maxLength(4000)]]
   });
   
@@ -57,7 +59,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private toastr: NGXToastrService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.AppId = params["AppId"];
@@ -69,8 +71,9 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.ClaimTask();
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
-    this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupAssetObj.urlQryPaging = URLConstant.GetAssetStockPagingFromAms;
     this.InputLookupAssetObj.urlEnviPaging = URLConstant.AmsUrl;
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
@@ -78,6 +81,18 @@ export class RequisitionDecisionDetailComponent implements OnInit {
 
     await this.SetMainInfo();
     await this.SetListOfAsset();
+  }
+
+  
+  ClaimTask() {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    var wfClaimObj = new ClaimWorkflowObj();
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
+    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
+
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
+      () => {
+      });
   }
 
   async SetMainInfo() {
@@ -151,8 +166,8 @@ export class RequisitionDecisionDetailComponent implements OnInit {
 
     this.http.post(URLConstant.GetListAppAssetAccessoryAndAppAssetAttrByAppAssetId, requestAppAssetId).subscribe(
       (response) => {
-        this.AccessoriesList = response["AppAssetAccesories"];
-        this.AttributeList = response["AppAssetAttrs"];
+        this.AttributeList = response["AppAssetAttrs"] ? response["AppAssetAttrs"] : new Array<any>();
+        this.AccessoriesList = response["AppAssetAccesories"] ? response["AppAssetAccesories"] : new Array<any>();
       }
     );
 

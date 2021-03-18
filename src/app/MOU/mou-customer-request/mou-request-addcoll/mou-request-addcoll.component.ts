@@ -1017,7 +1017,7 @@ export class MouRequestAddcollComponent implements OnInit {
       }
     }
     if (sumCollateralValue < this.returnMouCust.PlafondAmt) {
-      this.toastr.errorMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
+      this.toastr.warningMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
       return;
     }
     if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {

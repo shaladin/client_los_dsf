@@ -254,7 +254,7 @@ export class FormAddDynamicComponent implements OnInit {
               for (var j = 0; j < data.ReturnObject.length; j++) {
                 if (data.ReturnObject[j] == null || data.ReturnObject[j] == undefined) {
                   this.FormInputObj["isCalculated"] = false;
-                  return this.toastr.errorMessage("System Error - " + this.FormObj.value.arr[len - 1 - i].ContentNameValue + " don't have TaxpayerNo ");
+                  return this.toastr.warningMessage(this.FormObj.value.arr[len - 1 - i].ContentNameValue + " don't have TaxpayerNo ");
                 }
 
                 var taxAmt = 0;
