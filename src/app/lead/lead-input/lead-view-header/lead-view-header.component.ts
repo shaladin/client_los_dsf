@@ -30,7 +30,8 @@ export class LeadViewHeaderComponent implements OnInit {
   });
   leadUrl: string;
   
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient) {
+  constructor(private route: ActivatedRoute,
+    private http: HttpClient, private fb: FormBuilder) {
     this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {

@@ -165,7 +165,7 @@
                 
                 <div class="form-group row">
                   <label class="col-md-3 adins-label" translate>Asset Name</label>
-                  <label class="col-md-3 adins-label">{{AssetInfoObj.AsetName}}</label>
+                  <label class="col-md-3 adins-label">{{AssetInfoObj.AssetName}}</label>
                 </div>
                 
                 <div class="form-group row">
@@ -179,7 +179,7 @@
                     <select class="form-control" formControlName="Decision" style="width: 100%;"
                       (change)="OnChangedDdl($event)">
                       <option value="PURCHASE">Purchase Asset</option>
-                      <option value="EXISTING" disabled>Use Existing Stock</option>
+                      <option value="EXISTING">Use Existing Stock</option>
                     </select>
                     <lib-uc-show-errors [control]="ReqDecForm.controls.Decision"
                       [submit]="enjiForm.submitted">
