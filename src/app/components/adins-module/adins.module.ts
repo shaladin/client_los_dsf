@@ -21,6 +21,7 @@ import { UcuploadModule } from '@adins/ucupload';
 import { UcapprovalhistModule } from '@adins/ucapprovalhist';
 import { UcaddtotempModule } from '@adins/ucaddtotemp';
 import { UcthingstodoModule } from '@adins/ucthingstodo';
+import { UcdropdownlistModule } from '@adins/ucdropdownlist';
 
 @NgModule({
     declarations:[
@@ -45,6 +46,7 @@ import { UcthingstodoModule } from '@adins/ucthingstodo';
         UcapprovalhistModule,
         UcaddtotempModule,
         UcthingstodoModule,
+        UcdropdownlistModule
       //  UcapprovalModule
     ],
     imports: [
@@ -69,7 +71,8 @@ import { UcthingstodoModule } from '@adins/ucthingstodo';
         MatCheckboxModule,
         UcuploadModule,
         UcaddtotempModule,
-        UcthingstodoModule
+        UcthingstodoModule,
+        UcdropdownlistModule
     ]
 })
 
