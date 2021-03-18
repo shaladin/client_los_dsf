@@ -63,7 +63,7 @@ export class ExistingMouCompanyComponent implements OnInit {
     this.ListSelectedIdMouShareholder = new Array();
 
     //Get Mou Cust Data
-    this.http.post(URLConstant.GetMouCustByMouCustId, { "MouCustId": this.MouCustId }).subscribe(
+    this.http.post(URLConstant.GetMouCustByMouCustId, { "Id": this.MouCustId }).subscribe(
       response => {
         this.MouCustObj = response['MouCustObj'];
         var custObj = { CustNo: this.MouCustObj['CustNo'] };

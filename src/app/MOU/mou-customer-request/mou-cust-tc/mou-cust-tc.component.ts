@@ -45,7 +45,7 @@ export class MouCustTcComponent implements OnInit {
     var mouObj = new MouCustObj();
     mouObj.MouCustId = this.MouCustId;
     var mouCustObjData;
-    this.httpClient.post(URLConstant.GetMouCustById, mouObj).pipe(
+    this.httpClient.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).pipe(
       map((response: MouCustObj) => {
         mouCustObjData = response;
         return response;

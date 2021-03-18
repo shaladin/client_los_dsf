@@ -99,7 +99,7 @@ export class AgreementViewContainerComponent implements OnInit {
             this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, appNo));
             let mouId = response[0]['MouCustId'];
             if (mouId != null && mouId != "") {
-              let mouObj = { MouCustId: mouId };
+              let mouObj = { Id: mouId };
               this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
                 result => {
                   let mouCustNo = result['MouCustNo'];

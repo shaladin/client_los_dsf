@@ -36,7 +36,7 @@ export class MouMainInfoComponent implements OnInit {
       },
     ];
 
-    this.http.post(URLConstant.GetMouCustById, { MouCustId: this.MouCustId }).subscribe(
+    this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.MouCustObj  = response;
       });

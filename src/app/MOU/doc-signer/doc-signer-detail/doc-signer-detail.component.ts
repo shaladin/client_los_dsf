@@ -208,7 +208,7 @@ export class DocSignerDetailComponent implements OnInit {
 
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
-    this.http.post(this.getMouCustById, this.mouCustObj).subscribe(
+    this.http.post(this.getMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.returnMouCust = response;
         this.MrCustTypeCode = this.returnMouCust["MrCustTypeCode"];

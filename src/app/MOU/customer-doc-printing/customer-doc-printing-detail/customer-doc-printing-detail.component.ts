@@ -36,7 +36,7 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
   ngOnInit(): void {
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
-    this.http.post(this.GetListMouCustDocPrintForViewByMouCustIdUrl, this.mouCustObj).subscribe(
+    this.http.post(this.GetListMouCustDocPrintForViewByMouCustIdUrl, { Id: this.MouCustId }).subscribe(
       response => {
         this.responseObj = response[CommonConstant.ReturnObj];
       },
@@ -59,7 +59,7 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
     var mouObj = { "MouCustDocPrintId": MouCustDocPrintId, "RowVersion": this.searchRowVersion(MouCustDocPrintId) };
     this.http.post(this.EditMouCustDocPrintSequenceNoUrl, mouObj).subscribe(
       response => {
-        var mouCustObj = { "MouCustId": this.MouCustId };
+        var mouCustObj = { "Id": this.MouCustId };
         this.http.post(this.GetListMouCustDocPrintForViewByMouCustIdUrl, mouCustObj).subscribe(
           response => {
             this.responseObj = response[CommonConstant.ReturnObj];

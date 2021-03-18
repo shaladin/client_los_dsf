@@ -231,7 +231,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
 
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
         if (mouId != null && mouId != "") {
-          let mouObj = { MouCustId: mouId };
+          let mouObj = { Id: mouId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
             result => {
               this.mouCustNo = result['MouCustNo'];
