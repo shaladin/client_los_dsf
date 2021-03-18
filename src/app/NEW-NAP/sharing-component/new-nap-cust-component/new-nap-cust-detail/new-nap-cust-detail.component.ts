@@ -30,16 +30,16 @@ import { ResponseCustCompanyForCopyObj } from 'app/shared/model/ResponseCustComp
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { CookieService } from 'ngx-cookie';
-import { NewNapCustCompanyContactInfoComponent } from './component/company/new-nap-cust-company-contact-info/new-nap-cust-company-contact-info.component';
-import { NewNapCustCompanyFinDataComponent } from './component/company/new-nap-cust-company-fin-data/new-nap-cust-company-fin-data.component';
-import { NewNapCustCompanyFullDataComponent } from './component/company/new-nap-cust-company-full-data/new-nap-cust-company-full-data.component';
-import { NewNapCustCompanyLegalDocComponent } from './component/company/new-nap-cust-company-legal-doc/new-nap-cust-company-legal-doc.component';
-import { NewNapCustAddrComponent } from './component/new-nap-cust-addr/new-nap-cust-addr.component';
-import { NewNapOtherInfoComponent } from './component/new-nap-other-info/new-nap-other-info.component';
-import { NewNapCustPersonalEmergencyComponent } from './component/personal/new-nap-cust-personal-emergency/new-nap-cust-personal-emergency.component';
-import { NewNapCustPersonalFinancialComponent } from './component/personal/new-nap-cust-personal-financial/new-nap-cust-personal-financial.component';
-import { NewNapCustPersonalFullDataComponent } from './component/personal/new-nap-cust-personal-full-data/new-nap-cust-personal-full-data.component';
-import { NewNapCustPersonalJobComponent } from './component/personal/new-nap-cust-personal-job/new-nap-cust-personal-job.component';
+import { NewNapCustCompanyContactInfoComponent } from '../component/company/new-nap-cust-coy-contact-info/new-nap-cust-coy-contact-info.component';
+import { NewNapCustCompanyFinDataComponent } from '../component/company/new-nap-cust-coy-fin-data/new-nap-cust-coy-fin-data.component';
+import { NewNapCustCompanyFullDataComponent } from '../component/company/new-nap-cust-coy-full-data/new-nap-cust-coy-full-data.component';
+import { NewNapCustCompanyLegalDocComponent } from '../component/company/new-nap-cust-coy-legal-doc/new-nap-cust-coy-legal-doc.component';
+import { NewNapCustAddrComponent } from '../component/new-nap-cust-addr/new-nap-cust-addr.component';
+import { NewNapOtherInfoComponent } from '../component/new-nap-other-info/new-nap-other-info.component';
+import { NewNapCustPersonalEmergencyComponent } from '../component/personal/new-nap-cust-personal-emergency/new-nap-cust-personal-emergency.component';
+import { NewNapCustPersonalFinancialComponent } from '../component/personal/new-nap-cust-personal-financial/new-nap-cust-personal-financial.component';
+import { NewNapCustPersonalFullDataComponent } from '../component/personal/new-nap-cust-personal-full-data/new-nap-cust-personal-full-data.component';
+import { NewNapCustPersonalJobComponent } from '../component/personal/new-nap-cust-personal-job/new-nap-cust-personal-job.component';
 
 @Component({
   selector: 'app-new-nap-cust-detail',

@@ -15,7 +15,7 @@ import { NewNapAttrContentComponent } from '../../new-nap-other-info/new-nap-att
 
 @Component({
   selector: 'app-new-nap-cust-company-fin-data',
-  templateUrl: './new-nap-cust-company-fin-data.component.html',
+  templateUrl: './new-nap-cust-coy-fin-data.component.html',
   styles: []
 })
 export class NewNapCustCompanyFinDataComponent implements OnInit {

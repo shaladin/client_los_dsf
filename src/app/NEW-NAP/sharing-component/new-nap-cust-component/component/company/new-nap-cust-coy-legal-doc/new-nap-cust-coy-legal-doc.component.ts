@@ -10,7 +10,7 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 
 @Component({
   selector: 'app-new-nap-cust-company-legal-doc',
-  templateUrl: './new-nap-cust-company-legal-doc.component.html',
+  templateUrl: './new-nap-cust-coy-legal-doc.component.html',
   styles: []
 })
 export class NewNapCustCompanyLegalDocComponent implements OnInit {

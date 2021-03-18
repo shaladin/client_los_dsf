@@ -18,7 +18,7 @@ import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-new-nap-cust-company-contact-info',
-  templateUrl: './new-nap-cust-company-contact-info.component.html',
+  templateUrl: './new-nap-cust-coy-contact-info.component.html',
   styles: []
 })
 export class NewNapCustCompanyContactInfoComponent implements OnInit {
