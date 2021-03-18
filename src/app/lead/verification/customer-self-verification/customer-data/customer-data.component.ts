@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ViewContainerRef, Output, EventEmitter, ComponentFactoryResolver } from '@angular/core';
 import { FormBuilder, Validators, NgForm } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -110,7 +110,12 @@ export class CustomerDataComponent implements OnInit {
   inputAddressObjForLegalAddr: InputAddressObj;
   inputAddressObjForResidenceAddr: InputAddressObj;
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute,
+    private http: HttpClient,
+    private toastr: NGXToastrService,
+    private fb: FormBuilder,
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private cookieService: CookieService) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
     this.getListActiveRefMasterWithMappingCodeAll = URLConstant.GetListActiveRefMasterWithMappingCodeAll;
     this.addEditLeadCustPersonal = URLConstant.AddEditLeadCustPersonal;
@@ -183,7 +188,8 @@ export class CustomerDataComponent implements OnInit {
     }
     this.reqLeadCustObj = new LeadCustObj();
     this.reqLeadCustObj.LeadId = this.LeadId;
-    this.http.post(this.getLeadCustByLeadId, this.reqLeadCustObj).subscribe(
+    var objLeadCust = { Id: this.LeadId };
+    this.http.post(this.getLeadCustByLeadId, objLeadCust).subscribe(
       (response) => {
         this.resLeadCustObj = response;
         if (this.resLeadCustObj.LeadCustId != 0) {
@@ -196,7 +202,8 @@ export class CustomerDataComponent implements OnInit {
           });
           this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
           this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-          this.http.post(this.getListLeadCustSocmed, this.reqLeadCustSocmedObj).subscribe(
+          var objListLeadCustSocmed = { Id: this.resLeadCustObj.LeadCustId };
+          this.http.post(this.getListLeadCustSocmed, objListLeadCustSocmed).subscribe(
             (response) => {
               this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
               this.CustomerDataForm.patchValue({
@@ -269,7 +276,8 @@ export class CustomerDataComponent implements OnInit {
 
           this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
           this.reqLeadCustPersonalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-          this.http.post(this.getLeadCustPersonal, this.reqLeadCustPersonalObj).subscribe(
+          var objLeadCustPersonal = { Id: this.resLeadCustObj.LeadCustId };
+          this.http.post(this.getLeadCustPersonal, objLeadCustPersonal).subscribe(
             (response) => {
               this.resLeadCustPersonalObj = response;
               this.CustomerDataForm.patchValue({
@@ -284,7 +292,8 @@ export class CustomerDataComponent implements OnInit {
               });
               this.reqLeadCustPersonalJobDataObj = new LeadCustPersonalJobDataObj();
               this.reqLeadCustPersonalJobDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
-              this.http.post(this.getLeadCustPersonalJobData, this.reqLeadCustPersonalJobDataObj).subscribe(
+              var objLeadCustPersonalJobData = { Id: this.resLeadCustPersonalObj.LeadCustPersonalId };
+              this.http.post(this.getLeadCustPersonalJobData, objLeadCustPersonalJobData).subscribe(
                 (response) => {
                   this.resLeadCustPersonalJobDataObj = response;
                   this.CustomerDataForm.patchValue({
@@ -302,7 +311,8 @@ export class CustomerDataComponent implements OnInit {
                 });
               this.reqLeadCustPersonalFinDataObj = new LeadCustPersonalFinDataObj();
               this.reqLeadCustPersonalFinDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
-              this.http.post(this.getLeadCustPersonalFinData, this.reqLeadCustPersonalFinDataObj).subscribe(
+              var objCustPersonalFinData = { Id: this.resLeadCustPersonalObj.LeadCustPersonalId };
+              this.http.post(this.getLeadCustPersonalFinData, objCustPersonalFinData).subscribe(
                 (response) => {
                   this.resLeadCustPersonalFinDataObj = response;
                   this.CustomerDataForm.patchValue({
@@ -393,7 +403,8 @@ export class CustomerDataComponent implements OnInit {
     if (this.CopyFrom != null) {
       this.reqLeadCustObj = new LeadCustObj();
       this.reqLeadCustObj.LeadId = this.CopyFrom;
-      this.http.post(this.getLeadCustByLeadId, this.reqLeadCustObj).subscribe(
+      var objLeadCust1 = { Id: this.CopyFrom };
+      this.http.post(this.getLeadCustByLeadId, objLeadCust1).subscribe(
         (response) => {
           this.resLeadCustObj = response;
           this.CustomerDataForm.patchValue({
@@ -425,7 +436,8 @@ export class CustomerDataComponent implements OnInit {
 
           this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
           this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-          this.http.post(this.getListLeadCustSocmed, this.reqLeadCustSocmedObj).subscribe(
+          var objListLeadCustSocmed1 = { Id: this.resLeadCustObj.LeadCustId };
+          this.http.post(this.getListLeadCustSocmed, objListLeadCustSocmed1).subscribe(
             (response) => {
               this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
               this.CustomerDataForm.patchValue({
@@ -500,7 +512,8 @@ export class CustomerDataComponent implements OnInit {
 
           this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
           this.reqLeadCustPersonalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-          this.http.post(this.getLeadCustPersonal, this.reqLeadCustPersonalObj).subscribe(
+          var objLeadCustPersonal1 = { Id: this.resLeadCustObj.LeadCustId };
+          this.http.post(this.getLeadCustPersonal, objLeadCustPersonal1).subscribe(
             (response) => {
               this.resLeadCustPersonalObj = response;
               this.CustomerDataForm.patchValue({
@@ -516,7 +529,8 @@ export class CustomerDataComponent implements OnInit {
 
               this.reqLeadCustPersonalJobDataObj = new LeadCustPersonalJobDataObj();
               this.reqLeadCustPersonalJobDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
-              this.http.post(this.getLeadCustPersonalJobData, this.reqLeadCustPersonalJobDataObj).subscribe(
+              var objLeadCustPersonalJobData1 = { Id: this.resLeadCustPersonalObj.LeadCustPersonalId };
+              this.http.post(this.getLeadCustPersonalJobData, objLeadCustPersonalJobData1).subscribe(
                 (response) => {
                   this.resLeadCustPersonalJobDataObj = response;
                   this.CustomerDataForm.patchValue({
@@ -536,7 +550,8 @@ export class CustomerDataComponent implements OnInit {
 
               this.reqLeadCustPersonalFinDataObj = new LeadCustPersonalFinDataObj();
               this.reqLeadCustPersonalFinDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
-              this.http.post(this.getLeadCustPersonalFinData, this.reqLeadCustPersonalFinDataObj).subscribe(
+              var objCustPersonalFinData1 = { Id: this.resLeadCustPersonalObj.LeadCustPersonalId };
+              this.http.post(this.getLeadCustPersonalFinData, objCustPersonalFinData1).subscribe(
                 (response) => {
                   this.resLeadCustPersonalFinDataObj = response;
                   this.CustomerDataForm.patchValue({
@@ -551,7 +566,8 @@ export class CustomerDataComponent implements OnInit {
     if (this.typePage == "edit" || this.typePage == "update") {
       this.reqLeadCustObj = new LeadCustObj();
       this.reqLeadCustObj.LeadId = this.LeadId;
-      this.http.post(this.getLeadCustByLeadId, this.reqLeadCustObj).subscribe(
+      var objLeadCust2 = { Id: this.LeadId };
+      this.http.post(this.getLeadCustByLeadId, objLeadCust2).subscribe(
         (response) => {
           this.resLeadCustObj = response;
 
@@ -576,7 +592,8 @@ export class CustomerDataComponent implements OnInit {
 
             this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
             this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-            this.http.post(this.getListLeadCustSocmed, this.reqLeadCustSocmedObj).subscribe(
+            var objListLeadCustSocmed2 = { Id: this.resLeadCustObj.LeadCustId };
+            this.http.post(this.getListLeadCustSocmed, objListLeadCustSocmed2).subscribe(
               (response) => {
                 this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
                 this.CustomerDataForm.patchValue({
@@ -652,7 +669,8 @@ export class CustomerDataComponent implements OnInit {
 
             this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
             this.reqLeadCustPersonalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
-            this.http.post(this.getLeadCustPersonal, this.reqLeadCustPersonalObj).subscribe(
+            var objLeadCustPersonal2 = { Id: this.resLeadCustObj.LeadCustId };
+            this.http.post(this.getLeadCustPersonal, objLeadCustPersonal2).subscribe(
               (response) => {
                 this.resLeadCustPersonalObj = response;
                 this.CustomerDataForm.patchValue({
@@ -668,7 +686,8 @@ export class CustomerDataComponent implements OnInit {
 
                 this.reqLeadCustPersonalJobDataObj = new LeadCustPersonalJobDataObj();
                 this.reqLeadCustPersonalJobDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
-                this.http.post(this.getLeadCustPersonalJobData, this.reqLeadCustPersonalJobDataObj).subscribe(
+                var objLeadCustPersonalJobData2 = { Id: this.resLeadCustPersonalObj.LeadCustPersonalId };
+                this.http.post(this.getLeadCustPersonalJobData, objLeadCustPersonalJobData2).subscribe(
                   (response) => {
                     this.resLeadCustPersonalJobDataObj = response;
                     this.CustomerDataForm.patchValue({
@@ -696,7 +715,8 @@ export class CustomerDataComponent implements OnInit {
 
                 this.reqLeadCustPersonalFinDataObj = new LeadCustPersonalFinDataObj();
                 this.reqLeadCustPersonalFinDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
-                this.http.post(this.getLeadCustPersonalFinData, this.reqLeadCustPersonalFinDataObj).subscribe(
+                var objCustPersonalFinData2 = { Id: this.resLeadCustPersonalObj.LeadCustPersonalId };
+                this.http.post(this.getLeadCustPersonalFinData, objCustPersonalFinData2).subscribe(
                   (response) => {
                     this.resLeadCustPersonalFinDataObj = response;
                     this.CustomerDataForm.patchValue({
