@@ -249,7 +249,8 @@ export class LeadInputCustDataComponent implements OnInit {
         
         this.leadObj = new LeadObj();
         this.leadObj.LeadId = this.LeadId;
-        this.http.post(this.getLeadByLeadId, this.leadObj).subscribe(
+        var leadObj = { Id: this.LeadId };
+        this.http.post(this.getLeadByLeadId, leadObj).subscribe(
           (response) => {
             this.returnLeadObj = response;
             this.leadNo = response['LeadNo'];

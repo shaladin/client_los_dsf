@@ -58,7 +58,7 @@ export class LeadInputPageComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await this.http.post(URLConstant.GetLeadByLeadId, { LeadId: this.LeadId }).toPromise().then(
+    await this.http.post(URLConstant.GetLeadByLeadId, { Id: this.LeadId }).toPromise().then(
       (response) => {
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         this.dmsObj = new DMSObj();
@@ -181,10 +181,10 @@ export class LeadInputPageComponent implements OnInit {
       });
   }
   endOfTab() {
-    this.http.post(URLConstant.GetLeadAssetByLeadId, { LeadId: this.customObj.LeadInputLeadDataObj.LeadAppObj.LeadId }).subscribe(
+    this.http.post(URLConstant.GetLeadAssetByLeadId, { Id: this.customObj.LeadInputLeadDataObj.LeadAppObj.LeadId }).subscribe(
       (response) => {
         this.customObj.LeadInputLeadDataObj.LeadAssetObj.RowVersion = response["RowVersion"];
-        this.http.post(URLConstant.GetLeadAppByLeadId, { LeadId: this.customObj.LeadInputLeadDataObj.LeadAppObj.LeadId }).subscribe(
+        this.http.post(URLConstant.GetLeadAppByLeadId, { Id: this.customObj.LeadInputLeadDataObj.LeadAppObj.LeadId }).subscribe(
           (response) => {
             this.customObj.LeadInputLeadDataObj.LeadAppObj.RowVersion = response["RowVersion"];
             this.http.post(this.customObj.urlPost, this.customObj.LeadInputLeadDataObj).subscribe(

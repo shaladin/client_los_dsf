@@ -168,7 +168,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
             this.AppNo = this.result4.AppNo;
 
             if (this.result4.LeadId != null || this.result4.LeadId != undefined) {
-              this.http.post(URLConstant.GetLeadByLeadId, { LeadId: this.result4.LeadId }).subscribe(
+              this.http.post(URLConstant.GetLeadByLeadId, { Id: this.result4.LeadId }).subscribe(
                 (response) => {
                   this.LeadNo = response["LeadNo"];
                   this.LeadId = response["LeadId"];

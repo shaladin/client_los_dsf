@@ -146,7 +146,8 @@ export class LeadInputMainInfoComponent implements OnInit {
   copyLead() {
     this.getExistLeadObj = new LeadObj();
     this.getExistLeadObj.LeadId = this.leadIdExist;
-    this.http.post(this.getLeadByLeadId, this.getExistLeadObj).subscribe(
+    var getExistLeadObj = { Id: this.leadIdExist };
+    this.http.post(this.getLeadByLeadId, getExistLeadObj).subscribe(
       (response) => {
         this.returnExistLead = response;
         this.MainInfoForm.patchValue({
@@ -235,7 +236,8 @@ export class LeadInputMainInfoComponent implements OnInit {
     if (this.pageType == "edit" || this.pageType == "update") {
       this.getLeadObj = new LeadObj();
       this.getLeadObj.LeadId = this.LeadId;
-      this.http.post(this.getLeadByLeadId, this.getLeadObj).subscribe(
+      var getLeadObj = { Id: this.LeadId };
+      this.http.post(this.getLeadByLeadId, getLeadObj).subscribe(
         (response) => {
           this.returnLead = response;
           this.MainInfoForm.patchValue({
@@ -251,7 +253,8 @@ export class LeadInputMainInfoComponent implements OnInit {
           if (this.returnLead.LeadCopyId != null) {
             this.leadExistObj = new LeadObj();
             this.leadExistObj.LeadId = this.returnLead.LeadCopyId;
-            this.http.post(this.getLeadPersonalForLookup, this.leadExistObj).subscribe(
+            var leadExistObj = { Id: this.returnLead.LeadCopyId };
+            this.http.post(this.getLeadPersonalForLookup, leadExistObj).subscribe(
               (response) => {
                 this.returnLeadExistObj = response;
               });
