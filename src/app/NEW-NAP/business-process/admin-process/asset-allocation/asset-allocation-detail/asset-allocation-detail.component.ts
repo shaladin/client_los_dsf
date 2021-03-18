@@ -93,7 +93,7 @@ export class AssetAllocationDetailComponent implements OnInit {
     }
     this.http.post(URLConstant.SubmitAssetAllocation, reqObj).subscribe(
       (response) => {
-        this.toastr.successMessage("Asset Allocation Saved Successfully");
+        this.toastr.successMessage(response["message"]);
         this.backToPaging();
         
       }

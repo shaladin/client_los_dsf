@@ -127,7 +127,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
     }
     var selectedRelationship = this.CustRelationshipObj.find(x => x.Key == this.ContactInfoPersonalForm.controls.MrCustRelationshipCode.value);
     if (selectedRelationship == undefined) {
-      this.toastr.errorMessage(ExceptionConstant.CHOOSE_CUST_RELATIONSHIP);
+      this.toastr.warningMessage(ExceptionConstant.CHOOSE_CUST_RELATIONSHIP);
       return;
     }
     var userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));

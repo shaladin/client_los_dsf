@@ -128,7 +128,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
       }
     }
     if (!isPOResolved) {
-      this.toastr.errorMessage("Please Resolve All Purchase Order");
+      this.toastr.warningMessage("Please Resolve All Purchase Order");
     }
     else {
       var workflowModel = new WorkflowApiObj();

@@ -665,7 +665,7 @@ export class ApplicationDataComponent implements OnInit {
               });
           }
           else {
-            this.toastr.errorMessage("At Least 1 Loan Object Is Required");
+            this.toastr.warningMessage("At Least 1 Loan Object Is Required");
             return false;
           }
         });

@@ -490,7 +490,7 @@ export class FinancialDataOplEditComponent implements OnInit {
         (response) => {
           formDirective.resetForm();
           this.OutputGoPaging.emit();
-          this.toastr.successMessage("App Asset Rental Data Saved Successfully");
+          this.toastr.successMessage(response["message"]);
         }
       );
     }

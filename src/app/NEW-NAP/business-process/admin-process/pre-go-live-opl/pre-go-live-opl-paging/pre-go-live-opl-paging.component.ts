@@ -81,19 +81,19 @@ export class PreGoLiveOplPagingComponent implements OnInit {
   Next() {
     if(this.preGoLiveOplService.getList() !== undefined) {
       if(this.preGoLiveOplService.getList().length === 0) {
-        this.toastr.errorMessage("Please Select Item First");
+        this.toastr.warningMessage("Please Select Item First");
       }
       else {
         if(this.IsAppNoSame) {
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_OPL_DETAIL], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
         }
         else {
-          this.toastr.errorMessage("Application No Must Same!");
+          this.toastr.warningMessage("Application No Must Same!");
         }
       }
     }
     else {
-      this.toastr.errorMessage("Please Select Item First");
+      this.toastr.warningMessage("Please Select Item First");
     }
   }
 

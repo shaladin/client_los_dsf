@@ -86,7 +86,7 @@ export class GuarantorPagingComponent implements OnInit {
       (response) => {
         for (let i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
           if (response[CommonConstant.ReturnObj][i].MrMaritalStatCode == null || response[CommonConstant.ReturnObj][i].MrNationalityCode == null) {
-            this.toastr.errorMessage(ExceptionConstant.PLEASE_COMPLETE_MANDATORY_INPUT);
+            this.toastr.warningMessage(ExceptionConstant.PLEASE_COMPLETE_MANDATORY_INPUT);
             return;
           }
         }
