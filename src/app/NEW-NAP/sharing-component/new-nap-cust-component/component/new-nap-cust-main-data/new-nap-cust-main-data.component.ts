@@ -110,8 +110,6 @@ export class NewNapCustMainDataComponent implements OnInit {
   }
 
   async ngOnInit() {
-    console.log("init ui");
-    console.log(this.ParentForm);
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
 
