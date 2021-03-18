@@ -26,7 +26,7 @@ export class RequisitionDecisionPagingComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "NAP_" + CommonConstant.OPL;
+    critObj.value = "REQU_DEC_" + CommonConstant.OPL;
     this.arrCrit.push(critObj);
   }
 
