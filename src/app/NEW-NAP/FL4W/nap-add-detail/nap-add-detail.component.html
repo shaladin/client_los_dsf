@@ -261,8 +261,8 @@
             <div class="line"></div>
             <div class="step" data-target="#upload-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
-                      [disabled]="!(AppStepIndex >= 9)" (click)="ChangeTab('UPL_DOC')">
-                <span class="bs-stepper-circle">9</span>
+                      [disabled]="!(AppStepIndex >= 10)" (click)="ChangeTab('UPL_DOC')">
+                <span class="bs-stepper-circle">10</span>
                 <span class="bs-stepper-label">Upload Document</span>
               </button>
             </div>
@@ -285,9 +285,9 @@
               </app-referantor-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY'" [appId]="appId"
+              <app-application-data-FL4W *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY'" [AppId]="appId"
                                          [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
-              </app-application-data>
+              </app-application-data-FL4W>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
               <app-multi-asset-data *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY'" [AppId]="appId"

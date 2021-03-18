@@ -6,6 +6,7 @@ import { FormBuilder } from '@angular/forms';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-lead-view-header',
@@ -29,7 +30,7 @@ export class LeadViewHeaderComponent implements OnInit {
   });
   leadUrl: string;
   
-  constructor(private route: ActivatedRoute, private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient) {
     this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {

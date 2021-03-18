@@ -90,8 +90,7 @@ export class DocSignerDetailComponent implements OnInit {
 
   async getAllData() {
     var obj = {
-      Id: this.AppId,
-      AgrmntId: this.AgrmntId
+      AppId: this.AppId
     }
 
     var agrmntObj = {

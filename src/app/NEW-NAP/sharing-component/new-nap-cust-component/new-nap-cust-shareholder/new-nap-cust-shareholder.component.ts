@@ -61,7 +61,7 @@ export class NewNapCustShareholderComponent implements OnInit {
       return;
     }
 
-    if(this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x=>x.IsActive == true && x.IsSigner == true) == null){
+    if(this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x=>x.IsActive == true && x.IsSigner == true && x.MrCustTypeCode == CommonConstant.CustTypePersonal) == null){
       this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_ACTIVE_SIGNER);
       return false;
     }

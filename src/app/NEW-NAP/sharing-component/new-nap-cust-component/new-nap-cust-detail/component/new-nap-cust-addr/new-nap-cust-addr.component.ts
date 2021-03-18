@@ -39,9 +39,7 @@ export class NewNapCustAddrComponent implements OnInit {
     if(this.AppCustId && this.AppCustId > 0 && isOnInit){
       this.http.post<Array<AppCustAddrObj>>(URLConstant.GetListAppCustAddrByAppCustId, { Id: this.AppCustId }).subscribe(
         (response) => {
-          this.ListAddress = response;
-          let idxCompany = this.ListAddress.findIndex(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeCompany);
-          if(idxCompany != -1) this.ListAddress.splice(idxCompany, 1)      
+          this.ListAddress = response;     
           let idxEmergency = this.ListAddress.findIndex(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeEmergency);
           if(idxEmergency != -1) this.ListAddress.splice(idxEmergency, 1)
   
@@ -56,9 +54,7 @@ export class NewNapCustAddrComponent implements OnInit {
       );
     }
     else{
-      this.ListAddress = appCustAddrList;
-      let idxCompany = this.ListAddress.findIndex(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeCompany);
-      if(idxCompany != -1) this.ListAddress.splice(idxCompany, 1)      
+      this.ListAddress = appCustAddrList;     
       let idxEmergency = this.ListAddress.findIndex(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeEmergency);
       if(idxEmergency != -1) this.ListAddress.splice(idxEmergency, 1)
 

@@ -294,7 +294,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" [hidden]="custMainDataMode == 'SHAREHOLDER' && MrCustTypeCode == 'COMPANY'">
           <div class="form-group row">
             <label class="col-md-4" translate>Is Signer</label>
             <div class="col-md-8">

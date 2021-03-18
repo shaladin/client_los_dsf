@@ -393,7 +393,7 @@ export class NewNapCustDetailComponent implements OnInit {
               );
             }
             else{
-              await this.http.post<ResponseAppCustCompletionCompanyDataObj>(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, {AppCustId: this.AppCustIdInput}).toPromise().then(
+              await this.http.post<ResponseAppCustCompletionCompanyDataObj>(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, {Id: this.AppCustIdInput}).toPromise().then(
                 (response) => {
                   this.AppCustCompanyId = response.AppCustCompanyObj.AppCustCompanyId;
                 }
@@ -445,7 +445,7 @@ export class NewNapCustDetailComponent implements OnInit {
 
   GetExistingCustHandler(e: ResponseCustPersonalForCopyObj){
     this.custPersonalFullDataComponent.CopyExistingCust(e.CustObj, e.CustPersonalObj, e.CustGrpObjs);
-    this.custAddrComponent.LoadListCustAddress(e.CustAddrObjs);
+    this.custAddrComponent.LoadListCustAddress(e.CustAddrObjs, false);
     this.ListAddress = e.CustAddrObjs;
 
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(NewNapCustPersonalJobComponent);
@@ -567,6 +567,7 @@ export class NewNapCustDetailComponent implements OnInit {
 
   setMainDataCustomerCompanyForSave() {
     this.custDataCompanyObj = new CustMainDataCompanyObj();
+    this.custDataCompanyObj.AppCustObj.MrCustModelCode = this.CustMainDataForm.controls.MrCustModelCode.value;
     this.custDataCompanyObj.AppCustObj.MrCustTypeCode = this.MrCustTypeCode;
     this.custDataCompanyObj.AppCustObj.CustName = this.CustMainDataForm.value.lookupCustomer.value;
     this.custDataCompanyObj.AppCustObj.CustNo = this.CustMainDataForm.controls.CustNo.value;
@@ -590,7 +591,6 @@ export class NewNapCustDetailComponent implements OnInit {
 
     if (this.custDataCompanyObj.AppCustObj.IsShareholder) {
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.SharePrcnt = this.CustMainDataForm.controls.SharePrcnt.value;
-      this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsSigner = this.CustMainDataForm.controls.IsSigner.value;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsActive = this.CustMainDataForm.controls.IsActive.value;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsOwner = this.CustMainDataForm.controls.IsOwner.value;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.EstablishmentDt = this.CustMainDataForm.controls.EstablishmentDt.value;

@@ -123,7 +123,7 @@ export class NewNapCustCompanyFullDataComponent implements OnInit {
   }
 
   GetData(){
-    this.http.post<ResponseAppCustCompletionCompanyDataObj>(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, {AppCustId: this.AppCustId}).subscribe(
+    this.http.post<ResponseAppCustCompletionCompanyDataObj>(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, {Id: this.AppCustId}).subscribe(
       (response) => {
         if(response.AppCustCompanyObj.IndustryTypeCode != null){
           this.industryTypeObj.IndustryTypeCode =  response.AppCustCompanyObj.IndustryTypeCode;

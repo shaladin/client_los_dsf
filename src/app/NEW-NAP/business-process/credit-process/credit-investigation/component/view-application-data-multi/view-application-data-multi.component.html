@@ -3,52 +3,8 @@
     <div class="card">
       <div class="card-body">
         <div class="px-3">
-
-          <lib-ucSubsection [id]="'viewGuarantorInfoId'" [title]="'Guarantor'" [panel]="'viewGuarantorInfo'">
-          </lib-ucSubsection>
-          <div class="form-body" id="viewGuarantorInfo">
-            <table class="table table-responsive-md text-center table-hover" matSort
-              (matSortChange)="sortGuarantorData($event)">
-              <thead>
-                <tr class="table-header">
-                  <th><span translate class="thead-header" mat-sort-header="GuarantorName">Guarantor Name</span>
-                  </th>
-                  <th><span translate class="thead-header" mat-sort-header="GuarantorType">Guarantor Type</span>
-                  </th>
-                  <th><span translate class="thead-header" mat-sort-header="Relationship">Relationship</span>
-                  </th>
-                  <th><span translate class="thead-header" mat-sort-header="IdNo">ID no</span>
-                  </th>
-                  <th><span translate class="thead-header" mat-sort-header="Address">Address</span>
-                  </th>
-                  <th><span translate class="thead-header" mat-sort-header="MobilePhone">Mobile Phone</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody *ngIf="GuarantorData?.length == 0">
-                <tr>
-                  <td colspan="100%">No Data Available</td>
-                </tr>
-              </tbody>
-              <tbody>
-                <tr *ngFor="let item of GuarantorData">
-                  <td *ngIf="item.GuarantorName!=null">{{item.GuarantorName}}</td>
-                  <td *ngIf="item.GuarantorName==null"> - </td>
-                  <td *ngIf="item.GuarantorType!=null">{{item.GuarantorType}}</td>
-                  <td *ngIf="item.GuarantorType==null"> - </td>
-                  <td *ngIf="item.Relationship!=null">{{item.Relationship}}</td>
-                  <td *ngIf="item.Relationship==null"> - </td>
-                  <td *ngIf="item.IdNo!=null">{{item.IdNo}}</td>
-                  <td *ngIf="item.IdNo==null"> - </td>
-                  <td *ngIf="item.Address!=null">{{item.Address}}</td>
-                  <td *ngIf="item.Address==null"> - </td>
-                  <td *ngIf="item.MobilePhone!=null">{{item.MobilePhone}}</td>
-                  <td *ngIf="item.MobilePhone!=null"> - </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
+          <app-guarantor [AppId]="AppId"></app-guarantor>
+          
           <lib-ucSubsection [id]="'viewReferantorInfoId'" [title]="'Referantor'" [panel]="'viewReferantorInfo'">
           </lib-ucSubsection>
           <div class="form-body" id="viewReferantorInfo">
