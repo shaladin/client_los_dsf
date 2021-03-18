@@ -49,7 +49,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   ReqDecForm = this.fb.group({
     Decision: ['', [Validators.required]],
     AssetNo: [''],
-    ManYear: [, [Validators.required]],
+    ManYear: [, [Validators.required, Validators.min(1)]],
     Notes: ['', [Validators.maxLength(4000)]]
   });
   
