@@ -124,7 +124,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     if (this.pageType == "edit" || this.pageType == "return") {
       var mouCust = new MouCustObj();
       mouCust.MouCustId = this.mouCustId;
-      this.httpClient.post(URLConstant.GetMouCustById, mouCust).subscribe(
+      this.httpClient.post(URLConstant.GetMouCustById, { Id: this.mouCustId }).subscribe(
         (response: any) => {
           response["StartDt"] = datePipe.transform(response["StartDt"], "yyyy-MM-dd");
           response["EndDt"] = datePipe.transform(response["EndDt"], "yyyy-MM-dd");

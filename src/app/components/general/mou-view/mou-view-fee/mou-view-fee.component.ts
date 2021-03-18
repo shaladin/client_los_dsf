@@ -14,7 +14,7 @@ export class MouViewFeeComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    var mouCustObj = { MouCustId: this.MouCustId }
+    var mouCustObj = { Id: this.MouCustId }
     this.http.post(URLConstant.GetMouCustFeeByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.listFeeData = response;

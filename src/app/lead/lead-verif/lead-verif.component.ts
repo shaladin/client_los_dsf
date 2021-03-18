@@ -49,7 +49,7 @@ export class LeadVerifComponent implements OnInit {
   
   SaveLeadVerf(verifyStatus : string) {
     if (this.listSelectedId.length == 0) {
-      this.toastr.errorMessage(ExceptionConstant.ADD_MIN_1_DATA);
+      this.toastr.warningMessage(ExceptionConstant.ADD_MIN_1_DATA);
       return;
     } 
 

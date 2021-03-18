@@ -16,7 +16,7 @@ export class MouViewLegalComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    var mouCustObj = { MouCustId: this.MouCustId }
+    var mouCustObj = { Id: this.MouCustId }
     this.http.post(URLConstant.GetMouCustLglReviewByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.listLglReviewData = response['ReturnObject'];

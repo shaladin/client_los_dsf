@@ -69,7 +69,7 @@ export class MouCustFeeComponent implements OnInit {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       var mouCustFee = new MouCustFeeObj();
       mouCustFee.MouCustFeeId = mouCustFeeId;
-      this.httpClient.post(URLConstant.DeleteMouCustFee, mouCustFee).subscribe(
+      this.httpClient.post(URLConstant.DeleteMouCustFee, { Id: mouCustFeeId }).subscribe(
         (response: any) => {
           this.mouCustFeeList.splice(idx, 1);
           this.refFeeIdList.splice(idx, 1);

@@ -165,11 +165,11 @@ export class MouCustTabComponent implements OnInit {
       for (let i = 0; i < this.custDataPersonalObj.MouCustGrpObjs.length; i++) {
         for (let j = i + 1; j < this.custDataPersonalObj.MouCustGrpObjs.length; j++) {
           if (this.custDataPersonalObj.MouCustGrpObjs[i]["CustNo"] == this.custDataPersonalObj.MouCustGrpObjs[j]["CustNo"]) {
-            this.toastr.errorMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j + 1));
+            this.toastr.warningMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j + 1));
             return;
           }
           if (this.custDataPersonalObj.MouCustGrpObjs[i]["MrCustRelationshipCode"] == this.custDataPersonalObj.MouCustGrpObjs[j]["MrCustRelationshipCode"]) {
-            this.toastr.errorMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j + 1));
+            this.toastr.warningMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j + 1));
             return;
           }
         }
@@ -186,7 +186,7 @@ export class MouCustTabComponent implements OnInit {
               }
               else {
                 response["ErrorMessages"].forEach((message: string) => {
-                  this.toastr.errorMessage(message["Message"]);
+                  this.toastr.warningMessage(message["Message"]);
                 });
               }
             },
@@ -230,11 +230,11 @@ export class MouCustTabComponent implements OnInit {
       for (let i = 0; i < this.custDataCompanyObj.MouCustGrpObjs.length; i++) {
         for (let j = i + 1; j < this.custDataCompanyObj.MouCustGrpObjs.length; j++) {
           if (this.custDataCompanyObj.MouCustGrpObjs[i]["CustNo"] == this.custDataCompanyObj.MouCustGrpObjs[j]["CustNo"]) {
-            this.toastr.errorMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j + 1));
+            this.toastr.warningMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j + 1));
             return;
           }
           if (this.custDataCompanyObj.MouCustGrpObjs[i]["MrCustRelationshipCode"] == this.custDataCompanyObj.MouCustGrpObjs[j]["MrCustRelationshipCode"]) {
-            this.toastr.errorMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j + 1));
+            this.toastr.warningMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j + 1));
             return;
           }
         }
@@ -848,7 +848,7 @@ export class MouCustTabComponent implements OnInit {
   }
 
   async getCustData() {
-    await this.http.post(URLConstant.GetMouCustByMouCustId, { "MouCustId": this.MouCustId }).toPromise().then(
+    await this.http.post(URLConstant.GetMouCustByMouCustId, { "Id": this.MouCustId }).toPromise().then(
       (response) => {
         if (response["MouCustObj"]["MouCustId"] > 0) {
           if (response["MouCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
@@ -1434,7 +1434,7 @@ export class MouCustTabComponent implements OnInit {
         }
         this.mouObj = new MouCustObj();
         this.mouObj.MouCustId = this.MouCustId;
-        this.http.post(URLConstant.GetMouCustById, this.mouObj).subscribe(
+        this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
           (response) => {
             this.returnMouObj = response;
 

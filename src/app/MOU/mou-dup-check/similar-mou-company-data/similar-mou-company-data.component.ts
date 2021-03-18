@@ -55,7 +55,7 @@ export class SimilarMouCompanyDataComponent implements OnInit {
     this.MouCustCompanyObj = new MouCustCompanyObj();
     this.MouCustAddrObj = new MouCustAddrObj();
 
-    this.http.post(URLConstant.GetMouCustByMouCustId, { "MouCustId": this.MouCustId }).subscribe(
+    this.http.post(URLConstant.GetMouCustByMouCustId, { "Id": this.MouCustId }).subscribe(
       response => {
         this.MouCustObj = response['MouCustObj'];
         this.RowVersion = response['MouCustObj'].RowVersion;

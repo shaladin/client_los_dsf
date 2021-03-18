@@ -278,7 +278,7 @@ export class BankSectionComponent implements OnInit {
     for (let i = 0; i < this.ListBankStmntObj.length; i++) {
       for (let j = i + 1; j < this.ListBankStmntObj.length; j++) {
         if (this.ListBankStmntObj[i]["Month"] == this.ListBankStmntObj[j]["Month"] && this.ListBankStmntObj[i]["Year"] == this.ListBankStmntObj[j]["Year"]) {
-          this.toastr.errorMessage(ExceptionConstant.STATEMENT_WITH_SAME_MONTH_AND_YEAR);
+          this.toastr.warningMessage(ExceptionConstant.STATEMENT_WITH_SAME_MONTH_AND_YEAR);
           return;
         }
       }

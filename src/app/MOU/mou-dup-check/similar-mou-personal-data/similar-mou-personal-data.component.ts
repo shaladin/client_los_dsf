@@ -55,7 +55,7 @@ export class SimilarMouPersonalDataComponent implements OnInit {
     this.MouCustAddrObj = new MouCustAddrObj();
 
     //Get App Cust Data
-    this.http.post(URLConstant.GetMouCustByMouCustId, {"MouCustId": this.MouCustId}).subscribe(
+    this.http.post(URLConstant.GetMouCustByMouCustId, {"Id": this.MouCustId}).subscribe(
       response => {
         this.MouCustObj = response['MouCustObj'];
         this.RowVersion = response['MouCustObj'].RowVersion;

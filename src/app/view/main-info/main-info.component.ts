@@ -38,7 +38,7 @@ export class MainInfoComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient, public datepipe: DatePipe) { }
 
   ngOnInit() {
-    var mouCustObj = { MouCustId: this.MouCustId }
+    var mouCustObj = { Id: this.MouCustId }
     this.http.post(URLConstant.GetMouCustById, mouCustObj).pipe(
       map((response) => {
         return response;

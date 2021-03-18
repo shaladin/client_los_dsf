@@ -47,7 +47,7 @@ export class AdInsHelper {
     let interval = setInterval(() => {
       if (timeLeft > 0) {
         console.log("Time Left : " + timeLeft)
-        toastr.errorMessage("Automatic Log out at : " + timeLeft);
+        toastr.warningMessage("Automatic Log out at : " + timeLeft);
         toastr.clearToast();
         timeLeft--;
       } else {

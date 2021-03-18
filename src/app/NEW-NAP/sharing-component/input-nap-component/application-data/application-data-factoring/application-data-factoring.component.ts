@@ -285,7 +285,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
   SetPayFreq(MouCustId: number) {
     var MouObj = {
-      MouCustId: MouCustId
+      Id: MouCustId
     }
     this.http.post<MouCustFctrObj>(URLConstant.GetMouCustFctrByMouCustId, MouObj).subscribe(
       (response) => {

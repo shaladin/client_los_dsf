@@ -360,12 +360,12 @@ export class CustomerDataComponent implements OnInit {
       for (let i = 0; i < custDataPersonalObj.AppCustGrpObjs.length; i++) {
         for (let j = i + 1; j < custDataPersonalObj.AppCustGrpObjs.length; j++) {
           if (custDataPersonalObj.AppCustGrpObjs[i]["CustNo"] == custDataPersonalObj.AppCustGrpObjs[j]["CustNo"]) {
-            this.toastr.errorMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j + 1));
+            this.toastr.warningMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j + 1));
             return;
           }
 
           if (custDataPersonalObj.AppCustGrpObjs[i]["MrCustRelationshipCode"] == custDataPersonalObj.AppCustGrpObjs[j]["MrCustRelationshipCode"]) {
-            this.toastr.errorMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j + 1));
+            this.toastr.warningMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j + 1));
             return;
           }
         }
@@ -373,7 +373,7 @@ export class CustomerDataComponent implements OnInit {
 
       if (this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W) {
         if (custDataPersonalObj.AppCustBankAccObjs.length <= 0) {
-          this.toastr.errorMessage("Must Have At Least 1 Bank Account");
+          this.toastr.warningMessage("Must Have At Least 1 Bank Account");
           return false;
         }
       }
@@ -391,7 +391,7 @@ export class CustomerDataComponent implements OnInit {
               }
               else {
                 response["ErrorMessages"].forEach((message: string) => {
-                  this.toastr.errorMessage(message["Message"]);
+                  this.toastr.warningMessage(message["Message"]);
                 });
               }
             }
@@ -422,12 +422,12 @@ export class CustomerDataComponent implements OnInit {
       for (let i = 0; i < custDataCompanyObj.AppCustGrpObjs.length; i++) {
         for (let j = i + 1; j < custDataCompanyObj.AppCustGrpObjs.length; j++) {
           if (custDataCompanyObj.AppCustGrpObjs[i]["CustNo"] == custDataCompanyObj.AppCustGrpObjs[j]["CustNo"]) {
-            this.toastr.errorMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j + 1));
+            this.toastr.warningMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j + 1));
             return;
           }
 
           if (custDataCompanyObj.AppCustGrpObjs[i]["MrCustRelationshipCode"] == custDataCompanyObj.AppCustGrpObjs[j]["MrCustRelationshipCode"]) {
-            this.toastr.errorMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j + 1));
+            this.toastr.warningMessage("No " + (i + 1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j + 1));
             return;
           }
         }
@@ -435,7 +435,7 @@ export class CustomerDataComponent implements OnInit {
 
       if (this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W) {
         if (custDataCompanyObj.AppCustBankAccObjs.length <= 0) {
-          this.toastr.errorMessage("Must Have At Least 1 Bank Account");
+          this.toastr.warningMessage("Must Have At Least 1 Bank Account");
           return false;
         }
       }
@@ -526,7 +526,7 @@ export class CustomerDataComponent implements OnInit {
 
     } else if (type == ExceptionConstant.DateErrorMessageBirthDate && d1 > max17Yodt) {
       this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
-      // this.toastr.errorMessage(type + "  can not be more than " + Max17YO);
+      // this.toastr.warningMessage(type + "  can not be more than " + Max17YO);
       this.isExpiredBirthDt = true;
     }
     else {

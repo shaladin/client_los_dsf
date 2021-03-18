@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LeadCustObj } from 'app/shared/model/LeadCustObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { LeadCustSocmedObj } from 'app/shared/model/LeadCustSucmedObj.model';
@@ -14,14 +13,6 @@ import { environment } from 'environments/environment';
   templateUrl: './view-customer-data.component.html'
 })
 export class ViewCustomerDataComponent implements OnInit {
-
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
-    this.route.queryParams.subscribe(params => {
-      this.LeadId = params['LeadId'];
-    });
-    this.GetLeadCustByLeadIdUrl = URLConstant.GetLeadCustByLeadId;
-    this.GetListLeadCustSocmedByLeadCustIdUrl = URLConstant.GetListLeadCustSocmedByLeadCustId;
-  }
   viewLeadCustomerPersonalMaindata: UcViewGenericObj = new UcViewGenericObj();;
   LeadId: string;
   GetLeadCustByLeadIdUrl: string;
@@ -35,6 +26,15 @@ export class ViewCustomerDataComponent implements OnInit {
   viewLeadAddressResidence: UcViewGenericObj = new UcViewGenericObj();
   viewLeadCustPersonalJobData: UcViewGenericObj = new UcViewGenericObj();
   viewLeadCustPersonalFinData: UcViewGenericObj = new UcViewGenericObj();
+
+  constructor(private route: ActivatedRoute, private http: HttpClient) {
+    this.route.queryParams.subscribe(params => {
+      this.LeadId = params['LeadId'];
+    });
+    this.GetLeadCustByLeadIdUrl = URLConstant.GetLeadCustByLeadId;
+    this.GetListLeadCustSocmedByLeadCustIdUrl = URLConstant.GetListLeadCustSocmedByLeadCustId;
+  }
+
   ngOnInit() {
     this.viewLeadCustomerPersonalMaindata.viewInput = "./assets/ucviewgeneric/viewLeadCustomerPersonal.json";
     this.viewLeadCustomerPersonalMaindata.viewEnvironment = environment.losUrl;
@@ -53,15 +53,19 @@ export class ViewCustomerDataComponent implements OnInit {
 
     this.leadCustObj.LeadId = this.LeadId;
 
-    this.http.post(this.GetLeadCustByLeadIdUrl, this.leadCustObj).subscribe(
+    var obj = { Id: this.LeadId };
+    this.http.post(this.GetLeadCustByLeadIdUrl, obj).subscribe(
       response => {
         this.tempLeadCustObj = response;
         this.MrCustTypeCode = this.tempLeadCustObj.MrCustTypeCode;
         this.leadCustSocmedObj.LeadCustId = this.tempLeadCustObj.LeadCustId;
-        this.http.post(this.GetListLeadCustSocmedByLeadCustIdUrl, this.leadCustSocmedObj).subscribe(
+        var objListLeadCustSocmed = { Id: this.tempLeadCustObj.LeadCustId };
+        this.http.post(this.GetListLeadCustSocmedByLeadCustIdUrl, objListLeadCustSocmed).subscribe(
           response => {
             this.listLeadCustSocmed = response[CommonConstant.ReturnObj];
-          });
-      });
+          }
+        );
+      }
+    );
   }
 }
