@@ -97,11 +97,13 @@ export class FraudVerifPageComponent implements OnInit {
       },
     ];
     this.leadCustObj.LeadId = this.LeadId;
-    this.http.post(this.GetLeadCustByLeadIdUrl, this.leadCustObj).subscribe(
+    var obj = { Id: this.LeadId };
+    this.http.post(this.GetLeadCustByLeadIdUrl, obj).subscribe(
       (response) => {
         this.tempLeadCustObj = response;
         this.leadCustPersonalObj.LeadCustId = this.tempLeadCustObj.LeadCustId;
-        this.http.post(this.GetLeadCustPersonalByLeadCustIdUrl, this.leadCustPersonalObj).subscribe(
+        var obj1 = { Id: this.tempLeadCustObj.LeadCustId };
+        this.http.post(this.GetLeadCustPersonalByLeadCustIdUrl, obj1).subscribe(
           (response) => {
             this.tempLeadCustPersonalObj = response;
             this.DuplicateCustObj.CustName = this.tempLeadCustObj.CustName;
