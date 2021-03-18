@@ -64,7 +64,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
 
   async ngOnInit() {
     this.mouCustObject.MouCustId = this.mouCustId;
-    await this.httpClient.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
+    await this.httpClient.post(URLConstant.GetMouCustById, { Id: this.mouCustId }).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
         if (this.resultData.MrMouTypeCode == CommonConstant.GENERAL) {
@@ -80,7 +80,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
 
   async initDms(){
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    await this.httpClient.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
+    await this.httpClient.post(URLConstant.GetMouCustById, { Id: this.mouCustId }).toPromise().then(
       (response: MouCustObj) => {
         this.dmsObj = new DMSObj();
         this.dmsObj.User = currentUserContext.UserName;
@@ -201,7 +201,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
 
   submitHandler() {
     if ((this.mouType == CommonConstant.GENERAL && this.currentStepIndex >= 4) || (this.mouType == CommonConstant.FACTORING && this.currentStepIndex >= 5)) {
-      var mouObj = { MouCustId: this.mouCustId }
+      var mouObj = { Id: this.mouCustId }
       this.httpClient.post(URLConstant.SubmitWorkflowMouRequest, mouObj).subscribe(
         () => {
           this.toastr.successMessage("Success");

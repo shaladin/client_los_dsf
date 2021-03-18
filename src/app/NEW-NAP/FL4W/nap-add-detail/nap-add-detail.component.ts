@@ -156,7 +156,7 @@ export class NapAddDetailComponent implements OnInit {
 
         let mouId = response[0]['MouCustId'];
         if (mouId != null && mouId != "") {
-          let mouObj = { MouCustId: mouId };
+          let mouObj = { Id: mouId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
             result => {
               let mouCustNo = result['MouCustNo'];

@@ -46,7 +46,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
     });
     var mouListedFctr = new MouCustListedCustFctrObj();
     mouListedFctr.MouCustId = this.MouCustId;
-    this.httpClient.post<Array<MouCustListedCustFctrObj>>(URLConstant.GetListMouCustListedCustFctrByMouCustId, mouListedFctr).subscribe(
+    this.httpClient.post<Array<MouCustListedCustFctrObj>>(URLConstant.GetListMouCustListedCustFctrByMouCustId, { Id: this.MouCustId }).subscribe(
       (response) => {
         this.listedCusts = response;
         var MouCustListedCustFctrObjs = this.MouCustIsListedForm.get("ListCust") as FormArray;
@@ -87,7 +87,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
         this.spinner.show();
         var mouListedFctr = new MouCustListedCustFctrObj();
         mouListedFctr.MouCustId = this.MouCustId;
-        this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, mouListedFctr).subscribe(
+        this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { Id: this.MouCustId }).subscribe(
           (response) => {
             this.listedCusts = response["mouCustListedCustFctrObjs"];
           }
@@ -114,7 +114,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
         if (custFctrId != 0) {
           var mouListedFctr = new MouCustListedCustFctrObj();
           mouListedFctr.MouListedCustFctrId = custFctrId;
-          this.httpClient.post(URLConstant.DeleteMouCustListedCustFctr, mouListedFctr).subscribe(
+          this.httpClient.post(URLConstant.DeleteMouCustListedCustFctr, { Id: custFctrId}).subscribe(
             (response: any) => {
               this.toastr.successMessage(response["Message"]);
             }

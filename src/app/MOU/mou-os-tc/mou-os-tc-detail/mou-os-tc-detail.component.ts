@@ -37,7 +37,7 @@ export class MouOsTcDetailComponent implements OnInit {
 
   ngOnInit() {
     this.mouCustObject.MouCustId = this.MouCustId;
-    this.http.post(URLConstant.GetMouCustById, this.mouCustObject).subscribe(
+    this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
       }

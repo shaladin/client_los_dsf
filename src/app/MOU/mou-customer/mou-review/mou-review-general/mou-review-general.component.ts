@@ -75,7 +75,7 @@ export class MouReviewGeneralComponent implements OnInit {
       this.claimTask();
     }
     this.mouCustObject.MouCustId = this.MouCustId;
-    await this.http.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
+    await this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -122,7 +122,7 @@ export class MouReviewGeneralComponent implements OnInit {
     //     }
     //   })
 
-    var mouCustObj = { MouCustId: this.MouCustId };
+    var mouCustObj = { Id: this.MouCustId };
     await this.http.post(URLConstant.GetMouCustById, mouCustObj).toPromise().then(
       (response) => {
         this.PlafondAmt = response['PlafondAmt'];
@@ -142,7 +142,7 @@ export class MouReviewGeneralComponent implements OnInit {
       }
     );
 
-    await this.http.post(URLConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId }).toPromise().then(
+    await this.http.post(URLConstant.GetMouCustScoreByMouCustId, { Id: this.MouCustId }).toPromise().then(
       (response) => {
         this.ScoreResult = response["ScoreResult"];
       }
@@ -180,7 +180,7 @@ export class MouReviewGeneralComponent implements OnInit {
   }
 
   Return() {
-    var mouObj = { MouCustId: this.MouCustId, WfTaskListId: this.WfTaskListId }
+    var mouObj = { TaskListId: this.WfTaskListId}
     this.http.post(URLConstant.ReturnMouReview, mouObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);

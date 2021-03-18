@@ -170,7 +170,7 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
     
       this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
         (response) => {
-          this.http.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { MouCustId: response["MouCustId"] }).subscribe(
+          this.http.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { Id: response["MouCustId"] }).subscribe(
             (response2) => {
               if (response2["length"] > 0) {
                 this.IsDisableCustFctr = false;

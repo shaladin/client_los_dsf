@@ -161,7 +161,7 @@ export class MouRequestAddcollComponent implements OnInit {
   bindMouData() {
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
-    this.http.post(URLConstant.GetMouCustById, this.mouCustObj).subscribe(
+    this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.returnMouCust = response;
         this.custNo = this.returnMouCust.CustNo;

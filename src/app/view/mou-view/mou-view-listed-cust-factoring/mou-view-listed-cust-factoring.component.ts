@@ -18,7 +18,7 @@ export class MouViewListedCustFactoringComponent implements OnInit {
   ngOnInit() {
     var mouObj = new MouCustObj();
     mouObj.MouCustId = this.MouCustId;
-    this.http.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, mouObj).subscribe(
+    this.http.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { Id: this.MouCustId }).subscribe(
       response => {
         this.responseCustListed = response['mouCustListedCustFctrObjs'];
       });

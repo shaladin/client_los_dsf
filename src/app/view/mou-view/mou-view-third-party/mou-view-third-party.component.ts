@@ -22,7 +22,7 @@ export class MouViewThirdPartyComponent implements OnInit {
     this.GetFraudResult = URLConstant.GetFraudResult;
     this.thirdPartyRsltHObj = new ThirdPartyRsltHObj();
 
-    this.http.post(this.GetMouByMouId,  {"MouCustId": this.MouCustId}).subscribe(
+    this.http.post(this.GetMouByMouId,  {"Id": this.MouCustId}).subscribe(
       (response) => {
     this.thirdPartyRsltHObj.TrxNo = response['MouCustNo'];
     this.http.post(this.GetFraudResult, this.thirdPartyRsltHObj).subscribe(

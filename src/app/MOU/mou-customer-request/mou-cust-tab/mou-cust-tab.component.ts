@@ -848,7 +848,7 @@ export class MouCustTabComponent implements OnInit {
   }
 
   async getCustData() {
-    await this.http.post(URLConstant.GetMouCustByMouCustId, { "MouCustId": this.MouCustId }).toPromise().then(
+    await this.http.post(URLConstant.GetMouCustByMouCustId, { "Id": this.MouCustId }).toPromise().then(
       (response) => {
         if (response["MouCustObj"]["MouCustId"] > 0) {
           if (response["MouCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
@@ -1434,7 +1434,7 @@ export class MouCustTabComponent implements OnInit {
         }
         this.mouObj = new MouCustObj();
         this.mouObj.MouCustId = this.MouCustId;
-        this.http.post(URLConstant.GetMouCustById, this.mouObj).subscribe(
+        this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
           (response) => {
             this.returnMouObj = response;
 

@@ -28,7 +28,7 @@ export class LOSErrorDataMonitoringComponent implements OnInit {
 
     if (ev.Key == "ReSend") {
       var LosAppObj = {
-        AppNo: ev.RowObj.AppNo
+        TrxNo: ev.RowObj.AppNo
       };
       await this.http.post(URLConstant.ReSendLosR3DataToR2, LosAppObj).toPromise().then(
         (response) => {

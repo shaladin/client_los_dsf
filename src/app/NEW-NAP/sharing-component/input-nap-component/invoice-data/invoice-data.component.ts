@@ -52,7 +52,7 @@ export class InvoiceDataComponent implements OnInit {
 
     this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
-        this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { MouCustId: response["MouCustId"] }).subscribe(
+        this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { Id: response["MouCustId"] }).subscribe(
           (response2) => {
             if (response2["length"] > 0) {
               this.IsDisableCustFctr = false;
