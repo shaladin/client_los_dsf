@@ -61,16 +61,9 @@ export class DocChecklistApprovalDetailComponent implements OnInit {
       this.TrxNo = params["TrxNo"];
       this.taskId = params["TaskId"];
       this.ApvReqId = params["ApvReqId"];
-      var obj = {
-        taskId: params["TaskId"],
-        instanceId: params["InstanceId"],
-        approvalBaseUrl: environment.ApprovalR3Url
-      }
-
-      this.inputObj = obj;
 
       var ApvHoldObj = new ApprovalObj()
-      ApvHoldObj.TaskId = obj.taskId
+      ApvHoldObj.TaskId = params["TaskId"];
 
       this.HoldTask(ApvHoldObj);
     });

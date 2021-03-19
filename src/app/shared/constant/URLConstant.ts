@@ -17,6 +17,7 @@ export class URLConstant {
   
   // APP Application
   public static AddApp = environment.losUrl + "/Application/AddApp";
+  public static AddNewApplication = environment.losUrl + "/Application/AddNewApplication";
   public static AddAppMaindata = environment.losUrl + "/Application/AddAppMainData";
   public static EditApp = "/Application/EditApp";
   public static GetAppById = environment.losUrl + "/Application/GetAppById";
@@ -1097,7 +1098,6 @@ export class URLConstant {
   // public static GetAssetTypeById = environment.FoundationR3Url + "/AssetType/GetAssetTypeById"
 
   // List Approver
-  public static GetApprovedBy = environment.ApprovalR3Url + "/api/RFAWeb/GetApprovedBy/";
   public static GetRecommendations = environment.ApprovalR3Url + "/api/RFAWeb/GetRecommendations/";
 
   public static ApvHoldTaskUrl = environment.FoundationR3Url + "/Approval/Hold";
