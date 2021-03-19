@@ -40,7 +40,7 @@ export class FinancialDataComponent implements OnInit {
 
   listSubsidy: Array<AppSubsidyObj> = new Array<AppSubsidyObj>();
   AppData: AppObj;
-
+  isReady: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -56,6 +56,7 @@ export class FinancialDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("reyanrd");
     this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId}).subscribe(
       (response) => {
         this.AppData = response;
@@ -141,6 +142,7 @@ export class FinancialDataComponent implements OnInit {
             NeedReCalculate: true
           }
         );
+        this.isReady = true;
         this.LoadAppFinData();
       });
   }
