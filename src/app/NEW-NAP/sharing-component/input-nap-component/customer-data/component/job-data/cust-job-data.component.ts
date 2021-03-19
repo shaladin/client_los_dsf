@@ -226,7 +226,7 @@ export class CustJobDataComponent implements OnInit {
         CustModelCode: this.custModelCode,
         ProfessionalNo: this.appCustPersonalJobDataObj.ProfessionalNo,
         EstablishmentDt: this.appCustPersonalJobDataObj.EstablishmentDt != undefined ? formatDate(this.appCustPersonalJobDataObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US') : '',
-        JobTitleName: this.appCustPersonalJobDataObj.MrJobTitleCode,
+        JobTitleName: this.appCustPersonalJobDataObj.JobTitleName,
         IsMfEmp: this.appCustPersonalJobDataObj.IsMfEmp,
         CompanyName: this.appCustPersonalJobDataObj.CompanyName,
         MrJobPositionCode: this.appCustPersonalJobDataObj.MrJobPositionCode,

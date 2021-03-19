@@ -1099,7 +1099,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     this.setCollateralAttribute();
     for (const key in this.appCollateralDataObj.AppCollateralRegistrationObj) {
       console.log(key + ": " + this.appCollateralDataObj.AppCollateralRegistrationObj[key]);
-      if(key === "AppCollateralRegistrationId" || key === "AppCollateralId" || key === "RowVersion" || key === "Notes"){
+      if(key === "Id" || key === "AppCollateralRegistrationId" || key === "AppCollateralId" || key === "RowVersion" || key === "Notes"){
         continue;
       }
       if(!this.appCollateralDataObj.AppCollateralRegistrationObj[key]){

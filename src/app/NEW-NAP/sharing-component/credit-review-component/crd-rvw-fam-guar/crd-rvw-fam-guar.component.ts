@@ -71,10 +71,10 @@ export class CrdRvwFamGuarComponent implements OnInit {
         for (let index = 0; index < this.ListAppCustFamily.length; index++) {
           const element = this.ListAppCustFamily[index];
           if(element.MrCustTypeCode == this.CustTypePersonal){
-            this.ListAppCustFamily[index].MrCustRelationshipCodeDesc = this.DictRefMaster[this.RefMasterTypeCustPersonalRelationship + element.MrCustRelationshipCode];
+            this.ListAppCustFamily[index].MrCustRelationshipDescr = this.DictRefMaster[this.RefMasterTypeCustPersonalRelationship + element.MrCustRelationshipCode];
           }
           if(element.MrCustTypeCode == this.CustTypeCompany){
-            this.ListAppCustFamily[index].MrCustRelationshipCodeDesc = this.DictRefMaster[this.RefMasterTypeCustCompanyRelationship + element.MrCustRelationshipCode];
+            this.ListAppCustFamily[index].MrCustRelationshipDescr = this.DictRefMaster[this.RefMasterTypeCustCompanyRelationship + element.MrCustRelationshipCode];
           }
         }
       }
@@ -90,10 +90,10 @@ export class CrdRvwFamGuarComponent implements OnInit {
         for (let index = 0; index < this.ListAppCustShareholder.length; index++) {
           const element = this.ListAppCustShareholder[index];
           if(element.MrCustTypeCode == this.CustTypePersonal){
-            this.ListAppCustShareholder[index].MrCustRelationshipCodeDesc = this.DictRefMaster[this.RefMasterTypeCustPersonalRelationship + element.MrCustRelationshipCode];
+            this.ListAppCustShareholder[index].MrCustRelationshipDescr = this.DictRefMaster[this.RefMasterTypeCustPersonalRelationship + element.MrCustRelationshipCode];
           }
           if(element.MrCustTypeCode == this.CustTypeCompany){
-            this.ListAppCustShareholder[index].MrCustRelationshipCodeDesc = this.DictRefMaster[this.RefMasterTypeCustCompanyRelationship + element.MrCustRelationshipCode];
+            this.ListAppCustShareholder[index].MrCustRelationshipDescr = this.DictRefMaster[this.RefMasterTypeCustCompanyRelationship + element.MrCustRelationshipCode];
           }
         }
       }
@@ -108,10 +108,10 @@ export class CrdRvwFamGuarComponent implements OnInit {
         for (let index = 0; index < this.ListAppCustGuarantor.length; index++) {
           const element = this.ListAppCustGuarantor[index];
           if(element.MrCustTypeCode == this.CustTypePersonal){
-            this.ListAppCustGuarantor[index].MrCustRelationshipCodeDesc = this.DictRefMaster[this.RefMasterTypeCustPersonalRelationship + element.MrCustRelationshipCode];
+            this.ListAppCustGuarantor[index].MrCustRelationshipDescr = this.DictRefMaster[this.RefMasterTypeCustPersonalRelationship + element.MrCustRelationshipCode];
           }
           if(element.MrCustTypeCode == this.CustTypeCompany){
-            this.ListAppCustGuarantor[index].MrCustRelationshipCodeDesc = this.DictRefMaster[this.RefMasterTypeCustCompanyRelationship + element.MrCustRelationshipCode];
+            this.ListAppCustGuarantor[index].MrCustRelationshipDescr = this.DictRefMaster[this.RefMasterTypeCustCompanyRelationship + element.MrCustRelationshipCode];
           }
         }
       }

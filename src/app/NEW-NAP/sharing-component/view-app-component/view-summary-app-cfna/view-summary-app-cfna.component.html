@@ -77,12 +77,12 @@
             <label class="adInsLabel"> {{SummaryAppObj?.SpouseName}} </label>
           </div>
         </div>
-        <div class="row" *ngFor="let item of SummaryAppObj?.AppGuarantorObjs; let i=index">
+        <div class="row" *ngFor="let item of SummaryAppObj?.AppCustGuarantorObjs; let i=index">
           <div class="col-md-6">
             <label *ngIf="i == 0" class="adInsLabel" translate> Guarantor </label>
           </div>
           <div class="col-md-6">
-            <label class="adInsLabel"> {{item.GuarantorName + ' - ' + item.CustRelationshipCodeDesc}} </label>
+            <label class="adInsLabel"> {{item.CustName + ' - ' + item.MrCustRelationshipDescr}} </label>
           </div>
         </div>
       </div>

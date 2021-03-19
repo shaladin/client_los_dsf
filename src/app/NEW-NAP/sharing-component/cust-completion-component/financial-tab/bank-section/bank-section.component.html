@@ -51,7 +51,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let stmnt of item.AppCustBankStmntObjs">
-                    <td style="text-align: left;">{{stmnt.MonthName}}</td>
+                    <td style="text-align: left;">{{stmnt.Month}}</td>
                     <td style="text-align: left;">{{stmnt.Year}}</td>
                     <td style="text-align: left;">{{stmnt.DebitAmt | number:'.2':'en-US'}}</td>
                     <td style="text-align: left;">{{stmnt.CreditAmt | number:'.2':'en-US'}}</td>
@@ -145,7 +145,7 @@
               <tr *ngFor="let item of BankAccStmntForm.controls['BankStmntObjs'].controls;let i = index">
                 <td [formGroupName]="i"><select class="form-control" formControlName="Month"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Month.invalid }">
-                    <option *ngFor="let item of MonthObj" value="{{item.Key}}">
+                    <option *ngFor="let item of MonthObj" value="{{item.Value}}">
                       {{item.Value}}
                     </option>
                   </select>

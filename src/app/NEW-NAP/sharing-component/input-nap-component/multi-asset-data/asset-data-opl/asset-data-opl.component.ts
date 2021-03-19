@@ -144,7 +144,7 @@ export class AssetDataOplComponent implements OnInit {
     Discount: [0],
     ExpectedDelivDt: [''],
     IsNeedReplacementCar: [false],
-    ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
+    ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.min(1)]],
 
     /* AppAsset Value That required but not in form*/
     AssetSeqNo: ['1', Validators.required],

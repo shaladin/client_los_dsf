@@ -10,6 +10,7 @@ export class ResponseAppCustMainDataObj {
     AppCustAddrLegalObj: AppCustAddrObj;
     AppCustCompanyObj: AppCustCompanyObj;
     AppCustCompanyMgmntShrholderObj: AppCustCompanyMgmntShrholderObj;
+    StatusCode: string;
 
     constructor()
     {

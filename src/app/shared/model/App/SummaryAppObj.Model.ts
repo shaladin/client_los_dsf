@@ -21,7 +21,7 @@ export class SummaryAppObj{
     AppAssetObjs: Array<AppAssetObj>;
     AppCollateralObjs: Array<AppCollateralObj>;
     AppFinDataObj: AppFinDataObj;
-    AppGuarantorObjs: Array<AppGuarantorObj>;
+    AppCustGuarantorObjs: Array<AppCustObj>;
     AssetTypeSerialNoLabelCustomObjs: Array<AssetTypeSerialNoLabelObj>;
     MrNegCustTypeCode: string;
     NegCustTypeName: string;
@@ -50,7 +50,7 @@ export class SummaryAppObj{
         this.AppAssetObjs = new Array<AppAssetObj>();
         this.AppCollateralObjs = new Array<AppCollateralObj>();
         this.AppFinDataObj = new AppFinDataObj();
-        this.AppGuarantorObjs = new Array<AppGuarantorObj>();
+        this.AppCustGuarantorObjs = new Array<AppCustObj>();
         this.AssetTypeSerialNoLabelCustomObjs = new Array<AssetTypeSerialNoLabelObj>();
     }
 }

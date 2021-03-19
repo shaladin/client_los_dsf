@@ -308,10 +308,11 @@
               (ResponseProdOfrUpToDate)="MissingProdOfrHandler($event)" *ngIf="IsLoanObject"></app-loan-object>
           </div>
 
-          <lib-ucSubsection [id]="'mailingAddrId'" [title]="'Mailing Address'" [panel]="'mailingAddr'"
-            *ngIf="isIncludeMailingAddress">
+          
+          
+          <lib-ucSubsection [id]="'mailingAddrId'" [title]="'Mailing Address'" [panel]="'mailingAddr'">
           </lib-ucSubsection>
-          <div id="mailingAddr" *ngIf="isIncludeMailingAddress">
+          <div id="mailingAddr">
             <div class="form-group row">
               <label class="col-md-2" translate>Copy Address From</label>
               <div class="col-md-4">
@@ -329,7 +330,7 @@
                 </div>
               </div>
             </div>
-            <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObj" [enjiForm]="enjiForm" [identifier]="'Address'"
+            <lib-ucaddress #UcAddrGrp *ngIf="IsAddrReady" [addressObj]="inputAddressObj" [enjiForm]="enjiForm" [identifier]="'Address'"
               [UCAddrForm]="NapAppModelForm"></lib-ucaddress>
           </div>
 

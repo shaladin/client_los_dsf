@@ -1,3 +1,4 @@
+
 export class AppCustBankAccObj {
     AppCustBankAccId: number;
     AppCustId: number;

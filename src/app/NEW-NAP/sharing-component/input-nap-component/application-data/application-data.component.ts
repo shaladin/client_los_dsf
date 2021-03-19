@@ -50,7 +50,6 @@ export class ApplicationDataComponent implements OnInit {
   resMouCustObj;
   mouCustObj;
   CustNo: string;
-  isMainData: boolean = false;
   isProdOfrUpToDate: boolean = true;
   missingProdOfrComp: string = "";
 
@@ -124,9 +123,6 @@ export class ApplicationDataComponent implements OnInit {
     private toastr: NGXToastrService, private modalService: NgbModal, private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.appId = params["AppId"];
-    });
-    this.route.queryParams.subscribe(params => {
-      if (params["IsMainData"] != undefined && params["IsMainData"]) this.isMainData = params["IsMainData"];
     });
   }
 
@@ -657,7 +653,7 @@ export class ApplicationDataComponent implements OnInit {
               appFinData: tempAppFindDataObj,
               RowVersion: "",
             };
-            if (this.isIncludeMailingAddress) obj['appCustMailingAddr'] = this.getMailingAddrForSave();
+            obj['appCustMailingAddr'] = this.getMailingAddrForSave();
             this.http.post(url, obj).subscribe(
               (response) => {
                 this.toastr.successMessage('Save Application Data');
@@ -681,7 +677,7 @@ export class ApplicationDataComponent implements OnInit {
         appFinData: tempAppFindDataObj,
         RowVersion: ""
       };
-      if (this.isIncludeMailingAddress) obj['appCustMailingAddr'] = this.getMailingAddrForSave();
+      obj['appCustMailingAddr'] = this.getMailingAddrForSave();
       this.http.post(url, obj).subscribe(
         (response) => {
           this.toastr.successMessage('Save Application Data Success!');
@@ -762,7 +758,6 @@ export class ApplicationDataComponent implements OnInit {
     this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
   }
 
-  isIncludeMailingAddress: boolean = false;
   inputAddressObj: InputAddressObj = new InputAddressObj();
   inputFieldAddressObj: InputFieldObj = new InputFieldObj();
   mailingAddrObj: AddrObj = new AddrObj();
@@ -771,10 +766,8 @@ export class ApplicationDataComponent implements OnInit {
     { Key: "LEGAL", Value: "Legal" },
     { Key: "RESIDENCE", Value: "Residence" }
   ];
-  async initMailingAddress() {
-    if (!this.isMainData) return;
-
-    this.isIncludeMailingAddress = true;
+  IsAddrReady: boolean = false;
+  async initMailingAddress(){
     this.mailingAddrObj = new AddrObj();
     this.inputAddressObj = new InputAddressObj();
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
@@ -788,10 +781,9 @@ export class ApplicationDataComponent implements OnInit {
     );
   }
 
-  copyToMailing(addrType: string = '') {
-    if (!this.isIncludeMailingAddress) return;
-    if (!addrType) addrType = this.NapAppModelForm.controls.CopyFromMailing.value;
-    if (!addrType) return;
+  copyToMailing(addrType:string = ''){
+    if(!addrType) addrType = this.NapAppModelForm.controls.CopyFromMailing.value;
+    if(!addrType) return;
 
     let address = this.AppCustAddrObj.filter(emp => emp.MrCustAddrTypeCode === addrType);
     if (address.length && address[0] != undefined) {
@@ -806,19 +798,23 @@ export class ApplicationDataComponent implements OnInit {
       this.mailingAddrObj.FaxArea = address.FaxArea;
       this.mailingAddrObj.Phn1 = address.Phn1;
       this.mailingAddrObj.Phn2 = address.Phn2;
+      this.mailingAddrObj.Phn3 = address.Phn3;
       this.mailingAddrObj.PhnArea1 = address.PhnArea1;
       this.mailingAddrObj.PhnArea2 = address.PhnArea2;
+      this.mailingAddrObj.PhnArea3 = address.PhnArea3;
       this.mailingAddrObj.PhnExt1 = address.PhnExt1;
       this.mailingAddrObj.PhnExt2 = address.PhnExt2;
+      this.mailingAddrObj.PhnExt3 = address.PhnExt3;
 
       this.inputAddressObj.inputField.inputLookupObj.nameSelect = address.Zipcode;
       this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: address.Zipcode };
       this.inputAddressObj.default = this.mailingAddrObj;
     }
+    this.IsAddrReady = true;
   }
 
-  getMailingAddrForSave() {
-    if (!this.isIncludeMailingAddress) return null;
+  getMailingAddrForSave()
+  {
     let mailingAddr: AppCustAddrObj = new AppCustAddrObj();
     mailingAddr.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
     mailingAddr.Addr = this.NapAppModelForm.controls["Address"]["controls"].Addr.value;

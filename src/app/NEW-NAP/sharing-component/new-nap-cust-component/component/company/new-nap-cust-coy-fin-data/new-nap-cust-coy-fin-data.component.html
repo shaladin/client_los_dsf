@@ -1,0 +1,245 @@
+<form class="form form-horizontal" [formGroup]="ParentForm" (ngSubmit)="ParentForm.valid"
+  #enjiForm="ngForm">
+  <lib-ucSubsection [id]="'FinancialId'" [title]="'Financial Data'" [panel]="'Financial'">
+  </lib-ucSubsection>
+  <div id="Financial">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-4 adins-required-label" translate>Monthly Income</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="GrossMonthlyIncomeAmt"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.GrossMonthlyIncomeAmt.invalid}" [options]="{allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.GrossMonthlyIncomeAmt"
+              [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Return Of Investment(%)</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="ReturnOfInvestmentPrcnt"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.ReturnOfInvestmentPrcnt.invalid}" [options]="{suffix:'%', max:100, allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.ReturnOfInvestmentPrcnt" [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Return Of Asset(%)</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="ReturnOfAssetPrcnt"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.ReturnOfAssetPrcnt.invalid}" [options]="{suffix:'%', max:100, allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.ReturnOfAssetPrcnt" [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Current Ratio(%)</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="CurrentRatioPrcnt"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.CurrentRatioPrcnt.invalid}" [options]="{suffix:'%', max:100, allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.CurrentRatioPrcnt" [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Invetory Turn Over(%)</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="InvTurnOverPrcnt"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.InvTurnOverPrcnt.invalid}" [options]="{suffix:'%', max:100, allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.InvTurnOverPrcnt" [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Growth(%)</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="GrowthPrcnt"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.GrowthPrcnt.invalid}" [options]="{suffix:'%', max:100, allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.GrowthPrcnt" [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Other Monthly Installment</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="OthMonthlyInstAmt"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.OthMonthlyInstAmt.invalid}" [options]="{allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.OthMonthlyInstAmt" [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Revenue</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="Revenue"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.Revenue.invalid}" [options]="{allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.Revenue" [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Profit Before Tax</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="ProfitBeforeTax"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.ProfitBeforeTax.invalid}" [options]="{allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.ProfitBeforeTax" [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Nett Fixed Asset</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="NetFixedAsset"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.NetFixedAsset.invalid}" [options]="{allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.NetFixedAsset" [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Current Liabilities</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="CurrLiablts"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.CurrLiablts.invalid}" [options]="{allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.CurrLiablts" [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Shareholder Equity</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="ShareholderEquity"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.ShareholderEquity.invalid}" [options]="{allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.ShareholderEquity" [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group row">
+          <label class="col-md-4" translate>Monthly Expense</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="GrossMonthlyExpenseAmt"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.GrossMonthlyExpenseAmt.invalid}" [options]="{allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.GrossMonthlyExpenseAmt"
+              [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Return Of Equity(%)</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="ReturnOfEquityPrcnt"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.ReturnOfEquityPrcnt.invalid}" [options]="{suffix:'%', max:100, allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.ReturnOfEquityPrcnt"
+              [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Profit Margin(%)</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="ProfitMarginPrcnt"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.ProfitMarginPrcnt.invalid}" [options]="{suffix:'%', max:100, allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.ProfitMarginPrcnt"
+              [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Debt Equity Ratio(%)</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="DebtEquityRatioPrcnt"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.DebtEquityRatioPrcnt.invalid}" [options]="{suffix:'%', max:100, allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.DebtEquityRatioPrcnt"
+              [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>AR Turn Over(%)</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="ArTurnOverPrcnt"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.ArTurnOverPrcnt.invalid}" [options]="{suffix:'%', max:100, allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.ArTurnOverPrcnt"
+              [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Working Capital (Amount)</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="WorkingCapitalAmt"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.WorkingCapitalAmt.invalid}" [options]="{allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.WorkingCapitalAmt"
+              [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Date As Of</label>
+          <div class="col-md-8">
+            <input type="date" class="form-control" formControlName="DateAsOf"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.DateAsOf.invalid}">
+            <lib-uc-show-errors [control]="ParentForm.controls.DateAsOf"
+              [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Operational Cost</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="OprCost"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.OprCost.invalid}" [options]="{allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.OprCost"
+              [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Current Asset</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="CurrAsset"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.CurrAsset.invalid}" [options]="{allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.CurrAsset"
+              [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Total Asset</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="TotalAsset"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.TotalAsset.invalid}" [options]="{allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.TotalAsset"
+              [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Long Term Liabilities</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="LongTermLiablts"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.LongTermLiablts.invalid}" [options]="{allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.LongTermLiablts"
+              [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-4" translate>Current Ratio</label>
+          <div class="col-md-8">
+            <input type="" currencyMask class="form-control" formControlName="CurrRatio"
+              [ngClass]="{ 'is-invalid': IsCompanyFinDataSubmitted && ParentForm.controls.CurrRatio.invalid}" [options]="{allowNegative: false}">
+            <lib-uc-show-errors [control]="ParentForm.controls.CurrRatio"
+              [submit]="IsCompanyFinDataSubmitted">
+            </lib-uc-show-errors>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-new-nap-attr-content [title]="'Financial Attribute'" [AppCustId]="AppCustId" [enjiForm]="enjiForm"
+    [parentForm]="ParentForm" [identifier]="'AttrList'" [AttrGroup]="AttrGroup" [IsAttrSubmitted]="IsCompanyFinDataSubmitted"></app-new-nap-attr-content>
+  <app-new-nap-cust-bank-acc [AppCustId]="AppCustId" [AppCustBankAccList]="AppCustBankAccList" (OutputObj)="GetEvent($event)"></app-new-nap-cust-bank-acc>
+</form>

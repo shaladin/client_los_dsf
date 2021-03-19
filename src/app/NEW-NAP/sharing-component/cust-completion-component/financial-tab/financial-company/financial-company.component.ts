@@ -132,6 +132,7 @@ export class FinancialCompanyComponent implements OnInit {
     }
     
     this.AppCustCompanyFinData = this.FinancialForm.value;
+    this.AppCustCompanyFinData.GrossProfitAmt = this.AppCustCompanyFinData.GrossMonthlyIncomeAmt - this.AppCustCompanyFinData.GrossMonthlyExpenseAmt;
     this.AppCustCompanyFinData.AppCustId = this.AppCustId;
 
     let request = {
