@@ -17,7 +17,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
-import { ReqAddNapObj } from 'app/shared/model/Request/NAP/NewApplication/ReqAddNapObj.model';
+import { ReqAddNapFromCopyObj, ReqAddNapObj } from 'app/shared/model/Request/NAP/NewApplication/ReqAddNapObj.model';
 
 @Component({
   selector: 'cust-main-data-add',
@@ -141,50 +141,59 @@ export class CustMainDataAddComponent implements OnInit {
   }
 
   ChangeValueOffice(ev: UcDropdownListCallbackObj) {
-    console.log(ev);
-    // this.NapAppForm.patchValue({
-    //   OriOfficeCode: ev.target.selectedOptions[0].value,
-    //   OriOfficeName: ev.target.selectedOptions[0].text
-    // });
+    this.NapAppForm.patchValue({
+      OriOfficeCode: ev.selectedObj.Key,
+      OriOfficeName: ev.selectedObj.Value
+    });
 
-    // var arrCopyLookupCrit = new Array();
-    // var addCrit = new CriteriaObj();
-    // addCrit.DataType = "text";
-    // addCrit.propName = "a.ORI_OFFICE_CODE";
-    // addCrit.restriction = AdInsConstant.RestrictionIn;
-    // addCrit.listValue = [ev.target.selectedOptions[0].value];
-    // arrCopyLookupCrit.push(addCrit);
+    var arrCopyLookupCrit = new Array();
+    var addCrit = new CriteriaObj();
+    addCrit.DataType = "text";
+    addCrit.propName = "a.ORI_OFFICE_CODE";
+    addCrit.restriction = AdInsConstant.RestrictionEq;
+    addCrit.value = ev.selectedObj.Key;
+    arrCopyLookupCrit.push(addCrit);
 
-    // var critObj = new CriteriaObj();
-    // critObj.restriction = AdInsConstant.RestrictionEq;
-    // critObj.propName = 'vrl.BIZ_TMPLT_CODE';
-    // critObj.value = this.bizTemplateCode;
-    // arrCopyLookupCrit.push(critObj);
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'vrl.BIZ_TMPLT_CODE';
+    critObj.value = this.bizTemplateCode;
+    arrCopyLookupCrit.push(critObj);
 
-    // this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
-    // this.ucLookupCopyProduct.setAddCritInput();
+    this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
+    this.ucLookupCopyProduct.setAddCritInput();
 
-    // var arrAddCrit = new Array();
-    // var addCrit = new CriteriaObj();
-    // addCrit.DataType = "text";
-    // addCrit.propName = "ro.OFFICE_CODE";
-    // addCrit.restriction = AdInsConstant.RestrictionIn;
-    // addCrit.listValue = [ev.target.selectedOptions[0].value];
-    // arrAddCrit.push(addCrit);
+    var arrAddCrit = new Array();
+    var addCrit = new CriteriaObj();
+    addCrit.DataType = "text";
+    addCrit.propName = "ro.OFFICE_CODE";
+    addCrit.restriction = AdInsConstant.RestrictionEq;
+    addCrit.value = ev.selectedObj.Key;
+    arrAddCrit.push(addCrit);
 
-    // var addCritBizTempalte = new CriteriaObj();
-    // addCritBizTempalte.DataType = "text";
-    // addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
-    // addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
-    // addCritBizTempalte.value = this.bizTemplateCode;
-    // arrAddCrit.push(addCritBizTempalte);
+    var addCritBizTempalte = new CriteriaObj();
+    addCritBizTempalte.DataType = "text";
+    addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
+    addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
+    addCritBizTempalte.value = this.bizTemplateCode;
+    arrAddCrit.push(addCritBizTempalte);
 
-    // this.inputLookupObjName.addCritInput = arrAddCrit;
-    // this.ucLookupOffering.setAddCritInput();
+    this.inputLookupObjName.addCritInput = arrAddCrit;
+    this.ucLookupOffering.setAddCritInput();
   }
 
   getLookupAppResponseCopy(ev: any) {
-    console.log(ev);
+    this.NapAppForm.patchValue({
+      AppNo: ev.AppNo,
+      ProdOfferingName: ev.ProdOfferingName,
+      CurrCode: ev.CurrCode,
+    });
+    this.NapAppForm.get("ProductOfferingNameIdentifier").patchValue({
+      value: ev.ProdOfferingName
+    });
+    // this.inputLookupObjName.nameSelect = ev.ProdOfferingName;
+    this.inputLookupObjName.isRequired = false;
+    this.isCopyData = true;
   }
 
   getLookupAppResponseName(ev: any) {
@@ -229,24 +238,40 @@ export class CustMainDataAddComponent implements OnInit {
   }
 
   SaveForm() {
-    let reqAddNapObj: ReqAddNapObj = new ReqAddNapObj();
-    reqAddNapObj.OriOfficeCode = this.NapAppForm.getRawValue().OriOfficeCode;
-    reqAddNapObj.OriOfficeName = this.NapAppForm.getRawValue().OriOfficeName;
-    reqAddNapObj.CrtOfficeCode = this.NapAppForm.getRawValue().CrtOfficeCode;
-    reqAddNapObj.CrtOfficeName = this.NapAppForm.getRawValue().CrtOfficeName;
-    reqAddNapObj.ProdOfferingCode = this.NapAppForm.getRawValue().ProdOfferingCode;
-    reqAddNapObj.ProdOfferingName = this.NapAppForm.getRawValue().ProdOfferingName;
-    reqAddNapObj.ProdOfferingVersion = this.NapAppForm.getRawValue().ProdOfferingVersion;
-    reqAddNapObj.CurrCode = this.NapAppForm.getRawValue().CurrCode;
-    reqAddNapObj.LobCode = this.NapAppForm.getRawValue().LobCode;
-    reqAddNapObj.RefProdTypeCode = this.NapAppForm.getRawValue().RefProdTypeCode;
-    reqAddNapObj.PayFreqCode = this.NapAppForm.getRawValue().PayFreqCode;
-    reqAddNapObj.BizTemplateCode = this.bizTemplateCode;
-    console.log(reqAddNapObj);
+    let requestAddNapObj: Object = new Object();
+    let AddNapUrl: string = "";
+    if (this.NapAppForm.getRawValue().AppNo == "") {
+      let reqAddNapObj: ReqAddNapObj = new ReqAddNapObj();
 
-    this.http.post(URLConstant.AddAppMaindata, reqAddNapObj).subscribe(
+      reqAddNapObj.OriOfficeCode = this.NapAppForm.getRawValue().OriOfficeCode;
+      reqAddNapObj.OriOfficeName = this.NapAppForm.getRawValue().OriOfficeName;
+      reqAddNapObj.CrtOfficeCode = this.NapAppForm.getRawValue().CrtOfficeCode;
+      reqAddNapObj.CrtOfficeName = this.NapAppForm.getRawValue().CrtOfficeName;
+      reqAddNapObj.ProdOfferingCode = this.NapAppForm.getRawValue().ProdOfferingCode;
+      reqAddNapObj.ProdOfferingName = this.NapAppForm.getRawValue().ProdOfferingName;
+      reqAddNapObj.ProdOfferingVersion = this.NapAppForm.getRawValue().ProdOfferingVersion;
+      reqAddNapObj.CurrCode = this.NapAppForm.getRawValue().CurrCode;
+      reqAddNapObj.LobCode = this.NapAppForm.getRawValue().LobCode;
+      reqAddNapObj.RefProdTypeCode = this.NapAppForm.getRawValue().RefProdTypeCode;
+      reqAddNapObj.PayFreqCode = this.NapAppForm.getRawValue().PayFreqCode;
+      reqAddNapObj.BizTemplateCode = this.bizTemplateCode;
+
+      requestAddNapObj = reqAddNapObj;
+      AddNapUrl = URLConstant.AddNewApplication;
+    } else {
+
+      let reqAddNapFromCopyObj: ReqAddNapFromCopyObj = new ReqAddNapFromCopyObj();
+
+      reqAddNapFromCopyObj.AppNo = this.NapAppForm.getRawValue().AppNo;
+      reqAddNapFromCopyObj.OriOfficeCode = this.NapAppForm.getRawValue().OriOfficeCode;
+
+      requestAddNapObj = reqAddNapFromCopyObj;
+      AddNapUrl = URLConstant.AddNewApplicationFromCopy;
+    }
+
+    this.http.post(AddNapUrl, requestAddNapObj).subscribe(
       (response) => {
-        // setTimeout(() => { this.spinner.show(); }, 10)
+        setTimeout(() => { this.spinner.show(); }, 10);
         this.toastr.successMessage(response["message"]);
         switch (this.bizTemplateCode) {
           case CommonConstant.CF4W:
@@ -274,9 +299,4 @@ export class CustMainDataAddComponent implements OnInit {
   buttonCancelClick() {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
   }
-
-  clickme() {
-    console.log(this.NapAppForm.value);
-  }
-
 }

@@ -1,4 +1,3 @@
-
 export class ReqAddNapObj {
     OriOfficeCode: string;
     OriOfficeName: string;
@@ -12,6 +11,7 @@ export class ReqAddNapObj {
     RefProdTypeCode: string;
     PayFreqCode: string;
     BizTemplateCode: string;
+    RowVersion: string;
 
     constructor() {
         this.OriOfficeCode = "";
@@ -26,5 +26,18 @@ export class ReqAddNapObj {
         this.RefProdTypeCode = "";
         this.PayFreqCode = "";
         this.BizTemplateCode = "";
+        this.RowVersion = "";
+    }
+}
+
+export class ReqAddNapFromCopyObj {
+    AppNo: string;
+    OriOfficeCode: string;
+    RowVersion: string;
+
+    constructor() {
+        this.AppNo = "";
+        this.OriOfficeCode = "";
+        this.RowVersion = "";
     }
 }

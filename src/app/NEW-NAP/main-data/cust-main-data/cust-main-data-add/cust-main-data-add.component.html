@@ -39,11 +39,12 @@
                     (lookup)="getLookupAppResponseName($event)">
                   </lib-uclookupgeneric>
                 </div>
-                <label class="col-md-4 adInsLabel" *ngIf="isCopyData">{{NapAppForm.controls.ProdOfferingName.value}} </label>
+                <label class="col-md-4 adInsLabel" *ngIf="isCopyData">{{NapAppForm.controls.ProdOfferingName.value}}
+                </label>
               </div>
               <div class="form-group row">
                 <label class="col-md-4 adInsLabel" translate>Currency </label>
-                <label class="col-md-4 adInsLabel">{{NapAppForm.controls.CurrDescr.value}} </label>
+                <label class="col-md-4 adInsLabel">{{NapAppForm.controls.CurrCode.value}} </label>
               </div>
             </div>
             <div class="form-actions right">
@@ -60,6 +61,3 @@
     </div>
   </div>
 </div>
-
-<button type="button" (click)="clickme()">click me</button>
-<p>is this form valid ? {{NapAppForm.valid}}</p>
