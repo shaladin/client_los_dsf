@@ -27,7 +27,7 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstant.DETAIL,
+        path: PathConstant.ADD_DETAIL,
         component: NapAddDetailComponent,
         data: {
           title: 'New Application Add Detail'

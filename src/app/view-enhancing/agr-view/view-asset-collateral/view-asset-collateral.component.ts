@@ -12,7 +12,6 @@ import { ViewAssetCollateralDetailComponent } from './view-asset-collateral-deta
   templateUrl: './view-asset-collateral.component.html'
 })
 export class ViewAssetCollateralComponent implements OnInit {
-
   @Input() agrmntId: number = 0;
   @Input() appId: number = 0;
   appAssetList: Array<AppAssetObj> = new Array<AppAssetObj>();
@@ -22,7 +21,7 @@ export class ViewAssetCollateralComponent implements OnInit {
 
   ngOnInit() {
     var AgrmntObj = {
-      AgrmntId: this.agrmntId
+      Id: this.agrmntId
     }
     this.http.post<Array<AppAssetObj>>(URLConstant.GetAppAssetListByAgrmntIdForViewAgrmnt, AgrmntObj).subscribe(
       (response) => {
@@ -32,7 +31,7 @@ export class ViewAssetCollateralComponent implements OnInit {
         }
       });
 
-    this.http.post<Array<AppCollateralObj>>(URLConstant.GetListAppCollateralByAgrmntId, {AgrmntId: this.agrmntId}).subscribe(
+    this.http.post<Array<AppCollateralObj>>(URLConstant.GetListAppCollateralByAgrmntId, {Id: this.agrmntId}).subscribe(
       (response) => {
         this.AppCollateralObj = response[CommonConstant.ReturnObj];
       });

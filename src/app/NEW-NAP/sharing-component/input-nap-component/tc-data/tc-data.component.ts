@@ -185,7 +185,7 @@ export class TcDataComponent implements OnInit {
     // this.listAppTcObj.push(appTcObj);
     //}
     if (this.AppTcForm.value.TCList["length"] <= 0) {
-      this.toastr.errorMessage("Term & Conditions not found");
+      this.toastr.warningMessage("Term & Conditions not found");
       return;
     }
 

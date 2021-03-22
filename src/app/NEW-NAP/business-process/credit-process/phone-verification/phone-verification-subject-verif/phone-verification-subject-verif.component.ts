@@ -66,7 +66,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   idSource: number;
   verfSchemeHId: number;
   appObj = {
-    AppId: 0,
+    Id: 0,
   };
 
   verfResObj = {
@@ -147,7 +147,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     };
     this.initUrl();
     this.setPhnObj();
-    this.appObj.AppId = this.appId;
+    this.appObj.Id = this.appId;
     this.verfResHObj.VerfResultHId = this.verfResultHId;
     this.bindResultObj();
     this.bindSubjectRelationObj();
@@ -494,7 +494,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   Navigate() {
-    AdInsHelper.OpenAppViewByAppId(this.AppObj.AppId);
+    AdInsHelper.OpenAppViewByAppId(this.AppObj.Id);
   }
 
   ChangeResult() {

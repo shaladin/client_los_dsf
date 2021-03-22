@@ -1,16 +1,20 @@
 <form class="form form-horizontal" [formGroup]="PODetailForm" #enjiForm="ngForm" novalidate
   (ngSubmit)="enjiForm.form.valid && Save()">
+
   <div class="modal-header">
-    <h4 class="modal-title">Purchase Order Detail</h4>
+    <h4 class="modal-title" translate>Purchase Order Detail</h4>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
+
   <div class="modal-body">
     <div class="col-md-12">
       <div class="px-3">
         <div class="form-body">
+
           <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info>
+
           <lib-ucSubsection [id]="'DetailDisbursementId'" [title]="'Detail Disbursement'" [panel]="'DetailDisbursementSection'">
           </lib-ucSubsection>
           <div id="DetailDisbursementSection">
@@ -34,6 +38,7 @@
               <label class="col-md-3 adInsLabel adins-required-label" for="FeeAmt" translate>{{PODetailForm.controls.TotalDisburse.value | currency : "USD" : ""}}</label>
             </div>
           </div>
+
           <lib-ucSubsection [id]="'OtherInfoId'" [title]="'Other Information'" [panel]="'OtherInfoSection'">
           </lib-ucSubsection>
           <div id="OtherInfoSection">
@@ -55,15 +60,19 @@
               </div>
             </div>
           </div>
+          
         </div>
       </div>
     </div>
   </div>
+
   <div class="modal-footer"> 
-    <button type="button" class="btn btn-warning btn-raised" (click)="activeModal.dismiss('0')"> <i class="ft-x"></i> Cancel</button>
-    <button type="submit" class="btn btn-raised btn-primary">
+    <button type="button" class="btn btn-warning btn-raised" (click)="activeModal.dismiss('0')" translate>
+      <i class="ft-x"></i> Cancel
+    </button>
+    <button type="submit" class="btn btn-raised btn-primary" translate>
       <i class=" far fa-check-square"></i> Save
     </button>
   </div>
-</form>
 
+</form>

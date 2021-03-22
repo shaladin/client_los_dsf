@@ -1,11 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-
 
 @Component({
   selector: "agrmnt-view-summary",
@@ -13,30 +9,19 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   providers: [NGXToastrService]
 })
 export class ViewAgrmntSummaryComponent implements OnInit {
-
   @Input() agrmntId: any;
   totalRsvFund: number;
-
   agrmntObj = {
-    AgrmntId: 0,
+    Id: 0,
   };
   totalInsPremi: any;
   SummaryObj: any;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
-
-    //this.route.queryParams.subscribe(params => {
-    //  if (params['AppId'] != null) {
-    //    this.agrmntId = params['AppId'];
-    //  }
-    //});
-  }
-
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.agrmntObj.AgrmntId = this.agrmntId;
+    this.agrmntObj.Id = this.agrmntId;
     this.GetAgrmntSummary();
-
   }
 
   GetAgrmntSummary() {
@@ -49,5 +34,4 @@ export class ViewAgrmntSummaryComponent implements OnInit {
       }
     );
   }
-
 }

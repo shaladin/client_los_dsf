@@ -87,7 +87,7 @@ export class PreGoLiveOplDetailComponent implements OnInit {
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppTc.json";
 
     var AppObj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
 
     await this.http.post(URLConstant.GetListTCbyAppId, AppObj).toPromise().then(

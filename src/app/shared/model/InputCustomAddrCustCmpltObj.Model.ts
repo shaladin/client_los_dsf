@@ -8,7 +8,8 @@ export class InputCustomAddrCustCmpltObj{
     Mode: string;
     IsDetail: boolean;
     ListInputedAddr: Array<AppCustAddrObj>;
-
+    InputedAddr: AppCustAddrObj;
+    EditedIndex: number;
     constructor()
     {
         this.AppCustId = 0;
@@ -17,5 +18,7 @@ export class InputCustomAddrCustCmpltObj{
         this.Mode = "Add";
         this.IsDetail = false;
         this.ListInputedAddr = new Array<AppCustAddrObj>();
+        this.InputedAddr = new AppCustAddrObj();
+        this.EditedIndex = 0;
     }
 }

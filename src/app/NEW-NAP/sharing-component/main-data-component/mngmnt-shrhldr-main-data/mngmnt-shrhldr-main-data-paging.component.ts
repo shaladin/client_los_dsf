@@ -50,8 +50,8 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_OWNER_DATA)
       return;
     }
-    if(this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x=>x.IsActive == true) == null){
-      this.toastr.warningMessage("At Least 1 Active Signer is Required");
+    if(this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x=>x.IsActive == true && x.IsSigner == true && x.MrCustTypeCode == CommonConstant.CustTypePersonal) == null){
+      this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_ACTIVE_SIGNER);
       return false;
     }
 
@@ -82,7 +82,7 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
 
     if (ev.Key == "delete") {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-        this.http.post(URLConstant.DeleteAppCustMainData, {AppCustId: ev.RowObj.AppCustId}).subscribe(
+        this.http.post(URLConstant.DeleteAppCustMainData, { Id: ev.RowObj.AppCustId }).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             this.loadMgmntShrholderListData();

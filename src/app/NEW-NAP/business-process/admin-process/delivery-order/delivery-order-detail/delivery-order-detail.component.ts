@@ -94,7 +94,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.MaxDate = this.UserAccess.BusinessDt;
 
     var appAssetobj = {
-      AgrmntId: this.AgrmntId
+      Id: this.AgrmntId
     }
 
     this.http.post(URLConstant.GetPurchaseOrderHByAgrmntId, appAssetobj).subscribe(
@@ -204,8 +204,8 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.dmsAppObj.Role = currentUserContext.RoleCode;
     this.dmsAppObj.ViewCode = CommonConstant.DmsViewCodeApp;
 
-    var agrObj = { AgrmntId: this.AgrmntId };
-    var appObj = { AppId: this.AppId };
+    var agrObj = { Id: this.AgrmntId };
+    var appObj = { Id: this.AppId };
 
     let getAgr = await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
@@ -231,7 +231,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
 
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
         if (mouId != null && mouId != "") {
-          let mouObj = { MouCustId: mouId };
+          let mouObj = { Id: mouId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
             result => {
               this.mouCustNo = result['MouCustNo'];
@@ -251,7 +251,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
   SaveForm() {
     var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     // if (Date.parse(this.DeliveryOrderForm.value.TCList[0].PromisedDt) < this.businessDt.getTime()) {
-    //   this.toastr.errorMessage("Promised Date Must Bigger Than Business Date")
+    //   this.toastr.warningMessage("Promised Date Must Bigger Than Business Date")
     //   return;
     // }
     var appAsset = {

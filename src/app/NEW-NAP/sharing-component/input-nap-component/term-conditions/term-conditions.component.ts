@@ -43,9 +43,10 @@ export class TermConditionsComponent implements OnInit {
     var listTC = this.parentForm.get(this.identifier) as FormArray;
     
     var appTcObj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
-    this.http.post(URLConstant.GetAppById, appTcObj).subscribe(
+    var appObj = { Id: this.AppId };
+    this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (responseApp: AppObj) => {
         this.http.post(URLConstant.GetListTCbyAppId, appTcObj).subscribe(
           (response) => {

@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AppObj } from 'app/shared/model/App/App.Model';
 import { CrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditReview/CrdRvwDiffAppToInPrcAppCustObj.Model';
 import { ResponseCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditReview/ResponseCrdRvwDiffAppToInPrcAppCustObj.Model';
 
@@ -12,11 +11,10 @@ import { ResponseCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditR
   styleUrls: ['./crd-rvw-diff-with-in-process-app.component.scss']
 })
 export class CrdRvwDiffWithInProcessAppComponent implements OnInit {
-
   @Input() ListCrdRvwDiffAppToInPrcAppCustObj: Array<CrdRvwDiffAppToInPrcAppCustObj> = new Array<CrdRvwDiffAppToInPrcAppCustObj>();
   @Input() responseCrdRvwDiffAppToInPrcAppCustObj: ResponseCrdRvwDiffAppToInPrcAppCustObj = new ResponseCrdRvwDiffAppToInPrcAppCustObj();
-  constructor(
-    private http: HttpClient) { }
+
+  constructor(private http: HttpClient) { }
 
   ListDiffTypeCustData: Array<string> = new Array<string>();
   ListAppNo: Array<string> = new Array<string>();
@@ -53,11 +51,10 @@ export class CrdRvwDiffWithInProcessAppComponent implements OnInit {
   }
 
   async ClickLinkApp(AppNo: string) {
-    await this.http.post<any>(URLConstant.GetAppByAppNo, { AppNo: AppNo }).toPromise().then(
+    await this.http.post<any>(URLConstant.GetAppByAppNo, { TrxNo: AppNo }).toPromise().then(
       (response) => {
         AdInsHelper.OpenAppViewByAppId(response.AppId);
       }
     )
   }
 }
-

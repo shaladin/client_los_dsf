@@ -25,7 +25,7 @@ export class TabDeviationComponent implements OnInit {
 
   async GetDeviationData() {
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
 

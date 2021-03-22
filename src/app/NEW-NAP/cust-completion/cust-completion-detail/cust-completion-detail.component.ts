@@ -32,6 +32,8 @@ export class CustCompletionDetailComponent implements OnInit {
   ReturnHandlingHId: number = 0;
   ResponseReturnInfoObj: ReturnHandlingDObj;
   OnFormReturnInfo: boolean = false;
+  IsFromPaging: boolean = false;
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -49,6 +51,7 @@ export class CustCompletionDetailComponent implements OnInit {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
         localStorage.setItem(CommonConstant.BIZ_TEMPLATE_CODE, this.BizTemplateCode);
+        this.IsFromPaging = true;
       }
       if (params["ReturnHandlingHId"] != null) {
         this.ReturnHandlingHId = params["ReturnHandlingHId"];
@@ -81,6 +84,13 @@ export class CustCompletionDetailComponent implements OnInit {
 
     this.loadCustCompletionListData();
     this.claimTask();
+
+    if(!this.IsFromPaging){
+      this.http.post(URLConstant.UpdateAppStepByAppId, { AppId: this.AppId, AppCurrStep: CommonConstant.AppStepCustCmpltn }).subscribe(
+        (response) => {
+        }
+      )
+    }
   }
 
   MakeViewReturnInfoObj() {
@@ -101,7 +111,7 @@ export class CustCompletionDetailComponent implements OnInit {
   }
 
   loadCustCompletionListData() {
-    this.http.post(URLConstant.GetListAppCustCompletion, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetListAppCustCompletion, { Id: this.AppId }).subscribe(
       (response) => {
         this.inputGridObj.resultData = {
           Data: ""

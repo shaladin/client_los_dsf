@@ -65,7 +65,7 @@ export class FinancialPersonalComponent implements OnInit {
   }
 
   GetFinData(){
-    this.http.post<AppCustPersonalFinDataObj>(URLConstant.GetAppCustPersonalFinDataByAppCustPersonalId, { AppCustPersonalId: this.AppCustPersonalId }).subscribe(
+    this.http.post<AppCustPersonalFinDataObj>(URLConstant.GetAppCustPersonalFinDataByAppCustPersonalId, { Id: this.AppCustPersonalId }).subscribe(
       async (response) => {
         if(response.AppCustPersonalFinDataId != 0){
           await this.FinancialForm.patchValue({
@@ -75,7 +75,7 @@ export class FinancialPersonalComponent implements OnInit {
             IsJoinIncome: response.IsJoinIncome,
             MonthlyExpenseAmt: response.MonthlyExpenseAmt,
             MonthlyInstallmentAmt: response.MonthlyInstallmentAmt,
-            OtherMonthlyInstAmt: response.OtherMonthlyInstAmt,
+            OtherMonthlyInstAmt: response.OtherMonthlyInstallmentAmt,
             SpouseMonthlyIncomeAmt: response.SpouseMonthlyIncomeAmt,
             RowVersion: response.RowVersion
           });
@@ -137,9 +137,10 @@ export class FinancialPersonalComponent implements OnInit {
   }
 
   SaveForm() {
-    if(this.FinancialForm['controls']['AttrList'] != undefined){
+    if (this.FinancialForm.get('AttrList') != undefined){
       this.SetAttrContent();
     }
+    
     this.AppCustPersonalFinData = this.FinancialForm.value;
     this.AppCustPersonalFinData.AppCustPersonalId = this.AppCustPersonalId;
 

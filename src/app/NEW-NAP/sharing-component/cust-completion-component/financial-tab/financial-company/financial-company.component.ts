@@ -52,7 +52,7 @@ export class FinancialCompanyComponent implements OnInit {
     TotalAsset: [0],
     LongTermLiablts: [0],
     CurrRatio: [0],
-    RowVersion: [''],
+    RowVersion: ['']
   })
 
   constructor(private fb: FormBuilder,
@@ -65,7 +65,7 @@ export class FinancialCompanyComponent implements OnInit {
   }
 
   GetFinData(){
-    this.http.post<AppCustCompanyFinDataObj>(URLConstant.GetAppCustCompanyFinDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post<AppCustCompanyFinDataObj>(URLConstant.GetAppCustCompanyFinDataByAppCustId, { Id: this.AppCustId }).subscribe(
       async (response) => {
         if(response.AppCustCompanyFinDataId != 0){
           this.FinancialForm.patchValue({
@@ -127,10 +127,12 @@ export class FinancialCompanyComponent implements OnInit {
   }
 
   SaveForm() {
-    if(this.FinancialForm['controls']['AttrList'] != undefined){
+    if (this.FinancialForm.get('AttrList') != undefined){
       this.SetAttrContent();
     }
+    
     this.AppCustCompanyFinData = this.FinancialForm.value;
+    this.AppCustCompanyFinData.GrossProfitAmt = this.AppCustCompanyFinData.GrossMonthlyIncomeAmt - this.AppCustCompanyFinData.GrossMonthlyExpenseAmt;
     this.AppCustCompanyFinData.AppCustId = this.AppCustId;
 
     let request = {

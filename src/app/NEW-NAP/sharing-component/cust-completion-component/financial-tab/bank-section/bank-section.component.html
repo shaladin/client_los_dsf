@@ -1,8 +1,8 @@
 <form class="form form-horizontal" [formGroup]="BankAccStmntForm" (ngSubmit)="BankAccStmntForm.valid && SaveForm(enjiForm)"
   #enjiForm="ngForm">
   <span class="mr-1 pull-right" *ngIf="!IsDetail">
-    <button type="button" class="addButton" (click)="CustBankHandler('Add')" style="margin-right: 0!important;"
-      translate>
+    <button type="button" class="addButton" (click)="CustBankHandler('Add')"
+      style="margin-right: 0!important;" translate>
       <i class="ft-plus-circle"></i> Add
     </button>
   </span>
@@ -33,25 +33,25 @@
                 <thead>
                   <tr class="table-header">
                     <th style="text-align: left;">
-                      <span class="thead-header" name='month' translate>MONTH</span>
+                      <span name='month' translate>MONTH</span>
                     </th>
                     <th style="text-align: left;">
-                      <span class="thead-header" name='year' translate>YEAR</span>
+                      <span name='year' translate>YEAR</span>
                     </th>
                     <th style="text-align: left;">
-                      <span class="thead-header" name='debit' translate>DEBIT (-)</span>
+                      <span name='debit' translate>DEBIT (-)</span>
                     </th>
                     <th style="text-align: left;">
-                      <span class="thead-header" name='credit' translate>CREDIT (+)</span>
+                      <span name='credit' translate>CREDIT (+)</span>
                     </th>
                     <th style="text-align: left;">
-                      <span class="thead-header" name='endingBalance' translate>ENDING BALANCE</span>
+                      <span name='endingBalance' translate>ENDING BALANCE</span>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let stmnt of item.AppCustBankStmntObjs">
-                    <td style="text-align: left;">{{stmnt.MonthName}}</td>
+                    <td style="text-align: left;">{{stmnt.Month}}</td>
                     <td style="text-align: left;">{{stmnt.Year}}</td>
                     <td style="text-align: left;">{{stmnt.DebitAmt | number:'.2':'en-US'}}</td>
                     <td style="text-align: left;">{{stmnt.CreditAmt | number:'.2':'en-US'}}</td>
@@ -101,15 +101,14 @@
               <label class="col-md-4 adins-required-label" translate>Account No</label>
               <div class="col-md-8">
                 <input type="text" class="form-control" formControlName="BankAccNo"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls.BankAccNo.invalid}">
-                <lib-uc-show-errors [control]="BankAccStmntForm.controls.BankAccNo" [submit]="enjiForm.submitted">
-                </lib-uc-show-errors>
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls.BankAccNo.invalid }">
+                <lib-uc-show-errors [control]="BankAccStmntForm.controls.BankAccNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-md-4" translate>Is Default</label>
               <div class="col-md-8">
-                <input type="checkbox" formControlName="IsDefault" />
+                <input type="checkbox" formControlName="IsDefault" (change)="CheckDefault()"/>
               </div>
             </div>
             <div class="form-group row">
@@ -121,7 +120,7 @@
           </div>
         </div>
         <div class="col-md-12" style="text-align: right; margin-top: 10px;">
-          <button type="button" name="add" id="add" (click)="AddRowCustBankStmnt()" class="btn btn-raised btn-primary">
+          <button type="button" name="add" id="add" (click)="AddRowCustBankStmnt()" class="btn btn-raised btn-primary" translate>
             Add New Row
           </button>
         </div>
@@ -146,7 +145,7 @@
               <tr *ngFor="let item of BankAccStmntForm.controls['BankStmntObjs'].controls;let i = index">
                 <td [formGroupName]="i"><select class="form-control" formControlName="Month"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Month.invalid }">
-                    <option *ngFor="let item of MonthObj" value="{{item.Key}}">
+                    <option *ngFor="let item of MonthObj" value="{{item.Value}}">
                       {{item.Value}}
                     </option>
                   </select>
@@ -190,10 +189,12 @@
             </tbody>
           </table>
           <div class="form-actions right">
-            <button type="button" (click)="CustBankHandler('Cancel')" class="btn btn-raised btn-warning mr-1">
+            <button type="button" (click)="CustBankHandler('Cancel')" translate
+              class="btn btn-raised btn-warning mr-1">
               <i class="ft-x"></i> Cancel
             </button>
-            <button type="submit" (click)="formValidate.scrollIfFormHasErrors(BankAccStmntForm)" class="btn btn-raised btn-primary">
+            <button type="submit" (click)="formValidate.scrollIfFormHasErrors(BankAccStmntForm)" translate
+              class="btn btn-raised btn-primary">
               <i class="fa fa-check-square"></i> Save
             </button>
           </div>

@@ -14,7 +14,6 @@ export class AppCustPersonalJobDataObj {
     IndustryTypeName: string;
     MrCompanyScaleCode: string;
     EstablishmentDt: Date;
-    MrJobTitleCode: string;
     ProfessionalNo: string;
     MrInvestmentTypeCode: string;
     NumOfEmployee: number;
@@ -29,6 +28,7 @@ export class AppCustPersonalJobDataObj {
     OthBizIndustryTypeCode : string;
     OthBizJobPosition : string;
     OthBizEstablishmentDt : Date;
+    EmpNo: string;
     AppCustAddrJobObj: AppCustAddrObj;
     RowVersion : string[];
 
@@ -46,7 +46,6 @@ constructor() {
     this.IndustryTypeName = "";
     this.MrCompanyScaleCode = "";
     this.EstablishmentDt = new Date();
-    this.MrJobTitleCode = "";
     this.ProfessionalNo = "";
     this.MrInvestmentTypeCode = "";
     this.NumOfEmployee = 0;

@@ -17,6 +17,7 @@
                   </lib-uclookupgeneric>
                 </div>
               </div>
+
               <lib-ucSubsection [id]="'AddCollInfoId'" [title]="'Collateral Information'" [panel]="'AddCollInfo'">
               </lib-ucSubsection>
               <div id="AddCollInfo">
@@ -32,6 +33,7 @@
                     </lib-uc-show-errors>
                   </div>
                 </div>
+
                 <div class="form-group row">
                   <label class="col-md-2 adins-required-label" translate>Collateral Name</label>
                   <div class="col-md-3">
@@ -49,6 +51,7 @@
                     </lib-uc-show-errors>
                   </div>
                 </div>
+
                 <div class="form-group row">
                   <label class="col-md-2" translate>Manufacturing Year</label>
                   <div class="col-md-3">
@@ -71,14 +74,15 @@
                     </lib-uc-show-errors>
                   </div>
                 </div>
+
                 <div class="form-group row">
-                  <label class="col-md-2" [ngClass]="{ 'adins-required-label': AddCollForm.controls.MrCollateralConditionCode.value == 'USED' }" translate>Serial No 1</label>
+                  <!-- <label class="col-md-2" [ngClass]="{ 'adins-required-label': AddCollForm.controls.MrCollateralConditionCode.value == 'USED' }" translate>Serial No 1</label>
                   <div class="col-md-3">
                     <input type="text" class="form-control" formControlName="SerialNo1"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo1.invalid }">
                     <lib-uc-show-errors [control]="AddCollForm.controls.SerialNo1" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
-                  </div>
+                  </div> -->
                   <label class="col-md-1"></label>
                   <label class="col-md-2 adins-required-label" translate>Collateral Usage</label>
                   <div class="col-md-3">
@@ -92,14 +96,15 @@
                     </lib-uc-show-errors>
                   </div>
                 </div>
+
                 <div class="form-group row">
-                  <label class="col-md-2" [ngClass]="{ 'adins-required-label': AddCollForm.controls.MrCollateralConditionCode.value == 'USED' }" translate>Serial No 2</label>
+                  <!-- <label class="col-md-2" [ngClass]="{ 'adins-required-label': AddCollForm.controls.MrCollateralConditionCode.value == 'USED' }" translate>Serial No 2</label>
                   <div class="col-md-3">
                     <input type="text" class="form-control" formControlName="SerialNo2"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo2.invalid }">
                     <lib-uc-show-errors [control]="AddCollForm.controls.SerialNo2" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
-                  </div>
+                  </div> -->
                   <label class="col-md-1"></label>
                   <label class="col-md-2 adins-required-label" translate>Collateral Tax Date</label>
                   <div class="col-md-2">
@@ -109,14 +114,15 @@
                     </lib-uc-show-errors>
                   </div>
                 </div>
+
                 <div class="form-group row">
-                  <label class="col-md-2" translate>Serial No 3</label>
+                  <!-- <label class="col-md-2" translate>Serial No 3</label>
                   <div class="col-md-3">
                     <input type="text" class="form-control" formControlName="SerialNo3"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.SerialNo3.invalid }">
                     <lib-uc-show-errors [control]="AddCollForm.controls.SerialNo3" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
-                  </div>
+                  </div> -->
                   <label class="col-md-1"></label>
                   <label class="col-md-2 adins-label" translate>Notes</label>
                   <div class="col-md-3">
@@ -125,7 +131,27 @@
                   </div>
                   <label class="col-md-1"></label>
                 </div>
+
+                <div class="form-group row">
+                  <div formArrayName="items1">
+                    <div *ngFor="let item of items1.controls; let i = index;">
+                      <div class="form-group row" [formGroupName]="i">
+                        <label class="col-md-2" translate
+                          [ngClass]="{'adins-required-label': item.controls.IsMandatory.value == true}">
+                          {{item.controls.SerialNoLabel.value}} </label>
+                        <div class="col-md-3">
+                          <input type="text" class="form-control adInsInput" formControlName="SerialNoValue"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.items1['controls'][i]['controls'].SerialNoValue.invalid}">
+                          <lib-uc-show-errors
+                            [control]="AddCollForm.controls.items1['controls'][i]['controls'].SerialNoValue"
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
               <lib-ucSubsection [id]="'AddCollAttributeId'" [title]="'Collateral Attribute'"
                 [panel]="'AddCollAttribut'">
               </lib-ucSubsection>
@@ -274,7 +300,7 @@
                       </select>
                       <div class="input-group-append">
                         <span class="input-group-btn">
-                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocation()">
+                          <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocation()" translate>
                             <i class="fa fa-check-square-o"></i>Copy
                           </button>
                         </span>

@@ -9,14 +9,14 @@
             <table class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
-                  <th class="text-left">No</th>
-                  <th class="text-left">Asset Name</th>
-                  <th class="text-right">Security Deposit</th>
-                  <th class="text-right">Total Cost</th>
-                  <th class="text-right">Margin</th>
-                  <th class="text-right">Total Cost After Margin</th>
-                  <th class="text-right">Rental Amount (Monthly)</th>
-                  <th class="text-center">Entry Financial Data</th>
+                  <th translate class="text-left">No</th>
+                  <th translate class="text-left">Asset Name</th>
+                  <th translate class="text-right">Security Deposit</th>
+                  <th translate class="text-right">Total Cost</th>
+                  <th translate class="text-right">Margin</th>
+                  <th translate class="text-right">Total Cost After Margin</th>
+                  <th translate class="text-right">Rental Amount (Monthly)</th>
+                  <th translate class="text-center">Entry Financial Data</th>
                 </tr>
               </thead>
               <tbody>
@@ -42,7 +42,7 @@
             <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
               <i class="ft-x"></i> Cancel
             </button>
-            <button type="button" class="btn btn-raised btn-primary" (click)="Next()">
+            <button type="button" class="btn btn-raised btn-primary" (click)="Next()" translate>
               <i class="far fa-check-square"></i> Save
             </button>
           </div>

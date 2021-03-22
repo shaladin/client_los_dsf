@@ -96,9 +96,9 @@ export class CustDetailCompanyComponent implements OnInit {
   SetData() {
     this.AppCustObj.AppCustId = this.AppCustId;
     this.AppCustObj.MrCustModelCode = this.CustDetailForm.controls.MrCustModelCode.value;
-    this.AppCustObj.IsAffiliateWithMF = this.CustDetailForm.controls.IsAffiliateWithMF.value;
-
-    this.AppCustCompanyObj.IndustryTypeCode = this.CustDetailForm.controls.IndustryTypeCode.value;
+    this.AppCustObj.IsAffiliateWithMf = this.CustDetailForm.controls.IsAffiliateWithMF.value; 
+   
+    this.AppCustCompanyObj.IndustryTypeCode   = this.CustDetailForm.controls.IndustryTypeCode.value;
     this.AppCustCompanyObj.NumOfEmp = this.CustDetailForm.controls.NoOfEmployee.value;
     this.AppCustCompanyObj.EstablishmentDt = this.CustDetailForm.controls.EstablishmentDate.value;
   }
@@ -122,7 +122,7 @@ export class CustDetailCompanyComponent implements OnInit {
   }
 
   GetData() {
-    this.http.post<ResponseAppCustCompletionCompanyDataObj>(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post<ResponseAppCustCompletionCompanyDataObj>(URLConstant.GetAppCustAndAppCustCompanyDataByAppCustId, { Id: this.AppCustId }).subscribe(
       (response) => {
         if (response.AppCustCompanyObj.IndustryTypeCode != null) {
           this.industryTypeObj.IndustryTypeCode = response.AppCustCompanyObj.IndustryTypeCode;
@@ -135,11 +135,11 @@ export class CustDetailCompanyComponent implements OnInit {
         }
 
         this.CustDetailForm.patchValue({
-          IsAffiliateWithMF: response.AppCustObj.IsAffiliateWithMF,
-          NoOfEmployee: response.AppCustCompanyObj.NumOfEmp,
-          EstablishmentDate: response.AppCustCompanyObj.EstablishmentDt != null ? formatDate(response.AppCustCompanyObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US') : "",
-          IndustryTypeCode: response.AppCustCompanyObj.IndustryTypeCode,
-          MrCustModelCode: response.AppCustObj.MrCustModelCode,
+          IsAffiliateWithMF : response.AppCustObj.IsAffiliateWithMf,
+          NoOfEmployee : response.AppCustCompanyObj.NumOfEmp,
+          EstablishmentDate : response.AppCustCompanyObj.EstablishmentDt != null ? formatDate(response.AppCustCompanyObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US') : "",
+          IndustryTypeCode : response.AppCustCompanyObj.IndustryTypeCode,
+          MrCustModelCode : response.AppCustObj.MrCustModelCode,
         })
 
         this.AppCustObj.RowVersion = response.AppCustObj.RowVersion;

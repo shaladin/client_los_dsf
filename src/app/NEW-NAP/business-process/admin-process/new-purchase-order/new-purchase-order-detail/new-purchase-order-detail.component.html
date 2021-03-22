@@ -2,6 +2,7 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-body">
+
         <div class="card-header header-title">
           <div class="">
             <div class="col-md-12" style="border-bottom: 1px solid black; margin-left: -5px; padding: 0;">
@@ -9,8 +10,11 @@
             </div>
           </div>
         </div>
+
         <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info>
+
         <div class="px-3">
+
           <lib-ucSubsection [id]="'DisburseId'" [title]="'Disburse to Listing'" [panel]="'DisburseSection'">
           </lib-ucSubsection>
           <div class="form-body" id="DisburseSection">
@@ -50,28 +54,31 @@
             </table>
           </div>
 
-          <form class="form form-horizontal" [formGroup]="TcForm"
-          (ngSubmit)="TcForm.valid && Save()" #enjiForm="ngForm">
-          <lib-ucSubsection [id]="'TCListId'" [title]="'Term & Conditions'" [panel]="'TCList'">
-          </lib-ucSubsection>
-          <div id="TCList">
-          <app-term-conditions [AppId]="AppId" [parentForm]="TcForm" [enjiForm]="enjiForm">
-          </app-term-conditions>
-        </div>
-          <div class="form-body">
-            <div class="form-actions right" style="text-align: right;">
-              <button type="button" class="btn btn-raised btn-warning mr-1 margin-r-5" (click)="Cancel()">
-                <i class="ft-x"></i> Cancel
-              </button>
-              <button type="submit" class="btn btn-raised btn-primary" >
-                <i class="far fa-check-square"></i> Save
-              </button>
-            </div>
-          </div>
-        </form>
+          <form class="form form-horizontal" [formGroup]="TcForm" (ngSubmit)="TcForm.valid && Save()"
+            #enjiForm="ngForm">
 
-      
+            <lib-ucSubsection [id]="'TCListId'" [title]="'Term & Conditions'" [panel]="'TCList'">
+            </lib-ucSubsection>
+            <div id="TCList">
+              <app-term-conditions [AppId]="AppId" [parentForm]="TcForm" [enjiForm]="enjiForm">
+              </app-term-conditions>
+            </div>
+
+            <div class="form-body">
+              <div class="form-actions right" style="text-align: right;">
+                <button type="button" class="btn btn-raised btn-warning mr-1 margin-r-5" (click)="Cancel()" translate>
+                  <i class="ft-x"></i> Cancel
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary" translate>
+                  <i class="far fa-check-square"></i> Save
+                </button>
+              </div>
+            </div>
+
+          </form>
+
         </div>
+        
       </div>
     </div>
   </div>

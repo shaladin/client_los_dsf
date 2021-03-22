@@ -1,12 +1,12 @@
 {
-    "sectionTitle": "Debitor Group",
+    "sectionTitle": "Debtor Group",
     "component": [
         {
             "type": "textbox",
             "name": "LBPPMS_DEBT_GRP_CODE",
             "id": "LbppmsDebtGrpCodeId",
             "value": "",
-            "label": "Debitor Group Code",
+            "label": "Debtor Group Code",
             "placeholder": "Placeholder"
         },
         {
@@ -14,7 +14,7 @@
             "name": "DESCR",
             "id": "DescrId",
             "value": "",
-            "label": "Debitor Group Name",
+            "label": "Debtor Group Name",
             "placeholder": "Placeholder"
         },{
             "type": "textbox",
@@ -43,13 +43,13 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "Debitor Group Code",
+            "label": "Debtor Group Code",
             "name": "LBPPMS_DEBT_GRP_CODE"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Debitor Group Name",
+            "label": "Debtor Group Name",
             "name": "DESCR"
         },
         {

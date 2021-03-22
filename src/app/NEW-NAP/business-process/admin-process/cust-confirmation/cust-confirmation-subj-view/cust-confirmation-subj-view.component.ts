@@ -66,21 +66,21 @@ export class CustConfirmationSubjViewComponent implements OnInit {
 
   GetData() {
     var agrmntObj = {
-      AgrmntId: this.AgrmntId
+      Id: this.AgrmntId
     };
     this.http.post<AgrmntObj>(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
       (response) => {
         this.AgrmntObj = response;
 
         var appObj = {
-          AppId: this.AgrmntObj.AppId
+          Id: this.AgrmntObj.AppId
         };
         this.http.post<AppObj>(URLConstant.GetAppById, appObj).subscribe(
           (response) => {
             this.AppObj = response;
           });
         if (this.AgrmntObj.LeadId != null) {
-          this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { LeadId: this.AgrmntObj.LeadId }).subscribe(
+          this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { Id: this.AgrmntObj.LeadId }).subscribe(
             (response) => {
               this.LeadObj = response;
             });

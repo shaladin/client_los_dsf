@@ -50,9 +50,9 @@ export class InvoiceDataComponent implements OnInit {
     this.MouCustLookupObj.pagingJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
     this.MouCustLookupObj.genericJson = "./assets/uclookup/NAP/lookupMouCustListedCustFctr.json";
 
-    this.httpClient.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
+    this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
-        this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { MouCustId: response["MouCustId"] }).subscribe(
+        this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { Id: response["MouCustId"] }).subscribe(
           (response2) => {
             if (response2["length"] > 0) {
               this.IsDisableCustFctr = false;
@@ -63,7 +63,7 @@ export class InvoiceDataComponent implements OnInit {
       });
 
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
     }
     this.httpClient.post<AppFctrObj>(URLConstant.GetAppFctrByAppId, obj).subscribe(
       (response) => {
@@ -91,7 +91,7 @@ export class InvoiceDataComponent implements OnInit {
 
   GetListAppInvoiceFctr() {
     var obj = {
-      AppFctrId: this.AppFactoringObj.AppFctrId,
+      Id: this.AppFactoringObj.AppFctrId,
     }
     this.httpClient.post(URLConstant.GetListAppInvoiceFctrByAppFctrId, obj).subscribe(
       (response) => {
@@ -141,7 +141,7 @@ export class InvoiceDataComponent implements OnInit {
       this.invoiceObj = new AppInvoiceFctrObj();
       this.invoiceObj.AppInvoiceFctrId = AppInvoiceFctrId;
 
-      this.httpClient.post(URLConstant.DeleteAppInvoiceFctr, this.invoiceObj).subscribe(
+      this.httpClient.post(URLConstant.DeleteAppInvoiceFctr, { Id: AppInvoiceFctrId }).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.GetListAppInvoiceFctr();

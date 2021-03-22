@@ -46,18 +46,18 @@
   <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
     <i class="ft-x"></i> Cancel
   </button>
-  <button type="button" (click)="SaveAndContinue()" class="btn btn-raised btn-primary">
+  <button type="button" (click)="SaveAndContinue()" class="btn btn-raised btn-primary" translate>
     <i class="far fa-check-square"></i> Save
   </button>
 </div>
 
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title">Guarantor</h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+    <h4 class="modal-title" translate>Guarantor</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <app-guarantor [AppGuarantorId]=AppGuarantorId [MrGuarantorTypeCode]=MrGuarantorTypeCode [mode]=mode [AppId]="AppId"
-                 (closeX)="close($event)"></app-guarantor>
+    (closeX)="close($event)"></app-guarantor>
 </ng-template>

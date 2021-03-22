@@ -137,7 +137,7 @@ export class CommissionCfnaComponent implements OnInit {
       TempObj.RefundAmount = element.RefundAmount;
       this.DictRemainingIncomeForm[element.RefundAllocationFrom] = TempObj;
     }
-    await this.http.post(URLConstant.GetListAppReservedFundByAppId, {AppId: this.AppId}).toPromise().then(
+    await this.http.post(URLConstant.GetListAppReservedFundByAppId, {Id: this.AppId}).toPromise().then(
       (response)=>{
         // console.log(response);
         let tempObj: Array<any> = response[CommonConstant.ReturnObj];
@@ -157,10 +157,10 @@ export class CommissionCfnaComponent implements OnInit {
 
   async GetContentData() {
     var obj;
-    obj = {
-      AppId: this.AppId,
-      RowVersion: ""
-    };
+    //obj = {
+    //  AppId: this.AppId,
+    //  RowVersion: ""
+    //};
     // await this.http.post(URLConstant.GetAppLoanPurposeVendorAndVendorEmpByAppId, obj).toPromise().then(
     //   (response) => {
     //     console.log("GetContentData: " + JSON.stringify(response));
@@ -175,7 +175,7 @@ export class CommissionCfnaComponent implements OnInit {
     // );
 
     obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     await this.http.post<NapAppReferantorModel>(URLConstant.GetAppReferantorByAppId, obj).toPromise().then(
@@ -341,7 +341,7 @@ export class CommissionCfnaComponent implements OnInit {
 
   isAutoGenerate: boolean = true;
   async GetExistingAppCommData() {
-    var objApi = { AppId: this.AppId };
+    var objApi = { Id: this.AppId };
     await this.http.post(URLConstant.GetAppCommissionDataForEditByAppId, objApi).toPromise().then(
       (response) => {
         console.log("response edit comm");

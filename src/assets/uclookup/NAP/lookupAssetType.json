@@ -1,81 +1,80 @@
-
 {
-    "title": "Lookup Asset Master",
-    "component": [
-      {
-        "type": "textbox",
-        "name": "A.Full_Asset_Code",
-        "id": "fullAssetCode",
-        "value": "",
-        "label": "Full Asset Code",
-        "placeholder": "Full Asset Code"
-      },
-      {
-        "type": "textbox",
-        "name": "A.Full_Asset_Name",
-        "id": "fullAssetName",
-        "value": "",
-        "label": "Full Asset Name",
-        "placeholder": "Full Asset Name"
-      },
-      {
-        "type" : "dropdown",
-        "label" : "Asset Type Name",
-        "name" : "asset_Type_Name",
-        "id" : "assetTypeName",
-        "value" : "",
-        "datatype" : "text",
-        "isSelectOne" : false,
-        "items" : [],
-        "isFromURL" : true, 
-        "url" : "http://r3app-server.ad-ins.com/FOUNDATION_R3/AssetType/GetListKeyValueActiveByCode", 
-        "itemsUrl" : []
-      }
-    ],
+  "title": "Lookup Asset Master",
+  "component": [
+    {
+      "type": "textbox",
+      "name": "A.Full_Asset_Code",
+      "id": "fullAssetCode",
+      "value": "",
+      "label": "Full Asset Code",
+      "placeholder": "Full Asset Code"
+    },
+    {
+      "type": "textbox",
+      "name": "A.Full_Asset_Name",
+      "id": "fullAssetName",
+      "value": "",
+      "label": "Full Asset Name",
+      "placeholder": "Full Asset Name"
+    },
+    {
+      "type": "dropdown",
+      "label": "Asset Type Name",
+      "name": "asset_Type_Name",
+      "id": "assetTypeName",
+      "value": "",
+      "datatype": "text",
+      "ddlType": "all",
+      "items": [],
+      "isFromURL": true,
+      "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/AssetType/GetListKeyValueActiveByCode",
+      "itemsUrl": []
+    }
+  ],
   "querystring": {
     "name": "lookupAssetType"
   },
-    "headerList": [
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Full Asset Code",
+      "name": "FullAssetCode"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Full Asset Name",
+      "name": "FullAssetName"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Action"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "FullAssetCode"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "FullAssetName"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
         {
-          "type": "sort",
-          "position": "left",
-          "label": "Full Asset Code",
-          "name": "FullAssetCode"
-        },
-        {
-          "type": "sort",
-          "position": "left",
-          "label": "Full Asset Name",
-          "name": "FullAssetName"
-        },
-        {
-          "type": "label",
-          "position": "center",
-          "label": "Action"
+          "type": "select",
+          "property": "AssetMasterId"
         }
-    ],
-    "bodyList": [
-      {
-        "type": "text",
-        "position": "left",
-        "property": "FullAssetCode"
-      },
-      {
-        "type": "text",
-        "position": "left",
-        "property": "FullAssetName"
-      },
-      {
-        "type": "action",
-        "position": "center",
-        "action": [
-          {
-            "type": "select",
-            "property": "AssetMasterId"
-          }
-        ]
-      }
-    ],
-    "propertyId": "FullAssetCode",
-    "propertyName": "FullAssetName"
-  }
+      ]
+    }
+  ],
+  "propertyId": "FullAssetCode",
+  "propertyName": "FullAssetName"
+}

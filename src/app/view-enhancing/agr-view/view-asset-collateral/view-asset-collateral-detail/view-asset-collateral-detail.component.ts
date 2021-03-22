@@ -16,19 +16,18 @@ export class ViewAssetCollateralDetailComponent implements OnInit {
   appAsset: any;
   appAssetSupplEmp: any;
   appCollateralRegistration: any;
+  AssetTypeObj: any;
   salesName: string;
   branchManagerName: string;
   adminHeadName: string;
 
-  constructor(
-    private httpClient: HttpClient,
-    public activeModal: NgbActiveModal
-  ) { }
+  constructor(private httpClient: HttpClient,
+    public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
-    let getAppAsset = this.httpClient.post(URLConstant.GetAppAssetByAppAssetIdWithSerialNoDefinition, { AppAssetId: this.AppAssetId });
-    let getAppAssetSupplEmp = this.httpClient.post(URLConstant.GetListAppAssetSupplEmpByAppAssetId, { AppAssetId: this.AppAssetId });
-    let getAppCollReg = this.httpClient.post(URLConstant.GetAppCollateralRegistrationByAppId, { AppId: this.AppId });
+    let getAppAsset = this.httpClient.post(URLConstant.GetAppAssetByAppAssetIdWithSerialNoDefinition, { Id: this.AppAssetId });
+    let getAppAssetSupplEmp = this.httpClient.post(URLConstant.GetListAppAssetSupplEmpByAppAssetId, { Id: this.AppAssetId });
+    let getAppCollReg = this.httpClient.post(URLConstant.GetAppCollateralRegistrationByAppId, { Id: this.AppId });
     forkJoin([getAppAsset, getAppAssetSupplEmp, getAppCollReg]).subscribe(
       (response: any) => {
         this.appAsset = response[0];
@@ -46,7 +45,13 @@ export class ViewAssetCollateralDetailComponent implements OnInit {
             this.adminHeadName = item.SupplEmpName;
           }
         }
-      });
-  }
+      }
+    );
 
+    this.httpClient.post(URLConstant.GetAssetTypeByCode, { AssetTypeCode: this.appAsset.AssetTypeCode }).subscribe(
+      (response: any) => {
+        this.AssetTypeObj = response;
+      }
+    );
+  }
 }

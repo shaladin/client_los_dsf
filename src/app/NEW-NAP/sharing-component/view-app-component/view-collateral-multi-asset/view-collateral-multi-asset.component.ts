@@ -21,7 +21,7 @@ export class ViewCollateralMultiAssetComponent implements OnInit {
 
   ngOnInit() {
     var AppIdObj = {
-      AppId: this.appId
+      Id: this.appId
     }
     this.http.post<Array<AppCollateralObj>>(URLConstant.GetListAppCollateralByAppId, AppIdObj).subscribe(
       (response) => {

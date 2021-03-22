@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ControlContainer, FormGroupDirective, NgForm, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -30,17 +30,15 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
   result: AppObj = new AppObj();
   PriceLabel: string = "Asset Price";
 
-  constructor(
-    private fb: FormBuilder,
+  constructor(private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService,
-  ) { }
+    private toastr: NGXToastrService) { }
 
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadDDLStepUpStepDownInputType();
-    this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId}).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.result = response;
         if(this.result.BizTemplateCode == CommonConstant.CFRFN4W || this.result.BizTemplateCode == CommonConstant.CFNA){
@@ -296,7 +294,6 @@ export class SchmStepUpStepDownLeasingComponent implements OnInit {
   }
 
   test() {
+    
   }
-
-
 }

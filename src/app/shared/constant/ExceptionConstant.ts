@@ -94,8 +94,10 @@ export class ExceptionConstant {
     public static CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER = " cannot have the same relationship as customer group member No ";
     public static NO_SIGNER_AVAILABLE = "No Signer Available, Please Input Signer at Document Signer";
     public static MUST_INPUT_SPOUSE_DATA = "Please Input Spouse Data in Family!";
+    public static CANT_HAVE_SPOUSE = "Customer cannot have Spouse!";
     public static CANT_HAVE_THE_SAME_GUARANTOR_MEMBER = " cannot have the same name as Guarantor No ";
     public static MUST_INPUT_OWNER_DATA = "Please Input Owner Data in Management/Shareholder!";
+    public static MUST_INPUT_ACTIVE_SIGNER = "At Least 1 Active Signer is Required";
     public static TOTAL_SHARE_MUST_100 = "Total Share % must be 100%";
     public static CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP = "This Customer already self customer for this NAP";
 
@@ -103,5 +105,6 @@ export class ExceptionConstant {
     
     public static NO_SURVEY = "No Survey";
     public static NO_PHONE_VERF = "No Phone Verification";
+    public static STATEMENT_WITH_SAME_MONTH_AND_YEAR = "Cannot Input Statement With The Same Month and Year";
 }
 

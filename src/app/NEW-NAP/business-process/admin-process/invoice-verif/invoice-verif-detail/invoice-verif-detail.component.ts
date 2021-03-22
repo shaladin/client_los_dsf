@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormArray } from '@angular/forms';
+import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -11,6 +11,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 
 @Component({
   selector: 'app-invoice-verif-detail',
@@ -18,21 +20,27 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class InvoiceVerifDetailComponent implements OnInit {
 
+  @Input() IsFromReturnHandling: boolean = false;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   listInvoice: any;
-  listVerificationStatus: any;
   verifStatCode: RefMasterObj;
   BusinessDate: any;
   Username: any;
-  AppId: any;
-  WfTaskListId: string;
+  AppId: number;
+  WfTaskListId: number;
   TrxNo: string;
   PlafondAmt: any;
   OsPlafondAmt: any;
   token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  IsReturnOn: boolean = false;
+  listRefReason: Array<KeyValueObj> = new Array();
+  ReturnHandlingHData: ReturnHandlingHObj = new ReturnHandlingHObj();
 
   InvoiceForm = this.fb.group({
-    Invoices: this.fb.array([])
+    Invoices: this.fb.array([]),
+    Reason: [''],
+    Notes: [''],
+    ReasonDesc: ['']
   });
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) {
@@ -63,7 +71,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
 
     this.GetListVerifStatus();
     var request = {
-      AppId: this.AppId
+      Id: this.AppId
     }
 
     this.httpClient.post(URLConstant.GetMouCustByAppId, request).subscribe((response) => {
@@ -90,7 +98,6 @@ export class InvoiceVerifDetailComponent implements OnInit {
       InvoiceNo: obj.InvoiceNo,
       CustName: obj.CustomerFactoringName,
       InvoiceAmt: obj.InvoiceAmt,
-      Verification: this.listVerificationStatus[0].Key,
       InvoiceNotes: obj.InvoiceNotes,
       InvoiceDt: obj.InvoiceDueDt,
       RowVersion: obj.RowVersion,
@@ -98,25 +105,38 @@ export class InvoiceVerifDetailComponent implements OnInit {
   }
 
   GetListVerifStatus() {
-    this.httpClient.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { statusGrpCode: CommonConstant.INV_VERF_RESULT_STAT }).subscribe((response) => {
-      this.listVerificationStatus = response[CommonConstant.ReturnObj];
-    })
+    this.httpClient.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeInvoiceDataVerif }).toPromise().then(
+      (response) => {
+        this.listRefReason = response[CommonConstant.ReturnObj];
+      });
   }
 
   Cancel() {
     AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
   }
+
   SaveData() {
     var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray
     for (let i = 0; i < fa_listInvoice.length; i++) {
       var item = fa_listInvoice.at(i);
-      this.listInvoice[i].IsApproved = item.get("Verification").value == "APV" ? true : false;
-      this.listInvoice[i].InvoiceStat = item.get("Verification").value;
       this.listInvoice[i].Notes = item.get("InvoiceNotes").value;
       this.listInvoice[i].RowVersion = item.get("RowVersion").value;
     }
 
-    var request = { Invoices: this.listInvoice, TaskListId: this.WfTaskListId };
+    this.ReturnHandlingHData.AppId = this.AppId;
+    this.ReturnHandlingHData.WfTaskListId = this.WfTaskListId;
+    if(this.IsReturnOn){
+      this.ReturnHandlingHData.ReturnBy = this.Username;
+      this.ReturnHandlingHData.ReturnNotes = this.InvoiceForm.controls.Notes.value;
+      this.ReturnHandlingHData.ReturnFromTrxType = CommonConstant.VerfTrxTypeCodeInvoice;
+    }
+
+    var request = { 
+      Invoices: this.listInvoice,
+      IsReturn: this.IsReturnOn,
+      ReturnHandlingHObj : this.ReturnHandlingHData
+    };
+
     this.httpClient.post(URLConstant.UpdateAppInvoiceFctr, request).subscribe((response) => {
       AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
     });
@@ -126,26 +146,40 @@ export class InvoiceVerifDetailComponent implements OnInit {
   async claimTask() {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.WfTaskListId;
+    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
     this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       () => {
       });
-  }
-  Calculate(i) {
-    var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
-    var item = fa_listInvoice.at(i);
-    if (item.get("Verification").value == "APV") {
-      this.OsPlafondAmt -= item.get("InvoiceAmt").value;
-    }
-    else {
-      this.OsPlafondAmt += item.get("InvoiceAmt").value;
-    }
   }
 
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
+  }
+
+  switchForm(){
+    if(this.IsReturnOn){
+      this.InvoiceForm.patchValue({
+        Reason: [],
+        Notes: []
+      });
+      this.IsReturnOn = false;
+      this.InvoiceForm.controls.Notes.clearValidators();
+      this.InvoiceForm.controls.Reason.clearValidators();
+    }else{
+      this.IsReturnOn = true;
+      this.InvoiceForm.controls.Notes.setValidators(Validators.required)
+      this.InvoiceForm.controls.Reason.setValidators(Validators.required)
+    }
+    this.InvoiceForm.controls.Notes.updateValueAndValidity();
+    this.InvoiceForm.controls.Reason.updateValueAndValidity();
+  }
+  
+  onChangeReason(ev) {
+    this.InvoiceForm.patchValue({
+      ReasonDesc: ev.target.selectedOptions[0].text
+    });
   }
 }

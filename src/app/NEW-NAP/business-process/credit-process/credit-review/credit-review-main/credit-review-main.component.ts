@@ -119,7 +119,7 @@ export class CreditReviewMainComponent implements OnInit {
     await this.GetAppNo();
     var appObj = new AppObj();
     appObj.AppNo = this.AppNo;
-    await this.http.post(URLConstant.GetListDeviationTypeByAppNo, appObj).toPromise().then(
+    await this.http.post(URLConstant.GetListDeviationTypeByAppNo, { TrxNo: this.AppNo }).toPromise().then(
       (response) => {
         this.responseListTypeCodes = response['ApvTypecodes'];
       });
@@ -142,7 +142,7 @@ export class CreditReviewMainComponent implements OnInit {
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    var appObj = { AppId: this.appId };
+    var appObj = { Id: this.appId };
 
     let getApp = await this.http.post(URLConstant.GetAppById, appObj)
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
@@ -160,7 +160,7 @@ export class CreditReviewMainComponent implements OnInit {
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
         let mouCustId = response[0]['MouCustId'];
         if (mouCustId != null && mouCustId != '') {
-          var mouObj = { MouCustId: mouCustId };
+          var mouObj = { Id: mouCustId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
             (response) => {
               let mouCustNo = response['MouCustNo'];
@@ -178,7 +178,7 @@ export class CreditReviewMainComponent implements OnInit {
 
 
   async GetAppNo() {
-    var obj = { AppId: this.appId };
+    var obj = { Id: this.appId };
     await this.http.post<NapAppModel>(URLConstant.GetAppById, obj).toPromise().then(
       (response) => {
         if (response != undefined) {
@@ -207,7 +207,7 @@ export class CreditReviewMainComponent implements OnInit {
 
   async GetAppCustData() {
     var obj = {
-      AppId: this.appId,
+      Id: this.appId,
       RowVersion: ""
     };
 
@@ -234,7 +234,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async BindAppvAmt() {
-    var Obj = { AppId: this.appId };
+    var Obj = { Id: this.appId };
     await this.http.post(URLConstant.GetAppFinDataByAppId, Obj).toPromise().then(
       (response) => {
         // this.FormObj.patchValue({
@@ -245,7 +245,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async GetExistingCreditReviewData() {
-    var Obj = { appCrdRvwHObj: { AppId: this.appId } };
+    let Obj = { Id: this.appId };
     await this.http.post(URLConstant.GetAppCrdRvwById, Obj).toPromise().then(
       (response) => {
         this.ResponseExistCreditReview = response["appCrdRvwHObj"];

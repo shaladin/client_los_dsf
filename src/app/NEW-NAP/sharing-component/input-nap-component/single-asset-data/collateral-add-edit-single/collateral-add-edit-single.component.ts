@@ -118,6 +118,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
     MrOwnerRelationshipCode: [''],
     Notes: [''],
     items: this.fb.array([]),
+    items1: this.fb.array([]),
     ListAttr: this.fb.array([]),
     OwnerRelationship: [''],
     MrIdType: [''],
@@ -128,6 +129,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
   ConditionCodeList: any;
   AgrmntId: any;
   items: any;
+  items1: FormArray;
   appAssetObj: any;
   AppAssetId: any;
   AssetTypeCode: any;
@@ -137,6 +139,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
   listRefAppAttr: any;
   ListAttr: any;
   AddrObj: AddrObj;
+  SerialNoList: any;
 
   AppCollateralId: any;
   inputAddressObjForOwner: InputAddressObj;
@@ -215,7 +218,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
         );
 
         var AppIdObj = {
-          AppId: this.AppId
+          Id: this.AppId
         }
         this.http.post(URLConstant.GetAppCollateralByAppId, AppIdObj).subscribe(
           (response) => {
@@ -246,10 +249,34 @@ export class CollateralAddEditSingleComponent implements OnInit {
               SerialNo2: AppCollateralObj.SerialNo2,
               SerialNo3: AppCollateralObj.SerialNo3,
             });
+
+            this.items1 = this.AddCollForm.get('items1') as FormArray;
+            this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { AssetTypeCode: AppCollateralObj.AssetTypeCode }).subscribe(
+              (response: any) => {
+                while (this.items1.length) {
+                  this.items1.removeAt(0);
+                }
+
+                this.SerialNoList = response[CommonConstant.ReturnObj];
+                for (let i = 0; i < this.SerialNoList.length; i++) {
+                  let eachDataDetail = this.fb.group({
+                    SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
+                    SerialNoValue: [''],
+                    IsMandatory: [this.SerialNoList[i].IsMandatory]
+                  }) as FormGroup;
+                  this.items1.push(eachDataDetail);
+                  if (this.items1.controls[i]['controls']['IsMandatory'].value == true) {
+                    this.items1.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
+                    this.items1.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+                  }
+                }
+              }
+            );
+
             this.inputLookupObj.nameSelect = AppCollateralObj.FullAssetName
             this.changeSerialNoValidators(AppCollateralObj.MrCollateralConditionCode.value);
             var AppCollateralRegistration: any;
-            this.http.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, AppCollateralObj).subscribe(
+            this.http.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, {Id: AppCollateralObj.AppCollateralId}).subscribe(
               (response) => {
                 AppCollateralRegistration = response;
 
@@ -289,7 +316,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
                 this.inputAddressObjForOwner.inputField = this.inputFieldLegalObj;
               });
             var Obj2 = {
-              AppCollateralId: this.AppCollateralId
+              Id: this.AppCollateralId
             }
             this.http.post(URLConstant.GetListAppCollateralDocsByAppCollateralId, Obj2).subscribe(
               (response) => {
@@ -339,8 +366,8 @@ export class CollateralAddEditSingleComponent implements OnInit {
       }
     )
 
-    var appIdObj = { AppId: this.AppId }
-    this.http.post(URLConstant.GetAppCollateralByAppCollateralId, appIdObj).subscribe(
+    var appIdObj = { Id: this.AppId }
+    this.http.post(URLConstant.GetListAppCollateralByAppId, appIdObj).subscribe(
       (response) => {
         this.listCollateralData = response[CommonConstant.ReturnObj];
       })
@@ -430,7 +457,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
 
   GetListAppCollateralByAppId() {
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
     }
     var getListUrl = URLConstant.GetListAppCollateralByAppId;
     this.http.post(getListUrl, obj).subscribe(
@@ -602,7 +629,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
   }
 
   getLookupAppCollateralResponse(event) {
-    var AppCollateralIdObj = { AppCollateralId: event.AppCollateralId }
+    var AppCollateralIdObj = { Id: event.AppCollateralId }
     var AppCollateralObj: any;
     this.http.post(URLConstant.GetAppCollateralByAppCollateralId, AppCollateralIdObj).subscribe(
       (response) => {

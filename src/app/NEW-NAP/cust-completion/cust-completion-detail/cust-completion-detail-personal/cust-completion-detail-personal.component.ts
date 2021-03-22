@@ -27,7 +27,6 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
   WfTaskListId: number;
   AppCustPersonalId: number;
   stepIndex: number = 1;
-  BizTemplateCode: string;
   CustModelCode: string;
   IsMarried: boolean = false;
   private stepper: Stepper;
@@ -70,9 +69,6 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       if (params['WfTaskListId'] != null) {
         this.WfTaskListId = params['WfTaskListId'];
       }
-      if (params['BizTemplateCode'] != null) {
-        this.BizTemplateCode = params['BizTemplateCode'];
-      }
       if (params["ReturnHandlingHId"] != null) {
         this.ReturnHandlingHId = params["ReturnHandlingHId"];
       }
@@ -94,7 +90,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       animation: true
     })
 
-    this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, { Id: this.AppCustId }).subscribe(
       (response) => {
         if (response.AppCustPersonalObj.MrMaritalStatCode != null && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried) this.IsMarried = true;
         this.CustModelCode = response.AppCustObj.MrCustModelCode;
@@ -111,10 +107,10 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
 
   Back() {
     if (this.ReturnHandlingHId != 0) {
-      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "ReturnHandlingHId": this.ReturnHandlingHId, "BizTemplateCode": this.BizTemplateCode } });
+      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "ReturnHandlingHId": this.ReturnHandlingHId} });
     }
     else {
-      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "BizTemplateCode": this.BizTemplateCode } });
+      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId} });
     }
   }
 
@@ -169,7 +165,7 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
   }
   completionCheckingObj: AppCustCompletionCheckingObj = new AppCustCompletionCheckingObj();
   Save() {
-    this.http.post(URLConstant.SaveAppCustCompletion, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post(URLConstant.SaveAppCustCompletion, { Id: this.AppCustId }).subscribe(
       (response) => {
         this.completionCheckingObj.IsCompleted = response["IsCompleted"];
         this.completionCheckingObj.InCompletedStep = response["InCompletedStep"];

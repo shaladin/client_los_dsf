@@ -1,10 +1,8 @@
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { DatePipe } from '@angular/common';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
@@ -24,11 +22,10 @@ export class LeadMainInfoComponent implements OnInit {
   AgencyName: any;
   leadUrl: string;
 
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, public datepipe: DatePipe) { }
-
+  constructor(private fb: FormBuilder, private http: HttpClient, public datepipe: DatePipe) { }
 
   ngOnInit() {
-    var leadObj = { LeadId: this.LeadId }
+    var leadObj = { Id: this.LeadId }
     this.http.post(URLConstant.GetLeadByLeadId, leadObj).subscribe(
       (response) => {
         this.LeadNo = response['LeadNo'];
@@ -37,11 +34,10 @@ export class LeadMainInfoComponent implements OnInit {
         this.LobCode = response['LobCode'];
         this.MrLeadSourceCode = response['MrLeadSourceCode'];
         this.AgencyName = response['AgencyName'];
-      })
-      this.leadUrl = '/View/Lead?LeadId=' + this.LeadId;
+      }
+    )
+    this.leadUrl = '/View/Lead?LeadId=' + this.LeadId;
   }
 
-  MainInfoForm = this.fb.group({
-  })
-
+  MainInfoForm = this.fb.group({})
 }

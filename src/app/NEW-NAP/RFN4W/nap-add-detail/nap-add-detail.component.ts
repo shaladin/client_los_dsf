@@ -13,6 +13,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
@@ -27,7 +28,8 @@ import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-in
 export class NapAddDetailComponent implements OnInit {
 
   custType: string = CommonConstant.CustTypePersonal;
-  private stepper: Stepper;
+  private stepperPersonal: Stepper;
+  private stepperCompany: Stepper;
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
@@ -40,6 +42,8 @@ export class NapAddDetailComponent implements OnInit {
   showCancel: boolean = true;
   IsLastStep: boolean = false;
   ReturnHandlingHId: number = 0;
+  isMainCustMarried: boolean = false;
+
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -48,15 +52,17 @@ export class NapAddDetailComponent implements OnInit {
   AppStep = {
     "NEW": 1,
     "CUST": 1,
-    "GUAR": 2,
-    "REF": 3,
-    "APP": 4,
-    "COLL": 5,
-    "INS": 6,
-    "LFI": 7,
-    "FIN": 8,
-    "TC": 9,
-    "UPD": 10
+    "FAM": 2,
+    "SHR": 2,
+    "GUAR": 3,
+    "REF": 4,
+    "APP": 5,
+    "COLL": 6,
+    "INS": 7,
+    "LFI": 8,
+    "FIN": 9,
+    "TC": 10,
+    "UPL_DOC": 11
   };
   dmsObj: DMSObj;
   appNo: string;
@@ -85,36 +91,100 @@ export class NapAddDetailComponent implements OnInit {
     this.AppStepIndex = 1;
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-    this.stepper = new Stepper(document.querySelector('#stepper1'), {
-      linear: false,
-      animation: true
-    })
 
     if (this.ReturnHandlingHId > 0) {
-      this.stepper.to(this.AppStepIndex);
+      this.ChangeStepper();
+      this.ChooseStep(this.AppStepIndex);    
     }
     else {
-      this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
+      var appObj = { Id: this.appId };
+      this.http.post(URLConstant.GetAppById, appObj).subscribe(
         (response: AppObj) => {
           if (response) {
-            if (response["MrCustTypeCode"] != null)
-              this.custType = response["MrCustTypeCode"];
+            this.NapObj = response;
+            if (this.NapObj.MrCustTypeCode != null)
+              this.custType = this.NapObj.MrCustTypeCode;
+
             if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
               this.initDms();
             }
-            this.AppStepIndex = this.AppStep[response.AppCurrStep];
-            this.stepper.to(this.AppStepIndex);
-          } else {
-            this.AppStepIndex = 0;
-            this.stepper.to(this.AppStepIndex);
+            this.ChangeStepper();
+            this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
+            this.ChooseStep(this.AppStepIndex);
           }
         }
       );
     };
-
+    
+    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, this.NapObj).subscribe(
+      (response) => {
+        if (response.AppCustObj) 
+        {
+          this.isMainCustMarried = response.AppCustPersonalObj != undefined && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried ? true : false;
+        }
+      }
+    );
     this.MakeViewReturnInfoObj();
   }
 
+  stepperMode: string = CommonConstant.CustTypePersonal;
+  ChangeStepper() {
+    if (this.custType == CommonConstant.CustTypePersonal) {
+      this.stepperPersonal = new Stepper(document.querySelector('#stepperPersonal'), {
+        linear: false,
+        animation: true
+      });
+      this.stepperMode = CommonConstant.CustTypePersonal;
+      document.getElementById('stepperPersonal').style.display = 'block';
+      document.getElementById('stepperCompany').style.display = 'none';
+      this.AppStep = {
+        "NEW": 1,
+        "CUST": 1,
+        "FAM": 2,
+        "SHR": 2,
+        "GUAR": 3,
+        "REF": 4,
+        "APP": 5,
+        "COLL": 6,
+        "INS": 7,
+        "LFI": 8,
+        "FIN": 9,
+        "TC": 10,
+        "UPL_DOC": 11
+      };
+    } else if (this.custType == CommonConstant.CustTypeCompany) {
+      this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
+        linear: false,
+        animation: true
+      });
+      this.stepperMode = CommonConstant.CustTypeCompany;
+      document.getElementById('stepperPersonal').style.display = 'none';
+      document.getElementById('stepperCompany').style.display = 'block';
+      this.AppStep = {
+        "NEW": 1,
+      "CUST": 1,
+      "FAM": 2,
+      "SHR": 2,
+      "GUAR": 3,
+      "REF": 4,
+      "APP": 5,
+      "COLL": 6,
+      "INS": 7,
+      "LFI": 8,
+      "FIN": 8,
+      "TC": 9,
+      "UPL_DOC": 10
+      };
+    }
+  }
+
+  ChooseStep(idxStep: number) {
+    if (this.custType == CommonConstant.CustTypePersonal) {
+      this.stepperPersonal.to(idxStep);
+    } else if (this.custType == CommonConstant.CustTypeCompany) {
+      this.stepperCompany.to(idxStep);
+    }
+  }
   async initDms() {
     this.isDmsReady = false;
     this.dmsObj = new DMSObj();
@@ -122,7 +192,7 @@ export class NapAddDetailComponent implements OnInit {
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    var appObj = { AppId: this.appId };
+    var appObj = { Id: this.appId };
     let getApp = await this.http.post(URLConstant.GetAppById, appObj);
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
     forkJoin([getApp, getAppCust]).subscribe(
@@ -141,7 +211,7 @@ export class NapAddDetailComponent implements OnInit {
 
         let mouId = response[0]['MouCustId'];
         if (mouId != null && mouId != "") {
-          let mouObj = { MouCustId: mouId };
+          let mouObj = { Id: mouId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
             result => {
               let mouCustNo = result['MouCustNo'];
@@ -175,7 +245,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   CheckMultiAsset() {
-    var appObj = { AppId: this.appId }
+    var appObj = { Id: this.appId }
     this.http.post(URLConstant.GetAppAssetListByAppId, appObj).subscribe(
       (response) => {
         this.ListAsset = response['ReturnObject'];
@@ -194,6 +264,12 @@ export class NapAddDetailComponent implements OnInit {
     switch (AppStep) {
       case CommonConstant.AppStepCust:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepCust];
+        break;
+      case CommonConstant.AppStepFamily:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepFamily];
+        break;
+      case CommonConstant.AppStepShr:
+        this.AppStepIndex = this.AppStep[CommonConstant.AppStepShr];
         break;
       case CommonConstant.AppStepGuar:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepGuar];
@@ -233,39 +309,42 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   NextStep(Step) {
-    if (Step == 'GUAR') {
-      this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
-        (response: AppObj) => {
-          if (response) {
-            if (response["MrCustTypeCode"] != null)
-              this.custType = response["MrCustTypeCode"];
-          }
-        });
-    }
-
     if (this.ReturnHandlingHId > 0) {
 
+    } else {
+      this.UpdateAppStep(Step);
     }
-    else {
-      this.NapObj.AppCurrStep = Step;
-      this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
-        (response) => {
-        }
-      )
-    }
+
     if (Step == CommonConstant.AppStepUplDoc) {
       this.initDms();
     }
+
     this.ChangeTab(Step);
-    this.stepper.to(this.AppStepIndex)
+    if (this.custType == CommonConstant.CustTypePersonal) {
+      this.stepperPersonal.next();
+    } else if (this.custType == CommonConstant.CustTypeCompany) {
+      this.stepperCompany.next();
+    }
+  }
+
+  UpdateAppStep(Step: string) {
+    this.NapObj.AppCurrStep = Step;
+    this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
+      (response) => {
+      }
+    )
   }
 
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
+    this.http.post(URLConstant.CreateWorkflowDuplicateCheck, this.NapObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFRFN4W_PAGING], {});
-      })
+        this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
+          (response) => {
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFRFN4W_PAGING], {});
+          })
+      }
+    );
   }
 
   Submit() {
@@ -300,5 +379,16 @@ export class NapAddDetailComponent implements OnInit {
   }
   Cancel() {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.BACK_TO_PAGING], { BizTemplateCode: CommonConstant.CFRFN4W });
+  }
+
+  CheckCustType(ev) {
+    this.isMainCustMarried = ev.MrMaritalStatCode != undefined && ev.MrMaritalStatCode == 'MARRIED'? true : false;
+    this.custType = ev.MrCustTypeCode != undefined? ev.MrCustTypeCode : CommonConstant.CustTypePersonal;
+    this.ChangeStepper();
+    if(this.custType == CommonConstant.CustTypePersonal){
+      this.NextStep(CommonConstant.AppStepFamily);
+    }else{
+      this.NextStep(CommonConstant.AppStepShr);
+    }
   }
 }

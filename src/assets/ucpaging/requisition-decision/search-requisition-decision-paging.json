@@ -9,7 +9,7 @@
             "value": "Office",
             "placeholder": "Placeholder",
             "isFromURL": true,
-            "isSelectOne": false,
+            "ddlType": "all",
             "isQueryIn" : true,
             "url": "",
             "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
@@ -67,7 +67,7 @@
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": false,
-            "isSelectOne": false,
+            "ddlType": "all",
             "items": [
                 {
                     "key": "CLAIMED",
@@ -98,13 +98,13 @@
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Claim By",
             "name": "ClaimBy"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Office",
             "name": "A.ORI_OFFICE_NAME"
         },
@@ -116,13 +116,13 @@
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Customer Name",
             "name": "AC.CUST_NAME"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Product Offering Name",
             "name": "A.PROD_OFFERING_NAME"
         },

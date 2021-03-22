@@ -39,7 +39,7 @@
             "name": "vat.SERIAL_NO_5_LABEL",
             "id": "LicensePlateId",
             "value": "",
-            "label": "License Plate No",
+            "label": "Serial No 5",
             "placeholder": "Placeholder"
         },
         {
@@ -47,7 +47,7 @@
             "name": "vat.SERIAL_NO_1_LABEL",
             "id": "ChassisId",
             "value": "",
-            "label": "Chassis NO",
+            "label": "Serial No 1",
             "placeholder": "Placeholder"
         },
         {
@@ -55,7 +55,7 @@
             "name": "vat.SERIAL_NO_2_LABEL",
             "id": "EngineId",
             "value": "",
-            "label": "Engine NO",
+            "label": "Serial No 2",
             "placeholder": "Placeholder"
         },
         {
@@ -98,19 +98,19 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "License Plate No",
+            "label": "Serial No 5",
             "name": "vat.SERIAL_NO_5_LABEL"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Chassis No",
+            "label": "Serial No 1",
             "name": "vat.SERIAL_NO_1_LABEL"
         },
         {
             "type": "sort",
             "position": "left",
-            "label": "Engine No",
+            "label": "Serial No 2",
             "name": "vat.SERIAL_NO_2_LABEL"
         },
         {

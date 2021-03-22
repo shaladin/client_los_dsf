@@ -116,7 +116,7 @@ export class CollateralLeasingAddEditComponent implements OnInit {
   assetConditionObj: RefMasterObj;
   returnAssetCondition: any;
   appObj = {
-    AppId: 0,
+    Id: 0,
   };
 
   AddCollForm = this.fb.group({
@@ -370,7 +370,7 @@ export class CollateralLeasingAddEditComponent implements OnInit {
   }
 
   GetListAddr() {
-    this.appObj.AppId = this.AppId;
+    this.appObj.Id = this.AppId;
     this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
@@ -383,9 +383,10 @@ export class CollateralLeasingAddEditComponent implements OnInit {
   }
 
   copyToLocationAddr() {
-    this.appCustAddrObj = new AppCustAddrObj();
-    this.appCustAddrObj.AppCustAddrId = this.AddCollForm.controls["LocationAddrType"].value;
-    this.http.post(this.getAppCustAddrByAppCustAddrId, this.appCustAddrObj).subscribe(
+    // this.appCustAddrObj = new AppCustAddrObj();
+    // this.appCustAddrObj.AppCustAddrId = this.AddCollForm.controls["LocationAddrType"].value;
+    var appCustAddrObj = { Id: this.AddCollForm.controls["LocationAddrType"].value };
+    this.http.post(this.getAppCustAddrByAppCustAddrId, appCustAddrObj).subscribe(
       (response) => {
         this.returnAppCustAddrObj = response;
 
@@ -406,9 +407,10 @@ export class CollateralLeasingAddEditComponent implements OnInit {
   }
 
   copyToCollateralOwnerAddr() {
-    this.collOwnerObj = new AppCustAddrObj();
-    this.collOwnerObj.AppCustAddrId = this.AddCollForm.controls["CollateralOwnerAddr"].value;
-    this.http.post(this.getAppCustAddrByAppCustAddrId, this.collOwnerObj).subscribe(
+    // this.collOwnerObj = new AppCustAddrObj();
+    // this.collOwnerObj.AppCustAddrId = this.AddCollForm.controls["CollateralOwnerAddr"].value;
+    var collOwnerObj = { Id: this.AddCollForm.controls["CollateralOwnerAddr"].value };
+    this.http.post(this.getAppCustAddrByAppCustAddrId, collOwnerObj).subscribe(
       (response) => {
         this.returnCollOwnerObj = response;
 
@@ -443,6 +445,7 @@ export class CollateralLeasingAddEditComponent implements OnInit {
     if (this.mode == 'editColl') {
       this.appCollateralObj = new AppCollateralObj();
       this.appCollateralObj.AppCollateralId = this.AppCollateralId;
+      this.appCollateralObj.Id = this.AppCollateralId;
       this.http.post(this.getAppCollateralByAppCollateralId, this.appCollateralObj).subscribe(
         (response) => {
           this.returnAppCollateralObj = response;
@@ -474,6 +477,7 @@ export class CollateralLeasingAddEditComponent implements OnInit {
 
       this.appCollateralRegistObj = new AppCollateralRegistrationObj();
       this.appCollateralRegistObj.AppCollateralId = this.AppCollateralId;
+      this.appCollateralRegistObj.Id = this.AppCollateralId;
       this.http.post(this.getAppCollateralRegistByAppCollateralId, this.appCollateralRegistObj).subscribe(
         (response) => {
           this.returnAppCollateralRegistObj = response;
@@ -727,7 +731,7 @@ export class CollateralLeasingAddEditComponent implements OnInit {
     }
 
     if (this.appCollateralObj.ListCollateralId.length == 0) {
-      this.toastr.errorMessage(ExceptionConstant.ADD_MIN_1_DATA);
+      this.toastr.warningMessage(ExceptionConstant.ADD_MIN_1_DATA);
       return;
     }
 

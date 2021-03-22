@@ -280,9 +280,11 @@ export class MouCustPersonalMainComponent implements OnInit {
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
-          this.parentForm.controls[this.identifier].patchValue({
-            MrGenderCode: this.GenderObj[0].Key
-          });
+          if(this.custDataPersonalObj.MouCustPersonalObj.MrGenderCode != null){
+            this.parentForm.controls[this.identifier].patchValue({
+              MrGenderCode: this.GenderObj[0].Key
+            });
+          }
         }
       }
     );

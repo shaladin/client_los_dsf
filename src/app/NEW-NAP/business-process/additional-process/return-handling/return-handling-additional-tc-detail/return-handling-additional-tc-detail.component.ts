@@ -57,7 +57,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   });
 
   appObj = {
-    AppId: 0,
+    Id: 0,
   };
 
   rtnHandlingDObj = {
@@ -99,7 +99,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
 
     var AppObj = {
-      AppId: this.appId
+      Id: this.appId
     }
 
     this.http.post(URLConstant.GetListExistingTCbyAppId, AppObj).subscribe(
@@ -116,14 +116,14 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.ClaimTask();
     this.initUrl();
-    this.appObj.AppId = this.appId;
+    this.appObj.Id = this.appId;
     this.initExistingTc();
     await this.GetAppData();
     this.getCustType();
     if (this.isReturnHandling == true) {
       this.MakeViewReturnInfoObj();
     }
-    this.http.post(URLConstant.GetListNewTCbyAppId, { AppId: this.appId }).toPromise().then(
+    this.http.post(URLConstant.GetListNewTCbyAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.listAddTc = response["AppTcs"];
         var fa_apptc = this.ReturnHandlingForm.get("AppTcs") as FormArray;
@@ -313,7 +313,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     );
     // }
     // else{
-    //   this.toastr.errorMessage("Please Complete TC");
+    //   this.toastr.warningMessage("Please Complete TC");
     // }
   }
 
@@ -352,7 +352,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   }
 
   bindRefTcObj() {
-    this.http.post(URLConstant.GetListTCbyAppId, { appId: this.appId }).subscribe(
+    this.http.post(URLConstant.GetListTCbyAppId, { Id: this.appId }).subscribe(
       (response) => {
         this.listTcCode = response["AppTcs"]
         this.http.post(this.getRefTcUrl, {}).subscribe(
@@ -410,7 +410,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
       this.listAddTc.push(appTcObj);
       this.ReqTCObj.ListAppTcObj = new Array<AppTCObj>();
       this.ReqTCObj.ListAppTcObj.push(appTcObj);
-      this.http.post(URLConstant.GetDocIsExpDtMandatory, { DocCode: appTcObj.TcCode }).subscribe(
+      this.http.post(URLConstant.GetDocIsExpDtMandatory, { Code: appTcObj.TcCode }).subscribe(
         (response) => {
           console.log("IsExpDate: " + JSON.stringify(response));
           if (response["DocCode"]) {
@@ -467,7 +467,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
   async getExpDtMandatory(TcCode) {
     console.log("getExpDtMandatory Code: " + TcCode);
-    await this.http.post(URLConstant.GetDocIsExpDtMandatory, { DocCode: TcCode }).subscribe(
+    await this.http.post(URLConstant.GetDocIsExpDtMandatory, { Code: TcCode }).subscribe(
       (response) => {
         console.log("getExpDtMandatory: " + JSON.stringify(response));
         var isExpDateMandatory = false;

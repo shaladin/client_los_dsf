@@ -77,19 +77,19 @@ export class NewApplicationDataComponent implements OnInit {
       RowVersion: ""
     };
     var objReferantor = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     var objAppDetail = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     var objComm = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     var objTc = {
-      AppId: this.AppId
+      Id: this.AppId
     }
 
     this.http.post(URLConstant.GetListAppGuarantorDetail, objGuarantor).subscribe(
@@ -112,15 +112,15 @@ export class NewApplicationDataComponent implements OnInit {
       (response) => {
         this.GetAppTc(response);
       });
-    this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.LoanObjectData = response["listResponseAppLoanPurpose"];
       });
-    this.http.post(URLConstant.GetListCollateralAppInsObjForViewByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetListCollateralAppInsObjForViewByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.AppCollateralInsData = response["ListAppInsObjForView"];
       });
-    this.http.post(URLConstant.GetAppLifeInsHByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetAppLifeInsHByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         if (response != null && response["AppLifeInsHId"] > 0) {
           this.AppLifeInsData["CoverLifeIns"] = "Yes";

@@ -40,7 +40,7 @@ export class FinancialDataComponent implements OnInit {
 
   listSubsidy: Array<AppSubsidyObj> = new Array<AppSubsidyObj>();
   AppData: AppObj;
-
+  isReady: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -56,7 +56,7 @@ export class FinancialDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.AppId}).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId}).subscribe(
       (response) => {
         this.AppData = response;
         this.FinDataForm = this.fb.group(
@@ -141,12 +141,13 @@ export class FinancialDataComponent implements OnInit {
             NeedReCalculate: true
           }
         );
+        this.isReady = true;
         this.LoadAppFinData();
       });
   }
 
   LoadAppFinData() {
-    this.http.post<AppFinDataObj>(URLConstant.GetInitAppFinDataByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post<AppFinDataObj>(URLConstant.GetInitAppFinDataByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
 

@@ -142,7 +142,7 @@ export class NapFromMouDetailComponent implements OnInit {
   }
 
   async GetLead() {
-    await this.http.post(URLConstant.GetMouCustById, { MouCustId: this.MouCustId }).toPromise().then(
+    await this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
       (response) => {
         this.MouCustObj = response as MouCustObj;
         this.NapAppForm.patchValue({

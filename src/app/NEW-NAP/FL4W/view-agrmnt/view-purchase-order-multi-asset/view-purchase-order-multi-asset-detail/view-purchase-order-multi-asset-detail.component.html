@@ -2,97 +2,100 @@
   <div class="card">
     <div class="card-body">
       <div class="px-3">
+
         <lib-ucSubsection [id]="'viewPOInfoId'" [title]="'Purchase Order Information'" [panel]="'viewPOInfo'">
         </lib-ucSubsection>
         <div class="form-body" id="viewPOInfo">
           <div class="row">
             <div class="col-md-6 ">
               <div class="row">
-                <label class="col-md-6 adInsLabel"> Purchase Order No </label>
+                <label class="col-md-6 adInsLabel" translate> Purchase Order No </label>
                 <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.PurchaseOrderNo}} </label>
               </div>
               <div class="row">
-                <label class="col-md-6 adInsLabel"> Purchase Order Date </label>
+                <label class="col-md-6 adInsLabel" translate> Purchase Order Date </label>
                 <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.PurchaseOrderDt | date:'shortDate'}} </label>
               </div>
               <div class="row">
-                <label class="col-md-6 adInsLabel"> Purchase Order Expired Date </label>
+                <label class="col-md-6 adInsLabel" translate> Purchase Order Expired Date </label>
                 <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.PurchaseOrderExpiredDt | date:'shortDate'}} </label>
               </div>
               <div class="row">
-                <label class="col-md-6 adInsLabel"> Total Purchase Order Amount </label>
+                <label class="col-md-6 adInsLabel" translate> Total Purchase Order Amount </label>
                 <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.TotalPurchaseOrderAmt | number:'.2':'en-US'}} </label>
               </div>
             </div>
             <div class="col-md-6 ">
               <div class="row">
-                <label class="col-md-6 adInsLabel"> MOU </label>
+                <label class="col-md-6 adInsLabel" translate> MOU </label>
                 <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.MouNo}} </label>
               </div>
               <div class="row">
-                <label class="col-md-6 adInsLabel"> Num of Extention </label>
+                <label class="col-md-6 adInsLabel" translate> Num of Extention </label>
                 <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.NumOfExtension}} </label>
               </div>
               <div class="row">
-                <label class="col-md-6 adInsLabel"> Purchase Order Notes </label>
+                <label class="col-md-6 adInsLabel" translate> Purchase Order Notes </label>
                 <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.Notes}} </label>
               </div>
             </div>
           </div>
         </div>
+
         <lib-ucSubsection [id]="'viewSupplInfoId'" [title]="'Supplier Information'" [panel]="'viewSupplInfo'">
         </lib-ucSubsection>
         <div class="form-body" id="viewSupplInfo">
           <div class="row">
             <div class="col-md-6 ">
               <div class="row">
-                <label class="col-md-6 adInsLabel"> Supplier Name </label>
+                <label class="col-md-6 adInsLabel" translate> Supplier Name </label>
                 <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.SupplName}} </label>
               </div>
               <div class="row">
-                <label class="col-md-6 adInsLabel"> Address </label>
+                <label class="col-md-6 adInsLabel" translate> Address </label>
                 <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.SupplAddr}} </label>
               </div>
               <div class="row">
-                <label class="col-md-6 adInsLabel"> Supplier Bank Account </label>
+                <label class="col-md-6 adInsLabel" translate> Supplier Bank Account </label>
                 <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.BankName }} - {{ ResponsePurchaseOrderHData?.BankAccName }} - {{ ResponsePurchaseOrderHData?.BankAccNo}} </label>
               </div>
             </div>
             <div class="col-md-6 ">
               <div class="row">
-                <!-- <label class="col-md-6 adInsLabel"> MOU </label>
+                <!-- <label class="col-md-6 adInsLabel" translate> MOU </label>
                 <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.MouNo}} </label> -->
               </div>
             </div>
           </div>
         </div>
+
         <lib-ucSubsection [id]="'AssetInfoId'" [title]="'Asset List'" [panel]="'AssetInfo'">
         </lib-ucSubsection>
         <div class="form-body" id="AssetInfo">
-            <table class="table table-responsive-md text-center table-hover">
-                <thead>
-                    <tr class="table-header">
-                        <th><span translate class="thead-header text-left">ASSET NAME</span></th>
-                        <th><span translate class="thead-header text-right">ASSET PRICE</span></th>
-                        <th><span translate class="thead-header text-right">DOWN PAYMENT</span></th>
-                        <th><span translate class="thead-header">SERIAL NO. 1</span></th>
-                        <th><span translate class="thead-header">SERIAL NO. 2</span></th>
-                        <th><span translate class="thead-header">LICENSE PLATE</span></th>
-                        <th><span translate class="thead-header">NOTES</span></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of ResponseAppAssetData ">
-                        <td class="text-left">{{item.FullAssetName}}</td>
-                        <td class="text-right">{{item.AssetPriceAmt | number}}</td>
-                        <td class="text-right">{{item.DownPaymentAmt | number}}</td>
-                        <td>{{item.SerialNo1}}</td>
-                        <td>{{item.SerialNo2}}</td>
-                        <td>{{item.SerialNo3}}</td>
-                        <td>{{item.AssetNotes}}</td>
-                    </tr>
-                </tbody>
-            </table>
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th><span translate class="thead-header text-left">ASSET NAME</span></th>
+                <th><span translate class="thead-header text-right">ASSET PRICE</span></th>
+                <th><span translate class="thead-header text-right">DOWN PAYMENT</span></th>
+                <th><span translate class="thead-header">SERIAL NO. 1</span></th>
+                <th><span translate class="thead-header">SERIAL NO. 2</span></th>
+                <th><span translate class="thead-header">SERIAL NO. 3</span></th>
+                <th><span translate class="thead-header">NOTES</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of ResponseAppAssetData ">
+                <td class="text-left">{{item.FullAssetName}}</td>
+                <td class="text-right">{{item.AssetPriceAmt | number}}</td>
+                <td class="text-right">{{item.DownPaymentAmt | number}}</td>
+                <td>{{item.SerialNo1}}</td>
+                <td>{{item.SerialNo2}}</td>
+                <td>{{item.SerialNo3}}</td>
+                <td>{{item.AssetNotes}}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
         <lib-ucSubsection [id]="'viewFinInfoId'" [title]="'Financial Information'" [panel]="'viewFinInfo'">
@@ -101,52 +104,53 @@
           <div class="row">
             <div class="col-md-6 ">
               <div class="row">
-                <label class="col-md-6 adInsLabel"> Total Asset Price </label>
+                <label class="col-md-6 adInsLabel" translate> Total Asset Price </label>
                 <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TotalAssetPriceAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
-                <label class="col-md-6 adInsLabel"> DP Asset Paid by Customer </label>
+                <label class="col-md-6 adInsLabel" translate> DP Asset Paid by Customer </label>
                 <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.DownPaymentGrossAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
-                <label class="col-md-6 adInsLabel"> Subsidy DP from Dealer </label>
+                <label class="col-md-6 adInsLabel" translate> Subsidy DP from Dealer </label>
                 <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.DownPaymentGrossAmt - ResponseAgrmntFinDataData?.DownPaymentNettAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
-                <label class="col-md-6 adInsLabel"> First Installment in Advance </label>
+                <label class="col-md-6 adInsLabel" translate> First Installment in Advance </label>
                 <label class="col-md-6 adInsLabel" *ngIf="ResponseAgrmntFinDataData?.MrFirstInstTypeCode == 'AD'"> {{ResponseAgrmntFinDataData?.InstAmt}} </label>
                 <label class="col-md-6 adInsLabel" *ngIf="ResponseAgrmntFinDataData?.MrFirstInstTypeCode == 'AR'"> {{0}} </label>
               </div>
               <div class="row">
-                <label class="col-md-6 adInsLabel"> Total Insurance Premi </label>
+                <label class="col-md-6 adInsLabel" translate> Total Insurance Premi </label>
                 <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TotalInsCustAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
-                <label class="col-md-6 adInsLabel"> Total Life Insurance Premi </label>
+                <label class="col-md-6 adInsLabel" translate> Total Life Insurance Premi </label>
                 <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TotalLifeInsCustAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
-                <label class="col-md-6 adInsLabel"> Total Fee </label>
+                <label class="col-md-6 adInsLabel" translate> Total Fee </label>
                 <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TotalFeeAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
-                <label class="col-md-6 adInsLabel"> TDP Paid at MF </label>
+                <label class="col-md-6 adInsLabel" translate> TDP Paid at MF </label>
                 <label class="col-md-6 adInsLabel"> {{ResponseAgrmntFinDataData?.TdpPaidCoyAmt | number:'.2':'en-US'}} </label>
               </div>
               <div class="row">
-                <label class="col-md-6 adInsLabel"> Total Purchase Order Amount </label>
+                <label class="col-md-6 adInsLabel" translate> Total Purchase Order Amount </label>
                 <label class="col-md-6 adInsLabel"> {{ResponsePurchaseOrderHData?.TotalPurchaseOrderAmt | number:'.2':'en-US'}} </label>
               </div>
             </div>
-            <div class="col-md-6 ">
-            </div>
+            <div class="col-md-6 "></div>
           </div>
         </div>
+
         <div class="float-right">
-          <button type="button" class="btn btn-raised btn-warning mr-1" (click) = "back()"
-            translate>
+          <button type="button" class="btn btn-raised btn-warning mr-1" (click) = "back()" translate>
             <i class="ft-x"></i> Back
           </button>
+        </div>
+
       </div>
     </div>
   </div>

@@ -93,7 +93,7 @@ export class AssetAllocationDetailComponent implements OnInit {
     }
     this.http.post(URLConstant.SubmitAssetAllocation, reqObj).subscribe(
       (response) => {
-        this.toastr.successMessage("Asset Allocation Saved Successfully");
+        this.toastr.successMessage(response["message"]);
         this.backToPaging();
         
       }
@@ -117,7 +117,7 @@ export class AssetAllocationDetailComponent implements OnInit {
   }
   isReady: boolean = false;
   async getAssetAllocationData() {
-    var reqObj = { AppId: this.AppId }
+    var reqObj = { Id: this.AppId }
     await this.http.post(URLConstant.GetAssetAllocationDataByAppId, reqObj).toPromise().then(
       (response) => {
         this.ListUsedAssetNumber = response["ListAssetNumber"];

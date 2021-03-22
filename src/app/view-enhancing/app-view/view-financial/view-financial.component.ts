@@ -80,7 +80,7 @@ export class ViewFinancialComponent implements OnInit {
   }
 
   getFinancialData() {
-    var reqObj = { AppId: this.AppId };
+    var reqObj = { Id: this.AppId };
     this.http.post(URLConstant.GetFinancialDataByAppIdForView, reqObj).subscribe(
       (response) => {
         this.listSubsidy = response["AppSubsidyObjs"];
@@ -94,7 +94,7 @@ export class ViewFinancialComponent implements OnInit {
 
   async GetListAllAssetFinancialData() {
     var requestAppId = {
-      AppId: this.AppId
+      Id: this.AppId
     };
 
     await this.http.post(URLConstant.GetListAllAssetFinancialData, requestAppId).toPromise().then(

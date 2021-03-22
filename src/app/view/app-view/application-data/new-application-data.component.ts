@@ -80,28 +80,28 @@ export class NewApplicationDataComponent implements OnInit {
       RowVersion: ""
     };
     var objReferantor = {
-      AppID: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     var objAppDetail = {
-      AppID: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     var objComm = {
-      AppID: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
     var objTc = {
-      AppId: this.AppId
+      Id: this.AppId
     }
     let getGuarantor = this.http.post(URLConstant.GetListAppGuarantorDetail, objGuarantor).toPromise();
     let getReferantor = this.http.post(URLConstant.GetAppReferantorForAppsData, objReferantor).toPromise();
     let getAppDetail = this.http.post(URLConstant.GetAppDetailForAppTabById, objAppDetail).toPromise();
     let getCommission = this.http.post(URLConstant.GetAppCommissionDataDetailByAppId, objComm).toPromise();
     let getAppTc = this.http.post(URLConstant.GetListTCbyAppId, objTc).toPromise();
-    let getLoanObj = this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { AppId: this.AppId }).toPromise();
-    let getCollateralIns = this.http.post(URLConstant.GetListCollateralAppInsObjForViewByAppId, { AppId: this.AppId }).toPromise();
-    let getLifeInsurance = this.http.post(URLConstant.GetAppLifeInsHByAppId, { AppId: this.AppId }).toPromise();
+    let getLoanObj = this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.AppId }).toPromise();
+    let getCollateralIns = this.http.post(URLConstant.GetListCollateralAppInsObjForViewByAppId, { Id: this.AppId }).toPromise();
+    let getLifeInsurance = this.http.post(URLConstant.GetAppLifeInsHByAppId, { Id: this.AppId }).toPromise();
     forkJoin([getGuarantor, getReferantor, getAppDetail, getCommission, getAppTc, getLoanObj, getCollateralIns, getLifeInsurance]).toPromise().then(
       (response) => {
         this.GetGuarantorData(response[0]);

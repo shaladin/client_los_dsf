@@ -45,7 +45,7 @@ export class MouCustTcComponent implements OnInit {
     var mouObj = new MouCustObj();
     mouObj.MouCustId = this.MouCustId;
     var mouCustObjData;
-    this.httpClient.post(URLConstant.GetMouCustById, mouObj).pipe(
+    this.httpClient.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).pipe(
       map((response: MouCustObj) => {
         mouCustObjData = response;
         return response;
@@ -53,7 +53,7 @@ export class MouCustTcComponent implements OnInit {
       mergeMap(() => {
         var mouCustClause = new MouCustClauseObj();
         mouCustClause.MouCustId = this.MouCustId;
-        return this.httpClient.post(URLConstant.GetMouCustClauseByMouCustId, mouCustClause);
+        return this.httpClient.post(URLConstant.GetMouCustClauseByMouCustId, { Id: this.MouCustId });
       }),
       mergeMap((response) => {
         var mouCustClause = response;

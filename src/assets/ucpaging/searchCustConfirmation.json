@@ -42,7 +42,7 @@
       "value": "",
       "placeholder": "Placeholder",
       "isFromURL": true,
-      "isSelectOne": false,
+      "ddlType": "all",
       "isQueryIn" : true,
       "url": "",
       "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
@@ -58,7 +58,7 @@
       "value": "",
       "placeholder": "Placeholder",
       "isFromURL": false,
-      "isSelectOne": false,
+      "ddlType": "all",
       "items": [
         {
           "key": "CLAIMED",

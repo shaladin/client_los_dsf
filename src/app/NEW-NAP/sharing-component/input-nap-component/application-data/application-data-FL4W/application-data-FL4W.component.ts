@@ -48,7 +48,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.mode = params["mode"];
-      if (params["IsMainData"] != undefined && params["IsMainData"]) this.isMainData = params["IsMainData"];
     });
   }
 
@@ -123,7 +122,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
   mouCustObj;
   resMouCustObj;
   CustNo: string;
-  isMainData: boolean = false;
   ngOnInit() {
     this.defaultSlikSecEcoCode = CommonConstant.DefaultSlikSecEcoCode;
     this.ListCrossAppObj["appId"] = this.AppId;
@@ -150,7 +148,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
 
     var user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var AppObj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
     this.http.post(URLConstant.GetAppCustByAppId, AppObj).subscribe(
       (response) => {
@@ -164,8 +162,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
         this.http.post(URLConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
           (response) => {
             this.resMouCustObj = response[CommonConstant.ReturnObj];
-
-
             // if(this.resMouCustObj.length > 0)
             // {
             //   this.NapAppModelForm.patchValue({ MouCustId: this.resMouCustObj[0].Key });
@@ -239,7 +235,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
 
   GetCrossInfoData() {
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     }
     this.http.post(URLConstant.GetListAppCross, obj).subscribe(
@@ -255,7 +251,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   resultResponse;
   getAppModelInfo() {
     var obj = {
-      AppId: this.AppId,
+      Id: this.AppId,
       RowVersion: ""
     };
 
@@ -613,7 +609,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       RowVersion: this.resultResponse.RowVersion
     };
 
-    if (this.isIncludeMailingAddress) obj['appCustMailingAddr'] = this.getMailingAddrForSave();
+     obj['appCustMailingAddr'] = this.getMailingAddrForSave();
     this.http.post(URLConstant.EditAppAddAppCross, obj).subscribe(
       (response) => {
         this.outputTab.emit();
@@ -677,7 +673,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
     }
   }
 
-  isIncludeMailingAddress: boolean = false;
   inputAddressObj: InputAddressObj = new InputAddressObj();
   inputFieldAddressObj: InputFieldObj = new InputFieldObj();
   mailingAddrObj: AddrObj = new AddrObj();
@@ -687,15 +682,13 @@ export class ApplicationDataFL4WComponent implements OnInit {
     { Key: "RESIDENCE", Value: "Residence" }
   ];
   async initMailingAddress() {
-    if (!this.isMainData) return;
 
-    this.isIncludeMailingAddress = true;
     this.mailingAddrObj = new AddrObj();
     this.inputAddressObj = new InputAddressObj();
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
     this.inputAddressObj.showSubsection = false;
 
-    await this.http.post(URLConstant.GetListAppCustAddrByAppId, { 'AppId': this.AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetListAppCustAddrByAppId, { 'Id': this.AppId }).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.copyToMailing(CommonConstant.AddrTypeMailing);
@@ -704,7 +697,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   copyToMailing(addrType: string = '') {
-    if (!this.isIncludeMailingAddress) return;
     if (!addrType) addrType = this.NapAppModelForm.controls.CopyFromMailing.value;
     if (!addrType) return;
 
@@ -721,10 +713,13 @@ export class ApplicationDataFL4WComponent implements OnInit {
       this.mailingAddrObj.FaxArea = address.FaxArea;
       this.mailingAddrObj.Phn1 = address.Phn1;
       this.mailingAddrObj.Phn2 = address.Phn2;
+      this.mailingAddrObj.Phn3 = address.Phn3;
       this.mailingAddrObj.PhnArea1 = address.PhnArea1;
       this.mailingAddrObj.PhnArea2 = address.PhnArea2;
+      this.mailingAddrObj.PhnArea3 = address.PhnArea3;
       this.mailingAddrObj.PhnExt1 = address.PhnExt1;
       this.mailingAddrObj.PhnExt2 = address.PhnExt2;
+      this.mailingAddrObj.PhnExt3 = address.PhnExt3;
 
       this.inputAddressObj.inputField.inputLookupObj.nameSelect = address.Zipcode;
       this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: address.Zipcode };
@@ -733,7 +728,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   getMailingAddrForSave() {
-    if (!this.isIncludeMailingAddress) return null;
     let mailingAddr: AppCustAddrObj = new AppCustAddrObj();
     mailingAddr.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
     mailingAddr.Addr = this.NapAppModelForm.controls["Address"]["controls"].Addr.value;

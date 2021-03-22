@@ -53,7 +53,8 @@ export class CustomerSelfVerificationComponent implements OnInit {
     
     this.leadObj = new LeadObj;
     this.leadObj.LeadId = this.LeadId;
-    this.http.post(URLConstant.GetLeadByLeadId, this.leadObj).subscribe(
+    var leadObj = { Id: this.LeadId };
+    this.http.post(URLConstant.GetLeadByLeadId, leadObj).subscribe(
       (response) => { 
         this.LeadStep = response["LeadStep"];
          if (this.LeadStep != CommonConstant.LeadStepSelfVerification){

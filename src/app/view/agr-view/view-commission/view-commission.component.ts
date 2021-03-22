@@ -43,7 +43,7 @@ export class ViewCommissionComponent implements OnInit {
   }
 
   async GetCommissionData() {
-    var obj: object = { AgrmntId: this.agrmntId };
+    var obj: object = { Id: this.agrmntId };
 
     var url: string = URLConstant.GetListAgrmntCommissionWithDetailByAgrmntId;
 

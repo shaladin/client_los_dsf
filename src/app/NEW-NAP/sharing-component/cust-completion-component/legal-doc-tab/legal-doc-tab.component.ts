@@ -34,7 +34,7 @@ export class LegalDocTabComponent implements OnInit {
   }
 
   LoadListLegalDocData(){
-    this.http.post(URLConstant.GetAppCustCompanyLegalDocsByAppCustCompanyId, { AppCustCompanyId: this.AppCustCompanyId }).subscribe(
+    this.http.post(URLConstant.GetAppCustCompanyLegalDocsByAppCustCompanyId, { Id: this.AppCustCompanyId }).subscribe(
       (response) => {
         this.InputGridObj.resultData = {
           Data: ""

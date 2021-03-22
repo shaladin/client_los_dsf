@@ -120,8 +120,9 @@ export class PreGoLiveComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
-    var agrmntObj = new AgrmntObj();
-    agrmntObj.AgrmntId = this.AgrmntId;
+    var agrmntObj = {
+      Id: this.AgrmntId
+    }
     this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
       (response) => {
         this.result = response;
@@ -148,8 +149,8 @@ export class PreGoLiveComponent implements OnInit {
     this.dmsAppObj.Role = currentUserContext.RoleCode;
     this.dmsAppObj.ViewCode = CommonConstant.DmsViewCodeApp;
 
-    var agrObj = { AgrmntId: this.AgrmntId };
-    var appObj = { AppId: this.AppId };
+    var agrObj = { Id: this.AgrmntId };
+    var appObj = { Id: this.AppId };
 
     let getAgr = await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
@@ -175,7 +176,7 @@ export class PreGoLiveComponent implements OnInit {
 
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
         if (mouId != null && mouId != "") {
-          let mouObj = { MouCustId: mouId };
+          let mouObj = { Id: mouId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
             result => {
               this.mouCustNo = result['MouCustNo'];

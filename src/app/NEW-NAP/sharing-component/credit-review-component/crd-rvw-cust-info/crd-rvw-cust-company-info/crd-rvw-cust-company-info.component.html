@@ -3,7 +3,7 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-10">
-          <label class="label-control"> Customer Name </label>
+          <label class="label-control" translate> Customer Name </label>
         </div>
         <div class="col-md-2">
           <span id="CustIndicator" style="float: right;">
@@ -26,7 +26,7 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-10">
-          <label class="label-control"> NPWP </label>
+          <label class="label-control" translate> NPWP </label>
         </div>
         <div class="col-md-2">
           <span id="NpwpIndicator" style="float: right;">
@@ -47,7 +47,7 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <label class="label-control"> Address </label>
+      <label class="label-control" translate> Address </label>
     </div>
     <div class="col-md-6 ">
       <label class="label-control"> {{crdRvwCustCoyInfoObj.Address}} </label>
@@ -55,7 +55,7 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <label class="label-control"> Industry Type </label>
+      <label class="label-control" translate> Industry Type </label>
     </div>
     <div class="col-md-6 ">
       <label class="label-control"> {{crdRvwCustCoyInfoObj.IndustryType}} </label>
@@ -65,7 +65,7 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-10">
-          <label class="label-control"> ROI </label>
+          <label class="label-control" translate> ROI </label>
         </div>
         <div class="col-md-2">
           <span id="RoiIndicator" style="float: right;">
@@ -86,7 +86,7 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <label class="label-control"> Phone </label>
+      <label class="label-control" translate> Phone </label>
     </div>
     <div class="col-md-6 "> 
       <span *ngFor="let item of ListCrdRvwCustPhnStatusObj; let i = index">
@@ -108,7 +108,7 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-10">  
-          <label class="label-control">         
+          <label class="label-control" translate>         
             <a class="link" (click)="ClickLinkDiffCust(DiffCustContent)"> Difference with master customer </a>
           </label>        
         </div>
@@ -133,7 +133,7 @@
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-10">
-          <label class="label-control"> 
+          <label class="label-control" translate> 
             <a class="link" (click)="ClickLinkDiffApp(DiffAppContent)"> Difference with in process Application </a>
           </label>
         </div>
@@ -156,9 +156,9 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <label class="label-control"> View </label>
+      <label class="label-control" translate> View </label>
     </div>
-    <div class="col-md-6 ">
+    <div class="col-md-6" translate>
       <a class="link" (click)="ClickLinkBankStatement()">Bank Statement</a>
       <label class="label-control"> &nbsp;|&nbsp; </label>
       <a class="link" (click)="ClickLinkNegativeCheckingList()">Negative Checking List</a>
@@ -168,8 +168,8 @@
 
 <ng-template #DiffCustContent let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title"></h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+    <h4 class="modal-title" translate></h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -177,8 +177,8 @@
 </ng-template>
 <ng-template #DiffAppContent let-c="close" let-d="dismiss">
   <div class="modal-header">
-    <h4 class="modal-title"></h4>
-    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+    <h4 class="modal-title" translate></h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
       <span aria-hidden="true">&times;</span>
     </button>
   </div>

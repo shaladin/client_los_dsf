@@ -68,7 +68,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
     this.claimTask();
     this.arrValue.push(this.AgrmntId);
 
-    this.http.post(URLConstant.GetPurchaseOrderListForNewPOByAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetPurchaseOrderListForNewPOByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.POList = response["PurchaseOrderForNewPOObjs"];
         console.log("POList: " + JSON.stringify(this.POList));
@@ -99,7 +99,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
     modalPOEntry.result.then(
       (response) => {
         this.spinner.show();
-        this.http.post(URLConstant.GetPurchaseOrderListForNewPOByAppId, { AppId: this.AppId }).toPromise().then(
+        this.http.post(URLConstant.GetPurchaseOrderListForNewPOByAppId, { Id: this.AppId }).toPromise().then(
           (response) => {
             this.POList = response["PurchaseOrderForNewPOObjs"];
           }
@@ -128,7 +128,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
       }
     }
     if (!isPOResolved) {
-      this.toastr.errorMessage("Please Resolve All Purchase Order");
+      this.toastr.warningMessage("Please Resolve All Purchase Order");
     }
     else {
       var workflowModel = new WorkflowApiObj();

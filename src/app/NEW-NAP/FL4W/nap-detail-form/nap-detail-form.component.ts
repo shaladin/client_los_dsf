@@ -60,7 +60,7 @@ export class NapDetailFormComponent implements OnInit {
     "LFI": 5,
     "FIN": 6,
     "TC": 7,
-    "UPD": 8
+    "UPL_DOC": 8
   };
   dmsObj: DMSObj;
   appNo: string;
@@ -94,8 +94,10 @@ export class NapDetailFormComponent implements OnInit {
     if (this.ReturnHandlingHId > 0) {
       this.ChangeStepper();
       this.ChooseStep(this.AppStepIndex);
-    } else {
-      this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
+    }
+    else {
+      var appObj = { Id: this.appId };
+      this.http.post(URLConstant.GetAppById, appObj).subscribe(
         (response: AppObj) => {
           if (response) {
             this.NapObj = response;
@@ -120,7 +122,7 @@ export class NapDetailFormComponent implements OnInit {
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    var appObj = { AppId: this.appId };
+    var appObj = { Id: this.appId };
     let getApp = await this.http.post(URLConstant.GetAppById, appObj);
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
     forkJoin([getApp, getAppCust]).subscribe(
@@ -139,7 +141,7 @@ export class NapDetailFormComponent implements OnInit {
 
         let mouId = response[0]['MouCustId'];
         if (mouId != null && mouId != "") {
-          let mouObj = { MouCustId: mouId };
+          let mouObj = { Id: mouId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
             result => {
               let mouCustNo = result['MouCustNo'];
@@ -177,7 +179,7 @@ export class NapDetailFormComponent implements OnInit {
         "LFI": 5,
         "FIN": 6,
         "TC": 7,
-        "UPD": 8
+        "UPL_DOC": 8
       };
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
@@ -196,7 +198,7 @@ export class NapDetailFormComponent implements OnInit {
         "LFI": 5,
         "FIN": 5,
         "TC": 6,
-        "UPD": 7
+        "UPL_DOC": 7
       };
     }
   }

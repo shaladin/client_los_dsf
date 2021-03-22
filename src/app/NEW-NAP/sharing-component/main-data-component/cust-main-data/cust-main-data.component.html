@@ -294,7 +294,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6" [hidden]="custMainDataMode == CustMainDataMgmntShrholder">
+            <div class="col-md-6" [hidden]="custMainDataMode == CustMainDataMgmntShrholder && MrCustTypeCode == 'COMPANY'">
               <div class="form-group row">
                 <label class="col-md-4" translate>Is Signer</label>
                 <div class="col-md-8">
@@ -330,7 +330,7 @@
                 <div class="input-group-append">
                   <span class="input-group-btn">
                     <button [disabled]="isExisting ? 'true' : null" type="button" class="btn btn-raised btn-primary"
-                      (click)="CopyAddress()">
+                      (click)="CopyAddress()" translate>
                       <i class="fa fa-files-o"></i> Copy
                     </button>
                   </span>
@@ -347,11 +347,11 @@
           (click)="cancel()" translate>
           <i class="ft-x"></i> Cancel
         </button>
-        <button type="submit" (click)=formValidate.scrollIfFormHasErrors(CustMainDataForm)
+        <button type="submit" (click)=formValidate.scrollIfFormHasErrors(CustMainDataForm) translate
           class="btn btn-raised btn-primary">
           <i class="fa fa-check-square"></i> Save
         </button>
-        <!-- <button type="button" (click)=getFormValidationErrors()
+        <!-- <button type="button" (click)=getFormValidationErrors() translate
           class="btn btn-raised btn-primary">
           <i class="fa fa-check-square"></i> cek error
         </button> -->

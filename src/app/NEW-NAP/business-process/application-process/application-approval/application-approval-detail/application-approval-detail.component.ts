@@ -50,15 +50,9 @@ export class ApplicationApprovalDetailComponent implements OnInit {
       if (params["ApvReqId"] != null) {
         this.ApvReqId = params["ApvReqId"];
       }
-      var obj = {
-        taskId: params["TaskId"],
-        instanceId: params["InstanceId"],
-        approvalBaseUrl: environment.ApprovalR3Url
-      }
-      this.inputObj = obj;
-
+      
       var ApvHoldObj = new ApprovalObj()
-      ApvHoldObj.TaskId = obj.taskId
+      ApvHoldObj.TaskId = params["TaskId"];
 
       this.HoldTask(ApvHoldObj);
     });
@@ -97,7 +91,7 @@ export class ApplicationApprovalDetailComponent implements OnInit {
   crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   isShow: boolean = false;
   async GetCrdRvwCustInfoByAppId() {
-    await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { AppId: this.appId }).toPromise().then(
+    await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.crdRvwCustInfoObj = response;
         this.isShow = true;
@@ -140,6 +134,8 @@ export class ApplicationApprovalDetailComponent implements OnInit {
     this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
     this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
     this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel; 
+    this.InputApvObj.PathUrlReturnToLevel = URLConstant.ReturnLevel;
+    this.InputApvObj.PathUrlContinueToLevel = URLConstant.ContinueToLevel;
     this.InputApvObj.TrxNo =  this.AppObj.AppNo;
     this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
     this.InputApvObj.RequestId = this.ApvReqId;
@@ -148,8 +144,9 @@ export class ApplicationApprovalDetailComponent implements OnInit {
 
   //#region Uc Approval 
   async getApp() {
-    let appObj = new AppObj();
-    appObj.AppId = this.appId
+    // let appObj = new AppObj();
+    // appObj.AppId = this.appId
+    var appObj = { Id: this.appId };
     await this.http.post<AppObj>(URLConstant.GetAppById, appObj).toPromise().then(
       (response) => {
         this.AppObj = response;

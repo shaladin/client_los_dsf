@@ -285,7 +285,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
   SetPayFreq(MouCustId: number) {
     var MouObj = {
-      MouCustId: MouCustId
+      Id: MouCustId
     }
     this.http.post<MouCustFctrObj>(URLConstant.GetMouCustFctrByMouCustId, MouObj).subscribe(
       (response) => {
@@ -534,11 +534,10 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   async loadData() {
-    var obj = {
-      AppId: this.AppId
-    }
+    var obj = { Id: this.AppId };
+    var appObj = { Id: this.AppId };
 
-    await this.http.post(URLConstant.GetAppById, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
       (response) => {
         this.responseApp = response
       });

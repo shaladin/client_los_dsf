@@ -13,19 +13,15 @@
             </lib-ucSubsection>
             <div class="form-body" id="addApp">
               <div class="form-group row adins-required">
-                <label class="col-md-4 adInsLabel">Office </label>
+                <label class="col-md-4 adInsLabel" translate>Office </label>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="OriOfficeCode"
-                    (change)="ChangeValueOffice($event)"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppForm.controls.OriOfficeCode.invalid }">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let it of officeItems" value="{{it.Key}}">
-                      {{it.Value}} </option>
-                  </select>
+                  <lib-ucdropdownlist [dropdownListObj]="dropdownListObj" [parentForm]="NapAppForm"
+                    [enjiForm]="enjiForm" [identifier]="'OriOfficeCode'" (callback)="ChangeValueOffice($event)">
+                  </lib-ucdropdownlist>
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-4 adInsLabel">Copy Application From </label>
+                <label class="col-md-4 adInsLabel" translate>Copy Application From </label>
                 <div class="col-md-4">
                   <lib-uclookupgeneric [lookupInput]="inputLookupObjCopyProduct" [parentForm]='NapAppForm'
                     [enjiForm]='enjiForm' [identifier]="'ProductOfferingIdentifier'" #LookupCopyProduct
@@ -35,7 +31,7 @@
               </div>
               <div class="form-group row">
                 <div class="col-md-4 adins-required">
-                  <label class="adInsLabel">Product Offering Name </label>
+                  <label class="adInsLabel" translate>Product Offering Name </label>
                 </div>
                 <div class="col-md-4" *ngIf="!isCopyData">
                   <lib-uclookupgeneric [lookupInput]="inputLookupObjName" [parentForm]='NapAppForm'
@@ -43,10 +39,11 @@
                     (lookup)="getLookupAppResponseName($event)">
                   </lib-uclookupgeneric>
                 </div>
-                <label class="col-md-4 adInsLabel" *ngIf="isCopyData">{{NapAppForm.controls.ProdOfferingName.value}} </label>
+                <label class="col-md-4 adInsLabel" *ngIf="isCopyData">{{NapAppForm.controls.ProdOfferingName.value}}
+                </label>
               </div>
               <div class="form-group row">
-                <label class="col-md-4 adInsLabel">Currency </label>
+                <label class="col-md-4 adInsLabel" translate>Currency </label>
                 <label class="col-md-4 adInsLabel">{{NapAppForm.controls.CurrCode.value}} </label>
               </div>
             </div>

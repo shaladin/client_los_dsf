@@ -24,13 +24,13 @@
                 <div class="form-body">
                   <div class="form-group row">
                     <div class="form-group col-md-2">
-                      <label class="adInsLabel">Return Notes</label>
+                      <label class="adInsLabel" translate>Return Notes</label>
                     </div>
                     <div class="col-md-4">
                       <label class="adInsLabel">{{ returnHandlingDObj?.ReturnHandlingNotes }}</label>
                     </div>
                     <div class="form-group col-md-2">
-                      <label class="adInsLabel">Return Execution Notes</label>
+                      <label class="adInsLabel" translate>Return Execution Notes</label>
                     </div>
                     <div class="col-md-4">
                       <textarea type="textarea" row="5" class="form-control" formControlName="ReturnHandlingExecNotes"
@@ -49,7 +49,7 @@
                 <i class="ft-x"></i> Cancel
               </button>
               <button *ngIf="ReturnHandlingHObj.ReturnHandlingHId > 0 && IsLastStep" type="button"
-                (click)="SubmitReturnHandling()" class="btn btn-raised btn-primary">
+                (click)="SubmitReturnHandling()" class="btn btn-raised btn-primary" translate>
                 <i class="far fa-check-square"></i> Submit
               </button>
             </div>
@@ -67,7 +67,7 @@
               <div *ngFor="let item of ListResultRefundIncomeInfo; let i = index">
                 <div class="row">
                   <div class="col-md-6">
-                    <label class="label-control"> {{ item.RefundAllocationFromDesc }} </label>
+                    <label class="label-control" translate> {{ item.RefundAllocationFromDesc }} </label>
                   </div>
                   <div class="col-md-6 form-inline-right">
                     <label class="label-control" *ngIf="item.RefundAmount >= 0"> {{item.RefundAmount | number:'.2':'en-US'}} </label>
@@ -77,7 +77,7 @@
               </div>
               <div class="row">
                 <div class="col-md-6">
-                  <label class="label-control"> Max Allocated Amount </label>
+                  <label class="label-control" translate> Max Allocated Amount </label>
                 </div>
                 <div class="col-md-6 form-inline-right">
                   <label class="label-control" *ngIf="viewIncomeInfoObj.MaxAllocatedAmount >= 0">
@@ -94,7 +94,7 @@
               <div *ngFor="let item of ListResultRefundIncomeInfo; let i = index">
                 <div class="row">
                   <div class="col-md-6">
-                    <label class="label-control"> {{ item.RefundAllocationFromDesc }} </label>
+                    <label class="label-control" translate> {{ item.RefundAllocationFromDesc }} </label>
                   </div>
                   <div class="col-md-6 form-inline-right">
                     <label class="label-control" *ngIf="DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount >= 0"> {{DictRemainingIncomeForm[item.RefundAllocationFrom].RefundAmount | number:'.2':'en-US'}} </label>
@@ -104,7 +104,7 @@
               </div>
               <div class="row">
                 <div class="col-md-6">
-                  <label class="label-control"> Remaining Allocated Amount </label>
+                  <label class="label-control" translate> Remaining Allocated Amount </label>
                 </div>
                 <div class="col-md-6 form-inline-right">
                   <label class="label-control" *ngIf="viewIncomeInfoObj.RemainingAllocatedAmount >= 0">

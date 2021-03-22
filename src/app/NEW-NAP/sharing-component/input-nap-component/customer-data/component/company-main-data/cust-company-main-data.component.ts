@@ -205,7 +205,7 @@ export class CustCompanyMainDataComponent implements OnInit {
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.setCriteriaLookupCustomer(CommonConstant.CustTypeCompany);
 
-    var AppObj = { AppId: this.AppId };
+    var AppObj = { Id: this.AppId };
     this.http.post<AppObj>(URLConstant.GetAppById, AppObj).subscribe(
       (response) => {
         this.AppObj = response;

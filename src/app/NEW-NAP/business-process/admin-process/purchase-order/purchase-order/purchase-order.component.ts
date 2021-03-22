@@ -57,7 +57,7 @@ export class PurchaseOrderComponent implements OnInit {
   async ngOnInit() {
     this.arrValue.push(this.AgrmntId);
     var appAssetObj = {
-      AgrmntId: this.AgrmntId
+      Id: this.AgrmntId
     }
     this.claimTask();
     this.http.post(URLConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(
@@ -80,8 +80,8 @@ export class PurchaseOrderComponent implements OnInit {
     this.dmsAppObj.Role = currentUserContext.RoleCode;
     this.dmsAppObj.ViewCode = CommonConstant.DmsViewCodeApp;
 
-    var agrObj = { AgrmntId: this.AgrmntId };
-    var appObj = { AppId: this.AppId };
+    var agrObj = { Id: this.AgrmntId };
+    var appObj = { Id: this.AppId };
 
     let getAgr = await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
@@ -107,7 +107,7 @@ export class PurchaseOrderComponent implements OnInit {
 
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
         if (mouId != null && mouId != "") {
-          let mouObj = { MouCustId: mouId };
+          let mouObj = { Id: mouId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
             result => {
               this.mouCustNo = result['MouCustNo'];

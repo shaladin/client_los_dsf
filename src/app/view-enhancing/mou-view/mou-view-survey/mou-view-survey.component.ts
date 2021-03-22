@@ -19,7 +19,7 @@ export class MouViewSurveyComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {
-    var mouObj = { MouCustId: this.MouCustId }
+    var mouObj = { Id: this.MouCustId }
     this.http.post<any>(URLConstant.GetSrvyResultDataByTrxRefNo, mouObj).subscribe(
       (response) => {
         this.listSrvyOrder = response[CommonConstant.ReturnObj];

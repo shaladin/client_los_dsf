@@ -186,12 +186,12 @@ export class CustomerDataFL4WComponent implements OnInit {
       for (let i = 0; i < this.custDataPersonalObj.AppCustGrpObjs.length; i++) {
         for (let j = i+1; j < this.custDataPersonalObj.AppCustGrpObjs.length; j++) {
           if (this.custDataPersonalObj.AppCustGrpObjs[i]["CustNo"] == this.custDataPersonalObj.AppCustGrpObjs[j]["CustNo"] ) {
-            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j+1));
+            this.toastr.warningMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j+1));
             return;
           }
 
           if (this.custDataPersonalObj.AppCustGrpObjs[i]["MrCustRelationshipCode"] == this.custDataPersonalObj.AppCustGrpObjs[j]["MrCustRelationshipCode"]) {
-            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j+1));
+            this.toastr.warningMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j+1));
             return;
           }
         }
@@ -236,12 +236,12 @@ export class CustomerDataFL4WComponent implements OnInit {
       for (let i = 0; i < this.custDataCompanyObj.AppCustGrpObjs.length; i++) {
         for (let j = i+1; j < this.custDataCompanyObj.AppCustGrpObjs.length; j++) {
           if (this.custDataCompanyObj.AppCustGrpObjs[i]["CustNo"] == this.custDataCompanyObj.AppCustGrpObjs[j]["CustNo"] ) {
-            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j+1));
+            this.toastr.warningMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j+1));
             return;
           }
 
           if (this.custDataCompanyObj.AppCustGrpObjs[i]["MrCustRelationshipCode"] == this.custDataCompanyObj.AppCustGrpObjs[j]["MrCustRelationshipCode"]) {
-            this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j+1));
+            this.toastr.warningMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j+1));
             return;
           }
         }
@@ -532,7 +532,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custDataPersonalObj.AppCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.ProfessionalNo = this.CustDataForm.controls["jobData"]["controls"].ProfessionalNo.value;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+      this.custDataPersonalObj.AppCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
       this.setAppCustAddrJob();
     }
 
@@ -540,7 +540,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+      this.custDataPersonalObj.AppCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.IsMfEmp = this.CustDataForm.controls["jobData"]["controls"].IsMfEmp.value;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
@@ -554,7 +554,7 @@ export class CustomerDataFL4WComponent implements OnInit {
       this.custDataPersonalObj.AppCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-      this.custDataPersonalObj.AppCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+      this.custDataPersonalObj.AppCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
       this.custDataPersonalObj.AppCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
@@ -819,9 +819,10 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   async getCustData() {
-    this.custDataObj = new CustDataObj();
-    this.custDataObj.AppId = this.appId;
-    await this.http.post(this.getCustDataUrl, this.custDataObj).toPromise().then(
+    // this.custDataObj = new CustDataObj();
+    // this.custDataObj.AppId = this.appId;
+    var custDataObj = { Id: this.appId };
+    await this.http.post(this.getCustDataUrl, custDataObj).toPromise().then(
       (response) => {
         if (response["AppCustObj"]["AppCustId"] > 0) {
           if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {

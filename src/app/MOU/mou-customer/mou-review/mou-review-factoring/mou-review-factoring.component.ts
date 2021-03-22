@@ -64,7 +64,7 @@ export class MouReviewFactoringComponent implements OnInit {
       this.claimTask();
     }
     this.mouCustObject.MouCustId = this.MouCustId;
-    await this.http.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
+    await this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -83,34 +83,7 @@ export class MouReviewFactoringComponent implements OnInit {
       }
     );
 
-    var apvObj = { SchemeCode: 'MOUC_FCTR_APV' }
-    this.http.post(URLConstant.GetApprovedBy, apvObj).subscribe(
-      (response) => {
-        this.listApprover = response;
-
-        this.MouReviewDataForm.patchValue({
-          ListApprover: this.listApprover[0].Key
-        })
-      })
-
-    // var listRec = this.MouReviewDataForm.get("ApvRecommendation") as FormArray;
-    // var apvRecommendObj = { SchemeCode: 'MOUC_FCTR_APV' }
-    // this.http.post(URLConstant.GetRecommendations, apvRecommendObj).subscribe(
-    //   (response) => {
-    //     this.listRecommendationObj = response;
-    //     for (let i = 0; i < this.listRecommendationObj["length"]; i++) {
-    //       var ApvRecommendation = this.fb.group({
-    //         RefRecommendationId: this.listRecommendationObj[i].RefRecommendationId,
-    //         RecommendationCode: this.listRecommendationObj[i].RecommendationCode,
-    //         RecommendationName: this.listRecommendationObj[i].RecommendationName,
-    //         RecommendationValue: ['', Validators.required]
-    //       }) as FormGroup;
-    //       listRec.push(ApvRecommendation);
-    //     }
-    //     // this.ApvRecommendation = ApvRecommendation;
-    //   })
-
-    var mouCustObj = { MouCustId: this.MouCustId };
+    var mouCustObj = { Id: this.MouCustId };
     await this.http.post(URLConstant.GetMouCustById, mouCustObj).toPromise().then(
       (response) => {
         this.PlafondAmt = response['PlafondAmt'];
@@ -129,7 +102,7 @@ export class MouReviewFactoringComponent implements OnInit {
       }
     );
 
-    await this.http.post(URLConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId }).toPromise().then(
+    await this.http.post(URLConstant.GetMouCustScoreByMouCustId, { Id: this.MouCustId }).toPromise().then(
       (response) => {
         this.ScoreResult = response["ScoreResult"];
       }
@@ -176,7 +149,7 @@ export class MouReviewFactoringComponent implements OnInit {
   }
 
   Return() {
-    var mouObj = { MouCustId: this.MouCustId, WfTaskListId: this.WfTaskListId }
+    var mouObj = { TaskListId: this.WfTaskListId }
     this.http.post(URLConstant.ReturnMouReview, mouObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);

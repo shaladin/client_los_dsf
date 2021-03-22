@@ -61,16 +61,9 @@ export class DocChecklistApprovalDetailComponent implements OnInit {
       this.TrxNo = params["TrxNo"];
       this.taskId = params["TaskId"];
       this.ApvReqId = params["ApvReqId"];
-      var obj = {
-        taskId: params["TaskId"],
-        instanceId: params["InstanceId"],
-        approvalBaseUrl: environment.ApprovalR3Url
-      }
-
-      this.inputObj = obj;
 
       var ApvHoldObj = new ApprovalObj()
-      ApvHoldObj.TaskId = obj.taskId
+      ApvHoldObj.TaskId = params["TaskId"];
 
       this.HoldTask(ApvHoldObj);
     });
@@ -79,7 +72,7 @@ export class DocChecklistApprovalDetailComponent implements OnInit {
   async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.http.post(URLConstant.GetListTCbyAppId, { AppId: this.AppId }).subscribe(
+    this.http.post(URLConstant.GetListTCbyAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.TCList = response["AppTcs"];
       });
@@ -90,7 +83,7 @@ export class DocChecklistApprovalDetailComponent implements OnInit {
 
   async GetAppData() {
     var appObj = {
-      AppId: this.AppId,
+      Id: this.AppId,
     };
     await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
       (response) => {
@@ -140,6 +133,8 @@ export class DocChecklistApprovalDetailComponent implements OnInit {
     this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
     this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
     this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
+    this.InputApvObj.PathUrlReturnToLevel = URLConstant.ReturnLevel;
+    this.InputApvObj.PathUrlContinueToLevel = URLConstant.ContinueToLevel;
     this.InputApvObj.TrxNo = this.AppNo;
     this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
     this.InputApvObj.RequestId = this.ApvReqId;

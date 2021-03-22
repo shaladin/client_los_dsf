@@ -55,7 +55,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
 
   OfficeCode: String;
   async GetAppData() {
-    var obj = { AppId: this.appId };
+    var obj = { Id: this.appId };
     await this.http.post<AppObj>(URLConstant.GetAppById, obj).toPromise().then(
       (response) => {
         this.OfficeCode = response.OriOfficeCode;
@@ -106,7 +106,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
 
     // Check Data App Id
     var obj = {
-      AppId: this.appId,
+      Id: this.appId,
       RowVersion: "",
     }
 

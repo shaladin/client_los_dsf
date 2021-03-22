@@ -160,7 +160,7 @@ export class CustDetailPersonalComponent implements OnInit {
   }
 
   GetData() {
-    this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
+    this.http.post<ResponseAppCustCompletionPersonalDataObj>(URLConstant.GetAppCustAndAppCustPersonalDataByAppCustId, { Id: this.AppCustId }).subscribe(
       (response) => {
         this.CustFullName = response.AppCustObj.CustName;
         this.CustDetailForm.patchValue({
@@ -191,7 +191,7 @@ export class CustDetailPersonalComponent implements OnInit {
             });
         }
 
-        this.VIPCheck(response.AppCustObj.IsVip);
+        this.VIPCheck();
 
         if(response.AppCustPersonalObj.NationalityCountryCode != null){
           this.NationalityCountryCode = response.AppCustPersonalObj.NationalityCountryCode

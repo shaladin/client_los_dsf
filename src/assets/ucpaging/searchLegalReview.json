@@ -19,7 +19,7 @@
       "placeholder": "Placeholder",
       "datatype": "text",
       "isFromURL": true,
-      "isSelectOne": false,
+      "ddlType": "all",
       "url": "",
       "path":"/MouCust/GetListKeyValueMouType",
       "label": "Mou Type",
@@ -43,7 +43,7 @@
       "value": "",
       "placeholder": "Placeholder",
       "isFromURL": false,
-      "isSelectOne": false,
+      "ddlType": "all",
       "items": [
         {
           "key": true,
@@ -82,7 +82,7 @@
       "value": "",
       "placeholder": "Placeholder",
       "isFromURL": false,
-      "isSelectOne": false,
+      "ddlType": "all",
       "items": [
         {
           "key": "CLAIMED",

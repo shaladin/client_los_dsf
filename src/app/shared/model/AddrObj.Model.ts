@@ -14,6 +14,7 @@ export class AddrObj {
     PhnArea3: string;
     Phn3: string;
     PhnExt3: string;
+    Notes: string;
     FaxArea: string;
     Fax: string;
     MrHouseOwnershipCode: string;

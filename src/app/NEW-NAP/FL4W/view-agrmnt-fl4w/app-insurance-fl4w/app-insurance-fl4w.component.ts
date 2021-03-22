@@ -29,7 +29,7 @@ export class AppInsuranceFl4wComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.httpClient.post(URLConstant.GetListAppInsObjByAgrmntIdForView, { AgrmntId: this.AgrmntId }).subscribe(
+    this.httpClient.post(URLConstant.GetListAppInsObjByAgrmntIdForView, { Id: this.AgrmntId }).subscribe(
       (response: any) => {
         this.appInsObjs = response.LoanAppInsObjects;
         this.appCollObjs = response.CollateralAppInsObjects;

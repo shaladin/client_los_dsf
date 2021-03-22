@@ -13,6 +13,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from 'ngx-cookie';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -20,6 +23,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 
 export class DocSignerDetailComponent implements OnInit {
+  WfTaskListId: number = 0;
   AppId: number;
   AgrmntId: number;
   ResponseAppAssetObj: any;
@@ -44,11 +48,15 @@ export class DocSignerDetailComponent implements OnInit {
 
   readonly CanceLink: string = NavigationConstant.NAP_ADM_PRCS_NAP_DOC_SIGNER_PAGING;
   constructor(private fb: FormBuilder, private http: HttpClient,
-    private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService) {
+    private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params['AppId'];
       this.AgrmntId = params['AgrmntId'];
       this.BizTemplateCode = params['BizTemplateCode'];
+      if (params['WfTaskListId'] != null) {
+        this.WfTaskListId = params['WfTaskListId'];
+      }
     });
   }
 
@@ -60,19 +68,40 @@ export class DocSignerDetailComponent implements OnInit {
     MrJobPositionMgmntShrholder1Name: [''],
   });
 
-  async ngOnInit() {
+  async ngOnInit() : Promise<void> {
+    if (this.WfTaskListId != 0) {
+      this.ClaimTask();
+    }
     await this.getAllData();
     this.setLookupObj();
     await this.setDefaultShareholder();
   }
 
+  ClaimTask() {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    var wfClaimObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
+
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
+      () => {
+      });
+  }
+
   async getAllData() {
     var obj = {
-      AppId: this.AppId,
-      AgrmntId: this.AgrmntId
+      AppId: this.AppId
     }
 
-    await this.http.post(URLConstant.GetAgrmntByAgrmntId, obj).toPromise().then(
+    var agrmntObj = {
+      Id: this.AgrmntId
+    }
+
+    var appObj = {
+      Id: this.AppId
+    }
+
+    await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).toPromise().then(
       (response) => {
         this.result2 = response;
         this.OfficeCode = this.result2.OfficeCode;
@@ -85,7 +114,7 @@ export class DocSignerDetailComponent implements OnInit {
         if (this.ResponseAppCustObj.AppCustObj != undefined) {
           this.MrCustTypeCode = this.ResponseAppCustObj.AppCustObj.MrCustTypeCode;
           if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-            this.http.post(URLConstant.GetAppCustPersonalDataAndSpouseByAppId, obj).toPromise().then(
+            this.http.post(URLConstant.GetAppCustPersonalDataAndSpouseByAppId, appObj).toPromise().then(
               (response) => {
                 this.ResponseAppCustDataObj = response;
                 this.CustFullName = this.ResponseAppCustDataObj.CustFullName;
@@ -95,13 +124,14 @@ export class DocSignerDetailComponent implements OnInit {
         }
       });
 
-    await this.http.post(URLConstant.GetAppAssetDataByAppId, obj).toPromise().then(
+
+    await this.http.post(URLConstant.GetAppAssetDataByAppId, appObj).toPromise().then(
       (response) => {
         this.ResponseAppAssetObj = response;
         this.SupplCode = this.ResponseAppAssetObj.SupplCode;
       });
 
-    await this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, agrmntObj).toPromise().then(
       (response) => {
         this.ResponseAgrmntSignerObj = response;
         if (this.ResponseAgrmntSignerObj.AgrmntSignerId == 0) {
@@ -130,6 +160,12 @@ export class DocSignerDetailComponent implements OnInit {
           this.agrmntSignerObj.MrJobPositionSupplBranchEmpName = this.ResponseAgrmntSignerObj.MrJobPositionSupplBranchEmpName;
           this.agrmntSignerObj.MrJobPositionMfEmpNo1Name = this.ResponseAgrmntSignerObj.MrJobPositionMfEmpNo1Name;
           this.agrmntSignerObj.MrJobPositionMfEmpNo2Name = this.ResponseAgrmntSignerObj.MrJobPositionMfEmpNo2Name;
+          this.agrmntSignerObj.MrJobPositionMgmntShrholder1Code = this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder1Code;
+          this.agrmntSignerObj.MrJobPositionMgmntShrholder2Code = this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder2Code;
+          this.agrmntSignerObj.MrJobPositionMgmntShrholder3Code = this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder3Code;
+          this.agrmntSignerObj.MrJobPositionMgmntShrholder1Name = this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder1Name;
+          this.agrmntSignerObj.MrJobPositionMgmntShrholder2Name = this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder2Name;
+          this.agrmntSignerObj.MrJobPositionMgmntShrholder3Name = this.ResponseAgrmntSignerObj.MrJobPositionMgmntShrholder3Name;
 
           this.DocSignerForm.patchValue({
             MrJobPositionSupplBranchEmpName: this.ResponseAgrmntSignerObj.MrJobPositionSupplBranchEmpName,
@@ -267,6 +303,10 @@ export class DocSignerDetailComponent implements OnInit {
 
   getLookupAppCustCompanyShareHolder1(event) {
     this.agrmntSignerObj.AppCustCompanyMgmntShrholder1Id = event.AppCustCompanyMgmntShrholderId;
+    this.agrmntSignerObj.MrJobPositionMgmntShrholder1Code = event.MrJobPositionCode;
+    let tempJobName: string = "-";
+    if(event.MrJobPositionCodeDesc != "" && event.MrJobPositionCodeDesc != null) tempJobName = event.MrJobPositionCodeDesc;
+    this.agrmntSignerObj.MrJobPositionMgmntShrholder1Name = tempJobName;
     let tempJobCode: string = "-";
     if (event.MrJobPositionCode != "" && event.MrJobPositionCode != null) tempJobCode = event.MrJobPositionCode;
     this.DocSignerForm.patchValue({
@@ -278,10 +318,9 @@ export class DocSignerDetailComponent implements OnInit {
 
   SaveForm() {
     this.agrmntSignerObj.AgrmntId = this.AgrmntId;
+    this.agrmntSignerObj.WfTaskListId = this.WfTaskListId;
 
-    if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
-      this.agrmntSignerObj.MrJobPositionMgmntShrholder1Code = this.DocSignerForm.controls.MrJobPositionMgmntShrholder1Code.value;
-    } else if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+    if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.agrmntSignerObj.AppCustPersonalId = this.ResponseAppCustDataObj.AppCustPersonalId;
       this.agrmntSignerObj.AppCustSpouseId = this.ResponseAppCustDataObj.AppCustSpouseId;
     }
@@ -290,13 +329,13 @@ export class DocSignerDetailComponent implements OnInit {
       this.http.post(URLConstant.EditAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,[this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, [this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });
         });
     } else {
       this.http.post(URLConstant.SubmitAgrmntSignerData, this.agrmntSignerObj).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,[this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, [this.CanceLink], { "BizTemplateCode": this.BizTemplateCode });
         });
     }
   }

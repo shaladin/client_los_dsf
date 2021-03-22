@@ -1,0 +1,324 @@
+<form class="form form-horizontal" [formGroup]="ParentForm" (ngSubmit)="ParentForm.valid"
+  #enjiForm="ngForm">
+  <div class="form-body">
+    <div class="form-group row" *ngIf="!custDataObj?.IsFamily">
+      <label class="col-md-2" translate>{{subjectTitle}} Type</label>
+      <div class="col-md-10">
+        <mat-radio-group formControlName="MrCustTypeCode" (change)="resetInput($event.value)">
+          <mat-radio-button class="custom-control custom-radio display-inline-block"
+            *ngFor="let item of DictRefMaster[MasterCustType]" [value]="item.Key">
+            {{item.Value}}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+    <lib-ucSubsection [id]="'CustMainDataId'" [title]="subjectTitle+' Main Data'" [panel]="'CustMainData'">
+    </lib-ucSubsection>
+    <div id="CustMainData">
+      <div class="row">
+        <div class="col-md-12" *ngIf="isIncludeCustRelation">
+          <div class="form-group row ">
+            <label class="col-md-2 adins-required-label" translate>Customer Relationship </label>
+            <div class="col-md-3">
+              <select class="form-control adInsInput full-width" style="width: 100%"
+                formControlName="MrCustRelationshipCode" (change)="RelationshipChange($event.target.value)"
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.MrCustRelationshipCode.invalid }">
+                <option value="">-Select One-</option>
+                <option *ngFor="let it of MrCustRelationshipCodeObj" value="{{it.Key}}">{{it.Value}}</option>
+              </select>
+              <lib-uc-show-errors [control]="ParentForm.controls.MrCustRelationshipCode"
+                [submit]="IsCustMainDataSubmitted"></lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>{{subjectTitle}} Legal Name</label>
+            <div class="col-md-8">
+              <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustObj"
+                *ngIf="this.InputLookupCustObj.isReady" [parentForm]="ParentForm"
+                [identifier]="'lookupCustomer'" (lookup)="copyCustomerEvent($event)" #LookupExistingCust>
+              </lib-uclookupgeneric>
+              <lib-uc-show-errors *ngIf="ParentForm.controls.lookupCustomer && ParentForm.controls.lookupCustomer['controls']['value']['untouched']" [control]="ParentForm.controls.lookupCustomer['controls']['value']"
+                [submit]="IsCustMainDataSubmitted"></lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" *ngIf="MrCustTypeCode == 'PERSONAL'">
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>Gender</label>
+            <div class="col-md-6">
+              <select [attr.disabled]="isExisting ? 'true' : null" class="form-control"
+                formControlName="MrGenderCode" style="width:100%;"
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.MrGenderCode.invalid}">
+                <option value="">-Select One-</option>
+                <option *ngFor="let item of DictRefMaster[MasterGender]" [value]="item.Key">
+                  {{item.Value}}
+                </option>
+              </select>
+              <lib-uc-show-errors [control]="ParentForm.controls.MrGenderCode" [submit]="IsCustMainDataSubmitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" *ngIf="MrCustTypeCode == 'COMPANY'">
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>Company Type</label>
+            <div class="col-md-6">
+              <select [attr.disabled]="isExisting ? 'true' : null" class="form-control"
+                formControlName="MrCompanyTypeCode" style="width:100%;">
+                <option value="">-Select One-</option>
+                <option *ngFor="let item of DictRefMaster[MasterCompanyType]" [value]="item.Key">
+                  {{item.Value}}
+                </option>
+              </select>
+              <lib-uc-show-errors [control]="ParentForm.controls.MrCompanyTypeCode"
+                [submit]="IsCustMainDataSubmitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="MrCustTypeCode == 'COMPANY'">
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-4" [ngClass]="{'adins-required-label': MrCustTypeCode == 'COMPANY'}" translate>Tax
+              Id No</label>
+            <div class="col-md-8">
+              <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
+                formControlName="TaxIdNo"
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.TaxIdNo.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.TaxIdNo" [submit]="IsCustMainDataSubmitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="MrCustTypeCode == 'PERSONAL'">
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" for="idType" translate>Id Type</label>
+            <div class="col-md-6">
+              <select [attr.disabled]="isExisting ? 'true' : null" class="form-control" id="idType"
+                formControlName="MrIdTypeCode" (change)="ChangeIdType($event.target.value)" style="width:100%;"
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.MrIdTypeCode.invalid }">
+                <option value="">-Select One-</option>
+                <option *ngFor="let item of IdTypeObj" [value]="item.MasterCode">
+                  {{item.Descr}}
+                </option>
+              </select>
+              <lib-uc-show-errors [control]="ParentForm.controls.MrIdTypeCode" [submit]="IsCustMainDataSubmitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>Birth Place</label>
+            <div class="col-md-8">
+              <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
+                formControlName="BirthPlace"
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.BirthPlace.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.BirthPlace" [submit]="IsCustMainDataSubmitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>Id No</label>
+            <div class="col-md-8">
+              <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
+                formControlName="IdNo"
+                [ngClass]="{'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.IdNo.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.IdNo" [submit]="IsCustMainDataSubmitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>Birth Date</label>
+            <div class="col-md-8">
+              <input [attr.readonly]="isExisting ? 'true' : null" type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}"
+                class="form-control" formControlName="BirthDt"
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.BirthDt.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.BirthDt" [submit]="IsCustMainDataSubmitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-4"
+              [ngClass]="{'adins-required-label': ParentForm.controls.MrIdTypeCode.value == 'KITAS' || ParentForm.controls.MrIdTypeCode.value == 'SIM'}"
+              translate>Id Expired Date</label>
+            <div class="col-md-8">
+              <input *ngIf="['NPWP','AKTA','EKTP'].includes(ParentForm.controls.MrIdTypeCode.value)" readonly
+                type="date" class="form-control" formControlName="IdExpiredDt"
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.IdExpiredDt.invalid}">
+              <input [attr.readonly]="isExisting ? 'true' : null"
+                *ngIf="!['NPWP','AKTA','EKTP'].includes(ParentForm.controls.MrIdTypeCode.value)"
+                min="{{MaxDate | date:'yyyy-MM-dd'}}" type="date" class="form-control" formControlName="IdExpiredDt"
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.IdExpiredDt.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.IdExpiredDt" [submit]="IsCustMainDataSubmitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-4" [ngClass]="{'adins-required-label': MrCustTypeCode == 'COMPANY'}" translate>Tax
+              Id No</label>
+            <div class="col-md-8">
+              <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
+                formControlName="TaxIdNo"
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.TaxIdNo.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.TaxIdNo" [submit]="IsCustMainDataSubmitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>Marital Status</label>
+            <div class="col-md-6">
+              <select [attr.disabled]="isExisting ? 'true' : null" class="form-control"
+                formControlName="MrMaritalStatCode" style="width:100%;" (change)="MaritalStatChange($event.target.value)"
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.MrMaritalStatCode.invalid}">
+                <option value="">-Select One-</option>
+                <option *ngFor="let item of DictRefMaster[MasterMaritalStat]" [value]="item.Key">
+                  {{item.Value}}
+                </option>
+              </select>
+              <lib-uc-show-errors [control]="ParentForm.controls.MrMaritalStatCode"
+                [submit]="IsCustMainDataSubmitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>Mother Maiden Name</label>
+            <div class="col-md-8">
+              <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
+                formControlName="MotherMaidenName"
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.MotherMaidenName.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.MotherMaidenName"
+                [submit]="IsCustMainDataSubmitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>Customer Model</label>
+            <div class="col-md-6">
+              <select [attr.disabled]="isExisting ? 'true' : null" class="form-control adInsInput full-width"
+                style="width: 100%" formControlName="MrCustModelCode"
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.MrCustModelCode.invalid }" (change)="CustModelHandler()">
+                <option value="">-Select One-</option>
+                <option *ngFor="let item of CustModelObj" value="{{item.Key}}">{{item.Value}}</option>
+              </select>
+              <lib-uc-show-errors [control]="ParentForm.controls.MrCustModelCode"
+                [submit]="IsCustMainDataSubmitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>Mobile Phone</label>
+            <div class="col-md-8">
+              <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
+                formControlName="MobilePhnNo1"
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.MobilePhnNo1.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.MobilePhnNo1" [submit]="IsCustMainDataSubmitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>Email</label>
+            <div class="col-md-8">
+              <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
+                formControlName="Email1"
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.Email1.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.Email1" [submit]="IsCustMainDataSubmitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="custMainDataMode == 'SHAREHOLDER'">
+        <div class="col-md-6" *ngIf="MrCustTypeCode == 'PERSONAL'">
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>Job Position</label>
+            <div class="col-md-6">
+              <select class="form-control adInsInput full-width" style="width: 100%"
+                formControlName="MrJobPositionCode"
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.MrJobPositionCode.invalid }">
+                <option value="">-Select One-</option>
+                <option *ngFor="let item of DictRefMaster[MasterJobPosition]" value="{{item.Key}}">{{item.Value}}
+                </option>
+              </select>
+              <lib-uc-show-errors [control]="ParentForm.controls.MrJobPositionCode"
+                [submit]="IsCustMainDataSubmitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-4 adins-required-label" translate>Establishment Date</label>
+            <div class="col-md-8">
+              <input type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" class="form-control"
+                formControlName="EstablishmentDt"
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.EstablishmentDt.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.EstablishmentDt"
+                [submit]="IsCustMainDataSubmitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-4" translate>Share(%)</label>
+            <div class="col-md-8">
+              <input type="text" currencyMask class="form-control" formControlName="SharePrcnt"
+                [ngClass]="{ 'is-invalid': IsCustMainDataSubmitted && ParentForm.controls.SharePrcnt.invalid}"
+                [options]="{suffix:'%', max:100, allowNegative: false}">
+              <lib-uc-show-errors [control]="ParentForm.controls.SharePrcnt" [submit]="IsCustMainDataSubmitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" [hidden]="custMainDataMode == 'SHAREHOLDER' && MrCustTypeCode == 'COMPANY'">
+          <div class="form-group row">
+            <label class="col-md-4" translate>Is Signer</label>
+            <div class="col-md-8">
+              <input type="checkbox" formControlName="IsSigner" />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-4" translate>Is Active</label>
+            <div class="col-md-8">
+              <input type="checkbox" formControlName="IsActive" />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group row">
+            <label class="col-md-4" translate>Is Owner</label>
+            <div class="col-md-8">
+              <input type="checkbox" formControlName="IsOwner" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -86,7 +86,8 @@ export class NapCustMainDataComponent implements OnInit {
     ];
     
     this.NapObj.AppId = this.appId;
-    this.http.post(URLConstant.GetAppById, this.NapObj).subscribe(
+    var appObj = { Id: this.appId };
+    this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;

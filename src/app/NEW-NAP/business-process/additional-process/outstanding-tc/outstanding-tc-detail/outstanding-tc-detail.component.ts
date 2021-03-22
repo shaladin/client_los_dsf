@@ -60,7 +60,7 @@ export class OutstandingTcDetailComponent implements OnInit {
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    var appObj = { AppId: this.AppId };
+    var appObj = { Id: this.AppId };
 
     let getCustNo = this.http.post(URLConstant.GetAppCustByAppId, appObj);
     let getAppNo = this.http.post(URLConstant.GetAppById, appObj);
@@ -78,7 +78,7 @@ export class OutstandingTcDetailComponent implements OnInit {
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
         if (mouCustId != null && mouCustId != '') {
-          var mouObj = { MouCustId: mouCustId };
+          var mouObj = { Id: mouCustId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
             (response) => {
               this.mouCustNo = response['MouCustNo'];
@@ -92,7 +92,6 @@ export class OutstandingTcDetailComponent implements OnInit {
       }
     );
   }
-
 
   SaveForm() {
     this.outstandingTcObj = new OutstandingTcObj();

@@ -2,7 +2,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -16,7 +15,6 @@ export class AssetExpenseComponent implements OnInit {
   @Input() showCancel: boolean = true;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
-  appAssetObj: any;
   listDataAsset: Array<any> = new Array();
   listAppAssetObj: any;
   appCollateralObj: any;
@@ -50,14 +48,13 @@ export class AssetExpenseComponent implements OnInit {
   ngOnInit() {
     this.gridAssetDataObj = new InputGridObj();
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetExpense.json";
-    this.appAssetObj = new AppAssetObj();
-    this.appAssetObj.AppId = this.AppId;
     this.getListDataAsset();
   }
 
   getListDataAsset() {
     this.isReady = false;
-    this.http.post(URLConstant.GetListAppAssetExpenseByAppId, this.appAssetObj).subscribe(
+    var appAssetObj = { Id: this.AppId };
+    this.http.post(URLConstant.GetListAppAssetExpenseByAppId, appAssetObj).subscribe(
       (response) => {
         this.listAppAssetObj = response;
         var DetailForGridAsset = {

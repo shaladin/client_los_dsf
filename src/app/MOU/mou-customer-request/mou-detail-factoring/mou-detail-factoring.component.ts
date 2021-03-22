@@ -91,7 +91,7 @@ export class MouDetailFactoringComponent implements OnInit {
     let getCurrency = this.httpClient.post(URLConstant.GetListKvpActiveRefCurr, refCurr);
     var mouCustFctr = new MouCustFctrObj();
     mouCustFctr.MouCustId = this.MouCustId;
-    let getMouFctr = this.httpClient.post(URLConstant.GetMouCustFctrByMouCustId, mouCustFctr);
+    let getMouFctr = this.httpClient.post(URLConstant.GetMouCustFctrByMouCustId, { Id: this.MouCustId });
     forkJoin([getRecourseType, getWop, getPaidBy, getInstType, getSingleInstCalcMethod, getPayFreq, getInstSchm, getCurrency, getMouFctr]).subscribe(
       (response) => {
         this.recourseTypeList = response[0];

@@ -96,12 +96,12 @@
             </lib-ucSubsection>
             <div class="form-body" id="SummDecision">
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Total Purchase Asset</label>
+                <label class="col-md-3 adins-label" translate>Total Purchase Asset</label>
                 <label class="col-md-3 adins-label">{{TotalPurchaseAsset}}</label>
               </div>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label">Total Use Existing Stock</label>
+                <label class="col-md-3 adins-label" translate>Total Use Existing Stock</label>
                 <label class="col-md-3 adins-label">{{TotalUseExistingStock}}</label>
               </div>
             </div>
@@ -111,7 +111,7 @@
                 (click)="CancelToPaging()">
                 <i class="fa fa-arrow-circle-left"></i> Cancel
               </button>
-              <button type="submit" class="btn btn-raised btn-primary" (click)="Submit()">
+              <button type="submit" class="btn btn-raised btn-primary" (click)="Submit()" translate>
                 <i class="fa fa-arrow-circle-right"></i> Submit
               </button>
             </div>
@@ -154,7 +154,7 @@
               </lib-ucSubsection>
               <div class="form-body" id="AssetInfo">
                 <div class="form-group row">
-                  <label class="col-md-3 adins-label">Asset No</label>
+                  <label class="col-md-3 adins-label" translate>Asset No</label>
                   <label class="col-md-3 adins-label">
                     <a [routerLink]="['/View/AppAsset']" target="_blank"
                       [queryParams]="{ AppId: AppId, AppAssetId: AppAssetId }">
@@ -164,22 +164,22 @@
                 </div>
                 
                 <div class="form-group row">
-                  <label class="col-md-3 adins-label">Asset Name</label>
-                  <label class="col-md-3 adins-label">{{AssetInfoObj.AsetName}}</label>
+                  <label class="col-md-3 adins-label" translate>Asset Name</label>
+                  <label class="col-md-3 adins-label">{{AssetInfoObj.AssetName}}</label>
                 </div>
                 
                 <div class="form-group row">
-                  <label class="col-md-3 adins-label">Asset Condition</label>
+                  <label class="col-md-3 adins-label" translate>Asset Condition</label>
                   <label class="col-md-3 adins-label">{{AssetInfoObj.AssetCondition}}</label>
                 </div>
                 
                 <div class="form-group row">
-                  <label class="col-md-3 adins-required-label">Decision</label>
+                  <label class="col-md-3 adins-required-label" translate>Decision</label>
                   <div class="col-md-3">
                     <select class="form-control" formControlName="Decision" style="width: 100%;"
                       (change)="OnChangedDdl($event)">
                       <option value="PURCHASE">Purchase Asset</option>
-                      <option value="EXISTING" disabled>Use Existing Stock</option>
+                      <option value="EXISTING">Use Existing Stock</option>
                     </select>
                     <lib-uc-show-errors [control]="ReqDecForm.controls.Decision"
                       [submit]="enjiForm.submitted">
@@ -189,7 +189,7 @@
 
                 <div *ngIf="IsExisting">
                   <div class="form-group row">
-                    <label class="col-md-3 adins-label">Asset Number</label>
+                    <label class="col-md-3 adins-label" translate>Asset Number</label>
                     <div class="col-md-3">
                       <lib-uclookupgeneric [lookupInput]="InputLookupAssetObj"
                         [identifier]="'lookupAsset'" [enjiForm]='enjiForm' [parentForm]='ReqDecForm'
@@ -198,29 +198,54 @@
                     </div>
                   </div>
                   
-                  <div class="form-group row">
-                    <label class="col-md-3 adins-label">Chasis No</label>
-                    <label class="col-md-3 adins-label">{{ChasisNo}}</label>
+                  <!-- <div class="form-group row">
+                    <label class="col-md-3 adins-label" translate>Nomor Rangka</label>
+                    <label class="col-md-3 adins-label">{{SerialNo1}}</label>
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-3 adins-label">Engine No</label>
-                    <label class="col-md-3 adins-label">{{EngineNo}}</label>
+                    <label class="col-md-3 adins-label" translate>Nomor Mesin</label>
+                    <label class="col-md-3 adins-label">{{SerialNo2}}</label>
                   </div>
 
                   <div class="form-group row">
-                    <label class="col-md-3 adins-label">License Plate No</label>
-                    <label class="col-md-3 adins-label">{{LicensePlateNo}}</label>
+                    <label class="col-md-3 adins-label" translate>Nomor Polisi</label>
+                    <label class="col-md-3 adins-label">{{SerialNo3}}</label>
+                  </div> -->
+
+                  <div class="form-group row" *ngIf="AssetTypeObj?.SerialNo1Label">
+                    <label class="col-md-3 adins-label">{{AssetTypeObj?.SerialNo1Label}}</label>
+                    <label class="col-md-3 adins-label">{{SerialNo1}}</label>
+                  </div>
+
+                  <div class="form-group row" *ngIf="AssetTypeObj?.SerialNo2Label">
+                    <label class="col-md-3 adins-label">{{AssetTypeObj?.SerialNo2Label}}</label>
+                    <label class="col-md-3 adins-label">{{SerialNo2}}</label>
+                  </div>
+
+                  <div class="form-group row" *ngIf="AssetTypeObj?.SerialNo3Label">
+                    <label class="col-md-3 adins-label">{{AssetTypeObj?.SerialNo3Label}}</label>
+                    <label class="col-md-3 adins-label">{{SerialNo3}}</label>
+                  </div>
+
+                  <div class="form-group row" *ngIf="AssetTypeObj?.SerialNo4Label">
+                    <label class="col-md-3 adins-label">{{AssetTypeObj?.SerialNo4Label}}</label>
+                    <label class="col-md-3 adins-label">{{SerialNo4}}</label>
+                  </div>
+
+                  <div class="form-group row" *ngIf="AssetTypeObj?.SerialNo5Label">
+                    <label class="col-md-3 adins-label">{{AssetTypeObj?.SerialNo5Label}}</label>
+                    <label class="col-md-3 adins-label">{{SerialNo5}}</label>
                   </div>
                 </div>
                 
                 <div class="form-group row">
-                  <label class="col-md-3 adins-label">Asset Usage</label>
+                  <label class="col-md-3 adins-label" translate>Asset Usage</label>
                   <label class="col-md-3 adins-label">{{AssetInfoObj.AssetUsage}}</label>
                 </div>
                 
                 <div class="form-group row">
-                  <label class="col-md-3 adins-required-label">Manufacturing Year</label>
+                  <label class="col-md-3 adins-required-label" translate>Manufacturing Year</label>
                   <div class="col-md-3">
                     <input type="number" class="form-control" formControlName="ManYear"
                       [ngClass]="{ 'border-danger': enjiForm.submitted && ReqDecForm.controls.ManYear.invalid }">
@@ -231,22 +256,22 @@
                 </div>
                 
                 <div class="form-group row">
-                  <label class="col-md-3 adins-label">BPKB City Issuer</label>
+                  <label class="col-md-3 adins-label" translate>BPKB City Issuer</label>
                   <label class="col-md-3 adins-label">{{AssetInfoObj.BpkbCityIssuer}}</label>
                 </div>
                 
                 <div class="form-group row">
-                  <label class="col-md-3 adins-label">Color</label>
+                  <label class="col-md-3 adins-label" translate>Color</label>
                   <label class="col-md-3 adins-label">{{AssetInfoObj.Color}}</label>
                 </div>
                 
                 <div class="form-group row">
-                  <label class="col-md-3 adins-label">Expected Delivery Date</label>
+                  <label class="col-md-3 adins-label" translate>Expected Delivery Date</label>
                   <label class="col-md-3 adins-label">{{AssetInfoObj.ExpectedDlvryDt | date: 'dd-MMM-yyyy'}}</label>
                 </div>
                 
                 <div class="form-group row">
-                  <label class="col-md-3 adins-label">Notes</label>
+                  <label class="col-md-3 adins-label" translate>Notes</label>
                   <div class="col-md-3">
                     <textarea cols="30" rows="3" class="form-control" formControlName="Notes">
                     </textarea>
@@ -303,7 +328,7 @@
                   translate>
                   <i class="fa fa-arrow-circle-left"></i> Cancel
                 </button>
-                <button type="submit" class="btn btn-raised btn-primary">
+                <button type="submit" class="btn btn-raised btn-primary" translate>
                   <i class="fa fa-arrow-circle-right"></i> Save
                 </button>
               </div>

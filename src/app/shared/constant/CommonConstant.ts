@@ -103,7 +103,7 @@ export class CommonConstant {
   public static AppStepLIns = "LFI";
   public static AppStepFin = "FIN";
   public static AppStepTC = "TC";
-  public static AppStepUplDoc = "UPD";
+  public static AppStepUplDoc = "UPL_DOC";
   public static AppStepColl = "COLL";
   public static AppStepInvoice = "INVOICE";
   public static AppStepOther = "OTH";
@@ -128,6 +128,7 @@ export class CommonConstant {
   public static AppStepPGLV = "PGLV";
   public static AppStepCSR = "CSR";
   public static AppStepAssetExpense = "AEX";
+  public static AppStepCustCmpltn = "CMPLTN";
   public static FL4W = "FL4W";
   public static CF4W = "CF4W";
   public static FCTR = "FCTR";
@@ -174,6 +175,7 @@ export class CommonConstant {
   public static VerfResultStatFailed = "FAIL";
   public static TrxTypeCodePhn = "PHN";
   public static VerfTrxTypeCodePhn = "PHN_VERIF";
+  public static VerfTrxTypeCodeInvoice = "INVOICE";
   public static VerfResultStatCodeNew = "NEW";
   public static RtnHandlingReturnStatDone = "DONE";
   public static CrdInvstgStatDone = "DONE";
@@ -286,6 +288,7 @@ export class CommonConstant {
   public static AddrTypeOthBiz = "OTHERBIZ";
   public static AddrTypeCompany = "COMPANY";
   public static AddrTypeEmergency = "EMERGENCY";
+  public static AddrTypeContactInfo = "CONTACT";
 
   //CUST MODEL
   public static CustModelProfessional = "PROF";
@@ -342,6 +345,7 @@ export class CommonConstant {
   public static RefReasonTypeCodePreGlvApv = "PRE_GLV_APV";
   public static RefReasonTypeCodeCrdReview = "CRD_REVIEW";
   public static RefReasonTypeDocChecklist = "DCK_LIST";
+  public static RefReasonTypeCodeInvoiceDataVerif = "INVOICE_DATA_VERIF";
 
   // INST TYPE
   public static SINGLE_INST_TYPE = "SINGLE";
@@ -401,6 +405,7 @@ export class CommonConstant {
   public static ReturnHandlingEditComRsvFnd = "RTN_EDIT_COM_RSV_FND";
   public static ReturnHandlingAddColtr = "RTN_ADD_COLTR";
   public static ReturnHandlingAddTc = "RTN_ADD_TC";
+  public static ReturnHandlingInvoice = "RTN_INVOICE_VERF";
   public static ReturnStatNew = "NEW";
   public static ReturnStatRequest = "REQ";
   public static ReturnStatus = "Status";
@@ -472,6 +477,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeReturnTaskCFRFN4W = "RETURN_TASK_CFRFN4W";
   public static RefMasterTypeCodeReturnTaskFL4W = "RETURN_TASK_FL4W";
   public static RefMasterTypeCodeReturnTaskOPL = "RETURN_TASK_OPL";
+  public static RefMasterTypeCodeReturnTaskFCTR = "RETURN_TASK_FCTR";
   public static RefMasterTypeCodeVerfSubjRelation = "VERF_SUBJ_RELATION";
   public static RefMasterTypeCodeCrdRvwAnalysisItem = "CRD_RVW_ANALYSIS_ITEM";
   public static RefMasterTypeCodeCrdInvstgAnalysisItem = "CRD_INVSTG_ANALYSIS_ITEM";
@@ -496,6 +502,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeCustExpsrType = "CUST_EXPSR_TYPE";
   public static RefMasterTypeCodeResidualType = "RESIDUAL_TYPE";
   public static RefMasterTypeCodeOperatingMargin = "OPERATING_MARGIN_TYPE";
+  public static RefMasterTypeCodeCashflowItem = "CASHFLOW_ITEM";
   //RATE TYPE
   public static RateTypeFlat = "FLT";
   public static RateTypeEffective = "EFCTV";
@@ -638,4 +645,18 @@ export class CommonConstant {
   //MOU TYPE
   public static MOU_TYPE_GENERAL = "GENERAL";
   public static MOU_TYPE_FACTORING = "FACTORING";
+
+  //Cashflow Item Type
+  public static CashFlowItemMasterCodeFeeCptlz = "CASHFLOW_FEE_CPTLZ";
+  public static CashFlowItemMasterCodeInstallment = "CASHFLOW_INSTALLMENT";
+  public static CashFlowItemMasterCodeInsurance = "CASHFLOW_INSURANCE";
+  public static CashFlowItemMasterCodeMaint = "CASHFLOW_MAINT";
+  public static CashFlowItemMasterCodeReplaceCar = "CASHFLOW_REPLACE_CAR";
+  public static CashFlowItemMasterCodeStnk = "CASHFLOW_STNK";
+  public static CashFlowItemMasterCodeOdb = "CASHFLOW_ODB";
+
+  //oth expense opl
+  public static OtherExpenseMasterCodeExpStn = "EXP_STN";
+  public static OtherExpenseMasterCodeExpOdb = "ODB";
+  public static OtherExpenseMasterCodeExpRc = "RC";
 }

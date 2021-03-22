@@ -735,7 +735,6 @@ export class CustMainDataComponent implements OnInit {
 
     if (this.custDataCompanyObj.AppCustObj.IsShareholder) {
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.SharePrcnt = this.CustMainDataForm.controls.SharePrcnt.value;
-      this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsSigner = this.CustMainDataForm.controls.IsSigner.value;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsActive = this.CustMainDataForm.controls.IsActive.value;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.IsOwner = this.CustMainDataForm.controls.IsOwner.value;
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.EstablishmentDt = this.CustMainDataForm.controls.EstablishmentDt.value;
@@ -786,7 +785,7 @@ export class CustMainDataComponent implements OnInit {
           }
           else {
             response["ErrorMessages"].forEach((message: string) => {
-              this.toastr.errorMessage(message["Message"]);
+              this.toastr.warningMessage(message["Message"]);
             });
           }
         }
@@ -802,7 +801,7 @@ export class CustMainDataComponent implements OnInit {
           }
           else {
             response["ErrorMessages"].forEach((message: string) => {
-              this.toastr.errorMessage(message["Message"]);
+              this.toastr.warningMessage(message["Message"]);
             });
           }
         }

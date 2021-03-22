@@ -91,7 +91,7 @@ export class CreditApprovalDetailComponent implements OnInit {
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    var appObj = { AppId: this.appId };
+    var appObj = { Id: this.appId };
 
     let getApp = await this.http.post(URLConstant.GetAppById, appObj)
     let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
@@ -109,7 +109,7 @@ export class CreditApprovalDetailComponent implements OnInit {
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
         let mouCustId = response[0]['MouCustId'];
         if (mouCustId != null && mouCustId != '') {
-          var mouObj = { MouCustId: mouCustId };
+          var mouObj = { Id: mouCustId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
             (response) => {
               let mouCustNo = response['MouCustNo'];
@@ -136,8 +136,9 @@ export class CreditApprovalDetailComponent implements OnInit {
   }
 
   async getApp() {
-    var appObj = new AppObj();
-    appObj.AppId = this.appId
+    // var appObj = new AppObj();
+    // appObj.AppId = this.appId
+    var appObj = { Id: this.appId };
     await this.http.post<AppObj>(URLConstant.GetAppById, appObj).toPromise().then(
       (response) => {
         this.AppObj = response;
@@ -204,6 +205,8 @@ export class CreditApprovalDetailComponent implements OnInit {
     this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
     this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
     this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
+    this.InputApvObj.PathUrlReturnToLevel = URLConstant.ReturnLevel;
+    this.InputApvObj.PathUrlContinueToLevel = URLConstant.ContinueToLevel;
     this.InputApvObj.TrxNo = this.AppObj.AppNo;
     this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
     this.InputApvObj.RequestId = this.ApvReqId;

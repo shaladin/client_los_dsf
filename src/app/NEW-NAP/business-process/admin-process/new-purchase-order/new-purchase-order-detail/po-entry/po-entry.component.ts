@@ -97,7 +97,7 @@ export class PoEntryComponent implements OnInit {
       );
     }
     else {
-      let getPurchaseOrderHId = this.httpClient.post(URLConstant.GetPurchaseOrderByPurchaseOrderHIdForNewPO, { PurchaseOrderHId: this.PurchaseOrderHId }).toPromise();
+      let getPurchaseOrderHId = this.httpClient.post(URLConstant.GetPurchaseOrderByPurchaseOrderHIdForNewPO, { Id: this.PurchaseOrderHId }).toPromise();
       let getListBankAcc = this.httpClient.post(URLConstant.GetListVendorBankAccByVendorCode, { VendorCode: this.SupplCode }).toPromise();
       forkJoin([getPurchaseOrderHId, getListBankAcc]).toPromise().then(
         (response) => {
@@ -125,7 +125,7 @@ export class PoEntryComponent implements OnInit {
       );
 
     }
-    this.httpClient.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
+    this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.AppData = response;
         this.httpClient.post(URLConstant.GetProdOfferingHByCode, { ProdOfferingCode: this.AppData["ProdOfferingCode"] }).toPromise().then(
@@ -164,7 +164,7 @@ export class PoEntryComponent implements OnInit {
         break;
       }
     }
-    this.httpClient.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
+    this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.AppData = response;
         this.httpClient.post(URLConstant.GetProdOfferingHByCode, { ProdOfferingCode: this.AppData["ProdOfferingCode"] }).toPromise().then(

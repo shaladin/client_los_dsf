@@ -9,7 +9,9 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-requisition-decision-detail',
@@ -27,11 +29,16 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   IsSecondDetail: boolean = false;
   IsExisting: boolean = false;
 
-  ChasisNo: string = "-";
-  EngineNo: string = "-";
-  LicensePlateNo: string = "-";
+  SerialNo1: string = "-";
+  SerialNo2: string = "-";
+  SerialNo3: string = "-";
+  SerialNo4: string = "-";
+  SerialNo5: string = "-";
+  AssetTypeCode: string = "";
 
   AssetInfoObj: any;
+  AssetObj: any;
+  AssetTypeObj: any;
 
   ListOfAsset: Array<any> = new Array<any>();
   AttributeList: Array<any> = new Array<any>();
@@ -44,7 +51,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   ReqDecForm = this.fb.group({
     Decision: ['', [Validators.required]],
     AssetNo: [''],
-    ManYear: [, [Validators.required]],
+    ManYear: [, [Validators.required, Validators.min(1)]],
     Notes: ['', [Validators.maxLength(4000)]]
   });
   
@@ -52,7 +59,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private toastr: NGXToastrService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.AppId = params["AppId"];
@@ -64,15 +71,28 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // this.InputLookupAssetObj.urlJson = "./assets/uclookup/Lead/lookupAsset.json";
-    this.InputLookupAssetObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    // this.InputLookupAssetObj.urlEnviPaging = environment.FoundationR3Url;
-    // this.InputLookupAssetObj.pagingJson = "./assets/uclookup/Lead/lookupAsset.json";
-    // this.InputLookupAssetObj.genericJson = "./assets/uclookup/Lead/lookupAsset.json";
+    this.ClaimTask();
+    this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
+    this.InputLookupAssetObj.urlQryPaging = URLConstant.GetAssetStockPagingFromAms;
+    this.InputLookupAssetObj.urlEnviPaging = URLConstant.AmsUrl;
+    this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
+    this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetObj.isRequired = true;
 
     await this.SetMainInfo();
     await this.SetListOfAsset();
+  }
+
+  
+  ClaimTask() {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    var wfClaimObj = new ClaimWorkflowObj();
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
+    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
+
+    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
+      () => {
+      });
   }
 
   async SetMainInfo() {
@@ -82,7 +102,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
 
   async SetListOfAsset() {
     var requestAppId = {
-      AppId: this.AppId
+      Id: this.AppId
     };
 
     await this.http.post(URLConstant.GetListOfAsset, requestAppId).toPromise().then(
@@ -141,13 +161,13 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     this.ReqDecForm.controls.ManYear.disable();
 
     var requestAppAssetId = {
-      AppAssetId: this.AppAssetId
+      Id: this.AppAssetId
     };
 
     this.http.post(URLConstant.GetListAppAssetAccessoryAndAppAssetAttrByAppAssetId, requestAppAssetId).subscribe(
       (response) => {
-        this.AccessoriesList = response["AppAssetAccesories"];
-        this.AttributeList = response["AppAssetAttrs"];
+        this.AttributeList = response["AppAssetAttrs"] ? response["AppAssetAttrs"] : new Array<any>();
+        this.AccessoriesList = response["AppAssetAccesories"] ? response["AppAssetAccesories"] : new Array<any>();
       }
     );
 
@@ -162,10 +182,32 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     this.ReqDecForm.patchValue({
       AssetNo: event.AssetNo
     });
+    
+    var requestAssetNo = {
+      AssetNo: event.AssetNo
+    };
 
-    // this.ChasisNo = event.ChasisNo;
-    // this.EngineNo = event.EngineNo;
-    // this.LicensePlateNo = event.LicensePlateNo;
+    // this.SerialNo1 = event.SerialNo1;
+    // this.SerialNo2 = event.SerialNo2;
+    // this.SerialNo3 = event.SerialNo3;
+
+    this.http.post(URLConstant.GetAssetByAssetNo, requestAssetNo).subscribe(
+      (response: any) => {
+        this.AssetObj = response;
+        this.AssetTypeCode = this.AssetObj.AssetTypeCode;
+        this.SerialNo1 = this.AssetObj.SerialNo1;
+        this.SerialNo2 = this.AssetObj.SerialNo2;
+        this.SerialNo3 = this.AssetObj.SerialNo3;
+        this.SerialNo4 = this.AssetObj.SerialNo4;
+        this.SerialNo5 = this.AssetObj.SerialNo5;
+      }
+    );
+
+    this.http.post(URLConstant.GetAssetTypeByCode, { AssetTypeCode: this.AssetTypeCode }).subscribe(
+      (response: any) => {
+        this.AssetTypeObj = response;
+      }
+    );
   }
 
   ChangeDecision(decisionCode: string) {
@@ -177,11 +219,30 @@ export class RequisitionDecisionDetailComponent implements OnInit {
           AssetNo: this.AssetInfoObj.AssetNo
         });
   
-        this.InputLookupAssetObj.nameSelect = this.AssetInfoObj.AssetNo;
+        this.InputLookupAssetObj.jsonSelect = { AssetNo: this.AssetInfoObj.AssetNo };
+        this.InputLookupAssetObj.idSelect = this.AssetInfoObj.AssetNo;
 
-        // this.ChasisNo = ChasisNo (Belum Tau Dapat Dari Mana);
-        // this.EngineNo = EngineNo (Belum Tau Dapat Dari Mana);
-        // this.LicensePlateNo = LicensePlateNo (Belum Tau Dapat Dari Mana);
+        var requestAssetNo = {
+          AssetNo: this.AssetInfoObj.AssetNo
+        };
+
+        this.http.post(URLConstant.GetAssetByAssetNo, requestAssetNo).subscribe(
+          (response: any) => {
+            this.AssetObj = response;
+            this.AssetTypeCode = this.AssetObj.AssetTypeCode;
+            this.SerialNo1 = this.AssetObj.SerialNo1;
+            this.SerialNo2 = this.AssetObj.SerialNo2;
+            this.SerialNo3 = this.AssetObj.SerialNo3;
+            this.SerialNo4 = this.AssetObj.SerialNo4;
+            this.SerialNo5 = this.AssetObj.SerialNo5;
+          }
+        );
+
+        this.http.post(URLConstant.GetAssetTypeByCode, { AssetTypeCode: this.AssetTypeCode }).subscribe(
+          (response: any) => {
+            this.AssetTypeObj = response;
+          }
+        );
       }
 
       this.IsExisting = true;

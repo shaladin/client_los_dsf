@@ -24,7 +24,7 @@
             <div class="col-md-12">
               <div class="row">
                 <div class="col-md-2 form-inline">
-                  <label>Total Commision Amount</label>
+                  <label translate>Total Commision Amount</label>
                 </div>
                 <div class="col-md-4 form-inline form-inline-right">
                   <label *ngIf="Summary.TotalCommisionAmount <= maxAllocAmt"
@@ -37,7 +37,7 @@
               </div>
               <div class="row">
                 <div class="col-md-2 form-inline">
-                  <label>Total TAX</label>
+                  <label translate>Total TAX</label>
                 </div>
                 <div class="col-md-4 form-inline form-inline-right">
                   <label>{{Summary.TotalTaxAmmount | number:'.2':'en-US'}}</label>
@@ -45,7 +45,7 @@
               </div>
               <div class="row">
                 <div class="col-md-2 form-inline">
-                  <label>Total VAT</label>
+                  <label translate>Total VAT</label>
                 </div>
                 <div class="col-md-4 form-inline form-inline-right">
                   <label>{{Summary.TotalVATAmount | number:'.2':'en-US'}}</label>
@@ -53,7 +53,7 @@
               </div>
               <div class="row">
                 <div class="col-md-2 form-inline">
-                  <label>Gross Yield</label>
+                  <label translate>Gross Yield</label>
                 </div>
                 <div class="col-md-4 form-inline form-inline-right">
                   <label *ngIf="Summary.GrossYield >= 0"> {{Summary.GrossYield | number:'.6':'en-US'}}%</label>
@@ -63,8 +63,8 @@
             </div>
           </div>
           <div class="form-actions right">
-            <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
-              translate>
+            <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1"
+              (click)="Cancel()" translate>
               <i class="ft-x"></i> Cancel
             </button>
             <button type="button" (click)="CalculateTotal()" class="btn btn-raised btn-primary mr-1" translate>

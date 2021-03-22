@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
@@ -96,7 +96,8 @@ export class AssetLeasingAddEditComponent implements OnInit {
   headAppAssetSupplEmpObj: any;
   appAssetSupplEmpBranchObj: any;
   branchAppAssetSupplEmpObj: any;
-
+  items: FormArray;
+  SerialNoList: any;
 
   AssetDataForm = this.fb.group({
     SupplName:[''],
@@ -144,14 +145,18 @@ export class AssetLeasingAddEditComponent implements OnInit {
     OwnerMobilePhn:[''],
 
     LocationAddrType: [''],
+    items: this.fb.array([])
   });
 
   appObj = {
-    AppId: 0,
+    Id: 0,
   };
   inputAddressObjForLoc: InputAddressObj;
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
+  constructor(private route: ActivatedRoute,
+    private http: HttpClient,
+    private toastr: NGXToastrService,
+    private fb: FormBuilder) { 
     this.getListAppAssetData = URLConstant.GetListAppAssetData;
     this.getListVendorEmp = URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition;
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -198,7 +203,7 @@ SetAsset(event) {
 }
 
 GetListAddr() {
-  this.appObj.AppId = this.AppId;
+  this.appObj.Id = this.AppId;
   this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
     (response) => {
       this.AppCustAddrObj = response[CommonConstant.ReturnObj];
@@ -208,9 +213,10 @@ GetListAddr() {
 }
 
 copyToLocationAddr() {
-  this.appCustAddrObj = new AppCustAddrObj();
-  this.appCustAddrObj.AppCustAddrId = this.AssetDataForm.controls["LocationAddrType"].value;
-  this.http.post(this.getAppCustAddrByAppCustAddrId, this.appCustAddrObj).subscribe(
+  // this.appCustAddrObj = new AppCustAddrObj();
+  // this.appCustAddrObj.AppCustAddrId = this.AssetDataForm.controls["LocationAddrType"].value;
+  var appCustAddrObj = { Id: this.AssetDataForm.controls["LocationAddrType"].value };
+  this.http.post(this.getAppCustAddrByAppCustAddrId, appCustAddrObj).subscribe(
     (response) => {
         this.returnAppCustAddrObj = response;
         
@@ -248,7 +254,6 @@ copyToLocationAddr() {
           BranchManagerNo: response[CommonConstant.ReturnObj][0]['Key'],
           BranchManagerName: response[CommonConstant.ReturnObj][0]['Value'] 
         });
-      
     });
 
     this.salesObj = new VendorEmpObj();
@@ -261,7 +266,6 @@ copyToLocationAddr() {
           SalesPersonNo: response[CommonConstant.ReturnObj][0]['Key'],
           SalesPersonName: response[CommonConstant.ReturnObj][0]['Value']
         });
-      
     });
 
     this.adminHeadObj = new VendorEmpObj();
@@ -274,13 +278,12 @@ copyToLocationAddr() {
           AdminHeadNo: response[CommonConstant.ReturnObj][0]['Key'],
           AdminHeadName: response[CommonConstant.ReturnObj][0]['Value'] 
         });
-      
     });
   }
 
   GetAppCust() {
     var appObj = {
-      AppId: this.AppId,
+      Id: this.AppId,
     };
     this.http.post(this.getAppCustUrl, appObj).subscribe(
       (response) => {
@@ -343,7 +346,8 @@ copyToLocationAddr() {
     if(this.mode == 'editAsset'){
       this.appAssetObj = new AppAssetObj();
       this.appAssetObj.AppAssetId = this.AppAssetId;
-      this.http.post(this.getAppAssetByAppAssetId, this.appAssetObj).subscribe(
+      var appAssetObj = { Id: this.AppAssetId };
+      this.http.post(this.getAppAssetByAppAssetId, appAssetObj).subscribe(
       (response) => {
           this.returnAppAssetObj = response;
           this.AssetDataForm.patchValue({ 
@@ -359,6 +363,29 @@ copyToLocationAddr() {
             AssetTypeCode: this.returnAppAssetObj.AssetTypeCode,
             AssetCategoryCode: this.returnAppAssetObj.AssetCategoryCode,
           });
+
+          this.items = this.AssetDataForm.get('items') as FormArray;
+          this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { AssetTypeCode: this.returnAppAssetObj.AssetTypeCode }).subscribe(
+            (response: any) => {
+              while (this.items.length) {
+                this.items.removeAt(0);
+              }
+
+              this.SerialNoList = response[CommonConstant.ReturnObj];
+              for (let i = 0; i < this.SerialNoList.length; i++) {
+                let eachDataDetail = this.fb.group({
+                  SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
+                  SerialNoValue: [''],
+                  IsMandatory: [this.SerialNoList[i].IsMandatory]
+                }) as FormGroup;
+                this.items.push(eachDataDetail);
+                if (this.items.controls[i]['controls']['IsMandatory'].value == true) {
+                  this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
+                  this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
+                }
+              }
+            }
+          );
 
           this.reqAssetMasterObj = new AssetMasterObj();
           this.reqAssetMasterObj.FullAssetCode = this.returnAppAssetObj.FullAssetCode;
@@ -444,18 +471,19 @@ copyToLocationAddr() {
                     });
                 });
               });
-
             });
         });
 
         this.appCollateralObj = new AppCollateralObj();
         this.appCollateralObj.AppId = this.AppId;
+        this.appCollateralObj.Id = this.AppId;
         this.http.post(this.getAppCollateralByAppId, this.appCollateralObj).subscribe(
         (response) => {
           this.returnAppCollateralObj = response;
 
           this.appCollateralRegistObj = new AppCollateralRegistrationObj();
           this.appCollateralRegistObj.AppCollateralId = this.returnAppCollateralObj.AppCollateralId;
+          this.appCollateralRegistObj.Id = this.returnAppCollateralObj.AppCollateralId;
           this.http.post(this.getAppCollateralRegistByAppCollateralId, this.appCollateralRegistObj).subscribe(
           (response) => {
             this.returnAppCollateralRegistObj = response;

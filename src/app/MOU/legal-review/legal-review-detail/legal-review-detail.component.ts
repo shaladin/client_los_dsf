@@ -75,7 +75,7 @@ export class LegalReviewDetailComponent implements OnInit {
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;    
-    this.http.post(URLConstant.GetMouCustById, this.mouCustObj).subscribe(
+    this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -89,7 +89,7 @@ export class LegalReviewDetailComponent implements OnInit {
 
       }
     );
-    var mouObj = { "MouCustId": this.MouCustId };
+    var mouObj = { "Id": this.MouCustId };
     this.http.post(this.GetMouCustLglReviewByMouCustIdUrl, mouObj).subscribe(
       response => {
         this.responseMouObj = response['ReturnObject'];

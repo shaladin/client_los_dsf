@@ -1,0 +1,195 @@
+<form class="form form-horizontal" [formGroup]="ParentForm" (ngSubmit)="ParentForm.valid"
+  #enjiForm="ngForm">
+  <lib-ucSubsection [id]="'jobDataId'" [title]="MrCustModelDescr + ' Job Data'" [panel]="'jobData'">
+  </lib-ucSubsection>
+  <div id="jobData">
+    <div class="form-group row">
+      <label class="col-md-2 adins-required-label" translate>Profession Name</label>
+      <div class="col-md-4">
+        <lib-uclookupgeneric *ngIf="InputLookupProfessionObj.isReady" [enjiForm]="enjiForm"
+          [lookupInput]="InputLookupProfessionObj" [parentForm]="ParentForm"
+          [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
+        </lib-uclookupgeneric>
+        <lib-uc-show-errors *ngIf="ParentForm.controls.lookupProfessionData && ParentForm.controls.lookupProfessionData['controls']['value']['untouched']" [control]="ParentForm.controls.lookupProfessionData['controls']['value']"
+          [submit]="IsJobSubmitted"></lib-uc-show-errors>
+      </div>
+      <label class="col-md-2 adins-required-label" *ngIf="CustModelCode != 'NONPROF'" translate>Industry
+        Type</label>
+      <div class="col-md-4" *ngIf="CustModelCode != 'NONPROF'">
+        <lib-uclookupgeneric *ngIf="InputLookupIndustryTypeObj.isReady" [enjiForm]="enjiForm"
+          [lookupInput]="InputLookupIndustryTypeObj" [parentForm]="ParentForm"
+          [identifier]="'lookupIndustryType'" (lookup)="GetIndustryType($event)">
+        </lib-uclookupgeneric>
+        <lib-uc-show-errors *ngIf="ParentForm.controls.lookupIndustryType && ParentForm.controls.lookupIndustryType['controls']['value']['untouched']" [control]="ParentForm.controls.lookupIndustryType['controls']['value']"
+          [submit]="IsJobSubmitted"></lib-uc-show-errors>
+      </div>
+    </div>
+    <div *ngIf="CustModelCode == 'EMP' || CustModelCode == 'SME'">
+      <div class="form-group row">
+        <label class="col-md-2 adins-required-label" translate>Company Name</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control" formControlName="CoyName"
+            [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.CoyName.invalid }">
+          <lib-uc-show-errors [control]="ParentForm.controls.CoyName" [submit]="IsJobSubmitted">
+          </lib-uc-show-errors>
+        </div>
+        <label class="col-md-2" [ngClass]="{ 'adins-required-label': CustModelCode == 'EMP' }" translate>Establishment Date</label>
+        <div class="col-md-4">
+          <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt" [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.EmploymentEstablishmentDt.invalid }"
+            max="{{BusinessDt | date:'yyyy-MM-dd'}}">
+          <lib-uc-show-errors [control]="ParentForm.controls.EmploymentEstablishmentDt"
+            [submit]="IsJobSubmitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2 adins-required-label" translate>Job Position</label>
+        <div class="col-md-4">
+          <select class="form-control" formControlName="MrJobPositionCode">
+            <option *ngFor="let item of JobPositionObj" [value]="item.Key">
+              {{item.Value}}
+            </option>
+          </select>
+        </div>
+        <label class="col-md-2" translate>Company Scale</label>
+        <div class="col-md-4">
+          <select class="form-control" formControlName="MrCoyScaleCode">
+            <option *ngFor="let item of CompanyScaleObj" [value]="item.Key">
+              {{item.Value}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="CustModelCode == 'PROF'">
+      <div class="form-group row">
+        <label class="col-md-2" translate>Professional No</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control" formControlName="ProfessionalNo"
+            [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.ProfessionalNo.invalid }">
+          <lib-uc-show-errors [control]="ParentForm.controls.ProfessionalNo" [submit]="IsJobSubmitted">
+          </lib-uc-show-errors>
+        </div>
+        <label class="col-md-2 adins-required-label" translate>Establishment Date</label>
+        <div class="col-md-4">
+          <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt" [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.EmploymentEstablishmentDt.invalid }"
+            max="{{BusinessDt | date:'yyyy-MM-dd'}}">
+          <lib-uc-show-errors [control]="ParentForm.controls.EmploymentEstablishmentDt"
+            [submit]="IsJobSubmitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row" *ngIf="CustModelCode != 'NONPROF'">
+      <label class="col-md-2" translate>Job Title Name</label>
+      <div class="col-md-4">
+        <input type="text" class="form-control" formControlName="JobTitleName"
+          [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.JobTitleName.invalid }">
+        <lib-uc-show-errors [control]="ParentForm.controls.JobTitleName" [submit]="IsJobSubmitted">
+        </lib-uc-show-errors>
+      </div>
+      <label class="col-md-2" *ngIf="CustModelCode != 'PROF'" translate>Number of Employee</label>
+      <div class="col-md-2" *ngIf="CustModelCode != 'PROF'">
+        <input type="number" min="0" class="form-control" formControlName="NumOfEmployee"
+          [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.NumOfEmployee.invalid }">
+        <lib-uc-show-errors [control]="ParentForm.controls.NumOfEmployee" [submit]="IsJobSubmitted">
+        </lib-uc-show-errors>
+      </div>
+    </div>
+    <div *ngIf="CustModelCode == 'EMP'">
+      <div class="form-group row">
+        <label class="col-md-2 adins-required-label" translate>Job Status</label>
+        <div class="col-md-4">
+          <select class="form-control" formControlName="MrJobStatCode">
+            <option *ngFor="let item of JobStatObj" [value]="item.Key">
+              {{item.Value}}
+            </option>
+          </select>
+        </div>
+        <label class="col-md-2" translate>Internal Employee</label>
+        <div class="col-md-4">
+          <input type="checkbox" data-md-icheck formControlName="IsMfEmp">
+        </div>
+      </div>
+    </div>
+    <div *ngIf="CustModelCode == 'SME'">
+      <div class="form-group row">
+        <label class="col-md-2" translate>Investment Type</label>
+        <div class="col-md-4">
+          <select class="form-control" formControlName="MrInvestmentTypeCode">
+            <option *ngFor="let item of InvestmentTypeObj" [value]="item.Key">
+              {{item.Value}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="CustModelCode != 'NONPROF'">
+    <lib-ucSubsection [id]="'PrevJobDataId'" [title]="'Previous Job Data'" [panel]="'PrevJobData'">
+    </lib-ucSubsection>
+    <div id="PrevJobData">
+      <div class="form-group row">
+        <label class="col-md-2" translate>Previous Company Name</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control" formControlName="PrevCoyName"
+            [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.PrevCoyName.invalid }">
+          <lib-uc-show-errors [control]="ParentForm.controls.PrevCoyName" [submit]="IsJobSubmitted">
+          </lib-uc-show-errors>
+        </div>
+        <label class="col-md-2" translate>Previous Employment Date</label>
+        <div class="col-md-4">
+          <input type="date" class="form-control" formControlName="PrevEmploymentDt" max="{{BusinessDt | date:'yyyy-MM-dd'}}">
+          <lib-uc-show-errors [control]="ParentForm.controls.PrevEmploymentDt" [submit]="IsJobSubmitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+    </div>
+    <lib-ucSubsection [id]="'OtherJobDataId'" [title]="'Other Business'" [panel]="'OtherJobData'">
+    </lib-ucSubsection>
+    <div id="OtherJobData">
+      <div class="form-group row">
+        <label class="col-md-2" translate>Other Business Name</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control" formControlName="OthBizName"
+            [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.OthBizName.invalid }">
+          <lib-uc-show-errors [control]="ParentForm.controls.OthBizName" [submit]="IsJobSubmitted">
+          </lib-uc-show-errors>
+        </div>
+        <label class="col-md-2" translate>Other Business Type</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control" formControlName="OthBizType"
+            [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.OthBizType.invalid }">
+          <lib-uc-show-errors [control]="ParentForm.controls.OthBizType" [submit]="IsJobSubmitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" translate>Other Business Industry Type</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control" formControlName="OthBizIndustryTypeCode"
+            [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.OthBizIndustryTypeCode.invalid }">
+          <lib-uc-show-errors [control]="ParentForm.controls.OthBizIndustryTypeCode"
+            [submit]="IsJobSubmitted">
+          </lib-uc-show-errors>
+        </div>
+        <label class="col-md-2" translate>Other Job Type</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control" formControlName="OthBizJobPosition"
+            [ngClass]="{ 'is-invalid': IsJobSubmitted && ParentForm.controls.OthBizJobPosition.invalid }">
+          <lib-uc-show-errors [control]="ParentForm.controls.OthBizJobPosition" [submit]="IsJobSubmitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2" translate>Establishment Date</label>
+        <div class="col-md-4">
+          <input type="date" class="form-control" formControlName="OthBizEstablishmentDt" max="{{BusinessDt | date:'yyyy-MM-dd'}}">
+          <lib-uc-show-errors [control]="ParentForm.controls.OthBizEstablishmentDt"
+            [submit]="IsJobSubmitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

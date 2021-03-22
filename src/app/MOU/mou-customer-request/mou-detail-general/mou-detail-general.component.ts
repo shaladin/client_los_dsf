@@ -48,8 +48,8 @@ export class MouDetailGeneralComponent implements OnInit {
     MrInstSchmCode: ['', [Validators.required]],
     MrFirstInstTypeCode: [''],
     PayFreqCode: ['', [Validators.required]],
-    DownPaymentFromPrcnt: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.min(0), Validators.max(100)]],
-    DownPaymentToPrcnt: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.min(0), Validators.max(100)]],
+    DownPaymentFromPrcnt: ['', [Validators.required, Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.min(0), Validators.max(100)]],
+    DownPaymentToPrcnt: ['', [Validators.required, Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.min(0), Validators.max(100)]],
     TenorFrom: ['', [Validators.required, Validators.pattern("^[0-9]+$"), Validators.min(0)]],
     TenorTo: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     CurrCode: ['', [Validators.required]]
@@ -85,7 +85,7 @@ export class MouDetailGeneralComponent implements OnInit {
     let reqFirstInst = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterFirstInst);
     var mouCustClause = new MouCustClauseObj();
     mouCustClause.MouCustId = this.MouCustId;
-    let getMouCustClause = this.httpClient.post(URLConstant.GetMouCustClauseByMouCustId, mouCustClause);
+    let getMouCustClause = this.httpClient.post(URLConstant.GetMouCustClauseByMouCustId, { Id: this.MouCustId });
     forkJoin([reqCurrency, reqIntrstType, reqInstSchm, reqPayFreq, reqFirstInst, getMouCustClause]).subscribe(
       (response) => {
         this.currencyList = response[0];
@@ -123,7 +123,7 @@ export class MouDetailGeneralComponent implements OnInit {
       this.saveMouCustAssetDetail();
       this.mouCustClause = new MouCustClauseObj();
       this.mouCustClause.MouCustId = this.MouCustId;
-      this.httpClient.post(URLConstant.GetMouCustClauseByMouCustId, this.mouCustClause).subscribe(
+      this.httpClient.post(URLConstant.GetMouCustClauseByMouCustId, { Id: this.MouCustId }).subscribe(
         (response) => {
           this.tempMouCustClause = response;
           this.getData();

@@ -1,13 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AppSubsidyObj } from 'app/shared/model/AppSubsidyObj.Model';
-import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
-import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
-import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { SummaryAppObj } from 'app/shared/model/App/SummaryAppObj.Model';
 import { SerialNoObj } from 'app/shared/model/SerialNo/SerialNoObj.Model';
@@ -20,18 +13,18 @@ import { SerialNoObj } from 'app/shared/model/SerialNo/SerialNoObj.Model';
 
 export class ViewSummaryAppComponent implements OnInit {
   @Input() AppId: number;
+
   SummaryAppObj: SummaryAppObj = new SummaryAppObj();
   SerialNoObjs: Array<SerialNoObj> = new Array<SerialNoObj>();
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
-  }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
      this.getSummaryApp();
   }
 
   getSummaryApp() {
-    var reqObj = { AppId: this.AppId };
+    var reqObj = { Id: this.AppId };
     this.http.post<SummaryAppObj>(URLConstant.GetSummaryAppByAppId, reqObj).subscribe(
       (response) => {
         this.SummaryAppObj = response;
@@ -43,7 +36,7 @@ export class ViewSummaryAppComponent implements OnInit {
             this.SerialNoObjs.push(serialNoObj);
           }
         }
-      });
+      }
+    );
   }
-
 }

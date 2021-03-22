@@ -62,7 +62,7 @@ export class AssetDataPagingComponent implements OnInit {
 
   async GetThirdPartyResultH() {
     if(this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0"){
-      this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).subscribe(
+      this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
         (response) => {
           this.appObj = response;
           if(response['MouCustId'] != null){
@@ -227,7 +227,8 @@ export class AssetDataPagingComponent implements OnInit {
   }
 
   getListDataForDDLCopy() {
-    this.http.post(URLConstant.GetListAppAssetForCopyByAppId, this.appAssetObj).subscribe(
+    var appAssetObj = { Id: this.AppId };
+    this.http.post(URLConstant.GetListAppAssetForCopyByAppId, appAssetObj).subscribe(
       (response) => {
         this.listDataAsset = response[CommonConstant.ReturnObj];
         if (this.listDataAsset.length > 0) this.selectedAsset = this.listDataAsset[0].Code;
@@ -236,7 +237,8 @@ export class AssetDataPagingComponent implements OnInit {
   }
 
   getListDataAsset() {
-    this.http.post(this.getListAppAssetData, this.appAssetObj).subscribe(
+    var appAssetObj = { Id: this.AppId };
+    this.http.post(this.getListAppAssetData, appAssetObj).subscribe(
       (response) => {
         this.listAppAssetObj = response[CommonConstant.ReturnObj];
 
@@ -268,6 +270,7 @@ export class AssetDataPagingComponent implements OnInit {
 
     this.appCollateralObj = new AppCollateralObj();
     this.appCollateralObj.AppId = this.AppId;
+    this.appCollateralObj.Id = this.AppId;
     this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
       (response) => {
         this.listAppCollateralObj = response[CommonConstant.ReturnObj];
@@ -289,6 +292,7 @@ export class AssetDataPagingComponent implements OnInit {
 
     this.appCollateralObj = new AppCollateralObj();
     this.appCollateralObj.AppId = this.AppId;
+    this.appCollateralObj.Id = this.AppId;
     this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
       (response) => {
         this.listAppCollateralObj = response[CommonConstant.ReturnObj];

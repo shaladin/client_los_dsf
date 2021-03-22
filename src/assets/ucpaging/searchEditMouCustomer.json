@@ -18,7 +18,7 @@
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": true,
-            "isSelectOne": false,
+            "ddlType": "all",
             "url": "",
             "path": "/RefMaster/GetListKeyValueActiveByCode",
             "label": "Mou Type",
@@ -43,7 +43,7 @@
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": false,
-            "isSelectOne": false,
+            "ddlType": "all",
             "items": [
                 {
                     "key": true,
@@ -82,7 +82,7 @@
             "value": "",
             "placeholder": "Placeholder",
             "isFromURL": false,
-            "isSelectOne": false,
+            "ddlType": "all",
             "items": [
                 {
                     "key": "CLAIMED",

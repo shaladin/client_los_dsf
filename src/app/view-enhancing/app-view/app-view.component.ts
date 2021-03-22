@@ -78,7 +78,7 @@ export class AppViewComponent implements OnInit {
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    var appObj = { AppId: this.AppId };
+    var appObj = { Id: this.AppId };
 
     let getApp = this.http.post(URLConstant.GetAppById, appObj);
     let getAppCust = this.http.post(URLConstant.GetAppCustByAppId, appObj);
@@ -98,7 +98,7 @@ export class AppViewComponent implements OnInit {
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
         let mouCustId = response[0]['MouCustId'];
         if (mouCustId != null && mouCustId != '') {
-          var mouObj = { MouCustId: mouCustId };
+          var mouObj = { Id: mouCustId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
             (response) => {
               let mouCustNo = response['MouCustNo'];
@@ -115,7 +115,7 @@ export class AppViewComponent implements OnInit {
 
   GetApp() {
     var appObj = {
-      AppId: this.AppId,
+      Id: this.AppId,
     };
 
     this.http.post(URLConstant.GetAppById, appObj).subscribe(

@@ -78,13 +78,13 @@ export class AgreementViewContainerComponent implements OnInit {
     this.dmsObj.User = currentUserContext.UserName;
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
-    var agrObj = { AgrmntId: this.AgrmntId };
+    var agrObj = { Id: this.AgrmntId };
 
     await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj).subscribe(
       (response) => {
         this.agrNo = response['AgrmntNo'];
         this.appId = response['AppId'];
-        let appObj = { AppId: this.appId };
+        var appObj = { Id: this.appId };
         let getApp = this.http.post(URLConstant.GetAppById, appObj);
         let getAppCust = this.http.post(URLConstant.GetAppCustByAppId, appObj);
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
@@ -99,7 +99,7 @@ export class AgreementViewContainerComponent implements OnInit {
             this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, appNo));
             let mouId = response[0]['MouCustId'];
             if (mouId != null && mouId != "") {
-              let mouObj = { MouCustId: mouId };
+              let mouObj = { Id: mouId };
               this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
                 result => {
                   let mouCustNo = result['MouCustNo'];
@@ -118,7 +118,7 @@ export class AgreementViewContainerComponent implements OnInit {
   }
 
   async GetAppAndAppCustDetailByAgrmntId() {
-    var obj = { agrmntId: this.AgrmntId };
+    var obj = { Id: this.AgrmntId };
     await this.http.post(URLConstant.GetAppAndAppCustDetailByAgrmntId, obj).toPromise().then(
       (response) => {
         this.ResponseAppDetailData = response;
@@ -127,7 +127,7 @@ export class AgreementViewContainerComponent implements OnInit {
 
   async GetAgrmnt() {
     var agrmntObj = {
-      AgrmntId: this.AgrmntId,
+      Id: this.AgrmntId,
     };
     this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
       (response) => {

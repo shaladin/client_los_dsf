@@ -9,7 +9,7 @@
       "name": "CrtOfficeCode",
       "datatype": "text",
       "isFromURL": true,
-      "isSelectOne": true,
+      "ddlType": "one",
       "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "path": "",
       "items": [],
