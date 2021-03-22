@@ -1,0 +1,69 @@
+<lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"> </lib-ucviewgeneric>
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="MainInfoForm" #MainInfoReqForm="ngForm"
+                (ngSubmit)="MainInfoForm.valid && SaveForm()">
+            <lib-ucSubsection [id]="'MainInfoFormId2'" [title]="'Application / Agreement Cancellation'"
+                              [panel]="'MainInfoForm2'"></lib-ucSubsection>
+            <div class="form-body" id="MainInfoForm2">
+              <div class="form-group row">
+                <label class="col-md-6" for="title" translate>Cancellation Information</label>
+                <label class="col-md-6" for="titlePo" translate>Request Po Cancellation</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2  adins-required" translate>Reason Description</label>
+                <div class="col-md-4">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="ReasonCode"
+                          [ngClass]="{ 'is-invalid': MainInfoReqForm.submitted && MainInfoForm.controls.ReasonCode.invalid }">
+                    <option *ngFor="let it of itemReasonCode" value="{{it.Key}}">
+                      {{it.Value}}
+                    </option>
+                  </select>
+                  <lib-uc-show-errors [control]="MainInfoForm.controls.ReasonCode" [submit]="MainInfoReqForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+                <label class="col-md-2" translate>Reason Po Description</label>
+                <div class="col-md-4">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="PoReasonCode"
+                          [ngClass]="{ 'is-invalid': MainInfoReqForm.submitted && MainInfoForm.controls.PoReasonCode.invalid }">
+                    <option *ngFor="let it of itemReasonCode" value="{{it.Key}}">
+                      {{it.Value}}
+                    </option>
+                  </select>
+                  <lib-uc-show-errors [control]="MainInfoForm.controls.PoReasonCode" [submit]="MainInfoReqForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2 adins-required" for="Notes" translate>Notes</label>
+                <div class="col-md-4">
+                  <textarea id="Notes" class="form-control adInsInput name " formControlName="CancelNotes"></textarea>
+                  <lib-uc-show-errors [control]="MainInfoForm.controls.CancelNotes" [submit]="MainInfoReqForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+                <label class="col-md-2" for="NotesPo" translate>Notes</label>
+                <div class="col-md-4">
+                  <textarea id="NotesPo" class="form-control adInsInput name " formControlName="PoCancelNotes"></textarea>
+                  <lib-uc-show-errors [control]="MainInfoForm.controls.PoCancelNotes" [submit]="MainInfoReqForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+            </div>
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode: this.BizTemplateCode}"
+                      translate>
+                <i class="ft-x"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary" translate>
+                <i class="far fa-check-square"></i> Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

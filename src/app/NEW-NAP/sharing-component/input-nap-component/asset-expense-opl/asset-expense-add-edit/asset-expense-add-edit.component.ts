@@ -2455,15 +2455,18 @@ export class AssetExpenseAddEditComponent implements OnInit {
   calculateChangeVAT(i) {
     if (this.InsuranceDataForm["controls"]["FeeInputType"].value == "VAT") {
       this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i].patchValue({
-        VATAmt: this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["FeeTypeAmt"].value - (this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["FeeTypeAmt"].value / 1.1)
+        VATAmt: this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["FeeTypeAmt"].value - (this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["FeeTypeAmt"].value / 1.1),
+        CptlzAmt: this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["FeeTypeAmt"].value / 1.1
       });
     }
     else {
       this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i].patchValue({
-        VATAmt: this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["FeeTypeAmt"].value * 0.1
+        VATAmt: this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["FeeTypeAmt"].value * 0.1,
+        CptlzAmt: this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["FeeTypeAmt"].value
       });
     }
     this.calculateFee();
+    this.calculateCptlz();
   }
 
   calculateFee() {
