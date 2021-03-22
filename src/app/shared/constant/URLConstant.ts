@@ -14,7 +14,11 @@ export class URLConstant {
 
   // APPROVAL
   public static GetApprovalScreenViewInfo = environment.FoundationR3Url + "/Approval/GetApprovalScreenViewInfo";
-  
+
+  // New Application
+  public static AddNewApplication = environment.losUrl + "/Application/AddNewApplication";
+  public static AddNewApplicationFromCopy = environment.losUrl + "/Application/AddNewApplicationFromCopy";
+
   // APP Application
   public static AddApp = environment.losUrl + "/Application/AddApp";
   public static AddAppMaindata = environment.losUrl + "/Application/AddAppMainData";
@@ -782,11 +786,11 @@ export class URLConstant {
   // APP CUST ATTR CONTENT 
   public static GetListAppCustAttrContentByAppCustIdAndAttrGroup = environment.losUrl + "/AppCustAttrContent/GetListAppCustAttrContentByAppCustIdAndAttrGroup"
   public static GetListAppCustAttrContentForNewNap = environment.losUrl + "/AppCustAttrContent/GetListAppCustAttrContentForNewNap";
-  
+
   // APP CUST OTHER INFO
   public static AddEditCustCompletionOtherInfo = environment.losUrl + "/AppCustOtherInfo/AddEditCustCompletionOtherInfo";
   public static GetAppCustOtherInfoByAppCustId = environment.losUrl + "/AppCustOtherInfo/GetAppCustOtherInfoByAppCustId"
-  
+
   // APP TC
   public static GetListTCbyAppId = environment.losUrl + "/AppTc/GetListTCbyAppId";
   public static GetListExistingTCbyAppId = environment.losUrl + "/AppTc/GetListExistingTCbyAppId";
@@ -815,7 +819,7 @@ export class URLConstant {
   public static CheckAssetValidationRule = environment.losUrl + "/AppAsset/CheckAssetValidationRule";
   public static DeleteAppAsset = environment.losUrl + "/AppAsset/DeleteAppAsset";
   public static GenerateAppAssetAttr = environment.losUrl + "/AppAsset/GenerateAppAssetAttr";
-  
+
   //Asset Doc List
   public static GetAppAssetDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetDataByAppId";
   public static GetListAppCollateralForDOView = environment.losUrl + "/AppCollateralDoc/GetListAppCollateralForDOView";
@@ -990,7 +994,7 @@ export class URLConstant {
   public static GetListAppCustAddrDataForCopyByAppCustId = environment.losUrl + "/AppCustAddr/GetListAppCustAddrDataForCopyByAppCustId";
   public static GetListAppCustAddrDataForCopyByAppId = environment.losUrl + "/AppCustAddr/GetListAppCustAddrDataForCopyByAppId";
   public static GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode = environment.losUrl + "/AppCustAddr/GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode";
-  
+
   //App Fee
   public static GetListAppFeeByAppId = environment.losUrl + "/AppFee/GetListAppFeeByAppId";
 
@@ -1039,11 +1043,11 @@ export class URLConstant {
 
   //CUSTOMER DUPLICATE CHECKING
   public static GetCustomerAndNegativeCustDuplicateCheck = environment.FoundationR3Url + "/CustDuplicateCheck/GetCustomerAndNegativeCustDuplicateCheck";
-  
+
   // ASSET NEGATIVE DUPLICATE CHECK
   public static GetAssetNegativeDuplicateCheck = environment.FoundationR3Url + "/AssetNegative/GetAssetNegativeDuplicateCheck";
   public static GetAssetNegativeDuplicateCheckByListOfAsset = environment.FoundationR3Url + "/AssetNegative/GetAssetNegativeDuplicateCheckByListOfAsset"
-  
+
   //App Duplicate Checking
   public static GetCustomerDuplicateCheck = environment.FoundationR3Url + "/CustDuplicateCheck/GetCustomerDuplicateCheck";
   public static GetNegativeCustomerDuplicateCheck = environment.FoundationR3Url + "/CustDuplicateCheck/GetNegativeCustomerDuplicateCheck";
@@ -1077,7 +1081,7 @@ export class URLConstant {
   public static GetAssetTypeById = environment.FoundationR3Url + "/AssetType/GetAssetTypeById";
   public static GetListAssetTypeByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueActiveByCode";
   public static GetListSerialNoLabelByAssetTypeCode = environment.FoundationR3Url + "/AssetType/GetListSerialNoLabelByAssetTypeCode"
-  
+
   //App Crd Invstg
   public static AddAppCrdInvstg = environment.losUrl + "/AppCrdInvstgH/AddAppCrdInvstg";
   public static AddEditAppCrdInvstg = environment.losUrl + "/AppCrdInvstgH/AddEditAppCrdInvstg";
@@ -1097,7 +1101,6 @@ export class URLConstant {
   // public static GetAssetTypeById = environment.FoundationR3Url + "/AssetType/GetAssetTypeById"
 
   // List Approver
-  public static GetApprovedBy = environment.ApprovalR3Url + "/api/RFAWeb/GetApprovedBy/";
   public static GetRecommendations = environment.ApprovalR3Url + "/api/RFAWeb/GetRecommendations/";
 
   public static ApvHoldTaskUrl = environment.FoundationR3Url + "/Approval/Hold";
@@ -1134,7 +1137,7 @@ export class URLConstant {
   public static GetPhoneNumberByIdSourceAppIdAndSubject = environment.losUrl + "/PhoneVerif/GetPhoneNumberByIdSourceAppIdAndSubject";
   public static GetVerfQuestionListByAppIdAndSubjectForPhoneVerif = environment.losUrl + "/PhoneVerif/GetVerfQuestionListByAppIdAndSubjectForPhoneVerif";
   public static AddReturnHandlingFromPhoneVerif = environment.losUrl + "/PhoneVerif/AddReturnHandlingFromPhoneVerif";
-  
+
   // App Cust
   public static GetAppCustByAppId = environment.losUrl + "/AppCust/GetAppCustByAppId";
   public static AddNegativeCustByAppId = environment.losUrl + "/AppCust/AddNegativeCustByAppId";
@@ -1322,18 +1325,18 @@ export class URLConstant {
   public static GetListAllAssetExpenseData = environment.losUrl + "/AppAssetView/GetListAllAssetExpenseData";
   public static GetRentalCalculationData = environment.losUrl + "/AppAssetView/GetRentalCalculationData";
   public static GetListAllAssetFinancialData = environment.losUrl + "/AppAssetView/GetListAllAssetFinancialData";
-  
+
   // App Review
   public static GetAppRvwSummaryAsset = environment.losUrl + "/ApplicationReview/GetAppRvwSummaryAsset";
   public static GetApprovalAmount = environment.losUrl + "/ApplicationReview/GetApprovalAmount";
-  
+
   // Requisition Decision
   public static SaveRequisitionDecision = environment.losUrl + "/RequisitionDecision/SaveRequisitionDecision";
   public static SubmitRequisitionDecision = environment.losUrl + "/RequisitionDecision/SubmitRequisitionDecision";
 
   // Pre Go Live
   public static SubmitPreGoLive = environment.losUrl + "/PreGoLive/SubmitPreGoLive";
-  
+
   //App Asset Rent Data
   public static GetAppFinDataOplByAppAssetId = environment.losUrl + "/AppAssetRentDataOpl/GetAppFinDataOplByAppAssetId";
   public static AddEditFinDataOpl = environment.losUrl + "/AppAssetFinancialDataOpl/SubmitFinancialDataOpl";
@@ -1347,7 +1350,7 @@ export class URLConstant {
   public static GetAssetAllocationDataByAppId = environment.losUrl + "/AppAssetAllocationOpl/GetAssetAllocationDataByAppId";
   public static SubmitAssetAllocation = environment.losUrl + "/AppAssetAllocationOpl/SubmitAssetAllocation";
 
-   //API AMS
+  //API AMS
   public static AmsUrl = "http://r3impl-appsvr/AMS";
   public static amsUrl = "http://r3impl-appsvr.ad-ins.com/AMS";
   public static GetAssetStockPagingFromAms = "/Api/Integration/GetAssetStockPaging";

@@ -917,7 +917,6 @@ export class AdInsConstant {
   // public static GetAssetTypeById = environment.FoundationR3Url + "/AssetType/GetAssetTypeById"
 
   // List Approver
-  public static GetApprovedBy = environment.ApprovalR3Url + "/api/RFAWeb/GetApprovedBy/";
   public static GetRecommendations = environment.ApprovalR3Url + "/api/RFAWeb/GetRecommendations/";
 
   public static ApvHoldTaskUrl = environment.FoundationR3Url + "/Approval/Hold";
