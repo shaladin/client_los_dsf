@@ -38,7 +38,7 @@
     "@adins/uclookupgeneric": "^2.0.29",
     "@adins/ucpaging": "^2.0.33",
     "@adins/ucreport": "^1.0.10",
-    "@adins/ucsearch": "^2.0.73",
+    "@adins/ucsearch": "^2.1.2",
     "@adins/ucthingstodo": "^1.0.4",
     "@adins/ucupload": "^1.7.4",
     "@adins/ucviewgeneric": "^2.0.66",
