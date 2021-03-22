@@ -142,7 +142,7 @@ export class FraudVerifPageComponent implements OnInit {
             (response) => {
               this.tempLeadAsset = response;
               this.leadAssetObj.FullAssetCode = this.tempLeadAsset.FullAssetCode;
-              this.http.post(this.GetLeadAssetForCheckUrl, this.leadAssetObj).subscribe(
+              this.http.post(this.GetLeadAssetForCheckUrl, leadAssetObj).subscribe(
                 (response) => {
                   this.tempAssetCategoryTypeCode = response;
                   this.negativeAssetCheckObj.AssetTypeCode = this.tempAssetCategoryTypeCode.AssetTypeCode;
