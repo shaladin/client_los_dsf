@@ -15,13 +15,14 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 
 @Component({
   selector: 'app-nap-detail-form',
   templateUrl: './nap-detail-form.component.html'
 })
 export class NapDetailFormComponent implements OnInit {
-  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
+  @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
@@ -94,16 +95,18 @@ export class NapDetailFormComponent implements OnInit {
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response: AppObj) => {
         if (response) {
+          this.NapObj = response;
           this.AppStepIndex = this.AppStep[response.AppCurrStep];
           this.stepper.to(this.AppStepIndex);
           if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
             this.initDms();
           }
+          this.IsDataReady = true;
         } else {
           this.AppStepIndex = 0;
           this.stepper.to(this.AppStepIndex);
+          this.IsDataReady = true;
         }
-        this.IsDataReady = true;
       }
     );
 
@@ -218,7 +221,7 @@ export class NapDetailFormComponent implements OnInit {
       default:
         break;
     }
-    this.ucViewMainProd.initiateForm();
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   NextStep(Step) {
@@ -232,7 +235,7 @@ export class NapDetailFormComponent implements OnInit {
         this.stepper.next();
       }
     )
-    this.ucViewMainProd.initiateForm();
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
@@ -266,9 +269,5 @@ export class NapDetailFormComponent implements OnInit {
       () => {
 
       });
-  }
-
-  GetCallback(ev) {
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 }

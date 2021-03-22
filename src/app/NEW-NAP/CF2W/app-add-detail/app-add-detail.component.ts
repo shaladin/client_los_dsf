@@ -28,6 +28,7 @@ export class AppAddDetailComponent implements OnInit {
   NapObj: AppObj;
   IsMultiAsset: string;
   ListAsset: any;
+  IsViewReady: boolean = false;
   AppStep = {
     "NEW": 1,
     "CUST": 1,
@@ -76,6 +77,7 @@ export class AppAddDetailComponent implements OnInit {
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;
+          this.IsViewReady = true;
           this.AppStepIndex = this.AppStep[response.AppCurrStep];
           this.stepper.to(this.AppStepIndex);
         }

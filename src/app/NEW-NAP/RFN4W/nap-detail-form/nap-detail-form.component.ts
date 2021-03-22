@@ -100,6 +100,7 @@ export class NapDetailFormComponent implements OnInit {
       this.http.post(URLConstant.GetAppById, appObj).subscribe(
         (response: AppObj) => {
           if (response) {
+            this.NapObj = response;
             if (response["MrCustTypeCode"] != null)
               this.custType = response["MrCustTypeCode"];
             if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {

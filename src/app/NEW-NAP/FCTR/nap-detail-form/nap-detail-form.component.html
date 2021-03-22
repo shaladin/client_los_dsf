@@ -1,6 +1,6 @@
 <div class="col-md-12 text-left">
   <div class="card">
-    <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)" #viewMainProd> </lib-ucviewgeneric>
+    <app-app-main-info [AppId]="appId" [BizTemplateCode]="NapObj.BizTemplateCode" *ngIf="IsDataReady" #viewAppMainInfo></app-app-main-info>
     <div class="card-body">
       <div class="px-3">
         <lib-ucSubsection *ngIf="mode == 'ReturnHandling'" [id]="'formReturnInfoId'" [title]="'Return Handling'"
@@ -116,7 +116,7 @@
               </app-insurance-data> -->
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data-fctr *ngIf="AppStepIndex == 5" [AppId]="appId" [AppObj]="NapObj" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
+              <app-financial-data-fctr *ngIf="AppStepIndex == 5" [AppId]="appId" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
               </app-financial-data-fctr>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
