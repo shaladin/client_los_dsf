@@ -114,38 +114,38 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
-              <app-referantor-data *ngIf="AppStepIndex == 1" [appId]="appId" (outputTab)="NextStep('APP')"
+              <app-referantor-data *ngIf="AppStepIndex == 1 && IsDataReady" [appId]="appId" (outputTab)="NextStep('APP')"
                 (outputCancel)="Cancel()" [showCancel]="showCancel">
               </app-referantor-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 2" [appId]="appId" [isCollateral]="false"
+              <app-application-data *ngIf="AppStepIndex == 2 && IsDataReady" [appId]="appId" [isCollateral]="false"
                 [IsLoanObject]="true" (outputCancel)="Cancel()" [showCancel]="showCancel"
                 (outputTab)="NextStep('COLL')"></app-application-data>
             </div>
             <div id="coll-tab" class="content" role="tabpanel" aria-labelledby="coll-tab-trigger">
-              <app-single-coll-data *ngIf="AppStepIndex == 3" [AppId]="appId" (outputTab)="NextStep('INS')"
+              <app-single-coll-data *ngIf="AppStepIndex == 3 && IsDataReady" [AppId]="appId" (outputTab)="NextStep('INS')"
                 (outputCancel)="Cancel()"> </app-single-coll-data>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <app-insurance-data *ngIf="AppStepIndex == 4" [appId]="appId" (outputTab)="NextStep(custType == 'PERSONAL' ? 'LFI' : 'FIN')"
+              <app-insurance-data *ngIf="AppStepIndex == 4 && IsDataReady" [appId]="appId" (outputTab)="NextStep(custType == 'PERSONAL' ? 'LFI' : 'FIN')"
                 (outputCancel)="Cancel()" [showCancel]="showCancel"></app-insurance-data>
             </div>
             <div id="lifeInsurance-tab" class="content" role="tabpanel" aria-labelledby="lifeInsurance-tab-trigger">
-              <app-life-insurance-data *ngIf="AppStepIndex == 5" [AppId]="appId" (outputTab)="NextStep('FIN')"
+              <app-life-insurance-data *ngIf="AppStepIndex == 5 && IsDataReady" [AppId]="appId" (outputTab)="NextStep('FIN')"
                 (outputCancel)="Cancel()" [showCancel]="showCancel">
               </app-life-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data *ngIf="AppStepIndex == 6" [AppId]=appId (outputTab)="NextStep('TC')"
+              <app-financial-data *ngIf="AppStepIndex == 6 && IsDataReady" [AppId]="appId" (outputTab)="NextStep('TC')"
                 (outputCancel)="Cancel()" [showCancel]="showCancel"></app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 7" [AppId]="appId" (outputTab)="NextStep('UPL_DOC')"
+              <app-tc-data *ngIf="AppStepIndex == 7 && IsDataReady" [AppId]="appId" (outputTab)="NextStep('UPL_DOC')"
                 (outputCancel)="Cancel()" [showCancel]="showCancel"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
-              <app-dms-iframe *ngIf="AppStepIndex == 8 && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"  [showButton]="true" [dmsObj]="dmsObj"></app-dms-iframe>
+              <app-dms-iframe *ngIf="AppStepIndex == 8 && IsDataReady && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"  [showButton]="true" [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>

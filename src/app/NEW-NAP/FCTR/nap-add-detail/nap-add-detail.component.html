@@ -122,41 +122,41 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
-              <app-new-nap-cust-detail *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL'" [AppId]="appId" [AppCustIdInput]="'0'" [custMainDataMode]="'CUST'" [BizTemplateCode]="'CF4W'" (outputTab)="CheckCustType($event)" (outputCancel)="Cancel()"></app-new-nap-cust-detail>
+              <app-new-nap-cust-detail *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId" [AppCustIdInput]="'0'" [custMainDataMode]="'CUST'" [BizTemplateCode]="'CF4W'" (outputTab)="CheckCustType($event)" (outputCancel)="Cancel()"></app-new-nap-cust-detail>
             </div>
             <div id="family-tab" class="content" role="tabpanel" aria-labelledby="family-tab-trigger">
-              <app-new-nap-cust-family *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()"></app-new-nap-cust-family>
+              <app-new-nap-cust-family *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL' && IsDataReady" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()"></app-new-nap-cust-family>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
-              <app-new-nap-cust-guarantor *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()"></app-new-nap-cust-guarantor>
+              <app-new-nap-cust-guarantor *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL' && IsDataReady" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()"></app-new-nap-cust-guarantor>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data-factoring *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL'" [AppId]="appId"
+              <app-application-data-factoring *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId"
                 (outputTab)="NextStep('INVOICE')" (outputCancel)="Cancel()"></app-application-data-factoring>
             </div>
             <div id="invoice-tab" class="content" role="tabpanel" aria-labelledby="invoice-tab-trigger">
-              <app-invoice-data *ngIf="AppStepIndex == 5 && stepperMode == 'PERSONAL'" [AppId]="appId" (outputTab)="NextStep('COLL')" (outputCancel)="Cancel()">
+              <app-invoice-data *ngIf="AppStepIndex == 5 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId" (outputTab)="NextStep('COLL')" (outputCancel)="Cancel()">
               </app-invoice-data>
             </div>
             <div id="coll-tab" class="content" role="tabpanel" aria-labelledby="coll-tab-trigger">
-              <app-multi-coll-data *ngIf="AppStepIndex == 6 && stepperMode == 'PERSONAL'" [AppId]="appId" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()" [BLCode]="'FCTR'">
+              <app-multi-coll-data *ngIf="AppStepIndex == 6 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()" [BLCode]="'FCTR'">
               </app-multi-coll-data>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <app-insurance-multi-asset-data *ngIf="AppStepIndex == 7 && stepperMode == 'PERSONAL'" [appId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()" [showCancel]="'true'" [BLCode]="'FCTR'">
+              <app-insurance-multi-asset-data *ngIf="AppStepIndex == 7 && stepperMode == 'PERSONAL' && IsDataReady" [appId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()" [showCancel]="'true'" [BLCode]="'FCTR'">
               </app-insurance-multi-asset-data>
               <!-- <app-insurance-data *ngIf="AppStepIndex == 5" [appId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()" [showCancel]="'true'">
               </app-insurance-data> -->
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data-fctr *ngIf="AppStepIndex == 8 && stepperMode == 'PERSONAL'" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
+              <app-financial-data-fctr *ngIf="AppStepIndex == 8 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId" [AppObj]="NapObj" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
               </app-financial-data-fctr>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 9 && stepperMode == 'PERSONAL'" [AppId]="appId" (outputTab)="NextStep('UPL_DOC')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
+              <app-tc-data *ngIf="AppStepIndex == 9 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId" (outputTab)="NextStep('UPL_DOC')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
-              <app-dms-iframe *ngIf="AppStepIndex == 10 && stepperMode == 'PERSONAL' && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="mode != 'ReturnHandling'" [dmsObj]="dmsObj"></app-dms-iframe>
+              <app-dms-iframe *ngIf="AppStepIndex == 10 && stepperMode == 'PERSONAL' && IsDataReady && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="mode != 'ReturnHandling'" [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>
@@ -247,41 +247,41 @@
           <div class="bs-stepper-content">
             <!-- your steps content here -->
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
-              <app-new-nap-cust-detail *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY'" [AppId]="appId" [AppCustIdInput]="'0'" [custMainDataMode]="'CUST'" [BizTemplateCode]="'CF4W'" (outputTab)="CheckCustType($event)" (outputCancel)="Cancel()"></app-new-nap-cust-detail>
+              <app-new-nap-cust-detail *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId" [AppCustIdInput]="'0'" [custMainDataMode]="'CUST'" [BizTemplateCode]="'CF4W'" (outputTab)="CheckCustType($event)" (outputCancel)="Cancel()"></app-new-nap-cust-detail>
             </div>
             <div id="shareholder-tab" class="content" role="tabpanel" aria-labelledby="shareholder-tab-trigger">
-              <app-new-nap-cust-shareholder *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()"></app-new-nap-cust-shareholder>
+              <app-new-nap-cust-shareholder *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="NextStep('GUAR')" (outputCancel)="Cancel()"></app-new-nap-cust-shareholder>
             </div>
             <div id="guarantor-tab" class="content" role="tabpanel" aria-labelledby="guarantor-tab-trigger">
-              <app-new-nap-cust-guarantor *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY'" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()"></app-new-nap-cust-guarantor>
+              <app-new-nap-cust-guarantor *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId" [isMainCustMarried]="isMainCustMarried" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()"></app-new-nap-cust-guarantor>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data-factoring *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [AppId]="appId"
+              <app-application-data-factoring *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId"
                 (outputTab)="NextStep('INVOICE')" (outputCancel)="Cancel()"></app-application-data-factoring>
             </div>
             <div id="invoice-tab" class="content" role="tabpanel" aria-labelledby="invoice-tab-trigger">
-              <app-invoice-data *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY'" [AppId]="appId" (outputTab)="NextStep('COLL')" (outputCancel)="Cancel()">
+              <app-invoice-data *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId" (outputTab)="NextStep('COLL')" (outputCancel)="Cancel()">
               </app-invoice-data>
             </div>
             <div id="coll-tab" class="content" role="tabpanel" aria-labelledby="coll-tab-trigger">
-              <app-multi-coll-data *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY'" [AppId]="appId" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()" [BLCode]="'FCTR'">
+              <app-multi-coll-data *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()" [BLCode]="'FCTR'">
               </app-multi-coll-data>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <app-insurance-multi-asset-data *ngIf="AppStepIndex == 7 && stepperMode == 'COMPANY'" [appId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()" [showCancel]="'true'" [BLCode]="'FCTR'">
+              <app-insurance-multi-asset-data *ngIf="AppStepIndex == 7 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()" [showCancel]="'true'" [BLCode]="'FCTR'">
               </app-insurance-multi-asset-data>
               <!-- <app-insurance-data *ngIf="AppStepIndex == 5" [appId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()" [showCancel]="'true'">
               </app-insurance-data> -->
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data-fctr *ngIf="AppStepIndex == 8 && stepperMode == 'COMPANY'" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
+              <app-financial-data-fctr *ngIf="AppStepIndex == 8 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId" [AppObj]="NapObj" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
               </app-financial-data-fctr>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="NextStep('UPL_DOC')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
-              <app-dms-iframe *ngIf="AppStepIndex == 10 && stepperMode == 'COMPANY' && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="mode != 'ReturnHandling'" [dmsObj]="dmsObj"></app-dms-iframe>
+              <app-dms-iframe *ngIf="AppStepIndex == 10 && stepperMode == 'COMPANY' && IsDataReady && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="mode != 'ReturnHandling'" [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>
