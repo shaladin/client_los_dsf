@@ -207,7 +207,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.http.post(this.getPhoneVerifSubjUrl, this.appObj).subscribe(
       (response) => {
         this.phoneVerifObj = response[CommonConstant.ReturnObj];
-        console.log(this.phoneVerifObj);
         this.tempBlank = this.phoneVerifObj.filter(
           blank => blank.Result == '');
         this.tempScs = this.phoneVerifObj.filter(
