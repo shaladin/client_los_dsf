@@ -29,7 +29,7 @@ export class UcDropdownListObj {
 
 export class UcDropdownListCallbackObj {
     selectedValue: string;
-    selectedObj: Object;
+    selectedObj: any;
 
     constructor() {
         this.selectedValue = "";

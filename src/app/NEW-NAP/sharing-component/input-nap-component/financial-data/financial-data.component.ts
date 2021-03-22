@@ -40,7 +40,7 @@ export class FinancialDataComponent implements OnInit {
 
   listSubsidy: Array<AppSubsidyObj> = new Array<AppSubsidyObj>();
   AppData: AppObj;
-
+  isReady: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -141,6 +141,7 @@ export class FinancialDataComponent implements OnInit {
             NeedReCalculate: true
           }
         );
+        this.isReady = true;
         this.LoadAppFinData();
       });
   }
