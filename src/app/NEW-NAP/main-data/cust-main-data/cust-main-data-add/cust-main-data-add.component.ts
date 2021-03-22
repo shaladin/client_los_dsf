@@ -16,6 +16,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 
 @Component({
   selector: 'cust-main-data-add',
@@ -28,6 +29,7 @@ export class CustMainDataAddComponent implements OnInit {
   @ViewChild('LookupCopyProduct') ucLookupCopyProduct: UclookupgenericComponent;
   inputLookupObjCopyProduct: InputLookupObj = new InputLookupObj();
   inputLookupObjName: InputLookupObj = new InputLookupObj();
+  ddlOfficeObj: UcDropdownListObj = new UcDropdownListObj();
   officeItems: Array<KeyValueObj> = new Array<KeyValueObj>();
   bizTemplateCode: string;
   isCopyData: boolean = false;
@@ -177,14 +179,11 @@ export class CustMainDataAddComponent implements OnInit {
 
   GetOfficeDDL() {
     // Office DDL
-    var obj = {
+    this.ddlOfficeObj.apiUrl = URLConstant.GetListKvpActiveRefOfficeForPaging;
+    this.ddlOfficeObj.requestObj = {
       RowVersion: ""
     };
-    var url = URLConstant.GetListKvpActiveRefOfficeForPaging;
-    this.http.post(url, obj).subscribe(
-      (response) => {
-        this.officeItems = response[CommonConstant.ReturnObj];
-      });
+    this.ddlOfficeObj.isSelectOutput = true;
   }
 
   CheckValue(obj) {
@@ -319,10 +318,10 @@ export class CustMainDataAddComponent implements OnInit {
       });
   }
 
-  ChangeValueOffice(ev: any) {
+  ChangeValueOffice(ev: UcDropdownListCallbackObj) {
     this.NapAppForm.patchValue({
-      OriOfficeCode: ev.target.selectedOptions[0].value,
-      OriOfficeName: ev.target.selectedOptions[0].text
+      OriOfficeCode: ev.selectedObj["Key"],
+      OriOfficeName: ev.selectedObj["Value"]
     });
 
     var arrCopyLookupCrit = new Array();
@@ -330,7 +329,7 @@ export class CustMainDataAddComponent implements OnInit {
     addCrit.DataType = "text";
     addCrit.propName = "a.ORI_OFFICE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
-    addCrit.listValue = [ev.target.selectedOptions[0].value];
+    addCrit.listValue = [ev.selectedObj["Key"]];
     arrCopyLookupCrit.push(addCrit);
 
     var critObj = new CriteriaObj();
@@ -347,7 +346,7 @@ export class CustMainDataAddComponent implements OnInit {
     addCrit.DataType = "text";
     addCrit.propName = "ro.OFFICE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
-    addCrit.listValue = [ev.target.selectedOptions[0].value];
+    addCrit.listValue = [ev.selectedObj["Key"]];
     arrAddCrit.push(addCrit);
 
     var addCritBizTempalte = new CriteriaObj();

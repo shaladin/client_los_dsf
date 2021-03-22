@@ -26,6 +26,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 
 @Component({
   selector: 'app-cust-main-data',
@@ -52,6 +53,11 @@ export class CustMainDataComponent implements OnInit {
   isExisting: boolean = false;
   isUcAddressReady: boolean = false;
   isIncludeCustRelation: boolean = false;
+  isDllMrCustRelationshipReady: boolean = false;
+  isDllMrGenderReady: boolean = false;
+  isDllMrCompanyTypeReady: boolean = false;
+  isDllIdTypeReady: boolean = false;
+  isDllMaritalStatReady: boolean = false;
   MrCustTypeCode: string = CommonConstant.CustTypePersonal;
   subjectTitle: string = 'Customer';
   MaritalStatLookup: string = "";
@@ -63,7 +69,12 @@ export class CustMainDataComponent implements OnInit {
   legalAddrObj: AddrObj = new AddrObj();
   IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   DictRefMaster: Array<KeyValueObj> = new Array<KeyValueObj>();
-  MrCustRelationshipCodeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+  dllMrCustRelationshipCodeObj: UcDropdownListObj = new UcDropdownListObj();
+  dllGenderObj: UcDropdownListObj = new UcDropdownListObj();
+  dllMrCompanyTypeObj: UcDropdownListObj = new UcDropdownListObj();
+  dllIdTypeObj: UcDropdownListObj = new UcDropdownListObj();
+  dllMaritalStatObj: UcDropdownListObj = new UcDropdownListObj();
+  MrCustRelationshipCodeObj:  Array<KeyValueObj> = new Array<KeyValueObj>();
   CustModelObj: Array<KeyValueObj> = new Array();
   ArrAddCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   UserAccess: Object;
@@ -120,6 +131,10 @@ export class CustMainDataComponent implements OnInit {
   });
 
   async ngOnInit() {
+    this.dllMrCustRelationshipCodeObj.isSelectOutput = true;
+    this.dllIdTypeObj.isSelectOutput = true;
+    this.dllIdTypeObj.customKey = "MasterCode";
+    this.dllIdTypeObj.customValue = "Descr";
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
 
@@ -260,6 +275,20 @@ export class CustMainDataComponent implements OnInit {
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: RefMasterTypeCode }).toPromise().then(
       (response) => {
         this.DictRefMaster[RefMasterTypeCode] = response[CommonConstant.ReturnObj];
+        switch (RefMasterTypeCode) {
+          case this.MasterGender:
+            this.isDllMrGenderReady = true;
+            break;
+          case this.MasterCompanyType:
+            this.isDllMrCompanyTypeReady = true;
+            break;
+          case this.MasterMaritalStat:
+            this.isDllMaritalStatReady = true;
+            break;
+            
+          default:
+            break;
+        }
       });
   }
 
@@ -278,6 +307,7 @@ export class CustMainDataComponent implements OnInit {
     await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).toPromise().then(
       (response) => {
         this.IdTypeObj = response[CommonConstant.RefMasterObjs];
+        this.isDllIdTypeReady = true;
         if (this.IdTypeObj.length > 0) {
           let idxDefault = this.IdTypeObj.findIndex(x => x["IsDefaultValue"]);
           this.ChangeIdType(this.IdTypeObj[idxDefault]["MasterCode"]);
@@ -308,6 +338,7 @@ export class CustMainDataComponent implements OnInit {
       this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refCustRelObj).subscribe(
         (response) => {
           this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
+          this.isDllMrCustRelationshipReady = true
         }
       );
     } else {
@@ -315,6 +346,7 @@ export class CustMainDataComponent implements OnInit {
         async (response) => {
           this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
           if (this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMarried) await this.removeSpouse();
+          this.isDllMrCustRelationshipReady = true
         }
       );
     }
@@ -506,6 +538,9 @@ export class CustMainDataComponent implements OnInit {
 
   disableInput() {
     this.isExisting = true;
+    this.CustMainDataForm.controls.MrGenderCode.disable();
+    this.CustMainDataForm.controls.MrIdTypeCode.disable();
+    this.CustMainDataForm.controls.MrMaritalStatCode.disable();
     this.inputAddressObj.isReadonly = true;
     this.InputLookupCustObj.isReadonly = true;
     this.inputAddressObj.inputField.inputLookupObj.isReadonly = true;
@@ -514,6 +549,9 @@ export class CustMainDataComponent implements OnInit {
 
   enableInput() {
     this.isExisting = false;
+    this.CustMainDataForm.controls.MrGenderCode.enable();
+    this.CustMainDataForm.controls.MrIdTypeCode.enable();
+    this.CustMainDataForm.controls.MrMaritalStatCode.enable();
     this.inputAddressObj.isReadonly = false;
     this.InputLookupCustObj.isReadonly = false;
     this.inputAddressObj.inputField.inputLookupObj.isReadonly = false;

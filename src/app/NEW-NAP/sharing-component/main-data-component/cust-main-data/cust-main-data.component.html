@@ -22,14 +22,8 @@
               <div class="form-group row ">
                 <label class="col-md-2 adins-required-label" translate>Customer Relationship </label>
                 <div class="col-md-3">
-                  <select class="form-control adInsInput full-width" style="width: 100%"
-                    formControlName="MrCustRelationshipCode" (change)="RelationshipChange($event.target.value)"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrCustRelationshipCode.invalid }">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let it of MrCustRelationshipCodeObj" value="{{it.Key}}">{{it.Value}}</option>
-                  </select>
-                  <lib-uc-show-errors [control]="CustMainDataForm.controls.MrCustRelationshipCode"
-                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  <lib-ucdropdownlist *ngIf="isDllMrCustRelationshipReady" [dropdownListObj]="dllMrCustRelationshipCodeObj" [parentForm]="CustMainDataForm" [enjiForm]="enjiForm"
+                    [identifier]="'MrCustRelationshipCode'" [genericList]="MrCustRelationshipCodeObj" (callback)="RelationshipChange($event.selectedValue)"></lib-ucdropdownlist>
                 </div>
               </div>
             </div>
@@ -48,16 +42,8 @@
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Gender</label>
                 <div class="col-md-6">
-                  <select [attr.disabled]="isExisting ? 'true' : null" class="form-control"
-                    formControlName="MrGenderCode" style="width:100%;"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrGenderCode.invalid}">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let item of DictRefMaster[MasterGender]" [value]="item.Key">
-                      {{item.Value}}
-                    </option>
-                  </select>
-                  <lib-uc-show-errors [control]="CustMainDataForm.controls.MrGenderCode" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+                  <lib-ucdropdownlist *ngIf="isDllMrGenderReady" [dropdownListObj]="dllGenderObj" [parentForm]="CustMainDataForm" [enjiForm]="enjiForm"
+                    [identifier]="'MrGenderCode'" [genericList]="DictRefMaster[MasterGender]"></lib-ucdropdownlist>
                 </div>
               </div>
             </div>
@@ -65,16 +51,8 @@
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Company Type</label>
                 <div class="col-md-6">
-                  <select [attr.disabled]="isExisting ? 'true' : null" class="form-control"
-                    formControlName="MrCompanyTypeCode" style="width:100%;">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let item of DictRefMaster[MasterCompanyType]" [value]="item.Key">
-                      {{item.Value}}
-                    </option>
-                  </select>
-                  <lib-uc-show-errors [control]="CustMainDataForm.controls.MrCompanyTypeCode"
-                    [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+                  <lib-ucdropdownlist *ngIf="isDllMrCompanyTypeReady" [dropdownListObj]="dllMrCompanyTypeObj" [parentForm]="CustMainDataForm" [enjiForm]="enjiForm"
+                    [identifier]="'MrCompanyTypeCode'" [genericList]="DictRefMaster[MasterCompanyType]"></lib-ucdropdownlist>
                 </div>
               </div>
             </div>
@@ -99,16 +77,8 @@
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" for="idType" translate>Id Type</label>
                 <div class="col-md-6">
-                  <select [attr.disabled]="isExisting ? 'true' : null" class="form-control" id="idType"
-                    formControlName="MrIdTypeCode" (change)="ChangeIdType($event.target.value)" style="width:100%;"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrIdTypeCode.invalid }">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let item of IdTypeObj" [value]="item.MasterCode">
-                      {{item.Descr}}
-                    </option>
-                  </select>
-                  <lib-uc-show-errors [control]="CustMainDataForm.controls.MrIdTypeCode" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+                  <lib-ucdropdownlist *ngIf="isDllIdTypeReady" [dropdownListObj]="dllIdTypeObj" [parentForm]="CustMainDataForm" [enjiForm]="enjiForm"
+                    [identifier]="'MrIdTypeCode'" [genericList]="IdTypeObj" (callback)="ChangeIdType($event.selectedValue)"></lib-ucdropdownlist>
                 </div>
               </div>
             </div>
@@ -183,17 +153,8 @@
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Marital Status</label>
                 <div class="col-md-6">
-                  <select [attr.disabled]="isExisting ? 'true' : null" class="form-control"
-                    formControlName="MrMaritalStatCode" style="width:100%;"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CustMainDataForm.controls.MrMaritalStatCode.invalid}">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let item of DictRefMaster[MasterMaritalStat]" [value]="item.Key">
-                      {{item.Value}}
-                    </option>
-                  </select>
-                  <lib-uc-show-errors [control]="CustMainDataForm.controls.MrMaritalStatCode"
-                    [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+                  <lib-ucdropdownlist *ngIf="isDllMaritalStatReady" [dropdownListObj]="dllMaritalStatObj" [parentForm]="CustMainDataForm" [enjiForm]="enjiForm"
+                    [identifier]="'MrMaritalStatCode'" [genericList]="DictRefMaster[MasterMaritalStat]"></lib-ucdropdownlist>
                 </div>
               </div>
             </div>
