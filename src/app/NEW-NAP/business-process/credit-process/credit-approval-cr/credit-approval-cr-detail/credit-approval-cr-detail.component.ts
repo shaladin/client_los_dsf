@@ -31,6 +31,7 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   isExistedManualDeviationData;
   BizTemplateCode: string;
   AppObj: AppObj;
+  IsViewReady: boolean = false;
 
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
   readonly CustTypeCompany: string = CommonConstant.CustTypeCompany;
@@ -65,6 +66,7 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    this.IsViewReady = true;
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
     await this.getApp();
     await this.GetCrdRvwCustInfoByAppId();

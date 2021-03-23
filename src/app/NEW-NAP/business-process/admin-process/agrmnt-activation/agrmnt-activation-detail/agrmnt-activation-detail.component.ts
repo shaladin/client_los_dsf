@@ -33,6 +33,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
   BizTemplateCode: string;
   IsEnd: boolean = false;
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
+  IsViewReady: boolean = false;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_AGRMNT_ACT_PAGING;
   constructor(private fb: FormBuilder, private toastr: NGXToastrService, private route: ActivatedRoute, private adminProcessSvc: AdminProcessService, private router: Router, private http: HttpClient, private cookieService: CookieService) {
@@ -68,6 +69,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
 
   ngOnInit() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    this.IsViewReady = true;
     this.ClaimTask(this.WfTaskListId);
 
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/AgrmntActivationTempPaging.json";

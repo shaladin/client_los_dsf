@@ -67,7 +67,8 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
   tempAppObj: any;
   appFraudVerf: any;
   idNo: any;
-  bizTemplateCode: any;
+  BizTemplateCode: string;
+  IsViewReady: boolean = false;
 
   readonly CancelLink: string = NavigationConstant.NAP_CRD_PRCS_FRAUD_DETECTION_PAGING;
   constructor(private http: HttpClient, private route: ActivatedRoute, private modalService: NgbModal, private router: Router, private cookieService: CookieService) {
@@ -98,7 +99,8 @@ export class FraudVerificationMultiAssetComponent implements OnInit {
     this.viewDukcapilObj.whereValue = this.arrValue;
 
     this.isDataAlreadyLoaded = true;
-    this.bizTemplateCode = CommonConstant.FL4W;
+    this.BizTemplateCode = CommonConstant.FL4W;
+    this.IsViewReady = true;
   }
 
   async ClaimTask() {

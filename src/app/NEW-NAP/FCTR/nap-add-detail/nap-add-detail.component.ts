@@ -63,7 +63,8 @@ export class NapAddDetailComponent implements OnInit {
   dmsObj: DMSObj;
   appNo: string;
   isDmsReady: boolean = false;
-
+  IsDataReady: boolean = false;
+  
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING2;
   readonly BackLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private toastr: NGXToastrService) {
@@ -97,6 +98,7 @@ export class NapAddDetailComponent implements OnInit {
         this.ChangeStepper();
         this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
         this.ChooseStep(this.AppStepIndex);
+        this.IsDataReady = true;
       }
     );
 
@@ -175,24 +177,22 @@ export class NapAddDetailComponent implements OnInit {
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
     var appObj = { Id: this.appId };
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj);
-    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
-    forkJoin([getApp, getAppCust]).subscribe(
+    this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
       response => {
-        this.appNo = response[0]['AppNo'];
+        this.appNo = this.NapObj.AppNo;
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-        let isExisting = response[1]['IsExistingCust'];
+        let isExisting = response['IsExistingCust'];
         if (isExisting) {
-          let custNo = response[1]['CustNo'];
+          let custNo = response['CustNo'];
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
         }
         else {
           this.dmsObj.MetadataParent = null;
         }
 
-        let mouId = response[0]['MouCustId'];
-        if (mouId != null && mouId != "") {
+        let mouId = this.NapObj.MouCustId;
+        if (mouId != null && mouId != 0) {
           let mouObj = { Id: mouId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
             result => {

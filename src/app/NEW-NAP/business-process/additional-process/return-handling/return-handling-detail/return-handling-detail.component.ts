@@ -31,6 +31,8 @@ export class ReturnHandlingDetailComponent implements OnInit {
   returnHandlingDObjs: Array<ReturnHandlingDObj>;
   taskObj: Array<KeyValueObj>;
   MrCustTypeCode: string;
+  IsViewReady: boolean = false;
+  
   ReturnHandlingForm = this.fb.group({
     MrReturnTaskCode: ['', [Validators.required, Validators.maxLength(50)]],
     ReturnHandlingNotes: ['', [Validators.required, Validators.maxLength(4000)]]
@@ -65,6 +67,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
     if(this.lobCode === CommonConstant.OPL) {
       await this.SetMainInfo();
     }
+    this.IsViewReady = true;
     this.ClaimTask();
     await this.bindTaskObj();
     await this.getReturnHandling();

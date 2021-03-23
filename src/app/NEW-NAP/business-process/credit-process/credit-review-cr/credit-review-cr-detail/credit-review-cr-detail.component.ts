@@ -43,6 +43,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   BizTemplateCode: string = "";
   InputObj: UcInputRFAObj;
   IsReady: boolean = false;
+  IsViewReady: boolean = false;
   readonly apvBaseUrl = environment.ApprovalR3Url;
 
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
@@ -85,6 +86,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   initData() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    this.IsViewReady = true;
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.Arr = this.FormObj.get('arr') as FormArray;
   }

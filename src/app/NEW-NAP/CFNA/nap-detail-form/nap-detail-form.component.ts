@@ -65,6 +65,7 @@ export class NapDetailFormComponent implements OnInit {
   dmsObj: DMSObj;
   appNo: string;
   isDmsReady: boolean = false;
+  IsDataReady: boolean = false;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
   constructor(
@@ -91,7 +92,6 @@ export class NapDetailFormComponent implements OnInit {
 
   ngOnInit() {
     this.ClaimTask();
-    this.AppStepIndex = 1;
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformationCFNA.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
@@ -116,6 +116,7 @@ export class NapDetailFormComponent implements OnInit {
     if (this.ReturnHandlingHId > 0) {
       this.ChangeStepper();
       this.ChooseStep(this.AppStepIndex);
+      this.IsDataReady = true;
     }
     else {
       var appObj = { Id: this.appId };
@@ -131,12 +132,11 @@ export class NapDetailFormComponent implements OnInit {
             this.ChangeStepper();
             this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
             this.ChooseStep(this.AppStepIndex);
+            this.IsDataReady = true;
           }
         });
     }
-
     this.MakeViewReturnInfoObj();
-    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   async initDms() {
@@ -147,24 +147,22 @@ export class NapDetailFormComponent implements OnInit {
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
     var appObj = { Id: this.appId };
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj);
-    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
-    forkJoin([getApp, getAppCust]).subscribe(
+    this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
       response => {
-        this.appNo = response[0]['AppNo'];
+        this.appNo = this.NapObj.AppNo;
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-        let isExisting = response[1]['IsExistingCust'];
+        let isExisting = response['IsExistingCust'];
         if (isExisting) {
-          let custNo = response[1]['CustNo'];
+          let custNo = response['CustNo'];
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
         }
         else {
           this.dmsObj.MetadataParent = null;
         }
 
-        let mouId = response[0]['MouCustId'];
-        if (mouId != null && mouId != "") {
+        let mouId = this.NapObj.MouCustId;
+        if (mouId != null && mouId != 0) {
           let mouObj = { Id: mouId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
             result => {

@@ -21,6 +21,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 export class FinancialDataComponent implements OnInit {
   @Input() AppId: number;
   @Input() showCancel: boolean = true;
+  @Input() AppObj: AppObj = new AppObj();
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
@@ -37,7 +38,7 @@ export class FinancialDataComponent implements OnInit {
   responseCalc: any;
   NumOfInst: number;
   IsParentLoaded: boolean = false;
-
+  BizTemplateCode: string;
   listSubsidy: Array<AppSubsidyObj> = new Array<AppSubsidyObj>();
   AppData: AppObj;
   isReady: boolean = false;
@@ -56,94 +57,91 @@ export class FinancialDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId}).subscribe(
-      (response) => {
-        this.AppData = response;
-        this.FinDataForm = this.fb.group(
-          {
-            AppId: this.AppId,
-    
-            TotalAssetPriceAmt: 0,
-            TotalFeeAmt: 0,
-            TotalFeeCptlzAmt: 0,
-            TotalInsCustAmt: 0,
-            InsCptlzAmt: 0,
-            TotalInsInscoAmt: 0,
-            TotalLifeInsCustAmt: 0,
-            LifeInsCptlzAmt: 0,
-            DownPaymentGrossAmt: 0,
-            DownPaymentNettAmt: 0,
-    
-            TotalDownPaymentNettAmt: 0, //muncul di layar
-            TotalDownPaymentGrossAmt: 0, //inmemory
-            TdpPaidCoyAmt: 0, // input layar
-    
-            NtfAmt: 0,
-            RateType: "EFCTV",
-            EffectiveRatePrcnt: 0, //eff rate to cust
-            EffectiveRateBhv: "",
-            StdEffectiveRatePrcnt: 0, //base eff rate to cust
-            FlatRatePrcnt: 0, //flat rate to cust
-            InstAmt: 0,
-            GracePeriod: 0,
-            MrGracePeriodTypeCode: "",
-    
-            NumOfInst: 0,
-            RoundingAmt: 0,
-            SellSupplEffectiveRatePrcnt: 0,
-            SupplFlatRatePrcnt: 0,
-            AppSupplEffectiveRatePrcnt: 0,
+    this.AppData = this.AppObj;
+    this.FinDataForm = this.fb.group(
+      {
+        AppId: this.AppId,
 
-            DiffRateAmt: 0,
-            SubsidyAmtFromDiffRate: {value: 0, disabled: true},
-            CommissionAmtFromDiffRate: 0,
-            IsSubsidyRateExist: false,
-            ResidualValueAmt: [0, response.BizTemplateCode == CommonConstant.FL4W ? [Validators.min(0)] : []],
-    
-            TotalInterestAmt: 0,
-            TotalAR: 0,
-    
-            GrossYieldPrcnt: 0,
-    
-            NumOfStep: 0,
-            MrInstSchemeCode: "",
-            CummulativeTenor: 0,
-            StepUpStepDownInputType: "",
-    
-            AppFee: this.fb.array([]),
-            ListEntryInst: this.fb.array([]),
-    
-            MrProvisionFeeTypeCode: '',
-            MrProvisionFeeCalcMethodCode: '',
-            BalloonValueAmt: 0,
-    
-            LcRate: 0,
-            MrLcCalcMethodCode: '',
-            LcGracePeriod: 0,
-            PrepaymentPenaltyRate: 0,
-    
-            ApvAmt: 0,
-            TotalDpAmt: 0,
-            VendorAtpmCode: '',
+        TotalAssetPriceAmt: 0,
+        TotalFeeAmt: 0,
+        TotalFeeCptlzAmt: 0,
+        TotalInsCustAmt: 0,
+        InsCptlzAmt: 0,
+        TotalInsInscoAmt: 0,
+        TotalLifeInsCustAmt: 0,
+        LifeInsCptlzAmt: 0,
+        DownPaymentGrossAmt: 0,
+        DownPaymentNettAmt: 0,
 
-            MinEffectiveRatePrcnt: 0,
-            MaxEffectiveRatePrcnt: 0,
-            MinInterestIncomeAmt: 0,
-            MinGrossYieldPrcnt: 0,
-            MaxGrossYieldPrcnt: 0,
-            MinBalloonAmt: 0,
-            MaxBalloonAmt: 0,
-            BalloonBhv: '',
-            MinDownPaymentNettPrcnt: 0,
-            MaxDownPaymentNettPrcnt: 0,
-    
-            CalcBase: '',
-            NeedReCalculate: true
-          }
-        );
-        this.isReady = true;
-        this.LoadAppFinData();
-      });
+        TotalDownPaymentNettAmt: 0, //muncul di layar
+        TotalDownPaymentGrossAmt: 0, //inmemory
+        TdpPaidCoyAmt: 0, // input layar
+
+        NtfAmt: 0,
+        RateType: "EFCTV",
+        EffectiveRatePrcnt: 0, //eff rate to cust
+        EffectiveRateBhv: "",
+        StdEffectiveRatePrcnt: 0, //base eff rate to cust
+        FlatRatePrcnt: 0, //flat rate to cust
+        InstAmt: 0,
+        GracePeriod: 0,
+        MrGracePeriodTypeCode: "",
+
+        NumOfInst: 0,
+        RoundingAmt: 0,
+        SellSupplEffectiveRatePrcnt: 0,
+        SupplFlatRatePrcnt: 0,
+        AppSupplEffectiveRatePrcnt: 0,
+
+        DiffRateAmt: 0,
+        SubsidyAmtFromDiffRate: {value: 0, disabled: true},
+        CommissionAmtFromDiffRate: 0,
+        IsSubsidyRateExist: false,
+        ResidualValueAmt: [0, this.BizTemplateCode == CommonConstant.FL4W ? [Validators.min(0)] : []],
+
+        TotalInterestAmt: 0,
+        TotalAR: 0,
+
+        GrossYieldPrcnt: 0,
+
+        NumOfStep: 0,
+        MrInstSchemeCode: "",
+        CummulativeTenor: 0,
+        StepUpStepDownInputType: "",
+
+        AppFee: this.fb.array([]),
+        ListEntryInst: this.fb.array([]),
+
+        MrProvisionFeeTypeCode: '',
+        MrProvisionFeeCalcMethodCode: '',
+        BalloonValueAmt: 0,
+
+        LcRate: 0,
+        MrLcCalcMethodCode: '',
+        LcGracePeriod: 0,
+        PrepaymentPenaltyRate: 0,
+
+        ApvAmt: 0,
+        TotalDpAmt: 0,
+        VendorAtpmCode: '',
+
+        MinEffectiveRatePrcnt: 0,
+        MaxEffectiveRatePrcnt: 0,
+        MinInterestIncomeAmt: 0,
+        MinGrossYieldPrcnt: 0,
+        MaxGrossYieldPrcnt: 0,
+        MinBalloonAmt: 0,
+        MaxBalloonAmt: 0,
+        BalloonBhv: '',
+        MinDownPaymentNettPrcnt: 0,
+        MaxDownPaymentNettPrcnt: 0,
+
+        CalcBase: '',
+        NeedReCalculate: true
+      }
+    );
+    this.isReady = true;
+    this.LoadAppFinData();
   }
 
   LoadAppFinData() {

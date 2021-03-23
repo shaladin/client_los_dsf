@@ -15,13 +15,14 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 
 @Component({
   selector: 'app-nap-detail-form',
   templateUrl: './nap-detail-form.component.html'
 })
 export class NapDetailFormComponent implements OnInit {
-  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
+  @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
@@ -33,7 +34,8 @@ export class NapDetailFormComponent implements OnInit {
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
-
+  IsDataReady: boolean = false;
+  
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
   });
@@ -93,14 +95,17 @@ export class NapDetailFormComponent implements OnInit {
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response: AppObj) => {
         if (response) {
+          this.NapObj = response;
           this.AppStepIndex = this.AppStep[response.AppCurrStep];
           this.stepper.to(this.AppStepIndex);
           if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
             this.initDms();
           }
+          this.IsDataReady = true;
         } else {
           this.AppStepIndex = 0;
           this.stepper.to(this.AppStepIndex);
+          this.IsDataReady = true;
         }
       }
     );
@@ -121,24 +126,22 @@ export class NapDetailFormComponent implements OnInit {
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
     var appObj = { Id: this.appId };
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj);
-    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
-    forkJoin([getApp, getAppCust]).subscribe(
+    this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
       response => {
-        this.appNo = response[0]['AppNo'];
+        this.appNo = this.NapObj.AppNo;
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-        let isExisting = response[1]['IsExistingCust'];
+        let isExisting = response['IsExistingCust'];
         if (isExisting) {
-          let custNo = response[1]['CustNo'];
+          let custNo = response['CustNo'];
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
         }
         else {
           this.dmsObj.MetadataParent = null;
         }
 
-        let mouId = response[0]['MouCustId'];
-        if (mouId != null && mouId != "") {
+        let mouId = this.NapObj.MouCustId;
+        if (mouId != null && mouId != 0) {
           let mouObj = { Id: mouId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
             result => {
@@ -218,7 +221,7 @@ export class NapDetailFormComponent implements OnInit {
       default:
         break;
     }
-    this.ucViewMainProd.initiateForm();
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   NextStep(Step) {
@@ -232,7 +235,7 @@ export class NapDetailFormComponent implements OnInit {
         this.stepper.next();
       }
     )
-    this.ucViewMainProd.initiateForm();
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
@@ -266,9 +269,5 @@ export class NapDetailFormComponent implements OnInit {
       () => {
 
       });
-  }
-
-  GetCallback(ev) {
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 }

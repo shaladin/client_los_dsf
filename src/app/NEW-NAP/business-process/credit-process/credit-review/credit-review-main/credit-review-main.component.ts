@@ -56,6 +56,7 @@ export class CreditReviewMainComponent implements OnInit {
   custNo: string;
   isDmsReady: boolean = false;
   IsUseDigitalization: string;
+  IsViewReady: boolean = false;
 
   // ReturnForm = this.fb.group({
   //   ReturnReason: [''],
@@ -87,6 +88,7 @@ export class CreditReviewMainComponent implements OnInit {
 
   InitData() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
+    this.IsViewReady = true;
     this.DDLRecommendation = new Array();
     this.DDLReasonReturn = new Array();
     this.AppStepIndex = 0;

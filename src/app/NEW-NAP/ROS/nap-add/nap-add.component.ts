@@ -15,6 +15,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 
 @Component({
   selector: 'app-nap-add',
@@ -27,6 +28,7 @@ export class NapAddComponent implements OnInit {
   @ViewChild('LookupCopyProduct') ucLookupCopyProduct: UclookupgenericComponent;
   inputLookupObjCopyProduct: InputLookupObj = new InputLookupObj();
   inputLookupObjName: InputLookupObj = new InputLookupObj();
+  ddlOfficeObj: UcDropdownListObj = new UcDropdownListObj();
   officeItems: Array<KeyValueObj> = new Array<KeyValueObj>();
   user: any;
 
@@ -172,14 +174,11 @@ export class NapAddComponent implements OnInit {
 
   GetOfficeDDL() {
     // Office DDL
-    var obj = {
+    this.ddlOfficeObj.apiUrl = URLConstant.GetListKvpActiveRefOfficeForPaging;
+    this.ddlOfficeObj.requestObj = {
       RowVersion: ""
     };
-    var url = URLConstant.GetListKvpActiveRefOfficeForPaging;
-    this.http.post(url, obj).subscribe(
-      (response) => {
-        this.officeItems = response[CommonConstant.ReturnObj];
-      });
+    this.ddlOfficeObj.isSelectOutput = true;
   }
 
   CheckValue(obj) {
@@ -307,10 +306,10 @@ export class NapAddComponent implements OnInit {
       });
   }
 
-  ChangeValueOffice(ev: any) {
+  ChangeValueOffice(ev: UcDropdownListCallbackObj) {
     this.NapAppForm.patchValue({
-      OriOfficeCode: ev.target.selectedOptions[0].value,
-      OriOfficeName: ev.target.selectedOptions[0].text
+      OriOfficeCode: ev.selectedObj["Key"],
+      OriOfficeName: ev.selectedObj["Value"]
     });
 
     var arrCopyLookupCrit = new Array();
@@ -318,13 +317,13 @@ export class NapAddComponent implements OnInit {
     addCrit.DataType = "text";
     addCrit.propName = "a.ORI_OFFICE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
-    addCrit.listValue = [ev.target.selectedOptions[0].value];
+    addCrit.listValue = [ev.selectedObj["Key"]];
     arrCopyLookupCrit.push(addCrit);
 
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'vrl.BIZ_TMPLT_CODE';
-    critObj.value = CommonConstant.FL4W; //Diganti ROS Bila Sudah Siap
+    critObj.value = CommonConstant.OPL;
     arrCopyLookupCrit.push(critObj);
 
     this.inputLookupObjCopyProduct.addCritInput = arrCopyLookupCrit;
@@ -335,14 +334,14 @@ export class NapAddComponent implements OnInit {
     addCrit.DataType = "text";
     addCrit.propName = "ro.OFFICE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
-    addCrit.listValue = [ev.target.selectedOptions[0].value];
+    addCrit.listValue = [ev.selectedObj["Key"]];
     arrAddCrit.push(addCrit);
 
     var addCritBizTempalte = new CriteriaObj();
     addCritBizTempalte.DataType = "text";
     addCritBizTempalte.propName = "rlob.BIZ_TMPLT_CODE";
     addCritBizTempalte.restriction = AdInsConstant.RestrictionEq;
-    addCritBizTempalte.value = CommonConstant.FL4W; //Diganti ROS Bila Sudah Siap
+    addCritBizTempalte.value = CommonConstant.OPL;
     arrAddCrit.push(addCritBizTempalte);
 
     this.inputLookupObjName.addCritInput = arrAddCrit;

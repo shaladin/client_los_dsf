@@ -1,6 +1,6 @@
 <div class="row text-left">
   <div class="col-md-12">
-    <app-app-main-info [AppId]="appId"></app-app-main-info>
+    <app-app-main-info [AppId]="appId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info>
     <app-view-fraud-detection-result *ngIf="isReady == true" [appId]="appId" [mrCustTypeCode]="mrCustTypeCode"></app-view-fraud-detection-result>
     <br>
     <div class="card">
