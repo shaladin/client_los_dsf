@@ -11,6 +11,7 @@ import { InputCustomAddrCustCmpltObj } from 'app/shared/model/InputCustomAddrCus
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 
 @Component({
@@ -29,6 +30,11 @@ export class CcAddressDetailComponent implements OnInit {
   appCustAddrObj: AppCustAddrObj = new AppCustAddrObj();
   copyAddressFromObj: Array<AppCustAddrObj> = new Array();
   AddressTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+  dllAddressTypeObj: UcDropdownListObj = new UcDropdownListObj();
+  dllCopyAddressFromObj: UcDropdownListObj = new UcDropdownListObj();
+  isDllAddressTypeReady: boolean = false;
+  isDllCopyAddressFromReady: boolean = false;
+  isAddrObjReady :boolean = false;
 
   AddressForm = this.fb.group({
     MrCustAddrTypeCode: [],
@@ -49,6 +55,10 @@ export class CcAddressDetailComponent implements OnInit {
     this.inputAddressObj.showOwnership = true;
     this.isUcAddressReady = true;
 
+    this.dllCopyAddressFromObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.dllCopyAddressFromObj.customKey = "AppCustAddrId";
+    this.dllCopyAddressFromObj.customValue = "MrCustAddrTypeDescr";
+
     this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCustAddrType, MappingCode: this.InputObj.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.CustTypePersonal : CommonConstant.CustTypeCompany }).subscribe(
       async (response) => {
         this.AddressTypeObj = response[CommonConstant.ReturnObj];
@@ -62,8 +72,9 @@ export class CcAddressDetailComponent implements OnInit {
         this.AddressForm.patchValue({
           MrCustAddrTypeCode: this.AddressTypeObj[0].Key
         })
-        await this.LoadAddrForCopy();
-        await this.ResetForm();
+        this.LoadAddrForCopy();
+        this.ResetForm();
+        this.isDllAddressTypeReady = true;
       });
 
     if (this.InputObj.AppCustAddrId != 0) {
@@ -76,7 +87,11 @@ export class CcAddressDetailComponent implements OnInit {
           this.inputAddressObj.inputField.inputLookupObj.nameSelect = response.Zipcode;
           this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
           this.inputAddressObj.default = this.AddrObj;
+          this.isAddrObjReady = true;
         });
+    }
+    else{
+      this.isAddrObjReady = true;
     }
   }
 
@@ -95,6 +110,7 @@ export class CcAddressDetailComponent implements OnInit {
       (response) => {
         this.copyAddressFromObj = response;
         this.AddressForm.patchValue({ CopyAddrFrom: response[0]['AppCustAddrId'] });
+        this.isDllCopyAddressFromReady = true;
       });
   }
 
