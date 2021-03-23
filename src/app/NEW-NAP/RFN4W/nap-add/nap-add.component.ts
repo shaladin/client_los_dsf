@@ -245,14 +245,12 @@ export class NapAddComponent implements OnInit {
 
   getLookupAppResponseName(ev: any) {
     var url = URLConstant.GetListProdOfferingDByProdOfferingCode;
-    var obj = {
-      ProdOfferingCode: ev.ProdOfferingCode
-    };
+
     var tempLobCode;
     var tempCurrCode;
     var tempPayFreqCode;
     var tempRefProdTypeCode;
-    this.http.post(url, obj).subscribe(
+    this.http.post(url, {Code : ev.ProdOfferingCode}).subscribe(
       (response) => {
         var temp = response[CommonConstant.ReturnObj];
         for (var i = 0; i < temp.length; i++) {

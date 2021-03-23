@@ -109,7 +109,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     this.InputLookupCustomerObj.isReadonly = true;
 
     var custObj = { CustId: event.CustId };
-    this.http.post(URLConstant.GetCustPersonalForCopyByCustId, custObj).subscribe(
+    this.http.post(URLConstant.GetCustPersonalForCopyByCustId, {Id : event.CustId}).subscribe(
       (response) => {
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);
