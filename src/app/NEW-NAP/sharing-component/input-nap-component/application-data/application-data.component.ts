@@ -722,7 +722,8 @@ export class ApplicationDataComponent implements OnInit {
         appFinData: tempAppFindDataObj,
         RowVersion: ""
       };
-      obj['appCustMailingAddr'] = this.getMailingAddrForSave();
+      if(this.BizTemplateCode != CommonConstant.OPL)
+        obj['appCustMailingAddr'] = this.getMailingAddrForSave();
       this.http.post(url, obj).subscribe(
         (response) => {
           this.toastr.successMessage('Save Application Data Success!');
