@@ -1286,7 +1286,8 @@ export class AssetDataOplComponent implements OnInit {
 
   setAppAccessory(i, AssetAccessoryCode) {
     this.accObj.AssetAccessoryCode = AssetAccessoryCode;
-    this.http.post(URLConstant.GetAssetAccessoryByCode, this.accObj).subscribe(
+    let obj = {Code: this.accObj.AssetAccessoryCode}
+    this.http.post(URLConstant.GetAssetAccessoryByCode, obj).subscribe(
       (response) => {
         this.dictAccLookup[i].nameSelect = response["AssetAccessoryName"];
         this.dictAccLookup[i].jsonSelect = response;
@@ -1344,7 +1345,7 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   GetAssetMaster(assetMasterObj) {
-    this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, assetMasterObj).subscribe(
+    this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, {Code: assetMasterObj.FullAssetCode}).subscribe(
       (response) => {
         this.AssetMasterObj = response;
         this.AssetDataForm.patchValue({
