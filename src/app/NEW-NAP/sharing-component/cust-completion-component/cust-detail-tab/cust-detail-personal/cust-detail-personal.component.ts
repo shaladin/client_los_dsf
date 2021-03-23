@@ -83,7 +83,7 @@ export class CustDetailPersonalComponent implements OnInit {
         });
       });
 
-      await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeNationality }).toPromise().then(
+      await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeNationality }).toPromise().then(
       (response) => {
         this.NationalityObj = response[CommonConstant.RefMasterObjs];
         this.CustDetailForm.patchValue({

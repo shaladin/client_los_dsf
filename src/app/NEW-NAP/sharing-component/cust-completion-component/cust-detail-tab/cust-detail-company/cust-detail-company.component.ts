@@ -125,7 +125,7 @@ export class CustDetailCompanyComponent implements OnInit {
       (response) => {
         if (response.AppCustCompanyObj.IndustryTypeCode != null) {
           this.industryTypeObj.IndustryTypeCode = response.AppCustCompanyObj.IndustryTypeCode;
-          this.http.post(URLConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
+          this.http.post(URLConstant.GetRefIndustryTypeByCode, {Code: response.AppCustCompanyObj.IndustryTypeCode}).subscribe(
             (response) => {
               this.lookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
               this.lookupIndustryTypeObj.jsonSelect = response;

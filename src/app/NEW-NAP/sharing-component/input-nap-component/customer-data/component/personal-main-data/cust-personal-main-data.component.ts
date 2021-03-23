@@ -297,9 +297,8 @@ export class CustPersonalMainDataComponent implements OnInit {
     idExpiredDate.updateValueAndValidity();
   }
 
-  async bindIdTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, this.refMasterObj).toPromise().then(
+  async bindIdTypeObj() {    
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, {Code : CommonConstant.RefMasterTypeCodeIdType}).toPromise().then(
       (response) => {
         this.IdTypeObj = response["RefMasterObjs"];
         if (this.IdTypeObj.length > 0) {
@@ -344,9 +343,9 @@ export class CustPersonalMainDataComponent implements OnInit {
 
   async bindNationalityObj() {
     // this.refMasterObj.RefMasterTypeCode = "NATIONALITY";
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeNationality;
+    // this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeNationality;
     // var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
-    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, {Code : CommonConstant.RefMasterTypeCodeNationality}).toPromise().then(
       (response) => {
         this.NationalityObj = response["RefMasterObjs"];
         if (this.NationalityObj.length > 0) {
