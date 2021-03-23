@@ -264,7 +264,7 @@ export class GuarantorCompanyComponent implements OnInit {
   lookupGuarantor(event) {
     this.tempCustNo = event.CustNo;
     this.inputLookupObj.isReadonly = true;
-    this.http.post(URLConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
+    this.http.post(URLConstant.GetCustByCustId, { Id: event.CustId }).subscribe(
       (response) => {
         this.resultData = response;
         this.CompanyForm.patchValue(
@@ -273,7 +273,7 @@ export class GuarantorCompanyComponent implements OnInit {
             TaxIdNo: this.resultData.TaxIdNo
           }
         );
-        this.http.post(URLConstant.GetCustCompanyByCustId, { CustId: event.CustId }).subscribe(
+        this.http.post(URLConstant.GetCustCompanyByCustId, { Id: event.CustId }).subscribe(
           (response) => {
             this.resultData = response;
             this.CompanyForm.patchValue({

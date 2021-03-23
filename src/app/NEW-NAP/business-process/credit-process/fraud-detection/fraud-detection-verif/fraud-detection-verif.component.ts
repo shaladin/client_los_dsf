@@ -56,6 +56,8 @@ export class FraudDetectionVerifComponent implements OnInit {
   GetNegativeCustomerDuplicateCheckUrl = URLConstant.GetNegativeCustomerDuplicateCheck;
   ListNegativeCust: Array<NegativeCustObj> = new Array<NegativeCustObj>();
   viewObj: string;
+  BizTemplateCode: string;
+  IsViewReady: boolean = false;
 
   respAppDupCheck: any;
   respNegativeCust: any;
@@ -92,6 +94,8 @@ export class FraudDetectionVerifComponent implements OnInit {
     this.verfUser = context[CommonConstant.USER_NAME];
     this.verfDt = context[CommonConstant.BUSINESS_DT];
     this.verfCode = context[CommonConstant.EMP_NO];
+    this.BizTemplateCode = context[CommonConstant.BIZ_TEMPLATE_CODE];
+    this.IsViewReady = true;
   }
 
   getApp() {

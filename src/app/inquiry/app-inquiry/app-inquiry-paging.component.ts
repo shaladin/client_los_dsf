@@ -86,8 +86,7 @@ export class AppInquiryPagingComponent implements OnInit {
 
   getEvent(event) {
     if(event.Key == "customer"){
-      var custObj = { CustNo: event.RowObj.custNo };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, { TrxNo: event.RowObj.custNo }).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }

@@ -52,7 +52,7 @@ export class CrdRvwAppInfoComponent implements OnInit {
   scoringResultHObj: ScoringResultHObj = new ScoringResultHObj();
   ListScoringResultDObj: Array<ScoringResultDObj> = new Array<ScoringResultDObj>();
   async GetLatestListScoringResultHAndResultDByTrxSourceNo() {
-    await this.http.post<{ ScoringResultHObj: ScoringResultHObj, ListScoringResultDObj: Array<ScoringResultDObj> }>(URLConstant.GetLatestListScoringResultHAndResultDByTrxSourceNo, { ScoringResultH: { TrxSourceNo: this.crdRvwAppObj.AppNo } }).toPromise().then(
+    await this.http.post<{ ScoringResultHObj: ScoringResultHObj, ListScoringResultDObj: Array<ScoringResultDObj> }>(URLConstant.GetLatestListScoringResultHAndResultDByTrxSourceNo, { ScoringResultH: { TrxNo: this.crdRvwAppObj.AppNo } }).toPromise().then(
       (response) => {
         this.scoringResultHObj = response.ScoringResultHObj;
         this.ListScoringResultDObj = response.ListScoringResultDObj;

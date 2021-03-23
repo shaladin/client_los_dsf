@@ -80,6 +80,7 @@ export class CustMainDataAddComponent implements OnInit {
   MakeLookUpObj() {
     this.dropdownListObj.apiUrl = URLConstant.GetListKvpActiveRefOfficeForPaging;
     this.dropdownListObj.requestObj = {};
+    this.dropdownListObj.isSelectOutput = true;
 
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";

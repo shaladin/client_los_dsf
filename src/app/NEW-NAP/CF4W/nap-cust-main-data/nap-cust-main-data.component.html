@@ -10,7 +10,7 @@
         <div class="col-md-8" style="padding-left: 0px;">
           <h4 class="form-section card-title" translate>Customer Main Data</h4>
         </div>
-        <app-app-main-info [AppId]="appId" #viewAppMainInfo></app-app-main-info>
+        <app-app-main-info [AppId]="appId" [BizTemplateCode]="NapObj.BizTemplateCode" *ngIf="IsViewReady" #viewAppMainInfo></app-app-main-info>
         <div id="stepper1" class="bs-stepper">
           <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
             <div class="step" data-target="#customer-tab">

@@ -17,8 +17,8 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 export class SubsidyComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm : FormGroup;
+  @Input() BizTemplateCode: string;
   @Output() emitData = new EventEmitter();
-
 
   listSubsidy: Array<AppSubsidyObj> = new Array<AppSubsidyObj>();
   listAppFeeObj : Array<AppFeeObj> = new Array<AppFeeObj>();
@@ -40,6 +40,7 @@ export class SubsidyComponent implements OnInit {
     modalRef.componentInstance.AppId = this.AppId;
     modalRef.componentInstance.ParentForm = this.ParentForm;
     modalRef.componentInstance.listAppFeeObj = this.listAppFeeObj;
+    modalRef.componentInstance.BizTemplateCode = this.BizTemplateCode;
     modalRef.componentInstance.emitData.subscribe(($e) => {
       this.LoadSubsidyData();
       this.SetNeedReCalculate(true);
@@ -54,6 +55,7 @@ export class SubsidyComponent implements OnInit {
     modalRef.componentInstance.ParentForm = this.ParentForm;
     modalRef.componentInstance.AppSubsidyId = obj.AppSubsidyId;
     modalRef.componentInstance.listAppFeeObj = this.listAppFeeObj;
+    modalRef.componentInstance.BizTemplateCode = this.BizTemplateCode;
     modalRef.componentInstance.emitData.subscribe(($e) => {
       this.LoadSubsidyData();
       this.SetNeedReCalculate(true);

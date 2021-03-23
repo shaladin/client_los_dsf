@@ -56,6 +56,7 @@ export class CreditReviewMainComponent implements OnInit {
   custNo: string;
   isDmsReady: boolean = false;
   IsUseDigitalization: string;
+  IsViewReady: boolean = false;
 
   // ReturnForm = this.fb.group({
   //   ReturnReason: [''],
@@ -87,6 +88,7 @@ export class CreditReviewMainComponent implements OnInit {
 
   InitData() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
+    this.IsViewReady = true;
     this.DDLRecommendation = new Array();
     this.DDLReasonReturn = new Array();
     this.AppStepIndex = 0;
@@ -189,7 +191,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   GetCreditScoring(appNo: string) {
-    var obj = { ScoringResultH: { TrxSourceNo: appNo } };
+    var obj = { ScoringResultH: { TrxNo: appNo } };
     this.http.post(URLConstant.GetLatestScoringResultHByTrxSourceNo, obj).toPromise().then(
       (response) => {
         if (response["ScoringResultHObj"] != null) {
@@ -470,7 +472,7 @@ export class CreditReviewMainComponent implements OnInit {
   async GetIsUseDigitalization() {
     var generalSettingObj = new GeneralSettingObj();
     generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
-    await this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).toPromise().then(
+    await this.http.post(URLConstant.GetGeneralSettingByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).toPromise().then(
       (response) => {
         this.IsUseDigitalization = response["GsValue"];
       }

@@ -24,7 +24,8 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
   getVerfResultDUrl: any;
   appId: any;
   verfResultHId: any;
-
+  IsViewReady: boolean = false;
+  
   appObj = {
     AppId: 0,
   };
@@ -87,6 +88,7 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
       (response) => {
         this.AppObj = response;
         this.verfResObj.TrxRefNo = this.AppObj.AppNo;
+        this.IsViewReady = true;
       }
     );
   }

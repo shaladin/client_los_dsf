@@ -32,6 +32,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   showCancel: boolean = true;
   OnFormReturnInfo: boolean = false;
   BizTemplateCode: string;
+  IsViewReady: boolean = false;
 
   Step = {
     "COM": 1,
@@ -58,6 +59,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
         this.showCancel = false;
       }
       this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+      this.IsViewReady = true;
     });
   }
 

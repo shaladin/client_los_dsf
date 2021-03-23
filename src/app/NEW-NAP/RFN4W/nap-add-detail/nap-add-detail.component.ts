@@ -43,7 +43,8 @@ export class NapAddDetailComponent implements OnInit {
   IsLastStep: boolean = false;
   ReturnHandlingHId: number = 0;
   isMainCustMarried: boolean = false;
-
+  IsDataReady: boolean = false;
+  
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -94,7 +95,8 @@ export class NapAddDetailComponent implements OnInit {
 
     if (this.ReturnHandlingHId > 0) {
       this.ChangeStepper();
-      this.ChooseStep(this.AppStepIndex);    
+      this.ChooseStep(this.AppStepIndex);   
+      this.IsDataReady = true; 
     }
     else {
       var appObj = { Id: this.appId };
@@ -111,6 +113,7 @@ export class NapAddDetailComponent implements OnInit {
             this.ChangeStepper();
             this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
             this.ChooseStep(this.AppStepIndex);
+            this.IsDataReady = true;
           }
         }
       );
@@ -185,6 +188,7 @@ export class NapAddDetailComponent implements OnInit {
       this.stepperCompany.to(idxStep);
     }
   }
+  
   async initDms() {
     this.isDmsReady = false;
     this.dmsObj = new DMSObj();
@@ -193,24 +197,22 @@ export class NapAddDetailComponent implements OnInit {
     this.dmsObj.Role = currentUserContext.RoleCode;
     this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
     var appObj = { Id: this.appId };
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj);
-    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
-    forkJoin([getApp, getAppCust]).subscribe(
+    this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
       response => {
-        this.appNo = response[0]['AppNo'];
+        this.appNo = this.NapObj.AppNo;
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-        let isExisting = response[1]['IsExistingCust'];
+        let isExisting = response['IsExistingCust'];
         if (isExisting) {
-          let custNo = response[1]['CustNo'];
+          let custNo = response['CustNo'];
           this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
         }
         else {
           this.dmsObj.MetadataParent = null;
         }
 
-        let mouId = response[0]['MouCustId'];
-        if (mouId != null && mouId != "") {
+        let mouId = this.NapObj.MouCustId;
+        if (mouId != null && mouId != 0) {
           let mouObj = { Id: mouId };
           this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
             result => {
