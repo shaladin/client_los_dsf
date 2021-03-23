@@ -180,7 +180,7 @@ export class MouCustPersonalMainComponent implements OnInit {
   setCountryName(countryCode) {
     this.countryObj.CountryCode = countryCode;
 
-    this.http.post(this.getCountryUrl, this.countryObj).subscribe(
+    this.http.post(this.getCountryUrl, {Code: countryCode}).subscribe(
       (response) => {
         this.InputLookupCountryObj.jsonSelect = { CountryName: response["CountryName"] };
       },

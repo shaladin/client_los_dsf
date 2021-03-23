@@ -48,7 +48,7 @@ export class ViewAssetCollateralDetailComponent implements OnInit {
       }
     );
 
-    this.httpClient.post(URLConstant.GetAssetTypeByCode, { AssetTypeCode: this.appAsset.AssetTypeCode }).subscribe(
+    this.httpClient.post(URLConstant.GetAssetTypeByCode, {Code: this.appAsset.AssetTypeCode }).subscribe(
       (response: any) => {
         this.AssetTypeObj = response;
       }

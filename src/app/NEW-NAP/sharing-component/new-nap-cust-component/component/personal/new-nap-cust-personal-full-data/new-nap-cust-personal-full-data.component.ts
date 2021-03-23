@@ -83,7 +83,7 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
         });
       });
 
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GSCodeDefLocalNationality }).toPromise().then(
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeDefLocalNationality }).toPromise().then(
       (response) => {
         this.Country = response;
         this.lookupCountryObj.urlJson = "./assets/uclookup/lookupCustomerCountry.json";
@@ -99,7 +99,7 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
         criteriaObj.value = this.Country.GsValue;
         this.lookupCountryObj.addCritInput.push(criteriaObj);
 
-        this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: this.Country.GsValue }).subscribe(
+        this.http.post(URLConstant.GetRefCountryByCountryCode, { Code: this.Country.GsValue }).subscribe(
           (response) => {
             this.LocalCountry = response;
             this.ChangeNationality(this.Country.GsValue)
@@ -196,7 +196,7 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
         if (response.AppCustPersonalObj.MrNationalityCode != "" && response.AppCustPersonalObj.MrNationalityCode != CommonConstant.NationalityLocal) {
           this.isLocal = false;
           this.ResponseIsLocal.emit(this.isLocal);
-          this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: response.AppCustPersonalObj.NationalityCountryCode }).subscribe(
+          this.http.post(URLConstant.GetRefCountryByCountryCode, { Code: response.AppCustPersonalObj.NationalityCountryCode }).subscribe(
             (responseCountry) => {
               this.lookupCountryObj.nameSelect = responseCountry["CountryName"];
               this.lookupCountryObj.jsonSelect = { CountryName: responseCountry["CountryName"]};
@@ -248,7 +248,7 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
     if (custPersonalObj.MrNationalityCode != "" && custPersonalObj.MrNationalityCode != CommonConstant.NationalityLocal) {
       this.isLocal = false;
       this.ResponseIsLocal.emit(this.isLocal);
-      this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: custPersonalObj.WnaCountryCode }).subscribe(
+      this.http.post(URLConstant.GetRefCountryByCountryCode, { Code: custPersonalObj.WnaCountryCode }).subscribe(
         (responseCountry) => {
           this.lookupCountryObj.nameSelect = responseCountry["CountryName"];
           this.lookupCountryObj.jsonSelect = { CountryName: responseCountry["CountryName"]};
