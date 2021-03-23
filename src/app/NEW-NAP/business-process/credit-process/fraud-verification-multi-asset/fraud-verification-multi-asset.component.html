@@ -16,7 +16,7 @@
 <div class="card">
   <div class="card-body">
     <!-- <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewInput]="viewObj" [whereValue]="arrValue"></lib-ucviewgeneric> -->
-    <app-app-main-info [AppId]="AppId"></app-app-main-info>
+    <app-app-main-info [AppId]="AppId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info>
     <div class="px-3">
     <lib-ucSubsection [id]="'CustDupCheckId'" [title]="'Customer Duplicate Checking'" [panel]="'CustDupCheck'">
     </lib-ucSubsection>
@@ -251,7 +251,7 @@
       </div>
       <div class="button-right">
         <button type="button" class="btn btn-raised btn-warning mr-1"
-          [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode : this.bizTemplateCode}" translate>
+          [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode : this.BizTemplateCode}" translate>
           <i class="fa fa-arrow-circle-left"></i> Cancel
         </button>
         <button type="button" (click)="submit()" class="btn btn-raised btn-primary" translate>

@@ -15,13 +15,8 @@
               <div class="form-group row adins-required">
                 <label class="col-md-4 adInsLabel" translate>Office </label>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="OriOfficeCode"
-                    (change)="ChangeValueOffice($event)"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppForm.controls.OriOfficeCode.invalid }">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let it of officeItems" value="{{it.Key}}">
-                      {{it.Value}} </option>
-                  </select>
+                  <lib-ucdropdownlist [dropdownListObj]="ddlOfficeObj" [parentForm]="NapAppForm" [enjiForm]="enjiForm"
+                    [identifier]="'OriOfficeCode'" (callback)="ChangeValueOffice($event)"></lib-ucdropdownlist>
                 </div>
               </div>
               <div class="form-group row">

@@ -49,7 +49,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   listTcCode: Array<AppTCObj> = new Array<AppTCObj>();
   inputGridObj: InputGridObj;
   ReqTCObj = new ReqTCObj();
-
+  IsViewReady: boolean = false;
 
   ReturnHandlingForm = this.fb.group({
     ExecNotes: ['', Validators.maxLength(4000)],
@@ -114,6 +114,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    this.IsViewReady = true;
     this.ClaimTask();
     this.initUrl();
     this.appObj.Id = this.appId;

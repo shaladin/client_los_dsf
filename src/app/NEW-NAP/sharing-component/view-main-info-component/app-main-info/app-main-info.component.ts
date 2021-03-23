@@ -23,49 +23,45 @@ export class AppMainInfoComponent implements OnInit {
   }
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   @Input() AppId: number ;
-  
+  @Input() BizTemplateCode: string ;
+
   AppObj: any;
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    if (this.BizTemplateCode == CommonConstant.CF4W) {
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    }
+    else if (this.BizTemplateCode == CommonConstant.FL4W) {
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
+    }
+    else if (this.BizTemplateCode == CommonConstant.OPL) {
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-opl-main-info.json";
+    }
+    else {
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfo.json";
+    }
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.whereValue.push(this.AppId);
-    this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-      (response) => {
-        this.AppObj = response;
-        if (this.AppObj.BizTemplateCode == CommonConstant.CF4W) {
-          this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
-        }
-        else if (this.AppObj.BizTemplateCode == CommonConstant.FL4W) {
-          this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
-        }
-        else if (this.AppObj.BizTemplateCode == CommonConstant.OPL) {
-          this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-opl-main-info.json";
-        }
-        else {
-          this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfo.json";
-        }
-        this.viewGenericObj.viewEnvironment = environment.losUrl;
-        this.viewGenericObj.whereValue = this.whereValue;
-        this.viewGenericObj.ddlEnvironments = [
-          {
-            name: "AppNo",
-            environment: environment.losR3Web
-          },
-          {
-            name: "MouCustNo",
-            environment: environment.losR3Web
-          },
-          {
-            name: "LeadNo",
-            environment: environment.losR3Web
-          },
-          {
-            name: "MouCustNo",
-            environment: environment.losR3Web
-          },
-        ];
-      }
-    );
+    this.viewGenericObj.whereValue = this.whereValue;
+    this.viewGenericObj.ddlEnvironments = [
+      {
+        name: "AppNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "LeadNo",
+        environment: environment.losR3Web
+      },
+      {
+        name: "MouCustNo",
+        environment: environment.losR3Web
+      },
+    ];
   }
   
   ReloadUcViewGeneric(){
