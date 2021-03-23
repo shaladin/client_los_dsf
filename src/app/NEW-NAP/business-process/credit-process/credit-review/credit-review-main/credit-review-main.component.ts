@@ -470,7 +470,7 @@ export class CreditReviewMainComponent implements OnInit {
   async GetIsUseDigitalization() {
     var generalSettingObj = new GeneralSettingObj();
     generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
-    await this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).toPromise().then(
+    await this.http.post(URLConstant.GetGeneralSettingByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).toPromise().then(
       (response) => {
         this.IsUseDigitalization = response["GsValue"];
       }

@@ -162,7 +162,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
         );
 
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
-          AssetTypeCode: this.appAssetObj.AssetTypeCode
+          Code: this.appAssetObj.AssetTypeCode
         }).subscribe(
           (response: any) => {
             while (this.listItem.length) {

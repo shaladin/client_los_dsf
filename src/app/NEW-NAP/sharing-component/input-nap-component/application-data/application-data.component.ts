@@ -474,7 +474,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   async GetGSValueSalesOfficer() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
       (response) => {
         console.log(response);
         var addCrit3 = new CriteriaObj();

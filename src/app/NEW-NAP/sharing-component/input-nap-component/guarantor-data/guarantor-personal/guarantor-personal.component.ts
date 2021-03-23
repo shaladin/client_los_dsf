@@ -272,7 +272,7 @@ export class GuarantorPersonalComponent implements OnInit {
   }
 
   setCountryName(countryCode) {
-    this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: countryCode }).subscribe(
+    this.http.post(URLConstant.GetRefCountryByCountryCode, { Code: countryCode }).subscribe(
       (response) => {
         this.inputLookupObj1.nameSelect = response["CountryName"];
         this.inputLookupObj1.jsonSelect = { CountryName: response["CountryName"] };
@@ -401,7 +401,7 @@ export class GuarantorPersonalComponent implements OnInit {
           this.selectedNationalityCountryName = setCountry[1] ? setCountry[1] : setCountry[0];
           this.inputLookupObj1.nameSelect = setCountry[1] ? setCountry[1] : setCountry[0];
         }
-        this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(
+        this.http.post(URLConstant.GetRefCountryByCountryCode, { Code: this.resultData.WnaCountryCode }).subscribe(
           (response) => {
             this.inputLookupObj1.nameSelect = response["CountryName"];
           }
