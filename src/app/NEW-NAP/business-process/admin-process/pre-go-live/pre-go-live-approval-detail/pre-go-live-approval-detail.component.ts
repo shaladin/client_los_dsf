@@ -232,7 +232,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       AdInsHelper.OpenMOUCustViewByMouCustId(this.MouCustId);
     } else if (key == 'cust') {
       var custObj = { CustNo: this.CustNo };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, {TrxNo : custObj}).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"])
         });
@@ -282,7 +282,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
   openView(custNo) {
     var custObj = { CustNo: custNo };
-    this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+    this.http.post(URLConstant.GetCustByCustNo, {TrxNo : custObj}).subscribe(
       response => {
         AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
       });

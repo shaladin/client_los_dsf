@@ -138,7 +138,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
   }
 
   async GetCreditScoring(appNo: string) {
-    let obj = { ScoringResultH: { TrxSourceNo: appNo } };
+    let obj = { ScoringResultH: { TrxNo: appNo } };
     await this.http.post(URLConstant.GetLatestScoringResultHByTrxSourceNo, obj).toPromise().then(
       (response) => {
         if (response["ScoringResultHObj"] != null) {

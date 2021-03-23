@@ -75,7 +75,7 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
         this.AppCustObj = response['AppCustObj'];
 
         var custObj = { CustNo: this.AppCustObj['CustNo'] };
-        this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        this.http.post(URLConstant.GetCustByCustNo, {TrxNo : custObj}).subscribe(
           response => {
             this.cust = response;
           }

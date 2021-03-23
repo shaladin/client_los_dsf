@@ -63,7 +63,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
   }
 
   async setCustName(i, custNo){
-    await this.http.post(URLConstant.GetCustByCustNo, {CustNo: custNo}).toPromise().then(
+    await this.http.post(URLConstant.GetCustByCustNo, {TrxNo: custNo}).toPromise().then(
       (response) => {
         console.log(response);
         
@@ -102,7 +102,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
   openView(custNo) {
     var link: string;
     var custObj = { CustNo: custNo };
-    this.httpClient.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+    this.httpClient.post(URLConstant.GetCustByCustNo, {TrxNo : custNo}).subscribe(
       response => {
         AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
       });

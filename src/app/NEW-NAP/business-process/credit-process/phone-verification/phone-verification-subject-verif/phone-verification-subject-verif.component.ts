@@ -270,7 +270,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
   async GetCust() {
     var custObj = { CustNo: this.AppCustObj['CustNo'] };
-    await this.http.post(URLConstant.GetCustByCustNo, custObj).toPromise().then(
+    await this.http.post(URLConstant.GetCustByCustNo, {TrxNo : custObj}).toPromise().then(
       (response) => {
         this.custId = response["CustId"];
       })

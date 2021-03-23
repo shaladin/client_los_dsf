@@ -364,7 +364,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   lookupGuarantor(event) {
     this.tempCustNo = event.CustNo;
     this.inputLookupObj.isReadonly = true;
-    this.http.post(URLConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
+    this.http.post(URLConstant.GetCustByCustId, { Id: event.CustId }).subscribe(
       (response) => {
         this.clearExpDt();
         this.resultData = response;
