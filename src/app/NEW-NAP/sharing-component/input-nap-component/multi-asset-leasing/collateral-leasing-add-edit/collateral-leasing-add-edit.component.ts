@@ -202,7 +202,8 @@ export class CollateralLeasingAddEditComponent implements OnInit {
 
     this.assetCategoryObj = new AssetCategoryObj();
     this.assetCategoryObj.AssetCategoryId = event.AssetCategoryId;
-    this.http.post(this.getAssetCategoryById, this.assetCategoryObj).subscribe(
+    let obj = {Id: event.AssetCategoryId};
+    this.http.post(this.getAssetCategoryById, obj).subscribe(
       (response) => {
         this.returnAssetCategoryObj = response;
         this.AddCollForm.patchValue({

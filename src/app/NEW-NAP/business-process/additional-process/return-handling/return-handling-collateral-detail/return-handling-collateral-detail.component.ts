@@ -560,7 +560,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
 
 
   GetAssetMaster(assetMasterObj) {
-    this.http.post(this.getAssetMasterTypeUrl, assetMasterObj).subscribe(
+    this.http.post(this.getAssetMasterTypeUrl, {Code: assetMasterObj.FullAssetCode}).subscribe(
       (response) => {
         this.AssetMasterObj = response;
         this.CollateralDataForm.patchValue({
@@ -578,7 +578,7 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     var assetTypeObj = {
       AssetTypeCode: Code
     };
-    await this.http.post(URLConstant.GetAssetTypeByCode, assetTypeObj).toPromise().then(
+    await this.http.post(URLConstant.GetAssetTypeByCode, {Code: Code}).toPromise().then(
       (response) => {
         this.AssetTypeObj = response;
       }

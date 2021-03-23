@@ -185,7 +185,7 @@ export class CustPersonalMainDataComponent implements OnInit {
   setCountryName(countryCode) {
     this.countryObj.CountryCode = countryCode;
 
-    this.http.post(this.getCountryUrl, this.countryObj).subscribe(
+    this.http.post(this.getCountryUrl, {Code: countryCode}).subscribe(
       (response) => {
         this.InputLookupCountryObj.nameSelect = response["CountryName"];
         this.InputLookupCountryObj.jsonSelect = response;

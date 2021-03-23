@@ -467,7 +467,7 @@ export class MouRequestAddcollComponent implements OnInit {
           this.inputLookupObj.nameSelect = this.collateralObj.FullAssetName;
           this.inputLookupObj.jsonSelect = this.collateralObj;
           var AssetTypeCode = { 'AssetTypeCode': this.collateralObj.AssetTypeCode };
-          this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+          this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: this.collateralObj.AssetTypeCode}).subscribe(
             (response: any) => {
               while (this.items.length) {
                 this.items.removeAt(0);
@@ -610,7 +610,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
   onItemChange(value, UserChange: boolean = false) {
     var AssetTypeCode = { 'AssetTypeCode': value };
-    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: value}).subscribe(
       (response: any) => {
         while (this.items.length) {
           this.items.removeAt(0);
@@ -778,7 +778,7 @@ export class MouRequestAddcollComponent implements OnInit {
         this.inputLookupObj.nameSelect = this.collateralObj.FullAssetName;
         this.inputLookupObj.jsonSelect = this.collateralObj;
         var AssetTypeCode = { 'AssetTypeCode': this.collateralObj.AssetTypeCode };
-        this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+        this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: this.collateralObj.AssetTypeCode}).subscribe(
           (response: any) => {
             while (this.items.length) {
               this.items.removeAt(0);

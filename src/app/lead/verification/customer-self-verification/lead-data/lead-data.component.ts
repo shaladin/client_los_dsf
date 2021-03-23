@@ -124,7 +124,7 @@ export class LeadDataComponent implements OnInit {
     this.assetTypeId = event.AssetTypeId;
     var AssetTypeCode = { 'AssetTypeCode': event.AssetTypeCode };
 
-    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: event.AssetTypeCode}).subscribe(
       (response: any) => {
         while (this.items.length) {
           this.items.removeAt(0);
@@ -155,7 +155,7 @@ export class LeadDataComponent implements OnInit {
 
     var assetType : AssetTypeObj= new AssetTypeObj();
     assetType.AssetTypeId = this.assetTypeId;
-    this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
+    this.http.post(URLConstant.GetAssetTypeById, {Id: this.assetTypeId}).subscribe(
       (response: any) => { 
  
       }
@@ -174,7 +174,7 @@ export class LeadDataComponent implements OnInit {
 
     this.generalSettingObj = new GeneralSettingObj();
     this.generalSettingObj.GsCode = "LOB_KTA";
-    this.http.post(this.getGeneralSettingByCode, this.generalSettingObj).subscribe(
+    this.http.post(this.getGeneralSettingByCode, {Code: "LOB_KTA"}).subscribe(
       (response) => {
         this.returnGeneralSettingObj = response;
         this.lobKta = this.returnGeneralSettingObj.GsValue.split(',');
@@ -271,12 +271,12 @@ export class LeadDataComponent implements OnInit {
               this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
               var assetType = new AssetTypeObj();
               assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-              this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
+              this.http.post(URLConstant.GetAssetTypeById, {Id: this.resAssetMasterObj.AssetTypeId}).subscribe(
                 (response: any) => { 
                   
 
                   var AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
-                  this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+                  this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: response.AssetTypeCode}).subscribe(
                     (response: any) => {
                       while (this.items.length) {
                         this.items.removeAt(0);
@@ -397,12 +397,12 @@ export class LeadDataComponent implements OnInit {
                 this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
                 var assetType = new AssetTypeObj();
                 assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-                this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
+                this.http.post(URLConstant.GetAssetTypeById, {Id: this.resAssetMasterObj.AssetTypeId}).subscribe(
                   (response: any) => { 
                     
 
                     var AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
-                    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+                    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: response.AssetTypeCode}).subscribe(
                       (response: any) => {
                         while (this.items.length) {
                           this.items.removeAt(0);
