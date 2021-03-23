@@ -105,7 +105,7 @@ export class LeadInputCustDataComponent implements OnInit {
     MotherName: ['', [Validators.required]],
     IdNo: [''],
     MrMaritalStatCode: ['', [Validators.required]],
-    Npwp: ['', Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)],
+    Npwp: ['', [Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
     Email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
     MobilePhone1: ['', [Validators.pattern("^[0-9]+$")]],
     MobilePhone2: ['', Validators.pattern("^[0-9]+$")],

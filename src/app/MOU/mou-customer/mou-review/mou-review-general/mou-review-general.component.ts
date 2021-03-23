@@ -96,32 +96,6 @@ export class MouReviewGeneralComponent implements OnInit {
       }
     );
 
-    var apvObj = { SchemeCode: 'MOUC_GEN_APV' }
-    this.http.post(URLConstant.GetApprovedBy, apvObj).subscribe(
-      (response) => {
-        this.listApprover = response;
-
-        this.MouReviewDataForm.patchValue({
-          ListApprover: this.listApprover[0].Key,
-        })
-      })
-
-    // var listRec = this.MouReviewDataForm.get("ApvRecommendation") as FormArray;
-    // var apvRecommendObj = { SchemeCode: 'MOUC_GEN_APV' }
-    // this.http.post(URLConstant.GetRecommendations, apvRecommendObj).subscribe(
-    //   (response) => {
-    //     this.listRecommendationObj = response;
-    //     for (let i = 0; i < this.listRecommendationObj["length"]; i++) {
-    //       var ApvRecommendation = this.fb.group({
-    //         RefRecommendationId: this.listRecommendationObj[i].RefRecommendationId,
-    //         RecommendationCode: this.listRecommendationObj[i].RecommendationCode,
-    //         RecommendationName: this.listRecommendationObj[i].RecommendationName,
-    //         RecommendationValue: ['', Validators.required]
-    //       }) as FormGroup;
-    //       listRec.push(ApvRecommendation);
-    //     }
-    //   })
-
     var mouCustObj = { Id: this.MouCustId };
     await this.http.post(URLConstant.GetMouCustById, mouCustObj).toPromise().then(
       (response) => {
