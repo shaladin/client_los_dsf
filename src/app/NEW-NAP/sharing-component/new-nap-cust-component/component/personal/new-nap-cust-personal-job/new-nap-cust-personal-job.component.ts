@@ -66,7 +66,6 @@ export class NewNapCustPersonalJobComponent implements OnInit {
   }
 
   async ngOnInit() : Promise<void> {
-    console.log("init job");
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = this.UserAccess.BusinessDt;
 
@@ -82,7 +81,6 @@ export class NewNapCustPersonalJobComponent implements OnInit {
       await this.SetDropdown();
     }
     await this.GetData(this.IsCopy, this.CustPersonalJobData);
-    console.log(this.ParentForm);
   }
 
   async GetData(isCopy: boolean, custPersonalJobData: AppCustPersonalJobDataObj) {
