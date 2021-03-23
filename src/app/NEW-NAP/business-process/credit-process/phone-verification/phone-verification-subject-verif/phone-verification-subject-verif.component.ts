@@ -11,6 +11,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 
 
@@ -68,6 +69,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   appObj = {
     Id: 0,
   };
+  IsDataReady: boolean = true;
 
   verfResObj = {
     TrxRefNo: "",
@@ -94,7 +96,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     Source: "",
   };
 
-  AppObj: any;
+  AppObj: AppObj= new AppObj();
   AppCustObj: any;
   verifResultObj: any;
   verifResultHObj: any;
@@ -246,9 +248,10 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
   async GetAppData() {
     await this.http.post(this.getAppUrl, this.appObj).toPromise().then(
-      (response) => {
+      (response: AppObj) => {
         this.AppObj = response;
         this.verfResObj.TrxRefNo = this.AppObj.AppNo;
+        this.IsDataReady = true;
         //this.PhoneDataForm.patchValue({
         //  AppNo: this.AppObj.AppNo,
         //});
@@ -270,7 +273,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
   async GetCust() {
     var custObj = { CustNo: this.AppCustObj['CustNo'] };
-    await this.http.post(URLConstant.GetCustByCustNo, custObj).toPromise().then(
+    await this.http.post(URLConstant.GetCustByCustNo, {TrxNo : custObj}).toPromise().then(
       (response) => {
         this.custId = response["CustId"];
       })
@@ -494,7 +497,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   Navigate() {
-    AdInsHelper.OpenAppViewByAppId(this.AppObj.Id);
+    AdInsHelper.OpenAppViewByAppId(this.appObj.Id);
   }
 
   ChangeResult() {

@@ -7,7 +7,7 @@
           <div class="form-body">  
             <lib-ucSubsection [id]="'custInfoId'" [title]="'Customer Information'" [panel]="'custInfo'">
             </lib-ucSubsection>
-            <div id="custInfo">
+            <div id="custInfo" *ngIf="IsDataReady">
               <div class="form-group row">
                 <label class="col-md-2 adInsLabel"  translate>Application No</label>
                 <a class="col-md-4" href="javascript:void(0);" (click)="OpenView('app')">
@@ -25,8 +25,8 @@
                 <label class="col-md-4" translate>{{subjectName}}</label>
               </div>
               <div class="form-group row">
-                <label class="col-md-2 adInsLabel" *ngIf="this.AppObj.BizTemplateCode != 'FL4W'" translate>Customer Name</label> 
-                <label class="col-md-2 adInsLabel" *ngIf="this.AppObj.BizTemplateCode == 'FL4W'" translate>Lessee Name</label> 
+                <label class="col-md-2 adInsLabel" *ngIf="AppObj.BizTemplateCode != 'FL4W'" translate>Customer Name</label> 
+                <label class="col-md-2 adInsLabel" *ngIf="AppObj.BizTemplateCode == 'FL4W'" translate>Lessee Name</label> 
                 <label class="col-md-4" translate>{{this.AppCustObj?.CustName}}</label>
                 <!-- <label class="col-md-2  adins-required-label" translate>Subject Relation</label>
                 <div class="col-md-4">

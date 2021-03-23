@@ -215,7 +215,7 @@ export class AppViewComponent implements OnInit {
 
     var generalSettingObj = new GeneralSettingObj();
     generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
-    this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).subscribe(
+    this.http.post(URLConstant.GetGeneralSettingByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).subscribe(
       (response) => {
         this.IsUseDigitalization = response["GsValue"];
         console.log(this.IsUseDigitalization); 

@@ -8,8 +8,7 @@
         </button>
       </div>
     </div>
-    <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)" #viewMainProd>
-    </lib-ucviewgeneric>
+    <app-app-main-info [AppId]="appId" [BizTemplateCode]="NapObj.BizTemplateCode" *ngIf="IsDataReady" #viewAppMainInfo></app-app-main-info>
     <div class="card-body">
       <div class="px-3">
         <div class="card" *ngIf="ReturnHandlingHId > 0">
@@ -108,43 +107,43 @@
             </div>
           </div>
           <br><br>
-          <div class="bs-stepper-content">
+          <div class="bs-stepper-content" >
             <!-- your steps content here -->
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
-              <app-referantor-data *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL'" [appId]="appId"
+              <app-referantor-data *ngIf="AppStepIndex == 1 && stepperMode == 'PERSONAL' && IsDataReady" [appId]="appId"
                 [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
               </app-referantor-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL'" [appId]="appId"
+              <app-application-data *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL' && IsDataReady" [appId]="appId"
                 [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
               </app-application-data>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
-              <app-asset-data *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL'" [AppId]=appId
+              <app-asset-data *ngIf="AppStepIndex == 3 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]=appId
                 [showCancel]="showCancel" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()"></app-asset-data>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <app-insurance-data *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL'" [appId]="appId"
+              <app-insurance-data *ngIf="AppStepIndex == 4 && stepperMode == 'PERSONAL' && IsDataReady" [appId]="appId"
                 [showCancel]="showCancel" (outputTab)="NextStep('LFI')" (outputCancel)="Cancel()">
               </app-insurance-data>
             </div>
             <div id="lifeInsurance-tab" class="content" role="tabpanel" aria-labelledby="lifeInsurance-tab-trigger">
-              <app-life-insurance-data *ngIf="AppStepIndex == 5 && stepperMode == 'PERSONAL'" [AppId]="appId"
+              <app-life-insurance-data *ngIf="AppStepIndex == 5 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId"
                 [showCancel]="showCancel" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()">
               </app-life-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data *ngIf="AppStepIndex == 6 && stepperMode == 'PERSONAL'" [AppId]=appId
+              <app-financial-data *ngIf="AppStepIndex == 6 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId" [AppObj]="NapObj"
                 [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
               </app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 7 && stepperMode == 'PERSONAL'" [AppId]="appId"
+              <app-tc-data *ngIf="AppStepIndex == 7 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId"
                 [showCancel]="showCancel" (outputTab)="NextStep('UPL_DOC')" (outputCancel)="Cancel()"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
-              <app-dms-iframe *ngIf="AppStepIndex == 8 && stepperMode == 'PERSONAL' && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"  [showButton]="true" [dmsObj]="dmsObj"></app-dms-iframe>
+              <app-dms-iframe *ngIf="AppStepIndex == 8 && stepperMode == 'PERSONAL' && IsDataReady && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"  [showButton]="true" [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>
@@ -208,38 +207,38 @@
             </div>
           </div>
           <br><br>
-          <div class="bs-stepper-content">
+          <div class="bs-stepper-content" >
             <!-- your steps content here -->
             <div id="referantor-tab" class="content" role="tabpanel" aria-labelledby="referantor-tab-trigger">
-              <app-referantor-data *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY'" [appId]="appId"
+              <app-referantor-data *ngIf="AppStepIndex == 1 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"
                 [showCancel]="showCancel" (outputTab)="NextStep('APP')" (outputCancel)="Cancel()">
               </app-referantor-data>
             </div>
             <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
-              <app-application-data *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY'" [appId]="appId"
+              <app-application-data *ngIf="AppStepIndex == 2 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"
                 [showCancel]="showCancel" (outputTab)="NextStep('ASSET')" (outputCancel)="Cancel()">
               </app-application-data>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
-              <app-asset-data *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY'" [AppId]=appId
+              <app-asset-data *ngIf="AppStepIndex == 3 && stepperMode == 'COMPANY' && IsDataReady" [AppId]=appId
                 [showCancel]="showCancel" (outputTab)="NextStep('INS')" (outputCancel)="Cancel()"></app-asset-data>
             </div>
             <div id="insurance-tab" class="content" role="tabpanel" aria-labelledby="insurance-tab-trigger">
-              <app-insurance-data *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY'" [appId]="appId"
+              <app-insurance-data *ngIf="AppStepIndex == 4 && stepperMode == 'COMPANY' && IsDataReady" [appId]="appId"
                 [showCancel]="showCancel" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()">
               </app-insurance-data>
             </div>
             <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
-              <app-financial-data *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY'" [AppId]=appId
+              <app-financial-data *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId" [AppObj]="NapObj"
                 [showCancel]="showCancel" (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
               </app-financial-data>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY'" [AppId]="appId"
+              <app-tc-data *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY' && IsDataReady" [AppId]="appId"
                 [showCancel]="showCancel" (outputTab)="NextStep('UPL_DOC')" (outputCancel)="Cancel()"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
-              <app-dms-iframe *ngIf="AppStepIndex == 7 && stepperMode == 'COMPANY' && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"  [showButton]="true" [dmsObj]="dmsObj"></app-dms-iframe>
+              <app-dms-iframe *ngIf="AppStepIndex == 7 && stepperMode == 'COMPANY' && IsDataReady && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()"  [showButton]="true" [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>

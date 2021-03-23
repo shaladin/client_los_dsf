@@ -373,7 +373,7 @@ export class AssetDataComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { AssetTypeCode: this.RefProdCmptAssetType.CompntValue }).subscribe(
+    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: this.RefProdCmptAssetType.CompntValue }).subscribe(
       (response: any) => {
         while (this.items.length) {
           this.items.removeAt(0);
@@ -2126,8 +2126,8 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  GetAssetMaster(assetMasterObj) {
-    this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, assetMasterObj).subscribe(
+  GetAssetMaster(assetMasterObj) {    
+    this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, {Code: assetMasterObj.FullAssetCode}).subscribe(
       (response) => {
         this.AssetMasterObj = response;
         this.AssetDataForm.patchValue({
@@ -2273,7 +2273,8 @@ export class AssetDataComponent implements OnInit {
 
   setAppAccessory(i, AssetAccessoryCode) {
     this.accObj.AssetAccessoryCode = AssetAccessoryCode;
-    this.http.post(URLConstant.GetAssetAccessoryByCode, this.accObj).subscribe(
+    let obj = {Code: this.accObj.AssetAccessoryCode}
+    this.http.post(URLConstant.GetAssetAccessoryByCode, obj).subscribe(
       (response) => {
         this.dictAccLookup[i].nameSelect = response["AssetAccessoryName"];
         this.dictAccLookup[i].jsonSelect = response;

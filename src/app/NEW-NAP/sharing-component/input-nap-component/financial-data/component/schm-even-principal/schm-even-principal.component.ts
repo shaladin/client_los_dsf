@@ -5,7 +5,6 @@ import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { CalcEvenPrincipleObj } from 'app/shared/model/AppFinData/CalcEvenPrincipleObj.Model';
-import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -26,8 +25,8 @@ export class SchmEvenPrincipalComponent implements OnInit {
   calcEvenPrincipleObj: CalcEvenPrincipleObj = new CalcEvenPrincipleObj();
   listInstallment: any;
   responseCalc: any;
-  result: AppObj = new AppObj();
   PriceLabel: string = "Asset Price";
+  @Input() BizTemplateCode: string;
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -37,13 +36,10 @@ export class SchmEvenPrincipalComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
-    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-      (response) => {
-        this.result = response;
-        if (this.result.BizTemplateCode == CommonConstant.CFRFN4W || this.result.BizTemplateCode == CommonConstant.CFNA) {
-          this.PriceLabel = "Financing Amount";
-        }
-      });
+
+    if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
+      this.PriceLabel = "Financing Amount";
+    }
   }
 
   LoadDDLRateType() {

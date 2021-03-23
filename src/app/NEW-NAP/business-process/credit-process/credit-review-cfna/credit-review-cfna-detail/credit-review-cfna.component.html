@@ -1,6 +1,6 @@
 <div class="col-md-12 text-left">
   <div class="card">
-    <app-app-main-info [AppId]="appId"></app-app-main-info>
+    <app-app-main-info [AppId]="appId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info>
 
     <mat-tab-group mat-align-tabs="center">
 

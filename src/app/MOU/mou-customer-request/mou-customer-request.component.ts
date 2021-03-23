@@ -50,9 +50,8 @@ export class MouCustomerRequestComponent implements OnInit {
 
   customerView(ev) {
     var custNo = ev.RowObj.CustNo;
-    var custObj = { CustNo: custNo };
     var custId: number
-    this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+    this.http.post(URLConstant.GetCustByCustNo, {TrxNo : custNo}).subscribe(
       (response) => {
         custId = response['CustId'];
         AdInsHelper.OpenCustomerViewByCustId(custId);

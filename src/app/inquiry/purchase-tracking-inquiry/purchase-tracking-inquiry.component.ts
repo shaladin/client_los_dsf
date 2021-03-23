@@ -59,8 +59,7 @@ export class PurchaseTrackingInquiryComponent implements OnInit {
       AdInsHelper.OpenAgrmntViewByAgrmntId(event.RowObj.AgrmntId);
     }
     else if(event.Key == "Customer") {
-      var custObj = { CustNo: event.RowObj.CustNo };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, {TrxNo : event.RowObj.CustNo}).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }

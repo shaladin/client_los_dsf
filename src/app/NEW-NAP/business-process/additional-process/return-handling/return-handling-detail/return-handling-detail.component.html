@@ -8,7 +8,7 @@
       </lib-ucviewgeneric>
     </div>
     <div *ngIf="lobCode !== 'OPL'">
-      <app-app-main-info [AppId]="appId"></app-app-main-info>
+      <app-app-main-info [AppId]="appId" [BizTemplateCode]="lobCode" *ngIf="IsViewReady"></app-app-main-info>
     </div>
     <div class="px-3">
       <form class="form form-horizontal" [formGroup]="ReturnHandlingForm" (ngSubmit)="ReturnHandlingForm.valid && AddTask()"

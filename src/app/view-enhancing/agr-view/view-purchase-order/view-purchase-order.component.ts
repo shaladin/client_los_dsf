@@ -34,7 +34,7 @@ export class ViewPurchaseOrderComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetAssetTypeByCode, { AssetTypeCode: this.ResponseAppAssetData.AssetTypeCode }).subscribe(
+    this.http.post(URLConstant.GetAssetTypeByCode, {Code: this.ResponseAppAssetData.AssetTypeCode }).subscribe(
       (response: any) => {
         this.AssetTypeObj = response;
       }

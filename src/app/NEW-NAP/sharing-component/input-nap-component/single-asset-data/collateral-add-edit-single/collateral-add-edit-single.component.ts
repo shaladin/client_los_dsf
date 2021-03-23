@@ -251,7 +251,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
             });
 
             this.items1 = this.AddCollForm.get('items1') as FormArray;
-            this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { AssetTypeCode: AppCollateralObj.AssetTypeCode }).subscribe(
+            this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: AppCollateralObj.AssetTypeCode }).subscribe(
               (response: any) => {
                 while (this.items1.length) {
                   this.items1.removeAt(0);

@@ -46,6 +46,7 @@ export class CreditApprovalDetailComponent implements OnInit {
   rootServer: string;
   isDmsReady: boolean = false;
   IsUseDigitalization: string;
+  IsViewReady: boolean = false;
 
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private cookieService: CookieService) {
@@ -77,6 +78,7 @@ export class CreditApprovalDetailComponent implements OnInit {
   }
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    this.IsViewReady = true;
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
     await this.getApp();
     this.initInputApprovalObj();
@@ -216,7 +218,7 @@ export class CreditApprovalDetailComponent implements OnInit {
   async GetIsUseDigitalization() {
     var generalSettingObj = new GeneralSettingObj();
     generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
-    await this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).toPromise().then(
+    await this.http.post(URLConstant.GetGeneralSettingByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).toPromise().then(
       (response) => {
         this.IsUseDigitalization = response["GsValue"];
       }

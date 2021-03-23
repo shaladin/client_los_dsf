@@ -203,7 +203,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetAssetTypeByCode, { AssetTypeCode: this.AssetTypeCode }).subscribe(
+    this.http.post(URLConstant.GetAssetTypeByCode, {Code: this.AssetTypeCode }).subscribe(
       (response: any) => {
         this.AssetTypeObj = response;
       }
@@ -238,7 +238,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
           }
         );
 
-        this.http.post(URLConstant.GetAssetTypeByCode, { AssetTypeCode: this.AssetTypeCode }).subscribe(
+        this.http.post(URLConstant.GetAssetTypeByCode, {Code: this.AssetTypeCode }).subscribe(
           (response: any) => {
             this.AssetTypeObj = response;
           }

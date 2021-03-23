@@ -30,6 +30,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
   analysisItemObj: Array<KeyValueObj>;
   appCrdInvstgHObj: AppCrdInvstgHObj;
   type: string;
+  IsViewReady: boolean = false;
 
   CreditInvestigationForm = this.fb.group({
     AppCrdInvstgDs: new FormArray([]),
@@ -54,6 +55,7 @@ export class CreditInvestigationDetailComponent implements OnInit {
   }
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    this.IsViewReady = true;
     this.ClaimTask();
     this.viewObj = "./assets/ucviewgeneric/viewCreditInvestigationInfo.json";
     await this.bindAnalysisItemObj();
