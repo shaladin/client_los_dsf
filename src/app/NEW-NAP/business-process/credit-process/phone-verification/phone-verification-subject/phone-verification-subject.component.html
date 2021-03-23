@@ -67,7 +67,7 @@
             <div id="summary" class="row">
               <div class="col-md-6">
                 <div class="form-group row">
-                  <label class="col-md-4  adInsLabel" translate>Is Need Update Application</label>
+                  <label class="col-md-4  adInsLabel adins-required-label" translate>Is Need Update Application</label>
                   <div class="col-md-8">
                     <select class="form-control" id="isAnyUpdate" formControlName="IsAnyUpdate" (change)="CheckState($event.target.value)"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && ReturnHandlingForm.controls.IsAnyUpdate.invalid }" style="width:50%">
