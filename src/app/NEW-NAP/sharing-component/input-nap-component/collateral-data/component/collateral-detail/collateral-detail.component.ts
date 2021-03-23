@@ -797,7 +797,7 @@ export class CollateralDetailComponent implements OnInit {
       this.isUsed = false;
     }
 
-    await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { AssetTypeCode: AssetTypeCode }).toPromise().then(
+    await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: AssetTypeCode }).toPromise().then(
       async (response: any) => {
         while (this.items.length) {
           this.items.removeAt(0);

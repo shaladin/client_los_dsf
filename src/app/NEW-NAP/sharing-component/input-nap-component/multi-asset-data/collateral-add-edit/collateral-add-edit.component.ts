@@ -296,7 +296,7 @@ export class CollateralAddEditComponent implements OnInit {
       CollateralName: ""
     });
 
-    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { AssetTypeCode: this.AddCollForm.controls["AssetTypeCode"].value
+    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: this.AddCollForm.controls["AssetTypeCode"].value
   }).subscribe(
    (response: any) => {
      while (this.items.length) {

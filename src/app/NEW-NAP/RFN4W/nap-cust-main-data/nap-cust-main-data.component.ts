@@ -35,6 +35,7 @@ export class NapCustMainDataComponent implements OnInit {
   isMarried: boolean = false;
   bizTemplateCode: string;
   appCustId: number = 0;
+  IsViewReady: boolean = false;
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
 
   AppStep = {
@@ -80,9 +81,11 @@ export class NapCustMainDataComponent implements OnInit {
           this.bizTemplateCode = this.NapObj.BizTemplateCode;
           this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
           this.stepper.to(this.AppStepIndex);
+          this.IsViewReady = true;
         }
         else {
           this.AppStepIndex = 0;
+          this.IsViewReady = true;
         }
       }
     );

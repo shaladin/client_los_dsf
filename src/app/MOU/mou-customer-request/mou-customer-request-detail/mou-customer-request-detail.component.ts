@@ -132,7 +132,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
             ...response
           });
           var custObj = { CustNo: response['CustNo'] };
-          this.httpClient.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+          this.httpClient.post(URLConstant.GetCustByCustNo, {TrxNo : custObj}).subscribe(
             (response: any) => {
               this.custId = response['CustId'];
             });

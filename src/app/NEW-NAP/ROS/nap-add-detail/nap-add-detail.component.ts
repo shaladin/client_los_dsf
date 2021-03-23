@@ -37,6 +37,8 @@ export class NapAddDetailComponent implements OnInit {
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   BizTemplateCode: string = CommonConstant.OPL;
+  IsViewReady: boolean = false;
+  
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   arrValue = [];
 
@@ -109,6 +111,7 @@ export class NapAddDetailComponent implements OnInit {
             this.ChangeStepper();
             this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
             this.ChooseStep(this.AppStepIndex);
+            this.IsViewReady = true;
           }
         }
       );

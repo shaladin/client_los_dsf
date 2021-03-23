@@ -365,7 +365,7 @@ copyToLocationAddr() {
           });
 
           this.items = this.AssetDataForm.get('items') as FormArray;
-          this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { AssetTypeCode: this.returnAppAssetObj.AssetTypeCode }).subscribe(
+          this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: this.returnAppAssetObj.AssetTypeCode }).subscribe(
             (response: any) => {
               while (this.items.length) {
                 this.items.removeAt(0);

@@ -200,7 +200,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   GetCallBack(event) {
     if (event.Key == "customer") {
       var custObj = { CustNo: event.ViewObj.CustNo };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, {TrxNo : custObj}).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         });

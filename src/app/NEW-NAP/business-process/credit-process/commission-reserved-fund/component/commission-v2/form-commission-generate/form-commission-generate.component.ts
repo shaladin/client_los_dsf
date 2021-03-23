@@ -316,7 +316,7 @@ export class FormCommissionGenerateComponent implements OnInit {
           this.SetDefaultDDLBankAcc(idx, idxDefault);
         });
     } else if (content == CommonConstant.ContentReferantor) {
-      this.http.post(URLConstant.GetRefBankByBankCodeAsync, { BankCode: this.FormInputObj["BankData"].BankCode }).toPromise().then(
+      this.http.post(URLConstant.GetRefBankByBankCodeAsync, { Code: this.FormInputObj["BankData"].BankCode }).toPromise().then(
         (response) => {
           var eachDDLDetail = this.fb.group({
             Key: this.FormInputObj["BankData"].BankAccNo,

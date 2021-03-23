@@ -43,6 +43,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   appNo: any;
   custNo: string;
   IsUseDigitalization: string;
+  IsViewReady: boolean = false;
 
   // ReturnForm = this.fb.group({
   //   ReturnReason: [''],
@@ -93,6 +94,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
 
   InitData() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
+    this.IsViewReady = true;
     this.DDLRecommendation = new Array();
     this.DDLReasonReturn = new Array();
     this.AppStepIndex = 0;
@@ -196,7 +198,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   }
 
   GetCreditScoring(appNo: string) {
-    var obj = { ScoringResultH: { TrxSourceNo: appNo } };
+    var obj = { ScoringResultH: { TrxNo: appNo } };
     this.http.post(URLConstant.GetLatestScoringResultHByTrxSourceNo, obj).toPromise().then(
       (response) => {
         if (response["ScoringResultHObj"] != null) {
@@ -473,7 +475,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   async GetIsUseDigitalization() {
     var generalSettingObj = new GeneralSettingObj();
     generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
-    await this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).toPromise().then(
+    await this.http.post(URLConstant.GetGeneralSettingByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).toPromise().then(
       (response) => {
         this.IsUseDigitalization = response["GsValue"];
       }

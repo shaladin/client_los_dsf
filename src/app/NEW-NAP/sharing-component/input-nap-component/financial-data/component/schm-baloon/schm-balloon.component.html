@@ -70,13 +70,13 @@
         </div>
       </div>
       <br />
-      <span *ngIf="result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'">
+      <span *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'">
         <div class="row">
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-3 form-inline">
-                <label *ngIf="result.BizTemplateCode != 'FL4W'" translate>DP Asset</label>
-                <label *ngIf="result.BizTemplateCode == 'FL4W'" translate>Security Deposit</label>
+                <label *ngIf="BizTemplateCode != 'FL4W'" translate>DP Asset</label>
+                <label *ngIf="BizTemplateCode == 'FL4W'" translate>Security Deposit</label>
               </div>
               <div class="col-md-3 form-inline form-inline-right">
                 <label>{{ParentForm.controls.DownPaymentGrossAmt.value | number : '1.2-2'}}</label>
@@ -94,8 +94,8 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-3 form-inline">
-                <label *ngIf="result.BizTemplateCode != 'FL4W'" translate>DP Asset - Subsidy DP</label>
-                <label *ngIf="result.BizTemplateCode == 'FL4W'" translate>Security Deposit - Subsidy DP</label>
+                <label *ngIf="BizTemplateCode != 'FL4W'" translate>DP Asset - Subsidy DP</label>
+                <label *ngIf="BizTemplateCode == 'FL4W'" translate>Security Deposit - Subsidy DP</label>
               </div>
               <div class="col-md-3 form-inline form-inline-right">
                 <label>{{ParentForm.controls.DownPaymentNettAmt.value | number : '1.2-2'}}</label>
@@ -182,10 +182,10 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-3 form-inline" *ngIf="result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'">
+            <div class="col-md-3 form-inline" *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'">
               <label translate>Supplier Rate</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right" *ngIf="result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'">
+            <div class="col-md-3 form-inline form-inline-right" *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'">
               <input type="" class="form-control full-width" formControlName="AppSupplEffectiveRatePrcnt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.AppSupplEffectiveRatePrcnt.invalid}"
                 (focusout)="SupplEffectiveRatePrcnt_FocusOut()" (keyup)="SupplRate_Keyup($event)"
@@ -223,10 +223,10 @@
               <lib-uc-show-errors [control]="ParentForm.controls.InstAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
-            <div *ngIf="this.result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'" class="col-md-3 form-inline">
+            <div *ngIf="this.BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'" class="col-md-3 form-inline">
               <label translate>Subsidy Amount from Diff Rate</label>
             </div>
-            <div *ngIf="this.result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'" class="col-md-3 form-inline form-inline-right">
+            <div *ngIf="this.BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'" class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="SubsidyAmtFromDiffRate"
                 [options]="{ allowNegative: false }"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.SubsidyAmtFromDiffRate.invalid}"
@@ -275,10 +275,10 @@
                 </div>
               </div>
             </div>        
-            <div *ngIf="this.result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'" class="col-md-3 form-inline">
+            <div *ngIf="this.BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'" class="col-md-3 form-inline">
               <label translate>Commission Amount from Diff Rate</label>
             </div>
-            <div *ngIf="this.result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'" class="col-md-3 form-inline form-inline-right">
+            <div *ngIf="this.BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'" class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="CommissionAmtFromDiffRate"
                 [options]="{ allowNegative: false }"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.CommissionAmtFromDiffRate.invalid}"
@@ -323,10 +323,10 @@
       <div class="row">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-3 form-inline" *ngIf="result.BizTemplateCode == 'FL4W'">
+            <div class="col-md-3 form-inline" *ngIf="BizTemplateCode == 'FL4W'">
               <label translate>Residual Value Amount</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right" *ngIf="result.BizTemplateCode == 'FL4W'">
+            <div class="col-md-3 form-inline form-inline-right" *ngIf="BizTemplateCode == 'FL4W'">
               <input type="" class="form-control full-width" formControlName="ResidualValueAmt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ResidualValueAmt.invalid}"
                 (keyup)="SetNeedReCalculate(true)" currencyMask>
