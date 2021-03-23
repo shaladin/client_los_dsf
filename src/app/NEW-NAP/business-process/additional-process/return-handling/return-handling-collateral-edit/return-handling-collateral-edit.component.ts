@@ -34,7 +34,8 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   returnHandlingDObj: any;
   ReturnHandlingDData: ReturnHandlingDObj;
   BizTemplateCode: string;
-
+  IsViewReady: boolean = false;
+  
   ReturnHandlingForm = this.fb.group({
     ExecNotes: ['', Validators.maxLength(4000)],
   });
@@ -81,6 +82,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    this.IsViewReady = true;
     this.ClaimTask();
     this.initUrl();
     this.appObj.AppId = this.appId;

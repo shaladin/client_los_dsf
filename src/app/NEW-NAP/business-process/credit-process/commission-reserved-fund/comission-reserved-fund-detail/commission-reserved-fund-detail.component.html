@@ -7,7 +7,7 @@
         </button>
       </span>
     </div> -->
-    <app-app-main-info [AppId]="ReturnHandlingHObj.AppId"></app-app-main-info>
+    <app-app-main-info [AppId]="ReturnHandlingHObj.AppId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info>
     <br>
     <div class="col-md-12" style="padding: 0;">
       <div class="form-action pull-right">

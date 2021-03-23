@@ -43,6 +43,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   appNo: any;
   custNo: string;
   IsUseDigitalization: string;
+  IsViewReady: boolean = false;
 
   // ReturnForm = this.fb.group({
   //   ReturnReason: [''],
@@ -93,6 +94,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
 
   InitData() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
+    this.IsViewReady = true;
     this.DDLRecommendation = new Array();
     this.DDLReasonReturn = new Array();
     this.AppStepIndex = 0;

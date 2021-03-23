@@ -70,13 +70,13 @@
         </div>
       </div>
       <br />
-      <span *ngIf="result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'">
+      <span *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'">
         <div class="row">
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-3 form-inline">
-                <label *ngIf="result.BizTemplateCode != 'FL4W'" translate>DP Asset</label>
-                <label *ngIf="result.BizTemplateCode == 'FL4W'" translate>Security Deposit</label>
+                <label *ngIf="BizTemplateCode != 'FL4W'" translate>DP Asset</label>
+                <label *ngIf="BizTemplateCode == 'FL4W'" translate>Security Deposit</label>
               </div>
               <div class="col-md-3 form-inline form-inline-right">
                 <label>{{ParentForm.controls.DownPaymentGrossAmt.value | number : '1.2-2'}}</label>
@@ -94,8 +94,8 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-3 form-inline">
-                <label *ngIf="result.BizTemplateCode != 'FL4W'" translate>DP Asset - Subsidy DP</label>
-                <label *ngIf="result.BizTemplateCode == 'FL4W'" translate>Security Deposit - Subsidy DP</label>
+                <label *ngIf="BizTemplateCode != 'FL4W'" translate>DP Asset - Subsidy DP</label>
+                <label *ngIf="BizTemplateCode == 'FL4W'" translate>Security Deposit - Subsidy DP</label>
               </div>
               <div class="col-md-3 form-inline form-inline-right">
                 <label>{{ParentForm.controls.DownPaymentNettAmt.value | number : '1.2-2'}}</label>
@@ -190,10 +190,10 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-3 form-inline" *ngIf="result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'">
+            <div class="col-md-3 form-inline" *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'">
               <label translate>Supplier Rate</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right" *ngIf="result.BizTemplateCode != 'CFRFN4W' && result.BizTemplateCode != 'CFNA'">
+            <div class="col-md-3 form-inline form-inline-right" *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'">
               <label>{{ParentForm.controls.AppSupplEffectiveRatePrcnt.value | number : '1.2-2'}}</label>
             </div>
             <!-- <div class="col-md-3 form-inline">
@@ -289,7 +289,7 @@
           </div>
         </div>
       </div>
-      <div class="row" *ngIf="result.BizTemplateCode == 'FL4W'">
+      <div class="row" *ngIf="BizTemplateCode == 'FL4W'">
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">

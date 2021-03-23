@@ -6,7 +6,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { CalcStepUpStepDownObj } from 'app/shared/model/AppFinData/CalcStepUpStepDownObj.Model';
 import { AppInstStepSchmObj } from 'app/shared/model/AppInstStepSchm/AppInstStepSchmObj.Model';
-import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -19,6 +18,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 export class SchmStepUpStepDownNormalComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
+  @Input() BizTemplateCode: string;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -27,7 +27,6 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
   listInstallment: any;
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
   responseCalc: any;
-  result: AppObj = new AppObj();
   PriceLabel : string = "Asset Price";
 
   constructor(private fb: FormBuilder,
@@ -38,13 +37,10 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadDDLStepUpStepDownInputType();
-    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-      (response) => {
-        this.result = response;
-        if(this.result.BizTemplateCode == CommonConstant.CFRFN4W && this.result.BizTemplateCode == CommonConstant.CFNA){
-          this.PriceLabel = "Financing Amount";
-        }
-      });
+    
+    if(this.BizTemplateCode == CommonConstant.CFRFN4W && this.BizTemplateCode == CommonConstant.CFNA){
+      this.PriceLabel = "Financing Amount";
+    }
   }
 
   LoadDDLRateType() {

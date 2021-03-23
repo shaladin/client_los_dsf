@@ -72,6 +72,9 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   ReturnHandlingDData: ReturnHandlingDObj;
   ReturnHandlingHData: ReturnHandlingHObj;
   OnFormReturnInfo: boolean = false;
+  BizTemplateCode: string;
+  IsViewReady: boolean = false;
+
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
 
     this.route.queryParams.subscribe(params => {
@@ -98,6 +101,8 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+
     if (this.wfTaskListId != null || this.wfTaskListId != undefined)
       this.claimTask();
 
@@ -118,14 +123,13 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   async SaveForm() {
     if (this.blankCount == 0) {
-      var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
       if (this.isReturnHandling == false) {
         this.setReturnHandlingH();
         this.http.post(URLConstant.CompleteAppPhoneVerif, this.ReturnHandlingHData).subscribe(
           (response) => {
 
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_PAGING], { "BizTemplateCode": BizTemplateCode });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_PAGING], { "BizTemplateCode": this.BizTemplateCode });
           });
       }
       if (this.isReturnHandling == true) {
@@ -133,7 +137,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
         this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING], { "BizTemplateCode": BizTemplateCode });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING], { "BizTemplateCode": this.BizTemplateCode });
           });
 
       }
@@ -169,11 +173,10 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     var workflowApiObj = new WorkflowApiObj();
     workflowApiObj.TaskListId = this.wfTaskListId;
     workflowApiObj.ListValue["pBookmarkValue"] = this.ReturnHandlingForm.controls["ExecNotes"].value;
-    var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.http.post(URLConstant.ResumeWorkflow, workflowApiObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING], { BizTemplateCode: lobCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING], { BizTemplateCode: this.BizTemplateCode });
 
       }
     );
@@ -185,6 +188,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       (response) => {
 
         this.AppObj = response;
+        this.IsViewReady = true;
         this.verfResObj.TrxRefNo = this.AppObj.AppNo;
       }
     );
@@ -293,12 +297,11 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   back() {
-    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     if (this.isReturnHandling == false) {
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_PAGING], { "BizTemplateCode": BizTemplateCode });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_PAGING], { "BizTemplateCode": this.BizTemplateCode });
     }
     if (this.isReturnHandling == true) {
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING], { "BizTemplateCode": BizTemplateCode });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING], { "BizTemplateCode": this.BizTemplateCode });
     }
   }
 
