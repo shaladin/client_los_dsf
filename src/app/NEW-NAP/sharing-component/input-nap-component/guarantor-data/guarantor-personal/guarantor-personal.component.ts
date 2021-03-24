@@ -344,7 +344,7 @@ export class GuarantorPersonalComponent implements OnInit {
   lookupGuarantor(event) {
     this.tempCustNo = event.CustNo;
     this.inputLookupObj.isReadonly = true;
-    this.http.post(URLConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
+    this.http.post(URLConstant.GetCustByCustId, { Id: event.CustId }).subscribe(
       (response) => {
         this.resultData = response;
         this.PersonalForm.patchValue(

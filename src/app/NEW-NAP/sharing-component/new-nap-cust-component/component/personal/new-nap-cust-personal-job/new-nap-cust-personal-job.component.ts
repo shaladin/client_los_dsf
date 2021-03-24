@@ -65,28 +65,28 @@ export class NewNapCustPersonalJobComponent implements OnInit {
     this.IsJobSubmitted = false;
   }
 
-  async ngOnInit() {
+  async ngOnInit() : Promise<void> {
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = this.UserAccess.BusinessDt;
 
-    await this.InitLookup();
-    this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel}).subscribe(
+    await this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel}).toPromise().then(
       (response) => {
         this.MrCustModelDescr = response.Descr;
         this.CheckCustModel();
+        this.InitLookup();
       }
     );
 
     if (this.CustModelCode != CommonConstant.CustModelNonProfessional) {
       await this.SetDropdown();
     }
-    this.GetData(this.IsCopy, this.CustPersonalJobData);
+    await this.GetData(this.IsCopy, this.CustPersonalJobData);
   }
 
-  GetData(isCopy: boolean, custPersonalJobData: AppCustPersonalJobDataObj) {
+  async GetData(isCopy: boolean, custPersonalJobData: AppCustPersonalJobDataObj) {
     var datePipe = new DatePipe("en-US");
     if(!isCopy){
-      this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustId }).subscribe(
+      await this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustId }).toPromise().then(
         (response) => {
           if (response.AppCustPersonalJobDataObj != null) {
             this.ParentForm.patchValue({
@@ -181,6 +181,7 @@ export class NewNapCustPersonalJobComponent implements OnInit {
   }
 
   SetCriteriaAndRequired(CustModelCode: string, isChange: boolean = false) {
+    this.InputLookupIndustryTypeObj.isReady = false;
     this.InputLookupProfessionObj.nameSelect = "";
     this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
     this.InputLookupIndustryTypeObj.nameSelect = "";
@@ -197,15 +198,20 @@ export class NewNapCustPersonalJobComponent implements OnInit {
     if (isChange) this.ucLookupProfession.setAddCritInput();
     this.InputLookupProfessionObj.isReady = true;
 
+
     if (CustModelCode == CommonConstant.CustModelNonProfessional || CustModelCode == CommonConstant.CustModelProfessional) {
       this.InputLookupIndustryTypeObj.isRequired = false;
-      this.ParentForm.controls.CoyName.clearValidators();
+      if(this.ParentForm.controls.lookupIndustryType != undefined){
+        this.ParentForm.controls.lookupIndustryType['controls']['value'].clearValidators();
+      }
     } else {
       this.InputLookupIndustryTypeObj.isRequired = true;
-      this.ParentForm.controls.CoyName.setValidators(Validators.required);
+      if(this.ParentForm.controls.lookupIndustryType != undefined){
+        this.ParentForm.controls.lookupIndustryType['controls']['value'].setValidators([Validators.required]);
+      }
     }
+    this.InputLookupIndustryTypeObj.isReady = true;
 
-    this.ParentForm.updateValueAndValidity();
   }
 
   async SetDropdown() {
@@ -259,9 +265,7 @@ export class NewNapCustPersonalJobComponent implements OnInit {
     this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
-    this.InputLookupIndustryTypeObj.isReady = false;
     this.SetCriteriaAndRequired(this.CustModelCode);
-    this.InputLookupIndustryTypeObj.isReady = true;
   }
 
   GetProfession(event) {

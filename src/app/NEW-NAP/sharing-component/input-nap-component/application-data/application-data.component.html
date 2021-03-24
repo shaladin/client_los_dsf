@@ -53,34 +53,21 @@
                     <label class="adInsLabel" translate>Application Source</label>
                   </div>
                   <div class="col-md-8">
-                    <select class="form-control adInsInput" style="width: 50%" formControlName="MrAppSourceCode"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrAppSourceCode.invalid }">
-                      <option value="">-Select One-</option>
-                      <option *ngFor="let it of applicationDDLitems['APP_SOURCE']" value="{{it.Key}}">
-                        {{it.Value}}
-                      </option>
-                    </select>
-                    <lib-uc-show-errors [control]="NapAppModelForm.controls.MrAppSourceCode"
-                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    <lib-ucdropdownlist [dropdownListObj]="ddlMrAppSourceObj" [parentForm]="NapAppModelForm"
+                      [enjiForm]="enjiForm" [identifier]="'MrAppSourceCode'"></lib-ucdropdownlist>
                   </div>
                 </div>
 
                 <div class="form-group row">
                   <!-- First Installment Type -->
-                  <label class="col-md-4 adInsLabel" *ngIf="BizTemplateCode != 'OPL'" translate>First Installment Type</label>
-                  <label class="col-md-4 adins-required-label" *ngIf="BizTemplateCode == 'OPL'" translate> First Rental Type</label>
+                  <label class="col-md-4 adInsLabel" *ngIf="BizTemplateCode != 'OPL'" translate>First Installment
+                    Type</label>
+                  <label class="col-md-4 adins-required-label" *ngIf="BizTemplateCode == 'OPL'" translate> First Rental
+                    Type</label>
                   <div class="col-md-8">
-                    <!-- <label class="adInsLabel"> {{FirstInstType}} </label> -->
-                    <select class="form-control adInsInput" style="width: 50%" formControlName="MrFirstInstTypeCode"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrFirstInstTypeCode.invalid }">
-                      <option value="">-Select One-</option>
-                      <option *ngFor="let it of applicationDDLitems['FIRSTINSTTYPE']" value="{{it.Key}}">
-                        {{it.Value}}
-                      </option>
-                    </select>
-                    <lib-uc-show-errors [control]="NapAppModelForm.controls.MrFirstInstTypeCode"
-                      [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                    <lib-ucdropdownlist *ngIf="isDdlMrFirstInstTypeReady" [dropdownListObj]="ddlMrFirstInstTypeObj"
+                      [parentForm]="NapAppModelForm" [enjiForm]="enjiForm" [identifier]="'MrFirstInstTypeCode'">
+                    </lib-ucdropdownlist>
                   </div>
                 </div>
 
@@ -88,16 +75,9 @@
                   <!-- Payment Frequency -->
                   <label class="col-md-4 adInsLabel" translate>Payment Frequency</label>
                   <div class="col-md-8">
-                    <select class="form-control adInsInput" style="width: 50%" formControlName="PayFreqCode"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.PayFreqCode.invalid }"
-                      (change)="ChangeNumOfInstallmentPayFreq($event)">
-                      <option value="">-Select One-</option>
-                      <option *ngFor="let it of applicationDDLitems['PAYFREQ']" value="{{it.Key}}">
-                        {{it.Value}}
-                      </option>
-                    </select>
-                    <lib-uc-show-errors [control]="NapAppModelForm.controls.PayFreqCode" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                    <lib-ucdropdownlist *ngIf="isDdlPayFreqReady" [dropdownListObj]="ddlPayFreqObj"
+                      [parentForm]="NapAppModelForm" [enjiForm]="enjiForm" [identifier]="'PayFreqCode'"
+                      (callback)="ChangeNumOfInstallmentPayFreq($event)"></lib-ucdropdownlist>
                   </div>
                 </div>
 
@@ -190,15 +170,8 @@
                   <!-- Way of Payment -->
                   <label class="col-md-4 adInsLabel" translate>Way of Payment</label>
                   <div class="col-md-8">
-                    <select class="form-control adInsInput" style="width: 50%" formControlName="MrWopCode"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrWopCode.invalid }">
-                      <option value="">-Select One-</option>
-                      <option *ngFor="let it of applicationDDLitems['WOP']" value="{{it.Key}}">
-                        {{it.Value}}
-                      </option>
-                    </select>
-                    <lib-uc-show-errors [control]="NapAppModelForm.controls.MrWopCode" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                    <lib-ucdropdownlist [dropdownListObj]="ddlMrWopObj" [parentForm]="NapAppModelForm"
+                      [enjiForm]="enjiForm" [identifier]="'MrWopCode'"></lib-ucdropdownlist>
                   </div>
                 </div>
 
@@ -206,15 +179,8 @@
                   <!-- Customer Notification By -->
                   <label class="col-md-4 adInsLabel" translate>Customer Notification By</label>
                   <div class="col-md-8">
-                    <select class="form-control adInsInput" style="width: 50%" formControlName="MrCustNotifyOptCode"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrCustNotifyOptCode.invalid }">
-                      <option value="">-Select One-</option>
-                      <option *ngFor="let it of applicationDDLitems['CUST_NOTIF_OPT']" value="{{it.Key}}">
-                        {{it.Value}}
-                      </option>
-                    </select>
-                    <lib-uc-show-errors [control]="NapAppModelForm.controls.MrCustNotifyOptCode"
-                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    <lib-ucdropdownlist [dropdownListObj]="ddlMrCustNotifyOptObj" [parentForm]="NapAppModelForm"
+                      [enjiForm]="enjiForm" [identifier]="'MrCustNotifyOptCode'"></lib-ucdropdownlist>
                   </div>
                 </div>
 
@@ -306,32 +272,29 @@
           <div *ngIf="BizTemplateCode != 'OPL'">
             <app-loan-object [AppId]="appId" [mode]="mode" [isCollateral]="true"
               (ResponseProdOfrUpToDate)="MissingProdOfrHandler($event)" *ngIf="IsLoanObject"></app-loan-object>
-          </div>
-
-          
-          
-          <lib-ucSubsection [id]="'mailingAddrId'" [title]="'Mailing Address'" [panel]="'mailingAddr'">
-          </lib-ucSubsection>
-          <div id="mailingAddr">
-            <div class="form-group row">
-              <label class="col-md-2" translate>Copy Address From</label>
-              <div class="col-md-4">
-                <div class="input-group">
-                  <select class="form-control" formControlName="CopyFromMailing">
-                    <option *ngFor="let item of copyToMailingTypeObj" [value]="item.Key">{{item.Value}}</option>
-                  </select>
-                  <div class="input-group-append">
-                    <span class="input-group-btn">
-                      <button class="btn btn-raised btn-primary" type="button" (click)="copyToMailing()" translate>
-                        <i class="fa fa-check-square-o"></i>Copy
-                      </button>
-                    </span>
+            <lib-ucSubsection [id]="'mailingAddrId'" [title]="'Mailing Address'" [panel]="'mailingAddr'">
+            </lib-ucSubsection>
+            <div id="mailingAddr">
+              <div class="form-group row">
+                <label class="col-md-2" translate>Copy Address From</label>
+                <div class="col-md-4">
+                  <div class="input-group">
+                    <select class="form-control" formControlName="CopyFromMailing">
+                      <option *ngFor="let item of copyToMailingTypeObj" [value]="item.Key">{{item.Value}}</option>
+                    </select>
+                    <div class="input-group-append">
+                      <span class="input-group-btn">
+                        <button class="btn btn-raised btn-primary" type="button" (click)="copyToMailing()" translate>
+                          <i class="fa fa-check-square-o"></i>Copy
+                        </button>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
+              <lib-ucaddress #UcAddrGrp *ngIf="IsAddrReady" [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
+                [identifier]="'Address'" [UCAddrForm]="NapAppModelForm"></lib-ucaddress>
             </div>
-            <lib-ucaddress #UcAddrGrp *ngIf="IsAddrReady" [addressObj]="inputAddressObj" [enjiForm]="enjiForm" [identifier]="'Address'"
-              [UCAddrForm]="NapAppModelForm"></lib-ucaddress>
           </div>
 
           <lib-ucSubsection [id]="'restDataId'" [title]="'Restructuring Data'" [panel]="'restData'">

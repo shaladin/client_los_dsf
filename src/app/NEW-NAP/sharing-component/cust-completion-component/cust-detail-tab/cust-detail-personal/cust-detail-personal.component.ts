@@ -182,7 +182,7 @@ export class CustDetailPersonalComponent implements OnInit {
         this.AppCustObj.RowVersion = response.AppCustObj.RowVersion;
         this.AppCustPersonalObj.RowVersion = response.AppCustPersonalObj.RowVersion;
         if (response.AppCustGrpObj != null && response.AppCustGrpObj.CustNo != "") {
-          this.http.post(URLConstant.GetCustByCustNo, { CustNo: response.AppCustGrpObj.CustNo }).subscribe(
+          this.http.post(URLConstant.GetCustByCustNo, { TrxNo: response.AppCustGrpObj.CustNo }).subscribe(
             (responseCustGrp) => {
               this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
               this.lookupCustGrpObj.jsonSelect = { CustName: responseCustGrp["CustName"]};

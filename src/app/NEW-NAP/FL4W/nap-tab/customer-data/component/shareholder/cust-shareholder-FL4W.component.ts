@@ -294,7 +294,6 @@ export class CustShareholderFL4WComponent implements OnInit {
     this.selectedCustNo = event.CustNo;
     this.InputLookupCustomerObj.isReadonly = true;
 
-    var custObj = { CustId: event.CustId };
     var url;
 
     if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {
@@ -304,7 +303,7 @@ export class CustShareholderFL4WComponent implements OnInit {
       url = URLConstant.GetCustCompanyForCopyMgmntShrholderByCustId;
     }
 
-    this.http.post(url, custObj).subscribe(
+    this.http.post(url, {Id : event.CustId}).subscribe(
       (response) => {
 
         if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {

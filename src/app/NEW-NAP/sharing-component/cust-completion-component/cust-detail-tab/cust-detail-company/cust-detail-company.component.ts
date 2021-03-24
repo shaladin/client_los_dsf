@@ -145,7 +145,7 @@ export class CustDetailCompanyComponent implements OnInit {
         this.AppCustCompanyObj.RowVersion = response.AppCustCompanyObj.RowVersion;
 
         if (response.AppCustGrpObj != null && response.AppCustGrpObj.CustNo != "") {
-          this.http.post(URLConstant.GetCustByCustNo, { CustNo: response.AppCustGrpObj.CustNo }).subscribe(
+          this.http.post(URLConstant.GetCustByCustNo, { TrxNo: response.AppCustGrpObj.CustNo }).subscribe(
             (responseCustGrp) => {
               this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
               this.lookupCustGrpObj.jsonSelect = { CustName: responseCustGrp["CustName"] };

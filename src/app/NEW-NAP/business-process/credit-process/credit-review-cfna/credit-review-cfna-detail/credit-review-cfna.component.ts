@@ -198,7 +198,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   }
 
   GetCreditScoring(appNo: string) {
-    var obj = { ScoringResultH: { TrxSourceNo: appNo } };
+    var obj = { ScoringResultH: { TrxNo: appNo } };
     this.http.post(URLConstant.GetLatestScoringResultHByTrxSourceNo, obj).toPromise().then(
       (response) => {
         if (response["ScoringResultHObj"] != null) {

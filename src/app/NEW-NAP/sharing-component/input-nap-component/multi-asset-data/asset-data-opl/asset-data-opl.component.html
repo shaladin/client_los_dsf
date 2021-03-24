@@ -106,34 +106,16 @@
                   </div>
                   <label class="col-md-2  adins-required-label" translate>Sales Person Name</label>
                   <div class="col-md-4">
-                    <select *ngIf="SalesPersonObj" class="form-control" id="salesPerson" formControlName="SalesPersonId"
-                      (change)="SalesPersonChanged($event)"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.SalesPersonId.invalid }"
-                      style="width:100%">
-                      <option value="">-Select One-</option>
-                      <option *ngFor="let item of SalesPersonObj" [value]="item.VendorEmpId">
-                        {{item.VendorEmpName}}
-                      </option>
-                    </select>
-                    <lib-uc-show-errors [control]="AssetDataForm.controls.SalesPersonId" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                    <lib-ucdropdownlist *ngIf="isDdlSalesPersonReady" [dropdownListObj]="ddlSalesPersonObj" [parentForm]="AssetDataForm" [enjiForm]="enjiForm"
+                      [identifier]="'SalesPersonId'" [genericList]="SalesPersonObj" (callback) = "SalesPersonChanged($event)"></lib-ucdropdownlist>
                   </div>
                 </div>
   
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Admin Head</label>
                   <div class="col-md-4">
-                    <select *ngIf="AdminHeadObj" class="form-control" id="adminHead" formControlName="AdminHeadId"
-                      (change)="AdminHeadChanged($event)"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AdminHeadId.invalid }"
-                      style="width:100%">
-                      <option value="">-Select One-</option>
-                      <option *ngFor="let item of AdminHeadObj" [value]="item.VendorEmpId">
-                        {{item.VendorEmpName}}
-                      </option>
-                    </select>
-                    <lib-uc-show-errors [control]="AssetDataForm.controls.AdminHeadId" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                    <lib-ucdropdownlist *ngIf="isDdlAdminHeadReady" [dropdownListObj]="ddlAdminHeadObj" [parentForm]="AssetDataForm" [enjiForm]="enjiForm"
+                      [identifier]="'AdminHeadId'" [genericList]="AdminHeadObj" (callback) = "AdminHeadChanged($event)"></lib-ucdropdownlist>
                   </div>
                   <!-- Sales Supervisor -->
                   <label class="col-md-2 adInsLabel" translate>Sales Supervisor </label>
@@ -144,17 +126,8 @@
                 <div class="form-group row">
                   <label class="col-md-2 adInsLabel" translate>Branch Manager</label>
                   <div class="col-md-4">
-                    <select *ngIf="BranchManagerObj" class="form-control" id="branchManager"
-                      formControlName="BranchManagerId" (change)="BranchManagerChanged($event)"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.BranchManagerId.invalid }"
-                      style="width:100%">
-                      <option value="">-Select One-</option>
-                      <option *ngFor="let item of BranchManagerObj" [value]="item.VendorEmpId">
-                        {{item.VendorEmpName}}
-                      </option>
-                    </select>
-                    <lib-uc-show-errors [control]="AssetDataForm.controls.BranchManagerId" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                    <lib-ucdropdownlist *ngIf="isDdlBranchManagerReady" [dropdownListObj]="ddlBranchManagerObj" [parentForm]="AssetDataForm" [enjiForm]="enjiForm"
+                      [identifier]="'BranchManagerId'" [genericList]="BranchManagerObj" (callback) = "BranchManagerChanged($event)"></lib-ucdropdownlist>
                   </div>
                 </div>
               </div>
@@ -178,14 +151,8 @@
                     <div class="form-group row">
                       <label class="col-md-4 adins-required-label" translate>Asset Condition</label>
                       <div class="col-md-8">
-                        <select class="form-control" id="MrAssetConditionCodeId" formControlName="MrAssetConditionCode" (change)="AssetConditionChanged()"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrAssetConditionCode.invalid }" style="width: 100%;">
-                          <option value="">-Select One-</option>
-                          <option *ngFor="let item of AssetConditionObj" [value]="item.Key">
-                            {{item.Value}}
-                          </option>
-                        </select>
-                        <lib-uc-show-errors [control]="AssetDataForm.controls.MrAssetConditionCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        <lib-ucdropdownlist [dropdownListObj]="ddlAssetConditionObj" [parentForm]="AssetDataForm" [enjiForm]="enjiForm"
+                          [identifier]="'MrAssetConditionCode'" (callback) = "AssetConditionChanged($event)"></lib-ucdropdownlist>
                       </div>
                     </div>
                   </div>
@@ -208,17 +175,8 @@
                     <div class="form-group row">
                       <label class="col-md-4 adins-required-label" translate>Asset Usage</label>
                       <div class="col-md-8">
-                        <select class="form-control" id="assetUsage" formControlName="MrAssetUsageCode"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrAssetUsageCode.invalid }"
-                          style="width:100%">
-                          <option value="">-Select One-</option>
-                          <option *ngFor="let item of AssetUsageObj" [value]="item.Key">
-                            {{item.Value}}
-                          </option>
-                        </select>
-                        <lib-uc-show-errors [control]="AssetDataForm.controls.MrAssetUsageCode"
-                          [submit]="enjiForm.submitted">
-                        </lib-uc-show-errors>
+                        <lib-ucdropdownlist [dropdownListObj]="ddlAssetUsageObj" [parentForm]="AssetDataForm" [enjiForm]="enjiForm"
+                          [identifier]="'MrAssetUsageCode'"></lib-ucdropdownlist>
                       </div>
                     </div>
                   </div>

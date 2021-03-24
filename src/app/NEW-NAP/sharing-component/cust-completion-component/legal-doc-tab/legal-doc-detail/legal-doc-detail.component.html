@@ -12,15 +12,8 @@
                 <div class="form-group row">
                   <label class="col-md-4 adins-required-label" translate>Legal Document Type</label>
                   <div class="col-md-6">
-                    <select class="form-control" formControlName="MrLegalDocTypeCode" style="width:100%;" (change)="ChangeLegalDocType($event.target)"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.MrLegalDocTypeCode.invalid }">
-                      <option *ngFor="let item of LegalDocTypeObj" [value]="item.Key">
-                        {{item.Value}}
-                      </option>
-                    </select>
-                    <lib-uc-show-errors [control]="LegalDocForm.controls.MrLegalDocTypeCode"
-                      [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                    <lib-ucdropdownlist *ngIf="isDdlMrLegalDocTypeReady" [dropdownListObj]="ddlMrLegalDocTypeObj" [parentForm]="LegalDocForm" [enjiForm]="enjiForm"
+                      [identifier]="'MrLegalDocTypeCode'" [genericList]="LegalDocTypeObj" (callback)="ChangeLegalDocType($event.selectedValue)"></lib-ucdropdownlist>
                   </div>
                 </div>
                 <div class="form-group row">

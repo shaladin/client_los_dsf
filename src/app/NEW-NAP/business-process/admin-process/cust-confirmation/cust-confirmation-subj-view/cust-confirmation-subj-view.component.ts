@@ -147,7 +147,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
     else if (key == "agreement") {
       AdInsHelper.OpenAgrmntViewByAgrmntId(this.AgrmntObj.AgrmntId);
     }else if( key == "customer"){
-      this.http.post(URLConstant.GetCustByCustNo, {CustNo: this.AgrmntObj.CustNo}).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, {TrxNo: this.AgrmntObj.CustNo}).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         });

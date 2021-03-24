@@ -96,8 +96,7 @@ export class CustCompanyMainDataComponent implements OnInit {
     });
     this.InputLookupCustomerObj.isReadonly = true;
 
-    var custObj = { CustId: event.CustId };
-    this.http.post(URLConstant.GetCustCompanyForCopyByCustId, custObj).subscribe(
+    this.http.post(URLConstant.GetCustCompanyForCopyByCustId, {Id : event.CustId}).subscribe(
       (response) => {
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);

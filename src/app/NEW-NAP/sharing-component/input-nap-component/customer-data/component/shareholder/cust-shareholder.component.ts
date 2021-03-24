@@ -323,7 +323,7 @@ export class CustShareholderComponent implements OnInit {
       url = URLConstant.GetCustCompanyForCopyMgmntShrholderByCustId;
     }
 
-    this.http.post(url, custObj).subscribe(
+    this.http.post(url, {Id : event.CustId}).subscribe(
       (response) => {
 
         if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {
