@@ -77,8 +77,7 @@ export class Nap1FromLeadPagingComponent implements OnInit {
   }
 
   AddApp(ev) {
-    var obj = { OfficeCode: this.userAccess.OfficeCode };
-    this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
+    this.http.post(URLConstant.GetRefOfficeByOfficeCode, {Code : this.userAccess.OfficeCode}).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP1_SHARING_FROM_LEAD_DETAIL], { "LeadId": ev.RowObj.LeadId });

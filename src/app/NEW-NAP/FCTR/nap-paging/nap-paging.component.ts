@@ -71,8 +71,7 @@ export class NapPagingComponent implements OnInit {
       critObj.listValue = [this.userAccess.OfficeCode];
     } else {
       critObj.propName = 'a.ORI_OFFICE_CODE';
-      var obj = { CenterGrpCode: CommonConstant.CENTER_GROUP_CODE };
-      this.http.post(URLConstant.GetListCenterGrpMemberByCenterGrpCode, obj).subscribe(
+      this.http.post(URLConstant.GetListCenterGrpMemberByCenterGrpCode, {Code : CommonConstant.CENTER_GROUP_CODE }).subscribe(
         (response) => {
           var CenterGrpOfficeMbrObjs: Array<CenterGrpOfficeMbrObj> = response["ListCenterGrpOfficeMbr"];
 
@@ -87,8 +86,7 @@ export class NapPagingComponent implements OnInit {
   }
 
   AddApp() {
-    var obj = { OfficeCode: this.userAccess.OfficeCode };
-    this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
+    this.http.post(URLConstant.GetRefOfficeByOfficeCode, {Code : this.userAccess.OfficeCode}).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FCTR_ADD], {});          
