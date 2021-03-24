@@ -88,7 +88,7 @@ export class PhoneVerifComponent implements OnInit {
   }
 
   async GetVerfResultHData() {
-    await this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, this.verfResHObj).toPromise().then(
+    await this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, {Id : this.verifResultObj.VerfResultId}).toPromise().then(
       (response) => {
         this.verifResultHObj = response;
         this.verfResHObj.MrVerfObjectCode = this.verifResultHObj.MrVerfObjectCode;
