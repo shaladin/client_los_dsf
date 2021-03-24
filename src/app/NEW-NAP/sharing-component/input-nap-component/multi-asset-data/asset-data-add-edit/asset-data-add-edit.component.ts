@@ -1571,7 +1571,7 @@ export class AssetDataAddEditComponent implements OnInit {
   }
   setAppAccessorySupplier(i, SupplCode) {
     this.vendorAccSuppObj.VendorCode = SupplCode;
-    this.http.post(URLConstant.GetVendorByVendorCode, this.vendorAccSuppObj).subscribe(
+    this.http.post(URLConstant.GetVendorByVendorCode, {Code : SupplCode}).subscribe(
       (response) => {
         this.dictSuppLookup[i].nameSelect = response["VendorName"];
         this.dictSuppLookup[i].jsonSelect = response;
@@ -1717,7 +1717,7 @@ export class AssetDataAddEditComponent implements OnInit {
     }
   }
   GetVendorForView() {
-    this.http.post(URLConstant.GetVendorByVendorCode, this.vendorObj).toPromise().then(
+    this.http.post(URLConstant.GetVendorByVendorCode, {Code : this.vendorObj.VendorCode}).toPromise().then(
       (response) => {
         this.AssetDataForm.patchValue({
           SupplName: response["VendorName"],

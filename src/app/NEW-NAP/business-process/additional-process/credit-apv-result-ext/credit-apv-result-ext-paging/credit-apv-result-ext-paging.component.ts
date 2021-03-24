@@ -51,7 +51,7 @@ export class CreditApvResultExtPagingComponent implements OnInit {
           AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response['ProdOfferingHId']);
         });
     }else if(ev.Key == "suppl"){
-      this.http.post(URLConstant.GetVendorByVendorCode, {VendorCode : ev.RowObj.SupplCode}).subscribe(
+      this.http.post(URLConstant.GetVendorByVendorCode, {Code : ev.RowObj.SupplCode}).subscribe(
         response => {
           AdInsHelper.OpenVendorBranchViewByVendorId(response['VendorId']);
         });
