@@ -35,7 +35,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 export class JobTabComponent implements OnInit {
   requestedDate: any = "";
   private ucLookupProfession: UclookupgenericComponent;
-  mouCustId: number=0;
+  mouCustId: number = 0;
   @ViewChild('LookupProfession') set content(content: UclookupgenericComponent) {
     if (content) { // initially setter gets called with undefined
       this.ucLookupProfession = content;
@@ -47,6 +47,7 @@ export class JobTabComponent implements OnInit {
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
   InputLookupProfessionObj: InputLookupObj = new InputLookupObj();
   InputLookupIndustryTypeObj: InputLookupObj = new InputLookupObj();
+  InputLookupCompanyObj: InputLookupObj = new InputLookupObj();
   InputJobAddrObj: InputAddressObj = new InputAddressObj();
   InputFieldJobAddrObj: InputFieldObj = new InputFieldObj();
   JobAddrObj: AddrObj = new AddrObj();
@@ -66,14 +67,17 @@ export class JobTabComponent implements OnInit {
   JobStatObj: Array<KeyValueObj> = new Array();
   InvestmentTypeObj: Array<KeyValueObj> = new Array();
   ArrAddCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
+  ArrAddCritCoy: Array<CriteriaObj> = new Array<CriteriaObj>();
   isUcAddrReady: boolean = false
   MrCustModelDescr: string = "Employee";
   IsIntegratorCheckBySystem: string = "0";
   IsUseDigitalization: string;
   IsCustomer: boolean = false;
+  IsWellknownCoy: boolean = false;
   BusinessDt: Date;
   UserAccess: any;
-  bizTemplateCode : string ="";
+  bizTemplateCode: string = "";
+  RowVersion: string[];
   JobDataForm = this.fb.group({
     MrProfessionCode: ['', Validators.required],
     IndustryTypeCode: [Validators.required],
@@ -85,6 +89,8 @@ export class JobTabComponent implements OnInit {
     NumOfEmployee: [''],
     JobTitleName: [''],
     IsMfEmp: [false],
+    IsWellknownCoy: [false],
+    MrWellknownCoyCode: [''],
     MrInvestmentTypeCode: [''],
     ProfessionalNo: [''],
     PrevCoyName: [''],
@@ -99,11 +105,13 @@ export class JobTabComponent implements OnInit {
     OthBizNotes: [''],
   })
   IsNeedIntegrator: boolean = false;
+
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private route: ActivatedRoute,
     private toastr: NGXToastrService,
-    public formValidate: FormValidateService, private cookieService: CookieService) {
+    public formValidate: FormValidateService,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
 
       if (params['AppCustId'] != null) {
@@ -165,15 +173,17 @@ export class JobTabComponent implements OnInit {
         var gsNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
         var gsUseDigitalization = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
         
-        if(gsNeedCheckBySystem != undefined){
+        if(gsNeedCheckBySystem != undefined) {
           this.IsIntegratorCheckBySystem = gsNeedCheckBySystem.GsValue;
-        }else{
+        }
+        else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
         }
 
-        if(gsUseDigitalization != undefined){
+        if(gsUseDigitalization != undefined) {
           this.IsUseDigitalization = gsUseDigitalization.GsValue;
-        }else{
+        }
+        else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
         }
 
@@ -201,6 +211,8 @@ export class JobTabComponent implements OnInit {
             NumOfEmployee: response.AppCustPersonalJobDataObj.NumOfEmployee,
             JobTitleName: response.AppCustPersonalJobDataObj.JobTitleName,
             IsMfEmp: response.AppCustPersonalJobDataObj.IsMfEmp,
+            IsWellknownCoy: response.AppCustPersonalJobDataObj.IsWellknownCoy,
+            MrWellknownCoyCode: response.AppCustPersonalJobDataObj.MrWellknownCoyCode,
             MrInvestmentTypeCode: response.AppCustPersonalJobDataObj.MrInvestmentTypeCode,
             ProfessionalNo: response.AppCustPersonalJobDataObj.ProfessionalNo != "" ? response.AppCustPersonalJobDataObj.ProfessionalNo : "",
             PrevCoyName: response.AppCustPersonalJobDataObj.PrevCoyName != "" ? response.AppCustPersonalJobDataObj.PrevCoyName : "",
@@ -211,45 +223,48 @@ export class JobTabComponent implements OnInit {
             OthBizJobPosition: response.AppCustPersonalJobDataObj.OthBizJobPosition != "" ? response.AppCustPersonalJobDataObj.OthBizJobPosition : "",
             OthBizEstablishmentDt: response.AppCustPersonalJobDataObj.OthBizEstablishmentDt != null ? datePipe.transform(response.AppCustPersonalJobDataObj.OthBizEstablishmentDt, "yyyy-MM-dd") : ""
           })
+          this.IsWellknownCoy = response.AppCustPersonalJobDataObj.IsWellknownCoy;
           this.JobDataObj.RowVersion = response.AppCustPersonalJobDataObj.RowVersion;
           this.InputLookupProfessionObj.nameSelect = response.AppCustPersonalJobDataObj.MrProfessionName;
           this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response.AppCustPersonalJobDataObj.MrProfessionName };
           this.InputLookupIndustryTypeObj.nameSelect = response.AppCustPersonalJobDataObj.IndustryTypeName;
           this.InputLookupIndustryTypeObj.jsonSelect = { IndustryTypeName: response.AppCustPersonalJobDataObj.IndustryTypeName };
+          this.InputLookupCompanyObj.nameSelect = response.AppCustPersonalJobDataObj.CoyName;
+          this.InputLookupCompanyObj.jsonSelect = { Descr: response.AppCustPersonalJobDataObj.CoyName };
         }
         
-          if (response.JobAddr.AppCustAddrId != 0) {
-            this.JobAddrObj = response.JobAddr;
-            this.InputJobAddrObj.inputField.inputLookupObj.nameSelect = response.JobAddr.Zipcode;
-            this.InputJobAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.JobAddr.Zipcode };
-            this.InputJobAddrObj.default = this.JobAddrObj;
-            this.JobDataAddrObj.RowVersion = response.JobAddr.RowVersion;
-            this.JobDataForm.patchValue({
-              JobNotes: this.JobAddrObj.Notes
-            });
-          }
+        if (response.JobAddr.AppCustAddrId != 0) {
+          this.JobAddrObj = response.JobAddr;
+          this.InputJobAddrObj.inputField.inputLookupObj.nameSelect = response.JobAddr.Zipcode;
+          this.InputJobAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.JobAddr.Zipcode };
+          this.InputJobAddrObj.default = this.JobAddrObj;
+          this.JobDataAddrObj.RowVersion = response.JobAddr.RowVersion;
+          this.JobDataForm.patchValue({
+            JobNotes: this.JobAddrObj.Notes
+          });
+        }
 
-          if (response.PrevJobAddr.AppCustAddrId != 0) {
-            this.PrevJobAddrObj = response.PrevJobAddr;
-            this.InputPrevJobAddrObj.inputField.inputLookupObj.nameSelect = response.PrevJobAddr.Zipcode;
-            this.InputPrevJobAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.PrevJobAddr.Zipcode };
-            this.InputPrevJobAddrObj.default = this.PrevJobAddrObj;
-            this.PrevJobDataAddrObj.RowVersion = response.PrevJobAddr.RowVersion;
-            this.JobDataForm.patchValue({
-              PrevJobNotes: this.PrevJobAddrObj.Notes
-            });
-          }
+        if (response.PrevJobAddr.AppCustAddrId != 0) {
+          this.PrevJobAddrObj = response.PrevJobAddr;
+          this.InputPrevJobAddrObj.inputField.inputLookupObj.nameSelect = response.PrevJobAddr.Zipcode;
+          this.InputPrevJobAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.PrevJobAddr.Zipcode };
+          this.InputPrevJobAddrObj.default = this.PrevJobAddrObj;
+          this.PrevJobDataAddrObj.RowVersion = response.PrevJobAddr.RowVersion;
+          this.JobDataForm.patchValue({
+            PrevJobNotes: this.PrevJobAddrObj.Notes
+          });
+        }
 
-          if (response.OthBizAddr.AppCustAddrId != 0) {
-            this.OthBizAddrObj = response.OthBizAddr;
-            this.InputOthBizAddrObj.inputField.inputLookupObj.nameSelect = response.OthBizAddr.Zipcode;
-            this.InputOthBizAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.OthBizAddr.Zipcode };
-            this.InputOthBizAddrObj.default = this.OthBizAddrObj;
-            this.OthBizDataAddrObj.RowVersion = response.OthBizAddr.RowVersion;
-            this.JobDataForm.patchValue({
-              OthBizNotes: this.OthBizAddrObj.Notes
-            });
-          }
+        if (response.OthBizAddr.AppCustAddrId != 0) {
+          this.OthBizAddrObj = response.OthBizAddr;
+          this.InputOthBizAddrObj.inputField.inputLookupObj.nameSelect = response.OthBizAddr.Zipcode;
+          this.InputOthBizAddrObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.OthBizAddr.Zipcode };
+          this.InputOthBizAddrObj.default = this.OthBizAddrObj;
+          this.OthBizDataAddrObj.RowVersion = response.OthBizAddr.RowVersion;
+          this.JobDataForm.patchValue({
+            OthBizNotes: this.OthBizAddrObj.Notes
+          });
+        }
         this.isUcAddrReady = true;
       },
       error => {
@@ -262,7 +277,8 @@ export class JobTabComponent implements OnInit {
       this.JobDataForm.controls.MrJobPositionCode.setValidators([Validators.required]);
       this.JobDataForm.controls.MrJobStatCode.setValidators([Validators.required]);
       this.JobDataForm.controls.EmploymentEstablishmentDt.setValidators([Validators.required]);
-    } else if (this.CustModelCode == CommonConstant.CustModelProfessional) {
+    }
+    else if (this.CustModelCode == CommonConstant.CustModelProfessional) {
       this.JobDataForm.controls.EmploymentEstablishmentDt.setValidators([Validators.required]);
     }
     this.JobDataForm.controls.MrJobPositionCode.updateValueAndValidity();
@@ -302,6 +318,8 @@ export class JobTabComponent implements OnInit {
     this.JobDataObj.NumOfEmployee = this.JobDataForm.controls.NumOfEmployee.value;
     this.JobDataObj.JobTitleName = this.JobDataForm.controls.JobTitleName.value;
     this.JobDataObj.IsMfEmp = this.JobDataForm.controls.IsMfEmp.value;
+    this.JobDataObj.IsWellknownCoy = this.JobDataForm.controls.IsWellknownCoy.value;
+    this.JobDataObj.MrWellknownCoyCode = this.JobDataForm.controls.MrWellknownCoyCode.value;
     this.JobDataObj.MrInvestmentTypeCode = this.JobDataForm.controls.MrInvestmentTypeCode.value;
     this.JobDataObj.ProfessionalNo = this.JobDataForm.controls.ProfessionalNo.value;
     this.JobDataObj.PrevCoyName = this.JobDataForm.controls.PrevCoyName.value;
@@ -310,7 +328,7 @@ export class JobTabComponent implements OnInit {
     this.JobDataObj.OthBizType = this.JobDataForm.controls.OthBizType.value;
     this.JobDataObj.OthBizIndustryTypeCode = this.JobDataForm.controls.OthBizIndustryTypeCode.value;
     this.JobDataObj.OthBizJobPosition = this.JobDataForm.controls.OthBizJobPosition.value;
-    this.JobDataObj.OthBizEstablishmentDt = this.JobDataForm.controls.OthBizEstablishmentDt.value
+    this.JobDataObj.OthBizEstablishmentDt = this.JobDataForm.controls.OthBizEstablishmentDt.value;
 
     if (this.CustModelCode != CommonConstant.CustModelNonProfessional) {
       this.JobDataAddrObj.Addr = this.JobDataForm.controls["JobAddr"]["controls"]["Addr"].value;
@@ -409,6 +427,8 @@ export class JobTabComponent implements OnInit {
     this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
     this.InputLookupIndustryTypeObj.nameSelect = "";
     this.InputLookupIndustryTypeObj.jsonSelect = { IndustryTypeName: "" };
+    this.InputLookupCompanyObj.nameSelect = "";
+    this.InputLookupCompanyObj.jsonSelect = { Descr: "" };
 
     this.ArrAddCrit = new Array<CriteriaObj>();
     let critObj = new CriteriaObj();
@@ -421,14 +441,31 @@ export class JobTabComponent implements OnInit {
     if (isChange) this.ucLookupProfession.setAddCritInput();
     this.InputLookupProfessionObj.isReady = true;
 
+    this.ArrAddCritCoy = new Array<CriteriaObj>();
+    let critCoyObj = new CriteriaObj();
+    critCoyObj.DataType = "text";
+    critCoyObj.propName = 'REF_MASTER_TYPE_CODE';
+    critCoyObj.restriction = AdInsConstant.RestrictionEq;
+    critCoyObj.value = "WELLKNOWN_COY";
+    this.ArrAddCritCoy.push(critCoyObj);
+    let critCoyObj1 = new CriteriaObj();
+    critCoyObj1.DataType = "text";
+    critCoyObj1.propName = 'IS_ACTIVE';
+    critCoyObj1.restriction = AdInsConstant.RestrictionEq;
+    critCoyObj1.value = "1";
+    this.ArrAddCritCoy.push(critCoyObj1);
+    this.InputLookupCompanyObj.addCritInput = this.ArrAddCritCoy;
+    this.InputLookupCompanyObj.isRequired = true;
+    this.InputLookupCompanyObj.isReady = true;
+
     if (CustModelCode == CommonConstant.CustModelNonProfessional || CustModelCode == CommonConstant.CustModelProfessional) {
       this.InputLookupIndustryTypeObj.isRequired = false;
       this.JobDataForm.controls.CoyName.clearValidators();
-    } else {
+    }
+    else {
       this.InputLookupIndustryTypeObj.isRequired = true;
       this.JobDataForm.controls.CoyName.setValidators(Validators.required);
     }
-
     this.JobDataForm.updateValueAndValidity();
   }
 
@@ -483,12 +520,19 @@ export class JobTabComponent implements OnInit {
     this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
+    
+    this.InputLookupCompanyObj.urlJson = "./assets/uclookup/customer/lookupCompany.json";
+    this.InputLookupCompanyObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
+    this.InputLookupCompanyObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCompanyObj.pagingJson = "./assets/uclookup/customer/lookupCompany.json";
+    this.InputLookupCompanyObj.genericJson = "./assets/uclookup/customer/lookupCompany.json";
+    this.InputLookupCompanyObj.addCritInput = new Array();
+
     this.SetCriteriaAndRequired(this.CustModelCode);
     this.InputLookupIndustryTypeObj.isReady = true;
   }
 
   GetProfession(event) {
-    console.log(event);
     this.JobDataForm.patchValue({
       MrProfessionCode: event.ProfessionCode
     });
@@ -499,6 +543,7 @@ export class JobTabComponent implements OnInit {
       IndustryTypeCode: event.IndustryTypeCode
     });
   }
+
   GetThirdPartyResultHByTrxTypeCodeAndTrxNo() {
     this.http.post(URLConstant.GetAppById, { Id: this.appId }).subscribe(
       (response) => {
@@ -536,6 +581,8 @@ export class JobTabComponent implements OnInit {
     this.JobDataObj.NumOfEmployee = this.JobDataForm.controls.NumOfEmployee.value;
     this.JobDataObj.JobTitleName = this.JobDataForm.controls.JobTitleName.value;
     this.JobDataObj.IsMfEmp = this.JobDataForm.controls.IsMfEmp.value;
+    this.JobDataObj.IsWellknownCoy = this.JobDataForm.controls.IsWellknownCoy.value;
+    this.JobDataObj.MrWellknownCoyCode = this.JobDataForm.controls.MrWellknownCoyCode.value;
     this.JobDataObj.MrInvestmentTypeCode = this.JobDataForm.controls.MrInvestmentTypeCode.value;
     this.JobDataObj.ProfessionalNo = this.JobDataForm.controls.ProfessionalNo.value;
     this.JobDataObj.PrevCoyName = this.JobDataForm.controls.PrevCoyName.value;
@@ -623,21 +670,29 @@ export class JobTabComponent implements OnInit {
       OthBizAddrObj: this.OthBizDataAddrObj
     }
     this.hitAPIIntegrator(requestObj);
-
   }
 
   hitAPIIntegrator(requestObj: any) {
     this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudChecking, requestObj).subscribe(
       (response) => {
-        console.log(response);
         this.GetThirdPartyResultHByTrxTypeCodeAndTrxNo()
         this.IsNeedIntegrator = true;
         this.toastr.successMessage("Success with Integrator Checking.");
-
       },
       (error) => {
         console.log(error);
       }
     );
+  }
+
+  isWellknownCoyChecked(event: any) {
+    this.IsWellknownCoy = event.target.checked;
+  }
+
+  getCoy(event: any) {
+    this.JobDataForm.patchValue({
+      MrWellknownCoyCode: event.MasterCode,
+      CoyName: event.Descr
+    });
   }
 }

@@ -15,17 +15,19 @@
                   [identifier]="'lookupProfessionData'" (lookup)="GetProfession($event)" #LookupProfession>
                 </lib-uclookupgeneric>
               </div>
-              <label class="col-md-2 adins-required-label" *ngIf="CustModelCode != 'NONPROF'" translate>Industry
-                Type</label>
+              <!-- <label class="col-md-2 adins-required-label" *ngIf="CustModelCode != 'NONPROF'" translate>
+                Industry Type
+              </label>
               <div class="col-md-4" *ngIf="CustModelCode != 'NONPROF'">
                 <lib-uclookupgeneric *ngIf="InputLookupIndustryTypeObj.isReady" [enjiForm]="enjiForm"
                   [lookupInput]="InputLookupIndustryTypeObj" [parentForm]="JobDataForm"
                   [identifier]="'lookupIndustryType'" (lookup)="GetIndustryType($event)">
                 </lib-uclookupgeneric>
-              </div>
+              </div> -->
             </div>
+
             <div *ngIf="CustModelCode == 'EMP' || CustModelCode == 'SME'">
-              <div class="form-group row">
+              <!-- <div class="form-group row">
                 <label class="col-md-2 adins-required-label" translate>Company Name</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="CoyName"
@@ -43,7 +45,8 @@
                     [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-              </div>
+              </div> -->
+
               <div class="form-group row">
                 <label class="col-md-2 adins-required-label" translate>Job Position</label>
                 <div class="col-md-4">
@@ -53,6 +56,90 @@
                     </option>
                   </select>
                 </div>
+                <!-- <label class="col-md-2" translate>Company Scale</label>
+                <div class="col-md-4">
+                  <select class="form-control" formControlName="MrCoyScaleCode">
+                    <option *ngFor="let item of CompanyScaleObj" [value]="item.Key">
+                      {{item.Value}}
+                    </option>
+                  </select>
+                </div> -->
+              </div>
+
+              <div *ngIf="CustModelCode == 'EMP'">
+                <div class="form-group row">
+                  <label class="col-md-2 adins-required-label" translate>Job Status</label>
+                  <div class="col-md-4">
+                    <select class="form-control" formControlName="MrJobStatCode">
+                      <option *ngFor="let item of JobStatObj" [value]="item.Key">
+                        {{item.Value}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" translate>Internal Employee</label>
+                  <div class="col-md-4">
+                    <input type="checkbox" data-md-icheck formControlName="IsMfEmp">
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-2" translate>Is Well Known Company</label>
+                  <div class="col-md-4">
+                    <input type="checkbox" data-md-icheck formControlName="IsWellknownCoy" (change)="isWellknownCoyChecked($event)">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-2 adins-required-label" translate>Company Name</label>
+                <!-- <div class="col-md-4">
+                  <input type="text" class="form-control" formControlName="CoyName"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.CoyName.invalid }">
+                  <lib-uc-show-errors [control]="JobDataForm.controls.CoyName" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div> -->
+                <div class="col-md-4" *ngIf="!IsWellknownCoy">
+                  <input type="text" class="form-control" formControlName="CoyName"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.CoyName.invalid }">
+                  <lib-uc-show-errors [control]="JobDataForm.controls.CoyName" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+                <div class="col-md-4" *ngIf="IsWellknownCoy">
+                  <lib-uclookupgeneric *ngIf="InputLookupCompanyObj.isReady" [enjiForm]="enjiForm"
+                    [lookupInput]="InputLookupCompanyObj" [parentForm]="JobDataForm"
+                    [identifier]="'lookupCompanyData'" (lookup)="getCoy($event)" #LookupCompany>
+                  </lib-uclookupgeneric>
+                </div>
+                <!-- <label class="col-md-2" [ngClass]="{ 'adins-required-label': CustModelCode == 'EMP' }"
+                  translate>Employment Establishment Date</label>
+                <div class="col-md-4">
+                  <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.EmploymentEstablishmentDt.invalid }"
+                    max="{{BusinessDt | date:'yyyy-MM-dd'}}">
+                  <lib-uc-show-errors [control]="JobDataForm.controls.EmploymentEstablishmentDt"
+                    [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div> -->
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label class="col-md-2 adins-required-label" *ngIf="CustModelCode != 'NONPROF'" translate>
+                Industry Type
+              </label>
+              <div class="col-md-4" *ngIf="CustModelCode != 'NONPROF'">
+                <lib-uclookupgeneric *ngIf="InputLookupIndustryTypeObj.isReady" [enjiForm]="enjiForm"
+                  [lookupInput]="InputLookupIndustryTypeObj" [parentForm]="JobDataForm"
+                  [identifier]="'lookupIndustryType'" (lookup)="GetIndustryType($event)">
+                </lib-uclookupgeneric>
+              </div>
+            </div>
+            
+            <div *ngIf="CustModelCode == 'EMP' || CustModelCode == 'SME'">
+              <div class="form-group row">
                 <label class="col-md-2" translate>Company Scale</label>
                 <div class="col-md-4">
                   <select class="form-control" formControlName="MrCoyScaleCode">
@@ -62,7 +149,21 @@
                   </select>
                 </div>
               </div>
+
+              <div class="form-group row">
+                <label class="col-md-2" [ngClass]="{ 'adins-required-label': CustModelCode == 'EMP' }"
+                  translate>Employment Establishment Date</label>
+                <div class="col-md-4">
+                  <input type="date" class="form-control" formControlName="EmploymentEstablishmentDt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.EmploymentEstablishmentDt.invalid }"
+                    max="{{BusinessDt | date:'yyyy-MM-dd'}}">
+                  <lib-uc-show-errors [control]="JobDataForm.controls.EmploymentEstablishmentDt"
+                    [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
             </div>
+
             <div *ngIf="CustModelCode == 'PROF'">
               <div class="form-group row">
                 <label class="col-md-2" translate>Professional No</label>
@@ -83,6 +184,7 @@
                 </div>
               </div>
             </div>
+
             <div class="form-group row" *ngIf="CustModelCode != 'NONPROF'">
               <label class="col-md-2" translate>Job Title Name</label>
               <div class="col-md-4">
@@ -99,7 +201,8 @@
                 </lib-uc-show-errors>
               </div>
             </div>
-            <div *ngIf="CustModelCode == 'EMP'">
+
+            <!-- <div *ngIf="CustModelCode == 'EMP'">
               <div class="form-group row">
                 <label class="col-md-2 adins-required-label" translate>Job Status</label>
                 <div class="col-md-4">
@@ -114,7 +217,8 @@
                   <input type="checkbox" data-md-icheck formControlName="IsMfEmp">
                 </div>
               </div>
-            </div>
+            </div> -->
+
             <div *ngIf="CustModelCode == 'SME'">
               <div class="form-group row">
                 <label class="col-md-2" translate>Investment Type</label>
@@ -127,6 +231,7 @@
                 </div>
               </div>
             </div>
+
             <div *ngIf="CustModelCode != 'NONPROF'">
               <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputJobAddrObj" [enjiForm]="enjiForm"
                 [identifier]="'JobAddr'" [UCAddrForm]="JobDataForm"></lib-ucaddress>
@@ -141,6 +246,7 @@
               </div>
             </div>
           </div>
+
           <div *ngIf="IsUseDigitalization == '1' && IsIntegratorCheckBySystem == '0' && IsCustomer && mouCustId == 0 && bizTemplateCode != 'FCTR'">
             <lib-ucSubsection [id]="'IntegratorId'" [title]="'Fraud Checking Customer'" [panel]="'Integrator'">
             </lib-ucSubsection>
@@ -154,6 +260,7 @@
               </div>
             </div>
           </div>
+
           <div *ngIf="CustModelCode != 'NONPROF'">
             <lib-ucSubsection [id]="'PrevJobDataId'" [title]="'Previous Job Data'" [panel]="'PrevJobData'">
             </lib-ucSubsection>
@@ -166,6 +273,16 @@
                   <lib-uc-show-errors [control]="JobDataForm.controls.PrevCoyName" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
+                <!-- <label class="col-md-2" translate>Previous Employment Date</label>
+                <div class="col-md-4">
+                  <input type="date" class="form-control" formControlName="PrevEmploymentDt"
+                    max="{{BusinessDt | date:'yyyy-MM-dd'}}">
+                  <lib-uc-show-errors [control]="JobDataForm.controls.PrevEmploymentDt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div> -->
+              </div>
+              
+              <div class="form-group row">
                 <label class="col-md-2" translate>Previous Employment Date</label>
                 <div class="col-md-4">
                   <input type="date" class="form-control" formControlName="PrevEmploymentDt"
@@ -174,10 +291,12 @@
                   </lib-uc-show-errors>
                 </div>
               </div>
+
               <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputPrevJobAddrObj" [enjiForm]="enjiForm"
                 [identifier]="'PrevJobAddr'" [UCAddrForm]="JobDataForm"></lib-ucaddress>
+              
               <div class="form-group row">
-                <label class="col-md-2" translate>Notes </label>
+                <label class="col-md-2" translate>Notes</label>
                 <div class="col-md-4">
                   <textarea type="text" class="form-control adInsInput" formControlName="PrevJobNotes"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.PrevJobNotes.invalid }"></textarea>
@@ -186,6 +305,7 @@
                 </div>
               </div>
             </div>
+
             <lib-ucSubsection [id]="'OtherJobDataId'" [title]="'Other Business'" [panel]="'OtherJobData'">
             </lib-ucSubsection>
             <div id="OtherJobData">
@@ -197,6 +317,16 @@
                   <lib-uc-show-errors [control]="JobDataForm.controls.OthBizName" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
+                <!-- <label class="col-md-2" translate>Other Business Type</label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control" formControlName="OthBizType"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.OthBizType.invalid }">
+                  <lib-uc-show-errors [control]="JobDataForm.controls.OthBizType" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div> -->
+              </div>
+
+              <div class="form-group row">
                 <label class="col-md-2" translate>Other Business Type</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="OthBizType"
@@ -205,6 +335,7 @@
                   </lib-uc-show-errors>
                 </div>
               </div>
+
               <div class="form-group row">
                 <label class="col-md-2" translate>Other Business Industry Type</label>
                 <div class="col-md-4">
@@ -214,7 +345,17 @@
                     [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2" translate>Other Job Type</label>
+                <!-- <label class="col-md-2" translate>Other Job Position</label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control" formControlName="OthBizJobPosition"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.OthBizJobPosition.invalid }">
+                  <lib-uc-show-errors [control]="JobDataForm.controls.OthBizJobPosition" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div> -->
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-2" translate>Other Job Position</label>
                 <div class="col-md-4">
                   <input type="text" class="form-control" formControlName="OthBizJobPosition"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls.OthBizJobPosition.invalid }">
@@ -222,6 +363,7 @@
                   </lib-uc-show-errors>
                 </div>
               </div>
+
               <div class="form-group row">
                 <label class="col-md-2" translate>Establishment Date</label>
                 <div class="col-md-4">
@@ -233,8 +375,10 @@
                 </div>
               </div>
             </div>
+
             <lib-ucaddress *ngIf="isUcAddrReady" [addressObj]="InputOthBizAddrObj" [enjiForm]="enjiForm"
               [identifier]="'OthBizAddr'" [UCAddrForm]="JobDataForm"></lib-ucaddress>
+
             <div class="form-group row">
               <label class="col-md-2" translate>Notes </label>
               <div class="col-md-4">
@@ -245,6 +389,7 @@
               </div>
             </div>
           </div>
+
           <div class="form-actions right">
             <button type="submit" (click)=formValidate.scrollIfFormHasErrors(JobDataForm)
               class="btn btn-raised btn-primary" translate>

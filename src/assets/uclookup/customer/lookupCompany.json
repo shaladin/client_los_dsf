@@ -1,0 +1,68 @@
+{
+    "url": "",
+    "title":"Lookup - Company",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "MASTER_CODE",
+        "id": "MasterCodeId",
+        "value": "",
+        "label": "Company Code",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "DESCR",
+        "id": "DescrId",
+        "value": "",
+        "label": "Company Name",
+        "placeholder": ""
+      }
+    ],
+  "querystring": {
+    "name": "lookupRefMaster"
+  },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Company Code",
+            "name": "MASTER_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Company Name",
+            "name": "DESCR"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MasterCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Descr"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "MasterCode"
+                }
+            ]
+        }
+    ],
+    "propertyId": "MasterCode",
+    "propertyName": "Descr"
+}
