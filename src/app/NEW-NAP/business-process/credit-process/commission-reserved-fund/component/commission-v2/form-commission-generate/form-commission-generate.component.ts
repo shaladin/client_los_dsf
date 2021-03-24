@@ -276,7 +276,7 @@ export class FormCommissionGenerateComponent implements OnInit {
         VendorCode: code,
         RowVersion: ""
       };
-      this.http.post<VendorBankAccObj>(URLConstant.GetListVendorBankAccByVendorCode, obj).subscribe(
+      this.http.post<VendorBankAccObj>(URLConstant.GetListVendorBankAccByVendorCode, {Code : code}).subscribe(
         (response) => {
           var len = response["ReturnObject"].length;
           for (var i = 0; i < len; i++) {
