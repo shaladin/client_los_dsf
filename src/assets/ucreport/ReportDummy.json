@@ -1,6 +1,7 @@
 {
   "title": "Report Lead",
   "reportName": "Contoh Report Lead",
+  "reportTemplateCode": "DOC_DUMMY",
   "reportTemplateName": "AdIns_LeadSummaryRpt.rdlc",
   "component": [
     {

@@ -132,6 +132,19 @@
                         </div>
                       </div>
                     </div>
+                    <div class="col-md-6 form-group" *ngIf="(isReport != undefined && isReport)">
+                      <div class="col-md-12">
+                        <div class="row">
+                          <label class="col-md-5 no-padding" translate>Report Type</label>
+                          <div class="col-md-7 no-padding">
+                            <select name="ExportType" [(ngModel)]="ExportType"
+                              class="form-control search-form-control" attr.data-type="text">
+                              <option *ngFor="let item of ExportTypeList" [value]="item.key">{{item.value}}</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                   <div class="col-md-12 no-padding">
                     <form>
@@ -143,9 +156,12 @@
                         <button type="button" (click)="reset()" class="btn btn-raised btn-warning mr-1" translate>
                           <i class="fa fa-times"></i> Reset
                         </button>
-                        <button type="button" (click)="searchClick()" class="btn btn-raised btn-primary" #UCSearchClick
+                        <button *ngIf="(isReport == undefined || !isReport)" type="button" (click)="searchClick()" class="btn btn-raised btn-primary" #UCSearchClick
                           translate>
                           <i class="fa fa-search"></i> Search
+                        </button>
+                        <button *ngIf="(isReport != undefined && isReport)" type="button" (click)="GenerateReport()" class="btn btn-raised btn-primary" translate>
+                          <i class="fa ft-download"></i> Generate Report
                         </button>
                       </div>
                     </form>

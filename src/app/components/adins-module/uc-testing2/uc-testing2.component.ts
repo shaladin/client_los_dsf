@@ -39,7 +39,12 @@ export class UcTesting2Component implements OnInit {
   @ViewChild('formIdSearch') myForm: ElementRef;
   @Input() searchInput: InputSearchObj = new InputSearchObj();
   @Input() pageSize: number = 10;
+  @Input() isReport: boolean = false;
   @Output() result: EventEmitter<any> = new EventEmitter();
+  @Output() genRpt: EventEmitter<{ ExportType: number, ElRef: ElementRef }> = new EventEmitter<{ ExportType: number, ElRef: ElementRef }>();
+  ExportTypeList: Array<KeyValueReportObj> = new Array<KeyValueReportObj>();
+  ExportType: number = 0;
+
   pageNow: any = 1;
   configuration: any;
   exportData: any;
@@ -64,7 +69,8 @@ export class UcTesting2Component implements OnInit {
   }
 
   ngOnInit() {
-    console.log("ucsearch");
+    console.log("ucsearchTemp");
+    console.log(this.isReport);
     this.apiUrl = this.searchInput.enviromentUrl + this.searchInput.apiQryPaging;
     this.arrCrit = this.searchInput.arrCritObj;
     let js = this._renderer2.createElement('script');
@@ -76,6 +82,30 @@ export class UcTesting2Component implements OnInit {
           });
         `;
     this._renderer2.appendChild(this._document.body, js);
+
+    this.ExportTypeList = [
+      {
+        key: 0,
+        value: "PDF"
+      },
+      {
+        key: 1,
+        value: "Excel"
+      },
+      {
+        key: 2,
+        value: "XLSX"
+      },
+      {
+        key: 3,
+        value: "DOC"
+      },
+      {
+        key: 4,
+        value: "DOCX"
+      },
+    ];
+
     this.initiateForm();
   }
 
@@ -83,6 +113,10 @@ export class UcTesting2Component implements OnInit {
     this.getJSON(this.searchInput._url).subscribe(data => {
       this.configuration = data;
       this.exportData = data.exportExcel;
+      if (data.exportTypeList != undefined && data.exportTypeList.length != 0) {
+        this.ExportTypeList = data.exportTypeList;
+        this.ExportType = this.ExportTypeList[0].key;
+      }
       this.countForm = data.component.length;
       this.isDataLoaded = true;
 
@@ -333,6 +367,10 @@ export class UcTesting2Component implements OnInit {
     element.target.value = parseFloat(element.target.value.toString().replace(/,/g, ''));
   }
 
+  GenerateReport() {
+    this.genRpt.emit({ ExportType: this.ExportType, ElRef: this.myForm });
+  }
+
   exportAsXLSX(): void {
     var request = new RequestCriteriaObj();
     request.pageNo = 1;
@@ -503,3 +541,12 @@ export class UcTesting2Component implements OnInit {
   }
 }
 
+export class KeyValueReportObj {
+  key: number;
+  value: string;
+
+  constructor() {
+    this.key = 0;
+    this.value = "";
+  }
+}

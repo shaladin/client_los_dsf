@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FormsRoutingModule } from "./forms-routing.module";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -23,21 +22,20 @@ import { InputGridComponent } from './elements/input-grid/input-grid.component';
 import { ArchwizardComponent } from './archwizard/archwizard.component';
 import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { ReportComponent } from './report/report.component';
-import { UcreportModule } from "@adins/ucreport";
+import { AdInsModule } from 'app/components/adins-module/adins.module';
+import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsRoutingModule,
-        ReactiveFormsModule,
-        FormsModule,
         NGXFormWizardModule,
         ArchwizardModule,
         CustomFormsModule,
         MatchHeightModule,
         NgbModule,
         SharingComponentModule,
-        UcreportModule
+        AdInsModule,
     ],
     declarations: [
         ValidationFormsComponent,
