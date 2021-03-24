@@ -15,55 +15,20 @@
                 <label class="col-md-4" for="paidBy" translate>{{InsuranceDataForm.controls.InsAssetPaidByName.value}}</label>
                 <label class="col-md-2 adins-required-label" for="coverPeriod" translate>Order Period</label>
                 <div class="col-md-4">
-                  <select class="form-control width-75-per" id="coverPeriod" formControlName="InsAssetCoverPeriod"
-                    (change)="CoverPeriodChanged($event)"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsAssetCoverPeriod.invalid }">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let item of insAssetCoverPeriodObj" [value]="item.Key">
-                      {{item.Value}}
-                    </option>
-                  </select>
-                  <!--<select class="form-control width-75-per" id="coverPeriod" formControlName="InsAssetCoverPeriod"
-                    (change)="CoverPeriodChanged($event)" *ngIf="this.assetObj.MrAssetOwnerTypeCode == 'INT'"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsAssetCoverPeriod.invalid }">
-                    <option value="">-Select One-</option>
-                    <option value="AN">
-                      Annualy
-                    </option>
-                    <option value="IP">
-                      Input Period
-                    </option>
-                  </select>-->
-                  <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsAssetCoverPeriod"
-                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  <lib-ucdropdownlist [dropdownListObj]="ddlInsAssetCoverPeriodObj" [parentForm]="InsuranceDataForm" [enjiForm]="enjiForm"
+                    [identifier]="'InsAssetCoverPeriod'" (callback)="setGenerateCalculateValidation()"></lib-ucdropdownlist>
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-2 adins-required-label" for="assetRegion" translate>Asset Region</label>
                 <div class="col-md-4">
-                  <select class="form-control width-75-per" id="assetRegion" formControlName="InsAssetRegion"
-                    (change)="AssetRegionChanged()"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsAssetRegion.invalid }">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let item of insAssetRegionObj" [value]="item.Key">
-                      {{item.Value}}
-                    </option>
-                  </select>
-                  <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsAssetRegion"
-                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  <lib-ucdropdownlist [dropdownListObj]="ddlInsAssetRegionObj" [parentForm]="InsuranceDataForm" [enjiForm]="enjiForm"
+                    [identifier]="'InsAssetRegion'" (callback)="setGenerateCalculateValidation()"></lib-ucdropdownlist>
                 </div>
                 <label class="col-md-2 adins-required-label" for="insuredBy" translate>Insco Branch Name</label>
                 <div class="col-md-4">
-                  <select class="form-control width-75-per" id="insuredBy" formControlName="InscoBranchCode"
-                    (change)="InscoBranchCodeChanged($event)"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InscoBranchCode.invalid }">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let item of inscoBranchObj" [value]="item.Key">
-                      {{item.Value}}
-                    </option>
-                  </select>
-                  <lib-uc-show-errors [control]="InsuranceDataForm.controls.InscoBranchCode"
-                                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  <lib-ucdropdownlist *ngIf="isDdlInscoBranchReady" [dropdownListObj]="ddlInscoBranchObj" [parentForm]="InsuranceDataForm" [enjiForm]="enjiForm"
+                    [identifier]="'InscoBranchCode'" (callback)="InscoBranchCodeChanged($event)"></lib-ucdropdownlist>
                 </div>
               </div>
               <div class="form-group row">
@@ -72,7 +37,7 @@
                   <input type="" currencyMask id="cvgAmt" class="form-control" formControlName="CvgAmt"
                     [options]="{ allowNegative: false, nullable: false }"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CvgAmt.invalid }"
-                    (ngModelChange)="CvgAmtChanged()">
+                    (ngModelChange)="setGenerateCalculateValidation()">
                   <lib-uc-show-errors [control]="InsuranceDataForm.controls.CvgAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -98,11 +63,8 @@
                 <div class="form-group row">
                   <label class="col-md-2" for="mainCvg" translate>Main Coverage</label>
                   <div class="col-md-4">
-                    <select class="form-control width-75-per" id="mainCvg" formControlName="InsMainCvgType" (change)="changeMainCvgddl($event)">
-                      <option *ngFor="let item of insMainCvgTypeRuleObj" [value]="item.Key">
-                        {{item.Value}}
-                      </option>
-                    </select>
+                    <lib-ucdropdownlist *ngIf="isDdlinsMainCvgTypeRuleReady" [dropdownListObj]="ddlInsMainCvgTypeRuleObj" [parentForm]="InsuranceDataForm" [enjiForm]="enjiForm"
+                      [identifier]="'InsMainCvgType'" [genericList]="insMainCvgTypeRuleObj" (callback)="changeMainCvgddl($event)"></lib-ucdropdownlist>
                   </div>
                 </div>
                 <div [hidden]="addDdl.length < 1" class="form-group row">

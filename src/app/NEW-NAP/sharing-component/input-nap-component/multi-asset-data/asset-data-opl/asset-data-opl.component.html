@@ -387,13 +387,8 @@
                     <label class="col-md-2" translate >Copy Address</label>
                     <div class="col-md-4">
                       <div class="input-group">
-                        <select class="form-control" formControlName="DelivAddrType"
-                          [(ngModel)]="copyFromAppCustAddrForDelivery" (change)="SetDelivAddrType($event.target.value)">
-                          <option value="">-Select One-</option>
-                          <option *ngFor="let item of AppCustAddrObj" [value]="item.MrCustAddrTypeCode">
-                            {{item.MrCustAddrTypeCode}}
-                          </option>
-                        </select>
+                        <lib-ucdropdownlist [dropdownListObj]="dllAppCustAddrObj" [parentForm]="AssetDataForm" [enjiForm]="enjiForm"
+                          [identifier]="'DelivAddrType'" (callback) = "SetDelivAddrType($event)"></lib-ucdropdownlist>
                         <div class="input-group-append">
                           <span class="input-group-btn">
                             <button class="btn btn-raised btn-primary" type="button" (click)="copyToDelivAddr()" translate>
@@ -419,14 +414,8 @@
                     <label class="col-md-2" translate>Copy Address</label>
                     <div class="col-md-4">
                       <div class="input-group">
-                        <select class="form-control" formControlName="LocationAddrType"
-                          [(ngModel)]="copyFromAppCustAddrForLocation"
-                          (change)="SetLocationAddrType($event.target.value)">
-                          <option value="">-Select One-</option>
-                          <option *ngFor="let item of AppCustAddrObj" [value]="item.MrCustAddrTypeCode">
-                            {{item.MrCustAddrTypeCode}}
-                          </option>
-                        </select>
+                        <lib-ucdropdownlist [dropdownListObj]="dllAppCustAddrObj" [parentForm]="AssetDataForm" [enjiForm]="enjiForm"
+                          [identifier]="'LocationAddrType'" (callback) = "SetLocationAddrType($event)"></lib-ucdropdownlist>
                         <div class="input-group-append">
                           <span class="input-group-btn">
                             <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocationAddr()" translate>

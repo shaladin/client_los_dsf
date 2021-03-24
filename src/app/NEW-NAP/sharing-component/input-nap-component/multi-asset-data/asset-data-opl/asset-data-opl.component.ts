@@ -43,6 +43,7 @@ export class AssetDataOplComponent implements OnInit {
   isDdlBranchManagerReady: boolean = false;
   ddlAssetConditionObj: UcDropdownListObj = new UcDropdownListObj();
   ddlAssetUsageObj: UcDropdownListObj = new UcDropdownListObj();
+  dllAppCustAddrObj: UcDropdownListObj = new UcDropdownListObj();
 
   inputFieldDelivAddrObj: InputFieldObj;
   inputFieldLocationAddrObj: InputFieldObj;
@@ -217,6 +218,13 @@ export class AssetDataOplComponent implements OnInit {
     this.ddlSalesPersonObj.isSelectOutput = true;
     this.ddlAdminHeadObj.isSelectOutput = true;
     this.ddlBranchManagerObj.isSelectOutput = true;
+    this.ddlSalesPersonObj.customKey = "VendorEmpId"
+    this.ddlSalesPersonObj.customValue = "VendorEmpName"
+    this.ddlAdminHeadObj.customKey = "VendorEmpId"
+    this.ddlAdminHeadObj.customValue = "VendorEmpName"
+    this.ddlBranchManagerObj.customKey = "VendorEmpId"
+    this.ddlBranchManagerObj.customValue = "VendorEmpName"
+
     this.isListAsset = true;
 
     this.inputAddressObjForDeliv = new InputAddressObj();
@@ -256,6 +264,11 @@ export class AssetDataOplComponent implements OnInit {
   AddAsset() {
     this.mode = "Add";
     this.salesSupervisor = "";
+    this.isDdlSalesPersonReady = false;
+    this.isDdlAdminHeadReady = false;
+    this.isDdlBranchManagerReady = false;
+    this.copyFromAppCustAddrForDelivery = undefined;
+    this.copyFromAppCustAddrForLocation = undefined;
 
     this.InputLookupSupplierObj.jsonSelect = "";
     this.InputLookupSupplierObj.nameSelect = "";
@@ -617,32 +630,28 @@ export class AssetDataOplComponent implements OnInit {
     }
   }
 
-  SetDelivAddrType(event) {
-    this.copyFromAppCustAddrForDelivery = event;
+  SetDelivAddrType(event : UcDropdownListCallbackObj) {
+    this.copyFromAppCustAddrForDelivery = event.selectedObj;
   }
 
   copyToDelivAddr() {
-    if (this.copyFromAppCustAddrForDelivery != "") {
-      this.AddrObj = this.AppCustAddrObj.filter(
-        emp => emp.MrCustAddrTypeCode === this.copyFromAppCustAddrForDelivery
-      );
-
+    if (this.copyFromAppCustAddrForDelivery != undefined) {
       this.AssetDataForm.patchValue({
-        DelivAddr: this.AddrObj[0].Addr,
-        DelivAreaCode1: this.AddrObj[0].AreaCode1,
-        DelivAreaCode2: this.AddrObj[0].AreaCode2,
-        DelivAreaCode3: this.AddrObj[0].AreaCode3,
-        DelivAreaCode4: this.AddrObj[0].AreaCode4,
-        DelivCity: this.AddrObj[0].City,
-        DelivZipcode: this.AddrObj[0].Zipcode,
+        DelivAddr: this.copyFromAppCustAddrForDelivery.Addr,
+        DelivAreaCode1: this.copyFromAppCustAddrForDelivery.AreaCode1,
+        DelivAreaCode2: this.copyFromAppCustAddrForDelivery.AreaCode2,
+        DelivAreaCode3: this.copyFromAppCustAddrForDelivery.AreaCode3,
+        DelivAreaCode4: this.copyFromAppCustAddrForDelivery.AreaCode4,
+        DelivCity: this.copyFromAppCustAddrForDelivery.City,
+        DelivZipcode: this.copyFromAppCustAddrForDelivery.Zipcode,
       });
       this.delivAddrObj = new AddrObj();
-      this.delivAddrObj.Addr = this.AddrObj[0].Addr;
-      this.delivAddrObj.AreaCode1 = this.AddrObj[0].AreaCode1;
-      this.delivAddrObj.AreaCode2 = this.AddrObj[0].AreaCode2;
-      this.delivAddrObj.AreaCode3 = this.AddrObj[0].AreaCode3;
-      this.delivAddrObj.AreaCode4 = this.AddrObj[0].AreaCode4;
-      this.delivAddrObj.City = this.AddrObj[0].City;
+      this.delivAddrObj.Addr = this.copyFromAppCustAddrForDelivery.Addr;
+      this.delivAddrObj.AreaCode1 = this.copyFromAppCustAddrForDelivery.AreaCode1;
+      this.delivAddrObj.AreaCode2 = this.copyFromAppCustAddrForDelivery.AreaCode2;
+      this.delivAddrObj.AreaCode3 = this.copyFromAppCustAddrForDelivery.AreaCode3;
+      this.delivAddrObj.AreaCode4 = this.copyFromAppCustAddrForDelivery.AreaCode4;
+      this.delivAddrObj.City = this.copyFromAppCustAddrForDelivery.City;
 
       this.inputFieldDelivAddrObj.inputLookupObj.nameSelect = this.AssetDataForm.controls.DelivZipcode.value;
       this.inputFieldDelivAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AssetDataForm.controls.DelivZipcode.value };
@@ -652,32 +661,28 @@ export class AssetDataOplComponent implements OnInit {
     }
   }
 
-  SetLocationAddrType(event) {
-    this.copyFromAppCustAddrForLocation = event;
+  SetLocationAddrType(event: UcDropdownListCallbackObj) {
+    this.copyFromAppCustAddrForLocation = event.selectedObj;
   }
 
   copyToLocationAddr() {
-    if (this.copyFromAppCustAddrForLocation != "") {
-      this.AddrObj = this.AppCustAddrObj.filter(
-        emp => emp.MrCustAddrTypeCode === this.copyFromAppCustAddrForLocation
-      );
-
+    if (this.copyFromAppCustAddrForLocation != undefined) {
       this.AssetDataForm.patchValue({
-        LocationAddr: this.AddrObj[0].Addr,
-        LocationAreaCode1: this.AddrObj[0].AreaCode1,
-        LocationAreaCode2: this.AddrObj[0].AreaCode2,
-        LocationAreaCode3: this.AddrObj[0].AreaCode3,
-        LocationAreaCode4: this.AddrObj[0].AreaCode4,
-        LocationCity: this.AddrObj[0].City,
-        LocationZipcode: this.AddrObj[0].Zipcode,
+        LocationAddr: this.copyFromAppCustAddrForLocation.Addr,
+        LocationAreaCode1: this.copyFromAppCustAddrForLocation.AreaCode1,
+        LocationAreaCode2: this.copyFromAppCustAddrForLocation.AreaCode2,
+        LocationAreaCode3: this.copyFromAppCustAddrForLocation.AreaCode3,
+        LocationAreaCode4: this.copyFromAppCustAddrForLocation.AreaCode4,
+        LocationCity: this.copyFromAppCustAddrForLocation.City,
+        LocationZipcode: this.copyFromAppCustAddrForLocation.Zipcode,
       });
       this.locationAddrObj = new AddrObj();
-      this.locationAddrObj.Addr = this.AddrObj[0].Addr;
-      this.locationAddrObj.AreaCode1 = this.AddrObj[0].AreaCode1;
-      this.locationAddrObj.AreaCode2 = this.AddrObj[0].AreaCode2;
-      this.locationAddrObj.AreaCode3 = this.AddrObj[0].AreaCode3;
-      this.locationAddrObj.AreaCode4 = this.AddrObj[0].AreaCode4;
-      this.locationAddrObj.City = this.AddrObj[0].City;
+      this.locationAddrObj.Addr = this.copyFromAppCustAddrForLocation.Addr;
+      this.locationAddrObj.AreaCode1 = this.copyFromAppCustAddrForLocation.AreaCode1;
+      this.locationAddrObj.AreaCode2 = this.copyFromAppCustAddrForLocation.AreaCode2;
+      this.locationAddrObj.AreaCode3 = this.copyFromAppCustAddrForLocation.AreaCode3;
+      this.locationAddrObj.AreaCode4 = this.copyFromAppCustAddrForLocation.AreaCode4;
+      this.locationAddrObj.City = this.copyFromAppCustAddrForLocation.City;
 
       this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.AssetDataForm.controls.LocationZipcode.value;
       this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.AssetDataForm.controls.LocationZipcode.value };
@@ -930,11 +935,11 @@ export class AssetDataOplComponent implements OnInit {
 
   async GetListAddr() {
     this.appObj.Id = this.AppId;
-    await this.http.post(URLConstant.GetListAppCustAddrByAppId, this.appObj).toPromise().then(
-      (response) => {
-        this.AppCustAddrObj = response[CommonConstant.ReturnObj];
-      }
-    );
+    this.dllAppCustAddrObj.customKey = "MrCustAddrTypeCode";
+    this.dllAppCustAddrObj.customValue = "MrCustAddrTypeCode";
+    this.dllAppCustAddrObj.apiUrl = URLConstant.GetListAppCustAddrByAppId;
+    this.dllAppCustAddrObj.requestObj = {"Id":this.AppId};
+    this.dllAppCustAddrObj.isSelectOutput = true;
   }
 
   async getListAllAssetData() {
@@ -1305,12 +1310,6 @@ export class AssetDataOplComponent implements OnInit {
 
   
   GetVendorEmpList() {
-    this.ddlSalesPersonObj.customKey = "VendorEmpId"
-    this.ddlSalesPersonObj.customValue = "VendorEmpName"
-    this.ddlAdminHeadObj.customKey = "VendorEmpId"
-    this.ddlAdminHeadObj.customValue = "VendorEmpName"
-    this.ddlBranchManagerObj.customKey = "VendorEmpId"
-    this.ddlBranchManagerObj.customValue = "VendorEmpName"
     this.isDdlSalesPersonReady = false;
     this.isDdlAdminHeadReady = false;
     this.isDdlBranchManagerReady = false;
@@ -1341,9 +1340,15 @@ export class AssetDataOplComponent implements OnInit {
         this.BranchManagerObj = this.EmpObj.filter(
           emp => emp.MrVendorEmpPositionCode === CommonConstant.BRANCH_MANAGER_JOB_CODE
         );
-        this.isDdlSalesPersonReady = true;
-        this.isDdlAdminHeadReady = true;
-        this.isDdlBranchManagerReady = true;
+        if(this.AdminHeadObj.length > 0){
+          this.isDdlSalesPersonReady = true;
+        }
+        if(this.SalesPersonObj.length > 0){
+          this.isDdlAdminHeadReady = true;
+        }
+        if(this.BranchManagerObj.length > 0){
+          this.isDdlBranchManagerReady = true;
+        }
       }
     );
   }

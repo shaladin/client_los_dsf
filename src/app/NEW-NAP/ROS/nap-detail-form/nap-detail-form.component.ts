@@ -52,7 +52,7 @@ export class NapDetailFormComponent implements OnInit {
     "AEX": 3,
     "FIN": 4,
     "TC": 5,
-    "UPD": 6
+    "UPL_DOC": 6
   };
 
   ResponseReturnInfoObj: ReturnHandlingDObj;
@@ -86,6 +86,7 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("TEST");
     this.ClaimTask();
     this.AppStepIndex = 1;
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapDetailMainData.json";
@@ -194,7 +195,7 @@ export class NapDetailFormComponent implements OnInit {
         "AEX": 3,
         "FIN": 4,
         "TC": 5,
-        "UPD": 6
+        "UPL_DOC": 6
       };
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
@@ -211,7 +212,7 @@ export class NapDetailFormComponent implements OnInit {
         "AEX": 3,
         "FIN": 4,
         "TC": 5,
-        "UPD": 6
+        "UPL_DOC": 6
       };
     }
   }
@@ -266,7 +267,7 @@ export class NapDetailFormComponent implements OnInit {
       "AEX": 3,
       "FIN": 4,
       "TC": 5,
-      "UPD": 6
+      "UPL_DOC": 6
     };
     switch (AppStep) {
       case CommonConstant.AppStepApp:
