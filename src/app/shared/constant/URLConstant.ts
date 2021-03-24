@@ -1357,4 +1357,10 @@ export class URLConstant {
 
   // ASSET (AMS)
   public static GetAssetByAssetNo = URLConstant.amsUrl + "/Asset/GetAssetByAssetNo";
+
+  // API LMS
+  public static lmsUrl = "http://r3impl-appsvr.ad-ins.com/LMS";
+
+  // GO LIVE (LMS)
+  public static CheckGoLivePayment = URLConstant.lmsUrl + "/Api/Integration/CheckGoLivePayment";
 }

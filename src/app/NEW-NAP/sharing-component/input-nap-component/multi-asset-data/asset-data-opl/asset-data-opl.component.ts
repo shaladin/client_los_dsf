@@ -690,8 +690,8 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   Back() {
-    // this.isListAsset = true;
-    this.findInvalidControls();
+    this.isListAsset = true;
+    // this.findInvalidControls();
   }
 
   async SaveForm() {
