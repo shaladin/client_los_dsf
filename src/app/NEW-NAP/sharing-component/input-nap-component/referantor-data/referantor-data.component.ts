@@ -235,13 +235,9 @@ export class ReferantorDataComponent implements OnInit {
   }
 
   getDDLBank(VendorCode) {
-    var url = URLConstant.GetListVendorBankAccByVendorCode;
-    var obj = {
-      VendorCode: VendorCode,
-      RowVersion: ""
-    }
+    var url = URLConstant.GetListVendorBankAccByVendorCode;    
 
-    this.http.post(url, obj).subscribe(
+    this.http.post(url, {Code : VendorCode}).subscribe(
       (response) => {
         this.bankItems = response[CommonConstant.ReturnObj];
         // if(this.bankItems.length == 0){
