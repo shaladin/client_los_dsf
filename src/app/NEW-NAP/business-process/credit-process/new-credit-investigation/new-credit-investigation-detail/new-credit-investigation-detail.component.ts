@@ -24,6 +24,7 @@ export class NewCreditInvestigationDetailComponent implements OnInit {
   wfTaskListId: number;
   mrCustTypeCode: string;
   BizTemplateCode: string = "";
+  IsViewReady: boolean = false;
   viewObj: string;
   analysisItemObj: Array<KeyValueObj>;
   appCrdInvstgHObj: AppCrdInvstgHObj;
@@ -55,6 +56,7 @@ export class NewCreditInvestigationDetailComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    this.IsViewReady = true;
     this.ClaimTask();
     this.viewObj = "./assets/ucviewgeneric/viewCreditInvestigationInfo.json";
     await this.bindAnalysisItemObj();

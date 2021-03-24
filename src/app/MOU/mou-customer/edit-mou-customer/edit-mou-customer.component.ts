@@ -59,8 +59,7 @@ export class EditMouCustomerComponent implements OnInit {
   getEvent(event) {
     if (event.Key == "customer") {
       var link: string;
-      var custObj = { CustNo: event.RowObj.CustNo };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, {TrxNo : event.RowObj.CustNo}).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }

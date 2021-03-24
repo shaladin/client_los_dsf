@@ -21,6 +21,7 @@ import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -34,6 +35,15 @@ export class AssetDataOplComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   
+  ddlSalesPersonObj: UcDropdownListObj = new UcDropdownListObj();
+  isDdlSalesPersonReady: boolean = false;
+  ddlAdminHeadObj: UcDropdownListObj = new UcDropdownListObj();
+  isDdlAdminHeadReady: boolean = false;
+  ddlBranchManagerObj: UcDropdownListObj = new UcDropdownListObj();
+  isDdlBranchManagerReady: boolean = false;
+  ddlAssetConditionObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlAssetUsageObj: UcDropdownListObj = new UcDropdownListObj();
+
   inputFieldDelivAddrObj: InputFieldObj;
   inputFieldLocationAddrObj: InputFieldObj;
   locationAddrObj: AddrObj;
@@ -103,8 +113,6 @@ export class AssetDataOplComponent implements OnInit {
   AppCustObj: any;
   AppCustCoyObj: any;
   AppCustAddrObj: any;
-  AssetUsageObj: any;
-  AssetConditionObj: any;
   AssetMasterObj: any;
   EmpObj: any;
   VendorObj: any;
@@ -206,6 +214,9 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.ddlSalesPersonObj.isSelectOutput = true;
+    this.ddlAdminHeadObj.isSelectOutput = true;
+    this.ddlBranchManagerObj.isSelectOutput = true;
     this.isListAsset = true;
 
     this.inputAddressObjForDeliv = new InputAddressObj();
@@ -464,10 +475,7 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   async SetSupplier(event) {
-    this.AdminHeadObj = null;
-    this.SalesPersonObj = null;
-    this.BranchManagerObj = null;
-
+    this.salesSupervisor = "";
     this.vendorObj.VendorCode = event.VendorCode;
     this.vendorObj.VendorId = event.VendorId;
     await this.GetVendor();
@@ -475,9 +483,9 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   SalesPersonChanged(event) {
-    if (event.target.value != "") {
+    if (event.selectedObj != undefined) {
       var temp: any;
-      temp = this.EmpObj.filter(emp => emp.VendorEmpId == event.target.value);
+      temp = this.EmpObj.filter(emp => emp.VendorEmpId == event.selectedValue);
       this.AssetDataForm.patchValue({
         SalesPersonId: temp[0].VendorEmpId,
         SalesPersonName: temp[0].VendorEmpName,
@@ -496,11 +504,9 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   AdminHeadChanged(event) {
-    if (event.target.value != "") {
-      var tempId = event.target.value;
+    if (event.selectedObj != undefined) {
       var temp: any;
-      temp = this.EmpObj.filter(
-        emp => emp.VendorEmpId == tempId);
+      temp = this.EmpObj.filter(emp => emp.VendorEmpId == event.selectedValue);
       this.AssetDataForm.patchValue({
         AdminHeadId: temp[0].VendorEmpId,
         AdminHeadName: temp[0].VendorEmpName,
@@ -519,11 +525,9 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   BranchManagerChanged(event) {
-    if (event.target.value != "") {
-      var tempId = event.target.value;
+    if (event.selectedObj != undefined) {
       var temp: any;
-      temp = this.EmpObj.filter(
-        emp => emp.VendorEmpId == tempId);
+      temp = this.EmpObj.filter(emp => emp.VendorEmpId == event.selectedValue);
       this.AssetDataForm.patchValue({
         BranchManagerId: temp[0].VendorEmpId,
         BranchManagerName: temp[0].VendorEmpName,
@@ -551,14 +555,8 @@ export class AssetDataOplComponent implements OnInit {
     });
   }
 
-  AssetConditionChanged(mode: string = "add") {
-    if (this.AssetConditionObj != null) {
-      var filter: any;
-      filter = this.AssetConditionObj.filter(
-        cond => cond.Key == this.AssetDataForm.controls.MrAssetConditionCode.value
-      );
-      this.AssetConditionName = filter[0].Value;
-    }
+  AssetConditionChanged(event : UcDropdownListCallbackObj) {
+    this.AssetConditionName = event.selectedObj.Value;
   }
   
   updateValueAssetPrice() {
@@ -836,21 +834,15 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   async bindAssetUsageObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
-      (response) => {
-        this.AssetUsageObj = response[CommonConstant.ReturnObj];
-      }
-    );
+    this.ddlAssetUsageObj.apiUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.ddlAssetUsageObj.requestObj = {"RefMasterTypeCode":CommonConstant.RefMasterTypeCodeAssetUsage};
+    this.ddlAssetUsageObj.isSelectOutput = true;
   }
 
   async bindAsseConditionObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
-      (response) => {
-        this.AssetConditionObj = response[CommonConstant.ReturnObj];
-      }
-    );
+    this.ddlAssetConditionObj.apiUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.ddlAssetConditionObj.requestObj = {"RefMasterTypeCode":CommonConstant.RefMasterTypeCodeAssetCondition};
+    this.ddlAssetConditionObj.isSelectOutput = true;
   }
 
   initLookup() {
@@ -1286,7 +1278,8 @@ export class AssetDataOplComponent implements OnInit {
 
   setAppAccessory(i, AssetAccessoryCode) {
     this.accObj.AssetAccessoryCode = AssetAccessoryCode;
-    this.http.post(URLConstant.GetAssetAccessoryByCode, this.accObj).subscribe(
+    let obj = {Code: this.accObj.AssetAccessoryCode}
+    this.http.post(URLConstant.GetAssetAccessoryByCode, obj).subscribe(
       (response) => {
         this.dictAccLookup[i].nameSelect = response["AssetAccessoryName"];
         this.dictAccLookup[i].jsonSelect = response;
@@ -1312,6 +1305,15 @@ export class AssetDataOplComponent implements OnInit {
 
   
   GetVendorEmpList() {
+    this.ddlSalesPersonObj.customKey = "VendorEmpId"
+    this.ddlSalesPersonObj.customValue = "VendorEmpName"
+    this.ddlAdminHeadObj.customKey = "VendorEmpId"
+    this.ddlAdminHeadObj.customValue = "VendorEmpName"
+    this.ddlBranchManagerObj.customKey = "VendorEmpId"
+    this.ddlBranchManagerObj.customValue = "VendorEmpName"
+    this.isDdlSalesPersonReady = false;
+    this.isDdlAdminHeadReady = false;
+    this.isDdlBranchManagerReady = false;
     this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, this.vendorObj).subscribe(
       (response) => {
         this.EmpObj = response[CommonConstant.ReturnObj];
@@ -1339,12 +1341,15 @@ export class AssetDataOplComponent implements OnInit {
         this.BranchManagerObj = this.EmpObj.filter(
           emp => emp.MrVendorEmpPositionCode === CommonConstant.BRANCH_MANAGER_JOB_CODE
         );
+        this.isDdlSalesPersonReady = true;
+        this.isDdlAdminHeadReady = true;
+        this.isDdlBranchManagerReady = true;
       }
     );
   }
 
   GetAssetMaster(assetMasterObj) {
-    this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, assetMasterObj).subscribe(
+    this.http.post(URLConstant.GetAssetMasterTypeByFullAssetCode, {Code: assetMasterObj.FullAssetCode}).subscribe(
       (response) => {
         this.AssetMasterObj = response;
         this.AssetDataForm.patchValue({

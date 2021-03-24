@@ -124,7 +124,7 @@ export class LeadDataComponent implements OnInit {
     this.assetTypeId = event.AssetTypeId;
     var AssetTypeCode = { 'AssetTypeCode': event.AssetTypeCode };
 
-    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: event.AssetTypeCode}).subscribe(
       (response: any) => {
         while (this.items.length) {
           this.items.removeAt(0);
@@ -155,7 +155,7 @@ export class LeadDataComponent implements OnInit {
 
     var assetType : AssetTypeObj= new AssetTypeObj();
     assetType.AssetTypeId = this.assetTypeId;
-    this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
+    this.http.post(URLConstant.GetAssetTypeById, {Id: this.assetTypeId}).subscribe(
       (response: any) => { 
  
       }
@@ -174,7 +174,7 @@ export class LeadDataComponent implements OnInit {
 
     this.generalSettingObj = new GeneralSettingObj();
     this.generalSettingObj.GsCode = "LOB_KTA";
-    this.http.post(this.getGeneralSettingByCode, this.generalSettingObj).subscribe(
+    this.http.post(this.getGeneralSettingByCode, {Code: "LOB_KTA"}).subscribe(
       (response) => {
         this.returnGeneralSettingObj = response;
         this.lobKta = this.returnGeneralSettingObj.GsValue.split(',');
@@ -235,14 +235,14 @@ export class LeadDataComponent implements OnInit {
           if (this.resLeadAssetObj.LeadAssetId != 0) { 
             this.assetConditionObj = new RefMasterObj();
             this.assetConditionObj.MasterCode = this.resLeadAssetObj.MrAssetConditionCode; 
-            this.http.post(this.GetRefMasterByMasterCode, this.assetConditionObj).subscribe(
+            this.http.post(this.GetRefMasterByMasterCode, {Code: this.resLeadAssetObj.MrAssetConditionCode}).subscribe(
               (response) => {
                 this.tempMrAssetConditionCode = response["Descr"]; 
               }
             );
             this.assetConditionObj = new RefMasterObj();
             this.assetConditionObj.MasterCode = this.resLeadAssetObj.MrDownPaymentTypeCode; 
-            this.http.post(this.GetRefMasterByMasterCode, this.assetConditionObj).subscribe(
+            this.http.post(this.GetRefMasterByMasterCode, {Code: this.resLeadAssetObj.MrDownPaymentTypeCode}).subscribe(
               (response) => {
                 this.tempMrDownPaymentTypeCode = response["Descr"]; 
               }
@@ -271,12 +271,12 @@ export class LeadDataComponent implements OnInit {
               this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
               var assetType = new AssetTypeObj();
               assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-              this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
+              this.http.post(URLConstant.GetAssetTypeById, {Id: this.resAssetMasterObj.AssetTypeId}).subscribe(
                 (response: any) => { 
                   
 
                   var AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
-                  this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+                  this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: response.AssetTypeCode}).subscribe(
                     (response: any) => {
                       while (this.items.length) {
                         this.items.removeAt(0);
@@ -333,7 +333,7 @@ export class LeadDataComponent implements OnInit {
           this.resLeadAppObj = response; 
           this.assetConditionObj = new RefMasterObj();
           this.assetConditionObj.MasterCode = this.resLeadAppObj.MrFirstInstTypeCode;  
-          this.http.post(this.GetRefMasterByMasterCode, this.assetConditionObj).subscribe(
+          this.http.post(this.GetRefMasterByMasterCode, {Code : this.resLeadAppObj.MrFirstInstTypeCode}).subscribe(
             (response) => {
               this.tempMrFirstInstTypeCode = response["Descr"]; 
             }
@@ -360,14 +360,14 @@ export class LeadDataComponent implements OnInit {
           if (this.resLeadAssetObj.LeadAssetId != 0) { 
             this.assetConditionObj = new RefMasterObj();
             this.assetConditionObj.MasterCode = this.resLeadAssetObj.MrAssetConditionCode; 
-            this.http.post(this.GetRefMasterByMasterCode, this.assetConditionObj).subscribe(
+            this.http.post(this.GetRefMasterByMasterCode, {Code : this.resLeadAssetObj.MrAssetConditionCode}).subscribe(
               (response) => {
                 this.tempMrAssetConditionCode = response["Descr"]; 
               }
             );
             this.assetConditionObj = new RefMasterObj();
             this.assetConditionObj.MasterCode = this.resLeadAssetObj.MrDownPaymentTypeCode; 
-            this.http.post(this.GetRefMasterByMasterCode, this.assetConditionObj).subscribe(
+            this.http.post(this.GetRefMasterByMasterCode, {Code: this.resLeadAssetObj.MrDownPaymentTypeCode}).subscribe(
               (response) => {
                 this.tempMrDownPaymentTypeCode = response["Descr"]; 
               }
@@ -397,12 +397,12 @@ export class LeadDataComponent implements OnInit {
                 this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
                 var assetType = new AssetTypeObj();
                 assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-                this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
+                this.http.post(URLConstant.GetAssetTypeById, {Id: this.resAssetMasterObj.AssetTypeId}).subscribe(
                   (response: any) => { 
                     
 
                     var AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
-                    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+                    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: response.AssetTypeCode}).subscribe(
                       (response: any) => {
                         while (this.items.length) {
                           this.items.removeAt(0);
@@ -458,7 +458,7 @@ export class LeadDataComponent implements OnInit {
               this.resLeadAppObj = response;
               this.assetConditionObj = new RefMasterObj();
               this.assetConditionObj.MasterCode = this.resLeadAppObj.MrFirstInstTypeCode; 
-              this.http.post(this.GetRefMasterByMasterCode, this.assetConditionObj).subscribe(
+              this.http.post(this.GetRefMasterByMasterCode, {Code : this.resLeadAppObj.MrFirstInstTypeCode}).subscribe(
                 (response) => {
                   this.tempMrFirstInstTypeCode = response["Descr"]; 
                 }

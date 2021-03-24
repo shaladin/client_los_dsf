@@ -86,7 +86,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         this.SubjectResponse = response;
       });
 
-    await this.http.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { StatusGrpCode: CommonConstant.StatusGrpVerfResultStat }).toPromise().then(
+    await this.http.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { Code: CommonConstant.StatusGrpVerfResultStat }).toPromise().then(
       (response) => {
         this.RefStatusList = response[CommonConstant.ReturnObj];
         this.CustConfirm.patchValue({
@@ -356,7 +356,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     }
     else if (key == "cust") {
       var custObj = { CustNo: this.CustNo };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, {TrxNo : this.CustNo}).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         });

@@ -94,8 +94,14 @@ export class PreGoLiveComponent implements OnInit {
         this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
         this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
         this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
-        if(response['ListRfaLogObj'].length > 0){
-          this.InputApprovalHistoryObj.RequestId = response['ListRfaLogObj'][0]['RfaNo'];  
+        for (let i = 0; i < this.ListRfaLogObj.length; i++) {
+          if (this.ListRfaLogObj[i]["ApvCategory"] == CommonConstant.ApvCategoryPreGoLive) {
+            this.InputApprovalHistoryObj.RequestId = this.ListRfaLogObj[i].RfaNo
+            if (this.ListRfaLogObj[i].ApvStat == "ApproveFinal") {
+              this.IsCheckedAll = true;
+              this.hasApproveFinal = true;
+            }
+          }
         }
         this.IsApvReady = true;
       });

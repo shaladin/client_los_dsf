@@ -23,6 +23,7 @@ import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 
 @Component({
   selector: 'app-application-data',
@@ -52,6 +53,14 @@ export class ApplicationDataComponent implements OnInit {
   CustNo: string;
   isProdOfrUpToDate: boolean = true;
   missingProdOfrComp: string = "";
+  isDdlMrAppSourceReady: boolean = false;
+  ddlMrAppSourceObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlMrFirstInstTypeObj : UcDropdownListObj = new UcDropdownListObj();
+  ddlPayFreqObj : UcDropdownListObj = new UcDropdownListObj();
+  ddlMrWopObj : UcDropdownListObj = new UcDropdownListObj();
+  ddlMrCustNotifyOptObj : UcDropdownListObj = new UcDropdownListObj();
+  isDdlMrFirstInstTypeReady : boolean = false;
+  isDdlPayFreqReady : boolean = false;
 
   NapAppModelForm = this.fb.group({
     MouCustId: [''],
@@ -135,8 +144,10 @@ export class ApplicationDataComponent implements OnInit {
     this.applicationDDLitems = [];
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustType);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeSlsRecom);
-    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWOP);
-    this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustNotifyOpt);
+    this.initDdlMrWop();
+    this.initDdlMrCustNotifyOpt();
+    // this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWOP);
+    // this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustNotifyOpt);
     // this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeFirstInstType);
     // this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestType);
     // this.getPayFregData();
@@ -173,6 +184,30 @@ export class ApplicationDataComponent implements OnInit {
         );
       }
     );
+  }
+
+  initDdlMrFirstInstType(){
+    this.ddlMrFirstInstTypeObj.apiUrl = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL;
+    this.ddlMrFirstInstTypeObj.requestObj = {
+      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
+      RefProdCompntCode: CommonConstant.RefProdCompFirstInstType,
+      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
+    };
+    this.ddlMrFirstInstTypeObj.customObjName = "DDLRefProdComptCode";
+    this.ddlMrFirstInstTypeObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.isDdlMrFirstInstTypeReady = true;
+  }
+
+  initDdlPayFreq(){
+    this.ddlPayFreqObj.apiUrl = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL;
+    this.ddlPayFreqObj.requestObj = {
+      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
+      RefProdCompntCode: CommonConstant.RefMasterTypeCodePayFreq,
+      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
+    };
+    this.ddlPayFreqObj.customObjName = "DDLRefProdComptCode";
+    this.ddlPayFreqObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.isDdlPayFreqReady = true;
   }
 
   getDDLFromProdOffering(refProdCompntCode: string) {
@@ -320,22 +355,16 @@ export class ApplicationDataComponent implements OnInit {
           this.NapAppModelForm.controls.MrInstSchemeCode.updateValueAndValidity();
         }
         this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodeInstSchm);
-        this.getDDLFromProdOffering(CommonConstant.RefMasterTypeCodePayFreq);
-        this.getDDLFromProdOffering(CommonConstant.RefProdCompFirstInstType);
+        this.initDdlMrFirstInstType();
+        this.initDdlPayFreq();
         this.getPayFregData();
       });
   }
 
   getAppSrcData() {
-    var url = URLConstant.GetListKvpActiveRefAppSrc;
-    var obj = {
-      RowVersion: ""
-    };
-
-    this.http.post(url, obj).subscribe(
-      (response) => {
-        this.applicationDDLitems["APP_SOURCE"] = response[CommonConstant.ReturnObj];
-      });
+    this.ddlMrAppSourceObj.apiUrl = URLConstant.GetListKvpActiveRefAppSrc;
+    this.ddlMrAppSourceObj.requestObj = {RowVersion: ""}
+    this.ddlMrAppSourceObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
   }
 
   DictRefPayFreq: any = {};
@@ -356,9 +385,25 @@ export class ApplicationDataComponent implements OnInit {
           this.PayFreqVal = this.DictRefPayFreq[this.resultResponse.PayFreqCode].PayFreqVal;
           this.PayFreqTimeOfYear = this.DictRefPayFreq[this.resultResponse.PayFreqCode].TimeOfYear;
         }
-
         this.ChangeNumOfInstallmentTenor();
       });
+  }
+
+
+  initDdlMrWop(){
+    this.ddlMrWopObj.apiUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.ddlMrWopObj.requestObj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeWOP
+    }
+    this.ddlMrWopObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+  }
+
+  initDdlMrCustNotifyOpt(){
+    this.ddlMrCustNotifyOptObj.apiUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.ddlMrCustNotifyOptObj.requestObj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustNotifyOpt
+    }
+    this.ddlMrCustNotifyOptObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
   }
 
   getRefMasterTypeCode(code) {
@@ -474,7 +519,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   async GetGSValueSalesOfficer() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
       (response) => {
         console.log(response);
         var addCrit3 = new CriteriaObj();
@@ -677,7 +722,8 @@ export class ApplicationDataComponent implements OnInit {
         appFinData: tempAppFindDataObj,
         RowVersion: ""
       };
-      obj['appCustMailingAddr'] = this.getMailingAddrForSave();
+      if(this.BizTemplateCode != CommonConstant.OPL)
+        obj['appCustMailingAddr'] = this.getMailingAddrForSave();
       this.http.post(url, obj).subscribe(
         (response) => {
           this.toastr.successMessage('Save Application Data Success!');

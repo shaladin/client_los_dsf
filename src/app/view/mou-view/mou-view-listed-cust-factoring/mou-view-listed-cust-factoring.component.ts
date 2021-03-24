@@ -26,7 +26,7 @@ export class MouViewListedCustFactoringComponent implements OnInit {
   openView(custNo){
     var link: string;
     var custObj = { CustNo: custNo };
-    this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+    this.http.post(URLConstant.GetCustByCustNo, {TrxNo : custNo}).subscribe(
       response => {
         AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
       });

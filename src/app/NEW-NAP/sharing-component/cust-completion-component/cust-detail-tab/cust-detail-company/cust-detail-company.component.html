@@ -42,18 +42,14 @@
                 <div class="form-group row">
                   <label class="col-md-4 adins-required-label" translate>Customer Model</label>
                   <div class="col-md-8">
-                    <select class="form-control adInsInput full-width" style="width: 100%" formControlName="MrCustModelCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && CustDetailForm.controls.MrCustModelCode.invalid }">
-                      <option value="">-Select One-</option>
-                      <option *ngFor="let item of CustModelObj" value="{{item.Key}}">{{item.Value}}</option>
-                    </select>
-                    <lib-uc-show-errors [control]="CustDetailForm.controls.MrCustModelCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    <lib-ucdropdownlist [dropdownListObj]="ddlCustModelObj" [parentForm]="CustDetailForm" [enjiForm]="enjiForm"
+                      [identifier]="'MrCustModelCode'"></lib-ucdropdownlist>
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-4 adins-required-label" translate>Industry Type</label>
                   <div class="col-md-8"> 
-                      <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="lookupIndustryTypeObj"   *ngIf="lookupIndustryTypeObj.isReady" [parentForm]="CustDetailForm" [identifier]="'lookupIndustryType'" (lookup)="GetIndustryType($event)"></lib-uclookupgeneric>
+                      <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="lookupIndustryTypeObj" *ngIf="lookupIndustryTypeObj.isReady" [parentForm]="CustDetailForm" [identifier]="'lookupIndustryType'" (lookup)="GetIndustryType($event)"></lib-uclookupgeneric>
                   </div>
                 </div>
                 <div class="form-group row">

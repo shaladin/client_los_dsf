@@ -190,7 +190,7 @@ export class CustBankAccountComponent implements OnInit {
 
   setBankName(bankCode) {
     this.bankObj.BankCode = bankCode;
-    this.http.post(environment.FoundationR3Url + URLConstant.GetRefBankByBankCodeAsync, this.bankObj).subscribe(
+    this.http.post(environment.FoundationR3Url + URLConstant.GetRefBankByBankCodeAsync, {Code: bankCode}).subscribe(
       (response) => {
         this.InputLookupBankObj.nameSelect = response["BankName"];
         this.InputLookupBankObj.jsonSelect = response;

@@ -7,7 +7,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
-import { formatDate } from '@angular/common';
+import { formatDate, KeyValue } from '@angular/common';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
@@ -26,6 +26,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 
 @Component({
   selector: 'app-cust-main-data',
@@ -52,6 +53,13 @@ export class CustMainDataComponent implements OnInit {
   isExisting: boolean = false;
   isUcAddressReady: boolean = false;
   isIncludeCustRelation: boolean = false;
+  isDdlMrCustRelationshipReady: boolean = false;
+  isDdlMrGenderReady: boolean = false;
+  isDdlMrCompanyTypeReady: boolean = false;
+  isDdlIdTypeReady: boolean = false;
+  isDdlMaritalStatReady: boolean = false;
+  isDdlMrCustModelReady: boolean = false;
+  isDdlMasterJobPositionReady: boolean = false;
   MrCustTypeCode: string = CommonConstant.CustTypePersonal;
   subjectTitle: string = 'Customer';
   MaritalStatLookup: string = "";
@@ -63,8 +71,15 @@ export class CustMainDataComponent implements OnInit {
   legalAddrObj: AddrObj = new AddrObj();
   IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   DictRefMaster: Array<KeyValueObj> = new Array<KeyValueObj>();
-  MrCustRelationshipCodeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
-  CustModelObj: Array<KeyValueObj> = new Array();
+  ddlMrCustRelationshipCodeObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlGenderObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlMrCompanyTypeObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlIdTypeObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlMaritalStatObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlMasterJobPositionObj: UcDropdownListObj = new UcDropdownListObj();
+  MrCustRelationshipCodeObj:  Array<KeyValueObj> = new Array<KeyValueObj>();
+  ddlCustModelObj : UcDropdownListObj = new UcDropdownListObj();
+  CustModelObj : Array<KeyValueObj> = new Array<KeyValueObj>();
   ArrAddCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   UserAccess: Object;
   custDataObj: CustDataObj;
@@ -120,6 +135,10 @@ export class CustMainDataComponent implements OnInit {
   });
 
   async ngOnInit() {
+    this.ddlMrCustRelationshipCodeObj.isSelectOutput = true;
+    this.ddlIdTypeObj.isSelectOutput = true;
+    this.ddlIdTypeObj.customKey = "MasterCode";
+    this.ddlIdTypeObj.customValue = "Descr";
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
 
@@ -260,6 +279,22 @@ export class CustMainDataComponent implements OnInit {
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: RefMasterTypeCode }).toPromise().then(
       (response) => {
         this.DictRefMaster[RefMasterTypeCode] = response[CommonConstant.ReturnObj];
+        switch (RefMasterTypeCode) {
+          case this.MasterGender:
+            this.isDdlMrGenderReady = true;
+            break;
+          case this.MasterCompanyType:
+            this.isDdlMrCompanyTypeReady = true;
+            break;
+          case this.MasterMaritalStat:
+            this.isDdlMaritalStatReady = true;
+            break;
+          case this.MasterJobPosition:
+            this.isDdlMasterJobPositionReady = true;
+            break;
+          default:
+            break;
+        }
       });
   }
 
@@ -269,15 +304,18 @@ export class CustMainDataComponent implements OnInit {
     await this.GetListActiveRefMaster(this.MasterMaritalStat);
     await this.GetListActiveRefMaster(this.MasterCompanyType);
     await this.GetListActiveRefMaster(this.MasterJobPosition);
+
     await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel, MappingCode: this.MrCustTypeCode }).toPromise().then(
       (response) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
+        this.isDdlMrCustModelReady = true;
       }
     );
 
-    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).toPromise().then(
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeIdType }).toPromise().then(
       (response) => {
         this.IdTypeObj = response[CommonConstant.RefMasterObjs];
+        this.isDdlIdTypeReady = true;
         if (this.IdTypeObj.length > 0) {
           let idxDefault = this.IdTypeObj.findIndex(x => x["IsDefaultValue"]);
           this.ChangeIdType(this.IdTypeObj[idxDefault]["MasterCode"]);
@@ -308,6 +346,7 @@ export class CustMainDataComponent implements OnInit {
       this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refCustRelObj).subscribe(
         (response) => {
           this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
+          this.isDdlMrCustRelationshipReady = true
         }
       );
     } else {
@@ -315,6 +354,7 @@ export class CustMainDataComponent implements OnInit {
         async (response) => {
           this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
           if (this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMarried) await this.removeSpouse();
+          this.isDdlMrCustRelationshipReady = true
         }
       );
     }
@@ -436,12 +476,12 @@ export class CustMainDataComponent implements OnInit {
 
   async copyCustomerEvent(event) {
     if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-      this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalMainDataForCopyByCustId, { CustId: event.CustId }).subscribe(
+      this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalMainDataForCopyByCustId, { Id: event.CustId }).subscribe(
         (response) => {
           this.setDataCustomerPersonal(response.CustObj, response.CustPersonalObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
         });
     } else {
-      this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyMainDataForCopyByCustId, { CustId: event.CustId }).subscribe(
+      this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyMainDataForCopyByCustId, { Id: event.CustId }).subscribe(
         (response) => {
           this.setDataCustomerCompany(response.CustObj, response.CustCompanyObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
         });
@@ -506,6 +546,10 @@ export class CustMainDataComponent implements OnInit {
 
   disableInput() {
     this.isExisting = true;
+    this.CustMainDataForm.controls.MrGenderCode.disable();
+    this.CustMainDataForm.controls.MrIdTypeCode.disable();
+    this.CustMainDataForm.controls.MrMaritalStatCode.disable();
+    this.CustMainDataForm.controls.MrCustModelCode.disable();
     this.inputAddressObj.isReadonly = true;
     this.InputLookupCustObj.isReadonly = true;
     this.inputAddressObj.inputField.inputLookupObj.isReadonly = true;
@@ -514,6 +558,10 @@ export class CustMainDataComponent implements OnInit {
 
   enableInput() {
     this.isExisting = false;
+    this.CustMainDataForm.controls.MrGenderCode.enable();
+    this.CustMainDataForm.controls.MrIdTypeCode.enable();
+    this.CustMainDataForm.controls.MrMaritalStatCode.enable();
+    this.CustMainDataForm.controls.MrCustModelCode.enable();
     this.inputAddressObj.isReadonly = false;
     this.InputLookupCustObj.isReadonly = false;
     this.inputAddressObj.inputField.inputLookupObj.isReadonly = false;

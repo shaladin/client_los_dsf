@@ -87,8 +87,7 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
     });
     this.InputLookupCustomerObj.isReadonly = true;
 
-    var custObj = { CustId: event.CustId };
-    this.http.post(URLConstant.GetCustCompanyForCopyByCustId, custObj).subscribe(
+    this.http.post(URLConstant.GetCustCompanyForCopyByCustId, {Id : event.CustId}).subscribe(
       (response) => {
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);
@@ -144,7 +143,7 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
   setIndustryTypeName(industryTypeCode) {
     this.refIndustryObj.IndustryTypeCode = industryTypeCode;
 
-    this.http.post(URLConstant.GetRefIndustryTypeByCode, this.refIndustryObj).subscribe(
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, {Code: industryTypeCode}).subscribe(
       (response) => {
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
         this.InputLookupIndustryTypeObj.jsonSelect = response;

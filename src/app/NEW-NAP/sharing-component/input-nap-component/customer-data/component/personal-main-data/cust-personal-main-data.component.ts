@@ -108,8 +108,7 @@ export class CustPersonalMainDataComponent implements OnInit {
     this.selectedCustNo = event.CustNo;
     this.InputLookupCustomerObj.isReadonly = true;
 
-    var custObj = { CustId: event.CustId };
-    this.http.post(URLConstant.GetCustPersonalForCopyByCustId, custObj).subscribe(
+    this.http.post(URLConstant.GetCustPersonalForCopyByCustId, {Id : event.CustId}).subscribe(
       (response) => {
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);
@@ -185,7 +184,7 @@ export class CustPersonalMainDataComponent implements OnInit {
   setCountryName(countryCode) {
     this.countryObj.CountryCode = countryCode;
 
-    this.http.post(this.getCountryUrl, this.countryObj).subscribe(
+    this.http.post(this.getCountryUrl, {Code: countryCode}).subscribe(
       (response) => {
         this.InputLookupCountryObj.nameSelect = response["CountryName"];
         this.InputLookupCountryObj.jsonSelect = response;
@@ -297,9 +296,8 @@ export class CustPersonalMainDataComponent implements OnInit {
     idExpiredDate.updateValueAndValidity();
   }
 
-  async bindIdTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, this.refMasterObj).toPromise().then(
+  async bindIdTypeObj() {    
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, {Code : CommonConstant.RefMasterTypeCodeIdType}).toPromise().then(
       (response) => {
         this.IdTypeObj = response["RefMasterObjs"];
         if (this.IdTypeObj.length > 0) {
@@ -344,9 +342,9 @@ export class CustPersonalMainDataComponent implements OnInit {
 
   async bindNationalityObj() {
     // this.refMasterObj.RefMasterTypeCode = "NATIONALITY";
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeNationality;
+    // this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeNationality;
     // var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
-    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, {Code : CommonConstant.RefMasterTypeCodeNationality}).toPromise().then(
       (response) => {
         this.NationalityObj = response["RefMasterObjs"];
         if (this.NationalityObj.length > 0) {

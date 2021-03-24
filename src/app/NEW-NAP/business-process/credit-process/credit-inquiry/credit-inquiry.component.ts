@@ -41,7 +41,7 @@ export class CreditInquiryComponent implements OnInit {
       AdInsHelper.OpenAppViewByAppId(ev.RowObj.AppId);
     }
     else if (ev.Key == "customer") {
-      this.http.post(URLConstant.GetCustByCustNo, { CustNo: ev.RowObj.CustNo }).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, { TrxNo: ev.RowObj.CustNo }).subscribe(
         (response) => {
           AdInsHelper.OpenCustomerViewByCustId(response['CustId']);
         }

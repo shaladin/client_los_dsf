@@ -15,6 +15,7 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 
 @Component({
   selector: 'app-cust-detail-company',
@@ -32,6 +33,7 @@ export class CustDetailCompanyComponent implements OnInit {
   AppCustCompanyObj: AppCustCompanyObj = new AppCustCompanyObj();
   businessDt: Date = new Date();
   CustModelObj: Array<KeyValueObj> = new Array();
+  ddlCustModelObj: UcDropdownListObj = new UcDropdownListObj();
   industryTypeObj = {
     IndustryTypeCode: ""
   };
@@ -48,7 +50,7 @@ export class CustDetailCompanyComponent implements OnInit {
     MrCustModelCode: ['', Validators.required],
   })
 
-  async ngOnInit() {
+  ngOnInit() {
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -68,16 +70,13 @@ export class CustDetailCompanyComponent implements OnInit {
     this.lookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.lookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.lookupIndustryTypeObj.isReady = true;
-    await this.GetCustModel();
+    this.GetCustModel();
     this.GetData();
   }
 
-  async GetCustModel() {
-    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel, MappingCode: CommonConstant.CustTypeCompany }).toPromise().then(
-      (response) => {
-        this.CustModelObj = response[CommonConstant.ReturnObj];
-      }
-    );
+  GetCustModel() {
+    this.ddlCustModelObj.apiUrl = URLConstant.GetListActiveRefMasterWithMappingCodeAll;
+    this.ddlCustModelObj.requestObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel, MappingCode: CommonConstant.CustTypeCompany };
   }
 
   GetIndustryType(event) {
@@ -126,7 +125,7 @@ export class CustDetailCompanyComponent implements OnInit {
       (response) => {
         if (response.AppCustCompanyObj.IndustryTypeCode != null) {
           this.industryTypeObj.IndustryTypeCode = response.AppCustCompanyObj.IndustryTypeCode;
-          this.http.post(URLConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
+          this.http.post(URLConstant.GetRefIndustryTypeByCode, {Code: response.AppCustCompanyObj.IndustryTypeCode}).subscribe(
             (response) => {
               this.lookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
               this.lookupIndustryTypeObj.jsonSelect = response;
@@ -146,7 +145,7 @@ export class CustDetailCompanyComponent implements OnInit {
         this.AppCustCompanyObj.RowVersion = response.AppCustCompanyObj.RowVersion;
 
         if (response.AppCustGrpObj != null && response.AppCustGrpObj.CustNo != "") {
-          this.http.post(URLConstant.GetCustByCustNo, { CustNo: response.AppCustGrpObj.CustNo }).subscribe(
+          this.http.post(URLConstant.GetCustByCustNo, { TrxNo: response.AppCustGrpObj.CustNo }).subscribe(
             (responseCustGrp) => {
               this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
               this.lookupCustGrpObj.jsonSelect = { CustName: responseCustGrp["CustName"] };

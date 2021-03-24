@@ -316,7 +316,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         }
 
 
-        this.http.post(URLConstant.GetRefPayFreqByPayFreqCode, this.mouCustFctrObj).subscribe(
+        this.http.post(URLConstant.GetRefPayFreqByPayFreqCode, {Code: this.mouCustFctrObj.PayFreqCode}).subscribe(
           (response) => {
             this.allPayFreq = response;
             var PayFreqCode = null;
@@ -521,7 +521,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   async GetGSValueSalesOfficer() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
       (response) => {
         console.log(response);
         var addCrit3 = new CriteriaObj();

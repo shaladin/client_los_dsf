@@ -22,6 +22,7 @@ export class SubsidyAddEditComponent implements OnInit {
   @Input() AppId: number;
   @Input() listAppFeeObj: Array<AppFeeObj>;
   @Input() ParentForm: FormGroup;
+  @Input() BizTemplateCode: string;
   @Output() emitData = new EventEmitter();
 
   FormAppSubsidy: FormGroup;
@@ -164,15 +165,12 @@ export class SubsidyAddEditComponent implements OnInit {
           }
         }
 
-        this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-          (response) => {
-            if (response.BizTemplateCode == CommonConstant.CFRFN4W || response.BizTemplateCode == CommonConstant.CFNA) {
-              let supplierIndex = this.FromTypeCodeOptions.findIndex(x => x.Key == CommonConstant.SubsidyFromTypeSupplier);
-              if (supplierIndex != -1) {
-                this.FromTypeCodeOptions.splice(supplierIndex, 1);
-              }
-            }
-          });
+        if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
+          let supplierIndex = this.FromTypeCodeOptions.findIndex(x => x.Key == CommonConstant.SubsidyFromTypeSupplier);
+          if (supplierIndex != -1) {
+            this.FromTypeCodeOptions.splice(supplierIndex, 1);
+          }
+        }
 
         // Check Ins Type if contain Off System or By Cust
         let insIndex = this.FromTypeCodeOptions.findIndex(x => x.Key == CommonConstant.SubsidyFromTypeIns);

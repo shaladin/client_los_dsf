@@ -67,7 +67,7 @@ export class ExistingMouCompanyComponent implements OnInit {
       response => {
         this.MouCustObj = response['MouCustObj'];
         var custObj = { CustNo: this.MouCustObj['CustNo'] };
-        this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        this.http.post(URLConstant.GetCustByCustNo, {TrxNo : this.MouCustObj['CustNo']}).subscribe(
           response => {
             this.cust = response;
           }

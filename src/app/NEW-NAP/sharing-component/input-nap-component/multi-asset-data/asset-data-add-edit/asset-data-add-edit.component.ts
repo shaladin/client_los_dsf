@@ -844,7 +844,7 @@ export class AssetDataAddEditComponent implements OnInit {
         this.GenerataAppAssetAttr(false);
 
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
-          AssetTypeCode: assetType["CompntValue"]
+          Code: assetType["CompntValue"]
         }).subscribe(
           (response: any) => {
             while (this.items.length) {
@@ -1582,7 +1582,8 @@ export class AssetDataAddEditComponent implements OnInit {
 
   setAppAccessory(i, AssetAccessoryCode) {
     this.accObj.AssetAccessoryCode = AssetAccessoryCode;
-    this.http.post(URLConstant.GetAssetAccessoryByCode, this.accObj).subscribe(
+    let obj = {Code: this.accObj.AssetAccessoryCode}
+    this.http.post(URLConstant.GetAssetAccessoryByCode, obj).subscribe(
       (response) => {
         this.dictAccLookup[i].nameSelect = response["AssetAccessoryName"];
         this.dictAccLookup[i].jsonSelect = response;
