@@ -128,7 +128,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         }
       });
 
-    await this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, { VerfResultHId: this.VerfResultHId }).toPromise().then(
+    await this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, { Id: this.VerfResultHId }).toPromise().then(
       async (response) => {
         this.newVerfResultHObj.VerfResultId = response.VerfResultId;
         this.newVerfResultHObj.VerfSchemeHId = response.VerfSchemeHId;

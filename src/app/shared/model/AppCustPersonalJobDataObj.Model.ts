@@ -10,6 +10,8 @@ export class AppCustPersonalJobDataObj {
     MrJobPositionCode: string;
     MrJobStatCode: string;
     IsMfEmp: boolean;
+    IsWellknownCoy: boolean;
+    MrWellknownCoyCode: string;
     IndustryTypeCode: string;
     IndustryTypeName: string;
     MrCompanyScaleCode: string;
@@ -42,6 +44,8 @@ constructor() {
     this.MrJobPositionCode = "";
     this.MrJobStatCode = "";
     this.IsMfEmp = false;
+    this.IsWellknownCoy = false;
+    this.MrWellknownCoyCode = "";
     this.IndustryTypeCode = "";
     this.IndustryTypeName = "";
     this.MrCompanyScaleCode = "";
