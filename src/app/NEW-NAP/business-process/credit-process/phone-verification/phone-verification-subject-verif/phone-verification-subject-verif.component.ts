@@ -405,7 +405,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
   bindResultObj() {
     this.refStatusObj.StatusGrpCode = CommonConstant.StatusGrpVerfResultStat;
-    this.http.post(this.getRefStatusUrl, this.refStatusObj).subscribe(
+    this.http.post(this.getRefStatusUrl, {Code : CommonConstant.StatusGrpVerfResultStat}).subscribe(
       (response) => {
         this.ResultObj = response[CommonConstant.ReturnObj];
         if (this.ResultObj.length > 0) {

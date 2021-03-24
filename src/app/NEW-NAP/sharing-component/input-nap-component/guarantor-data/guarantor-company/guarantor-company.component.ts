@@ -281,7 +281,7 @@ export class GuarantorCompanyComponent implements OnInit {
             });
 
             if (this.resultData.RefIndustryTypeId != null) {
-              this.http.post(URLConstant.GetRefIndustryTypeByRefIndustryTypeId, { RefIndustryTypeId: this.resultData.RefIndustryTypeId }).subscribe(
+              this.http.post(URLConstant.GetRefIndustryTypeByRefIndustryTypeId, { Id: this.resultData.RefIndustryTypeId }).subscribe(
                 (response) => {
                   this.inputLookupObj1.nameSelect = response["IndustryTypeName"];
                   this.inputLookupObj1.jsonSelect = response;
@@ -538,7 +538,7 @@ export class GuarantorCompanyComponent implements OnInit {
     };
     refIndustryObj.IndustryTypeCode = industryTypeCode;
 
-    this.http.post(URLConstant.GetRefIndustryTypeByCode, refIndustryObj).subscribe(
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, {Code: industryTypeCode}).subscribe(
       (response) => {
         this.inputLookupObj1.nameSelect = response["IndustryTypeName"];
         this.inputLookupObj1.jsonSelect = response;

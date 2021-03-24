@@ -86,7 +86,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         this.SubjectResponse = response;
       });
 
-    await this.http.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { StatusGrpCode: CommonConstant.StatusGrpVerfResultStat }).toPromise().then(
+    await this.http.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { Code: CommonConstant.StatusGrpVerfResultStat }).toPromise().then(
       (response) => {
         this.RefStatusList = response[CommonConstant.ReturnObj];
         this.CustConfirm.patchValue({

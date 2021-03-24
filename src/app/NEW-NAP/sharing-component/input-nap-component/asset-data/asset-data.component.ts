@@ -2051,7 +2051,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetProvDistrict() {
-    this.http.post(URLConstant.GetRefProvDistrictByProvDistrictCode, this.districtObj).subscribe(
+    this.http.post(URLConstant.GetRefProvDistrictByProvDistrictCode, {Code : this.districtObj.ProvDistrictCode}).subscribe(
       (response) => {
         this.DistrictObj = response;
         this.AssetDataForm.patchValue({

@@ -144,7 +144,7 @@ export class MouCustJobDataComponent implements OnInit {
 
   setProfessionName(professionCode) {
     this.professionObj.ProfessionCode = professionCode;
-    this.http.post(URLConstant.GetRefProfessionByCode, this.professionObj).subscribe(
+    this.http.post(URLConstant.GetRefProfessionByCode, {Code : professionCode}).subscribe(
       (response) => {
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
         this.InputLookupProfessionObj.jsonSelect = response;
@@ -157,7 +157,7 @@ export class MouCustJobDataComponent implements OnInit {
 
   setIndustryTypeName(industryTypeCode) {
     this.industryTypeObj.IndustryTypeCode = industryTypeCode;
-    this.http.post(URLConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, {Code: industryTypeCode}).subscribe(
       (response) => {
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
         this.InputLookupIndustryTypeObj.jsonSelect = response;
