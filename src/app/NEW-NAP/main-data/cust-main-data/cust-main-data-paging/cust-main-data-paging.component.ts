@@ -65,8 +65,7 @@ export class CustMainDataPagingComponent implements OnInit {
 
   AddApp() {
     if (!this.bizTemplateCode) return;
-    var obj = { OfficeCode: this.userAccess.OfficeCode };
-    this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
+    this.http.post(URLConstant.GetRefOfficeByOfficeCode, {Code : this.userAccess.OfficeCode}).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP1_ADD], { "BizTemplateCode": this.bizTemplateCode });

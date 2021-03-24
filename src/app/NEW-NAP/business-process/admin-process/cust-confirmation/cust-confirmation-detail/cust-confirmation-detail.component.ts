@@ -86,7 +86,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   }
 
   async GetVerfResult(IsAdded: boolean = false) {
-    await this.http.post(URLConstant.GetVerfResultHsByTrxRefNo, { TrxRefNo: this.AgrmntNo }).toPromise().then(
+    await this.http.post(URLConstant.GetVerfResultHsByTrxRefNo, { TrxNo: this.AgrmntNo }).toPromise().then(
       async (response) => {
         this.VerfResultList = response["responseVerfResultHCustomObjs"];
         this.CustCnfrmObj.Phone = "-";
