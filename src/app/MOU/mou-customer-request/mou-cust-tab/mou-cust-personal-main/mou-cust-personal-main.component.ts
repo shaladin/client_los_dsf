@@ -262,7 +262,7 @@ export class MouCustPersonalMainComponent implements OnInit {
   }
 
   bindAllRefMasterObj() {
-    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { "RefMasterTypeCode": CommonConstant.RefMasterTypeCodeIdType }).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
       (response) => {
         this.IdTypeObj = response["RefMasterObjs"];
         if (this.IdTypeObj.length > 0) {
@@ -302,7 +302,7 @@ export class MouCustPersonalMainComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { "RefMasterTypeCode": CommonConstant.RefMasterTypeCodeNationality }).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code : CommonConstant.RefMasterTypeCodeNationality }).subscribe(
       (response) => {
         this.NationalityObj = response["RefMasterObjs"];
         if (this.NationalityObj.length > 0) {

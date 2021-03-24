@@ -277,7 +277,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
             this.CompanyForm.patchValue({
               MrCompanyTypeCode: this.resultData.MrCompanyTypeCode
             });
-            this.http.post(URLConstant.GetRefIndustryTypeByRefIndustryTypeId, { RefIndustryTypeId: this.resultData.RefIndustryTypeId }).subscribe(
+            this.http.post(URLConstant.GetRefIndustryTypeByRefIndustryTypeId, { Id: this.resultData.RefIndustryTypeId }).subscribe(
               (response) => {
                 this.inputLookupObj1.nameSelect = response["IndustryTypeName"];
                 this.inputLookupObj1.jsonSelect = response;
@@ -577,7 +577,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
     };
     refIndustryObj.IndustryTypeCode = industryTypeCode;
 
-    this.http.post(URLConstant.GetRefIndustryTypeByCode, refIndustryObj).subscribe(
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, {Code: industryTypeCode}).subscribe(
       (response) => {
         this.inputLookupObj1.nameSelect = response["IndustryTypeName"];
         this.inputLookupObj1.jsonSelect = response;

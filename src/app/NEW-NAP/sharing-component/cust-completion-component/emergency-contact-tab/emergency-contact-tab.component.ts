@@ -99,7 +99,7 @@ export class EmergencyContactTabComponent implements OnInit {
   }
 
   setDropdown() {
-    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
       (response) => {
         this.IdTypeObj = response[CommonConstant.RefMasterObjs];
         if (this.IdTypeObj.length > 0) {

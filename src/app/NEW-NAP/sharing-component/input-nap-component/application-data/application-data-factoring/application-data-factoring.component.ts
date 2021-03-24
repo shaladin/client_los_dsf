@@ -316,7 +316,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         }
 
 
-        this.http.post(URLConstant.GetRefPayFreqByPayFreqCode, this.mouCustFctrObj).subscribe(
+        this.http.post(URLConstant.GetRefPayFreqByPayFreqCode, {Code: this.mouCustFctrObj.PayFreqCode}).subscribe(
           (response) => {
             this.allPayFreq = response;
             var PayFreqCode = null;

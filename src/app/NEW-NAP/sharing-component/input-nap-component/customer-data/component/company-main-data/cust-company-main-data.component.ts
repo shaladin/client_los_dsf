@@ -152,7 +152,7 @@ export class CustCompanyMainDataComponent implements OnInit {
   setIndustryTypeName(industryTypeCode) {
     this.refIndustryObj.IndustryTypeCode = industryTypeCode;
 
-    this.http.post(URLConstant.GetRefIndustryTypeByCode, this.refIndustryObj).subscribe(
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, {Code: industryTypeCode}).subscribe(
       (response) => {
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
         this.InputLookupIndustryTypeObj.jsonSelect = response;
