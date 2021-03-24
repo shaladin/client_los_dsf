@@ -3,7 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { DOCUMENT } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
-import { InputReportObj } from 'app/shared/model/Report/InputReportObj.model';
+import { InputReportObj } from 'app/shared/model/library/InputReportObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
