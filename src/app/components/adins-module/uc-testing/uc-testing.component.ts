@@ -97,17 +97,19 @@ export class UcTestingComponent implements OnInit {
           fileName = fileName + ".pdf";
         }
 
-        const downloadLink = document.createElement("a");
-        downloadLink.href = linkSource;
-        downloadLink.download = fileName;
-        // var iframe = "<iframe width='100%' height='100%' src='" + linkSource + "'></iframe>";
-        // var x = window.open();
-        // x.document.open();
-        // x.document.write(iframe);
-        // x.document.close();
-
         if (response["ReportFile"] != undefined) {
-          downloadLink.click();
+          if (ev.ExportType != 0) {
+            const downloadLink = document.createElement("a");
+            downloadLink.href = linkSource;
+            downloadLink.download = fileName;
+            downloadLink.click();
+          } else {
+            var iframe = "<iframe width='100%' height='100%' src='" + linkSource + "'></iframe>";
+            var x = window.open();
+            x.document.open();
+            x.document.write(iframe);
+            x.document.close();
+          }
           this.toastr.success(response['message'], 'Success!');
         } else {
           this.toastr.error(response['Message']);

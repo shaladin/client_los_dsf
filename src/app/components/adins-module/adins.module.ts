@@ -24,27 +24,10 @@ import { UcthingstodoModule } from '@adins/ucthingstodo';
 import { UcdropdownlistModule } from '@adins/ucdropdownlist';
 import { UcreportModule } from "@adins/ucreport";
 import { UcTestingComponent } from './uc-testing/uc-testing.component';
-import { PageTestingComponent } from './page-testing/page-testing.component';
-import { UcTesting2Component } from './uc-testing2/uc-testing2.component';
-import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
-
-export const customCurrencyMaskConfig = {     
-    align: "right",
-    allowNegative: false,
-    allowZero: true,
-    decimal: ".",
-    precision: 2,
-    prefix: "",
-    suffix: "",
-    thousands: ",",
-    nullable: false,
-    inputMode: CurrencyMaskInputMode.NATURAL };
     
 @NgModule({
     declarations: [
         UcTestingComponent,
-        PageTestingComponent,
-        UcTesting2Component
     ],
     exports: [
         FormsModule,
@@ -96,7 +79,6 @@ export const customCurrencyMaskConfig = {
         UcthingstodoModule,
         UcreportModule,
         UcdropdownlistModule,
-        NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     ]
 })
 
