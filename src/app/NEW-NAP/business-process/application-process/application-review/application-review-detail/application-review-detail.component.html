@@ -113,15 +113,8 @@
                   <label class="adInsLabel" translate>Return Reason</label>
                 </div>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
-                          (change)="onChangeReason($event)"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Reason.invalid}">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let it of DDLData[DDLReason]" value="{{it.Key}}">
-                      {{it.Value}}
-                    </option>
-                  </select>
-                  <lib-uc-show-errors [control]="Reason" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  <lib-ucdropdownlist [dropdownListObj]="DdlReasonObj" [parentForm]="FormObj" [enjiForm]="enjiForm"
+                    [identifier]="'Reason'" (callback) = "onChangeReason($event)"></lib-ucdropdownlist>
                 </div>
               </div>
 

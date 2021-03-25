@@ -20,6 +20,7 @@ import { environment } from 'environments/environment';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { CookieService } from 'ngx-cookie';
+import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 
 @Component({
   selector: 'app-application-review-detail',
@@ -54,6 +55,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
   });
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
+  DdlReasonObj: UcDropdownListObj = new UcDropdownListObj();
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -82,10 +84,10 @@ export class ApplicationReviewDetailComponent implements OnInit {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.initData();
+    this.BindDDLReasonReturn();
     await this.ClaimTask();
     await this.GetAppNo();
     await this.BindDDLRecommendation();
-    await this.BindDDLReasonReturn();
     await this.BindCreditAnalysisItemFormObj();
     await this.BindAppvAmt();
     await this.GetExistingCreditReviewData();
@@ -106,9 +108,9 @@ export class ApplicationReviewDetailComponent implements OnInit {
     });
   }
 
-  onChangeReason(ev) {
+  onChangeReason(ev: UcDropdownListCallbackObj) {
     this.FormObj.patchValue({
-      ReasonDesc: ev.target.selectedOptions[0].text
+      ReasonDesc: ev.selectedObj.Value
     });
   }
   //#endregion
@@ -165,13 +167,10 @@ export class ApplicationReviewDetailComponent implements OnInit {
       });
   }
 
-  readonly DDLReason: string = "REASON";
-  async BindDDLReasonReturn() {
-    let obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
-    await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
-      (response) => {
-        this.DDLData[this.DDLReason] = response[CommonConstant.ReturnObj];
-      });
+  BindDDLReasonReturn() {
+    this.DdlReasonObj.apiUrl = URLConstant.GetListActiveRefReason;
+    this.DdlReasonObj.requestObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
+    this.DdlReasonObj.isSelectOutput = true;
   }
   //#endregion
 
@@ -238,17 +237,17 @@ export class ApplicationReviewDetailComponent implements OnInit {
       Notes: ""
     });
 
-    //if (!this.isReturnOn) {
-    //  this.isReturnOn = true;;
-    //  this.FormObj.controls.Reason.setValidators([Validators.required]);
-    //  this.FormObj.controls.Notes.setValidators([Validators.required]);
-    //} else {
-    //  this.isReturnOn = false;
-    //  this.FormObj.controls.Reason.clearValidators()
-    //  this.FormObj.controls.Notes.clearValidators()
-    //}
-    //this.FormObj.controls.Reason.updateValueAndValidity();
-    //this.FormObj.controls.Notes.updateValueAndValidity();
+    if (!this.isReturnOn) {
+     this.isReturnOn = true;;
+     this.FormObj.controls.Reason.setValidators([Validators.required]);
+     this.FormObj.controls.Notes.setValidators([Validators.required]);
+    } else {
+     this.isReturnOn = false;
+     this.FormObj.controls.Reason.clearValidators()
+     this.FormObj.controls.Notes.clearValidators()
+    }
+    this.FormObj.controls.Reason.updateValueAndValidity();
+    this.FormObj.controls.Notes.updateValueAndValidity();
 
   }
 
