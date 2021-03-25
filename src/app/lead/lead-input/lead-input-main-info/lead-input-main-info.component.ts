@@ -161,7 +161,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
         this.vendorExistObj = new VendorObj();
         this.vendorExistObj.VendorCode = this.returnExistLead.AgencyCode;
-        this.http.post(this.getVendorByVendorCode, this.vendorExistObj).subscribe(
+        this.http.post(this.getVendorByVendorCode, {Code : this.returnExistLead.AgencyCode}).subscribe(
           (response) => {
             this.returnVendorExistObj = response;
             this.agencyLookUpObj.nameSelect = this.returnVendorExistObj.VendorName;
@@ -262,7 +262,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
           this.vendorObj = new VendorObj();
           this.vendorObj.VendorCode = this.returnLead.AgencyCode;
-          this.http.post(this.getVendorByVendorCode, this.vendorObj).subscribe(
+          this.http.post(this.getVendorByVendorCode, {Code : this.returnLead.AgencyCode}).subscribe(
             (response) => {
               this.returnVendorObj = response;
               this.agencyLookUpObj.nameSelect = this.returnVendorObj.VendorName;

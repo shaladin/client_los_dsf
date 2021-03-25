@@ -501,7 +501,7 @@ export class LeadInputCustDataComponent implements OnInit {
 
                   this.refProfessionObj = new RefProfessionObj();
                   this.refProfessionObj.ProfessionCode = this.resLeadCustPersonalJobDataObj.MrProfessionCode;
-                  this.http.post(this.getRefProfessionByCode, this.refProfessionObj).subscribe(
+                  this.http.post(this.getRefProfessionByCode, {Code : this.resLeadCustPersonalJobDataObj.MrProfessionCode}).subscribe(
                     (response) => {
                       this.returnRefProfessionObj = response;
                       this.professionLookUpObj.nameSelect = this.returnRefProfessionObj.ProfessionName;
@@ -657,7 +657,7 @@ export class LeadInputCustDataComponent implements OnInit {
                     });
                     this.refProfessionObj = new RefProfessionObj();
                     this.refProfessionObj.ProfessionCode = this.resLeadCustPersonalJobDataObj.MrProfessionCode;
-                    this.http.post(this.getRefProfessionByCode, this.refProfessionObj).subscribe(
+                    this.http.post(this.getRefProfessionByCode, {Code : this.resLeadCustPersonalJobDataObj.MrProfessionCode}).subscribe(
                       (response) => {
                         this.returnRefProfessionObj = response;
                         this.professionLookUpObj.nameSelect = this.returnRefProfessionObj.ProfessionName;
@@ -1036,7 +1036,7 @@ export class LeadInputCustDataComponent implements OnInit {
                   });
                   this.refProfessionObj = new RefProfessionObj();
                   this.refProfessionObj.ProfessionCode = this.resLeadCustPersonalJobDataObj.MrProfessionCode;
-                  this.http.post(this.getRefProfessionByCode, this.refProfessionObj).subscribe(
+                  this.http.post(this.getRefProfessionByCode, {Code : this.resLeadCustPersonalJobDataObj.MrProfessionCode}).subscribe(
                     (response) => {
                       this.returnRefProfessionObj = response;
                       this.professionLookUpObj.nameSelect = this.returnRefProfessionObj.ProfessionName;

@@ -101,7 +101,6 @@ export class MouCustListedCustFctrComponent implements OnInit {
 
   openView(custNo) {
     var link: string;
-    var custObj = { CustNo: custNo };
     this.httpClient.post(URLConstant.GetCustByCustNo, {TrxNo : custNo}).subscribe(
       response => {
         AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);

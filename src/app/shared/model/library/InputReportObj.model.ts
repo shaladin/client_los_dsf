@@ -1,3 +1,5 @@
+import { environment } from "environments/environment";
+
 export class InputReportObj {
     JsonPath: string;
     EnvironmentUrl: string;
@@ -6,8 +8,8 @@ export class InputReportObj {
     
     constructor() {
         this.JsonPath = "",
-        this.EnvironmentUrl = "",
-        this.ApiReportPath = "/Report/GenerateReportSync",
+        this.EnvironmentUrl = environment.FoundationR3Url,
+        this.ApiReportPath = "/Report/GenerateReportR3",
         this.ddlEnvironments = new Array<EnviObj>();
     }
 }

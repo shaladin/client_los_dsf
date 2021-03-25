@@ -2004,7 +2004,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   async GetVendor() {
-    await this.http.post(URLConstant.GetVendorByVendorCode, this.vendorObj).toPromise().then(
+    await this.http.post(URLConstant.GetVendorByVendorCode, {Code : this.vendorObj.VendorCode}).toPromise().then(
       (response) => {
         this.VendorObj = response;
         this.AssetDataForm.patchValue({
@@ -2019,7 +2019,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   async GetVendorForView() {
-    await this.http.post(URLConstant.GetVendorByVendorCode, this.vendorObj).toPromise().then(
+    await this.http.post(URLConstant.GetVendorByVendorCode, {Code : this.vendorObj.VendorCode}).toPromise().then(
       (response) => {
         this.VendorObj = response;
         this.AssetDataForm.patchValue({
@@ -2051,7 +2051,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetProvDistrict() {
-    this.http.post(URLConstant.GetRefProvDistrictByProvDistrictCode, this.districtObj).subscribe(
+    this.http.post(URLConstant.GetRefProvDistrictByProvDistrictCode, {Code : this.districtObj.ProvDistrictCode}).subscribe(
       (response) => {
         this.DistrictObj = response;
         this.AssetDataForm.patchValue({
@@ -2107,7 +2107,7 @@ export class AssetDataComponent implements OnInit {
             var supervisor = {
               "VendorEmpId": this.EmpObj[i]["SupervisorId"]
             }
-            this.http.post(URLConstant.GetVendorEmpByVendorEmpId, supervisor).subscribe(
+            this.http.post(URLConstant.GetVendorEmpByVendorEmpId, {Id : this.EmpObj[i]["SupervisorId"]}).subscribe(
               (response) => {
                 this.salesSupervisor = response["VendorEmpName"];
               }
@@ -2262,7 +2262,7 @@ export class AssetDataComponent implements OnInit {
 
   setAppAccessorySupplier(i, SupplCode) {
     this.vendorAccSuppObj.VendorCode = SupplCode;
-    this.http.post(URLConstant.GetVendorByVendorCode, this.vendorAccSuppObj).subscribe(
+    this.http.post(URLConstant.GetVendorByVendorCode, {Code : SupplCode}).subscribe(
       (response) => {
         this.dictSuppLookup[i].nameSelect = response["VendorName"];
         this.dictSuppLookup[i].jsonSelect = response;
@@ -2334,7 +2334,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetVendorAccessories() {
-    this.http.post(URLConstant.GetVendorByVendorCode, this.vendorObj).subscribe(
+    this.http.post(URLConstant.GetVendorByVendorCode, {Code : this.vendorObj.VendorCode}).subscribe(
       (response) => {
         this.VendorObj = response;
         this.AssetDataForm.patchValue({
@@ -2346,7 +2346,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetVendorEmpSupervisi() {
-    this.http.post(URLConstant.GetVendorEmpSupervisorByVendorEmpNo, this.vendorEmpObj).subscribe(
+    this.http.post(URLConstant.GetVendorEmpSupervisorByVendorEmpNo, {TrxNo: this.vendorEmpObj.VendorEmpNo}).subscribe(
       (response) => {
         this.BranchManagerObj = response;
         if (this.BranchManagerObj.VendorEmpName != null) {

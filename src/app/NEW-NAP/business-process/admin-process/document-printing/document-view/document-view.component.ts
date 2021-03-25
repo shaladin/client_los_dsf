@@ -7,7 +7,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
 import { AgrmntDocObj } from 'app/shared/model/AgrmntDocObj.Model';
 import { AgrmntDocPrintObj } from 'app/shared/model/AgrmntDocPrintObj.Model';
-import { RdlcReportObj } from 'app/shared/model/Report/RdlcReportObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -19,6 +18,7 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AgrmntSignerObj } from 'app/shared/model/AgrmntSignerObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { RdlcReportObj } from 'app/shared/model/library/RdlcReportObj.model';
 
 @Component({
   selector: 'app-document-view',

@@ -75,7 +75,7 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
         });
       });
 
-      await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeNationality }).toPromise().then(
+      await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeNationality }).toPromise().then(
       (response) => {
         this.NationalityObj = response[CommonConstant.RefMasterObjs];
         this.ParentForm.patchValue({
@@ -177,7 +177,7 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
           RowVersionAppCustPersonal: response.AppCustPersonalObj.RowVersion
         });
         if (response.AppCustGrpObj != null && response.AppCustGrpObj.CustNo != "") {
-          this.http.post(URLConstant.GetCustByCustNo, { CustNo: response.AppCustGrpObj.CustNo }).subscribe(
+          this.http.post(URLConstant.GetCustByCustNo, { TrxNo: response.AppCustGrpObj.CustNo }).subscribe(
             (responseCustGrp) => {
               this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
               this.lookupCustGrpObj.jsonSelect = { CustName: responseCustGrp["CustName"]};
@@ -229,7 +229,7 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
     });
 
     if (custGrpObj != null && custGrpObj.length > 0 && custGrpObj[0].CustNo != "") {
-      this.http.post(URLConstant.GetCustByCustNo, { CustNo: custGrpObj[0].CustNo }).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, { TrxNo: custGrpObj[0].CustNo }).subscribe(
         (responseCustGrp) => {
           this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
           this.lookupCustGrpObj.jsonSelect = { CustName: responseCustGrp["CustName"]};

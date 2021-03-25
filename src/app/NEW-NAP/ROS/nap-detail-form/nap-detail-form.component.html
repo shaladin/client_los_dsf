@@ -101,9 +101,6 @@
               </app-application-data>
             </div>
             <div id="asset-tab" class="content" role="tabpanel" aria-labelledby="asset-tab-trigger">
-              <!-- <app-asset-data *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL' && isReady" [AppId]=appId
-                [BizTemplateCode]="bizTemplateCode" [showCancel]="showCancel" (outputTab)="NextStep('AEX')"
-                (outputCancel)="Cancel()"></app-asset-data> -->
                 <app-multi-asset-data *ngIf="AppStepIndex == 2 && stepperMode == 'PERSONAL' && isReady"[AppId]=appId
                 [BizTemplateCode]="bizTemplateCode" [showCancel]="showCancel" (outputTab)="NextStep('AEX')"
                 (outputCancel)="Cancel()"></app-multi-asset-data>

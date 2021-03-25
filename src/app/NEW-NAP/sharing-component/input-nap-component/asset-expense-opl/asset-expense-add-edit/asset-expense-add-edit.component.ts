@@ -2,18 +2,14 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { formatDate } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { AppAssetAccessoryObj } from 'app/shared/model/AppAssetAccessoryObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { AppInsuranceObj } from 'app/shared/model/AppInsuranceObj.Model';
 import { AppInsObjObj } from 'app/shared/model/AppInsObjObj.Model';
-import { InsuranceDataObj } from 'app/shared/model/InsuranceDataObj.Model';
 import { InsuranceDataInsRateRuleObj } from 'app/shared/model/InsuranceDataInsRateRuleObj.Model';
-import { ResultInsRateRuleObj } from 'app/shared/model/ResultInsRateRuleObj.Model';
 import { AppInsMainCvgObj } from 'app/shared/model/AppInsMainCvgObj.Model';
-import { AppInsAddCvgObj } from 'app/shared/model/AppInsAddCvgObj.Model';
 import { ResultSubsidySchmRuleObj } from 'app/shared/model//SubsidySchm/ResultSubsidySchmRuleObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
@@ -41,7 +37,7 @@ import { AppAssetInsFeeOplObj } from '../../../../../shared/model/AppAssetExpens
 import { AppAssetInsAddCvgOplObj } from '../../../../../shared/model/AppAssetExpense/AppAssetInsAddCvgOplObj.Model';
 import { AdInsHelper } from '../../../../../shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { AdInsConstant } from '../../../../../shared/AdInstConstant';
+import { UcDropdownListCallbackObj, UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 
 @Component({
   selector: 'app-asset-expense-add-edit',
@@ -87,7 +83,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
   maxInsLength: number = 9999;
   isCanSave: boolean = true;
   insuredByObj: Array<KeyValueObj>;
-  inscoBranchObj: Array<KeyValueObj>;
   paidByObj: Array<KeyValueObj>;
   packageTypeRuleObj: any;
   packageDetailObj: any;
@@ -110,8 +105,12 @@ export class AssetExpenseAddEditComponent implements OnInit {
   }];
   groupedAddCvgType: Array<string>;
   groupedAddCvgTypeDDL: Array<string>;
-  insAssetCoverPeriodObj: Array<KeyValueObj>;
-  insAssetRegionObj: Array<KeyValueObj>;
+  ddlInsAssetCoverPeriodObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlInsAssetRegionObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlInscoBranchObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlInsMainCvgTypeRuleObj: UcDropdownListObj = new UcDropdownListObj();
+  isDdlinsMainCvgTypeRuleReady: boolean = false;
+  isDdlInscoBranchReady: boolean = false;
   payPeriodToInscoObj: Array<KeyValueObj>;
   defaultInsMainCvgType: string;
   sumInsuredAmtObj: Array<string> = new Array<string>();
@@ -184,7 +183,10 @@ export class AssetExpenseAddEditComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     //this.InsuranceDataForm.removeControl("ServiceObjs");
     //this.InsuranceDataForm.addControl("ServiceObjs", this.fb.array([]));
+    this.ddlInsMainCvgTypeRuleObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
     this.items = this.InsuranceDataForm.get('items') as FormArray;
+    this.bindInsAssetCoverPeriodObj();
+    this.bindInsAssetRegionObj();
     await this.getMainPackage();
     await this.addFee();
     await this.getOtherExpense();
@@ -195,10 +197,8 @@ export class AssetExpenseAddEditComponent implements OnInit {
     await this.bindInsuredByObj();
     await this.bindPaidByObj();
     await this.getInsuranceData();
-    await this.bindInsAssetRegionObj();
-    await this.bindInscoBranchObj();
+    this.bindInscoBranchObj();
     await this.bindPayPeriodToInscoObj();
-    await this.bindInsAssetCoverPeriodObj();
     this.setValidator("CO");
   }
 
@@ -512,6 +512,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
   }
 
   async GenerateInsurance(appInsMainCvgObj: Array<AppAssetInsMainCvgOplObj>) {
+    this.isDdlinsMainCvgTypeRuleReady = false;
     if (appInsMainCvgObj == undefined) {
       if (this.InsuranceDataForm.controls.InscoBranchCode.value == "") {
         this.toastr.warningMessage("Please choose Insco Branch.");
@@ -589,6 +590,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
       }
     );
     this.BindCapitalize();
+    this.isDdlinsMainCvgTypeRuleReady = true;
   }
   feeTypeObj: Array<KeyValueObj>;
   GenerateInsFee(ListFee: Array<InsFeeObj>) {
@@ -1047,8 +1049,8 @@ export class AssetExpenseAddEditComponent implements OnInit {
     });
   }
 
-  changeMainCvgddl(event) {
-    this.bindAddCheckbox(event.target.value);
+  changeMainCvgddl(event: UcDropdownListCallbackObj) {
+    this.bindAddCheckbox(event.selectedValue);
   }
 
   IsAddCvgChanged(event) {
@@ -1144,35 +1146,14 @@ export class AssetExpenseAddEditComponent implements OnInit {
     }
   }
 
-  CvgAmtChanged() {
-    this.isGenerate = false;
-    this.isCalculate = false;
-  }
-
-  CustAdminFeeAmtChanged() {
-    this.isCalculate = false;
-  }
-
-  CoverPeriodChanged(event) {
-    //this.setInsLengthDefaultValue(event.target.value);
-    this.isGenerate = false;
-    this.isCalculate = false;
-  }
-
-  AssetRegionChanged() {
-    this.isGenerate = false;
-    this.isCalculate = false;
-  }
-
-  InsLengthChanged() {
+  setGenerateCalculateValidation(){
     this.isGenerate = false;
     this.isCalculate = false;
   }
 
   InsAssetPaidByChanged(event) {
     this.setPaidByInput(event.target.value);
-    this.isGenerate = false;
-    this.isCalculate = false;
+    this.setGenerateCalculateValidation();
   }
 
   EndDt_FocusOut() {
@@ -1315,10 +1296,10 @@ export class AssetExpenseAddEditComponent implements OnInit {
     }
   }
 
-  InscoBranchCodeChanged(event) {
-    if (event.target.value != "") {
+  InscoBranchCodeChanged(event:UcDropdownListCallbackObj) {
+    if (event.selectedObj != undefined) {
       this.InsuranceDataForm.patchValue({
-        InscoBranchName: this.inscoBranchObj.find(x => x.Key == event.target.value).Value
+        InscoBranchName: event.selectedObj.Value
       });
     } else {
       this.InsuranceDataForm.patchValue({
@@ -1472,6 +1453,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
     await this.http.post(URLConstant.GetAssetExpenseDataByAppAssetId, reqObj).toPromise().then(
       (response) => {
         this.appObj = response["AppObj"];
+        this.isDdlInscoBranchReady = true;
         this.InsuranceDataForm.patchValue({
           InsLength: this.appObj.Tenor
         });
@@ -1820,58 +1802,36 @@ export class AssetExpenseAddEditComponent implements OnInit {
 
   }
 
-  async bindInsAssetCoverPeriodObj() {
+  bindInsAssetCoverPeriodObj() {
     var ListMapCodes = new Array<string>();
-    ListMapCodes.push("OPL");
-    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsCoverPeriod, MappingCodes: ListMapCodes };
-    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterCodeAndMappingCodes, refMasterObj).toPromise().then(
-      (response) => {
-        this.insAssetCoverPeriodObj = response[CommonConstant.ReturnObj];
-        if (this.insAssetCoverPeriodObj.length > 0 && this.isInsDataExist) {
-          let idxTemp = this.insAssetCoverPeriodObj.findIndex(x => x.Key == CommonConstant.CoverPeriodFullTenor);
-          this.InsuranceDataForm.patchValue({
-            InsAssetCoverPeriod: this.insAssetCoverPeriodObj[idxTemp].Key
-          });
-
-          //this.setInsLengthDefaultValue(this.insAssetCoverPeriodObj[idxTemp].Key);
-        }
-      }
-    );
+    ListMapCodes.push(CommonConstant.OPL);
+    this.ddlInsAssetCoverPeriodObj.apiUrl = URLConstant.GetListActiveRefMasterByRefMasterCodeAndMappingCodes;
+    this.ddlInsAssetCoverPeriodObj.requestObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsCoverPeriod, MappingCodes: ListMapCodes };
+    this.ddlInsAssetCoverPeriodObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.ddlInsAssetCoverPeriodObj.isSelectOutput = true;
   }
 
   async bindInsAssetRegionObj() {
-    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetInsRegion };
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
-      (response) => {
-        this.insAssetRegionObj = response[CommonConstant.ReturnObj];
-        var assetObj = { Id: this.AppAssetId };
-        if (this.isInsDataExist == false) {
-          this.http.post(URLConstant.GetAssetRegionFromRuleByAppAssetId, assetObj).subscribe(
-            response => {
-              var res = response["AssetRegion"];
-              this.InsuranceDataForm.patchValue({
-                InsAssetRegion: res
-              });
-            }
-          );
-        }
-      }
-    );
-  }
-
-  async bindInscoBranchObj() {
-    var inscoBranchObj = { MrVendorCategory: CommonConstant.VendorCategoryAssetInscoBranch, OfficeCode: this.appObj.OriOfficeCode };
-    await this.http.post(URLConstant.GetListKeyValueActiveVendorByCategoryCodeAndOfficeCode, inscoBranchObj).toPromise().then(
-      (response) => {
-        this.inscoBranchObj = response[CommonConstant.ReturnObj];
-        if (this.inscoBranchObj.length > 0 && this.inscoBranchObj.length == 1 && this.isInsDataExist == false) {
+    if (this.isInsDataExist == false) {
+      this.http.post(URLConstant.GetAssetRegionFromRuleByAppAssetId, { Id: this.AppAssetId }).subscribe(
+        response => {
+          var res = response["AssetRegion"];
           this.InsuranceDataForm.patchValue({
-            InscoBranchCode: this.inscoBranchObj[0].Key,
-            InscoBranchName: this.inscoBranchObj[0].Value
+            InsAssetRegion: res
           });
         }
-      }
-    );
+      );
+    }
+    this.ddlInsAssetRegionObj.apiUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.ddlInsAssetRegionObj.requestObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetInsRegion };
+    this.ddlInsAssetRegionObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.ddlInsAssetRegionObj.isSelectOutput = true;
+  }
+
+  bindInscoBranchObj() {
+    this.ddlInscoBranchObj.apiUrl = URLConstant.GetListKeyValueActiveVendorByCategoryCodeAndOfficeCode;
+    this.ddlInscoBranchObj.requestObj = { MrVendorCategory: CommonConstant.VendorCategoryAssetInscoBranch, OfficeCode: this.appObj.OriOfficeCode };
+    this.ddlInscoBranchObj.isSelectOutput = true;
   }
 
   async bindPayPeriodToInscoObj() {

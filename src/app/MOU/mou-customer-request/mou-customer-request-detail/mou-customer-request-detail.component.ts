@@ -116,7 +116,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
 
     var refOffice = new RefOfficeObj();
     refOffice.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
-    this.httpClient.post(URLConstant.GetRefOfficeByOfficeCode, refOffice).subscribe(
+    this.httpClient.post(URLConstant.GetRefOfficeByOfficeCode, {Code : refOffice.OfficeCode}).subscribe(
       (response: any) => {
         this.refOfficeId = response.RefOfficeId;
       });
@@ -132,7 +132,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
             ...response
           });
           var custObj = { CustNo: response['CustNo'] };
-          this.httpClient.post(URLConstant.GetCustByCustNo, {TrxNo : custObj}).subscribe(
+          this.httpClient.post(URLConstant.GetCustByCustNo, {TrxNo : response['CustNo']}).subscribe(
             (response: any) => {
               this.custId = response['CustId'];
             });

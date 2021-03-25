@@ -49,7 +49,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   InputLookupAssetObj: InputLookupObj = new InputLookupObj();
 
   ReqDecForm = this.fb.group({
-    Decision: ['', [Validators.required]],
+    Decision: ['PURCHASE', [Validators.required]],
     AssetNo: [''],
     ManYear: [, [Validators.required, Validators.min(1)]],
     Notes: ['', [Validators.maxLength(4000)]]
@@ -186,10 +186,6 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     var requestAssetNo = {
       AssetNo: event.AssetNo
     };
-
-    // this.SerialNo1 = event.SerialNo1;
-    // this.SerialNo2 = event.SerialNo2;
-    // this.SerialNo3 = event.SerialNo3;
 
     this.http.post(URLConstant.GetAssetByAssetNo, requestAssetNo).subscribe(
       (response: any) => {

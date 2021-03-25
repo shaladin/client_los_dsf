@@ -194,7 +194,7 @@ export class CustGrpMemberFL4WComponent implements OnInit {
 
   async setCustNameAndCustRelationship(i, custNo){
     this.custObj.CustNo = custNo;
-    await this.http.post(URLConstant.GetCustByCustNo, {TrxNo : this.custObj}).toPromise().then(
+    await this.http.post(URLConstant.GetCustByCustNo, {TrxNo : custNo}).toPromise().then(
       (response) => {
         this.custMasterObj = response;
         this.dictLookup[i].nameSelect = response["CustName"];

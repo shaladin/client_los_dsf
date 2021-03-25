@@ -15,6 +15,7 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 
 @Component({
   selector: 'app-cc-contact-information-tab',
@@ -31,7 +32,10 @@ export class CcContactInformationTabComponent implements OnInit {
   CcCustAddrObj: AppCustAddrObj;
   IsUcAddrReady: boolean = false;
   TempAppCustCompanyContactPersonObj: AppCustCompanyContactPersonObj = new AppCustCompanyContactPersonObj();
-  DictRefMaster: any = {};
+  ddlMrIdTypeObj : UcDropdownListObj = new UcDropdownListObj();
+  ddlMrGenderObj : UcDropdownListObj = new UcDropdownListObj();
+  ddlMrJobPositionObj : UcDropdownListObj = new UcDropdownListObj();
+  ddlMrCustRelationshipObj : UcDropdownListObj = new UcDropdownListObj();
   BusinessDate: Date;
   readonly MasterIdTypeCode: string = CommonConstant.RefMasterTypeCodeIdType;
   readonly MasterGenderCode: string = CommonConstant.RefMasterTypeCodeGender;
@@ -78,19 +82,32 @@ export class CcContactInformationTabComponent implements OnInit {
     this.BusinessDate = new Date(formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US'));
 
     this.SetAddrForm();
-    await this.GetListActiveRefMaster(this.MasterGenderCode);
-    await this.GetListActiveRefMaster(this.MasterIdTypeCode);
-    await this.GetListActiveRefMaster(this.MasterJobPosCode);
-    await this.GetListActiveRefMaster(this.MasterCustRelationCode);
+    this.initDdlMrIdType();
+    this.initddlMrGender();
+    this.initddlMrJobPosition();
+    this.initddlMrCustRelationship();
     await this.GetAppCustCompanyContactPersonByAppCustId();
   }
 
-  async GetListActiveRefMaster(RefMasterTypeCode: string) {
-    await this.http.post<any>(URLConstant.GetRefMasterListKeyValueActiveByCode, { "RefMasterTypeCode": RefMasterTypeCode }).toPromise().then(
-      (response) => {
-        this.DictRefMaster[RefMasterTypeCode] = response["ReturnObject"];
-      }
-    );
+  initDdlMrIdType(){
+    this.ddlMrIdTypeObj.apiUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.ddlMrIdTypeObj.requestObj = { "RefMasterTypeCode": this.MasterIdTypeCode };
+    this.ddlMrIdTypeObj.isSelectOutput = true;
+  }
+
+  initddlMrGender(){
+    this.ddlMrGenderObj.apiUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.ddlMrGenderObj.requestObj = { "RefMasterTypeCode": this.MasterGenderCode };
+  }
+
+  initddlMrJobPosition(){
+    this.ddlMrJobPositionObj.apiUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.ddlMrJobPositionObj.requestObj = { "RefMasterTypeCode": this.MasterJobPosCode };
+  }
+
+  initddlMrCustRelationship(){
+    this.ddlMrCustRelationshipObj.apiUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.ddlMrCustRelationshipObj.requestObj = { "RefMasterTypeCode": this.MasterCustRelationCode };
   }
 
   async GetAppCustCompanyContactPersonByAppCustId() {

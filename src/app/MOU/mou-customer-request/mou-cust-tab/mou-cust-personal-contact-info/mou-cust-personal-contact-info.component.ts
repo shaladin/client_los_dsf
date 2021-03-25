@@ -298,7 +298,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
 
   setProfessionName(professionCode) {
     this.professionObj.ProfessionCode = professionCode;
-    this.http.post(this.getRefProfessionUrl, this.professionObj).subscribe(
+    this.http.post(this.getRefProfessionUrl, {Code : professionCode}).subscribe(
       (response) => {
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
         this.InputLookupProfessionObj.jsonSelect = response;

@@ -273,7 +273,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
   async GetCust() {
     var custObj = { CustNo: this.AppCustObj['CustNo'] };
-    await this.http.post(URLConstant.GetCustByCustNo, {TrxNo : custObj}).toPromise().then(
+    await this.http.post(URLConstant.GetCustByCustNo, {TrxNo : this.AppCustObj['CustNo']}).toPromise().then(
       (response) => {
         this.custId = response["CustId"];
       })
@@ -387,7 +387,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   async GetVerfResultHData() {
-    await this.http.post(this.getVerfResulHtUrl, this.verfResHObj).toPromise().then(
+    await this.http.post(this.getVerfResulHtUrl, {Id : this.verifResultObj.VerfResultId}).toPromise().then(
       (response) => {
         this.verifResultHObj = response;
         this.verfResHObj.MrVerfObjectCode = this.verifResultHObj.MrVerfObjectCode;
@@ -405,7 +405,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
   bindResultObj() {
     this.refStatusObj.StatusGrpCode = CommonConstant.StatusGrpVerfResultStat;
-    this.http.post(this.getRefStatusUrl, this.refStatusObj).subscribe(
+    this.http.post(this.getRefStatusUrl, {Code : CommonConstant.StatusGrpVerfResultStat}).subscribe(
       (response) => {
         this.ResultObj = response[CommonConstant.ReturnObj];
         if (this.ResultObj.length > 0) {
