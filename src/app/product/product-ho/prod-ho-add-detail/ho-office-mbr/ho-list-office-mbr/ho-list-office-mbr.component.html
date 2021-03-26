@@ -1,3 +1,63 @@
-<p>
-  ho-list-office-mbr works!
-</p>
+<div class="col-md-12">
+  <div class="card">
+    <!-- <div [hidden]="resultData?.Data == null"> -->
+    <div>
+      <!-- <div class="card-header">
+        <div class="text-right">
+          <div class="card-header row">
+            <h4 class="card-title col-md-6">Office List Search</h4>
+          </div>
+          <button type="button" (click)="addOfficeMember()" class="btn btn-raised btn-warning mr-1">
+            <i class="fa ft-plus"></i> Add Office Member
+          </button>
+        </div>
+      </div> -->
+
+      <div class="text-right">
+        <button type="button" (click)="addOfficeMember()" class="btn btn-raised btn-warning ">
+          <i class="fa ft-plus"></i> Add Office Member
+        </button>
+      </div>
+      <div [hidden]="resultData?.length == 0">
+        <table class="table table-responsive-md text-center table-hover">
+          <thead>
+            <tr class="table-header">
+              <th><span translate class="thead-header" (click)="searchSort($event)" name='OfficeCode'>Office Code</span>
+              </th>
+              <th><span translate class="thead-header" (click)="searchSort($event)" name='OfficeName'>Office Name</span>
+              </th>
+              <th><span translate class="thead-header" (click)="searchSort($event)" name='OfficeArea'>Office Area</span>
+              </th>
+              <th><span translate class="thead-header" (click)="searchSort($event)" name='AllowedCreateOffering'>Allowed To Create Offering</span>
+              </th>
+              <th translate>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of resultData; let i = index;">
+              <td>{{item.OfficeCode}}</td>
+              <td>{{item.OfficeName}}</td>
+              <td>{{item.AreaName}}</td>
+              <td *ngIf="item.IsAllowedCrt">Yes</td>
+              <td *ngIf="!item.IsAllowedCrt">No</td>
+              <td>
+                <div>
+                  <a class="danger p-0" data-original-title="" title="" (click)="deleteFromList(item, i)">
+                    <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                  </a></div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+          <div class="text-right">
+            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+              <i class="far fa-window-close"></i> Cancel
+            </button>
+            <button type="submit" (click)="DoneForm()" class="btn btn-raised btn-primary" translate>
+              <i class="far fa-check-square"></i> Save
+            </button>
+          </div>
+    </div>
+  </div>
+</div>

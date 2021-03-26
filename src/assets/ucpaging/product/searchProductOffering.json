@@ -1,0 +1,196 @@
+{
+    "title": "Product Offering",
+    "exportExcel": false,
+    "component": [{
+        "type": "textbox",
+        "name": "Prod_Code",
+        "id": "ProdCode",
+        "value": "",
+        "label": "Product Code",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "Prod_Name",
+        "id": "ProdName",
+        "value": "",
+        "label": "Product Name",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "Prod_Offering_Code",
+        "id": "ProdCode",
+        "value": "",
+        "label": "Product Offering Code",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "Prod_Offering_Name",
+        "id": "ProdOfferingName",
+        "value": "",
+        "label": "Product Offering Name",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "dropdown",
+        "name": "A.Prod_Offering_Stat",
+        "id": "ProdOfferingStat",
+        "value": "Product Offering Status",
+        "placeholder": "Placeholder",
+        "isFromURL": true,
+        "ddlType": "all",
+        "url": "",
+        "path": "/RefMaster/GetListKeyValueActiveByCode",
+        "label": "Product Offering Status",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "RefMasterTypeCode",
+        "criteriaPropValue": "PROD_STAT"
+      },
+      {
+        "type": "datepicker",
+        "name": "A.End_Dt",
+        "id": "EndDt",
+        "value": "",
+        "label": "End Date",
+        "placeholder": "Placeholder"
+      }
+    ],
+    "headerList": [{
+        "type": "sort",
+        "position": "center",
+        "label": "Product Code",
+        "name": "ProdCode"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Product Name",
+        "name": "ProdName"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Product Offering Code",
+        "name": "ProdOfferingCode"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Product Offering Name",
+        "name": "ProdOfferingName"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Current Version",
+        "name": "CurrentProdOfrVersion"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Draft Version",
+        "name": "DraftProdOfrVersion"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "End Date",
+        "name": "EndDt"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Product Offering Status",
+        "name": "ProdOfferingStatDesc"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Action"
+      }
+    ],
+    "querystring": {
+      "name": "searchProductOffering"
+    },
+    "bodyList": [{
+        "type": "text",
+        "position": "center",
+        "property": "ProdCode"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "ProdName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "ProdOfferingCode"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "ProdOfferingName"
+      },
+      {
+        "type": "link",
+        "position": "center",
+        "property": "CurrentProdOfrVersion",
+        "path": "VIEW_OFFERING",
+        "target": "_blank",
+        "param": [
+            {
+                "type": "prodOfferingHId",
+                "property": "prodOfferingHId"
+            }
+        ]
+      },
+      {
+        "type": "link",
+        "position": "center",
+        "property": "DraftProdOfrVersion",
+        "path": "VIEW_OFFERING",
+        "target": "_blank",
+        "param": [
+            {
+                "type": "prodOfferingHId",
+                "property": "DraftProdOfferingHId"
+            }
+        ]
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "EndDt"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "ProdOfferingStatDesc"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [{
+          "type": "switch",
+          "case": [
+          {
+            "conditions": [{
+              "property": "ProdOfferingStat",
+              "value": "DEACT",
+              "restriction": "NEQ"
+            }],
+            "result": {
+              "type": "callback",
+              "key": "EditProductOffering"
+            },
+            "isHide": false
+          }
+        ]
+        }]
+      }
+    ]
+  }

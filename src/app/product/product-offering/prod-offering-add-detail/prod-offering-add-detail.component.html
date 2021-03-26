@@ -1,3 +1,71 @@
-<p>
-  prod-offering-add-detail works!
-</p>
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header header-title">
+        <div class="row">
+          <div class="col-md-8">
+            <h4 class="card-title" translate>Product Offering </h4>
+          </div>
+          <!-- <div class="col-md-4" style="text-align-last: right">
+            <button type="button" class="backButton" [routerLink]="['/Product/ProdOffering/Paging']" translate>
+              <i class="far fa-window-close"></i> Cancel
+            </button>
+          </div> -->
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="px-3">
+            <div class="form-body">
+              <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Main Information</h4>
+              <div class="form-group row">
+                <label class="col-md-2 adInsLabel">Product Offering Code </label>
+                <label class="col-md-4 adInsLabel">{{ProdOfferingForm.controls.ProdOfferingCode.value}}</label>
+
+                <label class="col-md-2 adInsLabel">Start Active Date</label>
+                <label class="col-md-4 adInsLabel">{{ProdOfferingForm.controls.StartDt.value}} </label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2 adInsLabel">Product Offering Name </label>
+                <label class="col-md-4 adInsLabel">{{ProdOfferingForm.controls.ProdOfferingName.value}}</label>
+
+                <label class="col-md-2 adInsLabel">End Date </label>
+                <label class="col-md-4 adInsLabel">{{ProdOfferingForm.controls.EndDt.value}} </label>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-2 adInsLabel">Offering Description </label>
+                <label class="col-md-4 adInsLabel">{{ProdOfferingForm.controls.ProdOfferingDescr.value}} </label>
+
+                <label class="col-md-2 adInsLabel">Status</label>
+                <label class="col-md-4 adInsLabel">{{ProdOfferingForm.controls.ProdOfferingStat.value}} </label>
+              </div>
+              <div class="form-group row">
+                <label *ngIf="source == 'return'" class="col-md-2 adInsLabel">Return Notes </label>
+                <label *ngIf="source == 'return'" class="col-md-4 adInsLabel">{{ProdOfferingForm.controls.ReturnNotes.value}} </label>
+              </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="px-3">
+                <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="0">
+                  <aw-wizard-step [stepTitle]="'General Data'"
+                    [navigationSymbol]="{ symbol: '1', fontFamily: 'FontAwesome' }" (stepEnter)="EnterTab('general')">
+                    <app-offering-general-data *ngIf="isGeneralData == true" [objInput]="objPassing"></app-offering-general-data>
+                  </aw-wizard-step>
+                  
+                  <aw-wizard-step [stepTitle]="'Product Component'" 
+                    [navigationSymbol]="{ symbol: '2', fontFamily: 'FontAwesome' }" (stepEnter)="EnterTab('prodCompnt')">
+                    <app-offering-prod-compnt *ngIf="isProdCompnt == true" [objInput]="objPassing"></app-offering-prod-compnt>
+                  </aw-wizard-step>
+                  
+                  <aw-wizard-step [stepTitle]="'Office Member'" 
+                    [navigationSymbol]="{ symbol: '3', fontFamily: 'FontAwesome' }" (stepEnter)="EnterTab('officeMbr')">
+                    <app-offering-office-mbr *ngIf="isOfficeMbr == true" [ProdHId]="ProdHId" [objInput]="objPassing"></app-offering-office-mbr>
+                  </aw-wizard-step>
+                </aw-wizard>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>

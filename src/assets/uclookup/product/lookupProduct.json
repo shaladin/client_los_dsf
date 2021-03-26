@@ -1,0 +1,66 @@
+{
+    "url": "http://getSupplier",
+    "sectionTitle":"Lookup Product",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "Prod_Code",
+        "id": "ProdCode",
+        "label": "Product Code",
+        "placeholder": "Product Code"
+      },
+      {
+        "type": "textbox",
+        "name": "Prod_Name",
+        "id": "ProdName",
+        "label": "Product Name",
+        "placeholder": "Product Name"
+      }
+    ],
+    "querystring": {
+        "name": "lookupProduct"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Product Code",
+            "name": "ProdCode"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Product Name",
+            "name": "ProdName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ProdCode"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ProdName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "ProdName"
+                }
+            ]
+        }
+    ],
+    "propertyId": "ProdName",
+    "propertyName": "ProdName"
+}

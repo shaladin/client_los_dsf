@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { ProductRoutingModule } from './product-routing.module';
 import { HoProdCompntComponent } from './product-ho/prod-ho-add-detail/ho-prod-compnt/ho-prod-compnt.component';
 import { HoOfficeMbrComponent } from './product-ho/prod-ho-add-detail/ho-office-mbr/ho-office-mbr.component';
@@ -28,7 +27,29 @@ import { OfferingProdCompntComponent } from './product-offering/prod-offering-ad
 import { OfferingOfficeMbrComponent } from './product-offering/prod-offering-add-detail/offering-office-mbr/offering-office-mbr.component';
 import { ProdOfferingReturnPagingComponent } from './product-offering/prod-offering-return-paging/prod-offering-return-paging.component';
 import { ProdHoReturnPagingComponent } from './product-ho/prod-ho-return-paging/prod-ho-return-paging.component';
-
+import { ProdOfferingViewComponent } from './product-offering/prod-offering-view/prod-offering-view.component';
+import { ProdHoViewComponent } from './product-ho/prod-ho-view/prod-ho-view.component';
+import { UcProdOfferingCompComponent } from './uc-prod-offering-comp/uc-prod-offering-comp.component';
+import { AdInsModule } from 'app/components/adins-module/adins.module';
+import { SharedModule } from 'app/shared/shared.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProdOfferingAddDetailComponent } from './product-offering/prod-offering-add-detail/prod-offering-add-detail.component';
+import { ProdOfferingApvDetailComponent } from './product-offering/prod-offering-apv-detail/prod-offering-apv-detail.component';
+import { ProdOfferingApvPagingComponent } from './product-offering/prod-offering-apv-paging/prod-offering-apv-paging.component';
+import { ProdOfferingDeactApvDetailComponent } from './product-offering/prod-offering-deact-apv-detail/prod-offering-deact-apv-detail.component';
+import { ProdOfferingDeactApvPagingComponent } from './product-offering/prod-offering-deact-apv-paging/prod-offering-deact-apv-paging.component';
+import { ProdOfferingDeactDetailComponent } from './product-offering/prod-offering-deact-detail/prod-offering-deact-detail.component';
+import { ProdOfferingDeactPagingComponent } from './product-offering/prod-offering-deact-paging/prod-offering-deact-paging.component';
+import { OfferingSearchOfficeComponent } from './product-offering/prod-offering-add-detail/offering-office-mbr/offering-search-office/offering-search-office.component';
+import { ArchwizardModule } from 'angular-archwizard';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { UcapprovalcreateModule } from '@adins/Ucapprovalcreate';
+import { UcapprovalR3Module } from '@adins/ucapproval-r3';
+import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
+import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
+import { UcapprovebyModule } from '@adins/ucapproveby';
+import { MatTabsModule } from '@angular/material';
+import { UcviewgenericModule } from '@adins/ucviewgeneric';
 
 @NgModule({
   declarations: [
@@ -57,10 +78,38 @@ import { ProdHoReturnPagingComponent } from './product-ho/prod-ho-return-paging/
     OfferingGeneralDataComponent, 
     OfferingListOfficeMbrComponent, 
     OfferingProdCompntComponent, 
-    OfferingOfficeMbrComponent, ProdOfferingReturnPagingComponent, ProdHoReturnPagingComponent],
+    OfferingOfficeMbrComponent, 
+    ProdOfferingReturnPagingComponent, 
+    ProdHoReturnPagingComponent, 
+    ProdOfferingViewComponent, 
+    ProdHoViewComponent, 
+    UcProdOfferingCompComponent,
+    ProdOfferingAddDetailComponent,
+    ProdOfferingApvDetailComponent,
+    ProdOfferingApvPagingComponent,
+    ProdOfferingDeactApvDetailComponent,
+    ProdOfferingDeactApvPagingComponent,
+    ProdOfferingDeactDetailComponent,
+    ProdOfferingDeactPagingComponent,
+    OfferingSearchOfficeComponent
+  ],
   imports: [
     CommonModule,
-    ProductRoutingModule
+    AdInsModule,
+    SharedModule,
+    ProductRoutingModule,
+    AdInsModule,
+    NgbModule,
+    CommonModule,
+    ArchwizardModule,
+    NgMultiSelectDropDownModule,
+    UcapprovebyModule,
+    UcapprovalcreateModule,
+    UcapprovalR3Module,
+    UcapprovalHistoryModule,
+    UcapprovalgeneralinfoModule,
+    MatTabsModule,
+    UcviewgenericModule
   ]
 })
 export class ProductModule { }

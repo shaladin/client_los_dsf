@@ -1,0 +1,89 @@
+{
+    "title": "Product HO Review",
+    "exportExcel": false,
+    "component": [{
+        "type": "textbox",
+        "name": "A.PROD_CODE",
+        "id": "ProdCodeId",
+        "value": "",
+        "label": "Product Code",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "A.PROD_NAME",
+        "id": "ProdNameId",
+        "value": "",
+        "label": "Product Name",
+        "placeholder": "Placeholder"
+      }
+    ],
+    "headerList": [{
+        "type": "sort",
+        "position": "center",
+        "label": "Product Code",
+        "name": "ProdCode"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Product Name",
+        "name": "ProdName"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "End Date",
+        "name": "EndDt"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Action"
+      }
+    ],
+    "querystring": {
+      "name": "searchProductHOReview"
+    },
+    "bodyList": [{
+        "type": "text",
+        "position": "center",
+        "property": "ProdCode"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "ProdName"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "EndDt"
+      }, 
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "edit",
+            "path": "PRODUCT_HO_REVIEW_DETAIL",
+            "param": [
+              {
+                "type": "ProdHId",
+                "property": "ProdHId"
+              },
+              {
+                "type": "ProdId",
+                "property": "ProdId"
+              },
+              {
+                "type": "WfTaskListId",
+                "property": "WfTaskListId"
+              }
+            ]
+          }
+        ] 
+      }
+      
+    ]
+  }

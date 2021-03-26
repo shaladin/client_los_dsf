@@ -1,0 +1,114 @@
+{
+    "keyProperty": "RefOfficeId",
+    "keyPropCriteria": "RO.REF_OFFICE_ID",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "RO.OFFICE_CODE",
+        "id": "officeCodeId",
+        "value": "",
+        "label": "Office Code",
+        "placeholder": "Office Code"
+      },
+      {
+        "type": "textbox",
+        "name": "RO.OFFICE_NAME",
+        "id": "officeNameId",
+        "value": "",
+        "label": "Office Name",
+        "placeholder": "Office Name"
+      },
+      {
+        "type": "dropdown",
+        "datatype": "text",
+        "name": "ROA.AREA_CODE",
+        "id": "areaNameId",
+        "value": "",
+        "label": "Area Name",
+        "placeholder": "Area Name",
+        "isFromURL": true,
+        "url": "",
+        "path": "/RefOfficeArea/GetListKvpActiveRefOfficeArea",
+        "itemsUrl": [],
+        "items": [],
+        "ddlType": "all"
+      }
+    ],
+    "querystring": {
+      "name": "productOfficeMbrTempPaging"
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Office Code",
+        "name": "RO.OFFICE_CODE"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Office Name",
+        "name": "RO.OFFICE_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Office Area",
+        "name": "ROA.AREA_CODE"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "OfficeCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "OfficeName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "AreaName"
+      }
+    ],
+    "headerListTemp": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Office Code",
+        "name": "RO.OFFICE_CODE"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Office Name",
+        "name": "RO.OFFICE_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Office Area",
+        "name": "ROA.AREA_CODE"
+      }
+    ],
+    "bodyListTemp": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "OfficeCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "OfficeName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "AreaName"
+      }
+    ]
+  }

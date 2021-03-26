@@ -1,3 +1,18 @@
-<p>
-  prod-ho-rvw-detail works!
-</p>
+<app-prod-ho-view [inputProdHId]="ProdHId"></app-prod-ho-view>
+<lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady" #ApprovalComponent></lib-ucapprovalcreate>
+<div class="card">
+  <div class="card-body">
+    <div class="px-3">
+      <form class="form form-horizontal" (ngSubmit)="SaveForm()"> 
+        <div class="form-actions right">
+          <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" skipLocationChange translate>
+            <i class="ft-x"></i> Cancel
+          </button>
+          <button type="submit" class="btn btn-raised btn-primary" translate>
+            <i class="far fa-check-square"></i> Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

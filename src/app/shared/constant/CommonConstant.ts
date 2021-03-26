@@ -337,7 +337,7 @@ export class CommonConstant {
   public static RefProdCompntLob = "LOB";
   public static RefProdCompntCurr = "CURR";
   public static RefProdCompntPayFreq = "PAYFREQ";
-    public static RefProdCompntProdType = "PROD_TYPE";
+  public static RefProdCompntProdType = "PROD_TYPE";
   public static RefProdCompntDocChecklist = "DOC_CHKLST_APV";
 
   // REF REASON TYPE CODE
@@ -346,6 +346,7 @@ export class CommonConstant {
   public static RefReasonTypeCodeCrdReview = "CRD_REVIEW";
   public static RefReasonTypeDocChecklist = "DCK_LIST";
   public static RefReasonTypeCodeInvoiceDataVerif = "INVOICE_DATA_VERIF";
+  public static RefReasonTypeCodeProdDeactivate = "PROD_DEACT";
 
   // INST TYPE
   public static SINGLE_INST_TYPE = "SINGLE";
@@ -659,4 +660,32 @@ export class CommonConstant {
   public static OtherExpenseMasterCodeExpStn = "EXP_STN";
   public static OtherExpenseMasterCodeExpOdb = "ODB";
   public static OtherExpenseMasterCodeExpRc = "RC";
+
+
+  //Behaviour Type
+  public static BehaviourTypeLock = "LOCK";
+  public static BehaviourTypeMin = "MIN";
+  public static BehaviourTypeMax = "MAX";
+  public static BehaviourTypeDefault = "DEFAULT";
+
+  // ProductDeact
+  public static PROD_REASON_DEACT = "PROD_DEACT"
+
+  //Product Status
+  public static ProdStatApproval = "APVL";
+  public static ProdStatReqDeact = "REQD";
+
+  //Product Approval
+  public static SCHM_CODE_APV_HO_ACT_SCHM = "APV_HO_ACT_SCHM";
+  public static SCHM_CODE_APV_HO_DEACT_SCHM = "APV_HO_DEACT_SCHM";
+  public static SCHM_CODE_APV_OFR_ACT_SCHM = "APV_OFR_ACT_SCHM";
+  public static SCHM_CODE_APV_OFR_DEACT_SCHM = "APV_OFR_DEACT_SCHM";
+  public static CAT_CODE_PRD_HO_APV = "PRD_HO_APV";
+  public static CAT_CODE_PRD_HO_DEACT_APV = "PRD_HO_DEACT_APV";
+  public static CAT_CODE_PRD_OFR_APV = "PRD_OFR_APV";
+  public static CAT_CODE_PRD_OFR_DEACT_APV = "PRD_OFR_DEACT_APV";
+  public static PRD_HO_APV_TYPE = "PROD_HO_APV_TYPE";
+  public static PRD_HO_DEACT_APV_TYPE = "PROD_HO_DEACT_APV_TYPE";
+  public static PRD_OFR_APV_TYPE = "PROD_OFR_APV_TYPE";
+  public static PRD_OFR_DEACT_APV_TYPE = "PROD_OFR_DEACT_APV_TYPE";    
 }

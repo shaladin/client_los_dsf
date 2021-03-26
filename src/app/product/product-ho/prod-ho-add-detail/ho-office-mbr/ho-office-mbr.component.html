@@ -1,3 +1,2 @@
-<p>
-  ho-office-mbr works!
-</p>
+<app-ho-list-office-mbr *ngIf="isOn" [ListOfficeMemberObjInput]="ListOfficeMemberObj" (componentIsOn)="ChangeComponent($event)"></app-ho-list-office-mbr>
+<app-ho-search-office *ngIf="!isOn" [ListOfficeMemberObjInput]="ListOfficeMemberObj" (componentIsOn)="ChangeComponent($event)"></app-ho-search-office>

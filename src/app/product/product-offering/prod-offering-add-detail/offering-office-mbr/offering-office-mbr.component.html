@@ -1,3 +1,2 @@
-<p>
-  offering-office-mbr works!
-</p>
+<app-offering-list-office-mbr *ngIf="isOn" [ListOfficeMemberObjInput]="ListOfficeMemberObj" (componentIsOn)="ChangeComponent($event)"></app-offering-list-office-mbr>
+<app-offering-search-office *ngIf="!isOn" [ListOfficeMemberObjInput]="ListOfficeMemberObj" [ProdHId]="ProdHId" (componentIsOn)="ChangeComponent($event)"></app-offering-search-office>
