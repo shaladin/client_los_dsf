@@ -115,7 +115,7 @@
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 5 && stepperMode == 'PERSONAL'" [AppId]="appId"
-                [showCancel]="showCancel" (outputTab)="NextStep('UPD')" (outputCancel)="Cancel()"></app-tc-data>
+                [showCancel]="showCancel" (outputTab)="NextStep('UPL_DOC')" (outputCancel)="Cancel()"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
               <app-dms-iframe *ngIf="AppStepIndex == 6 && stepperMode == 'PERSONAL' && isDmsReady"
@@ -202,7 +202,7 @@
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
               <app-tc-data *ngIf="AppStepIndex == 5 && stepperMode == 'COMPANY'" [AppId]="appId"
-                [showCancel]="showCancel" (outputTab)="NextStep('UPD')" (outputCancel)="Cancel()"></app-tc-data>
+                [showCancel]="showCancel" (outputTab)="NextStep('UPL_DOC')" (outputCancel)="Cancel()"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
               <app-dms-iframe *ngIf="AppStepIndex == 6 && stepperMode == 'COMPANY' && isDmsReady"
