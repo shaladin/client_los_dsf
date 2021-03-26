@@ -1199,6 +1199,7 @@ export class URLConstant {
 
   // Report
   public static GenerateReportSync = environment.FoundationR3Url + '/Report/GenerateReportSync';
+  public static GenerateReportR3 = environment.FoundationR3Url + '/Report/GenerateReportR3';
 
   // Asset Category
   public static GetAssetCategoryById = environment.FoundationR3Url + "/AssetCategory/GetAssetCategoryById";

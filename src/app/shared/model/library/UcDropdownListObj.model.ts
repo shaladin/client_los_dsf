@@ -12,6 +12,8 @@ export class UcDropdownListObj {
     isObject: boolean;
     customObjName: string;
     isSelectOutput: boolean;
+    isLabel: boolean;
+    isCustomList: boolean;
 
     constructor() {
         this.enviromentUrl = "";
@@ -24,6 +26,8 @@ export class UcDropdownListObj {
         this.isObject = true;
         this.customObjName = CommonConstant.ReturnObj;
         this.isSelectOutput = false;
+        this.isLabel = true;
+        this.isCustomList = false;
     }
 }
 
