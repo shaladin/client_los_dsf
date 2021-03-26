@@ -113,10 +113,12 @@
   
                 <div class="form-group row">
                   <label class="col-md-2  adInsLabel" translate>Admin Head</label>
-                  <div class="col-md-4">
+                  <label class="col-md-4 adInsLabel" *ngIf="adminHead">{{adminHead}} </label>
+                  <label class="col-md-4 adInsLabel" *ngIf="!adminHead"> -  </label>
+                  <!-- <div class="col-md-4">
                     <lib-ucdropdownlist *ngIf="isDdlAdminHeadReady" [dropdownListObj]="ddlAdminHeadObj" [parentForm]="AssetDataForm" [enjiForm]="enjiForm"
                       [identifier]="'AdminHeadId'" [genericList]="AdminHeadObj" (callback) = "AdminHeadChanged($event)"></lib-ucdropdownlist>
-                  </div>
+                  </div> -->
                   <!-- Sales Supervisor -->
                   <label class="col-md-2 adInsLabel" translate>Sales Supervisor </label>
                   <label class="col-md-4 adInsLabel" *ngIf="salesSupervisor">{{salesSupervisor}} </label>
@@ -125,10 +127,12 @@
   
                 <div class="form-group row">
                   <label class="col-md-2 adInsLabel" translate>Branch Manager</label>
-                  <div class="col-md-4">
+                  <label class="col-md-4 adInsLabel" *ngIf="branchManager">{{branchManager}} </label>
+                  <label class="col-md-4 adInsLabel" *ngIf="!branchManager"> -  </label>
+                  <!-- <div class="col-md-4">
                     <lib-ucdropdownlist *ngIf="isDdlBranchManagerReady" [dropdownListObj]="ddlBranchManagerObj" [parentForm]="AssetDataForm" [enjiForm]="enjiForm"
                       [identifier]="'BranchManagerId'" [genericList]="BranchManagerObj" (callback) = "BranchManagerChanged($event)"></lib-ucdropdownlist>
-                  </div>
+                  </div> -->
                 </div>
               </div>
   

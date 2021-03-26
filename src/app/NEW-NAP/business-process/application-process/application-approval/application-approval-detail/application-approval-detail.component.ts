@@ -27,11 +27,11 @@ export class ApplicationApprovalDetailComponent implements OnInit {
   mrCustTypeCode: string;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   type: string;
-  inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
   ManualDeviationData;
   isExistedManualDeviationData;
   BizTemplateCode: string;
   AppObj: AppObj = new AppObj();
+  taskId: number = 0;
   CrdApvObj: UcInputApprovalHistoryObj;
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
   readonly CustTypeCompany: string = CommonConstant.CustTypeCompany;
@@ -55,6 +55,7 @@ export class ApplicationApprovalDetailComponent implements OnInit {
       ApvHoldObj.TaskId = params["TaskId"];
 
       this.HoldTask(ApvHoldObj);
+      this.taskId = params["TaskId"];
     });
   }
   
@@ -118,7 +119,7 @@ export class ApplicationApprovalDetailComponent implements OnInit {
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
-    this.UcInputApprovalGeneralInfoObj.TaskId = this.inputObj.taskId;
+    this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
     
     this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
     this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
@@ -126,7 +127,7 @@ export class ApplicationApprovalDetailComponent implements OnInit {
     this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
 
     this.InputApvObj = new UcInputApprovalObj();
-    this.InputApvObj.TaskId = this.inputObj.taskId;
+    this.InputApvObj.TaskId = this.taskId;
     this.InputApvObj.EnvUrl = environment.FoundationR3Url;
     this.InputApvObj.PathUrlGetLevelVoting = URLConstant.GetLevelVoting;
     this.InputApvObj.PathUrlGetPossibleResult = URLConstant.GetPossibleResult;

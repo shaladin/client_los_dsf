@@ -49,7 +49,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   InputLookupAssetObj: InputLookupObj = new InputLookupObj();
 
   ReqDecForm = this.fb.group({
-    Decision: ['PURCHASE', [Validators.required]],
+    Decision: ['', [Validators.required]],
     AssetNo: [''],
     ManYear: [, [Validators.required, Validators.min(1)]],
     Notes: ['', [Validators.maxLength(4000)]]
