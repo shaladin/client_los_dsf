@@ -133,7 +133,9 @@ export class AssetDataOplComponent implements OnInit {
   isAssetAttrReady: boolean = false;
   isOnlookup: boolean = false;
   
+  adminHead: string;
   salesSupervisor: string;
+  branchManager: string;
   mode: string = "Add";
   CustType: string = "";
   IntegratorCheckBySystemGsValue: string = "1";
@@ -263,7 +265,9 @@ export class AssetDataOplComponent implements OnInit {
 
   AddAsset() {
     this.mode = "Add";
+    this.adminHead = "";
     this.salesSupervisor = "";
+    this.branchManager = "";
     this.isDdlSalesPersonReady = false;
     this.isDdlAdminHeadReady = false;
     this.isDdlBranchManagerReady = false;
@@ -1308,7 +1312,6 @@ export class AssetDataOplComponent implements OnInit {
     );
   }
 
-  
   GetVendorEmpList() {
     this.isDdlSalesPersonReady = false;
     this.isDdlAdminHeadReady = false;
@@ -1318,7 +1321,7 @@ export class AssetDataOplComponent implements OnInit {
         this.EmpObj = response[CommonConstant.ReturnObj];
 
         for(let i = 0; i < this.EmpObj.length; i++) {
-          if(this.EmpObj[i]["SupervisorId"] !== null) {
+          if(this.EmpObj[i]["SupervisorId"] !== null && this.salesSupervisor !== "") {
             var supervisor = {
               "VendorEmpId": this.EmpObj[i]["SupervisorId"]
             }
@@ -1327,6 +1330,17 @@ export class AssetDataOplComponent implements OnInit {
                 this.salesSupervisor = response["VendorEmpName"];
               }
             )
+            // break;
+          }
+
+          if(this.EmpObj[i]["MrVendorEmpPositionCode"] === CommonConstant.ADMIN_HEAD_JOB_CODE && this.adminHead !== "") {
+            this.adminHead = this.EmpObj[i]["VendorEmpName"];
+          }
+          else if(this.EmpObj[i]["MrVendorEmpPositionCode"] === CommonConstant.BRANCH_MANAGER_JOB_CODE && this.branchManager !== "") {
+            this.branchManager = this.EmpObj[i]["VendorEmpName"];
+          }
+
+          if(this.salesSupervisor !== "" && this.adminHead !== "" && this.branchManager !== "") {
             break;
           }
         }
