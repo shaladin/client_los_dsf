@@ -556,10 +556,10 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   DownPaymentChange() {
     if (this.LeadDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypeAmt) {
-      this.isReadOnly = false;
+      this.isReadOnly = true;
     }
     else {
-      this.isReadOnly = true;
+      this.isReadOnly = false;
     }
   }
 
