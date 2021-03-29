@@ -1,45 +1,40 @@
 export class RdlcReportObj {
-    RequestUserId: number;
-    RequesterEmail: string;
-    ReportProcessorSelector: string;
-    ExportFormat: string;
-    ReportName: string;
-    ExportFile: string;
-    MainReportParameter: MainReportObj;
-    MainReportInfoDetail: MainReportDetailObj;
-    ReportTemplate: string;
-
+    ReportInfo: ReportInfoObj;
+    RequestingUsername: string;
+    RowVersion: string;
+  
     constructor() {
-        this.RequestUserId = 0;
-        this.RequesterEmail = "";
-        this.ReportProcessorSelector = "RdlcReportProcessor";
-        this.ExportFormat = "";
-        this.ReportName = "";
-        this.ExportFile = "";
-        this.MainReportParameter = new MainReportObj();
-        this.MainReportInfoDetail = new MainReportDetailObj();
-        this.ReportTemplate = "";
-    }
-
-}
-
-export class MainReportObj {
-    FilterBy: string;
-
-    constructor() {
-        this.FilterBy = "";
+      this.ReportInfo = new ReportInfoObj();
+      this.RequestingUsername = "";
+      this.RowVersion = "";
     }
 }
 
-export class MainReportDetailObj {
-    ReportDataProviderName: string;
-    ReportDataProviderParameter: Object;
-    ReportTemplateName: string;
+export class ReportInfoObj {
+  ReportName: string;
+  ReportTemplateCode: string;
+  ReportTemplatePath: string;
+  ExportFormat: number;
+  ReportParameters: Array<ReportParamObj>;
+  SubReports: Array<any>;
 
-    constructor() {
-        this.ReportDataProviderName = "DefaultDataRDLCProvider";
-        this.ReportDataProviderParameter = new Object();
-        this.ReportTemplateName = "";
-    }
+  constructor() {
+    this.ReportName = "";
+    this.ReportTemplateCode = "";
+    this.ReportTemplatePath = "";
+    this.ExportFormat = 0;
+    this.ReportParameters = new Array<ReportParamObj>();
+    this.SubReports = new Array<any>();
+  }
+}
 
+export class ReportParamObj {
+  paramKey: string;
+  paramValue: string;
+  paramAssignment: number;
+  constructor() {
+    this.paramKey = "";
+    this.paramValue = "";
+    this.paramAssignment = 0;
+  }
 }

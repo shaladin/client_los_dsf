@@ -18,7 +18,8 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AgrmntSignerObj } from 'app/shared/model/AgrmntSignerObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { RdlcReportObj } from 'app/shared/model/library/RdlcReportObj.model';
+import { RdlcReportObj, ReportParamObj } from 'app/shared/model/library/RdlcReportObj.model';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-document-view',
@@ -55,8 +56,7 @@ export class DocumentViewComponent implements OnInit {
   isDocSignerAvailable: boolean;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_NAP_DOC_PRINT_PAGING;
-  constructor(private http: HttpClient,
-    private route: ActivatedRoute, private toastr: NGXToastrService) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params['AgrmntId'] != null) {
         this.AgrmntId = params['AgrmntId'];
@@ -116,26 +116,26 @@ export class DocumentViewComponent implements OnInit {
       (response) => {
         const appCust = response[0] as AppCustObj;
         const agrmntSigner = response[1] as AgrmntSignerObj;
-        if (this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W || this.BizTemplateCode == CommonConstant.OPL){
-          if(appCust.MrCustTypeCode == CommonConstant.CustTypePersonal){
-            if(agrmntSigner.AppCustPersonalId && agrmntSigner.AppCustPersonalId > 0 && agrmntSigner.MfEmpNo1 && agrmntSigner.SupplBranchEmpNo){
+        if (this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W || this.BizTemplateCode == CommonConstant.OPL) {
+          if (appCust.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+            if (agrmntSigner.AppCustPersonalId && agrmntSigner.AppCustPersonalId > 0 && agrmntSigner.MfEmpNo1 && agrmntSigner.SupplBranchEmpNo) {
               this.isDocSignerAvailable = true;
             }
           }
-          else if(appCust.MrCustTypeCode == CommonConstant.CustTypeCompany){
-            if(agrmntSigner.AppCustCompanyMgmntShrholder1Id && agrmntSigner.AppCustCompanyMgmntShrholder1Id > 0 && agrmntSigner.MfEmpNo1 && agrmntSigner.SupplBranchEmpNo){
+          else if (appCust.MrCustTypeCode == CommonConstant.CustTypeCompany) {
+            if (agrmntSigner.AppCustCompanyMgmntShrholder1Id && agrmntSigner.AppCustCompanyMgmntShrholder1Id > 0 && agrmntSigner.MfEmpNo1 && agrmntSigner.SupplBranchEmpNo) {
               this.isDocSignerAvailable = true;
             }
           }
         }
-        else if(this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA){
-          if(appCust.MrCustTypeCode == CommonConstant.CustTypePersonal){
-            if(agrmntSigner.AppCustPersonalId && agrmntSigner.AppCustPersonalId > 0 && agrmntSigner.MfEmpNo1){
+        else if (this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
+          if (appCust.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+            if (agrmntSigner.AppCustPersonalId && agrmntSigner.AppCustPersonalId > 0 && agrmntSigner.MfEmpNo1) {
               this.isDocSignerAvailable = true;
             }
           }
-          else if(appCust.MrCustTypeCode == CommonConstant.CustTypeCompany){
-            if(agrmntSigner.AppCustCompanyMgmntShrholder1Id && agrmntSigner.AppCustCompanyMgmntShrholder1Id > 0 && agrmntSigner.MfEmpNo1){
+          else if (appCust.MrCustTypeCode == CommonConstant.CustTypeCompany) {
+            if (agrmntSigner.AppCustCompanyMgmntShrholder1Id && agrmntSigner.AppCustCompanyMgmntShrholder1Id > 0 && agrmntSigner.MfEmpNo1) {
               this.isDocSignerAvailable = true;
             }
           }
@@ -197,35 +197,46 @@ export class DocumentViewComponent implements OnInit {
 
   Print(item) {
     try {
-      if(this.isDocSignerAvailable){
-        this.RdlcReport.ExportFormat = "JPDF";
-        this.RdlcReport.ExportFile = "JPDF";
-        this.RdlcReport.MainReportParameter = null;
-        this.RdlcReport.ReportName = item.AgrmntDocName;
-        this.RdlcReport.ReportTemplate = item.RptTmpltCode;
-        this.RdlcReport.MainReportInfoDetail.ReportTemplateName = item.RptTmpltCode;
-        this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["AgrmntId"] = +this.AgrmntId;
+      if (this.isDocSignerAvailable) {
+        let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+        this.RdlcReport.RequestingUsername = currentUserContext.UserName;
+        this.RdlcReport.ReportInfo.ReportName = item.AgrmntDocName;
+        this.RdlcReport.ReportInfo.ReportTemplateCode = item.RptTmpltCode;
+        this.RdlcReport.ReportInfo.ReportParameters = new Array<ReportParamObj>();
+        this.RdlcReport.ReportInfo.ExportFormat = 0;
+
+        let reportParamObj: ReportParamObj = new ReportParamObj();
+        reportParamObj.paramKey = "AgrmntId";
+        reportParamObj.paramValue = this.AgrmntId.toString();
+        reportParamObj.paramAssignment = 1;
+        this.RdlcReport.ReportInfo.ReportParameters.push(reportParamObj);
+
         // this.RdlcReport.MainReportInfoDetail.ReportDataProviderParameter["RptTmpltCode"] = item.RptTmpltCode;
-    
-        this.http.post(URLConstant.GenerateReportSync, { RequestObject: this.RdlcReport }).subscribe(
+
+        this.http.post(URLConstant.GenerateReportR3, this.RdlcReport).subscribe(
           (response) => {
-            let linkSource: string = 'data:application/pdf;base64,' + response[CommonConstant.ReturnObj];
+            let linkSource: string = 'data:application/pdf;base64,' + response["ReportFile"];
             let fileName: string = item.AgrmntDocName + ".pdf";
             const downloadLink = document.createElement("a");
             downloadLink.href = linkSource;
             downloadLink.download = fileName;
-    
-            if (response[CommonConstant.ReturnObj] != undefined) {
+
+            if (response["ReportFile"] != undefined) {
               downloadLink.click();
               this.SaveAgrmntDocPrint(item.AgrmntDocId);
               this.toastr.successMessage(response['message']);
-    
+
+              // var iframe = "<iframe width='100%' height='100%' src='" + linkSource + "'></iframe>";
+              // var x = window.open();
+              // x.document.open();
+              // x.document.write(iframe);
+              // x.document.close();
             } else {
               this.toastr.warningMessage(response['message']);
             }
           });
       }
-      else{
+      else {
         this.toastr.warningMessage(ExceptionConstant.NO_SIGNER_AVAILABLE);
       }
     } catch (error) {
@@ -234,8 +245,8 @@ export class DocumentViewComponent implements OnInit {
   }
 
   GetCallBack(ev: any) {
-    if (ev.Key == "ViewProdOffering") { 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
   }
 }

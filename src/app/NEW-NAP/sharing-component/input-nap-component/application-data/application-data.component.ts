@@ -207,6 +207,7 @@ export class ApplicationDataComponent implements OnInit {
     };
     this.ddlPayFreqObj.customObjName = "DDLRefProdComptCode";
     this.ddlPayFreqObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.ddlPayFreqObj.isSelectOutput = true;
     this.isDdlPayFreqReady = true;
   }
 
@@ -533,6 +534,13 @@ export class ApplicationDataComponent implements OnInit {
 
   ChangeNumOfInstallmentTenor() {
     var temp: number = +this.NapAppModelForm.controls.Tenor.value;
+    
+    var tempPayFreq = this.DictRefPayFreq[this.NapAppModelForm.controls.PayFreqCode.value];
+    if(tempPayFreq != undefined && tempPayFreq != null){
+      this.PayFreqVal = this.DictRefPayFreq[this.NapAppModelForm.controls.PayFreqCode.value].PayFreqVal;
+      this.PayFreqTimeOfYear = this.DictRefPayFreq[this.NapAppModelForm.controls.PayFreqCode.value].TimeOfYear;
+    }
+    
     if (!isNaN(temp) && !isNaN(this.PayFreqTimeOfYear) && !isNaN(this.PayFreqVal)) {
       var total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);
@@ -540,12 +548,10 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   ChangeNumOfInstallmentPayFreq(ev) {
-    if (ev.target.selectedIndex == 0) return;
-    var idx = ev.target.selectedIndex - 1;
     var temp = this.NapAppModelForm.controls.Tenor.value;
     if (!isNaN(temp)) {
-      this.PayFreqVal = this.DictRefPayFreq[this.applicationDDLitems[CommonConstant.RefMasterTypeCodePayFreq][idx].Key].PayFreqVal;
-      this.PayFreqTimeOfYear = this.DictRefPayFreq[this.applicationDDLitems[CommonConstant.RefMasterTypeCodePayFreq][idx].Key].TimeOfYear;
+      this.PayFreqVal = this.DictRefPayFreq[ev.selectedValue].PayFreqVal;
+      this.PayFreqTimeOfYear = this.DictRefPayFreq[ev.selectedValue].TimeOfYear;
       var total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);
     }

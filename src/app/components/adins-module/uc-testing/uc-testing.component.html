@@ -1,0 +1,24 @@
+  <div formArrayName="Deductions">
+    <div formGroupName="{{groupName}}">
+      <div *ngIf="genericList?.length != 1 || (dropdownListObj.isLabel != undefined && !dropdownListObj.isLabel)">
+        <select class="form-control" formControlName="{{identifier}}"
+          (change)="onSelectOpt($event.target.value)"
+          [attr.disabled]="(isDisabled != undefined && isDisabled) ? '' : null ">
+          <option *ngIf="genericList.length != 1 && dropdownListObj.ddlType == 'one'" value="">Select One</option>
+          <option *ngIf="genericList.length != 1 && dropdownListObj.ddlType == 'all'" value="">All</option>
+          <option *ngIf="genericList.length != 1 && dropdownListObj.ddlType == 'none'" value="">Select None</option>
+          <option *ngFor="let item of genericList;let i = index" [value]="item[dropdownListObj.customKey]">
+            {{item[dropdownListObj.customValue]}}
+          </option>
+        </select>
+      </div>
+      <div *ngIf="genericList.length == 1 && (dropdownListObj.isLabel == undefined || dropdownListObj.isLabel)">
+        {{ this.genericList[0][this.dropdownListObj.customValue] }}
+      </div>
+      <!-- <lib-uc-show-errors [control]="parentForm.controls[identifier]" [submit]="enjiForm.submitted">
+      </lib-uc-show-errors> -->
+
+      <button type="button" (click)="clickMe()">Click Me</button>
+
+    </div>
+  </div>
