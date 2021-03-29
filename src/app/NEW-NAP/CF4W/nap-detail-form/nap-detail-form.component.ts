@@ -6,6 +6,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { SysConfigResultObj } from 'app/shared/model/SysConfigResult/SysConfigResultObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -61,6 +62,7 @@ export class NapDetailFormComponent implements OnInit {
   dmsObj: DMSObj;
   appNo: string;
   isDmsReady: boolean = false;
+  SysConfigResultObj: SysConfigResultObj = new SysConfigResultObj();
 
   readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
   constructor(
@@ -84,7 +86,12 @@ export class NapDetailFormComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() : Promise<void> {
+    // check DMS
+    await this.http.post<SysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+      (response) => {
+        this.SysConfigResultObj = response;
+    });
     this.ClaimTask();
     this.AppStepIndex = 1;
     this.NapObj = new AppObj();
@@ -117,46 +124,50 @@ export class NapDetailFormComponent implements OnInit {
         });
     }
     this.MakeViewReturnInfoObj();
+    
+
   }
 
   async initDms() {
-    this.isDmsReady = false;
-    this.dmsObj = new DMSObj();
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.dmsObj.User = currentUserContext.UserName;
-    this.dmsObj.Role = currentUserContext.RoleCode;
-    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    var appObj = { Id: this.appId };
-    this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
-      response => {
-        this.appNo = this.NapObj.AppNo;
-        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-        let isExisting = response['IsExistingCust'];
-        if (isExisting) {
-          let custNo = response['CustNo'];
-          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
+    if(this.SysConfigResultObj.ConfigValue == '1'){
+      this.isDmsReady = false;
+      this.dmsObj = new DMSObj();
+      let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+      this.dmsObj.User = currentUserContext.UserName;
+      this.dmsObj.Role = currentUserContext.RoleCode;
+      this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+      var appObj = { Id: this.appId };
+      this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
+        response => {
+          this.appNo = this.NapObj.AppNo;
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+          let isExisting = response['IsExistingCust'];
+          if (isExisting) {
+            let custNo = response['CustNo'];
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
+          }
+          else {
+            this.dmsObj.MetadataParent = null;
+          }
+  
+          let mouId = this.NapObj.MouCustId;
+          if (mouId != null && mouId != 0) {
+            let mouObj = { Id: mouId };
+            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+              result => {
+                let mouCustNo = result['MouCustNo'];
+                this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+                this.isDmsReady = true;
+              }
+            )
+          }
+          else {
+            this.isDmsReady = true;
+          }
         }
-        else {
-          this.dmsObj.MetadataParent = null;
-        }
-
-        let mouId = this.NapObj.MouCustId;
-        if (mouId != null && mouId != 0) {
-          let mouObj = { Id: mouId };
-          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-            result => {
-              let mouCustNo = result['MouCustNo'];
-              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
-              this.isDmsReady = true;
-            }
-          )
-        }
-        else {
-          this.isDmsReady = true;
-        }
-      }
-    );
+      );
+    }  
   }
 
   stepperMode: string = CommonConstant.CustTypeCompany;
@@ -309,16 +320,20 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   LastStepHandler() {
-    this.NapObj.WfTaskListId = this.wfTaskListId;
-    if (this.ReturnHandlingHId > 0) {
-      this.IsSavedTC = true;
-    } else {
-      this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: this.bizTemplateCode });
-
-        })
+    if(this.SysConfigResultObj.ConfigValue == '1'){
+      this.NextStep(CommonConstant.AppStepUplDoc);
+    }else{
+      this.NapObj.WfTaskListId = this.wfTaskListId;
+      if (this.ReturnHandlingHId > 0) {
+        this.IsSavedTC = true;
+      } else {
+        this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: this.bizTemplateCode });
+  
+          })
+      }
     }
   }
 
