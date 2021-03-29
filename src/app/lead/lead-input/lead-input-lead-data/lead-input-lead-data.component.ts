@@ -31,6 +31,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 export class LeadInputLeadDataComponent implements OnInit {
   @Input() originPage: string = "";
+  @Input() isEndOfTab: string = "";
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
   typePage: string = "";
   CopyFrom: string;
@@ -121,6 +122,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
   isAlreadySubmittedByIntegrator: boolean = false;
   isReadOnly: boolean = true;
+  textButton : string
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -202,6 +204,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isEndOfTab == '0'? this.textButton = 'Save' : this.textButton = 'Save and Continue'
     this.items = this.LeadDataForm.get('items') as FormArray;
 
     this.InputLookupAssetObj = new InputLookupObj();

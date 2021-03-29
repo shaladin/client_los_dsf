@@ -30,6 +30,7 @@ export class LeadInputPageComponent implements OnInit {
   viewLeadHeaderMainInfo: UcViewGenericObj = new UcViewGenericObj();
   pageType: string;
   dmsObj: DMSObj;
+  SysConfigResultObj : any;
   @ViewChild("LeadMainInfo", { read: ViewContainerRef }) leadMainInfo: ViewContainerRef;
   AppStepIndex: number = 1;
   customObj: any;
@@ -71,7 +72,6 @@ export class LeadInputPageComponent implements OnInit {
         this.isDmsReady = true;
         console.log('dmsobj = ', JSON.stringify(this.dmsObj));
       });
-
     if (this.TaskListId > 0) {
       this.claimTask();
     }
@@ -94,6 +94,12 @@ export class LeadInputPageComponent implements OnInit {
     this.leadMainInfo.clear();
     const component = this.leadMainInfo.createComponent(componentFactory);
     component.instance.viewGenericObj = this.viewLeadHeaderMainInfo;
+
+    // check DMS
+    await this.http.post(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+      (response) => {
+        this.SysConfigResultObj = response
+      });
   }
 
   EnterTab(type) {
@@ -153,7 +159,12 @@ export class LeadInputPageComponent implements OnInit {
         }
         else if (this.AppStepIndex == 3) {
           this.customObj = ev;
-          this.EnterTab("uploadDocument")
+          if(this.SysConfigResultObj.ConfigValue == 0){
+            this.endOfTab()
+          }else{
+            this.EnterTab("uploadDocument")
+          }
+         
         }
 
       }
@@ -194,7 +205,5 @@ export class LeadInputPageComponent implements OnInit {
             );
           });
       });
-
-
   }
 }

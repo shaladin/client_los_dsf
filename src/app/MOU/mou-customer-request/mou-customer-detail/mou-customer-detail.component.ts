@@ -40,6 +40,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   dmsObj: DMSObj;
   custObj: CustObj = new CustObj();
   isDmsReady: boolean = false;
+  SysConfigResultObj : any;
   
   constructor(
     private router: Router,
@@ -75,7 +76,11 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         }
       }
     );
-
+        // check DMS
+  await this.httpClient.post(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+    (response) => {
+      this.SysConfigResultObj = response
+    });
   }
 
   async initDms(){
@@ -155,9 +160,15 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   saveMouTc() {
     if (this.mouType == CommonConstant.GENERAL) {
       this.mouTcGeneral.Save();
+      if(this.SysConfigResultObj.ConfigValue == 0){
+        this.endOfTab()
+      }     
     }
     else if (this.mouType == CommonConstant.FACTORING) {
       this.mouTcFactoring.Save();
+      if(this.SysConfigResultObj.ConfigValue == 0){
+        this.endOfTab()
+      }  
     }
   }
 

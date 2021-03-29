@@ -1364,4 +1364,7 @@ export class URLConstant {
 
   // GO LIVE (LMS)
   public static CheckGoLivePayment = URLConstant.lmsUrl + "/Api/Integration/CheckGoLivePayment";
+
+  //Check DMS
+  public static GetSysConfigPncplResultByCode = environment.FoundationR3Url + "/SysConfigResult/GetSysConfigPncplResultByCode";
 }
