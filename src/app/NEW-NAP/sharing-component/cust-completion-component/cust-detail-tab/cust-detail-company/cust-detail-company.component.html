@@ -37,7 +37,14 @@
                     </lib-uclookupgeneric>
                   </div>
                 </div>
+                <div class="form-group row" *ngIf="BizTemplateCode === 'OPL'">
+                  <label class="col-md-4" translate>SKT</label>
+                  <div class="col-md-8">
+                    <input type="checkbox" formControlName="IsSkt"/>
+                  </div>
+                </div>
               </div>
+
               <div class="col-md-6">
                 <div class="form-group row">
                   <label class="col-md-4 adins-required-label" translate>Customer Model</label>
@@ -55,7 +62,7 @@
                 <div class="form-group row">
                   <label class="col-md-4" translate>Affiliation with Multifinance</label>
                   <div class="col-md-8">
-                    <input type="checkbox" formControlName="IsAffiliateWithMF" />
+                    <input type="checkbox" formControlName="IsAffiliateWithMF"/>
                   </div>
                 </div>
               </div>

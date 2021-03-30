@@ -69,7 +69,7 @@ export class PurchaseTrackingInquiryComponent implements OnInit {
       window.open(environment.losR3Web + "/View/AppAsset?AppId=" + event.RowObj.AppId + "&AppAssetId=" + event.RowObj.AppAssetId, "_blank");
     }
     else if(event.Key == "View") {
-      window.open(environment.losR3Web + "/View/PurchaseTracking?AppId=" + event.RowObj.AppId, "_blank");
+      window.open(environment.losR3Web + "/View/PurchaseTracking?AppId=" + event.RowObj.AppId + "&AppAssetId=" + event.RowObj.AppAssetId, "_blank");
     }
   }
 }

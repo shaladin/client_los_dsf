@@ -246,6 +246,10 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     else {
       this.ReqDecForm.controls.AssetNo.clearValidators();
       this.IsExisting = false;
+      this.ReqDecForm.patchValue({
+        AssetNo: ""
+      });
+      this.ReqDecForm.controls.AssetNo.updateValueAndValidity();
     }
   }
 
