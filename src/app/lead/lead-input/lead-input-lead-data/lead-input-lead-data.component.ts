@@ -1076,6 +1076,11 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   CheckSubmitForCFNA() {
+    if(isNaN(this.LeadDataForm.controls.InstallmentAmt.value)){
+      this.toastr.warningMessage("Installment Amount cannot be empty");
+      this.isAbleToSubmit = false;
+      return;
+    }
     var minAmt = this.LeadDataForm.controls["NTFAmt"].value / this.LeadDataForm.controls["Tenor"].value;
     if (this.LeadDataForm.controls.InstallmentAmt.value < minAmt) {
       this.toastr.warningMessage("Installment Amount must be bigger than " + minAmt);

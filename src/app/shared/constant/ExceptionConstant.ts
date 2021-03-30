@@ -106,5 +106,7 @@ export class ExceptionConstant {
     public static NO_SURVEY = "No Survey";
     public static NO_PHONE_VERF = "No Phone Verification";
     public static STATEMENT_WITH_SAME_MONTH_AND_YEAR = "Cannot Input Statement With The Same Month and Year";
+
+    public static EMPLOYMENT_ESTABLISHMENT_CANNOT_LESS_THAN = "Employment Establishment Date can not be less than ";
 }
 

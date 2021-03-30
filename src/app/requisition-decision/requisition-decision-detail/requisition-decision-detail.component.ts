@@ -246,11 +246,16 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     else {
       this.ReqDecForm.controls.AssetNo.clearValidators();
       this.IsExisting = false;
+      this.ReqDecForm.patchValue({
+        AssetNo: ""
+      });
+      this.ReqDecForm.controls.AssetNo.updateValueAndValidity();
     }
   }
 
   Cancel() {
     this.IsSecondDetail = false;
+    this.SetListOfAsset();
   }
 
   SaveForm() {
@@ -281,6 +286,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
 
         this.toastr.successMessage("Submit Requisition Decision Asset Success");
         this.IsSecondDetail = false;
+        this.SetListOfAsset();
       }
     );
   }
