@@ -161,7 +161,7 @@
         {
             "type": "text",
             "position": "center",
-            "property": "LeadSourceName"
+            "property": "MrLeadSourceCode"
         },
         {
             "type": "action",
