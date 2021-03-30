@@ -12,7 +12,7 @@ import { environment } from 'environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { ViewAppCustDetailComponent } from '../view-app-cust-detail/view-app-cust-detail.component';
-
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-view-app-cust-data-completion-company',
@@ -20,7 +20,7 @@ import { ViewAppCustDetailComponent } from '../view-app-cust-detail/view-app-cus
   styleUrls: []
 })
 export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
-
+  @Input() BizTemplateCode: string = "";
   @Input() appId: number;
   @Input() isDetail: boolean = false;
   @Input() appCustId: number;
@@ -50,13 +50,18 @@ export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
   appCustCompanyMgmntShrholderObjs: Array<AppCustCompanyMgmntShrholderObj>;
   appCustCompanyLegalDocObjs: Array<AppCustCompanyLegalDocObj>;
 
-  constructor(private http: HttpClient, private modalService: NgbModal) {
-  }
+  constructor(private http: HttpClient, private modalService: NgbModal) { }
 
-  async ngOnInit() : Promise<void>{
+  async ngOnInit() : Promise<void> {
     await this.getCustData();
     this.arrValue.push(this.appCustObj.AppCustId);
-    this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewAppCustCompanyMainData.json";
+    
+    if(this.BizTemplateCode === CommonConstant.OPL) {
+      this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/opl/cust/company/viewAppCustCompanyMainDataOpl.json";
+    }
+    else {
+      this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewAppCustCompanyMainData.json";
+    }
     this.viewMainDataObj.viewEnvironment = environment.losUrl;
     this.viewMainDataObj.whereValue = this.arrValue;
     
@@ -71,15 +76,15 @@ export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
     this.isDataAlreadyLoaded = true;
   }
 
-  async getCustData(){
+  async getCustData() {
     let reqObj = {};
     let url = '';
 
-    if(this.isDetail)
-    {
+    if(this.isDetail) {
       reqObj = {AppCustId: this.appCustId, IsForNapCompletionVersion: true};
       url = URLConstant.GetCustDataCompanyForViewByAppCustId;
-    } else {
+    }
+    else {
       reqObj ={AppId: this.appId, IsForNapCompletionVersion: true};
       url = URLConstant.GetCustDataCompanyForViewByAppId;
     }
@@ -106,9 +111,8 @@ export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
       });
   }
 
-  viewDetailShareholderHandler(AppCustId, MrCustTypeCode){
-    if(this.isPopupDetail)
-    {
+  viewDetailShareholderHandler(AppCustId, MrCustTypeCode) {
+    if(this.isPopupDetail) {
       const modalInsDetail = this.modalService.open(ViewAppCustDetailComponent);
       modalInsDetail.componentInstance.AppCustId = AppCustId;
       modalInsDetail.componentInstance.MrCustTypeCode = MrCustTypeCode;
@@ -116,8 +120,7 @@ export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
       modalInsDetail.result.then().catch((error) => {
       });
     }
-    else
-    {
+    else {
       this.detailAppCustId = AppCustId;
       this.detailMrCustTypeCode = MrCustTypeCode;
       this.detailCustomerTitle = 'Shareholder';
@@ -125,8 +128,7 @@ export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
     }
   }
 
-  closeDetailHandler()
-  {
+  closeDetailHandler() {
     this.isShowDetail = false;
   }
 }

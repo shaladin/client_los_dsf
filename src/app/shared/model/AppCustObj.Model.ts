@@ -24,7 +24,7 @@ export class AppCustObj {
     Age: number;
     RowVersion: any;
 
-constructor() { 
+    constructor() { 
         this.AppCustId = 0; 
         this.AppId = 0;
         this.CustNo = "";

@@ -1,4 +1,4 @@
-<app-view-app-cust-data-completion-company *ngIf="IsNAPVersionCompletion" [appId]="appId"></app-view-app-cust-data-completion-company>
+<app-view-app-cust-data-completion-company *ngIf="IsNAPVersionCompletion" [appId]="appId" [BizTemplateCode]="BizTemplateCode"></app-view-app-cust-data-completion-company>
 <div *ngIf="!IsNAPVersionCompletion">
     <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewMainDataObj"></lib-ucviewgeneric>
     <div class="px-3">
@@ -22,10 +22,10 @@
                 <tbody>
                 <ng-container *ngFor="let item of appCustAddrForViewObjs">
                     <tr>
-                    <td class="text-left">{{item.CustAddrTypeName}}</td>
-                    <td class="text-left">{{item.FullAddr}}</td>
-                    <td class="text-center">{{item.PhoneNo}}</td>
-                    <td class="text-center">{{item.HouseOwnershipName}}</td>
+                        <td class="text-left">{{item.CustAddrTypeName}}</td>
+                        <td class="text-left">{{item.FullAddr}}</td>
+                        <td class="text-center">{{item.PhoneNo}}</td>
+                        <td class="text-center">{{item.HouseOwnershipName}}</td>
                     </tr>
                 </ng-container>
                 </tbody>
@@ -38,13 +38,13 @@
         <div id="CustShareholder">
             <table class="table table-responsive-md text-center table-hover">
                 <thead>
-                <tr class="table-header">
-                    <th class="text-left"><span class="thead-header" name='addrType' translate>Name</span> </th>
-                    <th class="text-center"><span class="thead-header" name='fullAddr' translate>Job Position</span></th>
-                    <th class="text-center"><span class="thead-header" name='phoneNo' translate>Type</span></th>
-                    <th class="text-center"><span class="thead-header" name='houseOwnership' translate>NPWP</span></th>
-                    <th class="text-center"><span class="thead-header" name='houseOwnership' translate>Share (%)</span></th>
-                </tr>
+                    <tr class="table-header">
+                        <th class="text-left"><span class="thead-header" name='addrType' translate>Name</span> </th>
+                        <th class="text-center"><span class="thead-header" name='fullAddr' translate>Job Position</span></th>
+                        <th class="text-center"><span class="thead-header" name='phoneNo' translate>Type</span></th>
+                        <th class="text-center"><span class="thead-header" name='houseOwnership' translate>NPWP</span></th>
+                        <th class="text-center"><span class="thead-header" name='houseOwnership' translate>Share (%)</span></th>
+                    </tr>
                 </thead>
                 <tbody *ngIf = "appCustCompanyMgmntShrholderObjs?.length == 0">
                     <tr>
@@ -54,11 +54,11 @@
                 <tbody>
                 <ng-container *ngFor="let item of appCustCompanyMgmntShrholderObjs">
                     <tr>
-                    <td class="text-left">{{item.MgmntShrholderName}}</td>
-                    <td class="text-center">{{item.JobPositionName}}</td>
-                    <td class="text-center">{{item.CustTypeName}}</td>
-                    <td class="text-center">{{item.TaxIdNo}}</td>
-                    <td class="text-center">{{item.SharePrcnt}}</td>
+                        <td class="text-left">{{item.MgmntShrholderName}}</td>
+                        <td class="text-center">{{item.JobPositionName}}</td>
+                        <td class="text-center">{{item.CustTypeName}}</td>
+                        <td class="text-center">{{item.TaxIdNo}}</td>
+                        <td class="text-center">{{item.SharePrcnt}}</td>
                     </tr>
                 </ng-container>
                 </tbody>
@@ -183,7 +183,3 @@
         </div>
     </div>
 </div>
-
-
-
-
