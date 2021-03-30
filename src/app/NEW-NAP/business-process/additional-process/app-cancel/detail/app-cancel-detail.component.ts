@@ -10,6 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 
 @Component({
   selector: 'app-cancel-detail',
@@ -22,12 +23,13 @@ export class AppCancelDetailComponent implements OnInit {
   AppAgrmntCancelObj: any;
   MainInfoForm = this.fb.group({
     ReasonCode: ['', Validators.required],
-    CancelNotes: ['', Validators.required]
+    CancelNotes: ['', Validators.required],
+    IsContractSigned: [false, Validators.required]
   });
   itemReasonCode: any;
   ReasonCode: any;
   BizTemplateCode: string = "";
-
+  ddlReason: UcDropdownListObj = new UcDropdownListObj();
   AgrmntId: any;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
@@ -47,14 +49,15 @@ export class AppCancelDetailComponent implements OnInit {
     var refReasonObj = {
       RefReasonTypeCode: CommonConstant.RefReasonTypeCodeAppAgrCncl
     }
-    this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).subscribe(
-      (response) => {
-        this.itemReasonCode = response[CommonConstant.ReturnObj];
-        this.MainInfoForm.patchValue({
-          ReasonCode: this.itemReasonCode[0].Key
-        });
-      }
-    );
+
+    this.ddlReason = new UcDropdownListObj;
+    this.ddlReason.enviromentUrl = environment.FoundationR3Url;
+    this.ddlReason.apiPath = "/RefReason/GetListActiveRefReason";
+    this.ddlReason.ddlType = "one";
+    this.ddlReason.requestObj = refReasonObj;
+    this.ddlReason.isObject = true;
+    this.ddlReason.customObjName = "ReturnObject";
+    this.ddlReason.isSelectOutput = true;
   }
 
   SaveForm() {
@@ -66,7 +69,7 @@ export class AppCancelDetailComponent implements OnInit {
 
     this.http.post(URLConstant.AddAppAgrmntCancel, this.AppAgrmntCancelObj).subscribe((response) => {
       this.toastr.successMessage(response['message']);
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_CAN_PAGING], { BizTemplateCode: this.BizTemplateCode });
+      this.backToPaging();
     });
   }
 
@@ -74,5 +77,8 @@ export class AppCancelDetailComponent implements OnInit {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
+  }
+  backToPaging() {
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_CAN_PAGING], { BizTemplateCode: this.BizTemplateCode });
   }
 }

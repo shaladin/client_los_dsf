@@ -10,13 +10,14 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 
 @Component({
   selector: 'app-asset-cancel-detail',
   templateUrl: './app-asset-cancel-detail.component.html'
 })
 export class AppAssetCancelDetailComponent implements OnInit {
-
+  IsPoDone: boolean = false;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   AppAssetId: any;
   AppAgrmntCancelObj: any;
@@ -29,7 +30,7 @@ export class AppAssetCancelDetailComponent implements OnInit {
   itemReasonCode: any;
   ReasonCode: any;
   BizTemplateCode: string = "";
-
+  ddlReason: UcDropdownListObj = new UcDropdownListObj();
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppAssetId = params["AppAssetId"];
@@ -40,20 +41,18 @@ export class AppAssetCancelDetailComponent implements OnInit {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-asset-opl-main-info.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
-
-
-
     var refReasonObj = {
       RefReasonTypeCode: CommonConstant.RefReasonTypeCodeAppAgrCncl
     }
-    this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).subscribe(
-      (response) => {
-        this.itemReasonCode = response[CommonConstant.ReturnObj];
-        this.MainInfoForm.patchValue({
-          ReasonCode: this.itemReasonCode[0].Key
-        });
-      }
-    );
+
+    this.ddlReason = new UcDropdownListObj;
+    this.ddlReason.enviromentUrl = environment.FoundationR3Url;
+    this.ddlReason.apiPath = "/RefReason/GetListActiveRefReason";
+    this.ddlReason.ddlType = "one";
+    this.ddlReason.requestObj = refReasonObj;
+    this.ddlReason.isObject = true;
+    this.ddlReason.customObjName = "ReturnObject";
+    this.ddlReason.isSelectOutput = true;
   }
 
   SaveForm() {
@@ -66,7 +65,7 @@ export class AppAssetCancelDetailComponent implements OnInit {
     };
     this.http.post(URLConstant.AddAppAssetCancel, saveObj).subscribe((response) => {
       this.toastr.successMessage(response['message']);
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_ASSET_CAN_PAGING], { BizTemplateCode: this.BizTemplateCode });
+      this.backToPaging();
     });
   }
 
@@ -74,5 +73,9 @@ export class AppAssetCancelDetailComponent implements OnInit {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
+  }
+
+  backToPaging() {
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_ASSET_CAN_PAGING], { BizTemplateCode: this.BizTemplateCode });
   }
 }

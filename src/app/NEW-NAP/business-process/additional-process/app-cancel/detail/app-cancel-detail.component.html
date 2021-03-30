@@ -10,16 +10,18 @@
                               [panel]="'MainInfoForm2'"></lib-ucSubsection>
             <div class="form-body" id="MainInfoForm2">
               <div class="form-group row adins-required">
-                <label class="col-md-2  adInsLabel" translate>Reason Description</label>
+                <label class="col-md-2  adInsLabel" translate>Is Contract Signed</label>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="ReasonCode"
-                          [ngClass]="{ 'is-invalid': MainInfoReqForm.submitted && MainInfoForm.controls.ReasonCode.invalid }">
-                    <option *ngFor="let it of itemReasonCode" value="{{it.Key}}">
-                      {{it.Value}}
-                    </option>
-                  </select>
+                  <input type="checkbox" class="border-primary" data-md-icheck id="default" formControlName="IsContractSigned">
                   <lib-uc-show-errors [control]="MainInfoForm.controls.ReasonCode" [submit]="MainInfoReqForm.submitted">
                   </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row adins-required">
+                <label class="col-md-2  adInsLabel" translate>Reason Description</label>
+                <div class="col-md-4">
+                  <lib-ucdropdownlist [dropdownListObj]="ddlReason" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm"
+                                      [identifier]="'ReasonCode'"></lib-ucdropdownlist>
                 </div>
               </div>
               <div class="form-group row adins-required">
@@ -32,7 +34,7 @@
               </div>
             </div>
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode: this.BizTemplateCode}"
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="backToPaging()"
                       translate>
                 <i class="ft-x"></i> Cancel
               </button>

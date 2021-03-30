@@ -11,30 +11,20 @@
             <div class="form-body" id="MainInfoForm2">
               <div class="form-group row">
                 <label class="col-md-6" for="title" translate>Cancellation Information</label>
-                <label class="col-md-6" for="titlePo" translate>Request Po Cancellation</label>
+                <label class="col-md-6" for="titlePo" translate *ngIf="IsPoDone">Request Po Cancellation</label>
               </div>
               <div class="form-group row">
                 <label class="col-md-2  adins-required" translate>Reason Description</label>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="ReasonCode"
-                          [ngClass]="{ 'is-invalid': MainInfoReqForm.submitted && MainInfoForm.controls.ReasonCode.invalid }">
-                    <option *ngFor="let it of itemReasonCode" value="{{it.Key}}">
-                      {{it.Value}}
-                    </option>
-                  </select>
-                  <lib-uc-show-errors [control]="MainInfoForm.controls.ReasonCode" [submit]="MainInfoReqForm.submitted">
-                  </lib-uc-show-errors>
+                  <lib-ucdropdownlist [dropdownListObj]="ddlReason" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm"
+                                      [identifier]="'ReasonCode'"></lib-ucdropdownlist>
                 </div>
-                <label class="col-md-2" translate>Reason Po Description</label>
-                <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="PoReasonCode"
-                          [ngClass]="{ 'is-invalid': MainInfoReqForm.submitted && MainInfoForm.controls.PoReasonCode.invalid }">
-                    <option *ngFor="let it of itemReasonCode" value="{{it.Key}}">
-                      {{it.Value}}
-                    </option>
-                  </select>
-                  <lib-uc-show-errors [control]="MainInfoForm.controls.PoReasonCode" [submit]="MainInfoReqForm.submitted">
-                  </lib-uc-show-errors>
+                <div *ngIf="IsPoDone">
+                  <label class="col-md-2" translate>Reason Po Description</label>
+                  <div class="col-md-4">
+                    <lib-ucdropdownlist [dropdownListObj]="ddlReason" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm"
+                                        [identifier]="'PoReasonCode'"></lib-ucdropdownlist>
+                  </div>
                 </div>
               </div>
               <div class="form-group row">
@@ -44,16 +34,18 @@
                   <lib-uc-show-errors [control]="MainInfoForm.controls.CancelNotes" [submit]="MainInfoReqForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-2" for="NotesPo" translate>Notes</label>
-                <div class="col-md-4">
-                  <textarea id="NotesPo" class="form-control adInsInput name " formControlName="PoCancelNotes"></textarea>
-                  <lib-uc-show-errors [control]="MainInfoForm.controls.PoCancelNotes" [submit]="MainInfoReqForm.submitted">
-                  </lib-uc-show-errors>
+                <div *ngIf="IsPoDone">
+                  <label class="col-md-2" for="NotesPo" translate>Notes</label>
+                  <div class="col-md-4">
+                    <textarea id="NotesPo" class="form-control adInsInput name " formControlName="PoCancelNotes"></textarea>
+                    <lib-uc-show-errors [control]="MainInfoForm.controls.PoCancelNotes" [submit]="MainInfoReqForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
                 </div>
               </div>
             </div>
             <div class="form-actions right">
-              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode: this.BizTemplateCode}"
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="backToPaging()"
                       translate>
                 <i class="ft-x"></i> Cancel
               </button>
