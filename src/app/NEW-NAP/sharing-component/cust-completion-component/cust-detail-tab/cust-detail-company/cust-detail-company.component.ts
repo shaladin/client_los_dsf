@@ -16,6 +16,7 @@ import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cust-detail-company',
@@ -37,14 +38,25 @@ export class CustDetailCompanyComponent implements OnInit {
   industryTypeObj = {
     IndustryTypeCode: ""
   };
+  BizTemplateCode: string = "";
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    public formValidate: FormValidateService, private cookieService: CookieService) { }
+    public formValidate: FormValidateService,
+    private cookieService: CookieService,
+    private route: ActivatedRoute) {
+      this.route.queryParams.subscribe(params => {
+        if (params['BizTemplateCode'] != null) {
+          this.BizTemplateCode = params['BizTemplateCode'];
+        }
+      });
+    }
+
   CustDetailForm = this.fb.group({
     NoOfEmployee: ['', Validators.required],
     IsAffiliateWithMF: [false],
+    IsSkt: [false],
     EstablishmentDate: ['', Validators.required],
     IndustryTypeCode: ['', Validators.required],
     MrCustModelCode: ['', Validators.required],
@@ -95,11 +107,14 @@ export class CustDetailCompanyComponent implements OnInit {
   SetData() {
     this.AppCustObj.AppCustId = this.AppCustId;
     this.AppCustObj.MrCustModelCode = this.CustDetailForm.controls.MrCustModelCode.value;
-    this.AppCustObj.IsAffiliateWithMf = this.CustDetailForm.controls.IsAffiliateWithMF.value; 
+    this.AppCustObj.IsAffiliateWithMf = this.CustDetailForm.controls.IsAffiliateWithMF.value;
    
     this.AppCustCompanyObj.IndustryTypeCode   = this.CustDetailForm.controls.IndustryTypeCode.value;
     this.AppCustCompanyObj.NumOfEmp = this.CustDetailForm.controls.NoOfEmployee.value;
     this.AppCustCompanyObj.EstablishmentDt = this.CustDetailForm.controls.EstablishmentDate.value;
+    if(this.BizTemplateCode === CommonConstant.OPL) {
+      this.AppCustCompanyObj.IsTaxable = this.CustDetailForm.controls.IsSkt.value;
+    }
   }
 
   SaveForm() {
@@ -139,8 +154,10 @@ export class CustDetailCompanyComponent implements OnInit {
           EstablishmentDate : response.AppCustCompanyObj.EstablishmentDt != null ? formatDate(response.AppCustCompanyObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US') : "",
           IndustryTypeCode : response.AppCustCompanyObj.IndustryTypeCode,
           MrCustModelCode : response.AppCustObj.MrCustModelCode,
+          IsSkt : response.AppCustCompanyObj.IsTaxable
         })
 
+        this.AppCustCompanyObj.IsTaxable = response.AppCustCompanyObj.IsTaxable;
         this.AppCustObj.RowVersion = response.AppCustObj.RowVersion;
         this.AppCustCompanyObj.RowVersion = response.AppCustCompanyObj.RowVersion;
 
@@ -156,6 +173,4 @@ export class CustDetailCompanyComponent implements OnInit {
       }
     );
   }
-
-
 }
