@@ -46,6 +46,7 @@ export class NapDetailFormComponent implements OnInit {
   isReady:boolean = false;
 
   AppStep = {
+    "CMPLTN":1,
     "NAPD": 1,
     "APP": 1,
     "ASSET": 2,
@@ -189,6 +190,7 @@ export class NapDetailFormComponent implements OnInit {
       document.getElementById('stepperPersonal').style.display = 'block';
       document.getElementById('stepperCompany').style.display = 'none';
       this.AppStep = {
+        "CMPLTN":1,
         "NAPD": 1,
         "APP": 1,
         "ASSET": 2,
@@ -206,6 +208,7 @@ export class NapDetailFormComponent implements OnInit {
       document.getElementById('stepperPersonal').style.display = 'none';
       document.getElementById('stepperCompany').style.display = 'block';
       this.AppStep = {
+        "CMPLTN":1,
         "NAPD": 1,
         "APP": 1,
         "ASSET": 2,
@@ -261,6 +264,7 @@ export class NapDetailFormComponent implements OnInit {
   ChangeTab(AppStep) {
     this.IsSavedTC = false;
     this.AppStep = {
+      "CMPLTN":1,
       "NAPD": 1,
       "APP": 1,
       "ASSET": 2,
