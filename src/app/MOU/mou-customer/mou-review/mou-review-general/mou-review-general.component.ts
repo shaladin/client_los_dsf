@@ -17,6 +17,7 @@ import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj';
 
 
 @Component({
@@ -47,6 +48,7 @@ export class MouReviewGeneralComponent implements OnInit {
   Uploadlink: string;
   Viewlink: string;
   dmsObj: DMSObj;
+  SysConfigResultObj : ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
 
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
@@ -70,10 +72,14 @@ export class MouReviewGeneralComponent implements OnInit {
     })
   }
 
-  async ngOnInit() {
+  async ngOnInit() : Promise<void>{
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
+    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+      (response) => {
+        this.SysConfigResultObj = response
+      });
     this.mouCustObject.MouCustId = this.MouCustId;
     await this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
       (response: MouCustObj) => {
