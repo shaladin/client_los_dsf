@@ -523,7 +523,7 @@ export class FinancialDataOplEditComponent implements OnInit {
       TotalCostAmt: this.FinancialDataForm.controls.TotalOperatingCostAmt.value,
       MarginPrcnt: this.FinancialDataForm.controls.OperatingMarginPrcnt.value,
       MarginAmt: this.FinancialDataForm.controls.OperatingMarginAmt.value,
-      RentAmt: this.FinancialDataForm.controls.RentAmt.value,
+      RentAmt: this.FinancialDataForm.controls.RentAmt.value * 1.1,
       VatAmt: this.FinancialDataForm.controls.VatAmt.value,
       GrossYieldPrcnt: this.FinancialDataForm.controls.GrossYieldPrcnt.value
     };
