@@ -1556,7 +1556,7 @@ export class AssetDataAddEditComponent implements OnInit {
     critSupp2Obj.DataType = 'text';
     critSupp2Obj.restriction = AdInsConstant.RestrictionEq;
     critSupp2Obj.propName = 'v.MR_VENDOR_CATEGORY_CODE';
-    critSupp2Obj.value = 'SUPPLIER_BRANCH';
+    critSupp2Obj.value = 'SUPPLIER';
     suppCrit.push(critSupp2Obj);
 
     var critSuppSupplSchmObj = new CriteriaObj();

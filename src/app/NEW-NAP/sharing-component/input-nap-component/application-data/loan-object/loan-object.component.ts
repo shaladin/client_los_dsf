@@ -174,6 +174,7 @@ export class LoanObjectComponent implements OnInit {
                 this.MainInfoForm.patchValue({
                   IsDisburseToCust: response["CompntValue"] == 'Y' ? true : false
                 });
+                console.log(this.MainInfoForm.value);
                 this.CheckIsDisburseToCust();
 
                 if(response["CompntValue"] != 'Y'){
@@ -237,6 +238,9 @@ export class LoanObjectComponent implements OnInit {
     this.supplierInputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.supplierInputLookupObj.addCritInput = new Array();
     
+    console.log(this.isCollateral);
+    console.log("test");
+
     if (this.isCollateral) {
       this.supplierInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupSupplierRefinancingLoanObj.json";
       this.supplierInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupSupplierRefinancingLoanObj.json";
