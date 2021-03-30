@@ -150,7 +150,7 @@ export class InvoiceDataComponent implements OnInit {
   }
 
   SaveContinue() {
-    if (this.dataobj["TotalInvoiceAmt"] <= 0) {
+    if (this.dataobj["TotalInvoiceAmt"] <= 0 || this.dataobj["TotalInvoiceAmt"] == undefined) {
       this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_INVOICE);
     }
     else {

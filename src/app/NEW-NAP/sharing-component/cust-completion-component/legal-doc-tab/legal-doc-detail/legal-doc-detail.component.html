@@ -19,7 +19,7 @@
                 <div class="form-group row">
                   <label class="col-md-4 adins-required-label" translate>Issued Date</label>
                   <div class="col-md-8">
-                    <input type="date" class="form-control" formControlName="DocDt" [max]="BusinessDt | date: 'yyyy-MM-dd'"
+                    <input type="date" class="form-control" formControlName="DocDt" [max]="MaxBusinessDt | date: 'yyyy-MM-dd'"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocDt.invalid}">
                     <lib-uc-show-errors [control]="LegalDocForm.controls.DocDt"
                       [submit]="enjiForm.submitted">
@@ -57,7 +57,7 @@
                 <div class="form-group row">
                   <label class="col-md-4" [ngClass]="{ 'adins-required-label': IsExpDateMandatory }" translate>Expired Date</label>
                   <div class="col-md-8">
-                    <input type="date" class="form-control" formControlName="DocExpiredDt" [max]="BusinessDt | date: 'yyyy-MM-dd'"
+                    <input type="date" class="form-control" formControlName="DocExpiredDt" [min]="MinBusinessDt | date: 'yyyy-MM-dd'"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalDocForm.controls.DocExpiredDt.invalid}">
                     <lib-uc-show-errors [control]="LegalDocForm.controls.DocExpiredDt"
                       [submit]="enjiForm.submitted">

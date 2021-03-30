@@ -287,6 +287,11 @@ export class JobTabComponent implements OnInit {
   }
 
   SaveForm() {
+    if(this.JobDataForm.controls.EmploymentEstablishmentDt.value > this.BusinessDt){
+      var businessDtStr = formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+      this.toastr.errorMessage(String.Format(ExceptionConstant.EMPLOYMENT_ESTABLISHMENT_CANNOT_LESS_THAN + businessDtStr));
+      return false;
+    }
     if (this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0" && this.mouCustId == 0 && this.bizTemplateCode != CommonConstant.FCTR) {
       if (this.IsCustomer) {
         if (!this.IsNeedIntegrator) {
