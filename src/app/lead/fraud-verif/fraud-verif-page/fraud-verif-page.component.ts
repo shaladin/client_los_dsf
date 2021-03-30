@@ -39,6 +39,7 @@ export class FraudVerifPageComponent implements OnInit {
   thirdPartyRsltHObj: ThirdPartyRsltHObj;
   dmsObj: DMSObj;
   isDmsReady: boolean = false;
+  SysConfigResultObj : any;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -83,7 +84,7 @@ export class FraudVerifPageComponent implements OnInit {
   FraudVerfForm = this.fb.group({
     Notes: ['', [Validators.required]],
   });
-  ngOnInit() {
+  async ngOnInit() {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
@@ -174,6 +175,11 @@ export class FraudVerifPageComponent implements OnInit {
         console.log(error);
       }
     );
+    // check DMS
+    await this.http.post(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+      (response) => {
+        this.SysConfigResultObj = response
+      });
   }
   reject(): void {
     this.leadFraudVerfObj = new LeadFraudVerfObj();

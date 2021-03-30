@@ -37,6 +37,7 @@ export class LegalReviewDetailComponent implements OnInit {
   link: any;
   mouCustObj: any;
   resultData: any;
+  SysConfigResultObj : any;
   LegalForm = this.fb.group(
     {
       items: this.fb.array([]),
@@ -66,7 +67,7 @@ export class LegalReviewDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
@@ -113,7 +114,11 @@ export class LegalReviewDetailComponent implements OnInit {
       }
     );
 
-
+    // check DMS
+    await this.http.post(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+      (response) => {
+        this.SysConfigResultObj = response
+      });
   }
 
   async claimTask() {
