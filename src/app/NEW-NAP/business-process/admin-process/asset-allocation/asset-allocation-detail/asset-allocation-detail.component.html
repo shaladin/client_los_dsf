@@ -117,15 +117,21 @@
                     <th translate class="text-left">Take Over Agreement No</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr *ngFor="let item of requisitionList?.AppAssetFinDataGridObjs; let i = index;">
+                <tbody *ngIf="requisitionList?.length == 0">
+                  <tr>
+                    <td class="text-center" colspan="7">No Data Available</td>
+                  </tr>
+                </tbody>
+                <tbody *ngIf="requisitionList?.length > 0">
+                  <tr *ngFor="let item of requisitionList; let i = index;">
                     <td class="text-left">{{i+1}}</td>
                     <td class="text-left">{{item.FullAssetName}}</td>
-                    <td class="text-left">{{item.SecurityDepositAmt | number:'.2':'en-US'}}</td>
-                    <td class="text-center">{{item.TotalCostAmt | number:'.2':'en-US'}}</td>
-                    <td class="text-center">{{item.MarginAmt | number:'.2':'en-US'}}</td>
-                    <td class="text-left">{{item.TotalCostAfterMarginAmt | number:'.2':'en-US'}}</td>
-                    <td class="text-left">{{item.RentAmt | number:'.2':'en-US'}}</td>
+                    <td class="text-left">{{item.AssetRequisitionNo}}</td>
+                    <td class="text-center">{{item.PurchaseOrderDate | date: 'dd-MMMM-yyyy'}}</td>
+                    <td class="text-center">{{item.AssetRcvActvDt | date: 'dd-MMMM-yyyy'}}</td>
+                    <!--<td class="text-left">{{item.TotalCostAfterMarginAmt | number:'.2':'en-US'}}</td>-->
+                    <td class="text-left">-</td>
+                    <td class="text-left">{{item.AgrmntNo}}</td>
                   </tr>
                 </tbody>
               </table>
