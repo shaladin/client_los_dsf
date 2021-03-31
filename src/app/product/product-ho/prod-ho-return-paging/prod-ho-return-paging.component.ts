@@ -20,15 +20,9 @@ export class ProdHoReturnPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url="./assets/ucpaging/product/searchProductHOReturn.json";
-    this.inputPagingObj.enviromentUrl = environment.FoundationR3Url;
+    this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHOReturn.json";
-
-    
-    var WVTrxTypeCodeObj = new WhereValueObj();
-    WVTrxTypeCodeObj.property = "TrxTypeCode";
-    WVTrxTypeCodeObj.value = "PROD";
-    this.inputPagingObj.whereValue.push(WVTrxTypeCodeObj);
 
     var WVProdStatObj = new WhereValueObj();
     WVProdStatObj.property = "ProdStat";

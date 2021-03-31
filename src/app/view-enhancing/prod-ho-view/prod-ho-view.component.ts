@@ -58,8 +58,8 @@ export class ProdHoViewComponent implements OnInit {
     }
 
     //** Main Information **//
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewProductMainInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.FoundationR3Url;
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformation.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
 
     //** Product Version **//
     this.ProdVersionObj = new ProdHVersionObj()

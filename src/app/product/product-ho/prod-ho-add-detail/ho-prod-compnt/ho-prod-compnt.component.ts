@@ -19,8 +19,6 @@ export class HoProdCompntComponent implements OnInit {
   source:string = "";
   FormProdComp: any;
   dictOptions: { [key: string]: any; } = {};
-  UrlGetProdCompGrouped: string;
-  UrlPostAddEditProdD: string;
   ProdHId: number;
   StateSave : string;
   dictBehaviour: {[key: string]: any;} = {};
@@ -42,16 +40,13 @@ export class HoProdCompntComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.UrlGetProdCompGrouped = URLConstant.GetProductHOComponentGrouped;
-    this.UrlPostAddEditProdD = URLConstant.AddOrEditProductDetail;
-
     this.FormProdComp = this.fb.group(
       {
         groups: this.fb.array([])
       }
     );
 
-    this.ProdHId = this.objInput["param"];
+    this.ProdHId = this.objInput["ProdHId"];
     this.LoadProdComponent(this.ProdHId, "SCORE,RULE,OTHR,LOS", true);
   }
 
@@ -143,7 +138,7 @@ export class HoProdCompntComponent implements OnInit {
       IsFilterBizTmpltCode: IsFilterBizTmpltCode,
       RowVersion: ""
     }
-    this.http.post(this.UrlGetProdCompGrouped, ProdHOComponent).toPromise().then(
+    this.http.post(URLConstant.GetProductHOComponentGrouped, ProdHOComponent).toPromise().then(
       async (response) => {
         for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
           var group = response[CommonConstant.ReturnObj][i];
@@ -209,7 +204,7 @@ export class HoProdCompntComponent implements OnInit {
 
   SaveForm() {
     var objPost = this.BuildReqProdDetail();
-    this.http.post(this.UrlPostAddEditProdD, objPost).subscribe(
+    this.http.post(URLConstant.AddOrEditProductDetail, objPost).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.BackToPaging();
@@ -219,7 +214,7 @@ export class HoProdCompntComponent implements OnInit {
 
   NextDetail() {
     var objPost = this.BuildReqProdDetail();
-    this.http.post(this.UrlPostAddEditProdD, objPost).subscribe(
+    this.http.post(URLConstant.AddOrEditProductDetail, objPost).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.wizard.goToNextStep();

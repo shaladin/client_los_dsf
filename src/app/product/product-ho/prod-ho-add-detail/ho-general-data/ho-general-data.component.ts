@@ -25,8 +25,6 @@ export class HoGeneralDataComponent implements OnInit {
   dictOptions: { [key: string]: any; } = {};
   dictMultiOptions: { [key: string]: any; } = {};
   selectedMultiDDLItems: { [key: string]: any; } = {};
-  UrlGetProdCompGrouped: string;
-  UrlPostAddEditProdD: string;
   ProdHId: number;
   ProdId: number;
   StateSave: string;
@@ -61,30 +59,27 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.UrlGetProdCompGrouped = URLConstant.GetProductHOComponentGrouped;
-    this.UrlPostAddEditProdD = URLConstant.AddOrEditProductDetail;
-
     this.FormProdComp = this.fb.group(
       {
         groups: this.fb.array([])
       }
     );
 
-    this.ProdHId = this.objInput["param"];
+    this.ProdHId = this.objInput["ProdHId"];
     this.ProdId = this.objInput["ProdId"];
     this.LoadProdComponent(this.ProdHId, "GEN", true, "");
 
 
     this.inputLookUpObj = new InputLookupObj();
     this.inputLookUpObj.urlJson = "./assets/uclookup/product/lookupProduct.json";
-    this.inputLookUpObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookUpObj.urlEnviPaging = environment.losUrl;
     this.inputLookUpObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookUpObj.pagingJson = "./assets/uclookup/product/lookupProduct.json";
     this.inputLookUpObj.genericJson = "./assets/uclookup/product/lookupProduct.json";
     this.inputLookUpObj.isRequired = false;
 
     var critObj = new CriteriaObj();
-    critObj.propName = 'P.PROD_ID';
+    critObj.propName = 'PROD_ID';
     critObj.restriction = AdInsConstant.RestrictionNeq;
     critObj.value = this.ProdId.toString();
     var arrCrit = new Array();
@@ -247,7 +242,7 @@ export class HoGeneralDataComponent implements OnInit {
       Lob: Lob,
       RowVersion: ""
     }
-    this.http.post(this.UrlGetProdCompGrouped, ProdHOComponent).toPromise().then(
+    this.http.post(URLConstant.GetProductHOComponentGrouped, ProdHOComponent).toPromise().then(
       async (response) => {
         var fa_group = this.FormProdComp.controls['groups'] as FormArray;
         while(fa_group.length){
@@ -346,7 +341,7 @@ export class HoGeneralDataComponent implements OnInit {
 
   SaveForm() {
     var objPost = this.BuildReqProdDetail();
-    this.http.post(this.UrlPostAddEditProdD, objPost).subscribe(
+    this.http.post(URLConstant.AddOrEditProductDetail, objPost).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.BackToPaging();
@@ -356,7 +351,7 @@ export class HoGeneralDataComponent implements OnInit {
 
   NextDetail() {
     var objPost = this.BuildReqProdDetail();
-    this.http.post(this.UrlPostAddEditProdD, objPost).subscribe(
+    this.http.post(URLConstant.AddOrEditProductDetail, objPost).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.wizard.goToNextStep();
@@ -383,8 +378,8 @@ export class HoGeneralDataComponent implements OnInit {
     }
     else {
       if (confirm('This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?')) {
-        var url = environment.FoundationR3Url + "/Product/CopyProduct";
-        this.http.post(url, { prodHId: this.ProdHId, fromProdId: this.inputLookUpObj.jsonSelect["ProdId"] }).subscribe(
+        
+        this.http.post(URLConstant.CopyProduct, { prodHId: this.ProdHId, fromProdId: this.inputLookUpObj.jsonSelect["ProdId"] }).subscribe(
           (response) => {
             this.toastr.successMessage("Product Copied Successfully");
             window.location.reload();

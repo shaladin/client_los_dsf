@@ -87,12 +87,12 @@ export class ProdOfferingViewComponent implements OnInit {
     }
     //** Main Information **//
     if (this.mainInfoByHIdOnly == true) {
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewProductOfferingMainInformation.json";
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformation.json";
     }
     else {
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewProductOfferingMainInformationByCode.json";
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformationByCode.json";
     }
-    this.viewGenericObj.viewEnvironment = environment.FoundationR3Url;
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
 
 
     if (this.prodOfferingHId == 0) {

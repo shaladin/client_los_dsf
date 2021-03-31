@@ -29,10 +29,10 @@ export class OfferingSearchOfficeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/productOfficeMbrTempPaging.json";
+    this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
     this.tempPagingObj.enviromentUrl = environment.FoundationR3Url;
     this.tempPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/productOfficeMbrTempPaging.json";
+    this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
     this.tempPagingObj.ddlEnvironments = [
       {
         name: "ROA.AREA_CODE",
@@ -42,23 +42,21 @@ export class OfferingSearchOfficeComponent implements OnInit {
     this.obj.ProdHId = this.ProdHId;
     this.http.post(URLConstant.GetListProdBranchOfficeMbrByProdHId, {Id : this.ProdHId}).subscribe(
       response => {
-        this.toastr.successMessage(response["message"]);
         for (let i = 0; i < response["ReturnObject"].length; i++) {
-          this.arrListId.push(response["ReturnObject"][i]["RefOfficeId"]);
+          this.arrListId.push(response["ReturnObject"][i]["OfficeCode"]);
         }
         var addCrit = new CriteriaObj();
-        addCrit.DataType = "numeric";
-        addCrit.propName = "RO.REF_OFFICE_ID";
+        addCrit.propName = "RO.OFFICE_CODE";
         addCrit.restriction = AdInsConstant.RestrictionIn;
         addCrit.listValue = this.arrListId;
         this.tempPagingObj.addCritInput.push(addCrit);
 
       }
     );
+
     if (this.ListOfficeMemberObjInput["result"].length != 0) {
       var addCrit = new CriteriaObj();
-      addCrit.DataType = "numeric";
-      addCrit.propName = "RO.REF_OFFICE_ID";
+      addCrit.propName = "RO.OFFICE_CODE";
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
       addCrit.listValue = this.ListOfficeMemberObjInput["result"];
       this.tempPagingObj.addCritInput.push(addCrit);
@@ -75,7 +73,7 @@ export class OfferingSearchOfficeComponent implements OnInit {
   }
 
   getListTemp(ev) {
-    this.listSelectedId = ev.TempListId;
+    this.listSelectedId = ev;
   }
 
   SaveForm() {
@@ -83,20 +81,15 @@ export class OfferingSearchOfficeComponent implements OnInit {
       this.toastr.errorMessage(ExceptionConstant.ADD_MIN_1_DATA);
       return;
     }
-
+  
     var obj = {
-      ProdOfferingBranchMbrs: [],
+      ProdOfferingBranchMbrs: this.listSelectedId["TempListObj"],
       RowVersion: ""
     };
 
-    for (var i = 0; i < this.listSelectedId.length; i++) {
-      var tempObj = {
-        ProdOfferingHId: this.ListOfficeMemberObjInput["param"],
-        RefOfficeId: this.listSelectedId[i],
-        IsAllowedCrt: true,
-        RowVersion: ""
-      }
-      obj.ProdOfferingBranchMbrs.push(tempObj);
+    for (var i = 0; i < this.listSelectedId["TempListObj"].length; i++) {
+      obj.ProdOfferingBranchMbrs[i].ProdOfferingHId = this.ListOfficeMemberObjInput["ProdOfferingHId"],
+        obj.ProdOfferingBranchMbrs[i].RowVersion = "";
     }
 
     this.http.post(URLConstant.AddProdOfferingOfficeMbrBatch, obj).subscribe(

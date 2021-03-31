@@ -24,8 +24,6 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
   prodOfferingHId: any;
   prodOfferingHDeactivateObj: any;
   resultData: any;
-  apiUrl: any;
-  editUrl: any;
   arrCrit: any;
   getValueReasonModel: any;
   allRefReasonMethod: any;
@@ -51,7 +49,6 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
   readonly CancelLink: string = NavigationConstant.PRODUCT_OFFERING_DEACTIVATE;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
 
-    this.editUrl = URLConstant.RequestOfferingDeactivationNew;
     this.getValueReasonModel = URLConstant.GetListActiveRefReason;
     this.ProdOfferingBranchUrl = URLConstant.GetListProdOfferingBranchOfficeMbrByProdHIdAndApp;
 
@@ -66,8 +63,8 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewProductOfferingMainInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.FoundationR3Url;
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformation.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
 
     var obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeProdDeactivate };
     await this.http.post(this.getValueReasonModel, obj).toPromise().then(
@@ -131,7 +128,7 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
     this.prodOfferingHDeactivateObj.ProdOfferingHId = this.prodOfferingHId;
     this.prodOfferingHDeactivateObj.RowVersion = "";
     this.prodOfferingHDeactivateObj.RequestRFAObj = this.ApprovalCreateOutput;
-    this.http.post(this.editUrl, this.prodOfferingHDeactivateObj).subscribe(
+    this.http.post(URLConstant.RequestOfferingDeactivationNew, this.prodOfferingHDeactivateObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_DEACTIVATE], {});

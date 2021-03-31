@@ -50,6 +50,7 @@ import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
 import { UcapprovebyModule } from '@adins/ucapproveby';
 import { MatTabsModule } from '@angular/material';
 import { UcviewgenericModule } from '@adins/ucviewgeneric';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @NgModule({
   declarations: [
@@ -110,6 +111,9 @@ import { UcviewgenericModule } from '@adins/ucviewgeneric';
     UcapprovalgeneralinfoModule,
     MatTabsModule,
     UcviewgenericModule
-  ]
+  ],
+  providers: [
+      NGXToastrService
+    ]
 })
 export class ProductModule { }

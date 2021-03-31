@@ -12,6 +12,7 @@ import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHisto
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-prod-ho-deact-apv-detail',
@@ -42,8 +43,8 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewProductMainInformationForDeactApv.json";
-    this.viewGenericObj.viewEnvironment = environment.FoundationR3Url;
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformationForDeactApv.json";
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
     
     var obj = {
       taskId: this.taskId,

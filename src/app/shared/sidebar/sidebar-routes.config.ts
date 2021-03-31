@@ -5,6 +5,24 @@ import { RouteInfo } from './sidebar.metadata';
 export const ROUTES: RouteInfo[] = [
   { Path: NavigationConstant.DASHBOARD, Title: 'Home', Icon: 'ft-home', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
   {
+    Path: '', Title: 'Product', Icon: 'ft-package', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+    Submenu: [
+      { Path: NavigationConstant.PRODUCT_HO_PAGING, Title: 'Product HO', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params : []  },
+      { Path: NavigationConstant.PRODUCT_HO_REVIEW, Title: 'Product HO Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params : []  },
+      { Path: NavigationConstant.PRODUCT_HO_APPRV, Title: 'Product HO Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params : []  },
+      { Path: NavigationConstant.PRODUCT_HO_RTN_PAGING, Title: 'Product HO Return', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params : []  },
+      { Path: NavigationConstant.PRODUCT_HO_DEACTIVATE, Title: 'Product HO Deactivation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params : []  },
+      { Path: NavigationConstant.PRODUCT_HO_DEACTIVATE_APPRV, Title: 'Product HO Deactivate Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params : []  },
+      { Path: NavigationConstant.PROD_OFFERING_PAGING, Title: 'Product Offering', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params : []  },
+      { Path: NavigationConstant.PRODUCT_OFFERING_REVIEW, Title: 'Product Offering Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params : []  },
+      { Path: NavigationConstant.PRODUCT_OFFERING_APPRV, Title: 'Product Offering Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params : []  },
+      { Path: NavigationConstant.PROD_OFFERING_RTN_PAGING, Title: 'Product Offering Return', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params : []  },
+      { Path: NavigationConstant.PRODUCT_OFFERING_DEACTIVATE, Title: 'Product Offering Deactivation', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params : []  },
+      { Path: NavigationConstant.PRODUCT_OFFERING_DEACTIVATE_APPRV, Title: 'Product Offering Deactivate Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params : []  }
+      
+    ], Params : [] 
+  },
+  {
     Path: '', Title: 'OPL', Icon: 'ft-file-plus', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
     Submenu: [
       { Path: '/Nap/MainData/NAP2/Paging', Title: 'New Application', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },

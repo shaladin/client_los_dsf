@@ -44,7 +44,7 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
 
   ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewProductOfferingMainInformationForDeactApv.json";
-    this.viewGenericObj.viewEnvironment = environment.FoundationR3Url;
+    this.viewGenericObj.viewEnvironment = environment.losUrl;
 
     var obj = {
       taskId: this.taskId,

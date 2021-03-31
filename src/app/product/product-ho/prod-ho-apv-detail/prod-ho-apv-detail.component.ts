@@ -45,7 +45,6 @@ export class ProdHoApvDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-
     var obj = {
       taskId: this.taskId,
       instanceId: this.instanceId,
@@ -106,7 +105,7 @@ export class ProdHoApvDetailComponent implements OnInit {
     var data = {
       ProdHId : this.prodHId, 
       TaskId : event[0].ApvTaskId, 
-      Notes : event[0].Notes,
+      Notes : event[0].Notes != undefined? event[0].Notes : "",
       Reason : event[0].ReasonCode, 
       Result : event[0].ApvResult
     }

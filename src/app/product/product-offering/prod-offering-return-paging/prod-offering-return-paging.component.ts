@@ -22,9 +22,8 @@ export class ProdOfferingReturnPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/product/searchProductOfferingReturn.json";
-    this.inputPagingObj.enviromentUrl = environment.FoundationR3Url;
+    this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.deleteUrl = "/RefBank/DeleteRefBank";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOfferingReturn.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -32,11 +31,6 @@ export class ProdOfferingReturnPagingComponent implements OnInit {
         environment: environment.FoundationR3Url
       }
     ];
-
-    var WVTrxTypeCodeObj = new WhereValueObj();
-    WVTrxTypeCodeObj.property = "TrxTypeCode";
-    WVTrxTypeCodeObj.value = "PROD";
-    this.inputPagingObj.whereValue.push(WVTrxTypeCodeObj);
 
     var WVProdOfferingStatObj = new WhereValueObj();
     WVProdOfferingStatObj.property = "ProdOfferingStat";

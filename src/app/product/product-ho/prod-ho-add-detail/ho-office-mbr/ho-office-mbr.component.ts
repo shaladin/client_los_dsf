@@ -13,11 +13,8 @@ export class HoOfficeMbrComponent implements OnInit {
 
   ngOnInit() {
     this.isOn = true;
-    this.ListOfficeMemberObj["param"]=this.objInput["param"];
+    this.ListOfficeMemberObj["ProdHId"]=this.objInput["ProdHId"];
     this.ListOfficeMemberObj["result"] = [];
-  }
-
-  GetSearchedOfficeObjOutput(ev: any){
   }
 
   ChangeComponent(ev: any){

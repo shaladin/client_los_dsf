@@ -15,14 +15,9 @@ export class ProdOfferingDeactPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/product/searchProductOfferingDeactivate.json";
-    this.inputPagingObj.enviromentUrl = environment.FoundationR3Url;
+    this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOfferingDeactivate.json";
-
-    var WVTrxTypeCodeObj = new WhereValueObj();
-    WVTrxTypeCodeObj.property = "TrxTypeCode";
-    WVTrxTypeCodeObj.value = "PROD";
-    this.inputPagingObj.whereValue.push(WVTrxTypeCodeObj);
 
     var WVProdOfferingStatObj = new WhereValueObj();
     WVProdOfferingStatObj.property = "ProdOfferingStat";

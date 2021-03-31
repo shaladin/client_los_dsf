@@ -4,7 +4,7 @@ export class ProdHVersionObj {
     ProdVersion: string;
     ProdStat: string;
     Descr: string;
-    StarDt: Date;
+    StartDt: Date;
     EndDt: Date;
     constructor() { this.ProdHId = 0; }
   }

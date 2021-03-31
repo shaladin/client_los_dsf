@@ -39,16 +39,15 @@ export class HoListOfficeMbrComponent implements OnInit {
   ngOnInit() {
     this.pageNow = 1;
     this.pageSize = 10;
-    this.apiUrl = environment.FoundationR3Url + URLConstant.GetPagingObjectBySQL;
+    this.apiUrl = environment.losUrl + URLConstant.GetPagingObjectBySQL;
 
-    this.ProdHId = this.ListOfficeMemberObjInput["param"];
+    this.ProdHId = this.ListOfficeMemberObjInput["ProdHId"];
     var obj = {
-      ProdHId: this.ListOfficeMemberObjInput["param"],
+      ProdHId: this.ListOfficeMemberObjInput["ProdHId"],
       RowVersion: ""
     }
 
-    var url = URLConstant.GetListProdBranchOfficeMbrByProdHId;
-    this.http.post(url, {Id : this.ListOfficeMemberObjInput["param"]}).subscribe(
+    this.http.post(URLConstant.GetListProdBranchOfficeMbrByProdHId, {Id : this.ListOfficeMemberObjInput["ProdHId"]}).subscribe(
       (response) => {
         this.resultData = response[CommonConstant.ReturnObj];
       }
@@ -65,7 +64,7 @@ export class HoListOfficeMbrComponent implements OnInit {
       }
     } else {
       for (var i = 0; i < this.resultData.length; i++) {
-        temp.push(this.resultData[i].RefOfficeId);
+        temp.push(this.resultData[i].OfficeCode);
       }
       obj = {
         isOn: false,
@@ -96,7 +95,6 @@ export class HoListOfficeMbrComponent implements OnInit {
 
   deleteFromList(ev: any) {
     if (confirm('Are you sure to delete this record?')) {
-      var url = URLConstant.DeleteProductOfficeMbr;
       var obj = {
         ProductBranchMbrs: [
           {
@@ -106,7 +104,7 @@ export class HoListOfficeMbrComponent implements OnInit {
         ]
       };
 
-      this.http.post(url, obj).subscribe(
+      this.http.post(URLConstant.DeleteProductOfficeMbr, obj).subscribe(
         (response) => {
           var idx = this.resultData.findIndex(x => x.ProdBranchMbrId == ev.ProdBranchMbrId);
           if (idx > -1) this.resultData.splice(idx, 1);
@@ -117,7 +115,7 @@ export class HoListOfficeMbrComponent implements OnInit {
   }
 
   DoneForm() {
-    this.http.post(environment.FoundationR3Url + "/Product/SubmitProduct", { ProdHId: this.ProdHId }).subscribe(
+    this.http.post(environment.losUrl + "/Product/SubmitProduct", { ProdHId: this.ProdHId }).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
       }

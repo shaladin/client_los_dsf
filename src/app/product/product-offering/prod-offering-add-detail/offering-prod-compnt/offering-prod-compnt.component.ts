@@ -36,7 +36,7 @@ export class OfferingProdCompntComponent implements OnInit {
   source:string = "";
 
   ngOnInit() {
-    this.prodOfferingHId = this.objInput["param"];
+    this.prodOfferingHId = this.objInput["ProdOfferingId"];
   }
   
   SaveForm(event) {
@@ -64,11 +64,11 @@ export class OfferingProdCompntComponent implements OnInit {
   generateSaveObj(event){
     this.listProductComponentObj = new ListProductOfferingDetailObj();
     this.listProductComponentObj.ProdOfferingDetails = new Array();
-    this.listProductComponentObj.ProdOfferingHId = this.objInput["param"];
+    this.listProductComponentObj.ProdOfferingHId = this.objInput["ProdOfferingId"];
     for (var i = 0; i < event.length; i++) {
       var GeneralDataObj = new ProductOfferingDetailObj();
       GeneralDataObj.ProdOfferingDId = event[i].ProdOfferingDId;
-      GeneralDataObj.ProdOfferingHId = this.objInput["param"];
+      GeneralDataObj.ProdOfferingHId = this.objInput["ProdOfferingId"];
       GeneralDataObj.RefProdCompntCode = event[i].RefProdCompntCode;
       GeneralDataObj.RefProdCompntGrpCode = event[i].RefProdCompntGrpCode;
       if(event[i].IsProdOffering == true){

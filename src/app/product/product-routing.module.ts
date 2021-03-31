@@ -13,7 +13,6 @@ import { ProdHoPagingComponent } from './product-ho/prod-ho-paging/prod-ho-pagin
 import { ProdHoReturnPagingComponent } from './product-ho/prod-ho-return-paging/prod-ho-return-paging.component';
 import { ProdHoRvwDetailComponent } from './product-ho/prod-ho-rvw-detail/prod-ho-rvw-detail.component';
 import { ProdHoRvwPagingComponent } from './product-ho/prod-ho-rvw-paging/prod-ho-rvw-paging.component';
-import { ProdHoViewComponent } from './product-ho/prod-ho-view/prod-ho-view.component';
 import { ProdOfferingAddDetailComponent } from './product-offering/prod-offering-add-detail/prod-offering-add-detail.component';
 import { ProdOfferingAddComponent } from './product-offering/prod-offering-add/prod-offering-add.component';
 import { ProdOfferingApvDetailComponent } from './product-offering/prod-offering-apv-detail/prod-offering-apv-detail.component';
@@ -26,7 +25,6 @@ import { ProdOfferingPagingComponent } from './product-offering/prod-offering-pa
 import { ProdOfferingReturnPagingComponent } from './product-offering/prod-offering-return-paging/prod-offering-return-paging.component';
 import { ProdOfferingRvwDetailComponent } from './product-offering/prod-offering-rvw-detail/prod-offering-rvw-detail.component';
 import { ProdOfferingRvwPagingComponent } from './product-offering/prod-offering-rvw-paging/prod-offering-rvw-paging.component';
-import { ProdOfferingViewComponent } from './product-offering/prod-offering-view/prod-offering-view.component';
 
 const routes: Routes = [
   {
@@ -100,20 +98,6 @@ const routes: Routes = [
       component: ProdHoDeactDetailComponent,
       data: {
         title: 'Product HO Deactivate'
-      }
-    },
-    {
-      path: PathConstant.HO_VIEW,
-      component: ProdHoViewComponent,
-      data: {
-        title: 'Product HO View'
-      }
-    },
-    {
-      path: PathConstant.OFFERING_VIEW,
-      component: ProdOfferingViewComponent,
-      data: {
-        title: 'Product Offering View'
       }
     },
     {

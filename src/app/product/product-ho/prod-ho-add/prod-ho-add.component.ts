@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -10,21 +10,22 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ProdHObj } from 'app/shared/model/Product/ProdHObj.model';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ReqProductObj } from 'app/shared/model/Request/Product/ReqProductObj.model';
 
 @Component({
   selector: 'app-prod-ho-add',
   templateUrl: './prod-ho-add.component.html'
 })
 export class ProdHoAddComponent implements OnInit {
-  param: any;
+  ProdHId: number;
   mode: string = 'add';
   key: any;
   criteria: CriteriaObj[] = [];
   source:string="";
   ResultResponse: any;
   SaveMode;
-  ProdHOBj: any;
+  ReqProductObj: ReqProductObj = new ReqProductObj();
   businessDt: any;
   startActiveDt : any;
 
@@ -47,7 +48,7 @@ export class ProdHoAddComponent implements OnInit {
     
     this.route.queryParams.subscribe(params => {
       if(params["ProdHId"] != null){
-        this.param = params["ProdHId"];
+        this.ProdHId = params["ProdHId"];
       }
       if(params["mode"] != null){
         this.mode = params["mode"];
@@ -71,14 +72,12 @@ export class ProdHoAddComponent implements OnInit {
     if (this.mode == "edit") {
       var tempCrit = new CriteriaObj();
       tempCrit.propName = this.key;
-      tempCrit.restriction = "Eq";
-      tempCrit.value = this.param;
+      tempCrit.restriction = AdInsConstant.RestrictionEq;
+      tempCrit.value = this.ProdHId.toString();
       this.criteria.push(tempCrit);
 
       this.RefProductHOForm.controls.ProdCode.disable();
-      this.ProdHOBj = new ProdHObj();
-      this.ProdHOBj.ProdHId = this.param;
-      this.http.post(URLConstant.GetProductMainInfo, this.ProdHOBj).subscribe(
+      this.http.post(URLConstant.GetProductMainInfo, {Id: this.ProdHId}).subscribe(
         (response) => {
           this.ResultResponse = response;
           this.RefProductHOForm.patchValue({
@@ -126,15 +125,14 @@ export class ProdHoAddComponent implements OnInit {
 
   SaveForm() {
     if (this.SaveMode == "save") {
-      this.ProdHOBj = new ProdHObj();
-      this.ProdHOBj = this.RefProductHOForm.value;
+      this.ReqProductObj = this.RefProductHOForm.value;
 
       if (this.mode == "edit") {
         if (this.ValidateDate()) {
-          this.ProdHOBj.ProdId = this.ResultResponse.ProdId;
-          this.ProdHOBj.ProdCode = this.ResultResponse.ProdCode;
-          this.ProdHOBj.RowVersion = this.ResultResponse.RowVersion;
-          this.http.post(URLConstant.EditProduct, this.ProdHOBj).subscribe(
+          this.ReqProductObj.ProdId = this.ResultResponse.ProdId;
+          this.ReqProductObj.ProdCode = this.ResultResponse.ProdCode;
+          this.ReqProductObj.RowVersion = this.ResultResponse.RowVersion;
+          this.http.post(URLConstant.EditProduct, this.ReqProductObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               this.BackToPaging();
@@ -143,8 +141,8 @@ export class ProdHoAddComponent implements OnInit {
         }
       } else {
         if (this.ValidateDate()) {
-          this.ProdHOBj.RowVersion = "";
-          this.http.post(URLConstant.AddProduct, this.ProdHOBj).subscribe(
+          this.ReqProductObj.RowVersion = [];
+          this.http.post(URLConstant.AddProduct, this.ReqProductObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               this.BackToPaging();
@@ -153,27 +151,26 @@ export class ProdHoAddComponent implements OnInit {
         }
       }
     } else { //next
-      this.ProdHOBj = new ProdHObj();
-      this.ProdHOBj = this.RefProductHOForm.value;
+      this.ReqProductObj = this.RefProductHOForm.value;
       if (this.mode == "edit") {
         if (this.ValidateDate()) {
-          this.ProdHOBj.ProdId = this.ResultResponse.ProdId;
-          this.ProdHOBj.ProdCode = this.ResultResponse.ProdCode;
-          this.ProdHOBj.RowVersion = this.ResultResponse.RowVersion;
-          this.http.post(URLConstant.EditProduct, this.ProdHOBj).subscribe(
+          this.ReqProductObj.ProdId = this.ResultResponse.ProdId;
+          this.ReqProductObj.ProdCode = this.ResultResponse.ProdCode;
+          this.ReqProductObj.RowVersion = this.ResultResponse.RowVersion;
+          this.http.post(URLConstant.EditProduct, this.ReqProductObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
-              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_ADD_DETAIL],{ "ProdHId": response["DraftProdHId"], "ProdId" : response["ProdId"], "mode": this.mode, source : this.source });
+              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_ADD_DETAIL],{ "ProdHId": response["DraftProdHId"], "ProdId" : response["ProdId"], "mode": this.mode, "source" : this.source });
             }
           );
         }
       } else {
         if (this.ValidateDate()) {
-          this.ProdHOBj.RowVersion = "";
-          this.http.post(URLConstant.AddProduct, this.ProdHOBj).subscribe(
+          this.ReqProductObj.RowVersion = [];
+          this.http.post(URLConstant.AddProduct, this.ReqProductObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
-              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_ADD_DETAIL],{ "ProdHId": response["DraftProdHId"], "ProdId" : response["ProdId"], "mode": this.mode, source : this.source });
+              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_ADD_DETAIL],{ "ProdHId": response["DraftProdHId"], "ProdId" : response["ProdId"], "mode": this.mode, "source" : this.source });
             }
           );
         }

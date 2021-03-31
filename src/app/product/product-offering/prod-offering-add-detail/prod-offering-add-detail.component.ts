@@ -15,7 +15,7 @@ export class ProdOfferingAddDetailComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,private fb:FormBuilder, private toastr: NGXToastrService) { 
     this.route.queryParams.subscribe(params => {
       
-      this.objPassing["param"] = params["ProdOfferingHId"];
+      this.objPassing["ProdOfferingHId"] = params["ProdOfferingHId"];
       this.objPassing["ProdOfferingId"] = params["ProdOfferingId"];
       this.objPassing["mode"] = params["mode"];
       this.source = params["source"];
@@ -49,10 +49,7 @@ export class ProdOfferingAddDetailComponent implements OnInit {
   });
 
   ngOnInit() {
-    console.log("CCCCCCCCCCCCCCCCCCCC");
-    var prodOfferingObj = new ProdOfferingObj();
-    prodOfferingObj.ProdOfferingHId = this.objPassing.param;
-    this.http.post(URLConstant.GetProductOfferingMainInfo, prodOfferingObj).subscribe(
+    this.http.post(URLConstant.GetProductOfferingMainInfo, {Id: this.objPassing.ProdOfferingId}).subscribe(
       (response) => {
         this.resultData=response;
         this.ProdHId = response["ProdHId"];

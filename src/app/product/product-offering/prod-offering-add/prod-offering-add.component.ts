@@ -45,7 +45,7 @@ export class ProdOfferingAddComponent implements OnInit {
   criteria: CriteriaObj[] = [];
   prodOfferingObj: ProdOfferingObj;
   resultData: any;
-  ProdOfferingId: any;
+  ProdOfferingId: number;
   inputLookupObj: any;
   ProdOfferingHId: number;
 
@@ -59,7 +59,7 @@ export class ProdOfferingAddComponent implements OnInit {
 
   ngOnInit() {
     this.inputLookupObj = new InputLookupObj();
-    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.urlEnviPaging = environment.losUrl;
     this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
 
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -74,9 +74,9 @@ export class ProdOfferingAddComponent implements OnInit {
       this.inputLookupObj.genericJson = "./assets/uclookup/product/lookupProductForHO.json";
     }
     else {
-      this.inputLookupObj.urlJson = "./assets/uclookup/lookupProdOffering.json";
-      this.inputLookupObj.pagingJson = "./assets/uclookup/lookupProdOffering.json";
-      this.inputLookupObj.genericJson = "./assets/uclookup/lookupProdOffering.json";
+      this.inputLookupObj.urlJson = "./assets/uclookup/product/lookupProdOffering.json";
+      this.inputLookupObj.pagingJson = "./assets/uclookup/product/lookupProdOffering.json";
+      this.inputLookupObj.genericJson = "./assets/uclookup/product/lookupProdOffering.json";
 
       var arrCrit = new Array();
       var critObj = new CriteriaObj();
@@ -97,14 +97,11 @@ export class ProdOfferingAddComponent implements OnInit {
     if (this.mode == "edit") {
 
       this.ProdOfferingForm.controls.ProdOfferingCode.disable();
-      var prodOfferingObj = new ProdOfferingObj();
-      prodOfferingObj.ProdOfferingHId = this.ProdOfferingHId;
-      this.http.post(URLConstant.GetProductOfferingMainInfo, prodOfferingObj).subscribe(
+      this.http.post(URLConstant.GetProductOfferingMainInfo, {Id: this.ProdOfferingHId}).subscribe(
         (response) => {
           this.resultData = response;
           this.inputLookupObj.nameSelect = this.resultData.ProdName;
           this.inputLookupObj.jsonSelect = { ProdName: this.resultData.ProdName, CurrentProdHId: this.resultData.ProdHId };
-          prodOfferingObj.ProdHId = this.resultData.ProdHId;
           this.ProductName = this.resultData.ProdName;
           this.ProdOfferingForm.patchValue({
             ProdOfferingCode: this.resultData.ProdOfferingCode,

@@ -24,10 +24,10 @@ export class HoSearchOfficeComponent implements OnInit {
 
 
   ngOnInit() {
-    this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/productHOfficeMbrTempPaging.json";
+    this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/product/productHOfficeMbrTempPaging.json";
     this.tempPagingObj.enviromentUrl = environment.FoundationR3Url;
     this.tempPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/productHOfficeMbrTempPaging.json";
+    this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/product/productHOfficeMbrTempPaging.json";
     this.tempPagingObj.ddlEnvironments = [
       {
         name: "ROA.AREA_CODE",
@@ -37,8 +37,7 @@ export class HoSearchOfficeComponent implements OnInit {
 
     if (this.ListOfficeMemberObjInput["result"].length != 0) {
       var addCrit = new CriteriaObj();
-      addCrit.DataType = "numeric";
-      addCrit.propName = "RO.REF_OFFICE_ID";
+      addCrit.propName = "RO.OFFICE_CODE";
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
       addCrit.listValue = this.ListOfficeMemberObjInput["result"];
       this.tempPagingObj.addCritInput.push(addCrit);
@@ -59,7 +58,7 @@ export class HoSearchOfficeComponent implements OnInit {
   }
 
   SaveForm() {
-    if (this.listSelectedId["TempListId"].length == 0) {
+    if (this.listSelectedId.length == 0) {
       this.toastr.errorMessage(ExceptionConstant.ADD_MIN_1_DATA);
       return;
     }
@@ -69,8 +68,8 @@ export class HoSearchOfficeComponent implements OnInit {
       RowVersion: ""
     };
 
-    for (var i = 0; i < this.listSelectedId["TempListId"].length; i++) {
-      obj.ProductBranchMbrs[i].ProdHId = this.ListOfficeMemberObjInput["param"],
+    for (var i = 0; i < this.listSelectedId["TempListObj"].length; i++) {
+      obj.ProductBranchMbrs[i].ProdHId = this.ListOfficeMemberObjInput["ProdHId"],
         obj.ProductBranchMbrs[i].RowVersion = "";
     }
 

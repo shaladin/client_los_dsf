@@ -91,8 +91,6 @@ export class ProdOfferingRvwDetailComponent implements OnInit {
     var data = {
       ProdOfferingId: this.ProdOfferingId,
       ProdOfferingHId: this.ProdOfferingHId,
-      Notes: this.ApprovalCreateOutput.Notes,
-      Reason: this.ApprovalCreateOutput.ReasonCode,
       WfTaskListId: this.WfTaskListId,
       RequestRFAObj: this.ApprovalCreateOutput
     }

@@ -5,15 +5,7 @@ import { ProdOfferingViewComponent } from './prod-offering-view.component';
 const routes: Routes = [
   {
     path: '',
-    children: [
-      {
-        path: '',
-        component: ProdOfferingViewComponent,
-        data: {
-          title: 'Offering View'
-        }
-    }
-    ]
+    component: ProdOfferingViewComponent,
   }
 ];
 @NgModule({

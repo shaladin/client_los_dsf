@@ -19,6 +19,7 @@ export class ProdHObj {
     ExecutionByUser : string;
     ReturnNotes : string;
     RowVersion : string[];
+    ProdCode : string;
 
     constructor() {
         this.ProdHId = 0;
@@ -41,5 +42,6 @@ export class ProdHObj {
         this.ExecutionByUser = "";
         this.ReturnNotes = "";
         this.RowVersion = [];
+        this.ProdCode = "";
     }
 }

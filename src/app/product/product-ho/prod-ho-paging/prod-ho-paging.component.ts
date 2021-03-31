@@ -11,17 +11,22 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class ProdHoPagingComponent implements OnInit {
 
-  inputPagingObj: any;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
 
   readonly AddLink: string = NavigationConstant.PRODUCT_HO_ADD;
-  constructor(private route: ActivatedRoute,
-    private router: Router) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url = "./assets/ucpaging/product/searchProductHO.json";
-    this.inputPagingObj.enviromentUrl = environment.FoundationR3Url;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL; 
+    
+    var whereValueObj = new WhereValueObj();
+    whereValueObj.property = "ProdStat";
+    whereValueObj.value = "RET";
+    this.inputPagingObj.whereValue.push(whereValueObj);
+
+    this.inputPagingObj._url= "./assets/ucpaging/product/searchProductHO.json";
+    this.inputPagingObj.enviromentUrl = environment.losUrl;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHO.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -29,21 +34,6 @@ export class ProdHoPagingComponent implements OnInit {
         environment: environment.FoundationR3Url
       }
     ];
-
-    var WVTrxTypeCodeObj = new WhereValueObj();
-    WVTrxTypeCodeObj.property = "TrxTypeCode";
-    WVTrxTypeCodeObj.value = "PROD";
-    this.inputPagingObj.whereValue.push(WVTrxTypeCodeObj);
-
-    var WVProdStatObj = new WhereValueObj();
-    WVProdStatObj.property = "ProdStat";
-    WVProdStatObj.value = "RET";
-    this.inputPagingObj.whereValue.push(WVProdStatObj); 
-
-    var WVProdStatObj = new WhereValueObj();
-    WVProdStatObj.property = "searchProductHO";
-    WVProdStatObj.value = null;
-    this.inputPagingObj.whereValue.push(WVProdStatObj);
   }
 
   EditButtonClick(e) {

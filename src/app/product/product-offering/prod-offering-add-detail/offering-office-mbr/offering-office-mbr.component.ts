@@ -14,13 +14,9 @@ export class OfferingOfficeMbrComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("BBBBBBBBBBB");
     this.isOn = true;
-    this.ListOfficeMemberObj["param"]=this.objInput["param"];
+    this.ListOfficeMemberObj["ProdOfferingHId"]=this.objInput["ProdOfferingHId"];
     this.ListOfficeMemberObj["result"] = [];
-  }
-
-  GetSearchedOfficeObjOutput(ev: any){
   }
 
   ChangeComponent(ev: any){
