@@ -52,7 +52,7 @@ export class MouApprovalFactoringComponent implements OnInit {
 
 
   async ngOnInit() : Promise<void> {
-    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
       });

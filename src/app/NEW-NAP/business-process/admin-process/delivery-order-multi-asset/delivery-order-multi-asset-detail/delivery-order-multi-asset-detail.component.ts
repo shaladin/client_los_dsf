@@ -120,7 +120,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         this.isFinal = response[2]["IsFinal"];
       }
     );
-        await this.httpClient.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+        await this.httpClient.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
       });

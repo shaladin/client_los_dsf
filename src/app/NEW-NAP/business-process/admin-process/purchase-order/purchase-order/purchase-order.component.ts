@@ -66,7 +66,7 @@ export class PurchaseOrderComponent implements OnInit {
       (response) => {
         this.AppAssetList = response[CommonConstant.ReturnObj];
       });
-    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
       });

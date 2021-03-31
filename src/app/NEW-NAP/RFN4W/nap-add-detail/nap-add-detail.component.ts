@@ -91,7 +91,7 @@ export class NapAddDetailComponent implements OnInit {
 
   async ngOnInit() : Promise<void> {
     //check DMS
-    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
     });

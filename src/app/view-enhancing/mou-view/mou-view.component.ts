@@ -55,7 +55,7 @@ export class MouViewComponent implements OnInit {
         this.MrMouTypeCode = this.resultData['MrMouTypeCode'];
         this.MrCustTypeCode = this.resultData['MrCustTypeCode'];
         this.MouCustNo = this.resultData['MouCustNo'];
-        this.http.post(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+        this.http.post(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
           (response) => {
             if(response["ConfigValue"] == '1'){
               let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));

@@ -65,7 +65,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   }
 
   async ngOnInit() : Promise<void> {
-    await this.httpClient.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+    await this.httpClient.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
       });

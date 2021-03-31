@@ -141,7 +141,7 @@ export class PreGoLiveComponent implements OnInit {
         this.AgrmntId = this.result.AgrmntId;
         this.AppId = this.result.AppId;
       });
-      await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+      await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
         (response) => {
           this.SysConfigResultObj = response
         });

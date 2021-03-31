@@ -573,7 +573,6 @@ export class CommonConstant {
   public static GSCodeInputOPLFeeBehaviour = "INPOPLFEETBHV";
   public static GSCodeIsUseDigitalization = "IS_USE_DIGITALIZATION";
   public static GSCodeLobKta = "LOB_KTA";
-  public static GsCodeIsUseDms = "IS_USE_DMS";
 
 
   //Serial Item
@@ -660,4 +659,7 @@ export class CommonConstant {
   public static OtherExpenseMasterCodeExpStn = "EXP_STN";
   public static OtherExpenseMasterCodeExpOdb = "ODB";
   public static OtherExpenseMasterCodeExpRc = "RC";
+
+  //SYS CONFIG
+  public static ConfigCodeIsUseDms = "IS_USE_DMS";
 }
