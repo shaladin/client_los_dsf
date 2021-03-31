@@ -62,13 +62,13 @@ export class MouReviewFactoringComponent implements OnInit {
   }
 
   async ngOnInit() : Promise<void> {
-    if (this.WfTaskListId > 0) {
-      this.claimTask();
-    }
     await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
       });
+    if (this.WfTaskListId > 0) {
+      this.claimTask();
+    }
     this.mouCustObject.MouCustId = this.MouCustId;
     await this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
       (response: MouCustObj) => {

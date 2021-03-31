@@ -165,8 +165,8 @@
                     <span class="bs-stepper-label">Term and Condition</span>
                   </button>
                 </div>
-                <div class="line"></div>
-                <div class="step" data-target="#upload-data-tab">
+                <div class="line" [hidden]="SysConfigResultObj?.ConfigValue == 0"></div>
+                <div class="step" data-target="#upload-data-tab" [hidden]="SysConfigResultObj?.ConfigValue == 0">
                   <button type="button" class="step-trigger" role="tab" aria-controls="upload-data-tab"
                     id="upload-data-tab-trigger" (click)="designatedStepHandler('6')" [disabled]="currentStepIndex < 6">
                     <span class="bs-stepper-circle">6</span>
