@@ -10,7 +10,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { SysConfigResultObj } from 'app/shared/model/SysConfigResult/SysConfigResultObj.Model';
+import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
 
 @Component({
   selector: 'app-app-view',
@@ -49,7 +49,7 @@ export class AppViewComponent implements OnInit {
   dmsObj: DMSObj;
   appNo: any;
   custNo: any;
-  SysConfigResultObj: SysConfigResultObj = new SysConfigResultObj();
+  SysConfigResultObj: ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   
   constructor(private route: ActivatedRoute, private http: HttpClient, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
@@ -66,7 +66,7 @@ export class AppViewComponent implements OnInit {
   }
 
   async InitDms() {
-    await this.http.post<SysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
     });

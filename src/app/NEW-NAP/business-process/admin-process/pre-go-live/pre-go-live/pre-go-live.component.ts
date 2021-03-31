@@ -21,7 +21,7 @@ import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
-import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj';
+import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
 
 @Component({
   selector: 'app-sharing-pre-go-live',

@@ -18,7 +18,7 @@ import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
-import { SysConfigResultObj } from 'app/shared/model/SysConfigResult/SysConfigResultObj.Model';
+import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
 
 @Component({
   selector: 'app-credit-approval-cfna',
@@ -47,7 +47,7 @@ export class CreditApprovalCfnaComponent implements OnInit {
   custNo: any;
   IsUseDigitalization: string;
   IsViewReady: boolean = false;
-  SysConfigResultObj: SysConfigResultObj = new SysConfigResultObj();
+  SysConfigResultObj: ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -87,7 +87,7 @@ export class CreditApprovalCfnaComponent implements OnInit {
   }
 
   async InitDms() {
-    await this.http.post<SysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
     });

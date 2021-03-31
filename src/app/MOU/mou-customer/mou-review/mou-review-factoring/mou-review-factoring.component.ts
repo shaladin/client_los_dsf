@@ -17,7 +17,7 @@ import { CookieService } from 'ngx-cookie';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj';
+import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
 @Component({
   selector: 'app-mou-review-factoring',
   templateUrl: './mou-review-factoring.component.html',

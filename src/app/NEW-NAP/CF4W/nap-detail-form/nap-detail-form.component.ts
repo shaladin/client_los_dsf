@@ -6,7 +6,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
-import { SysConfigResultObj } from 'app/shared/model/SysConfigResult/SysConfigResultObj.Model';
+import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -62,7 +62,7 @@ export class NapDetailFormComponent implements OnInit {
   dmsObj: DMSObj;
   appNo: string;
   isDmsReady: boolean = false;
-  SysConfigResultObj: SysConfigResultObj = new SysConfigResultObj();
+  SysConfigResultObj: ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
 
   readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
   constructor(
@@ -88,7 +88,7 @@ export class NapDetailFormComponent implements OnInit {
 
   async ngOnInit() : Promise<void> {
     // check DMS
-    await this.http.post<SysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
     });

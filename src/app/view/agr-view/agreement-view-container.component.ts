@@ -8,7 +8,7 @@ import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { SysConfigResultObj } from 'app/shared/model/SysConfigResult/SysConfigResultObj.Model';
+import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
 
 @Component({
   selector: 'app-agreement-view-container',
@@ -51,7 +51,7 @@ export class AgreementViewContainerComponent implements OnInit {
   agrNo: string;
   appId: string;
   dmsObj: DMSObj;
-  SysConfigResultObj: SysConfigResultObj = new SysConfigResultObj();
+  SysConfigResultObj: ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
 
   constructor(
     private route: ActivatedRoute,
@@ -73,7 +73,7 @@ export class AgreementViewContainerComponent implements OnInit {
   }
 
   async InitDms() {
-    await this.http.post<SysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
     });
