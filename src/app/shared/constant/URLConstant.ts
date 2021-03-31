@@ -1334,6 +1334,7 @@ export class URLConstant {
   // Requisition Decision
   public static SaveRequisitionDecision = environment.losUrl + "/RequisitionDecision/SaveRequisitionDecision";
   public static SubmitRequisitionDecision = environment.losUrl + "/RequisitionDecision/SubmitRequisitionDecision";
+  public static IsSecurityDepositExist = environment.losUrl + "/RequisitionDecision/IsSecurityDepositExist";
 
   // Pre Go Live
   public static SubmitPreGoLive = environment.losUrl + "/PreGoLive/SubmitPreGoLive";
@@ -1352,16 +1353,12 @@ export class URLConstant {
   public static SubmitAssetAllocation = environment.losUrl + "/AppAssetAllocationOpl/SubmitAssetAllocation";
 
   //API AMS
-  public static AmsUrl = "http://r3impl-appsvr/AMS";
-  public static amsUrl = "http://r3impl-appsvr.ad-ins.com/AMS";
   public static GetAssetStockPagingFromAms = "/Api/Integration/GetAssetStockPaging";
 
   // ASSET (AMS)
-  public static GetAssetByAssetNo = URLConstant.amsUrl + "/Asset/GetAssetByAssetNo";
+  public static GetAssetByAssetNo = environment.AMSUrl + "/Asset/GetAssetByAssetNo";
 
-  // API LMS
-  public static lmsUrl = "http://r3impl-appsvr.ad-ins.com/LMS";
 
   // GO LIVE (LMS)
-  public static CheckGoLivePayment = URLConstant.lmsUrl + "/Api/Integration/CheckGoLivePayment";
+  public static CheckGoLivePayment = environment.LMSUrl + "/Api/Integration/CheckGoLivePayment";
 }

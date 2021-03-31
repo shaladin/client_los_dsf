@@ -74,7 +74,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     this.ClaimTask();
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetObj.urlQryPaging = URLConstant.GetAssetStockPagingFromAms;
-    this.InputLookupAssetObj.urlEnviPaging = URLConstant.AmsUrl;
+    this.InputLookupAssetObj.urlEnviPaging = environment.AMSUrl;
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetObj.isRequired = true;
