@@ -1,5 +1,109 @@
-<div class="col-md-12 text-left">
-  <div class="card">
-    <lib-ucviewgeneric *ngIf="isReady" [viewGenericObj]="viewPurchaseTrackingMainInfoObj" (callback)="getEvent($event)"></lib-ucviewgeneric>
+<div class="container-fluid">
+  <div class="row text-left">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body" *ngIf="isReady">
+
+          <lib-ucviewgeneric [viewGenericObj]="viewPurchaseTrackingMainInfoObj" (callback)="getEvent($event)"></lib-ucviewgeneric>
+
+          <div class="px-3">
+            <lib-ucSubsection [id]="'TrackingDetailId'" [title]="'Tracking Detail'" [panel]="'TrackingDetail'">
+            </lib-ucSubsection>
+            <div class="form-body" id="TrackingDetail">
+              <div *ngIf="!AssetReqObj">
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Asset No</label>
+                  <label class="col-md-9 adins-label">-</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Accessories / Avaliable Status</label>
+                  <label class="col-md-9 adins-label">- / -</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Allocate to Agreement No</label>
+                  <label class="col-md-9 adins-label">-</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Asset Requisition No</label>
+                  <label class="col-md-9 adins-label">-</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Requisition Date</label>
+                  <label class="col-md-9 adins-label">-</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Purchase Order Date</label>
+                  <label class="col-md-9 adins-label">-</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Asset Registration Date</label>
+                  <label class="col-md-9 adins-label">-</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Asset Activation Date</label>
+                  <label class="col-md-9 adins-label">-</label>
+                </div>
+              </div>
+              
+              <div *ngIf="AssetReqObj">
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Asset No</label>
+                  <label class="col-md-9 adins-label">{{AssetReqObj.AssetNo}}</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Accessories / Avaliable Status</label>
+                  <label class="col-md-9 adins-label">No (Hardcode) / - (Hardcode)</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Allocate to Agreement No</label>
+                  <label class="col-md-9 adins-label">{{AssetReqObj.AgrmntNo}}</label>
+                  <!-- <label class="col-md-9 adins-label" *ngIf="AssetReqObj.AgrmntNo === null">-</label>
+                  <label class="col-md-9 adins-label" *ngIf="AssetReqObj.AgrmntNo !== null">
+                    <a class="col-md-4" href="javascript:void(0);" (click)="OpenView('AGR')">
+                    {{AssetReqObj.AgrmntNo}}
+                    </a>
+                  </label> -->
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Asset Requisition No</label>
+                  <label class="col-md-9 adins-label">{{AssetReqObj.AssetRequisitionNo}}</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Requisition Date</label>
+                  <label class="col-md-9 adins-label">24-Mar-2021 (Hardcode)</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Purchase Order Date</label>
+                  <label class="col-md-9 adins-label">{{AssetReqObj.PurchaseOrderDate | date: 'dd-MMM-yyyy'}}</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Asset Registration Date</label>
+                  <label class="col-md-9 adins-label">24-Mar-2021 (Hardcode)</label>
+                </div>
+  
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Asset Activation Date</label>
+                  <label class="col-md-9 adins-label">{{AssetReqObj.AssetRcvActvDt | date: 'dd-MMM-yyyy'}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
   </div>
 </div>
