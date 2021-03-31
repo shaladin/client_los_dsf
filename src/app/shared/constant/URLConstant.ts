@@ -197,8 +197,8 @@ export class URLConstant {
   public static GetListActiveRefReasonByRefReasonTypeCode = environment.FoundationR3Url + "/RefReason/GetListKeyValueByCode";
 
   // AppAgrmntCancel
-  public static AddAppAgrmntCancel = environment.losUrl + "/AppAgrmntCancel/AddAppAgrmntCancel"
-
+  public static AddAppAgrmntCancel = environment.losUrl + "/AppAgrmntCancel/AddAppAgrmntCancel";
+  public static AddAppAssetCancel = environment.losUrl + "/AppAgrmntCancel/AddAppAssetCancel";
   //ORGANIZATION
   public static GetRefOrg = "/OrganizationDefinition/GetRefOrg";
   public static EditRefOrgWithOldParentId = "/OrganizationDefinition/EditRefOrgWithOldParentId";
@@ -1333,6 +1333,7 @@ export class URLConstant {
   public static GetApprovalAmount = environment.losUrl + "/ApplicationReview/GetApprovalAmount";
 
   // Requisition Decision
+  public static GetRequisitionDecisionHByAppId = environment.losUrl + "/RequisitionDecision/GetRequisitionDecisionHByAppId";
   public static SaveRequisitionDecision = environment.losUrl + "/RequisitionDecision/SaveRequisitionDecision";
   public static SubmitRequisitionDecision = environment.losUrl + "/RequisitionDecision/SubmitRequisitionDecision";
 
