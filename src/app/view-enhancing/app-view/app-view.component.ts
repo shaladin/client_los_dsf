@@ -69,8 +69,8 @@ export class AppViewComponent implements OnInit {
     this.arrValue.push(this.AppId);
     this.GetApp();
     this.GetIsUseDigitalization();
+    // this.viewAppMainInfo.ReloadUcViewGeneric();
     await this.InitDms();
-    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   async InitDms() {
