@@ -26,9 +26,9 @@
                 <app-mou-view-tc [MouCustId]="MouCustId"></app-mou-view-tc>
               </ng-template>
             </mat-tab>
-            <mat-tab label="Document">
+            <mat-tab *ngIf="IsDms" label="Document">
               <ng-template matTabContent>
-                <app-dms-iframe *ngIf="IsReady" [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
+                <app-dms-iframe *ngIf="IsDms" [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
               </ng-template>
             </mat-tab>
             <mat-tab label="Listed Customer Factoring"  *ngIf="this.MrMouTypeCode == 'FACTORING'">

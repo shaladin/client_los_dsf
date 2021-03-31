@@ -107,7 +107,7 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == '1'" label="Document">
+            <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Document">
               <ng-template matTabContent>
                 <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
               </ng-template>
