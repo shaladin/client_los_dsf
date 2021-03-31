@@ -38,7 +38,9 @@ export const ROUTES: RouteInfo[] = [
       {
         Path: '', Title: 'Additional Process', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
         Submenu: [
-          { Path: NavigationConstant.NAP_ADD_PRCS_ADD_TC_PAGING, Title: 'Additional TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }]},
+          { Path: NavigationConstant.NAP_ADD_PRCS_ADD_TC_PAGING, Title: 'Additional TC', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+          { Path: NavigationConstant.NAP_ADD_PRCS_APP_CAN_PAGING, Title: 'App Cancel', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
+          { Path: NavigationConstant.NAP_ADD_PRCS_APP_ASSET_CAN_PAGING, Title: 'App Asset Cancel', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "OPL" }] },
         ], Params: []
       },
       {

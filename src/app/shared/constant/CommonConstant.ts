@@ -661,6 +661,9 @@ export class CommonConstant {
   public static OtherExpenseMasterCodeExpOdb = "ODB";
   public static OtherExpenseMasterCodeExpRc = "RC";
 
+  //interest input type
+  public static InterestInputTypeAmt = "AMT";
+  public static InterestInputTypePrcnt = "PRCNT"
 
   //Behaviour Type
   public static BehaviourTypeLock = "LOCK";

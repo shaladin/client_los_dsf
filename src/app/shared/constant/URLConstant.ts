@@ -196,8 +196,8 @@ export class URLConstant {
   public static GetListActiveRefReasonByRefReasonTypeCode = environment.FoundationR3Url + "/RefReason/GetListKeyValueByCode";
 
   // AppAgrmntCancel
-  public static AddAppAgrmntCancel = environment.losUrl + "/AppAgrmntCancel/AddAppAgrmntCancel"
-
+  public static AddAppAgrmntCancel = environment.losUrl + "/AppAgrmntCancel/AddAppAgrmntCancel";
+  public static AddAppAssetCancel = environment.losUrl + "/AppAgrmntCancel/AddAppAssetCancel";
   //ORGANIZATION
   public static GetRefOrg = "/OrganizationDefinition/GetRefOrg";
   public static EditRefOrgWithOldParentId = "/OrganizationDefinition/EditRefOrgWithOldParentId";
@@ -1303,6 +1303,7 @@ export class URLConstant {
 
   //App Asset OPL
   public static GetAppAssetOplMainInfoByAppAssetId = environment.losUrl + "/AppAssetOpl/GetAppAssetOplMainInfoByAppAssetId";
+  public static GetAppAssetOplByAppAssetId = environment.losUrl + "/AppAssetOpl/GetAppAssetOplByAppAssetId";
   public static GetAssetRegionFromRuleByAppAssetId = environment.losUrl + "/AppAssetOpl/GetAssetRegionFromRuleByAppAssetId";
   public static GetListAppAssetExpenseByAppId = environment.losUrl + "/AppAssetOpl/GetListAppAssetExpenseByAppId";
   public static GetMaintenancePackageByAppAssetId = environment.losUrl + "/AppAssetOpl/GetMaintenancePackageByAppAssetId";
@@ -1331,6 +1332,7 @@ export class URLConstant {
   public static GetApprovalAmount = environment.losUrl + "/ApplicationReview/GetApprovalAmount";
 
   // Requisition Decision
+  public static GetRequisitionDecisionHByAppId = environment.losUrl + "/RequisitionDecision/GetRequisitionDecisionHByAppId";
   public static SaveRequisitionDecision = environment.losUrl + "/RequisitionDecision/SaveRequisitionDecision";
   public static SubmitRequisitionDecision = environment.losUrl + "/RequisitionDecision/SubmitRequisitionDecision";
 
@@ -1345,7 +1347,6 @@ export class URLConstant {
   public static GetFinancialRuleOpl = environment.losUrl + "/AppAssetFinancialDataOpl/GetFinancialRuleOpl";
   public static CalculateCOFOpl = environment.losUrl + "/AppFinData/CalculateCOFOpl";
 
-
   //Asset Allocation
   public static GetAssetAllocationDataByAppId = environment.losUrl + "/AppAssetAllocationOpl/GetAssetAllocationDataByAppId";
   public static SubmitAssetAllocation = environment.losUrl + "/AppAssetAllocationOpl/SubmitAssetAllocation";
@@ -1354,14 +1355,11 @@ export class URLConstant {
   public static AmsUrl = "http://r3impl-appsvr/AMS";
   public static amsUrl = "http://r3impl-appsvr.ad-ins.com/AMS";
   public static GetAssetStockPagingFromAms = "/Api/Integration/GetAssetStockPaging";
-
-  // ASSET (AMS)
   public static GetAssetByAssetNo = URLConstant.amsUrl + "/Asset/GetAssetByAssetNo";
+  public static GetListAssetReqInProgress = URLConstant.amsUrl + "/Api/Integration/GetListAssetReqInProgress";
 
   // API LMS
   public static lmsUrl = "http://r3impl-appsvr.ad-ins.com/LMS";
-
-  // GO LIVE (LMS)
   public static CheckGoLivePayment = URLConstant.lmsUrl + "/Api/Integration/CheckGoLivePayment";
 
   // REF BEHAVIOUR

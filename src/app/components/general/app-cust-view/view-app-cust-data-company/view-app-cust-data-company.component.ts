@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { AppCustAddrForViewObj } from 'app/shared/model/AppCustAddr/AppCustAddrForViewObj.Model';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
@@ -11,7 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-view-app-cust-data-company',
@@ -19,7 +18,7 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
   styleUrls: []
 })
 export class ViewAppCustDataCompanyComponent implements OnInit {
-
+  @Input() BizTemplateCode: string = "";
   @Input() appId: number;
   @Input() IsNAPVersionCompletion: boolean = true;
   viewMainDataObj: UcViewGenericObj = new UcViewGenericObj();
@@ -40,15 +39,20 @@ export class ViewAppCustDataCompanyComponent implements OnInit {
   appCustCompanyMgmntShrholderObjs: Array<AppCustCompanyMgmntShrholderObj>;
   appCustCompanyLegalDocObjs: Array<AppCustCompanyLegalDocObj>;
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) { }
 
   async ngOnInit() : Promise<void>{
     //jika pake NAP versi baru maka langsung arahkan semua ke view completion tanpa init data di view lama
     if(this.IsNAPVersionCompletion) return;
     await this.getCustData();
     this.arrValue.push(this.appCustObj.AppCustId);
-    this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewAppCustCompanyMainData.json";
+
+    if(this.BizTemplateCode === CommonConstant.OPL) {
+      this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/opl/cust/company/viewAppCustCompanyMainDataOpl.json";
+    }
+    else {
+      this.viewMainDataObj.viewInput = "./assets/ucviewgeneric/viewAppCustCompanyMainData.json";
+    }
     this.viewMainDataObj.viewEnvironment = environment.losUrl;
     this.viewMainDataObj.whereValue = this.arrValue;
 
@@ -59,7 +63,7 @@ export class ViewAppCustDataCompanyComponent implements OnInit {
     this.isDataAlreadyLoaded = true;
   }
 
-  async getCustData(){
+  async getCustData() {
     var reqObj = {AppId: this.appId}
     await this.http.post(URLConstant.GetCustDataCompanyForViewByAppId, reqObj).toPromise().then(
       (response) => {
@@ -70,6 +74,7 @@ export class ViewAppCustDataCompanyComponent implements OnInit {
         this.appCustCompanyLegalDocObjs = response["AppCustCompanyLegalDocObjs"];
         this.appCustSocmedObjs = response["AppCustSocmedObjs"];
         this.appCustGrpObjs = response["AppCustGrpObjs"];
-      });
+      }
+    );
   }
 }

@@ -168,6 +168,12 @@ export class PathConstant {
     public static RETURN_HANDLING_INVOICE = "Invoice";
     public static RETURN_HANDLING_INVOICE_PAGING = PathConstant.RETURN_HANDLING + "/" + PathConstant.RETURN_HANDLING_INVOICE + "/" + PathConstant.PAGING;
     public static RETURN_HANDLING_INVOICE_DETAIL = PathConstant.RETURN_HANDLING + "/" + PathConstant.RETURN_HANDLING_INVOICE + "/" + PathConstant.DETAIL;
+    public static APP_CAN = "AppCancel";
+    public static APP_CAN_PAGING = PathConstant.APP_CAN + "/" + PathConstant.PAGING;
+    public static APP_CAN_DETAIL = PathConstant.APP_CAN + "/" + PathConstant.DETAIL;
+    public static APP_ASSET_CAN = "AppAssetCancel";
+    public static APP_ASSET_CAN_PAGING = PathConstant.APP_ASSET_CAN + "/" + PathConstant.PAGING;
+    public static APP_ASSET_CAN_DETAIL = PathConstant.APP_ASSET_CAN + "/" + PathConstant.DETAIL;
     //#endregion
 
     //#region Nap-Admin-Prcs
