@@ -726,12 +726,21 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.leadInputLeadDataObj.LeadAssetObj.AssetSeqNo = 1;
     if (this.items.controls[0] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 = this.items.controls[0]["controls"]["SerialNoValue"].value;
+      if(this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 == null){
+        this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 = "";
+      }
     }
     if (this.items.controls[1] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 = this.items.controls[1]["controls"]["SerialNoValue"].value;
+      if(this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 == null){
+        this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 = "";
+      }
     }
     if (this.items.controls[2] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo3 = this.items.controls[2]["controls"]["SerialNoValue"].value;
+      if(this.leadInputLeadDataObj.LeadAssetObj.SerialNo3 == null){
+        this.leadInputLeadDataObj.LeadAssetObj.SerialNo3 = "";
+      }
     }
     if (this.items.controls[3] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo4 = this.items.controls[3]["controls"]["SerialNoValue"].value;
