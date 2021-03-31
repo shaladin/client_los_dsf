@@ -1333,6 +1333,7 @@ export class URLConstant {
   public static GetApprovalAmount = environment.losUrl + "/ApplicationReview/GetApprovalAmount";
 
   // Requisition Decision
+  public static GetRequisitionDecisionHByAppId = environment.losUrl + "/RequisitionDecision/GetRequisitionDecisionHByAppId";
   public static SaveRequisitionDecision = environment.losUrl + "/RequisitionDecision/SaveRequisitionDecision";
   public static SubmitRequisitionDecision = environment.losUrl + "/RequisitionDecision/SubmitRequisitionDecision";
 
