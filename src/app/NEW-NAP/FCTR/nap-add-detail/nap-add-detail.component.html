@@ -109,8 +109,8 @@
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
             </div>
-            <div class="line"></div>
-            <div class="step" data-target="#upload-tab">
+            <div class="line" *ngIf="SysConfigResultObj?.ConfigValue == 1"></div>
+            <div class="step" data-target="#upload-tab" *ngIf="SysConfigResultObj?.ConfigValue == 1">
               <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
                       [disabled]="!(AppStepIndex >= 10)" (click)="ChangeTab('UPL_DOC')">
                 <span class="bs-stepper-circle">10</span>
@@ -153,10 +153,10 @@
               </app-financial-data-fctr>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 9 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId" (outputTab)="NextStep('UPL_DOC')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
+              <app-tc-data *ngIf="AppStepIndex == 9 && stepperMode == 'PERSONAL' && IsDataReady" [AppId]="appId" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
-              <app-dms-iframe *ngIf="AppStepIndex == 10 && stepperMode == 'PERSONAL' && IsDataReady && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="mode != 'ReturnHandling'" [dmsObj]="dmsObj"></app-dms-iframe>
+              <app-dms-iframe *ngIf="AppStepIndex == 10 && stepperMode == 'PERSONAL' && IsDataReady && isDmsReady && SysConfigResultObj?.ConfigValue == 1" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="mode != 'ReturnHandling'" [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>
@@ -234,8 +234,8 @@
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
             </div>
-            <div class="line"></div>
-            <div class="step" data-target="#upload-tab">
+            <div class="line" *ngIf="SysConfigResultObj?.ConfigValue == 1"></div>
+            <div class="step" data-target="#upload-tab" *ngIf="SysConfigResultObj?.ConfigValue == 1">
               <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
                       [disabled]="!(AppStepIndex >= 10)" (click)="ChangeTab('UPL_DOC')">
                 <span class="bs-stepper-circle">10</span>
@@ -278,10 +278,10 @@
               </app-financial-data-fctr>
             </div>
             <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
-              <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="NextStep('UPL_DOC')" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
+              <app-tc-data *ngIf="AppStepIndex == 9" [AppId]="appId" (outputTab)="CheckIsUseDms()" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
             </div>
             <div id="upload-tab" class="content" role="tabpanel" aria-labelledby="upload-tab-trigger">
-              <app-dms-iframe *ngIf="AppStepIndex == 10 && stepperMode == 'COMPANY' && IsDataReady && isDmsReady" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="mode != 'ReturnHandling'" [dmsObj]="dmsObj"></app-dms-iframe>
+              <app-dms-iframe *ngIf="AppStepIndex == 10 && stepperMode == 'COMPANY' && IsDataReady && isDmsReady && SysConfigResultObj?.ConfigValue == 1" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showButton]="mode != 'ReturnHandling'" [dmsObj]="dmsObj"></app-dms-iframe>
             </div>
           </div>
         </div>

@@ -319,22 +319,26 @@ export class NapDetailFormComponent implements OnInit {
     )
   }
 
-  LastStepHandler() {
+  CheckIsUseDms(){
     if(this.SysConfigResultObj.ConfigValue == '1'){
       this.NextStep(CommonConstant.AppStepUplDoc);
     }else{
-      this.NapObj.WfTaskListId = this.wfTaskListId;
-      if (this.ReturnHandlingHId > 0) {
-        this.IsSavedTC = true;
-      } else {
-        this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: this.bizTemplateCode });
-  
-          })
-      }
+      this.LastStepHandler();
     }
+  }
+
+  LastStepHandler() {
+    this.NapObj.WfTaskListId = this.wfTaskListId;
+    if (this.ReturnHandlingHId > 0) {
+      this.IsSavedTC = true;
+    } else {
+      this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: this.bizTemplateCode });
+
+        })
+    }  
   }
 
   Cancel() {
