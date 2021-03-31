@@ -183,12 +183,12 @@
               </mat-tab>
               <mat-tab label="App Document">
                 <ng-template matTabContent>
-                  <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsAppObj"></app-dms-iframe>
+                  <app-dms-iframe *ngIf="isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsAppObj"></app-dms-iframe>
                 </ng-template>
               </mat-tab>
               <mat-tab label="Agreement Document">
                 <ng-template matTabContent>
-                  <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
+                  <app-dms-iframe *ngIf="isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj"></app-dms-iframe>
                 </ng-template>
               </mat-tab>
 
