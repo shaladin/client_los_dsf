@@ -28,7 +28,7 @@
     {
       "type": "label",
       "position": "right",
-      "label": "Fee",
+      "label": "Fee Capitalized",
       "name": "Fee"
     },
     {

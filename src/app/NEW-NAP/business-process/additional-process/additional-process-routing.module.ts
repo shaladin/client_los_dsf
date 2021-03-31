@@ -33,6 +33,10 @@ import { AdditionalTcDetailComponent } from './additional-tc/additional-tc-detai
 import { ReturnHandlingEditCustPagingComponent } from './return-handling/return-handling-edit-cust-paging/return-handling-edit-cust-paging.component';
 import { ReturnHandlingInvoicePagingComponent } from './return-handling/return-handling-invoice-paging/return-handling-invoice-paging.component';
 import { ReturnHandlingInvoiceDetailComponent } from './return-handling/return-handling-invoice-detail/return-handling-invoice-detail.component';
+import { AppCancelPagingComponent } from './app-cancel/paging/app-cancel-paging.component';
+import { AppCancelDetailComponent } from './app-cancel/detail/app-cancel-detail.component';
+import { AppAssetCancelPagingComponent } from './app-asset-cancel/paging/app-asset-cancel-paging.component';
+import { AppAssetCancelDetailComponent } from './app-asset-cancel/detail/app-asset-cancel-detail.component';
 
 const routes: Routes = [
   {
@@ -261,6 +265,34 @@ const routes: Routes = [
         component: ReturnHandlingInvoiceDetailComponent,
         data: {
           title: 'Return Handling Invoice Detail'
+        }
+      },
+      {
+        path: PathConstant.APP_CAN_PAGING,
+        component: AppCancelPagingComponent,
+        data: {
+          title: 'App Cancel Paging'
+        }
+      },
+      {
+        path: PathConstant.APP_CAN_DETAIL,
+        component: AppCancelDetailComponent,
+        data: {
+          title: 'App Cancel Detail'
+        }
+      },
+      {
+        path: PathConstant.APP_ASSET_CAN_PAGING,
+        component: AppAssetCancelPagingComponent,
+        data: {
+          title: 'App Asset Cancel Paging'
+        }
+      },
+      {
+        path: PathConstant.APP_ASSET_CAN_DETAIL,
+        component: AppAssetCancelDetailComponent,
+        data: {
+          title: 'App Asset Cancel Detail'
         }
       }
     ]

@@ -37,6 +37,7 @@ export class AssetAllocationDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   requisitionList: any;
   dictAssetNumber: { [key: string]: any; } = {};
+  agrmntNo: any;
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -122,6 +123,7 @@ export class AssetAllocationDetailComponent implements OnInit {
       (response) => {
         this.ListUsedAssetNumber = response["ListAssetNumber"];
         this.appAssetObj = response["AppAssetObjs"];
+        this.agrmntNo = response["AgrmntNo"];
         console.log(this.appAssetObj);
         if (response["AppAssetObjs"].length > 0) {
           this.AssetAllocationForm.controls["ListAsset"] = this.fb.array([]);
@@ -149,6 +151,10 @@ export class AssetAllocationDetailComponent implements OnInit {
             this.addListAsset(x);
           }
         }
+        this.http.post(URLConstant.GetListAssetReqInProgress, { AgrmntNo: this.agrmntNo }).subscribe(
+          (response) => {
+            this.requisitionList = response["ListAsset"];
+          });
         this.isReady = true;
       });
   }
