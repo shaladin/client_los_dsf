@@ -222,7 +222,7 @@
               
               <div id="upload-data-tab" class="content" role="tabpanel"
               aria-labelledby="upload-data-tab-trigger">
-              <app-dms-iframe *ngIf="currentStepIndex == 6 && isDmsReady" [dmsObj]="dmsObj" [showButton]="true"  (outputTab)="endOfTab()" (outputCancel)="backFromMouTc()"></app-dms-iframe>
+              <app-dms-iframe *ngIf="currentStepIndex == 6 && isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="true"  (outputTab)="endOfTab()" (outputCancel)="backFromMouTc()"></app-dms-iframe>
             </div>
                 <!-- <div id="document-data-tab" class="content" role="tabpanel" aria-labelledby="document-data-tab-trigger">
                 <div *ngIf="currentStepIndex == 6" class="col-md-12" style="padding: 0; text-align: right;">

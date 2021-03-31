@@ -14,6 +14,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { CustObj } from 'app/shared/model/CustObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj';
 
 @Component({
   selector: 'app-mou-customer-detail',
@@ -40,7 +41,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   dmsObj: DMSObj;
   custObj: CustObj = new CustObj();
   isDmsReady: boolean = false;
-  SysConfigResultObj : any;
+  SysConfigResultObj : ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
   
   constructor(
     private router: Router,
@@ -63,7 +64,11 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
     // this.currentStepIndex = 5; //buat DMS Test sementara
   }
 
-  async ngOnInit() {
+  async ngOnInit() : Promise<void> {
+    await this.httpClient.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+      (response) => {
+        this.SysConfigResultObj = response
+      });
     this.mouCustObject.MouCustId = this.mouCustId;
     await this.httpClient.post(URLConstant.GetMouCustById, { Id: this.mouCustId }).toPromise().then(
       (response: MouCustObj) => {
@@ -76,31 +81,28 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         }
       }
     );
-        // check DMS
-  await this.httpClient.post(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
-    (response) => {
-      this.SysConfigResultObj = response
-    });
   }
 
-  async initDms(){
+  async initDms() : Promise<void>{
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     await this.httpClient.post(URLConstant.GetMouCustById, { Id: this.mouCustId }).toPromise().then(
       (response: MouCustObj) => {
-        this.dmsObj = new DMSObj();
-        this.dmsObj.User = currentUserContext.UserName;
-        this.dmsObj.Role = currentUserContext.RoleCode;
-        this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
-
-        if(response['CustNo'] != null && response['CustNo'] != ""){
-          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['CustNo']));
+        if(this.SysConfigResultObj.ConfigValue == '1'){
+          this.dmsObj = new DMSObj();
+          this.dmsObj.User = currentUserContext.UserName;
+          this.dmsObj.Role = currentUserContext.RoleCode;
+          this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
+  
+          if(response['CustNo'] != null && response['CustNo'] != ""){
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['CustNo']));
+          }
+          else{
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['ApplicantNo']));
+          }
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, response.MouCustNo));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+          this.isDmsReady = true;
         }
-        else{
-          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['ApplicantNo']));
-        }
-        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, response.MouCustNo));
-        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-        this.isDmsReady = true;
       });
   }
   ngAfterViewInit(): void {
@@ -160,13 +162,13 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   saveMouTc() {
     if (this.mouType == CommonConstant.GENERAL) {
       this.mouTcGeneral.Save();
-      if(this.SysConfigResultObj.ConfigValue == 0){
+      if(this.SysConfigResultObj.ConfigValue == '0'){
         this.endOfTab()
       }     
     }
     else if (this.mouType == CommonConstant.FACTORING) {
       this.mouTcFactoring.Save();
-      if(this.SysConfigResultObj.ConfigValue == 0){
+      if(this.SysConfigResultObj.ConfigValue == '0'){
         this.endOfTab()
       }  
     }

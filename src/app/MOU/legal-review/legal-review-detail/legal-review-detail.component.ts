@@ -14,6 +14,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj';
+import { promise } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-legal-review-detail',
@@ -37,6 +39,7 @@ export class LegalReviewDetailComponent implements OnInit {
   link: any;
   mouCustObj: any;
   resultData: any;
+  SysConfigResultObj : ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
   LegalForm = this.fb.group(
     {
       items: this.fb.array([]),
@@ -66,10 +69,14 @@ export class LegalReviewDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() : Promise<void> {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
+    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+      (response) => {
+        this.SysConfigResultObj = response
+      });
 
     this.items = this.LegalForm.get('items') as FormArray;
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
@@ -79,14 +86,15 @@ export class LegalReviewDetailComponent implements OnInit {
       (response: MouCustObj) => {
         this.resultData = response;
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-        this.dmsObj = new DMSObj();
-        this.dmsObj.User = currentUserContext.UserName;
-        this.dmsObj.Role = currentUserContext.RoleCode;
-        this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
-        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
-        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
-        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
-
+        if(this.SysConfigResultObj.ConfigValue == '1'){
+          this.dmsObj = new DMSObj();
+          this.dmsObj.User = currentUserContext.UserName;
+          this.dmsObj.Role = currentUserContext.RoleCode;
+          this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+        }
       }
     );
     var mouObj = { "Id": this.MouCustId };
@@ -112,8 +120,6 @@ export class LegalReviewDetailComponent implements OnInit {
         );
       }
     );
-
-
   }
 
   async claimTask() {

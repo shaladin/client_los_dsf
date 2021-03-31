@@ -268,9 +268,9 @@
 </div>
 </ng-template>
 </mat-tab>
-<mat-tab label="Document">
+<mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Document">
     <ng-template matTabContent>
-        <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
+        <app-dms-iframe *ngIf="isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
     </ng-template>
 </mat-tab>
 </mat-tab-group>

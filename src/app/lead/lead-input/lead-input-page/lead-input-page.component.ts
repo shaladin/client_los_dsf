@@ -13,6 +13,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj';
 
 @Component({
   selector: 'app-lead-input-page',
@@ -30,7 +31,7 @@ export class LeadInputPageComponent implements OnInit {
   viewLeadHeaderMainInfo: UcViewGenericObj = new UcViewGenericObj();
   pageType: string;
   dmsObj: DMSObj;
-  SysConfigResultObj : any;
+  SysConfigResultObj : ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
   @ViewChild("LeadMainInfo", { read: ViewContainerRef }) leadMainInfo: ViewContainerRef;
   AppStepIndex: number = 1;
   customObj: any;
@@ -58,18 +59,24 @@ export class LeadInputPageComponent implements OnInit {
     });
   }
 
-  async ngOnInit() {
+  async ngOnInit() : Promise<void> {
+    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
+      (response) => {
+        this.SysConfigResultObj = response
+      });
     await this.http.post(URLConstant.GetLeadByLeadId, { Id: this.LeadId }).toPromise().then(
       (response) => {
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-        this.dmsObj = new DMSObj();
-        this.dmsObj.User = currentUserContext.UserName;
-        this.dmsObj.Role = currentUserContext.RoleCode;
-        this.dmsObj.ViewCode = CommonConstant.DmsViewCodeLead;
-        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response["LeadNo"]));
-        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsLeadId, response["LeadNo"]));
-        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-        this.isDmsReady = true;
+        if(this.SysConfigResultObj.ConfigValue == '1'){
+          this.dmsObj = new DMSObj();
+          this.dmsObj.User = currentUserContext.UserName;
+          this.dmsObj.Role = currentUserContext.RoleCode;
+          this.dmsObj.ViewCode = CommonConstant.DmsViewCodeLead;
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response["LeadNo"]));
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsLeadId, response["LeadNo"]));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+          this.isDmsReady = true;
+        }
         console.log('dmsobj = ', JSON.stringify(this.dmsObj));
       });
     if (this.TaskListId > 0) {
@@ -95,11 +102,6 @@ export class LeadInputPageComponent implements OnInit {
     const component = this.leadMainInfo.createComponent(componentFactory);
     component.instance.viewGenericObj = this.viewLeadHeaderMainInfo;
 
-    // check DMS
-    await this.http.post(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.GsCodeIsUseDms}).toPromise().then(
-      (response) => {
-        this.SysConfigResultObj = response
-      });
   }
 
   EnterTab(type) {
@@ -159,7 +161,7 @@ export class LeadInputPageComponent implements OnInit {
         }
         else if (this.AppStepIndex == 3) {
           this.customObj = ev;
-          if(this.SysConfigResultObj.ConfigValue == 0){
+          if(this.SysConfigResultObj.ConfigValue == '0'){
             this.endOfTab()
           }else{
             this.EnterTab("uploadDocument")
