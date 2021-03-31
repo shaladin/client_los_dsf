@@ -659,4 +659,8 @@ export class CommonConstant {
   public static OtherExpenseMasterCodeExpStn = "EXP_STN";
   public static OtherExpenseMasterCodeExpOdb = "ODB";
   public static OtherExpenseMasterCodeExpRc = "RC";
+
+  //interest input type
+  public static InterestInputTypeAmt = "AMT";
+  public static InterestInputTypePrcnt = "PRCNT"
 }
