@@ -220,7 +220,7 @@ export class FinancialDataFctrComponent implements OnInit {
       }
       if (isValidGracePeriod) {
   
-        this.http.post(URLConstant.SaveAppFinDataFctr, this.FinDataForm.value).subscribe(
+        this.http.post(URLConstant.SaveAppFinDataFctr, this.FinDataForm.getRawValue()).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);
             this.outputTab.emit();

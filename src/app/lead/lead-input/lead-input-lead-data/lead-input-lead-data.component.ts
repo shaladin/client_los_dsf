@@ -634,7 +634,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
     this.NTFAmt = this.AssetPrice - this.DPAmount;
     var minAmt = this.NTFAmt / this.Tenor;
-    if (!this.LeadDataForm.controls["InstallmentAmt"].value) this.LeadDataForm.patchValue({ InstallmentAmt: minAmt });
+    if (!this.LeadDataForm.controls["InstallmentAmt"].value || this.LeadDataForm.controls["InstallmentAmt"].value < minAmt) this.LeadDataForm.patchValue({ InstallmentAmt: minAmt });
     this.InstAmt = this.LeadDataForm.controls["InstallmentAmt"].value;
 
     if (this.NTFAmt && this.InstAmt > this.NTFAmt) {
@@ -663,20 +663,15 @@ export class LeadInputLeadDataComponent implements OnInit {
       NTFAmt: this.NTFAmt
     });
 
-    if (this.LeadDataForm.controls.InstallmentAmt.value < minAmt) {
-      this.toastr.warningMessage("Installment Amount must be bigger than " + minAmt);
-      return;
-    } else {
-      if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
-        this.TotalDownPayment = this.DPAmount + this.InstAmt;
-      }
-      else {
-        this.TotalDownPayment = this.DPAmount;
-      }
-      this.LeadDataForm.patchValue({
-        TotalDownPayment: this.TotalDownPayment
-      });
+    if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
+      this.TotalDownPayment = this.DPAmount + this.InstAmt;
     }
+    else {
+      this.TotalDownPayment = this.DPAmount;
+    }
+    this.LeadDataForm.patchValue({
+      TotalDownPayment: this.TotalDownPayment
+    });
 
     this.Calculate = true;
   }
@@ -734,12 +729,21 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.leadInputLeadDataObj.LeadAssetObj.AssetSeqNo = 1;
     if (this.items.controls[0] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 = this.items.controls[0]["controls"]["SerialNoValue"].value;
+      if(this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 == null){
+        this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 = "";
+      }
     }
     if (this.items.controls[1] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 = this.items.controls[1]["controls"]["SerialNoValue"].value;
+      if(this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 == null){
+        this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 = "";
+      }
     }
     if (this.items.controls[2] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo3 = this.items.controls[2]["controls"]["SerialNoValue"].value;
+      if(this.leadInputLeadDataObj.LeadAssetObj.SerialNo3 == null){
+        this.leadInputLeadDataObj.LeadAssetObj.SerialNo3 = "";
+      }
     }
     if (this.items.controls[3] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo4 = this.items.controls[3]["controls"]["SerialNoValue"].value;

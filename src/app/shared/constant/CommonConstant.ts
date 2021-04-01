@@ -662,4 +662,8 @@ export class CommonConstant {
 
   //SYS CONFIG
   public static ConfigCodeIsUseDms = "IS_USE_DMS";
+  
+  //interest input type
+  public static InterestInputTypeAmt = "AMT";
+  public static InterestInputTypePrcnt = "PRCNT"
 }
