@@ -32,7 +32,7 @@ export class URLConstant {
   public static GetRuleFeeAndInsFixedNAP = environment.losUrl + "/Application/GetRuleFeeAndInsFixedNAP";
   public static GetAppAndAppCustDetailByAgrmntId = environment.losUrl + "/Application/GetAppAndAppCustDetailByAgrmntId";
   public static SubmitNAP = environment.losUrl + "/Application/SubmitNAP";
-  public static SubmitNapCustMainData = environment.losUrl + "/Application/SubmitNapCustMainData";
+  public static SubmitNapCustMainData = environment.losUrl + "/Application/SubmitNAPCustMainData";
   public static CreateWorkflowDuplicateCheck = environment.losUrl + "/Application/CreateWorkflowDuplicateCheck";
   public static AddEditAppCF2W = environment.losUrl + "/Application/AddEditAppCF2W";
   public static DataTableFeeAndInsNAP = environment.losUrl + "/Application/DataTableFeeAndInsNAP";
@@ -312,15 +312,15 @@ export class URLConstant {
   public static GetRefZipcodePaging = "/RefZipcode/GetRefZipcodePaging";
   public static GetRefZipCode = "/RefZipcode/GetRefZipcode";
   public static GetRefProvDistrictObj = "/RefProvDistrict/GetRefProvDistrict";
-  public static EditRefZipcode = "/RefZipcode/EditRefZipCode";
-  public static AddRefZipcode = "/RefZipcode/AddRefZipCode";
+  public static EditRefZipcode = "/RefZipcode/EditRefZipcode";
+  public static AddRefZipcode = "/RefZipcode/AddRefZipcode";
   public static DeleteRefZipcode = "/RefZipcode/DeleteRefZipCode";
   public static GetOfficeZipcodeMemberAddPaging = "/RefZipcode/GetOfficeZipcodeMemberAddPaging";
 
   //OFFICE ZIPCODE MEMBER
   public static GetOfficeZipCodeMemberPaging = "/OfficeZipcodeMember/GetOfficeZipCodeMemberPaging";
   public static GetRefOfficeZipcodePaging = "/OfficeZipcodeMember/GetRefOfficeZipcodePaging";
-  public static AddOfficeZipcodeMember = "/OfficeZipcodeMember/AddOfficeZipcodeMember";
+  public static AddOfficeZipcodeMember = "/OfficeZipcodeMember/AddOfficeZipCodeMember";
   public static DeleteOfficeZipcodeMember = "/OfficeZipcodeMember/DeleteOfficeZipcodeMember";
 
   //BUSINESS UNIT
