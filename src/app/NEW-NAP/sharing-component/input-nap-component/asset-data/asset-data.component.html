@@ -247,7 +247,7 @@
                             [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
                           <lib-uc-show-errors
                             [control]="AssetDataForm.controls.items['controls'][i]['controls'].SerialNoValue"
-                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                            [submit]="enjiForm.submitted" [customPattern]="ListPattern"></lib-uc-show-errors>
                         </div>
                       </div>
                     </div>

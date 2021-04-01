@@ -15,7 +15,6 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { CustomPatternObj } from 'app/shared/model/LibraryObj/CustomPatternObj.model';
 
 @Component({
   selector: 'app-cust-company-main-data',
