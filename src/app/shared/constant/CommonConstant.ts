@@ -574,6 +574,7 @@ export class CommonConstant {
   public static GSCodeInputOPLFeeBehaviour = "INPOPLFEETBHV";
   public static GSCodeIsUseDigitalization = "IS_USE_DIGITALIZATION";
   public static GSCodeLobKta = "LOB_KTA";
+  public static GSSerialNoRegex = "SERIAL_NO_REGEX";
 
 
   //Serial Item
