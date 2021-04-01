@@ -660,4 +660,11 @@ export class CommonConstant {
   public static OtherExpenseMasterCodeExpStn = "EXP_STN";
   public static OtherExpenseMasterCodeExpOdb = "ODB";
   public static OtherExpenseMasterCodeExpRc = "RC";
+
+  //SYS CONFIG
+  public static ConfigCodeIsUseDms = "IS_USE_DMS";
+  
+  //interest input type
+  public static InterestInputTypeAmt = "AMT";
+  public static InterestInputTypePrcnt = "PRCNT"
 }

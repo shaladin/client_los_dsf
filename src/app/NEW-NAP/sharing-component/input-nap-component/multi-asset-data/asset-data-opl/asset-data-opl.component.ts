@@ -1262,7 +1262,7 @@ export class AssetDataOplComponent implements OnInit {
     critSupp2Obj.DataType = 'text';
     critSupp2Obj.restriction = AdInsConstant.RestrictionEq;
     critSupp2Obj.propName = 'v.MR_VENDOR_CATEGORY_CODE';
-    critSupp2Obj.value = 'SUPPLIER_BRANCH';
+    critSupp2Obj.value = 'SUPPLIER';
     suppCrit.push(critSupp2Obj);
 
     var critSuppSupplSchmObj = new CriteriaObj();
@@ -1321,9 +1321,10 @@ export class AssetDataOplComponent implements OnInit {
     this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, this.vendorObj).subscribe(
       (response) => {
         this.EmpObj = response[CommonConstant.ReturnObj];
+        console.log("Isi dari EmpObj: ",this.EmpObj);
 
         for(let i = 0; i < this.EmpObj.length; i++) {
-          if(this.EmpObj[i]["SupervisorId"] !== null && this.salesSupervisor !== "") {
+          if(this.EmpObj[i]["SupervisorId"] !== null && this.salesSupervisor !== undefined) {
             var supervisor = {
               "VendorEmpId": this.EmpObj[i]["SupervisorId"]
             }
@@ -1335,14 +1336,14 @@ export class AssetDataOplComponent implements OnInit {
             // break;
           }
 
-          if(this.EmpObj[i]["MrVendorEmpPositionCode"] === CommonConstant.ADMIN_HEAD_JOB_CODE && this.adminHead !== "") {
+          if(this.EmpObj[i]["MrVendorEmpPositionCode"] === CommonConstant.ADMIN_HEAD_JOB_CODE && this.adminHead !== undefined) {
             this.adminHead = this.EmpObj[i]["VendorEmpName"];
           }
-          else if(this.EmpObj[i]["MrVendorEmpPositionCode"] === CommonConstant.BRANCH_MANAGER_JOB_CODE && this.branchManager !== "") {
+          else if(this.EmpObj[i]["MrVendorEmpPositionCode"] === CommonConstant.BRANCH_MANAGER_JOB_CODE && this.branchManager !== undefined) {
             this.branchManager = this.EmpObj[i]["VendorEmpName"];
           }
 
-          if(this.salesSupervisor !== "" && this.adminHead !== "" && this.branchManager !== "") {
+          if(this.salesSupervisor !== undefined && this.adminHead !== undefined && this.branchManager !== undefined) {
             break;
           }
         }
@@ -1356,13 +1357,13 @@ export class AssetDataOplComponent implements OnInit {
         this.BranchManagerObj = this.EmpObj.filter(
           emp => emp.MrVendorEmpPositionCode === CommonConstant.BRANCH_MANAGER_JOB_CODE
         );
-        if(this.AdminHeadObj.length > 0){
-          this.isDdlSalesPersonReady = true;
-        }
-        if(this.SalesPersonObj.length > 0){
+        if(this.AdminHeadObj.length > 0) {
           this.isDdlAdminHeadReady = true;
         }
-        if(this.BranchManagerObj.length > 0){
+        if(this.SalesPersonObj.length > 0) {
+          this.isDdlSalesPersonReady = true;
+        }
+        if(this.BranchManagerObj.length > 0) {
           this.isDdlBranchManagerReady = true;
         }
       }

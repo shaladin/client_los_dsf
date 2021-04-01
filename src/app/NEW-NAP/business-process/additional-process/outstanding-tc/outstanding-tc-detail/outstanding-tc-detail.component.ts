@@ -16,6 +16,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
 
 @Component({
   selector: 'app-outstanding-tc-detail',
@@ -34,6 +35,7 @@ export class OutstandingTcDetailComponent implements OnInit {
   appNo: string = "";
   mouCustNo: string = "";
   isDmsReady: boolean;
+  SysConfigResultObj : ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -43,7 +45,7 @@ export class OutstandingTcDetailComponent implements OnInit {
 
   OustandingTCForm = this.fb.group({});
 
-  ngOnInit() {
+  async ngOnInit() : Promise<void> {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewOutstandingTC.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
@@ -52,45 +54,51 @@ export class OutstandingTcDetailComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
+    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+      (response) => {
+        this.SysConfigResultObj = response
+      });
     this.InitDms();
   }
   async InitDms() {
-    this.dmsObj = new DMSObj();
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.dmsObj.User = currentUserContext.UserName;
-    this.dmsObj.Role = currentUserContext.RoleCode;
-    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    var appObj = { Id: this.AppId };
-
-    let getCustNo = this.http.post(URLConstant.GetAppCustByAppId, appObj);
-    let getAppNo = this.http.post(URLConstant.GetAppById, appObj);
-    forkJoin([getCustNo, getAppNo]).subscribe(
-      (response) => {
-        this.custNo = response[0]['CustNo'];
-        var mouCustId = response[1]['MouCustId'];
-        this.appNo = response[1]['AppNo'];
-        if (this.custNo != null && this.custNo != '') {
-          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+    if(this.SysConfigResultObj.ConfigValue == '1'){
+      this.dmsObj = new DMSObj();
+      let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+      this.dmsObj.User = currentUserContext.UserName;
+      this.dmsObj.Role = currentUserContext.RoleCode;
+      this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+      var appObj = { Id: this.AppId };
+  
+      let getCustNo = this.http.post(URLConstant.GetAppCustByAppId, appObj);
+      let getAppNo = this.http.post(URLConstant.GetAppById, appObj);
+      forkJoin([getCustNo, getAppNo]).subscribe(
+        (response) => {
+          this.custNo = response[0]['CustNo'];
+          var mouCustId = response[1]['MouCustId'];
+          this.appNo = response[1]['AppNo'];
+          if (this.custNo != null && this.custNo != '') {
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+          }
+          else {
+            this.dmsObj.MetadataParent = null;
+          }
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+          if (mouCustId != null && mouCustId != '') {
+            var mouObj = { Id: mouCustId };
+            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+              (response) => {
+                this.mouCustNo = response['MouCustNo'];
+                this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
+                this.isDmsReady = true;
+              });
+          }
+          else {
+            this.isDmsReady = true;
+          }
         }
-        else {
-          this.dmsObj.MetadataParent = null;
-        }
-        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-        if (mouCustId != null && mouCustId != '') {
-          var mouObj = { Id: mouCustId };
-          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-            (response) => {
-              this.mouCustNo = response['MouCustNo'];
-              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
-              this.isDmsReady = true;
-            });
-        }
-        else {
-          this.isDmsReady = true;
-        }
-      }
-    );
+      );
+    }
   }
 
   SaveForm() {

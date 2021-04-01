@@ -44,6 +44,7 @@ export class SingleInstFctrComponent implements OnInit {
           this.ParentForm.patchValue({
             InterestType: this.InterestTypeOptions[0].Key
           });
+          this.SetInterestTypeInput(this.InterestTypeOptions[0].Key);
         }
       }
     );
@@ -111,6 +112,21 @@ export class SingleInstFctrComponent implements OnInit {
         DueDt: this.listInstallment[i].DueDt
       });
       (this.ParentForm.controls.InstallmentTable as FormArray).push(group);
+    }
+  }
+
+  InterestTypeChanged(ev){
+    this.SetInterestTypeInput(ev.target.value);
+  }
+
+  SetInterestTypeInput(interestInputType: string){
+    if(interestInputType == CommonConstant.InterestInputTypeAmt){
+      this.ParentForm.controls.TotalInterestAmt.enable();
+      this.ParentForm.controls.EffectiveRatePrcnt.disable();
+    }
+    if(interestInputType == CommonConstant.InterestInputTypePrcnt){
+      this.ParentForm.controls.TotalInterestAmt.disable();
+      this.ParentForm.controls.EffectiveRatePrcnt.enable();
     }
   }
 

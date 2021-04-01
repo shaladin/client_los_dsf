@@ -28,6 +28,7 @@ export class MouViewComponent implements OnInit {
   IsResponseProcessed: boolean = false;
   isListedCustFactoring: boolean;
   IsReady: boolean = false;
+  IsDms: boolean = false;
   UploadViewlink: string;
   Uploadlink: string;
   Viewlink: string;
@@ -54,20 +55,28 @@ export class MouViewComponent implements OnInit {
         this.MrMouTypeCode = this.resultData['MrMouTypeCode'];
         this.MrCustTypeCode = this.resultData['MrCustTypeCode'];
         this.MouCustNo = this.resultData['MouCustNo'];
-        let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-        this.dmsObj = new DMSObj();
-        this.dmsObj.User = currentUserContext.UserName;
-        this.dmsObj.Role = currentUserContext.RoleCode;
-        this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
+        this.http.post(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+          (response) => {
+            if(response["ConfigValue"] == '1'){
+              let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+              this.dmsObj = new DMSObj();
+              this.dmsObj.User = currentUserContext.UserName;
+              this.dmsObj.Role = currentUserContext.RoleCode;
+              this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
+      
+              if(this.resultData['CustNo'] != null && this.resultData['CustNo'] != ""){
+                this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
+              }
+              else{
+                this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['ApplicantNo']));
+              }
+              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
+              this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+              this.IsDms = true;
+            }
+            
+        });
 
-        if(this.resultData['CustNo'] != null && this.resultData['CustNo'] != ""){
-          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
-        }
-        else{
-          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['ApplicantNo']));
-        }
-        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
-        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
 
         this.IsResponseProcessed = true;
         this.IsReady = true;

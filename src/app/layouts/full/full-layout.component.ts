@@ -10,7 +10,7 @@ var fireRefreshEventOnWindow = function () {
 @Component({
     selector: 'app-full-layout',
     templateUrl: './full-layout.component.html',
-    styleUrls: ['./full-layout.component.scss']
+    styleUrls: ['./full-layout.component.css']
 })
 
 export class FullLayoutComponent implements OnInit {

@@ -1333,6 +1333,7 @@ export class URLConstant {
   public static GetApprovalAmount = environment.losUrl + "/ApplicationReview/GetApprovalAmount";
 
   // Requisition Decision
+  public static GetRequisitionDecisionHByAppId = environment.losUrl + "/RequisitionDecision/GetRequisitionDecisionHByAppId";
   public static SaveRequisitionDecision = environment.losUrl + "/RequisitionDecision/SaveRequisitionDecision";
   public static SubmitRequisitionDecision = environment.losUrl + "/RequisitionDecision/SubmitRequisitionDecision";
   public static IsSecurityDepositExist = environment.losUrl + "/RequisitionDecision/IsSecurityDepositExist";
@@ -1362,4 +1363,7 @@ export class URLConstant {
 
   // GO LIVE (LMS)
   public static CheckGoLivePayment = environment.LMSUrl + "/Api/Integration/CheckGoLivePayment";
+  
+  //Check DMS
+  public static GetSysConfigPncplResultByCode = environment.FoundationR3Url + "/SysConfigResult/GetSysConfigPncplResultByCode";
 }

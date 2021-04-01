@@ -60,18 +60,17 @@
   
                 <div class="form-group row">
                   <label class="col-md-3 adins-label">Accessories / Avaliable Status</label>
-                  <label class="col-md-9 adins-label">No (Hardcode) / - (Hardcode)</label>
+                  <label class="col-md-9 adins-label">{{Accessory}} / {{AvaliableStat}}</label>
                 </div>
   
                 <div class="form-group row">
                   <label class="col-md-3 adins-label">Allocate to Agreement No</label>
-                  <label class="col-md-9 adins-label">{{AssetReqObj.AgrmntNo}}</label>
-                  <!-- <label class="col-md-9 adins-label" *ngIf="AssetReqObj.AgrmntNo === null">-</label>
-                  <label class="col-md-9 adins-label" *ngIf="AssetReqObj.AgrmntNo !== null">
+                  <label class="col-md-9 adins-label" *ngIf="!AgrmntObj">-</label>
+                  <label class="col-md-9 adins-label" *ngIf="AgrmntObj">
                     <a class="col-md-4" href="javascript:void(0);" (click)="OpenView('AGR')">
-                    {{AssetReqObj.AgrmntNo}}
+                      {{AgrmntObj.AgrmntNo}}
                     </a>
-                  </label> -->
+                  </label>
                 </div>
   
                 <div class="form-group row">
@@ -81,7 +80,7 @@
   
                 <div class="form-group row">
                   <label class="col-md-3 adins-label">Requisition Date</label>
-                  <label class="col-md-9 adins-label">24-Mar-2021 (Hardcode)</label>
+                  <label class="col-md-9 adins-label">{{ReqDecObj.RequisitionDecisionDt | date: 'dd-MMM-yyyy'}}</label>
                 </div>
   
                 <div class="form-group row">
@@ -91,7 +90,7 @@
   
                 <div class="form-group row">
                   <label class="col-md-3 adins-label">Asset Registration Date</label>
-                  <label class="col-md-9 adins-label">24-Mar-2021 (Hardcode)</label>
+                  <label class="col-md-9 adins-label">{{AssetReqObj.AssetEnrollmentDate | date: 'dd-MMM-yyyy'}}</label>
                 </div>
   
                 <div class="form-group row">
