@@ -31,6 +31,7 @@ import { AppAssetAttrCustomObj } from 'app/shared/model/AppAsset/AppAssetAttrCus
 import { AppCollateralAttrCustomObj } from 'app/shared/model/AppCollateralAttrCustom.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { CustomPatternObj } from 'app/shared/model/library/CustomPatternObj.model';
 
 @Component({
   selector: 'app-collateral-add-edit',
@@ -128,6 +129,8 @@ export class CollateralAddEditComponent implements OnInit {
   
   appAssetAttrObjs: Array<AppAssetAttrCustomObj>;
   AppCustObj: AppCustObj;
+  SerialNoRegex: string;
+  ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
 
   // @ViewChild("CollateralModal", { read: ViewContainerRef }) collateralModal: ViewContainerRef;
   @ViewChild("CityIssuerModal", { read: ViewContainerRef }) cityIssuerModal: ViewContainerRef;
@@ -307,7 +310,7 @@ export class CollateralAddEditComponent implements OnInit {
      for (let i = 0; i < this.SerialNoList.length; i++) {
        let eachDataDetail = this.fb.group({
          SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
-         SerialNoValue: [''],
+         SerialNoValue: ['', [Validators.pattern(this.SerialNoRegex)]],
          IsMandatory: [this.SerialNoList[i].IsMandatory]
        }) as FormGroup;
        this.items.push(eachDataDetail);
@@ -315,7 +318,7 @@ export class CollateralAddEditComponent implements OnInit {
 
      for (let i = 0; i < this.items.length; i++) {
        if (this.items.controls[i]['controls']['IsMandatory'].value == true) {
-         this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
+         this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required, Validators.pattern(this.SerialNoRegex)]);
          this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
        }
      }
@@ -757,6 +760,18 @@ export class CollateralAddEditComponent implements OnInit {
     this.bindUcAddToTempData();
     this.GenerateAppCollateralAttr(false);
 
+    
+    this.http.post(URLConstant.GetGeneralSettingByCode, {Code: CommonConstant.GSSerialNoRegex}).subscribe(
+      (response) => {
+        this.SerialNoRegex = response["GsValue"];
+
+        let obj: CustomPatternObj = {
+          pattern: this.SerialNoRegex,
+          invalidMsg: "Cannot input special character"
+        }
+        this.ListPattern.push(obj);
+      }
+    )
 
   }
 
