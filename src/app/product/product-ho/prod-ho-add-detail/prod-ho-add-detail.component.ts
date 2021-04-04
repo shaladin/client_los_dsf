@@ -60,9 +60,10 @@ export class ProdHoAddDetailComponent implements OnInit {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformation.json";
     }
     this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.whereValue.push(this.objPassing.ProdHId)
     
     this.ProdHOBj=new ProdHObj();
-    this.ProdHOBj.ProdHId = this.objPassing.param;
+    this.ProdHOBj.ProdHId = this.objPassing.ProdHId;
     this.UrlBackEnd = URLConstant.GetProductMainInfo;
     this.http.post(this.UrlBackEnd, this.ProdHOBj).subscribe(
       (response) => {

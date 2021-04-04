@@ -49,7 +49,7 @@ export class ProdOfferingAddDetailComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.http.post(URLConstant.GetProductOfferingMainInfo, {Id: this.objPassing.ProdOfferingId}).subscribe(
+    this.http.post(URLConstant.GetProductOfferingMainInfo, {Id: this.objPassing.ProdOfferingHId}).subscribe(
       (response) => {
         this.resultData=response;
         this.ProdHId = response["ProdHId"];
