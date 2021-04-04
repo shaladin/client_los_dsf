@@ -31,6 +31,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 export class LeadInputLeadDataComponent implements OnInit {
   @Input() originPage: string = "";
+  @Input() isEndOfTab: string = "";
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
   typePage: string = "";
   CopyFrom: string;
@@ -121,6 +122,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
   isAlreadySubmittedByIntegrator: boolean = false;
   isReadOnly: boolean = true;
+  textButton : string
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -202,6 +204,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isEndOfTab == '0'? this.textButton = 'Save' : this.textButton = 'Save and Continue'
     this.items = this.LeadDataForm.get('items') as FormArray;
 
     this.InputLookupAssetObj = new InputLookupObj();
@@ -726,12 +729,21 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.leadInputLeadDataObj.LeadAssetObj.AssetSeqNo = 1;
     if (this.items.controls[0] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 = this.items.controls[0]["controls"]["SerialNoValue"].value;
+      if(this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 == null){
+        this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 = "";
+      }
     }
     if (this.items.controls[1] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 = this.items.controls[1]["controls"]["SerialNoValue"].value;
+      if(this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 == null){
+        this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 = "";
+      }
     }
     if (this.items.controls[2] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo3 = this.items.controls[2]["controls"]["SerialNoValue"].value;
+      if(this.leadInputLeadDataObj.LeadAssetObj.SerialNo3 == null){
+        this.leadInputLeadDataObj.LeadAssetObj.SerialNo3 = "";
+      }
     }
     if (this.items.controls[3] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo4 = this.items.controls[3]["controls"]["SerialNoValue"].value;

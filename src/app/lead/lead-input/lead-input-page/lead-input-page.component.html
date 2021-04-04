@@ -42,15 +42,17 @@
             <span class="bs-stepper-label">LEAD DATA</span>
           </button>
         </div>
-        <div  class="line"></div>
-        <div class="step" data-target="#upload-data-tab">
+        <div  class="line" [hidden]="SysConfigResultObj?.ConfigValue == 0"></div>
+        <!-- --- -->
+        <div class="step" data-target="#upload-data-tab" [hidden]="SysConfigResultObj?.ConfigValue == 0">
           <button type="button" class="step-trigger" role="tab" aria-controls="upload-data-tab" id="upload-data-tab-trigger"
           [disabled]="!(AppStepIndex >= 3)"
-        (click)="EnterTab('uploadDocument')">
+          (click)="EnterTab('uploadDocument')">
             <span class="bs-stepper-circle">3</span>
             <span class="bs-stepper-label">UPLOAD DOCUMENT</span>
           </button>
         </div>
+        <!-- --- -->
       </div>
       <br><br>
       <!-- <div class="bs-stepper-content"> -->
@@ -59,11 +61,11 @@
         </app-lead-input-cust-data>
       </div>
       <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
-        <app-lead-input-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)">
+        <app-lead-input-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)" [isEndOfTab]= "SysConfigResultObj?.ConfigValue">
         </app-lead-input-lead-data>
       </div>
       <div id="upload-data-tab" class="content" role="tabpanel" aria-labelledby="upload-data-tab-trigger">
-        <app-dms-iframe *ngIf="isDmsData && AppStepIndex == 3 && isDmsReady" [dmsObj]="dmsObj" [showButton]="true" (outputTab)="endOfTab()" (outputCancel)="backTabToLeadData()">></app-dms-iframe>
+        <app-dms-iframe *ngIf="isDmsData && AppStepIndex == 3 && isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj" [showButton]="true" (outputTab)="endOfTab()" (outputCancel)="backTabToLeadData()">></app-dms-iframe>
       </div>
       <!-- </div> -->
     </div>
