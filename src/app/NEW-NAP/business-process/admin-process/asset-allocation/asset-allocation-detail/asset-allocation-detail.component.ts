@@ -162,7 +162,7 @@ export class AssetAllocationDetailComponent implements OnInit {
   initLookupAssetNumber() {
     this.InputLookupAssetNumberObj = new InputLookupObj();
     this.InputLookupAssetNumberObj.urlJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
-    this.InputLookupAssetNumberObj.urlEnviPaging = URLConstant.AmsUrl;
+    this.InputLookupAssetNumberObj.urlEnviPaging = environment.AMSUrl;
     this.InputLookupAssetNumberObj.urlQryPaging = URLConstant.GetAssetStockPagingFromAms;
     this.InputLookupAssetNumberObj.pagingJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetNumberObj.genericJson = "./assets/uclookup/NAP/lookupAssetNumber.json";

@@ -699,6 +699,7 @@ export class AssetDataOplComponent implements OnInit {
 
   Back() {
     this.isListAsset = true;
+    this.getListAllAssetData();
     // this.findInvalidControls();
   }
 
@@ -763,6 +764,7 @@ export class AssetDataOplComponent implements OnInit {
             this.listAsset[this.index] = this.allAssetDataObj;
           }
           this.isListAsset = true;
+          this.getListAllAssetData();
         }
       }
     );
