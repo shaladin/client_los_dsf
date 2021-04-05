@@ -1328,6 +1328,9 @@ export class URLConstant {
   public static GetRentalCalculationData = environment.losUrl + "/AppAssetView/GetRentalCalculationData";
   public static GetListAllAssetFinancialData = environment.losUrl + "/AppAssetView/GetListAllAssetFinancialData";
 
+  // App List View
+  public static GetAllAppAndAppOplListData = environment.losUrl + "/AppListView/GetAllAppAndAppOplListData";
+
   // App Review
   public static GetAppRvwSummaryAsset = environment.losUrl + "/ApplicationReview/GetAppRvwSummaryAsset";
   public static GetApprovalAmount = environment.losUrl + "/ApplicationReview/GetApprovalAmount";
