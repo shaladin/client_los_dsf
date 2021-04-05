@@ -404,6 +404,7 @@ export class PathConstant {
     public static VIEW_PHN_VERIF = "PhoneVerifView";
     public static VIEW_PURCHASE_TRACKING = "PurchaseTracking";
     public static VIEW_APP_ASSET = "AppAsset";
+    public static VIEW_APP_LIST = "AppList";
     //#endregion
 
     //#region FOU-View-Module

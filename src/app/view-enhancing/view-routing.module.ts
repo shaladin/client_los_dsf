@@ -53,6 +53,10 @@ const routes: Routes = [
             {
                 path: PathConstant.VIEW_PRODUCT_HO,
                 loadChildren: './prod-ho-view/prod-ho-view.module#ProdHoViewModule'
+            },
+            {
+                path: PathConstant.VIEW_APP_LIST,
+                loadChildren: './app-list-view/app-list-view.module#AppListViewModule'
             }
         ]
     }
