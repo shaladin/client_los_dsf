@@ -1335,6 +1335,7 @@ export class URLConstant {
   public static GetRequisitionDecisionHByAppId = environment.losUrl + "/RequisitionDecision/GetRequisitionDecisionHByAppId";
   public static SaveRequisitionDecision = environment.losUrl + "/RequisitionDecision/SaveRequisitionDecision";
   public static SubmitRequisitionDecision = environment.losUrl + "/RequisitionDecision/SubmitRequisitionDecision";
+  public static IsSecurityDepositExist = environment.losUrl + "/RequisitionDecision/IsSecurityDepositExist";
 
   // Pre Go Live
   public static SubmitPreGoLive = environment.losUrl + "/PreGoLive/SubmitPreGoLive";
@@ -1352,15 +1353,11 @@ export class URLConstant {
   public static SubmitAssetAllocation = environment.losUrl + "/AppAssetAllocationOpl/SubmitAssetAllocation";
 
   //API AMS
-  public static AmsUrl = "http://r3impl-appsvr/AMS";
-  public static amsUrl = "http://r3impl-appsvr.ad-ins.com/AMS";
   public static GetAssetStockPagingFromAms = "/Api/Integration/GetAssetStockPaging";
-  public static GetAssetByAssetNo = URLConstant.amsUrl + "/Asset/GetAssetByAssetNo";
-  public static GetListAssetReqInProgress = URLConstant.amsUrl + "/Api/Integration/GetListAssetReqInProgress";
 
-  // API LMS
-  public static lmsUrl = "http://r3impl-appsvr.ad-ins.com/LMS";
-  public static CheckGoLivePayment = URLConstant.lmsUrl + "/Api/Integration/CheckGoLivePayment";
+  // ASSET (AMS)
+  public static GetAssetByAssetNo = environment.AMSUrl + "/Asset/GetAssetByAssetNo";
+  public static GetListAssetReqInProgress = environment.AMSUrl + "/Api/Integration/GetListAssetReqInProgress";
 
   // REF BEHAVIOUR
   public static GetRefBehaviourByBehaviourTypeCode = environment.losUrl + "/RefBehaviour/GetRefBehaviourByBehaviourTypeCode";
@@ -1418,6 +1415,10 @@ export class URLConstant {
   public static DeleteProdOfferingOfficeMbr = environment.losUrl + "/ProductOffering/DeleteProdOfferingOfficeMbr";
   public static AddProdOfferingOfficeMbrBatch = environment.losUrl + "/ProductOffering/AddProdOfferingOfficeMbrBatch";
 
+
+  // GO LIVE (LMS)
+  public static CheckGoLivePayment = environment.LMSUrl + "/Api/Integration/CheckGoLivePayment";
+  
   //Check DMS
   public static GetSysConfigPncplResultByCode = environment.FoundationR3Url + "/SysConfigResult/GetSysConfigPncplResultByCode";
 }

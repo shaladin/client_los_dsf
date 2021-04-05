@@ -416,6 +416,7 @@ export class CommonConstant {
   public static TitleReferantor = "List Referantor Commission Data";
   public static ReturnObj = "ReturnObject";
   public static RefMasterObjs = "RefMasterObjs";
+  public static Result = "Result";
 
   public static RefMasterTypeCodeCustType = "CUST_TYPE";
   public static RefMasterTypeCodeSlsRecom = "SLS_RECOM";

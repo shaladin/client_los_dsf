@@ -59,19 +59,41 @@ export class RequisitionDecisionPagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.RowObj.ProdOfferingCode, event.RowObj.ProdOfferingVersion);
     }
     if (event.Key === "Edit") {
-      this.http.post(URLConstant.CheckGoLivePayment, { AgrmntNo: event.RowObj.AgrmntNo }).subscribe(
+      this.http.post(URLConstant.IsSecurityDepositExist, {Id : event.RowObj.AppId}).subscribe(
         (response) => {
-          if(response["IsPaid"]) {
+          if(response[CommonConstant.Result] == "True")
+          {
+            this.http.post(URLConstant.CheckGoLivePayment, { AgrmntNo: event.RowObj.AgrmntNo }).subscribe(
+              (response) => {
+                if(response["IsPaid"]) {
+                  AdInsHelper.RedirectUrl(this.router,[NavigationConstant.REQUISITION_DECISION_DETAIL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+                }
+                else {
+                  this.toastr.errorMessage("Security Deposit has not been paid yet!");
+                }
+              },
+              (error) => {
+                this.toastr.warningMessage("Agreement not found!");
+              }
+            );
+          }
+          else{
             AdInsHelper.RedirectUrl(this.router,[NavigationConstant.REQUISITION_DECISION_DETAIL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
           }
-          else {
-            this.toastr.errorMessage("Security Deposit has not been paid yet!");
-          }
-        },
-        (error) => {
-          this.toastr.warningMessage("Agreement not found!");
         }
       );
+      
     }
   }
+
+  GetAllAssetFinancialData(AppId : number) {
+    this.http.post(URLConstant.GetListAppAssetFinDataGridByAppId, {Id : AppId}).subscribe(
+      (response) => {
+        if (response["AppAssetFinDataGridObjs"].length > 0) {
+
+        }
+      }
+    );
+  }
+
 }

@@ -9,6 +9,8 @@ export const environment = {
     losUrl: 'http://r3app.ad-ins.com/LOS_DEMO',
     FoundationR3Url: 'http://r3app.ad-ins.com/FOUNDATION_DEMO',
     DMSUrl : "http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx",
+    AMSUrl : "http:/r3app.ad-ins.com/AMS_DEMO", //OPL dah ada
+    LMSUrl : "http:/r3app.ad-ins.com/LMS_DEMO", //OPL dah ada
     ApprovalR3Url: 'http://r3app.ad-ins.com/APPROVAL_DEMO',
     FoundationR3Web: 'http://r3web.ad-ins.com/FOUNDATION_DEMO',
     losR3Web: 'http://r3web.ad-ins.com/LOS_DEMO',
