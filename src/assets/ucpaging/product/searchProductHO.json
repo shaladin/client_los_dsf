@@ -1,0 +1,157 @@
+{
+  "title": "Product HO",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "textbox",
+      "name": "Prod_Code",
+      "id": "ProdCodeId",
+      "value": "",
+      "label": "Product Code",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "Prod_Name",
+      "id": "ProdNameId",
+      "value": "",
+      "label": "Product Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "name": "A.Prod_Stat",
+      "id": "ProdStatId",
+      "value": "Product Status",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "path": "/RefMaster/GetListKeyValueActiveByCode",
+      "label": "Product Status",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "RefMasterTypeCode",
+      "criteriaPropValue": "PROD_STAT"
+    },
+    {
+      "type": "datepicker",
+      "name": "A.End_Dt",
+      "id": "EndDtId",
+      "value": "",
+      "label": "End Date",
+      "placeholder": "Placeholder"
+    }
+  ],
+  "headerList": [{
+      "type": "sort",
+      "position": "center",
+      "label": "Product Code",
+      "name": "ProdCode"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Product Name",
+      "name": "ProdName"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Current Version",
+      "name": "CurrentProdVersion"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Draft Version",
+      "name": "DraftProdVersion"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "End Date",
+      "name": "EndDt"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Product Status",
+      "name": "ProdStatDesc"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Action"
+    }
+  ],
+  "querystring": {
+    "name": "searchProductHO"
+  },
+  "bodyList": [{
+      "type": "text",
+      "position": "center",
+      "property": "ProdCode"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "ProdName"
+    },
+    {
+      "type": "link",
+      "position": "center",
+      "property": "CurrentProdVersion",
+      "path": "VIEW_PRODUCT_HO",
+      "target": "_blank",
+      "param": [
+          {
+              "type": "prodHId",
+              "property": "prodHId"
+          }
+      ]
+    },
+    {
+      "type": "link",
+      "position": "center",
+      "property": "DraftProdVersion",
+      "path": "VIEW_PRODUCT_HO",
+      "target": "_blank",
+      "param": [
+          {
+              "type": "prodHId",
+              "property": "DraftProdHId"
+          }
+      ]
+    },
+    {
+      "type": "date",
+      "position": "center",
+      "property": "EndDt"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "ProdStatDesc"
+    },
+    {
+
+      "type": "action",
+      "position": "center",
+      "action": [{
+        "type": "switch",
+        "case": [{
+          "conditions": [{
+            "property": "ProdStat",
+            "value": "DEACT",
+            "restriction": "NEQ"
+          }],
+          "result": {
+            "type": "callback",
+            "key": "EditProductOffering"
+          }
+        }]
+      }]
+    }
+  ]
+}

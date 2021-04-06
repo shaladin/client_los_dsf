@@ -1,0 +1,88 @@
+{
+    "title": "Product Offering Review",
+    "exportExcel": false,
+    "component": [{
+        "type": "textbox",
+        "name": "A.PROD_OFFERING_CODE",
+        "id": "ProdCodeId",
+        "value": "",
+        "label": "Product Offering Code",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "A.PROD_OFFERING_NAME",
+        "id": "ProdNameId",
+        "value": "",
+        "label": "Product Offering Name",
+        "placeholder": "Placeholder"
+      }
+    ],
+    "headerList": [{
+        "type": "sort",
+        "position": "center",
+        "label": "Product Offering Code",
+        "name": "ProdOfferingCode"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Product Offering Name",
+        "name": "ProdOfferingName"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "End Date",
+        "name": "EndDt"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Action"
+      }
+    ],
+    "querystring": {
+      "name": "searchProductOfferingReview"
+    },
+    "bodyList": [{
+        "type": "text",
+        "position": "center",
+        "property": "ProdOfferingCode"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "ProdOfferingName"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "EndDt"
+      }, 
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "edit",
+            "path": "PRODUCT_OFFERING_REVIEW_DETAIL",
+            "param": [
+              {
+                "type": "ProdOfferingHId",
+                "property": "ProdOfferingHId"
+              },
+              {
+                "type": "ProdOfferingId",
+                "property": "ProdOfferingId"
+              },
+              {
+                "type": "WfTaskListId",
+                "property": "WfTaskListId"
+              }
+            ]
+          }
+        ] 
+      }
+    ]
+  }
