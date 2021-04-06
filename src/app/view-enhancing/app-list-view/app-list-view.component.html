@@ -40,12 +40,12 @@
                   </tr>
                   <tr *ngFor="let item of AppList; let i = index">
                     <td>{{i+1}}</td>
-                    <td class="align-left">
+                    <td>
                       <a href="javascript:void(0);" (click)="OpenAppView(item.AppId)">
                         {{item.AppNo}}
                       </a>
                     </td>
-                    <td class="align-left">{{item.CurrCode}}</td>
+                    <td>{{item.CurrCode}}</td>
                     <td class="text-right">{{item.InstAmt | number:'1.2-2':'en-US'}}</td>
                     <td class="text-right">{{item.AssetPriceAmt | number:'1.2-2':'en-US'}}</td>
                     <td class="text-right">{{item.TotalDownPaymentAmt | number:'1.2-2':'en-US'}}</td>
@@ -84,12 +84,12 @@
                   </tr>
                   <tr *ngFor="let item of AppOplList; let i = index">
                     <td>{{i+1}}</td>
-                    <td class="align-left">
+                    <td>
                       <a href="javascript:void(0);" (click)="OpenAppView(item.AppId)">
                         {{item.AppNo}}
                       </a>
                     </td>
-                    <td class="align-left">{{item.CurrCode}}</td>
+                    <td>{{item.CurrCode}}</td>
                     <td class="text-right">{{item.RentAmt | number:'1.2-2':'en-US'}}</td>
                     <td class="text-right">{{item.TotalAssetPriceAmt | number:'1.2-2':'en-US'}}</td>
                   </tr>
