@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { InputReportObj } from 'app/shared/model/Report/InputReportObj.model';
+import { InputReportObj } from 'app/shared/model/library/InputReportObj.model';
 import { environment } from 'environments/environment';
 
 @Component({
