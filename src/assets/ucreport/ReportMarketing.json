@@ -1,0 +1,65 @@
+{
+    "title": "Report Marketing",
+    "reportName": "Report Marketing",
+    "reportTemplateName": "ReportMarketing.rdlc",
+    "component": [
+      {
+        "type": "dropdown",
+        "label": "Application Office Name",
+        "name": "OfficeCode",
+        "datatype": "text",
+        "isFromURL": true,
+        "isSelectOne": false,
+        "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+        "path": "",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "",
+        "criteriaPropValue": "",
+        "isReportParam": false,
+        "isProviderParam": true
+      },
+      {
+        "type": "dropdown",
+        "label": "Application Step",
+        "name": "AppStep",
+        "datatype": "text",
+        "isFromURL": true,
+        "isSelectOne": false,
+        "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+        "path": "",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "",
+        "criteriaPropValue": "",
+        "isReportParam": false,
+        "isProviderParam": true
+      },
+      {
+        "type": "datepicker",
+        "label": "Period From >=",
+        "name": "PeriodFrom",
+        "datatype": "date",
+        "value": "BD-10",
+        "restriction": "gte",
+        "isReportParam": true,
+        "isProviderParam": true
+      },
+      {
+        "type": "datepicker",
+        "label": "Period To <=",
+        "name": "PeriodTo",
+        "datatype": "date",
+        "value": "BD+10",
+        "restriction": "lte",
+        "isReportParam": true,
+        "isProviderParam": true
+      }
+    ],
+    "exportTypeList": [
+        {
+            "key": "XLS",
+            "value": "Excel"
+        }
+    ]
+  }

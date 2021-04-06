@@ -1,0 +1,10 @@
+<h4 class="form-section card-title" translate><i class="ft-file-text"></i> Product Offering Deactivate Approval</h4>
+<lib-ucviewgeneric [viewGenericObj]="viewGenericObj"> </lib-ucviewgeneric>
+<br/>
+<lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady">
+</lib-ucapprovalgeneralinfo>
+
+<lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)" (onCancel)="onCancelClick()"></lib-ucapprovalR3>
+
+<lib-ucapprovalHistory [InputObj]="InputApprovalHistoryObj" *ngIf="IsReady">
+</lib-ucapprovalHistory>

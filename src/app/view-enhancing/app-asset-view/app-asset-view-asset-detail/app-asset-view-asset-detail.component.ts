@@ -12,7 +12,10 @@ import { environment } from 'environments/environment';
 })
 export class AppAssetViewAssetDetailComponent implements OnInit {
   @Input() AppAssetId: number;
+  
   @Input() BizTemplateCode: string;
+
+  isReady: boolean = false;
   
   AttributeList: Array<any> = new Array<any>();
   AccessoriesList: Array<any> = new Array<any>();
@@ -25,6 +28,8 @@ export class AppAssetViewAssetDetailComponent implements OnInit {
   async ngOnInit() {
     await this.SetInfo();
     await this.SetAccessoriesListAndAttrList();
+    
+    this.isReady = true;
   }
 
   async SetInfo() {

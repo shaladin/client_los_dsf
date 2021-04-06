@@ -32,7 +32,7 @@ export class URLConstant {
   public static GetRuleFeeAndInsFixedNAP = environment.losUrl + "/Application/GetRuleFeeAndInsFixedNAP";
   public static GetAppAndAppCustDetailByAgrmntId = environment.losUrl + "/Application/GetAppAndAppCustDetailByAgrmntId";
   public static SubmitNAP = environment.losUrl + "/Application/SubmitNAP";
-  public static SubmitNapCustMainData = environment.losUrl + "/Application/SubmitNapCustMainData";
+  public static SubmitNapCustMainData = environment.losUrl + "/Application/SubmitNAPCustMainData";
   public static CreateWorkflowDuplicateCheck = environment.losUrl + "/Application/CreateWorkflowDuplicateCheck";
   public static AddEditAppCF2W = environment.losUrl + "/Application/AddEditAppCF2W";
   public static DataTableFeeAndInsNAP = environment.losUrl + "/Application/DataTableFeeAndInsNAP";
@@ -135,9 +135,8 @@ export class URLConstant {
   // App Asset
   public static GetAppAssetForDealerDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetForDealerDataByAppId";
   public static GetAppAssetForDealerDataByAppAssetId = environment.losUrl + "/AppAsset/GetAppAssetForDealerDataByAppAssetId";
-  public static GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode = environment.FoundationR3Url + "/ProductOffering/GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode";
-  public static GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode = environment.FoundationR3Url + "/ProductOffering/GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode"
-  public static GetProdOfferingDByProdOfferingHIdAndCompCode = environment.FoundationR3Url + "/ProductOffering/GetProdOfferingDByProdOfferingHIdAndCompCode";
+  public static GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode = environment.losUrl + "/ProductOffering/GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode"
+  public static GetProdOfferingDByProdOfferingHIdAndCompCode = environment.losUrl + "/ProductOffering/GetProdOfferingDByProdOfferingHIdAndCompCode";
   // App Commission
   public static GetAppCommissionDataDetailByAppId = environment.losUrl + "/AppCommission/GetAppCommissionDataDetailByAppId";
 
@@ -312,15 +311,15 @@ export class URLConstant {
   public static GetRefZipcodePaging = "/RefZipcode/GetRefZipcodePaging";
   public static GetRefZipCode = "/RefZipcode/GetRefZipcode";
   public static GetRefProvDistrictObj = "/RefProvDistrict/GetRefProvDistrict";
-  public static EditRefZipcode = "/RefZipcode/EditRefZipCode";
-  public static AddRefZipcode = "/RefZipcode/AddRefZipCode";
+  public static EditRefZipcode = "/RefZipcode/EditRefZipcode";
+  public static AddRefZipcode = "/RefZipcode/AddRefZipcode";
   public static DeleteRefZipcode = "/RefZipcode/DeleteRefZipCode";
   public static GetOfficeZipcodeMemberAddPaging = "/RefZipcode/GetOfficeZipcodeMemberAddPaging";
 
   //OFFICE ZIPCODE MEMBER
   public static GetOfficeZipCodeMemberPaging = "/OfficeZipcodeMember/GetOfficeZipCodeMemberPaging";
   public static GetRefOfficeZipcodePaging = "/OfficeZipcodeMember/GetRefOfficeZipcodePaging";
-  public static AddOfficeZipcodeMember = "/OfficeZipcodeMember/AddOfficeZipcodeMember";
+  public static AddOfficeZipcodeMember = "/OfficeZipcodeMember/AddOfficeZipCodeMember";
   public static DeleteOfficeZipcodeMember = "/OfficeZipcodeMember/DeleteOfficeZipcodeMember";
 
   //BUSINESS UNIT
@@ -1066,16 +1065,16 @@ export class URLConstant {
   public static MD_SubmitAppDupCheck = environment.losUrl + "/AppDupCheckMainData/SubmitAppDupCheck";
 
   // Product Offering
-  public static GetListProdOfferingDByProdOfferingCode = environment.FoundationR3Url + "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
-  public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode = environment.FoundationR3Url + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode";
-  public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL = environment.FoundationR3Url + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL";
-  public static GetPayFreqByProdOfferingD = environment.FoundationR3Url + "/ProductOffering/GetPayFreqByProdOfferingD";
-  public static GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion = environment.FoundationR3Url + "/ProductOffering/GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion";
-  public static GetProdOfferingHByCode = environment.FoundationR3Url + "/ProductOffering/GetProdOfferingHByCode";
+  public static GetListProdOfferingDByProdOfferingCode = environment.losUrl + "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
+  public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode = environment.losUrl + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode";
+  public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL = environment.losUrl + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL";
+  public static GetPayFreqByProdOfferingD = environment.losUrl + "/ProductOffering/GetPayFreqByProdOfferingD";
+  public static GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion = environment.losUrl + "/ProductOffering/GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion";
+  public static GetProdOfferingHByCode = environment.losUrl + "/ProductOffering/GetProdOfferingHByCode";
 
   //Ref Pay Freq
-  public static GetPayFreqByProdOfferingCodeandRefProdCompntCode = environment.FoundationR3Url + "/RefPayFreq/GetPayFreqByProdOfferingCodeandRefProdCompntCode";
-  public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat = environment.FoundationR3Url + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat";
+  public static GetPayFreqByProdOfferingCodeandRefProdCompntCode = environment.losUrl + "/RefPayFreq/GetPayFreqByProdOfferingCodeandRefProdCompntCode";
+  public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat = environment.losUrl + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat";
 
   // ASSET TYPE
   public static GetAssetTypeById = environment.FoundationR3Url + "/AssetType/GetAssetTypeById";
@@ -1328,6 +1327,9 @@ export class URLConstant {
   public static GetRentalCalculationData = environment.losUrl + "/AppAssetView/GetRentalCalculationData";
   public static GetListAllAssetFinancialData = environment.losUrl + "/AppAssetView/GetListAllAssetFinancialData";
 
+  // App List View
+  public static GetAllAppAndAppOplListData = environment.losUrl + "/AppListView/GetAllAppAndAppOplListData";
+
   // App Review
   public static GetAppRvwSummaryAsset = environment.losUrl + "/ApplicationReview/GetAppRvwSummaryAsset";
   public static GetApprovalAmount = environment.losUrl + "/ApplicationReview/GetApprovalAmount";
@@ -1336,6 +1338,7 @@ export class URLConstant {
   public static GetRequisitionDecisionHByAppId = environment.losUrl + "/RequisitionDecision/GetRequisitionDecisionHByAppId";
   public static SaveRequisitionDecision = environment.losUrl + "/RequisitionDecision/SaveRequisitionDecision";
   public static SubmitRequisitionDecision = environment.losUrl + "/RequisitionDecision/SubmitRequisitionDecision";
+  public static IsSecurityDepositExist = environment.losUrl + "/RequisitionDecision/IsSecurityDepositExist";
 
   // Pre Go Live
   public static SubmitPreGoLive = environment.losUrl + "/PreGoLive/SubmitPreGoLive";
@@ -1353,16 +1356,72 @@ export class URLConstant {
   public static SubmitAssetAllocation = environment.losUrl + "/AppAssetAllocationOpl/SubmitAssetAllocation";
 
   //API AMS
-  public static AmsUrl = "http://r3impl-appsvr/AMS";
-  public static amsUrl = "http://r3impl-appsvr.ad-ins.com/AMS";
   public static GetAssetStockPagingFromAms = "/Api/Integration/GetAssetStockPaging";
-  public static GetAssetByAssetNo = URLConstant.amsUrl + "/Asset/GetAssetByAssetNo";
-  public static GetListAssetReqInProgress = URLConstant.amsUrl + "/Api/Integration/GetListAssetReqInProgress";
 
-  // API LMS
-  public static lmsUrl = "http://r3impl-appsvr.ad-ins.com/LMS";
-  public static CheckGoLivePayment = URLConstant.lmsUrl + "/Api/Integration/CheckGoLivePayment";
+  // ASSET (AMS)
+  public static GetAssetByAssetNo = environment.AMSUrl + "/Asset/GetAssetByAssetNo";
+  public static GetListAssetReqInProgress = environment.AMSUrl + "/Api/Integration/GetListAssetReqInProgress";
 
+  // REF BEHAVIOUR
+  public static GetRefBehaviourByBehaviourTypeCode = environment.losUrl + "/RefBehaviour/GetRefBehaviourByBehaviourTypeCode";
+
+  //REF LOB
+  public static GetListKvpInstSchmByLobCode = environment.FoundationR3Url + "/InstSchmMap/GetListKvpInstSchmByLobCode";
+  public static GetKvpRefFinMapByLobCode = environment.losUrl + "/RefFinMap/GetKvpRefFinMapByLobCode";
+
+  // PRODUCT
+  public static GetProductMainInfo = environment.losUrl + "/Product/GetProductMainInfo"
+  public static AddProduct = environment.losUrl + "/Product/AddProduct"
+  public static EditProduct = environment.losUrl + "/Product/EditProduct"
+  public static RequestDeactivation = environment.losUrl + "/Product/RequestDeactivation"
+  public static RequestDeactivationNew = environment.losUrl + "/Product/RequestDeactivationNew"
+  public static GetListProdBranchOfficeMbrByProdHId = environment.losUrl + "/Product/GetListProdBranchOfficeMbrByProdHId"
+  public static GetListProdHByProdCurrentProdHId = environment.losUrl + "/Product/GetListProdHByProdCurrentProdHId";
+  public static AddProductOfficeMbrBatch = environment.losUrl + "/Product/AddProductOfficeMbrBatch";
+  public static DeleteProductOfficeMbr = environment.losUrl + "/Product/DeleteProductOfficeMbr";
+  public static GetListProdHVersionByProdId = environment.losUrl + "/Product/GetListProdHVersionByProdId";
+  public static GetProductDetailComponentInfo = environment.losUrl + "/Product/GetProductDetailComponentInfo";
+  public static AddOrEditProductDetail = environment.losUrl + "/Product/AddOrEditProductDetail";
+  public static DownloadProductRule = environment.losUrl + "/Product/DownloadProductRule";
+  public static UpdateProductPostApv = environment.losUrl + "/Product/UpdateProductPostApv";
+  public static ReviewProduct = environment.losUrl + "/Product/ReviewProduct";
+  public static ReviewProductNew = environment.losUrl + "/Product/ReviewProductNew";
+  public static GetProductById = environment.losUrl + "/Product/GetProductById";
+  public static GetProductByHId = environment.losUrl + "/Product/GetProductByHId";
+  public static  CopyProduct = environment.losUrl + "/Product/CopyProduct";
+  
+  //PRODUCT OFFERING
+  public static GetProductOfferingMainInfo = environment.losUrl + "/ProductOffering/GetProductOfferingMainInfo";
+  public static AddProdOffering = environment.losUrl + "/ProductOffering/AddProdOffering";
+  public static EditProdOffering = environment.losUrl + "/ProductOffering/EditProdOffering";
+  public static AddOrEditProdOfferingDetail = environment.losUrl + "/ProductOffering/AddOrEditProdOfferingDetail";
+  public static GetProdOfferingDetailInfo = environment.losUrl + "/ProductOffering/GetProdOfferingDetailInfo";
+  public static GetListProdOfferingVersionByProdId = environment.losUrl + "/ProductOffering/GetListProdOfferingVersionByProdId"
+  public static GetListProdOfferingBranchOfficeMbrByProdHId = environment.losUrl + "/ProductOffering/GetListProdOfferingBranchOfficeMbrByProdHId"
+  public static GetProductOfferingComponentGrouped = environment.losUrl + "/ProductComponent/GetProductOfferingComponentGrouped";
+  public static GetProdOfferingHByCodeAndVerion = environment.losUrl + "/ProductOffering/GetProdOfferingHByCodeAndVerion";
+  public static GetListProdOfferingHByProdOfferingCurrentProdHId = environment.losUrl + "/ProductOffering/GetListProdOfferingHByProdOfferingCurrentProdHId"
+  public static GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode = environment.losUrl + "/ProductOffering/GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode"
+  public static RequestOfferingDeactivation = environment.losUrl + "/ProductOffering/RequestProdOfferingDeactivationProdOffering"
+  public static RequestOfferingDeactivationNew = environment.losUrl + "/ProductOffering/RequestProdOfferingDeactivationNew"
+  public static GetListProdOfferingBranchOfficeMbrByProdHIdAndApp = environment.losUrl + "/ProductOffering/GetListProdOfferingBranchOfficeMbrByProdHIdAndApp"
+  public static CopyProductOffering = environment.losUrl + "/ProductOffering/CopyProductOffering";
+  public static UpdateProdOfferingPostApv = environment.losUrl + "/ProductOffering/UpdateProdOfferingPostApv";
+  public static ReviewProdOffering = environment.losUrl + "/ProductOffering/ReviewProdOffering";
+  public static ReviewProdOfferingNew = environment.losUrl + "/ProductOffering/ReviewProdOfferingNew";
+  public static GetProdOfferingByProdOfferingId = environment.losUrl + "/ProductOffering/GetProdOfferingByProdOfferingId"
+
+  // PRODUCT COMPONENT
+  public static GetProductHOComponent = environment.losUrl + "/ProductComponent/GetProductHOComponent";
+  public static GetProductHOComponentGrouped = environment.losUrl + "/ProductComponent/GetProductHOComponentGrouped";
+  public static GetProductOfferingComponent = environment.losUrl + "/ProductComponent/GetProductOfferingComponent";
+  public static DeleteProdOfferingOfficeMbr = environment.losUrl + "/ProductOffering/DeleteProdOfferingOfficeMbr";
+  public static AddProdOfferingOfficeMbrBatch = environment.losUrl + "/ProductOffering/AddProdOfferingOfficeMbrBatch";
+
+
+  // GO LIVE (LMS)
+  public static CheckGoLivePayment = environment.LMSUrl + "/Api/Integration/CheckGoLivePayment";
+  
   //Check DMS
   public static GetSysConfigPncplResultByCode = environment.FoundationR3Url + "/SysConfigResult/GetSysConfigPncplResultByCode";
 }

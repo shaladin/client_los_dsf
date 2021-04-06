@@ -7,6 +7,7 @@ import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: "view-financial",
@@ -99,12 +100,11 @@ export class ViewFinancialComponent implements OnInit {
 
     await this.http.post(URLConstant.GetListAllAssetFinancialData, requestAppId).toPromise().then(
       (response) => {
-        this.listAsset = response["ReturnObject"];
-
-        if(this.listAsset !== null) {
+        if(response[CommonConstant.ReturnObj].length > 0) {
+          this.listAsset = response[CommonConstant.ReturnObj];
           var length = this.listAsset.length;
 
-          for(let i = 0; i < length; i++) {
+          for(let i = 0; i < this.listAsset.length; i++) {
             this.TotalAssetValue += this.listAsset[i].AssetValue;
             this.TotalRentAmt += this.listAsset[i].RentAmt;
             this.TotalAssetResidualValuePrcnt += this.listAsset[i].ResidualValuePrcnt;

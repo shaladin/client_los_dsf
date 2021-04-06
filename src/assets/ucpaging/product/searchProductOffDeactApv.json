@@ -1,0 +1,173 @@
+{
+    "title": "Product Offering Deactivation Approval",
+    "exportExcel": false,
+    "component": [
+      {
+        "type": "textbox",
+        "name": "TL.TRX_NO",
+        "id": "ProdCodeId",
+        "value": "",
+        "label": "Product Offering Code",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "P.PROD_OFFERING_NAME",
+        "id": "ProdNameId",
+        "value": "",
+        "label": "Product Offering Name",
+        "placeholder": "Placeholder"
+      }
+    ],
+    "querystring": {
+      "name": "searchProductOffDeactApv"
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Product Offering Code",
+        "name": "TRX_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Product Offering name",
+        "name": "PROD_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Start Date",
+        "name": "START_DT"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "End Date",
+        "name": "END_DT"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Apv No",
+        "name": "APV_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Request By",
+        "name": "REQUEST_BY"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Request Date",
+        "name": "REQUEST_DATE"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Main User Id",
+        "name": "MAIN_USER_ID"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Current User Id",
+        "name": "CURRENT_USER_ID"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Process"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Hold"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Take Back"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "TRX_NO"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "PROD_NAME"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "START_DT"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "END_DT"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "APV_NO"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "REQUEST_BY"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "REQUEST_DATE"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "MAIN_USER_ID"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "CURRENT_USER_ID"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "callback",
+            "key": "Process"
+          }
+        ]
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "callback",
+            "key": "HoldTask"
+          }
+        ]
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "callback",
+            "key": "TakeBack"
+          }
+        ]
+      }
+    ]
+  }

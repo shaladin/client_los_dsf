@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
@@ -37,25 +38,32 @@ export class ViewAssetExpenseComponent implements OnInit {
 
     await this.http.post(URLConstant.GetListAllAssetExpenseData, requestAppId).toPromise().then(
       (response) => {
-        this.listAsset = response["ReturnObject"];
-        for(let i = 0; i < this.listAsset.length; i++) {
-          this.InsuranceObj = response["InsuranceData"];
-          this.listAsset[i].TotalInsuranceAmt = this.InsuranceObj.TotalPremi;
-
-          this.MaintenanceObj = response["MaintenanceData"];
-          this.listAsset[i].TotalMaintenanceAmt = this.MaintenanceObj.TotalServiceAmt + this.MaintenanceObj.TotalSparepartAmt;
-
-          this.ExpenseObj = response["OtherExpensesData"];
-          for(let i = 0; i < this.ExpenseObj.length; i++) {
-            this.listAsset[i].TotalExpenseAmt += this.ExpenseObj[i].OthExpenseAmt;
+        if(response[CommonConstant.ReturnObj].length > 0) {
+          this.listAsset = response[CommonConstant.ReturnObj];
+          
+          for(let i = 0; i < this.listAsset.length; i++) {
+            this.InsuranceObj = this.listAsset[i].InsuranceData;
+            this.listAsset[i].TotalInsuranceAmt = this.InsuranceObj.TotalPremi;
+  
+            this.MaintenanceObj = this.listAsset[i].MaintenanceData;
+            this.listAsset[i].TotalMaintenanceAmt = this.MaintenanceObj.TotalServiceAmt + this.MaintenanceObj.TotalSparepartAmt;
+  
+            this.ExpenseObj = this.listAsset[i].OtherExpensesData;
+            if(this.ExpenseObj.length > 0) {
+              for(let j = 0; j < this.ExpenseObj.length; j++) {
+                this.listAsset[i].TotalExpenseAmt += this.ExpenseObj[j].OthExpenseAmt;
+              }
+            }
+  
+            this.FeeObj = this.listAsset[i].FeesData;
+            if(this.FeeObj.length > 0) {
+              for(let k = 0; k < this.FeeObj.length; k++) {
+                this.listAsset[i].TotalFeeAmt += this.FeeObj[k].CapitalizedAmt;
+              }
+            }
+  
+            this.listAsset[i].TotalAssetExpenseAmt = this.listAsset[i].TotalInsuranceAmt + this.listAsset[i].TotalMaintenanceAmt + this.listAsset[i].TotalExpenseAmt + this.listAsset[i].TotalFeeAmt;
           }
-
-          this.FeeObj = response["FeesData"];
-          for(let j = 0; j < this.FeeObj.length; j++) {
-            this.listAsset[i].TotalFeeAmt += this.FeeObj[j].CapitalizedAmt;
-          }
-
-          this.listAsset[i].TotalAssetExpenseAmt = this.listAsset[i].TotalInsuranceAmt + this.listAsset[i].TotalMaintenanceAmt + this.listAsset[i].TotalExpenseAmt + this.listAsset[i].TotalFeeAmt;
         }
       }
     );
