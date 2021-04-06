@@ -361,6 +361,13 @@ export class PathConstant {
     public static LEAD_RVW_MONITORING_DETAIL = PathConstant.LEAD_RVW_MONITORING + "/" + PathConstant.DETAIL;
     //#endregion
 
+    //#region Report-Module
+    public static REPORT_MARKETING = "RptMarketing";
+    public static REPORT_APPLICATION_PENDING = "RptAppPending";
+    public static REPORT_RENT_SUMMARY = "RptRentSummary";
+    public static REPORT_RENT_DETAIL = "RptRentDetail";
+    //#endregion
+
     //#region Inquiry-Module
     public static APP_INQUIRY = "AppInquiry";
     public static PURCHASE_TRACKING_INQUIRY = "PurchaseTrackingInquiry";
@@ -416,7 +423,7 @@ export class PathConstant {
     //#endregion
 
     //#region FOU-View-Module
-    public static REQUISITION_DECISION = "requisitiondecision";
+public static REQUISITION_DECISION = "requisitiondecision";
     //#endregion
 
     //PRODUCT

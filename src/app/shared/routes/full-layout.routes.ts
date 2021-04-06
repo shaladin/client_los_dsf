@@ -63,5 +63,9 @@ export const Full_ROUTES: Routes = [
   {
     path: PathConstant.LR_PRODUCT,
     loadChildren: './product/product.module#ProductModule'
+  },
+  {
+    path: PathConstant.REPORT,
+    loadChildren: './report/report.module#ReportModule'
   }
 ];

@@ -1,0 +1,62 @@
+{
+    "title": "APPLICATION PENDING REPORT",
+    "reportName": "Application Pending",
+    "reportTemplateName": "ApplicationPending.rdlc",
+    "component": [
+        {
+            "type": "dropdown",
+            "label": "Office Name",
+            "name": "OfficeCode",
+            "datatype": "text",
+            "isFromURL": true,
+            "isSelectOne": true,
+            "url": "",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "",
+            "criteriaPropValue": "",
+            "isReportParam": false,
+            "isProviderParam": true
+        },
+        {
+            "type": "dropdown",
+            "label": "Currency",
+            "name": "CurrCode",
+            "datatype": "text",
+            "isFromURL": false,
+            "isSelectOne": true,
+            "url": "",
+            "path": "",
+            "items": [
+                {
+                    "key": "IDR",
+                    "value": "IDR"
+                }
+            ],
+            "itemsUrl": [],
+            "criteriaPropName": "",
+            "criteriaPropValue": "",
+            "isReportParam": false,
+            "isProviderParam": true
+        },
+        {
+            "type": "dropdown",
+            "label": "Application Step",
+            "name": "AppCurrStep",
+            "datatype": "text",
+            "isFromURL": true,
+            "isSelectOne": false,
+            "url": "",
+            "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "statusGrpCode",
+            "criteriaPropValue": "APP_STEP",
+            "isReportParam": false,
+            "isProviderParam": true
+        }
+    ],
+    "exportTypeList": [
+    ]
+}
