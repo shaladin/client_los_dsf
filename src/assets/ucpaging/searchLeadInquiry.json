@@ -81,7 +81,7 @@
             "label": "Lead Step",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName": "StatusGrpCode",
+            "criteriaPropName": "Code",
             "criteriaPropValue": "LEAD_STEP"
         },
         {
@@ -98,7 +98,7 @@
             "label": "Lead Status",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName": "StatusGrpCode",
+            "criteriaPropName": "Code",
             "criteriaPropValue": "LEAD_STAT"
         }
     ],
