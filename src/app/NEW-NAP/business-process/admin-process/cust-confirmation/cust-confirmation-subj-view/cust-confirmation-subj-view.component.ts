@@ -87,17 +87,14 @@ export class CustConfirmationSubjViewComponent implements OnInit {
         }
       });
 
-    var verfResultHObj = {
-      VerfResultHId: this.VerfResultHId
-    };
-    this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, verfResultHObj).subscribe(
+    this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, {Id : this.VerfResultHId}).subscribe(
       (response) => {
         this.VerfResultHObj = response;
 
         var verfResultObj = {
           VerfResultId: this.VerfResultHObj.VerfResultId
         };
-        this.http.post<VerfResultObj>(URLConstant.GetVerfResultById, verfResultObj).subscribe(
+        this.http.post<VerfResultObj>(URLConstant.GetVerfResultById, {Id : this.VerfResultHObj.VerfResultId}).subscribe(
           (response) => {
             this.VerfResultObj = response;
           }
@@ -116,10 +113,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
   }
 
   GetDetailVerf(TempVerfResultHId) {
-    var verfResultHObj = {
-      VerfResultHId: TempVerfResultHId
-    };
-    this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, verfResultHObj).subscribe(
+    this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, {Id : TempVerfResultHId}).subscribe(
       (response) => {
         this.VerfResultHObjDetail = response;
       });
@@ -147,7 +141,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
     else if (key == "agreement") {
       AdInsHelper.OpenAgrmntViewByAgrmntId(this.AgrmntObj.AgrmntId);
     }else if( key == "customer"){
-      this.http.post(URLConstant.GetCustByCustNo, {CustNo: this.AgrmntObj.CustNo}).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, {TrxNo: this.AgrmntObj.CustNo}).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         });

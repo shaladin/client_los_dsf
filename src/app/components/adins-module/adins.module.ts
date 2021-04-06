@@ -22,9 +22,12 @@ import { UcapprovalhistModule } from '@adins/ucapprovalhist';
 import { UcaddtotempModule } from '@adins/ucaddtotemp';
 import { UcthingstodoModule } from '@adins/ucthingstodo';
 import { UcdropdownlistModule } from '@adins/ucdropdownlist';
-
+import { UcreportModule } from "@adins/ucreport";
+import { UcTestingComponent } from './uc-testing/uc-testing.component';
+    
 @NgModule({
-    declarations:[
+    declarations: [
+        UcTestingComponent,
     ],
     exports: [
         FormsModule,
@@ -46,8 +49,10 @@ import { UcdropdownlistModule } from '@adins/ucdropdownlist';
         UcapprovalhistModule,
         UcaddtotempModule,
         UcthingstodoModule,
-        UcdropdownlistModule
-      //  UcapprovalModule
+        UcdropdownlistModule,
+        UcreportModule,
+        UcTestingComponent
+        //  UcapprovalModule
     ],
     imports: [
         CommonModule,
@@ -72,7 +77,8 @@ import { UcdropdownlistModule } from '@adins/ucdropdownlist';
         UcuploadModule,
         UcaddtotempModule,
         UcthingstodoModule,
-        UcdropdownlistModule
+        UcreportModule,
+        UcdropdownlistModule,
     ]
 })
 

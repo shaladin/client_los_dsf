@@ -31,7 +31,7 @@ export class MouViewSurveyComponent implements OnInit {
 
   
   openView(SurveyTaskNo){
-    this.http.post(URLConstant.GetSrvyTaskBySrvyTaskNo, {SrvyTaskNo: SurveyTaskNo}).subscribe(
+    this.http.post(URLConstant.GetSrvyTaskBySrvyTaskNo, {TrxNo: SurveyTaskNo}).subscribe(
       response => {
         AdInsHelper.OpenSrvyTaskViewBySrvyTaskId(response["SrvyTaskId"]);
       });

@@ -1,0 +1,26 @@
+{
+    "title": "View Application Listing",
+    "subsection": [
+        {
+            "subSectionId": "MainInfoId",
+            "subSectionTitle": "Customer Main Info",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "callback",
+                    "key": "Customer",
+                    "label": "Customer No.",
+                    "property": "CustNo"
+                },
+                {
+                    "type": "text",
+                    "label": "Customer Name",
+                    "property": "CustName"
+                }
+            ],
+            "querystring": {
+                "name": "viewAppListCustMainInfo"
+            }
+        }
+    ]
+}  

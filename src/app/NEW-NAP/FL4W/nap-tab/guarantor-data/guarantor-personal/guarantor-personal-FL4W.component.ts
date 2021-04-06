@@ -294,7 +294,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   setCountryName(countryCode) {
     this.countryObj.CountryCode = countryCode;
 
-    this.http.post(URLConstant.GetRefCountryByCountryCode, this.countryObj).subscribe(
+    this.http.post(URLConstant.GetRefCountryByCountryCode, {Code: countryCode}).subscribe(
       (response) => {
         this.inputLookupObj1.nameSelect = response["CountryName"];
         this.inputLookupObj1.jsonSelect = { CountryName: response["CountryName"] };
@@ -364,7 +364,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   lookupGuarantor(event) {
     this.tempCustNo = event.CustNo;
     this.inputLookupObj.isReadonly = true;
-    this.http.post(URLConstant.GetCustByCustId, { CustId: event.CustId }).subscribe(
+    this.http.post(URLConstant.GetCustByCustId, { Id: event.CustId }).subscribe(
       (response) => {
         this.clearExpDt();
         this.resultData = response;
@@ -397,7 +397,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
               this.selectedNationalityCountryName = setCountry[1] || setCountry[0];
             } else {
               this.isLocal = false;
-              this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: this.resultData.WnaCountryCode }).subscribe(
+              this.http.post(URLConstant.GetRefCountryByCountryCode, {Code: this.resultData.WnaCountryCode }).subscribe(
                 (response) => {
                   this.inputLookupObj1.nameSelect = response["CountryName"];
                   this.countryCode = response["CountryCode"];

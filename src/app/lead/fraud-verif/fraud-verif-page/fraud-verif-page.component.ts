@@ -25,6 +25,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
 
 @Component({
   selector: 'app-fraud-verif-page',
@@ -39,6 +40,7 @@ export class FraudVerifPageComponent implements OnInit {
   thirdPartyRsltHObj: ThirdPartyRsltHObj;
   dmsObj: DMSObj;
   isDmsReady: boolean = false;
+  SysConfigResultObj : ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -83,7 +85,8 @@ export class FraudVerifPageComponent implements OnInit {
   FraudVerfForm = this.fb.group({
     Notes: ['', [Validators.required]],
   });
-  ngOnInit() {
+  async ngOnInit() : Promise<void> {
+
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
@@ -96,6 +99,10 @@ export class FraudVerifPageComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
+    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+      (response) => {
+        this.SysConfigResultObj = response;
+      });
     this.leadCustObj.LeadId = this.LeadId;
     var obj = { Id: this.LeadId };
     this.http.post(this.GetLeadCustByLeadIdUrl, obj).subscribe(
@@ -118,23 +125,24 @@ export class FraudVerifPageComponent implements OnInit {
                 if (this.DuplicateStatus != null && this.DuplicateStatus != undefined) {
                   this.ResultDuplicate = response[CommonConstant.ReturnObj]["CustDuplicate"];
                   this.ResultDuplicateNegative = response[CommonConstant.ReturnObj]["NegativeCustDuplicate"];
+                  console.log(response[CommonConstant.ReturnObj]["NegativeCustDuplicate"])
                 }
               });
           });
       });
-
     this.http.post(URLConstant.GetLeadByLeadId, { Id: this.LeadId }).subscribe(
       (response) => {
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-        this.dmsObj = new DMSObj();
-        this.dmsObj.User = currentUserContext.UserName;
-        this.dmsObj.Role = currentUserContext.RoleCode;
-        this.dmsObj.ViewCode = CommonConstant.DmsViewCodeLead;
-        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response["LeadNo"]));
-        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsLeadId, response["LeadNo"]));
-        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
-        this.isDmsReady = true;
-
+        if(this.SysConfigResultObj.ConfigValue == '1'){
+          this.dmsObj = new DMSObj();
+          this.dmsObj.User = currentUserContext.UserName;
+          this.dmsObj.Role = currentUserContext.RoleCode;
+          this.dmsObj.ViewCode = CommonConstant.DmsViewCodeLead;
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response["LeadNo"]));
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsLeadId, response["LeadNo"]));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+          this.isDmsReady = true;
+        }
         if (response["LobCode"] !== CommonConstant.CFNA) {
           this.leadAssetObj.LeadId = this.LeadId;
           var leadAssetObj = { Id: this.LeadId };
@@ -142,7 +150,7 @@ export class FraudVerifPageComponent implements OnInit {
             (response) => {
               this.tempLeadAsset = response;
               this.leadAssetObj.FullAssetCode = this.tempLeadAsset.FullAssetCode;
-              this.http.post(this.GetLeadAssetForCheckUrl, this.leadAssetObj).subscribe(
+              this.http.post(this.GetLeadAssetForCheckUrl, leadAssetObj).subscribe(
                 (response) => {
                   this.tempAssetCategoryTypeCode = response;
                   this.negativeAssetCheckObj.AssetTypeCode = this.tempAssetCategoryTypeCode.AssetTypeCode;

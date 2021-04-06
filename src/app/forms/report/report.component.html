@@ -1,1 +1,52 @@
-<lib-ucreport [ReportInput]="inputReportObj"></lib-ucreport>
+<!-- <div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="px-3">
+                <lib-ucreport [ReportInput]="inputReportObj"></lib-ucreport>
+
+                <form class="form form-horizontal" [formGroup]="JobDataForm" (ngSubmit)="JobDataForm.valid"
+                    #enjiForm="ngForm">
+                    <lib-ucdropdownlist [dropdownListObj]="ddlOfficeObj" [parentForm]="JobDataForm"
+                        [enjiForm]="enjiForm" [isDisabled]="isDisabled" [identifier]="'OriOfficeCode'">
+                    </lib-ucdropdownlist>
+
+                    <div formArrayName="Deductions">
+                        <table class="table table-responsive-md text-center table-hover">
+                            <thead>
+                                <tr class="table-header">
+                                    <th><span translate class="thead-header">No</span></th>
+                                    <th><span translate class="thead-header">Supplier Name</span></th>
+                                    <th><span translate class="thead-header">Supplier Name</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    *ngFor="let item of JobDataForm.controls['Deductions'].controls;let i = index">
+                                    <td class="text-center">
+                                        {{i + 1}}
+                                    </td>
+                                    <td class="text-center" [formGroupName]="i">
+                                        <app-uc-testing [dropdownListObj]="ddlOfficeObj" [parentForm]="JobDataForm" [groupName]="i"
+                                            [enjiForm]="enjiForm" [identifier]="'DeductTypeList'">
+                                        </app-uc-testing>
+                                    </td>
+                                    <td class="text-center" [formGroupName]="i">
+                                      <input type="text" class="form-control" formControlName="DeductTypeList"
+                                        [ngClass]="{ 'is-invalid': enjiForm.submitted && JobDataForm.controls['Deductions']['controls'][i]['controls'].DeductTypeList.invalid }">
+                                      <lib-uc-show-errors
+                                        [control]="JobDataForm.controls['Deductions']['controls'][i]['controls'].DeductTypeList"
+                                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+
+                <button (click)="clickMe()">Click Me</button>
+                <button (click)="disableMe()">Disable Me</button>
+                <button (click)="enableMe()">Enable Me</button>
+            </div>
+        </div>
+    </div>
+</div> -->

@@ -1,0 +1,32 @@
+{
+  "title": "Report KTP",
+  "reportName": "Kartu Tanda Penduduk",
+  "reportTemplateCode": "DOC_DUMMY",
+  "component": [
+    {
+      "type": "dropdown",
+      "label": "Office Name",
+      "name": "OfficeName",
+      "datatype": "text",
+      "isFromURL": true,
+      "ddlType": "one",
+      "url": "http://r3app-server.ad-ins.com/FOUNDATION_R3/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "path": "",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "",
+      "criteriaPropValue": "",
+      "paramAssignment": 0
+    },
+    {
+      "type": "textbox",
+      "name": "ClaimBy",
+      "id": "claimById",
+      "value": "",
+      "label": "Claim By",
+      "placeholder": "Placeholder",
+      "paramAssignment": 1
+    }
+  ],
+  "exportTypeList": []
+}

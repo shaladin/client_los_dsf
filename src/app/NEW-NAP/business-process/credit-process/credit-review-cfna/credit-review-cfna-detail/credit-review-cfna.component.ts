@@ -20,6 +20,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
 
 @Component({
   selector: 'app-credit-review-cfna',
@@ -43,6 +44,8 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   appNo: any;
   custNo: string;
   IsUseDigitalization: string;
+  IsViewReady: boolean = false;
+  SysConfigResultObj: ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
 
   // ReturnForm = this.fb.group({
   //   ReturnReason: [''],
@@ -93,6 +96,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
 
   InitData() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
+    this.IsViewReady = true;
     this.DDLRecommendation = new Array();
     this.DDLReasonReturn = new Array();
     this.AppStepIndex = 0;
@@ -120,7 +124,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   DDLReasonReturn;
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
-  async ngOnInit() {
+  async ngOnInit() : Promise<void> {
     this.ClaimTask();
     this.InitData();
     await this.GetAppNo();
@@ -146,43 +150,49 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
     console.log(this.createComponent)
   }
   async InitDms() {
-    this.isDmsReady = false;
-    this.dmsObj = new DMSObj();
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.dmsObj.User = currentUserContext.UserName;
-    this.dmsObj.Role = currentUserContext.RoleCode;
-    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    var appObj = { Id: this.appId };
-
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj)
-    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
-    forkJoin([getApp, getAppCust]).subscribe(
+    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
-        this.appNo = response[0]['AppNo'];
-        this.custNo = response[1]['CustNo'];
-        if (this.custNo != null && this.custNo != '') {
-          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        this.SysConfigResultObj = response;
+    });
+    if(this.SysConfigResultObj.ConfigValue == '1'){
+      this.isDmsReady = false;
+      this.dmsObj = new DMSObj();
+      let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+      this.dmsObj.User = currentUserContext.UserName;
+      this.dmsObj.Role = currentUserContext.RoleCode;
+      this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+      var appObj = { Id: this.appId };
+  
+      let getApp = await this.http.post(URLConstant.GetAppById, appObj)
+      let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+      forkJoin([getApp, getAppCust]).subscribe(
+        (response) => {
+          this.appNo = response[0]['AppNo'];
+          this.custNo = response[1]['CustNo'];
+          if (this.custNo != null && this.custNo != '') {
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+          }
+          else {
+            this.dmsObj.MetadataParent = null;
+          }
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+          let mouCustId = response[0]['MouCustId'];
+          if (mouCustId != null && mouCustId != '') {
+            var mouObj = { Id: mouCustId };
+            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+              (response) => {
+                let mouCustNo = response['MouCustNo'];
+                this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+                this.isDmsReady = true;
+              });
+          }
+          else {
+            this.isDmsReady = true;
+          }
         }
-        else {
-          this.dmsObj.MetadataParent = null;
-        }
-        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
-        let mouCustId = response[0]['MouCustId'];
-        if (mouCustId != null && mouCustId != '') {
-          var mouObj = { Id: mouCustId };
-          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-            (response) => {
-              let mouCustNo = response['MouCustNo'];
-              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
-              this.isDmsReady = true;
-            });
-        }
-        else {
-          this.isDmsReady = true;
-        }
-      }
-    );
+      );
+    }  
   }
 
   async GetAppNo() {
@@ -196,7 +206,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   }
 
   GetCreditScoring(appNo: string) {
-    var obj = { ScoringResultH: { TrxSourceNo: appNo } };
+    var obj = { ScoringResultH: { TrxNo: appNo } };
     this.http.post(URLConstant.GetLatestScoringResultHByTrxSourceNo, obj).toPromise().then(
       (response) => {
         if (response["ScoringResultHObj"] != null) {
@@ -473,7 +483,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   async GetIsUseDigitalization() {
     var generalSettingObj = new GeneralSettingObj();
     generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
-    await this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).toPromise().then(
+    await this.http.post(URLConstant.GetGeneralSettingByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).toPromise().then(
       (response) => {
         this.IsUseDigitalization = response["GsValue"];
       }

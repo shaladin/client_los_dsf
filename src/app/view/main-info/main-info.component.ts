@@ -45,7 +45,7 @@ export class MainInfoComponent implements OnInit {
       }),
       mergeMap((response) => {
         var custObj = { CustNo: response['CustNo'] };
-        let getCustData = this.http.post(URLConstant.GetCustByCustNo, custObj);
+        let getCustData = this.http.post(URLConstant.GetCustByCustNo, {TrxNo : response['CustNo']});
         var tempResponse = [response];
         return forkJoin([tempResponse, getCustData]);
       })

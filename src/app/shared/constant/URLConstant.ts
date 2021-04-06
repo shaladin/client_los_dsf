@@ -197,8 +197,8 @@ export class URLConstant {
   public static GetListActiveRefReasonByRefReasonTypeCode = environment.FoundationR3Url + "/RefReason/GetListKeyValueByCode";
 
   // AppAgrmntCancel
-  public static AddAppAgrmntCancel = environment.losUrl + "/AppAgrmntCancel/AddAppAgrmntCancel"
-
+  public static AddAppAgrmntCancel = environment.losUrl + "/AppAgrmntCancel/AddAppAgrmntCancel";
+  public static AddAppAssetCancel = environment.losUrl + "/AppAgrmntCancel/AddAppAssetCancel";
   //ORGANIZATION
   public static GetRefOrg = "/OrganizationDefinition/GetRefOrg";
   public static EditRefOrgWithOldParentId = "/OrganizationDefinition/EditRefOrgWithOldParentId";
@@ -1199,6 +1199,7 @@ export class URLConstant {
 
   // Report
   public static GenerateReportSync = environment.FoundationR3Url + '/Report/GenerateReportSync';
+  public static GenerateReportR3 = environment.FoundationR3Url + '/Report/GenerateReportR3';
 
   // Asset Category
   public static GetAssetCategoryById = environment.FoundationR3Url + "/AssetCategory/GetAssetCategoryById";
@@ -1303,6 +1304,7 @@ export class URLConstant {
 
   //App Asset OPL
   public static GetAppAssetOplMainInfoByAppAssetId = environment.losUrl + "/AppAssetOpl/GetAppAssetOplMainInfoByAppAssetId";
+  public static GetAppAssetOplByAppAssetId = environment.losUrl + "/AppAssetOpl/GetAppAssetOplByAppAssetId";
   public static GetAssetRegionFromRuleByAppAssetId = environment.losUrl + "/AppAssetOpl/GetAssetRegionFromRuleByAppAssetId";
   public static GetListAppAssetExpenseByAppId = environment.losUrl + "/AppAssetOpl/GetListAppAssetExpenseByAppId";
   public static GetMaintenancePackageByAppAssetId = environment.losUrl + "/AppAssetOpl/GetMaintenancePackageByAppAssetId";
@@ -1326,13 +1328,18 @@ export class URLConstant {
   public static GetRentalCalculationData = environment.losUrl + "/AppAssetView/GetRentalCalculationData";
   public static GetListAllAssetFinancialData = environment.losUrl + "/AppAssetView/GetListAllAssetFinancialData";
 
+  // App List View
+  public static GetAllAppAndAppOplListData = environment.losUrl + "/AppListView/GetAllAppAndAppOplListData";
+
   // App Review
   public static GetAppRvwSummaryAsset = environment.losUrl + "/ApplicationReview/GetAppRvwSummaryAsset";
   public static GetApprovalAmount = environment.losUrl + "/ApplicationReview/GetApprovalAmount";
 
   // Requisition Decision
+  public static GetRequisitionDecisionHByAppId = environment.losUrl + "/RequisitionDecision/GetRequisitionDecisionHByAppId";
   public static SaveRequisitionDecision = environment.losUrl + "/RequisitionDecision/SaveRequisitionDecision";
   public static SubmitRequisitionDecision = environment.losUrl + "/RequisitionDecision/SubmitRequisitionDecision";
+  public static IsSecurityDepositExist = environment.losUrl + "/RequisitionDecision/IsSecurityDepositExist";
 
   // Pre Go Live
   public static SubmitPreGoLive = environment.losUrl + "/PreGoLive/SubmitPreGoLive";
@@ -1345,16 +1352,21 @@ export class URLConstant {
   public static GetFinancialRuleOpl = environment.losUrl + "/AppAssetFinancialDataOpl/GetFinancialRuleOpl";
   public static CalculateCOFOpl = environment.losUrl + "/AppFinData/CalculateCOFOpl";
 
-
   //Asset Allocation
   public static GetAssetAllocationDataByAppId = environment.losUrl + "/AppAssetAllocationOpl/GetAssetAllocationDataByAppId";
   public static SubmitAssetAllocation = environment.losUrl + "/AppAssetAllocationOpl/SubmitAssetAllocation";
 
   //API AMS
-  public static AmsUrl = "http://r3impl-appsvr/AMS";
-  public static amsUrl = "http://r3impl-appsvr.ad-ins.com/AMS";
   public static GetAssetStockPagingFromAms = "/Api/Integration/GetAssetStockPaging";
 
   // ASSET (AMS)
-  public static GetAssetByAssetNo = URLConstant.amsUrl + "/Asset/GetAssetByAssetNo";
+  public static GetAssetByAssetNo = environment.AMSUrl + "/Asset/GetAssetByAssetNo";
+  public static GetListAssetReqInProgress = environment.AMSUrl + "/Api/Integration/GetListAssetReqInProgress";
+
+
+  // GO LIVE (LMS)
+  public static CheckGoLivePayment = environment.LMSUrl + "/Api/Integration/CheckGoLivePayment";
+  
+  //Check DMS
+  public static GetSysConfigPncplResultByCode = environment.FoundationR3Url + "/SysConfigResult/GetSysConfigPncplResultByCode";
 }

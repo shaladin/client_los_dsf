@@ -74,7 +74,7 @@ export class DoAssetDetailComponent implements OnInit {
         appAsset.TempRegisLettDt = datePipe.transform(appAsset.TempRegisLettDt, "yyyy-MM-dd");
         
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
-          AssetTypeCode: appAsset.AssetTypeCode
+          Code: appAsset.AssetTypeCode
         }).subscribe(
           (response: any) => {
             while (this.listItem.length) {

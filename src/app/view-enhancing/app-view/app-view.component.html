@@ -19,7 +19,7 @@
             <mat-tab *ngIf="IsCustomer" label="Customer">
               <ng-template matTabContent>
                 <app-view-app-cust-data-personal [appId]="AppId" *ngIf="CustType=='PERSONAL'"></app-view-app-cust-data-personal>
-                <app-view-app-cust-data-company [appId]="AppId" *ngIf="CustType=='COMPANY'"></app-view-app-cust-data-company>
+                <app-view-app-cust-data-company [appId]="AppId" [BizTemplateCode]="bizTemplateCode" *ngIf="CustType=='COMPANY'"></app-view-app-cust-data-company>
               </ng-template>
             </mat-tab>
 
@@ -107,7 +107,7 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab label="Document">
+            <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Document">
               <ng-template matTabContent>
                 <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
               </ng-template>

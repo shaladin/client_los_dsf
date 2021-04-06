@@ -5,7 +5,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
-import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
@@ -20,6 +19,7 @@ export class SchmRegulerFixComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
   @Output() RefreshSubsidy = new EventEmitter();
+  @Input() BizTemplateCode: string;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
@@ -27,7 +27,6 @@ export class SchmRegulerFixComponent implements OnInit {
   calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
   listInstallment: any;
   responseCalc: any;
-  result: AppObj = new AppObj();
   PriceLabel: string = "Asset Price";
 
   constructor(private fb: FormBuilder,
@@ -38,13 +37,10 @@ export class SchmRegulerFixComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
-    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-      (response) => {
-        this.result = response;
-        if(this.result.BizTemplateCode == CommonConstant.CFRFN4W || this.result.BizTemplateCode == CommonConstant.CFNA){
-          this.PriceLabel = "Financing Amount";
-        }
-      });
+
+    if(this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA){
+      this.PriceLabel = "Financing Amount";
+    }
   }
 
   LoadDDLRateType() {

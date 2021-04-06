@@ -15,6 +15,8 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cust-detail-company',
@@ -32,23 +34,35 @@ export class CustDetailCompanyComponent implements OnInit {
   AppCustCompanyObj: AppCustCompanyObj = new AppCustCompanyObj();
   businessDt: Date = new Date();
   CustModelObj: Array<KeyValueObj> = new Array();
+  ddlCustModelObj: UcDropdownListObj = new UcDropdownListObj();
   industryTypeObj = {
     IndustryTypeCode: ""
   };
+  BizTemplateCode: string = "";
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    public formValidate: FormValidateService, private cookieService: CookieService) { }
+    public formValidate: FormValidateService,
+    private cookieService: CookieService,
+    private route: ActivatedRoute) {
+      this.route.queryParams.subscribe(params => {
+        if (params['BizTemplateCode'] != null) {
+          this.BizTemplateCode = params['BizTemplateCode'];
+        }
+      });
+    }
+
   CustDetailForm = this.fb.group({
     NoOfEmployee: ['', Validators.required],
     IsAffiliateWithMF: [false],
+    IsSkt: [false],
     EstablishmentDate: ['', Validators.required],
     IndustryTypeCode: ['', Validators.required],
     MrCustModelCode: ['', Validators.required],
   })
 
-  async ngOnInit() {
+  ngOnInit() {
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
     this.businessDt.setDate(this.businessDt.getDate() - 1);
@@ -68,16 +82,13 @@ export class CustDetailCompanyComponent implements OnInit {
     this.lookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.lookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.lookupIndustryTypeObj.isReady = true;
-    await this.GetCustModel();
+    this.GetCustModel();
     this.GetData();
   }
 
-  async GetCustModel() {
-    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel, MappingCode: CommonConstant.CustTypeCompany }).toPromise().then(
-      (response) => {
-        this.CustModelObj = response[CommonConstant.ReturnObj];
-      }
-    );
+  GetCustModel() {
+    this.ddlCustModelObj.apiUrl = URLConstant.GetListActiveRefMasterWithMappingCodeAll;
+    this.ddlCustModelObj.requestObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel, MappingCode: CommonConstant.CustTypeCompany };
   }
 
   GetIndustryType(event) {
@@ -96,11 +107,14 @@ export class CustDetailCompanyComponent implements OnInit {
   SetData() {
     this.AppCustObj.AppCustId = this.AppCustId;
     this.AppCustObj.MrCustModelCode = this.CustDetailForm.controls.MrCustModelCode.value;
-    this.AppCustObj.IsAffiliateWithMf = this.CustDetailForm.controls.IsAffiliateWithMF.value; 
+    this.AppCustObj.IsAffiliateWithMf = this.CustDetailForm.controls.IsAffiliateWithMF.value;
    
     this.AppCustCompanyObj.IndustryTypeCode   = this.CustDetailForm.controls.IndustryTypeCode.value;
     this.AppCustCompanyObj.NumOfEmp = this.CustDetailForm.controls.NoOfEmployee.value;
     this.AppCustCompanyObj.EstablishmentDt = this.CustDetailForm.controls.EstablishmentDate.value;
+    if(this.BizTemplateCode === CommonConstant.OPL) {
+      this.AppCustCompanyObj.IsTaxable = this.CustDetailForm.controls.IsSkt.value;
+    }
   }
 
   SaveForm() {
@@ -126,7 +140,7 @@ export class CustDetailCompanyComponent implements OnInit {
       (response) => {
         if (response.AppCustCompanyObj.IndustryTypeCode != null) {
           this.industryTypeObj.IndustryTypeCode = response.AppCustCompanyObj.IndustryTypeCode;
-          this.http.post(URLConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
+          this.http.post(URLConstant.GetRefIndustryTypeByCode, {Code: response.AppCustCompanyObj.IndustryTypeCode}).subscribe(
             (response) => {
               this.lookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
               this.lookupIndustryTypeObj.jsonSelect = response;
@@ -140,13 +154,15 @@ export class CustDetailCompanyComponent implements OnInit {
           EstablishmentDate : response.AppCustCompanyObj.EstablishmentDt != null ? formatDate(response.AppCustCompanyObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US') : "",
           IndustryTypeCode : response.AppCustCompanyObj.IndustryTypeCode,
           MrCustModelCode : response.AppCustObj.MrCustModelCode,
+          IsSkt : response.AppCustCompanyObj.IsTaxable
         })
 
+        this.AppCustCompanyObj.IsTaxable = response.AppCustCompanyObj.IsTaxable;
         this.AppCustObj.RowVersion = response.AppCustObj.RowVersion;
         this.AppCustCompanyObj.RowVersion = response.AppCustCompanyObj.RowVersion;
 
         if (response.AppCustGrpObj != null && response.AppCustGrpObj.CustNo != "") {
-          this.http.post(URLConstant.GetCustByCustNo, { CustNo: response.AppCustGrpObj.CustNo }).subscribe(
+          this.http.post(URLConstant.GetCustByCustNo, { TrxNo: response.AppCustGrpObj.CustNo }).subscribe(
             (responseCustGrp) => {
               this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
               this.lookupCustGrpObj.jsonSelect = { CustName: responseCustGrp["CustName"] };
@@ -157,6 +173,4 @@ export class CustDetailCompanyComponent implements OnInit {
       }
     );
   }
-
-
 }

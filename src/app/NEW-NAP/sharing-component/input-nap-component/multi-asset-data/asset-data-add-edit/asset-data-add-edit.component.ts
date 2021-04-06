@@ -37,6 +37,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { AppAssetAttrCustomObj } from 'app/shared/model/AppAsset/AppAssetAttrCustom.Model';
 import { AppAssetAttrObj } from 'app/shared/model/AppAssetAttrObj.Model';
+import { CustomPatternObj } from 'app/shared/model/library/CustomPatternObj.model';
 
 @Component({
   selector: 'app-asset-data-add-edit',
@@ -232,6 +233,8 @@ export class AssetDataAddEditComponent implements OnInit {
   IntegratorCheckBySystemGsValue: string = "1";
   LastRequestedDate: any = "";
   indexChassis: number = 0;
+  SerialNoRegex: string;
+  ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService) {
     this.getListAppAssetData = URLConstant.GetListAppAssetData;
@@ -822,7 +825,9 @@ export class AssetDataAddEditComponent implements OnInit {
         let getAssetCond = this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETCOND", ProdOfferingVersion: response.ProdOfferingVersion });
         let getAssetType = this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETTYPE", ProdOfferingVersion: response.ProdOfferingVersion });
         let getAssetSchm = this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETSCHM", ProdOfferingVersion: response.ProdOfferingVersion });
-        return forkJoin([getVendorSchmCode, getAssetCond, getAssetType, getAssetSchm]);
+        let RegexSerialNo = this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSSerialNoRegex });
+
+        return forkJoin([getVendorSchmCode, getAssetCond, getAssetType, getAssetSchm, RegexSerialNo]);
       })
     ).subscribe(
       (response) => {
@@ -831,7 +836,15 @@ export class AssetDataAddEditComponent implements OnInit {
         var assetCond = response[1];
         var assetType = response[2];
         var assetSchm = response[3];
+        this.SerialNoRegex = response[4]["GsValue"];
         this.assetTypeCompntValue = assetType["CompntValue"];
+        
+        let obj: CustomPatternObj = {
+          pattern: this.SerialNoRegex,
+          invalidMsg: "Cannot input special character"
+        }
+        this.ListPattern.push(obj);
+        
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
         if (this.mode != 'editAsset') {
@@ -844,7 +857,7 @@ export class AssetDataAddEditComponent implements OnInit {
         this.GenerataAppAssetAttr(false);
 
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
-          AssetTypeCode: assetType["CompntValue"]
+          Code: assetType["CompntValue"]
         }).subscribe(
           (response: any) => {
             while (this.items.length) {
@@ -855,7 +868,7 @@ export class AssetDataAddEditComponent implements OnInit {
             for (let i = 0; i < this.SerialNoList.length; i++) {
               let eachDataDetail = this.fb.group({
                 SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
-                SerialNoValue: [''],
+                SerialNoValue: ['',[Validators.pattern(this.SerialNoRegex)]],
                 IsMandatory: [this.SerialNoList[i].IsMandatory]
               }) as FormGroup;
               this.items.push(eachDataDetail);
@@ -863,7 +876,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
             for (let i = 0; i < this.items.length; i++) {
               if (this.items.controls[i]['controls']['IsMandatory'].value == true) {
-                this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
+                this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required, Validators.pattern(this.SerialNoRegex)]);
                 this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
               }
             }
@@ -1556,7 +1569,7 @@ export class AssetDataAddEditComponent implements OnInit {
     critSupp2Obj.DataType = 'text';
     critSupp2Obj.restriction = AdInsConstant.RestrictionEq;
     critSupp2Obj.propName = 'v.MR_VENDOR_CATEGORY_CODE';
-    critSupp2Obj.value = 'SUPPLIER_BRANCH';
+    critSupp2Obj.value = 'SUPPLIER';
     suppCrit.push(critSupp2Obj);
 
     var critSuppSupplSchmObj = new CriteriaObj();
@@ -1571,7 +1584,7 @@ export class AssetDataAddEditComponent implements OnInit {
   }
   setAppAccessorySupplier(i, SupplCode) {
     this.vendorAccSuppObj.VendorCode = SupplCode;
-    this.http.post(URLConstant.GetVendorByVendorCode, this.vendorAccSuppObj).subscribe(
+    this.http.post(URLConstant.GetVendorByVendorCode, {Code : SupplCode}).subscribe(
       (response) => {
         this.dictSuppLookup[i].nameSelect = response["VendorName"];
         this.dictSuppLookup[i].jsonSelect = response;
@@ -1582,7 +1595,8 @@ export class AssetDataAddEditComponent implements OnInit {
 
   setAppAccessory(i, AssetAccessoryCode) {
     this.accObj.AssetAccessoryCode = AssetAccessoryCode;
-    this.http.post(URLConstant.GetAssetAccessoryByCode, this.accObj).subscribe(
+    let obj = {Code: this.accObj.AssetAccessoryCode}
+    this.http.post(URLConstant.GetAssetAccessoryByCode, obj).subscribe(
       (response) => {
         this.dictAccLookup[i].nameSelect = response["AssetAccessoryName"];
         this.dictAccLookup[i].jsonSelect = response;
@@ -1700,7 +1714,7 @@ export class AssetDataAddEditComponent implements OnInit {
       this.inputAddressObjForLoc.isRequired = false;
       for (let i = 0; i < this.AssetDataForm.controls["items"]["controls"].length; i++) {
         if (this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.Chassis_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.License_Plate_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.Engine_No) {
-          this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].setValidators([Validators.required]);
+          this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].setValidators([Validators.required, Validators.pattern(this.SerialNoRegex)]);
           this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].updateValueAndValidity();
         }
       }
@@ -1709,14 +1723,14 @@ export class AssetDataAddEditComponent implements OnInit {
       this.inputAddressObjForLoc.isRequired = true;
       for (let i = 0; i < this.AssetDataForm.controls["items"]["controls"].length; i++) {
         if (this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.Chassis_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.License_Plate_No || this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoLabel"].value == AdInsConstant.Engine_No) {
-          this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].clearValidators();
+          this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].setValidators([Validators.pattern(this.SerialNoRegex)]);
           this.AssetDataForm.controls["items"]["controls"][i]["controls"]["SerialNoValue"].updateValueAndValidity();
         }
       }
     }
   }
   GetVendorForView() {
-    this.http.post(URLConstant.GetVendorByVendorCode, this.vendorObj).toPromise().then(
+    this.http.post(URLConstant.GetVendorByVendorCode, {Code : this.vendorObj.VendorCode}).toPromise().then(
       (response) => {
         this.AssetDataForm.patchValue({
           SupplName: response["VendorName"],

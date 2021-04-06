@@ -31,6 +31,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 export class LeadInputLeadDataComponent implements OnInit {
   @Input() originPage: string = "";
+  @Input() isEndOfTab: string = "";
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
   typePage: string = "";
   CopyFrom: string;
@@ -121,6 +122,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
   isAlreadySubmittedByIntegrator: boolean = false;
   isReadOnly: boolean = true;
+  textButton : string
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
@@ -162,7 +164,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.assetTypeId = event.AssetTypeId;
 
     var AssetTypeCode = { 'AssetTypeCode': event.AssetTypeCode };
-    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: event.AssetTypeCode}).subscribe(
       (response: any) => {
         while (this.items.length) {
           this.items.removeAt(0);
@@ -202,6 +204,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isEndOfTab == '0'? this.textButton = 'Save' : this.textButton = 'Save and Continue'
     this.items = this.LeadDataForm.get('items') as FormArray;
 
     this.InputLookupAssetObj = new InputLookupObj();
@@ -359,11 +362,11 @@ export class LeadInputLeadDataComponent implements OnInit {
               this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
               var assetType = new AssetTypeObj();
               assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-              this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
+              this.http.post(URLConstant.GetAssetTypeById, {Id: this.resAssetMasterObj.AssetTypeId}).subscribe(
                 (response: any) => {
 
                   var AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
-                  this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+                  this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: response.AssetTypeCode}).subscribe(
                     (response: any) => {
                       while (this.items.length) {
                         this.items.removeAt(0);
@@ -470,11 +473,11 @@ export class LeadInputLeadDataComponent implements OnInit {
               this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
               var assetType = new AssetTypeObj();
               assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-              this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
+              this.http.post(URLConstant.GetAssetTypeById, {Id: this.resAssetMasterObj.AssetTypeId}).subscribe(
                 (response: any) => {
 
                   var AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
-                  this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
+                  this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: response.AssetTypeCode}).subscribe(
                     (response: any) => {
                       while (this.items.length) {
                         this.items.removeAt(0);
@@ -556,10 +559,10 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   DownPaymentChange() {
     if (this.LeadDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypeAmt) {
-      this.isReadOnly = false;
+      this.isReadOnly = true;
     }
     else {
-      this.isReadOnly = true;
+      this.isReadOnly = false;
     }
   }
 
@@ -631,7 +634,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.DPAmount = this.LeadDataForm.controls["DownPaymentAmount"].value;
     this.NTFAmt = this.AssetPrice - this.DPAmount;
     var minAmt = this.NTFAmt / this.Tenor;
-    if (!this.LeadDataForm.controls["InstallmentAmt"].value) this.LeadDataForm.patchValue({ InstallmentAmt: minAmt });
+    if (!this.LeadDataForm.controls["InstallmentAmt"].value || this.LeadDataForm.controls["InstallmentAmt"].value < minAmt) this.LeadDataForm.patchValue({ InstallmentAmt: minAmt });
     this.InstAmt = this.LeadDataForm.controls["InstallmentAmt"].value;
 
     if (this.NTFAmt && this.InstAmt > this.NTFAmt) {
@@ -660,20 +663,15 @@ export class LeadInputLeadDataComponent implements OnInit {
       NTFAmt: this.NTFAmt
     });
 
-    if (this.LeadDataForm.controls.InstallmentAmt.value < minAmt) {
-      this.toastr.warningMessage("Installment Amount must be bigger than " + minAmt);
-      return;
-    } else {
-      if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
-        this.TotalDownPayment = this.DPAmount + this.InstAmt;
-      }
-      else {
-        this.TotalDownPayment = this.DPAmount;
-      }
-      this.LeadDataForm.patchValue({
-        TotalDownPayment: this.TotalDownPayment
-      });
+    if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
+      this.TotalDownPayment = this.DPAmount + this.InstAmt;
     }
+    else {
+      this.TotalDownPayment = this.DPAmount;
+    }
+    this.LeadDataForm.patchValue({
+      TotalDownPayment: this.TotalDownPayment
+    });
 
     this.Calculate = true;
   }
@@ -731,12 +729,21 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.leadInputLeadDataObj.LeadAssetObj.AssetSeqNo = 1;
     if (this.items.controls[0] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 = this.items.controls[0]["controls"]["SerialNoValue"].value;
+      if(this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 == null){
+        this.leadInputLeadDataObj.LeadAssetObj.SerialNo1 = "";
+      }
     }
     if (this.items.controls[1] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 = this.items.controls[1]["controls"]["SerialNoValue"].value;
+      if(this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 == null){
+        this.leadInputLeadDataObj.LeadAssetObj.SerialNo2 = "";
+      }
     }
     if (this.items.controls[2] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo3 = this.items.controls[2]["controls"]["SerialNoValue"].value;
+      if(this.leadInputLeadDataObj.LeadAssetObj.SerialNo3 == null){
+        this.leadInputLeadDataObj.LeadAssetObj.SerialNo3 = "";
+      }
     }
     if (this.items.controls[3] != null) {
       this.leadInputLeadDataObj.LeadAssetObj.SerialNo4 = this.items.controls[3]["controls"]["SerialNoValue"].value;
@@ -1076,6 +1083,11 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   CheckSubmitForCFNA() {
+    if(isNaN(this.LeadDataForm.controls.InstallmentAmt.value)){
+      this.toastr.warningMessage("Installment Amount cannot be empty");
+      this.isAbleToSubmit = false;
+      return;
+    }
     var minAmt = this.LeadDataForm.controls["NTFAmt"].value / this.LeadDataForm.controls["Tenor"].value;
     if (this.LeadDataForm.controls.InstallmentAmt.value < minAmt) {
       this.toastr.warningMessage("Installment Amount must be bigger than " + minAmt);

@@ -18,6 +18,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
+import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -44,6 +45,7 @@ export class NapAddDetailComponent implements OnInit {
   IsSavedTC: boolean = false;
   BizTemplateCode: string = CommonConstant.CFNA;
   isMainCustMarried: boolean = false;
+  IsDataReady: boolean = false;
 
   AppStep = {
     // "NEW": 1,
@@ -69,6 +71,7 @@ export class NapAddDetailComponent implements OnInit {
   appNo: string;
   dmsObj: DMSObj;
   isDmsReady: boolean = false;
+  SysConfigResultObj: ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
 
   readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
   constructor(
@@ -93,7 +96,12 @@ export class NapAddDetailComponent implements OnInit {
     });
   }
 
-  async ngOnInit() {
+  async ngOnInit() : Promise<void> {
+    //check DMS
+    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+      (response) => {
+        this.SysConfigResultObj = response;
+    });
     this.ClaimTask();
     this.AppStepIndex = 1;
     this.NapObj = new AppObj();
@@ -103,6 +111,7 @@ export class NapAddDetailComponent implements OnInit {
     if (this.ReturnHandlingHId > 0) {
       this.ChangeStepper();
       this.ChooseStep(this.AppStepIndex);
+      this.IsDataReady = true;
     }
     else {
       var appObj = { Id: this.appId };
@@ -118,9 +127,11 @@ export class NapAddDetailComponent implements OnInit {
             this.ChangeStepper();
             this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
             this.ChooseStep(this.AppStepIndex);
+            this.IsDataReady = true;
           }
         });
     }
+
     this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, this.NapObj).subscribe(
       (response) => {
         if (response.AppCustObj) 
@@ -134,45 +145,45 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   async initDms() {
-    this.isDmsReady = false;
-    this.dmsObj = new DMSObj();
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.dmsObj.User = currentUserContext.UserName;
-    this.dmsObj.Role = currentUserContext.RoleCode;
-    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    var appObj = { Id: this.appId };
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj);
-    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
-    forkJoin([getApp, getAppCust]).subscribe(
-      response => {
-        this.appNo = response[0]['AppNo'];
-        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-        let isExisting = response[1]['IsExistingCust'];
-        if (isExisting) {
-          let custNo = response[1]['CustNo'];
-          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
+    if(this.SysConfigResultObj.ConfigValue == '1'){
+      this.isDmsReady = false;
+      this.dmsObj = new DMSObj();
+      let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+      this.dmsObj.User = currentUserContext.UserName;
+      this.dmsObj.Role = currentUserContext.RoleCode;
+      this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+      var appObj = { Id: this.appId };
+      this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
+        response => {
+          this.appNo = this.NapObj.AppNo;
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+          let isExisting = response['IsExistingCust'];
+          if (isExisting) {
+            let custNo = response['CustNo'];
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
+          }
+          else {
+            this.dmsObj.MetadataParent = null;
+          }
+  
+          let mouId = this.NapObj.MouCustId;
+          if (mouId != null && mouId != 0) {
+            let mouObj = { Id: mouId };
+            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+              result => {
+                let mouCustNo = result['MouCustNo'];
+                this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+                this.isDmsReady = true;
+              }
+            )
+          }
+          else {
+            this.isDmsReady = true;
+          }
         }
-        else {
-          this.dmsObj.MetadataParent = null;
-        }
-
-        let mouId = response[0]['MouCustId'];
-        if (mouId != null && mouId != "") {
-          let mouObj = { Id: mouId };
-          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-            result => {
-              let mouCustNo = result['MouCustNo'];
-              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
-              this.isDmsReady = true;
-            }
-          )
-        }
-        else {
-          this.isDmsReady = true;
-        }
-      }
-    );
+      );
+    }  
   }
 
   stepperMode: string = CommonConstant.CustTypeCompany;
@@ -339,6 +350,14 @@ export class NapAddDetailComponent implements OnInit {
       () => {
       }
     )
+  }
+
+  CheckIsUseDms(){
+    if(this.SysConfigResultObj.ConfigValue == '1'){
+      this.NextStep(CommonConstant.AppStepUplDoc);
+    }else{
+      this.LastStepHandler();
+    }
   }
 
   LastStepHandler() {

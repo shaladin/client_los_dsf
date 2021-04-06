@@ -74,7 +74,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     this.ClaimTask();
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetObj.urlQryPaging = URLConstant.GetAssetStockPagingFromAms;
-    this.InputLookupAssetObj.urlEnviPaging = URLConstant.AmsUrl;
+    this.InputLookupAssetObj.urlEnviPaging = environment.AMSUrl;
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetObj.isRequired = true;
@@ -187,10 +187,6 @@ export class RequisitionDecisionDetailComponent implements OnInit {
       AssetNo: event.AssetNo
     };
 
-    // this.SerialNo1 = event.SerialNo1;
-    // this.SerialNo2 = event.SerialNo2;
-    // this.SerialNo3 = event.SerialNo3;
-
     this.http.post(URLConstant.GetAssetByAssetNo, requestAssetNo).subscribe(
       (response: any) => {
         this.AssetObj = response;
@@ -203,7 +199,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetAssetTypeByCode, { AssetTypeCode: this.AssetTypeCode }).subscribe(
+    this.http.post(URLConstant.GetAssetTypeByCode, {Code: this.AssetTypeCode }).subscribe(
       (response: any) => {
         this.AssetTypeObj = response;
       }
@@ -238,7 +234,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
           }
         );
 
-        this.http.post(URLConstant.GetAssetTypeByCode, { AssetTypeCode: this.AssetTypeCode }).subscribe(
+        this.http.post(URLConstant.GetAssetTypeByCode, {Code: this.AssetTypeCode }).subscribe(
           (response: any) => {
             this.AssetTypeObj = response;
           }
@@ -250,11 +246,16 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     else {
       this.ReqDecForm.controls.AssetNo.clearValidators();
       this.IsExisting = false;
+      this.ReqDecForm.patchValue({
+        AssetNo: ""
+      });
+      this.ReqDecForm.controls.AssetNo.updateValueAndValidity();
     }
   }
 
   Cancel() {
     this.IsSecondDetail = false;
+    this.SetListOfAsset();
   }
 
   SaveForm() {
@@ -285,6 +286,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
 
         this.toastr.successMessage("Submit Requisition Decision Asset Success");
         this.IsSecondDetail = false;
+        this.SetListOfAsset();
       }
     );
   }

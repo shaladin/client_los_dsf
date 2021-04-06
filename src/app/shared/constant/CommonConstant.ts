@@ -415,6 +415,7 @@ export class CommonConstant {
   public static TitleReferantor = "List Referantor Commission Data";
   public static ReturnObj = "ReturnObject";
   public static RefMasterObjs = "RefMasterObjs";
+  public static Result = "Result";
 
   public static RefMasterTypeCodeCustType = "CUST_TYPE";
   public static RefMasterTypeCodeSlsRecom = "SLS_RECOM";
@@ -573,6 +574,7 @@ export class CommonConstant {
   public static GSCodeInputOPLFeeBehaviour = "INPOPLFEETBHV";
   public static GSCodeIsUseDigitalization = "IS_USE_DIGITALIZATION";
   public static GSCodeLobKta = "LOB_KTA";
+  public static GSSerialNoRegex = "SERIAL_NO_REGEX";
 
 
   //Serial Item
@@ -659,4 +661,11 @@ export class CommonConstant {
   public static OtherExpenseMasterCodeExpStn = "EXP_STN";
   public static OtherExpenseMasterCodeExpOdb = "ODB";
   public static OtherExpenseMasterCodeExpRc = "RC";
+
+  //SYS CONFIG
+  public static ConfigCodeIsUseDms = "IS_USE_DMS";
+  
+  //interest input type
+  public static InterestInputTypeAmt = "AMT";
+  public static InterestInputTypePrcnt = "PRCNT"
 }

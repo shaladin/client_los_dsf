@@ -1,6 +1,6 @@
 <div class="col-md-12 text-left">
   <div class="card">
-    <app-app-main-info [AppId]="appId"></app-app-main-info>
+    <app-app-main-info [AppId]="appId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info>
 
     <mat-tab-group mat-align-tabs="center" *ngIf="BizTemplateCode != 'ROS'">
 
@@ -60,7 +60,7 @@
       </mat-tab>
 
 
-      <mat-tab label="Document">
+      <mat-tab *ngIf="SysConfigResultObj.ConfigValue == 1" label="Document">
         <ng-template matTabContent>
           <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
         </ng-template>

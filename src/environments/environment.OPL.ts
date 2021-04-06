@@ -11,6 +11,8 @@ export const environment = {
     losUrl: 'http://r3impl-appsvr.ad-ins.com/ROS_BE',
     FoundationR3Url: 'http://r3impl-appsvr.ad-ins.com/FOUNDATION_OPL',
     DMSUrl : "http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx",
+    AMSUrl : "http://r3impl-appsvr.ad-ins.com/AMS",
+    LMSUrl : "http://r3impl-appsvr.ad-ins.com/LMS",
     ApprovalR3Url: 'http://r3impl-appsvr.ad-ins.com/APPROVAL_OPL',
     FoundationR3Web: 'http://r3impl-websvr.ad-ins.com/Foundation',
     losR3Web: 'http://r3impl-websvr.ad-ins.com/ROS_FE',
@@ -20,4 +22,4 @@ export const environment = {
     ChipperKeyLocalStorage: "AdInsFOU2020OKOK", // 256 bit atau 16 karakter
     ChipperKeyCookie: "AdInsFOU12345678", // 256 bit atau 16 karakter & harus sama dengan BE
     Module:"LOS"
-};  
+  };  

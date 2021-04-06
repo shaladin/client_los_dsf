@@ -58,8 +58,7 @@ export class NapPagingComponent implements OnInit {
   }
 
   AddApp() {
-    var obj = { OfficeCode: this.userAccess.OfficeCode };
-    this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
+    this.http.post(URLConstant.GetRefOfficeByOfficeCode, {Code : this.userAccess.OfficeCode}).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ROS_ADD], {});

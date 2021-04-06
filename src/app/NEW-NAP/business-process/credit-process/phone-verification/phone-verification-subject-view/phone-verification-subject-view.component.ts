@@ -24,7 +24,8 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
   getVerfResultDUrl: any;
   appId: any;
   verfResultHId: any;
-
+  IsViewReady: boolean = false;
+  
   appObj = {
     AppId: 0,
   };
@@ -87,6 +88,7 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
       (response) => {
         this.AppObj = response;
         this.verfResObj.TrxRefNo = this.AppObj.AppNo;
+        this.IsViewReady = true;
       }
     );
   }
@@ -101,7 +103,7 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
   }
 
   async GetVerfResultHData() {
-    await this.http.post(this.getVerfResulHtUrl, this.verfResHObj).toPromise().then(
+    await this.http.post(this.getVerfResulHtUrl, {Id : this.verifResultObj.VerfResultId}).toPromise().then(
       (response) => {
         this.verifResultHObj = response;
         this.verfResHObj.MrVerfObjectCode = this.verifResultHObj.MrVerfObjectCode;

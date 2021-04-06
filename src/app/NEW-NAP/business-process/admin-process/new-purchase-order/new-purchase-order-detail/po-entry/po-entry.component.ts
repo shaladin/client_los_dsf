@@ -62,7 +62,7 @@ export class PoEntryComponent implements OnInit {
     this.BusinessDt = new Date(context["BusinessDt"]);
     if (!this.PurchaseOrderHId || this.PurchaseOrderHId == 0) {
       let getAppLoanPurpose = this.httpClient.post(URLConstant.GetAppLoanPurposeByAppIdSupplCode, { AppId: this.AppId, SupplCode: this.SupplCode }).toPromise();
-      let getListBankAcc = this.httpClient.post(URLConstant.GetListVendorBankAccByVendorCode, { VendorCode: this.SupplCode }).toPromise();
+      let getListBankAcc = this.httpClient.post(URLConstant.GetListVendorBankAccByVendorCode, { Code: this.SupplCode }).toPromise();
       forkJoin([getAppLoanPurpose, getListBankAcc]).toPromise().then(
         (response) => {
           this.AppLoanPurposeList = response[0]["listResponseAppLoanPurpose"] as Array<AppLoanPurposeObj>;
@@ -98,7 +98,7 @@ export class PoEntryComponent implements OnInit {
     }
     else {
       let getPurchaseOrderHId = this.httpClient.post(URLConstant.GetPurchaseOrderByPurchaseOrderHIdForNewPO, { Id: this.PurchaseOrderHId }).toPromise();
-      let getListBankAcc = this.httpClient.post(URLConstant.GetListVendorBankAccByVendorCode, { VendorCode: this.SupplCode }).toPromise();
+      let getListBankAcc = this.httpClient.post(URLConstant.GetListVendorBankAccByVendorCode, { Code: this.SupplCode }).toPromise();
       forkJoin([getPurchaseOrderHId, getListBankAcc]).toPromise().then(
         (response) => {
           this.vendorBankAccList = response[1]["ReturnObject"];

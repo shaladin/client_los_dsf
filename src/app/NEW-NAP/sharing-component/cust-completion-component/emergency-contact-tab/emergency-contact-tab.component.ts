@@ -99,7 +99,7 @@ export class EmergencyContactTabComponent implements OnInit {
   }
 
   setDropdown() {
-    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
       (response) => {
         this.IdTypeObj = response[CommonConstant.RefMasterObjs];
         if (this.IdTypeObj.length > 0) {
@@ -206,7 +206,7 @@ export class EmergencyContactTabComponent implements OnInit {
   }
 
   copyCustomerEvent(event) {
-    this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalForCopyByCustId, { CustId: event.CustId }).subscribe(
+    this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalForCopyByCustId, { Id: event.CustId }).subscribe(
       (response) => {
         if (response.CustObj != undefined) {
           this.EmergencyContactForm.patchValue({

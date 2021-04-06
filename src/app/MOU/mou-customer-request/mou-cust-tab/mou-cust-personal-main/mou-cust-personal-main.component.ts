@@ -99,8 +99,7 @@ export class MouCustPersonalMainComponent implements OnInit {
     this.selectedCustNo = event.CustNo;
     this.InputLookupCustomerObj.isReadonly = true;
 
-    var custObj = { CustId: event.CustId };
-    this.http.post(URLConstant.GetCustPersonalForCopyByCustId, custObj).subscribe(
+    this.http.post(URLConstant.GetCustPersonalForCopyByCustId, {Id : event.CustId }).subscribe(
       (response) => {
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);
@@ -181,7 +180,7 @@ export class MouCustPersonalMainComponent implements OnInit {
   setCountryName(countryCode) {
     this.countryObj.CountryCode = countryCode;
 
-    this.http.post(this.getCountryUrl, this.countryObj).subscribe(
+    this.http.post(this.getCountryUrl, {Code: countryCode}).subscribe(
       (response) => {
         this.InputLookupCountryObj.jsonSelect = { CountryName: response["CountryName"] };
       },
@@ -263,7 +262,7 @@ export class MouCustPersonalMainComponent implements OnInit {
   }
 
   bindAllRefMasterObj() {
-    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { "RefMasterTypeCode": CommonConstant.RefMasterTypeCodeIdType }).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
       (response) => {
         this.IdTypeObj = response["RefMasterObjs"];
         if (this.IdTypeObj.length > 0) {
@@ -280,7 +279,7 @@ export class MouCustPersonalMainComponent implements OnInit {
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
-          if(this.custDataPersonalObj.MouCustPersonalObj.MrGenderCode != null){
+          if(this.custDataPersonalObj.MouCustPersonalObj.MrGenderCode == null){
             this.parentForm.controls[this.identifier].patchValue({
               MrGenderCode: this.GenderObj[0].Key
             });
@@ -303,7 +302,7 @@ export class MouCustPersonalMainComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { "RefMasterTypeCode": CommonConstant.RefMasterTypeCodeNationality }).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code : CommonConstant.RefMasterTypeCodeNationality }).subscribe(
       (response) => {
         this.NationalityObj = response["RefMasterObjs"];
         if (this.NationalityObj.length > 0) {

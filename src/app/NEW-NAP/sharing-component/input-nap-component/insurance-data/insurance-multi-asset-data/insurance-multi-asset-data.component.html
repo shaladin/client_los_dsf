@@ -4,16 +4,20 @@
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="InsuranceDataForm" (ngSubmit)="InsuranceDataForm.valid"
           #enjiForm="ngForm">
-          <div [hidden]="PageState != 'Paging' || BizTemplateCode == 'FCTR' || BizTemplateCode == 'CFNA'" id="assetData">
+          <div [hidden]="PageState != 'Paging' || BizTemplateCode == 'FCTR' || BizTemplateCode == 'CFNA'">
             <lib-ucSubsection [id]="'assetDataId'" [title]="'Loan Object'" [panel]="'assetData'">
             </lib-ucSubsection>
-            <lib-ucgridview [gridInput]="gridAssetDataObj" (callback)="event2($event)"></lib-ucgridview>
+            <div id="assetData">
+              <lib-ucgridview [gridInput]="gridAssetDataObj" (callback)="event2($event)"></lib-ucgridview>
+            </div>
           </div>
 
-          <div [hidden]="PageState != 'Paging'" id="collateral">
+          <div [hidden]="PageState != 'Paging'">
             <lib-ucSubsection [id]="'collateralId'" [title]="'Collateral'" [panel]="'collateral'">
             </lib-ucSubsection>
-            <lib-ucgridview [gridInput]="gridAppCollateralObj" (callback)="event($event)"></lib-ucgridview>
+            <div id="collateral">
+              <lib-ucgridview [gridInput]="gridAppCollateralObj" (callback)="event($event)"></lib-ucgridview>
+            </div>
           </div>
 
           <!-- <app-insurance-data (outputTab)="getValue($event)"></app-insurance-data> -->

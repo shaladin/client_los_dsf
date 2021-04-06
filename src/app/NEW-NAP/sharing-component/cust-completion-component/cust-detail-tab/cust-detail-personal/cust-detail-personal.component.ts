@@ -83,7 +83,7 @@ export class CustDetailPersonalComponent implements OnInit {
         });
       });
 
-      await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeNationality }).toPromise().then(
+      await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeNationality }).toPromise().then(
       (response) => {
         this.NationalityObj = response[CommonConstant.RefMasterObjs];
         this.CustDetailForm.patchValue({
@@ -91,7 +91,7 @@ export class CustDetailPersonalComponent implements OnInit {
         });
       });
 
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { GsCode: CommonConstant.GSCodeDefLocalNationality }).toPromise().then(
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeDefLocalNationality }).toPromise().then(
       (response) => {
         this.Country = response;
         this.lookupCountryObj.urlJson = "./assets/uclookup/lookupCustomerCountry.json";
@@ -108,7 +108,7 @@ export class CustDetailPersonalComponent implements OnInit {
         this.lookupCountryObj.addCritInput.push(criteriaObj);
         this.ChangeNationality(this.Country.GsValue)
 
-        this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: this.Country.GsValue }).subscribe(
+        this.http.post(URLConstant.GetRefCountryByCountryCode, { Code: this.Country.GsValue }).subscribe(
           (response) => {
             this.LocalCountry = response;
             this.lookupCountryObj.isReady = true;
@@ -182,7 +182,7 @@ export class CustDetailPersonalComponent implements OnInit {
         this.AppCustObj.RowVersion = response.AppCustObj.RowVersion;
         this.AppCustPersonalObj.RowVersion = response.AppCustPersonalObj.RowVersion;
         if (response.AppCustGrpObj != null && response.AppCustGrpObj.CustNo != "") {
-          this.http.post(URLConstant.GetCustByCustNo, { CustNo: response.AppCustGrpObj.CustNo }).subscribe(
+          this.http.post(URLConstant.GetCustByCustNo, { TrxNo: response.AppCustGrpObj.CustNo }).subscribe(
             (responseCustGrp) => {
               this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
               this.lookupCustGrpObj.jsonSelect = { CustName: responseCustGrp["CustName"]};
@@ -199,7 +199,7 @@ export class CustDetailPersonalComponent implements OnInit {
           
         if ((response.AppCustPersonalObj.MrNationalityCode != null && response.AppCustPersonalObj.MrNationalityCode != "" ) && response.AppCustPersonalObj.MrNationalityCode != CommonConstant.NationalityLocal) {
           this.isLocal = false;
-          this.http.post(URLConstant.GetRefCountryByCountryCode, { CountryCode: response.AppCustPersonalObj.NationalityCountryCode }).subscribe(
+          this.http.post(URLConstant.GetRefCountryByCountryCode, { Code: response.AppCustPersonalObj.NationalityCountryCode }).subscribe(
             (responseCountry) => {
               this.lookupCountryObj.nameSelect = responseCountry["CountryName"];
               this.lookupCountryObj.jsonSelect = { CountryName: responseCountry["CountryName"]};

@@ -8,6 +8,8 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { HttpClient } from '@angular/common/http';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-requisition-decision-paging',
@@ -20,7 +22,9 @@ export class RequisitionDecisionPagingComponent implements OnInit {
   arrCrit: any;
   token: any = localStorage.getItem(CommonConstant.TOKEN);
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+    private toastr: NGXToastrService,
+    private http: HttpClient) { }
 
   makeCriteria() {
     var critObj = new CriteriaObj();
@@ -51,11 +55,45 @@ export class RequisitionDecisionPagingComponent implements OnInit {
   }
 
   getCallBack(event: any) {
-    if (event.Key == "ProdOffering") {
+    if (event.Key === "ProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.RowObj.ProdOfferingCode, event.RowObj.ProdOfferingVersion);
     }
-    if (event.Key == "Edit") {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.REQUISITION_DECISION_DETAIL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+    if (event.Key === "Edit") {
+      this.http.post(URLConstant.IsSecurityDepositExist, {Id : event.RowObj.AppId}).subscribe(
+        (response) => {
+          if(response[CommonConstant.Result] == "True")
+          {
+            this.http.post(URLConstant.CheckGoLivePayment, { AgrmntNo: event.RowObj.AgrmntNo }).subscribe(
+              (response) => {
+                if(response["IsPaid"]) {
+                  AdInsHelper.RedirectUrl(this.router,[NavigationConstant.REQUISITION_DECISION_DETAIL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+                }
+                else {
+                  this.toastr.errorMessage("Security Deposit has not been paid yet!");
+                }
+              },
+              (error) => {
+                this.toastr.warningMessage("Agreement not found!");
+              }
+            );
+          }
+          else{
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.REQUISITION_DECISION_DETAIL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+          }
+        }
+      );
+      
     }
   }
+
+  GetAllAssetFinancialData(AppId : number) {
+    this.http.post(URLConstant.GetListAppAssetFinDataGridByAppId, {Id : AppId}).subscribe(
+      (response) => {
+        if (response["AppAssetFinDataGridObjs"].length > 0) {
+
+        }
+      }
+    );
+  }
+
 }

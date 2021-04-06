@@ -131,6 +131,7 @@ export class FinancialDataOplEditComponent implements OnInit {
           OperatingType: "PRCNT",
           CofPrincipal: this.AppFinDataRuleObj.CofPrincipalObj.CofPrincipalAmt
         });
+        this.ChangeOperatingType();
         if (this.AppFinDataRuleObj.ResultFinancialOplRule.MarginRateBhv == "LOCK") {
           this.FinancialDataForm.controls["OperatingMarginPrcnt"].disable();
           this.FinancialDataForm.controls["OperatingType"].disable();
@@ -322,13 +323,17 @@ export class FinancialDataOplEditComponent implements OnInit {
             }
             else {
               this.FinancialDataForm.patchValue({
-                CustomerPaidAtCostAmt: this.CalculatedObj.RentAmt
+                CustomerPaidAtCostAmt: this.FinancialDataForm.controls.TotalFeeAmt.value + this.FinancialDataForm.controls.SecurityDepositAmt.value
               });
             }
           }
         );
       }
       else {
+        if (this.FinancialDataForm.controls.RentAmt.value < 1) {
+          this.toastr.warningMessage("Please Input Rental Amount More Than 0");
+          return;
+        }
         var CalculateObj = {
           AccessoriesPriceAmt: this.FinancialDataForm.controls.TotalAccessoriesPriceAmt.value,
           InsuranceAmt: this.FinancialDataForm.controls.TotalInsuranceAtCostAmt.value,
@@ -518,7 +523,7 @@ export class FinancialDataOplEditComponent implements OnInit {
       TotalCostAmt: this.FinancialDataForm.controls.TotalOperatingCostAmt.value,
       MarginPrcnt: this.FinancialDataForm.controls.OperatingMarginPrcnt.value,
       MarginAmt: this.FinancialDataForm.controls.OperatingMarginAmt.value,
-      RentAmt: this.FinancialDataForm.controls.RentAmt.value,
+      RentAmt: this.FinancialDataForm.controls.RentAmt.value * 1.1,
       VatAmt: this.FinancialDataForm.controls.VatAmt.value,
       GrossYieldPrcnt: this.FinancialDataForm.controls.GrossYieldPrcnt.value
     };

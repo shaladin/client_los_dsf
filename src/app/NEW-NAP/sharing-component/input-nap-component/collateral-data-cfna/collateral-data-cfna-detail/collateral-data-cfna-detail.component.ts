@@ -833,7 +833,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.isUsed = false;
     }
 
-    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { AssetTypeCode: AssetTypeCode }).subscribe(
+    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: AssetTypeCode }).subscribe(
       (response: any) => {
         while (this.items.length) {
           this.items.removeAt(0);

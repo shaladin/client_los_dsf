@@ -20,6 +20,7 @@ export class AppCustCompanyObj {
     PhnExt2: string;
     Email1: string;
     Email2: string;
+    IsTaxable: boolean;
     RowVersion: any;
 constructor() { 
         this.AppCustCompanyId = 0;
@@ -42,5 +43,6 @@ constructor() {
         this.PhnExt2 = "";
         this.Email1 = "";
         this.Email2 = "";
+        this.IsTaxable = false;
     }
 }

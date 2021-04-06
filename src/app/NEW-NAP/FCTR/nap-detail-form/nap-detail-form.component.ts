@@ -15,13 +15,15 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
+import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
 
 @Component({
   selector: 'app-nap-detail-form',
   templateUrl: './nap-detail-form.component.html'
 })
 export class NapDetailFormComponent implements OnInit {
-  @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
+  @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
@@ -33,7 +35,8 @@ export class NapDetailFormComponent implements OnInit {
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
-
+  IsDataReady: boolean = false;
+  
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
   });
@@ -51,6 +54,7 @@ export class NapDetailFormComponent implements OnInit {
   isDmsReady: boolean = false;
   dmsObj: DMSObj;
   appNo: string;
+  SysConfigResultObj: ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING2;
   readonly BackLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
@@ -67,7 +71,12 @@ export class NapDetailFormComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() : Promise<void> {
+    //check DMS
+    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+      (response) => {
+        this.SysConfigResultObj = response;
+    });
 
     this.ClaimTask();
     this.AppStepIndex = 0;
@@ -93,14 +102,17 @@ export class NapDetailFormComponent implements OnInit {
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response: AppObj) => {
         if (response) {
+          this.NapObj = response;
           this.AppStepIndex = this.AppStep[response.AppCurrStep];
           this.stepper.to(this.AppStepIndex);
           if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
             this.initDms();
           }
+          this.IsDataReady = true;
         } else {
           this.AppStepIndex = 0;
           this.stepper.to(this.AppStepIndex);
+          this.IsDataReady = true;
         }
       }
     );
@@ -114,45 +126,45 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   async initDms() {
-    this.isDmsReady = false;
-    this.dmsObj = new DMSObj();
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.dmsObj.User = currentUserContext.UserName;
-    this.dmsObj.Role = currentUserContext.RoleCode;
-    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    var appObj = { Id: this.appId };
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj);
-    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
-    forkJoin([getApp, getAppCust]).subscribe(
-      response => {
-        this.appNo = response[0]['AppNo'];
-        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
-        let isExisting = response[1]['IsExistingCust'];
-        if (isExisting) {
-          let custNo = response[1]['CustNo'];
-          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
+    if(this.SysConfigResultObj.ConfigValue == '1'){
+      this.isDmsReady = false;
+      this.dmsObj = new DMSObj();
+      let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+      this.dmsObj.User = currentUserContext.UserName;
+      this.dmsObj.Role = currentUserContext.RoleCode;
+      this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+      var appObj = { Id: this.appId };
+      this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
+        response => {
+          this.appNo = this.NapObj.AppNo;
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+          let isExisting = response['IsExistingCust'];
+          if (isExisting) {
+            let custNo = response['CustNo'];
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, custNo));
+          }
+          else {
+            this.dmsObj.MetadataParent = null;
+          }
+  
+          let mouId = this.NapObj.MouCustId;
+          if (mouId != null && mouId != 0) {
+            let mouObj = { Id: mouId };
+            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+              result => {
+                let mouCustNo = result['MouCustNo'];
+                this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+                this.isDmsReady = true;
+              }
+            )
+          }
+          else {
+            this.isDmsReady = true;
+          }
         }
-        else {
-          this.dmsObj.MetadataParent = null;
-        }
-
-        let mouId = response[0]['MouCustId'];
-        if (mouId != null && mouId != "") {
-          let mouObj = { Id: mouId };
-          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-            result => {
-              let mouCustNo = result['MouCustNo'];
-              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
-              this.isDmsReady = true;
-            }
-          )
-        }
-        else {
-          this.isDmsReady = true;
-        }
-      }
-    );
+      );
+    }  
   }
 
   Cancel() {
@@ -218,7 +230,7 @@ export class NapDetailFormComponent implements OnInit {
       default:
         break;
     }
-    this.ucViewMainProd.initiateForm();
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   NextStep(Step) {
@@ -232,8 +244,17 @@ export class NapDetailFormComponent implements OnInit {
         this.stepper.next();
       }
     )
-    this.ucViewMainProd.initiateForm();
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
+
+  CheckIsUseDms(){
+    if(this.SysConfigResultObj.ConfigValue == '1'){
+      this.NextStep(CommonConstant.AppStepUplDoc);
+    }else{
+      this.LastStepHandler();
+    }
+  }
+  
   LastStepHandler() {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
@@ -266,9 +287,5 @@ export class NapDetailFormComponent implements OnInit {
       () => {
 
       });
-  }
-
-  GetCallback(ev) {
-    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
   }
 }

@@ -109,7 +109,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
     this.InputLookupCustomerObj.isReadonly = true;
 
     var custObj = { CustId: event.CustId };
-    this.http.post(URLConstant.GetCustPersonalForCopyByCustId, custObj).subscribe(
+    this.http.post(URLConstant.GetCustPersonalForCopyByCustId, {Id : event.CustId}).subscribe(
       (response) => {
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);
@@ -193,7 +193,7 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   setCountryName(countryCode) {
     this.countryObj.CountryCode = countryCode;
 
-    this.http.post(this.getCountryUrl, this.countryObj).subscribe(
+    this.http.post(this.getCountryUrl, {Code: countryCode}).subscribe(
       (response) => {
         this.InputLookupCountryObj.nameSelect = response["CountryName"];
         this.InputLookupCountryObj.jsonSelect = response;

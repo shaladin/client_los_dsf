@@ -15,7 +15,6 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { CustomPatternObj } from 'app/shared/model/LibraryObj/CustomPatternObj.model';
 
 @Component({
   selector: 'app-cust-company-main-data',
@@ -96,8 +95,7 @@ export class CustCompanyMainDataComponent implements OnInit {
     });
     this.InputLookupCustomerObj.isReadonly = true;
 
-    var custObj = { CustId: event.CustId };
-    this.http.post(URLConstant.GetCustCompanyForCopyByCustId, custObj).subscribe(
+    this.http.post(URLConstant.GetCustCompanyForCopyByCustId, {Id : event.CustId}).subscribe(
       (response) => {
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);
@@ -153,7 +151,7 @@ export class CustCompanyMainDataComponent implements OnInit {
   setIndustryTypeName(industryTypeCode) {
     this.refIndustryObj.IndustryTypeCode = industryTypeCode;
 
-    this.http.post(URLConstant.GetRefIndustryTypeByCode, this.refIndustryObj).subscribe(
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, {Code: industryTypeCode}).subscribe(
       (response) => {
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
         this.InputLookupIndustryTypeObj.jsonSelect = response;

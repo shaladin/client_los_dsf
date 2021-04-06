@@ -18,6 +18,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
 
 @Component({
   selector: 'app-credit-approval-detail',
@@ -46,6 +47,8 @@ export class CreditApprovalDetailComponent implements OnInit {
   rootServer: string;
   isDmsReady: boolean = false;
   IsUseDigitalization: string;
+  IsViewReady: boolean = false;
+  SysConfigResultObj: ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
 
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private cookieService: CookieService) {
@@ -77,6 +80,7 @@ export class CreditApprovalDetailComponent implements OnInit {
   }
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+    this.IsViewReady = true;
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
     await this.getApp();
     this.initInputApprovalObj();
@@ -85,43 +89,49 @@ export class CreditApprovalDetailComponent implements OnInit {
   }
 
   async InitDms() {
-    this.isDmsReady = false;
-    this.dmsObj = new DMSObj();
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.dmsObj.User = currentUserContext.UserName;
-    this.dmsObj.Role = currentUserContext.RoleCode;
-    this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-    var appObj = { Id: this.appId };
-
-    let getApp = await this.http.post(URLConstant.GetAppById, appObj)
-    let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
-    forkJoin([getApp, getAppCust]).subscribe(
+    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
-        this.appNo = response[0]['AppNo'];
-        this.custNo = response[1]['CustNo'];
-        if (this.custNo != null && this.custNo != '') {
-          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+        this.SysConfigResultObj = response;
+    });
+    if(this.SysConfigResultObj.ConfigValue == '1'){
+      this.isDmsReady = false;
+      this.dmsObj = new DMSObj();
+      let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+      this.dmsObj.User = currentUserContext.UserName;
+      this.dmsObj.Role = currentUserContext.RoleCode;
+      this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
+      var appObj = { Id: this.appId };
+  
+      let getApp = await this.http.post(URLConstant.GetAppById, appObj)
+      let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+      forkJoin([getApp, getAppCust]).subscribe(
+        (response) => {
+          this.appNo = response[0]['AppNo'];
+          this.custNo = response[1]['CustNo'];
+          if (this.custNo != null && this.custNo != '') {
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+          }
+          else {
+            this.dmsObj.MetadataParent = null;
+          }
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
+          let mouCustId = response[0]['MouCustId'];
+          if (mouCustId != null && mouCustId != '') {
+            var mouObj = { Id: mouCustId };
+            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+              (response) => {
+                let mouCustNo = response['MouCustNo'];
+                this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+                this.isDmsReady = true;
+              });
+          }
+          else {
+            this.isDmsReady = true;
+          }
         }
-        else {
-          this.dmsObj.MetadataParent = null;
-        }
-        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
-        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
-        let mouCustId = response[0]['MouCustId'];
-        if (mouCustId != null && mouCustId != '') {
-          var mouObj = { Id: mouCustId };
-          this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-            (response) => {
-              let mouCustNo = response['MouCustNo'];
-              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
-              this.isDmsReady = true;
-            });
-        }
-        else {
-          this.isDmsReady = true;
-        }
-      }
-    );
+      );
+    }  
   }
 
 
@@ -216,7 +226,7 @@ export class CreditApprovalDetailComponent implements OnInit {
   async GetIsUseDigitalization() {
     var generalSettingObj = new GeneralSettingObj();
     generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
-    await this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).toPromise().then(
+    await this.http.post(URLConstant.GetGeneralSettingByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).toPromise().then(
       (response) => {
         this.IsUseDigitalization = response["GsValue"];
       }

@@ -86,7 +86,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         this.SubjectResponse = response;
       });
 
-    await this.http.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { StatusGrpCode: CommonConstant.StatusGrpVerfResultStat }).toPromise().then(
+    await this.http.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { Code: CommonConstant.StatusGrpVerfResultStat }).toPromise().then(
       (response) => {
         this.RefStatusList = response[CommonConstant.ReturnObj];
         this.CustConfirm.patchValue({
@@ -128,7 +128,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         }
       });
 
-    await this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, { VerfResultHId: this.VerfResultHId }).toPromise().then(
+    await this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, { Id: this.VerfResultHId }).toPromise().then(
       async (response) => {
         this.newVerfResultHObj.VerfResultId = response.VerfResultId;
         this.newVerfResultHObj.VerfSchemeHId = response.VerfSchemeHId;
@@ -356,7 +356,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     }
     else if (key == "cust") {
       var custObj = { CustNo: this.CustNo };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, {TrxNo : this.CustNo}).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         });

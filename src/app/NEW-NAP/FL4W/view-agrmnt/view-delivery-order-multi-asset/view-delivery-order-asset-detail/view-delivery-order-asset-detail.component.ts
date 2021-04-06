@@ -25,7 +25,7 @@ export class ViewDeliveryOrderAssetDetailComponent implements OnInit {
     this.http.post(this.GetAllAssetDataByAppAssetId, assetObj).subscribe((response) => { 
       this.assetData = response;
 
-      this.http.post(URLConstant.GetAssetTypeByCode, { AssetTypeCode: this.assetData.ResponseAppCollateralObj.AssetTypeCode }).subscribe(
+      this.http.post(URLConstant.GetAssetTypeByCode, {Code: this.assetData.ResponseAppCollateralObj.AssetTypeCode }).subscribe(
         (response: any) => {
           this.AssetTypeObj = response;
         }

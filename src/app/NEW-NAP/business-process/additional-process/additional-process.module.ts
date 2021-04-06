@@ -44,6 +44,10 @@ import { ReturnHandlingEditCustPagingComponent } from './return-handling/return-
 import { ReturnHandlingInvoicePagingComponent } from './return-handling/return-handling-invoice-paging/return-handling-invoice-paging.component';
 import { ReturnHandlingInvoiceDetailComponent } from './return-handling/return-handling-invoice-detail/return-handling-invoice-detail.component';
 import { AdminProcessSharingModule } from "../admin-process/admin-process.module";
+import { AppCancelDetailComponent } from "./app-cancel/detail/app-cancel-detail.component";
+import { AppAssetCancelDetailComponent } from "./app-asset-cancel/detail/app-asset-cancel-detail.component";
+import { AppCancelPagingComponent } from "./app-cancel/paging/app-cancel-paging.component";
+import { AppAssetCancelPagingComponent } from "./app-asset-cancel/paging/app-asset-cancel-paging.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -106,6 +110,10 @@ export const customCurrencyMaskConfig = {
     ReturnHandlingEditCustPagingComponent,
     ReturnHandlingInvoicePagingComponent,
     ReturnHandlingInvoiceDetailComponent,
+    AppCancelPagingComponent,
+    AppCancelDetailComponent,
+    AppAssetCancelPagingComponent,
+    AppAssetCancelDetailComponent
   ],
   providers: [
     NGXToastrService

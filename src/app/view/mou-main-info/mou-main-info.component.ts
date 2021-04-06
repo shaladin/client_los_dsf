@@ -51,7 +51,7 @@ export class MouMainInfoComponent implements OnInit {
       if (!this.MouCustObj.IsExistingCust) {
         AdInsHelper.OpenMOUCustViewByMouCustId(this.MouCustId);
       } else {
-        this.http.post(URLConstant.GetCustByCustNo, { CustNo: this.MouCustObj.CustNo }).subscribe(
+        this.http.post(URLConstant.GetCustByCustNo, { TrxNo: this.MouCustObj.CustNo }).subscribe(
           responseCust => {
             AdInsHelper.OpenCustomerViewByCustId(responseCust["CustId"]);
           });

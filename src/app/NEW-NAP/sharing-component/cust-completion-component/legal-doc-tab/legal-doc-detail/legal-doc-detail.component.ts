@@ -11,6 +11,7 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { UcDropdownListCallbackObj, UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 
 @Component({
   selector: 'app-legal-doc-detail',
@@ -24,9 +25,12 @@ export class LegalDocDetailComponent implements OnInit {
   @Input() AppCustCompanyLegalDoc: AppCustCompanyLegalDocObj;
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
   IsExpDateMandatory: boolean;
-  BusinessDt: Date;
+  MinBusinessDt: Date;
+  MaxBusinessDt: Date;
   UserAccess: Object;
   LegalDocTypeObj: Array<KeyValueObj> = new Array();
+  ddlMrLegalDocTypeObj: UcDropdownListObj = new UcDropdownListObj();
+  isDdlMrLegalDocTypeReady: boolean = false;
   AppCustCompanyLegalDocObj: AppCustCompanyLegalDocObj = new AppCustCompanyLegalDocObj();
   datePipe = new DatePipe("en-US");
 
@@ -50,8 +54,12 @@ export class LegalDocDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ddlMrLegalDocTypeObj.isSelectOutput = true;
+    this.ddlMrLegalDocTypeObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.BusinessDt = this.UserAccess[CommonConstant.BUSINESS_DT];
+    this.MaxBusinessDt = new Date(this.UserAccess[CommonConstant.BUSINESS_DT]);
+    this.MinBusinessDt = new Date(this.UserAccess[CommonConstant.BUSINESS_DT]);
+    this.MinBusinessDt.setDate(this.MinBusinessDt.getDate() + 1);
 
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeLegalDocType }).subscribe(
       (response) => {
@@ -60,6 +68,7 @@ export class LegalDocDetailComponent implements OnInit {
           MrLegalDocTypeCode: this.LegalDocTypeObj[0].Key
         });
 
+        var temp = new UcDropdownListCallbackObj();
         if (this.AppCustCompanyLegalDoc.AppCustCompanyLegalDocId != 0) {
           this.LegalDocForm.patchValue({
             AppCustCompanyLegalDocId: this.AppCustCompanyLegalDoc.AppCustCompanyLegalDocId,
@@ -73,7 +82,8 @@ export class LegalDocDetailComponent implements OnInit {
             DocNotes: this.AppCustCompanyLegalDoc.DocNotes,
             RowVersion: this.AppCustCompanyLegalDoc.RowVersion
           })
-          this.ChangeLegalDocType({ selectedIndex: 0 }, true);
+          temp.selectedValue = this.LegalDocTypeObj[0].Key;
+          this.ChangeLegalDocType(this.LegalDocTypeObj[0].Key, true);
           this.LegalDocForm.controls.MrLegalDocTypeCode.disable();
           this.LegalDocForm.updateValueAndValidity();
         } else {
@@ -89,15 +99,15 @@ export class LegalDocDetailComponent implements OnInit {
             DocNotes: [''],
             RowVersion: ['']
           })
-          this.ChangeLegalDocType({ selectedIndex: 0 });
+          this.ChangeLegalDocType(this.LegalDocTypeObj[0].Key);
         }
+        this.isDdlMrLegalDocTypeReady = true;
       }
     );
   }
 
-  ChangeLegalDocType(ev, ForEdit: boolean = false) {
-    var idx = ev.selectedIndex;
-    this.http.post(URLConstant.GetDocIsExpDtMandatory, { Code: this.LegalDocTypeObj[idx].Key }).subscribe(
+  ChangeLegalDocType(ev : string, ForEdit: boolean = false) {
+    this.http.post(URLConstant.GetDocIsExpDtMandatory, { Code: ev }).subscribe(
       (response) => {
         this.IsExpDateMandatory = response["IsExpDtMandatory"];
         if (!ForEdit) {
@@ -124,8 +134,8 @@ export class LegalDocDetailComponent implements OnInit {
   }
 
   SaveForm() {
-    if( this.datePipe.transform(this.LegalDocForm.controls.DocDt.value, "yyyy-MM-dd") > this.datePipe.transform(this.BusinessDt, "yyyy-MM-dd") ){
-      this.toastr.warningMessage(ExceptionConstant.ISSUED_DATE_CANNOT_MORE_THAN + this.datePipe.transform(this.BusinessDt, 'MMMM d, y'));
+    if( this.datePipe.transform(this.LegalDocForm.controls.DocDt.value, "yyyy-MM-dd") > this.datePipe.transform(this.MaxBusinessDt, "yyyy-MM-dd") ){
+      this.toastr.warningMessage(ExceptionConstant.ISSUED_DATE_CANNOT_MORE_THAN + this.datePipe.transform(this.MaxBusinessDt, 'MMMM d, y'));
       return;
    } 
 

@@ -11,7 +11,6 @@ import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
@@ -46,13 +45,14 @@ export class NapDetailFormComponent implements OnInit {
   isReady:boolean = false;
 
   AppStep = {
+    "CMPLTN":1,
     "NAPD": 1,
     "APP": 1,
     "ASSET": 2,
     "AEX": 3,
     "FIN": 4,
     "TC": 5,
-    "UPD": 6
+    "UPL_DOC": 6
   };
 
   ResponseReturnInfoObj: ReturnHandlingDObj;
@@ -86,6 +86,7 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("TEST");
     this.ClaimTask();
     this.AppStepIndex = 1;
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapDetailMainData.json";
@@ -188,13 +189,14 @@ export class NapDetailFormComponent implements OnInit {
       document.getElementById('stepperPersonal').style.display = 'block';
       document.getElementById('stepperCompany').style.display = 'none';
       this.AppStep = {
+        "CMPLTN":1,
         "NAPD": 1,
         "APP": 1,
         "ASSET": 2,
         "AEX": 3,
         "FIN": 4,
         "TC": 5,
-        "UPD": 6
+        "UPL_DOC": 6
       };
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
@@ -205,13 +207,14 @@ export class NapDetailFormComponent implements OnInit {
       document.getElementById('stepperPersonal').style.display = 'none';
       document.getElementById('stepperCompany').style.display = 'block';
       this.AppStep = {
+        "CMPLTN":1,
         "NAPD": 1,
         "APP": 1,
         "ASSET": 2,
         "AEX": 3,
         "FIN": 4,
         "TC": 5,
-        "UPD": 6
+        "UPL_DOC": 6
       };
     }
   }
@@ -260,13 +263,14 @@ export class NapDetailFormComponent implements OnInit {
   ChangeTab(AppStep) {
     this.IsSavedTC = false;
     this.AppStep = {
+      "CMPLTN":1,
       "NAPD": 1,
       "APP": 1,
       "ASSET": 2,
       "AEX": 3,
       "FIN": 4,
       "TC": 5,
-      "UPD": 6
+      "UPL_DOC": 6
     };
     switch (AppStep) {
       case CommonConstant.AppStepApp:
