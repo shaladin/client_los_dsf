@@ -1,7 +1,7 @@
 {
-    "title": "REPORT RENTAL SUMmARY MARKETING",
-    "reportName": "RENTAL SUMMARY MARKETING REPORT",
-    "reportTemplateName": "RentalSumaryMarketing.rdlc",
+    "title": "Report Rental Summary Marketing",
+    "reportName": "Rental Summary Marketing Report",
+    "reportTemplateName": "RENTAL_SUMMARY_MARKETING",
     "component": [
       {
         "type": "dropdown",
@@ -16,8 +16,7 @@
         "itemsUrl": [],
         "criteriaPropName": "",
         "criteriaPropValue": "",
-        "isReportParam": false,
-        "isProviderParam": true
+        "paramAssignment": 1
       },
       {
         "type": "datepicker",
@@ -26,8 +25,7 @@
         "datatype": "date",
         "value": "BD-10",
         "restriction": "gte",
-        "isReportParam": true,
-        "isProviderParam": true
+        "paramAssignment": 0
       },
       {
         "type": "datepicker",
@@ -36,8 +34,7 @@
         "datatype": "date",
         "value": "BD+10",
         "restriction": "lte",
-        "isReportParam": true,
-        "isProviderParam": true
+        "paramAssignment": 0
       }
     ],
     "exportTypeList": [

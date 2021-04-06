@@ -1,7 +1,7 @@
 {
-    "title": "APPLICATION PENDING REPORT",
+    "title": "Application Pending Report",
     "reportName": "Application Pending",
-    "reportTemplateName": "ApplicationPending.rdlc",
+    "reportTemplateName": "APPLICATION_PENDING",
     "component": [
         {
             "type": "dropdown",
@@ -16,8 +16,7 @@
             "itemsUrl": [],
             "criteriaPropName": "",
             "criteriaPropValue": "",
-            "isReportParam": false,
-            "isProviderParam": true
+            "paramAssignment": 1
         },
         {
             "type": "dropdown",
@@ -37,8 +36,7 @@
             "itemsUrl": [],
             "criteriaPropName": "",
             "criteriaPropValue": "",
-            "isReportParam": false,
-            "isProviderParam": true
+            "paramAssignment": 1
         },
         {
             "type": "dropdown",
@@ -53,8 +51,7 @@
             "itemsUrl": [],
             "criteriaPropName": "statusGrpCode",
             "criteriaPropValue": "APP_STEP",
-            "isReportParam": false,
-            "isProviderParam": true
+            "paramAssignment": 1
         }
     ],
     "exportTypeList": [
