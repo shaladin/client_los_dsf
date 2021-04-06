@@ -83,21 +83,21 @@ export class ViewAssetDataComponent implements OnInit {
   async GetListAllAssetData() {
     await this.http.post(URLConstant.GetListAllAssetDataByAppId, this.appObj).toPromise().then(
       (response) => {
-        this.AppAssetObj = response["ReturnObject"];
+        this.AppAssetObj = response[CommonConstant.ReturnObj];
 
-        if (this.AppAssetObj != null) {
+        if (this.AppAssetObj.length > 0) {
           for(let i = 0; i < this.AppAssetObj.length; i++) {
             this.allAssetDataObj = new AllAssetDataObj();
 
-            this.allAssetDataObj.AppAssetObj.AppAssetId = this.AppAssetObj.ResponseAppAssetObj.AppAssetId;
-            this.allAssetDataObj.AppAssetObj.AppId = this.AppAssetObj.ResponseAppAssetObj.AppId;
-            this.allAssetDataObj.AppAssetObj.AssetSeqNo = this.AppAssetObj.ResponseAppAssetObj.AssetSeqNo;
-            this.allAssetDataObj.AppAssetObj.AppAssetNo = this.AppAssetObj.ResponseAssetDataOplObj.AppAssetNo;
-            this.allAssetDataObj.AppAssetObj.FullAssetName = this.AppAssetObj.ResponseAppAssetObj.FullAssetName;
-            this.allAssetDataObj.AppAssetObj.Color = this.AppAssetObj.ResponseAppAssetObj.Color;
-            this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.AppAssetObj.ResponseAppAssetObj.MrAssetConditionCode;
-            this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.AppAssetObj.ResponseAssetDataOplObj.AssetPriceBefDiscAmt;
-            this.allAssetDataObj.AppAssetObj.Discount = this.AppAssetObj.ResponseAssetDataOplObj.DiscountAmt;
+            this.allAssetDataObj.AppAssetObj.AppAssetId = this.AppAssetObj[i].ResponseAppAssetObj.AppAssetId;
+            this.allAssetDataObj.AppAssetObj.AppId = this.AppAssetObj[i].ResponseAppAssetObj.AppId;
+            this.allAssetDataObj.AppAssetObj.AssetSeqNo = this.AppAssetObj[i].ResponseAppAssetObj.AssetSeqNo;
+            this.allAssetDataObj.AppAssetObj.AppAssetNo = this.AppAssetObj[i].ResponseAssetDataOplObj.AppAssetNo;
+            this.allAssetDataObj.AppAssetObj.FullAssetName = this.AppAssetObj[i].ResponseAppAssetObj.FullAssetName;
+            this.allAssetDataObj.AppAssetObj.Color = this.AppAssetObj[i].ResponseAppAssetObj.Color;
+            this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.AppAssetObj[i].ResponseAppAssetObj.MrAssetConditionCode;
+            this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.AppAssetObj[i].ResponseAssetDataOplObj.AssetPriceBefDiscAmt;
+            this.allAssetDataObj.AppAssetObj.Discount = this.AppAssetObj[i].ResponseAssetDataOplObj.DiscountAmt;
 
             this.listAsset.push(this.allAssetDataObj);
           }

@@ -307,10 +307,7 @@
                   </a>
                 </td>
                 <td class="text-left">
-                  <a [routerLink]="['/View/AppAsset']" target="_blank"
-                    [queryParams]="{ AppId: AppId, AppAssetId: item.AppAssetObj.AppAssetId }">
-                    {{item.AppAssetObj.FullAssetName}} - {{item.AppAssetObj.Color}} - {{item.AppAssetObj.MrAssetConditionCode}}
-                  </a>
+                  {{item.AppAssetObj.FullAssetName}} - {{item.AppAssetObj.Color}} - {{item.AppAssetObj.MrAssetConditionCode}}
                 </td>
                 <td class="text-right">{{item.AppAssetObj.AssetPriceAmt | number:'.2':'en-US'}}</td>
                 <td class="text-right">{{item.AppAssetObj.Discount | number:'.2':'en-US'}}</td>
