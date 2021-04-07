@@ -462,21 +462,21 @@ export class FormCommissionGenerateComponent implements OnInit {
     this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj);
     this.SetRule(code, indexFormObj, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
     
-    for (var i = 0; i < appCommObj.AppCommissionD.length; i++) {
-      let idxFromRuleObj = temp.findIndex(x => x.AllocationFrom == appCommObj.AppCommissionD[i].MrCommissionSourceCode);
+    for (var i = 0; i < appCommObj.AppCommissionDs.length; i++) {
+      let idxFromRuleObj = temp.findIndex(x => x.AllocationFrom == appCommObj.AppCommissionDs[i].MrCommissionSourceCode);
       if (idxFromRuleObj >= 0) {
         var allocAmt = 0;
         if (this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["value"][idxFromRuleObj].AllocationBehaviour != "LOCK") {
-          allocAmt = appCommObj.AppCommissionD[i].CommissionAmt;
+          allocAmt = appCommObj.AppCommissionDs[i].CommissionAmt;
         }
         this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"][idxFromRuleObj].patchValue({
-          AppCommissionDId: appCommObj.AppCommissionD[i].AppCommissionDId,
-          AppCommissionHId: appCommObj.AppCommissionD[i].AppCommissionHId,
+          AppCommissionDId: appCommObj.AppCommissionDs[i].AppCommissionDId,
+          AppCommissionHId: appCommObj.AppCommissionDs[i].AppCommissionHId,
           AllocationAmount: allocAmt,
-          TaxAmt: appCommObj.AppCommissionD[i].TaxAmt,
-          VatAmt: appCommObj.AppCommissionD[i].VatAmt,
-          PenaltyAmt: appCommObj.AppCommissionD[i].PenaltyAmt,
-          RowVersion: appCommObj.AppCommissionD[i].RowVersion,
+          TaxAmt: appCommObj.AppCommissionDs[i].TaxAmt,
+          VatAmt: appCommObj.AppCommissionDs[i].VatAmt,
+          PenaltyAmt: appCommObj.AppCommissionDs[i].PenaltyAmt,
+          RowVersion: appCommObj.AppCommissionDs[i].RowVersion,
         })
       } 
     }

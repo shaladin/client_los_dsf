@@ -131,6 +131,7 @@ export class CommonConstant {
   public static AppStepCustCmpltn = "CMPLTN";
   public static FL4W = "FL4W";
   public static CF4W = "CF4W";
+  public static CF2W = "CF2W";
   public static FCTR = "FCTR";
   public static CFRFN4W = "CFRFN4W";
   public static CFRFN = "CFRFN";
