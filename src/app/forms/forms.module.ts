@@ -24,6 +24,7 @@ import { SharingComponentModule } from 'app/shared/sharingcomponent.module';
 import { ReportComponent } from './report/report.component';
 import { AdInsModule } from 'app/components/adins-module/adins.module';
 import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
@@ -36,6 +37,7 @@ import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
         NgbModule,
         SharingComponentModule,
         AdInsModule,
+        TranslateModule
     ],
     declarations: [
         ValidationFormsComponent,

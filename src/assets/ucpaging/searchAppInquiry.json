@@ -90,7 +90,7 @@
       "label": "Application Status",
       "items": [],
       "itemsUrl": [],
-      "criteriaPropName": "StatusGrpCode",
+      "criteriaPropName": "Code",
       "criteriaPropValue": "APP_STAT"
     },
     {
@@ -107,7 +107,7 @@
       "label": "Current Application Step",
       "items": [],
       "itemsUrl": [],
-      "criteriaPropName": "StatusGrpCode",
+      "criteriaPropName": "Code",
       "criteriaPropValue": "APP_STEP"
     },
     {
@@ -124,7 +124,7 @@
       "label": "Contract Status",
       "items": [],
       "itemsUrl": [],
-      "criteriaPropName": "StatusGrpCode",
+      "criteriaPropName": "Code",
       "criteriaPropValue": "APP_STAT"
     }
   ],

@@ -84,7 +84,7 @@
             "url": "",
             "path":"/RefStatus/GetListKeyValueActiveGrpCodeByCode",
             "label": "Lead Step",
-            "criteriaPropName": "StatusGrpCode",
+            "criteriaPropName": "Code",
             "criteriaPropValue": "LEAD_STEP",
             "items": [],
             "itemsUrl": []
@@ -101,7 +101,7 @@
             "url": "",
             "path":"/RefStatus/GetListKeyValueActiveGrpCodeByCode",
             "label": "Lead Status",
-            "criteriaPropName": "StatusGrpCode",
+            "criteriaPropName": "Code",
             "criteriaPropValue": "LEAD_STAT",
             "items": [],
             "itemsUrl": []

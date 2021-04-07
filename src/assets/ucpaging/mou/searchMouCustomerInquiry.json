@@ -109,7 +109,7 @@
             "label": "Mou Status",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName": "StatusGrpCode",
+            "criteriaPropName": "Code",
             "criteriaPropValue": "MOUC_STAT"
         }
     ],

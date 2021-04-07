@@ -47,6 +47,14 @@ const routes: Routes = [
                 loadChildren: './app-asset-view/app-asset-view.module#AppAssetViewModule'
             },
             {
+                path: PathConstant.VIEW_OFFERING,
+                loadChildren: './prod-offering-view/prod-offering-view.module#ProdOfferingViewModule'
+            },
+            {
+                path: PathConstant.VIEW_PRODUCT_HO,
+                loadChildren: './prod-ho-view/prod-ho-view.module#ProdHoViewModule'
+            },
+            {
                 path: PathConstant.VIEW_APP_LIST,
                 loadChildren: './app-list-view/app-list-view.module#AppListViewModule'
             }

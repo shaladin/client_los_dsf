@@ -43,15 +43,12 @@
                 <td>{{item.AssetSeqNo}}</td>
                 <td>
                   <a [routerLink]="['/View/AppAsset']" target="_blank"
-                    [queryParams]="{ AppId: AppId, AppAssetId: item.AppAssetObj.AppAssetId }">
+                    [queryParams]="{ AppId: AppId, AppAssetId: item.AppAssetId }">
                     {{item.AppAssetNo}}
                   </a>
                 </td>
                 <td class="text-left">
-                  <a [routerLink]="['/View/AppAsset']" target="_blank"
-                    [queryParams]="{ AppId: AppId, AppAssetId: item.AppAssetObj.AppAssetId }">
-                    {{item.AssetName}} - {{item.Color}} - {{item.AssetCondition}}
-                  </a>
+                  {{item.AssetName}} - {{item.Color}} - {{item.AssetCondition}}
                 </td>
                 <td class="text-right">{{item.TotalInsuranceAmt | number:'.2':'en-US'}}</td>
                 <td class="text-right">{{item.TotalMaintenanceAmt | number:'.2':'en-US'}}</td>

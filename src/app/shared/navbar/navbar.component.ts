@@ -54,6 +54,7 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
 
     ngOnInit() {
         this.GetListNotifH();
+        localStorage.setItem('lang', 'en');
         // Object.defineProperty(WebSocket, 'OPEN', { value: 1, });
 
         // var _hubConnection = new HubConnectionBuilder()
@@ -146,6 +147,7 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
 
 
     ChangeLanguage(language: string) {
+        localStorage.setItem('lang', language);
         this.translate.use(language);
     }
 

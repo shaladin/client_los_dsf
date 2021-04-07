@@ -1,0 +1,97 @@
+<lib-ucviewgeneric [viewGenericObj]="viewGenericObj"> </lib-ucviewgeneric>
+<mat-tab-group mat-align-tabs="center">
+  <mat-tab label="GENERAL DATA">
+    <ng-template matTabContent>
+      <div class="card">
+        <div class="card-body px-3" *ngIf="IsLoaded">
+          <lib-ucSubsection [id]="'genId'" [title]="ProdCompGen.GroupName" [panel]="'gen'">
+          </lib-ucSubsection>
+          <div id="gen">
+            <div *ngFor="let item of ProdCompGen.Components">
+              <label class="col-md-4">{{item.ProdCompntName}}</label>
+              <label class="col-md-8">{{item.CompntValueDesc}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="PRODUCT COMPONENT">
+    <ng-template matTabContent>
+      <div class="card">
+        <div class="card-body px-3">
+          <div *ngFor=" let x of ProdCompNonGen">
+            <div *ngIf="x.Components != 0">
+              <lib-ucSubsection [id]="x.GroupName+'id'" [title]="x.GroupName" [panel]="x.GroupName">
+              </lib-ucSubsection>
+              <div id="{{x.GroupName}}">
+                <div *ngFor="let item of x.Components">
+                  <label class="col-md-3">{{item.ProdCompntName}}</label>
+                  <label class="col-md-4">{{item.CompntValueDesc}}</label>
+                  <span class="material-icons col-md-1 pointer" (click)="DownloadRule(item.CompntValue,item.CompntValueDesc)" *ngIf="x.GroupCode == 'RULE' || x.GroupCode == 'SCORE'">
+                    get_app
+                  </span>
+                  <label class="col-md-1" *ngIf="x.GroupCode != 'RULE' && x.GroupCode != 'SCORE'"> </label>
+                  <label class="col-md-4">{{item.MrProdBehaviourCode}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="OFFICE MEMBER">
+    <ng-template matTabContent>
+      <lib-ucSubsection [id]="'officembrId'" [title]="'Office Member'" [panel]="'officembr'">
+      </lib-ucSubsection>
+      <div id="officembr">
+        <table class="table table-responsive-md text-center table-hover">
+          <thead>
+            <tr class="table-header">
+              <th class="text-left">Office Code</th>
+              <th class="text-left">Office Name</th>
+              <th class="text-left">Area Name</th>
+              <th class="text-left">Allowed to Create Offering</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of ProdBranchMbr">
+              <td class="text-left">{{item.OfficeCode}}</td>
+              <td class="text-left">{{item.OfficeName}}</td>
+              <td class="text-left">{{item.AreaName}}</td>
+              <td class="text-left" *ngIf="item.IsAllowedCrt == 1">Yes</td>
+              <td class="text-left" *ngIf="item.IsAllowedCrt == 0">No</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-template>
+  </mat-tab>
+  <mat-tab label="PRODUCT VERSION">
+    <ng-template matTabContent>
+      <lib-ucSubsection [id]="'offerverId'" [title]="'Product Version'" [panel]="'offerver'">
+      </lib-ucSubsection>
+      <div id="offerver">
+        <table class="table table-responsive-md text-center table-hover">
+          <thead>
+            <tr class="table-header">
+              <th class="text-left">Prod Version</th>
+              <th class="text-left">Start Date</th>
+              <th class="text-left">End Date</th>
+              <th class="text-left">Product Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of ProdVersion">
+              <td class="text-left">{{item.ProdVersion}}</td>
+              <td class="text-left">{{item.StartDt | date}}</td>
+              <td class="text-left">{{item.EndDt | date}}</td>
+              <td class="text-left">{{item.Descr}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>
