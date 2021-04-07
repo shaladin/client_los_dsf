@@ -232,7 +232,7 @@ export class PathConstant {
     public static DOC_CHECK_LIST = "DocChecklist";
     public static DOC_CHECK_LIST_PAGING = PathConstant.DOC_CHECK_LIST + "/" + PathConstant.PAGING;
     public static DOC_CHECK_LIST_DETAIL = PathConstant.DOC_CHECK_LIST + "/" + PathConstant.DETAIL;
-    public static DOC_CHECK_LIST_REQ_APPRV = PathConstant.PGL + "/RequestApproval";
+    public static DOC_CHECK_LIST_REQ_APPRV = PathConstant.DOC_CHECK_LIST + "/RequestApproval";
     public static DOC_CHECK_LIST_APPRV = PathConstant.DOC_CHECK_LIST + "/" + PathConstant.APPRV;
     public static DOC_CHECK_LIST_APPRV_PAGING = PathConstant.DOC_CHECK_LIST_APPRV + "/" + PathConstant.PAGING;
     public static DOC_CHECK_LIST_APPRV_DETAIL = PathConstant.DOC_CHECK_LIST_APPRV + "/" + PathConstant.DETAIL;
