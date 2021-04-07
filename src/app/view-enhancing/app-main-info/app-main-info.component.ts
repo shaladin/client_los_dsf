@@ -6,13 +6,14 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-app-main-info',
   templateUrl: './app-main-info.component.html'
 })
 export class AppMainInfoComponent implements OnInit {
-  private viewGeneric : UcviewgenericComponent;
+  private viewGeneric: UcviewgenericComponent;
   whereValue = [];
   @ViewChild('viewGeneric') set content(content: UcviewgenericComponent) {
     if (content) { // initially setter gets called with undefined
@@ -23,9 +24,12 @@ export class AppMainInfoComponent implements OnInit {
   @Input() AppId: number;
   AppObj: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private translateService: TranslateService) { }
 
   ngOnInit() {
+    console.log("rey");
+    console.log(localStorage.getItem('lang'));
+    this.translateService.use(localStorage.getItem('lang') || 'en');
     this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.AppObj = response;
@@ -64,7 +68,7 @@ export class AppMainInfoComponent implements OnInit {
     );
   }
 
-  ReloadUcViewGeneric(){
+  ReloadUcViewGeneric() {
     this.viewGeneric.initiateForm();
   }
 

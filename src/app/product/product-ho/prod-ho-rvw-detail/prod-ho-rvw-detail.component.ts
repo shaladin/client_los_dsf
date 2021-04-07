@@ -8,7 +8,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
-import { UcapprovalcreateComponent } from '@adins/Ucapprovalcreate';
+import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 

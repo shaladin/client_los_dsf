@@ -10,7 +10,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
-import { UcapprovalcreateComponent } from '@adins/Ucapprovalcreate';
+import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ProdHDeactivateObj } from 'app/shared/model/Request/Product/ProdHDeactivateObj.model';
