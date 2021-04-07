@@ -603,13 +603,13 @@ export class ApplicationDataFL4WComponent implements OnInit {
     var tempListAppCrossObj = this.GetListAppCrossValue();
     var tempAppFindDataObj = this.GetAppFinDataValue();
     var obj = {
-      appObj: tempAppObj,
-      listAppCrossObj: tempListAppCrossObj,
-      appFinData: tempAppFindDataObj,
+      AppObj: tempAppObj,
+      ListAppCrossObj: tempListAppCrossObj,
+      AppFinData: tempAppFindDataObj,
       RowVersion: this.resultResponse.RowVersion
     };
 
-     obj['appCustMailingAddr'] = this.getMailingAddrForSave();
+     obj['AppCustMailingAddr'] = this.getMailingAddrForSave();
     this.http.post(URLConstant.EditAppAddAppCross, obj).subscribe(
       (response) => {
         this.outputTab.emit();

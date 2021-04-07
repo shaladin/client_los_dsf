@@ -575,62 +575,27 @@ export class ApplicationDataComponent implements OnInit {
   GetAppObjValue() {
     var temp = new NapAppModel();
     temp.AppId = this.resultResponse.AppId;
-    temp.MouCustId = this.NapAppModelForm.controls.MouCustId.value;
-    temp.LeadId = this.NapAppModelForm.controls.LeadId.value;
-    temp.AppNo = this.NapAppModelForm.controls.AppNo.value;
-    temp.OriOfficeCode = this.NapAppModelForm.controls.OriOfficeCode.value;
-    temp.OriOfficeName = this.NapAppModelForm.controls.OriOfficeName.value;
-    temp.CrtOfficeCode = this.NapAppModelForm.controls.CrtOfficeCode.value;
-    temp.CrtOfficeName = this.NapAppModelForm.controls.CrtOfficeName.value;
-    temp.ProdOfferingCode = this.NapAppModelForm.controls.ProdOfferingCode.value;
-    temp.ProdOfferingName = this.NapAppModelForm.controls.ProdOfferingName.value;
-    temp.ProdOfferingVersion = this.NapAppModelForm.controls.ProdOfferingVersion.value;
-    temp.AppCreatedDt = this.NapAppModelForm.controls.AppCreatedDt.value;
-    temp.AppStat = this.NapAppModelForm.controls.AppStat.value;
-    temp.AppCurrStep = this.NapAppModelForm.controls.AppCurrStep.value;
-    temp.AppLastStep = this.NapAppModelForm.controls.AppLastStep.value;
-    temp.CurrCode = this.NapAppModelForm.controls.CurrCode.value;
-    temp.LobCode = this.NapAppModelForm.controls.LobCode.value;
-    temp.RefProdTypeCode = this.NapAppModelForm.controls.RefProdTypeCode.value;
-    temp.Tenor = this.NapAppModelForm.controls.Tenor.value;
-    temp.NumOfInst = this.NapAppModelForm.controls.NumOfInst.value;
-    temp.PayFreqCode = this.NapAppModelForm.controls.PayFreqCode.value;
-    temp.MrFirstInstTypeCode = this.NapAppModelForm.controls.MrFirstInstTypeCode.value;
-    temp.NumOfAsset = this.NapAppModelForm.controls.NumOfAsset.value;
-    temp.MrLcCalcMethodCode = this.NapAppModelForm.controls.MrLcCalcMethodCode.value;
-    temp.LcInstRatePrml = this.NapAppModelForm.controls.LcInstRatePrml.value;
-    temp.LcInsRatePrml = this.NapAppModelForm.controls.LcInsRatePrml.value;
-    temp.MrAppSourceCode = this.NapAppModelForm.controls.MrAppSourceCode.value;
-    temp.MrWopCode = this.NapAppModelForm.controls.MrWopCode.value;
-    temp.SrvyOrderNo = this.NapAppModelForm.controls.SrvyOrderNo.value;
-    temp.ApvDt = this.NapAppModelForm.controls.ApvDt.value;
     temp.SalesHeadNo = this.NapAppModelForm.controls.SalesHeadNo.value;
     temp.SalesNotes = this.NapAppModelForm.controls.SalesNotes.value;
     temp.SalesOfficerNo = this.NapAppModelForm.controls.SalesOfficerNo.value;
-    temp.CreditAdminNo = this.NapAppModelForm.controls.CreditAdminNo.value;
-    temp.CreditAnalystNo = this.NapAppModelForm.controls.CreditAnalystNo.value;
-    temp.CreditRiskNo = this.NapAppModelForm.controls.CreditRiskNo.value;
-    temp.DataEntryNo = this.NapAppModelForm.controls.DataEntryNo.value;
-    temp.MrCustNotifyOptCode = this.NapAppModelForm.controls.MrCustNotifyOptCode.value;
-    temp.PreviousAppId = this.NapAppModelForm.controls.PreviousAppId.value;
-    temp.IsAppInitDone = this.NapAppModelForm.controls.IsAppInitDone.value;
-    temp.MrOrderInfoCode = this.NapAppModelForm.controls.MrOrderInfoCode.value;
-    temp.ApprovalStat = this.NapAppModelForm.controls.ApprovalStat.value;
-    temp.RsvField1 = this.NapAppModelForm.controls.RsvField1.value;
-    temp.RsvField2 = this.NapAppModelForm.controls.RsvField2.value;
-    temp.RsvField3 = this.NapAppModelForm.controls.RsvField3.value;
-    temp.RsvField4 = this.NapAppModelForm.controls.RsvField4.value;
-    temp.RsvField5 = this.NapAppModelForm.controls.RsvField5.value;
-    temp.RowVersion = this.resultResponse.RowVersion;
+    temp.MrAppSourceCode = this.NapAppModelForm.controls.MrAppSourceCode.value;
+    temp.MrFirstInstTypeCode = this.NapAppModelForm.controls.MrFirstInstTypeCode.value;
+    temp.PayFreqCode = this.NapAppModelForm.controls.PayFreqCode.value;
+    temp.Tenor = this.NapAppModelForm.controls.Tenor.value;
+    temp.NumOfInst = this.NapAppModelForm.controls.NumOfInst.value;
+    temp.MouCustId = this.NapAppModelForm.controls.MouCustId.value;
     temp.FloatingPeriodCode = this.NapAppModelForm.controls.FloatingPeriod.value;
+    temp.MrWopCode = this.NapAppModelForm.controls.MrWopCode.value;
+    temp.MrCustNotifyOptCode = this.NapAppModelForm.controls.MrCustNotifyOptCode.value;
+    temp.CharaCredit = this.NapAppModelForm.controls.CharaCredit.value;
+    temp.PrevAgrNo = this.NapAppModelForm.controls.PrevAgrNo.value;
+    temp.WayRestructure = this.NapAppModelForm.controls.WayRestructure.value;
     temp.MrSlikSecEcoCode = this.NapAppModelForm.controls.MrSlikSecEcoCode.value;
+    temp.RowVersion = this.resultResponse.RowVersion;
     if (this.BizTemplateCode == CommonConstant.OPL) {
       temp.ApplicationNotes = this.NapAppModelForm.controls.ApplicationNotes.value;
       temp.IsRos = true;
     }
-    temp.CharaCredit = this.NapAppModelForm.controls.CharaCredit.value;
-    temp.PrevAgrNo = this.NapAppModelForm.controls.PrevAgrNo.value;
-    temp.WayRestructure = this.NapAppModelForm.controls.WayRestructure.value;
     if (this.NapAppModelForm.controls.MouCustId.value == "null") {
       temp.MouCustId = "";
     }
@@ -697,15 +662,14 @@ export class ApplicationDataComponent implements OnInit {
             var tempAppObj = this.GetAppObjValue();
             var tempListAppCrossObj = this.GetListAppCrossValue();
             var tempAppFindDataObj = this.GetAppFinDataValue();
-            var url = URLConstant.EditAppAddAppCross;
             var obj = {
-              appObj: tempAppObj,
-              listAppCrossObj: tempListAppCrossObj,
-              appFinData: tempAppFindDataObj,
+              AppObj: tempAppObj,
+              ListAppCrossObj: tempListAppCrossObj,
+              AppFinData: tempAppFindDataObj,
               RowVersion: "",
             };
-            obj['appCustMailingAddr'] = this.getMailingAddrForSave();
-            this.http.post(url, obj).subscribe(
+            obj['AppCustMailingAddr'] = this.getMailingAddrForSave();
+            this.http.post(URLConstant.EditAppAddAppCross, obj).subscribe(
               (response) => {
                 this.toastr.successMessage('Save Application Data');
                 this.outputTab.emit();
@@ -721,16 +685,15 @@ export class ApplicationDataComponent implements OnInit {
       var tempAppObj = this.GetAppObjValue();
       var tempListAppCrossObj = this.GetListAppCrossValue();
       var tempAppFindDataObj = this.GetAppFinDataValue();
-      var url = URLConstant.EditAppAddAppCross;
       var obj = {
-        appObj: tempAppObj,
-        listAppCrossObj: tempListAppCrossObj,
-        appFinData: tempAppFindDataObj,
+        AppObj: tempAppObj,
+        ListAppCrossObj: tempListAppCrossObj,
+        AppFinData: tempAppFindDataObj,
         RowVersion: ""
       };
       if(this.BizTemplateCode != CommonConstant.OPL)
-        obj['appCustMailingAddr'] = this.getMailingAddrForSave();
-      this.http.post(url, obj).subscribe(
+        obj['AppCustMailingAddr'] = this.getMailingAddrForSave();
+      this.http.post(URLConstant.EditAppAddAppCross, obj).subscribe(
         (response) => {
           this.toastr.successMessage('Save Application Data Success!');
           this.outputTab.emit();

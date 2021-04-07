@@ -596,9 +596,9 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     var tempListAppCrossObj = this.GetListAppCrossValue();
     var tempAppFindDataObj = this.GetAppFinDataValue();
     var obj = {
-      appObj: tempAppObj,
-      listAppCrossObj: tempListAppCrossObj,
-      appFinData: tempAppFindDataObj,
+      AppObj: tempAppObj,
+      ListAppCrossObj: tempListAppCrossObj,
+      AppFinData: tempAppFindDataObj,
       RowVersion: ""
     };
 
