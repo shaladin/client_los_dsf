@@ -4,9 +4,9 @@ import { ListAppTCObj } from "../ListAppTCObj.Model";
 
 export class DocChecklist {
     TaskListId : any;
-    rAppTcObj: ListAppTCObj;
+    RListAppTcObj: ListAppTCObj;
 
     constructor() {
-      this.rAppTcObj = new ListAppTCObj();
+      this.RListAppTcObj = new ListAppTCObj();
     }
 }
