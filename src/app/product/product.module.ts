@@ -43,7 +43,7 @@ import { ProdOfferingDeactPagingComponent } from './product-offering/prod-offeri
 import { OfferingSearchOfficeComponent } from './product-offering/prod-offering-add-detail/offering-office-mbr/offering-search-office/offering-search-office.component';
 import { ArchwizardModule } from 'angular-archwizard';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { UcapprovalcreateModule } from '@adins/Ucapprovalcreate';
+import { UcapprovalcreateModule } from '@adins/ucapprovalcreate';
 import { UcapprovalR3Module } from '@adins/ucapproval-r3';
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
