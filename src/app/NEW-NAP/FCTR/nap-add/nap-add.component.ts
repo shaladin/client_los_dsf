@@ -15,6 +15,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { ReqAddNapFromCopyObj, ReqAddNapObj } from 'app/shared/model/Request/NAP/NewApplication/ReqAddNapObj.model';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-nap-add',
@@ -81,7 +84,7 @@ export class NapAddComponent implements OnInit {
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   constructor(private fb: FormBuilder, private router: Router,
-    private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) { }
+    private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     // Lookup Obj
@@ -198,24 +201,65 @@ export class NapAddComponent implements OnInit {
     return obj;
   }
 
-  SaveForm() {
-    var napAppObj = new NapAppModel();
-    napAppObj = this.NapAppForm.value;
-    napAppObj.AppCreatedDt = this.user.BusinessDt;
-    napAppObj.IsAppInitDone = false;
-    napAppObj.AppStat = CommonConstant.AppStepNew;
-    napAppObj.AppCurrStep = CommonConstant.AppStepNew;
-    napAppObj.BizTemplateCode = CommonConstant.FCTR;
-    napAppObj.LobCode = this.NapAppForm.controls.LobCode.value;
-    napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
-    napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
-    napAppObj = this.CheckValue(napAppObj);
+  // SaveForm() {
+  //   var napAppObj = new NapAppModel();
+  //   napAppObj = this.NapAppForm.value;
+  //   napAppObj.AppCreatedDt = this.user.BusinessDt;
+  //   napAppObj.IsAppInitDone = false;
+  //   napAppObj.AppStat = CommonConstant.AppStepNew;
+  //   napAppObj.AppCurrStep = CommonConstant.AppStepNew;
+  //   napAppObj.BizTemplateCode = CommonConstant.FCTR;
+  //   napAppObj.LobCode = this.NapAppForm.controls.LobCode.value;
+  //   napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
+  //   napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
+  //   napAppObj = this.CheckValue(napAppObj);
 
-    var url = URLConstant.AddApp;
-    this.http.post(url, napAppObj).subscribe(
+  //   var url = URLConstant.AddApp;
+  //   this.http.post(url, napAppObj).subscribe(
+  //     (response) => {
+  //       this.toastr.successMessage(response["message"]);
+  //       AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FCTR_ADD_DETAIL], { "AppId": response["AppId"] });
+  //     });
+  // }
+  
+  SaveForm() {
+    let requestAddNapObj: Object = new Object();
+    let AddNapUrl: string = "";
+    let tempFormObj = this.NapAppForm.getRawValue();
+    if (tempFormObj.AppNo == "") {
+      let reqAddNapObj: ReqAddNapObj = new ReqAddNapObj();
+
+      reqAddNapObj.OriOfficeCode = tempFormObj.OriOfficeCode;
+      reqAddNapObj.OriOfficeName = tempFormObj.OriOfficeName;
+      reqAddNapObj.CrtOfficeCode = tempFormObj.CrtOfficeCode;
+      reqAddNapObj.CrtOfficeName = tempFormObj.CrtOfficeName;
+      reqAddNapObj.ProdOfferingCode = tempFormObj.ProdOfferingCode;
+      reqAddNapObj.ProdOfferingName = tempFormObj.ProdOfferingName;
+      reqAddNapObj.ProdOfferingVersion = tempFormObj.ProdOfferingVersion;
+      reqAddNapObj.CurrCode = tempFormObj.CurrCode;
+      reqAddNapObj.LobCode = tempFormObj.LobCode;
+      reqAddNapObj.RefProdTypeCode = tempFormObj.RefProdTypeCode;
+      reqAddNapObj.PayFreqCode = tempFormObj.PayFreqCode;
+      reqAddNapObj.BizTemplateCode = CommonConstant.CF4W;
+
+      requestAddNapObj = reqAddNapObj;
+      AddNapUrl = URLConstant.AddNewApplication;
+    } else {
+
+      let reqAddNapFromCopyObj: ReqAddNapFromCopyObj = new ReqAddNapFromCopyObj();
+
+      reqAddNapFromCopyObj.AppNo = tempFormObj.AppNo;
+      reqAddNapFromCopyObj.OriOfficeCode = tempFormObj.OriOfficeCode;
+
+      requestAddNapObj = reqAddNapFromCopyObj;
+      AddNapUrl = URLConstant.AddNewApplicationFromCopy;
+    }
+
+    this.http.post<GenericObj>(AddNapUrl, requestAddNapObj).subscribe(
       (response) => {
+        setTimeout(() => { this.spinner.show(); }, 10);
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FCTR_ADD_DETAIL], { "AppId": response["AppId"] });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FCTR_ADD_DETAIL], { "AppId": response.Id });
       });
   }
 
