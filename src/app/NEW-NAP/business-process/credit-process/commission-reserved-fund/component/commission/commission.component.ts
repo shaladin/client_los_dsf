@@ -545,6 +545,7 @@ export class CommissionComponent implements OnInit {
   }
 
   private PatchTempDataValue(obj, CommReceipientTypeCode) {
+    console.log(obj.MrTaxKindCode);
     var temp = new AppCommissionHObj();
     if (obj.AppCommissionHId != 0) temp.AppCommissionHId = obj.AppCommissionHId;
     temp.AppId = this.AppId;
@@ -562,7 +563,7 @@ export class CommissionComponent implements OnInit {
     temp.TotalDisburseAmt = obj.TotalDisburseAmount;
     temp.MrCommissionRecipientTypeCode = CommReceipientTypeCode;
     temp.CommissionRecipientRefNo = obj.ContentName;
-    temp.MrTaxKindCode = obj.MrIdTypeCode;
+    temp.MrTaxKindCode = obj.MrTaxKindCode;
     temp.MrTaxCalcMethodCode = obj.MrTaxCalcMethodCode;
     temp.TaxpayerNo = obj.TaxpayerNo;
     temp.RowVersion = obj.RowVersion;
