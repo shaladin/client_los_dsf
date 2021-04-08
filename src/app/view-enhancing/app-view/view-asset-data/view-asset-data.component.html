@@ -302,7 +302,7 @@
                 <td>{{item.AppAssetObj.AssetSeqNo}}</td>
                 <td>
                   <a [routerLink]="['/View/AppAsset']" target="_blank"
-                    [queryParams]="{ AppId: AppId, AppAssetId: item.AppAssetObj.AppAssetId }">
+                    [queryParams]="{ AppId: appId, AppAssetId: item.AppAssetObj.AppAssetId }">
                     {{item.AppAssetObj.AppAssetNo}}
                   </a>
                 </td>

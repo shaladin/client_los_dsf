@@ -4,53 +4,53 @@
       <div class="card">
         <div class="card-body">
 
-          <app-app-asset-view-asset-info [AppAssetId]="AppAssetId" [BizTemplateCode]="BizTemplateCode"></app-app-asset-view-asset-info>
+          <br>
 
+          <app-app-asset-view-asset-info [AppAssetId]="AppAssetId" [BizTemplateCode]="BizTemplateCode"></app-app-asset-view-asset-info>
+          
           <div class="px-3">
             <lib-ucSubsection [id]="'InsId'" [title]="'INSURANCE'" [panel]="'Ins'">
             </lib-ucSubsection>
             <div class="form-body" id="Ins">
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Paid By</label>
-                <label class="col-md-3 adins-label">{{InsuranceObj.PaidBy}} (Hardcode)</label>
-                <label class="col-md-3 adins-label" translate>Payment Period to Insco</label>
-                <label class="col-md-3 adins-label">{{InsuranceObj.PaymentPeriod}} (Hardcode)</label>
+                <label class="col-md-3 adins-label">{{InsuranceObj?.PaidBy}}</label>
+                <label class="col-md-3 adins-label" translate>Order Period</label>
+                <label class="col-md-3 adins-label">{{InsuranceObj?.OrderPeriod}}</label>
               </div>
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Asset Region</label>
-                <label class="col-md-3 adins-label">{{InsuranceObj.AssetRegion}}</label>
+                <label class="col-md-3 adins-label">{{InsuranceObj?.AssetRegion}}</label>
                 <label class="col-md-3 adins-label" translate>Insco Branch Name</label>
-                <label class="col-md-3 adins-label">{{InsuranceObj.InscoBranchName}} (Hardcode)</label>
+                <label class="col-md-3 adins-label">{{InsuranceObj?.InscoBranchName}}</label>
               </div>
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Coverage Amount</label>
-                <label class="col-md-3 adins-label text-right">{{InsuranceObj.CoverageAmt | number:'1.2-2':'en-US'}}</label>
-                <label class="col-md-3 adins-label" translate>Cover Period</label>
-                <label class="col-md-3 adins-label">{{InsuranceObj.CoverPeriod}}</label>
+                <label class="col-md-3 adins-label text-right">{{InsuranceObj?.CoverageAmt | number:'1.2-2':'en-US'}}</label>
+                <label class="col-md-3 adins-label" translate>Insurance Length</label>
+                <label class="col-md-3 adins-label">{{InsuranceObj?.InsuranceLength}}</label>
               </div>
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Insurance Notes</label>
-                <label class="col-md-3 adins-label">{{InsuranceObj.InsuranceNotes}}</label>
-                <label class="col-md-3 adins-label" translate>Insurance Length</label>
-                <label class="col-md-3 adins-label">{{InsuranceObj.InsuranceLength}}</label>
+                <label class="col-md-3 adins-label">{{InsuranceObj?.InsuranceNotes}}</label>
               </div>
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Main Coverage</label>
-                <label class="col-md-3 adins-label">{{InsuranceObj.MainCoverage}}</label>
+                <label class="col-md-3 adins-label">{{InsuranceObj?.MainCoverage}}</label>
               </div>
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Additional Coverage</label>
-                <label class="col-md-3 adins-label">{{InsuranceObj.AdditionalCoverage}}</label>
+                <label class="col-md-3 adins-label">{{InsuranceObj?.AdditionalCoverage}}</label>
               </div>
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Total Premi</label>
-                <label class="col-md-3 adins-label text-right">{{InsuranceObj.TotalPremi | number:'1.2-2':'en-US'}} (Hardcode)</label>
+                <label class="col-md-3 adins-label text-right">{{InsuranceObj?.TotalPremi | number:'1.2-2':'en-US'}}</label>
               </div>
             </div>
 
@@ -59,7 +59,7 @@
             <div class="form-body" id="Maint">
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Package Name</label>
-                <label class="col-md-3 adins-label">{{MaintenanceObj.MaintPackage}}</label>
+                <label class="col-md-3 adins-label">{{MaintenanceObj?.MaintPackage}}</label>
               </div>
 
               <table class="table table-responsive-md text-center table-hover">
@@ -75,10 +75,10 @@
                 </thead>
   
                 <tbody>
-                  <tr *ngIf="MaintenanceObj.AppAssetMaintDObjsForService.length === 0">
+                  <tr *ngIf="MaintenanceObj?.AppAssetMaintDObjsForService?.length === 0">
                     <td colspan="100%">No Data Available</td>
                   </tr>
-                  <tr *ngFor="let item of MaintenanceObj.AppAssetMaintDObjsForService">
+                  <tr *ngFor="let item of MaintenanceObj?.AppAssetMaintDObjsForService">
                     <td class="align-left">{{item.Service}}</td>
                     <td class="text-right">{{item.FeeAmt | number:'1.2-2':'en-US'}}</td>
                   </tr>
@@ -98,10 +98,10 @@
                 </thead>
   
                 <tbody>
-                  <tr *ngIf="MaintenanceObj.AppAssetMaintDObjsForSparepart.length === 0">
+                  <tr *ngIf="MaintenanceObj?.AppAssetMaintDObjsForSparepart?.length === 0">
                     <td colspan="100%">No Data Available</td>
                   </tr>
-                  <tr *ngFor="let item of MaintenanceObj.AppAssetMaintDObjsForSparepart">
+                  <tr *ngFor="let item of MaintenanceObj?.AppAssetMaintDObjsForSparepart">
                     <td class="align-left" translate>{{item.Sparepart}}</td>
                     <td class="text-right">{{item.FeeAmt | number:'1.2-2':'en-US'}}</td>
                   </tr>
@@ -110,12 +110,12 @@
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Total Service Amount</label>
-                <label class="col-md-3 adins-label text-right">{{MaintenanceObj.TotalServiceAmt | number:'1.2-2':'en-US'}}</label>
+                <label class="col-md-3 adins-label text-right">{{MaintenanceObj?.TotalServiceAmt | number:'1.2-2':'en-US'}}</label>
               </div>
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Total Sparepart Amount</label>
-                <label class="col-md-3 adins-label text-right">{{MaintenanceObj.TotalSparepartAmt | number:'1.2-2':'en-US'}}</label>
+                <label class="col-md-3 adins-label text-right">{{MaintenanceObj?.TotalSparepartAmt | number:'1.2-2':'en-US'}}</label>
               </div>
             </div>
 
@@ -135,7 +135,7 @@
                 </thead>
   
                 <tbody>
-                  <tr *ngIf="ExpenseObj.length === 0">
+                  <tr *ngIf="ExpenseObj?.length === 0">
                     <td colspan="100%">No Data Available</td>
                   </tr>
                   <tr *ngFor="let item of ExpenseObj">
@@ -173,7 +173,7 @@
                 </thead>
   
                 <tbody>
-                  <tr *ngIf="FeeObj.length === 0">
+                  <tr *ngIf="FeeObj?.length === 0">
                     <td colspan="100%">No Data Available</td>
                   </tr>
                   <tr *ngFor="let item of FeeObj">

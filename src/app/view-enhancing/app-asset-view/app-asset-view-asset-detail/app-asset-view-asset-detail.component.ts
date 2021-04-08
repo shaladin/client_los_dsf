@@ -49,8 +49,13 @@ export class AppAssetViewAssetDetailComponent implements OnInit {
 
     await this.http.post(URLConstant.GetListAppAssetAccessoryAndAppAssetAttrByAppAssetId, requestAppAssetId).toPromise().then(
       (response) => {
-        this.AccessoriesList = response["AppAssetAccesories"];
-        this.AttributeList = response["AppAssetAttrs"];
+        if(response["AppAssetAccesories"] !== null) {
+          this.AccessoriesList = response["AppAssetAccesories"];
+        }
+        
+        if(response["AppAssetAttrs"] !== null) {
+          this.AttributeList = response["AppAssetAttrs"];
+        }
       }
     );
   }

@@ -4,6 +4,8 @@
       <div class="card">
         <div class="card-body">
 
+          <br>
+
           <app-app-asset-view-asset-info [AppAssetId]="AppAssetId" [BizTemplateCode]="BizTemplateCode"></app-app-asset-view-asset-info>
 
           <div class="px-3">
@@ -12,44 +14,37 @@
             <div class="form-body" id="RentCalc">
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Rental Period</label>
-                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj.Tenor}} / {{RentalCalculationObj.FirstInstType}}</label>
-                <label class="col-md-3 adins-label" translate>Rounding Amount</label>
-                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj.RoundingAmt | number:'1.2-2':'en-US'}} (Hardcode)</label>
+                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.Tenor}} / {{RentalCalculationObj?.FirstInstType}}</label>
+                <label class="col-md-3 adins-label" translate>Rental Amount</label>
+                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.RentalAmt | number:'1.2-2':'en-US'}}</label>
               </div>
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Total Asset Price</label>
-                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj.TotalAssetPriceAmt | number:'1.2-2':'en-US'}}</label>
-                <label class="col-md-3 adins-label" translate>Rental Amount</label>
-                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj.RentalAmt | number:'1.2-2':'en-US'}}</label>
-              </div>
-              
-              <div class="form-group row">
-                <label class="col-md-3 adins-label"></label>
-                <label class="col-md-3 adins-label"></label>
+                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.TotalAssetPriceAmt | number:'1.2-2':'en-US'}}</label>
                 <label class="col-md-3 adins-label" translate>Rental VAT</label>
-                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj.RentalVatAmt | number:'1.2-2':'en-US'}}</label>
+                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.RentalVatAmt | number:'1.2-2':'en-US'}}</label>
               </div>
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Residual Value (% / Amt)</label>
-                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj.ResidualValuePrcnt | number:'.6':'en-US'}}% / {{RentalCalculationObj.ResidualValueAmt | number:'1.2-2':'en-US'}}</label>
+                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.ResidualValuePrcnt | number:'.6':'en-US'}}% / {{RentalCalculationObj?.ResidualValueAmt | number:'1.2-2':'en-US'}}</label>
                 <label class="col-md-3 adins-label" translate>Rental Amount + VAT</label>
                 <label class="col-md-3 adins-label text-right">{{RentAmtAndVat | number:'1.2-2':'en-US'}}</label>
               </div>
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Depreciation</label>
-                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj.DepreciationAmt | number:'1.2-2':'en-US'}} (Hardcode)</label>
+                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.DepreciationAmt | number:'1.2-2':'en-US'}}</label>
                 <label class="col-md-3 adins-label" translate>Total Rental Amount + VAT</label>
                 <label class="col-md-3 adins-label text-right">{{TotalRentAmtAndVat | number:'1.2-2':'en-US'}}</label>
               </div>
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>COF Interest (% / Amt)</label>
-                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj.CofInterestPrcnt | number:'.6':'en-US'}}% p.a / {{RentalCalculationObj.CofInterestAmt | number:'1.2-2':'en-US'}}</label>
+                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.CofInterestPrcnt | number:'.6':'en-US'}}% p.a / {{RentalCalculationObj?.CofInterestAmt | number:'1.2-2':'en-US'}}</label>
                 <label class="col-md-3 adins-label" translate>Gross Yield (%)</label>
-                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj.GrossYieldPrcnt | number:'.6':'en-US'}}%</label>
+                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.GrossYieldPrcnt | number:'.6':'en-US'}}%</label>
               </div>
               
               <div class="form-group row">
@@ -58,8 +53,8 @@
               </div>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label" translate><b>Total Cost Before Margin</b></label>
-                <label class="col-md-3 adins-label text-right"><b>{{RentalCalculationObj.TotalCostBeforeMargin | number:'1.2-2':'en-US'}}</b></label>
+                <label class="col-md-3 adins-label" translate><b>Total Cost</b></label>
+                <label class="col-md-3 adins-label text-right"><b>{{RentalCalculationObj?.TotalCostBeforeMargin | number:'1.2-2':'en-US'}}</b></label>
               </div>
               
               <div class="form-group row">
@@ -74,13 +69,13 @@
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Margin (% / Amt)</label>
-                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj.MarginPrcnt}} / {{RentalCalculationObj.MarginAmt | number:'1.2-2':'en-US'}}</label>
+                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.MarginPrcnt}}% / {{RentalCalculationObj?.MarginAmt | number:'1.2-2':'en-US'}}</label>
                 <label class="col-md-3 adins-label" translate>Security Deposit</label>
-                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj.SecurityDepositAmt | number:'1.2-2':'en-US'}}</label>
+                <label class="col-md-3 adins-label text-right">{{RentalCalculationObj?.SecurityDepositAmt | number:'1.2-2':'en-US'}}</label>
               </div>
               
               <div class="form-group row">
-                <label class="col-md-3 adins-label" translate><b>Total Cost After Margin</b></label>
+                <label class="col-md-3 adins-label" translate><b>Total Rental Amount</b></label>
                 <label class="col-md-3 adins-label text-right"><b>{{TotalCostAfterMargin | number:'1.2-2':'en-US'}}</b></label>
                 <label class="col-md-3 adins-label" translate><b>Total Paid In Advance</b></label>
                 <label class="col-md-3 adins-label text-right"><b>{{TotalPaidInAdvance | number:'1.2-2':'en-US'}}</b></label>

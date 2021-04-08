@@ -45,9 +45,13 @@
                     "type": "link",
                     "label": "Asset Name",
                     "property": "FullAssetName",
-                    "path": "",
+                    "path": "/View/AppAsset",
                     "target": "_blank",
                     "param": [
+                        { 
+                            "type": "AppId",
+                            "property": "AppId"
+                        },
                         { 
                             "type": "AppAssetId",
                             "property": "AppAssetId" 
