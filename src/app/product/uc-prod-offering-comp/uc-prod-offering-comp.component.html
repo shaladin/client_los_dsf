@@ -11,7 +11,7 @@
               <div class="form-group row" [formGroupName]="l">
                 <label class="col-md-3 " *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE'">{{type.controls['components'].value[l].ProdCompntName}}</label>
                 <label class="col-md-4 " *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode != 'RULE'">{{type.controls['components'].value[l].ProdCompntName}}</label>
-                <span class="material-icons col-md-1 pointer" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE'" (click)="DownloadRule(type.controls['components'].value[l].OfferingCompntValue,type.controls['components'].value[l].OfferingCompntValueDesc)">
+                <span class="material-icons col-md-1 pointer" style="cursor: pointer;" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE'" (click)="DownloadRule(type.controls['components'].value[l].OfferingCompntValue,type.controls['components'].value[l].OfferingCompntValueDesc)">
                   get_app
                 </span>
                 <label class="col-md-4" *ngIf="type.controls['components'].value[l].IsProdOffering == false">{{type.controls['components'].value[l].HOCompntValueDesc}}</label>
@@ -67,7 +67,7 @@
               <div class="form-group row" [formGroupName]="l">
                 <label class="col-md-2">{{type.controls['components'].value[l].ProdCompntName}}</label>
                 <label class="col-md-2">{{type.controls['components'].value[l].HOCompntValueDesc}}</label>
-                <span class="material-icons col-md-1 pointer" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE' || FormProdOfferingComp.controls['groups'].value[j].groupCode == 'SCORE'" (click)="DownloadRule(type.controls['components'].value[l].HOCompntValue,type.controls['components'].value[l].HOCompntValueDesc)">
+                <span class="material-icons col-md-1 pointer" style="cursor: pointer;" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE' || FormProdOfferingComp.controls['groups'].value[j].groupCode == 'SCORE'" (click)="DownloadRule(type.controls['components'].value[l].HOCompntValue,type.controls['components'].value[l].HOCompntValueDesc)">
                   get_app
                 </span>
                 <label class="col-md-1" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode != 'RULE' && FormProdOfferingComp.controls['groups'].value[j].groupCode != 'SCORE'"> </label>
@@ -84,7 +84,7 @@
                   <lib-uc-show-errors [control]="type.controls['components'].controls[l].controls.OfferingCompntValue" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <span class="material-icons col-md-1 pointer" *ngIf="(FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE' || FormProdOfferingComp.controls['groups'].value[j].groupCode == 'SCORE') && type.controls['components'].value[l].IsProdOffering == true" (click)="DownloadRule(type.controls['components'].getRawValue()[l].OfferingCompntValue,type.controls['components'].value[l].OfferingCompntValueDesc)">
+                <span class="material-icons col-md-1 pointer" style="cursor: pointer;" *ngIf="(FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE' || FormProdOfferingComp.controls['groups'].value[j].groupCode == 'SCORE') && type.controls['components'].value[l].IsProdOffering == true" (click)="DownloadRule(type.controls['components'].getRawValue()[l].OfferingCompntValue,type.controls['components'].value[l].OfferingCompntValueDesc)">
                   get_app
                 </span>
                 <label class="col-md-1" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode != 'RULE' && FormProdOfferingComp.controls['groups'].value[j].groupCode != 'SCORE'"> </label>
