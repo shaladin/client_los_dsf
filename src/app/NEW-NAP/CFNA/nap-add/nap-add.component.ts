@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.Model';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';

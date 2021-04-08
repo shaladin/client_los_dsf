@@ -13,7 +13,7 @@ import { AppInsMainCvgObj } from 'app/shared/model/AppInsMainCvgObj.Model';
 import { ResultInsRateRuleObj } from 'app/shared/model/ResultInsRateRuleObj.Model';
 import { ResultCalcInsObj } from 'app/shared/model/ResultCalcInsObj.Model';
 import { InsuranceDataObj } from 'app/shared/model/InsuranceDataObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.Model';
 import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { AppCollateralAccessoryObj } from 'app/shared/model/AppCollateralAccessoryObj.Model';

@@ -5,7 +5,6 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { HttpClient } from '@angular/common/http';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { formatDate } from '@angular/common';
@@ -29,6 +28,7 @@ import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Mode
 import { AppCollateralAttrCustomObj } from 'app/shared/model/AppCollateralAttrCustom.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { String } from 'typescript-string-operations';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.Model';
 
 @Component({
   selector: 'app-collateral-detail',
