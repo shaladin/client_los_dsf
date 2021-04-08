@@ -17,14 +17,14 @@ import { ProdOfferingAddDetailComponent } from './product-offering/prod-offering
 import { ProdOfferingAddComponent } from './product-offering/prod-offering-add/prod-offering-add.component';
 import { ProdOfferingApvDetailComponent } from './product-offering/prod-offering-apv-detail/prod-offering-apv-detail.component';
 import { ProdOfferingApvPagingComponent } from './product-offering/prod-offering-apv-paging/prod-offering-apv-paging.component';
-import { ProdOfferingDeactApvDetailComponent } from './product-offering/prod-offering-deact-apv-detail/prod-offering-deact-apv-detail.component';
-import { ProdOfferingDeactApvPagingComponent } from './product-offering/prod-offering-deact-apv-paging/prod-offering-deact-apv-paging.component';
-import { ProdOfferingDeactDetailComponent } from './product-offering/prod-offering-deact-detail/prod-offering-deact-detail.component';
-import { ProdOfferingDeactPagingComponent } from './product-offering/prod-offering-deact-paging/prod-offering-deact-paging.component';
+import { ProdOfferingDeactApvDetailComponent } from './product-offering/prod-offering-deact-apv/prod-offering-deact-apv-detail/prod-offering-deact-apv-detail.component';
+import { ProdOfferingDeactApvPagingComponent } from './product-offering/prod-offering-deact-apv/prod-offering-deact-apv-paging/prod-offering-deact-apv-paging.component';
+import { ProdOfferingDeactDetailComponent } from './product-offering/prod-offering-deact/prod-offering-deact-detail/prod-offering-deact-detail.component';
+import { ProdOfferingDeactPagingComponent } from './product-offering/prod-offering-deact/prod-offering-deact-paging/prod-offering-deact-paging.component';
 import { ProdOfferingPagingComponent } from './product-offering/prod-offering-paging/prod-offering-paging.component';
 import { ProdOfferingReturnPagingComponent } from './product-offering/prod-offering-return-paging/prod-offering-return-paging.component';
-import { ProdOfferingRvwDetailComponent } from './product-offering/prod-offering-rvw-detail/prod-offering-rvw-detail.component';
-import { ProdOfferingRvwPagingComponent } from './product-offering/prod-offering-rvw-paging/prod-offering-rvw-paging.component';
+import { ProdOfferingRvwDetailComponent } from './product-offering/prod-offering-review/prod-offering-rvw-detail/prod-offering-rvw-detail.component';
+import { ProdOfferingRvwPagingComponent } from './product-offering/prod-offering-review/prod-offering-rvw-paging/prod-offering-rvw-paging.component';
 
 const routes: Routes = [
   {

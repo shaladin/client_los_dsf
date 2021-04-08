@@ -18,17 +18,17 @@
           <i class="fa ft-plus"></i> Add Office Member
         </button>
       </div>
-      <div [hidden]="resultData?.length == 0">
+      <div>
         <table class="table table-responsive-md text-center table-hover">
           <thead>
             <tr class="table-header">
-              <th><span translate class="thead-header" (click)="searchSort($event)" name='OfficeCode'>Office Code</span>
+              <th><span translate (click)="searchSort($event)" name='OfficeCode'>Office Code</span>
               </th>
-              <th><span translate class="thead-header" (click)="searchSort($event)" name='OfficeName'>Office Name</span>
+              <th><span translate (click)="searchSort($event)" name='OfficeName'>Office Name</span>
               </th>
-              <th><span translate class="thead-header" (click)="searchSort($event)" name='OfficeArea'>Office Area</span>
+              <th><span translate (click)="searchSort($event)" name='OfficeArea'>Office Area</span>
               </th>
-              <th><span translate class="thead-header" (click)="searchSort($event)" name='AllowedCreateOffering'>Allowed To Create Offering</span>
+              <th><span translate (click)="searchSort($event)" name='AllowedCreateOffering'>Allowed To Create Offering</span>
               </th>
               <th translate>Action</th>
             </tr>

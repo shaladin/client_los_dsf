@@ -4,7 +4,7 @@
   "component": [
     {
       "type": "textbox",
-      "name": "Prod_Code",
+      "name": "A.PROD_CODE",
       "id": "ProdCodeId",
       "value": "",
       "label": "Product Code",
@@ -12,7 +12,7 @@
     },
     {
       "type": "textbox",
-      "name": "Prod_Name",
+      "name": "A.PROD_NAME",
       "id": "ProdNameId",
       "value": "",
       "label": "Product Name",
@@ -20,7 +20,7 @@
     },
     {
       "type": "dropdown",
-      "name": "A.Prod_Stat",
+      "name": "A.PROD_STAT",
       "id": "ProdStatId",
       "value": "Product Status",
       "placeholder": "Placeholder",
@@ -36,7 +36,7 @@
     },
     {
       "type": "datepicker",
-      "name": "A.End_Dt",
+      "name": "A.END_DT",
       "id": "EndDtId",
       "value": "",
       "label": "End Date",

@@ -768,8 +768,10 @@ export class URLConstant {
   public static GetAppCustMainDataByAppId = environment.losUrl + "/AppCust/GetAppCustMainDataByAppId";
   public static GetAppCustMainDataByAppCustId = environment.losUrl + "/AppCust/GetAppCustMainDataByAppCustId";
   public static GetListAppCustMainDataByAppId = environment.losUrl + "/AppCust/GetListAppCustMainDataByAppId";
-  public static AddEditCustMainDataPersonal = environment.losUrl + "/AppCust/AddEditCustMainDataPersonal";
-  public static AddEditCustMainDataCompany = environment.losUrl + "/AppCust/AddEditCustMainDataCompany";
+  public static AddCustMainDataPersonal = environment.losUrl + "/AppCust/AddCustMainDataPersonal";
+  public static EditCustMainDataPersonal = environment.losUrl + "/AppCust/EditCustMainDataPersonal";
+  public static AddCustMainDataCompanyData = environment.losUrl + "/AppCust/AddCustMainDataCompanyData";
+  public static EditCustMainDataCompanyData = environment.losUrl + "/AppCust/EditCustMainDataCompanyData";
   public static DeleteAppCustMainData = environment.losUrl + "/AppCust/DeleteAppCustMainData";
   public static DeleteAllAppCust = environment.losUrl + "/AppCust/DeleteAllAppCust";
   public static CopyAllExistingCustByAppId = environment.losUrl + "/AppCust/CopyAllExistingCustByAppId";

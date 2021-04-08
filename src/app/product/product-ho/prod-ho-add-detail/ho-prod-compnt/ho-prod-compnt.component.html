@@ -27,7 +27,7 @@
                 <lib-uc-show-errors [control]="node.controls.CompntValue" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
               </div>
-              <span class="material-icons col-md-1 pointer" style="border-right: 1px solid grey" *ngIf="FormProdComp.controls['groups'].value[j].groupCode == 'RULE' || FormProdComp.controls['groups'].value[j].groupCode == 'SCORE'" (click)="DownloadRule(type.controls['components'].value[l].CompntValue,type.controls['components'].value[l].CompntValueDesc)">
+              <span class="material-icons col-md-1 pointer" style="border-right: 1px solid grey; cursor: pointer;" *ngIf="FormProdComp.controls['groups'].value[j].groupCode == 'RULE' || FormProdComp.controls['groups'].value[j].groupCode == 'SCORE'" (click)="DownloadRule(type.controls['components'].value[l].CompntValue,type.controls['components'].value[l].CompntValueDesc)">
                 get_app
               </span>
               <label class="col-md-1" *ngIf="FormProdComp.controls['groups'].value[j].groupCode != 'RULE' && FormProdComp.controls['groups'].value[j].groupCode != 'SCORE'" style="border-right: 1px solid grey"> </label>
