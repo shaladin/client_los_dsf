@@ -4,7 +4,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { environment } from '../../../../environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
@@ -15,6 +14,7 @@ import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ProdHDeactivateObj } from 'app/shared/model/Request/Product/ProdHDeactivateObj.model';
 import { ProdOfferingVersionObj } from 'app/shared/model/Request/Product/ProdOfferingVersionObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-prod-ho-deact-detail',
