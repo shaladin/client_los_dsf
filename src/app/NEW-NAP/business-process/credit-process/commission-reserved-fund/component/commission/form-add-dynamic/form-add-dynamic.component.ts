@@ -134,6 +134,7 @@ export class FormAddDynamicComponent implements OnInit {
       BankCode: [''],
       BankName: [''],
       MrIdTypeCode: [''],
+      MrTaxKindCode: [''],
       MrTaxCalcMethodCode: [''],
       TaxpayerNo: [''],
       GrossYield: [0],
@@ -283,6 +284,7 @@ export class FormAddDynamicComponent implements OnInit {
               }
               this.FormObj.controls.arr["controls"][len - 1 - i].patchValue({
                 MrIdTypeCode: data.MrIdTypeCode,
+                MrTaxKindCode: data.MrTaxKindCode,
                 MrTaxCalcMethodCode: data.MrTaxCalcMethodCode,
                 TaxpayerNo: data.TaxpayerNo,
                 TotalTaxAmount: totalTaxAmount,
