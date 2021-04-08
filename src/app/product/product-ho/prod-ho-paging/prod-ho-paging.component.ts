@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { WhereValueObj, UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -17,9 +17,7 @@ export class ProdHoPagingComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
-    
-    var whereValueObj = new WhereValueObj();
+    let whereValueObj = new WhereValueObj();
     whereValueObj.property = "ProdStat";
     whereValueObj.value = "RET";
     this.inputPagingObj.whereValue.push(whereValueObj);
@@ -30,7 +28,7 @@ export class ProdHoPagingComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHO.json";
     this.inputPagingObj.ddlEnvironments = [
       {
-        name: "A.Prod_Stat",
+        name: "A.PROD_STAT",
         environment: environment.FoundationR3Url
       }
     ];
