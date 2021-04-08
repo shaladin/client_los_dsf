@@ -3,15 +3,15 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.Model';
 import { formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ReqProductObj } from 'app/shared/model/Request/Product/ReqProductObj.model';
+import { ResProductHObj } from 'app/shared/model/Response/Product/ResProductHObj.Model';
+import { ResProductObj } from 'app/shared/model/Response/Product/ResProductObj.Model';
 
 @Component({
   selector: 'app-prod-ho-add',
@@ -20,14 +20,12 @@ import { ReqProductObj } from 'app/shared/model/Request/Product/ReqProductObj.mo
 export class ProdHoAddComponent implements OnInit {
   ProdHId: number;
   mode: string = 'add';
-  key: any;
-  criteria: CriteriaObj[] = [];
-  source:string="";
-  ResultResponse: any;
-  SaveMode;
+  source: string = '';
+  ResultResponse: ResProductHObj;
+  SaveMode: string;
   ReqProductObj: ReqProductObj = new ReqProductObj();
-  businessDt: any;
-  startActiveDt : any;
+  BusinessDt: Date;
+  StartActiveDt : Date;
 
   RefProductHOForm = this.fb.group({
     ProdCode: ['', Validators.required],
@@ -45,16 +43,12 @@ export class ProdHoAddComponent implements OnInit {
     private toastr: NGXToastrService,
     private cookieService: CookieService
   ) {
-    
     this.route.queryParams.subscribe(params => {
       if(params["ProdHId"] != null){
         this.ProdHId = params["ProdHId"];
       }
       if(params["mode"] != null){
         this.mode = params["mode"];
-      }
-      if(params["key"] != null){
-        this.key = params["key"];
       }
       if(params["source"] != null){
         this.source = params["source"];
@@ -64,21 +58,15 @@ export class ProdHoAddComponent implements OnInit {
 
   ngOnInit() {
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
-    this.businessDt.setDate(this.businessDt.getDate());
-    this.startActiveDt = new Date(context[CommonConstant.BUSINESS_DT]);
-    this.startActiveDt.setDate(this.businessDt.getDate());
+    this.BusinessDt = new Date(context[CommonConstant.BUSINESS_DT]);
+    this.BusinessDt.setDate(this.BusinessDt.getDate());
+    this.StartActiveDt = new Date(context[CommonConstant.BUSINESS_DT]);
+    this.StartActiveDt.setDate(this.BusinessDt.getDate());
     
     if (this.mode == "edit") {
-      var tempCrit = new CriteriaObj();
-      tempCrit.propName = this.key;
-      tempCrit.restriction = AdInsConstant.RestrictionEq;
-      tempCrit.value = this.ProdHId.toString();
-      this.criteria.push(tempCrit);
-
       this.RefProductHOForm.controls.ProdCode.disable();
       this.http.post(URLConstant.GetProductMainInfo, {Id: this.ProdHId}).subscribe(
-        (response) => {
+        (response : ResProductHObj) => {
           this.ResultResponse = response;
           this.RefProductHOForm.patchValue({
             ProdCode: this.ResultResponse.ProdCode,
@@ -88,14 +76,14 @@ export class ProdHoAddComponent implements OnInit {
             EndDt: formatDate(this.ResultResponse.EndDt, 'yyyy-MM-dd', 'en-US')
           });
           this.updateMinDtForEndDt();
-
         }
       );
     }
   }
+
   updateMinDtForEndDt(){
-    this.startActiveDt = this.RefProductHOForm.controls.StartDt.value;
-    if(this.RefProductHOForm.controls.EndDt.value < this.startActiveDt){
+    this.StartActiveDt = this.RefProductHOForm.controls.StartDt.value;
+    if(this.RefProductHOForm.controls.EndDt.value < this.StartActiveDt){
       this.RefProductHOForm.controls.EndDt.setValue("");
     }
   }
@@ -103,7 +91,6 @@ export class ProdHoAddComponent implements OnInit {
   ClickSave(ev) {
     this.SaveMode = ev;
   }
-
 
   ValidateDate() {
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -126,7 +113,6 @@ export class ProdHoAddComponent implements OnInit {
   SaveForm() {
     if (this.SaveMode == "save") {
       this.ReqProductObj = this.RefProductHOForm.value;
-
       if (this.mode == "edit") {
         if (this.ValidateDate()) {
           this.ReqProductObj.ProdId = this.ResultResponse.ProdId;
@@ -141,7 +127,6 @@ export class ProdHoAddComponent implements OnInit {
         }
       } else {
         if (this.ValidateDate()) {
-          this.ReqProductObj.RowVersion = [];
           this.http.post(URLConstant.AddProduct, this.ReqProductObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
@@ -158,19 +143,18 @@ export class ProdHoAddComponent implements OnInit {
           this.ReqProductObj.ProdCode = this.ResultResponse.ProdCode;
           this.ReqProductObj.RowVersion = this.ResultResponse.RowVersion;
           this.http.post(URLConstant.EditProduct, this.ReqProductObj).subscribe(
-            (response) => {
+            (response : ResProductObj) => {
               this.toastr.successMessage(response["message"]);
-              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_ADD_DETAIL],{ "ProdHId": response["DraftProdHId"], "ProdId" : response["ProdId"], "mode": this.mode, "source" : this.source });
+              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_ADD_DETAIL],{ "ProdHId": response.DraftProdHId, "ProdId" : response.ProdId, "mode": this.mode, "source" : this.source });
             }
           );
         }
       } else {
         if (this.ValidateDate()) {
-          this.ReqProductObj.RowVersion = [];
           this.http.post(URLConstant.AddProduct, this.ReqProductObj).subscribe(
-            (response) => {
+            (response : ResProductObj) => {
               this.toastr.successMessage(response["message"]);
-              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_ADD_DETAIL],{ "ProdHId": response["DraftProdHId"], "ProdId" : response["ProdId"], "mode": this.mode, "source" : this.source });
+              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_ADD_DETAIL],{ "ProdHId": response.DraftProdHId, "ProdId" : response.ProdId, "mode": this.mode, "source" : this.source });
             }
           );
         }

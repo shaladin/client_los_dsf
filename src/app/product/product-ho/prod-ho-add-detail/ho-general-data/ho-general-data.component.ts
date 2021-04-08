@@ -13,6 +13,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { ResGetKvpRefFinMapByLobCode } from 'app/shared/model/Response/Product/ResGetKvpRefFinMapByLobCode.Model';
 
 @Component({
   selector: 'app-ho-general-data',
@@ -30,8 +31,7 @@ export class HoGeneralDataComponent implements OnInit {
   StateSave: string;
   LOBSelected: string ="";
   LOBDescrSelected: string="";
-  inputLookUpObj: any;
-  indentifierTemp;
+  inputLookUpObj: InputLookupObj = new InputLookupObj();
   source: string = "";
 
   dropdownSettings: IDropdownSettings = {
@@ -69,8 +69,6 @@ export class HoGeneralDataComponent implements OnInit {
     this.ProdId = this.objInput["ProdId"];
     this.LoadProdComponent(this.ProdHId, "GEN", true, "");
 
-
-    this.inputLookUpObj = new InputLookupObj();
     this.inputLookUpObj.urlJson = "./assets/uclookup/product/lookupProduct.json";
     this.inputLookUpObj.urlEnviPaging = environment.losUrl;
     this.inputLookUpObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
@@ -86,7 +84,6 @@ export class HoGeneralDataComponent implements OnInit {
     arrCrit.push(critObj);
     this.inputLookUpObj.addCritInput = arrCrit;
   }
-
 
   addGroup(groupCode, groupName) {
     return this.fb.group({
@@ -151,10 +148,9 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   async PopulateDDL(obj) {
-    if (url != "") {
-      var url = obj.ProdCompntDtaSrcApi;
+    if (obj.ProdCompntDtaSrcApi != "") {
       var payload = JSON.parse(obj.ProdCompntDtaValue);
-      await this.http.post(url, payload).toPromise().then(
+      await this.http.post(obj.ProdCompntDtaSrcApi, payload).toPromise().then(
         (response) => {
           this.dictOptions[obj.RefProdCompntCode] = response[CommonConstant.ReturnObj];
           var compValue, compDescr;
@@ -176,10 +172,9 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   async PopulateMultiDDL(obj) {
-    if (url != "") {
-      var url = obj.ProdCompntDtaSrcApi;
+    if (obj.ProdCompntDtaSrcApi != "") {
       var payload = JSON.parse(obj.ProdCompntDtaValue);
-      await this.http.post(url, payload).toPromise().then(
+      await this.http.post(obj.ProdCompntDtaSrcApi, payload).toPromise().then(
         (response) => {
           var result = response[CommonConstant.ReturnObj];
           this.dictMultiOptions[obj.RefProdCompntCode] = new Array();
@@ -193,12 +188,11 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   async PopulateFinMapFromLOB() {
-    var url = URLConstant.GetKvpRefFinMapByLobCode;
-    await this.http.post(url, { Code: this.LOBSelected }).toPromise().then(
-      (response) => {
-        this.dictOptions["WAY_OF_FINANCING"] = response["RefWayOfFin"]
-        this.dictOptions["PURPOSE_OF_FINANCING"] = response["RefPurposeOfFin"]
-        this.dictOptions["PROD_TYPE"] = response["RefProdType"]
+    await this.http.post(URLConstant.GetKvpRefFinMapByLobCode, { Code: this.LOBSelected }).toPromise().then(
+      (response: ResGetKvpRefFinMapByLobCode) => {
+        this.dictOptions["WAY_OF_FINANCING"] = response.RefWayOfFin;
+        this.dictOptions["PURPOSE_OF_FINANCING"] = response.RefPurposeOfFin;
+        this.dictOptions["PROD_TYPE"] = response.RefProdType;
 
         for (var i = 0; i < this.FormProdComp.controls["groups"].controls.length; i++) {
           for (var j = 0; j < this.FormProdComp.controls["groups"].controls[i].controls["components"].length; j++) {
@@ -220,8 +214,7 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   async PopulateInstallmentSchedule() {
-    var url = URLConstant.GetListKvpInstSchmByLobCode;
-    await this.http.post(url, { Code: this.LOBSelected }).toPromise().then(
+    await this.http.post(URLConstant.GetListKvpInstSchmByLobCode, { Code: this.LOBSelected }).toPromise().then(
       (response) => {
         var result = response[CommonConstant.ReturnObj];
         this.dictMultiOptions["INST_SCHM"] = new Array();
@@ -276,9 +269,6 @@ export class HoGeneralDataComponent implements OnInit {
         }
       }
     )
-  }
-  ChangeDropdown() {
-    // this.dictOptions["COMP3"] = [{ "key": "oeoe", "value": "oeoe" }];
   }
 
   onChangeEvent(val, event, index, indexparent) {
@@ -387,13 +377,6 @@ export class HoGeneralDataComponent implements OnInit {
         );
       }
     }
-  }
-
-  test() {
-    var objPost = this.BuildReqProdDetail();
-  }
-
-  onSelect() {
   }
 
   Cancel() {

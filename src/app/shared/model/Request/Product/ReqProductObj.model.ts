@@ -5,15 +5,15 @@ export class ReqProductObj {
     ProdDescr : string;
     StartDt : Date;
     EndDt : Date;
-    RowVersion : string[];
+    RowVersion : string;
 
     constructor() {
         this.ProdId = 0;
         this.ProdCode = "";
-        this.ProdName = "";
+        this.ProdName = "";7
         this.ProdDescr = "";
         this.StartDt = new Date();
         this.EndDt = new Date();
-        this.RowVersion = [];
+        this.RowVersion = "";
     }
 }
