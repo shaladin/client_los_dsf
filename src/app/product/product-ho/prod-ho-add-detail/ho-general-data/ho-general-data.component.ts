@@ -38,7 +38,7 @@ export class HoGeneralDataComponent implements OnInit {
   LOBDescrSelected: string="";
   source: string = "";
   inputLookUpObj: InputLookupObj = new InputLookupObj();
-  ReqGetProdCompntObj : ReqGetProdCompntObj;
+  reqGetProdCompntObj : ReqGetProdCompntObj;
   ReqListProductDetailObj: ReqListProductDetailObj;
   ReqCopyProductObj: ReqCopyProductObj;
 
@@ -236,14 +236,14 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   LoadProdComponent(ProdHId, CompGroups, IsFilterBizTmpltCode, Lob) {
-    this.ReqGetProdCompntObj = new ReqGetProdCompntObj();
-    this.ReqGetProdCompntObj.ProdHId = ProdHId;
-    this.ReqGetProdCompntObj.GroupCodes = CompGroups.split(",");
-    this.ReqGetProdCompntObj.IsFilterBizTmpltCode = IsFilterBizTmpltCode;
-    this.ReqGetProdCompntObj.Lob = Lob;
-    this.ReqGetProdCompntObj.RowVersion = "";
+    this.reqGetProdCompntObj = new ReqGetProdCompntObj();
+    this.reqGetProdCompntObj.ProdHId = ProdHId;
+    this.reqGetProdCompntObj.GroupCodes = CompGroups.split(",");
+    this.reqGetProdCompntObj.IsFilterBizTmpltCode = IsFilterBizTmpltCode;
+    this.reqGetProdCompntObj.Lob = Lob;
+    this.reqGetProdCompntObj.RowVersion = "";
 
-    this.http.post(URLConstant.GetProductHOComponentGrouped, ReqGetProdCompntObj).toPromise().then(
+    this.http.post(URLConstant.GetProductHOComponentGrouped, this.reqGetProdCompntObj).toPromise().then(
       async (response : ResGetProductHOComponentGroupedObj) => {
         var fa_group = this.FormProdComp.controls['groups'] as FormArray;
         while(fa_group.length){

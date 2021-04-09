@@ -21,7 +21,7 @@ export class ProdHoAddComponent implements OnInit {
   ProdHId: number;
   mode: string = 'add';
   source: string = '';
-  ResultResponse: ResGetProductHObj;
+  ResultResponse: ResGetProductHObj = new ResGetProductHObj();
   ReqProductObj: ReqProductObj = new ReqProductObj();
   BusinessDt: Date;
   StartActiveDt: Date;
@@ -58,9 +58,13 @@ export class ProdHoAddComponent implements OnInit {
   ngOnInit() {
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = new Date(context[CommonConstant.BUSINESS_DT]);
+    console.log(this.BusinessDt);
     this.BusinessDt.setDate(this.BusinessDt.getDate());
+    console.log(this.BusinessDt);
     this.StartActiveDt = new Date(context[CommonConstant.BUSINESS_DT]);
+    console.log(this.StartActiveDt);
     this.StartActiveDt.setDate(this.BusinessDt.getDate());
+    console.log(this.StartActiveDt);
 
     if (this.mode == "edit") {
       this.RefProductHOForm.controls.ProdCode.disable();
