@@ -9,7 +9,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { GenericListByIdObj } from 'app/shared/model/Generic/GenericListByIdObj.Model';
+import { GenericListByIdObj } from 'app/shared/model/Generic/GenericListByIdObj.model';
 import { ResGetProdBranchMbrObj } from 'app/shared/model/Response/Product/ResGetProdBranchMbrObj.model';
 
 @Component({

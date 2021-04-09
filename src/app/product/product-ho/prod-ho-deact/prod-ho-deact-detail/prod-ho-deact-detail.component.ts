@@ -15,8 +15,8 @@ import { ReqProdDeactObj } from 'app/shared/model/Request/Product/ReqProdDeactOb
 import { environment } from 'environments/environment';
 import { ReqProdOffVersionObj } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 import { ResGetProductHObj } from 'app/shared/model/Response/Product/ResGetProdObj.model';
-import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.Model';
+import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ResProdOffVersionObj } from 'app/shared/model/Response/Product/ResProdOfferingObj.model';
 
 @Component({

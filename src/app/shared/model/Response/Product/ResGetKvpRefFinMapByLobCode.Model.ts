@@ -1,4 +1,4 @@
-import { KeyValueObj } from "../../KeyValue/KeyValueObj.Model";
+import { KeyValueObj } from "../../KeyValue/KeyValueObj.model";
 
 export class ResGetKvpRefFinMapByLobCode {
     RefPurposeOfFin : Array<KeyValueObj>;
