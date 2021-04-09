@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, ViewChild, Input, EventEmitter } from '@angular/core';
-import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { Validators, FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';

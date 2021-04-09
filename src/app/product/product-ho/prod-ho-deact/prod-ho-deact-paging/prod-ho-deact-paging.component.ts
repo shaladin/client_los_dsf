@@ -10,7 +10,7 @@ import { URLConstant } from "app/shared/constant/URLConstant";
 })
 export class ProdHoDeactPagingComponent implements OnInit {
   inputPagingObj: any;
-  arrCrit: any;
+  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   constructor() { }
 
   ngOnInit() {
@@ -20,7 +20,6 @@ export class ProdHoDeactPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHODeactivate.json";
 
-    this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'A.PROD_STAT';

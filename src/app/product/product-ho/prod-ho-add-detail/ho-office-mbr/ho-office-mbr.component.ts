@@ -5,7 +5,7 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './ho-office-mbr.component.html'
 })
 export class HoOfficeMbrComponent implements OnInit {
-  isOn: any;
+  isOn: boolean;
   @Input() objInput: any;
   ListOfficeMemberObj: any = {};
   

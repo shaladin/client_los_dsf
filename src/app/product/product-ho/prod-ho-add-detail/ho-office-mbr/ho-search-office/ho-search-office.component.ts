@@ -7,15 +7,17 @@ import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { ReqListProdBranchMbrObj } from 'app/shared/model/Request/Product/ReqAddProdBranchMbrObj.model';
 @Component({
   selector: 'app-ho-search-office',
   templateUrl: './ho-search-office.component.html'
 })
 export class HoSearchOfficeComponent implements OnInit {
-  listSelectedId: Array<any> = new Array<any>();
+  listSelected: Array<any> = new Array<any>();
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
   @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
   @Input() ListOfficeMemberObjInput: any;
+  ReqListProdBranchMbrObj : ReqListProdBranchMbrObj;
 
   constructor(
     private http: HttpClient,
@@ -54,26 +56,23 @@ export class HoSearchOfficeComponent implements OnInit {
   }
 
   getListTemp(ev) {
-    this.listSelectedId = ev;
+    this.listSelected = ev;
   }
 
   SaveForm() {
-    if (this.listSelectedId.length == 0) {
+    if (this.listSelected.length == 0) {
       this.toastr.errorMessage(ExceptionConstant.ADD_MIN_1_DATA);
       return;
     }
 
-    var obj = {
-      ProductBranchMbrs: this.listSelectedId["TempListObj"],
-      RowVersion: ""
-    };
+    this.ReqListProdBranchMbrObj.ProductBranchMbrs = this.listSelected["TempListObj"];
 
-    for (var i = 0; i < this.listSelectedId["TempListObj"].length; i++) {
-      obj.ProductBranchMbrs[i].ProdHId = this.ListOfficeMemberObjInput["ProdHId"],
-        obj.ProductBranchMbrs[i].RowVersion = "";
+    for (var i = 0; i < this.ReqListProdBranchMbrObj.ProductBranchMbrs.length; i++) {
+      this.ReqListProdBranchMbrObj.ProductBranchMbrs[i].ProdHId = this.ListOfficeMemberObjInput["ProdHId"],
+        this.ReqListProdBranchMbrObj.ProductBranchMbrs[i].RowVersion = "";
     }
 
-    this.http.post(URLConstant.AddProductOfficeMbrBatch, obj).subscribe(
+    this.http.post(URLConstant.AddProductOfficeMbrBatch, this.ReqListProdBranchMbrObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         var obj = {

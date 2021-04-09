@@ -8,9 +8,10 @@ import { URLConstant } from "app/shared/constant/URLConstant";
 import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { ProdOfferingCodeVersionObj } from "app/shared/model/Request/Product/ProdOfferingCodeVersionObj.model";
-import { ProdOfferingHVersionObj } from "app/shared/model/Request/Product/ProdOfferingHVersionObj.model";
 import { ProductOfferingBranchMbrObj } from "app/shared/model/Request/Product/ProductOfferingBranchMbrObj.model";
 import { ProductOfferingDetailObj } from "app/shared/model/Request/Product/ProductOfferingDetailObj.model";
+import { ReqProdOffVersionObj } from "app/shared/model/Request/Product/ReqGetProdOfferingObj.model";
+import { ReqDownloadRuleObj } from "app/shared/model/Request/Product/ReqDownloadRuleObj.model";
 
 @Component({
   selector: 'app-prod-offering-view',
@@ -40,10 +41,8 @@ export class ProdOfferingViewComponent implements OnInit {
   mainInfoByHIdOnly: boolean = true;
   IsLoaded: boolean = false;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-
-  DlRuleObj = {
-    CompntValue: "",
-  };
+  DlRuleObj  : ReqDownloadRuleObj = new ReqDownloadRuleObj();
+  
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
 
     this.ProdOfferingDUrl = URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode;
@@ -100,7 +99,7 @@ export class ProdOfferingViewComponent implements OnInit {
     }
 
     //** Product Offering Version **//
-    this.ProdOfferingVersionObj = new ProdOfferingHVersionObj;
+    this.ProdOfferingVersionObj = new ReqProdOffVersionObj;
     this.ProdOfferingVersionObj.ProdOfferingHId = this.prodOfferingHId;
     await this.http.post(this.ProdOfferingVerUrl, {Id : this.prodOfferingHId}).toPromise().then(
       response => {
@@ -137,7 +136,7 @@ export class ProdOfferingViewComponent implements OnInit {
     this.IsLoaded = true;
   }
   DownloadRule(CompntValue, CompntValueDesc) {
-    this.DlRuleObj.CompntValue = CompntValue;
+    this.DlRuleObj.RuleSetName = CompntValue;
     this.http.post(URLConstant.DownloadProductRule, this.DlRuleObj, { responseType: 'blob' }).subscribe(
       response => {
         saveAs(response, CompntValueDesc + '.xlsx');

@@ -5,6 +5,7 @@ import { saveAs } from 'file-saver';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ReqDownloadRuleObj } from 'app/shared/model/Request/Product/ReqDownloadRuleObj.model';
 
 @Component({
   selector: 'uc-prod-offering-comp',
@@ -25,7 +26,8 @@ export class UcProdOfferingCompComponent implements OnInit {
   UrlGetProdOfferingCompGrouped : any;
   dictMultiOptions: { [key: string]: any; } = {};
   selectedMultiDDLItems: { [key: string]: any; } = {};
-
+  DlRuleObj  : ReqDownloadRuleObj = new ReqDownloadRuleObj();
+  
   @Input() CompGroups : string;
   @Input() ProdOfferingHId : number;
   @Input() ShowComparison : boolean;
@@ -46,9 +48,6 @@ export class UcProdOfferingCompComponent implements OnInit {
     allowSearchFilter: true
   };
 
-  DlRuleObj = {
-    CompntValue: "",
-  };
   ngOnInit() {
     this.FormProdOfferingComp = this.fb.group(
       {
@@ -298,7 +297,7 @@ export class UcProdOfferingCompComponent implements OnInit {
     })
   }
   DownloadRule(CompntValue, CompntValueDesc) {
-    this.DlRuleObj.CompntValue = CompntValue;
+    this.DlRuleObj.RuleSetName = CompntValue;
     this.http.post(URLConstant.DownloadProductRule, this.DlRuleObj, { responseType: 'blob' }).subscribe(
       response => {
         saveAs(response, CompntValueDesc + '.xlsx');

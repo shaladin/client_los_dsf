@@ -11,6 +11,7 @@ import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ResProductObj } from 'app/shared/model/Response/Product/ResProductObj.Model';
 
 @Component({
   selector: 'app-prod-ho-rvw-detail',
@@ -78,8 +79,8 @@ export class ProdHoRvwDetailComponent implements OnInit {
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_HO_ACT_SCHM;
 
     this.http.post(URLConstant.GetProductById, {Id : this.ProdId}).subscribe(
-      (response) => {
-        this.InputObj.TrxNo = response["ProdCode"];
+      (response: ResProductObj) => {
+        this.InputObj.TrxNo = response.ProdCode;
         this.IsReady = true;
       });
   }
