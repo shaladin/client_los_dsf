@@ -50,13 +50,13 @@
                 <div class="form-group row">
                   <label class="col-md-3 adInsLabel">Start Active Date </label>
                   <div class="col-md-9">
-                    <input type="date" [min]="businessDt | date: 'yyyy-MM-dd'" (change)="updateMinDtForEndDt()" class="form-control adInsInput width-25-per" formControlName="StartDt">
+                    <input type="date" [min]="BusinessDt | date: 'yyyy-MM-dd'" (change)="updateMinDtForEndDt()" class="form-control adInsInput width-25-per" formControlName="StartDt">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-3 adInsLabel">End Date </label>
                   <div class="col-md-9">
-                    <input type="date" class="form-control adInsInput width-25-per" [min]="startActiveDt | date: 'yyyy-MM-dd'"  formControlName="EndDt">
+                    <input type="date" class="form-control adInsInput width-25-per" [min]="StartActiveDt | date: 'yyyy-MM-dd'"  formControlName="EndDt">
                   </div>
                 </div>
               </div>

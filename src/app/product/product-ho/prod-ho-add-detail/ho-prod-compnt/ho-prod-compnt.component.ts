@@ -9,6 +9,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ReqDownloadRuleObj } from 'app/shared/model/Request/Product/ReqDownloadRuleObj.model';
 @Component({
   selector: 'app-ho-prod-compnt',
   templateUrl: './ho-prod-compnt.component.html'
@@ -22,9 +23,7 @@ export class HoProdCompntComponent implements OnInit {
   ProdHId: number;
   StateSave : string;
   dictBehaviour: {[key: string]: any;} = {};
-  DlRuleObj = {
-    CompntValue: "",
-  };
+  DlRuleObj : ReqDownloadRuleObj = new ReqDownloadRuleObj();
 
   constructor(
     private router: Router,
@@ -239,7 +238,7 @@ export class HoProdCompntComponent implements OnInit {
   }
   
   DownloadRule(CompntValue, CompntValueDesc) {
-    this.DlRuleObj.CompntValue = CompntValue;
+    this.DlRuleObj.RuleSetName = CompntValue;
     this.http.post(URLConstant.DownloadProductRule, this.DlRuleObj, { responseType: 'blob' }).subscribe(
       response => {
         saveAs(response, CompntValueDesc + '.xlsx');

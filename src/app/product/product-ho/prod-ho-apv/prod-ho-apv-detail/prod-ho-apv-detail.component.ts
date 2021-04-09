@@ -2,15 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
-import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ReqUpdateProductPostApvObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
+import { ResProductObj } from 'app/shared/model/Response/Product/ResProductObj.Model';
 @Component({
   selector: 'app-prod-ho-apv-detail',
   templateUrl: './prod-ho-apv-detail.component.html'
@@ -23,18 +23,15 @@ export class ProdHoApvDetailComponent implements OnInit {
   ApvReqId: number;
   inputObj: any;
   InputApvObj : UcInputApprovalObj;
-  InputApprovalHistoryObj : UcInputApprovalHistoryObj;
   UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
+  ReqUpdateProductPostApvObj : ReqUpdateProductPostApvObj
 
-  constructor(private router: Router, 
+  constructor(
+    private router: Router, 
     private route: ActivatedRoute,
-     private toastr: NGXToastrService,
-     private http: HttpClient,
-     ) {
-
+    private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
-
       if (params["ProdHId"] != null) {
         this.prodHId = params["ProdHId"];
         this.taskId = params["TaskId"];
@@ -61,16 +58,10 @@ export class ProdHoApvDetailComponent implements OnInit {
   }
 
   initInputApprovalObj(){
-
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
     this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
-    
-    this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
-    this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
-    this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
-    this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
 
     this.InputApvObj = new UcInputApprovalObj();
     this.InputApvObj.TaskId = this.taskId;
@@ -87,8 +78,8 @@ export class ProdHoApvDetailComponent implements OnInit {
     this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
 
     this.http.post(URLConstant.GetProductByHId, {Id : this.prodHId}).subscribe(
-      (response) => {
-        this.InputApvObj.TrxNo = response["ProdCode"];
+      (response : ResProductObj) => {
+        this.InputApvObj.TrxNo = response.ProdCode;
         this.IsReady = true;
       });
   }
@@ -102,14 +93,13 @@ export class ProdHoApvDetailComponent implements OnInit {
 
   onApprovalSubmited(event)
   {
-    var data = {
-      ProdHId : this.prodHId, 
-      TaskId : event[0].ApvTaskId, 
-      Notes : event[0].Notes != undefined? event[0].Notes : "",
-      Reason : event[0].ReasonCode, 
-      Result : event[0].ApvResult
-    }
-    this.http.post(URLConstant.UpdateProductPostApv, data).subscribe(
+    this.ReqUpdateProductPostApvObj = new ReqUpdateProductPostApvObj();
+    this.ReqUpdateProductPostApvObj.ProdHId = this.prodHId, 
+    this.ReqUpdateProductPostApvObj.TaskId = event[0].ApvTaskId, 
+    this.ReqUpdateProductPostApvObj.Notes = event[0].Notes != undefined? event[0].Notes : "",
+    this.ReqUpdateProductPostApvObj.Reason = event[0].ReasonCode, 
+    this.ReqUpdateProductPostApvObj.Result = event[0].ApvResult
+    this.http.post(URLConstant.UpdateProductPostApv, this.ReqUpdateProductPostApvObj).subscribe(
       () => { 
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_APPRV],{ });
       }

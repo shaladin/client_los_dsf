@@ -22,7 +22,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 export class ProdHoDeactApvPagingComponent implements OnInit {
 
   inputPagingObj: any;
-  arrCrit: any;
+  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
   constructor(private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) { }
@@ -34,7 +34,6 @@ export class ProdHoDeactApvPagingComponent implements OnInit {
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHODeactApv.json";
 
-    this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;

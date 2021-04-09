@@ -8,11 +8,10 @@ import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
-import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ResProductObj } from 'app/shared/model/Response/Product/ResProductObj.Model';
 
 @Component({
   selector: 'app-prod-ho-deact-apv-detail',
@@ -26,7 +25,6 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
   inputObj: any;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   InputApvObj : UcInputApprovalObj;
-  InputApprovalHistoryObj : UcInputApprovalHistoryObj;
   UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
   ApvReqId: number;
@@ -67,11 +65,6 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
     this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
-    
-    this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
-    this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
-    this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
-    this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
 
     this.InputApvObj = new UcInputApprovalObj();
     this.InputApvObj.TaskId = this.taskId;
@@ -88,8 +81,8 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
     this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
 
     this.http.post(URLConstant.GetProductByHId, {Id : this.prodHId}).subscribe(
-      (response) => {
-        this.InputApvObj.TrxNo = response["ProdCode"];
+      (response : ResProductObj) => {
+        this.InputApvObj.TrxNo = response.ProdCode;
         this.IsReady = true;
       });
   }

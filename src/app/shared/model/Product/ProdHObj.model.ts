@@ -1,6 +1,8 @@
 export class ProdHObj {    
     ProdHId : number;
     ProdId : number;
+    ProdCode : string;
+    ProdStat : string;
     ProdVersion : number;
     StartDt : Date;
     EndDt : Date;
@@ -19,11 +21,12 @@ export class ProdHObj {
     ExecutionByUser : string;
     ReturnNotes : string;
     RowVersion : string[];
-    ProdCode : string;
 
     constructor() {
         this.ProdHId = 0;
         this.ProdId = 0;
+        this.ProdCode = "";
+        this.ProdStat = "";
         this.ProdVersion = 0;
         this.StartDt = new Date();
         this.EndDt = new Date();
@@ -42,6 +45,5 @@ export class ProdHObj {
         this.ExecutionByUser = "";
         this.ReturnNotes = "";
         this.RowVersion = [];
-        this.ProdCode = "";
     }
 }

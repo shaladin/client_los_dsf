@@ -11,14 +11,10 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class ProdHoReturnPagingComponent implements OnInit {
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) { }
+  inputPagingObj : UcPagingObj = new UcPagingObj();
+  constructor(private router: Router) { }
 
-  inputPagingObj;
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url="./assets/ucpaging/product/searchProductHOReturn.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
@@ -30,9 +26,7 @@ export class ProdHoReturnPagingComponent implements OnInit {
     this.inputPagingObj.whereValue.push(WVProdStatObj);
   }
 
-  EditButtonClick(e)
-  {
-    
+  EditButtonClick(e){
     if(e.RowObj.DraftProdHId == null)
     {
       AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_ADD],{ "ProdHId": e.RowObj.CurrentProdHId, "mode" : "edit", "source" : "return" });
