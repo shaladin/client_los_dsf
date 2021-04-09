@@ -14,37 +14,20 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ProdOfferingObj } from 'app/shared/model/Request/Product/ProdOfferingObj.model';
+import { ResProdOfferingHObj } from 'app/shared/model/Response/Product/ResProdOfferingObj.model';
 
 @Component({
   selector: 'app-prod-offering-add',
   templateUrl: './prod-offering-add.component.html'
 })
 export class ProdOfferingAddComponent implements OnInit {
-  businessDt: Date;
-  startActiveDt: any;
-
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private cookieService: CookieService) {
-    this.route.queryParams.subscribe(params => {
-      this.ProdOfferingHId = params["ProdOfferingHId"];
-      this.mode = params["mode"];
-      this.source = params["source"];
-      if (this.mode == "edit") {
-        var tempCrit = new CriteriaObj();
-        tempCrit.propName = this.key;
-        tempCrit.restriction = "Eq";
-        tempCrit.value = this.ProdOfferingHId.toString();
-        this.criteria.push(tempCrit);
-      }
-    })
-  }
-
+  BusinessDt: Date;
+  StartActiveDt: Date;
   source: string = "";
   ProductName: string ="";
   mode: string = "add";
-  key: any;
-  criteria: CriteriaObj[] = [];
   prodOfferingObj: ProdOfferingObj;
-  resultData: any;
+  ResProdOfferingHObj: ResProdOfferingHObj = new ResProdOfferingHObj();
   ProdOfferingId: number;
   inputLookupObj: any;
   ProdOfferingHId: number;
@@ -57,16 +40,30 @@ export class ProdOfferingAddComponent implements OnInit {
     EndDt: ['', Validators.required],
   });
 
+  constructor(private router: Router, 
+              private route: ActivatedRoute, 
+              private http: HttpClient, 
+              private fb: FormBuilder, 
+              private toastr: NGXToastrService, 
+              private cookieService: CookieService
+  ) {
+    this.route.queryParams.subscribe(params => {
+      this.ProdOfferingHId = params["ProdOfferingHId"];
+      this.mode = params["mode"];
+      this.source = params["source"];
+    })
+  }
+
   ngOnInit() {
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlEnviPaging = environment.losUrl;
     this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
 
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
-    this.businessDt.setDate(this.businessDt.getDate());
-    this.startActiveDt = new Date(context[CommonConstant.BUSINESS_DT]);
-    this.startActiveDt.setDate(this.businessDt.getDate());
+    this.BusinessDt = new Date(context[CommonConstant.BUSINESS_DT]);
+    this.BusinessDt.setDate(this.BusinessDt.getDate());
+    this.StartActiveDt = new Date(context[CommonConstant.BUSINESS_DT]);
+    this.StartActiveDt.setDate(this.BusinessDt.getDate());
     var currOfcCode = context["OfficeCode"];
     if (currOfcCode == CommonConstant.HeadOffice) {
       this.inputLookupObj.urlJson = "./assets/uclookup/product/lookupProductForHO.json";
@@ -98,29 +95,28 @@ export class ProdOfferingAddComponent implements OnInit {
 
       this.ProdOfferingForm.controls.ProdOfferingCode.disable();
       this.http.post(URLConstant.GetProductOfferingMainInfo, {Id: this.ProdOfferingHId}).subscribe(
-        (response) => {
-          this.resultData = response;
-          this.inputLookupObj.nameSelect = this.resultData.ProdName;
-          this.inputLookupObj.jsonSelect = { ProdName: this.resultData.ProdName, CurrentProdHId: this.resultData.ProdHId };
-          this.ProductName = this.resultData.ProdName;
+        (response : ResProdOfferingHObj) => {
+          this.ResProdOfferingHObj = response;
+          this.inputLookupObj.nameSelect = this.ResProdOfferingHObj.ProdName;
+          this.inputLookupObj.jsonSelect = { ProdName: this.ResProdOfferingHObj.ProdName, CurrentProdHId: this.ResProdOfferingHObj.ProdHId };
+          this.ProductName = this.ResProdOfferingHObj.ProdName;
           this.ProdOfferingForm.patchValue({
-            ProdOfferingCode: this.resultData.ProdOfferingCode,
-            ProdOfferingName: this.resultData.ProdOfferingName,
-            ProdOfferingDescr: this.resultData.ProdOfferingDescr,
-            StartDt: formatDate(this.resultData['StartDt'], 'yyyy-MM-dd', 'en-US'),
-            EndDt: formatDate(this.resultData['EndDt'], 'yyyy-MM-dd', 'en-US'),
+            ProdOfferingCode: this.ResProdOfferingHObj.ProdOfferingCode,
+            ProdOfferingName: this.ResProdOfferingHObj.ProdOfferingName,
+            ProdOfferingDescr: this.ResProdOfferingHObj.ProdOfferingDescr,
+            StartDt: formatDate(this.ResProdOfferingHObj.StartDt, 'yyyy-MM-dd', 'en-US'),
+            EndDt: formatDate(this.ResProdOfferingHObj.EndDt, 'yyyy-MM-dd', 'en-US'),
             
           })
           this.updateMinDtForEndDt();
-
         }
       );
     }
   }
 
   updateMinDtForEndDt(){
-    this.startActiveDt = this.ProdOfferingForm.controls.StartDt.value;
-    if(this.ProdOfferingForm.controls.EndDt.value < this.startActiveDt){
+    this.StartActiveDt = this.ProdOfferingForm.controls.StartDt.value;
+    if(this.ProdOfferingForm.controls.EndDt.value < this.StartActiveDt){
       this.ProdOfferingForm.controls.EndDt.setValue("");
     }
   }
@@ -131,10 +127,10 @@ export class ProdOfferingAddComponent implements OnInit {
 
     if (this.ValidateDate()) {
       if (this.mode == "edit") {
-        this.prodOfferingObj.ProdOfferingCode = this.resultData.ProdOfferingCode;
-        this.prodOfferingObj.ProdOfferingId = this.resultData.ProdOfferingId;
-        this.prodOfferingObj.ProdHId =  this.resultData.ProdHId;
-        this.prodOfferingObj.RowVersion = this.resultData.RowVersion;
+        this.prodOfferingObj.ProdOfferingCode = this.ResProdOfferingHObj.ProdOfferingCode;
+        this.prodOfferingObj.ProdOfferingId = this.ResProdOfferingHObj.ProdOfferingId;
+        this.prodOfferingObj.ProdHId =  this.ResProdOfferingHObj.ProdHId;
+        this.prodOfferingObj.RowVersion = this.ResProdOfferingHObj.RowVersion;
         this.prodOfferingObj.ProdOfferingHId = this.ProdOfferingHId;
         this.prodOfferingObj.ProdName = this.ProductName;
         this.http.post(URLConstant.EditProdOffering, this.prodOfferingObj).subscribe(

@@ -13,7 +13,12 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import { ResGetKvpRefFinMapByLobCode } from 'app/shared/model/Response/Product/ResGetKvpRefFinMapByLobCode.Model';
+import { ResGetKvpRefFinMapByLobCode } from 'app/shared/model/Response/Product/ResGetKvpRefFinMapByLobCode.model';
+import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.Model';
+import { ResGetProductHOComponentGroupedObj } from 'app/shared/model/Response/Product/ResGetProdCompntObj.model';
+import { ReqGetProdCompntObj } from 'app/shared/model/Request/Product/ReqGetProdCompntObj.model';
+import { ReqCopyProductObj, ReqListProductDetailObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
+
 
 @Component({
   selector: 'app-ho-general-data',
@@ -31,8 +36,11 @@ export class HoGeneralDataComponent implements OnInit {
   StateSave: string;
   LOBSelected: string ="";
   LOBDescrSelected: string="";
-  inputLookUpObj: InputLookupObj = new InputLookupObj();
   source: string = "";
+  inputLookUpObj: InputLookupObj = new InputLookupObj();
+  ReqGetProdCompntObj : ReqGetProdCompntObj;
+  ReqListProductDetailObj: ReqListProductDetailObj;
+  ReqCopyProductObj: ReqCopyProductObj;
 
   dropdownSettings: IDropdownSettings = {
     singleSelection: false,
@@ -215,8 +223,8 @@ export class HoGeneralDataComponent implements OnInit {
 
   async PopulateInstallmentSchedule() {
     await this.http.post(URLConstant.GetListKvpInstSchmByLobCode, { Code: this.LOBSelected }).toPromise().then(
-      (response) => {
-        var result = response[CommonConstant.ReturnObj];
+      (response : GenericKeyValueListObj) => {
+        var result = response.ReturnObject;
         this.dictMultiOptions["INST_SCHM"] = new Array();
         this.selectedMultiDDLItems["INST_SCHM"] = new Array();
 
@@ -228,21 +236,21 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   LoadProdComponent(ProdHId, CompGroups, IsFilterBizTmpltCode, Lob) {
-    var ProdHOComponent = {
-      ProdHId: ProdHId,
-      GroupCodes: CompGroups.split(","),
-      IsFilterBizTmpltCode: IsFilterBizTmpltCode,
-      Lob: Lob,
-      RowVersion: ""
-    }
-    this.http.post(URLConstant.GetProductHOComponentGrouped, ProdHOComponent).toPromise().then(
-      async (response) => {
+    this.ReqGetProdCompntObj = new ReqGetProdCompntObj();
+    this.ReqGetProdCompntObj.ProdHId = ProdHId;
+    this.ReqGetProdCompntObj.GroupCodes = CompGroups.split(",");
+    this.ReqGetProdCompntObj.IsFilterBizTmpltCode = IsFilterBizTmpltCode;
+    this.ReqGetProdCompntObj.Lob = Lob;
+    this.ReqGetProdCompntObj.RowVersion = "";
+
+    this.http.post(URLConstant.GetProductHOComponentGrouped, ReqGetProdCompntObj).toPromise().then(
+      async (response : ResGetProductHOComponentGroupedObj) => {
         var fa_group = this.FormProdComp.controls['groups'] as FormArray;
         while(fa_group.length){
           fa_group.removeAt(0);
         }
-        for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
-          var group = response[CommonConstant.ReturnObj][i];
+        for (var i = 0; i < response.ReturnObject.length; i++) {
+          var group = response.ReturnObject[i];
           var fa_group = this.FormProdComp.controls['groups'] as FormArray;
           fa_group.push(this.addGroup(group.GroupCode, group.GroupName));
 
@@ -321,17 +329,14 @@ export class HoGeneralDataComponent implements OnInit {
       list[i].RowVersion = "";
     }
 
-    var objPost = {
-      ProdHId: this.ProdHId,
-      ProductDetails: list
-    }
-
-    return objPost;
+    this.ReqListProductDetailObj = new ReqListProductDetailObj();
+    this.ReqListProductDetailObj.ProdHId = this.ProdHId;
+    this.ReqListProductDetailObj.ProductDetails = list;
   }
 
   SaveForm() {
-    var objPost = this.BuildReqProdDetail();
-    this.http.post(URLConstant.AddOrEditProductDetail, objPost).subscribe(
+    this.BuildReqProdDetail();
+    this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.BackToPaging();
@@ -340,8 +345,7 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   NextDetail() {
-    var objPost = this.BuildReqProdDetail();
-    this.http.post(URLConstant.AddOrEditProductDetail, objPost).subscribe(
+    this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.wizard.goToNextStep();
@@ -368,8 +372,10 @@ export class HoGeneralDataComponent implements OnInit {
     }
     else {
       if (confirm('This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?')) {
-        
-        this.http.post(URLConstant.CopyProduct, { prodHId: this.ProdHId, fromProdId: this.inputLookUpObj.jsonSelect["ProdId"] }).subscribe(
+        this.ReqCopyProductObj = new ReqCopyProductObj();
+        this.ReqCopyProductObj.ProdHId = this.ProdHId;
+        this.ReqCopyProductObj.FromProdId = this.inputLookUpObj.jsonSelect["ProdId"]
+        this.http.post(URLConstant.CopyProduct, this.ReqCopyProductObj).subscribe(
           (response) => {
             this.toastr.successMessage("Product Copied Successfully");
             window.location.reload();

@@ -1387,8 +1387,9 @@ export class URLConstant {
   public static ReviewProductNew = environment.losUrl + "/Product/ReviewProductNew";
   public static GetProductById = environment.losUrl + "/Product/GetProductById";
   public static GetProductByHId = environment.losUrl + "/Product/GetProductByHId";
-  public static  CopyProduct = environment.losUrl + "/Product/CopyProduct";
-  
+  public static CopyProduct = environment.losUrl + "/Product/CopyProduct";
+  public static SubmitProduct = environment.losUrl + "/Product/SubmitProduct"
+
   //PRODUCT OFFERING
   public static GetProductOfferingMainInfo = environment.losUrl + "/ProductOffering/GetProductOfferingMainInfo";
   public static AddProdOffering = environment.losUrl + "/ProductOffering/AddProdOffering";
