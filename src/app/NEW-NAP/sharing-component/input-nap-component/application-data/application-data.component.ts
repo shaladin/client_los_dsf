@@ -136,6 +136,11 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    if(this.BizTemplateCode == CommonConstant.OPL){
+      this.NapAppModelForm.controls.InterestType.clearValidators();
+      this.NapAppModelForm.controls.InterestType.updateValueAndValidity();
+    }
+
     this.defaultSlikSecEcoCode = CommonConstant.DefaultSlikSecEcoCode;
     this.ListCrossAppObj["appId"] = this.appId;
     this.ListCrossAppObj["result"] = [];
@@ -587,15 +592,11 @@ export class ApplicationDataComponent implements OnInit {
     temp.FloatingPeriodCode = this.NapAppModelForm.controls.FloatingPeriod.value;
     temp.MrWopCode = this.NapAppModelForm.controls.MrWopCode.value;
     temp.MrCustNotifyOptCode = this.NapAppModelForm.controls.MrCustNotifyOptCode.value;
-    temp.CharaCredit = this.NapAppModelForm.controls.CharaCredit.value;
+    temp.CharaCredit = this.NapAppModelForm.getRawValue().CharaCredit;
     temp.PrevAgrNo = this.NapAppModelForm.controls.PrevAgrNo.value;
     temp.WayRestructure = this.NapAppModelForm.controls.WayRestructure.value;
-    temp.MrSlikSecEcoCode = this.NapAppModelForm.controls.MrSlikSecEcoCode.value;
+    temp.MrSlikSecEcoCode = this.NapAppModelForm.getRawValue().MrSlikSecEcoCode;
     temp.RowVersion = this.resultResponse.RowVersion;
-    if (this.BizTemplateCode == CommonConstant.OPL) {
-      temp.ApplicationNotes = this.NapAppModelForm.controls.ApplicationNotes.value;
-      temp.IsRos = true;
-    }
     if (this.NapAppModelForm.controls.MouCustId.value == "null") {
       temp.MouCustId = "";
     }
@@ -628,6 +629,7 @@ export class ApplicationDataComponent implements OnInit {
     }
     if (this.BizTemplateCode == CommonConstant.OPL) {
       temp.MrInstSchemeCode = CommonConstant.INST_SCHM_REGULAR_FIXED;
+      temp.InterestType = CommonConstant.InterestTypeFixed;
     }
     return temp;
   }
