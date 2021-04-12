@@ -1,15 +1,14 @@
 import { environment } from "environments/environment";
-import { Component, OnInit, ViewChild, Input } from "@angular/core";
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, Input } from "@angular/core";
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
-import { CommonConstant } from "app/shared/constant/CommonConstant";
-import { ProductDetailObj } from "app/shared/model/Request/Product/ProductDetailObj.model";
-import { ResGetProdDCompntInfoObj, ResProdHVersionObj } from "app/shared/model/Response/Product/ResGetProdObj.model";
+import { ResGetProdDCompntInfoObj, ResProdDObj, ResProdHVersionObj } from "app/shared/model/Response/Product/ResGetProdObj.model";
 import { ResGetProdBranchMbrObj } from "app/shared/model/Response/Product/ResGetProdBranchMbrObj.model";
 import { ReqDownloadRuleObj } from "app/shared/model/Request/Product/ReqDownloadRuleObj.model";
+import { ReqGetProdCompntObj } from "app/shared/model/Request/Product/ReqGetProdCompntObj.model";
 
 @Component({
   selector: 'app-prod-ho-view',
@@ -19,13 +18,13 @@ export class ProdHoViewComponent implements OnInit {
 
   @Input() inputProdHId;
   ProdHId: number;
-  ProductDetailObj: ProductDetailObj;
+  ProductDetailObj: ReqGetProdCompntObj = new ReqGetProdCompntObj();
   GenData: any;
   ProdCompGen: any;
   ProdCompNonGen: any;
   ProdBranchMbr: any;
   ProdVersion: any;
-  ProdComp: any;
+  ProdComp: Array<ResProdDObj> = new Array<ResProdDObj>();
   IsLoaded: boolean = false;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   DlRuleObj  : ReqDownloadRuleObj = new ReqDownloadRuleObj();
@@ -57,12 +56,11 @@ export class ProdHoViewComponent implements OnInit {
     //** Office Member **//
     this.http.post<ResGetProdBranchMbrObj>(URLConstant.GetListProdBranchOfficeMbrByProdHId, {Id : this.ProdHId}).subscribe(
       response => {
-        this.ProdBranchMbr = response.ReturnObj;
+        this.ProdBranchMbr = response.ReturnObject;
       }
     );
 
     //** Product Component **//
-    this.ProductDetailObj = new ProductDetailObj();
     this.ProductDetailObj.ProdHId = this.ProdHId;
     this.ProductDetailObj.GroupCodes = ['GEN', 'SCHM', 'SCORE', 'RULE', 'OTHR', 'LOS'];
     await this.http.post<ResGetProdDCompntInfoObj>(URLConstant.GetProductDetailComponentInfo, this.ProductDetailObj).toPromise().then(

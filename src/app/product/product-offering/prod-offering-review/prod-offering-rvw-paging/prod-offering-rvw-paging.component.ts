@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
@@ -10,11 +9,11 @@ import { environment } from 'environments/environment';
 })
 export class ProdOfferingRvwPagingComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
-  inputPagingObj: any;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
+  
+  constructor() { }
   
   ngOnInit() {
-    this.inputPagingObj =new UcPagingObj();
     this.inputPagingObj._url="./assets/ucpaging/product/searchProductOfferingReview.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;

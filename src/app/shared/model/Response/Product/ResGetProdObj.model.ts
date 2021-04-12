@@ -45,21 +45,23 @@ export class ResGetProdDCompntInfoObj {
 
 class ResProdDCompntObj
 {
-    ProdOffComponents : ResProdDObj
+    ProdOffComponents : Array<ResProdDObj>
 
     constructor(){
-        this.ProdOffComponents = new ResProdDObj();
+        this.ProdOffComponents = new Array<ResProdDObj>();
     }
 }
 
-class ResProdDObj {
+export class ResProdDObj {
     GroupCode: string;
-    GroupName: string;
-    Components: Array<ProdDObj>;
+    ProdCompntName: string;
+    CompntValueDesc: string;
+    MrProdBehaviourCode: string;
 
     constructor(){
         this.GroupCode = "";
-        this.GroupName = "";
-        this.Components = new Array<ProdDObj>();
+        this.ProdCompntName = "";
+        this.CompntValueDesc = "";
+        this.MrProdBehaviourCode = "";
     }
 }

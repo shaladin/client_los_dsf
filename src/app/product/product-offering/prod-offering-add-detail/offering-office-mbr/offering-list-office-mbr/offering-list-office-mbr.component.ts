@@ -3,12 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { UCSearchComponent } from '@adins/ucsearch';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from 'environments/environment';
-import { empty } from 'rxjs';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ResGetListProdOfferingBranchMbrObj, ResGetProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from 'app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model';
+
 @Component({
   selector: 'app-offering-list-office-mbr',
   templateUrl: './offering-list-office-mbr.component.html'
@@ -18,7 +17,10 @@ export class OfferingListOfficeMbrComponent implements OnInit {
   @ViewChild(UCSearchComponent) UCSearchComponent;
   @Input() ListOfficeMemberObjInput: any;
   @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
-  resultData;
+  ListProdOfferingBranchMbr : Array<ResProdOfferingBranchOfficeMbrObj> = new Array<ResProdOfferingBranchOfficeMbrObj>();
+  ProdOfferingHId: number;
+  source: string = "";
+
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -30,39 +32,28 @@ export class OfferingListOfficeMbrComponent implements OnInit {
     });
   }
 
-  pageNow;
-  pageSize;
-  apiUrl;
-  ProdOfferingHId: number;
-  source: string = "";
-
   ngOnInit() {
-    this.pageNow = 1;
-    this.pageSize = 10;
-    this.apiUrl = environment.FoundationR3Url + URLConstant.GetPagingObjectBySQL;
     this.ProdOfferingHId = this.ListOfficeMemberObjInput["ProdOfferingHId"];
 
     this.http.post(URLConstant.GetListProdOfferingBranchOfficeMbrByProdHId, {Id : this.ProdOfferingHId}).subscribe(
-      (response) => {
-        this.resultData = response[CommonConstant.ReturnObj];
-
+      (response : ResGetListProdOfferingBranchMbrObj) => {
+        this.ListProdOfferingBranchMbr = response.ReturnObject;
       }
     );
   }
 
   addOfficeMember() {
-    console.log("ADD")
     // var tempIsOn = false;
     var temp = [];
     var obj;
-    if (this.resultData == empty) {
+    if (this.ListProdOfferingBranchMbr.length == 0) {
       obj = {
         isOn: false,
         result: []
       }
     } else {
-      for (var i = 0; i < this.resultData.length; i++) {
-        temp.push(this.resultData[i].OfficeCode);
+      for (var i = 0; i < this.ListProdOfferingBranchMbr.length; i++) {
+        temp.push(this.ListProdOfferingBranchMbr[i].OfficeCode);
       }
       obj = {
         isOn: false,
@@ -71,24 +62,6 @@ export class OfferingListOfficeMbrComponent implements OnInit {
     }
 
     this.componentIsOn.emit(obj);
-  }
-
-  orderByKey;
-  orderByValue
-  searchSort(ev: any) {
-    if (this.resultData != null) {
-      if (this.orderByKey == ev.target.attributes.name.nodeValue) {
-        this.orderByValue = !this.orderByValue
-      } else {
-        this.orderByValue = true
-      }
-      this.orderByKey = ev.target.attributes.name.nodeValue
-      let order = {
-        key: this.orderByKey,
-        value: this.orderByValue
-      }
-      this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
-    }
   }
 
   deleteFromList(ev: any) {
@@ -104,8 +77,8 @@ export class OfferingListOfficeMbrComponent implements OnInit {
 
       this.http.post(URLConstant.DeleteProdOfferingOfficeMbr, obj).subscribe(
         (response) => {
-          var idx = this.resultData.findIndex(x => x.ProdOfferingBranchMbrId == ev.ProdOfferingBranchMbrId);
-          if (idx > -1) this.resultData.splice(idx, 1);
+          var idx = this.ListProdOfferingBranchMbr.findIndex(x => x.ProdOfferingBranchMbrId == ev.ProdOfferingBranchMbrId);
+          if (idx > -1) this.ListProdOfferingBranchMbr.splice(idx, 1);
           this.toastr.successMessage(response["message"]);
         }
       );
@@ -113,13 +86,11 @@ export class OfferingListOfficeMbrComponent implements OnInit {
   }
 
   DoneForm() {
-    this.http.post(environment.losUrl + "/ProductOffering/SubmitProdOffering", { ProdOfferingHId: this.ProdOfferingHId }).subscribe(
+    this.http.post(URLConstant.SubmitProdOffering, { Id: this.ProdOfferingHId }).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
       }
     );
-    this.toastr.successMessage("Submitted");
-    this.toastr.successMessage("Submitted");
     this.BackToPaging();
   }
 

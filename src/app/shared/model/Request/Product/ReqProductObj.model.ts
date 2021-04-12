@@ -10,7 +10,7 @@ export class ReqProductObj {
     constructor() {
         this.ProdId = 0;
         this.ProdCode = "";
-        this.ProdName = "";7
+        this.ProdName = "";
         this.ProdDescr = "";
         this.StartDt = new Date();
         this.EndDt = new Date();

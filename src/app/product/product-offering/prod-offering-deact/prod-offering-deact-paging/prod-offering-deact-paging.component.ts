@@ -8,12 +8,11 @@ import { URLConstant } from "app/shared/constant/URLConstant";
   templateUrl: './prod-offering-deact-paging.component.html'
 })
 export class ProdOfferingDeactPagingComponent implements OnInit {
-  inputPagingObj: any;
-  arrCrit: any;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
+  
   constructor() { }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/product/searchProductOfferingDeactivate.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;

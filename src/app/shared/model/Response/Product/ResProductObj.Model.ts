@@ -22,5 +22,4 @@ export class ResProductObj {
         this.ProdStat = "";
         this.RowVersion = "";
     }
-
 }

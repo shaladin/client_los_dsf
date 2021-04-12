@@ -1,3 +1,5 @@
+import { ReqRFAObj } from "../RFA/ReqRFAObj.model";
+
 export class ReqListProductDetailObj {
     ProdHId : number;
     ProductDetails : Array<ReqProductDetailDomainObj>;
@@ -57,5 +59,19 @@ export class ReqUpdateProductPostApvObj {
         this.Notes = "";
         this.Reason = "";
         this.ReasonType = "";
+    }
+}
+
+export class ReqReviewProductObj {
+    ProdHId : number;
+    ProdId : number;
+    WfTaskListId: number;
+    RequestRFAObj : ReqRFAObj;
+
+    constructor(){
+        this.ProdHId = 0;
+        this.ProdId = 0;
+        this.WfTaskListId = 0;
+        this.RequestRFAObj = new ReqRFAObj();
     }
 }

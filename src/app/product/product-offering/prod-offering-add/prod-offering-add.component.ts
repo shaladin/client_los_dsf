@@ -13,7 +13,7 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ProdOfferingObj } from 'app/shared/model/Request/Product/ProdOfferingObj.model';
+import { ReqAddEditProdOfferingObj } from 'app/shared/model/Request/Product/ReqAddEditProdOfferingObj.model';
 import { ResProdOfferingHObj } from 'app/shared/model/Response/Product/ResProdOfferingObj.model';
 
 @Component({
@@ -26,7 +26,7 @@ export class ProdOfferingAddComponent implements OnInit {
   source: string = "";
   ProductName: string ="";
   mode: string = "add";
-  prodOfferingObj: ProdOfferingObj;
+  ReqAddEditProdOfferingObj: ReqAddEditProdOfferingObj = new ReqAddEditProdOfferingObj();
   ResProdOfferingHObj: ResProdOfferingHObj = new ResProdOfferingHObj();
   ProdOfferingId: number;
   inputLookupObj: any;
@@ -122,33 +122,31 @@ export class ProdOfferingAddComponent implements OnInit {
   }
 
   SaveForm() {
-    this.prodOfferingObj = new ProdOfferingObj();
-    this.prodOfferingObj = this.ProdOfferingForm.value;
+    this.ReqAddEditProdOfferingObj = this.ProdOfferingForm.value;
 
     if (this.ValidateDate()) {
       if (this.mode == "edit") {
-        this.prodOfferingObj.ProdOfferingCode = this.ResProdOfferingHObj.ProdOfferingCode;
-        this.prodOfferingObj.ProdOfferingId = this.ResProdOfferingHObj.ProdOfferingId;
-        this.prodOfferingObj.ProdHId =  this.ResProdOfferingHObj.ProdHId;
-        this.prodOfferingObj.RowVersion = this.ResProdOfferingHObj.RowVersion;
-        this.prodOfferingObj.ProdOfferingHId = this.ProdOfferingHId;
-        this.prodOfferingObj.ProdName = this.ProductName;
-        this.http.post(URLConstant.EditProdOffering, this.prodOfferingObj).subscribe(
+        this.ReqAddEditProdOfferingObj.ProdOfferingCode = this.ResProdOfferingHObj.ProdOfferingCode;
+        this.ReqAddEditProdOfferingObj.ProdOfferingId = this.ResProdOfferingHObj.ProdOfferingId;
+        this.ReqAddEditProdOfferingObj.ProdHId =  this.ResProdOfferingHObj.ProdHId;
+        this.ReqAddEditProdOfferingObj.RowVersion = this.ResProdOfferingHObj.RowVersion;
+        this.ReqAddEditProdOfferingObj.ProdOfferingHId = this.ProdOfferingHId;
+        this.ReqAddEditProdOfferingObj.ProdName = this.ProductName;
+        this.http.post<ResProdOfferingHObj>(URLConstant.EditProdOffering, this.ReqAddEditProdOfferingObj).subscribe(
           response => {
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_ADD_DETAIL],{ "ProdOfferingId": response["ProdOfferingId"], "ProdOfferingHId": response["DraftProdOfferingHId"], source: this.source });
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_ADD_DETAIL],{ "ProdOfferingId": response.ProdOfferingId, "ProdOfferingHId": response.DraftProdOfferingHId, source: this.source });
           }
         );
       }
       else {
-
-        this.prodOfferingObj.ProdOfferingId = "0";
-        this.prodOfferingObj.ProdHId = this.inputLookupObj.jsonSelect.CurrentProdHId;
-        this.prodOfferingObj.RowVersion = "";
-        this.http.post(URLConstant.AddProdOffering, this.prodOfferingObj).subscribe(
+        this.ReqAddEditProdOfferingObj.ProdOfferingId = 0;
+        this.ReqAddEditProdOfferingObj.ProdHId = this.inputLookupObj.jsonSelect.CurrentProdHId;
+        this.ReqAddEditProdOfferingObj.RowVersion = "";
+        this.http.post<ResProdOfferingHObj>(URLConstant.AddProdOffering, this.ReqAddEditProdOfferingObj).subscribe(
           response => {
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_ADD_DETAIL],{ "ProdOfferingId": response["ProdOfferingId"], "ProdOfferingHId": response["DraftProdOfferingHId"], source: this.source });
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_ADD_DETAIL],{ "ProdOfferingId": response.ProdOfferingId, "ProdOfferingHId": response.DraftProdOfferingHId, source: this.source });
           }
         );
       }

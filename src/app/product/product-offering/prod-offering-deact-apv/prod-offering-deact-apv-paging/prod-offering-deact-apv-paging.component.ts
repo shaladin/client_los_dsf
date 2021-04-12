@@ -23,20 +23,18 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class ProdOfferingDeactApvPagingComponent implements OnInit {
 
-  inputPagingObj: any;
-  arrCrit: any;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
+  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
   constructor(private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) { }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/product/searchProductOffDeactApv.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOffDeactApv.json";
 
-    this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
@@ -57,7 +55,6 @@ export class ProdOfferingDeactApvPagingComponent implements OnInit {
     critObj.propName = 'CURRENT_USER_ID';
     critObj.value = this.userContext.UserName;
     this.arrCrit.push(critObj);
-
 
     critObj = new CriteriaObj();
     critObj.DataType = 'text';

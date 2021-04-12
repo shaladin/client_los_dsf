@@ -53,7 +53,7 @@ export class HoListOfficeMbrComponent implements OnInit {
 
     this.http.post(URLConstant.GetListProdBranchOfficeMbrByProdHId, {Id : this.ListOfficeMemberObjInput["ProdHId"]}).subscribe(
       (response: ResGetProdBranchMbrObj) => {
-        this.resultData = response.ReturnObj;
+        this.resultData = response.ReturnObject;
       }
     );
   }

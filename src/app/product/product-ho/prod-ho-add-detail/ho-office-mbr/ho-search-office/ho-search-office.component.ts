@@ -17,7 +17,7 @@ export class HoSearchOfficeComponent implements OnInit {
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
   @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
   @Input() ListOfficeMemberObjInput: any;
-  ReqListProdBranchMbrObj : ReqListProdBranchMbrObj;
+  ReqListProdBranchMbrObj : ReqListProdBranchMbrObj = new ReqListProdBranchMbrObj();
 
   constructor(
     private http: HttpClient,

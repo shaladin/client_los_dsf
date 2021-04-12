@@ -10,8 +10,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqProductObj } from 'app/shared/model/Request/Product/ReqProductObj.model';
-import { ResProductObj } from 'app/shared/model/Response/Product/ResProductObj.Model';
 import { ResGetProductHObj } from 'app/shared/model/Response/Product/ResGetProdObj.model';
+import { ResProductObj } from 'app/shared/model/Response/Product/ResProductObj.Model';
 
 @Component({
   selector: 'app-prod-ho-add',
@@ -21,7 +21,7 @@ export class ProdHoAddComponent implements OnInit {
   ProdHId: number;
   mode: string = 'add';
   source: string = '';
-  ResultResponse: ResGetProductHObj;
+  ResultResponse: ResGetProductHObj = new ResGetProductHObj();
   ReqProductObj: ReqProductObj = new ReqProductObj();
   BusinessDt: Date;
   StartActiveDt: Date;
@@ -99,6 +99,11 @@ export class ProdHoAddComponent implements OnInit {
     }
 
     if (endDate <= businessDate) {
+      this.toastr.warningMessage("End Date Must be Greater than Business Date");
+      return false;
+    }
+    
+    if (startDate <= businessDate) {
       this.toastr.warningMessage("End Date Must be Greater than Business Date");
       return false;
     }

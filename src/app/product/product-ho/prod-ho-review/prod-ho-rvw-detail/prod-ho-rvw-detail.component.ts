@@ -12,6 +12,7 @@ import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResProductObj } from 'app/shared/model/Response/Product/ResProductObj.Model';
+import { ReqReviewProductObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
 
 @Component({
   selector: 'app-prod-ho-rvw-detail',
@@ -26,7 +27,7 @@ export class ProdHoRvwDetailComponent implements OnInit {
     }
   }
   ApprovalCreateOutput: any;
-  InputObj: UcInputRFAObj;
+  InputObj: UcInputRFAObj = new UcInputRFAObj();
   IsReady: Boolean = false;
   ProdId: number;
   WfTaskListId: number;
@@ -34,7 +35,8 @@ export class ProdHoRvwDetailComponent implements OnInit {
   FormObj = this.fb.group({
     Notes: ['', Validators.required]
   });
-
+  ReqReviewProductObj : ReqReviewProductObj = new ReqReviewProductObj();
+  
   readonly CancelLink: string = NavigationConstant.PRODUCT_HO_REVIEW;
   constructor(private toastr: NGXToastrService, private http: HttpClient, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -50,7 +52,7 @@ export class ProdHoRvwDetailComponent implements OnInit {
     });
 
   }
-  apvBaseUrl = environment.ApprovalR3Url;
+
   ngOnInit() {
     this.ClaimTask(this.WfTaskListId);
     this.initInputApprovalObj();
@@ -88,13 +90,12 @@ export class ProdHoRvwDetailComponent implements OnInit {
   SaveForm() {
     this.ApprovalCreateOutput = this.createComponent.output();
     if (this.ApprovalCreateOutput != undefined) {
-      let data = {
-        ProdHId: this.ProdHId,
-        ProdId: this.ProdId,
-        WfTaskListId: this.WfTaskListId,
-        RequestRFAObj: this.ApprovalCreateOutput
-      }
-      this.http.post(URLConstant.ReviewProductNew, data).subscribe(
+      this.ReqReviewProductObj.ProdHId = this.ProdHId,
+      this.ReqReviewProductObj.ProdId = this.ProdId,
+      this.ReqReviewProductObj.WfTaskListId = this.WfTaskListId,
+      this.ReqReviewProductObj.RequestRFAObj = this.ApprovalCreateOutput
+
+      this.http.post(URLConstant.ReviewProductNew, this.ReqReviewProductObj).subscribe(
         (response) => {
           this.toastr.successMessage("Success");
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_REVIEW], {});

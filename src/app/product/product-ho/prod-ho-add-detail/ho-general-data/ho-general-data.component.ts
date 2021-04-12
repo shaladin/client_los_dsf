@@ -38,9 +38,9 @@ export class HoGeneralDataComponent implements OnInit {
   LOBDescrSelected: string="";
   source: string = "";
   inputLookUpObj: InputLookupObj = new InputLookupObj();
-  ReqGetProdCompntObj : ReqGetProdCompntObj;
-  ReqListProductDetailObj: ReqListProductDetailObj;
-  ReqCopyProductObj: ReqCopyProductObj;
+  ReqGetProdCompntObj : ReqGetProdCompntObj = new ReqGetProdCompntObj();
+  ReqListProductDetailObj: ReqListProductDetailObj = new ReqListProductDetailObj();
+  ReqCopyProductObj: ReqCopyProductObj = new ReqCopyProductObj();
 
   dropdownSettings: IDropdownSettings = {
     singleSelection: false,
@@ -243,7 +243,7 @@ export class HoGeneralDataComponent implements OnInit {
     this.ReqGetProdCompntObj.Lob = Lob;
     this.ReqGetProdCompntObj.RowVersion = "";
 
-    this.http.post(URLConstant.GetProductHOComponentGrouped, ReqGetProdCompntObj).toPromise().then(
+    this.http.post(URLConstant.GetProductHOComponentGrouped, this.ReqGetProdCompntObj).toPromise().then(
       async (response : ResGetProductHOComponentGroupedObj) => {
         var fa_group = this.FormProdComp.controls['groups'] as FormArray;
         while(fa_group.length){
@@ -345,6 +345,7 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   NextDetail() {
+    this.BuildReqProdDetail();
     this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
@@ -372,7 +373,6 @@ export class HoGeneralDataComponent implements OnInit {
     }
     else {
       if (confirm('This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?')) {
-        this.ReqCopyProductObj = new ReqCopyProductObj();
         this.ReqCopyProductObj.ProdHId = this.ProdHId;
         this.ReqCopyProductObj.FromProdId = this.inputLookUpObj.jsonSelect["ProdId"]
         this.http.post(URLConstant.CopyProduct, this.ReqCopyProductObj).subscribe(

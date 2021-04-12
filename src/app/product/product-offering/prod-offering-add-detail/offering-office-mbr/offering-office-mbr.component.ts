@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class OfferingOfficeMbrComponent implements OnInit {
 
-  isOn: any;
+  isOn: boolean;
   @Input() objInput: any;
   @Input() ProdHId: any;
   ListOfficeMemberObj: any = {};

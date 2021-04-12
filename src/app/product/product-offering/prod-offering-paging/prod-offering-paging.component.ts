@@ -12,15 +12,10 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class ProdOfferingPagingComponent implements OnInit {
 
-  inputPagingObj: any;
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) { }
+  inputPagingObj: UcPagingObj = new UcPagingObj();
+  constructor(private router: Router) { }
 
-  readonly AddLink: string = NavigationConstant.PROD_OFFERING_ADD;
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/product/searchProductOffering.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;

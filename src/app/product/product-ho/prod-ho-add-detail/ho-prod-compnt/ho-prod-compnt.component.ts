@@ -10,6 +10,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqDownloadRuleObj } from 'app/shared/model/Request/Product/ReqDownloadRuleObj.model';
+import { ReqListProductDetailObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
 @Component({
   selector: 'app-ho-prod-compnt',
   templateUrl: './ho-prod-compnt.component.html'
@@ -24,6 +25,7 @@ export class HoProdCompntComponent implements OnInit {
   StateSave : string;
   dictBehaviour: {[key: string]: any;} = {};
   DlRuleObj : ReqDownloadRuleObj = new ReqDownloadRuleObj();
+  ReqListProductDetailObj: ReqListProductDetailObj = new ReqListProductDetailObj();
 
   constructor(
     private router: Router,
@@ -193,17 +195,14 @@ export class HoProdCompntComponent implements OnInit {
       list[i].RowVersion = "";
     }
 
-    var objPost = {
-      ProdHId: this.ProdHId,
-      ProductDetails: list
-    }
-
-    return objPost;
+    this.ReqListProductDetailObj = new ReqListProductDetailObj();
+    this.ReqListProductDetailObj.ProdHId = this.ProdHId;
+    this.ReqListProductDetailObj.ProductDetails = list;
   }
 
   SaveForm() {
-    var objPost = this.BuildReqProdDetail();
-    this.http.post(URLConstant.AddOrEditProductDetail, objPost).subscribe(
+    this.BuildReqProdDetail();
+    this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.BackToPaging();
@@ -212,8 +211,8 @@ export class HoProdCompntComponent implements OnInit {
   }
 
   NextDetail() {
-    var objPost = this.BuildReqProdDetail();
-    this.http.post(URLConstant.AddOrEditProductDetail, objPost).subscribe(
+    this.BuildReqProdDetail();
+    this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.wizard.goToNextStep();

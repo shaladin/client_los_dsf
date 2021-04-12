@@ -12,45 +12,44 @@ import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ProdOfferingHDeactivateObj } from 'app/shared/model/Request/Product/ProdOfferingHDeactivateObj.model';
-import { ProductOfferingBranchMbrObj } from 'app/shared/model/Request/Product/ProductOfferingBranchMbrObj.model';
+import { ReqProdOfferingHDeactivationObj } from 'app/shared/model/Request/Product/ReqProdOfferingDeactivationObj.model';
+import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
+import { ResGetListProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from 'app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model';
 
 @Component({
   selector: 'app-prod-offering-deact-detail',
   templateUrl: './prod-offering-deact-detail.component.html'
 })
 export class ProdOfferingDeactDetailComponent implements OnInit {
-
-  prodOfferingHId: any;
-  prodOfferingHDeactivateObj: any;
-  resultData: any;
-  arrCrit: any;
-  getValueReasonModel: any;
-  allRefReasonMethod: any;
-  ProdOfferingBranchMemObj: any;
-  OfficeList: any;
-  ProdOfferingBranchUrl: any;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  prodOfferingId: number;
-  InputObj: UcInputRFAObj;
-  IsReady: boolean;
-  ProdOfferingHDeactForm = this.fb.group({
-    EffectiveDate: ['', Validators.required]
-  });
-  private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) { 
       // initially setter gets called with undefined
       this.createComponent = content;
     }
   }
+
+  prodOfferingHId: number;
+  prodOfferingHDeactivateObj: any;
+  resultData: any;
+  allRefReasonMethod: any;
+  OfficeList: Array<ResProdOfferingBranchOfficeMbrObj> = new Array<ResProdOfferingBranchOfficeMbrObj>();
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  prodOfferingId: number;
+  InputObj: UcInputRFAObj;
+  IsReady: boolean;
+  private createComponent: UcapprovalcreateComponent;
   ApprovalCreateOutput: any;
 
-  readonly CancelLink: string = NavigationConstant.PRODUCT_OFFERING_DEACTIVATE;
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
+  ProdOfferingHDeactForm = this.fb.group({
+    EffectiveDate: ['', Validators.required]
+  });
 
-    this.getValueReasonModel = URLConstant.GetListActiveRefReason;
-    this.ProdOfferingBranchUrl = URLConstant.GetListProdOfferingBranchOfficeMbrByProdHIdAndApp;
+  constructor(private router: Router, 
+              private route: ActivatedRoute, 
+              private http: HttpClient, 
+              private toastr: NGXToastrService, 
+              private fb: FormBuilder, 
+              private cookieService: CookieService) {
 
     this.route.queryParams.subscribe(params => {
       if (params["prodOfferingHId"] != null) {
@@ -67,20 +66,18 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
     this.viewGenericObj.viewEnvironment = environment.losUrl;
 
     var obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeProdDeactivate };
-    await this.http.post(this.getValueReasonModel, obj).toPromise().then(
-      (response) => {
-        if (response['ReturnObject'].length > 0) {
-          this.allRefReasonMethod = response['ReturnObject'];
-          this.ProdOfferingHDeactForm.patchValue({ Reason: response['ReturnObject'][0]['Key'] });
+    await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
+      (response : GenericKeyValueListObj) => {
+        if (response.ReturnObject.length > 0) {
+          this.allRefReasonMethod = response.ReturnObject;
+          this.ProdOfferingHDeactForm.patchValue({ Reason: response.ReturnObject[0]['Key'] });
         }
       });
 
-    this.ProdOfferingBranchMemObj = new ProductOfferingBranchMbrObj();
-    this.ProdOfferingBranchMemObj.ProdOfferingHId = this.prodOfferingHId;
-    this.http.post(this.ProdOfferingBranchUrl, this.ProdOfferingBranchMemObj).subscribe(
+    this.http.post<ResGetListProdOfferingBranchMbrObj>(URLConstant.GetListProdOfferingBranchOfficeMbrByProdHIdAndApp, {Id: this.prodOfferingHId}).subscribe(
       response => {
-        if (response['ReturnObject'].length > 0) {
-          this.OfficeList = response['ReturnObject'];
+        if (response.ReturnObject.length > 0) {
+          this.OfficeList = response.ReturnObject;
         }
       }
     );
@@ -120,7 +117,7 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
 
   SaveForm() {
     this.ApprovalCreateOutput = this.createComponent.output();
-    this.prodOfferingHDeactivateObj = new ProdOfferingHDeactivateObj();
+    this.prodOfferingHDeactivateObj = new ReqProdOfferingHDeactivationObj();
     this.prodOfferingHDeactivateObj = this.ProdOfferingHDeactForm.value;
     this.prodOfferingHDeactivateObj.EffectiveDate = this.ProdOfferingHDeactForm.controls.EffectiveDate.value;
     this.prodOfferingHDeactivateObj.Reason = this.ApprovalCreateOutput.ReasonCode;
