@@ -319,15 +319,23 @@ export class LifeInsuranceDataComponent implements OnInit {
     if (this.IsChecked) {
       if (this.checkSubject() == false) return;
       this.LifeInsObj.AppId = this.AppId;
-      this.LifeInsObj.RowVersion = this.result.RowVersion;
-      this.http.post(URLConstant.AddEditAppLifeInsH, this.LifeInsObj).subscribe(
-        response => {
-          this.toastr.successMessage(response["message"]);
-          // this.wizard.goToNextStep()
-          this.outputTab.emit();
-        });
+      if (this.mode == "add") {
+        this.http.post(URLConstant.AddAppLifeInsH, this.LifeInsObj).subscribe(
+          response => {
+            this.toastr.successMessage(response["message"]);
+            // this.wizard.goToNextStep()
+            this.outputTab.emit();
+          });
+      } else {
+        this.LifeInsObj.RowVersion = this.result.RowVersion;
+        this.http.post(URLConstant.EditAppLifeInsH, this.LifeInsObj).subscribe(
+          response => {
+            this.toastr.successMessage(response["message"]);
+            // this.wizard.goToNextStep()
+            this.outputTab.emit();
+          });
+      }
     } else {
-      this.LifeInsObj.AppLifeInsHId = this.AppLifeInsHId;
       this.http.post(URLConstant.DeleteAppLifeIns, { Id: this.AppLifeInsHId }).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);

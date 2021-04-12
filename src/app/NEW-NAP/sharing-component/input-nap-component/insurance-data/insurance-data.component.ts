@@ -203,20 +203,28 @@ export class InsuranceDataComponent implements OnInit {
     }
     this.setSaveObj(insuredBy);
 
-    if (this.IsMultiAsset = "false") {
-      this.http.post(URLConstant.AddEditInsuranceData, this.saveObj).subscribe(
+    // if (this.IsMultiAsset = "false") {
+    if (this.appInsuranceObj == undefined || this.appInsObjObj == undefined) {
+      this.http.post(URLConstant.AddInsuranceData, this.saveObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["Message"]);
+          this.outputTab.emit();
+        });
+    } else {
+      this.http.post(URLConstant.EditInsuranceData, this.saveObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
           this.outputTab.emit();
         });
     }
-    else {
-      this.http.post(URLConstant.AddEditInsuranceDataMultiAsset, this.saveObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["Message"]);
-          this.outputTab.emit();
-        });
-    }
+    // }
+    // else {
+    //   this.http.post(URLConstant.AddEditInsuranceDataMultiAsset, this.saveObj).subscribe(
+    //     (response) => {
+    //       this.toastr.successMessage(response["Message"]);
+    //       this.outputTab.emit();
+    //     });
+    // }
   }
 
   Cancel() {

@@ -10,6 +10,7 @@ import { NapAppReferantorModel } from 'app/shared/model/NapAppReferantor.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-referantor-data',
@@ -140,6 +141,14 @@ export class ReferantorDataComponent implements OnInit {
       });
   }
 
+  DeleteData(url){    
+    let tempObj = new GenericObj();
+    tempObj.Id = this.appReferantorObj.AppReferantorId;
+    this.http.post(url, tempObj).subscribe(
+      (response) => {
+      });
+  }
+
   ClickSave() {
     var url;
     if (this.ExistedData) {
@@ -153,7 +162,7 @@ export class ReferantorDataComponent implements OnInit {
       } else {
         // delete & go to paging
         url = URLConstant.DeleteAppReferantor;
-        this.SaveData(url);
+        this.DeleteData(url);
         // this.wizard.goToNextStep();
         this.toastr.successMessage('Remove Data');
         this.outputTab.emit();

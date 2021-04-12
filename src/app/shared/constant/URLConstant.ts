@@ -910,7 +910,11 @@ export class URLConstant {
   public static GetInsDataByAppIdAndAssetId = environment.losUrl + "/AppIns/GetInsDataByAppIdAndAssetId";
   public static GetInsDataByAppAssetId = environment.losUrl + "/AppIns/GetInsDataByAppAssetId";
   public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
+  public static AddInsuranceData = environment.losUrl + "/AppIns/AddInsuranceData";
+  public static EditInsuranceData = environment.losUrl + "/AppIns/EditInsuranceData";
   public static AddEditInsuranceDataMultiAsset = environment.losUrl + "/AppIns/AddEditInsuranceDataMultiAsset";
+  public static AddInsuranceDataMultiAsset = environment.losUrl + "/AppIns/AddInsuranceDataMultiAsset";
+  public static EditInsuranceDataMultiAsset = environment.losUrl + "/AppIns/EditInsuranceDataMultiAsset";
   public static GetListAppInsObjByAppIdForView = environment.losUrl + "/AppIns/GetListAppInsObjByAppIdForView";
   public static GetListAppInsObjByAgrmntIdForView = environment.losUrl + "/AppIns/GetListAppInsObjByAgrmntIdForView";
   public static GetAppInsObjViewDetail = environment.losUrl + "/AppIns/GetAppInsObjViewDetail";
