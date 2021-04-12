@@ -21,7 +21,7 @@ export class ProdHoAddComponent implements OnInit {
   ProdHId: number;
   mode: string = 'add';
   source: string = '';
-  ResultResponse: ResGetProductHObj = new ResGetProductHObj();
+  ProdHObj: ResGetProductHObj = new ResGetProductHObj();
   ReqProductObj: ReqProductObj = new ReqProductObj();
   BusinessDt: Date;
   StartActiveDt: Date;
@@ -64,13 +64,13 @@ export class ProdHoAddComponent implements OnInit {
       this.RefProductHOForm.controls.ProdCode.disable();
       this.http.post(URLConstant.GetProductMainInfo, { Id: this.ProdHId }).subscribe(
         (response: ResGetProductHObj) => {
-          this.ResultResponse = response;
+          this.ProdHObj = response;
           this.RefProductHOForm.patchValue({
-            ProdCode: this.ResultResponse.ProdCode,
-            ProdName: this.ResultResponse.ProdName,
-            ProdDescr: this.ResultResponse.ProdDescr,
-            StartDt: formatDate(this.ResultResponse.StartDt, 'yyyy-MM-dd', 'en-US'),
-            EndDt: formatDate(this.ResultResponse.EndDt, 'yyyy-MM-dd', 'en-US')
+            ProdCode: this.ProdHObj.ProdCode,
+            ProdName: this.ProdHObj.ProdName,
+            ProdDescr: this.ProdHObj.ProdDescr,
+            StartDt: formatDate(this.ProdHObj.StartDt, 'yyyy-MM-dd', 'en-US'),
+            EndDt: formatDate(this.ProdHObj.EndDt, 'yyyy-MM-dd', 'en-US')
           });
           this.updateMinDtForEndDt();
         }
@@ -105,27 +105,27 @@ export class ProdHoAddComponent implements OnInit {
 
   SaveForm() {
     this.ReqProductObj = this.RefProductHOForm.value;
+    if (!this.ValidateDate()) {
+      return false;
+    }
+    
     if (this.mode == "edit") {
-      if (this.ValidateDate()) {
-        this.ReqProductObj.ProdId = this.ResultResponse.ProdId;
-        this.ReqProductObj.ProdCode = this.ResultResponse.ProdCode;
-        this.ReqProductObj.RowVersion = this.ResultResponse.RowVersion;
-        this.http.post(URLConstant.EditProduct, this.ReqProductObj).subscribe(
-          (response: ResProductObj) => {
-            this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_ADD_DETAIL], { "ProdHId": response.DraftProdHId, "ProdId": response.ProdId, "mode": this.mode, "source": this.source });
-          }
-        );
-      }
+      this.ReqProductObj.ProdId = this.ProdHObj.ProdId;
+      this.ReqProductObj.ProdCode = this.ProdHObj.ProdCode;
+      this.ReqProductObj.RowVersion = this.ProdHObj.RowVersion;
+      this.http.post(URLConstant.EditProduct, this.ReqProductObj).subscribe(
+        (response: ResProductObj) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_ADD_DETAIL], { "ProdHId": response.DraftProdHId, "ProdId": response.ProdId, "mode": this.mode, "source": this.source });
+        }
+      );
     } else {
-      if (this.ValidateDate()) {
-        this.http.post(URLConstant.AddProduct, this.ReqProductObj).subscribe(
-          (response: ResProductObj) => {
-            this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_ADD_DETAIL], { "ProdHId": response.DraftProdHId, "ProdId": response.ProdId, "mode": this.mode, "source": this.source });
-          }
-        );
-      }
+      this.http.post(URLConstant.AddProduct, this.ReqProductObj).subscribe(
+        (response: ResProductObj) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_ADD_DETAIL], { "ProdHId": response.DraftProdHId, "ProdId": response.ProdId, "mode": this.mode, "source": this.source });
+        }
+      );
     }
   }
 
