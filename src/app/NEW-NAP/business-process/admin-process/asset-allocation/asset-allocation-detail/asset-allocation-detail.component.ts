@@ -1,15 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { Validators, FormBuilder, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { DeliveryOrderObj } from 'app/shared/model/DeliveryOrderObj.Model';
-import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
-import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocObj.Model';
-import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
-import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -42,7 +36,7 @@ export class AssetAllocationDetailComponent implements OnInit {
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params['AppId'];
-      this.TaskListId = params['TaskListId'];
+      this.TaskListId = params['WfTaskListId'];
     });
   }
 
@@ -61,30 +55,32 @@ export class AssetAllocationDetailComponent implements OnInit {
 
   SaveForm() {
     var listAsset = new Array();
-    var checkedAsset = this.AssetAllocationForm.controls["ListAsset"].value.filter(
-      asset => asset.IsChecked == true
-    );
-    if (checkedAsset.length < 1) {
+    var Assets = new Array();
+    console.log(this.AssetAllocationForm);
+    Assets = this.AssetAllocationForm.controls["ListAsset"].value;
+    console.log(Assets);
+    if (Assets.find(x => x['IsChecked']) == undefined) {
       this.toastr.warningMessage("Please Choose at least 1 Asset");
       return;
     }
-    for (let i = 0; i < checkedAsset.length; i++) {
-      var tempAsset = checkedAsset.filter(
-        asset => asset.AssetNo == checkedAsset[i].AssetNo
+    for (let i = 0; i < Assets.length; i++) {
+      var tempAsset = Assets.filter(
+        asset => asset.AssetNo == Assets[i].AssetNo
       );
       if (tempAsset.length > 1) {
-        this.toastr.warningMessage("Asset Number cant duplicate");
+        this.toastr.warningMessage("Asset Number can't duplicate");
         return;
       }
 
       var newAssetAlloc = {
-        AppAssetId: checkedAsset[i].AppAssetId,
-        AssetNo: checkedAsset[i].AssetNo,
-        SerialNo1: checkedAsset[i].ChassisNo,
-        SerialNo2: checkedAsset[i].EngineNo,
-        SerialNo3: checkedAsset[i].LicensePlateNo,
-        ManufacturingYear: checkedAsset[i].ManuYearAssetNumber,
-        Color: checkedAsset[i].ColorAssetNumber,
+        AppAssetId: Assets[i].AppAssetId,
+        AssetNo: Assets[i].AssetNo,
+        SerialNo1: Assets[i].ChassisNo,
+        SerialNo2: Assets[i].EngineNo,
+        SerialNo3: Assets[i].LicensePlateNo,
+        ManufacturingYear: Assets[i].ManuYearAssetNumber,
+        Color: Assets[i].ColorAssetNumber,
+        IsChecked: Assets[i].IsChecked
       };
       listAsset.push(newAssetAlloc);
     }
@@ -144,7 +140,6 @@ export class AssetAllocationDetailComponent implements OnInit {
               LicensePlateNo: response["AppAssetObjs"][i].SerialNo3,
               ColorAssetNumber: response["AppAssetObjs"][i].Color,
               ManuYearAssetNumber: response["AppAssetObjs"][i].ManufacturingYear,
-              AssetLocation: response["AppAssetObjs"][i].AssetLocation,
               AssetNo: response["AppAssetObjs"][i].AssetNo,
               FullAssetCode: response["AppAssetObjs"][i].FullAssetCode,
             };
@@ -194,8 +189,8 @@ export class AssetAllocationDetailComponent implements OnInit {
 
       this.dictAssetNumber[max + 1] = InputLookupAssetNumberObj;
       if (x.DecisionCode == "USE_EXISTING") {
-        //this.InputLookupAssetNumberObjs[max].jsonSelect = x;
-        //this.InputLookupAssetNumberObjs[max].nameSelect = x.FullAssetName;
+        this.InputLookupAssetNumberObjs[max].jsonSelect = x;
+        this.InputLookupAssetNumberObjs[max].nameSelect = x.FullAssetName;
       }
     }
   }
@@ -213,14 +208,13 @@ export class AssetAllocationDetailComponent implements OnInit {
         Decision: [appAssetObj.Decision],
         DeliveryDt: [appAssetObj.DeliveryDt],
 
-        StockAssetName: [appAssetObj.StockAssetName, [Validators.required, Validators.maxLength(100)]],
-        ChassisNo: [appAssetObj.ChassisNo, [Validators.required, Validators.maxLength(50)]],
-        EngineNo: [appAssetObj.EngineNo, [Validators.required, Validators.maxLength(50)]],
-        LicensePlateNo: [appAssetObj.LicensePlateNo, [Validators.required, Validators.maxLength(50)]],
-        ColorAssetNumber: [appAssetObj.ColorAssetNumber, [Validators.required, Validators.maxLength(50)]],
-        ManuYearAssetNumber: [appAssetObj.ManuYearAssetNumber, [Validators.required, Validators.maxLength(50)]],
-        AssetLocation: [appAssetObj.AssetLocation],
-        AssetNo: [appAssetObj.AssetNo, [Validators.required, Validators.maxLength(50)]],
+        StockAssetName: [appAssetObj.StockAssetName],
+        ChassisNo: [appAssetObj.ChassisNo],
+        EngineNo: [appAssetObj.EngineNo],
+        LicensePlateNo: [appAssetObj.LicensePlateNo],
+        ColorAssetNumber: [appAssetObj.ColorAssetNumber],
+        ManuYearAssetNumber: [appAssetObj.ManuYearAssetNumber],
+        AssetNo: [appAssetObj.AssetNo],
         IsChecked:[false]
       })
     }
@@ -236,14 +230,13 @@ export class AssetAllocationDetailComponent implements OnInit {
         Decision: [appAssetObj.Decision],
         DeliveryDt: [appAssetObj.DeliveryDt],
 
-        StockAssetName: [''],
-        ChassisNo: ['', [Validators.required, Validators.maxLength(50)]],
-        EngineNo: ['', [Validators.required, Validators.maxLength(50)]],
-        LicensePlateNo: ['', [Validators.required, Validators.maxLength(50)]],
-        ColorAssetNumber: ['', [Validators.required, Validators.maxLength(50)]],
-        ManuYearAssetNumber: ['', [Validators.required, Validators.maxLength(50)]],
-        AssetLocation: [''],
-        AssetNo: ['', [Validators.required, Validators.maxLength(50)]],
+        StockAssetName: [appAssetObj.StockAssetName ? appAssetObj.StockAssetName : ''],
+        ChassisNo: [appAssetObj.ChassisNo ? appAssetObj.ChassisNo : ''],
+        EngineNo: [appAssetObj.EngineNo ? appAssetObj.EngineNo : ''],
+        LicensePlateNo: [appAssetObj.LicensePlateNo ? appAssetObj.LicensePlateNo : ''],
+        ColorAssetNumber: [appAssetObj.ColorAssetNumber ? appAssetObj.ColorAssetNumber : ''],
+        ManuYearAssetNumber: [appAssetObj.ManuYearAssetNumber ? appAssetObj.ManuYearAssetNumber : ''],
+        AssetNo: [appAssetObj.AssetNo ? appAssetObj.AssetNo : ''],
         IsChecked: [false]
       })
     }
@@ -257,7 +250,6 @@ export class AssetAllocationDetailComponent implements OnInit {
       LicensePlateNo: event.SerialNo3,
       ColorAssetNumber: event.Color,
       ManuYearAssetNumber: event.ManufacturingYear,
-      AssetLocation: event.AssetLocation,
       AssetNo: event.AssetNo
     });
   }

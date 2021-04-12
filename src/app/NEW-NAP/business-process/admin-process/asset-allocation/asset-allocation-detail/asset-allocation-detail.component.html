@@ -13,7 +13,7 @@
         <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"> </lib-ucviewgeneric>
         <div class="px-3">
           <form class="form form-horizontal" [formGroup]="AssetAllocationForm"
-                (ngSubmit)="AssetAllocationForm.valid && SaveForm()" #enjiForm="ngForm">
+                (ngSubmit)="SaveForm()" #enjiForm="ngForm">
             <lib-ucSubsection [id]="'listAssetDataId'" [title]="'List of Asset'" [panel]="'listAssetData'">
             </lib-ucSubsection>
             <div id="listAssetData">
@@ -49,10 +49,8 @@
                         Serial No 3
                       </span>
                     </th>
-                    <th><span translate class="thead-header">Asset Location</span></th>
                   </tr>
                 </thead>
-                <!--<div formArrayName="ListAsset">-->
                 <tbody formArrayName="ListAsset">
                   <tr *ngIf="AssetAllocationForm.controls['ListAsset']['controls'].length == 0">
                     <td align="center" colspan="11">No data available</td>
@@ -93,12 +91,8 @@
                     <td [formGroupName]="i" class="text-center">
                       {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["LicensePlateNo"].value}}
                     </td>
-                    <td [formGroupName]="i" class="text-center">
-                      {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["AssetLocation"].value}}
-                    </td>
                   </tr>
                 </tbody>
-                <!--</div>-->
               </table>
 
             </div>
