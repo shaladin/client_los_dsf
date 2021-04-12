@@ -26,13 +26,12 @@ import { ReqCopyProductObj, ReqListProductDetailObj } from 'app/shared/model/Req
 })
 export class HoGeneralDataComponent implements OnInit {
 
-  @Input() objInput: any;
   FormProdComp: any;
   dictOptions: { [key: string]: any; } = {};
   dictMultiOptions: { [key: string]: any; } = {};
   selectedMultiDDLItems: { [key: string]: any; } = {};
-  ProdHId: number;
-  ProdId: number;
+  @Input() ProdHId: number;
+  @Input() ProdId: number;
   StateSave: string;
   LOBSelected: string ="";
   LOBDescrSelected: string="";
@@ -73,8 +72,6 @@ export class HoGeneralDataComponent implements OnInit {
       }
     );
 
-    this.ProdHId = this.objInput["ProdHId"];
-    this.ProdId = this.objInput["ProdId"];
     this.LoadProdComponent(this.ProdHId, "GEN", true, "");
 
     this.inputLookUpObj.urlJson = "./assets/uclookup/product/lookupProduct.json";
@@ -345,6 +342,7 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   NextDetail() {
+    this.BuildReqProdDetail();
     this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);

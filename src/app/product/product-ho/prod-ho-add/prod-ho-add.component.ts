@@ -116,14 +116,14 @@ export class ProdHoAddComponent implements OnInit {
       this.http.post(URLConstant.EditProduct, this.ReqProductObj).subscribe(
         (response: ResProductObj) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_ADD_DETAIL], { "ProdHId": response.DraftProdHId, "ProdId": response.ProdId, "mode": this.mode, "source": this.source });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_ADD_DETAIL], { "ProdHId": response.DraftProdHId, "ProdId": response.ProdId, "source": this.source });
         }
       );
     } else {
       this.http.post(URLConstant.AddProduct, this.ReqProductObj).subscribe(
         (response: ResProductObj) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_ADD_DETAIL], { "ProdHId": response.DraftProdHId, "ProdId": response.ProdId, "mode": this.mode, "source": this.source });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_ADD_DETAIL], { "ProdHId": response.DraftProdHId, "ProdId": response.ProdId, "source": this.source });
         }
       );
     }
