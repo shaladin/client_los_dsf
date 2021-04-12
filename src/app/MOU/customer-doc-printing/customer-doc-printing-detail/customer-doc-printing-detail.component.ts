@@ -56,10 +56,10 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
   }
 
   print(MouCustDocPrintId) {
-    var mouObj = { "MouCustDocPrintId": MouCustDocPrintId, "RowVersion": this.searchRowVersion(MouCustDocPrintId) };
+    var mouObj = { Id: MouCustDocPrintId, RowVersion: this.searchRowVersion(MouCustDocPrintId) };
     this.http.post(this.EditMouCustDocPrintSequenceNoUrl, mouObj).subscribe(
       response => {
-        var mouCustObj = { "Id": this.MouCustId };
+        var mouCustObj = { Id: this.MouCustId };
         this.http.post(this.GetListMouCustDocPrintForViewByMouCustIdUrl, mouCustObj).subscribe(
           response => {
             this.responseObj = response[CommonConstant.ReturnObj];
