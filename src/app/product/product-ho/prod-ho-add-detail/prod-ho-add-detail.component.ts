@@ -18,7 +18,8 @@ export class ProdHoAddDetailComponent implements OnInit {
   param: any;
   mode: string = "add";
   criteria: CriteriaObj[] = [];
-  objPassing: any = {};
+  ProdId: number;
+  ProdHId: number;
   source: string = "";
   ResultResponse: any;
   ProdHOBj: any;
@@ -41,10 +42,8 @@ export class ProdHoAddDetailComponent implements OnInit {
     private route: ActivatedRoute,
   ) {
     this.route.queryParams.subscribe(params => {
-      this.objPassing["ProdId"] = params["ProdId"];
-      this.objPassing["ProdHId"] = params["ProdHId"];
-      this.objPassing["mode"] = params["mode"];
-      this.objPassing["url"] = URLConstant.GetProductDetailComponentInfo;
+      this.ProdId = params["ProdId"];
+      this.ProdHId = params["ProdHId"];
       this.source = params["source"];
     })
   }
@@ -58,10 +57,10 @@ export class ProdHoAddDetailComponent implements OnInit {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformation.json";
     }
     this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.whereValue.push(this.objPassing.ProdHId)
+    this.viewGenericObj.whereValue.push(this.ProdHId)
     
     this.ProdHOBj=new ProdHObj();
-    this.ProdHOBj.ProdHId = this.objPassing.ProdHId;
+    this.ProdHOBj.ProdHId = this.ProdHId;
     this.UrlBackEnd = URLConstant.GetProductMainInfo;
     this.http.post(this.UrlBackEnd, this.ProdHOBj).subscribe(
       (response) => {

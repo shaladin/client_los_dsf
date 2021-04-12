@@ -6,11 +6,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { empty } from 'rxjs';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { GenericListByIdObj } from 'app/shared/model/Generic/GenericListByIdObj.model';
 import { ResGetProdBranchMbrObj } from 'app/shared/model/Response/Product/ResGetProdBranchMbrObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-ho-list-office-mbr',
@@ -21,7 +20,7 @@ export class HoListOfficeMbrComponent implements OnInit {
   @ViewChild(UCSearchComponent) UCSearchComponent;
   @Input() ListOfficeMemberObjInput: any;
   @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
-  GenericListByIdObj: GenericListByIdObj
+  GenericByIdObj: GenericObj = new GenericObj();
 
   resultData;
   constructor(
@@ -99,9 +98,9 @@ export class HoListOfficeMbrComponent implements OnInit {
 
   deleteFromList(ev: any) {
     if (confirm('Are you sure to delete this record?')) {
-      this.GenericListByIdObj = ev.ProdBranchMbrId;
+      this.GenericByIdObj.Id = ev.ProdBranchMbrId;
 
-      this.http.post(URLConstant.DeleteProductOfficeMbr, this.GenericListByIdObj).subscribe(
+      this.http.post(URLConstant.DeleteProductOfficeMbr, this.GenericByIdObj).subscribe(
         (response) => {
           var idx = this.resultData.findIndex(x => x.ProdBranchMbrId == ev.ProdBranchMbrId);
           if (idx > -1) this.resultData.splice(idx, 1);

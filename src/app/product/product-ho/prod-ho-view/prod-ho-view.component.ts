@@ -47,15 +47,15 @@ export class ProdHoViewComponent implements OnInit {
     this.viewGenericObj.viewEnvironment = environment.losUrl;
 
     //** Product Version **//
-    this.http.post<ResProdHVersionObj>(URLConstant.GetListProdHByProdCurrentProdHId, {Id : this.ProdHId}).subscribe(
-      response => {
+    this.http.post(URLConstant.GetListProdHByProdCurrentProdHId, {Id : this.ProdHId}).subscribe(
+      (response : ResProdHVersionObj) => {
         this.ProdVersion = response.ReturnObject
       }
     );
 
     //** Office Member **//
-    this.http.post<ResGetProdBranchMbrObj>(URLConstant.GetListProdBranchOfficeMbrByProdHId, {Id : this.ProdHId}).subscribe(
-      response => {
+    this.http.post(URLConstant.GetListProdBranchOfficeMbrByProdHId, {Id : this.ProdHId}).subscribe(
+      (response : ResGetProdBranchMbrObj) => {
         this.ProdBranchMbr = response.ReturnObject;
       }
     );
@@ -63,8 +63,8 @@ export class ProdHoViewComponent implements OnInit {
     //** Product Component **//
     this.ProductDetailObj.ProdHId = this.ProdHId;
     this.ProductDetailObj.GroupCodes = ['GEN', 'SCHM', 'SCORE', 'RULE', 'OTHR', 'LOS'];
-    await this.http.post<ResGetProdDCompntInfoObj>(URLConstant.GetProductDetailComponentInfo, this.ProductDetailObj).toPromise().then(
-      response => {
+    await this.http.post(URLConstant.GetProductDetailComponentInfo, this.ProductDetailObj).toPromise().then(
+      (response : ResGetProdDCompntInfoObj) => {
         this.ProdComp = response.ReturnObject.ProdOffComponents;
         this.GenData = this.ProdComp.filter(
           comp => comp.GroupCode == 'GEN');
