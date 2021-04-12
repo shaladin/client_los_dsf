@@ -7,15 +7,16 @@
           <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="0">
             <aw-wizard-step [stepTitle]="'General Data'" (stepEnter)="EnterTab('GeneralData')"
               [navigationSymbol]="{ symbol: '1', fontFamily: 'FontAwesome' }">
-              <app-ho-general-data *ngIf="type == 'GeneralData'" [objInput]="objPassing"  (ApproverId)="ChangeComponent($event)" ></app-ho-general-data>
-            </aw-wizard-step> 
+              <app-ho-general-data *ngIf="type == 'GeneralData'" [ProdHId]="ProdHId" [ProdId]="ProdId"
+                (ApproverId)="ChangeComponent($event)"></app-ho-general-data>
+            </aw-wizard-step>
             <aw-wizard-step [stepTitle]="'Product Component'" (stepEnter)="EnterTab('ProductComponent')"
               [navigationSymbol]="{ symbol: '2', fontFamily: 'FontAwesome' }">
-              <app-ho-prod-compnt *ngIf="type == 'ProductComponent'" [objInput]="objPassing"></app-ho-prod-compnt>
+              <app-ho-prod-compnt *ngIf="type == 'ProductComponent'" [ProdHId]="ProdHId"></app-ho-prod-compnt>
             </aw-wizard-step>
             <aw-wizard-step [stepTitle]="'Office Member'" (stepEnter)="EnterTab('OfficeMember')"
               [navigationSymbol]="{ symbol: '3', fontFamily: 'FontAwesome' }">
-              <app-ho-office-mbr *ngIf="type == 'OfficeMember'" [objInput]="objPassing"></app-ho-office-mbr>
+              <app-ho-office-mbr *ngIf="type == 'OfficeMember'" [ProdHId]="ProdHId"></app-ho-office-mbr>
             </aw-wizard-step>
           </aw-wizard>
         </div>
