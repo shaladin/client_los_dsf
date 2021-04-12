@@ -1,4 +1,4 @@
-import { KeyValueObj } from "../KeyValueObj.Model";
+import { KeyValueObj } from "../KeyValue/KeyValueObj.model";
 
 export class RFAInfoObj {
     ApprovedById: any;

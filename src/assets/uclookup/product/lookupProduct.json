@@ -1,0 +1,65 @@
+{
+    "sectionTitle":"Lookup Product",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "PROD_CODE",
+        "id": "ProdCode",
+        "label": "Product Code",
+        "placeholder": "Product Code"
+      },
+      {
+        "type": "textbox",
+        "name": "PROD_NAME",
+        "id": "ProdName",
+        "label": "Product Name",
+        "placeholder": "Product Name"
+      }
+    ],
+    "querystring": {
+        "name": "lookupProduct"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Product Code",
+            "name": "PROD_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Product Name",
+            "name": "PROD_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ProdCode"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ProdName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "ProdName"
+                }
+            ]
+        }
+    ],
+    "propertyId": "ProdName",
+    "propertyName": "ProdName"
+}

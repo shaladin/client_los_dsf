@@ -4,7 +4,7 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-    production: false,
+    production: true,
     navbarColor: 'transparent',
     // losUrl: 'http://localhost:5001',
     // FoundationR3Url: 'http://localhost:5000',
@@ -19,6 +19,7 @@ export const environment = {
     WorkflowR3Url: 'http://r3impl-appsvr.ad-ins.com/WORKFLOW_OPL',
     WebSocketURL: 'http://r3impl-appsvr.ad-ins.com/FOUNDATION_R3',
     DashboardURL: 'http://r3impl-appsvr.ad-ins.com/Dashboard',
+    tempUrl: 'http://r3impl-appsvr.ad-ins.com/FOUNDATION_OPL',
     ChipperKeyLocalStorage: "AdInsFOU2020OKOK", // 256 bit atau 16 karakter
     ChipperKeyCookie: "AdInsFOU12345678", // 256 bit atau 16 karakter & harus sama dengan BE
     Module:"LOS"

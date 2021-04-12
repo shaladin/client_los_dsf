@@ -462,15 +462,12 @@
                   <td>{{item.AssetSeqNo}}</td>
                   <td>
                     <a [routerLink]="['/View/AppAsset']" target="_blank"
-                      [queryParams]="{ AppId: AppId, AppAssetId: item.AppAssetObj.AppAssetId }">
+                      [queryParams]="{ AppId: AppId, AppAssetId: item.AppAssetId }">
                       {{item.AppAssetNo}}
                     </a>
                   </td>
                   <td class="text-left">
-                    <a [routerLink]="['/View/AppAsset']" target="_blank"
-                      [queryParams]="{ AppId: AppId, AppAssetId: item.AppAssetObj.AppAssetId }">
-                      {{item.AssetName}} - {{item.Color}} - {{item.AssetCondition}}
-                    </a>
+                    {{item.AssetName}} - {{item.Color}} - {{item.AssetCondition}}
                   </td>
                   <td class="text-right">{{item.AssetValue | number:'.2':'en-US'}}</td>
                   <td class="text-right">{{item.ResidualValueAmt.ResidualValuePrcnt | number:'.6':'en-US'}}% / {{item.ResidualValueAmt | number:'.2':'en-US'}}</td>
@@ -488,12 +485,12 @@
           <div id="Summary">
             <div class="form-group row">
               <label class="col-md-3 adins-label" translate>Rental Period</label>
-              <label class="col-md-3 adins-label text-right">{{listAsset[0].Tenor}} / {{listAsset[0].FirstInstType}}</label>
+              <label class="col-md-3 adins-label text-right">{{listAsset[0]?.Tenor}} / {{listAsset[0]?.FirstInstType}}</label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adins-label" translate>Total # of Asset</label>
-              <label class="col-md-3 adins-label text-right">{{listAsset[0].TotalAsset}}</label>
+              <label class="col-md-3 adins-label text-right">{{listAsset[0]?.TotalAsset}}</label>
             </div>
             
             <div class="form-group row">
@@ -511,8 +508,8 @@
             </div>
             
             <div class="form-group row">
-              <label class="col-md-3 adins-label" translate>Total Depreciation (% / Amt)</label>
-              <label class="col-md-3 adins-label text-right">{{TotalDepreciationPrcnt | number:'.6':'en-US'}}% / {{TotalDepreciationAmt | number:'.2':'en-US'}} (Hardcode)</label>
+              <label class="col-md-3 adins-label" translate>Total Depreciation</label>
+              <label class="col-md-3 adins-label text-right">{{TotalDepreciationAmt | number:'.2':'en-US'}}</label>
               <label class="col-md-3 adins-label" translate>Gross Yield</label>
               <label class="col-md-3 adins-label text-right">{{GrossYieldPrcnt | number:'.6':'en-US'}}%</label>
             </div>
@@ -531,7 +528,7 @@
             
             <div class="form-group row">
               <label class="col-md-3 adins-label" translate>Total Margin Amount (% / Amt)</label>
-              <label class="col-md-3 adins-label text-right">{{TotalMarginPrcnt | number:'.6':'en-US'}}% / {{TotalMarginAmt | number:'.2':'en-US'}} (Hardcode)</label>
+              <label class="col-md-3 adins-label text-right">{{TotalMarginPrcnt | number:'.6':'en-US'}}% / {{TotalMarginAmt | number:'.2':'en-US'}}</label>
               <label class="col-md-3 adins-label" translate>Total Security Deposit</label>
               <label class="col-md-3 adins-label text-right">{{TotalSecurityDepositAmt | number:'.2':'en-US'}}</label>
             </div>

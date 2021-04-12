@@ -1,0 +1,4 @@
+<app-prod-ho-view [inputProdHId]="prodHId"></app-prod-ho-view>
+<br />
+<lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj"  *ngIf="IsReady"></lib-ucapprovalgeneralinfo>
+<lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)" (onCancel)="onCancelClick()"></lib-ucapprovalR3>

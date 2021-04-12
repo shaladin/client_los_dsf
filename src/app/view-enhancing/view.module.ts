@@ -48,7 +48,7 @@ import { MouMainInfoComponent } from './mou-main-info/mou-main-info.component';
     ViewInsuranceDetailComponent,
     AppInsuranceDetailComponent,
     LeadMainInfoComponent,
-    MouMainInfoComponent,
+    MouMainInfoComponent
   ],
   entryComponents: [
     UclookupgenericComponent,

@@ -111,7 +111,7 @@
       "label": "Last Application Step",
       "items": [],
       "itemsUrl": [],
-      "criteriaPropName": "StatusGrpCode",
+      "criteriaPropName": "Code",
       "criteriaPropValue": "APP_STEP"
     },
     {
@@ -128,7 +128,7 @@
       "label": "Current Application Step",
       "items": [],
       "itemsUrl": [],
-      "criteriaPropName": "StatusGrpCode",
+      "criteriaPropName": "Code",
       "criteriaPropValue": "APP_STEP"
     }
   ],

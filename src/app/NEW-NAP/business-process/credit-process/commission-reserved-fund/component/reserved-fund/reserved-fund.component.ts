@@ -186,8 +186,8 @@ export class ReservedFundComponent implements OnInit {
         for (let index = 0; index < tempObj.length; index++) {
           const element = tempObj[index];
           // console.log(element);
-          for (let index2 = 0; index2 < element.AppCommissionD.length; index2++) {
-            const element2 = element.AppCommissionD[index2];
+          for (let index2 = 0; index2 < element.AppCommissionDs.length; index2++) {
+            const element2 = element.AppCommissionDs[index2];
             // console.log(element2);
             if(this.DictRemainingIncomeForm[element2.MrCommissionSourceCode]){
               this.DictRemainingIncomeForm[element2.MrCommissionSourceCode].RefundAmount-=element2.CommissionAmt;

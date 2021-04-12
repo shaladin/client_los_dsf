@@ -232,7 +232,7 @@ export class PathConstant {
     public static DOC_CHECK_LIST = "DocChecklist";
     public static DOC_CHECK_LIST_PAGING = PathConstant.DOC_CHECK_LIST + "/" + PathConstant.PAGING;
     public static DOC_CHECK_LIST_DETAIL = PathConstant.DOC_CHECK_LIST + "/" + PathConstant.DETAIL;
-    public static DOC_CHECK_LIST_REQ_APPRV = PathConstant.PGL + "/RequestApproval";
+    public static DOC_CHECK_LIST_REQ_APPRV = PathConstant.DOC_CHECK_LIST + "/RequestApproval";
     public static DOC_CHECK_LIST_APPRV = PathConstant.DOC_CHECK_LIST + "/" + PathConstant.APPRV;
     public static DOC_CHECK_LIST_APPRV_PAGING = PathConstant.DOC_CHECK_LIST_APPRV + "/" + PathConstant.PAGING;
     public static DOC_CHECK_LIST_APPRV_DETAIL = PathConstant.DOC_CHECK_LIST_APPRV + "/" + PathConstant.DETAIL;
@@ -361,6 +361,13 @@ export class PathConstant {
     public static LEAD_RVW_MONITORING_DETAIL = PathConstant.LEAD_RVW_MONITORING + "/" + PathConstant.DETAIL;
     //#endregion
 
+    //#region Report-Module
+    public static REPORT_MARKETING = "RptMarketing";
+    public static REPORT_APPLICATION_PENDING = "RptAppPending";
+    public static REPORT_RENT_SUMMARY = "RptRentSummary";
+    public static REPORT_RENT_DETAIL = "RptRentDetail";
+    //#endregion
+
     //#region Inquiry-Module
     public static APP_INQUIRY = "AppInquiry";
     public static PURCHASE_TRACKING_INQUIRY = "PurchaseTrackingInquiry";
@@ -404,6 +411,7 @@ export class PathConstant {
     public static VIEW_PHN_VERIF = "PhoneVerifView";
     public static VIEW_PURCHASE_TRACKING = "PurchaseTracking";
     public static VIEW_APP_ASSET = "AppAsset";
+    public static VIEW_APP_LIST = "AppList";
     //#endregion
 
     //#region FOU-View-Module
@@ -415,6 +423,40 @@ export class PathConstant {
     //#endregion
 
     //#region FOU-View-Module
-    public static REQUISITION_DECISION = "requisitiondecision";
+public static REQUISITION_DECISION = "requisitiondecision";
     //#endregion
+
+    //PRODUCT
+    public static LR_PRODUCT = "Product";
+    public static PROD_OFFERING = "ProdOffering";
+    public static RTN_PAGING = "ReturnPaging";
+    public static CR_VIEW = "View";
+    public static VIEW_OFFERING = "Offering";
+    public static VIEW_PRODUCT_HO = "ProductHO";
+    public static PROD_OFFERING_PAGING = PathConstant.PROD_OFFERING + "/" + PathConstant.PAGING;
+    public static PROD_OFFERING_RTN_PAGING = PathConstant.PROD_OFFERING + "/" + PathConstant.RTN_PAGING;
+    public static PROD_OFFERING_ADD = PathConstant.PROD_OFFERING + "/" + PathConstant.ADD;
+    public static PROD_OFFERING_ADD_DETAIL = PathConstant.PROD_OFFERING + "/" + PathConstant.ADD_DETAIL;
+    public static HO_PAGING = "HOPaging";
+    public static HO_RTN_PAGING = "HOReturnPaging";
+    public static HO_ADD = "HOAdd";
+    public static HO_ADD_DETAIL = "HOAddDetail";
+    public static HO_DEACTIVATE = "HODeactivate";
+    public static HO_DEACTIVATE_EDIT = PathConstant.HO_DEACTIVATE + "/" + PathConstant.EDIT;
+    public static HO_VIEW = "HOView";
+    public static OFFERING_VIEW = "OfferingView";
+    public static HO_APPRV = "HOApproval";
+    public static HO_APPRV_DETAIL = PathConstant.HO_APPRV + "/" + PathConstant.DETAIL;
+    public static OFFERING_APPRV = "OfferingApproval";
+    public static OFFERING_APPRV_DETAIL = PathConstant.OFFERING_APPRV + "/" + PathConstant.DETAIL;
+    public static HO_DEACTIVATE_APPRV = "HODeactivateApproval";
+    public static HO_DEACTIVATE_APPRV_DETAIL = PathConstant.HO_DEACTIVATE_APPRV + "/" + PathConstant.DETAIL;
+    public static OFFERING_DEACTIVATE = "OfferingDeactivate";
+    public static OFFERING_DEACTIVATE_EDIT = PathConstant.HO_DEACTIVATE_APPRV + "/" + PathConstant.EDIT;
+    public static OFFERING_DEACTIVATE_APPRV = "OfferingDeactivateApproval";
+    public static OFFERING_DEACTIVATE_APPRV_DETAIL = PathConstant.OFFERING_DEACTIVATE_APPRV + "/" + PathConstant.DETAIL;
+    public static HO_REVIEW = "HOReview";
+    public static HO_REVIEW_DETAIL = PathConstant.HO_REVIEW + "/" + PathConstant.DETAIL;
+    public static OFFERING_REVIEW = "OfferingReview";
+    public static OFFERING_REVIEW_DETAIL = PathConstant.OFFERING_REVIEW + "/" + PathConstant.DETAIL;
 }

@@ -347,6 +347,7 @@ export class AssetDataOplComponent implements OnInit {
     this.index = index;
 
     this.allAssetDataObj = this.listAsset[this.index];
+    this.appAssetId = this.allAssetDataObj.AppAssetObj.AppAssetId;
 
     this.AdminHeadObj = null;
     this.SalesPersonObj = null;
@@ -1315,13 +1316,15 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   GetVendorEmpList() {
+    this.salesSupervisor = "";
+    this.adminHead = "";
+    this.branchManager = "";
     this.isDdlSalesPersonReady = false;
     this.isDdlAdminHeadReady = false;
     this.isDdlBranchManagerReady = false;
     this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, this.vendorObj).subscribe(
       (response) => {
         this.EmpObj = response[CommonConstant.ReturnObj];
-        console.log("Isi dari EmpObj: ",this.EmpObj);
 
         for(let i = 0; i < this.EmpObj.length; i++) {
           if(this.EmpObj[i]["SupervisorId"] !== null && this.salesSupervisor !== undefined) {
@@ -1336,15 +1339,11 @@ export class AssetDataOplComponent implements OnInit {
             // break;
           }
 
-          if(this.EmpObj[i]["MrVendorEmpPositionCode"] === CommonConstant.ADMIN_HEAD_JOB_CODE && this.adminHead !== undefined) {
+          if(this.EmpObj[i]["MrVendorEmpPositionCode"] === CommonConstant.ADMIN_HEAD_JOB_CODE) {
             this.adminHead = this.EmpObj[i]["VendorEmpName"];
           }
-          else if(this.EmpObj[i]["MrVendorEmpPositionCode"] === CommonConstant.BRANCH_MANAGER_JOB_CODE && this.branchManager !== undefined) {
+          else if(this.EmpObj[i]["MrVendorEmpPositionCode"] === CommonConstant.BRANCH_MANAGER_JOB_CODE) {
             this.branchManager = this.EmpObj[i]["VendorEmpName"];
-          }
-
-          if(this.salesSupervisor !== undefined && this.adminHead !== undefined && this.branchManager !== undefined) {
-            break;
           }
         }
 

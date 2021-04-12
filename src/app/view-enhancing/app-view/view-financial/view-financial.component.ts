@@ -7,6 +7,7 @@ import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: "view-financial",
@@ -30,7 +31,6 @@ export class ViewFinancialComponent implements OnInit {
   TotalAssetResidualValuePrcnt: number;
   TotalAssetResidualValueAmt: number;
   TotalRentAfterVatAmt: number;
-  TotalDepreciationPrcnt: number;
   TotalDepreciationAmt: number;
   GrossYieldPrcnt: number;
   TotalAssetExpense: number;
@@ -66,7 +66,6 @@ export class ViewFinancialComponent implements OnInit {
     this.TotalAssetResidualValuePrcnt = 0;
     this.TotalAssetResidualValueAmt = 0;
     this.TotalRentAfterVatAmt = 0;
-    this.TotalDepreciationPrcnt = 0;
     this.TotalDepreciationAmt = 0;
     this.GrossYieldPrcnt = 0;
     this.TotalAssetExpense = 0;
@@ -99,18 +98,16 @@ export class ViewFinancialComponent implements OnInit {
 
     await this.http.post(URLConstant.GetListAllAssetFinancialData, requestAppId).toPromise().then(
       (response) => {
-        this.listAsset = response["ReturnObject"];
-
-        if(this.listAsset !== null) {
+        if(response[CommonConstant.ReturnObj].length > 0) {
+          this.listAsset = response[CommonConstant.ReturnObj];
           var length = this.listAsset.length;
 
-          for(let i = 0; i < length; i++) {
+          for(let i = 0; i < this.listAsset.length; i++) {
             this.TotalAssetValue += this.listAsset[i].AssetValue;
             this.TotalRentAmt += this.listAsset[i].RentAmt;
             this.TotalAssetResidualValuePrcnt += this.listAsset[i].ResidualValuePrcnt;
             this.TotalAssetResidualValueAmt += this.listAsset[i].ResidualValueAmt;
             this.TotalRentAfterVatAmt += this.listAsset[i].RentAfterVatAmt;
-            this.TotalDepreciationPrcnt += this.listAsset[i].DepreciationPrcnt;
             this.TotalDepreciationAmt += this.listAsset[i].DepreciationAmt;
             this.GrossYieldPrcnt += this.listAsset[i].GrossYieldPrcnt;
             this.TotalAssetExpense += this.listAsset[i].AssetExpense;
@@ -124,7 +121,6 @@ export class ViewFinancialComponent implements OnInit {
           }
 
           this.TotalAssetResidualValuePrcnt /= length;
-          this.TotalDepreciationPrcnt /= length;
           this.GrossYieldPrcnt /= length;
           this.TotalMarginPrcnt /= length;
         }

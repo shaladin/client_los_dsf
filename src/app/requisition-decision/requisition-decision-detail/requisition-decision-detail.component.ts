@@ -101,6 +101,10 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   }
 
   async SetListOfAsset() {
+    
+    this.TotalPurchaseAsset = 0;
+    this.TotalUseExistingStock = 0;
+    
     var requestAppId = {
       Id: this.AppId
     };
@@ -271,18 +275,6 @@ export class RequisitionDecisionDetailComponent implements OnInit {
       (response: any) => {
         this.ListOfAsset[this.Index].DecisionCode = this.ReqDecForm.value.Decision;
         this.ListOfAsset[this.Index].AssetNo = this.ReqDecForm.value.AssetNo;
-
-        this.TotalPurchaseAsset = 0;
-        this.TotalUseExistingStock = 0;
-
-        for(let i = 0; i < this.ListOfAsset.length; i++) {
-          if(this.ListOfAsset[i].Decision === "Purchase Asset") {
-            this.TotalPurchaseAsset += 1;
-          }
-          else if(this.ListOfAsset[i].Decision === "Use Existing Stock") {
-            this.TotalUseExistingStock += 1;
-          }
-        }
 
         this.toastr.successMessage("Submit Requisition Decision Asset Success");
         this.IsSecondDetail = false;

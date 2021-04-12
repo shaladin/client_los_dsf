@@ -498,6 +498,7 @@ export class CommissionV2Component implements OnInit {
       }
       this.CommissionForm.controls[identifier]["controls"][i].patchValue({
         MrIdTypeCode: tempRespTaxObj.MrIdTypeCode,
+        MrTaxKindCode: tempRespTaxObj.MrTaxKindCode,
         MrTaxCalcMethodCode: tempRespTaxObj.MrTaxCalcMethodCode,
         TaxpayerNo: tempRespTaxObj.TaxpayerNo,
         TotalTaxAmount: totalTaxAmount,
@@ -585,7 +586,7 @@ export class CommissionV2Component implements OnInit {
     temp.TotalDisburseAmt = AppCommH.TotalDisburseAmount;
     temp.MrCommissionRecipientTypeCode = CommReceipientTypeCode;
     temp.CommissionRecipientRefNo = AppCommH.ContentName;
-    temp.MrTaxKindCode = AppCommH.MrIdTypeCode;
+    temp.MrTaxKindCode = AppCommH.MrTaxKindCode;
     temp.MrTaxCalcMethodCode = AppCommH.MrTaxCalcMethodCode;
     temp.TaxpayerNo = AppCommH.TaxpayerNo;
     temp.RowVersion = AppCommH.RowVersion;
