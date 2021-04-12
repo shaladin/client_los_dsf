@@ -87,6 +87,7 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   async ngOnInit() : Promise<void> {
+    console.log("TEST");
     // check DMS
     await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {

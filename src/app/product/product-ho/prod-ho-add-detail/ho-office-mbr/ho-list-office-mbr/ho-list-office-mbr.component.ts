@@ -9,6 +9,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { GenericListByIdObj } from 'app/shared/model/Generic/GenericListByIdObj.model';
+import { ResGetProdBranchMbrObj } from 'app/shared/model/Response/Product/ResGetProdBranchMbrObj.model';
 
 @Component({
   selector: 'app-ho-list-office-mbr',
@@ -19,6 +21,8 @@ export class HoListOfficeMbrComponent implements OnInit {
   @ViewChild(UCSearchComponent) UCSearchComponent;
   @Input() ListOfficeMemberObjInput: any;
   @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
+  GenericListByIdObj: GenericListByIdObj
+
   resultData;
   constructor(
     private http: HttpClient,
@@ -48,8 +52,8 @@ export class HoListOfficeMbrComponent implements OnInit {
     }
 
     this.http.post(URLConstant.GetListProdBranchOfficeMbrByProdHId, {Id : this.ListOfficeMemberObjInput["ProdHId"]}).subscribe(
-      (response) => {
-        this.resultData = response[CommonConstant.ReturnObj];
+      (response: ResGetProdBranchMbrObj) => {
+        this.resultData = response.ReturnObj;
       }
     );
   }
@@ -95,16 +99,9 @@ export class HoListOfficeMbrComponent implements OnInit {
 
   deleteFromList(ev: any) {
     if (confirm('Are you sure to delete this record?')) {
-      var obj = {
-        ProductBranchMbrs: [
-          {
-            ProdBranchMbrId: ev.ProdBranchMbrId,
-            RowVersion: " "
-          }
-        ]
-      };
+      this.GenericListByIdObj = ev.ProdBranchMbrId;
 
-      this.http.post(URLConstant.DeleteProductOfficeMbr, obj).subscribe(
+      this.http.post(URLConstant.DeleteProductOfficeMbr, this.GenericListByIdObj).subscribe(
         (response) => {
           var idx = this.resultData.findIndex(x => x.ProdBranchMbrId == ev.ProdBranchMbrId);
           if (idx > -1) this.resultData.splice(idx, 1);
@@ -115,7 +112,7 @@ export class HoListOfficeMbrComponent implements OnInit {
   }
 
   DoneForm() {
-    this.http.post(environment.losUrl + "/Product/SubmitProduct", { ProdHId: this.ProdHId }).subscribe(
+    this.http.post(URLConstant.SubmitProduct, { Id: this.ProdHId }).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
       }

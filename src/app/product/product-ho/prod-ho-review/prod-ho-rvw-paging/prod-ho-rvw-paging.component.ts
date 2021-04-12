@@ -9,10 +9,10 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 })
 export class ProdHoRvwPagingComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
-  inputPagingObj: any;
+  inputPagingObj: UcPagingObj  = new UcPagingObj();
+  constructor() { }
+
   ngOnInit() {
-    this.inputPagingObj =new UcPagingObj();
     this.inputPagingObj._url="./assets/ucpaging/product/searchProductHOReview.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;

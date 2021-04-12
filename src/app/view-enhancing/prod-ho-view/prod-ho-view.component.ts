@@ -10,6 +10,7 @@ import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { ProductDetailObj } from "app/shared/model/Request/Product/ProductDetailObj.model";
 import { ProdHVersionObj } from "app/shared/model/Request/Product/ProdHVersionObj.model";
 import { ProductBrancMbrObj } from "app/shared/model/Request/Product/ProductBranchMbrObj.model";
+import { ReqDownloadRuleObj } from "app/shared/model/Request/Product/ReqDownloadRuleObj.model";
 
 @Component({
   selector: 'app-prod-ho-view',
@@ -35,7 +36,8 @@ export class ProdHoViewComponent implements OnInit {
   ProdComp: any;
   IsLoaded: boolean = false;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-
+  DlRuleObj  : ReqDownloadRuleObj = new ReqDownloadRuleObj();
+  
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
 
     this.ProdDUrl = URLConstant.GetProductDetailComponentInfo;
@@ -49,9 +51,6 @@ export class ProdHoViewComponent implements OnInit {
     });
   }
 
-  DlRuleObj = {
-    CompntValue: "",
-  };
   async ngOnInit(): Promise<void> {
     if (this.prodHId == undefined) {
       this.prodHId = this.inputProdHId;
@@ -98,7 +97,7 @@ export class ProdHoViewComponent implements OnInit {
   }
 
   DownloadRule(CompntValue, CompntValueDesc) {
-    this.DlRuleObj.CompntValue = CompntValue;
+    this.DlRuleObj.RuleSetName = CompntValue;
     this.http.post(URLConstant.DownloadProductRule, this.DlRuleObj, { responseType: 'blob' }).subscribe(
       response => {
         saveAs(response, CompntValueDesc + '.xlsx');

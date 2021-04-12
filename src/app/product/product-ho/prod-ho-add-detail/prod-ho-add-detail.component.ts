@@ -17,7 +17,6 @@ export class ProdHoAddDetailComponent implements OnInit {
 
   param: any;
   mode: string = "add";
-  key: any;
   criteria: CriteriaObj[] = [];
   objPassing: any = {};
   source: string = "";
@@ -47,7 +46,6 @@ export class ProdHoAddDetailComponent implements OnInit {
       this.objPassing["mode"] = params["mode"];
       this.objPassing["url"] = URLConstant.GetProductDetailComponentInfo;
       this.source = params["source"];
-      this.key = params["key"];
     })
   }
 
