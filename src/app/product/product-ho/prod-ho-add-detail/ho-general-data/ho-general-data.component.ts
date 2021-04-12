@@ -332,7 +332,6 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   SaveForm() {
-    this.BuildReqProdDetail();
     this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
@@ -342,7 +341,6 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   NextDetail() {
-    this.BuildReqProdDetail();
     this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
@@ -356,6 +354,7 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   SubmitForm() {
+    this.BuildReqProdDetail();
     if (this.StateSave == "save") {
       this.SaveForm();
     }
