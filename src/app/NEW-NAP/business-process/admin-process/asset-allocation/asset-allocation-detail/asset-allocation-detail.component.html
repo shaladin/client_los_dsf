@@ -13,7 +13,7 @@
         <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"> </lib-ucviewgeneric>
         <div class="px-3">
           <form class="form form-horizontal" [formGroup]="AssetAllocationForm"
-                (ngSubmit)="SaveForm()" #enjiForm="ngForm">
+                (ngSubmit)="AssetAllocationForm.valid && SaveForm()" #enjiForm="ngForm">
             <lib-ucSubsection [id]="'listAssetDataId'" [title]="'List of Asset'" [panel]="'listAssetData'">
             </lib-ucSubsection>
             <div id="listAssetData">
@@ -79,7 +79,7 @@
                         [lookupInput]="dictAssetNumber[AssetAllocationForm.controls['ListAsset']['controls'][i]['controls'].No.value]"
                         [parentForm]="AssetAllocationForm"
                         [identifier]="'lookupAssetNumberObj' + AssetAllocationForm.controls['ListAsset']['controls'][i]['controls'].No.value"
-                        (lookup)="SetAssetNumber(i,$event)">
+                        (lookup)="SetAssetNumber(i,$event)" #dyna>
                       </lib-uclookupgeneric>
                     </td>
                     <td [formGroupName]="i" class="text-center">
