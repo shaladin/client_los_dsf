@@ -49,15 +49,15 @@ export class ProdHoViewComponent implements OnInit {
 
     //** Product Version **//
     this.http.post<ResProdHVersionObj>(URLConstant.GetListProdHByProdCurrentProdHId, {Id : this.ProdHId}).subscribe(
-      response => {
+      (response) => {
         this.ProdVersion = response.ReturnObject
       }
     );
 
     //** Office Member **//
     this.http.post<ResGetProdBranchMbrObj>(URLConstant.GetListProdBranchOfficeMbrByProdHId, {Id : this.ProdHId}).subscribe(
-      response => {
-        this.ProdBranchMbr = response.ReturnObj;
+      (response) => {
+        this.ProdBranchMbr = response.ReturnObject;
       }
     );
 
@@ -66,7 +66,7 @@ export class ProdHoViewComponent implements OnInit {
     this.ProductDetailObj.ProdHId = this.ProdHId;
     this.ProductDetailObj.GroupCodes = ['GEN', 'SCHM', 'SCORE', 'RULE', 'OTHR', 'LOS'];
     await this.http.post<ResGetProdDCompntInfoObj>(URLConstant.GetProductDetailComponentInfo, this.ProductDetailObj).toPromise().then(
-      response => {
+      (response) => {
         this.ProdComp = response.ReturnObject.ProdOffComponents;
         this.GenData = this.ProdComp.filter(
           comp => comp.GroupCode == 'GEN');
