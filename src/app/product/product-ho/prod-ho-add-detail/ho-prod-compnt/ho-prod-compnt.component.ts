@@ -11,6 +11,10 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqDownloadRuleObj } from 'app/shared/model/Request/Product/ReqDownloadRuleObj.model';
 import { ReqListProductDetailObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
+import { ReqGetProdCompntObj } from 'app/shared/model/Request/Product/ReqGetProdCompntObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
+import { ResGetProdCmpntGroupedObj } from 'app/shared/model/Response/Product/ResGetProdCompntObj.model';
 @Component({
   selector: 'app-ho-prod-compnt',
   templateUrl: './ho-prod-compnt.component.html'
@@ -20,11 +24,13 @@ export class HoProdCompntComponent implements OnInit {
   @Input() ProdHId: number;
   source: string = "";
   FormProdComp: any;
-  dictOptions: { [key: string]: any; } = {};
   StateSave: string;
+  dictOptions: { [key: string]: any; } = {};
   dictBehaviour: { [key: string]: any; } = {};
+  GenericByCodeObj : GenericObj = new GenericObj();
   DlRuleObj: ReqDownloadRuleObj = new ReqDownloadRuleObj();
   ReqListProductDetailObj: ReqListProductDetailObj = new ReqListProductDetailObj();
+  ReqGetProdHCompntGroupedObj: ReqGetProdCompntObj = new ReqGetProdCompntObj();
 
   constructor(
     private router: Router,
@@ -117,26 +123,24 @@ export class HoProdCompntComponent implements OnInit {
   async PopulateRefBehaviour(obj) {
     var bhvrTypeCode = obj.BehaviourType;
     if (this.dictBehaviour[bhvrTypeCode] == undefined) {
-      var url = URLConstant.GetRefBehaviourByBehaviourTypeCode;
-      await this.http.post(url, { Code: bhvrTypeCode }).toPromise().then(
-        (response) => {
-          this.dictBehaviour[bhvrTypeCode] = response[CommonConstant.ReturnObj];
+      this.GenericByCodeObj.Code = bhvrTypeCode;
+      await this.http.post(URLConstant.GetRefBehaviourByBehaviourTypeCode, this.GenericByCodeObj).toPromise().then(
+        (response: GenericKeyValueListObj) => {
+          this.dictBehaviour[bhvrTypeCode] = response.ReturnObject;
         }
       )
     }
   }
 
   LoadProdComponent(ProdHId, CompGroups, IsFilterBizTmpltCode) {
-    var ProdHOComponent = {
-      ProdHId: ProdHId,
-      GroupCodes: CompGroups.split(","),
-      IsFilterBizTmpltCode: IsFilterBizTmpltCode,
-      RowVersion: ""
-    }
-    this.http.post(URLConstant.GetProductHOComponentGrouped, ProdHOComponent).toPromise().then(
-      async (response) => {
-        for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
-          var group = response[CommonConstant.ReturnObj][i];
+    this.ReqGetProdHCompntGroupedObj.ProdHId = ProdHId,
+    this.ReqGetProdHCompntGroupedObj.GroupCodes = CompGroups.split(","),
+    this.ReqGetProdHCompntGroupedObj.IsFilterBizTmpltCode = IsFilterBizTmpltCode,
+
+    this.http.post(URLConstant.GetProductHOComponentGrouped, this.ReqGetProdHCompntGroupedObj).toPromise().then(
+      async (response : ResGetProdCmpntGroupedObj) => {
+        for (var i = 0; i < response.ReturnObject.length; i++) {
+          var group = response.ReturnObject[i];
           var fa_group = this.FormProdComp.controls['groups'] as FormArray;
           fa_group.push(this.addGroup(group.GroupCode, group.GroupName));
 

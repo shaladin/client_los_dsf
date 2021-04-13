@@ -15,9 +15,10 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ResGetKvpRefFinMapByLobCode } from 'app/shared/model/Response/Product/ResGetKvpRefFinMapByLobCode.model';
 import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
-import { ResGetProductHOComponentGroupedObj } from 'app/shared/model/Response/Product/ResGetProdCompntObj.model';
 import { ReqGetProdCompntObj } from 'app/shared/model/Request/Product/ReqGetProdCompntObj.model';
 import { ReqCopyProductObj, ReqListProductDetailObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
+import { ResGetProdCmpntGroupedObj } from 'app/shared/model/Response/Product/ResGetProdCompntObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 
 @Component({
@@ -27,17 +28,18 @@ import { ReqCopyProductObj, ReqListProductDetailObj } from 'app/shared/model/Req
 export class HoGeneralDataComponent implements OnInit {
 
   FormProdComp: any;
-  dictOptions: { [key: string]: any; } = {};
-  dictMultiOptions: { [key: string]: any; } = {};
-  selectedMultiDDLItems: { [key: string]: any; } = {};
   @Input() ProdHId: number;
   @Input() ProdId: number;
   StateSave: string;
-  LOBSelected: string ="";
-  LOBDescrSelected: string="";
+  LOBSelected: string = "";
+  LOBDescrSelected: string= "";
   source: string = "";
+  dictOptions: { [key: string]: any; } = {};
+  dictMultiOptions: { [key: string]: any; } = {};
+  selectedMultiDDLItems: { [key: string]: any; } = {};
+  GenericByCodeObj: GenericObj = new GenericObj();
   inputLookUpObj: InputLookupObj = new InputLookupObj();
-  ReqGetProdCompntObj : ReqGetProdCompntObj = new ReqGetProdCompntObj();
+  ReqGetProdCmpntObj : ReqGetProdCompntObj = new ReqGetProdCompntObj();
   ReqListProductDetailObj: ReqListProductDetailObj = new ReqListProductDetailObj();
   ReqCopyProductObj: ReqCopyProductObj = new ReqCopyProductObj();
 
@@ -193,7 +195,8 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   async PopulateFinMapFromLOB() {
-    await this.http.post(URLConstant.GetKvpRefFinMapByLobCode, { Code: this.LOBSelected }).toPromise().then(
+    this.GenericByCodeObj.Code = this.LOBSelected;
+    await this.http.post(URLConstant.GetKvpRefFinMapByLobCode, this.GenericByCodeObj).toPromise().then(
       (response: ResGetKvpRefFinMapByLobCode) => {
         this.dictOptions["WAY_OF_FINANCING"] = response.RefWayOfFin;
         this.dictOptions["PURPOSE_OF_FINANCING"] = response.RefPurposeOfFin;
@@ -219,7 +222,8 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   async PopulateInstallmentSchedule() {
-    await this.http.post(URLConstant.GetListKvpInstSchmByLobCode, { Code: this.LOBSelected }).toPromise().then(
+    this.GenericByCodeObj.Code = this.LOBSelected;
+    await this.http.post(URLConstant.GetListKvpInstSchmByLobCode, this.GenericByCodeObj).toPromise().then(
       (response : GenericKeyValueListObj) => {
         var result = response.ReturnObject;
         this.dictMultiOptions["INST_SCHM"] = new Array();
@@ -233,14 +237,14 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   LoadProdComponent(ProdHId, CompGroups, IsFilterBizTmpltCode, Lob) {
-    this.ReqGetProdCompntObj.ProdHId = ProdHId;
-    this.ReqGetProdCompntObj.GroupCodes = CompGroups.split(",");
-    this.ReqGetProdCompntObj.IsFilterBizTmpltCode = IsFilterBizTmpltCode;
-    this.ReqGetProdCompntObj.Lob = Lob;
-    this.ReqGetProdCompntObj.RowVersion = "";
+    this.ReqGetProdCmpntObj.ProdHId = ProdHId;
+    this.ReqGetProdCmpntObj.GroupCodes = CompGroups.split(",");
+    this.ReqGetProdCmpntObj.IsFilterBizTmpltCode = IsFilterBizTmpltCode;
+    this.ReqGetProdCmpntObj.Lob = Lob;
+    this.ReqGetProdCmpntObj.RowVersion = "";
 
-    this.http.post(URLConstant.GetProductHOComponentGrouped, this.ReqGetProdCompntObj).toPromise().then(
-      async (response : ResGetProductHOComponentGroupedObj) => {
+    this.http.post(URLConstant.GetProductHOComponentGrouped, this.ReqGetProdCmpntObj).toPromise().then(
+      async (response : ResGetProdCmpntGroupedObj) => {
         var fa_group = this.FormProdComp.controls['groups'] as FormArray;
         while(fa_group.length){
           fa_group.removeAt(0);

@@ -25,7 +25,10 @@ export class ProdHoDeactApvPagingComponent implements OnInit {
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-  constructor(private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) { }
+  constructor(private toastr: NGXToastrService, 
+              private httpClient: HttpClient, 
+              private router: Router, 
+              private cookieService: CookieService) { }
 
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();

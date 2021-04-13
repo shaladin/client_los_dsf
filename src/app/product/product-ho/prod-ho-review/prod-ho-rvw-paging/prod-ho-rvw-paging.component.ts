@@ -10,10 +10,11 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 export class ProdHoRvwPagingComponent implements OnInit {
 
   inputPagingObj: UcPagingObj  = new UcPagingObj();
+
   constructor() { }
 
   ngOnInit() {
-    this.inputPagingObj._url="./assets/ucpaging/product/searchProductHOReview.json";
+    this.inputPagingObj._url = "./assets/ucpaging/product/searchProductHOReview.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHOReview.json"; 

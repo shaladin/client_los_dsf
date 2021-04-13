@@ -8,7 +8,7 @@ import { empty } from 'rxjs';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResGetProdBranchMbrObj } from 'app/shared/model/Response/Product/ResGetProdBranchMbrObj.model';
+import { ResGetProdBranchMbrObj, ResProdBranchMbrObj } from 'app/shared/model/Response/Product/ResGetProdBranchMbrObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
@@ -20,9 +20,16 @@ export class HoListOfficeMbrComponent implements OnInit {
   @ViewChild(UCSearchComponent) UCSearchComponent;
   @Input() ListOfficeMemberObjInput: any;
   @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
+  source: string = "";
+  pageNow : number;
+  pageSize : number;
+  apiUrl : string;
+  ProdHId : number;
+  orderByKey;
+  orderByValue;
   GenericByIdObj: GenericObj = new GenericObj();
+  ResListProdBranchMbrObj: Array<ResProdBranchMbrObj> = new Array<ResProdBranchMbrObj>();
 
-  resultData;
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -34,11 +41,6 @@ export class HoListOfficeMbrComponent implements OnInit {
     })
   }
 
-  source: string = "";
-  pageNow;
-  pageSize;
-  apiUrl;
-  ProdHId;
   ngOnInit() {
     this.pageNow = 1;
     this.pageSize = 10;
@@ -50,9 +52,10 @@ export class HoListOfficeMbrComponent implements OnInit {
       RowVersion: ""
     }
 
-    this.http.post(URLConstant.GetListProdBranchOfficeMbrByProdHId, {Id : this.ListOfficeMemberObjInput["ProdHId"]}).subscribe(
+    this.GenericByIdObj.Id = this.ListOfficeMemberObjInput["ProdHId"];
+    this.http.post(URLConstant.GetListProdBranchOfficeMbrByProdHId, this.GenericByIdObj).subscribe(
       (response: ResGetProdBranchMbrObj) => {
-        this.resultData = response.ReturnObject;
+        this.ResListProdBranchMbrObj = response.ReturnObject;
       }
     );
   }
@@ -60,14 +63,14 @@ export class HoListOfficeMbrComponent implements OnInit {
   addOfficeMember() {
     var temp = [];
     var obj;
-    if (this.resultData == empty) {
+    if (this.ResListProdBranchMbrObj.length == 0) {
       obj = {
         isOn: false,
         result: []
       }
     } else {
-      for (var i = 0; i < this.resultData.length; i++) {
-        temp.push(this.resultData[i].OfficeCode);
+      for (var i = 0; i < this.ResListProdBranchMbrObj.length; i++) {
+        temp.push(this.ResListProdBranchMbrObj[i].OfficeCode);
       }
       obj = {
         isOn: false,
@@ -78,10 +81,8 @@ export class HoListOfficeMbrComponent implements OnInit {
     this.componentIsOn.emit(obj);
   }
 
-  orderByKey;
-  orderByValue
   searchSort(ev: any) {
-    if (this.resultData != null) {
+    if (this.ResListProdBranchMbrObj != null) {
       if (this.orderByKey == ev.target.attributes.name.nodeValue) {
         this.orderByValue = !this.orderByValue
       } else {
@@ -102,8 +103,8 @@ export class HoListOfficeMbrComponent implements OnInit {
 
       this.http.post(URLConstant.DeleteProductOfficeMbr, this.GenericByIdObj).subscribe(
         (response) => {
-          var idx = this.resultData.findIndex(x => x.ProdBranchMbrId == ev.ProdBranchMbrId);
-          if (idx > -1) this.resultData.splice(idx, 1);
+          var idx = this.ResListProdBranchMbrObj.findIndex(x => x.ProdBranchMbrId == ev.ProdBranchMbrId);
+          if (idx > -1) this.ResListProdBranchMbrObj.splice(idx, 1);
           this.toastr.successMessage(response["message"]);
         }
       );
@@ -111,7 +112,8 @@ export class HoListOfficeMbrComponent implements OnInit {
   }
 
   DoneForm() {
-    this.http.post(URLConstant.SubmitProduct, { Id: this.ProdHId }).subscribe(
+    this.GenericByIdObj.Id = this.ProdHId
+    this.http.post(URLConstant.SubmitProduct, this.GenericByIdObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
       }

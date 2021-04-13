@@ -22,21 +22,22 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class ProdHoApvPagingComponent implements OnInit {
 
-  inputPagingObj: UcPagingObj;
-  arrCrit: Array<CriteriaObj>;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
+  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   ApvReqObj: ApprovalObj;
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-  constructor(private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) { }
+  constructor(private toastr: NGXToastrService, 
+              private httpClient: HttpClient, 
+              private router: Router, 
+              private cookieService: CookieService) { }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/product/searchProductHOApproval.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHOApproval.json";
 
-    this.arrCrit = new Array<CriteriaObj>();
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;

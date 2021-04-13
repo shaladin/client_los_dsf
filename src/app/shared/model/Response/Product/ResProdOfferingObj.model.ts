@@ -36,7 +36,7 @@ export class ResProdOfferingHObj {
     }
 }
 
-export class ResProdOffVersionObj {
+export class ResProdOfferingVersionObj {
     ReturnObject : Array<ProdOfferingObj>
 
     constructor() {

@@ -1,4 +1,4 @@
-export class ReqProdOffVersionObj {
+export class ReqProdOfferingVersionObj {
     ProdOfferingId: number;
     ProdId: number;
     ProdOfferingCode: string;

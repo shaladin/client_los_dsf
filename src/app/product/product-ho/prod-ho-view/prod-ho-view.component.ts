@@ -5,10 +5,11 @@ import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
-import { ResGetProdDCompntInfoObj, ResProdDObj, ResProdHVersionObj } from "app/shared/model/Response/Product/ResGetProdObj.model";
 import { ResGetProdBranchMbrObj } from "app/shared/model/Response/Product/ResGetProdBranchMbrObj.model";
 import { ReqDownloadRuleObj } from "app/shared/model/Request/Product/ReqDownloadRuleObj.model";
 import { ReqGetProdCompntObj } from "app/shared/model/Request/Product/ReqGetProdCompntObj.model";
+import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
+import { ResGetProdDCompntInfoObj, ResProdDCompntObj, ResProdHVersionObj } from "app/shared/model/Response/Product/ResGetProdObj.model";
 
 @Component({
   selector: 'app-prod-ho-view',
@@ -18,14 +19,15 @@ export class ProdHoViewComponent implements OnInit {
 
   @Input() inputProdHId;
   ProdHId: number;
-  ProductDetailObj: ReqGetProdCompntObj = new ReqGetProdCompntObj();
   GenData: any;
   ProdCompGen: any;
   ProdCompNonGen: any;
   ProdBranchMbr: any;
   ProdVersion: any;
-  ProdComp: Array<ResProdDObj> = new Array<ResProdDObj>();
   IsLoaded: boolean = false;
+  GenericByIdObj: GenericObj = new GenericObj();
+  ProductDetailObj: ReqGetProdCompntObj = new ReqGetProdCompntObj();
+  ProdComp: Array<ResProdDCompntObj> = new Array<ResProdDCompntObj>();
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   DlRuleObj  : ReqDownloadRuleObj = new ReqDownloadRuleObj();
 
@@ -47,14 +49,15 @@ export class ProdHoViewComponent implements OnInit {
     this.viewGenericObj.viewEnvironment = environment.losUrl;
 
     //** Product Version **//
-    this.http.post(URLConstant.GetListProdHByProdCurrentProdHId, {Id : this.ProdHId}).subscribe(
+    this.GenericByIdObj.Id = this.ProdHId;
+    this.http.post(URLConstant.GetListProdHByProdCurrentProdHId, this.GenericByIdObj).subscribe(
       (response : ResProdHVersionObj) => {
         this.ProdVersion = response.ReturnObject
       }
     );
 
     //** Office Member **//
-    this.http.post(URLConstant.GetListProdBranchOfficeMbrByProdHId, {Id : this.ProdHId}).subscribe(
+    this.http.post(URLConstant.GetListProdBranchOfficeMbrByProdHId, this.GenericByIdObj).subscribe(
       (response : ResGetProdBranchMbrObj) => {
         this.ProdBranchMbr = response.ReturnObject;
       }

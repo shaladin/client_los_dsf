@@ -1371,7 +1371,7 @@ export class URLConstant {
   public static GetKvpRefFinMapByLobCode = environment.tempUrl + "/RefFinMap/GetKvpRefFinMapByLobCode";
 
   // PRODUCT
-  public static GetProductMainInfo = environment.losUrl + "/Product/GetProductMainInfo"
+  public static GetProdHById = environment.losUrl + "/Product/GetProdHById"
   public static AddProduct = environment.losUrl + "/Product/AddProduct"
   public static EditProduct = environment.losUrl + "/Product/EditProduct"
   public static RequestDeactivation = environment.losUrl + "/Product/RequestDeactivation"

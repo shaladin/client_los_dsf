@@ -9,12 +9,12 @@ import { URLConstant } from "app/shared/constant/URLConstant";
   templateUrl: './prod-ho-deact-paging.component.html'
 })
 export class ProdHoDeactPagingComponent implements OnInit {
-  inputPagingObj: any;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
+
   constructor() { }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/product/searchProductHODeactivate.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
@@ -25,6 +25,7 @@ export class ProdHoDeactPagingComponent implements OnInit {
     critObj.propName = 'A.PROD_STAT';
     critObj.value = 'ACT';
     this.arrCrit.push(critObj);
+    
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
 }
