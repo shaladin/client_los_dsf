@@ -254,7 +254,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
   PlafondAmt: number = 0;
   initInputApprovalObj() {
     //this.PlafondAmt = 1000000;
-    this.InputObj = new UcInputRFAObj();
+    this.InputObj = new UcInputRFAObj(this.cookieService);
     var Attributes = [{}];
     var attribute1 = {
       "AttributeName": "Approval Amount",
@@ -266,18 +266,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
       "TypeCode": "APV_LIMIT",
       "Attributes": Attributes,
     };
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
-    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
-    this.InputObj.EnvUrl = environment.FoundationR3Url;
-    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
-    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
-    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
-    this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
-    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_APP_OPL_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_RENT_APP;
     this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
