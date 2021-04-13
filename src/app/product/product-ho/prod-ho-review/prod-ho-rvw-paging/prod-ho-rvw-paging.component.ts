@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
-import { ActivatedRoute, Router } from '@angular/router'; 
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 @Component({

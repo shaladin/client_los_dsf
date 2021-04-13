@@ -7,7 +7,6 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -26,7 +25,6 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
   providers: [NGXToastrService]
 })
 export class NapAddComponent implements OnInit {
-
   @ViewChild('LookupOffering') ucLookupOffering: UclookupgenericComponent;
   @ViewChild('LookupCopyProduct') ucLookupCopyProduct: UclookupgenericComponent;
   inputLookupObjCopyProduct: InputLookupObj = new InputLookupObj();
@@ -86,8 +84,12 @@ export class NapAddComponent implements OnInit {
   });
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
-  constructor(private fb: FormBuilder, private router: Router,
-    private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService, private spinner: NgxSpinnerService) { }
+  constructor(private fb: FormBuilder,
+    private router: Router,
+    private http: HttpClient,
+    private toastr: NGXToastrService,
+    private cookieService: CookieService,
+    private spinner: NgxSpinnerService) { }
 
   isCopyData: boolean = false;
   ngOnInit() {
@@ -112,7 +114,6 @@ export class NapAddComponent implements OnInit {
         CrtOfficeName: this.user.OfficeName,
       });
     }
-
     // Test Data
   }
 
@@ -172,7 +173,6 @@ export class NapAddComponent implements OnInit {
         OriOfficeName: this.user.OfficeName,
       });
     }
-
   }
 
   GetOfficeDDL() {
@@ -261,15 +261,15 @@ export class NapAddComponent implements OnInit {
 
       requestAddNapObj = reqAddNapObj;
       AddNapUrl = URLConstant.AddNewApplication;
-    } else {
-
+    }
+    else {
       let reqAddNapFromCopyObj: ReqAddNapFromCopyObj = new ReqAddNapFromCopyObj();
 
       reqAddNapFromCopyObj.AppNo = tempFormObj.AppNo;
       reqAddNapFromCopyObj.OriOfficeCode = tempFormObj.OriOfficeCode;
 
       requestAddNapObj = reqAddNapFromCopyObj;
-      AddNapUrl = URLConstant.AddNewApplicationFromCopy;
+      AddNapUrl = URLConstant.AddNewApplicationOplFromCopy;
     }
 
     this.http.post<GenericObj>(AddNapUrl, requestAddNapObj).subscribe(
@@ -324,18 +324,20 @@ export class NapAddComponent implements OnInit {
         for (var i = 0; i < temp.length; i++) {
           if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntLob) {
             tempLobCode = temp[i].CompntValue;
-          } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntCurr) {
+          }
+          else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntCurr) {
             tempCurrCode = temp[i].CompntValue;
-          } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntPayFreq) {
+          }
+          else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntPayFreq) {
             var listPayFreqCode = temp[i].CompntValue.split(";");
             if (listPayFreqCode.length == 1) {
               tempPayFreqCode = temp[i].CompntValue;
             } else {
               tempPayFreqCode = null;
             }
-          } else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntProdType) {
+          }
+          else if (temp[i].RefProdCompntCode == CommonConstant.RefProdCompntProdType) {
             tempRefProdTypeCode = temp[i].CompntValue;
-          } else {
           }
         }
         this.NapAppForm.patchValue({
@@ -391,5 +393,4 @@ export class NapAddComponent implements OnInit {
     this.inputLookupObjName.addCritInput = arrAddCrit;
     this.ucLookupOffering.setAddCritInput();
   }
-
 }

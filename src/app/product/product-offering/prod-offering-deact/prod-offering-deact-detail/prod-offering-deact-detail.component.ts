@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { environment } from '../../../../../environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
@@ -15,6 +14,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqProdOfferingHDeactivationObj } from 'app/shared/model/Request/Product/ReqProdOfferingDeactivationObj.model';
 import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
 import { ResGetListProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from 'app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-prod-offering-deact-detail',
@@ -85,25 +85,14 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
   }
 
   initInputApprovalObj() {
-    this.InputObj = new UcInputRFAObj();
+    this.InputObj = new UcInputRFAObj(this.cookieService);
 
     var Attributes = [{}]
     var TypeCode = {
       "TypeCode": CommonConstant.PRD_OFR_DEACT_APV_TYPE,
       "Attributes": Attributes,
     };
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
-    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
-    this.InputObj.EnvUrl = environment.FoundationR3Url;
-    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
-    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
-    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
-    this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
-    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_PRD_OFR_DEACT_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_OFR_DEACT_SCHM;
     this.InputObj.Reason = this.allRefReasonMethod;
