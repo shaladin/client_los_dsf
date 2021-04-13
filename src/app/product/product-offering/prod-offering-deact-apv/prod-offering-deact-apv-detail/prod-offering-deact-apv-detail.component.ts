@@ -10,7 +10,7 @@ import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResProdOfferingObj } from 'app/shared/model/Response/Product/ResProdOfferingObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-prod-offering-deact-apv-detail',
@@ -19,14 +19,14 @@ import { ResProdOfferingObj } from 'app/shared/model/Response/Product/ResProdOff
 export class ProdOfferingDeactApvDetailComponent implements OnInit {
   prodOfferingHId: number;
   taskId: number;
-  instanceId: number;
   inputObj: any;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  InputApvObj: UcInputApprovalObj = new UcInputApprovalObj();
-  UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
   IsReady: boolean = false;
   ApvReqId: number;
   ProdOfferingId: number;
+  GenericByIdObj: GenericObj = new GenericObj();
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  InputApvObj: UcInputApprovalObj = new UcInputApprovalObj();
+  UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
 
   constructor(private router: Router,
     private route: ActivatedRoute,
@@ -35,7 +35,6 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
       if (params["ProdOfferingHId"] != null) {
         this.prodOfferingHId = params["ProdOfferingHId"];
         this.taskId = params["TaskId"];
-        this.instanceId = params["InstanceId"];
         this.ApvReqId = params["ApvReqId"];
         this.ProdOfferingId = params["ProdOfferingId"];
       }
@@ -43,12 +42,11 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewProductOfferingMainInformationForDeactApv.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformationForDeactApv.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
 
     var obj = {
       taskId: this.taskId,
-      instanceId: this.instanceId,
       approvalBaseUrl: environment.ApprovalR3Url
     }
 
@@ -70,9 +68,10 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
     this.InputApvObj.RequestId = this.ApvReqId;
     this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
 
-    this.http.post(URLConstant.GetProdOfferingByProdOfferingId, { Id: this.ProdOfferingId }).subscribe(
-      (response : ResProdOfferingObj) => {
-        this.InputApvObj.TrxNo = response.ProdOfferingCode;
+    this.GenericByIdObj.Id = this.ProdOfferingId;
+    this.http.post(URLConstant.GetProdOfferingByProdOfferingId, this.GenericByIdObj).subscribe(
+      (response) => {
+        this.InputApvObj.TrxNo = response["ProdOfferingCode"];
         this.IsReady = true;
       });
   }

@@ -1394,7 +1394,7 @@ export class URLConstant {
   public static SubmitProduct = environment.losUrl + "/Product/SubmitProduct"
 
   //PRODUCT OFFERING
-  public static GetProductOfferingMainInfo = environment.losUrl + "/ProductOffering/GetProductOfferingMainInfo";
+  public static GetProdOfferingHById = environment.losUrl + "/ProductOffering/GetProdOfferingHById";
   public static AddProdOffering = environment.losUrl + "/ProductOffering/AddProdOffering";
   public static EditProdOffering = environment.losUrl + "/ProductOffering/EditProdOffering";
   public static AddOrEditProdOfferingDetail = environment.losUrl + "/ProductOffering/AddOrEditProdOfferingDetail";

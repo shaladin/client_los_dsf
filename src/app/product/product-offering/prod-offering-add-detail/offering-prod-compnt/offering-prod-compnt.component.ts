@@ -18,8 +18,8 @@ export class OfferingProdCompntComponent implements OnInit {
 
   @Input() objInput: any;
   prodOfferingHId: number;
-  listProductComponentObj : ReqAddEditProdOfferingDObj = new ReqAddEditProdOfferingDObj();
   source: string = "";
+  listProductComponentObj : ReqAddEditProdOfferingDObj = new ReqAddEditProdOfferingDObj();
 
   constructor(
     private router: Router,

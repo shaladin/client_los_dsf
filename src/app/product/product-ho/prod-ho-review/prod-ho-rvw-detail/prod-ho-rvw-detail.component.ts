@@ -31,7 +31,7 @@ export class ProdHoRvwDetailComponent implements OnInit {
   ProdId: number;
   WfTaskListId: number;
   ProdHId: number;
-  InputObj: UcInputRFAObj;
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   GenericByIdObj : GenericObj = new GenericObj();
   ReqReviewProductObj : ReqReviewProductObj = new ReqReviewProductObj();
 
@@ -65,7 +65,6 @@ export class ProdHoRvwDetailComponent implements OnInit {
   }
 
   initInputApprovalObj() {
-    this.InputObj = new UcInputRFAObj(this.cookieService);
     this.InputObj.ApvTypecodes = [
       {
         "TypeCode": CommonConstant.PRD_HO_APV_TYPE,

@@ -10,6 +10,7 @@ import { ReqDownloadRuleObj } from "app/shared/model/Request/Product/ReqDownload
 import { ReqGetProdOffCompntObj } from "app/shared/model/Request/Product/ReqGetProdCompntObj.model";
 import { ResGetListProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from "app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model";
 import { ResGetListProdOfferingHVersionObj, ResGetProdOfferingDCompntInfoObj, ResGetProdOfferingHVersionObj } from "app/shared/model/Response/Product/ResGetProdOfferingObj.model";
+import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
 
 @Component({
   selector: 'app-prod-offering-view',
@@ -17,23 +18,23 @@ import { ResGetListProdOfferingHVersionObj, ResGetProdOfferingDCompntInfoObj, Re
 })
 export class ProdOfferingViewComponent implements OnInit {
   @Input() inputProdOfferingHId;
-
-  prodOfferingHId: number;
-  prodOfferingCode: string;
-  prodOfferingVersion: string;
-  GetProdOfferByVerCode: ProdOfferingCodeVersionObj = new ProdOfferingCodeVersionObj();
-  refProductDetailObj: ReqGetProdOffCompntObj = new ReqGetProdOffCompntObj();
   GenData: any;
   ProdComp: any;
   ProdCompGen: any;
   ProdCompNonGen: any;
+  prodOfferingHId: number;
+  prodOfferingCode: string;
+  prodOfferingVersion: string;
+  mainInfoByHIdOnly: boolean = true;
+  IsLoaded: boolean = false;
+  GenericByIdObj : GenericObj = new GenericObj();
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  DlRuleObj  : ReqDownloadRuleObj = new ReqDownloadRuleObj();
+  GetProdOfferByVerCode: ProdOfferingCodeVersionObj = new ProdOfferingCodeVersionObj();
+  refProductDetailObj: ReqGetProdOffCompntObj = new ReqGetProdOffCompntObj();
   ProdOfferingBranchMbr: Array<ResProdOfferingBranchOfficeMbrObj> = new Array<ResProdOfferingBranchOfficeMbrObj>();
   ProdOfferingVersion: Array<ResGetProdOfferingHVersionObj> = new Array<ResGetProdOfferingHVersionObj>();
   ProdOfferingCodeVersion: ResGetProdOfferingHVersionObj = new ResGetProdOfferingHVersionObj();
-  mainInfoByHIdOnly: boolean = true;
-  IsLoaded: boolean = false;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  DlRuleObj  : ReqDownloadRuleObj = new ReqDownloadRuleObj();
   
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
@@ -82,7 +83,8 @@ export class ProdOfferingViewComponent implements OnInit {
     }
 
     //** Product Offering Version **//
-    await this.http.post<ResGetListProdOfferingHVersionObj>(URLConstant.GetListProdOfferingHByProdOfferingCurrentProdHId, {Id : this.prodOfferingHId}).toPromise().then(
+    this.GenericByIdObj.Id = this.prodOfferingHId;
+    await this.http.post<ResGetListProdOfferingHVersionObj>(URLConstant.GetListProdOfferingHByProdOfferingCurrentProdHId, this.GenericByIdObj).toPromise().then(
       response => {
         this.ProdOfferingVersion = response.ReturnObject;
 
@@ -90,7 +92,7 @@ export class ProdOfferingViewComponent implements OnInit {
     );
 
     //** Office Member **//
-    await this.http.post<ResGetListProdOfferingBranchMbrObj>(URLConstant.GetListProdOfferingBranchOfficeMbrByProdHId, {Id : this.prodOfferingHId}).toPromise().then(
+    await this.http.post<ResGetListProdOfferingBranchMbrObj>(URLConstant.GetListProdOfferingBranchOfficeMbrByProdHId, this.GenericByIdObj).toPromise().then(
       response => {
         this.ProdOfferingBranchMbr = response.ReturnObject;
       }

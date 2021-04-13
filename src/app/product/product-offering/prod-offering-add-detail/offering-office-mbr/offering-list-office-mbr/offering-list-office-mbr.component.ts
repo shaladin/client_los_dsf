@@ -7,6 +7,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResGetListProdOfferingBranchMbrObj, ResGetProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from 'app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-offering-list-office-mbr',
@@ -16,10 +17,11 @@ export class OfferingListOfficeMbrComponent implements OnInit {
 
   @ViewChild(UCSearchComponent) UCSearchComponent;
   @Input() ListOfficeMemberObjInput: any;
-  @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
-  ListProdOfferingBranchMbr : Array<ResProdOfferingBranchOfficeMbrObj> = new Array<ResProdOfferingBranchOfficeMbrObj>();
   ProdOfferingHId: number;
   source: string = "";
+  GenericByIdObj: GenericObj = new GenericObj();
+  @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
+  ListProdOfferingBranchMbr : Array<ResProdOfferingBranchOfficeMbrObj> = new Array<ResProdOfferingBranchOfficeMbrObj>();
 
   constructor(
     private http: HttpClient,
@@ -35,7 +37,8 @@ export class OfferingListOfficeMbrComponent implements OnInit {
   ngOnInit() {
     this.ProdOfferingHId = this.ListOfficeMemberObjInput["ProdOfferingHId"];
 
-    this.http.post(URLConstant.GetListProdOfferingBranchOfficeMbrByProdHId, {Id : this.ProdOfferingHId}).subscribe(
+    this.GenericByIdObj.Id = this.ProdOfferingHId;
+    this.http.post(URLConstant.GetListProdOfferingBranchOfficeMbrByProdHId, this.GenericByIdObj).subscribe(
       (response : ResGetListProdOfferingBranchMbrObj) => {
         this.ListProdOfferingBranchMbr = response.ReturnObject;
       }
@@ -66,16 +69,8 @@ export class OfferingListOfficeMbrComponent implements OnInit {
 
   deleteFromList(ev: any) {
     if (confirm('Are you sure to delete this record?')) {
-      var obj = {
-        ProdOfferingBranchMbrs: [
-          {
-            ProdOfferingBranchMbrId: ev.ProdOfferingBranchMbrId,
-            RowVersion: ""
-          }
-        ]
-      };
-
-      this.http.post(URLConstant.DeleteProdOfferingOfficeMbr, obj).subscribe(
+      this.GenericByIdObj.Id = ev.ProdOfferingBranchMbrId;
+      this.http.post(URLConstant.DeleteProdOfferingOfficeMbr, this.GenericByIdObj).subscribe(
         (response) => {
           var idx = this.ListProdOfferingBranchMbr.findIndex(x => x.ProdOfferingBranchMbrId == ev.ProdOfferingBranchMbrId);
           if (idx > -1) this.ListProdOfferingBranchMbr.splice(idx, 1);

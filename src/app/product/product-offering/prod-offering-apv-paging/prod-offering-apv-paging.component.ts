@@ -66,7 +66,7 @@ export class ProdOfferingApvPagingComponent implements OnInit {
       if (String.Format("{0:L}", ev.RowObj.CURRENT_USER_ID) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_OFFERING_APPRV_DETAIL],{ "ProdOfferingHId": ev.RowObj.ProdOfferingHId, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId     });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_OFFERING_APPRV_DETAIL],{ "ProdOfferingHId": ev.RowObj.ProdOfferingHId, "TaskId" : ev.RowObj.TaskId, "ApvReqId": ev.RowObj.ApvReqId});
       }
     }
     else if (ev.Key == "HoldTask") {

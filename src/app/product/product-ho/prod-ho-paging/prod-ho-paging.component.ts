@@ -12,7 +12,8 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 export class ProdHoPagingComponent implements OnInit {
 
   inputPagingObj: UcPagingObj = new UcPagingObj();
-
+  readonly AddLink: string = NavigationConstant.PRODUCT_HO_ADD;
+  
   constructor(private router: Router) { }
 
   ngOnInit() {

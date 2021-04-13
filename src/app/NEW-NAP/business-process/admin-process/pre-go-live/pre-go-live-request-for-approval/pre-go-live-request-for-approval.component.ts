@@ -27,7 +27,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   TaskListId: any;
   AgrmntId: any;
   Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
-  InputObj: UcInputRFAObj;
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
@@ -109,7 +109,6 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_DETAIL], { AgrmntId: this.AgrmntId, AppId: this.AppId, TaskListId: this.TaskListId, AgrmntNo: this.AgrmntNo });
   }
   initInputApprovalObj() {
-    this.InputObj = new UcInputRFAObj(this.cookieService);
     var Attributes = [{}]
     var TypeCode = {
       "TypeCode": "PRE_GLV_APV_TYPE",

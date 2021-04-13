@@ -79,3 +79,13 @@ export class ResProdOfferingObj {
         this.RowVersion = "";
     }
 }
+
+export class ResAddEditProdOfferingObj {
+    ProdOfferingId : number;
+    DraftProdOfferingHId: number;
+
+    constructor() {
+        this.ProdOfferingId = 0;
+        this.DraftProdOfferingHId = 0;
+    }
+}

@@ -20,7 +20,6 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
 
   prodHId: number;
   taskId: number;
-  instanceId: number;
   inputObj: any;
   IsReady: boolean = false;
   ApvReqId: number;
@@ -36,7 +35,6 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
     if (params["ProdHId"] != null) {
         this.prodHId = params["ProdHId"];
         this.taskId = params["TaskId"];
-        this.instanceId = params["InstanceId"];
         this.ApvReqId = params["ApvReqId"];
       }
     });
@@ -48,7 +46,6 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
     
     var obj = {
       taskId: this.taskId,
-      instanceId: this.instanceId,
       approvalBaseUrl: environment.ApprovalR3Url
     }
 

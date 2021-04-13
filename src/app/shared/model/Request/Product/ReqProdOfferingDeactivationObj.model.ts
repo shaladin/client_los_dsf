@@ -1,6 +1,6 @@
 import { ReqRFAObj } from "../RFA/ReqRFAObj.model";
 
-export class ReqProdOfferingHDeactivationObj {
+export class ReqProdOfferingDeactivationObj {
     ProdOfferingHId: number;
     EffectiveDate: Date;
     Reason: string;

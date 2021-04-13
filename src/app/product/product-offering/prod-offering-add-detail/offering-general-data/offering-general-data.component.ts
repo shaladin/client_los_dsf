@@ -22,12 +22,12 @@ import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.mode
 export class OfferingGeneralDataComponent implements OnInit {
 
   @Input() objInput: any;
-  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
-  listGeneralDataObj : ReqAddEditProdOfferingDObj = new ReqAddEditProdOfferingDObj();
   ProdOfferingHId: number;
   prodOfferingId: number;
   source: string = "";
-  inputLookUpObj: InputLookupObj;
+  inputLookUpObj: InputLookupObj = new InputLookupObj();
+  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
+  listGeneralDataObj : ReqAddEditProdOfferingDObj = new ReqAddEditProdOfferingDObj();
 
   FormCopyProdOffering = this.fb.group(
     {
@@ -59,7 +59,6 @@ export class OfferingGeneralDataComponent implements OnInit {
   initLookup() {
     var user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    this.inputLookUpObj = new InputLookupObj();
     this.inputLookUpObj.urlJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
     this.inputLookUpObj.urlEnviPaging = environment.losUrl;
     this.inputLookUpObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;

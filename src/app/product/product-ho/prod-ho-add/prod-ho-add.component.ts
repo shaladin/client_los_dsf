@@ -63,11 +63,11 @@ export class ProdHoAddComponent implements OnInit {
   ngOnInit() {
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = new Date(context[CommonConstant.BUSINESS_DT]);
-    this.StartActiveDt = new Date(context[CommonConstant.BUSINESS_DT]);var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.StartActiveDt = new Date(context[CommonConstant.BUSINESS_DT]);
 
     if (this.mode == "edit") {
       this.RefProductHOForm.controls.ProdCode.disable();
-      this.GenericByIdObj.Id = this.ProdHId
+      this.GenericByIdObj.Id = this.ProdHId;
       this.http.post(URLConstant.GetProdHById, this.GenericByIdObj).subscribe(
         (response: ResGetProductHObj) => {
           this.ProdHObj = response;
@@ -116,9 +116,9 @@ export class ProdHoAddComponent implements OnInit {
     if (!this.ValidateDate()) {
       return false;
     }
+    this.ReqAddProdObj = this.ReqEditProdObj = this.RefProductHOForm.value;
     
     if (this.mode == "edit") {
-      this.ReqEditProdObj = this.RefProductHOForm.value;
       this.ReqEditProdObj.ProdId = this.ProdHObj.ProdId;
       this.ReqEditProdObj.ProdCode = this.ProdHObj.ProdCode;
       this.ReqEditProdObj.RowVersion = this.ProdHObj.RowVersion;
@@ -129,7 +129,6 @@ export class ProdHoAddComponent implements OnInit {
         }
       );
     } else {
-      this.ReqAddProdObj = this.RefProductHOForm.value;
       this.http.post(URLConstant.AddProduct, this.ReqAddProdObj).subscribe(
         (response: ResAddEditProductObj) => {
           this.toastr.successMessage(response["message"]);

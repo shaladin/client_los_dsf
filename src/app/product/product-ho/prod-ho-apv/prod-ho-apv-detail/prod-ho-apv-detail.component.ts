@@ -20,7 +20,6 @@ export class ProdHoApvDetailComponent implements OnInit {
   prodHId: number;
   taskId: number;
   ApvReqId: number;
-  inputObj: any;
   IsReady: boolean = false;
   InputApvObj : UcInputApprovalObj;
   GenericByIdObj : GenericObj = new GenericObj();

@@ -5,14 +5,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResProdOfferingObj } from 'app/shared/model/Response/Product/ResProdOfferingObj.model';
 import { ReqReviewProdOfferingObj } from 'app/shared/model/Request/Product/ReqAddEditProdOfferingObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-prod-offering-rvw-detail',
@@ -26,20 +25,27 @@ export class ProdOfferingRvwDetailComponent implements OnInit {
       this.createComponent = content;
     }
   }
-  InputObj: UcInputRFAObj
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: Boolean = false;
   ProdOfferingHId: number;
   WfTaskListId: number;
   ProdOfferingId: number;
   ApprovalCreateOutput: any;
+  GenericByIdObj: GenericObj = new GenericObj();
   ReqReviewProdOfferingObj: ReqReviewProdOfferingObj = new ReqReviewProdOfferingObj();
+  readonly CancelLink: string = NavigationConstant.PRODUCT_OFFERING_REVIEW;
 
   FormObj = this.fb.group({
     ApprovedById: ['', Validators.required],
     Notes: ['', Validators.required]
   });
   
-  constructor(private toastr: NGXToastrService, private http: HttpClient, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private cookieService: CookieService) {
+  constructor(private toastr: NGXToastrService, 
+              private http: HttpClient, 
+              private fb: FormBuilder, 
+              private router: Router, 
+              private route: ActivatedRoute, 
+              private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["ProdOfferingHId"] != null) {
         this.ProdOfferingHId = params["ProdOfferingHId"];
@@ -59,7 +65,6 @@ export class ProdOfferingRvwDetailComponent implements OnInit {
   }
 
   initInputApprovalObj() {
-    this.InputObj = new UcInputRFAObj(this.cookieService);
     var Attributes = [{}]
     var TypeCode = {
       "TypeCode": CommonConstant.PRD_OFR_APV_TYPE,
@@ -69,9 +74,10 @@ export class ProdOfferingRvwDetailComponent implements OnInit {
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_PRD_OFR_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_OFR_ACT_SCHM;
 
-    this.http.post(URLConstant.GetProdOfferingByProdOfferingId, {Id : this.ProdOfferingId}).subscribe(
-      (response : ResProdOfferingObj) => {
-        this.InputObj.TrxNo = response.ProdOfferingCode;
+    this.GenericByIdObj.Id = this.ProdOfferingId;
+    this.http.post(URLConstant.GetProdOfferingByProdOfferingId, this.GenericByIdObj).subscribe(
+      (response : GenericObj) => {
+        this.InputObj.TrxNo = response.Code;
         this.IsReady = true;
       });
   }

@@ -35,7 +35,7 @@ export class ProdHoDeactDetailComponent implements OnInit {
   prodHId: number;
   ProdOfferVer: any;
   IsReady: boolean;
-  InputObj: UcInputRFAObj;
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   ReqProdDeactObj: ReqProductDeactivationObj = new ReqProductDeactivationObj();
   ReqProdOffVersionObj: ReqProdOfferingVersionObj = new ReqProdOfferingVersionObj();
   allRefReasonMethod: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -81,9 +81,7 @@ export class ProdHoDeactDetailComponent implements OnInit {
       this.initInputApprovalObj();
 
   }
-  initInputApprovalObj(){  
-    this.InputObj = new UcInputRFAObj(this.cookieService);
-    
+  initInputApprovalObj(){      
     var Attributes = [{}] 
     var TypeCode = {
       "TypeCode" : CommonConstant.PRD_HO_DEACT_APV_TYPE,

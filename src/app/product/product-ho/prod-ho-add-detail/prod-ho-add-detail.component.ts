@@ -17,8 +17,6 @@ export class ProdHoAddDetailComponent implements OnInit {
   ProdHId: number;
   source: string = "";
   type: string;
-  GenericByIdObj : GenericObj = new GenericObj();
-  ResultResponse: ResGetProductHObj = new ResGetProductHObj();
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
 
   constructor(
@@ -42,13 +40,6 @@ export class ProdHoAddDetailComponent implements OnInit {
     }
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.whereValue.push(this.ProdHId)
-    
-    this.GenericByIdObj.Id = this.ProdHId;
-    this.http.post(URLConstant.GetProdHById, this.GenericByIdObj).subscribe(
-      (response : ResGetProductHObj) => {
-        this.ResultResponse = response;
-      }
-    );
   }
 
   EnterTab(type) {
