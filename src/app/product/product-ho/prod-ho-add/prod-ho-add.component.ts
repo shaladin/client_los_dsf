@@ -15,7 +15,7 @@ import { ReqAddProductObj, ReqEditProductObj } from 'app/shared/model/Request/Pr
 import { ResAddEditProductObj } from 'app/shared/model/Response/Product/ResAddEditProdObj.model';
 
 @Component({
-  selector: 'app-prod-ho-Edit',
+  selector: 'app-prod-ho-add',
   templateUrl: './prod-ho-add.component.html'
 })
 export class ProdHoAddComponent implements OnInit {
