@@ -31,8 +31,8 @@ export class ProdHoRvwDetailComponent implements OnInit {
   ProdId: number;
   WfTaskListId: number;
   ProdHId: number;
-  GenericByIdObj : GenericObj = new GenericObj();
   InputObj: UcInputRFAObj;
+  GenericByIdObj : GenericObj = new GenericObj();
   ReqReviewProductObj : ReqReviewProductObj = new ReqReviewProductObj();
 
   FormObj = this.fb.group({
