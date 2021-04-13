@@ -1,9 +1,9 @@
 import { ProdBranchMbrObj } from "../../Product/ProdBranchMbrObj.model";
 
 export class ResGetProdBranchMbrObj {
-    ReturnObj : Array<ProdBranchMbrObj>;
+    ReturnObject : Array<ProdBranchMbrObj>;
 
     constructor(){
-        this.ReturnObj = new Array<ProdBranchMbrObj>();
+        this.ReturnObject = new Array<ProdBranchMbrObj>();
     }
 }
