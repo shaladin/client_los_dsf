@@ -74,7 +74,6 @@ export class ProdHoRvwDetailComponent implements OnInit {
     ];
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_PRD_HO_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_HO_ACT_SCHM;
-    console.log(this.InputObj);
 
     this.GenericByIdObj.Id = this.ProdId;
     this.http.post(URLConstant.GetProductById, this.GenericByIdObj).subscribe(

@@ -19,63 +19,42 @@ export class ProdHoApvDetailComponent implements OnInit {
 
   prodHId: number;
   taskId: number;
-  instanceId: number;
   ApvReqId: number;
   inputObj: any;
   IsReady: boolean = false;
+  InputApvObj : UcInputApprovalObj;
   GenericByIdObj : GenericObj = new GenericObj();
-  InputApvObj : UcInputApprovalObj = new UcInputApprovalObj();
-  UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
+  UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
   ReqUpdateProdPostApvObj : ReqUpdateProductPostApprovalObj = new ReqUpdateProductPostApprovalObj();
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private route: ActivatedRoute,
     private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params["ProdHId"] != null) {
         this.prodHId = params["ProdHId"];
         this.taskId = params["TaskId"];
-        this.instanceId = params["InstanceId"];
         this.ApvReqId = params["ApvReqId"];
       }
     });
   }
 
   ngOnInit() {
-    var obj = {
-      taskId: this.taskId,
-      instanceId: this.instanceId,
-      approvalBaseUrl: environment.ApprovalR3Url
-    }
-
-    this.inputObj = obj;
-
     var ApvHoldObj = new ApprovalObj()
-    ApvHoldObj.TaskId = obj.taskId
+    ApvHoldObj.TaskId = this.taskId;
 
     this.HoldTask(ApvHoldObj);
     this.initInputApprovalObj();
   }
 
-  initInputApprovalObj(){
-    this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
+  initInputApprovalObj() {
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
     this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
 
     this.InputApvObj.TaskId = this.taskId;
-    this.InputApvObj.EnvUrl = environment.FoundationR3Url;
-    this.InputApvObj.PathUrlGetLevelVoting = URLConstant.GetLevelVoting;
-    this.InputApvObj.PathUrlGetPossibleResult = URLConstant.GetPossibleResult;
-    this.InputApvObj.PathUrlSubmitApproval = URLConstant.SubmitApproval;
-    this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
-    this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
-    this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
-    this.InputApvObj.PathUrlReturnToLevel = URLConstant.ReturnLevel;
-    this.InputApvObj.PathUrlContinueToLevel = URLConstant.ContinueToLevel;
     this.InputApvObj.RequestId = this.ApvReqId;
-    this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
 
     this.GenericByIdObj.Id = this.prodHId;
     this.http.post(URLConstant.GetProductByHId, this.GenericByIdObj).subscribe(
@@ -85,9 +64,9 @@ export class ProdHoApvDetailComponent implements OnInit {
       });
   }
 
-  HoldTask(obj){
+  HoldTask(obj) {
     this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
-      (response)=>{
+      (response) => {
       }
     )
   }
@@ -106,7 +85,8 @@ export class ProdHoApvDetailComponent implements OnInit {
       }
     );
   }
+  
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_APPRV],{ });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_APPRV], {});
   }
 }

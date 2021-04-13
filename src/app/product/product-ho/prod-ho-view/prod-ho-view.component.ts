@@ -17,7 +17,7 @@ import { ResGetProdDCompntInfoObj, ResProdDCompntObj, ResProdHVersionObj } from 
 })
 export class ProdHoViewComponent implements OnInit {
 
-  @Input() inputProdHId;
+  @Input() inputProdHId: number;
   ProdHId: number;
   GenData: any;
   ProdCompGen: any;
@@ -29,7 +29,7 @@ export class ProdHoViewComponent implements OnInit {
   ProductDetailObj: ReqGetProdCompntObj = new ReqGetProdCompntObj();
   ProdComp: Array<ResProdDCompntObj> = new Array<ResProdDCompntObj>();
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  DlRuleObj  : ReqDownloadRuleObj = new ReqDownloadRuleObj();
+  DlRuleObj: ReqDownloadRuleObj = new ReqDownloadRuleObj();
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {

@@ -67,17 +67,7 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
     this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
 
     this.InputApvObj.TaskId = this.taskId;
-    this.InputApvObj.EnvUrl = environment.FoundationR3Url;
-    this.InputApvObj.PathUrlGetLevelVoting = URLConstant.GetLevelVoting;
-    this.InputApvObj.PathUrlGetPossibleResult = URLConstant.GetPossibleResult;
-    this.InputApvObj.PathUrlSubmitApproval = URLConstant.SubmitApproval;
-    this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
-    this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
-    this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
-    this.InputApvObj.PathUrlReturnToLevel = URLConstant.ReturnLevel;
-    this.InputApvObj.PathUrlContinueToLevel = URLConstant.ContinueToLevel;
     this.InputApvObj.RequestId = this.ApvReqId;
-    this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
 
     this.GenericByIdObj.Id = this.prodHId;
     this.http.post(URLConstant.GetProductByHId, this.GenericByIdObj).subscribe(
