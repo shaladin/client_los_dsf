@@ -34,7 +34,8 @@ export class ProdHoRvwDetailComponent implements OnInit {
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   GenericByIdObj : GenericObj = new GenericObj();
   ReqReviewProductObj : ReqReviewProductObj = new ReqReviewProductObj();
-
+  readonly CancelLink: string = NavigationConstant.PRODUCT_HO_REVIEW;
+  
   FormObj = this.fb.group({
     Notes: ['', Validators.required]
   });

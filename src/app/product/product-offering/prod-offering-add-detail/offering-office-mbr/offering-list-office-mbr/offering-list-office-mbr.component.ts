@@ -8,6 +8,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResGetListProdOfferingBranchMbrObj, ResGetProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from 'app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-offering-list-office-mbr',
@@ -17,10 +18,15 @@ export class OfferingListOfficeMbrComponent implements OnInit {
 
   @ViewChild(UCSearchComponent) UCSearchComponent;
   @Input() ListOfficeMemberObjInput: any;
-  ProdOfferingHId: number;
-  source: string = "";
-  GenericByIdObj: GenericObj = new GenericObj();
   @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
+  ProdOfferingHId: number;
+  source: string = "";pageNow : number;
+  pageSize : number;
+  apiUrl : string;
+  ProdHId : number;
+  orderByKey;
+  orderByValue;
+  GenericByIdObj: GenericObj = new GenericObj();
   ListProdOfferingBranchMbr : Array<ResProdOfferingBranchOfficeMbrObj> = new Array<ResProdOfferingBranchOfficeMbrObj>();
 
   constructor(
@@ -35,6 +41,10 @@ export class OfferingListOfficeMbrComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.pageNow = 1;
+    this.pageSize = 10;
+    this.apiUrl = environment.losUrl + URLConstant.GetPagingObjectBySQL;
+
     this.ProdOfferingHId = this.ListOfficeMemberObjInput["ProdOfferingHId"];
 
     this.GenericByIdObj.Id = this.ProdOfferingHId;
@@ -77,6 +87,22 @@ export class OfferingListOfficeMbrComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
         }
       );
+    }
+  }
+
+  searchSort(ev: any) {
+    if (this.ListProdOfferingBranchMbr != null) {
+      if (this.orderByKey == ev.target.attributes.name.nodeValue) {
+        this.orderByValue = !this.orderByValue
+      } else {
+        this.orderByValue = true
+      }
+      this.orderByKey = ev.target.attributes.name.nodeValue
+      let order = {
+        key: this.orderByKey,
+        value: this.orderByValue
+      }
+      this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
     }
   }
 
