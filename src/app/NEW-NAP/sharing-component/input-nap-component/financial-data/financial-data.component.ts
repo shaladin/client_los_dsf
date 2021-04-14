@@ -221,7 +221,6 @@ export class FinancialDataComponent implements OnInit {
     }
     if (isValidGracePeriod) {
       this.SetDiffRateAmt();
-      console.log(this.FinDataForm.getRawValue());
       this.http.post(URLConstant.SaveAppFinData, this.FinDataForm.getRawValue()).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
