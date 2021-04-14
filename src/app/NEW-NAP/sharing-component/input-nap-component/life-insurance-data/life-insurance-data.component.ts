@@ -336,6 +336,10 @@ export class LifeInsuranceDataComponent implements OnInit {
           });
       }
     } else {
+      if (this.AppLifeInsHId == 0){
+        this.outputTab.emit();
+        return;
+      }
       this.http.post(URLConstant.DeleteAppLifeIns, { Id: this.AppLifeInsHId }).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);

@@ -51,6 +51,8 @@ export class OtherInfoTabComponent implements OnInit {
   ResponseCustOtherInfo : any;
   appCustOtherInfo : AppCustOtherInfoObj;
   custAttrRequest = new Array<Object>();
+
+  isExistData: boolean = false;
   async ngOnInit() {
     this.AttrGroup = this.CustTypeCode == CommonConstant.CustTypeCompany ? CommonConstant.AttrGroupCustCompanyOther:CommonConstant.AttrGroupCustPersonalOther;
  
@@ -59,6 +61,7 @@ export class OtherInfoTabComponent implements OnInit {
     } 
     await this.httpClient.post(URLConstant.GetAppCustOtherInfoByAppCustId, AppcustOtherInfo).toPromise().then(
       (response: any) => {
+        console.log(response);
         this.ResponseCustOtherInfo = response;
       });
   
@@ -94,7 +97,8 @@ export class OtherInfoTabComponent implements OnInit {
       this.InputSustaianableFinancialBusinessLookupObj.genericJson = "./assets/uclookup/lookupSustainableFinancialBusiness.json";
       this.InputSustaianableFinancialBusinessLookupObj.isReady = true;
 
-      if (this.ResponseCustOtherInfo.AppCustOtherInfoId != null) {
+      if (this.ResponseCustOtherInfo.AppCustOtherInfoId != null && this.ResponseCustOtherInfo.AppCustOtherInfoId != 0) {
+        this.isExistData = true;
 
         this.InputDebitorGroupLookupObj.jsonSelect = { Descr: this.ResponseCustOtherInfo.LbppmsDebtGrpLbppDescr };
         this.InputDebitorBusinessScaleLookupObj.jsonSelect = { Descr: this.ResponseCustOtherInfo.LbppmsBizSclLbppDescr };
@@ -124,15 +128,27 @@ export class OtherInfoTabComponent implements OnInit {
       ListRequestAppCustAttrObject: this.custAttrRequest,
       RequestAppCustOtherInfoObj: this.appCustOtherInfo
     }
-    this.httpClient.post(URLConstant.AddEditCustCompletionOtherInfo, RequestAppCustOtherInfoObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["Message"]);
-        this.OutputTab.emit({IsComplete: true});
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    if(!this.isExistData){
+      this.httpClient.post(URLConstant.AddCustCompletionOtherInfo, RequestAppCustOtherInfoObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["Message"]);
+          this.OutputTab.emit({IsComplete: true});
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }else{      
+      this.httpClient.post(URLConstant.EditCustCompletionOtherInfo, RequestAppCustOtherInfoObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["Message"]);
+          this.OutputTab.emit({IsComplete: true});
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
 
   }
   setAttrContent(){
@@ -158,6 +174,7 @@ export class OtherInfoTabComponent implements OnInit {
     if(this.ResponseCustOtherInfo != undefined){
      this.appCustOtherInfo.RowVersion = this.ResponseCustOtherInfo.RowVersion 
     }
+    this.appCustOtherInfo.AppCustId = this.AppCustId;
     this.appCustOtherInfo.LbppmsBizSclLbppCode = this.OtherInformationForm.controls.LbppmsBizSclLbppCode.value;
     this.appCustOtherInfo.LbppmsBizSustainLbppCode = this.OtherInformationForm.controls.LbppmsBizSustainLbppCode.value;
     this.appCustOtherInfo.LbppmsCntrprtLbppCode = this.OtherInformationForm.controls.LbppmsCntrprtLbppCode.value;

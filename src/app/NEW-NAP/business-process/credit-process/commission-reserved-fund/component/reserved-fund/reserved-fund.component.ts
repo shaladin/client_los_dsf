@@ -26,7 +26,6 @@ export class ReservedFundComponent implements OnInit {
   getAppRsvFundUrl: any;
   getAppRsvFundRuleUrl: any;
   // getMaxAllocAmtRsvFundUrl: any;
-  addEditRsvFundUrl: any;
 
   RsvForm = this.fb.group({
     ReservedFundObjs: this.fb.array([])
@@ -73,7 +72,6 @@ export class ReservedFundComponent implements OnInit {
   initUrl() {
     this.getAppFeeUrl = URLConstant.GetListAppFeeByAppId;
     this.getAppRsvFundUrl = URLConstant.GetListAppReservedFundByAppId;
-    this.addEditRsvFundUrl = URLConstant.AddEditAppReservedFund;
     this.getAppRsvFundRuleUrl = URLConstant.CreateRsvFundRule;
     // this.getMaxAllocAmtRsvFundUrl = URLConstant.CreateMaxAllocAmtRsvFund;
   }
@@ -111,7 +109,7 @@ export class ReservedFundComponent implements OnInit {
       else {
         var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
         this.setAppReservedFundData();
-        this.http.post(this.addEditRsvFundUrl, this.allAppReservedFundObj).subscribe(
+        this.http.post(URLConstant.AddEditAppReservedFund, this.allAppReservedFundObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.allAppReservedFundObj.ReturnHandlingHId != 0 || this.allAppReservedFundObj.ReturnHandlingHId != undefined) {

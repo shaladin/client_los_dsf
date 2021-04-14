@@ -64,10 +64,12 @@ export class FinancialPersonalComponent implements OnInit {
     );
   }
 
-  GetFinData(){
+  isDataExist: boolean = false;
+  GetFinData() {
     this.http.post<AppCustPersonalFinDataObj>(URLConstant.GetAppCustPersonalFinDataByAppCustPersonalId, { Id: this.AppCustPersonalId }).subscribe(
       async (response) => {
-        if(response.AppCustPersonalFinDataId != 0){
+        if (response.AppCustPersonalFinDataId != 0) {
+          this.isDataExist = true;
           await this.FinancialForm.patchValue({
             MonthlyIncomeAmt: response.MonthlyIncomeAmt,
             MrSourceOfIncomeTypeCode: response.MrSourceOfIncomeTypeCode,
@@ -116,31 +118,32 @@ export class FinancialPersonalComponent implements OnInit {
     });
   }
 
-  SetAttrContent(){
+  SetAttrContent() {
     var formValue = this.FinancialForm['controls']['AttrList'].value;
     this.CustAttrRequest = new Array<Object>();
-     
-    if(Object.keys(formValue).length > 0 && formValue.constructor === Object){
-      for (const key in formValue) {
-        if(formValue[key]["AttrValue"]!=null ) { 
-        var custAttr = {
-          CustAttrContentId: formValue[key]["CustAttrContentId"],
-          AppCustId: this.AppCustId,
-          RefAttrCode: formValue[key]["AttrCode"],
-          AttrValue: formValue[key]["AttrValue"],
-          AttrGroup: this.AttrGroup
-        };
-        this.CustAttrRequest.push(custAttr);}
 
-      }  
+    if (Object.keys(formValue).length > 0 && formValue.constructor === Object) {
+      for (const key in formValue) {
+        if (formValue[key]["AttrValue"] != null) {
+          var custAttr = {
+            CustAttrContentId: formValue[key]["CustAttrContentId"],
+            AppCustId: this.AppCustId,
+            RefAttrCode: formValue[key]["AttrCode"],
+            AttrValue: formValue[key]["AttrValue"],
+            AttrGroup: this.AttrGroup
+          };
+          this.CustAttrRequest.push(custAttr);
+        }
+
+      }
     }
   }
 
   SaveForm() {
-    if (this.FinancialForm.get('AttrList') != undefined){
+    if (this.FinancialForm.get('AttrList') != undefined) {
       this.SetAttrContent();
     }
-    
+
     this.AppCustPersonalFinData = this.FinancialForm.value;
     this.AppCustPersonalFinData.AppCustPersonalId = this.AppCustPersonalId;
 
@@ -148,11 +151,19 @@ export class FinancialPersonalComponent implements OnInit {
       ListAppCustAttrObj: this.CustAttrRequest,
       AppCustPersonalFinDataObj: this.AppCustPersonalFinData
     }
-    this.http.post(URLConstant.AddEditAppCustPersonalFinData, request).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.OutputTab.emit({IsComplete: true});
-      });
+    if (!this.isDataExist) {
+      this.http.post(URLConstant.AddAppCustPersonalFinData, request).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.OutputTab.emit({ IsComplete: true });
+        });
+    } else {
+      this.http.post(URLConstant.EditAppCustPersonalFinData, request).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.OutputTab.emit({ IsComplete: true });
+        });
+    }
 
   }
 }

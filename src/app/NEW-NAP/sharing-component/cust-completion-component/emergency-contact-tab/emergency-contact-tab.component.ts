@@ -140,10 +140,12 @@ export class EmergencyContactTabComponent implements OnInit {
       });
   }
 
+  isDataExist: boolean = false;
   getData() {
     this.http.post<AppCustEmrgncCntctObj>(URLConstant.GetAppCustEmrgncCntctByAppCustId, { Id: this.AppCustId }).subscribe(
       (response) => {
         if (response.AppCustEmrgncCntctId != 0) {
+          this.isDataExist = true;
           this.EmergencyContactForm.patchValue({
             MrIdTypeCode: response.MrIdTypeCode,
             MrGenderCode: response.MrGenderCode,
@@ -314,13 +316,24 @@ export class EmergencyContactTabComponent implements OnInit {
     this.appCustEmrgncCntctObj.PhnExt3 = this.UcAddrObj.PhnExt3;
     this.appCustEmrgncCntctObj.Zipcode = this.EmergencyContactForm.controls["AddressZipcode"]["controls"].value.value;
 
-    this.http.post(URLConstant.AddEditAppCustEmrgncCntct, this.appCustEmrgncCntctObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.OutputTab.emit({ IsComplete: true });
-      },
-      error => {
-        console.log(error);
-      });
+    if (!this.isDataExist) {
+      this.http.post(URLConstant.AddAppCustEmrgncCntct, this.appCustEmrgncCntctObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.OutputTab.emit({ IsComplete: true });
+        },
+        error => {
+          console.log(error);
+        });
+    } else {
+      this.http.post(URLConstant.EditAppCustEmrgncCntct, this.appCustEmrgncCntctObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.OutputTab.emit({ IsComplete: true });
+        },
+        error => {
+          console.log(error);
+        });
+    }
   }
 }

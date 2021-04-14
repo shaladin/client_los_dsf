@@ -70,7 +70,7 @@ export class ReferantorDataComponent implements OnInit {
 
     var addCrit = new CriteriaObj();
     addCrit.DataType = "text";
-    addCrit.propName = "v.MR_VENDOR_CATEGORY_CODE ";
+    addCrit.propName = "v.MR_VENDOR_CATEGORY_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
     addCrit.listValue = [URLConstant.VendorCategoryAgencyCompany, URLConstant.VendorCategoryAgencyPersonal];
     this.arrAddCrit.push(addCrit);

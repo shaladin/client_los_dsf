@@ -195,11 +195,14 @@ export class JobTabComponent implements OnInit {
     );
   }
 
+  isDataEdit: boolean = false;
   GetData() {
     var datePipe = new DatePipe("en-US");
     this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustId }).subscribe(
       (response) => {
+        console.log(response);
         if (response.AppCustPersonalJobDataObj != null) {
+          this.isDataEdit = true;
           this.JobDataForm.patchValue({
             MrProfessionCode: response.AppCustPersonalJobDataObj.MrProfessionCode,
             IndustryTypeCode: response.AppCustPersonalJobDataObj.IndustryTypeCode,
@@ -417,14 +420,26 @@ export class JobTabComponent implements OnInit {
       OthBizAddrObj: this.OthBizDataAddrObj
     }
 
-    this.http.post(URLConstant.AddEditAppCustPersonalJobData, requestObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.OutputTab.emit({ IsComplete: true });
-      },
-      error => {
-        console.log(error);
-      });
+    console.log(requestObj);
+    if (!this.isDataEdit) {
+      this.http.post(URLConstant.AddAppCustPersonalJobData, requestObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.OutputTab.emit({ IsComplete: true });
+        },
+        error => {
+          console.log(error);
+        });
+    } else {
+      this.http.post(URLConstant.EditAppCustPersonalJobData, requestObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.OutputTab.emit({ IsComplete: true });
+        },
+        error => {
+          console.log(error);
+        });
+    }
   }
 
   SetCriteriaAndRequired(CustModelCode: string, isChange: boolean = false) {
@@ -515,7 +530,7 @@ export class JobTabComponent implements OnInit {
   InitLookup() {
     this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.InputLookupProfessionObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupProfessionObj.urlEnviPaging = environment.losUrl;
     this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.addCritInput = new Array();
