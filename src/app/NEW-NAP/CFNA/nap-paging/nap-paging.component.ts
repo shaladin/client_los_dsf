@@ -15,14 +15,12 @@ import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-nap-paging',
-  templateUrl: './nap-paging.component.html',
-  styleUrls: []
+  templateUrl: './nap-paging.component.html'
 })
 export class NapPagingComponent implements OnInit {
-  inputPagingObj: any;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: any;
   userAccess: any;
-
 
   constructor(
     private http: HttpClient,
@@ -43,10 +41,7 @@ export class NapPagingComponent implements OnInit {
     this.arrCrit = new Array();
     this.makeCriteria();
 
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchApp.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApp.json";
 
     this.inputPagingObj.ddlEnvironments = [
@@ -55,7 +50,6 @@ export class NapPagingComponent implements OnInit {
         environment: environment.FoundationR3Url
       }
     ];
-
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
 
@@ -73,7 +67,7 @@ export class NapPagingComponent implements OnInit {
       critObj.listValue = [this.userAccess.OfficeCode];
     } else {
       critObj.propName = 'a.ORI_OFFICE_CODE';
-      this.http.post(URLConstant.GetListCenterGrpMemberByCenterGrpCode, {Code : CommonConstant.CENTER_GROUP_CODE}).subscribe(
+      this.http.post(URLConstant.GetListCenterGrpMemberByCenterGrpCode, { Code: CommonConstant.CENTER_GROUP_CODE }).subscribe(
         (response) => {
           var CenterGrpOfficeMbrObjs: Array<CenterGrpOfficeMbrObj> = response["ListCenterGrpOfficeMbr"];
 
@@ -88,10 +82,10 @@ export class NapPagingComponent implements OnInit {
   }
 
   AddApp() {
-    this.http.post(URLConstant.GetRefOfficeByOfficeCode, {Code : this.userAccess.OfficeCode}).subscribe(
+    this.http.post(URLConstant.GetRefOfficeByOfficeCode, { Code: this.userAccess.OfficeCode }).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFNA_ADD], {});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_ADD], {});
         } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
@@ -103,7 +97,7 @@ export class NapPagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     if (ev.Key == "Edit") {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFNA_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
     }
   }
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.Model';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
@@ -9,7 +8,6 @@ import { HttpClient } from '@angular/common/http';
 import { String } from 'typescript-string-operations';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { Router } from '@angular/router';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -32,8 +30,6 @@ export class ProdOfferingApvPagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/product/searchProductOfferingApproval.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOfferingApproval.json";
 
     var critObj = new CriteriaObj();
@@ -62,7 +58,7 @@ export class ProdOfferingApvPagingComponent implements OnInit {
 
   CallBackHandler(ev) {
     var ApvReqObj = new ApprovalObj();
-    if(ev.Key == "Process"){
+    if (ev.Key == "Process") {
       if (String.Format("{0:L}", ev.RowObj.CURRENT_USER_ID) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {

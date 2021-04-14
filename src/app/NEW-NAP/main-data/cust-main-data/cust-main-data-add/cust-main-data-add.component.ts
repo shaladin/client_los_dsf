@@ -20,8 +20,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'cust-main-data-add',
-  templateUrl: './cust-main-data-add.component.html',
-  providers: [NGXToastrService]
+  templateUrl: './cust-main-data-add.component.html'
 })
 export class CustMainDataAddComponent implements OnInit {
 
@@ -85,7 +84,6 @@ export class CustMainDataAddComponent implements OnInit {
 
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObjCopyProduct.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
@@ -93,7 +91,6 @@ export class CustMainDataAddComponent implements OnInit {
 
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjName.urlEnviPaging = environment.tempUrl;
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
@@ -191,7 +188,6 @@ export class CustMainDataAddComponent implements OnInit {
     this.NapAppForm.get("ProductOfferingNameIdentifier").patchValue({
       value: ev.ProdOfferingName
     });
-    // this.inputLookupObjName.nameSelect = ev.ProdOfferingName;
     this.inputLookupObjName.isRequired = false;
     this.isCopyData = true;
   }
@@ -272,7 +268,7 @@ export class CustMainDataAddComponent implements OnInit {
       reqAddNapFromCopyObj.OriOfficeCode = this.NapAppForm.getRawValue().OriOfficeCode;
 
       requestAddNapObj = reqAddNapFromCopyObj;
-      if(this.bizTemplateCode === CommonConstant.OPL) {
+      if (this.bizTemplateCode === CommonConstant.OPL) {
         AddNapUrl = URLConstant.AddNewApplicationOplFromCopy;
       }
       else {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, ViewChild, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.Model';
@@ -17,7 +17,7 @@ export class HoSearchOfficeComponent implements OnInit {
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
   @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
   @Input() ListOfficeMemberObjInput: any;
-  ReqListProdBranchMbrObj : ReqListProdBranchMbrObj = new ReqListProdBranchMbrObj();
+  ReqListProdBranchMbrObj: ReqListProdBranchMbrObj = new ReqListProdBranchMbrObj();
 
   constructor(
     private http: HttpClient,
@@ -28,7 +28,6 @@ export class HoSearchOfficeComponent implements OnInit {
   ngOnInit() {
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/product/productHOfficeMbrTempPaging.json";
     this.tempPagingObj.enviromentUrl = environment.FoundationR3Url;
-    this.tempPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/product/productHOfficeMbrTempPaging.json";
     this.tempPagingObj.ddlEnvironments = [
       {

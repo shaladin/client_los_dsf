@@ -32,8 +32,6 @@ export class MouReviewPagingComponent implements OnInit {
     else {
       this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouReview.json";
-      this.inputPagingObj.enviromentUrl = environment.losUrl;
-      this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouReview.json";
       this.inputPagingObj.ddlEnvironments = [
         {

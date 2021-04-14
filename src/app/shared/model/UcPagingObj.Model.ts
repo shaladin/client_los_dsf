@@ -1,4 +1,6 @@
+import { environment } from "environments/environment";
 import { NavigationConstant } from "../constant/NavigationConstant";
+import { URLConstant } from "../constant/URLConstant";
 import { CriteriaObj } from "./CriteriaObj.model";
 
 export class UcPagingObj {
@@ -20,8 +22,8 @@ export class UcPagingObj {
     constructor() {
         this._url = "";
         this.title = "";
-        this.enviromentUrl = "";
-        this.apiQryPaging = "";
+        this.enviromentUrl = environment.losUrl;
+        this.apiQryPaging = URLConstant.GetPagingObjectBySQL;
         this.deleteUrl = "";
         this.pagingJson = "";
         this.arrCritObj = null;

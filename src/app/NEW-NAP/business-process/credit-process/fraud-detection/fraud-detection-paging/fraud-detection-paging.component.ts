@@ -14,13 +14,13 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-fraud-detection-paging',
-  templateUrl: './fraud-detection-paging.component.html',
-  styleUrls: []
+  templateUrl: './fraud-detection-paging.component.html'
 })
 export class FraudDetectionPagingComponent implements OnInit {
-  inputPagingObj: any;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+
   constructor(private router: Router, private http: HttpClient, private route: ActivatedRoute, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
@@ -31,10 +31,7 @@ export class FraudDetectionPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchFraudDetection.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchFraudDetection.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -53,7 +50,6 @@ export class FraudDetectionPagingComponent implements OnInit {
   }
 
   GetCallBack(event) {
-
     if (event.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.RowObj.prodOfferingCode, event.RowObj.prodOfferingVersion);
     }
@@ -82,14 +78,14 @@ export class FraudDetectionPagingComponent implements OnInit {
 
             if (dupCheckErrorMessage == null && surveyErrorMessage == null && fraudDetectionErrorMessage == null) {
               if (event.RowObj.BizTemplateCode == CommonConstant.FL4W)
-                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_FRAUD_VERIF_MULTI_ASSET_PAGING], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_FRAUD_VERIF_MULTI_ASSET_PAGING], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
               else
-                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_FRAUD_DETECTION_DETAIL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_FRAUD_DETECTION_DETAIL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
             }
           }
         );
       } else {
-        var appObj = { Id: event.RowObj.AppId };
+        let appObj = { Id: event.RowObj.AppId };
         this.http.post(AdInsConstant.SurveyFraudAppCheckingValidationForFraudVerif, appObj).subscribe(
           (response) => {
             var dupCheckErrorMessage = response["DupCheckErrorMessage"];
@@ -112,15 +108,13 @@ export class FraudDetectionPagingComponent implements OnInit {
 
             if (dupCheckErrorMessage == null && surveyErrorMessage == null && fraudDetectionErrorMessage == null) {
               if (event.RowObj.BizTemplateCode == CommonConstant.FL4W)
-                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_FRAUD_VERIF_MULTI_ASSET_PAGING], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId })
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_FRAUD_VERIF_MULTI_ASSET_PAGING], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId })
               else
-                AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_FRAUD_DETECTION_DETAIL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId })
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_FRAUD_DETECTION_DETAIL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId })
             }
           }
         );
       }
     }
-
   }
-
 }

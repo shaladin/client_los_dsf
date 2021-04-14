@@ -5,7 +5,6 @@ import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { environment } from 'environments/environment';
 import { WizardComponent } from 'angular-archwizard';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -41,7 +40,7 @@ export class OfferingGeneralDataComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private toastr: NGXToastrService,
-    private wizard: WizardComponent, 
+    private wizard: WizardComponent,
     private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
@@ -57,11 +56,9 @@ export class OfferingGeneralDataComponent implements OnInit {
   }
 
   initLookup() {
-    var user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.inputLookUpObj.urlJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
-    this.inputLookUpObj.urlEnviPaging = environment.losUrl;
-    this.inputLookUpObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookUpObj.pagingJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
     this.inputLookUpObj.genericJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
     this.inputLookUpObj.isRequired = false;
@@ -86,7 +83,7 @@ export class OfferingGeneralDataComponent implements OnInit {
     this.http.post(URLConstant.AddOrEditProdOfferingDetail, this.listGeneralDataObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_PAGING],{ });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PROD_OFFERING_PAGING], {});
       }
     );
   }
@@ -144,10 +141,10 @@ export class OfferingGeneralDataComponent implements OnInit {
 
   BackToPaging() {
     if (this.source == "return") {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_RTN_PAGING],{ });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PROD_OFFERING_RTN_PAGING], {});
     }
     else {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_PAGING],{ });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PROD_OFFERING_PAGING], {});
     }
   }
 }

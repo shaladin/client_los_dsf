@@ -1,3 +1,4 @@
+import { environment } from "environments/environment";
 import { NavigationConstant } from "../constant/NavigationConstant";
 
 export class UcViewGenericObj {
@@ -9,7 +10,7 @@ export class UcViewGenericObj {
 
     constructor() {
         this.viewInput = "";
-        this.viewEnvironment = "";
+        this.viewEnvironment = environment.losUrl;
         this.ddlEnvironments = new Array<EnviObj>();
         this.whereValue = new Array<any>();
         this.navigationConst = NavigationConstant;

@@ -9,18 +9,20 @@ import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.mod
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ResGetProdOfferingBranchMbrObj } from 'app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model';
 import { ReqListProdOfferingBranchMbrObj } from 'app/shared/model/Request/Product/ReqAddProdOfferingBranchMbrObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-offering-search-office',
   templateUrl: './offering-search-office.component.html'
 })
 export class OfferingSearchOfficeComponent implements OnInit {
+  @Input() ListOfficeMemberObjInput: any;
+  @Input() ProdHId: number;
+  @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
+  GenericByIdObj : GenericObj = new GenericObj();
   listSelected: Array<any> = new Array<any>();
   arrListId: Array<number> = new Array<number>();
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
-  @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
-  @Input() ListOfficeMemberObjInput: any;
-  @Input() ProdHId: any;
   ReqListProdBranchMbrObj : ReqListProdOfferingBranchMbrObj = new ReqListProdOfferingBranchMbrObj();
 
   constructor(
@@ -32,7 +34,6 @@ export class OfferingSearchOfficeComponent implements OnInit {
   ngOnInit() {
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
     this.tempPagingObj.enviromentUrl = environment.FoundationR3Url;
-    this.tempPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
     this.tempPagingObj.ddlEnvironments = [
       {
@@ -40,7 +41,9 @@ export class OfferingSearchOfficeComponent implements OnInit {
         environment: environment.FoundationR3Url
       }
     ];
-    this.http.post<ResGetProdOfferingBranchMbrObj>(URLConstant.GetListProdBranchOfficeMbrByProdHId, {Id : this.ProdHId}).subscribe(
+
+    this.GenericByIdObj.Id = this.ProdHId;
+    this.http.post<ResGetProdOfferingBranchMbrObj>(URLConstant.GetListProdBranchOfficeMbrByProdHId, this.GenericByIdObj).subscribe(
       response => {
         for (let i = 0; i < response["ReturnObject"].length; i++) {
           this.arrListId.push(response["ReturnObject"][i]["OfficeCode"]);

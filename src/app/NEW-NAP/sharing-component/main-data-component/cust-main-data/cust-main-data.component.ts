@@ -215,7 +215,6 @@ export class CustMainDataComponent implements OnInit {
 
   setLookup(custType: string = CommonConstant.CustTypePersonal, isChange: boolean = false) {
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCustObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.genericJson = "./assets/uclookup/lookupCustomer.json";

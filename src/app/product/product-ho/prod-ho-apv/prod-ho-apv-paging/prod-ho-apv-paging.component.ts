@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -9,7 +8,6 @@ import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { String } from 'typescript-string-operations';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { Router } from '@angular/router';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -21,7 +19,6 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './prod-ho-apv-paging.component.html'
 })
 export class ProdHoApvPagingComponent implements OnInit {
-
   inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   ApvReqObj: ApprovalObj = new ApprovalObj();
@@ -34,8 +31,6 @@ export class ProdHoApvPagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/product/searchProductHOApproval.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHOApproval.json";
 
     let critObj = new CriteriaObj();

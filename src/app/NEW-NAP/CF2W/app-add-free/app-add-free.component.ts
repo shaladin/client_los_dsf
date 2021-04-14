@@ -129,7 +129,6 @@ export class AppAddFreeComponent implements OnInit {
   MakeLookUpObj() {
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObjCopyProduct.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
@@ -137,7 +136,6 @@ export class AppAddFreeComponent implements OnInit {
 
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjName.urlEnviPaging = environment.tempUrl;
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
@@ -157,11 +155,7 @@ export class AppAddFreeComponent implements OnInit {
 
   GetOfficeDDL() {
     // Office DDL
-    var obj = {
-      RowVersion: ""
-    };
-    var url = environment.FoundationR3Url + URLConstant.GetListKvpActiveRefOffice;
-    this.http.post(url, obj).subscribe(
+    this.http.post(URLConstant.GetListKvpActiveRefOffice, {}).subscribe(
       (response) => {
         this.officeItems = response[CommonConstant.ReturnObj];
         this.NapAppForm.patchValue({

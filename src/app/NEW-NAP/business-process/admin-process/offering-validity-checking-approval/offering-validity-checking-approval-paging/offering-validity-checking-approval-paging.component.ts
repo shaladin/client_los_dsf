@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -22,8 +21,8 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   styleUrls: []
 })
 export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
-  inputPagingObj: any;
   Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
@@ -37,7 +36,6 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-
     var arrCrit = new Array();
 
     var critInputOnlyOffering = new CriteriaObj();
@@ -45,11 +43,7 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
     critInputOnlyOffering.restriction = AdInsConstant.RestrictionEq;
     critInputOnlyOffering.value = CommonConstant.OFFERING_VALIDITY_APV;
 
-
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchOfferingValidityCheckingAndApproval.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchOfferingValidityCheckingAndApproval.json";
     this.inputPagingObj.addCritInput = new Array();
     arrCrit.push(critInputOnlyOffering);
@@ -118,5 +112,4 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
       this.toastr.warningMessage(String.Format(ExceptionConstant.ERROR_NO_CALLBACK_SETTING, ev.Key));
     }
   }
-
 }
