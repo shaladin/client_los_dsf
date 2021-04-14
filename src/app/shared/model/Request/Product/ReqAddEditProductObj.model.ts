@@ -28,11 +28,11 @@ export class ReqEditProductObj extends ReqAddProductObj {
 }
 
 export class ReqListProductDetailObj {
-    ProdHId : number;
-    ProductDetails : Array<ReqProductDetailDomainObj>;
-    RowVersion : string;
+    ProdHId: number;
+    ProductDetails: Array<ReqProductDetailDomainObj>;
+    RowVersion: string;
 
-    constructor(){
+    constructor() {
         this.ProdHId = 0;
         this.ProductDetails = new Array<ReqProductDetailDomainObj>();
         this.RowVersion = "";
@@ -40,16 +40,16 @@ export class ReqListProductDetailObj {
 }
 
 class ReqProductDetailDomainObj {
-    ProdHId : number;
-    ProdDId : number;
-    RefProdCompntCode : string;
-    RefProdCompntGrpCode : string;
-    CompntValue : string;
-    CompntValueDesc : string;
-    MrProdBehaviour : string; 
-    RowVersion : string;
+    ProdHId: number;
+    ProdDId: number;
+    RefProdCompntCode: string;
+    RefProdCompntGrpCode: string;
+    CompntValue: string;
+    CompntValueDesc: string;
+    MrProdBehaviour: string;
+    RowVersion: string;
 
-    constructor(){
+    constructor() {
         this.ProdHId = 0;
         this.ProdDId = 0;
         this.RefProdCompntCode = "";
@@ -62,24 +62,24 @@ class ReqProductDetailDomainObj {
 }
 
 export class ReqCopyProductObj {
-    ProdHId : number;
-    FromProdId : number;
+    ProdHId: number;
+    FromProdId: number;
 
-    constructor(){
+    constructor() {
         this.ProdHId = 0;
         this.FromProdId = 0;
     }
 }
 
 export class ReqUpdateProductPostApprovalObj {
-    ProdHId : number;
-    TaskId : number;
-    Result : string;
-    Notes : string;
-    Reason : string;
-    ReasonType : string;
+    ProdHId: number;
+    TaskId: number;
+    Result: string;
+    Notes: string;
+    Reason: string;
+    ReasonType: string;
 
-    constructor(){
+    constructor() {
         this.ProdHId = 0;
         this.TaskId = 0;
         this.Result = "";
@@ -90,12 +90,12 @@ export class ReqUpdateProductPostApprovalObj {
 }
 
 export class ReqReviewProductObj {
-    ProdHId : number;
-    ProdId : number;
+    ProdHId: number;
+    ProdId: number;
     WfTaskListId: number;
-    RequestRFAObj : ReqRFAObj;
+    RequestRFAObj: ReqRFAObj;
 
-    constructor(){
+    constructor() {
         this.ProdHId = 0;
         this.ProdId = 0;
         this.WfTaskListId = 0;

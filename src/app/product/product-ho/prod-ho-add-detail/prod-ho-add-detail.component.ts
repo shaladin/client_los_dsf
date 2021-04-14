@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
-import { URLConstant } from 'app/shared/constant/URLConstant';
-import { environment } from 'environments/environment';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ResGetProductHObj } from 'app/shared/model/Response/Product/ResGetProdObj.model';
 
 @Component({
   selector: 'app-prod-ho-add-detail',
@@ -20,7 +15,6 @@ export class ProdHoAddDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
 
   constructor(
-    private http: HttpClient,
     private route: ActivatedRoute,
   ) {
     this.route.queryParams.subscribe(params => {
@@ -38,8 +32,7 @@ export class ProdHoAddDetailComponent implements OnInit {
     else{
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformation.json";
     }
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.whereValue.push(this.ProdHId)
+    this.viewGenericObj.whereValue.push(this.ProdHId);
   }
 
   EnterTab(type) {
