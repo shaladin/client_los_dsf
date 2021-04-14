@@ -1,3 +1,32 @@
+import { ReqRFAObj } from "../RFA/ReqRFAObj.model";
+
+export class ReqAddProductObj {
+    ProdCode: string;
+    ProdName: string;
+    ProdDescr: string;
+    StartDt: Date;
+    EndDt: Date;
+    RowVersion: string;
+
+    constructor() {
+        this.ProdCode = "";
+        this.ProdName = "";
+        this.ProdDescr = "";
+        this.StartDt = new Date();
+        this.EndDt = new Date();
+        this.RowVersion = "";
+    }
+}
+
+export class ReqEditProductObj extends ReqAddProductObj {
+    ProdId: number;
+
+    constructor() {
+        super();
+        this.ProdId = 0;
+    }
+}
+
 export class ReqListProductDetailObj {
     ProdHId : number;
     ProductDetails : Array<ReqProductDetailDomainObj>;
@@ -42,7 +71,7 @@ export class ReqCopyProductObj {
     }
 }
 
-export class ReqUpdateProductPostApvObj {
+export class ReqUpdateProductPostApprovalObj {
     ProdHId : number;
     TaskId : number;
     Result : string;
@@ -57,5 +86,19 @@ export class ReqUpdateProductPostApvObj {
         this.Notes = "";
         this.Reason = "";
         this.ReasonType = "";
+    }
+}
+
+export class ReqReviewProductObj {
+    ProdHId : number;
+    ProdId : number;
+    WfTaskListId: number;
+    RequestRFAObj : ReqRFAObj;
+
+    constructor(){
+        this.ProdHId = 0;
+        this.ProdId = 0;
+        this.WfTaskListId = 0;
+        this.RequestRFAObj = new ReqRFAObj();
     }
 }

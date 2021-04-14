@@ -1,4 +1,4 @@
-export class ReqProdDeactObj {
+export class ReqProductDeactivationObj {
     ProdHId: number;
     EffectiveDate: Date;
     Reason: string;

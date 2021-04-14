@@ -11,32 +11,19 @@ import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqProdDeactObj } from 'app/shared/model/Request/Product/ReqProdDeactObj.model';
+import { ReqProductDeactivationObj } from 'app/shared/model/Request/Product/ReqProductDeactivationObj.model';
 import { environment } from 'environments/environment';
-import { ReqProdOffVersionObj } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
-import { ResGetProductHObj } from 'app/shared/model/Response/Product/ResGetProdObj.model';
+import { ReqProdOfferingVersionObj } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { ResProdOffVersionObj } from 'app/shared/model/Response/Product/ResProdOfferingObj.model';
+import { ResProdOfferingVersionObj } from 'app/shared/model/Response/Product/ResProdOfferingObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-prod-ho-deact-detail',
   templateUrl: './prod-ho-deact-detail.component.html'
 })
 export class ProdHoDeactDetailComponent implements OnInit {
-
-  prodId: number;
-  prodHId: number;
-  prodHDeactivateObj: ReqProdDeactObj;
-  ReqProdOffVersionObj: ReqProdOffVersionObj;
-  allRefReasonMethod: Array<KeyValueObj>;
-  ProdOfferVer: any;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  InputObj: UcInputRFAObj;
-  IsReady: boolean;
-  ProdHDeactForm = this.fb.group({
-    EffectiveDate: ['', Validators.required]
-  });
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) { 
@@ -44,6 +31,20 @@ export class ProdHoDeactDetailComponent implements OnInit {
       this.createComponent = content;
     }
   }
+  prodId: number;
+  prodHId: number;
+  ProdOfferVer: any;
+  IsReady: boolean;
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
+  ReqProdDeactObj: ReqProductDeactivationObj = new ReqProductDeactivationObj();
+  ReqProdOffVersionObj: ReqProdOfferingVersionObj = new ReqProdOfferingVersionObj();
+  allRefReasonMethod: Array<KeyValueObj> = new Array<KeyValueObj>();
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+
+  ProdHDeactForm = this.fb.group({
+    EffectiveDate: ['', Validators.required]
+  });
+  
   ApprovalCreateOutput: any;
 
   readonly CancelLink: string = NavigationConstant.PRODUCT_HO_DEACTIVATE;
@@ -70,10 +71,9 @@ export class ProdHoDeactDetailComponent implements OnInit {
         }
       });
 
-    this.ReqProdOffVersionObj = new ReqProdOffVersionObj();
     this.ReqProdOffVersionObj.ProdId = this.prodId;
-    this.ReqProdOffVersionObj.ProdOfferingStat = 'ACT';
-    this.http.post<ResProdOffVersionObj>(URLConstant.GetListProdOfferingVersionByProdId, this.ReqProdOffVersionObj).subscribe(
+    this.ReqProdOffVersionObj.ProdOfferingStat = CommonConstant.PROD_OFF_STAT_ACT;
+    this.http.post<ResProdOfferingVersionObj>(URLConstant.GetListProdOfferingVersionByProdId, this.ReqProdOffVersionObj).subscribe(
       response => {
         this.ProdOfferVer = response.ReturnObject;
       }
@@ -81,9 +81,7 @@ export class ProdHoDeactDetailComponent implements OnInit {
       this.initInputApprovalObj();
 
   }
-  initInputApprovalObj(){  
-    this.InputObj = new UcInputRFAObj(this.cookieService);
-    
+  initInputApprovalObj(){      
     var Attributes = [{}] 
     var TypeCode = {
       "TypeCode" : CommonConstant.PRD_HO_DEACT_APV_TYPE,
@@ -95,21 +93,20 @@ export class ProdHoDeactDetailComponent implements OnInit {
     this.InputObj.Reason = this.allRefReasonMethod;
     
     this.http.post(URLConstant.GetProductById, {Id : this.prodId}).subscribe(
-      (response: ResGetProductHObj) => {
-        this.InputObj.TrxNo = response.ProdCode;
+      (response: GenericObj) => {
+        this.InputObj.TrxNo = response.Code;
         this.IsReady = true;
       });
   }
 
   SaveForm() {
     this.ApprovalCreateOutput = this.createComponent.output(); 
-    this.prodHDeactivateObj = new ReqProdDeactObj();
-    this.prodHDeactivateObj.EffectiveDate = this.ProdHDeactForm.controls.EffectiveDate.value;
-    this.prodHDeactivateObj.Reason = this.ApprovalCreateOutput.ReasonCode;
-    this.prodHDeactivateObj.Notes = this.ApprovalCreateOutput.Notes;
-    this.prodHDeactivateObj.ProdHId = this.prodHId;
-    this.prodHDeactivateObj.RequestRFAObj = this.ApprovalCreateOutput;
-    this.http.post(URLConstant.RequestDeactivationNew, this.prodHDeactivateObj).subscribe(
+    this.ReqProdDeactObj.EffectiveDate = this.ProdHDeactForm.controls.EffectiveDate.value;
+    this.ReqProdDeactObj.Reason = this.ApprovalCreateOutput.ReasonCode;
+    this.ReqProdDeactObj.Notes = this.ApprovalCreateOutput.Notes;
+    this.ReqProdDeactObj.ProdHId = this.prodHId;
+    this.ReqProdDeactObj.RequestRFAObj = this.ApprovalCreateOutput;
+    this.http.post(URLConstant.RequestDeactivationNew, this.ReqProdDeactObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_DEACTIVATE],{ });

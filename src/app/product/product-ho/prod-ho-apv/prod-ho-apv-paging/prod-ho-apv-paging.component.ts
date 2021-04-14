@@ -24,7 +24,10 @@ export class ProdHoApvPagingComponent implements OnInit {
   ApvReqObj: ApprovalObj = new ApprovalObj();
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-  constructor(private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) { }
+  constructor(private toastr: NGXToastrService, 
+              private httpClient: HttpClient, 
+              private router: Router, 
+              private cookieService: CookieService) { }
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/product/searchProductHOApproval.json";
@@ -61,7 +64,7 @@ export class ProdHoApvPagingComponent implements OnInit {
       if (String.Format("{0:L}", ev.RowObj.CURRENT_USER_ID) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_APPRV_DETAIL], { "ProdHId": ev.RowObj.ProdHId, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_APPRV_DETAIL], { "ProdHId": ev.RowObj.ProdHId, "TaskId": ev.RowObj.TaskId, "ApvReqId": ev.RowObj.ApvReqId });
       }
     }
     else if (ev.Key == "HoldTask") {

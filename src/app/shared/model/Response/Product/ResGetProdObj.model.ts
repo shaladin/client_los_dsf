@@ -1,16 +1,14 @@
-import { ProdDObj } from "../../Product/ProdDObj.Model";
 import { ProdHObj } from "../../Product/ProdHObj.model";
-
 export class ResGetProductHObj {
     ProdHId : number;
     ProdId : number; 
     ProdCode : string;
     ProdName : string;
     ProdDescr : string;
-    ProdStat : string;
-    ProdVersion : string;
     StartDt : Date
     EndDt : Date
+    ProdVersion : string;
+    ProdStat : string;
     RowVersion : string;
 
     constructor(){
@@ -19,47 +17,82 @@ export class ResGetProductHObj {
         this.ProdCode = "";
         this.ProdName = "";
         this.ProdDescr = "";
-        this.ProdStat = "";
-        this.ProdVersion = "";
         this.StartDt = new Date();
         this.EndDt = new Date();
+        this.ProdVersion = "";
+        this.ProdStat = "";
         this.RowVersion = "";
     }
 }
 
 export class ResProdHVersionObj {
-    ReturnObject : Array<ProdHObj>
+    ReturnObject : Array<ResProdHObj>
 
     constructor(){
-        this.ReturnObject = new Array<ProdHObj>()
+        this.ReturnObject = new Array<ResProdHObj>()
     }
 }
 
+export class ResProdHObj {
+    ProdVersion : string;
+    Descr : string;
+    StartDt : Date;
+    EndDt : Date;
+
+    constructor(){
+    this.ProdVersion = "";
+    this.Descr = "";
+    this.StartDt  = new Date();
+    this.EndDt  = new Date();
+    }
+}
 export class ResGetProdDCompntInfoObj {
-    ReturnObject : ResProdDCompntObj
+    ReturnObject : ResProdDCompntInfoObj
 
     constructor(){
-        this.ReturnObject = new ResProdDCompntObj();
+        this.ReturnObject = new ResProdDCompntInfoObj();
     }
 }
 
-class ResProdDCompntObj
+export class ResProdDCompntInfoObj
 {
-    ProdOffComponents : ResProdDObj
+    ProdOffComponents : Array<ResProdDCompntObj>
 
     constructor(){
-        this.ProdOffComponents = new ResProdDObj();
+        this.ProdOffComponents = new Array<ResProdDCompntObj>();
     }
 }
 
-class ResProdDObj {
+export class ResProdDCompntObj {
     GroupCode: string;
     GroupName: string;
-    Components: Array<ProdDObj>;
+    Components: Array<ResProdCompntObj>;
 
     constructor(){
         this.GroupCode = "";
         this.GroupName = "";
-        this.Components = new Array<ProdDObj>();
+        this.Components= new Array<ResProdCompntObj>();
+    }
+}
+
+class ResProdCompntObj {
+    CompntValue: string;
+    CompntValueDesc: string;
+    MrProdBehaviourCode: string;
+    ProdCompntName: string;
+    ProdDId: number;
+    ProdHId: number;
+    RefProdCompntCode: string;
+    RefProdCompntGrpCode: string;
+
+    constructor(){
+        this.CompntValue= "";
+        this.CompntValueDesc= "";
+        this.MrProdBehaviourCode= "";
+        this.ProdCompntName= "";
+        this.ProdDId= 0;
+        this.ProdHId= 0;
+        this.RefProdCompntCode= "";
+        this.RefProdCompntGrpCode= "";
     }
 }

@@ -10,10 +10,10 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class ProdOfferingPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
-
+  readonly AddLink: string = NavigationConstant.PROD_OFFERING_ADD;
+  
   constructor(private router: Router) { }
 
-  readonly AddLink: string = NavigationConstant.PROD_OFFERING_ADD;
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/product/searchProductOffering.json";
     this.inputPagingObj.deleteUrl = "/RefBank/DeleteRefBank";

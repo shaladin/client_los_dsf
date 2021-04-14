@@ -18,17 +18,20 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './prod-offering-apv-paging.component.html'
 })
 export class ProdOfferingApvPagingComponent implements OnInit {
+
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: any;
+  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-  constructor(private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) { }
+  constructor(private toastr: NGXToastrService, 
+              private http: HttpClient, 
+              private router: Router, 
+              private cookieService: CookieService) { }
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/product/searchProductOfferingApproval.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOfferingApproval.json";
 
-    this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
@@ -42,8 +45,7 @@ export class ProdOfferingApvPagingComponent implements OnInit {
     critObj.propName = 'CURRENT_USER_ID';
     critObj.value = this.userContext.UserName;
     this.arrCrit.push(critObj);
-
-
+    
     critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionOr;
@@ -52,7 +54,6 @@ export class ProdOfferingApvPagingComponent implements OnInit {
     this.arrCrit.push(critObj);
 
     this.inputPagingObj.addCritInput = this.arrCrit;
-
   }
 
   CallBackHandler(ev) {
@@ -61,12 +62,12 @@ export class ProdOfferingApvPagingComponent implements OnInit {
       if (String.Format("{0:L}", ev.RowObj.CURRENT_USER_ID) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_APPRV_DETAIL], { "ProdOfferingHId": ev.RowObj.ProdOfferingHId, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_OFFERING_APPRV_DETAIL],{ "ProdOfferingHId": ev.RowObj.ProdOfferingHId, "TaskId" : ev.RowObj.TaskId, "ApvReqId": ev.RowObj.ApvReqId});
       }
     }
     else if (ev.Key == "HoldTask") {
       ApvReqObj.TaskId = ev.RowObj.TaskId
-      this.httpClient.post(AdInsConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
+      this.http.post(AdInsConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
         }
@@ -77,7 +78,7 @@ export class ProdOfferingApvPagingComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId
-        this.httpClient.post(AdInsConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
+        this.http.post(AdInsConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);
           }

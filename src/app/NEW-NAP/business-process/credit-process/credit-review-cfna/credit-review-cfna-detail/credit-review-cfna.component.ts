@@ -52,7 +52,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   //   ReturnReasonDesc: [''],
   //   ReturnExecNotes: [''],
   // });
-  InputObj: UcInputRFAObj;
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   private createComponent: UcapprovalcreateComponent;
   responseListTypeCodes: Array<any>;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
@@ -437,7 +437,6 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
       });
   }
   initInputApprovalObj(manualDevList = null){  
-    this.InputObj = new UcInputRFAObj(this.cookieService); 
     var Attributes = []
     var attribute1 = {
       "AttributeName": "Approval Amount",

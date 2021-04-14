@@ -7,8 +7,7 @@ import { UcPagingObj, WhereValueObj } from "app/shared/model/UcPagingObj.Model";
 })
 export class ProdOfferingDeactPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: any;
-
+  
   constructor() { }
 
   ngOnInit() {

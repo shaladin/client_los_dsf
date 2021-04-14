@@ -20,8 +20,9 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './prod-offering-deact-apv-paging.component.html'
 })
 export class ProdOfferingDeactApvPagingComponent implements OnInit {
+
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: any;
+  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
   constructor(private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) { }
@@ -30,7 +31,6 @@ export class ProdOfferingDeactApvPagingComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/product/searchProductOffDeactApv.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOffDeactApv.json";
 
-    this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
@@ -52,7 +52,6 @@ export class ProdOfferingDeactApvPagingComponent implements OnInit {
     critObj.value = this.userContext.UserName;
     this.arrCrit.push(critObj);
 
-
     critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionOr;
@@ -70,7 +69,7 @@ export class ProdOfferingDeactApvPagingComponent implements OnInit {
       if (String.Format("{0:L}", ev.RowObj.CURRENT_USER_ID) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_DEACTIVATE_APPRV_DETAIL], { "ProdOfferingHId": ev.RowObj.ProdOfferingHId, "ProdOfferingId": ev.RowObj.ProdOfferingId, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_OFFERING_DEACTIVATE_APPRV_DETAIL],{ "ProdOfferingHId": ev.RowObj.ProdOfferingHId, "ProdOfferingId": ev.RowObj.ProdOfferingId,"TaskId": ev.RowObj.TaskId, "ApvReqId": ev.RowObj.ApvReqId});
       }
     }
     else if (ev.Key == "HoldTask") {

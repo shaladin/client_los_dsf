@@ -12,8 +12,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ListProductOfferingDetailObj } from 'app/shared/model/Request/Product/ListProductOfferingDetailObj.model';
-import { ProductOfferingDetailObj } from 'app/shared/model/Request/Product/ProductOfferingDetailObj.model';
+import { ReqAddEditProdOfferingDObj } from 'app/shared/model/Request/Product/ReqAddEditProdOfferingObj.model';
+import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
 @Component({
   selector: 'app-offering-general-data',
   templateUrl: './offering-general-data.component.html'
@@ -21,6 +21,18 @@ import { ProductOfferingDetailObj } from 'app/shared/model/Request/Product/Produ
 export class OfferingGeneralDataComponent implements OnInit {
 
   @Input() objInput: any;
+  ProdOfferingHId: number;
+  prodOfferingId: number;
+  source: string = "";
+  inputLookUpObj: InputLookupObj = new InputLookupObj();
+  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
+  listGeneralDataObj : ReqAddEditProdOfferingDObj = new ReqAddEditProdOfferingDObj();
+
+  FormCopyProdOffering = this.fb.group(
+    {
+
+    }
+  );
 
   constructor(
     private route: ActivatedRoute,
@@ -36,18 +48,6 @@ export class OfferingGeneralDataComponent implements OnInit {
     });
   }
 
-  listGeneralDataObj;
-  ProdOfferingHId: number;
-  prodOfferingId: number;
-  source: string = "";
-  inputLookUpObj: InputLookupObj;
-
-  FormCopyProdOffering = this.fb.group(
-    {
-
-    }
-  );
-
   ngOnInit() {
     this.ProdOfferingHId = this.objInput["ProdOfferingHId"];
     this.prodOfferingId = this.objInput["ProdOfferingId"];
@@ -58,7 +58,6 @@ export class OfferingGeneralDataComponent implements OnInit {
   initLookup() {
     let user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    this.inputLookUpObj = new InputLookupObj();
     this.inputLookUpObj.urlJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
     this.inputLookUpObj.pagingJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
     this.inputLookUpObj.genericJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
@@ -68,17 +67,15 @@ export class OfferingGeneralDataComponent implements OnInit {
     critObj.propName = 'PO.PROD_OFFERING_ID';
     critObj.restriction = AdInsConstant.RestrictionNeq;
     critObj.value = this.prodOfferingId.toString();
-    var arrCrit = new Array();
-    arrCrit.push(critObj);
+    this.arrCrit.push(critObj);
 
     critObj = new CriteriaObj();
     critObj.propName = 'PO.REF_OFFICE_ID';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.value = user.OfficeId;
-    arrCrit.push(critObj);
+    this.arrCrit.push(critObj);
 
-    this.inputLookUpObj.addCritInput = arrCrit;
-
+    this.inputLookUpObj.addCritInput = this.arrCrit;
   }
 
   SaveForm(event) {
@@ -118,11 +115,9 @@ export class OfferingGeneralDataComponent implements OnInit {
   }
 
   generateSaveObj(event) {
-    this.listGeneralDataObj = new ListProductOfferingDetailObj();
-    this.listGeneralDataObj.ProdOfferingDetails = new Array();
     this.listGeneralDataObj.ProdOfferingHId = this.objInput["ProdOfferingHId"];
     for (var i = 0; i < event.length; i++) {
-      var GeneralDataObj = new ProductOfferingDetailObj();
+      var GeneralDataObj = new ProdOfferingDObj();
       GeneralDataObj.ProdOfferingDId = event[i].ProdOfferingDId;
       GeneralDataObj.ProdOfferingHId = this.objInput["ProdOfferingHId"];
       GeneralDataObj.RefProdCompntCode = event[i].RefProdCompntCode;
@@ -130,11 +125,11 @@ export class OfferingGeneralDataComponent implements OnInit {
       if (event[i].IsProdOffering == true) {
         GeneralDataObj.CompntValue = event[i].OfferingCompntValue;
         GeneralDataObj.CompntValueDesc = event[i].OfferingCompntValueDesc;
-        GeneralDataObj.MrProdBehaviour = event[i].OfferingMrProdBehaviour;
+        GeneralDataObj.MrProdBehaviourCode = event[i].OfferingMrProdBehaviour;
       } else {
         GeneralDataObj.CompntValue = event[i].HOCompntValue;
         GeneralDataObj.CompntValueDesc = event[i].HOCompntValueDesc;
-        GeneralDataObj.MrProdBehaviour = event[i].HOMrProdBehaviour;
+        GeneralDataObj.MrProdBehaviourCode = event[i].HOMrProdBehaviour;
       }
       this.listGeneralDataObj.ProdOfferingDetails.push(GeneralDataObj);
     }

@@ -40,7 +40,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   UserAccess: any;
   Arr: FormArray;
   BizTemplateCode: string = "";
-  InputObj: UcInputRFAObj;
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean = false;
   IsViewReady: boolean = false;
   readonly apvBaseUrl = environment.ApprovalR3Url;
@@ -291,7 +291,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   PlafondAmt: number = 0;
   initInputApprovalObj(manualDevList = null) {
-    this.InputObj = new UcInputRFAObj(this.cookieService);
     var Attributes = [];
     var attribute1 = {
       "AttributeName": "Approval Amount",

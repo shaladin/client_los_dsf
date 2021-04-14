@@ -9,6 +9,7 @@ import { CriteriaObj } from "app/shared/model/CriteriaObj.Model";
 export class ProdHoDeactPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
+
   constructor() { }
 
   ngOnInit() {
@@ -20,6 +21,7 @@ export class ProdHoDeactPagingComponent implements OnInit {
     critObj.propName = 'A.PROD_STAT';
     critObj.value = 'ACT';
     this.arrCrit.push(critObj);
+    
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
 }
