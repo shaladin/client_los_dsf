@@ -15,9 +15,10 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { ResGetKvpRefFinMapByLobCode } from 'app/shared/model/Response/Product/ResGetKvpRefFinMapByLobCode.model';
 import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
-import { ResGetProductHOComponentGroupedObj } from 'app/shared/model/Response/Product/ResGetProdCompntObj.model';
 import { ReqGetProdCompntObj } from 'app/shared/model/Request/Product/ReqGetProdCompntObj.model';
 import { ReqCopyProductObj, ReqListProductDetailObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
+import { ResGetProdCmpntGroupedObj } from 'app/shared/model/Response/Product/ResGetProdCompntObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 
 @Component({
@@ -27,19 +28,20 @@ import { ReqCopyProductObj, ReqListProductDetailObj } from 'app/shared/model/Req
 export class HoGeneralDataComponent implements OnInit {
 
   FormProdComp: any;
-  dictOptions: { [key: string]: any; } = {};
-  dictMultiOptions: { [key: string]: any; } = {};
-  selectedMultiDDLItems: { [key: string]: any; } = {};
   @Input() ProdHId: number;
   @Input() ProdId: number;
   StateSave: string;
-  LOBSelected: string ="";
-  LOBDescrSelected: string="";
+  LOBSelected: string = "";
+  LOBDescrSelected: string = "";
   source: string = "";
+  dictOptions: { [key: string]: any; } = {};
+  dictMultiOptions: { [key: string]: any; } = {};
+  selectedMultiDDLItems: { [key: string]: any; } = {};
+  GenericByCodeObj: GenericObj = new GenericObj();
   inputLookUpObj: InputLookupObj = new InputLookupObj();
-  reqGetProdCompntObj : ReqGetProdCompntObj;
-  ReqListProductDetailObj: ReqListProductDetailObj;
-  ReqCopyProductObj: ReqCopyProductObj;
+  ReqGetProdCmpntObj : ReqGetProdCompntObj = new ReqGetProdCompntObj();
+  ReqListProductDetailObj: ReqListProductDetailObj = new ReqListProductDetailObj();
+  ReqCopyProductObj: ReqCopyProductObj = new ReqCopyProductObj();
 
   dropdownSettings: IDropdownSettings = {
     singleSelection: false,
@@ -76,7 +78,6 @@ export class HoGeneralDataComponent implements OnInit {
 
     this.inputLookUpObj.urlJson = "./assets/uclookup/product/lookupProduct.json";
     this.inputLookUpObj.urlEnviPaging = environment.losUrl;
-    this.inputLookUpObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookUpObj.pagingJson = "./assets/uclookup/product/lookupProduct.json";
     this.inputLookUpObj.genericJson = "./assets/uclookup/product/lookupProduct.json";
     this.inputLookUpObj.isRequired = false;
@@ -102,16 +103,16 @@ export class HoGeneralDataComponent implements OnInit {
     var compValue, compDescr;
     if (obj.ProdCompntType == "DDL") {
       if (obj.RefProdCompntCode == "LOB") {
-        if(this.LOBSelected != ""){
+        if (this.LOBSelected != "") {
           compValue = this.LOBSelected;
           compDescr = this.LOBDescrSelected;
         }
-        else{
+        else {
           compValue = -1;
           compDescr = "-Select One-";
-        }        
+        }
       }
-      else if(obj.CompntValue == "" || this.dictOptions[obj.RefProdCompntCode] == null || this.dictOptions[obj.RefProdCompntCode].find(f => f.Key == obj.CompntValue) == null) {
+      else if (obj.CompntValue == "" || this.dictOptions[obj.RefProdCompntCode] == null || this.dictOptions[obj.RefProdCompntCode].find(f => f.Key == obj.CompntValue) == null) {
         compValue = -1;
         compDescr = "-Select One-";
       }
@@ -168,8 +169,8 @@ export class HoGeneralDataComponent implements OnInit {
             compDescr = obj.CompntValueDesc;
           }
           if (obj.RefProdCompntCode == "LOB" && obj.CompntValue != "" && this.LOBSelected == "") {
-              this.LOBSelected = compValue;
-              this.LOBDescrSelected = compDescr;
+            this.LOBSelected = compValue;
+            this.LOBDescrSelected = compDescr;
           }
         }
       )
@@ -193,7 +194,8 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   async PopulateFinMapFromLOB() {
-    await this.http.post(URLConstant.GetKvpRefFinMapByLobCode, { Code: this.LOBSelected }).toPromise().then(
+    this.GenericByCodeObj.Code = this.LOBSelected;
+    await this.http.post(URLConstant.GetKvpRefFinMapByLobCode, this.GenericByCodeObj).toPromise().then(
       (response: ResGetKvpRefFinMapByLobCode) => {
         this.dictOptions["WAY_OF_FINANCING"] = response.RefWayOfFin;
         this.dictOptions["PURPOSE_OF_FINANCING"] = response.RefPurposeOfFin;
@@ -219,7 +221,8 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   async PopulateInstallmentSchedule() {
-    await this.http.post(URLConstant.GetListKvpInstSchmByLobCode, { Code: this.LOBSelected }).toPromise().then(
+    this.GenericByCodeObj.Code = this.LOBSelected;
+    await this.http.post(URLConstant.GetListKvpInstSchmByLobCode, this.GenericByCodeObj).toPromise().then(
       (response : GenericKeyValueListObj) => {
         var result = response.ReturnObject;
         this.dictMultiOptions["INST_SCHM"] = new Array();
@@ -233,17 +236,16 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   LoadProdComponent(ProdHId, CompGroups, IsFilterBizTmpltCode, Lob) {
-    this.reqGetProdCompntObj = new ReqGetProdCompntObj();
-    this.reqGetProdCompntObj.ProdHId = ProdHId;
-    this.reqGetProdCompntObj.GroupCodes = CompGroups.split(",");
-    this.reqGetProdCompntObj.IsFilterBizTmpltCode = IsFilterBizTmpltCode;
-    this.reqGetProdCompntObj.Lob = Lob;
-    this.reqGetProdCompntObj.RowVersion = "";
+    this.ReqGetProdCmpntObj.ProdHId = ProdHId;
+    this.ReqGetProdCmpntObj.GroupCodes = CompGroups.split(",");
+    this.ReqGetProdCmpntObj.IsFilterBizTmpltCode = IsFilterBizTmpltCode;
+    this.ReqGetProdCmpntObj.Lob = Lob;
+    this.ReqGetProdCmpntObj.RowVersion = "";
 
-    this.http.post(URLConstant.GetProductHOComponentGrouped, this.reqGetProdCompntObj).toPromise().then(
-      async (response : ResGetProductHOComponentGroupedObj) => {
+    this.http.post(URLConstant.GetProductHOComponentGrouped, this.ReqGetProdCmpntObj).toPromise().then(
+      async (response : ResGetProdCmpntGroupedObj) => {
         var fa_group = this.FormProdComp.controls['groups'] as FormArray;
-        while(fa_group.length){
+        while (fa_group.length) {
           fa_group.removeAt(0);
         }
         for (var i = 0; i < response.ReturnObject.length; i++) {
@@ -253,23 +255,23 @@ export class HoGeneralDataComponent implements OnInit {
 
           for (var j = 0; j < group.Components.length; j++) {
             var comp = group.Components[j];
-              if (comp.ProdCompntType == "DDL") {
-                await this.PopulateDDL(comp);
-              }
-              if (comp.ProdCompntType == "MULTI_DDL") {
-                await this.PopulateMultiDDL(comp);
-              }
+            if (comp.ProdCompntType == "DDL") {
+              await this.PopulateDDL(comp);
+            }
+            if (comp.ProdCompntType == "MULTI_DDL") {
+              await this.PopulateMultiDDL(comp);
+            }
           }
           await this.PopulateFinMapFromLOB();
           await this.PopulateInstallmentSchedule();
           var fa_comp = (<FormArray>this.FormProdComp.controls['groups']).at(i).get('components') as FormArray;
-          while(fa_comp.length){
+          while (fa_comp.length) {
             fa_comp.removeAt(0);
           }
           for (var j = 0; j < group.Components.length; j++) {
             var comp = group.Components[j];
-              var fa_comp = (<FormArray>this.FormProdComp.controls['groups']).at(i).get('components') as FormArray;
-              fa_comp.push(this.addComponent(comp));
+            var fa_comp = (<FormArray>this.FormProdComp.controls['groups']).at(i).get('components') as FormArray;
+            fa_comp.push(this.addComponent(comp));
           }
         }
       }
@@ -281,8 +283,6 @@ export class HoGeneralDataComponent implements OnInit {
       this.LOBSelected = event.target.value;
       this.LOBDescrSelected = this.dictOptions[val].find(f => f.Key == event.target.value).Value;
       this.LoadProdComponent(this.ProdHId, "GEN", true, this.LOBSelected);
-      // this.PopulateFinMapFromLOB()
-      // this.PopulateInstallmentSchedule();
     }
     this.FormProdComp.controls["groups"].controls[indexparent].controls["components"].controls[index].patchValue({
       CompntValueDesc: this.dictOptions[val].find(f => f.Key == event.target.value).Value
@@ -341,6 +341,7 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   NextDetail() {
+    this.BuildReqProdDetail();
     this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
@@ -369,7 +370,6 @@ export class HoGeneralDataComponent implements OnInit {
     }
     else {
       if (confirm('This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?')) {
-        this.ReqCopyProductObj = new ReqCopyProductObj();
         this.ReqCopyProductObj.ProdHId = this.ProdHId;
         this.ReqCopyProductObj.FromProdId = this.inputLookUpObj.jsonSelect["ProdId"]
         this.http.post(URLConstant.CopyProduct, this.ReqCopyProductObj).subscribe(
@@ -388,10 +388,10 @@ export class HoGeneralDataComponent implements OnInit {
 
   BackToPaging() {
     if (this.source == "return") {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_RTN_PAGING],{ });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_RTN_PAGING], {});
     }
     else {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_PAGING],{ });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_PAGING], {});
     }
   }
 }

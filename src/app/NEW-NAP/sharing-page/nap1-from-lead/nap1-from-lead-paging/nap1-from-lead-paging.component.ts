@@ -17,7 +17,6 @@ import { CookieService } from 'ngx-cookie';
   templateUrl: './nap1-from-lead-paging.component.html'
 })
 export class Nap1FromLeadPagingComponent implements OnInit {
-
   inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<any> = new Array();
   userAccess: any;
@@ -40,11 +39,7 @@ export class Nap1FromLeadPagingComponent implements OnInit {
 
     this.arrCrit = new Array();
     this.makeCriteria();
-
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchAppFromLead.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppFromLead.json";
 
     this.inputPagingObj.ddlEnvironments = [
@@ -77,7 +72,7 @@ export class Nap1FromLeadPagingComponent implements OnInit {
   }
 
   AddApp(ev) {
-    this.http.post(URLConstant.GetRefOfficeByOfficeCode, {Code : this.userAccess.OfficeCode}).subscribe(
+    this.http.post(URLConstant.GetRefOfficeByOfficeCode, { Code: this.userAccess.OfficeCode }).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP1_SHARING_FROM_LEAD_DETAIL], { "LeadId": ev.RowObj.LeadId });

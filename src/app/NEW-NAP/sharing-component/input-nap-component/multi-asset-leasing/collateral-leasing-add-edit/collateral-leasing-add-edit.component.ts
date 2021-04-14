@@ -3,16 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder } from '@angular/forms';
-import { WizardComponent } from 'angular-archwizard';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
-import { VendorEmpObj } from 'app/shared/model/VendorEmp.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
-import { UcgridfooterComponent } from '@adins/ucgridfooter';
 import { UCSearchComponent } from '@adins/ucsearch';
-import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
@@ -33,17 +28,15 @@ import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
   templateUrl: './collateral-leasing-add-edit.component.html'
 })
 export class CollateralLeasingAddEditComponent implements OnInit {
-  @Input() AppId: any;
-  @Input() mode: any;
+  @Input() AppId: number;
+  @Input() mode: string;
   @Input() AppCollateralId: number;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
   @Output() collValue: EventEmitter<object> = new EventEmitter();
-  @ViewChild(UcgridfooterComponent) UCGridFooter;
   @ViewChild(UCSearchComponent) UCSearchComponent;
 
   pageType: string = "add";
-  LobCode: any;
-  //AppCollateralId: any;
+  LobCode: string;
   branchObj: any;
   listBranchObj: any;
   getListAppAssetData: any;
@@ -215,69 +208,6 @@ export class CollateralLeasingAddEditComponent implements OnInit {
 
   CollChange() {
     this.collateral = this.AddCollForm.controls["Collateral"].value;
-  }
-
-  bindUcSearch() {
-    this.arrCrit = new Array();
-
-    this.listSelectedId = new Array();
-    this.tempListId = new Array();
-    this.tempData = new Array();
-    this.arrCrit = new Array();
-
-    this.inputObj = new InputSearchObj();
-    this.inputObj._url = "./assets/ucpaging/mou/searchMouCustCollateral.json";
-    this.inputObj.enviromentUrl = environment.FoundationR3Url;
-    this.inputObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
-
-    this.pageNow = 1;
-    this.pageSize = 10;
-    this.apiUrl = environment.FoundationR3Url + URLConstant.GetPagingObjectBySQL;
-    this.inputObj.addCritInput = new Array();
-
-  }
-
-  searchPagination(event: number) {
-    this.pageNow = event;
-    let order = null;
-    if (this.orderByKey != null) {
-      order = {
-        key: this.orderByKey,
-        value: this.orderByValue
-      }
-    }
-    this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
-  }
-
-  searchSort(event: any) {
-    if (this.resultData != null) {
-      if (this.orderByKey == event.target.attributes.name.nodeValue) {
-        this.orderByValue = !this.orderByValue
-      } else {
-        this.orderByValue = true
-      }
-      this.orderByKey = event.target.attributes.name.nodeValue
-      let order = {
-        key: this.orderByKey,
-        value: this.orderByValue
-      }
-      this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
-    }
-  }
-
-  getResult(event) {
-    this.resultData = event.response;
-    this.totalData = event.response.Count;
-    this.UCGridFooter.pageNow = event.pageNow;
-    this.UCGridFooter.totalData = this.totalData;
-    this.UCGridFooter.resultData = this.resultData;
-  }
-
-  onSelect(event) {
-    this.pageNow = event.pageNow;
-    this.pageSize = event.pageSize;
-    this.totalData = event.Count;
-    this.searchPagination(this.pageNow);
   }
 
   SelectAll(condition) {
@@ -523,8 +453,6 @@ export class CollateralLeasingAddEditComponent implements OnInit {
         });
     }
 
-
-    this.bindUcSearch();
     this.GetListAddr();
 
     this.inputFieldLocationAddrObj = new InputFieldObj();

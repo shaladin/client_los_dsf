@@ -9,17 +9,14 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   templateUrl: './asset-inquiry.component.html'
 })
 export class AssetInquiryComponent implements OnInit {
+  inputPagingObj: UcPagingObj = new UcPagingObj();
 
   constructor() { }
 
-  inputPagingObj;
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchAssetInquiry.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAssetInquiry.json";
-    this.inputPagingObj.addCritInput = new Array();
   }
 
 }

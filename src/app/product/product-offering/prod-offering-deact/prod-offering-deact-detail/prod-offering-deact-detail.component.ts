@@ -11,32 +11,17 @@ import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ProdOfferingHDeactivateObj } from 'app/shared/model/Request/Product/ProdOfferingHDeactivateObj.model';
-import { ProductOfferingBranchMbrObj } from 'app/shared/model/Request/Product/ProductOfferingBranchMbrObj.model';
+import { ReqProdOfferingDeactivationObj } from 'app/shared/model/Request/Product/ReqProdOfferingDeactivationObj.model';
+import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
+import { ResGetListProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from 'app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model';
 import { environment } from 'environments/environment';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-prod-offering-deact-detail',
   templateUrl: './prod-offering-deact-detail.component.html'
 })
 export class ProdOfferingDeactDetailComponent implements OnInit {
-
-  prodOfferingHId: any;
-  prodOfferingHDeactivateObj: any;
-  resultData: any;
-  arrCrit: any;
-  getValueReasonModel: any;
-  allRefReasonMethod: any;
-  ProdOfferingBranchMemObj: any;
-  OfficeList: any;
-  ProdOfferingBranchUrl: any;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  prodOfferingId: number;
-  InputObj: UcInputRFAObj;
-  IsReady: boolean;
-  ProdOfferingHDeactForm = this.fb.group({
-    EffectiveDate: ['', Validators.required]
-  });
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) { 
@@ -44,13 +29,30 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
       this.createComponent = content;
     }
   }
+
+  prodOfferingHId: number;
+  resultData: any;
+  allRefReasonMethod: any;
+  prodOfferingId: number;
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
+  IsReady: boolean;
   ApprovalCreateOutput: any;
-
+  GenericByIdObj: GenericObj = new GenericObj();
+  OfficeList: Array<ResProdOfferingBranchOfficeMbrObj> = new Array<ResProdOfferingBranchOfficeMbrObj>();
+  ProdOfferingHDeactObj: ReqProdOfferingDeactivationObj = new ReqProdOfferingDeactivationObj();
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   readonly CancelLink: string = NavigationConstant.PRODUCT_OFFERING_DEACTIVATE;
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
+  
+  ProdOfferingHDeactForm = this.fb.group({
+    EffectiveDate: ['', Validators.required]
+  });
 
-    this.getValueReasonModel = URLConstant.GetListActiveRefReason;
-    this.ProdOfferingBranchUrl = URLConstant.GetListProdOfferingBranchOfficeMbrByProdHIdAndApp;
+  constructor(private router: Router, 
+              private route: ActivatedRoute, 
+              private http: HttpClient, 
+              private toastr: NGXToastrService, 
+              private fb: FormBuilder, 
+              private cookieService: CookieService) {
 
     this.route.queryParams.subscribe(params => {
       if (params["prodOfferingHId"] != null) {
@@ -67,20 +69,19 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
     this.viewGenericObj.viewEnvironment = environment.losUrl;
 
     var obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeProdDeactivate };
-    await this.http.post(this.getValueReasonModel, obj).toPromise().then(
-      (response) => {
-        if (response['ReturnObject'].length > 0) {
-          this.allRefReasonMethod = response['ReturnObject'];
-          this.ProdOfferingHDeactForm.patchValue({ Reason: response['ReturnObject'][0]['Key'] });
+    await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
+      (response : GenericKeyValueListObj) => {
+        if (response.ReturnObject.length > 0) {
+          this.allRefReasonMethod = response.ReturnObject;
+          this.ProdOfferingHDeactForm.patchValue({ Reason: response.ReturnObject[0]['Key'] });
         }
       });
 
-    this.ProdOfferingBranchMemObj = new ProductOfferingBranchMbrObj();
-    this.ProdOfferingBranchMemObj.ProdOfferingHId = this.prodOfferingHId;
-    this.http.post(this.ProdOfferingBranchUrl, this.ProdOfferingBranchMemObj).subscribe(
+    this.GenericByIdObj.Id = this.prodOfferingHId;
+    this.http.post<ResGetListProdOfferingBranchMbrObj>(URLConstant.GetListProdOfferingBranchOfficeMbrByProdHIdAndApp, this.GenericByIdObj).subscribe(
       response => {
-        if (response['ReturnObject'].length > 0) {
-          this.OfficeList = response['ReturnObject'];
+        if (response.ReturnObject.length > 0) {
+          this.OfficeList = response.ReturnObject;
         }
       }
     );
@@ -88,8 +89,6 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
   }
 
   initInputApprovalObj() {
-    this.InputObj = new UcInputRFAObj(this.cookieService);
-
     var Attributes = [{}]
     var TypeCode = {
       "TypeCode": CommonConstant.PRD_OFR_DEACT_APV_TYPE,
@@ -100,24 +99,23 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_OFR_DEACT_SCHM;
     this.InputObj.Reason = this.allRefReasonMethod;
 
-    this.http.post(URLConstant.GetProdOfferingByProdOfferingId, {Id : this.prodOfferingId}).subscribe(
-      (response) => {
-        this.InputObj.TrxNo = response["ProdOfferingCode"];
+    this.GenericByIdObj.Id = this.prodOfferingId;
+    this.http.post(URLConstant.GetProdOfferingByProdOfferingId, this.GenericByIdObj).subscribe(
+      (response : GenericObj) => {
+        this.InputObj.TrxNo = response.Code;
         this.IsReady = true;
       });
   }
 
   SaveForm() {
     this.ApprovalCreateOutput = this.createComponent.output();
-    this.prodOfferingHDeactivateObj = new ProdOfferingHDeactivateObj();
-    this.prodOfferingHDeactivateObj = this.ProdOfferingHDeactForm.value;
-    this.prodOfferingHDeactivateObj.EffectiveDate = this.ProdOfferingHDeactForm.controls.EffectiveDate.value;
-    this.prodOfferingHDeactivateObj.Reason = this.ApprovalCreateOutput.ReasonCode;
-    this.prodOfferingHDeactivateObj.Notes = this.ApprovalCreateOutput.Notes;
-    this.prodOfferingHDeactivateObj.ProdOfferingHId = this.prodOfferingHId;
-    this.prodOfferingHDeactivateObj.RowVersion = "";
-    this.prodOfferingHDeactivateObj.RequestRFAObj = this.ApprovalCreateOutput;
-    this.http.post(URLConstant.RequestOfferingDeactivationNew, this.prodOfferingHDeactivateObj).subscribe(
+    this.ProdOfferingHDeactObj = this.ProdOfferingHDeactForm.value;
+    this.ProdOfferingHDeactObj.EffectiveDate = this.ProdOfferingHDeactForm.controls.EffectiveDate.value;
+    this.ProdOfferingHDeactObj.Reason = this.ApprovalCreateOutput.ReasonCode;
+    this.ProdOfferingHDeactObj.Notes = this.ApprovalCreateOutput.Notes;
+    this.ProdOfferingHDeactObj.ProdOfferingHId = this.prodOfferingHId;
+    this.ProdOfferingHDeactObj.RequestRFAObj = this.ApprovalCreateOutput;
+    this.http.post(URLConstant.RequestOfferingDeactivationNew, this.ProdOfferingHDeactObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_DEACTIVATE], {});

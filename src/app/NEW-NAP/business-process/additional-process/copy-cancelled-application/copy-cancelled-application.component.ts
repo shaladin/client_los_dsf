@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcpagingComponent } from '@adins/ucpaging';
 import { HttpClient } from '@angular/common/http';
@@ -10,6 +9,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-copy-cancelled-application',
@@ -22,7 +22,8 @@ export class CopyCancelledApplicationComponent implements OnInit {
   BizTemplateCode: string;
   IsNapVersionMainData: boolean = false;
 
-  constructor(private http: HttpClient, private toastr: NGXToastrService,
+  constructor(private http: HttpClient,
+    private toastr: NGXToastrService,
     private route: ActivatedRoute) { 
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {

@@ -49,19 +49,19 @@
         <table class="table table-responsive-md text-center table-hover">
           <thead>
             <tr class="table-header">
-              <th class="text-left">Office Code</th>
+              <th>Office Code</th>
               <th class="text-left">Office Name</th>
               <th class="text-left">Area Name</th>
-              <th class="text-left">Allowed to Create Offering</th>
+              <th>Allowed to Create Offering</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let item of ProdBranchMbr">
-              <td class="text-left">{{item.OfficeCode}}</td>
+              <td>{{item.OfficeCode}}</td>
               <td class="text-left">{{item.OfficeName}}</td>
               <td class="text-left">{{item.AreaName}}</td>
-              <td class="text-left" *ngIf="item.IsAllowedCrt == 1">Yes</td>
-              <td class="text-left" *ngIf="item.IsAllowedCrt == 0">No</td>
+              <td *ngIf="item.IsAllowedCrt == 1">Yes</td>
+              <td *ngIf="item.IsAllowedCrt == 0">No</td>
             </tr>
           </tbody>
         </table>

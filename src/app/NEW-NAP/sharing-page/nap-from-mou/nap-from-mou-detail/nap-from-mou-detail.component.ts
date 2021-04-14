@@ -97,7 +97,6 @@ export class NapFromMouDetailComponent implements OnInit {
   bizTemplateCode: string;
 
   async ngOnInit(): Promise<void> {
-    console.log("nap from mou")
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
 
@@ -117,7 +116,6 @@ export class NapFromMouDetailComponent implements OnInit {
   MakeLookUpObj() {
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjName.urlEnviPaging = environment.tempUrl;
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
@@ -190,7 +188,7 @@ export class NapFromMouDetailComponent implements OnInit {
     this.http.post<GenericObj>(URLConstant.AddAppFromMou, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FCTR_ADD_DETAIL], { "AppId": response.Id });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_ADD_DETAIL], { "AppId": response.Id });
       });
 
   }

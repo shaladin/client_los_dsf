@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { ActivatedRoute } from '@angular/router';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { environment } from 'environments/environment';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-return-handling-additional-tc-paging',
@@ -15,10 +12,10 @@ import { CookieService } from 'ngx-cookie';
   styleUrls: []
 })
 export class ReturnHandlingAdditionalTcPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
-  userAccess;
-  constructor(private route: ActivatedRoute, private cookieService: CookieService) {
+
+  constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -28,12 +25,7 @@ export class ReturnHandlingAdditionalTcPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingAdditionalTc.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingAdditionalTc.json";
     this.inputPagingObj.ddlEnvironments = [
       {

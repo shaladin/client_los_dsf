@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { UcPagingObj, WhereValueObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
@@ -12,18 +11,12 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './prod-offering-return-paging.component.html'
 })
 export class ProdOfferingReturnPagingComponent implements OnInit {
+  inputPagingObj: UcPagingObj = new UcPagingObj();
 
-  inputPagingObj: any;
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/product/searchProductOfferingReturn.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOfferingReturn.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -32,21 +25,18 @@ export class ProdOfferingReturnPagingComponent implements OnInit {
       }
     ];
 
-    var WVProdOfferingStatObj = new WhereValueObj();
+    let WVProdOfferingStatObj = new WhereValueObj();
     WVProdOfferingStatObj.property = "ProdOfferingStat";
     WVProdOfferingStatObj.value = "RET";
     this.inputPagingObj.whereValue.push(WVProdOfferingStatObj);
   }
 
-  EditProdOfr(e)
-  {
-    if(e.RowObj.DraftProdOfferingHId == null)
-    {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_ADD],{ "ProdOfferingHId": e.RowObj.CurrentProdOfferingHId, "mode" : "edit", "source" : "return" });
+  EditProdOfr(e) {
+    if (e.RowObj.DraftProdOfferingHId == null) {
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PROD_OFFERING_ADD], { "ProdOfferingHId": e.RowObj.CurrentProdOfferingHId, "mode": "edit", "source": "return" });
     }
-    else
-    {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_ADD],{ "ProdOfferingHId": e.RowObj.DraftProdOfferingHId, "mode" : "edit", "source" : "return" });
+    else {
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PROD_OFFERING_ADD], { "ProdOfferingHId": e.RowObj.DraftProdOfferingHId, "mode": "edit", "source": "return" });
     }
   }
 }
