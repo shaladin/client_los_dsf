@@ -473,7 +473,7 @@ export class LeadInputMainInfoComponent implements OnInit {
         this.http.post(this.addLead, this.leadObj).subscribe(
           (response) => {
             this.responseLead = response;
-            this.LeadId = this.responseLead.LeadId;
+            this.LeadId = this.responseLead.Id;
             this.toastr.successMessage(response["message"]);
             AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_PAGING],{});
           }

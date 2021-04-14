@@ -13,8 +13,8 @@ export class LeadInputObj{
     LeadCustPersonalFinDataObj: LeadCustPersonalFinDataObj;
     LeadCustPersonalJobDataObj: LeadCustPersonalJobDataObj;
     LeadCustSocmedObj: any;
-    WfTaskListId: any;
-    RowVersion: any;
+    WfTaskListId: string;
+    RowVersion: string;
 
     constructor() { 
         this.LeadCustObj = new LeadCustObj(); 
