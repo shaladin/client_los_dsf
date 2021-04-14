@@ -21,7 +21,7 @@ export class OfferingSearchOfficeComponent implements OnInit {
   @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
   GenericByIdObj : GenericObj = new GenericObj();
   listSelected: Array<any> = new Array<any>();
-  arrListId: Array<number> = new Array<number>();
+  arrListCode: Array<string> = new Array<string>();
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
   ReqListProdBranchMbrObj : ReqListProdOfferingBranchMbrObj = new ReqListProdOfferingBranchMbrObj();
 
@@ -45,13 +45,13 @@ export class OfferingSearchOfficeComponent implements OnInit {
     this.GenericByIdObj.Id = this.ProdHId;
     this.http.post<ResGetProdOfferingBranchMbrObj>(URLConstant.GetListProdBranchOfficeMbrByProdHId, this.GenericByIdObj).subscribe(
       response => {
-        for (let i = 0; i < response["ReturnObject"].length; i++) {
-          this.arrListId.push(response["ReturnObject"][i]["OfficeCode"]);
+        for (let i = 0; i < response.ReturnObject.length; i++) {
+          this.arrListCode.push(response.ReturnObject[i].OfficeCode);
         }
         var addCrit = new CriteriaObj();
         addCrit.propName = "RO.OFFICE_CODE";
         addCrit.restriction = AdInsConstant.RestrictionIn;
-        addCrit.listValue = this.arrListId;
+        addCrit.listValue = this.arrListCode;
         this.tempPagingObj.addCritInput.push(addCrit);
 
       }

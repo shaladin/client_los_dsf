@@ -1376,7 +1376,6 @@ export class URLConstant {
   public static AddProduct = environment.losUrl + "/Product/AddProduct"
   public static EditProduct = environment.losUrl + "/Product/EditProduct"
   public static RequestDeactivation = environment.losUrl + "/Product/RequestDeactivation"
-  public static RequestDeactivationNew = environment.losUrl + "/Product/RequestDeactivationNew"
   public static GetListProdBranchOfficeMbrByProdHId = environment.losUrl + "/Product/GetListProdBranchOfficeMbrByProdHId"
   public static GetListProdHByProdCurrentProdHId = environment.losUrl + "/Product/GetListProdHByProdCurrentProdHId";
   public static AddProductOfficeMbrBatch = environment.losUrl + "/Product/AddProductOfficeMbrBatch";
@@ -1387,7 +1386,6 @@ export class URLConstant {
   public static DownloadProductRule = environment.losUrl + "/Product/DownloadProductRule";
   public static UpdateProductPostApv = environment.losUrl + "/Product/UpdateProductPostApv";
   public static ReviewProduct = environment.losUrl + "/Product/ReviewProduct";
-  public static ReviewProductNew = environment.losUrl + "/Product/ReviewProductNew";
   public static GetProductById = environment.losUrl + "/Product/GetProductById";
   public static GetProductByHId = environment.losUrl + "/Product/GetProductByHId";
   public static CopyProduct = environment.losUrl + "/Product/CopyProduct";
@@ -1405,13 +1403,11 @@ export class URLConstant {
   public static GetProdOfferingHByCodeAndVersion = environment.losUrl + "/ProductOffering/GetProdOfferingHByCodeAndVersion";
   public static GetListProdOfferingHByProdOfferingCurrentProdHId = environment.losUrl + "/ProductOffering/GetListProdOfferingHByProdOfferingCurrentProdHId"
   public static GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode = environment.losUrl + "/ProductOffering/GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode"
-  public static RequestOfferingDeactivation = environment.losUrl + "/ProductOffering/RequestProdOfferingDeactivationProdOffering"
-  public static RequestOfferingDeactivationNew = environment.losUrl + "/ProductOffering/RequestProdOfferingDeactivationNew"
+  public static RequestOfferingDeactivation = environment.losUrl + "/ProductOffering/RequestProdOfferingDeactivation"
   public static GetListProdOfferingBranchOfficeMbrByProdHIdAndApp = environment.losUrl + "/ProductOffering/GetListProdOfferingBranchOfficeMbrByProdHIdAndApp"
   public static CopyProductOffering = environment.losUrl + "/ProductOffering/CopyProductOffering";
   public static UpdateProdOfferingPostApv = environment.losUrl + "/ProductOffering/UpdateProdOfferingPostApv";
   public static ReviewProdOffering = environment.losUrl + "/ProductOffering/ReviewProdOffering";
-  public static ReviewProdOfferingNew = environment.losUrl + "/ProductOffering/ReviewProdOfferingNew";
   public static GetProdOfferingByProdOfferingId = environment.losUrl + "/ProductOffering/GetProdOfferingByProdOfferingId";
   public static SubmitProdOffering = environment.losUrl + "/ProductOffering/SubmitProdOffering";
   

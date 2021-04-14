@@ -89,7 +89,7 @@ export class ProdOfferingRvwDetailComponent implements OnInit {
     this.ReqReviewProdOfferingObj.WfTaskListId = this.WfTaskListId,
     this.ReqReviewProdOfferingObj.RequestRFAObj = this.ApprovalCreateOutput
 
-    this.http.post(URLConstant.ReviewProdOfferingNew, this.ReqReviewProdOfferingObj).subscribe(
+    this.http.post(URLConstant.ReviewProdOffering, this.ReqReviewProdOfferingObj).subscribe(
       (response) => {
         this.toastr.successMessage("Success");
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_REVIEW], {});

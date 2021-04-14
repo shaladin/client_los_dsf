@@ -25,7 +25,7 @@ export class ProdHoApvPagingComponent implements OnInit {
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
   constructor(private toastr: NGXToastrService, 
-              private httpClient: HttpClient, 
+              private http: HttpClient, 
               private router: Router, 
               private cookieService: CookieService) { }
 
@@ -72,7 +72,7 @@ export class ProdHoApvPagingComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_HOLD);
       } else {
         this.ApvReqObj.TaskId = ev.RowObj.TaskId
-        this.httpClient.post(AdInsConstant.ApvHoldTaskUrl, this.ApvReqObj).subscribe(
+        this.http.post(AdInsConstant.ApvHoldTaskUrl, this.ApvReqObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);
           }
@@ -84,7 +84,7 @@ export class ProdHoApvPagingComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
         this.ApvReqObj.TaskId = ev.RowObj.TaskId
-        this.httpClient.post(AdInsConstant.ApvTakeBackTaskUrl, this.ApvReqObj).subscribe(
+        this.http.post(AdInsConstant.ApvTakeBackTaskUrl, this.ApvReqObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);
           }

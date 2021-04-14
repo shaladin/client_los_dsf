@@ -12,8 +12,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqAddEditProdOfferingDObj } from 'app/shared/model/Request/Product/ReqAddEditProdOfferingObj.model';
+import { ReqAddEditProdOfferingDObj, ReqCopyProductOfferingObj } from 'app/shared/model/Request/Product/ReqAddEditProdOfferingObj.model';
 import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 @Component({
   selector: 'app-offering-general-data',
   templateUrl: './offering-general-data.component.html'
@@ -27,6 +28,7 @@ export class OfferingGeneralDataComponent implements OnInit {
   inputLookUpObj: InputLookupObj = new InputLookupObj();
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   listGeneralDataObj : ReqAddEditProdOfferingDObj = new ReqAddEditProdOfferingDObj();
+  ReqCopyProductOffObj: ReqCopyProductOfferingObj = new ReqCopyProductOfferingObj();
 
   FormCopyProdOffering = this.fb.group(
     {
@@ -90,11 +92,13 @@ export class OfferingGeneralDataComponent implements OnInit {
 
   reload() {
     if (this.inputLookUpObj.jsonSelect["ProdOfferingId"] == undefined) {
-      this.toastr.warningMessage("Please select Product Offering to copied");
+      this.toastr.warningMessage(ExceptionConstant.SELECT_PROD_OFF_TO_COPY);
     }
     else {
-      if (confirm('This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?')) {
-        this.http.post(URLConstant.CopyProductOffering, { ProdOfferingHId: this.ProdOfferingHId, FromProdOfferingId: this.inputLookUpObj.jsonSelect["ProdOfferingId"] }).subscribe(
+      if (confirm(ExceptionConstant.CONFIRM_PROD_OFF_TO_COPY)) {
+        this.ReqCopyProductOffObj.ProdOfferingHId = this.ProdOfferingHId;
+        this.ReqCopyProductOffObj.FromProdOfferingId = this.inputLookUpObj.jsonSelect["ProdOfferingId"];
+        this.http.post(URLConstant.CopyProductOffering, this.ReqCopyProductOffObj).subscribe(
           (response) => {
             this.toastr.successMessage("Product Offering Copied Successfully");
             window.location.reload();

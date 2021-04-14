@@ -23,7 +23,6 @@ export class ProdHoAddComponent implements OnInit {
   mode: string = 'add';
   source: string = '';
   BusinessDt: Date;
-  StartActiveDt: Date;
   StartDt: Date;
   EndDt: Date;
   GenericByIdObj: GenericObj = new GenericObj();
@@ -63,7 +62,6 @@ export class ProdHoAddComponent implements OnInit {
   ngOnInit() {
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = new Date(context[CommonConstant.BUSINESS_DT]);
-    this.StartActiveDt = new Date(context[CommonConstant.BUSINESS_DT]);
 
     if (this.mode == "edit") {
       this.RefProductHOForm.controls.ProdCode.disable();
@@ -85,8 +83,7 @@ export class ProdHoAddComponent implements OnInit {
   }
 
   updateMinDtForEndDt() {
-    this.StartActiveDt = this.RefProductHOForm.controls.StartDt.value;
-    if (this.RefProductHOForm.controls.EndDt.value < this.StartActiveDt) {
+    if (this.RefProductHOForm.controls.EndDt.value < this.RefProductHOForm.controls.StartDt.value) {
       this.RefProductHOForm.controls.EndDt.setValue("");
     }
   }

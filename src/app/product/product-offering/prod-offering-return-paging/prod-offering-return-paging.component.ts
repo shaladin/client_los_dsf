@@ -4,8 +4,6 @@ import { UcPagingObj, WhereValueObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-
-
 @Component({
   selector: 'app-prod-offering-return-paging',
   templateUrl: './prod-offering-return-paging.component.html'

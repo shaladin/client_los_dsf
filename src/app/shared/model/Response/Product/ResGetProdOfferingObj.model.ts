@@ -40,24 +40,43 @@ export class ResGetProdOfferingDCompntInfoObj {
 }
 
 class ResProdOfferingDCompntObj {
-  ProdOffComponents: Array<ResProdDObj>
+  ProdOffComponents: Array<ResProdOffDCompntObj>
 
   constructor() {
-    this.ProdOffComponents = new Array<ResProdDObj>();
+    this.ProdOffComponents = new Array<ResProdOffDCompntObj>();
   }
 }
 
-export class ResProdDObj {
+export class ResProdOffDCompntObj {
   GroupCode: string;
-  ProdCompntName: string;
+  GroupName: string;
+  Components: Array<ResProdOffCompntObj>;
+
+  constructor(){
+      this.GroupCode = "";
+      this.GroupName = "";
+      this.Components= new Array<ResProdOffCompntObj>();
+  }
+}
+class ResProdOffCompntObj {
+  CompntValue: string;
   CompntValueDesc: string;
   MrProdBehaviourCode: string;
+  ProdCompntName: string;
+  ProdDId: number;
+  ProdHId: number;
+  RefProdCompntCode: string;
+  RefProdCompntGrpCode: string;
 
-  constructor() {
-    this.GroupCode = "";
-    this.ProdCompntName = "";
-    this.CompntValueDesc = "";
-    this.MrProdBehaviourCode = "";
+  constructor(){
+      this.CompntValue= "";
+      this.CompntValueDesc= "";
+      this.MrProdBehaviourCode= "";
+      this.ProdCompntName= "";
+      this.ProdDId= 0;
+      this.ProdHId= 0;
+      this.RefProdCompntCode= "";
+      this.RefProdCompntGrpCode= "";
   }
 }
 

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -24,7 +23,7 @@ export class ProdHoDeactApvPagingComponent implements OnInit {
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
   constructor(private toastr: NGXToastrService, 
-              private httpClient: HttpClient, 
+              private http: HttpClient, 
               private router: Router, 
               private cookieService: CookieService) { }
 
@@ -77,7 +76,7 @@ export class ProdHoDeactApvPagingComponent implements OnInit {
     }
     else if (ev.Key == "HoldTask") {
       ApvReqObj.TaskId = ev.RowObj.TaskId
-      this.httpClient.post(AdInsConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
+      this.http.post(AdInsConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
         }
@@ -88,7 +87,7 @@ export class ProdHoDeactApvPagingComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId
-        this.httpClient.post(AdInsConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
+        this.http.post(AdInsConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);
           }

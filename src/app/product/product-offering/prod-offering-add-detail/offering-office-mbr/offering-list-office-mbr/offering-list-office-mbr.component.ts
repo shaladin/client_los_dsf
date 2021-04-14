@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResGetListProdOfferingBranchMbrObj, ResGetProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from 'app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model';
+import { ResGetListProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from 'app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { environment } from 'environments/environment';
 
@@ -107,7 +107,8 @@ export class OfferingListOfficeMbrComponent implements OnInit {
   }
 
   DoneForm() {
-    this.http.post(URLConstant.SubmitProdOffering, { Id: this.ProdOfferingHId }).subscribe(
+    this.GenericByIdObj.Id = this.ProdOfferingHId;
+    this.http.post(URLConstant.SubmitProdOffering, this.GenericByIdObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
       }

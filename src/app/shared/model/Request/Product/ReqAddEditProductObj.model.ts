@@ -77,7 +77,6 @@ export class ReqUpdateProductPostApprovalObj {
     Result : string;
     Notes : string;
     Reason : string;
-    ReasonType : string;
 
     constructor(){
         this.ProdHId = 0;
@@ -85,7 +84,6 @@ export class ReqUpdateProductPostApprovalObj {
         this.Result = "";
         this.Notes = "";
         this.Reason = "";
-        this.ReasonType = "";
     }
 }
 

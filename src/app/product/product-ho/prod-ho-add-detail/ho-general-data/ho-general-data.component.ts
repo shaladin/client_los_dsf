@@ -341,7 +341,6 @@ export class HoGeneralDataComponent implements OnInit {
   }
 
   NextDetail() {
-    this.BuildReqProdDetail();
     this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
