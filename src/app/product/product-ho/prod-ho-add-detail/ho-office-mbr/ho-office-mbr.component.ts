@@ -6,18 +6,18 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class HoOfficeMbrComponent implements OnInit {
   isOn: boolean;
-  @Input() objInput: any;
+  @Input() ProdHId: number;
   ListOfficeMemberObj: any = {};
-  
+
   constructor() { }
 
   ngOnInit() {
     this.isOn = true;
-    this.ListOfficeMemberObj["ProdHId"]=this.objInput["ProdHId"];
+    this.ListOfficeMemberObj["ProdHId"] = this.ProdHId;
     this.ListOfficeMemberObj["result"] = [];
   }
 
-  ChangeComponent(ev: any){
+  ChangeComponent(ev: any) {
     this.isOn = ev.isOn;
     this.ListOfficeMemberObj["result"] = ev.result;
   }

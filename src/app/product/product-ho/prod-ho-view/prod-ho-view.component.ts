@@ -1,11 +1,10 @@
 import { environment } from "environments/environment";
-import { Component, OnInit, ViewChild, Input } from "@angular/core";
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, Input } from "@angular/core";
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
-import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { ProductDetailObj } from "app/shared/model/Request/Product/ProductDetailObj.model";
 import { ResGetProdDCompntInfoObj, ResProdHVersionObj } from "app/shared/model/Response/Product/ResGetProdObj.model";
 import { ResGetProdBranchMbrObj } from "app/shared/model/Response/Product/ResGetProdBranchMbrObj.model";
@@ -17,7 +16,7 @@ import { ReqDownloadRuleObj } from "app/shared/model/Request/Product/ReqDownload
 })
 export class ProdHoViewComponent implements OnInit {
 
-  @Input() inputProdHId;
+  @Input() inputProdHId: number;
   ProdHId: number;
   ProductDetailObj: ProductDetailObj;
   GenData: any;
@@ -28,7 +27,7 @@ export class ProdHoViewComponent implements OnInit {
   ProdComp: any;
   IsLoaded: boolean = false;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  DlRuleObj  : ReqDownloadRuleObj = new ReqDownloadRuleObj();
+  DlRuleObj: ReqDownloadRuleObj = new ReqDownloadRuleObj();
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
@@ -48,16 +47,16 @@ export class ProdHoViewComponent implements OnInit {
     this.viewGenericObj.viewEnvironment = environment.losUrl;
 
     //** Product Version **//
-    this.http.post<ResProdHVersionObj>(URLConstant.GetListProdHByProdCurrentProdHId, {Id : this.ProdHId}).subscribe(
-      response => {
+    this.http.post<ResProdHVersionObj>(URLConstant.GetListProdHByProdCurrentProdHId, { Id: this.ProdHId }).subscribe(
+      (response) => {
         this.ProdVersion = response.ReturnObject
       }
     );
 
     //** Office Member **//
-    this.http.post<ResGetProdBranchMbrObj>(URLConstant.GetListProdBranchOfficeMbrByProdHId, {Id : this.ProdHId}).subscribe(
-      response => {
-        this.ProdBranchMbr = response.ReturnObj;
+    this.http.post<ResGetProdBranchMbrObj>(URLConstant.GetListProdBranchOfficeMbrByProdHId, { Id: this.ProdHId }).subscribe(
+      (response) => {
+        this.ProdBranchMbr = response.ReturnObject;
       }
     );
 
@@ -66,7 +65,7 @@ export class ProdHoViewComponent implements OnInit {
     this.ProductDetailObj.ProdHId = this.ProdHId;
     this.ProductDetailObj.GroupCodes = ['GEN', 'SCHM', 'SCORE', 'RULE', 'OTHR', 'LOS'];
     await this.http.post<ResGetProdDCompntInfoObj>(URLConstant.GetProductDetailComponentInfo, this.ProductDetailObj).toPromise().then(
-      response => {
+      (response) => {
         this.ProdComp = response.ReturnObject.ProdOffComponents;
         this.GenData = this.ProdComp.filter(
           comp => comp.GroupCode == 'GEN');

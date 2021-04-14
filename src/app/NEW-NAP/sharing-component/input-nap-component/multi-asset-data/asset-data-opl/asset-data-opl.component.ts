@@ -53,7 +53,6 @@ export class AssetDataOplComponent implements OnInit {
   inputAddressObjForLoc: InputAddressObj;
   
   listAsset: Array<any> = new Array<any>();
-  appAssetAccessoriesObjs: Array<AppAssetAccessoryObj>;
   originalAppAssetAccessory: Array<AppAssetAccessoryObj>;
   appAssetAttrObjs: Array<AppAssetAttrCustomObj>;
   InputLookupAcceObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
@@ -433,8 +432,8 @@ export class AssetDataOplComponent implements OnInit {
       this.InputLookupAcceObjs.push(InputLookupAccObj);
       this.InputLookupSupplObjs.push(InputLookupAccSupObj);
 
-      this.setAppAccessorySupplier(i, this.appAssetAccessoriesObjs[i].SupplCode);
-      this.setAppAccessory(i, this.appAssetAccessoriesObjs[i].AssetAccessoryCode);
+      this.setAppAccessorySupplier(i, this.allAssetDataObj.AppAssetAccessoryObjs[i].SupplCode);
+      this.setAppAccessory(i, this.allAssetDataObj.AppAssetAccessoryObjs[i].AssetAccessoryCode);
     }
 
     var appAttrObjs = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;

@@ -434,7 +434,7 @@ export class CreditReviewMainComponent implements OnInit {
 
   initInputApprovalObj(manualDevList = null) {
 
-    this.InputObj = new UcInputRFAObj();
+    this.InputObj = new UcInputRFAObj(this.cookieService);
     var Attributes = []
     var attribute1 = {
       "AttributeName": "Approval Amount",
@@ -455,19 +455,8 @@ export class CreditReviewMainComponent implements OnInit {
     if (manualDevList != null) {
       listTypeCode = listTypeCode.concat(manualDevList);
     }
-
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
-    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
+    
     this.InputObj.ApvTypecodes = listTypeCode;
-    this.InputObj.EnvUrl = environment.FoundationR3Url;
-    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
-    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
-    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
-    this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
-    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
     this.InputObj.Reason = this.DDLRecommendation;
