@@ -5,7 +5,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
@@ -13,25 +12,22 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
   templateUrl: './app-cancel-paging.component.html'
 })
 export class AppCancelPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   bizTemplateCode: string;
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.bizTemplateCode = params["BizTemplateCode"];
-        localStorage.setItem("BizTemplateCode",this.bizTemplateCode);
+        localStorage.setItem("BizTemplateCode", this.bizTemplateCode);
       }
-      else{
+      else {
         this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
       }
     });
   }
-  
+
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchAppCancel.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppCancel.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -48,13 +44,10 @@ export class AppCancelPagingComponent implements OnInit {
     actCrit.push("REQU_DEC_" + this.bizTemplateCode);
     actCrit.push("AST_ALO_" + this.bizTemplateCode);
 
-
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionIn;
     critObj.propName = 'WTL.ACT_CODE';
     critObj.listValue = actCrit;
-
-    //this.inputPagingObj.addCritInput.push(critObj);
 
     var critBizTemplate = new CriteriaObj();
     critBizTemplate.restriction = AdInsConstant.RestrictionEq;
@@ -62,14 +55,11 @@ export class AppCancelPagingComponent implements OnInit {
     critBizTemplate.value = this.bizTemplateCode;
 
     this.inputPagingObj.addCritInput.push(critBizTemplate);
-
-    
   }
- 
-  
-  GetCallBack(ev: any){ 
-    if(ev.Key == "ViewProdOffering"){
+
+  GetCallBack(ev: any) {
+    if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
-    } 
+    }
   }
 }

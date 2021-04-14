@@ -1,11 +1,10 @@
-import { Component, OnInit, Output, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, FormArray, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { environment } from 'environments/environment';
 import { WizardComponent } from 'angular-archwizard';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -29,7 +28,7 @@ export class OfferingGeneralDataComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private toastr: NGXToastrService,
-    private wizard: WizardComponent, 
+    private wizard: WizardComponent,
     private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
@@ -57,13 +56,10 @@ export class OfferingGeneralDataComponent implements OnInit {
   }
 
   initLookup() {
-    var user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    //if (user.MrOfficeTypeCode == "HO") {
     this.inputLookUpObj = new InputLookupObj();
     this.inputLookUpObj.urlJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
-    this.inputLookUpObj.urlEnviPaging = environment.losUrl;
-    this.inputLookUpObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookUpObj.pagingJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
     this.inputLookUpObj.genericJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
     this.inputLookUpObj.isRequired = false;
@@ -83,31 +79,6 @@ export class OfferingGeneralDataComponent implements OnInit {
 
     this.inputLookUpObj.addCritInput = arrCrit;
 
-    //}else{
-    //   this.inputLookUpObj = new InputLookupObj();
-    //   this.inputLookUpObj.urlJson = "./assets/uclookup/product/lookupCopyProductOfferingBranch.json";
-    //   this.inputLookUpObj.urlEnviPaging = environment.losUrl;
-    //   this.inputLookUpObj.urlQryPaging = AdInsConstant.GetPagingObjectBySQL;
-    //   this.inputLookUpObj.pagingJson = "./assets/uclookup/product/lookupCopyProductOfferingBranch.json";
-    //   this.inputLookUpObj.genericJson = "./assets/uclookup/product/lookupCopyProductOfferingBranch.json";
-    //   this.inputLookUpObj.isRequired = false;
-
-    //   var critObj = new CriteriaObj();
-    //   critObj.propName = 'PO.PROD_OFFERING_ID';
-    //   critObj.restriction = AdInsConstant.RestrictionNeq;
-    //   critObj.value = this.prodOfferingId.toString();
-    //   var arrCrit = new Array();
-    //   arrCrit.push(critObj);
-
-    //   critObj = new CriteriaObj();
-    //   critObj.propName = 'POBM.REF_OFFICE_ID';
-    //   critObj.restriction = AdInsConstant.RestrictionEq;
-    //   critObj.value = user.OfficeId;
-    //   arrCrit.push(critObj);
-
-    //   this.inputLookUpObj.addCritInput = arrCrit;
-    // }
-
   }
 
   SaveForm(event) {
@@ -115,7 +86,7 @@ export class OfferingGeneralDataComponent implements OnInit {
     this.http.post(URLConstant.AddOrEditProdOfferingDetail, this.listGeneralDataObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_PAGING],{ });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PROD_OFFERING_PAGING], {});
       }
     );
   }
@@ -175,10 +146,10 @@ export class OfferingGeneralDataComponent implements OnInit {
 
   BackToPaging() {
     if (this.source == "return") {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_RTN_PAGING],{ });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PROD_OFFERING_RTN_PAGING], {});
     }
     else {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_PAGING],{ });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PROD_OFFERING_PAGING], {});
     }
   }
 }

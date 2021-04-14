@@ -12,7 +12,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
   styles: []
 })
 export class DocSignerCfnaComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   link: string;
   BizTemplateCode: string;
 
@@ -26,18 +26,12 @@ export class DocSignerCfnaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchNewDocSigner.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchNewDocSigner.json";
-    var whereValueObj = new WhereValueObj();
+    let whereValueObj = new WhereValueObj();
     whereValueObj.property = "BizTemplateCode";
     whereValueObj.value = this.BizTemplateCode;
     this.inputPagingObj.whereValue.push(whereValueObj);
-
-    // this.inputPagingObj.whereValue.push({property: "BizTemplateCode", value: ""});
-    // this.inputPagingObj.whereValue.find(x => x.property == "BizTemplateCode").value = this.BizTemplateCode;
   }
 
   getEvent(ev){

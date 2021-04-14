@@ -33,11 +33,11 @@ export class HoGeneralDataComponent implements OnInit {
   @Input() ProdHId: number;
   @Input() ProdId: number;
   StateSave: string;
-  LOBSelected: string ="";
-  LOBDescrSelected: string="";
+  LOBSelected: string = "";
+  LOBDescrSelected: string = "";
   source: string = "";
   inputLookUpObj: InputLookupObj = new InputLookupObj();
-  reqGetProdCompntObj : ReqGetProdCompntObj;
+  reqGetProdCompntObj: ReqGetProdCompntObj;
   ReqListProductDetailObj: ReqListProductDetailObj;
   ReqCopyProductObj: ReqCopyProductObj;
 
@@ -76,7 +76,6 @@ export class HoGeneralDataComponent implements OnInit {
 
     this.inputLookUpObj.urlJson = "./assets/uclookup/product/lookupProduct.json";
     this.inputLookUpObj.urlEnviPaging = environment.losUrl;
-    this.inputLookUpObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookUpObj.pagingJson = "./assets/uclookup/product/lookupProduct.json";
     this.inputLookUpObj.genericJson = "./assets/uclookup/product/lookupProduct.json";
     this.inputLookUpObj.isRequired = false;
@@ -102,16 +101,16 @@ export class HoGeneralDataComponent implements OnInit {
     var compValue, compDescr;
     if (obj.ProdCompntType == "DDL") {
       if (obj.RefProdCompntCode == "LOB") {
-        if(this.LOBSelected != ""){
+        if (this.LOBSelected != "") {
           compValue = this.LOBSelected;
           compDescr = this.LOBDescrSelected;
         }
-        else{
+        else {
           compValue = -1;
           compDescr = "-Select One-";
-        }        
+        }
       }
-      else if(obj.CompntValue == "" || this.dictOptions[obj.RefProdCompntCode] == null || this.dictOptions[obj.RefProdCompntCode].find(f => f.Key == obj.CompntValue) == null) {
+      else if (obj.CompntValue == "" || this.dictOptions[obj.RefProdCompntCode] == null || this.dictOptions[obj.RefProdCompntCode].find(f => f.Key == obj.CompntValue) == null) {
         compValue = -1;
         compDescr = "-Select One-";
       }
@@ -168,8 +167,8 @@ export class HoGeneralDataComponent implements OnInit {
             compDescr = obj.CompntValueDesc;
           }
           if (obj.RefProdCompntCode == "LOB" && obj.CompntValue != "" && this.LOBSelected == "") {
-              this.LOBSelected = compValue;
-              this.LOBDescrSelected = compDescr;
+            this.LOBSelected = compValue;
+            this.LOBDescrSelected = compDescr;
           }
         }
       )
@@ -220,7 +219,7 @@ export class HoGeneralDataComponent implements OnInit {
 
   async PopulateInstallmentSchedule() {
     await this.http.post(URLConstant.GetListKvpInstSchmByLobCode, { Code: this.LOBSelected }).toPromise().then(
-      (response : GenericKeyValueListObj) => {
+      (response: GenericKeyValueListObj) => {
         var result = response.ReturnObject;
         this.dictMultiOptions["INST_SCHM"] = new Array();
         this.selectedMultiDDLItems["INST_SCHM"] = new Array();
@@ -241,9 +240,9 @@ export class HoGeneralDataComponent implements OnInit {
     this.reqGetProdCompntObj.RowVersion = "";
 
     this.http.post(URLConstant.GetProductHOComponentGrouped, this.reqGetProdCompntObj).toPromise().then(
-      async (response : ResGetProductHOComponentGroupedObj) => {
+      async (response: ResGetProductHOComponentGroupedObj) => {
         var fa_group = this.FormProdComp.controls['groups'] as FormArray;
-        while(fa_group.length){
+        while (fa_group.length) {
           fa_group.removeAt(0);
         }
         for (var i = 0; i < response.ReturnObject.length; i++) {
@@ -253,23 +252,23 @@ export class HoGeneralDataComponent implements OnInit {
 
           for (var j = 0; j < group.Components.length; j++) {
             var comp = group.Components[j];
-              if (comp.ProdCompntType == "DDL") {
-                await this.PopulateDDL(comp);
-              }
-              if (comp.ProdCompntType == "MULTI_DDL") {
-                await this.PopulateMultiDDL(comp);
-              }
+            if (comp.ProdCompntType == "DDL") {
+              await this.PopulateDDL(comp);
+            }
+            if (comp.ProdCompntType == "MULTI_DDL") {
+              await this.PopulateMultiDDL(comp);
+            }
           }
           await this.PopulateFinMapFromLOB();
           await this.PopulateInstallmentSchedule();
           var fa_comp = (<FormArray>this.FormProdComp.controls['groups']).at(i).get('components') as FormArray;
-          while(fa_comp.length){
+          while (fa_comp.length) {
             fa_comp.removeAt(0);
           }
           for (var j = 0; j < group.Components.length; j++) {
             var comp = group.Components[j];
-              var fa_comp = (<FormArray>this.FormProdComp.controls['groups']).at(i).get('components') as FormArray;
-              fa_comp.push(this.addComponent(comp));
+            var fa_comp = (<FormArray>this.FormProdComp.controls['groups']).at(i).get('components') as FormArray;
+            fa_comp.push(this.addComponent(comp));
           }
         }
       }
@@ -281,8 +280,6 @@ export class HoGeneralDataComponent implements OnInit {
       this.LOBSelected = event.target.value;
       this.LOBDescrSelected = this.dictOptions[val].find(f => f.Key == event.target.value).Value;
       this.LoadProdComponent(this.ProdHId, "GEN", true, this.LOBSelected);
-      // this.PopulateFinMapFromLOB()
-      // this.PopulateInstallmentSchedule();
     }
     this.FormProdComp.controls["groups"].controls[indexparent].controls["components"].controls[index].patchValue({
       CompntValueDesc: this.dictOptions[val].find(f => f.Key == event.target.value).Value
@@ -388,10 +385,10 @@ export class HoGeneralDataComponent implements OnInit {
 
   BackToPaging() {
     if (this.source == "return") {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_RTN_PAGING],{ });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_RTN_PAGING], {});
     }
     else {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_PAGING],{ });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_PAGING], {});
     }
   }
 }

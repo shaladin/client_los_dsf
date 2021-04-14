@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { SalesInfoObj } from 'app/shared/model/SalesInfoObj.Model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -59,7 +59,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     WayRestructure: [''],
     MrSlikSecEcoCode: [''],
   })
-  slikSecDescr: string ="";
+  slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
   refMasterInterestType: RefMasterObj = new RefMasterObj();
   refMasterInsScheme: RefMasterObj = new RefMasterObj();
@@ -94,7 +94,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   responseApp: any;
   responseProd: any;
   isInit: boolean = true;
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -134,10 +134,10 @@ export class ApplicationDataFactoringComponent implements OnInit {
         this.allMouCust = response;
         var MouCustId;
         if (this.mode == 'edit') {
-          MouCustId = this.resultData.MouCustId           
-          this.SalesAppInfoForm.patchValue({            
+          MouCustId = this.resultData.MouCustId
+          this.SalesAppInfoForm.patchValue({
             MouCustId: MouCustId
-          });          
+          });
         }
         if (MouCustId == null) {
           MouCustId = this.allMouCust[0].MouCustId;
@@ -207,7 +207,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
           this.SalesAppInfoForm.patchValue({
             MrInstTypeCode: this.allInType[0].Key
           });
-        }        
+        }
       });
 
 
@@ -275,7 +275,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         if (this.mode != 'edit') {
           this.SalesAppInfoForm.patchValue({
             CharaCredit: this.allCharacteristicCredit[1].Key,
-            MrSlikSecEcoCode: this.defaultSlikSecEcoCode 
+            MrSlikSecEcoCode: this.defaultSlikSecEcoCode
           });
         }
       });
@@ -289,7 +289,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     }
     this.http.post<MouCustFctrObj>(URLConstant.GetMouCustFctrByMouCustId, MouObj).subscribe(
       (response) => {
-        this.mouCustFctrObj = response;        
+        this.mouCustFctrObj = response;
         if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {
           this.SalesAppInfoForm.patchValue({
             MrInstTypeCode: this.mouCustFctrObj.MrInstTypeCode,
@@ -318,7 +318,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         }
 
 
-        this.http.post(URLConstant.GetRefPayFreqByPayFreqCode, {Code: this.mouCustFctrObj.PayFreqCode}).subscribe(
+        this.http.post(URLConstant.GetRefPayFreqByPayFreqCode, { Code: this.mouCustFctrObj.PayFreqCode }).subscribe(
           (response) => {
             this.allPayFreq = response;
             var PayFreqCode = null;
@@ -354,13 +354,13 @@ export class ApplicationDataFactoringComponent implements OnInit {
                 MrSlikSecEcoCode: this.resultData.MrSlikSecEcoCode
               });
               this.CalculateNumOfInst(false, this.SalesAppInfoForm.controls.Tenor.value);
-              this.CheckInstType();             
+              this.CheckInstType();
 
             }
             if (this.mode == 'edit') {
               PayFreqCode = this.resultData.PayFreqCode
               this.SalesAppInfoForm.patchValue({
-                PayFreqCode: PayFreqCode                
+                PayFreqCode: PayFreqCode
               });
             }
             if (PayFreqCode == null) {
@@ -369,7 +369,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
                 PayFreqCode: PayFreqCode
               });
             }
-            this.isInit = false; 
+            this.isInit = false;
             this.makeNewLookupCriteria();
 
           });
@@ -377,11 +377,11 @@ export class ApplicationDataFactoringComponent implements OnInit {
     for (let i = 0; i < this.allMouCust.length; i++) {
       if (this.allMouCust[i].MouCustId == MouCustId) {
         this.SalesAppInfoForm.patchValue({
-          MrInstTypeCode: this.allMouCust[i].MrInstTypeCode          
-        })        
-        this.CheckInstType();       
+          MrInstTypeCode: this.allMouCust[i].MrInstTypeCode
+        })
+        this.CheckInstType();
       }
-    }   
+    }
     this.SalesAppInfoForm.controls.MrInstTypeCode.disable();
 
 
@@ -389,8 +389,8 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
   CalculateNumOfInst(IsFirstBind: boolean, tenor: number) {
     if (this.mouCustFctrObj.MouCustFctrId != 0) {
-      if(this.mouCustFctrObj.MrInstTypeCode == CommonConstant.InstTypeMultiple){      
-        if (!IsFirstBind  && tenor > this.mouCustFctrObj.TenorTo || tenor < this.mouCustFctrObj.TenorFrom) {         
+      if (this.mouCustFctrObj.MrInstTypeCode == CommonConstant.InstTypeMultiple) {
+        if (!IsFirstBind && tenor > this.mouCustFctrObj.TenorTo || tenor < this.mouCustFctrObj.TenorFrom) {
           return false;
         }
       }
@@ -406,7 +406,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     }
   }
 
-  async CheckInstType() {    
+  async CheckInstType() {
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {
       this.SalesAppInfoForm.controls.TopDays.disable();
       this.SalesAppInfoForm.controls.TopBased.disable();
@@ -416,9 +416,9 @@ export class ApplicationDataFactoringComponent implements OnInit {
       this.SalesAppInfoForm.controls.RecourseType.disable();
       this.SalesAppInfoForm.controls.IsDisclosed.disable();
       this.SalesAppInfoForm.controls.Tenor.enable();
-      if(this.mode != "edit"){
-      this.SalesAppInfoForm.controls.Tenor.setValue("");
-      this.SalesAppInfoForm.controls.NumOfInst.setValue("");
+      if (this.mode != "edit") {
+        this.SalesAppInfoForm.controls.Tenor.setValue("");
+        this.SalesAppInfoForm.controls.NumOfInst.setValue("");
       }
     } else if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle) {
       this.SalesAppInfoForm.controls.TopBased.enable();
@@ -430,10 +430,10 @@ export class ApplicationDataFactoringComponent implements OnInit {
       this.SalesAppInfoForm.controls.RecourseType.disable();
       this.SalesAppInfoForm.controls.TopDays.disable();
       this.SalesAppInfoForm.controls.IsDisclosed.disable();
-      this.SalesAppInfoForm.controls.Tenor.disable();     
+      this.SalesAppInfoForm.controls.Tenor.disable();
       this.SalesAppInfoForm.controls.Tenor.setValue(1);
       this.SalesAppInfoForm.controls.NumOfInst.setValue(1);
-      
+
     }
     this.SalesAppInfoForm.updateValueAndValidity();
   }
@@ -456,7 +456,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
@@ -466,25 +465,24 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
     this.inputLookupEconomicSectorObj = new InputLookupObj();
     this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    this.inputLookupEconomicSectorObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
     this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    
-    if(this.resultData["MrSlikSecEcoDescr"] != null && this.resultData["MrSlikSecEcoDescr"] != ""){
+
+    if (this.resultData["MrSlikSecEcoDescr"] != null && this.resultData["MrSlikSecEcoDescr"] != "") {
       this.inputLookupEconomicSectorObj.nameSelect = this.resultData["MrSlikSecEcoDescr"];
       this.inputLookupEconomicSectorObj.jsonSelect = { Descr: this.resultData["MrSlikSecEcoDescr"] };
     }
-    else{
+    else {
       var reqSecObj = new RefMasterObj();
       reqSecObj.MasterCode = this.defaultSlikSecEcoCode;
       reqSecObj.RefMasterTypeCode = "SLIK_SEC_ECO";
       this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(
-        (response)=>{
+        (response) => {
           console.log(response);
           this.slikSecDescr = response['Descr'];
           this.inputLookupEconomicSectorObj.nameSelect = response['Descr'];
-          this.inputLookupEconomicSectorObj.jsonSelect =  { Descr: response['Descr']};
+          this.inputLookupEconomicSectorObj.jsonSelect = { Descr: response['Descr'] };
         });
     }
     this.isInputLookupObj = true;
@@ -514,8 +512,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
     addCrit4.restriction = AdInsConstant.RestrictionIn;
     addCrit4.listValue = [this.resultData.OriOfficeCode];
     this.arrAddCrit.push(addCrit4);
-
-    //this.inputLookupObj.addCritInput = this.arrAddCrit;
 
     await this.GetGSValueSalesOfficer();
     this.makeLookUpObj();
@@ -565,10 +561,10 @@ export class ApplicationDataFactoringComponent implements OnInit {
       });
   }
 
-  Cancel(){
+  Cancel() {
     this.outputCancel.emit();
   }
-  
+
   SaveForm(): void {
     if (this.SalesAppInfoForm.value.CharaCredit != CommonConstant.CharacteristicOfCreditTypeCredit) {
       this.SalesAppInfoForm.patchValue({
@@ -576,11 +572,11 @@ export class ApplicationDataFactoringComponent implements OnInit {
         WayRestructure: null
       });
     }
-    if(this.CalculateNumOfInst(false, this.SalesAppInfoForm.controls.Tenor.value) == false){
+    if (this.CalculateNumOfInst(false, this.SalesAppInfoForm.controls.Tenor.value) == false) {
       this.toastr.warningMessage("Tenor must be between " + this.mouCustFctrObj.TenorFrom + " and " + this.mouCustFctrObj.TenorTo);
       return;
     }
-    
+
 
     this.salesAppInfoObj = this.SalesAppInfoForm.getRawValue();
     this.salesAppInfoObj.AppId = this.AppId;

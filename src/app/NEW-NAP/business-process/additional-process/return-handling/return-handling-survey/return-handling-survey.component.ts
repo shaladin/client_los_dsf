@@ -4,7 +4,6 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute } from '@angular/router';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
@@ -16,10 +15,8 @@ import { CookieService } from 'ngx-cookie';
 })
 export class ReturnHandlingSurveyComponent implements OnInit {
   BizTemplateCode: string;
-  TrxNo: any;
-  TrxType: any = "APP";
-  inputPagingObj: any;
-  userAccess: any;
+  TrxType: string = "APP";
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
 
   constructor(private route: ActivatedRoute,
@@ -33,11 +30,8 @@ export class ReturnHandlingSurveyComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingSurvey.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingSurvey.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -67,8 +61,7 @@ export class ReturnHandlingSurveyComponent implements OnInit {
         break;
       }
       case "Edit": {
-        this.TrxNo = ev.RowObj.AppNo;
-        window.open(environment.FoundationR3Web + "/Survey/ViewOrderExternal?TrxNo=" + this.TrxNo + "&TrxType=" + this.TrxType + "&Token=" + this.Token);
+        window.open(environment.FoundationR3Web + "/Survey/ViewOrderExternal?TrxNo=" + ev.RowObj.AppNo + "&TrxType=" + this.TrxType + "&Token=" + this.Token);
         break;
       }
     }

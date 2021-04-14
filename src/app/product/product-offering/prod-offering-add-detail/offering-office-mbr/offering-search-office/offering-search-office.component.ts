@@ -19,7 +19,7 @@ export class OfferingSearchOfficeComponent implements OnInit {
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
   @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
   @Input() ListOfficeMemberObjInput: any;
-  @Input() ProdHId: any;
+  @Input() ProdHId: number;
   obj: ProdOfferingObj = new ProdOfferingObj();
 
   constructor(
@@ -31,7 +31,6 @@ export class OfferingSearchOfficeComponent implements OnInit {
   ngOnInit() {
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
     this.tempPagingObj.enviromentUrl = environment.FoundationR3Url;
-    this.tempPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
     this.tempPagingObj.ddlEnvironments = [
       {
@@ -40,7 +39,7 @@ export class OfferingSearchOfficeComponent implements OnInit {
       }
     ];
     this.obj.ProdHId = this.ProdHId;
-    this.http.post(URLConstant.GetListProdBranchOfficeMbrByProdHId, {Id : this.ProdHId}).subscribe(
+    this.http.post(URLConstant.GetListProdBranchOfficeMbrByProdHId, { Id: this.ProdHId }).subscribe(
       response => {
         for (let i = 0; i < response["ReturnObject"].length; i++) {
           this.arrListId.push(response["ReturnObject"][i]["OfficeCode"]);
@@ -81,7 +80,7 @@ export class OfferingSearchOfficeComponent implements OnInit {
       this.toastr.errorMessage(ExceptionConstant.ADD_MIN_1_DATA);
       return;
     }
-  
+
     var obj = {
       ProdOfferingBranchMbrs: this.listSelectedId["TempListObj"],
       RowVersion: ""

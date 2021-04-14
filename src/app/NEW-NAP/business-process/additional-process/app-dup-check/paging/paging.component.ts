@@ -19,7 +19,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class PagingComponent implements OnInit {
 
-  inputPagingObj: any;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: any;
   BizTemplateCode: string;
 
@@ -35,10 +35,7 @@ export class PagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchAppDupCheck.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppDupCheck.json";
 
     this.inputPagingObj.ddlEnvironments = [
@@ -57,25 +54,25 @@ export class PagingComponent implements OnInit {
   }
 
   NextScreen(event) {
-    if(event.Key == "ViewProdOffering"){ 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( event.RowObj.ProdOfferingCode, event.RowObj.ProdOfferingVersion);  
+    if (event.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.RowObj.ProdOfferingCode, event.RowObj.ProdOfferingVersion);
       return false;
     }
 
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == false) {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_PERSONAL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
-      
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_PERSONAL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypePersonal && event.RowObj.IsExistingCust == true) {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_APP_EXIST_DATA_PERSONAL],{ "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_APP_EXIST_DATA_PERSONAL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
 
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == false) {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_COY], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
-      
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_COY], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+
     }
     if (event.RowObj.CustTypeCode == CommonConstant.CustTypeCompany && event.RowObj.IsExistingCust == true) {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_APP_EXIST_DATA_COY], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_APP_EXIST_DATA_COY], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
     }
   }
 }

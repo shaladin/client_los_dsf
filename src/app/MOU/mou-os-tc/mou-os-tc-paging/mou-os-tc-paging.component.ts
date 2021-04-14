@@ -16,7 +16,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class MouOsTcPagingComponent implements OnInit {
 
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   user: any;
 
@@ -25,15 +25,12 @@ export class MouOsTcPagingComponent implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    if (this.user.MrOfficeTypeCode !=CommonConstant.HeadOffice ) {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_UNAUTHORIZED_PAGE],{});
+    if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_UNAUTHORIZED_PAGE], {});
       return;
     }
     else {
-      this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouOsTc.json";
-      this.inputPagingObj.enviromentUrl = environment.losUrl;
-      this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouOsTc.json";
 
       this.inputPagingObj.ddlEnvironments = [
@@ -47,9 +44,7 @@ export class MouOsTcPagingComponent implements OnInit {
 
   getEvent(event) {
     if (event.Key == "customer") {
-      var link: string;
-      var custObj = { CustNo: event.RowObj.CustNo };
-      this.http.post(URLConstant.GetCustByCustNo, {TrxNo : event.RowObj.CustNo}).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, { TrxNo: event.RowObj.CustNo }).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }

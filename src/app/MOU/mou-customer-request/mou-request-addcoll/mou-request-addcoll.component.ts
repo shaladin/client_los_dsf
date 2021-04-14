@@ -147,7 +147,6 @@ export class MouRequestAddcollComponent implements OnInit {
   bindUcAddToTempData() {
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/MouExistingCollateralTempPaging.json";
     this.tempPagingObj.enviromentUrl = environment.FoundationR3Url;
-    this.tempPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/MouExistingCollateralTempPaging.json";
 
     const addCritCustNo = new CriteriaObj();
@@ -169,7 +168,7 @@ export class MouRequestAddcollComponent implements OnInit {
         this.thirdPartyObj.TrxTypeCode = CommonConstant.MOU_TRX_TYPE_CODE;
         this.thirdPartyObj.TrxNo = this.returnMouCust["MouCustNo"];
         this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_ASSET;
-        if(this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0"){
+        if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
           this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
             (response) => {
               if (response != null) {
@@ -466,8 +465,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
           this.inputLookupObj.nameSelect = this.collateralObj.FullAssetName;
           this.inputLookupObj.jsonSelect = this.collateralObj;
-          var AssetTypeCode = { 'AssetTypeCode': this.collateralObj.AssetTypeCode };
-          this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: this.collateralObj.AssetTypeCode}).subscribe(
+          this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: this.collateralObj.AssetTypeCode }).subscribe(
             (response: any) => {
               while (this.items.length) {
                 this.items.removeAt(0);
@@ -609,8 +607,7 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   onItemChange(value, UserChange: boolean = false) {
-    var AssetTypeCode = { 'AssetTypeCode': value };
-    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: value}).subscribe(
+    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: value }).subscribe(
       (response: any) => {
         while (this.items.length) {
           this.items.removeAt(0);
@@ -777,8 +774,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
         this.inputLookupObj.nameSelect = this.collateralObj.FullAssetName;
         this.inputLookupObj.jsonSelect = this.collateralObj;
-        var AssetTypeCode = { 'AssetTypeCode': this.collateralObj.AssetTypeCode };
-        this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: this.collateralObj.AssetTypeCode}).subscribe(
+        this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: this.collateralObj.AssetTypeCode }).subscribe(
           (response: any) => {
             while (this.items.length) {
               this.items.removeAt(0);
@@ -1047,27 +1043,27 @@ export class MouRequestAddcollComponent implements OnInit {
   GetGS() {
     this.generalSettingObj = new GeneralSettingObj();
     this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);    
+    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
     this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
       (response) => {
         this.returnGeneralSettingObj = response;
 
         var gsNeedCheckBySystem = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
         var gsUseDigitalization = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
-        
-        if(gsNeedCheckBySystem != undefined){
+
+        if (gsNeedCheckBySystem != undefined) {
           this.isNeedCheckBySystem = gsNeedCheckBySystem.GsValue;
-        }else{
+        } else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
         }
 
-        if(gsUseDigitalization != undefined){
+        if (gsUseDigitalization != undefined) {
           this.isUseDigitalization = gsUseDigitalization.GsValue;
-        }else{
+        } else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
-        } 
+        }
 
-        if(this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0"){
+        if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
           this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
           this.thirdPartyObj.TrxTypeCode = CommonConstant.MOU_TRX_TYPE_CODE;
           this.thirdPartyObj.TrxNo = this.returnMouCust["MouCustNo"];

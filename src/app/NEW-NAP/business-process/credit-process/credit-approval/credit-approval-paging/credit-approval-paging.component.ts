@@ -9,7 +9,6 @@ import { String } from 'typescript-string-operations';
 import { HttpClient } from '@angular/common/http';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
-import { event } from 'jquery';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
@@ -19,12 +18,11 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-credit-approval-paging',
-  templateUrl: './credit-approval-paging.component.html',
-  providers: [NGXToastrService]
+  templateUrl: './credit-approval-paging.component.html'
 })
 export class CreditApprovalPagingComponent implements OnInit {
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
-  inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj>;
   Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -39,10 +37,7 @@ export class CreditApprovalPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchCreditApproval.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditApproval.json";
 
     this.inputPagingObj.ddlEnvironments = [
@@ -75,8 +70,9 @@ export class CreditApprovalPagingComponent implements OnInit {
 
     this.inputPagingObj.addCritInput = arrCrit;
   }
+
   GetCallBack(ev: any) {
-    var ApvReqObj = new ApprovalObj();
+    let ApvReqObj = new ApprovalObj();
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
@@ -84,7 +80,7 @@ export class CreditApprovalPagingComponent implements OnInit {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_DETAIL],{ "AppId": ev.RowObj.AppId, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode, "ApvReqId": ev.RowObj.ApvReqId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_DETAIL], { "AppId": ev.RowObj.AppId, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode, "ApvReqId": ev.RowObj.ApvReqId });
       }
     }
     else if (ev.Key == "HoldTask") {
