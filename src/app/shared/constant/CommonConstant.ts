@@ -697,4 +697,7 @@ export class CommonConstant {
   public static PRD_HO_DEACT_APV_TYPE = "PROD_HO_DEACT_APV_TYPE";
   public static PRD_OFR_APV_TYPE = "PROD_OFR_APV_TYPE";
   public static PRD_OFR_DEACT_APV_TYPE = "PROD_OFR_DEACT_APV_TYPE";    
+
+  //PROD OFFERING
+  public static PROD_OFF_STAT_ACT = "ACT";
 }

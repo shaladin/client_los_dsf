@@ -1,41 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ProdOfferingObj } from 'app/shared/model/Request/Product/ProdOfferingObj.model';
+import { ResGetProdOfferingHObj } from 'app/shared/model/Response/Product/ResGetProdOfferingObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 @Component({
   selector: 'app-prod-offering-add-detail',
   templateUrl: './prod-offering-add-detail.component.html'
 })
 export class ProdOfferingAddDetailComponent implements OnInit {
 
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient,private fb:FormBuilder, private toastr: NGXToastrService) { 
-    this.route.queryParams.subscribe(params => {
-      
-      this.objPassing["ProdOfferingHId"] = params["ProdOfferingHId"];
-      this.objPassing["ProdOfferingId"] = params["ProdOfferingId"];
-      this.objPassing["mode"] = params["mode"];
-      this.source = params["source"];
-      this.objPassing["url"] = URLConstant.GetProdOfferingDetailInfo;
-      this.key = params["key"];
-    })
-  }
-
+  objPassing: any = {};
   source:string ="";
   param: string;
-  key: any;
-  prodOfferingObj : ProdOfferingObj;
-  resultData : any;
-  ProdOfferingHId: any;
-  ProdHId: any;
+  ProdOfferingHId: number;
+  ProdHId: number;
   isGeneralData: boolean = true;
   isProdCompnt: boolean = false;
   isOfficeMbr: boolean = false;
-
-  objPassing: any = {};
+  GenericByIdObj: GenericObj = new GenericObj();
+  resultData : ResGetProdOfferingHObj = new ResGetProdOfferingHObj();
 
   ProdOfferingForm = this.fb.group({
     ProdName: [''],
@@ -48,11 +34,23 @@ export class ProdOfferingAddDetailComponent implements OnInit {
     ReturnNotes: ['']
   });
 
+  constructor(private route: ActivatedRoute, 
+              private http: HttpClient,
+              private fb:FormBuilder) { 
+    this.route.queryParams.subscribe(params => {
+      this.objPassing["ProdOfferingHId"] = params["ProdOfferingHId"];
+      this.objPassing["ProdOfferingId"] = params["ProdOfferingId"];
+      this.objPassing["mode"] = params["mode"];
+      this.source = params["source"];
+    })
+  }
+
   ngOnInit() {
-    this.http.post(URLConstant.GetProductOfferingMainInfo, {Id: this.objPassing.ProdOfferingHId}).subscribe(
-      (response) => {
-        this.resultData=response;
-        this.ProdHId = response["ProdHId"];
+    this.GenericByIdObj.Id = this.objPassing.ProdOfferingHId
+    this.http.post(URLConstant.GetProdOfferingHById, this.GenericByIdObj).subscribe(
+      (response : ResGetProdOfferingHObj) => {
+        this.resultData = response;
+        this.ProdHId = response.ProdHId;
         this.ProdOfferingForm.patchValue({
           ProdOfferingCode : this.resultData.ProdOfferingCode,
           ProdOfferingName : this.resultData.ProdOfferingName,

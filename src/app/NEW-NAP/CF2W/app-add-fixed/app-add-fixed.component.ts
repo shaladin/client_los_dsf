@@ -20,8 +20,7 @@ import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-app-add-fixed',
-  templateUrl: './app-add-fixed.component.html',
-  providers: [NGXToastrService]
+  templateUrl: './app-add-fixed.component.html'
 })
 export class AppAddFixedComponent implements OnInit {
 
@@ -29,7 +28,7 @@ export class AppAddFixedComponent implements OnInit {
   ProductOfferingIdentifier;
   ProductOfferingNameIdentifier;
   LobCode;
-  
+
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   constructor(
     private fb: FormBuilder,
@@ -136,9 +135,6 @@ export class AppAddFixedComponent implements OnInit {
         }
       }
     );
-
-    // Test Data
-
   }
 
   refOfficeObj;
@@ -155,7 +151,6 @@ export class AppAddFixedComponent implements OnInit {
 
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObjCopyProduct.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
@@ -163,7 +158,6 @@ export class AppAddFixedComponent implements OnInit {
 
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjName.urlEnviPaging = environment.tempUrl;
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
@@ -184,25 +178,11 @@ export class AppAddFixedComponent implements OnInit {
     this.inputLookupSupplierObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupSupplierObj.pagingJson = "./assets/uclookup/NAP/lookupSupplierBranch.json";
     this.inputLookupSupplierObj.genericJson = "./assets/uclookup/NAP/lookupSupplierBranch.json";
-
-
-    // this.critSupplier = new Array();
-    // var addCritSupp = new CriteriaObj();
-    // addCritSupp.DataType = "number";
-    // addCritSupp.propName = "VOM.REF_OFFICE_ID";
-    // addCritSupp.restriction = AdInsConstant.RestrictionIn;
-    // addCritSupp.listValue = this.listRefOfficeId;
-    // this.critSupplier.push(addCritSupp);
-    // this.inputLookupSupplierObj.addCritInput = this.critSupplier;
   }
 
   GetOfficeDDL() {
     // Office DDL
-    var obj = {
-      RowVersion: ""
-    };
-    var url = environment.FoundationR3Url + URLConstant.GetListKvpActiveRefOffice;
-    this.http.post(url, obj).subscribe(
+    this.http.post(URLConstant.GetListKvpActiveRefOffice, {}).subscribe(
       (response) => {
         this.officeItems = response[CommonConstant.ReturnObj];
         this.NapAppForm.patchValue({
@@ -238,8 +218,6 @@ export class AppAddFixedComponent implements OnInit {
     }
     this.allAppDataObj.AppObj.AppNo = "0";
     this.allAppDataObj.AppObj.PreviousAppId = null;
-    // this.allAppDataObj.AppObj.MouCustId = this.NapAppForm.controls["MouCustId"].value;
-    // this.allAppDataObj.AppObj.LeadId = this.NapAppForm.controls["LeadId"].value;
     this.allAppDataObj.AppObj.OriOfficeCode = this.NapAppForm.controls["OriOfficeCode"].value;
     this.allAppDataObj.AppObj.OriOfficeName = this.NapAppForm.controls["OriOfficeName"].value;
     this.allAppDataObj.AppObj.CrtOfficeCode = this.NapAppForm.controls["CrtOfficeCode"].value;
@@ -425,12 +403,10 @@ export class AppAddFixedComponent implements OnInit {
           (response) => {
             this.returnAllAppDataObj = response;
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CF2W_ADD_DETAIL], { "AppId": response["AppId"], "LobCode": this.LobCode });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF2W_ADD_DETAIL], { "AppId": response["AppId"], "LobCode": this.LobCode });
           }
         );
       });
-    //this.allAppDataObj.AppFixedFeeObj = this.returnFeeAndInsFixedNAP.DtFeeFixedNAP;
-    //this.allAppDataObj.AppFixedInsObj = this.returnFeeAndInsFixedNAP.DtInsFixedNAP;
   }
 
   getLookupAppResponseCopy(ev: any) {
@@ -465,7 +441,7 @@ export class AppAddFixedComponent implements OnInit {
     var tempCurrCode;
     var tempPayFreqCode;
     var tempRefProdTypeCode;
-    this.http.post(url, {Code : ev.ProdOfferingCode}).subscribe(
+    this.http.post(url, { Code: ev.ProdOfferingCode }).subscribe(
       (response) => {
         var temp = response[CommonConstant.ReturnObj];
         for (var i = 0; i < temp.length; i++) {

@@ -13,8 +13,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-requisition-decision-paging',
-  templateUrl: './requisition-decision-paging.component.html',
-  styleUrls: []
+  templateUrl: './requisition-decision-paging.component.html'
 })
 export class RequisitionDecisionPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
@@ -38,10 +37,7 @@ export class RequisitionDecisionPagingComponent implements OnInit {
     this.arrCrit = new Array();
     this.makeCriteria();
 
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/requisition-decision/search-requisition-decision-paging.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/requisition-decision/search-requisition-decision-paging.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -59,14 +55,13 @@ export class RequisitionDecisionPagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.RowObj.ProdOfferingCode, event.RowObj.ProdOfferingVersion);
     }
     if (event.Key === "Edit") {
-      this.http.post(URLConstant.IsSecurityDepositExist, {Id : event.RowObj.AppId}).subscribe(
+      this.http.post(URLConstant.IsSecurityDepositExist, { Id: event.RowObj.AppId }).subscribe(
         (response) => {
-          if(response[CommonConstant.Result] == "True")
-          {
+          if (response[CommonConstant.Result] == "True") {
             this.http.post(URLConstant.CheckGoLivePayment, { AgrmntNo: event.RowObj.AgrmntNo }).subscribe(
               (response) => {
-                if(response["IsPaid"]) {
-                  AdInsHelper.RedirectUrl(this.router,[NavigationConstant.REQUISITION_DECISION_DETAIL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+                if (response["IsPaid"]) {
+                  AdInsHelper.RedirectUrl(this.router, [NavigationConstant.REQUISITION_DECISION_DETAIL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
                 }
                 else {
                   this.toastr.errorMessage("Security Deposit has not been paid yet!");
@@ -77,17 +72,17 @@ export class RequisitionDecisionPagingComponent implements OnInit {
               }
             );
           }
-          else{
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.REQUISITION_DECISION_DETAIL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
+          else {
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.REQUISITION_DECISION_DETAIL], { "AppId": event.RowObj.AppId, "WfTaskListId": event.RowObj.WfTaskListId });
           }
         }
       );
-      
+
     }
   }
 
-  GetAllAssetFinancialData(AppId : number) {
-    this.http.post(URLConstant.GetListAppAssetFinDataGridByAppId, {Id : AppId}).subscribe(
+  GetAllAssetFinancialData(AppId: number) {
+    this.http.post(URLConstant.GetListAppAssetFinDataGridByAppId, { Id: AppId }).subscribe(
       (response) => {
         if (response["AppAssetFinDataGridObjs"].length > 0) {
 

@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UcPagingObj, WhereValueObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -15,30 +14,27 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
   templateUrl: './doc-signer-paging.component.html'
 })
 export class DocSignerPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   link: string;
   BizTemplateCode: string;
-  
-  constructor(private route: ActivatedRoute, private http: HttpClient) { 
+
+  constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
         localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
       }
-  });
+    });
   }
 
   ngOnInit() {
     var pagingJsonPath = "./assets/ucpaging/searchDocSigner.json";
 
-    if(this.BizTemplateCode == CommonConstant.OPL){
+    if (this.BizTemplateCode == CommonConstant.OPL) {
       pagingJsonPath = "./assets/ucpaging/opl/search-doc-signer-opl-paging.json"
     }
 
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = pagingJsonPath;
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = pagingJsonPath;
 
     if (this.BizTemplateCode == CommonConstant.OPL) {
@@ -58,25 +54,21 @@ export class DocSignerPagingComponent implements OnInit {
 
       this.inputPagingObj.addCritInput = arrCrit;
     }
-    else
-    {
+    else {
       var whereValueObj = new WhereValueObj();
       whereValueObj.property = "BizTemplateCode";
       whereValueObj.value = this.BizTemplateCode;
       this.inputPagingObj.whereValue.push(whereValueObj);
     }
-
-    // this.inputPagingObj.whereValue.push({property: "BizTemplateCode", value: ""});
-    // this.inputPagingObj.whereValue.find(x => x.property == "BizTemplateCode").value = this.BizTemplateCode;
   }
 
-  getEvent(ev){
-    if(ev.Key == "prodOff"){
-      this.http.post(URLConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
+  getEvent(ev) {
+    if (ev.Key == "prodOff") {
+      this.http.post(URLConstant.GetProdOfferingHByCode, { ProdOfferingCode: ev.RowObj.ProdOfferingCode }).subscribe(
         response => {
           AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response['ProdOfferingHId']);
         });
-    }else if(ev.Key == "agrmnt"){
+    } else if (ev.Key == "agrmnt") {
       AdInsHelper.OpenAgrmntViewByAgrmntId(ev.RowObj.AgrmntId);
     }
   }

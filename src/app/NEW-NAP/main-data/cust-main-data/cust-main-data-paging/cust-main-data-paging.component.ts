@@ -14,16 +14,15 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'cust-main-data-paging',
-  templateUrl: './cust-main-data-paging.component.html',
-  styleUrls: []
+  templateUrl: './cust-main-data-paging.component.html'
 })
 export class CustMainDataPagingComponent implements OnInit {
-
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj>;
   bizTemplateCode: string;
   userAccess: any;
   token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -48,11 +47,8 @@ export class CustMainDataPagingComponent implements OnInit {
     this.arrCrit = new Array();
     this.makeCriteria();
 
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj.title = "NAP 1 Paging";
     this.inputPagingObj._url = "./assets/ucpaging/searchAppCustMainData.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppCustMainData.json";
     this.inputPagingObj.ddlEnvironments = [
       {

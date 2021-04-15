@@ -9,7 +9,6 @@ import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { String } from 'typescript-string-operations';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { Router } from '@angular/router';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -20,18 +19,17 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './prod-ho-deact-apv-paging.component.html'
 })
 export class ProdHoDeactApvPagingComponent implements OnInit {
-
-  inputPagingObj: any;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-  constructor(private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) { }
+  constructor(private toastr: NGXToastrService, 
+              private httpClient: HttpClient, 
+              private router: Router, 
+              private cookieService: CookieService) { }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/product/searchProductHODeactApv.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHODeactApv.json";
 
     var critObj = new CriteriaObj();
@@ -55,7 +53,7 @@ export class ProdHoDeactApvPagingComponent implements OnInit {
     critObj.value = this.userContext.UserName;
     this.arrCrit.push(critObj);
 
-    
+
     critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionOr;
@@ -70,11 +68,11 @@ export class ProdHoDeactApvPagingComponent implements OnInit {
 
   CallBackHandler(ev) {
     var ApvReqObj = new ApprovalObj();
-    if(ev.Key == "Process"){
+    if (ev.Key == "Process") {
       if (String.Format("{0:L}", ev.RowObj.CURRENT_USER_ID) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_DEACTIVATE_APPRV_DETAIL],{ "ProdHId": ev.RowObj.ProdHId, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId  });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_DEACTIVATE_APPRV_DETAIL],{ "ProdHId": ev.RowObj.ProdHId, "TaskId" : ev.RowObj.TaskId, "ApvReqId": ev.RowObj.ApvReqId  });
       }
     }
     else if (ev.Key == "HoldTask") {

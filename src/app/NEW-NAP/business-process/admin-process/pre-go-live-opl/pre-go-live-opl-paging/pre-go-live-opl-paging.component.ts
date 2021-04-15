@@ -5,7 +5,6 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { environment } from 'environments/environment';
@@ -28,21 +27,19 @@ export class PreGoLiveOplPagingComponent implements OnInit {
     private toastr: NGXToastrService,
     private router: Router,
     private route: ActivatedRoute) {
-      this.route.queryParams.subscribe(params => {
-        if (params["BizTemplateCode"] != null) {
-          this.BizTemplateCode = params["BizTemplateCode"];
-          localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
-        }
-        else {
-          this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-        }
-      });
-    }
+    this.route.queryParams.subscribe(params => {
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
+      }
+      else {
+        this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
+      }
+    });
+  }
 
   ngOnInit() {
     this.ucTempPagingObj.urlJson = "./assets/ucpaging/opl/search-pre-go-live-opl-paging.json";
-    this.ucTempPagingObj.enviromentUrl = environment.losUrl;
-    this.ucTempPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.ucTempPagingObj.pagingJson = "./assets/ucpaging/opl/search-pre-go-live-opl-paging.json";
     this.ucTempPagingObj.ddlEnvironments = [
       {
@@ -67,24 +64,23 @@ export class PreGoLiveOplPagingComponent implements OnInit {
   }
 
   getSelectedCallback(event: any) {
-    if(event.Key === "Application") {
+    if (event.Key === "Application") {
       AdInsHelper.OpenAppViewByAppId(event.RowObj.AppId);
     }
-    else if(event.Key === "AppAsset") {
+    else if (event.Key === "AppAsset") {
       window.open(environment.losR3Web + NavigationConstant.VIEW_APP_ASSET + "?AppId=" + event.RowObj.AppId + "&AppAssetId=" + event.RowObj.AppAssetId, "_blank");
     }
-    else if(event.Key === "ProdOffering") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.RowObj.ProdOfferingCode,event.RowObj.ProdOfferingVersion); 
+    else if (event.Key === "ProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.RowObj.ProdOfferingCode, event.RowObj.ProdOfferingVersion);
     }
   }
 
   Next() {
-    if(this.preGoLiveOplService.getList() !== undefined) {
-      if(this.preGoLiveOplService.getList().length === 0) {
+    if (this.preGoLiveOplService.getList() !== undefined) {
+      if (this.preGoLiveOplService.getList().length === 0) {
         this.toastr.warningMessage("Please Select Item First");
       }
       else {
-        this.IsAppNoSame();
         if(this.IsAppNoSame()) {
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_OPL_DETAIL], { "AppId": this.AppId, "WfTaskListIds": this.WfTaskListId });
         }

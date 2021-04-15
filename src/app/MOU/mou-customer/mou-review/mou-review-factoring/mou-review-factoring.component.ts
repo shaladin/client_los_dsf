@@ -38,7 +38,7 @@ export class MouReviewFactoringComponent implements OnInit {
   resultData: any;
   listReason: any;
   ScoreResult: number;
-  InputObj: UcInputRFAObj;
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
   dmsObj: DMSObj;
   SysConfigResultObj : ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
@@ -165,7 +165,6 @@ export class MouReviewFactoringComponent implements OnInit {
   }
 
   initInputApprovalObj() {
-    this.InputObj = new UcInputRFAObj(this.cookieService);
     var Attributes = []
     var attribute1 = {
       "AttributeName": "Approval Amount",

@@ -17,7 +17,6 @@ import { CookieService } from 'ngx-cookie';
   templateUrl: './nap-from-lead-paging.component.html'
 })
 export class NapFromLeadPagingComponent implements OnInit {
-
   inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<any> = new Array();
   userAccess: any;
@@ -40,11 +39,7 @@ export class NapFromLeadPagingComponent implements OnInit {
 
     this.arrCrit = new Array();
     this.makeCriteria();
-
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchAppFromLead.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppFromLead.json";
 
     this.inputPagingObj.ddlEnvironments = [
@@ -77,11 +72,11 @@ export class NapFromLeadPagingComponent implements OnInit {
   }
 
   AddApp(ev) {
-    this.http.post(URLConstant.GetRefOfficeByOfficeCode, {Code : this.userAccess.OfficeCode}).subscribe(
+    this.http.post(URLConstant.GetRefOfficeByOfficeCode, { Code: this.userAccess.OfficeCode }).subscribe(
       (response) => {
-        if(response["IsAllowAppCreated"] == true){
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_SHARING_FROM_LEAD_DETAIL], { "LeadId": ev.RowObj.LeadId});
-        }else{
+        if (response["IsAllowAppCreated"] == true) {
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_SHARING_FROM_LEAD_DETAIL], { "LeadId": ev.RowObj.LeadId });
+        } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
       });
