@@ -9,15 +9,13 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqAddEditProdOfferingDObj } from 'app/shared/model/Request/Product/ReqAddEditProdOfferingObj.model';
 import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
 
-
 @Component({
   selector: 'app-offering-prod-compnt',
   templateUrl: './offering-prod-compnt.component.html'
 })
 export class OfferingProdCompntComponent implements OnInit {
 
-  @Input() objInput: any;
-  prodOfferingHId: number;
+  @Input() ProdOfferingHId: number;
   source: string = "";
   listProductComponentObj : ReqAddEditProdOfferingDObj = new ReqAddEditProdOfferingDObj();
 
@@ -34,7 +32,7 @@ export class OfferingProdCompntComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.prodOfferingHId = this.objInput["ProdOfferingHId"];
+    this.ProdOfferingHId = this.ProdOfferingHId;
   }
   
   SaveForm(event) {
@@ -58,11 +56,11 @@ export class OfferingProdCompntComponent implements OnInit {
   }
 
   generateSaveObj(event){
-    this.listProductComponentObj.ProdOfferingHId = this.objInput["ProdOfferingHId"];
+    this.listProductComponentObj.ProdOfferingHId = this.ProdOfferingHId;
     for (var i = 0; i < event.length; i++) {
       var GeneralDataObj = new ProdOfferingDObj();
       GeneralDataObj.ProdOfferingDId = event[i].ProdOfferingDId;
-      GeneralDataObj.ProdOfferingHId = this.objInput["ProdOfferingHId"];
+      GeneralDataObj.ProdOfferingHId = this.ProdOfferingHId;
       GeneralDataObj.RefProdCompntCode = event[i].RefProdCompntCode;
       GeneralDataObj.RefProdCompntGrpCode = event[i].RefProdCompntGrpCode;
       if(event[i].IsProdOffering == true){

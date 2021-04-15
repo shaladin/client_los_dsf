@@ -21,9 +21,8 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 })
 export class OfferingGeneralDataComponent implements OnInit {
 
-  @Input() objInput: any;
-  ProdOfferingHId: number;
-  prodOfferingId: number;
+  @Input() ProdOfferingHId: number;
+  @Input() ProdOfferingId: number;
   source: string = "";
   inputLookUpObj: InputLookupObj = new InputLookupObj();
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
@@ -51,9 +50,6 @@ export class OfferingGeneralDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ProdOfferingHId = this.objInput["ProdOfferingHId"];
-    this.prodOfferingId = this.objInput["ProdOfferingId"];
-
     this.initLookup();
   }
 
@@ -68,7 +64,7 @@ export class OfferingGeneralDataComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.propName = 'PO.PROD_OFFERING_ID';
     critObj.restriction = AdInsConstant.RestrictionNeq;
-    critObj.value = this.prodOfferingId.toString();
+    critObj.value = this.ProdOfferingId.toString();
     this.arrCrit.push(critObj);
 
     critObj = new CriteriaObj();
@@ -119,11 +115,11 @@ export class OfferingGeneralDataComponent implements OnInit {
   }
 
   generateSaveObj(event) {
-    this.listGeneralDataObj.ProdOfferingHId = this.objInput["ProdOfferingHId"];
+    this.listGeneralDataObj.ProdOfferingHId = this.ProdOfferingHId;
     for (var i = 0; i < event.length; i++) {
       var GeneralDataObj = new ProdOfferingDObj();
       GeneralDataObj.ProdOfferingDId = event[i].ProdOfferingDId;
-      GeneralDataObj.ProdOfferingHId = this.objInput["ProdOfferingHId"];
+      GeneralDataObj.ProdOfferingHId = this.ProdOfferingHId;
       GeneralDataObj.RefProdCompntCode = event[i].RefProdCompntCode;
       GeneralDataObj.RefProdCompntGrpCode = event[i].RefProdCompntGrpCode;
       if (event[i].IsProdOffering == true) {

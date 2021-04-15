@@ -19,6 +19,7 @@ import { ReqGetProdCompntObj } from 'app/shared/model/Request/Product/ReqGetProd
 import { ReqCopyProductObj, ReqListProductDetailObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
 import { ResGetProdCmpntGroupedObj } from 'app/shared/model/Response/Product/ResGetProdCompntObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 
 @Component({
@@ -365,10 +366,10 @@ export class HoGeneralDataComponent implements OnInit {
 
   reload() {
     if (this.inputLookUpObj.jsonSelect["ProdId"] == undefined) {
-      this.toastr.warningMessage("Please select Product to copied");
+      this.toastr.warningMessage(ExceptionConstant.SELECT_PROD_TO_COPY);
     }
     else {
-      if (confirm('This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?')) {
+      if (confirm(ExceptionConstant.CONFIRM_PROD_TO_COPY)) {
         this.ReqCopyProductObj.ProdHId = this.ProdHId;
         this.ReqCopyProductObj.FromProdId = this.inputLookUpObj.jsonSelect["ProdId"]
         this.http.post(URLConstant.CopyProduct, this.ReqCopyProductObj).subscribe(

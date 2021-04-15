@@ -7,15 +7,14 @@ import { Component, OnInit, Input } from '@angular/core';
 export class OfferingOfficeMbrComponent implements OnInit {
 
   isOn: boolean;
-  @Input() objInput: any;
-  @Input() ProdHId: any;
+  @Input() ProdOfferingHId: number;
   ListOfficeMemberObj: any = {};
   
   constructor() { }
 
   ngOnInit() {
     this.isOn = true;
-    this.ListOfficeMemberObj["ProdOfferingHId"]=this.objInput["ProdOfferingHId"];
+    this.ListOfficeMemberObj["ProdOfferingHId"]= this.ProdOfferingHId;
     this.ListOfficeMemberObj["result"] = [];
   }
 

@@ -10,19 +10,22 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ResGetProdOfferingBranchMbrObj } from 'app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model';
 import { ReqListProdOfferingBranchMbrObj } from 'app/shared/model/Request/Product/ReqAddProdOfferingBranchMbrObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ProdOfficePassingObj } from 'app/shared/model/Product/ProdOfficePassingObj.model';
 
 @Component({
   selector: 'app-offering-search-office',
   templateUrl: './offering-search-office.component.html'
 })
 export class OfferingSearchOfficeComponent implements OnInit {
-  @Input() ListOfficeMemberObjInput: any;
+  @Input() ListOfficeMemberObjInput: Array<string> = new Array<string>();
+  @Input() ProdOfferingHId: number;
   @Input() ProdHId: number;
-  @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
+  @Output() componentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter();
   GenericByIdObj : GenericObj = new GenericObj();
   listSelected: Array<any> = new Array<any>();
   arrListCode: Array<string> = new Array<string>();
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
+  PassingObj: ProdOfficePassingObj = new ProdOfficePassingObj();
   ReqListProdBranchMbrObj : ReqListProdOfferingBranchMbrObj = new ReqListProdOfferingBranchMbrObj();
 
   constructor(
@@ -57,22 +60,19 @@ export class OfferingSearchOfficeComponent implements OnInit {
       }
     );
 
-    if (this.ListOfficeMemberObjInput["result"].length != 0) {
+    if (this.ListOfficeMemberObjInput.length != 0) {
       var addCrit = new CriteriaObj();
       addCrit.propName = "RO.OFFICE_CODE";
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
-      addCrit.listValue = this.ListOfficeMemberObjInput["result"];
+      addCrit.listValue = this.ListOfficeMemberObjInput;
       this.tempPagingObj.addCritInput.push(addCrit);
     }
     this.tempPagingObj.isReady = true;
   }
 
   GoBack() {
-    var obj = {
-      isOn: true,
-      result: []
-    }
-    this.componentIsOn.emit(obj);
+    this.PassingObj.isOn = true;
+    this.componentIsOn.emit(this.PassingObj);
   }
 
   getListTemp(ev) {
@@ -88,18 +88,15 @@ export class OfferingSearchOfficeComponent implements OnInit {
     this.ReqListProdBranchMbrObj.ProdOfferingBranchMbrs = this.listSelected
 
     for (var i = 0; i < this.listSelected.length; i++) {
-      this.ReqListProdBranchMbrObj.ProdOfferingBranchMbrs[i].ProdOfferingHId = this.ListOfficeMemberObjInput["ProdOfferingHId"],
+      this.ReqListProdBranchMbrObj.ProdOfferingBranchMbrs[i].ProdOfferingHId = this.ProdOfferingHId,
       this.ReqListProdBranchMbrObj.ProdOfferingBranchMbrs[i].RowVersion = "";
     }
 
     this.http.post(URLConstant.AddProdOfferingOfficeMbrBatch, this.ReqListProdBranchMbrObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        var obj = {
-          isOn: true,
-          result: []
-        }
-        this.componentIsOn.emit(obj);
+        this.PassingObj.isOn = true;
+        this.componentIsOn.emit(this.PassingObj);
       }
     );
   }

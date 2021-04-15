@@ -113,6 +113,8 @@ export class ExceptionConstant {
     public static END_DT_MUST_GREATER_THAN_BUSINESS_DT = "End Date Must be Greater than Business Date";
     public static START_DT_MUST_GREATER_THAN_BUSINESS_DT = "Start Date Must be Greater than Business Date";
     public static SELECT_PROD_OFF_TO_COPY = "Please select Product Offering to copied";
-    public static CONFIRM_PROD_OFF_TO_COPY = "This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?"
+    public static CONFIRM_PROD_OFF_TO_COPY = "This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?";
+    public static SELECT_PROD_TO_COPY = "Please select Product to copied";
+    public static CONFIRM_PROD_TO_COPY = "This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?";
 }
 
