@@ -403,7 +403,6 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.leadObj.LeadNo = "0";
     this.leadObj.LeadCopyId = this.leadIdExist;
     this.leadObj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
-    // this.leadObj.OriOfficeName = this.MainInfoForm.controls["OfficeName"].value;
     this.leadObj.CrtOfficeCode = this.MainInfoForm.controls["CrtOfficeCode"].value;
     this.leadObj.LeadDt = new Date();
     this.leadObj.OrderNo = this.MainInfoForm.controls["OrderNo"].value;
@@ -441,7 +440,7 @@ export class LeadInputMainInfoComponent implements OnInit {
         this.http.post(this.addLead, this.leadObj).subscribe(
           (response) => {
             this.responseLead = response;
-            this.LeadId = this.responseLead.LeadId;
+            this.LeadId = this.responseLead.Id;
             this.toastr.successMessage(response["message"]);
             AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_INPUT_PAGE],{ "LeadId": this.LeadId, "CopyFrom": this.leadIdExist });
           }
@@ -474,7 +473,7 @@ export class LeadInputMainInfoComponent implements OnInit {
         this.http.post(this.addLead, this.leadObj).subscribe(
           (response) => {
             this.responseLead = response;
-            this.LeadId = this.responseLead.LeadId;
+            this.LeadId = this.responseLead.Id;
             this.toastr.successMessage(response["message"]);
             AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_PAGING],{});
           }

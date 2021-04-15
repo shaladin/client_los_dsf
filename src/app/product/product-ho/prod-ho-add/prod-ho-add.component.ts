@@ -13,6 +13,7 @@ import { ResGetProductHObj } from 'app/shared/model/Response/Product/ResGetProdO
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ReqAddProductObj, ReqEditProductObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
 import { ResAddEditProductObj } from 'app/shared/model/Response/Product/ResAddEditProdObj.model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-prod-ho-add',
@@ -23,7 +24,6 @@ export class ProdHoAddComponent implements OnInit {
   mode: string = 'add';
   source: string = '';
   BusinessDt: Date;
-  StartActiveDt: Date;
   StartDt: Date;
   EndDt: Date;
   GenericByIdObj: GenericObj = new GenericObj();
@@ -63,7 +63,6 @@ export class ProdHoAddComponent implements OnInit {
   ngOnInit() {
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = new Date(context[CommonConstant.BUSINESS_DT]);
-    this.StartActiveDt = new Date(context[CommonConstant.BUSINESS_DT]);
 
     if (this.mode == "edit") {
       this.RefProductHOForm.controls.ProdCode.disable();
@@ -85,8 +84,7 @@ export class ProdHoAddComponent implements OnInit {
   }
 
   updateMinDtForEndDt() {
-    this.StartActiveDt = this.RefProductHOForm.controls.StartDt.value;
-    if (this.RefProductHOForm.controls.EndDt.value < this.StartActiveDt) {
+    if (this.RefProductHOForm.controls.EndDt.value < this.RefProductHOForm.controls.StartDt.value) {
       this.RefProductHOForm.controls.EndDt.setValue("");
     }
   }
@@ -96,17 +94,17 @@ export class ProdHoAddComponent implements OnInit {
     this.EndDt = new Date(this.RefProductHOForm.get("EndDt").value);
 
     if (this.StartDt > this.EndDt) {
-      this.toastr.warningMessage("Start Date Must be Less than End Date");
+      this.toastr.warningMessage(ExceptionConstant.START_DT_MUST_LESS_THAN_END_DT);
       return false;
     }
 
     if (this.EndDt <= this.BusinessDt) {
-      this.toastr.warningMessage("End Date Must be Greater than Business Date");
+      this.toastr.warningMessage(ExceptionConstant.END_DT_MUST_GREATER_THAN_BUSINESS_DT);
       return false;
     }
     
     if (this.StartDt <= this.BusinessDt) {
-      this.toastr.warningMessage("Start Date Must be Greater than Business Date");
+      this.toastr.warningMessage(ExceptionConstant.START_DT_MUST_GREATER_THAN_BUSINESS_DT);
       return false;
     }
     return true;

@@ -196,7 +196,6 @@ export class HoProdCompntComponent implements OnInit {
   }
 
   SaveForm() {
-    this.BuildReqProdDetail();
     this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
@@ -206,7 +205,6 @@ export class HoProdCompntComponent implements OnInit {
   }
 
   NextDetail() {
-    this.BuildReqProdDetail();
     this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
@@ -220,6 +218,7 @@ export class HoProdCompntComponent implements OnInit {
   }
 
   SubmitForm() {
+    this.BuildReqProdDetail();
     if (this.StateSave == "save") {
       this.SaveForm();
     }

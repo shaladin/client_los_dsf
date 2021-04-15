@@ -72,7 +72,6 @@ export class ProdHoApvDetailComponent implements OnInit {
 
   onApprovalSubmited(event)
   {
-    this.ReqUpdateProdPostApvObj = new ReqUpdateProductPostApprovalObj();
     this.ReqUpdateProdPostApvObj.ProdHId = this.prodHId, 
     this.ReqUpdateProdPostApvObj.TaskId = event[0].ApvTaskId, 
     this.ReqUpdateProdPostApvObj.Notes = event[0].Notes != undefined? event[0].Notes : "",

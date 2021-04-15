@@ -4,12 +4,13 @@ import { UCSearchComponent } from '@adins/ucsearch';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
-import { empty } from 'rxjs';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResGetProdBranchMbrObj, ResProdBranchMbrObj } from 'app/shared/model/Response/Product/ResGetProdBranchMbrObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ProdOfficePassingObj } from 'app/shared/model/Product/ProdOfficePassingObj.model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-ho-list-office-mbr',
@@ -18,16 +19,16 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 export class HoListOfficeMbrComponent implements OnInit {
 
   @ViewChild(UCSearchComponent) UCSearchComponent;
-  @Input() ListOfficeMemberObjInput: any;
+  @Input() ProdHId : number;
   @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
   source: string = "";
   pageNow : number;
   pageSize : number;
   apiUrl : string;
-  ProdHId : number;
   orderByKey;
   orderByValue;
   GenericByIdObj: GenericObj = new GenericObj();
+  PassingObj: ProdOfficePassingObj = new ProdOfficePassingObj();
   ResListProdBranchMbrObj: Array<ResProdBranchMbrObj> = new Array<ResProdBranchMbrObj>();
 
   constructor(
@@ -46,13 +47,7 @@ export class HoListOfficeMbrComponent implements OnInit {
     this.pageSize = 10;
     this.apiUrl = environment.losUrl + URLConstant.GetPagingObjectBySQL;
 
-    this.ProdHId = this.ListOfficeMemberObjInput["ProdHId"];
-    var obj = {
-      ProdHId: this.ListOfficeMemberObjInput["ProdHId"],
-      RowVersion: ""
-    }
-
-    this.GenericByIdObj.Id = this.ListOfficeMemberObjInput["ProdHId"];
+    this.GenericByIdObj.Id = this.ProdHId;
     this.http.post(URLConstant.GetListProdBranchOfficeMbrByProdHId, this.GenericByIdObj).subscribe(
       (response: ResGetProdBranchMbrObj) => {
         this.ResListProdBranchMbrObj = response.ReturnObject;
@@ -61,24 +56,13 @@ export class HoListOfficeMbrComponent implements OnInit {
   }
 
   addOfficeMember() {
-    var temp = [];
-    var obj;
-    if (this.ResListProdBranchMbrObj.length == 0) {
-      obj = {
-        isOn: false,
-        result: []
-      }
-    } else {
+    if (this.ResListProdBranchMbrObj.length != 0) {
       for (var i = 0; i < this.ResListProdBranchMbrObj.length; i++) {
-        temp.push(this.ResListProdBranchMbrObj[i].OfficeCode);
-      }
-      obj = {
-        isOn: false,
-        result: temp
+        this.PassingObj.result.push(this.ResListProdBranchMbrObj[i].OfficeCode);
       }
     }
 
-    this.componentIsOn.emit(obj);
+    this.componentIsOn.emit(this.PassingObj);
   }
 
   searchSort(ev: any) {
@@ -98,7 +82,7 @@ export class HoListOfficeMbrComponent implements OnInit {
   }
 
   deleteFromList(ev: any) {
-    if (confirm('Are you sure to delete this record?')) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.GenericByIdObj.Id = ev.ProdBranchMbrId;
 
       this.http.post(URLConstant.DeleteProductOfficeMbr, this.GenericByIdObj).subscribe(
@@ -118,7 +102,6 @@ export class HoListOfficeMbrComponent implements OnInit {
         this.toastr.successMessage(response["message"]);
       }
     );
-    this.toastr.successMessage("Submitted");
     this.BackToPaging();
   }
 
