@@ -14,8 +14,9 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqAddProdOfferingObj, ReqEditProdOfferingObj } from 'app/shared/model/Request/Product/ReqAddEditProdOfferingObj.model';
-import { ResAddEditProdOfferingObj, ResProdOfferingHObj, ResProdOfferingObj } from 'app/shared/model/Response/Product/ResProdOfferingObj.model';
+import { ResAddEditProdOfferingObj, ResProdOfferingHObj } from 'app/shared/model/Response/Product/ResProdOfferingObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-prod-offering-add',
@@ -165,17 +166,17 @@ export class ProdOfferingAddComponent implements OnInit {
     this.EndDt = new Date(this.ProdOfferingForm.get("EndDt").value);
 
     if (this.StartDt > this.EndDt) {
-      this.toastr.warningMessage("Start Date Must be Less than End Date");
+      this.toastr.warningMessage(ExceptionConstant.START_DT_MUST_LESS_THAN_END_DT);
       return false;
     }
 
     if (this.EndDt <= this.BusinessDt) {
-      this.toastr.warningMessage("End Date Must be Greater than Business Date");
+      this.toastr.warningMessage(ExceptionConstant.END_DT_MUST_GREATER_THAN_BUSINESS_DT);
       return false;
     }
     
     if (this.StartDt <= this.BusinessDt) {
-      this.toastr.warningMessage("Start Date Must be Greater than Business Date");
+      this.toastr.warningMessage(ExceptionConstant.START_DT_MUST_GREATER_THAN_BUSINESS_DT);
       return false;
     }
     return true;

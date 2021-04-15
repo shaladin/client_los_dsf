@@ -6,9 +6,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResGetListProdOfferingBranchMbrObj, ResGetProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from 'app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model';
+import { ResGetListProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from 'app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { environment } from 'environments/environment';
+import { ProdOfficePassingObj } from 'app/shared/model/Product/ProdOfficePassingObj.model';
 
 @Component({
   selector: 'app-offering-list-office-mbr',
@@ -17,9 +18,8 @@ import { environment } from 'environments/environment';
 export class OfferingListOfficeMbrComponent implements OnInit {
 
   @ViewChild(UCSearchComponent) UCSearchComponent;
-  @Input() ListOfficeMemberObjInput: any;
-  @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
-  ProdOfferingHId: number;
+  @Input() ProdOfferingHId: number;
+  @Output() componentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter();
   source: string = "";pageNow : number;
   pageSize : number;
   apiUrl : string;
@@ -27,6 +27,7 @@ export class OfferingListOfficeMbrComponent implements OnInit {
   orderByKey;
   orderByValue;
   GenericByIdObj: GenericObj = new GenericObj();
+  PassingObj: ProdOfficePassingObj = new ProdOfficePassingObj();
   ListProdOfferingBranchMbr : Array<ResProdOfferingBranchOfficeMbrObj> = new Array<ResProdOfferingBranchOfficeMbrObj>();
 
   constructor(
@@ -45,8 +46,6 @@ export class OfferingListOfficeMbrComponent implements OnInit {
     this.pageSize = 10;
     this.apiUrl = environment.losUrl + URLConstant.GetPagingObjectBySQL;
 
-    this.ProdOfferingHId = this.ListOfficeMemberObjInput["ProdOfferingHId"];
-
     this.GenericByIdObj.Id = this.ProdOfferingHId;
     this.http.post(URLConstant.GetListProdOfferingBranchOfficeMbrByProdHId, this.GenericByIdObj).subscribe(
       (response : ResGetListProdOfferingBranchMbrObj) => {
@@ -56,25 +55,14 @@ export class OfferingListOfficeMbrComponent implements OnInit {
   }
 
   addOfficeMember() {
-    // var tempIsOn = false;
-    var temp = [];
-    var obj;
-    if (this.ListProdOfferingBranchMbr.length == 0) {
-      obj = {
-        isOn: false,
-        result: []
-      }
+    if (this.ListProdOfferingBranchMbr.length != 0) {
     } else {
       for (var i = 0; i < this.ListProdOfferingBranchMbr.length; i++) {
-        temp.push(this.ListProdOfferingBranchMbr[i].OfficeCode);
-      }
-      obj = {
-        isOn: false,
-        result: temp
+        this.PassingObj.result.push(this.ListProdOfferingBranchMbr[i].OfficeCode);
       }
     }
 
-    this.componentIsOn.emit(obj);
+    this.componentIsOn.emit(this.PassingObj);
   }
 
   deleteFromList(ev: any) {
@@ -107,7 +95,8 @@ export class OfferingListOfficeMbrComponent implements OnInit {
   }
 
   DoneForm() {
-    this.http.post(URLConstant.SubmitProdOffering, { Id: this.ProdOfferingHId }).subscribe(
+    this.GenericByIdObj.Id = this.ProdOfferingHId;
+    this.http.post(URLConstant.SubmitProdOffering, this.GenericByIdObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
       }

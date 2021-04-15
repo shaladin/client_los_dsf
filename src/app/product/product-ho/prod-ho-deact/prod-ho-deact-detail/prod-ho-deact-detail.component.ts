@@ -106,7 +106,7 @@ export class ProdHoDeactDetailComponent implements OnInit {
     this.ReqProdDeactObj.Notes = this.ApprovalCreateOutput.Notes;
     this.ReqProdDeactObj.ProdHId = this.prodHId;
     this.ReqProdDeactObj.RequestRFAObj = this.ApprovalCreateOutput;
-    this.http.post(URLConstant.RequestDeactivationNew, this.ReqProdDeactObj).subscribe(
+    this.http.post(URLConstant.RequestDeactivation, this.ReqProdDeactObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_DEACTIVATE],{ });

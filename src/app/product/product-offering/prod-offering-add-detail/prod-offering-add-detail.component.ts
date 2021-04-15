@@ -11,11 +11,10 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
   templateUrl: './prod-offering-add-detail.component.html'
 })
 export class ProdOfferingAddDetailComponent implements OnInit {
-
-  objPassing: any = {};
   source:string ="";
   param: string;
   ProdOfferingHId: number;
+  ProdOfferingId: number;
   ProdHId: number;
   isGeneralData: boolean = true;
   isProdCompnt: boolean = false;
@@ -38,15 +37,13 @@ export class ProdOfferingAddDetailComponent implements OnInit {
               private http: HttpClient,
               private fb:FormBuilder) { 
     this.route.queryParams.subscribe(params => {
-      this.objPassing["ProdOfferingHId"] = params["ProdOfferingHId"];
-      this.objPassing["ProdOfferingId"] = params["ProdOfferingId"];
-      this.objPassing["mode"] = params["mode"];
-      this.source = params["source"];
+      this.ProdOfferingHId = params["ProdOfferingHId"];
+      this.ProdOfferingId = params["ProdOfferingId"];
     })
   }
 
   ngOnInit() {
-    this.GenericByIdObj.Id = this.objPassing.ProdOfferingHId
+    this.GenericByIdObj.Id = this.ProdOfferingHId
     this.http.post(URLConstant.GetProdOfferingHById, this.GenericByIdObj).subscribe(
       (response : ResGetProdOfferingHObj) => {
         this.resultData = response;

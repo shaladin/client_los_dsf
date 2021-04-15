@@ -50,6 +50,16 @@ export class ReqAddEditProdOfferingDObj {
   }
 }
 
+export class ReqCopyProductOfferingObj {
+  ProdOfferingHId: number;
+  FromProdOfferingId: number;
+
+  constructor() {
+    this.ProdOfferingHId = 0;
+    this.FromProdOfferingId = 0;
+  }
+}
+
 export class ReqUpdateProdOfferingPostApprovalObj {
   ProdOfferingHId: number;
   TaskId: number;

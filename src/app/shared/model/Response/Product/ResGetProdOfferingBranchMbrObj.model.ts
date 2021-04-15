@@ -9,26 +9,18 @@ export class ResGetProdOfferingBranchMbrObj {
 }
 
 export class ResGetListProdOffBranchMbrObj {
-    ProdOfferingId: number;
-    ProdId: number;
-    ProdOfferingCode: string;
-    ProdOfferingName: string;
-    EndDt: Date;
-    ProdOfferingStat: string;
-    ProdOfferingHId: number;
-    ProdOfferingVersion: string;
-    RowVersion: string;
+    ProdBranchMbrId: number;
+    OfficeCode: string;
+    OfficeName: string;
+    AreaName: string;
+    IsAllowedCrt: boolean;
 
     constructor() {
-        this.ProdOfferingId = 0;
-        this.ProdId = 0;
-        this.ProdOfferingCode = "";
-        this.ProdOfferingName = "";
-        this.EndDt = new Date();
-        this.ProdOfferingStat = "";
-        this.ProdOfferingHId = 0;
-        this.ProdOfferingVersion = "";
-        this.RowVersion = "";
+        this.ProdBranchMbrId = 0;
+        this.OfficeCode = "";
+        this.OfficeName = "";
+        this.AreaName = "";
+        this.IsAllowedCrt = false;
     }
 }
 
