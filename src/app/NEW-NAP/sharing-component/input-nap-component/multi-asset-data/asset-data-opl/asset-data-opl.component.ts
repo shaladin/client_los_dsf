@@ -532,25 +532,52 @@ export class AssetDataOplComponent implements OnInit {
             this.SupervisorObj = response[CommonConstant.ReturnObj];
   
             for(let i = 0; i < this.SupervisorObj.length; i++) {
-              if(this.SupervisorObj[i].MrVendorEmpPositionCode === CommonConstant.ADMIN_HEAD_JOB_CODE) {
-                this.adminHead = this.SupervisorObj[i].VendorEmpName;
-                this.AssetDataForm.patchValue({
-                  AdminHeadName: this.SupervisorObj[i].VendorEmpName,
-                  AdminHeadNo: this.SupervisorObj[i].VendorEmpNo,
-                  AdminHeadPositionCode: this.SupervisorObj[i].MrVendorEmpPositionCode
-                });
+              switch (this.SupervisorObj[i].MrVendorEmpPositionCode) {
+                case CommonConstant.ADMIN_HEAD_JOB_CODE: {
+                  this.adminHead = this.SupervisorObj[i].VendorEmpName;
+                  this.AssetDataForm.patchValue({
+                    AdminHeadName: this.SupervisorObj[i].VendorEmpName,
+                    AdminHeadNo: this.SupervisorObj[i].VendorEmpNo,
+                    AdminHeadPositionCode: this.SupervisorObj[i].MrVendorEmpPositionCode
+                  });
+                  break;
+                }
+                case CommonConstant.BRANCH_MANAGER_JOB_CODE: {
+                  this.branchManager = this.SupervisorObj[i].VendorEmpName;
+                  this.AssetDataForm.patchValue({
+                    BranchManagerName: this.SupervisorObj[i].VendorEmpName,
+                    BranchManagerNo: this.SupervisorObj[i].VendorEmpNo,
+                    BranchManagerPositionCode: this.SupervisorObj[i].MrVendorEmpPositionCode
+                  });
+                  break;
+                }
+                case CommonConstant.SUPERVISOR_JOB_CODE: {
+                  this.salesSupervisor = this.SupervisorObj[i].VendorEmpName;
+                  break;
+                }
+                default: {
+                  break;
+                }
               }
-              else if(this.SupervisorObj[i].MrVendorEmpPositionCode === CommonConstant.BRANCH_MANAGER_JOB_CODE) {
-                this.branchManager = this.SupervisorObj[i].VendorEmpName;
-                this.AssetDataForm.patchValue({
-                  BranchManagerName: this.SupervisorObj[i].VendorEmpName,
-                  BranchManagerNo: this.SupervisorObj[i].VendorEmpNo,
-                  BranchManagerPositionCode: this.SupervisorObj[i].MrVendorEmpPositionCode
-                });
-              }
-              else if(this.SupervisorObj[i].MrVendorEmpPositionCode === CommonConstant.SUPERVISOR_JOB_CODE) {
-                this.salesSupervisor = this.SupervisorObj[i].VendorEmpName;
-              }
+              // if(this.SupervisorObj[i].MrVendorEmpPositionCode === CommonConstant.ADMIN_HEAD_JOB_CODE) {
+              //   this.adminHead = this.SupervisorObj[i].VendorEmpName;
+              //   this.AssetDataForm.patchValue({
+              //     AdminHeadName: this.SupervisorObj[i].VendorEmpName,
+              //     AdminHeadNo: this.SupervisorObj[i].VendorEmpNo,
+              //     AdminHeadPositionCode: this.SupervisorObj[i].MrVendorEmpPositionCode
+              //   });
+              // }
+              // else if(this.SupervisorObj[i].MrVendorEmpPositionCode === CommonConstant.BRANCH_MANAGER_JOB_CODE) {
+              //   this.branchManager = this.SupervisorObj[i].VendorEmpName;
+              //   this.AssetDataForm.patchValue({
+              //     BranchManagerName: this.SupervisorObj[i].VendorEmpName,
+              //     BranchManagerNo: this.SupervisorObj[i].VendorEmpNo,
+              //     BranchManagerPositionCode: this.SupervisorObj[i].MrVendorEmpPositionCode
+              //   });
+              // }
+              // else if(this.SupervisorObj[i].MrVendorEmpPositionCode === CommonConstant.SUPERVISOR_JOB_CODE) {
+              //   this.salesSupervisor = this.SupervisorObj[i].VendorEmpName;
+              // }
             }
           }
         );
