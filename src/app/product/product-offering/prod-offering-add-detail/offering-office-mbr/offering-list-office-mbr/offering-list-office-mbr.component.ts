@@ -9,7 +9,8 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResGetListProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from 'app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { environment } from 'environments/environment';
-import { ProdOfficePassingObj } from 'app/shared/model/Product/ProdOfficePassingObj.model';
+import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/ProdOfficePassingObj.model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-offering-list-office-mbr',
@@ -19,13 +20,8 @@ export class OfferingListOfficeMbrComponent implements OnInit {
 
   @ViewChild(UCSearchComponent) UCSearchComponent;
   @Input() ProdOfferingHId: number;
-  @Output() componentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter();
-  source: string = "";pageNow : number;
-  pageSize : number;
-  apiUrl : string;
-  ProdHId : number;
-  orderByKey;
-  orderByValue;
+  @Output() componentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter<ProdOfficePassingObj>();
+  source: string = "";
   GenericByIdObj: GenericObj = new GenericObj();
   PassingObj: ProdOfficePassingObj = new ProdOfficePassingObj();
   ListProdOfferingBranchMbr : Array<ResProdOfferingBranchOfficeMbrObj> = new Array<ResProdOfferingBranchOfficeMbrObj>();
@@ -42,10 +38,6 @@ export class OfferingListOfficeMbrComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pageNow = 1;
-    this.pageSize = 10;
-    this.apiUrl = environment.losUrl + URLConstant.GetPagingObjectBySQL;
-
     this.GenericByIdObj.Id = this.ProdOfferingHId;
     this.http.post(URLConstant.GetListProdOfferingBranchOfficeMbrByProdHId, this.GenericByIdObj).subscribe(
       (response : ResGetListProdOfferingBranchMbrObj) => {
@@ -56,41 +48,23 @@ export class OfferingListOfficeMbrComponent implements OnInit {
 
   addOfficeMember() {
     if (this.ListProdOfferingBranchMbr.length != 0) {
-    } else {
       for (var i = 0; i < this.ListProdOfferingBranchMbr.length; i++) {
         this.PassingObj.result.push(this.ListProdOfferingBranchMbr[i].OfficeCode);
       }
     }
-
     this.componentIsOn.emit(this.PassingObj);
   }
 
-  deleteFromList(ev: any) {
-    if (confirm('Are you sure to delete this record?')) {
-      this.GenericByIdObj.Id = ev.ProdOfferingBranchMbrId;
+  deleteFromList(ProdOfferingBranchMbrId: number) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
+      this.GenericByIdObj.Id = ProdOfferingBranchMbrId;
       this.http.post(URLConstant.DeleteProdOfferingOfficeMbr, this.GenericByIdObj).subscribe(
         (response) => {
-          var idx = this.ListProdOfferingBranchMbr.findIndex(x => x.ProdOfferingBranchMbrId == ev.ProdOfferingBranchMbrId);
+          var idx = this.ListProdOfferingBranchMbr.findIndex(x => x.ProdOfferingBranchMbrId == ProdOfferingBranchMbrId);
           if (idx > -1) this.ListProdOfferingBranchMbr.splice(idx, 1);
           this.toastr.successMessage(response["message"]);
         }
       );
-    }
-  }
-
-  searchSort(ev: any) {
-    if (this.ListProdOfferingBranchMbr != null) {
-      if (this.orderByKey == ev.target.attributes.name.nodeValue) {
-        this.orderByValue = !this.orderByValue
-      } else {
-        this.orderByValue = true
-      }
-      this.orderByKey = ev.target.attributes.name.nodeValue
-      let order = {
-        key: this.orderByKey,
-        value: this.orderByValue
-      }
-      this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
     }
   }
 

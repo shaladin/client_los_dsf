@@ -32,7 +32,6 @@ export class OfferingProdCompntComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ProdOfferingHId = this.ProdOfferingHId;
   }
   
   SaveForm(event) {

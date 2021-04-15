@@ -93,7 +93,7 @@ export class ProdHoRvwDetailComponent implements OnInit {
 
       this.http.post(URLConstant.ReviewProduct, this.ReqReviewProductObj).subscribe(
         (response) => {
-          this.toastr.successMessage("Success");
+          this.toastr.successMessage(response["Message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_REVIEW], {});
           this.IsReady = true;
         });

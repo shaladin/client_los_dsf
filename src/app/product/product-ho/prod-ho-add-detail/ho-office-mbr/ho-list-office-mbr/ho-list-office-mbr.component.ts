@@ -9,7 +9,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResGetProdBranchMbrObj, ResProdBranchMbrObj } from 'app/shared/model/Response/Product/ResGetProdBranchMbrObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ProdOfficePassingObj } from 'app/shared/model/Product/ProdOfficePassingObj.model';
+import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/ProdOfficePassingObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
@@ -20,13 +20,8 @@ export class HoListOfficeMbrComponent implements OnInit {
 
   @ViewChild(UCSearchComponent) UCSearchComponent;
   @Input() ProdHId : number;
-  @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
+  @Output() componentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter<ProdOfficePassingObj>();
   source: string = "";
-  pageNow : number;
-  pageSize : number;
-  apiUrl : string;
-  orderByKey;
-  orderByValue;
   GenericByIdObj: GenericObj = new GenericObj();
   PassingObj: ProdOfficePassingObj = new ProdOfficePassingObj();
   ResListProdBranchMbrObj: Array<ResProdBranchMbrObj> = new Array<ResProdBranchMbrObj>();
@@ -43,10 +38,6 @@ export class HoListOfficeMbrComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pageNow = 1;
-    this.pageSize = 10;
-    this.apiUrl = environment.losUrl + URLConstant.GetPagingObjectBySQL;
-
     this.GenericByIdObj.Id = this.ProdHId;
     this.http.post(URLConstant.GetListProdBranchOfficeMbrByProdHId, this.GenericByIdObj).subscribe(
       (response: ResGetProdBranchMbrObj) => {
@@ -65,29 +56,12 @@ export class HoListOfficeMbrComponent implements OnInit {
     this.componentIsOn.emit(this.PassingObj);
   }
 
-  searchSort(ev: any) {
-    if (this.ResListProdBranchMbrObj != null) {
-      if (this.orderByKey == ev.target.attributes.name.nodeValue) {
-        this.orderByValue = !this.orderByValue
-      } else {
-        this.orderByValue = true
-      }
-      this.orderByKey = ev.target.attributes.name.nodeValue
-      let order = {
-        key: this.orderByKey,
-        value: this.orderByValue
-      }
-      this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
-    }
-  }
-
-  deleteFromList(ev: any) {
+  deleteFromList(ProdBranchMbrId: number) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      this.GenericByIdObj.Id = ev.ProdBranchMbrId;
-
+      this.GenericByIdObj.Id = ProdBranchMbrId;
       this.http.post(URLConstant.DeleteProductOfficeMbr, this.GenericByIdObj).subscribe(
         (response) => {
-          var idx = this.ResListProdBranchMbrObj.findIndex(x => x.ProdBranchMbrId == ev.ProdBranchMbrId);
+          var idx = this.ResListProdBranchMbrObj.findIndex(x => x.ProdBranchMbrId == ProdBranchMbrId);
           if (idx > -1) this.ResListProdBranchMbrObj.splice(idx, 1);
           this.toastr.successMessage(response["message"]);
         }

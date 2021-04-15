@@ -16,11 +16,11 @@
         <table class="table table-responsive-md text-center table-hover">
           <thead>
             <tr class="table-header">
-              <th><span translate (click)="searchSort($event)" name='OfficeCode'>Office Code</span>
+              <th><span translate name='OfficeCode'>Office Code</span>
               </th>
-              <th><span translate (click)="searchSort($event)" name='OfficeName'>Office Name</span>
+              <th><span translate name='OfficeName'>Office Name</span>
               </th>
-              <th><span translate (click)="searchSort($event)" name='OfficeArea'>Office Area</span>
+              <th><span translate name='OfficeArea'>Office Area</span>
               </th>
               <th translate>Action
               </th>
@@ -33,7 +33,7 @@
               <td>{{item.AreaName}}</td>
               <td>
                 <div>
-                  <a class="danger p-0" data-original-title="" title="" (click)="deleteFromList(item, i)">
+                  <a class="danger p-0" data-original-title="" title="" (click)="deleteFromList(item.ProdOfferingBranchMbrId)">
                     <i class="ft-trash-2 font-medium-3 mr-2"></i>
                   </a></div>
               </td>
