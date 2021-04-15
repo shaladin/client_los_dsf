@@ -39,7 +39,7 @@ export class HoGeneralDataComponent implements OnInit {
   selectedMultiDDLItems: { [key: string]: any; } = {};
   GenericByCodeObj: GenericObj = new GenericObj();
   inputLookUpObj: InputLookupObj = new InputLookupObj();
-  ReqGetProdCmpntObj : ReqGetProdCompntObj = new ReqGetProdCompntObj();
+  ReqGetProdCmpntObj: ReqGetProdCompntObj = new ReqGetProdCompntObj();
   ReqListProductDetailObj: ReqListProductDetailObj = new ReqListProductDetailObj();
   ReqCopyProductObj: ReqCopyProductObj = new ReqCopyProductObj();
 
@@ -223,7 +223,7 @@ export class HoGeneralDataComponent implements OnInit {
   async PopulateInstallmentSchedule() {
     this.GenericByCodeObj.Code = this.LOBSelected;
     await this.http.post(URLConstant.GetListKvpInstSchmByLobCode, this.GenericByCodeObj).toPromise().then(
-      (response : GenericKeyValueListObj) => {
+      (response: GenericKeyValueListObj) => {
         var result = response.ReturnObject;
         this.dictMultiOptions["INST_SCHM"] = new Array();
         this.selectedMultiDDLItems["INST_SCHM"] = new Array();
@@ -243,7 +243,7 @@ export class HoGeneralDataComponent implements OnInit {
     this.ReqGetProdCmpntObj.RowVersion = "";
 
     this.http.post(URLConstant.GetProductHOComponentGrouped, this.ReqGetProdCmpntObj).toPromise().then(
-      async (response : ResGetProdCmpntGroupedObj) => {
+      async (response: ResGetProdCmpntGroupedObj) => {
         var fa_group = this.FormProdComp.controls['groups'] as FormArray;
         while (fa_group.length) {
           fa_group.removeAt(0);
