@@ -28,7 +28,7 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
   RFADocChecklist: any;
   TaskListId: any;
   Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
-  InputObj: UcInputRFAObj;
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
@@ -118,7 +118,6 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
   }
 
   initInputApprovalObj(schemeCode) {
-    this.InputObj = new UcInputRFAObj(this.cookieService);
     var Attributes = [{}]
     var TypeCode = {
       "TypeCode": "DOC_CHCK_LIST_APV_TYPE",

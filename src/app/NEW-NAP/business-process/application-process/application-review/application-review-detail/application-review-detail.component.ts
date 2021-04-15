@@ -36,7 +36,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
   UserAccess: any;
   Arr: FormArray;
   BizTemplateCode: string = "";
-  InputObj: UcInputRFAObj;
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean = false;
   readonly apvBaseUrl = environment.ApprovalR3Url;
 
@@ -254,7 +254,6 @@ export class ApplicationReviewDetailComponent implements OnInit {
   PlafondAmt: number = 0;
   initInputApprovalObj() {
     //this.PlafondAmt = 1000000;
-    this.InputObj = new UcInputRFAObj(this.cookieService);
     var Attributes = [{}];
     var attribute1 = {
       "AttributeName": "Approval Amount",

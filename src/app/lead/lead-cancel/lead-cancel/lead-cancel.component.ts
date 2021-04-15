@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { LeadCancelObj } from 'app/shared/model/LeadCancelObj.Model';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { String } from 'typescript-string-operations';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
@@ -23,14 +22,10 @@ export class LeadCancelComponent implements OnInit {
   allowedStat = ['INP', 'NEW'];
   tempLeadCancelObj: LeadCancelObj;
 
-  constructor(
-    private toastr: NGXToastrService,
-    private router: Router) { }
+  constructor(private toastr: NGXToastrService, private router: Router) { }
 
   ngOnInit() {
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/LeadCancelTempPaging.json";
-    this.tempPagingObj.enviromentUrl = environment.losUrl;
-    this.tempPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/LeadCancelTempPaging.json";
     this.tempPagingObj.ddlEnvironments = [
       {
@@ -64,7 +59,7 @@ export class LeadCancelComponent implements OnInit {
   getListTemp(ev) {
     this.listSelectedId = ev.TempListObj;
   }
-  
+
   SaveLeadCancel() {
     if (this.listSelectedId.length == 0) {
       this.toastr.warningMessage(ExceptionConstant.ADD_MIN_1_DATA);
@@ -83,6 +78,6 @@ export class LeadCancelComponent implements OnInit {
 
     let params: string = this.tempLeadCancelObj.LeadIds.join(',')
     let taskListId: string = this.tempLeadCancelObj.listWfTaskListId.join(',')
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_CONFIRM_CANCEL],{ "LeadIds": params, "WfTaskListIds": taskListId });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_CONFIRM_CANCEL], { "LeadIds": params, "WfTaskListIds": taskListId });
   }
 }

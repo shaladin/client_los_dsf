@@ -14,12 +14,11 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
   styleUrls: []
 })
 export class PurchaseTrackingInquiryComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   isReady: boolean = false;
 
-  constructor(private http: HttpClient,
-    private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -29,10 +28,7 @@ export class PurchaseTrackingInquiryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchPurchaseTrackingInquiry.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPurchaseTrackingInquiry.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -42,7 +38,7 @@ export class PurchaseTrackingInquiryComponent implements OnInit {
     ];
 
     this.inputPagingObj.addCritInput = new Array();
-    var critLobObj = new CriteriaObj();
+    let critLobObj = new CriteriaObj();
     critLobObj.restriction = AdInsConstant.RestrictionEq;
     critLobObj.propName = 'A.BIZ_TEMPLATE_CODE';
     critLobObj.value = this.BizTemplateCode;
@@ -52,23 +48,23 @@ export class PurchaseTrackingInquiryComponent implements OnInit {
   }
 
   getEvent(event) {
-    if(event.Key == "Application") {
+    if (event.Key == "Application") {
       AdInsHelper.OpenAppViewByAppId(event.RowObj.AppId);
     }
-    else if(event.Key == "Agreement") {
+    else if (event.Key == "Agreement") {
       AdInsHelper.OpenAgrmntViewByAgrmntId(event.RowObj.AgrmntId);
     }
-    else if(event.Key == "Customer") {
-      this.http.post(URLConstant.GetCustByCustNo, {TrxNo : event.RowObj.CustNo}).subscribe(
+    else if (event.Key == "Customer") {
+      this.http.post(URLConstant.GetCustByCustNo, { TrxNo: event.RowObj.CustNo }).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }
       );
     }
-    else if(event.Key == "AppAsset") {
+    else if (event.Key == "AppAsset") {
       window.open(environment.losR3Web + "/View/AppAsset?AppId=" + event.RowObj.AppId + "&AppAssetId=" + event.RowObj.AppAssetId, "_blank");
     }
-    else if(event.Key == "View") {
+    else if (event.Key == "View") {
       window.open(environment.losR3Web + "/View/PurchaseTracking?AppId=" + event.RowObj.AppId + "&AppAssetId=" + event.RowObj.AppAssetId, "_blank");
     }
   }

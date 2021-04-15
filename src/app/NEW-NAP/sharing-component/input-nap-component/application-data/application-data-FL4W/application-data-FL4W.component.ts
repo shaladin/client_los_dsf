@@ -26,18 +26,17 @@ import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-application-data-FL4W',
-  templateUrl: './application-data-FL4W.component.html',
-  styleUrls: []
+  templateUrl: './application-data-FL4W.component.html'
 })
 export class ApplicationDataFL4WComponent implements OnInit {
 
-  @Input() AppId: any;
+  @Input() AppId: number;
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   FirstInstType: string;
-  mode: any;
+  mode: string;
   ListCrossAppObj: any = {};
   constructor(
     private fb: FormBuilder,
@@ -127,11 +126,8 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.ListCrossAppObj["appId"] = this.AppId;
     this.ListCrossAppObj["result"] = [];
     this.isInputLookupObj = false;
-    // this.makeLookUpObj();
     this.getAppModelInfo();
     this.applicationDDLitems = [];
-    // data dummy test
-    // data real
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustType);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeSlsRecom);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWOP);
@@ -162,10 +158,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
         this.http.post(URLConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
           (response) => {
             this.resMouCustObj = response[CommonConstant.ReturnObj];
-            // if(this.resMouCustObj.length > 0)
-            // {
-            //   this.NapAppModelForm.patchValue({ MouCustId: this.resMouCustObj[0].Key });
-            // }
           }
         );
       });
@@ -196,7 +188,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   getInterestTypeCode() {
-    var obj = {
+    let obj = {
       ProdOfferingCode: this.resultResponse.ProdOfferingCode,
       RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestTypeGeneral,
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
@@ -216,13 +208,10 @@ export class ApplicationDataFL4WComponent implements OnInit {
   ChangeInterestType() {
     if (this.NapAppModelForm.value.InterestType == CommonConstant.InterestTypeFixed) {
       this.isFixedRate = true;
-      // this.NapAppModelForm.controls.FloatingPeriod.clearValidators();
     }
     else {
       this.isFixedRate = false;
-      // this.NapAppModelForm.controls.FloatingPeriod.setValidators(Validators.required);
     }
-    // this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
   }
   ChangeCharacteristicOfCredit() {
     if (this.NapAppModelForm.value.CharaCredit == CommonConstant.CharacteristicOfCreditTypeCredit) {
@@ -390,7 +379,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
@@ -399,7 +387,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.inputLookupEconomicSectorObj = new InputLookupObj();
     this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    this.inputLookupEconomicSectorObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
     this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
@@ -609,7 +596,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       RowVersion: this.resultResponse.RowVersion
     };
 
-     obj['AppCustMailingAddr'] = this.getMailingAddrForSave();
+    obj['AppCustMailingAddr'] = this.getMailingAddrForSave();
     this.http.post(URLConstant.EditAppAddAppCross, obj).subscribe(
       (response) => {
         this.outputTab.emit();

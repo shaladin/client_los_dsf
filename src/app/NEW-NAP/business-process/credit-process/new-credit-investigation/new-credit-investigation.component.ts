@@ -5,26 +5,24 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-new-credit-investigation',
-  templateUrl: './new-credit-investigation.component.html',
-  styles: []
+  templateUrl: './new-credit-investigation.component.html'
 })
 export class NewCreditInvestigationComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   arrCrit: Array<any> = new Array();
 
-  constructor(private route: ActivatedRoute, private router: Router) { 
+  constructor(private route: ActivatedRoute, private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
         localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
       }
-      else{
+      else {
         this.BizTemplateCode = CommonConstant.CFNA;
       }
     });
@@ -32,8 +30,6 @@ export class NewCreditInvestigationComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchNewCreditInvestigation.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchNewCreditInvestigation.json";
     this.inputPagingObj.addCritInput = new Array();
 
@@ -53,15 +49,13 @@ export class NewCreditInvestigationComponent implements OnInit {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "CRD_INV_"+this.BizTemplateCode;
+    critObj.value = "CRD_INV_" + this.BizTemplateCode;
     this.inputPagingObj.addCritInput.push(critObj);
   }
 
-  Callback(event)
-  {
-    if(event.Key == "ViewProdOffering"){ 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( event.RowObj.ProdOfferingCode, event.RowObj.ProdOfferingVersion);
+  Callback(event) {
+    if (event.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.RowObj.ProdOfferingCode, event.RowObj.ProdOfferingVersion);
     }
   }
-
 }

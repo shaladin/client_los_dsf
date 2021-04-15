@@ -8,7 +8,6 @@ import { URLConstant } from "app/shared/constant/URLConstant";
 import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { ProdOfferingCodeVersionObj } from "app/shared/model/Request/Product/ProdOfferingCodeVersionObj.model";
-import { ProdOfferingHVersionObj } from "app/shared/model/Request/Product/ProdOfferingHVersionObj.model";
 import { ProductOfferingBranchMbrObj } from "app/shared/model/Request/Product/ProductOfferingBranchMbrObj.model";
 import { ProductOfferingDetailObj } from "app/shared/model/Request/Product/ProductOfferingDetailObj.model";
 import { ReqDownloadRuleObj } from "app/shared/model/Request/Product/ReqDownloadRuleObj.model";
@@ -48,7 +47,7 @@ export class ProdOfferingViewComponent implements OnInit {
     this.ProdOfferingDUrl = URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode;
     this.ProdOfferingBranchUrl = URLConstant.GetListProdOfferingBranchOfficeMbrByProdHId;
     this.ProdOfferingVerUrl = URLConstant.GetListProdOfferingHByProdOfferingCurrentProdHId;
-    this.ProdOfferingCodeVerUrl = URLConstant.GetProdOfferingHByCodeAndVerion;
+    this.ProdOfferingCodeVerUrl = URLConstant.GetProdOfferingHByCodeAndVersion;
 
     this.route.queryParams.subscribe(params => {
       if (params["prodOfferingHId"] != 0) {
@@ -99,8 +98,6 @@ export class ProdOfferingViewComponent implements OnInit {
     }
 
     //** Product Offering Version **//
-    this.ProdOfferingVersionObj = new ProdOfferingHVersionObj();
-    this.ProdOfferingVersionObj.ProdOfferingHId = this.prodOfferingHId;
     await this.http.post(this.ProdOfferingVerUrl, {Id : this.prodOfferingHId}).toPromise().then(
       response => {
         this.ProdOfferingVersion = response[CommonConstant.ReturnObj];
@@ -109,8 +106,6 @@ export class ProdOfferingViewComponent implements OnInit {
     );
 
     //** Office Member **//
-    this.ProdOfferingBranchMemObj = new ProductOfferingBranchMbrObj();
-    this.ProdOfferingBranchMemObj.ProdOfferingHId = this.prodOfferingHId;
     await this.http.post(this.ProdOfferingBranchUrl, {Id : this.prodOfferingHId}).toPromise().then(
       response => {
         this.ProdOfferingBranchMbr = response[CommonConstant.ReturnObj];

@@ -39,7 +39,7 @@ export class MouReviewGeneralComponent implements OnInit {
   mouCustObject: MouCustObj = new MouCustObj();
   listReason: any;
   ScoreResult: number;
-  InputObj: UcInputRFAObj;
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
   ApprovalCreateOutput: any;
   UploadViewlink: string;
@@ -168,7 +168,6 @@ export class MouReviewGeneralComponent implements OnInit {
   }
 
   initInputApprovalObj() {
-    this.InputObj = new UcInputRFAObj(this.cookieService);
     var Attributes = []
     var attribute1 = {
       "AttributeName": "Approval Amount",

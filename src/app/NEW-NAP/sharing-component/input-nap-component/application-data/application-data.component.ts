@@ -27,8 +27,7 @@ import { UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/libr
 
 @Component({
   selector: 'app-application-data',
-  templateUrl: './application-data.component.html',
-  styleUrls: []
+  templateUrl: './application-data.component.html'
 })
 export class ApplicationDataComponent implements OnInit {
   @Input() isCollateral: boolean;
@@ -55,12 +54,12 @@ export class ApplicationDataComponent implements OnInit {
   missingProdOfrComp: string = "";
   isDdlMrAppSourceReady: boolean = false;
   ddlMrAppSourceObj: UcDropdownListObj = new UcDropdownListObj();
-  ddlMrFirstInstTypeObj : UcDropdownListObj = new UcDropdownListObj();
-  ddlPayFreqObj : UcDropdownListObj = new UcDropdownListObj();
-  ddlMrWopObj : UcDropdownListObj = new UcDropdownListObj();
-  ddlMrCustNotifyOptObj : UcDropdownListObj = new UcDropdownListObj();
-  isDdlMrFirstInstTypeReady : boolean = false;
-  isDdlPayFreqReady : boolean = false;
+  ddlMrFirstInstTypeObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlPayFreqObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlMrWopObj: UcDropdownListObj = new UcDropdownListObj();
+  ddlMrCustNotifyOptObj: UcDropdownListObj = new UcDropdownListObj();
+  isDdlMrFirstInstTypeReady: boolean = false;
+  isDdlPayFreqReady: boolean = false;
 
   NapAppModelForm = this.fb.group({
     MouCustId: [''],
@@ -136,7 +135,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.BizTemplateCode == CommonConstant.OPL){
+    if (this.BizTemplateCode == CommonConstant.OPL) {
       this.NapAppModelForm.controls.InterestType.clearValidators();
       this.NapAppModelForm.controls.InterestType.updateValueAndValidity();
     }
@@ -191,7 +190,7 @@ export class ApplicationDataComponent implements OnInit {
     );
   }
 
-  initDdlMrFirstInstType(){
+  initDdlMrFirstInstType() {
     this.ddlMrFirstInstTypeObj.apiUrl = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL;
     this.ddlMrFirstInstTypeObj.requestObj = {
       ProdOfferingCode: this.resultResponse.ProdOfferingCode,
@@ -203,7 +202,7 @@ export class ApplicationDataComponent implements OnInit {
     this.isDdlMrFirstInstTypeReady = true;
   }
 
-  initDdlPayFreq(){
+  initDdlPayFreq() {
     this.ddlPayFreqObj.apiUrl = URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL;
     this.ddlPayFreqObj.requestObj = {
       ProdOfferingCode: this.resultResponse.ProdOfferingCode,
@@ -344,10 +343,10 @@ export class ApplicationDataComponent implements OnInit {
           CharaCredit: this.resultResponse.MrCharacteristicOfCreditCode,
           PrevAgrNo: this.resultResponse.PrevAgrmntNo,
           WayRestructure: this.resultResponse.MrWayOfRestructureCode,
-          MrSlikSecEcoCode : this.resultResponse.MrSlikSecEcoCode
-        }); 
+          MrSlikSecEcoCode: this.resultResponse.MrSlikSecEcoCode
+        });
         this.makeNewLookupCriteria();
-        if(this.BizTemplateCode != CommonConstant.OPL){
+        if (this.BizTemplateCode != CommonConstant.OPL) {
           this.getInterestTypeCode();
           this.initMailingAddress();
           this.GetCrossInfoData();
@@ -369,7 +368,7 @@ export class ApplicationDataComponent implements OnInit {
 
   getAppSrcData() {
     this.ddlMrAppSourceObj.apiUrl = URLConstant.GetListKvpActiveRefAppSrc;
-    this.ddlMrAppSourceObj.requestObj = {RowVersion: ""}
+    this.ddlMrAppSourceObj.requestObj = { RowVersion: "" }
     this.ddlMrAppSourceObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
   }
 
@@ -396,7 +395,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
 
-  initDdlMrWop(){
+  initDdlMrWop() {
     this.ddlMrWopObj.apiUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
     this.ddlMrWopObj.requestObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeWOP
@@ -404,7 +403,7 @@ export class ApplicationDataComponent implements OnInit {
     this.ddlMrWopObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
   }
 
-  initDdlMrCustNotifyOpt(){
+  initDdlMrCustNotifyOpt() {
     this.ddlMrCustNotifyOptObj.apiUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
     this.ddlMrCustNotifyOptObj.requestObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustNotifyOpt
@@ -424,7 +423,7 @@ export class ApplicationDataComponent implements OnInit {
         var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems[code] = objTemp;
         if (code == CommonConstant.RefMasterTypeCodeCharacteristicCredit && this.NapAppModelForm.value.CharaCredit == "") {
-          if(this.BizTemplateCode == CommonConstant.OPL){
+          if (this.BizTemplateCode == CommonConstant.OPL) {
             this.NapAppModelForm.patchValue({
               CharaCredit: CommonConstant.CharacteristicOfCreditTypeOther,
               MrSlikSecEcoCode: this.defaultSlikSecEcoCode
@@ -432,7 +431,7 @@ export class ApplicationDataComponent implements OnInit {
             this.NapAppModelForm.controls.CharaCredit.disable();
             this.NapAppModelForm.controls.CharaCredit.updateValueAndValidity();
           }
-          else{
+          else {
             this.NapAppModelForm.patchValue({
               CharaCredit: this.applicationDDLitems['CHARACTERISTIC_OF_CREDIT'][1].Key,
               MrSlikSecEcoCode: this.defaultSlikSecEcoCode
@@ -461,7 +460,6 @@ export class ApplicationDataComponent implements OnInit {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
@@ -471,7 +469,6 @@ export class ApplicationDataComponent implements OnInit {
 
     this.inputLookupEconomicSectorObj = new InputLookupObj();
     this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    this.inputLookupEconomicSectorObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
     this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
@@ -539,13 +536,13 @@ export class ApplicationDataComponent implements OnInit {
 
   ChangeNumOfInstallmentTenor() {
     var temp: number = +this.NapAppModelForm.controls.Tenor.value;
-    
+
     var tempPayFreq = this.DictRefPayFreq[this.NapAppModelForm.controls.PayFreqCode.value];
-    if(tempPayFreq != undefined && tempPayFreq != null){
+    if (tempPayFreq != undefined && tempPayFreq != null) {
       this.PayFreqVal = this.DictRefPayFreq[this.NapAppModelForm.controls.PayFreqCode.value].PayFreqVal;
       this.PayFreqTimeOfYear = this.DictRefPayFreq[this.NapAppModelForm.controls.PayFreqCode.value].TimeOfYear;
     }
-    
+
     if (!isNaN(temp) && !isNaN(this.PayFreqTimeOfYear) && !isNaN(this.PayFreqVal)) {
       var total = Math.ceil((this.PayFreqTimeOfYear / 12) * temp / this.PayFreqVal);
       this.PatchNumOfInstallment(total);
@@ -693,7 +690,7 @@ export class ApplicationDataComponent implements OnInit {
         AppFinData: tempAppFindDataObj,
         RowVersion: ""
       };
-      if(this.BizTemplateCode != CommonConstant.OPL)
+      if (this.BizTemplateCode != CommonConstant.OPL)
         obj['AppCustMailingAddr'] = this.getMailingAddrForSave();
       this.http.post(URLConstant.EditAppAddAppCross, obj).subscribe(
         (response) => {
@@ -784,7 +781,7 @@ export class ApplicationDataComponent implements OnInit {
     { Key: "RESIDENCE", Value: "Residence" }
   ];
   IsAddrReady: boolean = false;
-  async initMailingAddress(){
+  async initMailingAddress() {
     this.mailingAddrObj = new AddrObj();
     this.inputAddressObj = new InputAddressObj();
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
@@ -798,9 +795,9 @@ export class ApplicationDataComponent implements OnInit {
     );
   }
 
-  copyToMailing(addrType:string = ''){
-    if(!addrType) addrType = this.NapAppModelForm.controls.CopyFromMailing.value;
-    if(!addrType) return;
+  copyToMailing(addrType: string = '') {
+    if (!addrType) addrType = this.NapAppModelForm.controls.CopyFromMailing.value;
+    if (!addrType) return;
 
     let address = this.AppCustAddrObj.filter(emp => emp.MrCustAddrTypeCode === addrType);
     if (address.length && address[0] != undefined) {
@@ -830,8 +827,7 @@ export class ApplicationDataComponent implements OnInit {
     this.IsAddrReady = true;
   }
 
-  getMailingAddrForSave()
-  {
+  getMailingAddrForSave() {
     let mailingAddr: AppCustAddrObj = new AppCustAddrObj();
     mailingAddr.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
     mailingAddr.Addr = this.NapAppModelForm.controls["Address"]["controls"].Addr.value;

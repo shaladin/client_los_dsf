@@ -5,10 +5,11 @@ import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
-import { ProductDetailObj } from "app/shared/model/Request/Product/ProductDetailObj.model";
-import { ResGetProdDCompntInfoObj, ResProdHVersionObj } from "app/shared/model/Response/Product/ResGetProdObj.model";
 import { ResGetProdBranchMbrObj } from "app/shared/model/Response/Product/ResGetProdBranchMbrObj.model";
 import { ReqDownloadRuleObj } from "app/shared/model/Request/Product/ReqDownloadRuleObj.model";
+import { ReqGetProdCompntObj } from "app/shared/model/Request/Product/ReqGetProdCompntObj.model";
+import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
+import { ResGetProdDCompntInfoObj, ResProdDCompntObj, ResProdHVersionObj } from "app/shared/model/Response/Product/ResGetProdObj.model";
 
 @Component({
   selector: 'app-prod-ho-view',
@@ -18,14 +19,15 @@ export class ProdHoViewComponent implements OnInit {
 
   @Input() inputProdHId: number;
   ProdHId: number;
-  ProductDetailObj: ProductDetailObj;
   GenData: any;
   ProdCompGen: any;
   ProdCompNonGen: any;
   ProdBranchMbr: any;
   ProdVersion: any;
-  ProdComp: any;
   IsLoaded: boolean = false;
+  GenericByIdObj: GenericObj = new GenericObj();
+  ProductDetailObj: ReqGetProdCompntObj = new ReqGetProdCompntObj();
+  ProdComp: Array<ResProdDCompntObj> = new Array<ResProdDCompntObj>();
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   DlRuleObj: ReqDownloadRuleObj = new ReqDownloadRuleObj();
 
@@ -47,25 +49,25 @@ export class ProdHoViewComponent implements OnInit {
     this.viewGenericObj.viewEnvironment = environment.losUrl;
 
     //** Product Version **//
-    this.http.post<ResProdHVersionObj>(URLConstant.GetListProdHByProdCurrentProdHId, { Id: this.ProdHId }).subscribe(
-      (response) => {
+    this.GenericByIdObj.Id = this.ProdHId;
+    this.http.post(URLConstant.GetListProdHByProdCurrentProdHId, this.GenericByIdObj).subscribe(
+      (response : ResProdHVersionObj) => {
         this.ProdVersion = response.ReturnObject
       }
     );
 
     //** Office Member **//
-    this.http.post<ResGetProdBranchMbrObj>(URLConstant.GetListProdBranchOfficeMbrByProdHId, { Id: this.ProdHId }).subscribe(
-      (response) => {
+    this.http.post(URLConstant.GetListProdBranchOfficeMbrByProdHId, this.GenericByIdObj).subscribe(
+      (response : ResGetProdBranchMbrObj) => {
         this.ProdBranchMbr = response.ReturnObject;
       }
     );
 
     //** Product Component **//
-    this.ProductDetailObj = new ProductDetailObj();
     this.ProductDetailObj.ProdHId = this.ProdHId;
     this.ProductDetailObj.GroupCodes = ['GEN', 'SCHM', 'SCORE', 'RULE', 'OTHR', 'LOS'];
-    await this.http.post<ResGetProdDCompntInfoObj>(URLConstant.GetProductDetailComponentInfo, this.ProductDetailObj).toPromise().then(
-      (response) => {
+    await this.http.post(URLConstant.GetProductDetailComponentInfo, this.ProductDetailObj).toPromise().then(
+      (response : ResGetProdDCompntInfoObj) => {
         this.ProdComp = response.ReturnObject.ProdOffComponents;
         this.GenData = this.ProdComp.filter(
           comp => comp.GroupCode == 'GEN');

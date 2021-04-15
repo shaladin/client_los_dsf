@@ -5,7 +5,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-return-handling-paging',
@@ -14,7 +13,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class ReturnHandlingPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;
   BizTemplateCode: string;
-  
+
   constructor(
     private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
@@ -26,11 +25,7 @@ export class ReturnHandlingPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    //perubahan
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandling.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandling.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -49,7 +44,7 @@ export class ReturnHandlingPagingComponent implements OnInit {
 
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);  
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
   }
 }

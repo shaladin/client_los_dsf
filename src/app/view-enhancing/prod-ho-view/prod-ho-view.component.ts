@@ -7,10 +7,10 @@ import { saveAs } from 'file-saver';
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
-import { ProductDetailObj } from "app/shared/model/Request/Product/ProductDetailObj.model";
 import { ProdHVersionObj } from "app/shared/model/Request/Product/ProdHVersionObj.model";
 import { ProductBrancMbrObj } from "app/shared/model/Request/Product/ProductBranchMbrObj.model";
 import { ReqDownloadRuleObj } from "app/shared/model/Request/Product/ReqDownloadRuleObj.model";
+import { ReqGetProdCompntObj } from "app/shared/model/Request/Product/ReqGetProdCompntObj.model";
 
 @Component({
   selector: 'app-prod-ho-view',
@@ -27,7 +27,7 @@ export class ProdHoViewComponent implements OnInit {
   ProdBranchUrl: any;
   ProdVerUrl: any;
   ProdDUrl: any;
-  refProductDetailObj: any;
+  refProductDetailObj: ReqGetProdCompntObj;
   GenData: any;
   ProdCompGen: any;
   ProdCompNonGen: any;
@@ -79,7 +79,7 @@ export class ProdHoViewComponent implements OnInit {
     );
 
     //** Product Component **//
-    this.refProductDetailObj = new ProductDetailObj();
+    this.refProductDetailObj = new ReqGetProdCompntObj();
     this.refProductDetailObj.ProdHId = this.prodHId;
     this.refProductDetailObj.GroupCodes = ['GEN', 'SCHM', 'SCORE', 'RULE', 'OTHR', 'LOS'];
     await this.http.post(this.ProdDUrl, this.refProductDetailObj).toPromise().then(

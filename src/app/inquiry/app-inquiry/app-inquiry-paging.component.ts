@@ -7,14 +7,14 @@ import { HttpClient } from "@angular/common/http";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CommonConstant } from "../../shared/constant/CommonConstant";
+import { CommonConstant } from "app/shared/constant/CommonConstant";
 
 @Component({
   selector: "app-inquiry-paging",
   templateUrl: "./app-inquiry-paging.component.html"
 })
 export class AppInquiryPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   isReady: boolean = false;
 
@@ -29,7 +29,6 @@ export class AppInquiryPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     if (this.BizTemplateCode == CommonConstant.OPL) {
       this.inputPagingObj._url = "./assets/ucpaging/searchAppInquiryOpl.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppInquiryOpl.json";
@@ -70,8 +69,6 @@ export class AppInquiryPagingComponent implements OnInit {
         }
       ];
     }
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
 
     this.inputPagingObj.addCritInput = new Array();
 

@@ -21,7 +21,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './doc-checklist-approval-paging.component.html'
 })
 export class DocChecklistApprovalPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   token: any = localStorage.getItem(CommonConstant.TOKEN);
   userContext: CurrentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
@@ -34,17 +34,13 @@ export class DocChecklistApprovalPagingComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
-        localStorage.setItem("BizTemplateCode",this.BizTemplateCode);
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
       }
-    }); 
-   }
+    });
+  }
 
   ngOnInit() {
-
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchDocChecklistApproval.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDocChecklistApproval.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -72,7 +68,7 @@ export class DocChecklistApprovalPagingComponent implements OnInit {
     critCurrentUser.propName = 'vApv.CURRENT_USER_ID';
     critCurrentUser.value = this.userContext.UserName;
     this.inputPagingObj.addCritInput.push(critCurrentUser);
-    
+
     var critMainUser = new CriteriaObj();
     critMainUser.DataType = 'text';
     critMainUser.restriction = AdInsConstant.RestrictionOr;
@@ -84,17 +80,17 @@ export class DocChecklistApprovalPagingComponent implements OnInit {
 
   GetCallBack(ev: any) {
     var ApvReqObj = new ApprovalObj();
-    if(ev.Key == "Process"){
+    if (ev.Key == "Process") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DOC_CHECK_LIST_APPRV_DETAIL],{ "AppId": ev.RowObj.AppId, "TrxNo": ev.RowObj.TrxNo, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DOC_CHECK_LIST_APPRV_DETAIL], { "AppId": ev.RowObj.AppId, "TrxNo": ev.RowObj.TrxNo, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId });
       }
-    }    
+    }
     else if (ev.Key == "HoldTask") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_HOLD);
-      }else {
+      } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId
         this.httpClient.post(URLConstant.ApvHoldTaskUrl, ApvReqObj).subscribe(
           (response) => {

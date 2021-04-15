@@ -172,15 +172,15 @@ export class JobTabComponent implements OnInit {
 
         var gsNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
         var gsUseDigitalization = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
-        
-        if(gsNeedCheckBySystem != undefined) {
+
+        if (gsNeedCheckBySystem != undefined) {
           this.IsIntegratorCheckBySystem = gsNeedCheckBySystem.GsValue;
         }
         else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
         }
 
-        if(gsUseDigitalization != undefined) {
+        if (gsUseDigitalization != undefined) {
           this.IsUseDigitalization = gsUseDigitalization.GsValue;
         }
         else {
@@ -232,7 +232,7 @@ export class JobTabComponent implements OnInit {
           this.InputLookupCompanyObj.nameSelect = response.AppCustPersonalJobDataObj.CoyName;
           this.InputLookupCompanyObj.jsonSelect = { Descr: response.AppCustPersonalJobDataObj.CoyName };
         }
-        
+
         if (response.JobAddr.AppCustAddrId != 0) {
           this.JobAddrObj = response.JobAddr;
           this.InputJobAddrObj.inputField.inputLookupObj.nameSelect = response.JobAddr.Zipcode;
@@ -287,7 +287,7 @@ export class JobTabComponent implements OnInit {
   }
 
   SaveForm() {
-    if(this.JobDataForm.controls.EmploymentEstablishmentDt.value > this.BusinessDt){
+    if (this.JobDataForm.controls.EmploymentEstablishmentDt.value > this.BusinessDt) {
       var businessDtStr = formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
       this.toastr.errorMessage(String.Format(ExceptionConstant.EMPLOYMENT_ESTABLISHMENT_CANNOT_LESS_THAN + businessDtStr));
       return false;
@@ -307,7 +307,7 @@ export class JobTabComponent implements OnInit {
         this.SubmitData();
       }
     }
-    else{
+    else {
       this.SubmitData();
     }
   }
@@ -514,20 +514,17 @@ export class JobTabComponent implements OnInit {
 
   InitLookup() {
     this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
-    this.InputLookupProfessionObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.InputLookupProfessionObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.addCritInput = new Array();
 
     this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
-    this.InputLookupIndustryTypeObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
-    
+
     this.InputLookupCompanyObj.urlJson = "./assets/uclookup/customer/lookupCompany.json";
-    this.InputLookupCompanyObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.InputLookupCompanyObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCompanyObj.pagingJson = "./assets/uclookup/customer/lookupCompany.json";
     this.InputLookupCompanyObj.genericJson = "./assets/uclookup/customer/lookupCompany.json";
@@ -552,11 +549,11 @@ export class JobTabComponent implements OnInit {
   GetThirdPartyResultHByTrxTypeCodeAndTrxNo() {
     this.http.post(URLConstant.GetAppById, { Id: this.appId }).subscribe(
       (response) => {
-        if(response['MouCustId'] != null){
+        if (response['MouCustId'] != null) {
           this.mouCustId = response['MouCustId'];
         }
         this.bizTemplateCode = response["BizTemplateCode"];
-        if(this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0"){
+        if (this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0") {
           this.http.post(URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo, { TrxTypeCode: CommonConstant.APP_TRX_TYPE_CODE, TrxNo: response["AppNo"] }).subscribe(
             (response) => {
               if (response["ThirdPartyRsltHId"] != 0 && response["ThirdPartyRsltHId"] != null) {

@@ -1,4 +1,4 @@
-export class ReqProdOffVersionObj {
+export class ReqProdOfferingVersionObj {
     ProdOfferingId: number;
     ProdId: number;
     ProdOfferingCode: string;
@@ -21,4 +21,12 @@ export class ReqProdOffVersionObj {
     this.RowVersion = "";
     }
   }
-  
+  export class ReqGetListProdOfferingDObj {
+    ProdHId: number;
+    GroupCodes: Array<string>;
+
+    constructor() { 
+    this.ProdHId = 0;
+    this.GroupCodes = new Array<string>();
+    }
+  }
