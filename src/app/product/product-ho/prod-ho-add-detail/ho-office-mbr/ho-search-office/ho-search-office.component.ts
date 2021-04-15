@@ -8,14 +8,14 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ReqListProdBranchMbrObj } from 'app/shared/model/Request/Product/ReqAddProdBranchMbrObj.model';
-import { ProdOfficePassingObj } from 'app/shared/model/Product/ProdOfficePassingObj.model';
+import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/ProdOfficePassingObj.model';
 @Component({
   selector: 'app-ho-search-office',
   templateUrl: './ho-search-office.component.html'
 })
 export class HoSearchOfficeComponent implements OnInit {
   @Input() ProdHId : number;
-  @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
+  @Output() componentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter<ProdOfficePassingObj>();
   @Input() ListOfficeMemberObjInput: Array<string> = new Array<string>();
   listSelected: Array<any> = new Array<any>();
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
