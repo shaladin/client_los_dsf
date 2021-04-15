@@ -22,11 +22,6 @@ export class HoListOfficeMbrComponent implements OnInit {
   @Input() ProdHId : number;
   @Output() componentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter<ProdOfficePassingObj>();
   source: string = "";
-  pageNow : number;
-  pageSize : number;
-  apiUrl : string;
-  orderByKey;
-  orderByValue;
   GenericByIdObj: GenericObj = new GenericObj();
   PassingObj: ProdOfficePassingObj = new ProdOfficePassingObj();
   ResListProdBranchMbrObj: Array<ResProdBranchMbrObj> = new Array<ResProdBranchMbrObj>();
@@ -43,10 +38,6 @@ export class HoListOfficeMbrComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pageNow = 1;
-    this.pageSize = 10;
-    this.apiUrl = environment.losUrl + URLConstant.GetPagingObjectBySQL;
-
     this.GenericByIdObj.Id = this.ProdHId;
     this.http.post(URLConstant.GetListProdBranchOfficeMbrByProdHId, this.GenericByIdObj).subscribe(
       (response: ResGetProdBranchMbrObj) => {
@@ -63,22 +54,6 @@ export class HoListOfficeMbrComponent implements OnInit {
     }
 
     this.componentIsOn.emit(this.PassingObj);
-  }
-
-  searchSort(ev: any) {
-    if (this.ResListProdBranchMbrObj != null) {
-      if (this.orderByKey == ev.target.attributes.name.nodeValue) {
-        this.orderByValue = !this.orderByValue
-      } else {
-        this.orderByValue = true
-      }
-      this.orderByKey = ev.target.attributes.name.nodeValue
-      let order = {
-        key: this.orderByKey,
-        value: this.orderByValue
-      }
-      this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
-    }
   }
 
   deleteFromList(ev: any) {

@@ -20,12 +20,7 @@ export class OfferingListOfficeMbrComponent implements OnInit {
   @ViewChild(UCSearchComponent) UCSearchComponent;
   @Input() ProdOfferingHId: number;
   @Output() componentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter<ProdOfficePassingObj>();
-  source: string = "";pageNow : number;
-  pageSize : number;
-  apiUrl : string;
-  ProdHId : number;
-  orderByKey;
-  orderByValue;
+  source: string = "";
   GenericByIdObj: GenericObj = new GenericObj();
   PassingObj: ProdOfficePassingObj = new ProdOfficePassingObj();
   ListProdOfferingBranchMbr : Array<ResProdOfferingBranchOfficeMbrObj> = new Array<ResProdOfferingBranchOfficeMbrObj>();
@@ -42,10 +37,6 @@ export class OfferingListOfficeMbrComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pageNow = 1;
-    this.pageSize = 10;
-    this.apiUrl = environment.losUrl + URLConstant.GetPagingObjectBySQL;
-
     this.GenericByIdObj.Id = this.ProdOfferingHId;
     this.http.post(URLConstant.GetListProdOfferingBranchOfficeMbrByProdHId, this.GenericByIdObj).subscribe(
       (response : ResGetListProdOfferingBranchMbrObj) => {
@@ -74,22 +65,6 @@ export class OfferingListOfficeMbrComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
         }
       );
-    }
-  }
-
-  searchSort(ev: any) {
-    if (this.ListProdOfferingBranchMbr != null) {
-      if (this.orderByKey == ev.target.attributes.name.nodeValue) {
-        this.orderByValue = !this.orderByValue
-      } else {
-        this.orderByValue = true
-      }
-      this.orderByKey = ev.target.attributes.name.nodeValue
-      let order = {
-        key: this.orderByKey,
-        value: this.orderByValue
-      }
-      this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
     }
   }
 
