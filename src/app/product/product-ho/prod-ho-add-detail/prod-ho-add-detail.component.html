@@ -15,7 +15,7 @@
               <app-ho-prod-compnt *ngIf="type == 'ProductComponent'" [ProdHId]="ProdHId"></app-ho-prod-compnt>
             </aw-wizard-step>
             <aw-wizard-step [stepTitle]="'Office Member'" (stepEnter)="EnterTab('OfficeMember')"
-              [navigationSymbol]="{ symbol: '3', fontFamily: 'ProdIdFontAwesome' }">
+              [navigationSymbol]="{ symbol: '3', fontFamily: 'FontAwesome' }">
               <app-ho-office-mbr *ngIf="type == 'OfficeMember'" [ProdHId]="ProdHId"></app-ho-office-mbr>
             </aw-wizard-step>
           </aw-wizard>
