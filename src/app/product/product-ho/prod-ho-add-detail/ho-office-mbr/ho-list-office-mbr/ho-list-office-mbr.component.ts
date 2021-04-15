@@ -9,7 +9,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResGetProdBranchMbrObj, ResProdBranchMbrObj } from 'app/shared/model/Response/Product/ResGetProdBranchMbrObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ProdOfficePassingObj } from 'app/shared/model/Product/ProdOfficePassingObj.model';
+import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/ProdOfficePassingObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
@@ -20,7 +20,7 @@ export class HoListOfficeMbrComponent implements OnInit {
 
   @ViewChild(UCSearchComponent) UCSearchComponent;
   @Input() ProdHId : number;
-  @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
+  @Output() componentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter<ProdOfficePassingObj>();
   source: string = "";
   pageNow : number;
   pageSize : number;

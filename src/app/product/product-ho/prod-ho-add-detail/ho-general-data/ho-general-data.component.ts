@@ -336,16 +336,6 @@ export class HoGeneralDataComponent implements OnInit {
     this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.BackToPaging();
-      }
-    );
-  }
-
-  NextDetail() {
-    this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.wizard.goToNextStep();
       }
     );
   }
@@ -356,11 +346,12 @@ export class HoGeneralDataComponent implements OnInit {
 
   SubmitForm() {
     this.BuildReqProdDetail();
+    this.SaveForm();
     if (this.StateSave == "save") {
-      this.SaveForm();
+      this.BackToPaging();
     }
     else {
-      this.NextDetail();
+      this.wizard.goToNextStep();
     }
   }
 

@@ -9,7 +9,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResGetListProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from 'app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { environment } from 'environments/environment';
-import { ProdOfficePassingObj } from 'app/shared/model/Product/ProdOfficePassingObj.model';
+import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/ProdOfficePassingObj.model';
 
 @Component({
   selector: 'app-offering-list-office-mbr',
@@ -19,7 +19,7 @@ export class OfferingListOfficeMbrComponent implements OnInit {
 
   @ViewChild(UCSearchComponent) UCSearchComponent;
   @Input() ProdOfferingHId: number;
-  @Output() componentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter();
+  @Output() componentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter<ProdOfficePassingObj>();
   source: string = "";pageNow : number;
   pageSize : number;
   apiUrl : string;
@@ -56,7 +56,6 @@ export class OfferingListOfficeMbrComponent implements OnInit {
 
   addOfficeMember() {
     if (this.ListProdOfferingBranchMbr.length != 0) {
-    } else {
       for (var i = 0; i < this.ListProdOfferingBranchMbr.length; i++) {
         this.PassingObj.result.push(this.ListProdOfferingBranchMbr[i].OfficeCode);
       }

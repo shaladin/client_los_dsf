@@ -10,8 +10,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ResGetProdOfferingBranchMbrObj } from 'app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model';
 import { ReqListProdOfferingBranchMbrObj } from 'app/shared/model/Request/Product/ReqAddProdOfferingBranchMbrObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ProdOfficePassingObj } from 'app/shared/model/Product/ProdOfficePassingObj.model';
-
+import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/ProdOfficePassingObj.model';
 @Component({
   selector: 'app-offering-search-office',
   templateUrl: './offering-search-office.component.html'
@@ -20,7 +19,7 @@ export class OfferingSearchOfficeComponent implements OnInit {
   @Input() ListOfficeMemberObjInput: Array<string> = new Array<string>();
   @Input() ProdOfferingHId: number;
   @Input() ProdHId: number;
-  @Output() componentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter();
+  @Output() componentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter<ProdOfficePassingObj>();
   GenericByIdObj : GenericObj = new GenericObj();
   listSelected: Array<any> = new Array<any>();
   arrListCode: Array<string> = new Array<string>();
