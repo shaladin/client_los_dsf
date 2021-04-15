@@ -119,7 +119,6 @@
                     <lib-ucdropdownlist *ngIf="isDdlAdminHeadReady" [dropdownListObj]="ddlAdminHeadObj" [parentForm]="AssetDataForm" [enjiForm]="enjiForm"
                       [identifier]="'AdminHeadId'" [genericList]="AdminHeadObj" (callback) = "AdminHeadChanged($event)"></lib-ucdropdownlist>
                   </div> -->
-                  <!-- Sales Supervisor -->
                   <label class="col-md-2 adInsLabel" translate>Sales Supervisor </label>
                   <label class="col-md-4 adInsLabel" *ngIf="salesSupervisor">{{salesSupervisor}} </label>
                   <label class="col-md-4 adInsLabel" *ngIf="!salesSupervisor"> -  </label>
