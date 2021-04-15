@@ -13,7 +13,7 @@ export class LeadInputObj{
     LeadCustPersonalFinDataObj: LeadCustPersonalFinDataObj;
     LeadCustPersonalJobDataObj: LeadCustPersonalJobDataObj;
     LeadCustSocmedObj: any;
-    WfTaskListId: string;
+    WfTaskListId: number;
     RowVersion: string;
 
     constructor() { 
@@ -24,7 +24,7 @@ export class LeadInputObj{
         this.LeadCustPersonalFinDataObj = new LeadCustPersonalFinDataObj();
         this.LeadCustPersonalJobDataObj = new LeadCustPersonalJobDataObj();
         this.LeadCustSocmedObj = new Array();
-        this.WfTaskListId= "";
+        this.WfTaskListId= 0;
         this.RowVersion = ""; 
     }
 }

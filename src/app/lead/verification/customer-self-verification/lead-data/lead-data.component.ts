@@ -41,7 +41,6 @@ export class LeadDataComponent implements OnInit {
   getListActiveRefMasterUrl: string;
   assetTypeId: string;
   leadInputLeadDataObj: LeadInputLeadDataObj;
-  addEditLeadData: string;
   getLeadAssetByLeadId: string;
   getLeadAppByLeadId: string;
   getAssetMasterForLookupEmployee: string; 
@@ -76,7 +75,7 @@ export class LeadDataComponent implements OnInit {
   leadObj: LeadObj;
   returnLeadObj: any;
   returnLobCode: string;
-  WfTaskListId: string;
+  WfTaskListId: number;
   editLead : string;
   editLeadObj : LeadObj;
   isUsed: boolean;
@@ -88,7 +87,6 @@ export class LeadDataComponent implements OnInit {
   tempMrFirstInstTypeCode : any;
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-    this.addEditLeadData = URLConstant.AddEditLeadData;
     this.getLeadAssetByLeadId = URLConstant.GetLeadAssetByLeadId;
     this.getLeadAppByLeadId = URLConstant.GetLeadAppByLeadId;
     this.getAssetMasterForLookupEmployee = URLConstant.GetAssetMasterForLookupEmployee;
@@ -105,7 +103,7 @@ export class LeadDataComponent implements OnInit {
         this.typePage = params["mode"];
       }
       if (params["WfTaskListId"] == null) {
-        this.WfTaskListId = "0";
+        this.WfTaskListId = 0;
       }
       else {
         this.WfTaskListId = params["WfTaskListId"];
@@ -521,19 +519,19 @@ export class LeadDataComponent implements OnInit {
         this.setLeadAsset();
         this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
         this.setLeadApp();
-        this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
+        this.http.post(URLConstant.EditLeadData, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CONTENT_PAGE_SELF_VERIF], { LeadId: this.LeadId, WfTaskListId: this.WfTaskListId, LobCode: this.returnLobCode });
           }
         );
-        }
+      }
     } 
     else {
       this.leadInputLeadDataObj = new LeadInputLeadDataObj();
       this.setLeadAsset();
       this.setLeadApp();
-      this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
+      this.http.post(URLConstant.AddLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CONTENT_PAGE_SELF_VERIF], { LeadId: this.LeadId, WfTaskListId: this.WfTaskListId, LobCode: this.returnLobCode });

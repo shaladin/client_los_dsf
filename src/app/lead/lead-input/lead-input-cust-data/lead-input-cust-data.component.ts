@@ -200,6 +200,7 @@ export class LeadInputCustDataComponent implements OnInit {
   }
 
   async ngOnInit() {
+    console.log("asflkjasdflkjsadflkj");
     this.inputAddressObjForLegalAddr = new InputAddressObj();
     this.inputAddressObjForLegalAddr.showSubsection = false;
     this.inputAddressObjForLegalAddr.title = "Legal Address";

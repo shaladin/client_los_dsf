@@ -4,13 +4,12 @@ import { LeadAssetObj } from "./LeadAssetObj.Model";
 export class LeadInputLeadDataObj{
     LeadAppObj : LeadAppObj;
     LeadAssetObj : LeadAssetObj;
-    WfTaskListId: any;
-    RowVersion: any;
-    // IsEdit : boolean;
+    WfTaskListId: number;
+    RowVersion: string;
     constructor() { 
         this.LeadAppObj = new LeadAppObj(); 
         this.LeadAssetObj = new LeadAssetObj();
-        this.WfTaskListId = "";
+        this.WfTaskListId = 0;
         this.RowVersion = ""; 
     }
 }
