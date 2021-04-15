@@ -61,7 +61,7 @@ export class ProdHoAddComponent implements OnInit {
   }
 
   ngOnInit() {
-    var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = new Date(context[CommonConstant.BUSINESS_DT]);
 
     if (this.mode == "edit") {

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from 'environments/environment';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 
 @Component({
@@ -33,8 +32,7 @@ export class ProdHoAddDetailComponent implements OnInit {
     else{
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformation.json";
     }
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.whereValue.push(this.ProdHId)
+    this.viewGenericObj.whereValue.push(this.ProdHId);
   }
 
   EnterTab(type) {

@@ -1343,7 +1343,7 @@ export class URLConstant {
   public static IsSecurityDepositExist = environment.losUrl + "/RequisitionDecision/IsSecurityDepositExist";
 
   // Pre Go Live
-  public static SubmitPreGoLive = environment.losUrl + "/PreGoLive/SubmitPreGoLive";
+  public static SubmitPreGoLiveOpl = environment.losUrl + "/PreGoLiveOpl/SubmitPreGoLive";
 
   //App Asset Rent Data
   public static GetAppFinDataOplByAppAssetId = environment.losUrl + "/AppAssetRentDataOpl/GetAppFinDataOplByAppAssetId";
