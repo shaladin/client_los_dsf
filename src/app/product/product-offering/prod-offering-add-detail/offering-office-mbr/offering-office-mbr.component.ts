@@ -20,7 +20,6 @@ export class OfferingOfficeMbrComponent implements OnInit {
   }
 
   ChangeComponent(ev: ProdOfficePassingObj){
-    console.log("YEET")
     this.isOn = ev.isOn;
     this.ListOfficeMemberObj = ev.result;
   }

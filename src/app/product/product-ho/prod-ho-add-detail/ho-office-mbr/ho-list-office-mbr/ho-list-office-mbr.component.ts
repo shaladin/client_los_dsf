@@ -56,13 +56,12 @@ export class HoListOfficeMbrComponent implements OnInit {
     this.componentIsOn.emit(this.PassingObj);
   }
 
-  deleteFromList(ev: any) {
+  deleteFromList(ProdBranchMbrId: number) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      this.GenericByIdObj.Id = ev.ProdBranchMbrId;
-
+      this.GenericByIdObj.Id = ProdBranchMbrId;
       this.http.post(URLConstant.DeleteProductOfficeMbr, this.GenericByIdObj).subscribe(
         (response) => {
-          var idx = this.ResListProdBranchMbrObj.findIndex(x => x.ProdBranchMbrId == ev.ProdBranchMbrId);
+          var idx = this.ResListProdBranchMbrObj.findIndex(x => x.ProdBranchMbrId == ProdBranchMbrId);
           if (idx > -1) this.ResListProdBranchMbrObj.splice(idx, 1);
           this.toastr.successMessage(response["message"]);
         }

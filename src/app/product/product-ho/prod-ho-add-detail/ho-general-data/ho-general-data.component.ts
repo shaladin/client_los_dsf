@@ -336,6 +336,12 @@ export class HoGeneralDataComponent implements OnInit {
     this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
+        if (this.StateSave == "save") {
+          this.BackToPaging();
+        }
+        else {
+          this.wizard.goToNextStep();
+        }
       }
     );
   }
@@ -347,12 +353,6 @@ export class HoGeneralDataComponent implements OnInit {
   SubmitForm() {
     this.BuildReqProdDetail();
     this.SaveForm();
-    if (this.StateSave == "save") {
-      this.BackToPaging();
-    }
-    else {
-      this.wizard.goToNextStep();
-    }
   }
 
   reload() {

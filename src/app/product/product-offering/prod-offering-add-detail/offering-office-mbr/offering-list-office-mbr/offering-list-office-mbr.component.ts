@@ -10,6 +10,7 @@ import { ResGetListProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj }
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { environment } from 'environments/environment';
 import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/ProdOfficePassingObj.model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-offering-list-office-mbr',
@@ -51,16 +52,15 @@ export class OfferingListOfficeMbrComponent implements OnInit {
         this.PassingObj.result.push(this.ListProdOfferingBranchMbr[i].OfficeCode);
       }
     }
-
     this.componentIsOn.emit(this.PassingObj);
   }
 
-  deleteFromList(ev: any) {
-    if (confirm('Are you sure to delete this record?')) {
-      this.GenericByIdObj.Id = ev.ProdOfferingBranchMbrId;
+  deleteFromList(ProdOfferingBranchMbrId: number) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
+      this.GenericByIdObj.Id = ProdOfferingBranchMbrId;
       this.http.post(URLConstant.DeleteProdOfferingOfficeMbr, this.GenericByIdObj).subscribe(
         (response) => {
-          var idx = this.ListProdOfferingBranchMbr.findIndex(x => x.ProdOfferingBranchMbrId == ev.ProdOfferingBranchMbrId);
+          var idx = this.ListProdOfferingBranchMbr.findIndex(x => x.ProdOfferingBranchMbrId == ProdOfferingBranchMbrId);
           if (idx > -1) this.ListProdOfferingBranchMbr.splice(idx, 1);
           this.toastr.successMessage(response["message"]);
         }
