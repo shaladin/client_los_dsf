@@ -22,7 +22,7 @@ export class PreGoLiveOplPagingComponent implements OnInit {
   IsReady: boolean = false;
   BizTemplateCode: string;
   AppId: number;
-  WfTaskListId: number;
+  WfTaskListId: string;
   
   constructor(private preGoLiveOplService: PreGoLiveOplService,
     private toastr: NGXToastrService,
@@ -53,7 +53,7 @@ export class PreGoLiveOplPagingComponent implements OnInit {
     var critInput = new CriteriaObj();
     critInput.propName = "WTL.ACT_CODE";
     critInput.restriction = AdInsConstant.RestrictionEq;
-    critInput.value = "PGLV_" + this.BizTemplateCode;
+    critInput.value = "PRE_GO_LIVE_" + this.BizTemplateCode;
 
     this.ucTempPagingObj.addCritInput.push(critInput);
 
@@ -84,8 +84,9 @@ export class PreGoLiveOplPagingComponent implements OnInit {
         this.toastr.warningMessage("Please Select Item First");
       }
       else {
-        if(this.IsAppNoSame) {
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_OPL_DETAIL], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
+        this.IsAppNoSame();
+        if(this.IsAppNoSame()) {
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_OPL_DETAIL], { "AppId": this.AppId, "WfTaskListIds": this.WfTaskListId });
         }
         else {
           this.toastr.warningMessage("Application No Must Same!");
@@ -107,8 +108,10 @@ export class PreGoLiveOplPagingComponent implements OnInit {
         }
       }
       this.AppId = listPreGoLiveOpl[0].AppId;
-      this.WfTaskListId = listPreGoLiveOpl[0].WfTaskListId;
-
+      var WfTaskListIds = listPreGoLiveOpl.map(
+        (item)=> item['WfTaskListId']
+      );
+      this.WfTaskListId = WfTaskListIds.join(";");
       return true;
     }
   }
