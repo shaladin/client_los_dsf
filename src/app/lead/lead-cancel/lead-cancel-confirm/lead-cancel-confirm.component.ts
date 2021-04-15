@@ -94,7 +94,6 @@ export class LeadCancelConfirmComponent implements OnInit {
       var leadObj: LeadConfirmCancelObj = new LeadConfirmCancelObj();
       leadObj.LeadStat = CommonConstant.LeadStatCancel;
       leadObj.LeadStep = CommonConstant.LeadStepCancel;
-      leadObj.Notes = this.LeadConfirmCancelForm.controls.CancelReason.value;
       leadObj.MrCancelReasonCode = this.LeadConfirmCancelForm.controls.CancelReason.value;
       leadObj.Notes = this.LeadConfirmCancelForm.controls.Notes.value;
       var tempId = new Array();

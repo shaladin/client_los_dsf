@@ -1,15 +1,15 @@
 export class LeadCustObj{
-    LeadCustId : any;
+    LeadCustId : number;
     LeadId : any;
-    CustNo : any;
-    CustName : any;
-    MrCustTypeCode : any;
-    MrCustModelCode : any;
-    MrIdTypeCode : any;
-    IdNo : any;
-    IdExpiredDt : any;
-    TaxIdNo : any;
-    IsVip : any;
-    RowVersion: any;
+    CustNo : string;
+    CustName : string;
+    MrCustTypeCode : string;
+    MrCustModelCode : string;
+    MrIdTypeCode : string;
+    IdNo : string;
+    IdExpiredDt : Date;
+    TaxIdNo : string;
+    IsVip : boolean;
+    RowVersion: string;
     constructor() { this.LeadCustId = 0, this.RowVersion = "" }
 }
