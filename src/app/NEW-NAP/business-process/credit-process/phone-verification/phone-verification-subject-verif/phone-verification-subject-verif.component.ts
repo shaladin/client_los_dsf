@@ -386,7 +386,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   async GetVerfResultHData() {
     await this.http.post(this.getVerfResulHtUrl, {Id : this.verfResHObj.VerfResultHId}).toPromise().then(
       (response) => {
-        console.log(response);
         this.verifResultHObj = response;
         this.verfResHObj.MrVerfObjectCode = this.verifResultHObj.MrVerfObjectCode;
       }
@@ -396,7 +395,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   async GetListVerfResulHtData(verfResHObj) {
     await this.http.post(this.getListVerfResulHtUrl, verfResHObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.listVerifResultHObj = response["responseVerfResultHCustomObjs"];
       }
     );
