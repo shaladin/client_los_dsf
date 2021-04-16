@@ -27,17 +27,19 @@ export class ProdOfferingAddComponent implements OnInit {
   StartActiveDt: Date;
   StartDt: Date;
   EndDt: Date;
-  source: string = "";
+  Source: string = "";
   ProductName: string ="";
-  mode: string = "add";
+  Mode: string = "add";
   ProdOfferingId: number;
   ProdOfferingHId: number;
   ProdName : string = "ProdName";
-  inputLookupObj: InputLookupObj = new InputLookupObj();
+  InputLookupObj: InputLookupObj = new InputLookupObj();
   GenericByIdObj: GenericObj = new GenericObj();
+  ArrCrit : Array<CriteriaObj> = new Array<CriteriaObj>();
   ReqAddProdOfferingObj: ReqAddProdOfferingObj = new ReqAddProdOfferingObj();
   ReqEditProdOfferingObj: ReqEditProdOfferingObj = new ReqEditProdOfferingObj();
   ResProdOfferingHObj: ResProdOfferingHObj = new ResProdOfferingHObj();
+  UserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
   ProdOfferingForm = this.fb.group({
     ProdOfferingCode: ['', Validators.required],
@@ -56,54 +58,52 @@ export class ProdOfferingAddComponent implements OnInit {
   ) {
     this.route.queryParams.subscribe(params => {
       this.ProdOfferingHId = params["ProdOfferingHId"];
-      this.mode = params["mode"];
-      this.source = params["source"];
+      this.Mode = params["mode"];
+      this.Source = params["source"];
     })
   }
 
   ngOnInit() {
-    this.inputLookupObj.urlEnviPaging = environment.losUrl;
-    this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupObj.urlEnviPaging = environment.losUrl;
+    this.InputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
 
-    var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.BusinessDt = new Date(context[CommonConstant.BUSINESS_DT]);
-    this.StartActiveDt = new Date(context[CommonConstant.BUSINESS_DT]);
+    this.BusinessDt = new Date(this.UserContext[CommonConstant.BUSINESS_DT]);
+    this.StartActiveDt = new Date(this.UserContext[CommonConstant.BUSINESS_DT]);
 
-    var currOfcCode = context["OfficeCode"];
+    let currOfcCode = this.UserContext[CommonConstant.OFFICE_CODE];
     if (currOfcCode == CommonConstant.HeadOffice) {
-      this.inputLookupObj.urlJson = "./assets/uclookup/product/lookupProductForHO.json";
-      this.inputLookupObj.pagingJson = "./assets/uclookup/product/lookupProductForHO.json";
-      this.inputLookupObj.genericJson = "./assets/uclookup/product/lookupProductForHO.json";
+      this.InputLookupObj.urlJson = "./assets/uclookup/product/lookupProductForHO.json";
+      this.InputLookupObj.pagingJson = "./assets/uclookup/product/lookupProductForHO.json";
+      this.InputLookupObj.genericJson = "./assets/uclookup/product/lookupProductForHO.json";
     }
     else {
-      this.inputLookupObj.urlJson = "./assets/uclookup/product/lookupProdOffering.json";
-      this.inputLookupObj.pagingJson = "./assets/uclookup/product/lookupProdOffering.json";
-      this.inputLookupObj.genericJson = "./assets/uclookup/product/lookupProdOffering.json";
+      this.InputLookupObj.urlJson = "./assets/uclookup/product/lookupProdOffering.json";
+      this.InputLookupObj.pagingJson = "./assets/uclookup/product/lookupProdOffering.json";
+      this.InputLookupObj.genericJson = "./assets/uclookup/product/lookupProdOffering.json";
 
-      var arrCrit = new Array();
-      var critObj = new CriteriaObj();
+      let critObj = new CriteriaObj();
       critObj.restriction = AdInsConstant.RestrictionEq;
       critObj.propName = 'O.OFFICE_CODE';
       critObj.value = currOfcCode;
-      arrCrit.push(critObj);
+      this.ArrCrit.push(critObj);
 
       critObj = new CriteriaObj();
       critObj.restriction = AdInsConstant.RestrictionEq;
       critObj.propName = 'PBM.IS_ALLOWED_CRT';
       critObj.value = '1';
-      arrCrit.push(critObj);
+      this.ArrCrit.push(critObj);
 
-      this.inputLookupObj.addCritInput = arrCrit;
+      this.InputLookupObj.addCritInput = this.ArrCrit;
     }
 
-    if (this.mode == "edit") {
+    if (this.Mode == "edit") {
       this.ProdOfferingForm.controls.ProdOfferingCode.disable();
       this.GenericByIdObj.Id = this.ProdOfferingHId;
       this.http.post(URLConstant.GetProdOfferingHById, this.GenericByIdObj).subscribe(
         (response : ResProdOfferingHObj) => {
           this.ResProdOfferingHObj = response;
-          this.inputLookupObj.nameSelect = this.ResProdOfferingHObj.ProdName;
-          this.inputLookupObj.jsonSelect = { ProdName: this.ResProdOfferingHObj.ProdName, CurrentProdHId: this.ResProdOfferingHObj.ProdHId };
+          this.InputLookupObj.nameSelect = this.ResProdOfferingHObj.ProdName;
+          this.InputLookupObj.jsonSelect = { ProdName: this.ResProdOfferingHObj.ProdName, CurrentProdHId: this.ResProdOfferingHObj.ProdHId };
           this.ProductName = this.ResProdOfferingHObj.ProdName;
           this.ProdOfferingForm.patchValue({
             ProdOfferingCode: this.ResProdOfferingHObj.ProdOfferingCode,
@@ -129,7 +129,7 @@ export class ProdOfferingAddComponent implements OnInit {
     this.ReqAddProdOfferingObj = this.ReqEditProdOfferingObj = this.ProdOfferingForm.value;
 
     if (this.ValidateDate()) {
-      if (this.mode == "edit") {
+      if (this.Mode == "edit") {
         this.ReqEditProdOfferingObj.ProdOfferingCode = this.ResProdOfferingHObj.ProdOfferingCode;
         this.ReqEditProdOfferingObj.ProdOfferingId = this.ResProdOfferingHObj.ProdOfferingId;
         this.ReqEditProdOfferingObj.ProdHId =  this.ResProdOfferingHObj.ProdHId;
@@ -139,16 +139,16 @@ export class ProdOfferingAddComponent implements OnInit {
         this.http.post<ResAddEditProdOfferingObj>(URLConstant.EditProdOffering, this.ReqEditProdOfferingObj).subscribe(
           response => {
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_ADD_DETAIL],{ ProdOfferingId: response.ProdOfferingId, ProdOfferingHId: response.DraftProdOfferingHId, source: this.source });
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_ADD_DETAIL],{ ProdOfferingId: response.ProdOfferingId, ProdOfferingHId: response.DraftProdOfferingHId, source: this.Source });
           }
         );
       }
       else {
-        this.ReqAddProdOfferingObj.ProdHId = this.inputLookupObj.jsonSelect.CurrentProdHId;
+        this.ReqAddProdOfferingObj.ProdHId = this.InputLookupObj.jsonSelect.CurrentProdHId;
         this.http.post<ResAddEditProdOfferingObj>(URLConstant.AddProdOffering, this.ReqAddProdOfferingObj).subscribe(
           response => {
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_ADD_DETAIL],{ ProdOfferingId: response.ProdOfferingId, ProdOfferingHId: response.DraftProdOfferingHId, source: this.source });
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_ADD_DETAIL],{ ProdOfferingId: response.ProdOfferingId, ProdOfferingHId: response.DraftProdOfferingHId, source: this.Source });
           }
         );
       }
@@ -187,7 +187,7 @@ export class ProdOfferingAddComponent implements OnInit {
   }
 
   BackToPaging() {
-    if (this.source == "return") {
+    if (this.Source == "return") {
       AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_RTN_PAGING],{ });
     }
     else {

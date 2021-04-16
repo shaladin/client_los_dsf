@@ -8,7 +8,6 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResGetListProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from 'app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { environment } from 'environments/environment';
 import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/ProdOfficePassingObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
@@ -20,8 +19,8 @@ export class OfferingListOfficeMbrComponent implements OnInit {
 
   @ViewChild(UCSearchComponent) UCSearchComponent;
   @Input() ProdOfferingHId: number;
-  @Output() componentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter<ProdOfficePassingObj>();
-  source: string = "";
+  @Output() ComponentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter<ProdOfficePassingObj>();
+  Source: string = "";
   GenericByIdObj: GenericObj = new GenericObj();
   PassingObj: ProdOfficePassingObj = new ProdOfficePassingObj();
   ListProdOfferingBranchMbr : Array<ResProdOfferingBranchOfficeMbrObj> = new Array<ResProdOfferingBranchOfficeMbrObj>();
@@ -33,7 +32,7 @@ export class OfferingListOfficeMbrComponent implements OnInit {
     private router: Router,
   ) {
     this.route.queryParams.subscribe(params => {
-      this.source = params["source"];
+      this.Source = params["source"];
     });
   }
 
@@ -52,7 +51,7 @@ export class OfferingListOfficeMbrComponent implements OnInit {
         this.PassingObj.result.push(this.ListProdOfferingBranchMbr[i].OfficeCode);
       }
     }
-    this.componentIsOn.emit(this.PassingObj);
+    this.ComponentIsOn.emit(this.PassingObj);
   }
 
   deleteFromList(ProdOfferingBranchMbrId: number) {
@@ -60,7 +59,7 @@ export class OfferingListOfficeMbrComponent implements OnInit {
       this.GenericByIdObj.Id = ProdOfferingBranchMbrId;
       this.http.post(URLConstant.DeleteProdOfferingOfficeMbr, this.GenericByIdObj).subscribe(
         (response) => {
-          var idx = this.ListProdOfferingBranchMbr.findIndex(x => x.ProdOfferingBranchMbrId == ProdOfferingBranchMbrId);
+          let idx = this.ListProdOfferingBranchMbr.findIndex(x => x.ProdOfferingBranchMbrId == ProdOfferingBranchMbrId);
           if (idx > -1) this.ListProdOfferingBranchMbr.splice(idx, 1);
           this.toastr.successMessage(response["message"]);
         }
@@ -83,7 +82,7 @@ export class OfferingListOfficeMbrComponent implements OnInit {
   }
 
   BackToPaging() {
-    if (this.source == "return") {
+    if (this.Source == "return") {
       AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_RTN_PAGING],{ });
     }
     else {

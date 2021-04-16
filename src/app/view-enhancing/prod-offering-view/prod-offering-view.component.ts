@@ -11,25 +11,25 @@ import { ReqGetProdOffCompntObj } from "app/shared/model/Request/Product/ReqGetP
 import { ResGetListProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from "app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model";
 import { ResGetListProdOfferingHVersionObj, ResGetProdOfferingDCompntInfoObj, ResGetProdOfferingHVersionObj } from "app/shared/model/Response/Product/ResGetProdOfferingObj.model";
 import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
+import { ResProdDCompntObj } from "app/shared/model/Response/Product/ResGetProdObj.model";
 
 @Component({
   selector: 'app-prod-offering-view',
   templateUrl: './prod-offering-view.component.html'
 })
 export class ProdOfferingViewComponent implements OnInit {
-  @Input() inputProdOfferingHId;
-  GenData: any;
-  ProdComp: any;
-  ProdCompGen: any;
-  ProdCompNonGen: any;
   ProdOfferingHId: number;
   ProdOfferingCode: string;
   ProdOfferingVersion: string;
   mainInfoByHIdOnly: boolean = true;
   IsLoaded: boolean = false;
   GenericByIdObj : GenericObj = new GenericObj();
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  ViewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   DlRuleObj  : ReqDownloadRuleObj = new ReqDownloadRuleObj();
+  ProdCompGen: ResProdDCompntObj = new ResProdDCompntObj();
+  GenData: Array<ResProdDCompntObj> = new Array<ResProdDCompntObj>();
+  ProdComp: Array<ResProdDCompntObj> = new Array<ResProdDCompntObj>();
+  ProdCompNonGen: Array<ResProdDCompntObj> = new Array<ResProdDCompntObj>();
   GetProdOfferByVerCode: ProdOfferingCodeVersionObj = new ProdOfferingCodeVersionObj();
   refProductDetailObj: ReqGetProdOffCompntObj = new ReqGetProdOffCompntObj();
   ProdOfferingBranchMbr: Array<ResProdOfferingBranchOfficeMbrObj> = new Array<ResProdOfferingBranchOfficeMbrObj>();
@@ -66,17 +66,14 @@ export class ProdOfferingViewComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    if (this.ProdOfferingHId == undefined) {
-      this.ProdOfferingHId = this.inputProdOfferingHId;
-    }
     //** Main Information **//
     if (this.mainInfoByHIdOnly == true) {
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformation.json";
+      this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformation.json";
     }
     else {
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformationByCode.json";
+      this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformationByCode.json";
     }
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.ViewGenericObj.viewEnvironment = environment.losUrl;
 
     if (this.ProdOfferingHId == 0) {
       await this.LoadMainInfo();

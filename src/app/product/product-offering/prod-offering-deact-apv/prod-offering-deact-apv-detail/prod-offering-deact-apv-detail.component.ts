@@ -17,14 +17,13 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
   templateUrl: './prod-offering-deact-apv-detail.component.html'
 })
 export class ProdOfferingDeactApvDetailComponent implements OnInit {
-  prodOfferingHId: number;
-  taskId: number;
-  inputObj: any;
-  IsReady: boolean = false;
+  TaskId: number;
   ApvReqId: number;
   ProdOfferingId: number;
+  ProdOfferingHId: number;
+  IsReady: boolean = false;
   GenericByIdObj: GenericObj = new GenericObj();
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  ViewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   InputApvObj: UcInputApprovalObj = new UcInputApprovalObj();
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
 
@@ -33,8 +32,8 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
     private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params["ProdOfferingHId"] != null) {
-        this.prodOfferingHId = params["ProdOfferingHId"];
-        this.taskId = params["TaskId"];
+        this.ProdOfferingHId = params["ProdOfferingHId"];
+        this.TaskId = params["TaskId"];
         this.ApvReqId = params["ApvReqId"];
         this.ProdOfferingId = params["ProdOfferingId"];
       }
@@ -42,18 +41,11 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformationForDeactApv.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformationForDeactApv.json";
+    this.ViewGenericObj.viewEnvironment = environment.losUrl;
 
-    var obj = {
-      taskId: this.taskId,
-      approvalBaseUrl: environment.ApprovalR3Url
-    }
-
-    this.inputObj = obj;
-
-    var ApvHoldObj = new ApprovalObj()
-    ApvHoldObj.TaskId = obj.taskId
+    let ApvHoldObj = new ApprovalObj()
+    ApvHoldObj.TaskId = this.TaskId
 
     this.HoldTask(ApvHoldObj);
     this.initInputApprovalObj();
@@ -62,9 +54,9 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
   initInputApprovalObj() {
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
-    this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
+    this.UcInputApprovalGeneralInfoObj.TaskId = this.TaskId;
 
-    this.InputApvObj.TaskId = this.taskId;
+    this.InputApvObj.TaskId = this.TaskId;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
 

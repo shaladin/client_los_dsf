@@ -9,7 +9,7 @@ import { ProdOfferingCodeVersionObj } from "app/shared/model/Request/Product/Pro
 import { ReqDownloadRuleObj } from "app/shared/model/Request/Product/ReqDownloadRuleObj.model";
 import { ReqGetProdOffCompntObj } from "app/shared/model/Request/Product/ReqGetProdCompntObj.model";
 import { ResGetListProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from "app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model";
-import { ResGetListProdOfferingHVersionObj, ResGetProdOfferingDCompntInfoObj, ResGetProdOfferingHVersionObj } from "app/shared/model/Response/Product/ResGetProdOfferingObj.model";
+import { ResGetListProdOfferingHVersionObj, ResGetProdOfferingDCompntInfoObj, ResGetProdOfferingHVersionObj, ResProdOffDCompntObj } from "app/shared/model/Response/Product/ResGetProdOfferingObj.model";
 import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
 
 @Component({
@@ -18,22 +18,22 @@ import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
 })
 export class ProdOfferingViewComponent implements OnInit {
   @Input() inputProdOfferingHId;
-  GenData: any;
-  ProdComp: any;
-  ProdCompGen: any;
-  ProdCompNonGen: any;
   ProdOfferingHId: number;
   ProdOfferingCode: string;
   ProdOfferingVersion: string;
-  mainInfoByHIdOnly: boolean = true;
+  MainInfoByHIdOnly: boolean = true;
   IsLoaded: boolean = false;
   GenericByIdObj : GenericObj = new GenericObj();
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  ViewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   DlRuleObj  : ReqDownloadRuleObj = new ReqDownloadRuleObj();
+  ProdCompGen: ResProdOffDCompntObj = new ResProdOffDCompntObj();
+  GenData: Array<ResProdOffDCompntObj> = new Array<ResProdOffDCompntObj>();
+  ProdComp: Array<ResProdOffDCompntObj> = new Array<ResProdOffDCompntObj>();
+  ProdCompNonGen: Array<ResProdOffDCompntObj> = new Array<ResProdOffDCompntObj>();
+  ReqGetProdOffCmpntObj: ReqGetProdOffCompntObj = new ReqGetProdOffCompntObj();
   GetProdOfferByVerCode: ProdOfferingCodeVersionObj = new ProdOfferingCodeVersionObj();
-  refProductDetailObj: ReqGetProdOffCompntObj = new ReqGetProdOffCompntObj();
-  ProdOfferingBranchMbr: Array<ResProdOfferingBranchOfficeMbrObj> = new Array<ResProdOfferingBranchOfficeMbrObj>();
-  ListProdOfferingVersion: Array<ResGetProdOfferingHVersionObj> = new Array<ResGetProdOfferingHVersionObj>();
+  ProdOfferingBranchMbrObj: Array<ResProdOfferingBranchOfficeMbrObj> = new Array<ResProdOfferingBranchOfficeMbrObj>();
+  ListProdOfferingVersionObj: Array<ResGetProdOfferingHVersionObj> = new Array<ResGetProdOfferingHVersionObj>();
   ProdOfferingCodeVersion: ResGetProdOfferingHVersionObj = new ResGetProdOfferingHVersionObj();
   
   constructor(private route: ActivatedRoute, private http: HttpClient) {
@@ -49,7 +49,7 @@ export class ProdOfferingViewComponent implements OnInit {
           this.ProdOfferingVersion = params["prodOfferingVersion"];
         }
         this.ProdOfferingHId = params["prodOfferingHId"];
-        this.mainInfoByHIdOnly = false;
+        this.MainInfoByHIdOnly = false;
       }
     });
   }
@@ -70,13 +70,13 @@ export class ProdOfferingViewComponent implements OnInit {
       this.ProdOfferingHId = this.inputProdOfferingHId;
     }
     //** Main Information **//
-    if (this.mainInfoByHIdOnly == true) {
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformation.json";
+    if (this.MainInfoByHIdOnly == true) {
+      this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformation.json";
     }
     else {
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformationByCode.json";
+      this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformationByCode.json";
     }
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.ViewGenericObj.viewEnvironment = environment.losUrl;
 
     if (this.ProdOfferingHId == 0) {
       await this.LoadMainInfo();
@@ -86,7 +86,7 @@ export class ProdOfferingViewComponent implements OnInit {
     this.GenericByIdObj.Id = this.ProdOfferingHId;
     await this.http.post<ResGetListProdOfferingHVersionObj>(URLConstant.GetListProdOfferingHByProdOfferingCurrentProdHId, this.GenericByIdObj).toPromise().then(
       response => {
-        this.ListProdOfferingVersion = response.ReturnObject;
+        this.ListProdOfferingVersionObj = response.ReturnObject;
 
       }
     );
@@ -94,15 +94,15 @@ export class ProdOfferingViewComponent implements OnInit {
     //** Office Member **//
     await this.http.post<ResGetListProdOfferingBranchMbrObj>(URLConstant.GetListProdOfferingBranchOfficeMbrByProdHId, this.GenericByIdObj).toPromise().then(
       response => {
-        this.ProdOfferingBranchMbr = response.ReturnObject;
+        this.ProdOfferingBranchMbrObj = response.ReturnObject;
       }
     );
 
 
     //** Product Component **//
-    this.refProductDetailObj.ProdOfferingHId = this.ProdOfferingHId;
-    this.refProductDetailObj.GroupCodes = ['GEN', 'SCHM', 'SCORE', 'RULE', 'OTHR', 'LOS'];
-    await this.http.post<ResGetProdOfferingDCompntInfoObj>(URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode, this.refProductDetailObj).toPromise().then(
+    this.ReqGetProdOffCmpntObj.ProdOfferingHId = this.ProdOfferingHId;
+    this.ReqGetProdOffCmpntObj.GroupCodes = ['GEN', 'SCHM', 'SCORE', 'RULE', 'OTHR', 'LOS'];
+    await this.http.post<ResGetProdOfferingDCompntInfoObj>(URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode, this.ReqGetProdOffCmpntObj).toPromise().then(
       response => {
         this.ProdComp = response.ReturnObject.ProdOffComponents;
         this.GenData = this.ProdComp.filter(

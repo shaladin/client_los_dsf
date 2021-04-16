@@ -6,17 +6,17 @@ import { UcPagingObj, WhereValueObj } from "app/shared/model/UcPagingObj.Model";
   templateUrl: './prod-offering-deact-paging.component.html'
 })
 export class ProdOfferingDeactPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj = new UcPagingObj();
+  InputPagingObj: UcPagingObj = new UcPagingObj();
   
   constructor() { }
 
   ngOnInit() {
-    this.inputPagingObj._url = "./assets/ucpaging/product/searchProductOfferingDeactivate.json";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOfferingDeactivate.json";
+    this.InputPagingObj._url = "./assets/ucpaging/product/searchProductOfferingDeactivate.json";
+    this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOfferingDeactivate.json";
 
-    var WVProdOfferingStatObj = new WhereValueObj();
+    let WVProdOfferingStatObj = new WhereValueObj();
     WVProdOfferingStatObj.property = "ProdOfferingStat";
     WVProdOfferingStatObj.value = "ACT";
-    this.inputPagingObj.whereValue.push(WVProdOfferingStatObj);
+    this.InputPagingObj.whereValue.push(WVProdOfferingStatObj);
   }
 }

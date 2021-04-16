@@ -18,14 +18,13 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 })
 export class ProdHoDeactApvDetailComponent implements OnInit {
 
-  prodHId: number;
-  taskId: number;
-  inputObj: any;
-  IsReady: boolean = false;
+  ProdHId: number;
+  TaskId: number;
   ApvReqId: number;
+  IsReady: boolean = false;
   GenericByIdObj : GenericObj = new GenericObj();
   InputApvObj : UcInputApprovalObj = new UcInputApprovalObj();
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  ViewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
 
   constructor(private router: Router, 
@@ -33,26 +32,19 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
               private http:HttpClient) { 
     this.route.queryParams.subscribe(params => {
     if (params["ProdHId"] != null) {
-        this.prodHId = params["ProdHId"];
-        this.taskId = params["TaskId"];
+        this.ProdHId = params["ProdHId"];
+        this.TaskId = params["TaskId"];
         this.ApvReqId = params["ApvReqId"];
       }
     });
   }
 
   ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformationForDeactApv.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    
-    var obj = {
-      taskId: this.taskId,
-      approvalBaseUrl: environment.ApprovalR3Url
-    }
-
-    this.inputObj = obj;
-    
-    var ApvHoldObj = new ApprovalObj()
-    ApvHoldObj.TaskId = obj.taskId
+    this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformationForDeactApv.json";
+    this.ViewGenericObj.viewEnvironment = environment.losUrl;
+  
+    let ApvHoldObj = new ApprovalObj()
+    ApvHoldObj.TaskId = this.TaskId
 
     this.HoldTask(ApvHoldObj);
     this. initInputApprovalObj();
@@ -61,12 +53,12 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
   initInputApprovalObj(){
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
-    this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
+    this.UcInputApprovalGeneralInfoObj.TaskId = this.TaskId;
 
-    this.InputApvObj.TaskId = this.taskId;
+    this.InputApvObj.TaskId = this.TaskId;
     this.InputApvObj.RequestId = this.ApvReqId;
 
-    this.GenericByIdObj.Id = this.prodHId;
+    this.GenericByIdObj.Id = this.ProdHId;
     this.http.post(URLConstant.GetProductByHId, this.GenericByIdObj).subscribe(
       (response : GenericObj) => {
         this.InputApvObj.TrxNo = response.Code;
