@@ -19,8 +19,8 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './prod-ho-apv-paging.component.html'
 })
 export class ProdHoApvPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
+  InputPagingObj: UcPagingObj = new UcPagingObj();
+  ArrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   ApvReqObj: ApprovalObj = new ApprovalObj();
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
@@ -30,22 +30,22 @@ export class ProdHoApvPagingComponent implements OnInit {
               private cookieService: CookieService) { }
 
   ngOnInit() {
-    this.inputPagingObj._url = "./assets/ucpaging/product/searchProductHOApproval.json";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHOApproval.json";
+    this.InputPagingObj._url = "./assets/ucpaging/product/searchProductHOApproval.json";
+    this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHOApproval.json";
 
     let critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'CATEGORY_CODE';
     critObj.value = 'PRD_HO_APV';
-    this.arrCrit.push(critObj);
+    this.ArrCrit.push(critObj);
 
     critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'CURRENT_USER_ID';
     critObj.value = this.userContext.UserName;
-    this.arrCrit.push(critObj);
+    this.ArrCrit.push(critObj);
 
 
     critObj = new CriteriaObj();
@@ -53,9 +53,9 @@ export class ProdHoApvPagingComponent implements OnInit {
     critObj.restriction = AdInsConstant.RestrictionOr;
     critObj.propName = 'MAIN_USER_ID';
     critObj.value = this.userContext.UserName;
-    this.arrCrit.push(critObj);
+    this.ArrCrit.push(critObj);
 
-    this.inputPagingObj.addCritInput = this.arrCrit;
+    this.InputPagingObj.addCritInput = this.ArrCrit;
   }
 
   CallBackHandler(ev) {

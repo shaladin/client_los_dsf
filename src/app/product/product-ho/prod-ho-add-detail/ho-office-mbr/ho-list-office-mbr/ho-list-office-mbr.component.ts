@@ -1,9 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UCSearchComponent } from '@adins/ucsearch';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
@@ -18,10 +16,9 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 })
 export class HoListOfficeMbrComponent implements OnInit {
 
-  @ViewChild(UCSearchComponent) UCSearchComponent;
   @Input() ProdHId : number;
-  @Output() componentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter<ProdOfficePassingObj>();
-  source: string = "";
+  @Output() ComponentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter<ProdOfficePassingObj>();
+  Source: string = "";
   GenericByIdObj: GenericObj = new GenericObj();
   PassingObj: ProdOfficePassingObj = new ProdOfficePassingObj();
   ResListProdBranchMbrObj: Array<ResProdBranchMbrObj> = new Array<ResProdBranchMbrObj>();
@@ -33,7 +30,7 @@ export class HoListOfficeMbrComponent implements OnInit {
     private router: Router,
   ) {
     this.route.queryParams.subscribe(params => {
-      this.source = params["source"];
+      this.Source = params["source"];
     })
   }
 
@@ -53,7 +50,7 @@ export class HoListOfficeMbrComponent implements OnInit {
       }
     }
 
-    this.componentIsOn.emit(this.PassingObj);
+    this.ComponentIsOn.emit(this.PassingObj);
   }
 
   deleteFromList(ProdBranchMbrId: number) {
@@ -61,7 +58,7 @@ export class HoListOfficeMbrComponent implements OnInit {
       this.GenericByIdObj.Id = ProdBranchMbrId;
       this.http.post(URLConstant.DeleteProductOfficeMbr, this.GenericByIdObj).subscribe(
         (response) => {
-          var idx = this.ResListProdBranchMbrObj.findIndex(x => x.ProdBranchMbrId == ProdBranchMbrId);
+          let idx = this.ResListProdBranchMbrObj.findIndex(x => x.ProdBranchMbrId == ProdBranchMbrId);
           if (idx > -1) this.ResListProdBranchMbrObj.splice(idx, 1);
           this.toastr.successMessage(response["message"]);
         }
@@ -84,7 +81,7 @@ export class HoListOfficeMbrComponent implements OnInit {
   }
 
   BackToPaging() {
-    if (this.source == "return") {
+    if (this.Source == "return") {
       AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_RTN_PAGING],{ });
     }
     else {

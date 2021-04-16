@@ -18,11 +18,11 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
   templateUrl: './prod-offering-rvw-detail.component.html'
 })
 export class ProdOfferingRvwDetailComponent implements OnInit {
-  private createComponent: UcapprovalcreateComponent;
+  private CreateComponent: UcapprovalcreateComponent;
    @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) { 
       // initially setter gets called with undefined
-      this.createComponent = content;
+      this.CreateComponent = content;
     }
   }
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
@@ -65,8 +65,8 @@ export class ProdOfferingRvwDetailComponent implements OnInit {
   }
 
   initInputApprovalObj() {
-    var Attributes = [{}]
-    var TypeCode = {
+    let Attributes = [{}]
+    let TypeCode = {
       "TypeCode": CommonConstant.PRD_OFR_APV_TYPE,
       "Attributes": Attributes,
     }
@@ -83,7 +83,7 @@ export class ProdOfferingRvwDetailComponent implements OnInit {
   }
 
   SaveForm() {
-    this.ApprovalCreateOutput = this.createComponent.output();
+    this.ApprovalCreateOutput = this.CreateComponent.output();
     this.ReqReviewProdOfferingObj.ProdOfferingId = this.ProdOfferingId,
     this.ReqReviewProdOfferingObj.ProdOfferingHId = this.ProdOfferingHId,
     this.ReqReviewProdOfferingObj.WfTaskListId = this.WfTaskListId,
@@ -96,9 +96,9 @@ export class ProdOfferingRvwDetailComponent implements OnInit {
       });
   }
 
-  async ClaimTask(WfTaskListId) {
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME], isLoading: false };
+  async ClaimTask(WfTaskListId: number) {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME], isLoading: false };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
 }

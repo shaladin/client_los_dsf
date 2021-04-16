@@ -17,14 +17,14 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 })
 export class ProdHoApvDetailComponent implements OnInit {
 
-  prodHId: number;
-  taskId: number;
+  ProdHId: number;
+  TaskId: number;
   ApvReqId: number;
   IsReady: boolean = false;
-  InputApvObj : UcInputApprovalObj;
   GenericByIdObj : GenericObj = new GenericObj();
-  UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
+  InputApvObj : UcInputApprovalObj = new UcInputApprovalObj();
   ReqUpdateProdPostApvObj : ReqUpdateProductPostApprovalObj = new ReqUpdateProductPostApprovalObj();
+  UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
 
   constructor(
     private router: Router,
@@ -32,16 +32,16 @@ export class ProdHoApvDetailComponent implements OnInit {
     private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params["ProdHId"] != null) {
-        this.prodHId = params["ProdHId"];
-        this.taskId = params["TaskId"];
+        this.ProdHId = params["ProdHId"];
+        this.TaskId = params["TaskId"];
         this.ApvReqId = params["ApvReqId"];
       }
     });
   }
 
   ngOnInit() {
-    var ApvHoldObj = new ApprovalObj()
-    ApvHoldObj.TaskId = this.taskId;
+    let ApvHoldObj = new ApprovalObj()
+    ApvHoldObj.TaskId = this.TaskId;
 
     this.HoldTask(ApvHoldObj);
     this.initInputApprovalObj();
@@ -50,12 +50,12 @@ export class ProdHoApvDetailComponent implements OnInit {
   initInputApprovalObj() {
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
-    this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
+    this.UcInputApprovalGeneralInfoObj.TaskId = this.TaskId;
 
-    this.InputApvObj.TaskId = this.taskId;
+    this.InputApvObj.TaskId = this.TaskId;
     this.InputApvObj.RequestId = this.ApvReqId;
 
-    this.GenericByIdObj.Id = this.prodHId;
+    this.GenericByIdObj.Id = this.ProdHId;
     this.http.post(URLConstant.GetProductByHId, this.GenericByIdObj).subscribe(
       (response : GenericObj) => {
         this.InputApvObj.TrxNo = response.Code;
@@ -72,7 +72,7 @@ export class ProdHoApvDetailComponent implements OnInit {
 
   onApprovalSubmited(event)
   {
-    this.ReqUpdateProdPostApvObj.ProdHId = this.prodHId, 
+    this.ReqUpdateProdPostApvObj.ProdHId = this.ProdHId, 
     this.ReqUpdateProdPostApvObj.TaskId = event[0].ApvTaskId, 
     this.ReqUpdateProdPostApvObj.Notes = event[0].Notes != undefined? event[0].Notes : "",
     this.ReqUpdateProdPostApvObj.Reason = event[0].ReasonCode, 

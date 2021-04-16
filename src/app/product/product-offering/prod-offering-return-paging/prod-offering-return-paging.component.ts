@@ -9,14 +9,14 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './prod-offering-return-paging.component.html'
 })
 export class ProdOfferingReturnPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj = new UcPagingObj();
+  InputPagingObj: UcPagingObj = new UcPagingObj();
 
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.inputPagingObj._url = "./assets/ucpaging/product/searchProductOfferingReturn.json";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOfferingReturn.json";
-    this.inputPagingObj.ddlEnvironments = [
+    this.InputPagingObj._url = "./assets/ucpaging/product/searchProductOfferingReturn.json";
+    this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOfferingReturn.json";
+    this.InputPagingObj.ddlEnvironments = [
       {
         name: "A.Prod_Offering_Stat",
         environment: environment.FoundationR3Url
@@ -26,7 +26,7 @@ export class ProdOfferingReturnPagingComponent implements OnInit {
     let WVProdOfferingStatObj = new WhereValueObj();
     WVProdOfferingStatObj.property = "ProdOfferingStat";
     WVProdOfferingStatObj.value = "RET";
-    this.inputPagingObj.whereValue.push(WVProdOfferingStatObj);
+    this.InputPagingObj.whereValue.push(WVProdOfferingStatObj);
   }
 
   EditProdOfr(e) {

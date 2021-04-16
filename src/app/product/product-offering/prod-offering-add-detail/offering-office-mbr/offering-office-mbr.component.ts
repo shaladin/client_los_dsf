@@ -7,7 +7,7 @@ import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/
 })
 export class OfferingOfficeMbrComponent implements OnInit {
 
-  isOn: boolean;
+  IsOn: boolean;
   @Input() ProdOfferingHId: number;
   @Input() ProdHId: number;
   ListOfficeMemberObj: Array<string> = new Array<string>();
@@ -15,12 +15,12 @@ export class OfferingOfficeMbrComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.isOn = true;
+    this.IsOn = true;
     this.ListOfficeMemberObj = [];
   }
 
   ChangeComponent(ev: ProdOfficePassingObj){
-    this.isOn = ev.isOn;
+    this.IsOn = ev.isOn;
     this.ListOfficeMemberObj = ev.result;
   }
 }

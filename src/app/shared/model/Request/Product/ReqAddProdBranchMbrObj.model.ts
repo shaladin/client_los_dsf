@@ -6,7 +6,7 @@ export class ReqListProdBranchMbrObj {
     }
 }
 
-class ReqProdBranchMbrDomainObj {
+export class ReqProdBranchMbrDomainObj {
     ProdBranchMbrId : number;
     ProdHId : number;
     OfficeCode : string;

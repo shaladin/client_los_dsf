@@ -94,11 +94,11 @@
             "path": "PRODUCT_HO_DEACTIVATE_DETAIL",
             "param": [
               {
-                "type": "prodHId",
+                "type": "ProdHId",
                 "property": "prodHId"
               },
               {
-                "type": "prodId",
+                "type": "ProdId",
                 "property": "prodId"
               }
             ]
