@@ -115,7 +115,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   //#region Get Local Data
   ManualDeviationData: Array<DeviationResultObj> = new Array<DeviationResultObj>();
   BindManualDeviationData(ev) {
-    this.IsReady = false;
+    // this.IsReady = false;
     this.ref.tick();
     this.ManualDeviationData = ev;
     let manualDevList = []

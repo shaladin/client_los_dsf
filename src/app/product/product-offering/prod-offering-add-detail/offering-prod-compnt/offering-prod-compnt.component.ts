@@ -16,8 +16,8 @@ import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.mode
 export class OfferingProdCompntComponent implements OnInit {
 
   @Input() ProdOfferingHId: number;
-  source: string = "";
-  listProductComponentObj : ReqAddEditProdOfferingDObj = new ReqAddEditProdOfferingDObj();
+  Source: string = "";
+  ListProductComponentObj : ReqAddEditProdOfferingDObj = new ReqAddEditProdOfferingDObj();
 
   constructor(
     private router: Router,
@@ -27,17 +27,16 @@ export class OfferingProdCompntComponent implements OnInit {
     private route: ActivatedRoute,
   ) { 
     this.route.queryParams.subscribe(params => {
-      this.source = params["source"];
+      this.Source = params["source"];
     });
   }
 
   ngOnInit() {
-    this.ProdOfferingHId = this.ProdOfferingHId;
   }
   
   SaveForm(event) {
     this.generateSaveObj(event);
-    this.http.post(URLConstant.AddOrEditProdOfferingDetail, this.listProductComponentObj).subscribe(
+    this.http.post(URLConstant.AddOrEditProdOfferingDetail, this.ListProductComponentObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.BackToPaging();
@@ -47,7 +46,7 @@ export class OfferingProdCompntComponent implements OnInit {
 
   NextDetail(event) {
     this.generateSaveObj(event);
-    this.http.post(URLConstant.AddOrEditProdOfferingDetail, this.listProductComponentObj).subscribe(
+    this.http.post(URLConstant.AddOrEditProdOfferingDetail, this.ListProductComponentObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.wizard.goToNextStep();
@@ -56,9 +55,9 @@ export class OfferingProdCompntComponent implements OnInit {
   }
 
   generateSaveObj(event){
-    this.listProductComponentObj.ProdOfferingHId = this.ProdOfferingHId;
-    for (var i = 0; i < event.length; i++) {
-      var GeneralDataObj = new ProdOfferingDObj();
+    this.ListProductComponentObj.ProdOfferingHId = this.ProdOfferingHId;
+    for (let i = 0; i < event.length; i++) {
+      let GeneralDataObj = new ProdOfferingDObj();
       GeneralDataObj.ProdOfferingDId = event[i].ProdOfferingDId;
       GeneralDataObj.ProdOfferingHId = this.ProdOfferingHId;
       GeneralDataObj.RefProdCompntCode = event[i].RefProdCompntCode;
@@ -72,7 +71,7 @@ export class OfferingProdCompntComponent implements OnInit {
         GeneralDataObj.CompntValueDesc = event[i].HOCompntValueDesc;
         GeneralDataObj.MrProdBehaviourCode = event[i].HOMrProdBehaviour;
       }
-      this.listProductComponentObj.ProdOfferingDetails.push(GeneralDataObj);
+      this.ListProductComponentObj.ProdOfferingDetails.push(GeneralDataObj);
     }
   }
 
@@ -83,7 +82,7 @@ export class OfferingProdCompntComponent implements OnInit {
 
   BackToPaging()
   {
-    if(this.source == "return")
+    if(this.Source == "return")
     {
       AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_RTN_PAGING],{ });
     }

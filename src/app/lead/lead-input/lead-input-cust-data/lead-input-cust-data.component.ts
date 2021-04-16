@@ -44,10 +44,11 @@ export class LeadInputCustDataComponent implements OnInit {
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
   businessDt: Date = new Date();
   CopyFrom: string;
-  rowVersion: any;
+  rowVersion: string;
   typePage: string;
   WfTaskListId: number;
-  addEditLeadCustPersonal: string;
+  addLeadCustPersonal: string;
+  editLeadCustPersonal: string;
   inputLegalAddressObj: InputFieldObj;
   inputResidenceAddressObj: InputFieldObj;
   tempProfession: string;
@@ -143,7 +144,8 @@ export class LeadInputCustDataComponent implements OnInit {
     private cookieService: CookieService) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
     this.getListActiveRefMasterWithMappingCodeAll = URLConstant.GetListActiveRefMasterWithMappingCodeAll;
-    this.addEditLeadCustPersonal = URLConstant.AddEditLeadCustPersonal;
+    this.addLeadCustPersonal = URLConstant.AddLeadCustPersonal;
+    this.editLeadCustPersonal = URLConstant.EditLeadCustPersonal;
     this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
     this.getLeadCustByLeadId = URLConstant.GetLeadCustByLeadId;
     this.getLeadCustAddr = URLConstant.GetLeadCustAddrByLeadCustIdAndAddrTypeCode;
@@ -863,7 +865,7 @@ export class LeadInputCustDataComponent implements OnInit {
         this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
         this.setLeadCustPersonalFinData();
         if (this.confirmFraudCheck()) {
-          this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
+          this.http.post(this.editLeadCustPersonal, this.leadInputObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               this.outputTab.emit({ stepMode: "next" });
@@ -880,7 +882,7 @@ export class LeadInputCustDataComponent implements OnInit {
         this.setLeadCustPersonalJobData();
         this.setLeadCustPersonalFinData();
         if (this.confirmFraudCheck()) {
-          this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
+          this.http.post(this.addLeadCustPersonal, this.leadInputObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               this.outputTab.emit({ stepMode: "next" });
@@ -899,7 +901,7 @@ export class LeadInputCustDataComponent implements OnInit {
       this.setLeadCustPersonalJobData();
       this.setLeadCustPersonalFinData();
       if (this.confirmFraudCheck()) {
-        this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
+        this.http.post(this.addLeadCustPersonal, this.leadInputObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             this.outputTab.emit({ stepMode: "next" });

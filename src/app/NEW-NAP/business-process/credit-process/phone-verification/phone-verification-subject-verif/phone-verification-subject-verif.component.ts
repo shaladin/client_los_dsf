@@ -54,7 +54,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   getRefMasterUrl: any;
   getRefStatusUrl: any;
   getQuestionUrl: any;
-  saveVerfResultHDetailUrl: any;
   getPhnNumberUrl: any;
   custId: number;
   VerfResultAfterAddObj: any;
@@ -139,7 +138,6 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     this.getRefStatusUrl = URLConstant.GetListActiveRefStatusByStatusGrpCode;
     this.getPhnNumberUrl = URLConstant.GetPhoneNumberByIdSourceAppIdAndSubject;
     this.getQuestionUrl = URLConstant.GetVerfQuestionListByAppIdAndSubjectForPhoneVerif;
-    this.saveVerfResultHDetailUrl = URLConstant.AddVerfResultHeaderAndVerfResultDetail;
   }
 
   async ngOnInit(): Promise<void> {
@@ -180,7 +178,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     }
     else {
       this.setPhoneVerifData();
-      this.http.post(this.saveVerfResultHDetailUrl, this.PhoneDataObj).subscribe(
+      this.http.post(URLConstant.AddVerfResultHeaderAndVerfResultDetail, this.PhoneDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           if (activeButton == "save") {

@@ -11,6 +11,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-form-add-dynamic',
@@ -156,10 +157,8 @@ export class FormAddDynamicComponent implements OnInit {
 
   DeleteFromDatabase(AppCommissionHId) {
     var url = URLConstant.DeleteAppCommissionData;
-    var obj = {
-      AppCommissionHId: AppCommissionHId,
-      RowVersion: ""
-    };
+    let obj: GenericObj = new GenericObj()
+    obj.Id = AppCommissionHId;
     this.http.post(url, obj).subscribe(
       (response) => {
       });

@@ -1,18 +1,18 @@
 export class LeadCustPersonalJobDataObj{
-    LeadCustPersonalJobDataId: any;
-    LeadCustPersonalId: any;
-    MrProfessionCode: any;
-    CompanyName: any;
-    MrJobPositionCode: any;
-    MrJobStatCode: any;
-    IsMfEmp: any;
-    IndustryTypeCode: any;
-    MrCompanyScaleCode: any;
-    EstablishmentDt: any;
-    MrJobTitleCode: any;
-    ProfessionalNo: any;
-    MrInvestmentTypeCode: any;
-    NumOfEmployee: any;
-    RowVersion: any;
+    LeadCustPersonalJobDataId: number;
+    LeadCustPersonalId: number;
+    MrProfessionCode: string;
+    CompanyName: string;
+    MrJobPositionCode: string;
+    MrJobStatCode: string;
+    IsMfEmp: boolean;
+    IndustryTypeCode: string;
+    MrCompanyScaleCode: string;
+    EstablishmentDt: Date;
+    MrJobTitleCode: string;
+    ProfessionalNo: string;
+    MrInvestmentTypeCode: string;
+    NumOfEmployee: number;
+    RowVersion: string;
     constructor() { this.LeadCustPersonalJobDataId = 0, this.RowVersion = "" }
 }

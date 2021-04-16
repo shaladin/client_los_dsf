@@ -18,19 +18,19 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
   templateUrl: './prod-ho-rvw-detail.component.html'
 })
 export class ProdHoRvwDetailComponent implements OnInit {
-  private createComponent: UcapprovalcreateComponent;
-  @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
-    if (content) {
+  private CreateComponent: UcapprovalcreateComponent;
+  @ViewChild('ApprovalComponent') set content(Content: UcapprovalcreateComponent) {
+    if (Content) {
       // initially setter gets called with undefined
-      this.createComponent = content;
+      this.CreateComponent = Content;
     }
   }
 
-  ApprovalCreateOutput: any;
-  IsReady: Boolean = false;
   ProdId: number;
-  WfTaskListId: number;
   ProdHId: number;
+  WfTaskListId: number;
+  IsReady: Boolean = false;
+  ApprovalCreateOutput: any;
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   GenericByIdObj : GenericObj = new GenericObj();
   ReqReviewProductObj : ReqReviewProductObj = new ReqReviewProductObj();
@@ -84,7 +84,7 @@ export class ProdHoRvwDetailComponent implements OnInit {
   }
 
   SaveForm() {
-    this.ApprovalCreateOutput = this.createComponent.output();
+    this.ApprovalCreateOutput = this.CreateComponent.output();
     if (this.ApprovalCreateOutput != undefined) {
       this.ReqReviewProductObj.ProdHId = this.ProdHId,
       this.ReqReviewProductObj.ProdId = this.ProdId,
@@ -93,15 +93,15 @@ export class ProdHoRvwDetailComponent implements OnInit {
 
       this.http.post(URLConstant.ReviewProduct, this.ReqReviewProductObj).subscribe(
         (response) => {
-          this.toastr.successMessage("Success");
+          this.toastr.successMessage(response["Message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_REVIEW], {});
           this.IsReady = true;
         });
     }
   }
-  async ClaimTask(WfTaskListId) {
+  async ClaimTask(WfTaskListId: number) {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME], isLoading: false };
+    let wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME], isLoading: false };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
 }

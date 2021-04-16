@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProdOfficePassingObj } from 'app/shared/model/Product/ProdOfficePassingObj.model';
+import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/ProdOfficePassingObj.model';
 
 @Component({
   selector: 'app-ho-office-mbr',

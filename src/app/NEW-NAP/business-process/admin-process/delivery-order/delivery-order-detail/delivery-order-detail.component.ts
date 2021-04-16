@@ -318,22 +318,24 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.listAppTCObj.AppTCObj = new Array();
 
     for (var i = 0; i < this.DeliveryOrderForm.value.TCList["length"]; i++) {
+      const tempAppTc = this.DeliveryOrderForm.getRawValue().TCList[i];
       this.appTC = new AppTCObj();
-      this.appTC.AppId = this.DeliveryOrderForm.value.TCList[i].AppId;
-      this.appTC.AppTcId = this.DeliveryOrderForm.value.TCList[i].AppTcId;
-      this.appTC.TcCode = this.DeliveryOrderForm.value.TCList[i].TcCode;
-      this.appTC.TcName = this.DeliveryOrderForm.value.TCList[i].TcName;
-      this.appTC.PriorTo = this.DeliveryOrderForm.value.TCList[i].PriorTo;
-      this.appTC.IsChecked = this.DeliveryOrderForm.getRawValue().TCList[i].IsChecked;
-      this.appTC.ExpiredDt = this.DeliveryOrderForm.getRawValue().TCList[i].ExpiredDt;
-      this.appTC.IsMandatory = this.DeliveryOrderForm.value.TCList[i].IsMandatory;
-      this.appTC.PromisedDt = this.DeliveryOrderForm.getRawValue().TCList[i].PromisedDt;
-      this.appTC.CheckedDt = this.DeliveryOrderForm.value.TCList[i].CheckedDt;
-      this.appTC.Notes = this.DeliveryOrderForm.value.TCList[i].Notes;
-      this.appTC.IsAdditional = this.DeliveryOrderForm.value.TCList[i].IsAdditional;
+      this.appTC.AppId = tempAppTc.AppId;
+      this.appTC.AppTcId = tempAppTc.AppTcId;
+      this.appTC.TcCode = tempAppTc.TcCode;
+      this.appTC.TcName = tempAppTc.TcName;
+      this.appTC.PriorTo = tempAppTc.PriorTo;
+      this.appTC.IsChecked = tempAppTc.IsChecked;
+      this.appTC.ExpiredDt = tempAppTc.ExpiredDt;
+      this.appTC.IsMandatory = tempAppTc.IsMandatory;
+      this.appTC.PromisedDt = tempAppTc.PromisedDt;
+      this.appTC.CheckedDt = tempAppTc.CheckedDt;
+      this.appTC.Notes = tempAppTc.Notes;
+      this.appTC.IsAdditional = tempAppTc.IsAdditional;
+      this.appTC.RowVersion = tempAppTc.RowVersion;
 
       var prmsDt = new Date(this.appTC.PromisedDt);
-      var prmsDtForm = this.DeliveryOrderForm.value.TCList[i].PromisedDt;
+      var prmsDtForm = tempAppTc.PromisedDt;
       if (this.appTC.IsChecked == false) {
         if (prmsDtForm != null) {
           if (prmsDt < businessDt) {
@@ -345,6 +347,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
       this.listAppTCObj.AppTCObj.push(this.appTC);
     }
 
+    this.deliveryOrderObj.AgrmntId = this.AgrmntId;
     this.deliveryOrderObj.TaskListId = this.TaskListId;
     this.deliveryOrderObj.AppAssetObj = appAsset;
     this.deliveryOrderObj.DeliveryOrderHObj = deliveryOrderH;
