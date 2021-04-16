@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { LeadVerfObj } from 'app/shared/model/LeadVerfObj.Model';
+import { LeadVerfObj } from 'app/shared/model/Request/LEAD/LeadVerfObj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { Router } from '@angular/router';

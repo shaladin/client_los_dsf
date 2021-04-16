@@ -10,14 +10,15 @@ import { LeadObj } from 'app/shared/model/Lead.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
-import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
+import { LeadAssetObj } from 'app/shared/model/Request/LEAD/LeadAssetObj.model';
+import { LeadAppObj } from 'app/shared/model/Request/LEAD/LeadAppObj.model';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ReqLeadInputLeadDataObj } from 'app/shared/model/Request/LEAD/ReqInputLeadDataObj.model';
 
 @Component({
   selector: 'app-lead-data',
@@ -40,7 +41,7 @@ export class LeadDataComponent implements OnInit {
   InputLookupAssetObj: InputLookupObj;
   getListActiveRefMasterUrl: string;
   assetTypeId: string;
-  leadInputLeadDataObj: LeadInputLeadDataObj;
+  leadInputLeadDataObj: ReqLeadInputLeadDataObj;
   getLeadAssetByLeadId: string;
   getLeadAppByLeadId: string;
   getAssetMasterForLookupEmployee: string; 
@@ -514,7 +515,7 @@ export class LeadDataComponent implements OnInit {
   save() {
     if (this.typePage == "edit" || this.typePage == "update") {
       if (this.resLeadAssetObj.LeadAssetId != 0){ 
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
         this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
@@ -528,7 +529,7 @@ export class LeadDataComponent implements OnInit {
       }
     } 
     else {
-      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+      this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
       this.setLeadAsset();
       this.setLeadApp();
       this.http.post(URLConstant.AddLeadData, this.leadInputLeadDataObj).subscribe(
@@ -542,7 +543,7 @@ export class LeadDataComponent implements OnInit {
   SaveForm() {
     if (this.typePage == "edit" || this.typePage == "update" ) {
       if (this.resLeadAssetObj.LeadAssetId != 0){ 
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
         this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
@@ -566,7 +567,7 @@ export class LeadDataComponent implements OnInit {
           }
         );
       } else{
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
         this.setLeadApp();
         this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
@@ -591,7 +592,7 @@ export class LeadDataComponent implements OnInit {
       }
     } 
     else {
-      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+      this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
       this.setLeadAsset();
       this.setLeadApp();
       this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;

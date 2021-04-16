@@ -8,8 +8,8 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
 import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Model';
-import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
-import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
+import { LeadAppObj } from 'app/shared/model/Request/LEAD/LeadAppObj.model';
+import { LeadAssetObj } from 'app/shared/model/Request/LEAD/LeadAssetObj.model';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
@@ -21,6 +21,7 @@ import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyRes
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { String } from 'typescript-string-operations';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { ReqLeadInputLeadDataObj } from 'app/shared/model/Request/LEAD/ReqInputLeadDataObj.model';
 
 
 @Component({
@@ -54,7 +55,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   InputLookupAssetObj: InputLookupObj;
   getListActiveRefMasterUrl: string;
   assetTypeId: string;
-  leadInputLeadDataObj: LeadInputLeadDataObj;
+  leadInputLeadDataObj: ReqLeadInputLeadDataObj;
   getLeadAssetByLeadId: string;
   getLeadAppByLeadId: string;
   getAssetMasterForLookupEmployee: string;
@@ -794,7 +795,7 @@ export class LeadInputLeadDataComponent implements OnInit {
 
     if (this.typePage == "edit" || this.typePage == "update") {
       if (this.resLeadAssetObj.LeadAssetId != 0 && this.lobKta.includes(this.returnLobCode) == false) {
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
         this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
@@ -806,13 +807,13 @@ export class LeadInputLeadDataComponent implements OnInit {
       else {
         if (this.lobKta.includes(this.returnLobCode) == true) {
           if(this.resLeadAppObj.LeadAppId != 0){
-            this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+            this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
             this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
             this.setLeadApp();
             this.postLeadData(URLConstant.EditLeadDataKta);
           }
           else {
-            this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+            this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
             this.setLeadApp();
             this.postLeadData(URLConstant.AddLeadDataKta);
           }
@@ -822,7 +823,7 @@ export class LeadInputLeadDataComponent implements OnInit {
             this.toastr.warningMessage("Manufacturing Year must be lower or equal than current year.");
             return;
           }
-          this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+          this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
           this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
           this.setLeadAsset();
           this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
@@ -836,19 +837,19 @@ export class LeadInputLeadDataComponent implements OnInit {
     else {
       if (this.lobKta.includes(this.returnLobCode) == true) {
         if(this.resLeadAppObj.LeadAppId != 0){
-          this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+          this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
           this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
           this.setLeadApp();
           this.postLeadData(URLConstant.EditLeadDataKta);
         }
         else {
-          this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+          this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
           this.setLeadApp();
           this.postLeadData(URLConstant.AddLeadDataKta);
         }
       }
       else {
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
         this.setLeadAsset();
         this.setLeadApp();
         if (this.confirmFraudCheck()) {
@@ -896,7 +897,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     if (this.LeadDataForm.status == CommonConstant.INVALID_FORM) {
       return;
     }
-    this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+    this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
     this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
     this.setLeadApp();
     if (this.typePage == "edit" || this.typePage == "update") {
@@ -1037,7 +1038,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
       if (this.LeadDataForm.controls.items.value[0]['SerialNoLabel'] == CommonConstant.Chassis_No && this.LeadDataForm.controls.items.value[0]['SerialNoValue'] != "") {
 
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
         this.setLeadAsset();
         this.http.post(URLConstant.CheckRapindo, this.leadInputLeadDataObj).subscribe(
           (response1) => {

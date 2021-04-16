@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LeadCustObj } from 'app/shared/model/LeadCustObj.Model';
+import { LeadCustObj } from 'app/shared/model/Request/LEAD/LeadCustObj.model';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { LeadCustSocmedObj } from 'app/shared/model/LeadCustSucmedObj.model';
