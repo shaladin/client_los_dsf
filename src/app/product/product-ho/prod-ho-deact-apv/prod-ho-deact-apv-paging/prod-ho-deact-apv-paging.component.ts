@@ -18,9 +18,9 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './prod-ho-deact-apv-paging.component.html'
 })
 export class ProdHoDeactApvPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
-  userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+  InputPagingObj: UcPagingObj = new UcPagingObj();
+  ArrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
+  UserContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
   constructor(private toastr: NGXToastrService, 
               private http: HttpClient, 
@@ -28,47 +28,46 @@ export class ProdHoDeactApvPagingComponent implements OnInit {
               private cookieService: CookieService) { }
 
   ngOnInit() {
-    this.inputPagingObj._url = "./assets/ucpaging/product/searchProductHODeactApv.json";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHODeactApv.json";
+    this.InputPagingObj._url = "./assets/ucpaging/product/searchProductHODeactApv.json";
+    this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHODeactApv.json";
 
-    var critObj = new CriteriaObj();
+    let critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'CATEGORY_CODE';
     critObj.value = 'PRD_HO_DEACT_APV';
-    this.arrCrit.push(critObj);
+    this.ArrCrit.push(critObj);
 
     critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'PROD_STAT';
     critObj.value = CommonConstant.ProdStatReqDeact;
-    this.arrCrit.push(critObj);
+    this.ArrCrit.push(critObj);
 
     critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'CURRENT_USER_ID';
-    critObj.value = this.userContext.UserName;
-    this.arrCrit.push(critObj);
-
+    critObj.value = this.UserContext.UserName;
+    this.ArrCrit.push(critObj);
 
     critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionOr;
     critObj.propName = 'MAIN_USER_ID';
-    critObj.value = this.userContext.UserName;
-    this.arrCrit.push(critObj);
+    critObj.value = this.UserContext.UserName;
+    this.ArrCrit.push(critObj);
 
-    this.inputPagingObj.addCritInput = this.arrCrit;
+    this.InputPagingObj.addCritInput = this.ArrCrit;
   }
 
 
 
   CallBackHandler(ev) {
-    var ApvReqObj = new ApprovalObj();
+    let ApvReqObj = new ApprovalObj();
     if (ev.Key == "Process") {
-      if (String.Format("{0:L}", ev.RowObj.CURRENT_USER_ID) != String.Format("{0:L}", this.userContext.UserName)) {
+      if (String.Format("{0:L}", ev.RowObj.CURRENT_USER_ID) != String.Format("{0:L}", this.UserContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_DEACTIVATE_APPRV_DETAIL],{ "ProdHId": ev.RowObj.ProdHId, "TaskId" : ev.RowObj.TaskId, "ApvReqId": ev.RowObj.ApvReqId  });
@@ -83,7 +82,7 @@ export class ProdHoDeactApvPagingComponent implements OnInit {
       )
     }
     else if (ev.Key == "TakeBack") {
-      if (String.Format("{0:L}", ev.RowObj.MAIN_USER_ID) != String.Format("{0:L}", this.userContext.UserName)) {
+      if (String.Format("{0:L}", ev.RowObj.MAIN_USER_ID) != String.Format("{0:L}", this.UserContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId

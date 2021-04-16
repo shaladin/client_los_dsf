@@ -1,6 +1,6 @@
 import { environment } from "environments/environment";
 import { Component, OnInit, Input } from "@angular/core";
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 import { URLConstant } from "app/shared/constant/URLConstant";
@@ -9,7 +9,7 @@ import { ReqDownloadRuleObj } from "app/shared/model/Request/Product/ReqDownload
 import { ReqGetProdCompntObj } from "app/shared/model/Request/Product/ReqGetProdCompntObj.model";
 import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
 import { ResGetProdDCompntInfoObj, ResProdDCompntObj, ResProdHVersionObj } from "app/shared/model/Response/Product/ResGetProdObj.model";
-import { ResGetProdBranchMbrObj } from "app/shared/model/Response/Product/ResGetProdBranchMbrObj.model";
+import { ResGetProdBranchMbrObj, ResProdBranchMbrObj } from "app/shared/model/Response/Product/ResGetProdBranchMbrObj.model";
 
 @Component({
   selector: 'app-prod-ho-view',
@@ -17,18 +17,17 @@ import { ResGetProdBranchMbrObj } from "app/shared/model/Response/Product/ResGet
 })
 export class ProdHoViewComponent implements OnInit {
 
-  @Input() inputProdHId: number;
   ProdHId: number;
-  GenData: any;
-  ProdCompGen: any;
-  ProdCompNonGen: any;
-  ProdBranchMbr: any;
+  GenData: Array<ResProdDCompntObj> = new Array<ResProdDCompntObj>();
+  ProdCompGen: ResProdDCompntObj = new ResProdDCompntObj();
+  ProdCompNonGen: Array<ResProdDCompntObj> = new Array<ResProdDCompntObj>();
+  ProdBranchMbr: Array<ResProdBranchMbrObj> = new Array<ResProdBranchMbrObj>();
   ProdVersion: any;
   IsLoaded: boolean = false;
   GenericByIdObj: GenericObj = new GenericObj();
   ProductDetailObj: ReqGetProdCompntObj = new ReqGetProdCompntObj();
   ProdComp: Array<ResProdDCompntObj> = new Array<ResProdDCompntObj>();
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  ViewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   DlRuleObj: ReqDownloadRuleObj = new ReqDownloadRuleObj();
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
@@ -40,13 +39,9 @@ export class ProdHoViewComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    if (this.ProdHId == undefined) {
-      this.ProdHId = this.inputProdHId;
-    }
-
     //** Main Information **//
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformation.json";
+    this.ViewGenericObj.viewEnvironment = environment.losUrl;
 
     //** Product Version **//
     this.GenericByIdObj.Id = this.ProdHId;

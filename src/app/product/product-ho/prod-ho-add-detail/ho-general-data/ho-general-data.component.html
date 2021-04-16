@@ -9,7 +9,7 @@
         <div class="form-group row">
           <label class="col-md-4  adInsLabel">Copy Product</label>
           <div class="col-md-4">
-            <lib-uclookupgeneric width-75-per [lookupInput]="inputLookUpObj" [parentForm]='FormProdComp'
+            <lib-uclookupgeneric width-75-per [lookupInput]="InputLookUpObj" [parentForm]='FormProdComp'
               [enjiForm]="enjiForm" [identifier]="'indentifierTemp'" >
             </lib-uclookupgeneric>
           </div>
@@ -35,15 +35,15 @@
                   name="CompntValue{{l}}"
                   (change)="onChangeEvent(type.controls['components'].value[l].RefProdCompntCode,$event,l,j);">
                   <option  [value]="-1">-Select One-</option>
-                  <option *ngFor="let m of dictOptions[type.controls['components'].value[l].RefProdCompntCode]"
+                  <option *ngFor="let m of DictOptions[type.controls['components'].value[l].RefProdCompntCode]"
                     value={{m.Key}}>{{m.Value}}</option>
                 </select>
                 <lib-uc-show-errors [control]="node.controls.CompntValue" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
               </div>
               <div class="col-md-8" *ngIf="type.controls['components'].value[l].ProdCompntType == 'MULTI_DDL'">
-                <ng-multiselect-dropdown *ngIf="dictMultiOptions[type.controls['components'].value[l].RefProdCompntCode].length != 0" [placeholder]="'Search'" [data]="dictMultiOptions[type.controls['components'].value[l].RefProdCompntCode]"
-                [(ngModel)]="selectedMultiDDLItems[type.controls['components'].value[l].RefProdCompntCode]" [ngModelOptions]="{standalone: true}" [settings]="dropdownSettings" (onDropDownClose)="onMultiDDLChangeEvent(type.controls['components'].value[l].RefProdCompntCode,l,j)">
+                <ng-multiselect-dropdown *ngIf="DictMultiOptions[type.controls['components'].value[l].RefProdCompntCode].length != 0" [placeholder]="'Search'" [data]="DictMultiOptions[type.controls['components'].value[l].RefProdCompntCode]"
+                [(ngModel)]="SelectedMultiDDLItems[type.controls['components'].value[l].RefProdCompntCode]" [ngModelOptions]="{standalone: true}" [settings]="dropdownSettings" (onDropDownClose)="onMultiDDLChangeEvent(type.controls['components'].value[l].RefProdCompntCode,l,j)">
                 </ng-multiselect-dropdown>
                 <lib-uc-show-errors [control]="node.controls.CompntValue" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>

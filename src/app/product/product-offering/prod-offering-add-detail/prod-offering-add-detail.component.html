@@ -40,8 +40,8 @@
                 <label class="col-md-4 adInsLabel">{{ProdOfferingForm.controls.ProdOfferingStat.value}} </label>
               </div>
               <div class="form-group row">
-                <label *ngIf="source == 'return'" class="col-md-2 adInsLabel">Return Notes </label>
-                <label *ngIf="source == 'return'" class="col-md-4 adInsLabel">{{ProdOfferingForm.controls.ReturnNotes.value}} </label>
+                <label *ngIf="Source == 'return'" class="col-md-2 adInsLabel">Return Notes </label>
+                <label *ngIf="Source == 'return'" class="col-md-4 adInsLabel">{{ProdOfferingForm.controls.ReturnNotes.value}} </label>
               </div>
               </div>
             </div>
@@ -50,17 +50,17 @@
                 <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="0">
                   <aw-wizard-step [stepTitle]="'General Data'"
                     [navigationSymbol]="{ symbol: '1', fontFamily: 'FontAwesome' }" (stepEnter)="EnterTab('general')">
-                    <app-offering-general-data *ngIf="isGeneralData == true" [ProdOfferingHId]="ProdOfferingHId" [ProdOfferingId]="ProdOfferingId"></app-offering-general-data>
+                    <app-offering-general-data *ngIf="IsGeneralData == true" [ProdOfferingHId]="ProdOfferingHId" [ProdOfferingId]="ProdOfferingId"></app-offering-general-data>
                   </aw-wizard-step>
                   
                   <aw-wizard-step [stepTitle]="'Product Component'" 
                     [navigationSymbol]="{ symbol: '2', fontFamily: 'FontAwesome' }" (stepEnter)="EnterTab('prodCompnt')">
-                    <app-offering-prod-compnt *ngIf="isProdCompnt == true" [ProdOfferingHId]="ProdOfferingHId"></app-offering-prod-compnt>
+                    <app-offering-prod-compnt *ngIf="IsProdCompnt == true" [ProdOfferingHId]="ProdOfferingHId"></app-offering-prod-compnt>
                   </aw-wizard-step>
                   
                   <aw-wizard-step [stepTitle]="'Office Member'" 
                     [navigationSymbol]="{ symbol: '3', fontFamily: 'FontAwesome' }" (stepEnter)="EnterTab('officeMbr')">
-                    <app-offering-office-mbr *ngIf="isOfficeMbr == true" [ProdOfferingHId]="ProdOfferingHId" [ProdHId]="ProdHId"></app-offering-office-mbr>
+                    <app-offering-office-mbr *ngIf="IsOfficeMbr == true" [ProdOfferingHId]="ProdOfferingHId" [ProdHId]="ProdHId"></app-offering-office-mbr>
                   </aw-wizard-step>
                 </aw-wizard>
               </div>

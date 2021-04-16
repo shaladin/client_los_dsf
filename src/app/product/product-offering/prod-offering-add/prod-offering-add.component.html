@@ -4,7 +4,7 @@
       <div class="card-header header-title">
         <div class="row">
           <div class="col-md-8">
-            <h4 class="card-title" translate> {{mode}} Product Offering </h4>
+            <h4 class="card-title" translate> {{Mode}} Product Offering </h4>
           </div>
         </div>
       </div>
@@ -14,15 +14,15 @@
             <div class="form-body">
               <lib-ucSubsection [id]="'ProductOfferingInfoId'" [title]="'Main Information'" [panel]="'ProductOfferingInfo'"></lib-ucSubsection>
               <div id="ProductOfferingInfo">
-                <div *ngIf="mode != 'edit'" class="form-group row adins-required">
+                <div *ngIf="Mode != 'edit'" class="form-group row adins-required">
                   <label class="col-md-3 adInsLabel">Product Name </label>
                   <div  class="col-md-3">
-                    <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]="ProdOfferingForm"
+                    <lib-uclookupgeneric [lookupInput]="InputLookupObj" [parentForm]="ProdOfferingForm"
                       [enjiForm]="enjiForm" [identifier]="ProdName" (lookup)="handleOutput($event)">
                     </lib-uclookupgeneric>
                   </div>
                 </div>
-                <div *ngIf="mode == 'edit'" class="form-group row">
+                <div *ngIf="Mode == 'edit'" class="form-group row">
                   <label class="col-md-3 adInsLabel">Product Name </label>
                   <div  class="col-md-3">
                   <label class="col-md-9 adInsLabel">{{ProductName}}</label>

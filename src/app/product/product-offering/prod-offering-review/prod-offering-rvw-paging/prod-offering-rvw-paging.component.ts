@@ -6,12 +6,12 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
   templateUrl: './prod-offering-rvw-paging.component.html'
 })
 export class ProdOfferingRvwPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj = new UcPagingObj();
+  InputPagingObj: UcPagingObj = new UcPagingObj();
 
   constructor() { }
 
   ngOnInit() {
-    this.inputPagingObj._url = "./assets/ucpaging/product/searchProductOfferingReview.json";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOfferingReview.json";
+    this.InputPagingObj._url = "./assets/ucpaging/product/searchProductOfferingReview.json";
+    this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOfferingReview.json";
   }
 }

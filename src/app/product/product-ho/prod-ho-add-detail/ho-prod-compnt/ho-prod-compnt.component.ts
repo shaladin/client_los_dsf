@@ -64,10 +64,10 @@ export class HoProdCompntComponent implements OnInit {
   }
 
   addComponent(obj) {
-    var compCode, compDescr;
+    let compCode, compDescr;
     if (obj.ProdCompntType == "DDL") {
       if (obj.CompntValue == "") {
-        var dict = this.dictOptions[obj.RefProdCompntCode];
+        let dict = this.dictOptions[obj.RefProdCompntCode];
         if (dict != undefined) {
           compCode = this.dictOptions[obj.RefProdCompntCode][0].Key;
           compDescr = this.dictOptions[obj.RefProdCompntCode][0].Value;
@@ -83,7 +83,7 @@ export class HoProdCompntComponent implements OnInit {
       compDescr = obj.CompntValueDesc;
     }
 
-    var mrProdBehaviour = obj.MrProdBehaviour;
+    let mrProdBehaviour = obj.MrProdBehaviour;
 
     if (mrProdBehaviour == "") {
       if (this.dictBehaviour[obj.BehaviourType] != undefined) {
@@ -109,9 +109,9 @@ export class HoProdCompntComponent implements OnInit {
   }
 
   async PopulateDDL(obj) {
-    var url = obj.ProdCompntDtaSrcApi;
+    let url = obj.ProdCompntDtaSrcApi;
     if (url != "") {
-      var payload = JSON.parse(obj.ProdCompntDtaValue);
+      let payload = JSON.parse(obj.ProdCompntDtaValue);
       await this.http.post(url, payload).toPromise().then(
         (response) => {
           this.dictOptions[obj.RefProdCompntCode] = response[CommonConstant.ReturnObj];
@@ -121,7 +121,7 @@ export class HoProdCompntComponent implements OnInit {
   }
 
   async PopulateRefBehaviour(obj) {
-    var bhvrTypeCode = obj.BehaviourType;
+    let bhvrTypeCode = obj.BehaviourType;
     if (this.dictBehaviour[bhvrTypeCode] == undefined) {
       this.GenericByCodeObj.Code = bhvrTypeCode;
       await this.http.post(URLConstant.GetRefBehaviourByBehaviourTypeCode, this.GenericByCodeObj).toPromise().then(
@@ -140,12 +140,12 @@ export class HoProdCompntComponent implements OnInit {
     this.http.post(URLConstant.GetProductHOComponentGrouped, this.ReqGetProdHCompntGroupedObj).toPromise().then(
       async (response : ResGetProdCmpntGroupedObj) => {
         for (var i = 0; i < response.ReturnObject.length; i++) {
-          var group = response.ReturnObject[i];
-          var fa_group = this.FormProdComp.controls['groups'] as FormArray;
+          let group = response.ReturnObject[i];
+          let fa_group = this.FormProdComp.controls['groups'] as FormArray;
           fa_group.push(this.addGroup(group.GroupCode, group.GroupName));
 
           for (var j = 0; j < group.Components.length; j++) {
-            var comp = group.Components[j];
+            let comp = group.Components[j];
             if (comp.ProdCompntType == "DDL") {
               await this.PopulateDDL(comp);
 
@@ -156,9 +156,9 @@ export class HoProdCompntComponent implements OnInit {
           }
 
           for (var j = 0; j < group.Components.length; j++) {
-            var comp = group.Components[j];
-            var fa_comp = (<FormArray>this.FormProdComp.controls['groups']).at(i).get('components') as FormArray;
-            var comp_group = this.addComponent(comp) as FormGroup;
+            let comp = group.Components[j];
+            let fa_comp = (<FormArray>this.FormProdComp.controls['groups']).at(i).get('components') as FormArray;
+            let comp_group = this.addComponent(comp) as FormGroup;
             if (comp.ProdCompntType == "AMT") {
               comp_group.controls['CompntValue'].setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
             }
@@ -176,7 +176,7 @@ export class HoProdCompntComponent implements OnInit {
   }
 
   BuildReqProdDetail() {
-    var list = new Array();
+    let list = new Array();
     for (let i = 0; i < this.FormProdComp.controls.groups.length; i++) {
       for (let j = 0; j < this.FormProdComp.controls.groups.controls[i].controls["components"].length; j++) {
         list.push(Object.assign({}, ...this.FormProdComp.controls.groups.controls[i].controls["components"].controls[j].value));

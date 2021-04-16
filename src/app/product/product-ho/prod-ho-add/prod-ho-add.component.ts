@@ -21,13 +21,13 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 })
 export class ProdHoAddComponent implements OnInit {
   ProdHId: number;
-  mode: string = 'add';
-  source: string = '';
+  Mode: string = 'add';
+  Source: string = '';
   BusinessDt: Date;
   StartDt: Date;
   EndDt: Date;
   GenericByIdObj: GenericObj = new GenericObj();
-  ProdHObj: ResGetProductHObj = new ResGetProductHObj();
+  ResGetProdHObj: ResGetProductHObj = new ResGetProductHObj();
   ReqAddProdObj: ReqAddProductObj = new ReqAddProductObj();
   ReqEditProdObj: ReqEditProductObj = new ReqEditProductObj();
 
@@ -52,10 +52,10 @@ export class ProdHoAddComponent implements OnInit {
         this.ProdHId = params["ProdHId"];
       }
       if (params["mode"] != null) {
-        this.mode = params["mode"];
+        this.Mode = params["mode"];
       }
       if (params["source"] != null) {
-        this.source = params["source"];
+        this.Source = params["source"];
       }
     })
   }
@@ -64,18 +64,18 @@ export class ProdHoAddComponent implements OnInit {
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = new Date(context[CommonConstant.BUSINESS_DT]);
 
-    if (this.mode == "edit") {
+    if (this.Mode == "edit") {
       this.RefProductHOForm.controls.ProdCode.disable();
       this.GenericByIdObj.Id = this.ProdHId;
       this.http.post(URLConstant.GetProdHById, this.GenericByIdObj).subscribe(
         (response: ResGetProductHObj) => {
-          this.ProdHObj = response;
+          this.ResGetProdHObj = response;
           this.RefProductHOForm.patchValue({
-            ProdCode: this.ProdHObj.ProdCode,
-            ProdName: this.ProdHObj.ProdName,
-            ProdDescr: this.ProdHObj.ProdDescr,
-            StartDt: formatDate(this.ProdHObj.StartDt, 'yyyy-MM-dd', 'en-US'),
-            EndDt: formatDate(this.ProdHObj.EndDt, 'yyyy-MM-dd', 'en-US')
+            ProdCode: this.ResGetProdHObj.ProdCode,
+            ProdName: this.ResGetProdHObj.ProdName,
+            ProdDescr: this.ResGetProdHObj.ProdDescr,
+            StartDt: formatDate(this.ResGetProdHObj.StartDt, 'yyyy-MM-dd', 'en-US'),
+            EndDt: formatDate(this.ResGetProdHObj.EndDt, 'yyyy-MM-dd', 'en-US')
           });
           this.updateMinDtForEndDt();
         }
@@ -116,21 +116,21 @@ export class ProdHoAddComponent implements OnInit {
     }
     this.ReqAddProdObj = this.ReqEditProdObj = this.RefProductHOForm.value;
     
-    if (this.mode == "edit") {
-      this.ReqEditProdObj.ProdId = this.ProdHObj.ProdId;
-      this.ReqEditProdObj.ProdCode = this.ProdHObj.ProdCode;
-      this.ReqEditProdObj.RowVersion = this.ProdHObj.RowVersion;
+    if (this.Mode == "edit") {
+      this.ReqEditProdObj.ProdId = this.ResGetProdHObj.ProdId;
+      this.ReqEditProdObj.ProdCode = this.ResGetProdHObj.ProdCode;
+      this.ReqEditProdObj.RowVersion = this.ResGetProdHObj.RowVersion;
       this.http.post(URLConstant.EditProduct, this.ReqEditProdObj).subscribe(
         (response: ResAddEditProductObj) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_ADD_DETAIL], { ProdHId: response.DraftProdHId, ProdId: response.ProdId, source: this.source });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_ADD_DETAIL], { ProdHId: response.DraftProdHId, ProdId: response.ProdId, source: this.Source });
         }
       );
     } else {
       this.http.post(URLConstant.AddProduct, this.ReqAddProdObj).subscribe(
         (response: ResAddEditProductObj) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_ADD_DETAIL], { ProdHId: response.DraftProdHId, ProdId: response.ProdId, source: this.source });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_ADD_DETAIL], { ProdHId: response.DraftProdHId, ProdId: response.ProdId, source: this.Source });
         }
       );
     }
@@ -141,7 +141,7 @@ export class ProdHoAddComponent implements OnInit {
   }
 
   BackToPaging() {
-    if (this.source == "return") {
+    if (this.Source == "return") {
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_RTN_PAGING], {});
     }
     else {
