@@ -347,7 +347,7 @@ export class CreditReviewMainComponent implements OnInit {
       ListDeviationResultObjs: this.ManualDeviationData,
       RequestRFAObj: this.ApprovalCreateOutput
     }
-    this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationDataNew, apiObj).subscribe(
+    this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });

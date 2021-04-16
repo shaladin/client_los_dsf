@@ -60,7 +60,8 @@ export class PurchaseOrderDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  isDataExist: boolean = false;
+  async ngOnInit() {
     this.arrValue.push(this.AgrmntId);
     this.purchaseOrderHObj = new PurchaseOrderHObj();
 
@@ -76,9 +77,16 @@ export class PurchaseOrderDetailComponent implements OnInit {
       AgrmntId: this.AgrmntId,
       SupplCode: this.SupplCode
     }
-    this.http.post(poUrl, appAssetObj).subscribe(
+    await this.http.post(poUrl, appAssetObj).toPromise().then(
       (response) => {
+        console.log(response);
         this.AssetObj = response[CommonConstant.ReturnObj];
+        if(this.AssetObj["PurchaseOrderHObj"] != null || this.AssetObj["PurchaseOrderHObj"]["PurchaseOrderHId"] != 0){
+          this.isDataExist = true;
+          this.Notes = this.AssetObj["PurchaseOrderHObj"]["Notes"];
+          this.purchaseOrderHObj.RowVersion = this.AssetObj["PurchaseOrderHObj"]["RowVersion"];
+        }
+        console.log(this.isDataExist);
         this.ProportionalValue = this.AssetObj["ProportionalValue"];
         this.TotalInsCustAmt = this.AssetObj["TotalInsCustAmt"];
         this.TotalLifeInsCustAmt = this.AssetObj["TotalLifeInsCustAmt"];
@@ -109,6 +117,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     var tempRefMasterObj = new Array();
     await this.http.post(URLConstant.GetPurchaseOrderDPoItemCodeFromRuleByType, {}).toPromise().then(
       (response) => {
+        console.log(response);
         tempRefMasterObj = response["ListPoItems"];
 
       });
@@ -148,11 +157,20 @@ export class PurchaseOrderDetailComponent implements OnInit {
       requestPurchaseOrderHObj: this.purchaseOrderHObj,
       requestPurchaseOrderDObjs: listPurchaseOrderD
     }
-    this.http.post(URLConstant.SubmitPurchaseOrder, POObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT],{ "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId });
-        
-      });
+    if(!this.isDataExist){      
+      this.http.post(URLConstant.AddPurchaseOrder, POObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT],{ "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId });
+          
+        });
+    }else{      
+      this.http.post(URLConstant.EditPurchaseOrder, POObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT],{ "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId });
+          
+        });
+    }
   }
 }
