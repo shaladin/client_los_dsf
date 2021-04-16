@@ -5,9 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
@@ -16,13 +14,11 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   styleUrls: []
 })
 export class ReturnHandlingEditCustPagingComponent implements OnInit {
-  inputPagingObj: any;
-  userAccess: any;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
 
   constructor(private route: ActivatedRoute,
-    private router: Router,
-    private cookieService: CookieService) {
+    private router: Router) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
@@ -32,12 +28,7 @@ export class ReturnHandlingEditCustPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/new-nap/business-process/additional-process/return-handling/search-return-handling-edit-cust-paging.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/new-nap/business-process/additional-process/return-handling/search-return-handling-edit-cust-paging.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -50,7 +41,6 @@ export class ReturnHandlingEditCustPagingComponent implements OnInit {
 
   ActAndOfficeCriteria(): Array<CriteriaObj> {
     var critObjs: Array<CriteriaObj> = new Array<CriteriaObj>();
-
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';

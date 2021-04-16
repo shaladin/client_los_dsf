@@ -21,10 +21,10 @@ import { CookieService } from 'ngx-cookie';
 })
 
 export class MouCustPersonalMainComponent implements OnInit {
-  @Input() MouCustId;
+  @Input() MouCustId: number = 0;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() custDataPersonalObj: MouCustPersonalDataObj = new MouCustPersonalDataObj();
   @Input() custType: any;
   @Input() IsSpouseExist: boolean = false;
@@ -35,8 +35,8 @@ export class MouCustPersonalMainComponent implements OnInit {
   countryObj = {
     CountryCode: ""
   };
-  selectedCustNo: any;
-  selectedNationalityCountryCode: any;
+  selectedCustNo: string = "";
+  selectedNationalityCountryCode: string = "";
   custDataObj: CustDataObj;
 
   InputLookupCustomerObj: InputLookupObj = new InputLookupObj();
@@ -99,7 +99,7 @@ export class MouCustPersonalMainComponent implements OnInit {
     this.selectedCustNo = event.CustNo;
     this.InputLookupCustomerObj.isReadonly = true;
 
-    this.http.post(URLConstant.GetCustPersonalForCopyByCustId, {Id : event.CustId }).subscribe(
+    this.http.post(URLConstant.GetCustPersonalForCopyByCustId, { Id: event.CustId }).subscribe(
       (response) => {
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);
@@ -180,7 +180,7 @@ export class MouCustPersonalMainComponent implements OnInit {
   setCountryName(countryCode) {
     this.countryObj.CountryCode = countryCode;
 
-    this.http.post(this.getCountryUrl, {Code: countryCode}).subscribe(
+    this.http.post(this.getCountryUrl, { Code: countryCode }).subscribe(
       (response) => {
         this.InputLookupCountryObj.jsonSelect = { CountryName: response["CountryName"] };
       },
@@ -245,7 +245,6 @@ export class MouCustPersonalMainComponent implements OnInit {
 
   initLookup() {
     this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustomerObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
@@ -253,7 +252,6 @@ export class MouCustPersonalMainComponent implements OnInit {
     this.setCriteriaLookupCustomer(CommonConstant.CustTypePersonal);
 
     this.InputLookupCountryObj.urlJson = "./assets/uclookup/lookupCountry.json";
-    this.InputLookupCountryObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.InputLookupCountryObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCountryObj.pagingJson = "./assets/uclookup/lookupCountry.json";
     this.InputLookupCountryObj.genericJson = "./assets/uclookup/lookupCountry.json";
@@ -279,7 +277,7 @@ export class MouCustPersonalMainComponent implements OnInit {
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
-          if(this.custDataPersonalObj.MouCustPersonalObj.MrGenderCode == null){
+          if (this.custDataPersonalObj.MouCustPersonalObj.MrGenderCode == null) {
             this.parentForm.controls[this.identifier].patchValue({
               MrGenderCode: this.GenderObj[0].Key
             });
@@ -302,7 +300,7 @@ export class MouCustPersonalMainComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code : CommonConstant.RefMasterTypeCodeNationality }).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeNationality }).subscribe(
       (response) => {
         this.NationalityObj = response["RefMasterObjs"];
         if (this.NationalityObj.length > 0) {

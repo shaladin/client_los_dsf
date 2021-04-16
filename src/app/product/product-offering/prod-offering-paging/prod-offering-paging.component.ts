@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj, WhereValueObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { ActivatedRoute, Router } from '@angular/router';
-import { URLConstant } from 'app/shared/constant/URLConstant';
+import { Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 @Component({
@@ -11,19 +9,13 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './prod-offering-paging.component.html'
 })
 export class ProdOfferingPagingComponent implements OnInit {
-
-  inputPagingObj: any;
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) { }
-
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   readonly AddLink: string = NavigationConstant.PROD_OFFERING_ADD;
+  
+  constructor(private router: Router) { }
+
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/product/searchProductOffering.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.deleteUrl = "/RefBank/DeleteRefBank";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOffering.json";
     this.inputPagingObj.ddlEnvironments = [
@@ -32,27 +24,24 @@ export class ProdOfferingPagingComponent implements OnInit {
         environment: environment.FoundationR3Url
       }
     ];
-    
-    var WVTrxTypeCodeObj = new WhereValueObj();
+
+    let WVTrxTypeCodeObj = new WhereValueObj();
     WVTrxTypeCodeObj.property = "TrxTypeCode";
     WVTrxTypeCodeObj.value = "PROD";
     this.inputPagingObj.whereValue.push(WVTrxTypeCodeObj);
 
-    var WVProdStatObj = new WhereValueObj();
+    let WVProdStatObj = new WhereValueObj();
     WVProdStatObj.property = "ProdOfferingStat";
     WVProdStatObj.value = "RET";
     this.inputPagingObj.whereValue.push(WVProdStatObj);
   }
 
-  EditProdOfr(e)
-  {
-    if(e.RowObj.DraftProdOfferingHId == null)
-    {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_ADD],{ "ProdOfferingHId": e.RowObj.prodOfferingHId, "mode" : "edit" });
+  EditProdOfr(e) {
+    if (e.RowObj.DraftProdOfferingHId == null) {
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PROD_OFFERING_ADD], { "ProdOfferingHId": e.RowObj.prodOfferingHId, "mode": "edit" });
     }
-    else
-    {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_ADD],{ "ProdOfferingHId": e.RowObj.DraftProdOfferingHId, "mode" : "edit" });
+    else {
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PROD_OFFERING_ADD], { "ProdOfferingHId": e.RowObj.DraftProdOfferingHId, "mode": "edit" });
     }
   }
 }

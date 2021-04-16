@@ -152,6 +152,8 @@ export class CommonConstant {
   public static SALES_JOB_CODE = "SALES_PERSON";
   public static ADMIN_HEAD_JOB_CODE = "ADMIN_HEAD";
   public static BRANCH_MANAGER_JOB_CODE = "BRANCH_MANAGER";
+  public static SUPERVISOR_JOB_CODE = "SUPERVISOR";
+  
   public static REF_REASON_MOU_GENERAL = "MOUC_GEN_RVW";
   public static REF_REASON_MOU_FACTORING = "MOUC_FCTR_RVW";
 
@@ -697,4 +699,7 @@ export class CommonConstant {
   public static PRD_HO_DEACT_APV_TYPE = "PROD_HO_DEACT_APV_TYPE";
   public static PRD_OFR_APV_TYPE = "PROD_OFR_APV_TYPE";
   public static PRD_OFR_DEACT_APV_TYPE = "PROD_OFR_DEACT_APV_TYPE";    
+
+  //PROD OFFERING
+  public static PROD_OFF_STAT_ACT = "ACT";
 }

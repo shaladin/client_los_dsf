@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
@@ -13,9 +12,9 @@ import { environment } from 'environments/environment';
   styleUrls: ['./credit-review-cr-paging.component.scss']
 })
 export class CreditReviewCrPagingComponent implements OnInit {
-
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
+
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
@@ -26,10 +25,7 @@ export class CreditReviewCrPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
-    this.inputPagingObj._url="./assets/ucpaging/searchCreditReviewCr.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
+    this.inputPagingObj._url = "./assets/ucpaging/searchCreditReviewCr.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditReviewCr.json";
 
     this.inputPagingObj.ddlEnvironments = [
@@ -48,11 +44,10 @@ export class CreditReviewCrPagingComponent implements OnInit {
 
     this.inputPagingObj.addCritInput = arrCrit;
   }
-  
+
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
   }
-
 }

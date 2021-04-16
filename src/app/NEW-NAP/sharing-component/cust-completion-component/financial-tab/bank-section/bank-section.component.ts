@@ -63,7 +63,6 @@ export class BankSectionComponent implements OnInit {
 
     this.InputLookupBankObj = new InputLookupObj();
     this.InputLookupBankObj.urlJson = "./assets/uclookup/lookupBank.json";
-    this.InputLookupBankObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.InputLookupBankObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupBankObj.pagingJson = "./assets/uclookup/lookupBank.json";
     this.InputLookupBankObj.genericJson = "./assets/uclookup/lookupBank.json";
@@ -111,14 +110,14 @@ export class BankSectionComponent implements OnInit {
     this.OutputObj.emit({ Key: 'IsDetail', Value: this.IsDetail });
   }
 
-  CheckDefault(){
-    if(this.BankAccStmntForm.controls.IsDefault.value){
+  CheckDefault() {
+    if (this.BankAccStmntForm.controls.IsDefault.value) {
       this.BankAccStmntForm.patchValue({
-        IsActive : true
+        IsActive: true
       });
       this.BankAccStmntForm.controls.IsActive.disable();
     }
-    else{
+    else {
       this.BankAccStmntForm.controls.IsActive.enable();
     }
   }

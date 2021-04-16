@@ -10,29 +10,36 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqDownloadRuleObj } from 'app/shared/model/Request/Product/ReqDownloadRuleObj.model';
+import { ReqListProductDetailObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
+import { ReqGetProdCompntObj } from 'app/shared/model/Request/Product/ReqGetProdCompntObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
+import { ResGetProdCmpntGroupedObj } from 'app/shared/model/Response/Product/ResGetProdCompntObj.model';
 @Component({
   selector: 'app-ho-prod-compnt',
   templateUrl: './ho-prod-compnt.component.html'
 })
 export class HoProdCompntComponent implements OnInit {
 
-  @Input() objInput: any;
-  source:string = "";
+  @Input() ProdHId: number;
+  source: string = "";
   FormProdComp: any;
+  StateSave: string;
   dictOptions: { [key: string]: any; } = {};
-  ProdHId: number;
-  StateSave : string;
-  dictBehaviour: {[key: string]: any;} = {};
-  DlRuleObj : ReqDownloadRuleObj = new ReqDownloadRuleObj();
+  dictBehaviour: { [key: string]: any; } = {};
+  GenericByCodeObj : GenericObj = new GenericObj();
+  DlRuleObj: ReqDownloadRuleObj = new ReqDownloadRuleObj();
+  ReqListProductDetailObj: ReqListProductDetailObj = new ReqListProductDetailObj();
+  ReqGetProdHCompntGroupedObj: ReqGetProdCompntObj = new ReqGetProdCompntObj();
 
   constructor(
     private router: Router,
-    private route:ActivatedRoute,
+    private route: ActivatedRoute,
     private http: HttpClient,
     private fb: FormBuilder,
     private toastr: NGXToastrService,
     private wizard: WizardComponent
-  ) { 
+  ) {
     this.route.queryParams.subscribe(params => {
       this.source = params["source"];
     })
@@ -45,7 +52,6 @@ export class HoProdCompntComponent implements OnInit {
       }
     );
 
-    this.ProdHId = this.objInput["ProdHId"];
     this.LoadProdComponent(this.ProdHId, "SCORE,RULE,OTHR,LOS", true);
   }
 
@@ -62,8 +68,7 @@ export class HoProdCompntComponent implements OnInit {
     if (obj.ProdCompntType == "DDL") {
       if (obj.CompntValue == "") {
         var dict = this.dictOptions[obj.RefProdCompntCode];
-        if(dict != undefined)
-        {
+        if (dict != undefined) {
           compCode = this.dictOptions[obj.RefProdCompntCode][0].Key;
           compDescr = this.dictOptions[obj.RefProdCompntCode][0].Value;
         }
@@ -80,13 +85,12 @@ export class HoProdCompntComponent implements OnInit {
 
     var mrProdBehaviour = obj.MrProdBehaviour;
 
-    if(mrProdBehaviour == "")
-    {
-      if(this.dictBehaviour[obj.BehaviourType] != undefined){
-        if(this.dictBehaviour[obj.BehaviourType].length > 0){
+    if (mrProdBehaviour == "") {
+      if (this.dictBehaviour[obj.BehaviourType] != undefined) {
+        if (this.dictBehaviour[obj.BehaviourType].length > 0) {
           mrProdBehaviour = this.dictBehaviour[obj.BehaviourType][0].Key;
         }
-      }  
+      }
     }
 
     return this.fb.group({
@@ -98,7 +102,7 @@ export class HoProdCompntComponent implements OnInit {
       BehaviourType: obj.BehaviourType,
       ProdHId: obj.ProdHId,
       ProdDId: obj.ProdDId,
-      CompntValue: [compCode,Validators.required],
+      CompntValue: [compCode, Validators.required],
       CompntValueDesc: compDescr,
       MrProdBehaviour: mrProdBehaviour
     })
@@ -106,8 +110,7 @@ export class HoProdCompntComponent implements OnInit {
 
   async PopulateDDL(obj) {
     var url = obj.ProdCompntDtaSrcApi;
-    if(url != "")
-    {
+    if (url != "") {
       var payload = JSON.parse(obj.ProdCompntDtaValue);
       await this.http.post(url, payload).toPromise().then(
         (response) => {
@@ -119,28 +122,25 @@ export class HoProdCompntComponent implements OnInit {
 
   async PopulateRefBehaviour(obj) {
     var bhvrTypeCode = obj.BehaviourType;
-    if(this.dictBehaviour[bhvrTypeCode] == undefined)
-    {
-      var url = URLConstant.GetRefBehaviourByBehaviourTypeCode;
-      await this.http.post(url, {Code : bhvrTypeCode}).toPromise().then(
-        (response) => {
-          this.dictBehaviour[bhvrTypeCode] = response[CommonConstant.ReturnObj];
+    if (this.dictBehaviour[bhvrTypeCode] == undefined) {
+      this.GenericByCodeObj.Code = bhvrTypeCode;
+      await this.http.post(URLConstant.GetRefBehaviourByBehaviourTypeCode, this.GenericByCodeObj).toPromise().then(
+        (response: GenericKeyValueListObj) => {
+          this.dictBehaviour[bhvrTypeCode] = response.ReturnObject;
         }
       )
     }
   }
 
   LoadProdComponent(ProdHId, CompGroups, IsFilterBizTmpltCode) {
-    var ProdHOComponent = {
-      ProdHId: ProdHId,
-      GroupCodes: CompGroups.split(","),
-      IsFilterBizTmpltCode: IsFilterBizTmpltCode,
-      RowVersion: ""
-    }
-    this.http.post(URLConstant.GetProductHOComponentGrouped, ProdHOComponent).toPromise().then(
-      async (response) => {
-        for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
-          var group = response[CommonConstant.ReturnObj][i];
+    this.ReqGetProdHCompntGroupedObj.ProdHId = ProdHId,
+    this.ReqGetProdHCompntGroupedObj.GroupCodes = CompGroups.split(","),
+    this.ReqGetProdHCompntGroupedObj.IsFilterBizTmpltCode = IsFilterBizTmpltCode,
+
+    this.http.post(URLConstant.GetProductHOComponentGrouped, this.ReqGetProdHCompntGroupedObj).toPromise().then(
+      async (response : ResGetProdCmpntGroupedObj) => {
+        for (var i = 0; i < response.ReturnObject.length; i++) {
+          var group = response.ReturnObject[i];
           var fa_group = this.FormProdComp.controls['groups'] as FormArray;
           fa_group.push(this.addGroup(group.GroupCode, group.GroupName));
 
@@ -148,10 +148,9 @@ export class HoProdCompntComponent implements OnInit {
             var comp = group.Components[j];
             if (comp.ProdCompntType == "DDL") {
               await this.PopulateDDL(comp);
-              
+
             }
-            if(comp.BehaviourType != "")
-            {
+            if (comp.BehaviourType != "") {
               await this.PopulateRefBehaviour(comp);
             }
           }
@@ -160,8 +159,7 @@ export class HoProdCompntComponent implements OnInit {
             var comp = group.Components[j];
             var fa_comp = (<FormArray>this.FormProdComp.controls['groups']).at(i).get('components') as FormArray;
             var comp_group = this.addComponent(comp) as FormGroup;
-            if (comp.ProdCompntType == "AMT")
-            {
+            if (comp.ProdCompntType == "AMT") {
               comp_group.controls['CompntValue'].setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
             }
             fa_comp.push(comp_group);
@@ -186,24 +184,19 @@ export class HoProdCompntComponent implements OnInit {
     }
 
     for (let i = 0; i < list.length; i++) {
-      if(list[i].ProdCompntType == "AMT")
-      {
+      if (list[i].ProdCompntType == "AMT") {
         list[i].CompntValueDesc = list[i].CompntValue;
       }
       list[i].RowVersion = "";
     }
 
-    var objPost = {
-      ProdHId: this.ProdHId,
-      ProductDetails: list
-    }
-
-    return objPost;
+    this.ReqListProductDetailObj = new ReqListProductDetailObj();
+    this.ReqListProductDetailObj.ProdHId = this.ProdHId;
+    this.ReqListProductDetailObj.ProductDetails = list;
   }
 
   SaveForm() {
-    var objPost = this.BuildReqProdDetail();
-    this.http.post(URLConstant.AddOrEditProductDetail, objPost).subscribe(
+    this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.BackToPaging();
@@ -212,8 +205,7 @@ export class HoProdCompntComponent implements OnInit {
   }
 
   NextDetail() {
-    var objPost = this.BuildReqProdDetail();
-    this.http.post(URLConstant.AddOrEditProductDetail, objPost).subscribe(
+    this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.wizard.goToNextStep();
@@ -225,18 +217,16 @@ export class HoProdCompntComponent implements OnInit {
     this.StateSave = state;
   }
 
-  SubmitForm()
-  {
-    if(this.StateSave == "save")
-    {
+  SubmitForm() {
+    this.BuildReqProdDetail();
+    if (this.StateSave == "save") {
       this.SaveForm();
     }
-    else
-    {
+    else {
       this.NextDetail();
     }
   }
-  
+
   DownloadRule(CompntValue, CompntValueDesc) {
     this.DlRuleObj.RuleSetName = CompntValue;
     this.http.post(URLConstant.DownloadProductRule, this.DlRuleObj, { responseType: 'blob' }).subscribe(
@@ -246,20 +236,16 @@ export class HoProdCompntComponent implements OnInit {
     );
   }
 
-  Cancel()
-  {
+  Cancel() {
     this.BackToPaging();
   }
 
-  BackToPaging()
-  {
-    if(this.source == "return")
-    {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_RTN_PAGING],{ });
+  BackToPaging() {
+    if (this.source == "return") {
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_RTN_PAGING], {});
     }
-    else
-    {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_PAGING],{ });
+    else {
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_PAGING], {});
     }
   }
 }

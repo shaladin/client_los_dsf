@@ -142,8 +142,8 @@
     "name": "searchAssetAllocation"
   },
   "orderby": {
-    "key": "A.APP_NO",
-    "value": "false"
+    "key": "AAO.EXPECTED_DLVRY_DT",
+    "value": "true"
   },
   "bodyList": [
     {

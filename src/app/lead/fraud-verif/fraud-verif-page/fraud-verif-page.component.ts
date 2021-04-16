@@ -56,12 +56,11 @@ export class FraudVerifPageComponent implements OnInit {
     this.GetLeadAssetByLeadIdUrl = URLConstant.GetLeadAssetByLeadId;
     this.GetAssetNegativeDuplicateCheckUrl = URLConstant.GetAssetNegativeDuplicateCheck;
     this.GetFraudResult = URLConstant.GetFraudResult;
-    this.AddLeadFraudVerfUrl = URLConstant.AddLeadFraudVerf;
   }
   DuplicateCustObj: DuplicateCustObj = new DuplicateCustObj();
   leadCustObj: LeadCustObj = new LeadCustObj();
   leadAssetObj: LeadAssetObj = new LeadAssetObj();;
-  LeadId: string;
+  LeadId: number;
   WfTaskListId: number;
   GetLeadCustByLeadIdUrl: string;
   GetLeadCustPersonalByLeadCustIdUrl: string;
@@ -81,7 +80,6 @@ export class FraudVerifPageComponent implements OnInit {
   ResultDuplicateAssetNegative: ResDuplicateNegativeAssetObj = new ResDuplicateNegativeAssetObj();
   ResultDuplicateDoubleFinancing: ResDuplicateDoubleFinancingObj = new ResDuplicateDoubleFinancingObj();
   leadFraudVerfObj: LeadFraudVerfObj = new LeadFraudVerfObj();
-  AddLeadFraudVerfUrl: string;
   FraudVerfForm = this.fb.group({
     Notes: ['', [Validators.required]],
   });
@@ -189,7 +187,7 @@ export class FraudVerifPageComponent implements OnInit {
     this.leadFraudVerfObj.VerifyStat = CommonConstant.Reject;
     this.leadFraudVerfObj.Notes = this.FraudVerfForm.controls["Notes"].value;
     this.leadFraudVerfObj.WfTaskListId = this.WfTaskListId;
-    this.http.post(this.AddLeadFraudVerfUrl, this.leadFraudVerfObj).subscribe(
+    this.http.post(URLConstant.AddLeadFraudVerf, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_FRAUD_VERIF_PAGING],{});
@@ -202,8 +200,7 @@ export class FraudVerifPageComponent implements OnInit {
     this.leadFraudVerfObj.VerifyStat = CommonConstant.Verify;
     this.leadFraudVerfObj.Notes = this.FraudVerfForm.controls["Notes"].value;
     this.leadFraudVerfObj.WfTaskListId = this.WfTaskListId;
-
-    this.http.post(this.AddLeadFraudVerfUrl, this.leadFraudVerfObj).subscribe(
+    this.http.post(URLConstant.AddLeadFraudVerf, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_FRAUD_VERIF_PAGING],{});

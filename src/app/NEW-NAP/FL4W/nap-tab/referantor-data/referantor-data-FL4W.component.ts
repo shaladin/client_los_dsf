@@ -13,13 +13,11 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-referantor-data-FL4W',
-  templateUrl: './referantor-data-FL4W.component.html',
-  styleUrls: [],
-  providers: [NGXToastrService]
+  templateUrl: './referantor-data-FL4W.component.html'
 })
 export class ReferantorDataFL4WComponent implements OnInit {
 
-  @Input() appId: any;
+  @Input() appId: number;
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
@@ -73,13 +71,6 @@ export class ReferantorDataFL4WComponent implements OnInit {
     addCrit.listValue = [URLConstant.VendorCategoryAgencyCompany, URLConstant.VendorCategoryAgencyPersonal];
     this.arrAddCrit.push(addCrit);
 
-    // var addCrit1 = new CriteriaObj(); 
-    // addCrit1.DataType = "bool";
-    // addCrit1.propName = "vba.IS_DEFAULT";
-    // addCrit1.restriction = AdInsConstant.RestrictionIn;
-    // addCrit1.listValue = [1];
-    // this.arrAddCrit.push(addCrit1);
-
     var addCrit3 = new CriteriaObj();
     addCrit3.DataType = "text";
     addCrit3.propName = "ro.OFFICE_CODE";
@@ -90,7 +81,6 @@ export class ReferantorDataFL4WComponent implements OnInit {
     //Look Up Obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupVendor.json";
-    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupVendor.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupVendor.json";
@@ -100,10 +90,6 @@ export class ReferantorDataFL4WComponent implements OnInit {
   }
 
   getAppReferantorData() {
-    // data dummy test
-    // var tempId = 11;
-    // this.appId = tempId;
-
     // Check Data App Id
     var obj = {
       Id: this.appId,
@@ -200,10 +186,6 @@ export class ReferantorDataFL4WComponent implements OnInit {
     this.appReferantorObj.ReferantorCode = ev.ReferantorCode;
     this.appReferantorObj.ReferantorName = ev.ReferantorName;
     this.appReferantorObj.MrReferantorType = ev.ReferantorType;
-    // this.appReferantorObj.RefBankCode = ev.BankCode;
-    // this.appReferantorObj.BankAccNo = ev.BankAccNo;
-    // this.appReferantorObj.BankAccName = ev.BankAccName;
-    // this.appReferantorObj.BankBranch;
 
     this.appReferantorObj.TaxpayerNo = ev.TaxPayerNo;
     this.appReferantorObj.TaxIdNo = ev.TaxIdNo;
@@ -220,24 +202,22 @@ export class ReferantorDataFL4WComponent implements OnInit {
     this.NapAppReferantorForm.patchValue({
       AccountBank: ""
     });
-
-    // this.NpwpOn = ev.IsNPWPExist;
     this.NpwpOn = true;
 
     this.getDDLBank(ev.ReferantorCode);
   }
 
   getDDLBank(VendorCode) {
-    var url = URLConstant.GetListVendorBankAccByVendorCode;   
+    var url = URLConstant.GetListVendorBankAccByVendorCode;
 
-    this.http.post(url, {Code : VendorCode}).subscribe(
+    this.http.post(url, { Code: VendorCode }).subscribe(
       (response) => {
         this.bankItems = response[CommonConstant.ReturnObj];
-        var bankItem = this.bankItems.find(x => x.IsDefault == true); 
-     
+        var bankItem = this.bankItems.find(x => x.IsDefault == true);
+
         this.NapAppReferantorForm.patchValue({
-          AccountBank: bankItem.BankCode != null ? bankItem.BankAccountNo : "" 
-        }); 
+          AccountBank: bankItem.BankCode != null ? bankItem.BankAccountNo : ""
+        });
       });
   }
 

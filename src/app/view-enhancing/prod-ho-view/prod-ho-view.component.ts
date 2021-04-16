@@ -2,15 +2,14 @@ import { environment } from "environments/environment";
 import { Component, OnInit, Input } from "@angular/core";
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { saveAs } from 'file-saver';
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
-import { CommonConstant } from "app/shared/constant/CommonConstant";
-import { ProductDetailObj } from "app/shared/model/Request/Product/ProductDetailObj.model";
-import { ProdHVersionObj } from "app/shared/model/Request/Product/ProdHVersionObj.model";
-import { ProductBrancMbrObj } from "app/shared/model/Request/Product/ProductBranchMbrObj.model";
 import { ReqDownloadRuleObj } from "app/shared/model/Request/Product/ReqDownloadRuleObj.model";
+import { ReqGetProdCompntObj } from "app/shared/model/Request/Product/ReqGetProdCompntObj.model";
+import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
+import { ResGetProdDCompntInfoObj, ResProdDCompntObj, ResProdHVersionObj } from "app/shared/model/Response/Product/ResGetProdObj.model";
+import { ResGetProdBranchMbrObj } from "app/shared/model/Response/Product/ResGetProdBranchMbrObj.model";
 
 @Component({
   selector: 'app-prod-ho-view',
@@ -18,42 +17,31 @@ import { ReqDownloadRuleObj } from "app/shared/model/Request/Product/ReqDownload
 })
 export class ProdHoViewComponent implements OnInit {
 
-  @Input() inputProdHId;
-
-  prodId: any;
-  prodHId: any;
-  ProdBranchMemObj: any;
-  ProdVersionObj: any;
-  ProdBranchUrl: any;
-  ProdVerUrl: any;
-  ProdDUrl: any;
-  refProductDetailObj: any;
+  @Input() inputProdHId: number;
+  ProdHId: number;
   GenData: any;
   ProdCompGen: any;
   ProdCompNonGen: any;
   ProdBranchMbr: any;
   ProdVersion: any;
-  ProdComp: any;
   IsLoaded: boolean = false;
+  GenericByIdObj: GenericObj = new GenericObj();
+  ProductDetailObj: ReqGetProdCompntObj = new ReqGetProdCompntObj();
+  ProdComp: Array<ResProdDCompntObj> = new Array<ResProdDCompntObj>();
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  DlRuleObj  : ReqDownloadRuleObj = new ReqDownloadRuleObj();
-  
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
+  DlRuleObj: ReqDownloadRuleObj = new ReqDownloadRuleObj();
 
-    this.ProdDUrl = URLConstant.GetProductDetailComponentInfo;
-    this.ProdBranchUrl = URLConstant.GetListProdBranchOfficeMbrByProdHId;
-    this.ProdVerUrl = URLConstant.GetListProdHByProdCurrentProdHId;
-
+  constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params["prodHId"] != null) {
-        this.prodHId = params["prodHId"];
+        this.ProdHId = params["prodHId"];
       }
     });
   }
 
   async ngOnInit(): Promise<void> {
-    if (this.prodHId == undefined) {
-      this.prodHId = this.inputProdHId;
+    if (this.ProdHId == undefined) {
+      this.ProdHId = this.inputProdHId;
     }
 
     //** Main Information **//
@@ -61,30 +49,26 @@ export class ProdHoViewComponent implements OnInit {
     this.viewGenericObj.viewEnvironment = environment.losUrl;
 
     //** Product Version **//
-    this.ProdVersionObj = new ProdHVersionObj()
-    this.ProdVersionObj.ProdHId = this.prodHId;
-    this.http.post(this.ProdVerUrl, {Id : this.prodHId}).subscribe(
-      response => {
-        this.ProdVersion = response[CommonConstant.ReturnObj];
+    this.GenericByIdObj.Id = this.ProdHId;
+    this.http.post(URLConstant.GetListProdHByProdCurrentProdHId, this.GenericByIdObj).subscribe(
+      (response : ResProdHVersionObj) => {
+        this.ProdVersion = response.ReturnObject
       }
     );
 
     //** Office Member **//
-    this.ProdBranchMemObj = new ProductBrancMbrObj()
-    this.ProdBranchMemObj.ProdHId = this.prodHId;
-    this.http.post(this.ProdBranchUrl, {Id : this.prodHId}).subscribe(
-      response => {
-        this.ProdBranchMbr = response[CommonConstant.ReturnObj];
+    this.http.post(URLConstant.GetListProdBranchOfficeMbrByProdHId, this.GenericByIdObj).subscribe(
+      (response : ResGetProdBranchMbrObj) => {
+        this.ProdBranchMbr = response.ReturnObject;
       }
     );
 
     //** Product Component **//
-    this.refProductDetailObj = new ProductDetailObj();
-    this.refProductDetailObj.ProdHId = this.prodHId;
-    this.refProductDetailObj.GroupCodes = ['GEN', 'SCHM', 'SCORE', 'RULE', 'OTHR', 'LOS'];
-    await this.http.post(this.ProdDUrl, this.refProductDetailObj).toPromise().then(
-      response => {
-        this.ProdComp = response[CommonConstant.ReturnObj].ProdOffComponents;
+    this.ProductDetailObj.ProdHId = this.ProdHId;
+    this.ProductDetailObj.GroupCodes = ['GEN', 'SCHM', 'SCORE', 'RULE', 'OTHR', 'LOS'];
+    await this.http.post(URLConstant.GetProductDetailComponentInfo, this.ProductDetailObj).toPromise().then(
+      (response : ResGetProdDCompntInfoObj) => {
+        this.ProdComp = response.ReturnObject.ProdOffComponents;
         this.GenData = this.ProdComp.filter(
           comp => comp.GroupCode == 'GEN');
         this.ProdCompGen = this.GenData[0];
@@ -93,7 +77,6 @@ export class ProdHoViewComponent implements OnInit {
         this.IsLoaded = true;
       }
     );
-
   }
 
   DownloadRule(CompntValue, CompntValueDesc) {

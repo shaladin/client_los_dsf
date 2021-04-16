@@ -20,8 +20,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'cust-main-data-add',
-  templateUrl: './cust-main-data-add.component.html',
-  providers: [NGXToastrService]
+  templateUrl: './cust-main-data-add.component.html'
 })
 export class CustMainDataAddComponent implements OnInit {
 
@@ -85,7 +84,6 @@ export class CustMainDataAddComponent implements OnInit {
 
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObjCopyProduct.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
@@ -93,7 +91,6 @@ export class CustMainDataAddComponent implements OnInit {
 
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjName.urlEnviPaging = environment.tempUrl;
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
@@ -191,7 +188,6 @@ export class CustMainDataAddComponent implements OnInit {
     this.NapAppForm.get("ProductOfferingNameIdentifier").patchValue({
       value: ev.ProdOfferingName
     });
-    // this.inputLookupObjName.nameSelect = ev.ProdOfferingName;
     this.inputLookupObjName.isRequired = false;
     this.isCopyData = true;
   }
@@ -210,17 +206,21 @@ export class CustMainDataAddComponent implements OnInit {
         for (let i = 0; i < listD.length; i++) {
           if (listD[i].RefProdCompntCode == CommonConstant.RefProdCompntLob) {
             tempLobCode = listD[i].CompntValue;
-          } else if (listD[i].RefProdCompntCode == CommonConstant.RefProdCompntCurr) {
+          }
+          else if (listD[i].RefProdCompntCode == CommonConstant.RefProdCompntCurr) {
             tempCurrCode = listD[i].CompntValue;
             tempCurrDescr = listD[i].CompntValueDesc;
-          } else if (listD[i].RefProdCompntCode == CommonConstant.RefProdCompntPayFreq) {
+          }
+          else if (listD[i].RefProdCompntCode == CommonConstant.RefProdCompntPayFreq) {
             let listPayFreqCode = listD[i].CompntValue.split(";");
             if (listPayFreqCode.length == 1) {
               tempPayFreqCode = listD[i].CompntValue;
-            } else {
+            }
+            else {
               tempPayFreqCode = null;
             }
-          } else if (listD[i].RefProdCompntCode == CommonConstant.RefProdCompntProdType) {
+          }
+          else if (listD[i].RefProdCompntCode == CommonConstant.RefProdCompntProdType) {
             tempRefProdTypeCode = listD[i].CompntValue;
           }
         }
@@ -234,7 +234,8 @@ export class CustMainDataAddComponent implements OnInit {
           PayFreqCode: tempPayFreqCode,
           RefProdTypeCode: tempRefProdTypeCode
         });
-      });
+      }
+    );
   }
 
   SaveForm() {
@@ -258,7 +259,8 @@ export class CustMainDataAddComponent implements OnInit {
 
       requestAddNapObj = reqAddNapObj;
       AddNapUrl = URLConstant.AddNewApplication;
-    } else {
+    }
+    else {
 
       let reqAddNapFromCopyObj: ReqAddNapFromCopyObj = new ReqAddNapFromCopyObj();
 
@@ -266,7 +268,12 @@ export class CustMainDataAddComponent implements OnInit {
       reqAddNapFromCopyObj.OriOfficeCode = this.NapAppForm.getRawValue().OriOfficeCode;
 
       requestAddNapObj = reqAddNapFromCopyObj;
-      AddNapUrl = URLConstant.AddNewApplicationFromCopy;
+      if (this.bizTemplateCode === CommonConstant.OPL) {
+        AddNapUrl = URLConstant.AddNewApplicationOplFromCopy;
+      }
+      else {
+        AddNapUrl = URLConstant.AddNewApplicationFromCopy;
+      }
     }
 
     this.http.post<GenericObj>(AddNapUrl, requestAddNapObj).subscribe(
@@ -293,7 +300,8 @@ export class CustMainDataAddComponent implements OnInit {
             AdInsHelper.RedirectUrl(this.router, ["Nap/OPL/NAP1"], { "AppId": response.Id });
             break;
         }
-      });
+      }
+    );
   }
 
   buttonCancelClick() {

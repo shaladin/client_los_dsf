@@ -4,26 +4,20 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-lookup-collateral',
-  templateUrl: './lookup-collateral.component.html',
-  styles: []
+  templateUrl: './lookup-collateral.component.html'
 })
 export class LookupCollateralComponent implements OnInit {
   @Input() AssetTypeCode: string;
-  inputObj: UcPagingObj;
+  inputObj: UcPagingObj = new UcPagingObj();
 
-  constructor(
-    public activeModal: NgbActiveModal
-  ) { }
+  constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
-    this.inputObj = new UcPagingObj();
-    this.inputObj._url="./assets/uclookup/Collateral/lookupCollateralType.json";
+    this.inputObj._url = "./assets/uclookup/Collateral/lookupCollateralType.json";
     this.inputObj.enviromentUrl = environment.FoundationR3Url;
-    this.inputObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputObj.pagingJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
     var criteriaList = new Array<CriteriaObj>();
     var criteriaObj = new CriteriaObj();
@@ -34,7 +28,7 @@ export class LookupCollateralComponent implements OnInit {
     this.inputObj.addCritInput = criteriaList;
   }
 
-  GetResult(e){
+  GetResult(e) {
     this.activeModal.close(e);
   }
 
