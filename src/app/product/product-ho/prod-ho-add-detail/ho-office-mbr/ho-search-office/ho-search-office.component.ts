@@ -7,17 +7,20 @@ import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { ReqListProdBranchMbrObj } from 'app/shared/model/Request/Product/ReqAddProdBranchMbrObj.model';
+import { ReqListProdBranchMbrObj, ReqProdBranchMbrDomainObj } from 'app/shared/model/Request/Product/ReqAddProdBranchMbrObj.model';
+import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/ProdOfficePassingObj.model';
 @Component({
   selector: 'app-ho-search-office',
   templateUrl: './ho-search-office.component.html'
 })
 export class HoSearchOfficeComponent implements OnInit {
-  listSelected: Array<any> = new Array<any>();
-  tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
-  @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
-  @Input() ListOfficeMemberObjInput: any;
+  @Input() ProdHId : number;
+  @Output() ComponentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter<ProdOfficePassingObj>();
+  @Input() ListOfficeMemberObjInput: Array<string> = new Array<string>();
+  ListSelected: Array<ReqProdBranchMbrDomainObj> = new Array<ReqProdBranchMbrDomainObj>();
+  TempPagingObj: UcTempPagingObj = new UcTempPagingObj();
   ReqListProdBranchMbrObj: ReqListProdBranchMbrObj = new ReqListProdBranchMbrObj();
+  PassingObj: ProdOfficePassingObj = new ProdOfficePassingObj();
 
   constructor(
     private http: HttpClient,
@@ -26,59 +29,53 @@ export class HoSearchOfficeComponent implements OnInit {
 
 
   ngOnInit() {
-    this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/product/productHOfficeMbrTempPaging.json";
-    this.tempPagingObj.enviromentUrl = environment.FoundationR3Url;
-    this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/product/productHOfficeMbrTempPaging.json";
-    this.tempPagingObj.ddlEnvironments = [
+    this.TempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/product/productHOfficeMbrTempPaging.json";
+    this.TempPagingObj.enviromentUrl = environment.FoundationR3Url;
+    this.TempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/product/productHOfficeMbrTempPaging.json";
+    this.TempPagingObj.ddlEnvironments = [
       {
         name: "ROA.AREA_CODE",
         environment: environment.FoundationR3Url
       }
     ];
 
-    if (this.ListOfficeMemberObjInput["result"].length != 0) {
-      var addCrit = new CriteriaObj();
+    if (this.ListOfficeMemberObjInput.length != 0) {
+      let addCrit = new CriteriaObj();
       addCrit.propName = "RO.OFFICE_CODE";
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
-      addCrit.listValue = this.ListOfficeMemberObjInput["result"];
-      this.tempPagingObj.addCritInput.push(addCrit);
+      addCrit.listValue = this.ListOfficeMemberObjInput;
+      this.TempPagingObj.addCritInput.push(addCrit);
     }
-    this.tempPagingObj.isReady = true;
+    this.TempPagingObj.isReady = true;
   }
 
   GoBack() {
-    var obj = {
-      isOn: true,
-      result: []
-    }
-    this.componentIsOn.emit(obj);
+    this.PassingObj.isOn = true;
+    this.ComponentIsOn.emit(this.PassingObj);
   }
 
   getListTemp(ev) {
-    this.listSelected = ev;
+    this.ListSelected = ev["TempListObj"];
   }
 
   SaveForm() {
-    if (this.listSelected.length == 0) {
+    if (this.ListSelected.length == 0) {
       this.toastr.errorMessage(ExceptionConstant.ADD_MIN_1_DATA);
       return;
     }
 
-    this.ReqListProdBranchMbrObj.ProductBranchMbrs = this.listSelected["TempListObj"];
+    this.ReqListProdBranchMbrObj.ProductBranchMbrs = this.ListSelected;
 
     for (var i = 0; i < this.ReqListProdBranchMbrObj.ProductBranchMbrs.length; i++) {
-      this.ReqListProdBranchMbrObj.ProductBranchMbrs[i].ProdHId = this.ListOfficeMemberObjInput["ProdHId"],
+      this.ReqListProdBranchMbrObj.ProductBranchMbrs[i].ProdHId = this.ProdHId,
         this.ReqListProdBranchMbrObj.ProductBranchMbrs[i].RowVersion = "";
     }
 
     this.http.post(URLConstant.AddProductOfficeMbrBatch, this.ReqListProdBranchMbrObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        var obj = {
-          isOn: true,
-          result: []
-        }
-        this.componentIsOn.emit(obj);
+        this.PassingObj.isOn = true;
+        this.ComponentIsOn.emit(this.PassingObj);
       }
     );
   }

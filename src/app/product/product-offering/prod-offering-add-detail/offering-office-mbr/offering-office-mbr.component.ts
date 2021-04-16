@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/ProdOfficePassingObj.model';
 
 @Component({
   selector: 'app-offering-office-mbr',
@@ -6,21 +7,20 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class OfferingOfficeMbrComponent implements OnInit {
 
-  isOn: boolean;
-  @Input() objInput: any;
-  @Input() ProdHId: any;
-  ListOfficeMemberObj: any = {};
+  IsOn: boolean;
+  @Input() ProdOfferingHId: number;
+  @Input() ProdHId: number;
+  ListOfficeMemberObj: Array<string> = new Array<string>();
   
   constructor() { }
 
   ngOnInit() {
-    this.isOn = true;
-    this.ListOfficeMemberObj["ProdOfferingHId"]=this.objInput["ProdOfferingHId"];
-    this.ListOfficeMemberObj["result"] = [];
+    this.IsOn = true;
+    this.ListOfficeMemberObj = [];
   }
 
-  ChangeComponent(ev: any){
-    this.isOn = ev.isOn;
-    this.ListOfficeMemberObj["result"] = ev.result;
+  ChangeComponent(ev: ProdOfficePassingObj){
+    this.IsOn = ev.isOn;
+    this.ListOfficeMemberObj = ev.result;
   }
 }

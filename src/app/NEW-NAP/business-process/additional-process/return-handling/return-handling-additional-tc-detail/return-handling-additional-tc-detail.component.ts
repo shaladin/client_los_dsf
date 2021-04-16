@@ -18,6 +18,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { NumberValueAccessor } from '@angular/forms/src/directives';
 import { CookieService } from 'ngx-cookie';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-return-handling-additional-tc-detail',
@@ -418,8 +419,8 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
             appTcObj.IsExpDtMandatory = response["IsExpDtMandatory"];
           }
           this.http.post(URLConstant.AddAppTc, this.ReqTCObj).subscribe(
-            (response: Array<AppTCObj>) => {
-              appTcObj.AppTcId = response[0].AppTcId;
+            (response: Array<GenericObj>) => {
+              appTcObj.AppTcId = response[0].Id;
               appTcObj.RowVersion = response[0].RowVersion;
               fa_apptc.push(this.AddTcControl(appTcObj));
             });

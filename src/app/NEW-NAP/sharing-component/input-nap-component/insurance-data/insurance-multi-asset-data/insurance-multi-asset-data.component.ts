@@ -342,7 +342,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   // Insurance Methods
   SaveForm(formDirective: FormGroupDirective) {
     var insuredBy = this.InsuranceDataForm.controls.InsAssetCoveredBy.value;
-    var insCpltzAmt;
+    var insCpltzAmt: number;
     if (insuredBy == CommonConstant.InsuredByCompany || insuredBy == CommonConstant.InsuredByCustomerCompany) {
       var custDiscAmt = this.InsuranceDataForm.controls.TotalCustDiscAmt.value;
       var totalPremiToCust = this.InsuranceDataForm.controls.TotalCustMainPremiAmt.value + this.InsuranceDataForm.controls.TotalCustAddPremiAmt.value + this.InsuranceDataForm.controls.TotalCustFeeAmt.value;
@@ -386,13 +386,24 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       }
     }
     this.setSaveObj(insuredBy);
-    this.http.post(URLConstant.AddEditInsuranceDataMultiAsset, this.saveObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["Message"]);
-        this.BindMultiInsGridData();
-        formDirective.resetForm();
-        this.PageState = 'Paging';
-      });
+
+    if(this.appInsObjId == 0){      
+      this.http.post(URLConstant.AddInsuranceDataMultiAsset, this.saveObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["Message"]);
+          this.BindMultiInsGridData();
+          formDirective.resetForm();
+          this.PageState = 'Paging';
+        });
+    }else{      
+      this.http.post(URLConstant.EditInsuranceDataMultiAsset, this.saveObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["Message"]);
+          this.BindMultiInsGridData();
+          formDirective.resetForm();
+          this.PageState = 'Paging';
+        });
+    }
   }
 
   Cancel() {

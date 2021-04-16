@@ -12,21 +12,22 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqAddEditProdOfferingDObj } from 'app/shared/model/Request/Product/ReqAddEditProdOfferingObj.model';
+import { ReqAddEditProdOfferingDObj, ReqCopyProductOfferingObj } from 'app/shared/model/Request/Product/ReqAddEditProdOfferingObj.model';
 import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 @Component({
   selector: 'app-offering-general-data',
   templateUrl: './offering-general-data.component.html'
 })
 export class OfferingGeneralDataComponent implements OnInit {
 
-  @Input() objInput: any;
-  ProdOfferingHId: number;
-  prodOfferingId: number;
-  source: string = "";
-  inputLookUpObj: InputLookupObj = new InputLookupObj();
-  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
-  listGeneralDataObj : ReqAddEditProdOfferingDObj = new ReqAddEditProdOfferingDObj();
+  @Input() ProdOfferingHId: number;
+  @Input() ProdOfferingId: number;
+  Source: string = "";
+  InputLookUpObj: InputLookupObj = new InputLookupObj();
+  ArrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
+  ListGeneralDataObj : ReqAddEditProdOfferingDObj = new ReqAddEditProdOfferingDObj();
+  ReqCopyProductOffObj: ReqCopyProductOfferingObj = new ReqCopyProductOfferingObj();
 
   FormCopyProdOffering = this.fb.group(
     {
@@ -44,43 +45,40 @@ export class OfferingGeneralDataComponent implements OnInit {
     private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
-      this.source = params["source"];
+      this.Source = params["source"];
     });
   }
 
   ngOnInit() {
-    this.ProdOfferingHId = this.objInput["ProdOfferingHId"];
-    this.prodOfferingId = this.objInput["ProdOfferingId"];
-
     this.initLookup();
   }
 
   initLookup() {
     let user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    this.inputLookUpObj.urlJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
-    this.inputLookUpObj.pagingJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
-    this.inputLookUpObj.genericJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
-    this.inputLookUpObj.isRequired = false;
+    this.InputLookUpObj.urlJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
+    this.InputLookUpObj.pagingJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
+    this.InputLookUpObj.genericJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
+    this.InputLookUpObj.isRequired = false;
 
-    var critObj = new CriteriaObj();
+    let critObj = new CriteriaObj();
     critObj.propName = 'PO.PROD_OFFERING_ID';
     critObj.restriction = AdInsConstant.RestrictionNeq;
-    critObj.value = this.prodOfferingId.toString();
-    this.arrCrit.push(critObj);
+    critObj.value = this.ProdOfferingId.toString();
+    this.ArrCrit.push(critObj);
 
     critObj = new CriteriaObj();
     critObj.propName = 'PO.REF_OFFICE_ID';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.value = user.OfficeId;
-    this.arrCrit.push(critObj);
+    this.ArrCrit.push(critObj);
 
-    this.inputLookUpObj.addCritInput = this.arrCrit;
+    this.InputLookUpObj.addCritInput = this.ArrCrit;
   }
 
   SaveForm(event) {
     this.generateSaveObj(event);
-    this.http.post(URLConstant.AddOrEditProdOfferingDetail, this.listGeneralDataObj).subscribe(
+    this.http.post(URLConstant.AddOrEditProdOfferingDetail, this.ListGeneralDataObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PROD_OFFERING_PAGING], {});
@@ -89,12 +87,14 @@ export class OfferingGeneralDataComponent implements OnInit {
   }
 
   reload() {
-    if (this.inputLookUpObj.jsonSelect["ProdOfferingId"] == undefined) {
-      this.toastr.warningMessage("Please select Product Offering to copied");
+    if (this.InputLookUpObj.jsonSelect["ProdOfferingId"] == undefined) {
+      this.toastr.warningMessage(ExceptionConstant.SELECT_PROD_OFF_TO_COPY);
     }
     else {
-      if (confirm('This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?')) {
-        this.http.post(URLConstant.CopyProductOffering, { ProdOfferingHId: this.ProdOfferingHId, FromProdOfferingId: this.inputLookUpObj.jsonSelect["ProdOfferingId"] }).subscribe(
+      if (confirm(ExceptionConstant.CONFIRM_PROD_OFF_TO_COPY)) {
+        this.ReqCopyProductOffObj.ProdOfferingHId = this.ProdOfferingHId;
+        this.ReqCopyProductOffObj.FromProdOfferingId = this.InputLookUpObj.jsonSelect["ProdOfferingId"];
+        this.http.post(URLConstant.CopyProductOffering, this.ReqCopyProductOffObj).subscribe(
           (response) => {
             this.toastr.successMessage("Product Offering Copied Successfully");
             window.location.reload();
@@ -106,7 +106,7 @@ export class OfferingGeneralDataComponent implements OnInit {
 
   NextDetail(event) {
     this.generateSaveObj(event);
-    this.http.post(URLConstant.AddOrEditProdOfferingDetail, this.listGeneralDataObj).subscribe(
+    this.http.post(URLConstant.AddOrEditProdOfferingDetail, this.ListGeneralDataObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.wizard.goToNextStep();
@@ -115,11 +115,11 @@ export class OfferingGeneralDataComponent implements OnInit {
   }
 
   generateSaveObj(event) {
-    this.listGeneralDataObj.ProdOfferingHId = this.objInput["ProdOfferingHId"];
+    this.ListGeneralDataObj.ProdOfferingHId = this.ProdOfferingHId;
     for (var i = 0; i < event.length; i++) {
-      var GeneralDataObj = new ProdOfferingDObj();
+      let GeneralDataObj = new ProdOfferingDObj();
       GeneralDataObj.ProdOfferingDId = event[i].ProdOfferingDId;
-      GeneralDataObj.ProdOfferingHId = this.objInput["ProdOfferingHId"];
+      GeneralDataObj.ProdOfferingHId = this.ProdOfferingHId;
       GeneralDataObj.RefProdCompntCode = event[i].RefProdCompntCode;
       GeneralDataObj.RefProdCompntGrpCode = event[i].RefProdCompntGrpCode;
       if (event[i].IsProdOffering == true) {
@@ -131,7 +131,7 @@ export class OfferingGeneralDataComponent implements OnInit {
         GeneralDataObj.CompntValueDesc = event[i].HOCompntValueDesc;
         GeneralDataObj.MrProdBehaviourCode = event[i].HOMrProdBehaviour;
       }
-      this.listGeneralDataObj.ProdOfferingDetails.push(GeneralDataObj);
+      this.ListGeneralDataObj.ProdOfferingDetails.push(GeneralDataObj);
     }
   }
 
@@ -140,7 +140,7 @@ export class OfferingGeneralDataComponent implements OnInit {
   }
 
   BackToPaging() {
-    if (this.source == "return") {
+    if (this.Source == "return") {
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PROD_OFFERING_RTN_PAGING], {});
     }
     else {

@@ -8,22 +8,24 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ResGetProdOfferingBranchMbrObj } from 'app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model';
-import { ReqListProdOfferingBranchMbrObj } from 'app/shared/model/Request/Product/ReqAddProdOfferingBranchMbrObj.model';
+import { ReqListProdOfferingBranchMbrObj, ReqProdOfferingBranchMbrDomainObj } from 'app/shared/model/Request/Product/ReqAddProdOfferingBranchMbrObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-
+import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/ProdOfficePassingObj.model';
 @Component({
   selector: 'app-offering-search-office',
   templateUrl: './offering-search-office.component.html'
 })
 export class OfferingSearchOfficeComponent implements OnInit {
-  @Input() ListOfficeMemberObjInput: any;
+  @Input() ListOfficeMemberObjInput: Array<string> = new Array<string>();
+  @Input() ProdOfferingHId: number;
   @Input() ProdHId: number;
-  @Output() componentIsOn: EventEmitter<any> = new EventEmitter();
+  @Output() ComponentIsOn: EventEmitter<ProdOfficePassingObj> = new EventEmitter<ProdOfficePassingObj>();
   GenericByIdObj : GenericObj = new GenericObj();
-  listSelected: Array<any> = new Array<any>();
-  arrListId: Array<number> = new Array<number>();
-  tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
+  ArrListCode: Array<string> = new Array<string>();
+  TempPagingObj: UcTempPagingObj = new UcTempPagingObj();
+  PassingObj: ProdOfficePassingObj = new ProdOfficePassingObj();
   ReqListProdBranchMbrObj : ReqListProdOfferingBranchMbrObj = new ReqListProdOfferingBranchMbrObj();
+  ListSelected: Array<ReqProdOfferingBranchMbrDomainObj> = new Array<ReqProdOfferingBranchMbrDomainObj>();
 
   constructor(
     private http: HttpClient,
@@ -32,10 +34,10 @@ export class OfferingSearchOfficeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
-    this.tempPagingObj.enviromentUrl = environment.FoundationR3Url;
-    this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
-    this.tempPagingObj.ddlEnvironments = [
+    this.TempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
+    this.TempPagingObj.enviromentUrl = environment.FoundationR3Url;
+    this.TempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
+    this.TempPagingObj.ddlEnvironments = [
       {
         name: "ROA.AREA_CODE",
         environment: environment.FoundationR3Url
@@ -45,61 +47,55 @@ export class OfferingSearchOfficeComponent implements OnInit {
     this.GenericByIdObj.Id = this.ProdHId;
     this.http.post<ResGetProdOfferingBranchMbrObj>(URLConstant.GetListProdBranchOfficeMbrByProdHId, this.GenericByIdObj).subscribe(
       response => {
-        for (let i = 0; i < response["ReturnObject"].length; i++) {
-          this.arrListId.push(response["ReturnObject"][i]["OfficeCode"]);
+        for (let i = 0; i < response.ReturnObject.length; i++) {
+          this.ArrListCode.push(response.ReturnObject[i].OfficeCode);
         }
-        var addCrit = new CriteriaObj();
+        let addCrit = new CriteriaObj();
         addCrit.propName = "RO.OFFICE_CODE";
         addCrit.restriction = AdInsConstant.RestrictionIn;
-        addCrit.listValue = this.arrListId;
-        this.tempPagingObj.addCritInput.push(addCrit);
+        addCrit.listValue = this.ArrListCode;
+        this.TempPagingObj.addCritInput.push(addCrit);
 
       }
     );
 
-    if (this.ListOfficeMemberObjInput["result"].length != 0) {
-      var addCrit = new CriteriaObj();
+    if (this.ListOfficeMemberObjInput.length != 0) {
+      let addCrit = new CriteriaObj();
       addCrit.propName = "RO.OFFICE_CODE";
       addCrit.restriction = AdInsConstant.RestrictionNotIn;
-      addCrit.listValue = this.ListOfficeMemberObjInput["result"];
-      this.tempPagingObj.addCritInput.push(addCrit);
+      addCrit.listValue = this.ListOfficeMemberObjInput;
+      this.TempPagingObj.addCritInput.push(addCrit);
     }
-    this.tempPagingObj.isReady = true;
+    this.TempPagingObj.isReady = true;
   }
 
   GoBack() {
-    var obj = {
-      isOn: true,
-      result: []
-    }
-    this.componentIsOn.emit(obj);
+    this.PassingObj.isOn = true;
+    this.ComponentIsOn.emit(this.PassingObj);
   }
 
   getListTemp(ev) {
-    this.listSelected = ev["TempListObj"];
+    this.ListSelected = ev["TempListObj"];
   }
 
   SaveForm() {
-    if (this.listSelected.length == 0) {
+    if (this.ListSelected.length == 0) {
       this.toastr.errorMessage(ExceptionConstant.ADD_MIN_1_DATA);
       return;
     }
   
-    this.ReqListProdBranchMbrObj.ProdOfferingBranchMbrs = this.listSelected
+    this.ReqListProdBranchMbrObj.ProdOfferingBranchMbrs = this.ListSelected
 
-    for (var i = 0; i < this.listSelected.length; i++) {
-      this.ReqListProdBranchMbrObj.ProdOfferingBranchMbrs[i].ProdOfferingHId = this.ListOfficeMemberObjInput["ProdOfferingHId"],
+    for (var i = 0; i < this.ListSelected.length; i++) {
+      this.ReqListProdBranchMbrObj.ProdOfferingBranchMbrs[i].ProdOfferingHId = this.ProdOfferingHId,
       this.ReqListProdBranchMbrObj.ProdOfferingBranchMbrs[i].RowVersion = "";
     }
 
     this.http.post(URLConstant.AddProdOfferingOfficeMbrBatch, this.ReqListProdBranchMbrObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        var obj = {
-          isOn: true,
-          result: []
-        }
-        this.componentIsOn.emit(obj);
+        this.PassingObj.isOn = true;
+        this.ComponentIsOn.emit(this.PassingObj);
       }
     );
   }

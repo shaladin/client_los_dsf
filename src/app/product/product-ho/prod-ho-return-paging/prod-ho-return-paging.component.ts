@@ -8,18 +8,18 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './prod-ho-return-paging.component.html'
 })
 export class ProdHoReturnPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj = new UcPagingObj();
+  InputPagingObj: UcPagingObj = new UcPagingObj();
 
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.inputPagingObj._url = "./assets/ucpaging/product/searchProductHOReturn.json";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHOReturn.json";
+    this.InputPagingObj._url = "./assets/ucpaging/product/searchProductHOReturn.json";
+    this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHOReturn.json";
 
     let WVProdStatObj = new WhereValueObj();
     WVProdStatObj.property = "ProdStat";
     WVProdStatObj.value = "RET";
-    this.inputPagingObj.whereValue.push(WVProdStatObj);
+    this.InputPagingObj.whereValue.push(WVProdStatObj);
   }
 
   EditButtonClick(e) {

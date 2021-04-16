@@ -110,10 +110,12 @@ export class CcContactInformationTabComponent implements OnInit {
     this.ddlMrCustRelationshipObj.requestObj = { "RefMasterTypeCode": this.MasterCustRelationCode };
   }
 
+  isDataExist: boolean = false;
   async GetAppCustCompanyContactPersonByAppCustId() {
     await this.http.post<AppCustCompanyContactPersonObj>(URLConstant.GetAppCustCompanyContactPersonByAppCustId, { "Id": this.AppCustId }).toPromise().then(
       (response) => {
         if (response.AppCustCompanyContactPersonId != 0) {
+          this.isDataExist = true;
           this.TempAppCustCompanyContactPersonObj = response;
           this.CcForm.patchValue({
             ContactPersonName: response.ContactPersonName,
@@ -289,10 +291,18 @@ export class CcContactInformationTabComponent implements OnInit {
     ReqCcObj.PhnExt2 = obj[this.InputAddressObjForCc_Identifier].PhnExt2;
     ReqCcObj.AppCustAddrObj = ReqAddr;
 
-    await this.http.post(URLConstant.AddOrEditAppCustCompanyContactPerson, ReqCcObj).toPromise().then(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-      }
-    );
+    if(!this.isDataExist){      
+      await this.http.post(URLConstant.AddAppCustCompanyContactPerson, ReqCcObj).toPromise().then(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+        }
+      );
+    }else{      
+      await this.http.post(URLConstant.EditAppCustCompanyContactPerson, ReqCcObj).toPromise().then(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+        }
+      );
+    }
   }
 }

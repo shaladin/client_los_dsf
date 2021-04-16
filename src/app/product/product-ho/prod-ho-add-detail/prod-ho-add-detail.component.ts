@@ -7,12 +7,11 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
   templateUrl: './prod-ho-add-detail.component.html'
 })
 export class ProdHoAddDetailComponent implements OnInit {
-  mode: string = "add";
   ProdId: number;
   ProdHId: number;
-  source: string = "";
-  type: string;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  Source: string = "";
+  Type: string;
+  ViewGenericObj: UcViewGenericObj = new UcViewGenericObj();
 
   constructor(
     private route: ActivatedRoute,
@@ -20,22 +19,22 @@ export class ProdHoAddDetailComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.ProdHId = params["ProdHId"];
       this.ProdId = params["ProdId"];
-      this.source = params["source"];
+      this.Source = params["source"];
     })
   }
 
   ngOnInit() {
-    if(this.source == "return")
+    if(this.Source == "return")
     {
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformationReturn.json";
+      this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformationReturn.json";
     }
     else{
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformation.json";
+      this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformation.json";
     }
-    this.viewGenericObj.whereValue.push(this.ProdHId);
+    this.ViewGenericObj.whereValue.push(this.ProdHId);
   }
 
-  EnterTab(type) {
-    this.type = type;
+  EnterTab(type: string) {
+    this.Type = type;
   }
 }

@@ -9,16 +9,16 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './prod-offering-paging.component.html'
 })
 export class ProdOfferingPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj = new UcPagingObj();
+  InputPagingObj: UcPagingObj = new UcPagingObj();
   readonly AddLink: string = NavigationConstant.PROD_OFFERING_ADD;
   
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.inputPagingObj._url = "./assets/ucpaging/product/searchProductOffering.json";
-    this.inputPagingObj.deleteUrl = "/RefBank/DeleteRefBank";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOffering.json";
-    this.inputPagingObj.ddlEnvironments = [
+    this.InputPagingObj._url = "./assets/ucpaging/product/searchProductOffering.json";
+    this.InputPagingObj.deleteUrl = "/RefBank/DeleteRefBank";
+    this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOffering.json";
+    this.InputPagingObj.ddlEnvironments = [
       {
         name: "A.Prod_Offering_Stat",
         environment: environment.FoundationR3Url
@@ -28,12 +28,12 @@ export class ProdOfferingPagingComponent implements OnInit {
     let WVTrxTypeCodeObj = new WhereValueObj();
     WVTrxTypeCodeObj.property = "TrxTypeCode";
     WVTrxTypeCodeObj.value = "PROD";
-    this.inputPagingObj.whereValue.push(WVTrxTypeCodeObj);
+    this.InputPagingObj.whereValue.push(WVTrxTypeCodeObj);
 
     let WVProdStatObj = new WhereValueObj();
     WVProdStatObj.property = "ProdOfferingStat";
     WVProdStatObj.value = "RET";
-    this.inputPagingObj.whereValue.push(WVProdStatObj);
+    this.InputPagingObj.whereValue.push(WVProdStatObj);
   }
 
   EditProdOfr(e) {

@@ -9,7 +9,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './prod-ho-paging.component.html'
 })
 export class ProdHoPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj = new UcPagingObj();
+  InputPagingObj: UcPagingObj = new UcPagingObj();
   readonly AddLink: string = NavigationConstant.PRODUCT_HO_ADD;
   
   constructor(private router: Router) { }
@@ -18,11 +18,11 @@ export class ProdHoPagingComponent implements OnInit {
     let whereValueObj = new WhereValueObj();
     whereValueObj.property = "ProdStat";
     whereValueObj.value = "RET";
-    this.inputPagingObj.whereValue.push(whereValueObj);
+    this.InputPagingObj.whereValue.push(whereValueObj);
 
-    this.inputPagingObj._url = "./assets/ucpaging/product/searchProductHO.json";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHO.json";
-    this.inputPagingObj.ddlEnvironments = [
+    this.InputPagingObj._url = "./assets/ucpaging/product/searchProductHO.json";
+    this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHO.json";
+    this.InputPagingObj.ddlEnvironments = [
       {
         name: "A.PROD_STAT",
         environment: environment.FoundationR3Url

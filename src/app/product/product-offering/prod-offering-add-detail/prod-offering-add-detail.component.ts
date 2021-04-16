@@ -11,17 +11,15 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
   templateUrl: './prod-offering-add-detail.component.html'
 })
 export class ProdOfferingAddDetailComponent implements OnInit {
-
-  objPassing: any = {};
-  source:string ="";
-  param: string;
   ProdOfferingHId: number;
+  ProdOfferingId: number;
   ProdHId: number;
-  isGeneralData: boolean = true;
-  isProdCompnt: boolean = false;
-  isOfficeMbr: boolean = false;
+  IsGeneralData: boolean = true;
+  IsProdCompnt: boolean = false;
+  IsOfficeMbr: boolean = false;
   GenericByIdObj: GenericObj = new GenericObj();
-  resultData : ResGetProdOfferingHObj = new ResGetProdOfferingHObj();
+  ResGetProdOffHObj : ResGetProdOfferingHObj = new ResGetProdOfferingHObj();
+  Source:string ="";
 
   ProdOfferingForm = this.fb.group({
     ProdName: [''],
@@ -38,27 +36,26 @@ export class ProdOfferingAddDetailComponent implements OnInit {
               private http: HttpClient,
               private fb:FormBuilder) { 
     this.route.queryParams.subscribe(params => {
-      this.objPassing["ProdOfferingHId"] = params["ProdOfferingHId"];
-      this.objPassing["ProdOfferingId"] = params["ProdOfferingId"];
-      this.objPassing["mode"] = params["mode"];
-      this.source = params["source"];
+      this.ProdOfferingHId = params["ProdOfferingHId"];
+      this.ProdOfferingId = params["ProdOfferingId"];
+      this.Source = params["source"];
     })
   }
 
   ngOnInit() {
-    this.GenericByIdObj.Id = this.objPassing.ProdOfferingHId
+    this.GenericByIdObj.Id = this.ProdOfferingHId
     this.http.post(URLConstant.GetProdOfferingHById, this.GenericByIdObj).subscribe(
       (response : ResGetProdOfferingHObj) => {
-        this.resultData = response;
+        this.ResGetProdOffHObj = response;
         this.ProdHId = response.ProdHId;
         this.ProdOfferingForm.patchValue({
-          ProdOfferingCode : this.resultData.ProdOfferingCode,
-          ProdOfferingName : this.resultData.ProdOfferingName,
-          ProdOfferingDescr : this.resultData.ProdOfferingDescr,
-          StartDt : formatDate(this.resultData.StartDt,'yyyy-MM-dd', 'en-US'),
-          EndDt: formatDate(this.resultData.EndDt,'yyyy-MM-dd', 'en-US'),
-          ProdOfferingStat : this.resultData.ProdOfferingStat,
-          ReturnNotes : this.resultData.ReturnNotes
+          ProdOfferingCode : this.ResGetProdOffHObj.ProdOfferingCode,
+          ProdOfferingName : this.ResGetProdOffHObj.ProdOfferingName,
+          ProdOfferingDescr : this.ResGetProdOffHObj.ProdOfferingDescr,
+          StartDt : formatDate(this.ResGetProdOffHObj.StartDt,'yyyy-MM-dd', 'en-US'),
+          EndDt: formatDate(this.ResGetProdOffHObj.EndDt,'yyyy-MM-dd', 'en-US'),
+          ProdOfferingStat : this.ResGetProdOffHObj.ProdOfferingStat,
+          ReturnNotes : this.ResGetProdOffHObj.ReturnNotes
         })
       }
     );
@@ -66,21 +63,21 @@ export class ProdOfferingAddDetailComponent implements OnInit {
 
   EnterTab(type){
     if(type == "general"){
-      this.isGeneralData = true;
-      this.isProdCompnt = false;
-      this.isOfficeMbr = false;
+      this.IsGeneralData = true;
+      this.IsProdCompnt = false;
+      this.IsOfficeMbr = false;
     }
 
     if(type == "prodCompnt"){
-      this.isGeneralData = false;
-      this.isProdCompnt = true;
-      this.isOfficeMbr = false;
+      this.IsGeneralData = false;
+      this.IsProdCompnt = true;
+      this.IsOfficeMbr = false;
     }
 
     if(type == "officeMbr"){
-      this.isGeneralData = false;
-      this.isProdCompnt = false;
-      this.isOfficeMbr = true;
+      this.IsGeneralData = false;
+      this.IsProdCompnt = false;
+      this.IsOfficeMbr = true;
     }
   }
 }

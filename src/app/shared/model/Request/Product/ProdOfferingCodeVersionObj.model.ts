@@ -1,6 +1,9 @@
 export class ProdOfferingCodeVersionObj {
-    ProdOfferingCode: any;
-    ProdOfferingVersion: any;
-    constructor() {  }
+    ProdOfferingCode: string;
+    ProdOfferingVersion: string;
+    constructor() { 
+      this.ProdOfferingCode = "";
+      this.ProdOfferingVersion = "";
+    }
   }
   

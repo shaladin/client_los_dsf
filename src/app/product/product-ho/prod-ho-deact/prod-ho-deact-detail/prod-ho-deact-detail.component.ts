@@ -31,15 +31,15 @@ export class ProdHoDeactDetailComponent implements OnInit {
       this.createComponent = content;
     }
   }
-  prodId: number;
-  prodHId: number;
+  ProdId: number;
+  ProdHId: number;
   ProdOfferVer: any;
   IsReady: boolean;
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   ReqProdDeactObj: ReqProductDeactivationObj = new ReqProductDeactivationObj();
   ReqProdOffVersionObj: ReqProdOfferingVersionObj = new ReqProdOfferingVersionObj();
-  allRefReasonMethod: Array<KeyValueObj> = new Array<KeyValueObj>();
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  AllRefReasonMethod: Array<KeyValueObj> = new Array<KeyValueObj>();
+  ViewGenericObj: UcViewGenericObj = new UcViewGenericObj();
 
   ProdHDeactForm = this.fb.group({
     EffectiveDate: ['', Validators.required]
@@ -50,28 +50,28 @@ export class ProdHoDeactDetailComponent implements OnInit {
   readonly CancelLink: string = NavigationConstant.PRODUCT_HO_DEACTIVATE;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
-      if (params["prodHId"] != null) {
-        this.prodHId = params["prodHId"];
+      if (params["ProdHId"] != null) {
+        this.ProdHId = params["ProdHId"];
       }
-      if (params["prodId"] != null) {
-        this.prodId = params["prodId"];
+      if (params["ProdId"] != null) {
+        this.ProdId = params["ProdId"];
       }
     });
   }
 
   async ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformation.json";
+    this.ViewGenericObj.viewEnvironment = environment.losUrl;
 
     await this.http.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeProdDeactivate }).toPromise().then(
       (response : GenericKeyValueListObj) => {
-        this.allRefReasonMethod = response.ReturnObject; 
-        if (this.allRefReasonMethod.length > 0) {
-          this.ProdHDeactForm.patchValue({ Reason: this.allRefReasonMethod[0]['Key'] });
+        this.AllRefReasonMethod = response.ReturnObject; 
+        if (this.AllRefReasonMethod.length > 0) {
+          this.ProdHDeactForm.patchValue({ Reason: this.AllRefReasonMethod[0]['Key'] });
         }
       });
 
-    this.ReqProdOffVersionObj.ProdId = this.prodId;
+    this.ReqProdOffVersionObj.ProdId = this.ProdId;
     this.ReqProdOffVersionObj.ProdOfferingStat = CommonConstant.PROD_OFF_STAT_ACT;
     this.http.post<ResProdOfferingVersionObj>(URLConstant.GetListProdOfferingVersionByProdId, this.ReqProdOffVersionObj).subscribe(
       response => {
@@ -82,17 +82,17 @@ export class ProdHoDeactDetailComponent implements OnInit {
 
   }
   initInputApprovalObj(){      
-    var Attributes = [{}] 
-    var TypeCode = {
+    let Attributes = [{}] 
+    let TypeCode = {
       "TypeCode" : CommonConstant.PRD_HO_DEACT_APV_TYPE,
       "Attributes" : Attributes,
     };
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_PRD_HO_DEACT_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_HO_DEACT_SCHM;
-    this.InputObj.Reason = this.allRefReasonMethod;
+    this.InputObj.Reason = this.AllRefReasonMethod;
     
-    this.http.post(URLConstant.GetProductById, {Id : this.prodId}).subscribe(
+    this.http.post(URLConstant.GetProductById, {Id : this.ProdId}).subscribe(
       (response: GenericObj) => {
         this.InputObj.TrxNo = response.Code;
         this.IsReady = true;
@@ -104,9 +104,9 @@ export class ProdHoDeactDetailComponent implements OnInit {
     this.ReqProdDeactObj.EffectiveDate = this.ProdHDeactForm.controls.EffectiveDate.value;
     this.ReqProdDeactObj.Reason = this.ApprovalCreateOutput.ReasonCode;
     this.ReqProdDeactObj.Notes = this.ApprovalCreateOutput.Notes;
-    this.ReqProdDeactObj.ProdHId = this.prodHId;
+    this.ReqProdDeactObj.ProdHId = this.ProdHId;
     this.ReqProdDeactObj.RequestRFAObj = this.ApprovalCreateOutput;
-    this.http.post(URLConstant.RequestDeactivationNew, this.ReqProdDeactObj).subscribe(
+    this.http.post(URLConstant.RequestDeactivation, this.ReqProdDeactObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_DEACTIVATE],{ });

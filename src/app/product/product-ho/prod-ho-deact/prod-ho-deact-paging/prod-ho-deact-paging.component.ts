@@ -7,21 +7,21 @@ import { CriteriaObj } from "app/shared/model/CriteriaObj.Model";
   templateUrl: './prod-ho-deact-paging.component.html'
 })
 export class ProdHoDeactPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
+  InputPagingObj: UcPagingObj = new UcPagingObj();
+  ArrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
 
   constructor() { }
 
   ngOnInit() {
-    this.inputPagingObj._url = "./assets/ucpaging/product/searchProductHODeactivate.json";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHODeactivate.json";
+    this.InputPagingObj._url = "./assets/ucpaging/product/searchProductHODeactivate.json";
+    this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHODeactivate.json";
 
-    var critObj = new CriteriaObj();
+    let critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'A.PROD_STAT';
     critObj.value = 'ACT';
-    this.arrCrit.push(critObj);
+    this.ArrCrit.push(critObj);
     
-    this.inputPagingObj.addCritInput = this.arrCrit;
+    this.InputPagingObj.addCritInput = this.ArrCrit;
   }
 }
