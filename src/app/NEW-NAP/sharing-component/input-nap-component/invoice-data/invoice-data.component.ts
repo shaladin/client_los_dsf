@@ -11,6 +11,7 @@ import { AppFctrObj } from 'app/shared/model/AppFctr/AppFctr.model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-invoice-data',
@@ -120,8 +121,8 @@ export class InvoiceDataComponent implements OnInit {
       this.invoiceObj.InvoiceNo = this.InvoiceForm.controls.InvoiceNo.value;
       this.invoiceObj.InvoiceAmt = this.InvoiceForm.controls.InvoiceAmt.value;
       this.invoiceObj.InvoiceDueDt = this.InvoiceForm.controls.InvoiceDueDt.value;
-      this.invoiceObj.InvoiceStat = "NEW";
-      this.invoiceObj.IsApproved = true;
+      // this.invoiceObj.InvoiceStat = "NEW";
+      // this.invoiceObj.IsApproved = true;
       this.invoiceObj.Notes = this.InvoiceForm.controls.Notes.value;
       this.invoiceObj.AppFctrId = this.AppFactoringObj.AppFctrId;
 
@@ -138,10 +139,10 @@ export class InvoiceDataComponent implements OnInit {
 
   DeleteInvoice(AppInvoiceFctrId: number) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      this.invoiceObj = new AppInvoiceFctrObj();
-      this.invoiceObj.AppInvoiceFctrId = AppInvoiceFctrId;
+      let reqObj: GenericObj = new GenericObj();
+      reqObj.Id= AppInvoiceFctrId;
 
-      this.httpClient.post(URLConstant.DeleteAppInvoiceFctr, { Id: AppInvoiceFctrId }).subscribe(
+      this.httpClient.post(URLConstant.DeleteAppInvoiceFctr, reqObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.GetListAppInvoiceFctr();

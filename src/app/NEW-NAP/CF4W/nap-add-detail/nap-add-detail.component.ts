@@ -16,6 +16,8 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
+import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -356,13 +358,17 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   LastStepHandler() {
-    this.NapObj.WfTaskListId = this.wfTaskListId;
     if (this.ReturnHandlingHId > 0) {
       this.IsSavedTC = true;
     } else {
-      this.http.post(URLConstant.CreateWorkflowDuplicateCheck, this.NapObj).subscribe(
+      let reqObj: GenericObj = new GenericObj();
+      reqObj.TrxNo = this.appNo;
+      this.http.post(URLConstant.CreateWorkflowDuplicateCheck, reqObj).subscribe(
         (response) => {
-          this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
+          let reqObj: SubmitNapObj = new SubmitNapObj();
+          reqObj.AppId = this.NapObj.AppId;
+          reqObj.WfTaskListId = this.wfTaskListId;
+          this.http.post(URLConstant.SubmitNAP, reqObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_PAGING], { BizTemplateCode: CommonConstant.CF4W });
@@ -419,8 +425,10 @@ export class NapAddDetailComponent implements OnInit {
     }
   }
 
-  SubmitGuarantor(){
-    this.http.post(URLConstant.CreateWorkflowDuplicateCheck, this.NapObj).subscribe(
+  SubmitGuarantor() {
+    let reqObj: GenericObj = new GenericObj();
+    reqObj.TrxNo = this.appNo;
+    this.http.post(URLConstant.CreateWorkflowDuplicateCheck, reqObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.NextStep(CommonConstant.AppStepRef);

@@ -1144,8 +1144,8 @@ export class URLConstant {
   public static ClaimTaskNapCustmainData = environment.losUrl + "/Application/ClaimTaskNapCustmainData";
 
   //Application Data
-  public static SaveApplicationData = environment.losUrl + "/ApplicationData/SaveApplicationData"
-  public static EditApplicationData = environment.losUrl + "/ApplicationData/EditApplicationData"
+  public static SaveApplicationDataFctr = environment.losUrl + "/ApplicationData/SaveApplicationDataFctr"
+  public static EditApplicationDataFctr = environment.losUrl + "/ApplicationData/EditApplicationDataFctr"
   public static ClaimListTask = environment.FoundationR3Url + "/Workflow/ClaimListTask";
   public static GetApplicationDataByAppId = environment.losUrl + "/ApplicationData/GetApplicationDataByAppId";
 

@@ -283,7 +283,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     await this.CheckInstType();
 
   }
-  SetPayFreq(MouCustId: number) {
+  SetPayFreq(MouCustId: number, isCriteriaMake: boolean = true) {
     var MouObj = {
       Id: MouCustId
     }
@@ -370,7 +370,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
               });
             }
             this.isInit = false;
-            this.makeNewLookupCriteria();
+            if (isCriteriaMake) this.makeNewLookupCriteria();
 
           });
       });
@@ -592,7 +592,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     }
 
     if (this.mode == "add") {
-      this.http.post(URLConstant.SaveApplicationData, this.salesAppInfoObj).subscribe(
+      this.http.post(URLConstant.SaveApplicationDataFctr, this.salesAppInfoObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.outputTab.emit();
@@ -601,7 +601,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
       this.salesAppInfoObj.AppRowVersion = this.resultData.AppRowVersion;
       this.salesAppInfoObj.AppFctrRowVersion = this.resultData.AppFctrRowVersion;
       this.salesAppInfoObj.AppFinDataRowVersion = this.resultData.AppFinDataRowVersion;
-      this.http.post(URLConstant.EditApplicationData, this.salesAppInfoObj).subscribe(
+      this.http.post(URLConstant.EditApplicationDataFctr, this.salesAppInfoObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.outputTab.emit();

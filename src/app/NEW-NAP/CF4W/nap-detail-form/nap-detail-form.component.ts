@@ -15,6 +15,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
+import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -333,7 +334,10 @@ export class NapDetailFormComponent implements OnInit {
     if (this.ReturnHandlingHId > 0) {
       this.IsSavedTC = true;
     } else {
-      this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
+      let reqObj: SubmitNapObj = new SubmitNapObj();
+      reqObj.AppId = this.NapObj.AppId;
+      reqObj.WfTaskListId = this.wfTaskListId;
+      this.http.post(URLConstant.SubmitNAP, reqObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: this.bizTemplateCode });
