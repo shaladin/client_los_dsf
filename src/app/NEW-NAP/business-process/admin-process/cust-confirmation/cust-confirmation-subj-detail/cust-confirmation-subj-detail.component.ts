@@ -130,6 +130,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
 
     await this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, { Id: this.VerfResultHId }).toPromise().then(
       async (response) => {
+        console.log(response);
         this.newVerfResultHObj.VerfResultId = response.VerfResultId;
         this.newVerfResultHObj.VerfSchemeHId = response.VerfSchemeHId;
         this.newVerfResultHObj.MrVerfSubjectRelationCode = response.MrVerfSubjectRelationCode;
@@ -297,7 +298,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
           AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode });
         }
         else {
-          this.GetListVerfResultH(response["VerfResultId"], response["MrVerfSubjectRelationCode"]);
+          this.GetListVerfResultH(this.newVerfResultHObj.VerfResultId, this.newVerfResultHObj.MrVerfSubjectRelationCode);
           formDirective.resetForm();
           this.clearform(CommonConstant.VerfResultStatSuccess, false);
         }

@@ -190,8 +190,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
             }
           }
           else {
-            this.VerfResultAfterAddObj = response;
-            this.verfResHObj.MrVerfObjectCode = this.VerfResultAfterAddObj.MrVerfObjectCode
+            this.GetVerfResultHData();
             this.GetListVerfResulHtData(this.verfResHObj);
             formDirective.resetForm();
             this.clearform();
@@ -385,8 +384,9 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   async GetVerfResultHData() {
-    await this.http.post(this.getVerfResulHtUrl, {Id : this.verifResultObj.VerfResultId}).toPromise().then(
+    await this.http.post(this.getVerfResulHtUrl, {Id : this.verfResHObj.VerfResultHId}).toPromise().then(
       (response) => {
+        console.log(response);
         this.verifResultHObj = response;
         this.verfResHObj.MrVerfObjectCode = this.verifResultHObj.MrVerfObjectCode;
       }
@@ -396,6 +396,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   async GetListVerfResulHtData(verfResHObj) {
     await this.http.post(this.getListVerfResulHtUrl, verfResHObj).toPromise().then(
       (response) => {
+        console.log(response);
         this.listVerifResultHObj = response["responseVerfResultHCustomObjs"];
       }
     );
