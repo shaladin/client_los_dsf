@@ -17,6 +17,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ReqAddLeadObj, ReqEditLeadObj } from 'app/shared/model/Request/LEAD/ReqAddEditLeadObj.model';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-lead-input-main-info',
@@ -31,8 +33,8 @@ export class LeadInputMainInfoComponent implements OnInit {
   returnLead: any;
   responseLead: any;
   leadObj: LeadObj;
-  addLeadObj: ReqAddLeadObj;
-  editLeadObj: ReqEditLeadObj;
+  addLeadObj: ReqAddLeadObj = new ReqAddLeadObj();
+  editLeadObj: ReqEditLeadObj = new ReqEditLeadObj();
   getLeadObj: LeadObj;
   cmoNameLookUpObj: InputLookupObj;
   surveyorNameLookUpObj: InputLookupObj;
@@ -75,6 +77,8 @@ export class LeadInputMainInfoComponent implements OnInit {
   returnSalesExistObj: any;
   leadExistObj: LeadObj;
   returnLeadExistObj: any;
+  critObj: CriteriaObj = new CriteriaObj();
+  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   MainInfoForm = this.fb.group({
     OfficeCode: ['', [Validators.required]],
     OfficeName: [''],
@@ -208,9 +212,9 @@ export class LeadInputMainInfoComponent implements OnInit {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MakeLookUpObj();
     this.GetOfficeDDL();
-    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.http.post(this.getListActiveRefMasterUrl, { RefMasterTypeCode: "LOB" }).subscribe(
       (response) => {
@@ -308,6 +312,13 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.leadPersonalLookUpObj.urlEnviPaging = environment.losUrl;
     this.leadPersonalLookUpObj.pagingJson = "./assets/uclookup/lookupLeadPersonal.json";
     this.leadPersonalLookUpObj.genericJson = "./assets/uclookup/lookupLeadPersonal.json";
+    if(this.user.MrOfficeTypeCode != "CG" && this.user.MrOfficeTypeCode != CommonConstant.HeadOffice){
+      this.critObj.restriction = AdInsConstant.RestrictionEq;
+      this.critObj.propName = 'L.ORI_OFFICE_CODE';
+      this.critObj.value = this.user.OfficeCode;
+      this.arrCrit.push(this.critObj);
+      this.leadPersonalLookUpObj.addCritInput = this.arrCrit;
+    }
 
     this.agencyLookUpObj = new InputLookupObj();
     this.agencyLookUpObj.isRequired = false;
@@ -415,7 +426,6 @@ export class LeadInputMainInfoComponent implements OnInit {
   SaveForm() {
     if (this.MainInfoForm.valid) {
       if (this.pageType == "edit" || this.pageType == "update") {
-        this.editLeadObj = new ReqEditLeadObj();
         this.editLeadObj.LeadId = this.LeadId;
         this.editLeadObj.RowVersion = this.returnLead.RowVersion;
         this.setEditLead();
@@ -431,7 +441,6 @@ export class LeadInputMainInfoComponent implements OnInit {
           }
         );
       } else {
-        this.addLeadObj = new ReqAddLeadObj();
         this.setAddLead();
         this.http.post(this.addLead, this.addLeadObj).subscribe(
           (response) => {
@@ -448,7 +457,6 @@ export class LeadInputMainInfoComponent implements OnInit {
   save() {
     if (this.MainInfoForm.valid) {
       if (this.pageType == "edit" || this.pageType == "update") {
-        this.editLeadObj = new ReqEditLeadObj();
         this.editLeadObj.LeadId = this.LeadId;
         this.editLeadObj.RowVersion = this.returnLead.RowVersion;
         this.setEditLead();
@@ -464,7 +472,6 @@ export class LeadInputMainInfoComponent implements OnInit {
           }
         );
       } else {
-        this.addLeadObj = new ReqAddLeadObj();
         this.setAddLead();
         this.http.post(this.addLead, this.addLeadObj).subscribe(
           (response) => {
