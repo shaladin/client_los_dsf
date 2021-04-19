@@ -121,8 +121,6 @@ export class InvoiceDataComponent implements OnInit {
       this.invoiceObj.InvoiceNo = this.InvoiceForm.controls.InvoiceNo.value;
       this.invoiceObj.InvoiceAmt = this.InvoiceForm.controls.InvoiceAmt.value;
       this.invoiceObj.InvoiceDueDt = this.InvoiceForm.controls.InvoiceDueDt.value;
-      // this.invoiceObj.InvoiceStat = "NEW";
-      // this.invoiceObj.IsApproved = true;
       this.invoiceObj.Notes = this.InvoiceForm.controls.Notes.value;
       this.invoiceObj.AppFctrId = this.AppFactoringObj.AppFctrId;
 
