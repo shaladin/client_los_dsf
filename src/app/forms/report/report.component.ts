@@ -31,7 +31,6 @@ export class ReportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ml = "medium";
     this.ddlOfficeObj.apiUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.ddlOfficeObj.requestObj = {
       RefMasterTypeCode: "BUILDING_OWNERSHIP"
