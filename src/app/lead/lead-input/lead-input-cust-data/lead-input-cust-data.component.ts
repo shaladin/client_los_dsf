@@ -9,13 +9,12 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { formatDate } from '@angular/common';
-import { LeadCustAddrObj } from 'app/shared/model/LeadCustAddrObj.Model';
-import { LeadCustSocmedObj } from 'app/shared/model/LeadCustSocmedObj.Model';
-import { LeadInputObj } from 'app/shared/model/LeadInputObj.Model';
-import { LeadCustObj } from 'app/shared/model/LeadCustObj.Model';
-import { LeadCustPersonalObj } from 'app/shared/model/LeadCustPersonalObj.Model';
-import { LeadCustPersonalFinDataObj } from 'app/shared/model/LeadCustPersonalFinDataObj.Model';
-import { LeadCustPersonalJobDataObj } from 'app/shared/model/LeadCustPersonalJobDataObj.Model';
+import { LeadCustAddrObj } from 'app/shared/model/Request/LEAD/LeadCustAddrObj.model';
+import { LeadCustSocmedObj } from 'app/shared/model/Request/LEAD/LeadCustSocmedObj.model';
+import { LeadCustObj } from 'app/shared/model/Request/LEAD/LeadCustObj.model';
+import { LeadCustPersonalObj } from 'app/shared/model/Request/LEAD/LeadCustPersonalObj.model';
+import { LeadCustPersonalFinDataObj } from 'app/shared/model/Request/LEAD/LeadCustPersonalFinDataObj.model';
+import { LeadCustPersonalJobDataObj } from 'app/shared/model/Request/LEAD/LeadCustPersonalJobDataObj.model';
 import { RefProfessionObj } from 'app/shared/model/RefProfessionObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
@@ -32,6 +31,7 @@ import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { String } from 'typescript-string-operations';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { ReqInputLeadCustPersonalObj } from 'app/shared/model/Request/LEAD/ReqAddEditInputLeadCustPersonalObj.model';
 
 @Component({
   selector: 'app-lead-input-cust-data',
@@ -63,7 +63,7 @@ export class LeadInputCustDataComponent implements OnInit {
   getListActiveRefMasterWithMappingCodeAll: string;
   custModel: RefMasterObj;
   listCustModel: any;
-  leadInputObj: LeadInputObj = new LeadInputObj();
+  leadInputObj: ReqInputLeadCustPersonalObj;
   leadCustFacebookObj: LeadCustSocmedObj;
   leadCustInstagramObj: LeadCustSocmedObj;
   leadCustTwitterObj: LeadCustSocmedObj;
@@ -849,7 +849,7 @@ export class LeadInputCustDataComponent implements OnInit {
   SaveForm() {
     if (this.typePage == "edit" || this.typePage == "update") {
       if (this.resLeadCustObj.LeadCustId != 0) {
-        this.leadInputObj = new LeadInputObj();
+        this.leadInputObj = new ReqInputLeadCustPersonalObj();
         this.leadInputObj.LeadCustObj.LeadCustId = this.resLeadCustObj.LeadCustId;
         this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
         this.setLeadCust();
@@ -873,7 +873,7 @@ export class LeadInputCustDataComponent implements OnInit {
           );
         }
       } else {
-        this.leadInputObj = new LeadInputObj();
+        this.leadInputObj = new ReqInputLeadCustPersonalObj();
         this.setLeadCust();
         this.setLeadCustPersonal();
         this.setLeadCustSocmed();
@@ -892,7 +892,7 @@ export class LeadInputCustDataComponent implements OnInit {
       }
     }
     else {
-      this.leadInputObj = new LeadInputObj();
+      this.leadInputObj = new ReqInputLeadCustPersonalObj();
       this.setLeadCust();
       this.setLeadCustPersonal();
       this.setLeadCustSocmed();
@@ -1064,7 +1064,7 @@ export class LeadInputCustDataComponent implements OnInit {
 
   checkIntegrator() {
     if (this.isUseDigitalization == '1' && this.isNeedCheckBySystem == "0") {
-      this.leadInputObj = new LeadInputObj();
+      this.leadInputObj = new ReqInputLeadCustPersonalObj();
       this.setLeadCust();
       this.setLeadCustPersonal();
       this.setLegalAddr();

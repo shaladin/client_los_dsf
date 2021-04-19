@@ -294,7 +294,7 @@
           <div class="form-group row">
             <label class="col-md-4 adins-required-label" translate>Collateral Type</label>
             <div class="col-md-8">
-              <select class="form-control" formControlName="AssetTypeCode" (change)="onItemChange($event.target.value)"
+              <select class="form-control" formControlName="AssetTypeCode" (change)="onItemChange($event.target.value, true)"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.AssetTypeCode.invalid }">
                 <option *ngFor="let item of CollTypeList" [value]="item.Key">{{item.Value}}</option>
               </select>

@@ -20,7 +20,6 @@ export class MouCustFeeDetailComponent implements OnInit {
   feeTypeList: any;
 
   MouCustFeeForm = this.fb.group({
-    MouCustFeeId: [0, [Validators.required]],
     MouCustId: [0, [Validators.required]],
     RefFeeId: [0, [Validators.required]],
     FeePrcnt: [0, [Validators.required, Validators.min(0), Validators.max(100)]],

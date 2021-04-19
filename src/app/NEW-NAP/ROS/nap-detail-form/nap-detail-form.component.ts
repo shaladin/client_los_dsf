@@ -16,6 +16,8 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
 import { CookieService } from 'ngx-cookie';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -329,21 +331,22 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   LastStepHandler() {
-    this.NapObj.WfTaskListId = this.wfTaskListId;
     if (this.ReturnHandlingHId > 0) {
       this.IsSavedTC = true;
     } else {
-      this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
+      let reqObj: SubmitNapObj = new SubmitNapObj();
+      reqObj.AppId = this.NapObj.AppId;
+      reqObj.WfTaskListId = this.wfTaskListId;
+      this.http.post(URLConstant.SubmitNAP, reqObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: this.bizTemplateCode });
-
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: this.bizTemplateCode });
         })
     }
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/MainData/NAP2/Paging"], { BizTemplateCode: this.bizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: this.bizTemplateCode });
   }
 
   Submit() {

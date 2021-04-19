@@ -29,7 +29,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   getAppUrl: any;
   addVerfResultUrl: any;
   rtnHandlingDUrl: any;
-  editRtnHandlingDUrl: any;
 
   isReturnHandling: boolean = false;
 
@@ -97,7 +96,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.getVerfResultUrl = URLConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode;
     this.addVerfResultUrl = URLConstant.AddVerfResult;
     this.rtnHandlingDUrl = URLConstant.GetReturnHandlingDByReturnHandlingDId;
-    this.editRtnHandlingDUrl = URLConstant.EditReturnHandlingD;
   }
 
   async ngOnInit(): Promise<void> {
@@ -134,7 +132,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       }
       if (this.isReturnHandling == true) {
         this.setReturnHandlingD();
-        this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
+        this.http.post(URLConstant.EditReturnHandlingD, this.ReturnHandlingDData).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING], { "BizTemplateCode": this.BizTemplateCode });

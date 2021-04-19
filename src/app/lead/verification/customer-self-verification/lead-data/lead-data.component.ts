@@ -10,14 +10,15 @@ import { LeadObj } from 'app/shared/model/Lead.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
-import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
+import { LeadAssetObj } from 'app/shared/model/Request/LEAD/LeadAssetObj.model';
+import { LeadAppObj } from 'app/shared/model/Request/LEAD/LeadAppObj.model';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ReqLeadInputLeadDataObj } from 'app/shared/model/Request/LEAD/ReqInputLeadDataObj.model';
 
 @Component({
   selector: 'app-lead-data',
@@ -40,8 +41,7 @@ export class LeadDataComponent implements OnInit {
   InputLookupAssetObj: InputLookupObj;
   getListActiveRefMasterUrl: string;
   assetTypeId: string;
-  leadInputLeadDataObj: LeadInputLeadDataObj;
-  addEditLeadData: string;
+  leadInputLeadDataObj: ReqLeadInputLeadDataObj;
   getLeadAssetByLeadId: string;
   getLeadAppByLeadId: string;
   getAssetMasterForLookupEmployee: string; 
@@ -76,7 +76,7 @@ export class LeadDataComponent implements OnInit {
   leadObj: LeadObj;
   returnLeadObj: any;
   returnLobCode: string;
-  WfTaskListId: string;
+  WfTaskListId: number;
   editLead : string;
   editLeadObj : LeadObj;
   isUsed: boolean;
@@ -88,7 +88,6 @@ export class LeadDataComponent implements OnInit {
   tempMrFirstInstTypeCode : any;
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-    this.addEditLeadData = URLConstant.AddEditLeadData;
     this.getLeadAssetByLeadId = URLConstant.GetLeadAssetByLeadId;
     this.getLeadAppByLeadId = URLConstant.GetLeadAppByLeadId;
     this.getAssetMasterForLookupEmployee = URLConstant.GetAssetMasterForLookupEmployee;
@@ -105,7 +104,7 @@ export class LeadDataComponent implements OnInit {
         this.typePage = params["mode"];
       }
       if (params["WfTaskListId"] == null) {
-        this.WfTaskListId = "0";
+        this.WfTaskListId = 0;
       }
       else {
         this.WfTaskListId = params["WfTaskListId"];
@@ -516,24 +515,24 @@ export class LeadDataComponent implements OnInit {
   save() {
     if (this.typePage == "edit" || this.typePage == "update") {
       if (this.resLeadAssetObj.LeadAssetId != 0){ 
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
         this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
         this.setLeadApp();
-        this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
+        this.http.post(URLConstant.EditLeadData, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CONTENT_PAGE_SELF_VERIF], { LeadId: this.LeadId, WfTaskListId: this.WfTaskListId, LobCode: this.returnLobCode });
           }
         );
-        }
+      }
     } 
     else {
-      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+      this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
       this.setLeadAsset();
       this.setLeadApp();
-      this.http.post(this.addEditLeadData, this.leadInputLeadDataObj).subscribe(
+      this.http.post(URLConstant.AddLeadData, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CONTENT_PAGE_SELF_VERIF], { LeadId: this.LeadId, WfTaskListId: this.WfTaskListId, LobCode: this.returnLobCode });
@@ -544,7 +543,7 @@ export class LeadDataComponent implements OnInit {
   SaveForm() {
     if (this.typePage == "edit" || this.typePage == "update" ) {
       if (this.resLeadAssetObj.LeadAssetId != 0){ 
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
         this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
@@ -568,7 +567,7 @@ export class LeadDataComponent implements OnInit {
           }
         );
       } else{
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
         this.setLeadApp();
         this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
@@ -593,7 +592,7 @@ export class LeadDataComponent implements OnInit {
       }
     } 
     else {
-      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+      this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
       this.setLeadAsset();
       this.setLeadApp();
       this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;

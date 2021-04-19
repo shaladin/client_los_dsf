@@ -17,6 +17,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { ReqAddLeadObj, ReqEditLeadObj } from 'app/shared/model/Request/LEAD/ReqAddEditLeadObj.model';
 
 @Component({
   selector: 'app-lead-input-main-info',
@@ -25,13 +26,15 @@ import { CookieService } from 'ngx-cookie';
 })
 export class LeadInputMainInfoComponent implements OnInit {
   user: any;
-  LeadId: string;
+  LeadId: any;
   addLead: string;
   editLead: string;
   getLeadByLeadId: string;
   returnLead: any;
   responseLead: any;
   leadObj: LeadObj;
+  addLeadObj: ReqAddLeadObj;
+  editLeadObj: ReqEditLeadObj;
   getLeadObj: LeadObj;
   cmoNameLookUpObj: InputLookupObj;
   surveyorNameLookUpObj: InputLookupObj;
@@ -61,7 +64,7 @@ export class LeadInputMainInfoComponent implements OnInit {
   returnSurveyorObj: any;
   salesObj: RefEmpForLookupObj;
   returnSalesObj: any;
-  leadIdExist: string;
+  leadIdExist: any;
   getExistLeadObj: LeadObj;
   returnExistLead: any;
   vendorExistObj: VendorObj;
@@ -270,12 +273,6 @@ export class LeadInputMainInfoComponent implements OnInit {
               this.tempAgencyCode = this.returnVendorObj.VendorCode;
             });
 
-          // this.cmoNameLookUpObj.nameSelect = this.returnLead.CmoUsername;
-          // this.cmoNameLookUpObj.jsonSelect = this.returnLead;
-          // this.surveyorNameLookUpObj.nameSelect = this.returnLead.SurveyorUsername;
-          // this.surveyorNameLookUpObj.jsonSelect = this.returnLead;
-          // this.salesNameLookUpObj.nameSelect = this.returnLead.TeleMarketingUsername;
-          // this.salesNameLookUpObj.jsonSelect = this.returnLead;
           this.tempCmoUsername = this.returnLead.CmoUsername;
           this.tempSurveyorUsername = this.returnLead.SurveyorUsername;
           this.tempSalesUsername = this.returnLead.TeleMarketingUsername;
@@ -398,32 +395,46 @@ export class LeadInputMainInfoComponent implements OnInit {
       });
   }
 
+  setAddLead() {
+    this.addLeadObj.LeadCopyId = this.leadIdExist;
+    this.addLeadObj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
+    this.addLeadObj.CrtOfficeCode = this.MainInfoForm.controls["CrtOfficeCode"].value;
+    this.addLeadObj.LeadDt = new Date();
+    this.addLeadObj.OrderNo = this.MainInfoForm.controls["OrderNo"].value;
+    this.addLeadObj.LobCode = this.MainInfoForm.controls["LobCode"].value;
+    this.addLeadObj.MrLeadSourceCode = this.MainInfoForm.controls["LeadSource"].value;
+    this.addLeadObj.LeadStat = CommonConstant.LeadStatNew;
+    this.addLeadObj.LeadStep = CommonConstant.LeadStatNew;
+    this.addLeadObj.AgencyCode = this.tempAgencyCode;
+    this.addLeadObj.CmoUsername = this.tempCmoUsername;
+    this.addLeadObj.SurveyorUsername = this.tempSurveyorUsername;
+    this.addLeadObj.TeleMarketingUsername = this.tempSalesUsername;
+  }
 
-  setLead() {
-    this.leadObj.LeadNo = "0";
-    this.leadObj.LeadCopyId = this.leadIdExist;
-    this.leadObj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
-    this.leadObj.CrtOfficeCode = this.MainInfoForm.controls["CrtOfficeCode"].value;
-    this.leadObj.LeadDt = new Date();
-    this.leadObj.OrderNo = this.MainInfoForm.controls["OrderNo"].value;
-    this.leadObj.LobCode = this.MainInfoForm.controls["LobCode"].value;
-    this.leadObj.MrLeadSourceCode = this.MainInfoForm.controls["LeadSource"].value;
-    this.leadObj.LeadStat = CommonConstant.LeadStatNew;
-    this.leadObj.LeadStep = CommonConstant.LeadStatNew;
-    this.leadObj.AgencyCode = this.tempAgencyCode;
-    this.leadObj.CmoUsername = this.tempCmoUsername;
-    this.leadObj.SurveyorUsername = this.tempSurveyorUsername;
-    this.leadObj.TeleMarketingUsername = this.tempSalesUsername;
+  setEditLead() {
+    this.editLeadObj.LeadCopyId = this.leadIdExist;
+    this.editLeadObj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
+    this.editLeadObj.CrtOfficeCode = this.MainInfoForm.controls["CrtOfficeCode"].value;
+    this.editLeadObj.LeadDt = new Date();
+    this.editLeadObj.OrderNo = this.MainInfoForm.controls["OrderNo"].value;
+    this.editLeadObj.LobCode = this.MainInfoForm.controls["LobCode"].value;
+    this.editLeadObj.MrLeadSourceCode = this.MainInfoForm.controls["LeadSource"].value;
+    this.editLeadObj.LeadStat = CommonConstant.LeadStatNew;
+    this.editLeadObj.LeadStep = CommonConstant.LeadStatNew;
+    this.editLeadObj.AgencyCode = this.tempAgencyCode;
+    this.editLeadObj.CmoUsername = this.tempCmoUsername;
+    this.editLeadObj.SurveyorUsername = this.tempSurveyorUsername;
+    this.editLeadObj.TeleMarketingUsername = this.tempSalesUsername;
   }
 
   SaveForm() {
     if (this.MainInfoForm.valid) {
       if (this.pageType == "edit" || this.pageType == "update") {
-        this.leadObj = new LeadObj();
-        this.leadObj.LeadId = this.LeadId;
-        this.leadObj.RowVersion = this.returnLead.RowVersion;
-        this.setLead();
-        this.http.post(this.editLead, this.leadObj).subscribe(
+        this.editLeadObj = new ReqEditLeadObj();
+        this.editLeadObj.LeadId = this.LeadId;
+        this.editLeadObj.RowVersion = this.returnLead.RowVersion;
+        this.setEditLead();
+        this.http.post(this.editLead, this.editLeadObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.pageType == "edit"){
@@ -435,9 +446,9 @@ export class LeadInputMainInfoComponent implements OnInit {
           }
         );
       } else {
-        this.leadObj = new LeadObj();
-        this.setLead();
-        this.http.post(this.addLead, this.leadObj).subscribe(
+        this.addLeadObj = new ReqAddLeadObj();
+        this.setAddLead();
+        this.http.post(this.addLead, this.addLeadObj).subscribe(
           (response) => {
             this.responseLead = response;
             this.LeadId = this.responseLead.Id;
@@ -452,11 +463,11 @@ export class LeadInputMainInfoComponent implements OnInit {
   save() {
     if (this.MainInfoForm.valid) {
       if (this.pageType == "edit" || this.pageType == "update") {
-        this.leadObj = new LeadObj();
-        this.leadObj.LeadId = this.LeadId;
-        this.leadObj.RowVersion = this.returnLead.RowVersion;
-        this.setLead();
-        this.http.post(this.editLead, this.leadObj).subscribe(
+        this.editLeadObj = new ReqEditLeadObj();
+        this.editLeadObj.LeadId = this.LeadId;
+        this.editLeadObj.RowVersion = this.returnLead.RowVersion;
+        this.setEditLead();
+        this.http.post(this.editLead, this.editLeadObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             if(this.pageType == "edit"){
@@ -468,9 +479,9 @@ export class LeadInputMainInfoComponent implements OnInit {
           }
         );
       } else {
-        this.leadObj = new LeadObj();
-        this.setLead();
-        this.http.post(this.addLead, this.leadObj).subscribe(
+        this.addLeadObj = new ReqAddLeadObj();
+        this.setAddLead();
+        this.http.post(this.addLead, this.addLeadObj).subscribe(
           (response) => {
             this.responseLead = response;
             this.LeadId = this.responseLead.Id;

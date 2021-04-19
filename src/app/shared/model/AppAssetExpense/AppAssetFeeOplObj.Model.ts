@@ -2,7 +2,7 @@
 
 export class AppAssetFeeOplObj {
   AppAssetId: number;
-  MrFeeTypeOplCode: string;
+  FeeCode: string;
   FeeAmt: number;
   VatAmt: number;
   CapitalizedAmt: number;
@@ -11,7 +11,7 @@ export class AppAssetFeeOplObj {
   FeeCapBehaviourCode: string;
   constructor() {
     this.AppAssetId = 0;
-    this.MrFeeTypeOplCode = "";
+    this.FeeCode = "";
     this.FeeAmt = 0;
     this.VatAmt = 0;
     this.CapitalizedAmt = 0;

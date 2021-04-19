@@ -632,7 +632,7 @@ export class URLConstant {
 
   // MOU CUST LEGAL REVIEW
   public static GetMouCustLglReviewByMouCustId = environment.losUrl + "/MouCustLglReview/GetMouCustLglReviewByMouCustId";
-  public static AddEditRangeMouCustLglReview = environment.losUrl + "/MouCustLglReview/AddEditRangeMouCustLglReview";
+  public static AddRangeMouCustLglReview = environment.losUrl + "/MouCustLglReview/AddRangeMouCustLglReview";
   public static EditRangeMouCustLglReview = environment.losUrl + "/MouCustLglReview/EditRangeMouCustLglReview";
 
   // MOU CUST TC
@@ -717,9 +717,11 @@ export class URLConstant {
   // LEAD
   public static AddLeadCustPersonal = environment.losUrl + "/LeadCust/AddLeadCustPersonal";
   public static EditLeadCustPersonal = environment.losUrl + "/LeadCust/EditLeadCustPersonal";
-  public static AddEditLeadData = environment.losUrl + "/Lead/AddEditLeadData";
+  public static AddLeadData = environment.losUrl + "/Lead/AddLeadData";
+  public static EditLeadData = environment.losUrl + "/Lead/EditLeadData";
   public static GetLeadMonitoringByUploadMonitoringNoAndTrxType = environment.losUrl + "/Lead/GetLeadMonitoringByUploadMonitoringNoAndTrxType";
-  public static AddEditLeadDataKta = environment.losUrl + "/Lead/AddEditLeadDataKta";
+  public static AddLeadDataKta = environment.losUrl + "/Lead/AddLeadDataKta";
+  public static EditLeadDataKta = environment.losUrl + "/Lead/EditLeadDataKta";
 
   //LEAD CANCEL
   public static GetListLeadForLeadCancelByListLeadId = environment.losUrl + "/Lead/GetListLeadForLeadCancelByListLeadId";
@@ -1144,8 +1146,8 @@ export class URLConstant {
   public static ClaimTaskNapCustmainData = environment.losUrl + "/Application/ClaimTaskNapCustmainData";
 
   //Application Data
-  public static SaveApplicationData = environment.losUrl + "/ApplicationData/SaveApplicationData"
-  public static EditApplicationData = environment.losUrl + "/ApplicationData/EditApplicationData"
+  public static SaveApplicationDataFctr = environment.losUrl + "/ApplicationData/SaveApplicationDataFctr"
+  public static EditApplicationDataFctr = environment.losUrl + "/ApplicationData/EditApplicationDataFctr"
   public static ClaimListTask = environment.FoundationR3Url + "/Workflow/ClaimListTask";
   public static GetApplicationDataByAppId = environment.losUrl + "/ApplicationData/GetApplicationDataByAppId";
 

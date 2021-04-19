@@ -1,11 +1,10 @@
-import { LeadCustObj } from "./Request/LEAD/LeadCustObj.model";
-import { LeadCustPersonalObj } from "./Request/LEAD/LeadCustPersonalObj.model";
-import { LeadCustAddrObj } from "./Request/LEAD/LeadCustAddrObj.model";
-import { LeadCustPersonalFinDataObj } from "./Request/LEAD/LeadCustPersonalFinDataObj.model";
-import { LeadCustPersonalJobDataObj } from "./Request/LEAD/LeadCustPersonalJobDataObj.model";
-import { LeadCustSocmedObj } from "./Request/LEAD/LeadCustSocmedObj.model";
+import { LeadCustAddrObj } from "./LeadCustAddrObj.model";
+import { LeadCustObj } from "./LeadCustObj.model";
+import { LeadCustPersonalFinDataObj } from "./LeadCustPersonalFinDataObj.model";
+import { LeadCustPersonalJobDataObj } from "./LeadCustPersonalJobDataObj.model";
+import { LeadCustPersonalObj } from "./LeadCustPersonalObj.model";
 
-export class LeadInputObj{
+export class ReqInputLeadCustPersonalObj{
     LeadCustObj: LeadCustObj;
     LeadCustPersonalObj: LeadCustPersonalObj;
     LeadCustLegalAddrObj: LeadCustAddrObj;

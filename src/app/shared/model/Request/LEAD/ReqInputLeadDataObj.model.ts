@@ -1,7 +1,7 @@
-import { LeadAppObj } from "./Request/LEAD/LeadAppObj.model";
-import { LeadAssetObj } from "./Request/LEAD/LeadAssetObj.model";
+import { LeadAppObj } from "./LeadAppObj.model";
+import { LeadAssetObj } from "./LeadAssetObj.model";
 
-export class LeadInputLeadDataObj{
+export class ReqLeadInputLeadDataObj{
     LeadAppObj : LeadAppObj;
     LeadAssetObj : LeadAssetObj;
     WfTaskListId: number;

@@ -225,7 +225,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
       }
     }
     this.setSaveObj();
-    console.log(this.saveObj);
     if (this.isCanSave) {
       this.http.post(URLConstant.SubmitAssetExpense, this.saveObj).subscribe(
         (response) => {
@@ -254,7 +253,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
     for (let i = 0; i < this.InsuranceDataForm.controls["ServiceObjs"]["controls"].length; i++) {
       var mainpackageservice = new AppAssetMaintDObj();
       var x = this.InsuranceDataForm["controls"]["ServiceObjs"]["controls"].filter(x => x["controls"]["ServiceCode"].value == this.InsuranceDataForm["controls"]["ServiceObjs"]["controls"][i]["controls"]["ServiceCode"].value)
-      console.log(x);
       if (x.length > 1) {
         this.toastr.warningMessage("Cant Input Same Service");
         this.isCanSave = false;
@@ -267,7 +265,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
     for (let i = 0; i < this.InsuranceDataForm.controls["SparePartObjs"]["controls"].length; i++) {
       var mainpackageservice = new AppAssetMaintDObj();
       var y = this.InsuranceDataForm["controls"]["SparePartObjs"]["controls"].filter(x => x["controls"]["SparePartCode"].value == this.InsuranceDataForm["controls"]["SparePartObjs"]["controls"][i]["controls"]["SparePartCode"].value)
-      console.log(y);
       if (y.length > 1) {
         this.toastr.warningMessage("Cant Input Same Sparepart");
         this.isCanSave = false;
@@ -281,7 +278,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
     for (let i = 0; i < this.InsuranceDataForm.controls["OtherExpenseObjs"]["controls"].length; i++) {
       var othExpense = new AppAssetOthExpenseOplObj();
       var z = this.InsuranceDataForm["controls"]["OtherExpenseObjs"]["controls"].filter(x => x["controls"]["OthExpenseCode"].value == this.InsuranceDataForm["controls"]["OtherExpenseObjs"]["controls"][i]["controls"]["OthExpenseCode"].value)
-      console.log(z);
       if (z.length > 1) {
         this.toastr.warningMessage("Cant Input Same Other Expense");
         this.isCanSave = false;
@@ -299,7 +295,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
     for (let i = 0; i < this.InsuranceDataForm.controls["FeeObjs"]["controls"].length; i++) {
       var fee = new AppAssetFeeOplObj();
       fee.AppAssetId = this.AppAssetId;
-      fee.MrFeeTypeOplCode = this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["FeeTypeCode"].value;
+      fee.FeeCode = this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["FeeTypeCode"].value;
       if (this.InsuranceDataForm["controls"]["FeeInputType"].value == "VAT") {
         fee.FeeAmt = this.InsuranceDataForm["controls"]["FeeObjs"]["controls"][i]["controls"]["FeeTypeAmt"].value / 1.1;
       }
@@ -791,9 +787,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
             if (filtered[i].AdditionalCoverageType == CommonConstant.MrAddCvgTypeCodeLoading) {
               var assetAgeMin = filtered[i].AssetAgeFrom ? filtered[i].AssetAgeFrom : 0;
               var assetAgeMax = filtered[i].AssetAgeTo ? filtered[i].AssetAgeTo : 0;
-              console.log("Asset Age Min: " + assetAgeMin);
-              console.log("Asset Age Max: " + assetAgeMax);
-              console.log("Manuf Year Diff: " + ManufYearDiff);
               if (ManufYearDiff+1 >= assetAgeMin && ManufYearDiff+1 <= assetAgeMax) {
                 const control = this.fb.group({
                   MrAddCvgTypeCode: o.Key,
@@ -995,8 +988,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
             if (filtered[j].AdditionalCoverageType == CommonConstant.MrAddCvgTypeCodeLoading) {
               var assetAgeMin = filtered[j].AssetAgeFrom;
               var assetAgeMax = filtered[j].AssetAgeTo;
-              console.log("Asset Age Min: " + assetAgeMin);
-              console.log("Asset Age Max: " + assetAgeMax);
               if (this.InsuranceDataForm.controls.AppInsMainCvgs['controls'][i]['controls']['ManufYearDiff'].value + 1 >= assetAgeMin && this.InsuranceDataForm.controls.AppInsMainCvgs['controls'][i]['controls']['ManufYearDiff'].value + 1 <= assetAgeMax) {
                 const control = this.fb.group({
                   MrAddCvgTypeCode: o.Key,
@@ -1547,8 +1538,8 @@ export class AssetExpenseAddEditComponent implements OnInit {
           for (let i = 0; i < response["AppAssetFeeOplObjs"].length; i++) {
             if (this.InsuranceDataForm["controls"]["FeeInputType"].value == "VAT") {
               var fee = {
-                FeeTypeCode: response["AppAssetFeeOplObjs"][i].MrFeeTypeOplCode,
-                FeeTypeName: response["AppAssetFeeOplObjs"][i].MrFeeTypeOplName,
+                FeeTypeCode: response["AppAssetFeeOplObjs"][i].FeeCode,
+                FeeTypeName: response["AppAssetFeeOplObjs"][i].FeeName,
                 FeeTypeAmt: response["AppAssetFeeOplObjs"][i].FeeAmt + response["AppAssetFeeOplObjs"][i].VatAmt,
                 CptlzAmt: response["AppAssetFeeOplObjs"][i].CapitalizedAmt,
                 i: i,
@@ -1559,8 +1550,8 @@ export class AssetExpenseAddEditComponent implements OnInit {
             }
             else {
               var fee = {
-                FeeTypeCode: response["AppAssetFeeOplObjs"][i].MrFeeTypeOplCode,
-                FeeTypeName: response["AppAssetFeeOplObjs"][i].MrFeeTypeOplName,
+                FeeTypeCode: response["AppAssetFeeOplObjs"][i].FeeCode,
+                FeeTypeName: response["AppAssetFeeOplObjs"][i].FeeName,
                 FeeTypeAmt: response["AppAssetFeeOplObjs"][i].FeeAmt,
                 CptlzAmt: response["AppAssetFeeOplObjs"][i].CapitalizedAmt,
                 i: i,
@@ -2265,7 +2256,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
   async GetGSValueInputFeeType() {
     await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeInputOPLFeeType }).toPromise().then(
       (response) => {
-        console.log(response);
         this.InsuranceDataForm.patchValue({
           FeeInputType: response.GsValue
         });
@@ -2277,7 +2267,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
   async GetGSValueInputFeeTypeBehaviour() {
     await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeInputOPLFeeBehaviour }).toPromise().then(
       (response) => {
-        console.log(response);
         if (response.GsValue == "LOCK") {
           this.isInputTypeLock = true;
         }
