@@ -203,7 +203,6 @@ export class LeadInputLeadDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("TESTTTTTTTTTT");
     this.isEndOfTab == '0' ? this.textButton = 'Save' : this.textButton = 'Save and Continue'
     this.items = this.LeadDataForm.get('items') as FormArray;
 
@@ -1062,8 +1061,6 @@ export class LeadInputLeadDataComponent implements OnInit {
 
   CheckSubmitForCFNA() {
     if (isNaN(this.LeadDataForm.controls.InstallmentAmt.value)) {
-      console.log("askfjlskdjflskjfljkds");
-      console.log(this.Tenor);
       this.toastr.warningMessage("Installment Amount cannot be empty");
       this.isAbleToSubmit = false;
       return;

@@ -212,7 +212,6 @@ export class LeadInputMainInfoComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("FAWEOIFJWEOFIJ");
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
