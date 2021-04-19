@@ -20,7 +20,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 export class InvoiceDataComponent implements OnInit {
   @Input() AppId: number;
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   invoiceObj: AppInvoiceFctrObj;
   AppFactoringObj: AppFctrObj = new AppFctrObj();
   dataobj: any;

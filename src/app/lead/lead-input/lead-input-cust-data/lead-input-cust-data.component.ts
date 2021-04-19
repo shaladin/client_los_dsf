@@ -324,15 +324,6 @@ export class LeadInputCustDataComponent implements OnInit {
       (response) => {
         this.tempMrMaritalStatCode = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ MrMaritalStatCode: response[CommonConstant.ReturnObj][0]['Key'] });
-        // if (this.tempCustPersonalObj.MrMaritalStatCode != null) {
-        //   this.CustomerDataForm.patchValue({
-        //     MrMaritalStatCode: this.tempCustPersonalObj.MrMaritalStatCode
-        //   });
-        // } else {
-        //   this.CustomerDataForm.patchValue({
-        //     MrMaritalStatCode: response[CommonConstant.ReturnObj][0]['Key']
-        //   });
-        // }
       }
     );
 
@@ -702,13 +693,6 @@ export class LeadInputCustDataComponent implements OnInit {
     this.dmsObj.User = "Admin";
     this.dmsObj.Role = "SUPUSR";
     this.dmsObj.ViewCode = "ConfinsLead";
-    // var appObj = { Id: this.appId };
-    // await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
-    //   (response)=>{
-    //     this.custNo = response['CustNo'];
-    //   }
-    // );
-    // this.dmsObj.MetadataParent.push(new DMSLabelValueObj("No Customer", this.custNo));
 
     this.dmsObj.MetadataObject.push(new DMSLabelValueObj("Lead Id", this.LeadId));
     this.dmsObj.Option.push(new DMSLabelValueObj("OverideSecurity", "Upload"));
@@ -739,7 +723,6 @@ export class LeadInputCustDataComponent implements OnInit {
   }
 
   setLegalAddr() {
-    //this.legalAddressObj = new LeadCustAddrObj();
     this.leadInputObj.LeadCustLegalAddrObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal
     this.leadInputObj.LeadCustLegalAddrObj.Addr = this.CustomerDataForm.controls["legalAddress"]["controls"].Addr.value;
     this.leadInputObj.LeadCustLegalAddrObj.AreaCode3 = this.CustomerDataForm.controls["legalAddress"]["controls"].AreaCode3.value;
@@ -760,7 +743,6 @@ export class LeadInputCustDataComponent implements OnInit {
   }
 
   setResidenceAddr() {
-    //this.residenceAddressObj = new LeadCustAddrObj();
     this.leadInputObj.LeadCustResidenceAddrObj.MrCustAddrTypeCode = CommonConstant.AddrTypeResidence
     this.leadInputObj.LeadCustResidenceAddrObj.Addr = this.CustomerDataForm.controls["residenceAddress"]["controls"].Addr.value;
     this.leadInputObj.LeadCustResidenceAddrObj.AreaCode3 = this.CustomerDataForm.controls["residenceAddress"]["controls"].AreaCode3.value;

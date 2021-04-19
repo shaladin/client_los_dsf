@@ -27,7 +27,7 @@ import { ReqMouCustSignerObj } from 'app/shared/model/Request/MOU/ReqMouCustSign
   providers: [DecimalPipe]
 })
 export class DocSignerDetailComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   WfTaskListId: any;
   MouCustId: number;
   MouType: string;

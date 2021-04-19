@@ -15,7 +15,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './mou-review-paging.component.html',
 })
 export class MouReviewPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   user: any;
   link: string;

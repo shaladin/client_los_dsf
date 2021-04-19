@@ -16,7 +16,7 @@ import { ReqMouForEditConfirmCancelObj } from 'app/shared/model/Request/MOU/ReqM
   templateUrl: './mou-cancel.component.html'
 })
 export class MouCancelComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   user: any;
 
   constructor(
