@@ -129,11 +129,17 @@ export class MouRequestAddcollComponent implements OnInit {
   ngOnInit() {
     this.inputAddressObjForLegalAddr = new InputAddressObj();
     this.inputAddressObjForLegalAddr.showSubsection = false;
+    this.inputAddressObjForLegalAddr.showPhn1 = false;
+    this.inputAddressObjForLegalAddr.showPhn2 = false;
     this.inputAddressObjForLegalAddr.showPhn3 = false;
+    this.inputAddressObjForLegalAddr.showFax = false;
 
     this.inputAddressObjForLocAddr = new InputAddressObj();
     this.inputAddressObjForLocAddr.showSubsection = false;
+    this.inputAddressObjForLocAddr.showPhn1 = false;
+    this.inputAddressObjForLocAddr.showPhn2 = false;
     this.inputAddressObjForLocAddr.showPhn3 = false;
+    this.inputAddressObjForLocAddr.showFax = false;
 
     this.items = this.AddCollForm.get('items') as FormArray;
     this.bindUcLookup()
@@ -358,7 +364,15 @@ export class MouRequestAddcollComponent implements OnInit {
 
   ResetForm() {
     this.inputAddressObjForLegalAddr = new InputAddressObj();
+    this.inputAddressObjForLegalAddr.showPhn1 = false;
+    this.inputAddressObjForLegalAddr.showPhn2 = false;
+    this.inputAddressObjForLegalAddr.showPhn3 = false;
+    this.inputAddressObjForLegalAddr.showFax = false;
     this.inputAddressObjForLocAddr = new InputAddressObj();
+    this.inputAddressObjForLocAddr.showPhn1 = false;
+    this.inputAddressObjForLocAddr.showPhn2 = false;
+    this.inputAddressObjForLocAddr.showPhn3 = false;
+    this.inputAddressObjForLocAddr.showFax = false;
 
     this.AddCollForm.patchValue({
       MouCustCollateralId: 0,
@@ -640,7 +654,6 @@ export class MouRequestAddcollComponent implements OnInit {
     }
 
     if (this.collateralObj == null) {
-
       this.http.post(URLConstant.AddMouCustCollateralData, custCollObj).subscribe(
         (response) => {
           this.AddCollForm.reset();
@@ -663,7 +676,7 @@ export class MouRequestAddcollComponent implements OnInit {
   setCollateralObjForSave() {
     this.mouCustCollateralObj = new MouCustCollateralObj;
     this.mouCustCollateralRegistrationObj = new MouCustCollateralRegistrationObj;
-
+    
     if (this.collateralObj != null) {
       this.mouCustCollateralObj = this.collateralObj;
       this.mouCustCollateralRegistrationObj = this.collateralRegistrationObj;

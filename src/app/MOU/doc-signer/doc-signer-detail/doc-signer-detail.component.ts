@@ -19,6 +19,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { MouMainInfoComponent } from 'app/MOU/mou-main-info/mou-main-info.component';
+import { ReqMouCustSignerObj } from 'app/shared/model/Request/MOU/ReqMouCustSignerObj.model';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -31,7 +32,7 @@ export class DocSignerDetailComponent implements OnInit {
   MouCustId: number;
   MouType: string;
   mouCustObj: MouCustObj;
-  mouCustSignerObj: MouCustSignerObj;
+  mouCustSignerObj: ReqMouCustSignerObj;
   returnMouCust: MouCustObj;
   @ViewChild('LookupEmp1') ucLookupEmp1: UclookupgenericComponent;
   @ViewChild('LookupEmp2') ucLookupEmp2: UclookupgenericComponent;
@@ -256,7 +257,7 @@ export class DocSignerDetailComponent implements OnInit {
     }
   }
   SaveForm() {
-    this.mouCustSignerObj = new MouCustSignerObj();
+    this.mouCustSignerObj = new ReqMouCustSignerObj();
     this.setMouCustSigner();
     this.http.post(this.addMouCustSigner, this.mouCustSignerObj).subscribe(
       (response) => {
