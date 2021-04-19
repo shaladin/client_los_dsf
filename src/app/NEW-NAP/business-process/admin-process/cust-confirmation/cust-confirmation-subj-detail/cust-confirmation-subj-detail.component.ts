@@ -297,7 +297,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
           AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode });
         }
         else {
-          this.GetListVerfResultH(response["VerfResultId"], response["MrVerfSubjectRelationCode"]);
+          this.GetListVerfResultH(this.newVerfResultHObj.VerfResultId, this.newVerfResultHObj.MrVerfSubjectRelationCode);
           formDirective.resetForm();
           this.clearform(CommonConstant.VerfResultStatSuccess, false);
         }
