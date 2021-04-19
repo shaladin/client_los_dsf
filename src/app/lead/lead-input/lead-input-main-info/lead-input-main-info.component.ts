@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
 import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -21,8 +20,7 @@ import { ReqAddLeadObj, ReqEditLeadObj } from 'app/shared/model/Request/LEAD/Req
 
 @Component({
   selector: 'app-lead-input-main-info',
-  templateUrl: './lead-input-main-info.component.html',
-  providers: [DecimalPipe, NGXToastrService]
+  templateUrl: './lead-input-main-info.component.html'
 })
 export class LeadInputMainInfoComponent implements OnInit {
   user: any;
@@ -115,14 +113,14 @@ export class LeadInputMainInfoComponent implements OnInit {
     AdInsHelper.OpenLeadViewByLeadId(this.LeadId);
   }
 
-  backHandler(){
-    if(this.pageType == "update"){
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_UPDATE_PAGING],{});
-      }
-      else{
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_PAGING],{});
-      }
-  
+  backHandler() {
+    if (this.pageType == "update") {
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_UPDATE_PAGING], {});
+    }
+    else {
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_PAGING], {});
+    }
+
   }
 
   getLookUpAgency(event) {
@@ -164,19 +162,14 @@ export class LeadInputMainInfoComponent implements OnInit {
 
         this.vendorExistObj = new VendorObj();
         this.vendorExistObj.VendorCode = this.returnExistLead.AgencyCode;
-        this.http.post(this.getVendorByVendorCode, {Code : this.returnExistLead.AgencyCode}).subscribe(
+        this.http.post(this.getVendorByVendorCode, { Code: this.returnExistLead.AgencyCode }).subscribe(
           (response) => {
             this.returnVendorExistObj = response;
             this.agencyLookUpObj.nameSelect = this.returnVendorExistObj.VendorName;
             this.agencyLookUpObj.jsonSelect = this.returnVendorExistObj;
             this.tempAgencyCode = this.returnVendorExistObj.VendorCode;
           });
-        // this.cmoNameLookUpObj.nameSelect = this.returnExistLead.CmoUsername;
-        // this.cmoNameLookUpObj.jsonSelect = this.returnExistLead;
-        // this.surveyorNameLookUpObj.nameSelect = this.returnExistLead.SurveyorUsername;
-        // this.surveyorNameLookUpObj.jsonSelect = this.returnExistLead;
-        // this.salesNameLookUpObj.nameSelect = this.returnExistLead.TeleMarketingUsername;
-        // this.salesNameLookUpObj.jsonSelect = this.returnExistLead;
+          
         this.tempCmoUsername = this.returnExistLead.CmoUsername;
         this.tempSurveyorUsername = this.returnExistLead.SurveyorUsername;
         this.tempSalesUsername = this.returnExistLead.TeleMarketingUsername;
@@ -265,7 +258,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
           this.vendorObj = new VendorObj();
           this.vendorObj.VendorCode = this.returnLead.AgencyCode;
-          this.http.post(this.getVendorByVendorCode, {Code : this.returnLead.AgencyCode}).subscribe(
+          this.http.post(this.getVendorByVendorCode, { Code: this.returnLead.AgencyCode }).subscribe(
             (response) => {
               this.returnVendorObj = response;
               this.agencyLookUpObj.nameSelect = this.returnVendorObj.VendorName;
@@ -351,9 +344,6 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.salesNameLookUpObj.isRequired = true;
   }
   OfficeChanged(event) {
-    // this.MainInfoForm.patchValue({
-    //   OfficeName: this.listRefOffice.find(x => x.Key == event.target.value).Value
-    // });
     this.MainInfoForm.patchValue({
       OfficeCode: event.target.selectedOptions[0].value,
       OfficeName: event.target.selectedOptions[0].text,
@@ -371,10 +361,6 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.http.post(this.getListRefOffice, this.refOfficeObj).subscribe(
       (response) => {
         this.listRefOffice = response[CommonConstant.ReturnObj];
-        // this.MainInfoForm.patchValue({
-        //   OfficeCode: response[CommonConstant.ReturnObj][0]['Key'],
-        //   OfficeName: response[CommonConstant.ReturnObj][0]['Value']
-        // });
 
         if (this.user.MrOfficeTypeCode == "CG" || this.user.MrOfficeTypeCode == CommonConstant.HeadOffice) {
           this.MainInfoForm.patchValue({
@@ -382,7 +368,6 @@ export class LeadInputMainInfoComponent implements OnInit {
             OfficeCode: this.listRefOffice[0].Key,
             OfficeName: this.listRefOffice[0].Value,
           });
-          // this.MainInfoForm.controls.OfficeCode.setValidators([Validators.required]);    
         }
         else {
           this.MainInfoForm.controls.OfficeCode.disable();
@@ -437,11 +422,11 @@ export class LeadInputMainInfoComponent implements OnInit {
         this.http.post(this.editLead, this.editLeadObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            if (this.pageType == "edit"){
-              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_INPUT_PAGE],{ "LeadId": this.LeadId, "mode": this.pageType });
+            if (this.pageType == "edit") {
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_INPUT_PAGE], { "LeadId": this.LeadId, "mode": this.pageType });
             }
-            else{
-              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_INPUT_PAGE],{ "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId });
+            else {
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_INPUT_PAGE], { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId });
             }
           }
         );
@@ -453,7 +438,7 @@ export class LeadInputMainInfoComponent implements OnInit {
             this.responseLead = response;
             this.LeadId = this.responseLead.Id;
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_INPUT_PAGE],{ "LeadId": this.LeadId, "CopyFrom": this.leadIdExist });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_INPUT_PAGE], { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist });
           }
         );
       }
@@ -470,11 +455,11 @@ export class LeadInputMainInfoComponent implements OnInit {
         this.http.post(this.editLead, this.editLeadObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            if(this.pageType == "edit"){
-              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_PAGING],{});
+            if (this.pageType == "edit") {
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_PAGING], {});
             }
-            else{
-              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_UPDATE_PAGING],{});
+            else {
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_UPDATE_PAGING], {});
             }
           }
         );
@@ -486,7 +471,7 @@ export class LeadInputMainInfoComponent implements OnInit {
             this.responseLead = response;
             this.LeadId = this.responseLead.Id;
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_PAGING],{});
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_PAGING], {});
           }
         );
       }
