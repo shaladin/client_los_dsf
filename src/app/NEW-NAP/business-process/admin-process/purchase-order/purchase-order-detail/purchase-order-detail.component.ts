@@ -81,12 +81,11 @@ export class PurchaseOrderDetailComponent implements OnInit {
       (response) => {
         console.log(response);
         this.AssetObj = response[CommonConstant.ReturnObj];
-        if(this.AssetObj["PurchaseOrderHObj"] != null || this.AssetObj["PurchaseOrderHObj"]["PurchaseOrderHId"] != 0){
+        if(this.AssetObj["PurchaseOrderHObj"] != null && this.AssetObj["PurchaseOrderHObj"]["PurchaseOrderHId"] != 0){
           this.isDataExist = true;
           this.Notes = this.AssetObj["PurchaseOrderHObj"]["Notes"];
           this.purchaseOrderHObj.RowVersion = this.AssetObj["PurchaseOrderHObj"]["RowVersion"];
         }
-        console.log(this.isDataExist);
         this.ProportionalValue = this.AssetObj["ProportionalValue"];
         this.TotalInsCustAmt = this.AssetObj["TotalInsCustAmt"];
         this.TotalLifeInsCustAmt = this.AssetObj["TotalLifeInsCustAmt"];
