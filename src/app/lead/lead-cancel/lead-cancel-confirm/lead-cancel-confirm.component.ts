@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators } from '@angular/forms';
-import { LeadConfirmCancelObj } from 'app/shared/model/LeadConfirmCancelObj.Model';
+import { LeadConfirmCancelObj } from 'app/shared/model/Request/LEAD/LeadConfirmCancelObj.model';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
