@@ -1,4 +1,4 @@
-export class MouCustSignerObj{
+export class ReqMouCustSignerObj{
     MouCustSignerId: number;
     WfTaskListId: number;
     MouCustId: number;

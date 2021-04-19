@@ -632,7 +632,7 @@ export class URLConstant {
 
   // MOU CUST LEGAL REVIEW
   public static GetMouCustLglReviewByMouCustId = environment.losUrl + "/MouCustLglReview/GetMouCustLglReviewByMouCustId";
-  public static AddEditRangeMouCustLglReview = environment.losUrl + "/MouCustLglReview/AddEditRangeMouCustLglReview";
+  public static AddRangeMouCustLglReview = environment.losUrl + "/MouCustLglReview/AddRangeMouCustLglReview";
   public static EditRangeMouCustLglReview = environment.losUrl + "/MouCustLglReview/EditRangeMouCustLglReview";
 
   // MOU CUST TC
