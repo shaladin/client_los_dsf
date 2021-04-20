@@ -423,7 +423,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.editLeadObj.TeleMarketingUsername = this.tempSalesUsername;
   }
 
-  SaveForm() {
+  SaveForm(isNext: boolean = false) {
     if (this.MainInfoForm.valid) {
       if (this.pageType == "edit" || this.pageType == "update") {
         this.editLeadObj.LeadId = this.LeadId;
@@ -432,11 +432,21 @@ export class LeadInputMainInfoComponent implements OnInit {
         this.http.post(this.editLead, this.editLeadObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            if (this.pageType == "edit") {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_INPUT_PAGE], { "LeadId": this.LeadId, "mode": this.pageType });
+            if(isNext){
+              if (this.pageType == "edit") {
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_INPUT_PAGE], { "LeadId": this.LeadId, "mode": this.pageType });
+              }
+              else {
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_INPUT_PAGE], { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId });
+              }
             }
-            else {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_INPUT_PAGE], { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId });
+            else{
+              if (this.pageType == "edit") {
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_PAGING], {});
+              }
+              else {
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_UPDATE_PAGING], {});
+              }
             }
           }
         );
@@ -447,38 +457,12 @@ export class LeadInputMainInfoComponent implements OnInit {
             this.responseLead = response;
             this.LeadId = this.responseLead.Id;
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_INPUT_PAGE], { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist });
-          }
-        );
-      }
-    }
-  }
-
-  save() {
-    if (this.MainInfoForm.valid) {
-      if (this.pageType == "edit" || this.pageType == "update") {
-        this.editLeadObj.LeadId = this.LeadId;
-        this.editLeadObj.RowVersion = this.returnLead.RowVersion;
-        this.setEditLead();
-        this.http.post(this.editLead, this.editLeadObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            if (this.pageType == "edit") {
+            if(isNext){
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_INPUT_PAGE], { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist });
+            }
+            else{
               AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_PAGING], {});
             }
-            else {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_UPDATE_PAGING], {});
-            }
-          }
-        );
-      } else {
-        this.setAddLead();
-        this.http.post(this.addLead, this.addLeadObj).subscribe(
-          (response) => {
-            this.responseLead = response;
-            this.LeadId = this.responseLead.Id;
-            this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_PAGING], {});
           }
         );
       }

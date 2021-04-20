@@ -907,7 +907,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         if (this.originPage == "teleVerif") {
           if (this.confirmFraudCheck()) {
             // this.leadInputLeadDataObj.IsEdit = true;
-            this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+            this.http.post(URLConstant.SubmitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 if (this.originPage == "teleVerif") {
@@ -919,11 +919,11 @@ export class LeadInputLeadDataComponent implements OnInit {
         }
         else if (this.typePage == "update") {
 
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: this.submitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
+          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
 
         }
         else {
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: this.submitWorkflowLeadInput, paging: "/Lead/Lead/Paging" });
+          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/Lead/Paging" });
         }
       }
       else {
@@ -957,7 +957,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           this.setLeadAsset();
           if (this.originPage == "teleVerif") {
             if (this.confirmFraudCheck()) {
-              this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+              this.http.post(URLConstant.SubmitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
                 (response) => {
                   this.toastr.successMessage(response["message"]);
                   if (this.originPage == "teleVerif") {
@@ -969,11 +969,11 @@ export class LeadInputLeadDataComponent implements OnInit {
             }
           }
           else if (this.typePage == "update") {
-            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: this.submitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
+            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
 
           }
           else {
-            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: this.submitWorkflowLeadInput, paging: "/Lead/Lead/Paging" });
+            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/Lead/Paging" });
           }
         }
       }
@@ -1004,7 +1004,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         if (this.originPage == "teleVerif") {
 
           if (this.confirmFraudCheck()) {
-            this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+            this.http.post(URLConstant.SubmitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 if (this.originPage == "teleVerif") {
@@ -1015,10 +1015,10 @@ export class LeadInputLeadDataComponent implements OnInit {
           }
         }
         else if (this.typePage == "update") {
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: this.submitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
+          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
         }
         else {
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: this.submitWorkflowLeadInput, paging: "/Lead/Lead/Paging" });
+          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/Lead/Paging" });
         }
       }
     }
