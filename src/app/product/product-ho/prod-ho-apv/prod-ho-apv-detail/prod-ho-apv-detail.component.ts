@@ -9,21 +9,22 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqUpdateProductPostApvObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
-import { ResProductObj } from 'app/shared/model/Response/Product/ResProductObj.Model';
+import { ReqUpdateProductPostApprovalObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 @Component({
   selector: 'app-prod-ho-apv-detail',
   templateUrl: './prod-ho-apv-detail.component.html'
 })
 export class ProdHoApvDetailComponent implements OnInit {
 
-  prodHId: number;
-  taskId: number;
+  ProdHId: number;
+  TaskId: number;
   ApvReqId: number;
-  InputApvObj: UcInputApprovalObj;
-  UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
-  ReqUpdateProductPostApvObj: ReqUpdateProductPostApvObj
+  GenericByIdObj : GenericObj = new GenericObj();
+  InputApvObj : UcInputApprovalObj = new UcInputApprovalObj();
+  ReqUpdateProdPostApvObj : ReqUpdateProductPostApprovalObj = new ReqUpdateProductPostApprovalObj();
+  UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
 
   constructor(
     private router: Router,
@@ -31,34 +32,33 @@ export class ProdHoApvDetailComponent implements OnInit {
     private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params["ProdHId"] != null) {
-        this.prodHId = params["ProdHId"];
-        this.taskId = params["TaskId"];
+        this.ProdHId = params["ProdHId"];
+        this.TaskId = params["TaskId"];
         this.ApvReqId = params["ApvReqId"];
       }
     });
   }
 
   ngOnInit() {
-    var ApvHoldObj = new ApprovalObj()
-    ApvHoldObj.TaskId = this.taskId;
+    let ApvHoldObj = new ApprovalObj()
+    ApvHoldObj.TaskId = this.TaskId;
 
     this.HoldTask(ApvHoldObj);
     this.initInputApprovalObj();
   }
 
   initInputApprovalObj() {
-    this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
-    this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
+    this.UcInputApprovalGeneralInfoObj.TaskId = this.TaskId;
 
-    this.InputApvObj = new UcInputApprovalObj();
-    this.InputApvObj.TaskId = this.taskId;
+    this.InputApvObj.TaskId = this.TaskId;
     this.InputApvObj.RequestId = this.ApvReqId;
 
-    this.http.post(URLConstant.GetProductByHId, { Id: this.prodHId }).subscribe(
-      (response: ResProductObj) => {
-        this.InputApvObj.TrxNo = response.ProdCode;
+    this.GenericByIdObj.Id = this.ProdHId;
+    this.http.post(URLConstant.GetProductByHId, this.GenericByIdObj).subscribe(
+      (response : GenericObj) => {
+        this.InputApvObj.TrxNo = response.Code;
         this.IsReady = true;
       });
   }
@@ -70,19 +70,20 @@ export class ProdHoApvDetailComponent implements OnInit {
     )
   }
 
-  onApprovalSubmited(event) {
-    this.ReqUpdateProductPostApvObj = new ReqUpdateProductPostApvObj();
-    this.ReqUpdateProductPostApvObj.ProdHId = this.prodHId;
-    this.ReqUpdateProductPostApvObj.TaskId = event[0].ApvTaskId;
-    this.ReqUpdateProductPostApvObj.Notes = event[0].Notes != undefined ? event[0].Notes : "";
-    this.ReqUpdateProductPostApvObj.Reason = event[0].ReasonCode;
-    this.ReqUpdateProductPostApvObj.Result = event[0].ApvResult
-    this.http.post(URLConstant.UpdateProductPostApv, this.ReqUpdateProductPostApvObj).subscribe(
-      () => {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_APPRV], {});
+  onApprovalSubmited(event)
+  {
+    this.ReqUpdateProdPostApvObj.ProdHId = this.ProdHId, 
+    this.ReqUpdateProdPostApvObj.TaskId = event[0].ApvTaskId, 
+    this.ReqUpdateProdPostApvObj.Notes = event[0].Notes != undefined? event[0].Notes : "",
+    this.ReqUpdateProdPostApvObj.Reason = event[0].ReasonCode, 
+    this.ReqUpdateProdPostApvObj.Result = event[0].ApvResult
+    this.http.post(URLConstant.UpdateProductPostApv, this.ReqUpdateProdPostApvObj).subscribe(
+      () => { 
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_HO_APPRV],{ });
       }
     );
   }
+  
   onCancelClick() {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_APPRV], {});
   }

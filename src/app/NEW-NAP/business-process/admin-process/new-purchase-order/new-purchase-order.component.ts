@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { environment } from 'environments/environment';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-new-purchase-order',
@@ -14,18 +13,17 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   styles: []
 })
 export class NewPurchaseOrderComponent implements OnInit {
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   bizTemplateCode: string;
-  inputPagingObj: UcPagingObj;
   arrCrit: Array<CriteriaObj>;
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.bizTemplateCode = params["BizTemplateCode"];
         localStorage.setItem("BizTemplateCode", this.bizTemplateCode);
       }
       else {
-        // this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
         this.bizTemplateCode = CommonConstant.CFNA
       }
     });
@@ -34,8 +32,6 @@ export class NewPurchaseOrderComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchNewPurchaseOrder.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchNewPurchaseOrder.json";
     this.inputPagingObj.ddlEnvironments = [
       {

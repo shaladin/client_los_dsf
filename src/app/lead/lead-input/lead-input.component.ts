@@ -15,12 +15,13 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class LeadInputComponent implements OnInit {
   @ViewChild(UcpagingComponent) ucpaging;
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
 
   readonly AddLink: string = NavigationConstant.LEAD_INPUT_MAIN_INFO;
   constructor(private http: HttpClient, private toastr: NGXToastrService) { }
 
   ngOnInit() {
+    console.log("ASLDJFOISADJ");
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchLead.json";
     this.inputPagingObj.enviromentUrl = environment.losUrl;

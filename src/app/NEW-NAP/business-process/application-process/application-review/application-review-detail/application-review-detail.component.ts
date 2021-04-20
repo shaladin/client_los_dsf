@@ -36,7 +36,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
   UserAccess: any;
   Arr: FormArray;
   BizTemplateCode: string = "";
-  InputObj: UcInputRFAObj;
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean = false;
   readonly apvBaseUrl = environment.ApprovalR3Url;
 
@@ -56,13 +56,11 @@ export class ApplicationReviewDetailComponent implements OnInit {
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   DdlReasonObj: UcDropdownListObj = new UcDropdownListObj();
-  constructor(
-    private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    public toastr: NGXToastrService, private cookieService: CookieService
-  ) {
+    public toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -71,7 +69,6 @@ export class ApplicationReviewDetailComponent implements OnInit {
         this.wfTaskListId = params["WfTaskListId"];
       }
     });
-
   }
 
   initData() {
@@ -89,7 +86,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
     await this.GetAppNo();
     await this.BindDDLRecommendation();
     await this.BindCreditAnalysisItemFormObj();
-    await this.BindAppvAmt();
+    await this.BindApvAmt();
     await this.GetExistingCreditReviewData();
     await this.GetCrdRvwCustInfoByAppId();
     this.initInputApprovalObj();
@@ -98,7 +95,6 @@ export class ApplicationReviewDetailComponent implements OnInit {
   //#region Get Local Data
   ManualDeviationData: Array<DeviationResultObj> = new Array<DeviationResultObj>();
   BindManualDeviationData(ev) {
-    console.log(ev);
     this.ManualDeviationData = ev;
   }
 
@@ -125,7 +121,8 @@ export class ApplicationReviewDetailComponent implements OnInit {
           this.appNo = response.AppNo;
           await this.GetCreditScoring(response.AppNo);
         }
-      });
+      }
+    );
   }
 
   async ClaimTask() {
@@ -134,9 +131,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
 
-    await this.http.post(URLConstant.ClaimTask, wfClaimObj).toPromise().then(
-      (response) => {
-      });
+    await this.http.post(URLConstant.ClaimTask, wfClaimObj).toPromise().then((response) => {});
   }
 
   async GetCreditScoring(appNo: string) {
@@ -148,12 +143,14 @@ export class ApplicationReviewDetailComponent implements OnInit {
           this.FormObj.patchValue({
             CreditScoring: ScoringResult.ScoringValue
           });
-        } else {
+        }
+        else {
           this.FormObj.patchValue({
             CreditScoring: "-"
           });
         }
-      });
+      }
+    );
   }
 
   //#region DDL Data
@@ -164,7 +161,8 @@ export class ApplicationReviewDetailComponent implements OnInit {
     await this.http.post(URLConstant.GetListActiveRefReason, Obj).toPromise().then(
       (response) => {
         this.DDLData[this.DDLRecomendation] = response[CommonConstant.ReturnObj];
-      });
+      }
+    );
   }
 
   BindDDLReasonReturn() {
@@ -188,18 +186,20 @@ export class ApplicationReviewDetailComponent implements OnInit {
             });
           }
         }
-      });
+      }
+    );
   }
 
-  async BindAppvAmt() {
+  async BindApvAmt() {
     let Obj = { Id: this.appId };
     await this.http.post(URLConstant.GetApprovalAmount, Obj).toPromise().then(
       (response) => {
         this.FormObj.patchValue({
-          AppvAmt: response["ApvAmt"]
+          ApvAmt: response["ApvAmt"]
         });
-        this.PlafondAmt = response["ApvAmt"];
-      });
+        this.TotalCostAmt = response["ApvAmt"];
+      }
+    );
   }
 
   async BindCreditAnalysisItemFormObj() {
@@ -215,7 +215,8 @@ export class ApplicationReviewDetailComponent implements OnInit {
           }) as FormGroup;
           this.Arr.push(NewDataForm);
         }
-      });
+      }
+    );
   }
 
   crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
@@ -238,27 +239,33 @@ export class ApplicationReviewDetailComponent implements OnInit {
     });
 
     if (!this.isReturnOn) {
-     this.isReturnOn = true;;
-     this.FormObj.controls.Reason.setValidators([Validators.required]);
-     this.FormObj.controls.Notes.setValidators([Validators.required]);
-    } else {
-     this.isReturnOn = false;
-     this.FormObj.controls.Reason.clearValidators()
-     this.FormObj.controls.Notes.clearValidators()
+      this.isReturnOn = true;
+      this.FormObj.controls.Reason.setValidators([Validators.required]);
+      this.FormObj.controls.Notes.setValidators([Validators.required]);
+      for(let i = 0; i < this.FormObj.controls.arr['controls'].length; i++) {
+        this.FormObj.get("arr").get(i.toString()).get("Answer").clearValidators();
+        this.FormObj.get("arr").get(i.toString()).get("Answer").updateValueAndValidity();
+      }
+    }
+    else {
+      this.isReturnOn = false;
+      this.FormObj.controls.Reason.clearValidators();
+      this.FormObj.controls.Notes.clearValidators();
+      for(let i = 0; i < this.FormObj.controls.arr['controls'].length; i++) {
+        this.FormObj.get("arr").get(i.toString()).get("Answer").setValidators([Validators.required]);
+        this.FormObj.get("arr").get(i.toString()).get("Answer").updateValueAndValidity();
+      }
     }
     this.FormObj.controls.Reason.updateValueAndValidity();
     this.FormObj.controls.Notes.updateValueAndValidity();
-
   }
 
-  PlafondAmt: number = 0;
+  TotalCostAmt: number = 0;
   initInputApprovalObj() {
-    //this.PlafondAmt = 1000000;
-    this.InputObj = new UcInputRFAObj(this.cookieService);
     var Attributes = [{}];
     var attribute1 = {
       "AttributeName": "Approval Amount",
-      "AttributeValue": this.PlafondAmt
+      "AttributeValue": this.TotalCostAmt
     };
     Attributes.push(attribute1);
 
@@ -313,7 +320,8 @@ export class ApplicationReviewDetailComponent implements OnInit {
     this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_RVW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
-      });
+      }
+    );
   }
 
   ReCaptureCreditReviewData() {
@@ -323,14 +331,16 @@ export class ApplicationReviewDetailComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["Message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_RVW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
-      });
+      }
+    );
   }
 
   ReCaptureDataR2() {
     this.http.post(URLConstant.ReCaptureDataR2, { AppNo: this.appNo, CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RowVersion: this.crdRvwCustInfoObj.RowVersion }).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_RVW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
-      });
+      }
+    );
   }
 
   BindAppCrdRvwDObj(objArr: any) {

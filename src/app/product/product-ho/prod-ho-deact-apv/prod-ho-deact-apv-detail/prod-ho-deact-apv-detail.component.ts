@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { HttpClient } from '@angular/common/http';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
@@ -11,7 +10,7 @@ import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResProductObj } from 'app/shared/model/Response/Product/ResProductObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-prod-ho-deact-apv-detail',
@@ -19,60 +18,50 @@ import { ResProductObj } from 'app/shared/model/Response/Product/ResProductObj.M
 })
 export class ProdHoDeactApvDetailComponent implements OnInit {
 
-  prodHId: number;
-  taskId: number;
-  instanceId: number;
-  inputObj: any;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  InputApvObj : UcInputApprovalObj;
-  UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
-  IsReady: boolean = false;
+  ProdHId: number;
+  TaskId: number;
   ApvReqId: number;
+  IsReady: boolean = false;
+  GenericByIdObj : GenericObj = new GenericObj();
+  InputApvObj : UcInputApprovalObj = new UcInputApprovalObj();
+  ViewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
 
-  constructor(private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService, private http:HttpClient) { 
+  constructor(private router: Router, 
+              private route: ActivatedRoute,
+              private http:HttpClient) { 
     this.route.queryParams.subscribe(params => {
     if (params["ProdHId"] != null) {
-        this.prodHId = params["ProdHId"];
-        this.taskId = params["TaskId"];
-        this.instanceId = params["InstanceId"];
+        this.ProdHId = params["ProdHId"];
+        this.TaskId = params["TaskId"];
         this.ApvReqId = params["ApvReqId"];
       }
     });
   }
 
   ngOnInit() {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformationForDeactApv.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    
-    var obj = {
-      taskId: this.taskId,
-      instanceId: this.instanceId,
-      approvalBaseUrl: environment.ApprovalR3Url
-    }
-
-    this.inputObj = obj;
-    
-    var ApvHoldObj = new ApprovalObj()
-    ApvHoldObj.TaskId = obj.taskId
+    this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformationForDeactApv.json";
+    this.ViewGenericObj.viewEnvironment = environment.losUrl;
+  
+    let ApvHoldObj = new ApprovalObj()
+    ApvHoldObj.TaskId = this.TaskId
 
     this.HoldTask(ApvHoldObj);
     this. initInputApprovalObj();
   }
 
   initInputApprovalObj(){
-
-    this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
-    this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
+    this.UcInputApprovalGeneralInfoObj.TaskId = this.TaskId;
 
-    this.InputApvObj = new UcInputApprovalObj();
-    this.InputApvObj.TaskId = this.taskId;
+    this.InputApvObj.TaskId = this.TaskId;
     this.InputApvObj.RequestId = this.ApvReqId;
 
-    this.http.post(URLConstant.GetProductByHId, {Id : this.prodHId}).subscribe(
-      (response : ResProductObj) => {
-        this.InputApvObj.TrxNo = response.ProdCode;
+    this.GenericByIdObj.Id = this.ProdHId;
+    this.http.post(URLConstant.GetProductByHId, this.GenericByIdObj).subscribe(
+      (response : GenericObj) => {
+        this.InputApvObj.TrxNo = response.Code;
         this.IsReady = true;
       });
   }

@@ -1,7 +1,6 @@
 
 export class ProdBranchMbrObj {
     ProdBranchMbrId : number;
-    RefOfficeId : number;
     OfficeCode : string;
     OfficeName : string;
     AreaName : string;
@@ -10,7 +9,6 @@ export class ProdBranchMbrObj {
 
     constructor(){
         this.ProdBranchMbrId = 0;
-        this.RefOfficeId = 0;
         this.OfficeCode = "";
         this.OfficeName = "";
         this.AreaName = "";

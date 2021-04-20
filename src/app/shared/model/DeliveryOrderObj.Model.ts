@@ -8,7 +8,8 @@ export class DeliveryOrderObj {
     ListAppCollateralDocObj: ListAppCollateralDocObj;
     DeliveryOrderHObj: DeliveryOrderHObj;
     ListAppTCObj: ListAppTCObj;
-    TaskListId : any;
+    TaskListId : number;
+    AgrmntId : number;
     constructor()
     {
         this.AppAssetObj = new AppAssetObj();

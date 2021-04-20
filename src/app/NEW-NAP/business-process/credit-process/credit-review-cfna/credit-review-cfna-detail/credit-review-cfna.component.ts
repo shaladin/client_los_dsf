@@ -52,7 +52,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   //   ReturnReasonDesc: [''],
   //   ReturnExecNotes: [''],
   // });
-  InputObj: UcInputRFAObj;
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   private createComponent: UcapprovalcreateComponent;
   responseListTypeCodes: Array<any>;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
@@ -351,7 +351,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
       ListDeviationResultObjs: this.ManualDeviationData,
       RequestRFAObj: this.ApprovalCreateOutput
     }
-    this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationDataNew, apiObj).subscribe(
+    this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode, });
       });
@@ -437,7 +437,6 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
       });
   }
   initInputApprovalObj(manualDevList = null){  
-    this.InputObj = new UcInputRFAObj(this.cookieService); 
     var Attributes = []
     var attribute1 = {
       "AttributeName": "Approval Amount",

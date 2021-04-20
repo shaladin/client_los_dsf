@@ -40,7 +40,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   UserAccess: any;
   Arr: FormArray;
   BizTemplateCode: string = "";
-  InputObj: UcInputRFAObj;
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean = false;
   IsViewReady: boolean = false;
   readonly apvBaseUrl = environment.ApprovalR3Url;
@@ -115,7 +115,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   //#region Get Local Data
   ManualDeviationData: Array<DeviationResultObj> = new Array<DeviationResultObj>();
   BindManualDeviationData(ev) {
-    this.IsReady = false;
+    // this.IsReady = false;
     this.ref.tick();
     this.ManualDeviationData = ev;
     let manualDevList = []
@@ -291,7 +291,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   PlafondAmt: number = 0;
   initInputApprovalObj(manualDevList = null) {
-    this.InputObj = new UcInputRFAObj(this.cookieService);
     var Attributes = [];
     var attribute1 = {
       "AttributeName": "Approval Amount",

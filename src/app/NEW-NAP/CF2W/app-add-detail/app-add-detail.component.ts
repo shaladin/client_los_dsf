@@ -11,6 +11,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 
 @Component({
   selector: 'app-app-add-detail',
@@ -176,10 +177,12 @@ export class AppAddDetailComponent implements OnInit {
   }
 
   LastStepHandler() {
-    this.NapObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
+    let reqObj: SubmitNapObj = new SubmitNapObj();
+    reqObj.AppId = this.NapObj.AppId;
+    reqObj.WfTaskListId = this.wfTaskListId;
+    this.http.post(URLConstant.SubmitNAP, reqObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { LobCode: "CF2W" });
+        AdInsHelper.RedirectUrl(this.router, [this.CancelLink], { LobCode: CommonConstant.CF2W });
       })
   }
 

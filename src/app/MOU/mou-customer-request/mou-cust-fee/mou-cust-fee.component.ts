@@ -44,9 +44,7 @@ export class MouCustFeeComponent implements OnInit {
     modalMouFee.result.then(
       (response) => {
         this.spinner.show();
-        var mouCustFee = new MouCustFeeObj();
-        mouCustFee.MouCustId = this.MouCustId;
-        this.httpClient.post(URLConstant.GetMouCustFeeForMouRequestByMouCustId, mouCustFee).subscribe(
+        this.httpClient.post(URLConstant.GetMouCustFeeForMouRequestByMouCustId, {Id: this.MouCustId}).subscribe(
           (response) => {
             this.mouCustFeeList = response;
             this.refFeeIdList = new Array();

@@ -36,23 +36,14 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
     MouCustNo: [''],
-    TopupMouCustId: [0],
     StartDt: ['', [Validators.required]],
     EndDt: ['', [Validators.required]],
     RefNo: [''],
     IsRevolving: [false],
-    CurrCode: [''],
     PlafondAmt: ['', [Validators.required, Validators.min(1.00)]],
-    RealisationAmt: [0],
     MouStat: ['NEW', [Validators.required]],
     MrMouTypeCode: ['', [Validators.required]],
-    Notes: [''],
-    SrvyOrderNo: [''],
-    MrCustTypeCode: [''],
     RowVersion: [''],
-    CustModelCode: [''],
-    IdNo: [''],
-    MrIdTypeCode: [''],
     MrRevolvingTypeCode: ['']
   });
 
@@ -171,7 +162,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       this.httpClient.post(URLConstant.AddMouCust, mouCustFormData).subscribe(
         (response: any) => {
           this.toastr.successMessage(response["Message"]);
-          var mouCustId = response["MouCustId"];
+          var mouCustId = response["Id"];
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustId, MOUType: this.mouType });
         });
     }

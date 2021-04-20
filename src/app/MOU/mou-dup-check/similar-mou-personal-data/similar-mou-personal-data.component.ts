@@ -109,7 +109,7 @@ export class SimilarMouPersonalDataComponent implements OnInit {
 
   NewCustomer(){
     this.http.post(URLConstant.EditCustNoMouCust, {"MouCustId": this.MouCustId, 
-    "CustNo":this.MouCustObj.ApplicantNo, "ApplicantNo":this.MouCustObj.ApplicantNo, RowVersion: ""}).subscribe(
+    "CustNo":this.MouCustObj.ApplicantNo, "ApplicantNo":this.MouCustObj.ApplicantNo}).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DUP_CHECK_EXIST_PERSONAL],{ "MouCustId": this.MouCustId, "WfTaskListId": this.WfTaskListId });
       });

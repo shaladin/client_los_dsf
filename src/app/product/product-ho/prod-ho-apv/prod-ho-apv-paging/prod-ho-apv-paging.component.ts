@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -9,7 +8,6 @@ import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { String } from 'typescript-string-operations';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { Router } from '@angular/router';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -21,33 +19,33 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './prod-ho-apv-paging.component.html'
 })
 export class ProdHoApvPagingComponent implements OnInit {
-
-  inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
+  InputPagingObj: UcPagingObj = new UcPagingObj();
+  ArrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   ApvReqObj: ApprovalObj = new ApprovalObj();
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-  constructor(private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) { }
+  constructor(private toastr: NGXToastrService, 
+              private http: HttpClient, 
+              private router: Router, 
+              private cookieService: CookieService) { }
 
   ngOnInit() {
-    this.inputPagingObj._url = "./assets/ucpaging/product/searchProductHOApproval.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHOApproval.json";
+    this.InputPagingObj._url = "./assets/ucpaging/product/searchProductHOApproval.json";
+    this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHOApproval.json";
 
     let critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'CATEGORY_CODE';
     critObj.value = 'PRD_HO_APV';
-    this.arrCrit.push(critObj);
+    this.ArrCrit.push(critObj);
 
     critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'CURRENT_USER_ID';
     critObj.value = this.userContext.UserName;
-    this.arrCrit.push(critObj);
+    this.ArrCrit.push(critObj);
 
 
     critObj = new CriteriaObj();
@@ -55,9 +53,9 @@ export class ProdHoApvPagingComponent implements OnInit {
     critObj.restriction = AdInsConstant.RestrictionOr;
     critObj.propName = 'MAIN_USER_ID';
     critObj.value = this.userContext.UserName;
-    this.arrCrit.push(critObj);
+    this.ArrCrit.push(critObj);
 
-    this.inputPagingObj.addCritInput = this.arrCrit;
+    this.InputPagingObj.addCritInput = this.ArrCrit;
   }
 
   CallBackHandler(ev) {
@@ -66,7 +64,7 @@ export class ProdHoApvPagingComponent implements OnInit {
       if (String.Format("{0:L}", ev.RowObj.CURRENT_USER_ID) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_APPRV_DETAIL], { "ProdHId": ev.RowObj.ProdHId, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_APPRV_DETAIL], { "ProdHId": ev.RowObj.ProdHId, "TaskId": ev.RowObj.TaskId, "ApvReqId": ev.RowObj.ApvReqId });
       }
     }
     else if (ev.Key == "HoldTask") {
@@ -74,7 +72,7 @@ export class ProdHoApvPagingComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_HOLD);
       } else {
         this.ApvReqObj.TaskId = ev.RowObj.TaskId
-        this.httpClient.post(AdInsConstant.ApvHoldTaskUrl, this.ApvReqObj).subscribe(
+        this.http.post(AdInsConstant.ApvHoldTaskUrl, this.ApvReqObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);
           }
@@ -86,7 +84,7 @@ export class ProdHoApvPagingComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
         this.ApvReqObj.TaskId = ev.RowObj.TaskId
-        this.httpClient.post(AdInsConstant.ApvTakeBackTaskUrl, this.ApvReqObj).subscribe(
+        this.http.post(AdInsConstant.ApvTakeBackTaskUrl, this.ApvReqObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);
           }

@@ -9,9 +9,11 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqProductObj } from 'app/shared/model/Request/Product/ReqProductObj.model';
-import { ResProductObj } from 'app/shared/model/Response/Product/ResProductObj.Model';
 import { ResGetProductHObj } from 'app/shared/model/Response/Product/ResGetProdObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ReqAddProductObj, ReqEditProductObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
+import { ResAddEditProductObj } from 'app/shared/model/Response/Product/ResAddEditProdObj.model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-prod-ho-add',
@@ -19,12 +21,15 @@ import { ResGetProductHObj } from 'app/shared/model/Response/Product/ResGetProdO
 })
 export class ProdHoAddComponent implements OnInit {
   ProdHId: number;
-  mode: string = 'add';
-  source: string = '';
-  ProdHObj: ResGetProductHObj = new ResGetProductHObj();
-  ReqProductObj: ReqProductObj = new ReqProductObj();
+  Mode: string = 'add';
+  Source: string = '';
   BusinessDt: Date;
-  StartActiveDt: Date;
+  StartDt: Date;
+  EndDt: Date;
+  GenericByIdObj: GenericObj = new GenericObj();
+  ResGetProdHObj: ResGetProductHObj = new ResGetProductHObj();
+  ReqAddProdObj: ReqAddProductObj = new ReqAddProductObj();
+  ReqEditProdObj: ReqEditProductObj = new ReqEditProductObj();
 
   RefProductHOForm = this.fb.group({
     ProdCode: ['', Validators.required],
@@ -47,30 +52,30 @@ export class ProdHoAddComponent implements OnInit {
         this.ProdHId = params["ProdHId"];
       }
       if (params["mode"] != null) {
-        this.mode = params["mode"];
+        this.Mode = params["mode"];
       }
       if (params["source"] != null) {
-        this.source = params["source"];
+        this.Source = params["source"];
       }
     })
   }
 
   ngOnInit() {
-    var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = new Date(context[CommonConstant.BUSINESS_DT]);
-    this.StartActiveDt = new Date(context[CommonConstant.BUSINESS_DT]);
 
-    if (this.mode == "edit") {
+    if (this.Mode == "edit") {
       this.RefProductHOForm.controls.ProdCode.disable();
-      this.http.post(URLConstant.GetProductMainInfo, { Id: this.ProdHId }).subscribe(
+      this.GenericByIdObj.Id = this.ProdHId;
+      this.http.post(URLConstant.GetProdHById, this.GenericByIdObj).subscribe(
         (response: ResGetProductHObj) => {
-          this.ProdHObj = response;
+          this.ResGetProdHObj = response;
           this.RefProductHOForm.patchValue({
-            ProdCode: this.ProdHObj.ProdCode,
-            ProdName: this.ProdHObj.ProdName,
-            ProdDescr: this.ProdHObj.ProdDescr,
-            StartDt: formatDate(this.ProdHObj.StartDt, 'yyyy-MM-dd', 'en-US'),
-            EndDt: formatDate(this.ProdHObj.EndDt, 'yyyy-MM-dd', 'en-US')
+            ProdCode: this.ResGetProdHObj.ProdCode,
+            ProdName: this.ResGetProdHObj.ProdName,
+            ProdDescr: this.ResGetProdHObj.ProdDescr,
+            StartDt: formatDate(this.ResGetProdHObj.StartDt, 'yyyy-MM-dd', 'en-US'),
+            EndDt: formatDate(this.ResGetProdHObj.EndDt, 'yyyy-MM-dd', 'en-US')
           });
           this.updateMinDtForEndDt();
         }
@@ -79,51 +84,53 @@ export class ProdHoAddComponent implements OnInit {
   }
 
   updateMinDtForEndDt() {
-    this.StartActiveDt = this.RefProductHOForm.controls.StartDt.value;
-    if (this.RefProductHOForm.controls.EndDt.value < this.StartActiveDt) {
+    if (this.RefProductHOForm.controls.EndDt.value < this.RefProductHOForm.controls.StartDt.value) {
       this.RefProductHOForm.controls.EndDt.setValue("");
     }
   }
 
-  ValidateDate() {
-    var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let businessDate = new Date(context[CommonConstant.BUSINESS_DT]);
-    let startDate = new Date(this.RefProductHOForm.get("StartDt").value);
-    let endDate = new Date(this.RefProductHOForm.get("EndDt").value);
+  ValidateDate() {   
+    this.StartDt = new Date(this.RefProductHOForm.get("StartDt").value);
+    this.EndDt = new Date(this.RefProductHOForm.get("EndDt").value);
 
-    if (startDate > endDate) {
-      this.toastr.warningMessage("Start Date Must be Less than End Date");
+    if (this.StartDt > this.EndDt) {
+      this.toastr.warningMessage(ExceptionConstant.START_DT_MUST_LESS_THAN_END_DT);
       return false;
     }
 
-    if (endDate <= businessDate) {
-      this.toastr.warningMessage("End Date Must be Greater than Business Date");
+    if (this.EndDt <= this.BusinessDt) {
+      this.toastr.warningMessage(ExceptionConstant.END_DT_MUST_GREATER_THAN_BUSINESS_DT);
+      return false;
+    }
+    
+    if (this.StartDt <= this.BusinessDt) {
+      this.toastr.warningMessage(ExceptionConstant.START_DT_MUST_GREATER_THAN_BUSINESS_DT);
       return false;
     }
     return true;
   }
 
   SaveForm() {
-    this.ReqProductObj = this.RefProductHOForm.value;
     if (!this.ValidateDate()) {
       return false;
     }
+    this.ReqAddProdObj = this.ReqEditProdObj = this.RefProductHOForm.value;
     
-    if (this.mode == "edit") {
-      this.ReqProductObj.ProdId = this.ProdHObj.ProdId;
-      this.ReqProductObj.ProdCode = this.ProdHObj.ProdCode;
-      this.ReqProductObj.RowVersion = this.ProdHObj.RowVersion;
-      this.http.post(URLConstant.EditProduct, this.ReqProductObj).subscribe(
-        (response: ResProductObj) => {
+    if (this.Mode == "edit") {
+      this.ReqEditProdObj.ProdId = this.ResGetProdHObj.ProdId;
+      this.ReqEditProdObj.ProdCode = this.ResGetProdHObj.ProdCode;
+      this.ReqEditProdObj.RowVersion = this.ResGetProdHObj.RowVersion;
+      this.http.post(URLConstant.EditProduct, this.ReqEditProdObj).subscribe(
+        (response: ResAddEditProductObj) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_ADD_DETAIL], { "ProdHId": response.DraftProdHId, "ProdId": response.ProdId, "source": this.source });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_ADD_DETAIL], { ProdHId: response.DraftProdHId, ProdId: response.ProdId, source: this.Source });
         }
       );
     } else {
-      this.http.post(URLConstant.AddProduct, this.ReqProductObj).subscribe(
-        (response: ResProductObj) => {
+      this.http.post(URLConstant.AddProduct, this.ReqAddProdObj).subscribe(
+        (response: ResAddEditProductObj) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_ADD_DETAIL], { "ProdHId": response.DraftProdHId, "ProdId": response.ProdId, "source": this.source });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_ADD_DETAIL], { ProdHId: response.DraftProdHId, ProdId: response.ProdId, source: this.Source });
         }
       );
     }
@@ -134,7 +141,7 @@ export class ProdHoAddComponent implements OnInit {
   }
 
   BackToPaging() {
-    if (this.source == "return") {
+    if (this.Source == "return") {
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_RTN_PAGING], {});
     }
     else {

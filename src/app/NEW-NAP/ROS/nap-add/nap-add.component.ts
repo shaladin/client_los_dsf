@@ -21,8 +21,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-nap-add',
-  templateUrl: './nap-add.component.html',
-  providers: [NGXToastrService]
+  templateUrl: './nap-add.component.html'
 })
 export class NapAddComponent implements OnInit {
   @ViewChild('LookupOffering') ucLookupOffering: UclookupgenericComponent;
@@ -114,13 +113,11 @@ export class NapAddComponent implements OnInit {
         CrtOfficeName: this.user.OfficeName,
       });
     }
-    // Test Data
   }
 
   MakeLookUpObj() {
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObjCopyProduct.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
@@ -128,7 +125,6 @@ export class NapAddComponent implements OnInit {
 
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjName.urlEnviPaging = environment.tempUrl;
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
@@ -217,27 +213,6 @@ export class NapAddComponent implements OnInit {
       }
     }
   }
-
-  // SaveForm() {
-  //   var napAppObj = new NapAppModel();
-  //   napAppObj = this.NapAppForm.value;
-  //   napAppObj.AppCreatedDt = this.user.BusinessDt;
-  //   napAppObj.IsAppInitDone = false;
-  //   napAppObj.AppStat = CommonConstant.AppStepNew;
-  //   napAppObj.AppCurrStep = CommonConstant.AppStepNew;
-  //   napAppObj.BizTemplateCode = CommonConstant.OPL;
-  //   napAppObj.LobCode = this.NapAppForm.controls.LobCode.value;
-  //   napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
-  //   napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
-  //   napAppObj = this.CheckValue(napAppObj);
-
-  //   var url = URLConstant.AddApp;
-  //   this.http.post(url, napAppObj).subscribe(
-  //     (response) => {
-  //       this.toastr.successMessage(response["message"]);
-  //       AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ROS_ADD_DETAIL], { "AppId": response["AppId"] });
-  //     });
-  // }
   
   SaveForm() {
     let requestAddNapObj: Object = new Object();

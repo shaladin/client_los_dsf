@@ -9,13 +9,12 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { LeadCustAddrObj } from 'app/shared/model/LeadCustAddrObj.Model';
-import { LeadInputObj } from 'app/shared/model/LeadInputObj.Model';
-import { LeadCustSocmedObj } from 'app/shared/model/LeadCustSocmedObj.Model';
-import { LeadCustObj } from 'app/shared/model/LeadCustObj.Model';
-import { LeadCustPersonalObj } from 'app/shared/model/LeadCustPersonalObj.Model';
-import { LeadCustPersonalJobDataObj } from 'app/shared/model/LeadCustPersonalJobDataObj.Model';
-import { LeadCustPersonalFinDataObj } from 'app/shared/model/LeadCustPersonalFinDataObj.Model';
+import { LeadCustAddrObj } from 'app/shared/model/Request/LEAD/LeadCustAddrObj.model';
+import { LeadCustSocmedObj } from 'app/shared/model/Request/LEAD/LeadCustSocmedObj.model';
+import { LeadCustObj } from 'app/shared/model/Request/LEAD/LeadCustObj.model';
+import { LeadCustPersonalObj } from 'app/shared/model/Request/LEAD/LeadCustPersonalObj.model';
+import { LeadCustPersonalJobDataObj } from 'app/shared/model/Request/LEAD/LeadCustPersonalJobDataObj.model';
+import { LeadCustPersonalFinDataObj } from 'app/shared/model/Request/LEAD/LeadCustPersonalFinDataObj.model';
 import { RefProfessionObj } from 'app/shared/model/RefProfessionObj.Model';
 import { formatDate } from '@angular/common';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
@@ -24,6 +23,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { ReqInputLeadCustPersonalObj } from 'app/shared/model/Request/LEAD/ReqAddEditInputLeadCustPersonalObj.model';
 
 @Component({
   selector: 'app-lead-customer-data',
@@ -37,7 +37,8 @@ export class CustomerDataComponent implements OnInit {
   CopyFrom: string;
   rowVersion: any;
   typePage: string;
-  addEditLeadCustPersonal: string;
+  addLeadCustPersonal: string;
+  editLeadCustPersonal: string;
   inputLegalAddressObj: InputFieldObj;
   inputResidenceAddressObj: InputFieldObj;
   tempProfession: string;
@@ -52,7 +53,7 @@ export class CustomerDataComponent implements OnInit {
   getListActiveRefMasterWithMappingCodeAll: string;
   custModel: RefMasterObj;
   listCustModel: any;
-  leadInputObj: LeadInputObj = new LeadInputObj();
+  leadInputObj: ReqInputLeadCustPersonalObj = new ReqInputLeadCustPersonalObj();
   leadCustFacebookObj: LeadCustSocmedObj;
   leadCustInstagramObj: LeadCustSocmedObj;
   leadCustTwitterObj: LeadCustSocmedObj;
@@ -118,7 +119,8 @@ export class CustomerDataComponent implements OnInit {
     private cookieService: CookieService) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
     this.getListActiveRefMasterWithMappingCodeAll = URLConstant.GetListActiveRefMasterWithMappingCodeAll;
-    this.addEditLeadCustPersonal = URLConstant.AddEditLeadCustPersonal;
+    this.addLeadCustPersonal = URLConstant.AddLeadCustPersonal;
+    this.editLeadCustPersonal = URLConstant.EditLeadCustPersonal;
     this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
     this.getLeadCustByLeadId = URLConstant.GetLeadCustByLeadId;
     this.getLeadCustAddr = URLConstant.GetLeadCustAddrByLeadCustIdAndAddrTypeCode;
@@ -866,7 +868,7 @@ export class CustomerDataComponent implements OnInit {
   SaveForm() {
     if (this.typePage == "edit" || this.typePage == "update") {
       if (this.resLeadCustObj.LeadId != 0) {
-        this.leadInputObj = new LeadInputObj();
+        this.leadInputObj = new ReqInputLeadCustPersonalObj();
         this.leadInputObj.LeadCustObj.LeadCustId = this.resLeadCustObj.LeadCustId;
         this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
         this.setLeadCust();
@@ -881,7 +883,7 @@ export class CustomerDataComponent implements OnInit {
         this.setLeadCustPersonalJobData();
         this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
         this.setLeadCustPersonalFinData();
-        this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
+        this.http.post(this.editLeadCustPersonal, this.leadInputObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             // AdInsHelper.RedirectUrl(this.router,["/Customer/CustomerPersonal/Address"],{ "IdCust": this.IdCust });
@@ -891,7 +893,7 @@ export class CustomerDataComponent implements OnInit {
           }
         );
       } else {
-        this.leadInputObj = new LeadInputObj();
+        this.leadInputObj = new ReqInputLeadCustPersonalObj();
         this.setLeadCust();
         this.setLeadCustPersonal();
         this.setLeadCustSocmed();
@@ -899,7 +901,7 @@ export class CustomerDataComponent implements OnInit {
         this.setResidenceAddr();
         this.setLeadCustPersonalJobData();
         this.setLeadCustPersonalFinData();
-        this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
+        this.http.post(this.addLeadCustPersonal, this.leadInputObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             // AdInsHelper.RedirectUrl(this.router,["/Customer/CustomerPersonal/Address"],{ "IdCust": this.IdCust });
@@ -911,7 +913,7 @@ export class CustomerDataComponent implements OnInit {
       }
     }
     else {
-      this.leadInputObj = new LeadInputObj();
+      this.leadInputObj = new ReqInputLeadCustPersonalObj();
       this.setLeadCust();
       this.setLeadCustPersonal();
       this.setLeadCustSocmed();
@@ -920,7 +922,7 @@ export class CustomerDataComponent implements OnInit {
       this.setLeadCustPersonalJobData();
       this.setLeadCustPersonalFinData();
 
-      this.http.post(this.addEditLeadCustPersonal, this.leadInputObj).subscribe(
+      this.http.post(this.addLeadCustPersonal, this.leadInputObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           // AdInsHelper.RedirectUrl(this.router,["/Customer/CustomerPersonal/Address"],{ "IdCust": this.IdCust });

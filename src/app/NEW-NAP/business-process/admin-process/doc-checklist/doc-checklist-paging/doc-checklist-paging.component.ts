@@ -13,11 +13,10 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
   templateUrl: './doc-checklist-paging.component.html'
 })
 export class DocChecklistPagingComponent implements OnInit {
+  inputPagingObj: UcPagingObj = new UcPagingObj();
+  bizTemplateCode: string;
 
-  inputPagingObj: any;
-  bizTemplateCode: string; 
-
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.bizTemplateCode = params["BizTemplateCode"];
@@ -32,10 +31,7 @@ export class DocChecklistPagingComponent implements OnInit {
 
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchDocChecklist.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDocChecklist.json";
     this.inputPagingObj.ddlEnvironments = [
       {

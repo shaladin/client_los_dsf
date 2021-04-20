@@ -10,6 +10,11 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqDownloadRuleObj } from 'app/shared/model/Request/Product/ReqDownloadRuleObj.model';
+import { ReqListProductDetailObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
+import { ReqGetProdCompntObj } from 'app/shared/model/Request/Product/ReqGetProdCompntObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
+import { ResGetProdCmpntGroupedObj } from 'app/shared/model/Response/Product/ResGetProdCompntObj.model';
 @Component({
   selector: 'app-ho-prod-compnt',
   templateUrl: './ho-prod-compnt.component.html'
@@ -19,10 +24,13 @@ export class HoProdCompntComponent implements OnInit {
   @Input() ProdHId: number;
   source: string = "";
   FormProdComp: any;
-  dictOptions: { [key: string]: any; } = {};
   StateSave: string;
+  dictOptions: { [key: string]: any; } = {};
   dictBehaviour: { [key: string]: any; } = {};
+  GenericByCodeObj : GenericObj = new GenericObj();
   DlRuleObj: ReqDownloadRuleObj = new ReqDownloadRuleObj();
+  ReqListProductDetailObj: ReqListProductDetailObj = new ReqListProductDetailObj();
+  ReqGetProdHCompntGroupedObj: ReqGetProdCompntObj = new ReqGetProdCompntObj();
 
   constructor(
     private router: Router,
@@ -56,10 +64,10 @@ export class HoProdCompntComponent implements OnInit {
   }
 
   addComponent(obj) {
-    var compCode, compDescr;
+    let compCode, compDescr;
     if (obj.ProdCompntType == "DDL") {
       if (obj.CompntValue == "") {
-        var dict = this.dictOptions[obj.RefProdCompntCode];
+        let dict = this.dictOptions[obj.RefProdCompntCode];
         if (dict != undefined) {
           compCode = this.dictOptions[obj.RefProdCompntCode][0].Key;
           compDescr = this.dictOptions[obj.RefProdCompntCode][0].Value;
@@ -75,7 +83,7 @@ export class HoProdCompntComponent implements OnInit {
       compDescr = obj.CompntValueDesc;
     }
 
-    var mrProdBehaviour = obj.MrProdBehaviour;
+    let mrProdBehaviour = obj.MrProdBehaviour;
 
     if (mrProdBehaviour == "") {
       if (this.dictBehaviour[obj.BehaviourType] != undefined) {
@@ -101,9 +109,9 @@ export class HoProdCompntComponent implements OnInit {
   }
 
   async PopulateDDL(obj) {
-    var url = obj.ProdCompntDtaSrcApi;
+    let url = obj.ProdCompntDtaSrcApi;
     if (url != "") {
-      var payload = JSON.parse(obj.ProdCompntDtaValue);
+      let payload = JSON.parse(obj.ProdCompntDtaValue);
       await this.http.post(url, payload).toPromise().then(
         (response) => {
           this.dictOptions[obj.RefProdCompntCode] = response[CommonConstant.ReturnObj];
@@ -113,33 +121,31 @@ export class HoProdCompntComponent implements OnInit {
   }
 
   async PopulateRefBehaviour(obj) {
-    var bhvrTypeCode = obj.BehaviourType;
+    let bhvrTypeCode = obj.BehaviourType;
     if (this.dictBehaviour[bhvrTypeCode] == undefined) {
-      var url = URLConstant.GetRefBehaviourByBehaviourTypeCode;
-      await this.http.post(url, { Code: bhvrTypeCode }).toPromise().then(
-        (response) => {
-          this.dictBehaviour[bhvrTypeCode] = response[CommonConstant.ReturnObj];
+      this.GenericByCodeObj.Code = bhvrTypeCode;
+      await this.http.post(URLConstant.GetRefBehaviourByBehaviourTypeCode, this.GenericByCodeObj).toPromise().then(
+        (response: GenericKeyValueListObj) => {
+          this.dictBehaviour[bhvrTypeCode] = response.ReturnObject;
         }
       )
     }
   }
 
   LoadProdComponent(ProdHId, CompGroups, IsFilterBizTmpltCode) {
-    var ProdHOComponent = {
-      ProdHId: ProdHId,
-      GroupCodes: CompGroups.split(","),
-      IsFilterBizTmpltCode: IsFilterBizTmpltCode,
-      RowVersion: ""
-    }
-    this.http.post(URLConstant.GetProductHOComponentGrouped, ProdHOComponent).toPromise().then(
-      async (response) => {
-        for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
-          var group = response[CommonConstant.ReturnObj][i];
-          var fa_group = this.FormProdComp.controls['groups'] as FormArray;
+    this.ReqGetProdHCompntGroupedObj.ProdHId = ProdHId,
+    this.ReqGetProdHCompntGroupedObj.GroupCodes = CompGroups.split(","),
+    this.ReqGetProdHCompntGroupedObj.IsFilterBizTmpltCode = IsFilterBizTmpltCode,
+
+    this.http.post(URLConstant.GetProductHOComponentGrouped, this.ReqGetProdHCompntGroupedObj).toPromise().then(
+      async (response : ResGetProdCmpntGroupedObj) => {
+        for (var i = 0; i < response.ReturnObject.length; i++) {
+          let group = response.ReturnObject[i];
+          let fa_group = this.FormProdComp.controls['groups'] as FormArray;
           fa_group.push(this.addGroup(group.GroupCode, group.GroupName));
 
           for (var j = 0; j < group.Components.length; j++) {
-            var comp = group.Components[j];
+            let comp = group.Components[j];
             if (comp.ProdCompntType == "DDL") {
               await this.PopulateDDL(comp);
 
@@ -150,9 +156,9 @@ export class HoProdCompntComponent implements OnInit {
           }
 
           for (var j = 0; j < group.Components.length; j++) {
-            var comp = group.Components[j];
-            var fa_comp = (<FormArray>this.FormProdComp.controls['groups']).at(i).get('components') as FormArray;
-            var comp_group = this.addComponent(comp) as FormGroup;
+            let comp = group.Components[j];
+            let fa_comp = (<FormArray>this.FormProdComp.controls['groups']).at(i).get('components') as FormArray;
+            let comp_group = this.addComponent(comp) as FormGroup;
             if (comp.ProdCompntType == "AMT") {
               comp_group.controls['CompntValue'].setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
             }
@@ -170,7 +176,7 @@ export class HoProdCompntComponent implements OnInit {
   }
 
   BuildReqProdDetail() {
-    var list = new Array();
+    let list = new Array();
     for (let i = 0; i < this.FormProdComp.controls.groups.length; i++) {
       for (let j = 0; j < this.FormProdComp.controls.groups.controls[i].controls["components"].length; j++) {
         list.push(Object.assign({}, ...this.FormProdComp.controls.groups.controls[i].controls["components"].controls[j].value));
@@ -184,17 +190,13 @@ export class HoProdCompntComponent implements OnInit {
       list[i].RowVersion = "";
     }
 
-    var objPost = {
-      ProdHId: this.ProdHId,
-      ProductDetails: list
-    }
-
-    return objPost;
+    this.ReqListProductDetailObj = new ReqListProductDetailObj();
+    this.ReqListProductDetailObj.ProdHId = this.ProdHId;
+    this.ReqListProductDetailObj.ProductDetails = list;
   }
 
   SaveForm() {
-    var objPost = this.BuildReqProdDetail();
-    this.http.post(URLConstant.AddOrEditProductDetail, objPost).subscribe(
+    this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.BackToPaging();
@@ -203,8 +205,7 @@ export class HoProdCompntComponent implements OnInit {
   }
 
   NextDetail() {
-    var objPost = this.BuildReqProdDetail();
-    this.http.post(URLConstant.AddOrEditProductDetail, objPost).subscribe(
+    this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDetailObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.wizard.goToNextStep();
@@ -217,6 +218,7 @@ export class HoProdCompntComponent implements OnInit {
   }
 
   SubmitForm() {
+    this.BuildReqProdDetail();
     if (this.StateSave == "save") {
       this.SaveForm();
     }

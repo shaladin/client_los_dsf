@@ -21,6 +21,8 @@ export class ReportComponent implements OnInit {
   })
   isDisabled: boolean = false;
   lang: string = "Current Page";
+  tanggal: Date = new Date();
+  ml: any;
 
   constructor(private fb: FormBuilder,) {
     this.inputReportObj.JsonPath = "./assets/ucreport/ReportTest.json";

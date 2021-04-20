@@ -24,7 +24,7 @@ import { NapDetailPagingComponent } from "./nap-detail/nap-detail-paging/nap-det
     exports: [],
     providers: [
         NGXToastrService
-      ]
+    ]
 })
 
 export class MainDataModule { }

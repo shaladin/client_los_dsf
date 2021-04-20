@@ -1,4 +1,6 @@
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
+import { URLConstant } from "app/shared/constant/URLConstant";
+import { environment } from "environments/environment";
 import { CriteriaObj } from "../CriteriaObj.model";
 
 export class UcTempPagingObj {
@@ -17,8 +19,8 @@ export class UcTempPagingObj {
 
     constructor() {
         this.urlJson = "";
-        this.enviromentUrl = "";
-        this.apiQryPaging = "";
+        this.enviromentUrl = environment.losUrl;
+        this.apiQryPaging = URLConstant.GetPagingObjectBySQL;
         this.pagingJson = "";
         this.isReady = false;
         this.isSearched = false;

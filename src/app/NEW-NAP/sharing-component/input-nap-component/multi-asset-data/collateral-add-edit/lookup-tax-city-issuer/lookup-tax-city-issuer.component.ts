@@ -4,25 +4,19 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-lookup-tax-city-issuer',
-  templateUrl: './lookup-tax-city-issuer.component.html',
-  styles: []
+  templateUrl: './lookup-tax-city-issuer.component.html'
 })
 export class LookupTaxCityIssuerComponent implements OnInit {
-  inputObj: UcPagingObj;
+  inputObj: UcPagingObj = new UcPagingObj();;
 
-  constructor(
-    public activeModal: NgbActiveModal
-  ) { }
+  constructor(public activeModal: NgbActiveModal) { }
 
   ngOnInit() {
-    this.inputObj = new UcPagingObj();
-    this.inputObj._url="./assets/uclookup/NAP/lookupDistrict.json";
+    this.inputObj._url = "./assets/uclookup/NAP/lookupDistrict.json";
     this.inputObj.enviromentUrl = environment.FoundationR3Url;
-    this.inputObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
     var disCrit = new Array();
     var critDisObj = new CriteriaObj();
@@ -34,7 +28,7 @@ export class LookupTaxCityIssuerComponent implements OnInit {
     this.inputObj.addCritInput = disCrit;
   }
 
-  GetResult(e){
+  GetResult(e) {
     this.activeModal.close(e);
   }
 

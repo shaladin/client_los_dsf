@@ -10,32 +10,42 @@ import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResProductObj } from 'app/shared/model/Response/Product/ResProductObj.Model';
+import { ReqReviewProductObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-prod-ho-rvw-detail',
   templateUrl: './prod-ho-rvw-detail.component.html'
 })
 export class ProdHoRvwDetailComponent implements OnInit {
-  private createComponent: UcapprovalcreateComponent;
-  @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
-    if (content) {
+  private CreateComponent: UcapprovalcreateComponent;
+  @ViewChild('ApprovalComponent') set content(Content: UcapprovalcreateComponent) {
+    if (Content) {
       // initially setter gets called with undefined
-      this.createComponent = content;
+      this.CreateComponent = Content;
     }
   }
+
+  ProdId: number;
+  ProdHId: number;
+  WfTaskListId: number;
+  IsReady: Boolean = false;
   ApprovalCreateOutput: any;
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
-  IsReady: Boolean = false;
-  ProdId: number;
-  WfTaskListId: number;
-  ProdHId: number;
+  GenericByIdObj : GenericObj = new GenericObj();
+  ReqReviewProductObj : ReqReviewProductObj = new ReqReviewProductObj();
+  readonly CancelLink: string = NavigationConstant.PRODUCT_HO_REVIEW;
+  
   FormObj = this.fb.group({
     Notes: ['', Validators.required]
   });
-
-  readonly CancelLink: string = NavigationConstant.PRODUCT_HO_REVIEW;
-  constructor(private toastr: NGXToastrService, private http: HttpClient, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private cookieService: CookieService) {
+  
+  constructor(private toastr: NGXToastrService, 
+              private http: HttpClient, 
+              private fb: FormBuilder, 
+              private router: Router, 
+              private route: ActivatedRoute, 
+              private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["ProdId"] != null) {
         this.ProdId = params["ProdId"];
@@ -64,34 +74,34 @@ export class ProdHoRvwDetailComponent implements OnInit {
     ];
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_PRD_HO_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_HO_ACT_SCHM;
-    
-    this.http.post(URLConstant.GetProductById, { Id: this.ProdId }).subscribe(
-      (response: ResProductObj) => {
-        this.InputObj.TrxNo = response.ProdCode;
+
+    this.GenericByIdObj.Id = this.ProdId;
+    this.http.post(URLConstant.GetProductById, this.GenericByIdObj).subscribe(
+      (response: GenericObj) => {
+        this.InputObj.TrxNo = response.Code;
         this.IsReady = true;
       });
   }
 
   SaveForm() {
-    this.ApprovalCreateOutput = this.createComponent.output();
+    this.ApprovalCreateOutput = this.CreateComponent.output();
     if (this.ApprovalCreateOutput != undefined) {
-      let data = {
-        ProdHId: this.ProdHId,
-        ProdId: this.ProdId,
-        WfTaskListId: this.WfTaskListId,
-        RequestRFAObj: this.ApprovalCreateOutput
-      }
-      this.http.post(URLConstant.ReviewProductNew, data).subscribe(
+      this.ReqReviewProductObj.ProdHId = this.ProdHId,
+      this.ReqReviewProductObj.ProdId = this.ProdId,
+      this.ReqReviewProductObj.WfTaskListId = this.WfTaskListId,
+      this.ReqReviewProductObj.RequestRFAObj = this.ApprovalCreateOutput
+
+      this.http.post(URLConstant.ReviewProduct, this.ReqReviewProductObj).subscribe(
         (response) => {
-          this.toastr.successMessage("Success");
+          this.toastr.successMessage(response["Message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_REVIEW], {});
           this.IsReady = true;
         });
     }
   }
-  async ClaimTask(WfTaskListId) {
+  async ClaimTask(WfTaskListId: number) {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME], isLoading: false };
+    let wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME], isLoading: false };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
 }

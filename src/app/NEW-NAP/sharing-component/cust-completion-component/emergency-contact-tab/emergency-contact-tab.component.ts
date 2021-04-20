@@ -70,7 +70,6 @@ export class EmergencyContactTabComponent implements OnInit {
     this.BusinessDt = UserAccess.BusinessDt;
 
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCustObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.genericJson = "./assets/uclookup/lookupCustomer.json";
@@ -140,10 +139,12 @@ export class EmergencyContactTabComponent implements OnInit {
       });
   }
 
+  isDataExist: boolean = false;
   getData() {
     this.http.post<AppCustEmrgncCntctObj>(URLConstant.GetAppCustEmrgncCntctByAppCustId, { Id: this.AppCustId }).subscribe(
       (response) => {
         if (response.AppCustEmrgncCntctId != 0) {
+          this.isDataExist = true;
           this.EmergencyContactForm.patchValue({
             MrIdTypeCode: response.MrIdTypeCode,
             MrGenderCode: response.MrGenderCode,
@@ -161,23 +162,23 @@ export class EmergencyContactTabComponent implements OnInit {
         this.InputLookupCustObj.nameSelect = response["ContactPersonName"];
         this.InputLookupCustObj.jsonSelect = { CustName: response["ContactPersonName"] };
 
-      this.UcAddrObj.Addr = response["Addr"];
-      this.UcAddrObj.AreaCode1 = response["AreaCode1"];
-      this.UcAddrObj.AreaCode2 = response["AreaCode2"];
-      this.UcAddrObj.AreaCode3 = response["AreaCode3"];
-      this.UcAddrObj.AreaCode4 = response["AreaCode4"];
-      this.UcAddrObj.City = response["City"];
-      this.UcAddrObj.Fax = response["Fax"];
-      this.UcAddrObj.FaxArea = response["FaxArea"];
-      this.UcAddrObj.Phn1 = response["Phn1"];
-      this.UcAddrObj.Phn2 = response["Phn2"];
-      this.UcAddrObj.Phn3 = response["Phn3"];
-      this.UcAddrObj.PhnArea1 = response["PhnArea1"];
-      this.UcAddrObj.PhnArea2 = response["PhnArea2"];
-      this.UcAddrObj.PhnArea3 = response["PhnArea3"];
-      this.UcAddrObj.PhnExt1 = response["PhnExt1"];
-      this.UcAddrObj.PhnExt2 = response["PhnExt2"];
-      this.UcAddrObj.PhnExt3 = response["PhnExt3"];
+        this.UcAddrObj.Addr = response["Addr"];
+        this.UcAddrObj.AreaCode1 = response["AreaCode1"];
+        this.UcAddrObj.AreaCode2 = response["AreaCode2"];
+        this.UcAddrObj.AreaCode3 = response["AreaCode3"];
+        this.UcAddrObj.AreaCode4 = response["AreaCode4"];
+        this.UcAddrObj.City = response["City"];
+        this.UcAddrObj.Fax = response["Fax"];
+        this.UcAddrObj.FaxArea = response["FaxArea"];
+        this.UcAddrObj.Phn1 = response["Phn1"];
+        this.UcAddrObj.Phn2 = response["Phn2"];
+        this.UcAddrObj.Phn3 = response["Phn3"];
+        this.UcAddrObj.PhnArea1 = response["PhnArea1"];
+        this.UcAddrObj.PhnArea2 = response["PhnArea2"];
+        this.UcAddrObj.PhnArea3 = response["PhnArea3"];
+        this.UcAddrObj.PhnExt1 = response["PhnExt1"];
+        this.UcAddrObj.PhnExt2 = response["PhnExt2"];
+        this.UcAddrObj.PhnExt3 = response["PhnExt3"];
 
         this.InputUcAddressObj.inputField.inputLookupObj.nameSelect = response["Zipcode"];
         this.InputUcAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["Zipcode"] };
@@ -232,7 +233,7 @@ export class EmergencyContactTabComponent implements OnInit {
           });
         }
 
-        if (response.CustAddrObjs.length > 0 ) {
+        if (response.CustAddrObjs.length > 0) {
           var custAddrLegalObj = response.CustAddrObjs.find(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeLegal);
 
           this.UcAddrObj.Addr = custAddrLegalObj.Addr;
@@ -314,13 +315,24 @@ export class EmergencyContactTabComponent implements OnInit {
     this.appCustEmrgncCntctObj.PhnExt3 = this.UcAddrObj.PhnExt3;
     this.appCustEmrgncCntctObj.Zipcode = this.EmergencyContactForm.controls["AddressZipcode"]["controls"].value.value;
 
-    this.http.post(URLConstant.AddEditAppCustEmrgncCntct, this.appCustEmrgncCntctObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.OutputTab.emit({ IsComplete: true });
-      },
-      error => {
-        console.log(error);
-      });
+    if (!this.isDataExist) {
+      this.http.post(URLConstant.AddAppCustEmrgncCntct, this.appCustEmrgncCntctObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.OutputTab.emit({ IsComplete: true });
+        },
+        error => {
+          console.log(error);
+        });
+    } else {
+      this.http.post(URLConstant.EditAppCustEmrgncCntct, this.appCustEmrgncCntctObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.OutputTab.emit({ IsComplete: true });
+        },
+        error => {
+          console.log(error);
+        });
+    }
   }
 }

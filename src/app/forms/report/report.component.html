@@ -3,7 +3,10 @@
         <div class="card-body">
             <div class="px-3">
                 <lib-ucreport [ReportInput]="inputReportObj"></lib-ucreport>
-                <label class="col-md-5 no-padding" translate>{{lang}}</label>
+                <label class="col-md-2 no-padding" translate>{{lang}}</label>
+                <label class="col-md-2 no-padding" translate>{{tanggal}}</label>
+                <label class="col-md-2 no-padding" translate>{{tanggal | date: 'dd-MMM-yyyy'}}</label>
+                <label class="col-md-2 no-padding" translate>{{tanggal | date: (ml != undefined && ml != '') ? ml : 'dd-MMM-yyyy'}}</label>
                 <!-- 
                 <form class="form form-horizontal" [formGroup]="JobDataForm" (ngSubmit)="JobDataForm.valid"
                     #enjiForm="ngForm">

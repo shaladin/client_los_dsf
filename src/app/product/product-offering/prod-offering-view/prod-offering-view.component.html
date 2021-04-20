@@ -1,4 +1,4 @@
-<lib-ucviewgeneric [viewGenericObj]="viewGenericObj"> </lib-ucviewgeneric>
+<lib-ucviewgeneric [viewGenericObj]="ViewGenericObj"> </lib-ucviewgeneric>
 <mat-tab-group mat-align-tabs="center">
   <mat-tab label="GENERAL DATA">
     <ng-template matTabContent>
@@ -64,14 +64,14 @@
         <table class="table table-responsive-md text-center table-hover">
           <thead>
             <tr class="table-header">
-              <th class="text-left">Office Code</th>
+              <th>Office Code</th>
               <th class="text-left">Office Name</th>
               <th class="text-left">Area Name</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of ProdOfferingBranchMbr">
-              <td class="text-left">{{item.OfficeCode}}</td>
+            <tr *ngFor="let item of ProdOfferingBranchMbrObj">
+              <td>{{item.OfficeCode}}</td>
               <td class="text-left">{{item.OfficeName}}</td>
               <td class="text-left">{{item.AreaName}}</td>
             </tr>
@@ -88,17 +88,17 @@
         <table class="table table-responsive-md text-center table-hover">
           <thead>
             <tr class="table-header">
-              <th class="text-left">Prod Offering Version</th>
-              <th class="text-left">Start Date</th>
-              <th class="text-left">End Date</th>
+              <th>Prod Offering Version</th>
+              <th>Start Date</th>
+              <th>End Date</th>
               <th class="text-left">Product Status</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of ProdOfferingVersion">
-              <td class="text-left">{{item.ProdOfferingVersion}}</td>
-              <td class="text-left">{{item.StartDt | date}}</td>
-              <td class="text-left">{{item.EndDt | date}}</td>
+            <tr *ngFor="let item of ListProdOfferingVersionObj">
+              <td>{{item.ProdOfferingVersion}}</td>
+              <td>{{item.StartDt | date}}</td>
+              <td>{{item.EndDt | date}}</td>
               <td class="text-left">{{item.Descr}}</td>
             </tr>
           </tbody>
