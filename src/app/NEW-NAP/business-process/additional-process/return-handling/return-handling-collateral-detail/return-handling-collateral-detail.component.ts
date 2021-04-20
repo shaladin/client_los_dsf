@@ -136,7 +136,6 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   AppCustObj: any;
 
   getRefMasterUrl: any;
-  AddEditAllCollateralDataUrl: any;
   GetAppCollateralUrl: any;
   GetAppCollateralRegistUrl: any;
   getAppUrl: any;
@@ -224,14 +223,13 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
     this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
     this.GetAppCollateralUrl = URLConstant.GetAppCollateralByAppCollateralId;
     this.getAssetMasterTypeUrl = URLConstant.GetAssetMasterTypeByFullAssetCode;
-    this.AddEditAllCollateralDataUrl = URLConstant.AddEditAllCollateralDataByAppCollateraId;
     this.GetAppCollateralRegistUrl = URLConstant.GetAppCollateralRegistrationByAppCollateralId;
   }
 
   SaveForm() {
     this.allCollateralDataObj = new AllCollateralDataObj();
     this.setAllCollateralObj();
-    this.http.post(this.AddEditAllCollateralDataUrl, this.allCollateralDataObj).subscribe(
+    this.http.post(URLConstant.AddEditAllCollateralDataByAppCollateraId, this.allCollateralDataObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_EDIT], { "AppId": this.AppId, "ReturnHandlingHId": this.returnHandlingHId, "WfTaskListId": this.wfTaskListId });

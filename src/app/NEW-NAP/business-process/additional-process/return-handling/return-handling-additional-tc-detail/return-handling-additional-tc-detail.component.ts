@@ -30,7 +30,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   getAppUrl: string;
   getRefTcUrl: string;
   rtnHandlingDUrl: string;
-  editRtnHandlingDUrl: string;
   isReturnHandling: boolean = false;
   modal: any;
   closeResult: any;
@@ -91,7 +90,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   initUrl() {
     this.getAppUrl = URLConstant.GetAppById;
     this.rtnHandlingDUrl = URLConstant.GetReturnHandlingDByReturnHandlingDId;
-    this.editRtnHandlingDUrl = URLConstant.EditReturnHandlingD;
   }
 
   initExistingTc() {
@@ -212,7 +210,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
           }
         }),
         mergeMap((response) => {
-          return this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData);
+          return this.http.post(URLConstant.EditReturnHandlingD, this.ReturnHandlingDData);
         })
       ).subscribe(
         (response) => {
@@ -224,13 +222,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
           console.log(error);
         }
       );
-
-      // this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
-      //   (response) => {
-      //     this.toastr.successMessage(response["message"]);
-      //     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-      //     this.router.navigate(["/Nap/AddProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } })
-      //   });
 
     }
   }

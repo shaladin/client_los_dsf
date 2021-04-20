@@ -23,7 +23,6 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
 
   getAppUrl: string;
   rtnHandlingDUrl: string;
-  editRtnHandlingDUrl: string;
   getListAppCollateralUrl: string;
   isReturnHandling: boolean = false;
   appId: any;
@@ -77,7 +76,6 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     this.getListAppCollateralUrl = URLConstant.GetListAppCollateralByAppId;
     this.getAppUrl = URLConstant.GetAppById;
     this.rtnHandlingDUrl = URLConstant.GetReturnHandlingDByReturnHandlingDId;
-    this.editRtnHandlingDUrl = URLConstant.EditReturnHandlingD;
   }
 
   async ngOnInit(): Promise<void> {
@@ -100,7 +98,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     }
     if (this.isReturnHandling == true) {
       this.setReturnHandlingD();
-      this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
+      this.http.post(URLConstant.EditReturnHandlingD, this.ReturnHandlingDData).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);

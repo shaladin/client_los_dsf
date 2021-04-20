@@ -375,17 +375,26 @@ export class NapAddDetailComponent implements OnInit {
 
   Submit() {
     if (this.ReturnHandlingHId > 0) {
-      var obj = {
-        WfTaskListId: this.wfTaskListId,
-        ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
-        ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
-        ReturnHandlingExecNotes: this.FormReturnObj.value.ReturnExecNotes,
-        MrReturnTaskCode: this.ResponseReturnInfoObj.MrReturnTaskCode,
-        ReturnStat: this.ResponseReturnInfoObj.ReturnStat,
-        RowVersion: this.ResponseReturnInfoObj.RowVersion
-      };
+      // var obj = {
+      //   WfTaskListId: this.wfTaskListId,
+      //   ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
+      //   ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
+      //   ReturnHandlingExecNotes: this.FormReturnObj.value.ReturnExecNotes,
+      //   MrReturnTaskCode: this.ResponseReturnInfoObj.MrReturnTaskCode,
+      //   ReturnStat: this.ResponseReturnInfoObj.ReturnStat,
+      //   RowVersion: this.ResponseReturnInfoObj.RowVersion
+      // };
+      var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+      ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
+      ReturnHandlingResult.ReturnHandlingHId = this.ResponseReturnInfoObj.ReturnHandlingHId;
+      ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
+      ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
+      ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
+      ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
+      ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
+      ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-      this.http.post(URLConstant.EditReturnHandlingD, obj).subscribe(
+      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING], { BizTemplateCode: CommonConstant.CFRFN4W });

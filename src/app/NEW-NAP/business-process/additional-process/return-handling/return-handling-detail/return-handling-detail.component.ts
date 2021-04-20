@@ -100,7 +100,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
 
     this.http.post(URLConstant.AddReturnHandlingD, reqObj).subscribe(
       (response) => {
-        this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
+        this.GetListReturnHandlingDByReturnHandlingHId();
         this.toastr.successMessage(response["message"]);
       }
     );
@@ -118,7 +118,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
 
       this.http.post(URLConstant.RequestReturnTask, reqObj).subscribe(
         (response) => {
-          this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
+          this.GetListReturnHandlingDByReturnHandlingHId();
           this.toastr.successMessage(response["message"]);
         }
       );
@@ -133,11 +133,21 @@ export class ReturnHandlingDetailComponent implements OnInit {
 
       this.http.post(URLConstant.DeleteReturnHandlingD, reqObj).subscribe(
         (response) => {
-          this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
+          this.GetListReturnHandlingDByReturnHandlingHId();
           this.toastr.successMessage(response["message"]);
         }
       );
     }
+  }
+
+  async GetListReturnHandlingDByReturnHandlingHId() {
+    var reqObj = new ReturnHandlingHObj();
+    reqObj.Id = this.returnHandlingHId;
+    await this.http.post(URLConstant.GetListReturnHandlingDByReturnHandlingHId, reqObj).toPromise().then(
+      (response) => {
+        // console.log(response);
+        this.returnHandlingDObjs = response["ReturnHandlingDObjs"] == null ? new Array() : response["ReturnHandlingDObjs"];
+      });
   }
 
   async getReturnHandling() {
@@ -145,8 +155,9 @@ export class ReturnHandlingDetailComponent implements OnInit {
     reqObj.Id = this.returnHandlingHId;
     await this.http.post(URLConstant.GetReturnHandlingWithDetailByReturnHandlingHId, reqObj).toPromise().then(
       (response) => {
+        console.log(response);
         this.returnHandlingHObj = response["ReturnHandlingHObj"];
-        this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
+        this.returnHandlingDObjs = response["ReturnHandlingDObjs"] == null ? new Array() : response["ReturnHandlingDObjs"];
         if (this.returnHandlingHObj.ReturnFromTrxType == CommonConstant.TrxTypeCodePhn) {
           this.ReturnHandlingForm.patchValue({
             MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
