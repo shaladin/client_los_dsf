@@ -145,7 +145,6 @@ export class ReturnHandlingDetailComponent implements OnInit {
     reqObj.Id = this.returnHandlingHId;
     await this.http.post(URLConstant.GetListReturnHandlingDByReturnHandlingHId, reqObj).toPromise().then(
       (response) => {
-        // console.log(response);
         this.returnHandlingDObjs = response["ReturnHandlingDObjs"] == null ? new Array() : response["ReturnHandlingDObjs"];
       });
   }
@@ -155,7 +154,6 @@ export class ReturnHandlingDetailComponent implements OnInit {
     reqObj.Id = this.returnHandlingHId;
     await this.http.post(URLConstant.GetReturnHandlingWithDetailByReturnHandlingHId, reqObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.returnHandlingHObj = response["ReturnHandlingHObj"];
         this.returnHandlingDObjs = response["ReturnHandlingDObjs"] == null ? new Array() : response["ReturnHandlingDObjs"];
         if (this.returnHandlingHObj.ReturnFromTrxType == CommonConstant.TrxTypeCodePhn) {

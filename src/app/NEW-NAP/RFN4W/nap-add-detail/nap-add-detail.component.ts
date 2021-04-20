@@ -375,15 +375,6 @@ export class NapAddDetailComponent implements OnInit {
 
   Submit() {
     if (this.ReturnHandlingHId > 0) {
-      // var obj = {
-      //   WfTaskListId: this.wfTaskListId,
-      //   ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
-      //   ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
-      //   ReturnHandlingExecNotes: this.FormReturnObj.value.ReturnExecNotes,
-      //   MrReturnTaskCode: this.ResponseReturnInfoObj.MrReturnTaskCode,
-      //   ReturnStat: this.ResponseReturnInfoObj.ReturnStat,
-      //   RowVersion: this.ResponseReturnInfoObj.RowVersion
-      // };
       var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
       ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
       ReturnHandlingResult.ReturnHandlingHId = this.ResponseReturnInfoObj.ReturnHandlingHId;

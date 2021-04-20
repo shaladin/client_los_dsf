@@ -189,12 +189,6 @@ export class AppAddDetailComponent implements OnInit {
 
   Submit() {
     if (this.mode == CommonConstant.ModeResultHandling) {
-      // var obj = {
-      //   ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
-      //   ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
-      //   ReturnHandlingExecNotes: this.FormReturnObj.value.ReturnExecNotes,
-      //   RowVersion: this.ResponseReturnInfoObj.RowVersion
-      // };
       var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
       ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
       ReturnHandlingResult.ReturnHandlingHId = this.ResponseReturnInfoObj.ReturnHandlingHId;
