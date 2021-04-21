@@ -105,6 +105,7 @@ export class JobTabComponent implements OnInit {
     OthBizNotes: [''],
   })
   IsNeedIntegrator: boolean = false;
+  IsWellKnownBeforeChanged: boolean = true;
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -200,7 +201,6 @@ export class JobTabComponent implements OnInit {
     var datePipe = new DatePipe("en-US");
     this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustId }).subscribe(
       (response) => {
-        console.log(response);
         if (response.AppCustPersonalJobDataObj != null) {
           this.isDataEdit = true;
           this.JobDataForm.patchValue({
@@ -232,8 +232,10 @@ export class JobTabComponent implements OnInit {
           this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response.AppCustPersonalJobDataObj.MrProfessionName };
           this.InputLookupIndustryTypeObj.nameSelect = response.AppCustPersonalJobDataObj.IndustryTypeName;
           this.InputLookupIndustryTypeObj.jsonSelect = { IndustryTypeName: response.AppCustPersonalJobDataObj.IndustryTypeName };
-          this.InputLookupCompanyObj.nameSelect = response.AppCustPersonalJobDataObj.CoyName;
-          this.InputLookupCompanyObj.jsonSelect = { Descr: response.AppCustPersonalJobDataObj.CoyName };
+          if(this.IsWellknownCoy){
+            this.InputLookupCompanyObj.nameSelect = response.AppCustPersonalJobDataObj.CoyName;
+            this.InputLookupCompanyObj.jsonSelect = { Descr: response.AppCustPersonalJobDataObj.CoyName };
+          }
         }
 
         if (response.JobAddr.AppCustAddrId != 0) {
@@ -420,7 +422,6 @@ export class JobTabComponent implements OnInit {
       OthBizAddrObj: this.OthBizDataAddrObj
     }
 
-    console.log(requestObj);
     if (!this.isDataEdit) {
       this.http.post(URLConstant.AddAppCustPersonalJobData, requestObj).subscribe(
         (response) => {
@@ -704,6 +705,14 @@ export class JobTabComponent implements OnInit {
 
   isWellknownCoyChecked(event: any) {
     this.IsWellknownCoy = event.target.checked;
+    if(event.target.checked == false){
+      this.JobDataForm.controls.lookupCompanyData.disable();
+    }
+    else if(this.IsWellKnownBeforeChanged != true){
+      this.JobDataForm.controls.lookupCompanyData.enable();
+    }
+    this.IsWellKnownBeforeChanged = event.target.checked;
+    this.InputLookupCompanyObj.isRequired = event.target.checked;
   }
 
   getCoy(event: any) {

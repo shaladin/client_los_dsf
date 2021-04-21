@@ -714,8 +714,8 @@ export class URLConstant {
   public static ResumeWorkflowNewPurchaseOrder = environment.losUrl + "/PurchaseOrderH/ResumeWorkflowNewPurchaseOrder";
 
   // LEAD
-  public static AddLeadCustPersonal = environment.losUrl + "/LeadCust/AddLeadCustPersonal";
-  public static EditLeadCustPersonal = environment.losUrl + "/LeadCust/EditLeadCustPersonal";
+  public static AddLeadCust = environment.losUrl + "/LeadCust/AddLeadCust";
+  public static EditLeadCust = environment.losUrl + "/LeadCust/EditLeadCust";
   public static AddLeadData = environment.losUrl + "/Lead/AddLeadData";
   public static EditLeadData = environment.losUrl + "/Lead/EditLeadData";
   public static GetLeadMonitoringByUploadMonitoringNoAndTrxType = environment.losUrl + "/Lead/GetLeadMonitoringByUploadMonitoringNoAndTrxType";
