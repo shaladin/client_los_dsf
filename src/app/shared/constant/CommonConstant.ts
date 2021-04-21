@@ -97,6 +97,7 @@ export class CommonConstant {
   public static AppStepShr = "SHR";
   public static AppStepRef = "REF";
   public static AppStepApp = "APP";
+  public static AppStepNapd = "NAPD";
   public static AppStepAsset = "ASSET";
   public static AppStepExpense = "EXPENSE";
   public static AppStepIns = "INS";
@@ -189,6 +190,7 @@ export class CommonConstant {
   public static AppStatCancel = "CAN";
   //APV RESULT
   public static ApvResultReturn = "Return";
+  public static ApvResultReturnFinal = "ReturnFinal";
   public static ApvResultRejectFinal = "RejectFinal";
 
   //REF PROD COMPNT
