@@ -252,14 +252,25 @@ export class PoEntryComponent implements OnInit {
       }
     }
 
-    this.httpClient.post(URLConstant.SubmitPurchaseOrder, { requestPurchaseOrderHObj: requestPurchaseOrderH, requestPurchaseOrderDObjs: requestListPurchaseOrderD }).toPromise().then(
-      (response) => {
-        this.activeModal.close(response);
-      }
-    ).catch(
-      () => {
-      }
-    );
+    if (!this.PurchaseOrderHId || this.PurchaseOrderHId == 0) {
+      this.httpClient.post(URLConstant.AddPurchaseOrder, { requestPurchaseOrderHObj: requestPurchaseOrderH, requestPurchaseOrderDObjs: requestListPurchaseOrderD }).toPromise().then(
+        (response) => {
+          this.activeModal.close(response);
+        }
+      ).catch(
+        () => {
+        }
+      );
+    }else{      
+      this.httpClient.post(URLConstant.EditPurchaseOrder, { requestPurchaseOrderHObj: requestPurchaseOrderH, requestPurchaseOrderDObjs: requestListPurchaseOrderD }).toPromise().then(
+        (response) => {
+          this.activeModal.close(response);
+        }
+      ).catch(
+        () => {
+        }
+      );
+    }
 
   }
 
