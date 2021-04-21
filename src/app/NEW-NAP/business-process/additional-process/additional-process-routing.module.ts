@@ -37,6 +37,9 @@ import { AppCancelPagingComponent } from './app-cancel/paging/app-cancel-paging.
 import { AppCancelDetailComponent } from './app-cancel/detail/app-cancel-detail.component';
 import { AppAssetCancelPagingComponent } from './app-asset-cancel/paging/app-asset-cancel-paging.component';
 import { AppAssetCancelDetailComponent } from './app-asset-cancel/detail/app-asset-cancel-detail.component';
+import { DocPickupRequestPagingComponent } from './doc-pickup-request/doc-pickup-request-paging/doc-pickup-request-paging/doc-pickup-request-paging.component';
+import { DocPickupRequestDetailComponent } from './doc-pickup-request/doc-pickup-request-detail/doc-pickup-request-detail/doc-pickup-request-detail.component';
+
 
 const routes: Routes = [
   {
@@ -293,6 +296,20 @@ const routes: Routes = [
         component: AppAssetCancelDetailComponent,
         data: {
           title: 'App Asset Cancel Detail'
+        }
+      },
+      {
+        path: PathConstant.DOC_PICKUP_REQUEST_PAGING,
+        component: DocPickupRequestPagingComponent,
+        data: {
+          title: 'Doc Pickup Request Paging'
+        }
+      },
+      {
+        path: PathConstant.DOC_PICKUP_REQUEST_DETAIL,
+        component: DocPickupRequestDetailComponent,
+        data: {
+          title: 'Doc Pickup Request Detail'
         }
       }
     ]

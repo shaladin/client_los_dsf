@@ -174,6 +174,10 @@ export class PathConstant {
     public static APP_ASSET_CAN = "AppAssetCancel";
     public static APP_ASSET_CAN_PAGING = PathConstant.APP_ASSET_CAN + "/" + PathConstant.PAGING;
     public static APP_ASSET_CAN_DETAIL = PathConstant.APP_ASSET_CAN + "/" + PathConstant.DETAIL;
+    public static DOC_PICKUP_REQUEST = "DocumentPickupRequest";
+    public static DOC_PICKUP_REQUEST_PAGING = PathConstant.DOC_PICKUP_REQUEST + "/" + PathConstant.PAGING;
+    public static DOC_PICKUP_REQUEST_DETAIL= PathConstant.DOC_PICKUP_REQUEST + "/" + PathConstant.DETAIL;
+
     //#endregion
 
     //#region Nap-Admin-Prcs
