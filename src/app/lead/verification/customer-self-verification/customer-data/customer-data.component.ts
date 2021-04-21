@@ -37,8 +37,6 @@ export class CustomerDataComponent implements OnInit {
   CopyFrom: string;
   rowVersion: any;
   typePage: string;
-  addLeadCustPersonal: string;
-  editLeadCustPersonal: string;
   inputLegalAddressObj: InputFieldObj;
   inputResidenceAddressObj: InputFieldObj;
   tempProfession: string;
@@ -119,8 +117,6 @@ export class CustomerDataComponent implements OnInit {
     private cookieService: CookieService) {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
     this.getListActiveRefMasterWithMappingCodeAll = URLConstant.GetListActiveRefMasterWithMappingCodeAll;
-    this.addLeadCustPersonal = URLConstant.AddLeadCustPersonal;
-    this.editLeadCustPersonal = URLConstant.EditLeadCustPersonal;
     this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
     this.getLeadCustByLeadId = URLConstant.GetLeadCustByLeadId;
     this.getLeadCustAddr = URLConstant.GetLeadCustAddrByLeadCustIdAndAddrTypeCode;
@@ -883,7 +879,7 @@ export class CustomerDataComponent implements OnInit {
         this.setLeadCustPersonalJobData();
         this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
         this.setLeadCustPersonalFinData();
-        this.http.post(this.editLeadCustPersonal, this.leadInputObj).subscribe(
+        this.http.post(URLConstant.EditLeadCust, this.leadInputObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             // AdInsHelper.RedirectUrl(this.router,["/Customer/CustomerPersonal/Address"],{ "IdCust": this.IdCust });
@@ -901,7 +897,7 @@ export class CustomerDataComponent implements OnInit {
         this.setResidenceAddr();
         this.setLeadCustPersonalJobData();
         this.setLeadCustPersonalFinData();
-        this.http.post(this.addLeadCustPersonal, this.leadInputObj).subscribe(
+        this.http.post(URLConstant.AddLeadCust, this.leadInputObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             // AdInsHelper.RedirectUrl(this.router,["/Customer/CustomerPersonal/Address"],{ "IdCust": this.IdCust });
@@ -922,7 +918,7 @@ export class CustomerDataComponent implements OnInit {
       this.setLeadCustPersonalJobData();
       this.setLeadCustPersonalFinData();
 
-      this.http.post(this.addLeadCustPersonal, this.leadInputObj).subscribe(
+      this.http.post(URLConstant.AddLeadCust, this.leadInputObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           // AdInsHelper.RedirectUrl(this.router,["/Customer/CustomerPersonal/Address"],{ "IdCust": this.IdCust });
