@@ -118,7 +118,7 @@ export class NavbarComponent implements AfterViewChecked, OnInit {
     }
 
     ClickNotification(item) {
-        this.http.post(URLConstant.UpdateReadNotification, { NotificationDId: item.NotificationDId }).subscribe(
+        this.http.post(URLConstant.UpdateReadNotification, { Id: item.NotificationDId }).subscribe(
             () => {
             });
         if (item.MrNotificationMethodCode == "EXT_LINK") {
