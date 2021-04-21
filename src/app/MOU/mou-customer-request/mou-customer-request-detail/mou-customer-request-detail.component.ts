@@ -171,7 +171,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       this.httpClient.post(URLConstant.AddMouCust, mouCustFormData).subscribe(
         (response: any) => {
           this.toastr.successMessage(response["Message"]);
-          var mouCustId = response["MouCustId"];
+          var mouCustId = response["Id"];
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustId, MOUType: this.mouType });
         });
     }
