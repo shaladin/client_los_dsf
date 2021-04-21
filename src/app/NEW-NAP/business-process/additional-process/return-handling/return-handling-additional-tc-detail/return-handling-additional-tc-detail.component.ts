@@ -27,9 +27,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 })
 export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
-  getAppUrl: string;
   getRefTcUrl: string;
-  rtnHandlingDUrl: string;
   isReturnHandling: boolean = false;
   modal: any;
   closeResult: any;
@@ -87,11 +85,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     });
   }
 
-  initUrl() {
-    this.getAppUrl = URLConstant.GetAppById;
-    this.rtnHandlingDUrl = URLConstant.GetReturnHandlingDByReturnHandlingDId;
-  }
-
   initExistingTc() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppTc.json";
@@ -115,7 +108,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
     this.ClaimTask();
-    this.initUrl();
     this.appObj.Id = this.appId;
     this.initExistingTc();
     await this.GetAppData();
@@ -311,7 +303,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   }
 
   async GetAppData() {
-    await this.http.post(this.getAppUrl, this.appObj).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, this.appObj).toPromise().then(
       (response) => {
         this.AppObj = response;
       }

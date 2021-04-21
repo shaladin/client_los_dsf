@@ -21,9 +21,6 @@ import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 })
 export class ReturnHandlingCollateralEditComponent implements OnInit {
 
-  getAppUrl: string;
-  rtnHandlingDUrl: string;
-  getListAppCollateralUrl: string;
   isReturnHandling: boolean = false;
   appId: any;
   returnHandlingHId: any;
@@ -72,17 +69,10 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     });
   }
 
-  initUrl() {
-    this.getListAppCollateralUrl = URLConstant.GetListAppCollateralByAppId;
-    this.getAppUrl = URLConstant.GetAppById;
-    this.rtnHandlingDUrl = URLConstant.GetReturnHandlingDByReturnHandlingDId;
-  }
-
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
     this.ClaimTask();
-    this.initUrl();
     this.appObj.AppId = this.appId;
     this.appObj.Id = this.appId;
     await this.GetAppData();
@@ -135,7 +125,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
 
   async GetAppData() {
     var appObj1 = { Id: this.appId };
-    await this.http.post(this.getAppUrl, appObj1).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, appObj1).toPromise().then(
       (response) => {
 
         this.AppObj = response;
@@ -157,21 +147,9 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   }
 
   GetAppCollateralData() {
-    this.http.post(this.getListAppCollateralUrl, this.appObj).subscribe(
+    this.http.post(URLConstant.GetListAppCollateralByAppId, this.appObj).subscribe(
       (response) => {
         this.appCollateralObj = response[CommonConstant.ReturnObj];
-      }
-    );
-  }
-
-
-  async GetReturnHandlingD() {
-    this.rtnHandlingDObj.ReturnHandlingDId = this.returnHandlingHId;
-    this.rtnHandlingDObj.Id = this.returnHandlingHId;
-    await this.http.post(this.rtnHandlingDUrl, this.rtnHandlingDObj).toPromise().then(
-      (response) => {
-        this.returnHandlingDObj = response;
-
       }
     );
   }
