@@ -257,6 +257,8 @@ export class CommonConstant {
 
   //FIRST INST TYPE
   public static FirstInstTypeAdvance = "AD"
+  public static FirstInstTypeAdvanceString = "Advance"
+  public static FirstInstTypeArrearString = "Arrear"
 
   //FEE TYPE
   public static FeeTypeAmt = "AMT";
