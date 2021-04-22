@@ -224,6 +224,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
     if (this.ReturnHandlingHObj.ReturnHandlingHId > 0) {
       var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
       ReturnHandlingResult.WfTaskListId = this.ReturnHandlingHObj.WfTaskListId;
+      ReturnHandlingResult.ReturnHandlingHId = this.returnHandlingDObj.ReturnHandlingHId;
       ReturnHandlingResult.ReturnHandlingDId = this.returnHandlingDObj.ReturnHandlingDId;
       ReturnHandlingResult.MrReturnTaskCode = this.returnHandlingDObj.MrReturnTaskCode;
       ReturnHandlingResult.ReturnStat = this.returnHandlingDObj.ReturnStat;
