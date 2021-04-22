@@ -70,21 +70,20 @@ export class FraudVerifPageComponent implements OnInit {
   tempLeadCustPersonalObj: any;
   leadCustPersonalObj: LeadCustPersonalObj = new LeadCustPersonalObj();;
   DuplicateStatus: string;
-  ResultDuplicate: ResDuplicateCustomerObj = new ResDuplicateCustomerObj();
-  ResultDuplicateNegative: ResDuplicateNegativeCustomerObj = new ResDuplicateNegativeCustomerObj();
+  ResultDuplicate: ResDuplicateCustomerObj[] = new Array<ResDuplicateCustomerObj>();
+  ResultDuplicateNegative: ResDuplicateNegativeCustomerObj[] = new Array<ResDuplicateNegativeCustomerObj>();
   negativeAssetCheckObj: NegativeAssetCheckObj = new NegativeAssetCheckObj();;
   tempAssetCategoryTypeCode: any;
   GetLeadAssetByLeadIdUrl: string;
   tempLeadAsset: any;
   GetAssetNegativeDuplicateCheckUrl: string;
-  ResultDuplicateAssetNegative: ResDuplicateNegativeAssetObj = new ResDuplicateNegativeAssetObj();
-  ResultDuplicateDoubleFinancing: ResDuplicateDoubleFinancingObj = new ResDuplicateDoubleFinancingObj();
+  ResultDuplicateAssetNegative: ResDuplicateNegativeAssetObj[] = new Array<ResDuplicateNegativeAssetObj>();
+  ResultDuplicateDoubleFinancing: ResDuplicateDoubleFinancingObj[] = new Array<ResDuplicateDoubleFinancingObj>();
   leadFraudVerfObj: LeadFraudVerfObj = new LeadFraudVerfObj();
   FraudVerfForm = this.fb.group({
     Notes: ['', [Validators.required]],
   });
   async ngOnInit() : Promise<void> {
-
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
