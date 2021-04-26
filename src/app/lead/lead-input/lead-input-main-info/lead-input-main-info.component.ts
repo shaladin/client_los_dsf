@@ -391,36 +391,20 @@ export class LeadInputMainInfoComponent implements OnInit {
       });
   }
 
-  setAddLead() {
-    this.addLeadObj.LeadCopyId = this.leadIdExist;
-    this.addLeadObj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
-    this.addLeadObj.CrtOfficeCode = this.MainInfoForm.controls["CrtOfficeCode"].value;
-    this.addLeadObj.LeadDt = new Date();
-    this.addLeadObj.OrderNo = this.MainInfoForm.controls["OrderNo"].value;
-    this.addLeadObj.LobCode = this.MainInfoForm.controls["LobCode"].value;
-    this.addLeadObj.MrLeadSourceCode = this.MainInfoForm.controls["LeadSource"].value;
-    this.addLeadObj.LeadStat = CommonConstant.LeadStatNew;
-    this.addLeadObj.LeadStep = CommonConstant.LeadStatNew;
-    this.addLeadObj.AgencyCode = this.tempAgencyCode;
-    this.addLeadObj.CmoUsername = this.tempCmoUsername;
-    this.addLeadObj.SurveyorUsername = this.tempSurveyorUsername;
-    this.addLeadObj.TeleMarketingUsername = this.tempSalesUsername;
-  }
-
-  setEditLead() {
-    this.editLeadObj.LeadCopyId = this.leadIdExist;
-    this.editLeadObj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
-    this.editLeadObj.CrtOfficeCode = this.MainInfoForm.controls["CrtOfficeCode"].value;
-    this.editLeadObj.LeadDt = new Date();
-    this.editLeadObj.OrderNo = this.MainInfoForm.controls["OrderNo"].value;
-    this.editLeadObj.LobCode = this.MainInfoForm.controls["LobCode"].value;
-    this.editLeadObj.MrLeadSourceCode = this.MainInfoForm.controls["LeadSource"].value;
-    this.editLeadObj.LeadStat = CommonConstant.LeadStatNew;
-    this.editLeadObj.LeadStep = CommonConstant.LeadStatNew;
-    this.editLeadObj.AgencyCode = this.tempAgencyCode;
-    this.editLeadObj.CmoUsername = this.tempCmoUsername;
-    this.editLeadObj.SurveyorUsername = this.tempSurveyorUsername;
-    this.editLeadObj.TeleMarketingUsername = this.tempSalesUsername;
+  setLeadObj(obj: any) {
+    obj.LeadCopyId = this.leadIdExist;
+    obj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
+    obj.CrtOfficeCode = this.MainInfoForm.controls["CrtOfficeCode"].value;
+    obj.LeadDt = new Date();
+    obj.OrderNo = this.MainInfoForm.controls["OrderNo"].value;
+    obj.LobCode = this.MainInfoForm.controls["LobCode"].value;
+    obj.MrLeadSourceCode = this.MainInfoForm.controls["LeadSource"].value;
+    obj.LeadStat = CommonConstant.LeadStatNew;
+    obj.LeadStep = CommonConstant.LeadStatNew;
+    obj.AgencyCode = this.tempAgencyCode;
+    obj.CmoUsername = this.tempCmoUsername;
+    obj.SurveyorUsername = this.tempSurveyorUsername;
+    obj.TeleMarketingUsername = this.tempSalesUsername;
   }
 
   SaveForm(isNext: boolean = false) {
@@ -428,7 +412,7 @@ export class LeadInputMainInfoComponent implements OnInit {
       if (this.pageType == "edit" || this.pageType == "update") {
         this.editLeadObj.LeadId = this.LeadId;
         this.editLeadObj.RowVersion = this.returnLead.RowVersion;
-        this.setEditLead();
+        this.setLeadObj(this.editLeadObj);
         this.http.post(this.editLead, this.editLeadObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
@@ -451,7 +435,7 @@ export class LeadInputMainInfoComponent implements OnInit {
           }
         );
       } else {
-        this.setAddLead();
+        this.setLeadObj(this.addLeadObj);
         this.http.post(this.addLead, this.addLeadObj).subscribe(
           (response) => {
             this.responseLead = response;
