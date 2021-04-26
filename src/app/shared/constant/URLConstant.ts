@@ -151,7 +151,7 @@ export class URLConstant {
   public static GetAssetAccessoryByCode = environment.FoundationR3Url + "/AssetAccessory/GetAssetAccessoryByCode";
 
   //Asset Master
-  public static GetAssetMasterForLookupEmployee = environment.FoundationR3Url + "/AssetMaster/GetAssetMasterForLookupEmployee";
+  public static GetAssetMasterForLookup = environment.FoundationR3Url + "/AssetMaster/GetAssetMasterForLookup";
 
   //GENERAL SETTING
   public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";

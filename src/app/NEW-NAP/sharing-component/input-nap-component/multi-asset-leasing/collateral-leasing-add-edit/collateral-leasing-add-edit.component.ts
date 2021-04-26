@@ -22,6 +22,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-collateral-leasing-add-edit',
@@ -100,7 +101,7 @@ export class CollateralLeasingAddEditComponent implements OnInit {
   assetCategoryObj: any;
   returnAssetCategoryObj: any;
   getAppCollateralByAppCollateralId: any;
-  getAssetMasterForLookupEmployee: any;
+  getAssetMasterForLookup: any;
   getAppCollateralRegistByAppCollateralId: any;
   reqAssetMasterObj: any;
   resAssetMasterObj: any;
@@ -158,7 +159,7 @@ export class CollateralLeasingAddEditComponent implements OnInit {
     this.getListAssetTypeByCode = URLConstant.GetListAssetTypeByCode;
     this.getAssetCategoryById = URLConstant.GetAssetCategoryById;
     this.getAppCollateralByAppCollateralId = URLConstant.GetAppCollateralByAppCollateralId;
-    this.getAssetMasterForLookupEmployee = URLConstant.GetAssetMasterForLookupEmployee;
+    this.getAssetMasterForLookup = URLConstant.GetAssetMasterForLookup;
     this.getAppCollateralRegistByAppCollateralId = URLConstant.GetAppCollateralRegistrationByAppCollateralId;
 
     this.route.queryParams.subscribe(params => {
@@ -392,9 +393,9 @@ export class CollateralLeasingAddEditComponent implements OnInit {
             CollPercentage: this.returnAppCollateralObj.CollateralPrcnt,
           });
 
-          this.reqAssetMasterObj = new AssetMasterObj();
-          this.reqAssetMasterObj.FullAssetCode = this.returnAppCollateralObj.FullAssetCode;
-          this.http.post(this.getAssetMasterForLookupEmployee, this.reqAssetMasterObj).subscribe(
+          var reqByCode = new GenericObj();
+          reqByCode.Code = this.returnAppCollateralObj.FullAssetCode;
+          this.http.post(this.getAssetMasterForLookup, reqByCode).subscribe(
             (response) => {
               this.resAssetMasterObj = response;
               this.inputLookupObj.nameSelect = this.resAssetMasterObj.FullAssetName;
