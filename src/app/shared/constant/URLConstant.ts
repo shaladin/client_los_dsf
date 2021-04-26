@@ -576,7 +576,11 @@ export class URLConstant {
   public static MouCustExecutionHumanActivity = environment.losUrl + "/MouCust/MouCustExecutionHumanActivity";
 
   public static AddEditMouCustPersonalData = environment.losUrl + "/MouCust/AddEditMouCustPersonalData";
+  public static AddMouCustPersonalData = environment.losUrl + "/MouCust/AddMouCustPersonalData";
+  public static EditMouCustPersonalData = environment.losUrl + "/MouCust/EditMouCustPersonalData";
   public static AddEditMouCustCompanyData = environment.losUrl + "/MouCust/AddEditMouCustCompanyData";
+  public static AddMouCustCompanyData = environment.losUrl + "/MouCust/AddMouCustCompanyData";
+  public static EditMouCustCompanyData = environment.losUrl + "/MouCust/EditMouCustCompanyData";
   public static GetMouCustByMouCustId = environment.losUrl + "/MouCust/GetMouCustByMouCustId";
 
   // MOU CUST DUPCHECK
