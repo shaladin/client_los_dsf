@@ -17,7 +17,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   providers: [DecimalPipe]
 })
 export class DocSignerComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj>;
   user: any;
 
@@ -31,10 +31,7 @@ export class DocSignerComponent implements OnInit {
       return;
     }
     else {
-      this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/searchMouCustDocSigner.json";
-      this.inputPagingObj.enviromentUrl = environment.losUrl;
-      this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchMouCustDocSigner.json";
       this.inputPagingObj.ddlEnvironments = [
         {
@@ -65,7 +62,7 @@ export class DocSignerComponent implements OnInit {
 
   getEvent(event) {
     if (event.Key == "customer") {
-      this.http.post(URLConstant.GetCustByCustNo, {TrxNo : event.RowObj.CustNo}).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, { TrxNo: event.RowObj.CustNo }).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }

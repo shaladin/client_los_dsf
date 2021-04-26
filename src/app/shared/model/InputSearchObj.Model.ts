@@ -1,3 +1,5 @@
+import { environment } from "environments/environment";
+import { URLConstant } from "../constant/URLConstant";
 import { CriteriaObj } from "./CriteriaObj.model";
 
 export class InputSearchObj {
@@ -13,9 +15,9 @@ export class InputSearchObj {
     
     constructor() {
         this._url = "";
-        this.enviromentUrl = "";
+        this.enviromentUrl = environment.losUrl;
         this.title = "";
-        this.apiQryPaging = "";
+        this.apiQryPaging = URLConstant.GetPagingObjectBySQL;
         this.arrCritObj = null;
         this.addCritInput = new Array<CriteriaObj>();
         this.ddlEnvironments = new Array<EnviObj>();

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { AgrmntSignerObj } from 'app/shared/model/AgrmntSignerObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -109,12 +108,6 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         else {
           this.mode = "edit";
 
-          // this.inputLookupOfficeEmp1Obj.isReady = true;
-          // this.inputLookupOfficeEmp2Obj.isReady = true;
-          // this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
-          // this.inputLookupAppCustCompanyShareHolder3Obj.isReady = true;
-          // this.inputLookupAppCustCompanyShareHolder2Obj.isReady = true;
-
           this.agrmntSignerObj.AgrmntSignerId = this.ResponseAgrmntSignerObj.AgrmntSignerId;
           this.agrmntSignerObj.SupplBranchEmpNo = this.ResponseAgrmntSignerObj.SupplBranchEmpNo;
           this.agrmntSignerObj.SupplBranchEmpName = this.ResponseAgrmntSignerObj.SupplBranchEmpName;
@@ -155,17 +148,11 @@ export class DocSignerCfnaDetailComponent implements OnInit {
     await this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.inputLookupBranchEmpObj.urlJson = "./assets/uclookup/lookupBranchEmp.json";
-        this.inputLookupBranchEmpObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
         this.inputLookupBranchEmpObj.urlEnviPaging = environment.FoundationR3Url;
         this.inputLookupBranchEmpObj.pagingJson = "./assets/uclookup/lookupBranchEmp.json";
         this.inputLookupBranchEmpObj.genericJson = "./assets/uclookup/lookupBranchEmp.json";
         this.inputLookupBranchEmpObj.addCritInput = new Array();
     
-        // var crit1Obj = new CriteriaObj();
-        // crit1Obj.propName = 'V.VENDOR_CODE';
-        // crit1Obj.restriction = AdInsConstant.RestrictionEq;
-        // crit1Obj.value = this.SupplCode;
-        // this.inputLookupBranchEmpObj.addCritInput.push(crit1Obj);
         if(response["listResponseAppLoanPurpose"] && response["listResponseAppLoanPurpose"].length > 0){
           var arrValue = new Array<string>();
           var hasNotDisburseToCust = false;
@@ -192,14 +179,12 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         this.inputLookupBranchEmpObj.addCritInput.push(crit2Obj);
     
         this.inputLookupOfficeEmp1Obj.urlJson = "./assets/uclookup/lookupOfficeEmp.json";
-        this.inputLookupOfficeEmp1Obj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
         this.inputLookupOfficeEmp1Obj.urlEnviPaging = environment.FoundationR3Url;
         this.inputLookupOfficeEmp1Obj.pagingJson = "./assets/uclookup/lookupOfficeEmp.json";
         this.inputLookupOfficeEmp1Obj.genericJson = "./assets/uclookup/lookupOfficeEmp.json";
         this.inputLookupOfficeEmp1Obj.addCritInput = new Array();
     
         this.inputLookupOfficeEmp2Obj.urlJson = "./assets/uclookup/lookupOfficeEmp.json";
-        this.inputLookupOfficeEmp2Obj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
         this.inputLookupOfficeEmp2Obj.urlEnviPaging = environment.FoundationR3Url;
         this.inputLookupOfficeEmp2Obj.pagingJson = "./assets/uclookup/lookupOfficeEmp.json";
         this.inputLookupOfficeEmp2Obj.genericJson = "./assets/uclookup/lookupOfficeEmp.json";
@@ -215,14 +200,12 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         this.inputLookupOfficeEmp2Obj.addCritInput.push(crit3Obj);
     
         this.inputLookupAppCustCompanyShareHolder1Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
-        this.inputLookupAppCustCompanyShareHolder1Obj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
         this.inputLookupAppCustCompanyShareHolder1Obj.urlEnviPaging = environment.losUrl;
         this.inputLookupAppCustCompanyShareHolder1Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
         this.inputLookupAppCustCompanyShareHolder1Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
         this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput = new Array();
     
         this.inputLookupAppCustCompanyShareHolder2Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
-        this.inputLookupAppCustCompanyShareHolder2Obj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
         this.inputLookupAppCustCompanyShareHolder2Obj.urlEnviPaging = environment.losUrl;
         this.inputLookupAppCustCompanyShareHolder2Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
         this.inputLookupAppCustCompanyShareHolder2Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
@@ -230,7 +213,6 @@ export class DocSignerCfnaDetailComponent implements OnInit {
         this.inputLookupAppCustCompanyShareHolder2Obj.addCritInput = new Array();
     
         this.inputLookupAppCustCompanyShareHolder3Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
-        this.inputLookupAppCustCompanyShareHolder3Obj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
         this.inputLookupAppCustCompanyShareHolder3Obj.urlEnviPaging = environment.losUrl;
         this.inputLookupAppCustCompanyShareHolder3Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
         this.inputLookupAppCustCompanyShareHolder3Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";

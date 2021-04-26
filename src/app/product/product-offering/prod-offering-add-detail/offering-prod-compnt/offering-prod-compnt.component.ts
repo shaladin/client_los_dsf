@@ -6,9 +6,8 @@ import { WizardComponent } from 'angular-archwizard';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ProductOfferingDetailObj } from 'app/shared/model/Request/Product/ProductOfferingDetailObj.model';
-import { ListProductOfferingDetailObj } from 'app/shared/model/Request/Product/ListProductOfferingDetailObj.model';
-
+import { ReqAddEditProdOfferingDObj } from 'app/shared/model/Request/Product/ReqAddEditProdOfferingObj.model';
+import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
 
 @Component({
   selector: 'app-offering-prod-compnt',
@@ -16,7 +15,9 @@ import { ListProductOfferingDetailObj } from 'app/shared/model/Request/Product/L
 })
 export class OfferingProdCompntComponent implements OnInit {
 
-  @Input() objInput: any;
+  @Input() ProdOfferingHId: number;
+  Source: string = "";
+  ListProductComponentObj : ReqAddEditProdOfferingDObj = new ReqAddEditProdOfferingDObj();
 
   constructor(
     private router: Router,
@@ -26,23 +27,16 @@ export class OfferingProdCompntComponent implements OnInit {
     private route: ActivatedRoute,
   ) { 
     this.route.queryParams.subscribe(params => {
-      this.source = params["source"];
+      this.Source = params["source"];
     });
   }
 
-  UrlBackEnd;
-  prodOfferingHId: any;
-  listProductComponentObj;
-  source:string = "";
-
   ngOnInit() {
-    this.prodOfferingHId = this.objInput["ProdOfferingHId"];
   }
   
   SaveForm(event) {
-    this.UrlBackEnd = URLConstant.AddOrEditProdOfferingDetail;
     this.generateSaveObj(event);
-    this.http.post(this.UrlBackEnd, this.listProductComponentObj).subscribe(
+    this.http.post(URLConstant.AddOrEditProdOfferingDetail, this.ListProductComponentObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.BackToPaging();
@@ -51,9 +45,8 @@ export class OfferingProdCompntComponent implements OnInit {
   }
 
   NextDetail(event) {
-    this.UrlBackEnd = URLConstant.AddOrEditProdOfferingDetail;
     this.generateSaveObj(event);
-    this.http.post(this.UrlBackEnd, this.listProductComponentObj).subscribe(
+    this.http.post(URLConstant.AddOrEditProdOfferingDetail, this.ListProductComponentObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         this.wizard.goToNextStep();
@@ -62,25 +55,23 @@ export class OfferingProdCompntComponent implements OnInit {
   }
 
   generateSaveObj(event){
-    this.listProductComponentObj = new ListProductOfferingDetailObj();
-    this.listProductComponentObj.ProdOfferingDetails = new Array();
-    this.listProductComponentObj.ProdOfferingHId = this.objInput["ProdOfferingHId"];
-    for (var i = 0; i < event.length; i++) {
-      var GeneralDataObj = new ProductOfferingDetailObj();
+    this.ListProductComponentObj.ProdOfferingHId = this.ProdOfferingHId;
+    for (let i = 0; i < event.length; i++) {
+      let GeneralDataObj = new ProdOfferingDObj();
       GeneralDataObj.ProdOfferingDId = event[i].ProdOfferingDId;
-      GeneralDataObj.ProdOfferingHId = this.objInput["ProdOfferingHId"];
+      GeneralDataObj.ProdOfferingHId = this.ProdOfferingHId;
       GeneralDataObj.RefProdCompntCode = event[i].RefProdCompntCode;
       GeneralDataObj.RefProdCompntGrpCode = event[i].RefProdCompntGrpCode;
       if(event[i].IsProdOffering == true){
         GeneralDataObj.CompntValue = event[i].OfferingCompntValue;
         GeneralDataObj.CompntValueDesc = event[i].OfferingCompntValueDesc;
-        GeneralDataObj.MrProdBehaviour = event[i].OfferingMrProdBehaviour;  
+        GeneralDataObj.MrProdBehaviourCode = event[i].OfferingMrProdBehaviour;  
       }else{
         GeneralDataObj.CompntValue = event[i].HOCompntValue;
         GeneralDataObj.CompntValueDesc = event[i].HOCompntValueDesc;
-        GeneralDataObj.MrProdBehaviour = event[i].HOMrProdBehaviour;
+        GeneralDataObj.MrProdBehaviourCode = event[i].HOMrProdBehaviour;
       }
-      this.listProductComponentObj.ProdOfferingDetails.push(GeneralDataObj);
+      this.ListProductComponentObj.ProdOfferingDetails.push(GeneralDataObj);
     }
   }
 
@@ -91,7 +82,7 @@ export class OfferingProdCompntComponent implements OnInit {
 
   BackToPaging()
   {
-    if(this.source == "return")
+    if(this.Source == "return")
     {
       AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PROD_OFFERING_RTN_PAGING],{ });
     }

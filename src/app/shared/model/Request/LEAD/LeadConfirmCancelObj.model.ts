@@ -5,4 +5,8 @@ export class LeadConfirmCancelObj{
     MrCancelReasonCode : string;
     ListLeadId = new Array();
     ListWfTaskListId = new Array();
+
+    constructor() {
+        this.MrCancelReasonCode = "";
+    }
 }

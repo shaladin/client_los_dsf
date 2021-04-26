@@ -1,13 +1,13 @@
-export class ResGetProductHOComponentGroupedObj {
-    ReturnObject : Array<ResListProdHOCompntObj>;
+export class ResGetProdCmpntGroupedObj {
+    ReturnObject : Array<ResListProdCompntObj>;
 
     constructor(){
-        this.ReturnObject = new Array<ResListProdHOCompntObj>();
+        this.ReturnObject = new Array<ResListProdCompntObj>();
     }
 
 }
 
-class ResListProdHOCompntObj {
+class ResListProdCompntObj {
     GroupCode: string;
     GroupName: string;
     Components: Array<ResProductCompntWithDetailDomainObj>;

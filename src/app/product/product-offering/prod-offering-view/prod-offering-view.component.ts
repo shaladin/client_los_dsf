@@ -1,17 +1,16 @@
 import { environment } from "environments/environment";
-import { Component, OnInit, ViewChild, Input } from "@angular/core";
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, Input } from "@angular/core";
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { saveAs } from 'file-saver';
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
-import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { ProdOfferingCodeVersionObj } from "app/shared/model/Request/Product/ProdOfferingCodeVersionObj.model";
-import { ProductOfferingBranchMbrObj } from "app/shared/model/Request/Product/ProductOfferingBranchMbrObj.model";
-import { ProductOfferingDetailObj } from "app/shared/model/Request/Product/ProductOfferingDetailObj.model";
-import { ReqProdOffVersionObj } from "app/shared/model/Request/Product/ReqGetProdOfferingObj.model";
 import { ReqDownloadRuleObj } from "app/shared/model/Request/Product/ReqDownloadRuleObj.model";
+import { ReqGetProdOffCompntObj } from "app/shared/model/Request/Product/ReqGetProdCompntObj.model";
+import { ResGetListProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj } from "app/shared/model/Response/Product/ResGetProdOfferingBranchMbrObj.model";
+import { ResGetListProdOfferingHVersionObj, ResGetProdOfferingDCompntInfoObj, ResGetProdOfferingHVersionObj, ResProdOffDCompntObj } from "app/shared/model/Response/Product/ResGetProdOfferingObj.model";
+import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
 
 @Component({
   selector: 'app-prod-offering-view',
@@ -19,113 +18,93 @@ import { ReqDownloadRuleObj } from "app/shared/model/Request/Product/ReqDownload
 })
 export class ProdOfferingViewComponent implements OnInit {
   @Input() inputProdOfferingHId;
-
-  prodOfferingHId: any;
-  prodOfferingCode: any;
-  prodOfferingVersion: any;
-  ProdOfferingBranchMemObj: any;
-  ProdOfferingVersionObj: any;
-  GetProdOfferByVerCode: any;
-  ProdOfferingBranchUrl: any;
-  ProdOfferingVerUrl: any;
-  ProdOfferingDUrl: any;
-  ProdOfferingCodeVerUrl: any
-  refProductDetailObj: any;
-  GenData: any;
-  ProdComp: any;
-  ProdCompGen: any;
-  ProdCompNonGen: any;
-  ProdOfferingBranchMbr: any;
-  ProdOfferingVersion: any;
-  ProdOfferingCodeVersion: any;
-  mainInfoByHIdOnly: boolean = true;
+  ProdOfferingHId: number;
+  ProdOfferingCode: string;
+  ProdOfferingVersion: string;
+  MainInfoByHIdOnly: boolean = true;
   IsLoaded: boolean = false;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  GenericByIdObj : GenericObj = new GenericObj();
+  ViewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   DlRuleObj  : ReqDownloadRuleObj = new ReqDownloadRuleObj();
+  ProdCompGen: ResProdOffDCompntObj = new ResProdOffDCompntObj();
+  GenData: Array<ResProdOffDCompntObj> = new Array<ResProdOffDCompntObj>();
+  ProdComp: Array<ResProdOffDCompntObj> = new Array<ResProdOffDCompntObj>();
+  ProdCompNonGen: Array<ResProdOffDCompntObj> = new Array<ResProdOffDCompntObj>();
+  ReqGetProdOffCmpntObj: ReqGetProdOffCompntObj = new ReqGetProdOffCompntObj();
+  GetProdOfferByVerCode: ProdOfferingCodeVersionObj = new ProdOfferingCodeVersionObj();
+  ProdOfferingBranchMbrObj: Array<ResProdOfferingBranchOfficeMbrObj> = new Array<ResProdOfferingBranchOfficeMbrObj>();
+  ListProdOfferingVersionObj: Array<ResGetProdOfferingHVersionObj> = new Array<ResGetProdOfferingHVersionObj>();
+  ProdOfferingCodeVersion: ResGetProdOfferingHVersionObj = new ResGetProdOfferingHVersionObj();
   
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
-
-    this.ProdOfferingDUrl = URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode;
-    this.ProdOfferingBranchUrl = URLConstant.GetListProdOfferingBranchOfficeMbrByProdHId;
-    this.ProdOfferingVerUrl = URLConstant.GetListProdOfferingHByProdOfferingCurrentProdHId;
-    this.ProdOfferingCodeVerUrl = URLConstant.GetProdOfferingHByCodeAndVerion;
-
+  constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params["prodOfferingHId"] != 0) {
-        this.prodOfferingHId = params["prodOfferingHId"];
+        this.ProdOfferingHId = params["prodOfferingHId"];
       }
       else {
         if (params["prodOfferingCode"] != "") {
-          this.prodOfferingCode = params["prodOfferingCode"];
+          this.ProdOfferingCode = params["prodOfferingCode"];
         }
         if (params["prodOfferingVersion"] != "") {
-          this.prodOfferingVersion = params["prodOfferingVersion"];
+          this.ProdOfferingVersion = params["prodOfferingVersion"];
         }
-        this.prodOfferingHId = params["prodOfferingHId"];
-        this.mainInfoByHIdOnly = false;
+        this.ProdOfferingHId = params["prodOfferingHId"];
+        this.MainInfoByHIdOnly = false;
       }
     });
   }
 
   async LoadMainInfo() {
-    this.GetProdOfferByVerCode = new ProdOfferingCodeVersionObj();
-    this.GetProdOfferByVerCode.ProdOfferingCode = this.prodOfferingCode;
-    this.GetProdOfferByVerCode.ProdOfferingVersion = this.prodOfferingVersion;
-    await this.http.post(this.ProdOfferingCodeVerUrl, this.GetProdOfferByVerCode).toPromise().then(
+    this.GetProdOfferByVerCode.ProdOfferingCode = this.ProdOfferingCode;
+    this.GetProdOfferByVerCode.ProdOfferingVersion = this.ProdOfferingVersion;
+    await this.http.post<ResGetProdOfferingHVersionObj>(URLConstant.GetProdOfferingHByCodeAndVersion, this.GetProdOfferByVerCode).toPromise().then(
       response => {
         this.ProdOfferingCodeVersion = response;
-        this.prodOfferingHId = this.ProdOfferingCodeVersion.ProdOfferingHId
+        this.ProdOfferingHId = this.ProdOfferingCodeVersion.ProdOfferingHId
       }
     );
   }
 
-
   async ngOnInit(): Promise<void> {
-    if (this.prodOfferingHId == undefined) {
-      this.prodOfferingHId = this.inputProdOfferingHId;
+    if (this.ProdOfferingHId == undefined) {
+      this.ProdOfferingHId = this.inputProdOfferingHId;
     }
     //** Main Information **//
-    if (this.mainInfoByHIdOnly == true) {
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformation.json";
+    if (this.MainInfoByHIdOnly == true) {
+      this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformation.json";
     }
     else {
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformationByCode.json";
+      this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformationByCode.json";
     }
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.ViewGenericObj.viewEnvironment = environment.losUrl;
 
-
-    if (this.prodOfferingHId == 0) {
+    if (this.ProdOfferingHId == 0) {
       await this.LoadMainInfo();
     }
 
     //** Product Offering Version **//
-    this.ProdOfferingVersionObj = new ReqProdOffVersionObj;
-    this.ProdOfferingVersionObj.ProdOfferingHId = this.prodOfferingHId;
-    await this.http.post(this.ProdOfferingVerUrl, {Id : this.prodOfferingHId}).toPromise().then(
+    this.GenericByIdObj.Id = this.ProdOfferingHId;
+    await this.http.post<ResGetListProdOfferingHVersionObj>(URLConstant.GetListProdOfferingHByProdOfferingCurrentProdHId, this.GenericByIdObj).toPromise().then(
       response => {
-        this.ProdOfferingVersion = response[CommonConstant.ReturnObj];
+        this.ListProdOfferingVersionObj = response.ReturnObject;
 
       }
     );
 
     //** Office Member **//
-    this.ProdOfferingBranchMemObj = new ProductOfferingBranchMbrObj();
-    this.ProdOfferingBranchMemObj.ProdOfferingHId = this.prodOfferingHId;
-    await this.http.post(this.ProdOfferingBranchUrl, {Id : this.prodOfferingHId}).toPromise().then(
+    await this.http.post<ResGetListProdOfferingBranchMbrObj>(URLConstant.GetListProdOfferingBranchOfficeMbrByProdHId, this.GenericByIdObj).toPromise().then(
       response => {
-        this.ProdOfferingBranchMbr = response[CommonConstant.ReturnObj];
-
+        this.ProdOfferingBranchMbrObj = response.ReturnObject;
       }
     );
 
 
     //** Product Component **//
-    this.refProductDetailObj = new ProductOfferingDetailObj;
-    this.refProductDetailObj.ProdOfferingHId = this.prodOfferingHId;
-    this.refProductDetailObj.RefProdCompntGrpCode = ['GEN', 'SCHM', 'SCORE', 'RULE', 'OTHR', 'LOS'];
-    await this.http.post(this.ProdOfferingDUrl, this.refProductDetailObj).toPromise().then(
+    this.ReqGetProdOffCmpntObj.ProdOfferingHId = this.ProdOfferingHId;
+    this.ReqGetProdOffCmpntObj.GroupCodes = ['GEN', 'SCHM', 'SCORE', 'RULE', 'OTHR', 'LOS'];
+    await this.http.post<ResGetProdOfferingDCompntInfoObj>(URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode, this.ReqGetProdOffCmpntObj).toPromise().then(
       response => {
-        this.ProdComp = response[CommonConstant.ReturnObj].ProdOffComponents;
+        this.ProdComp = response.ReturnObject.ProdOffComponents;
         this.GenData = this.ProdComp.filter(
           comp => comp.GroupCode == 'GEN');
         this.ProdCompGen = this.GenData[0];
@@ -135,6 +114,7 @@ export class ProdOfferingViewComponent implements OnInit {
     );
     this.IsLoaded = true;
   }
+  
   DownloadRule(CompntValue, CompntValueDesc) {
     this.DlRuleObj.RuleSetName = CompntValue;
     this.http.post(URLConstant.DownloadProductRule, this.DlRuleObj, { responseType: 'blob' }).subscribe(

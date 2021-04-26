@@ -52,7 +52,8 @@ export class LegalDocDetailComponent implements OnInit {
     private toastr: NGXToastrService,
     public formValidate: FormValidateService, private cookieService: CookieService) {
   }
-
+  
+  isDataExist: boolean = false;
   ngOnInit() {
     this.ddlMrLegalDocTypeObj.isSelectOutput = true;
     this.ddlMrLegalDocTypeObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
@@ -70,6 +71,7 @@ export class LegalDocDetailComponent implements OnInit {
 
         var temp = new UcDropdownListCallbackObj();
         if (this.AppCustCompanyLegalDoc.AppCustCompanyLegalDocId != 0) {
+          this.isDataExist = true;
           this.LegalDocForm.patchValue({
             AppCustCompanyLegalDocId: this.AppCustCompanyLegalDoc.AppCustCompanyLegalDocId,
             AppCustCompanyId: this.AppCustCompanyLegalDoc.AppCustCompanyId,
@@ -147,12 +149,21 @@ export class LegalDocDetailComponent implements OnInit {
       this.AppCustCompanyLegalDocObj.MrLegalDocTypeCode = this.LegalDocForm.controls.MrLegalDocTypeCode.value;
       this.AppCustCompanyLegalDocObj.AppCustCompanyId = this.AppCustCompanyId;
 
-      this.http.post(URLConstant.AddEditAppCustCompanyLegalDoc, this.AppCustCompanyLegalDocObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.OutputTab.emit();
-        }
-      );
+      if (!this.isDataExist) {
+        this.http.post(URLConstant.AddAppCustCompanyLegalDoc, this.AppCustCompanyLegalDocObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.OutputTab.emit();
+          }
+        );
+      } else {
+        this.http.post(URLConstant.EditAppCustCompanyLegalDoc, this.AppCustCompanyLegalDocObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.OutputTab.emit();
+          }
+        );
+      }
     }
   }
 }

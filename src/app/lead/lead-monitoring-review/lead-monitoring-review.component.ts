@@ -15,7 +15,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   styles: []
 })
 export class LeadMonitoringReviewComponent implements OnInit {
-  inputPagingObj: UcPagingObj
+  inputPagingObj: UcPagingObj = new UcPagingObj();
 
   constructor(private httpClient: HttpClient, private toastr: NGXToastrService, private router: Router) { }
 
@@ -23,7 +23,6 @@ export class LeadMonitoringReviewComponent implements OnInit {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReviewUploadLead.json";
     this.inputPagingObj.enviromentUrl = environment.FoundationR3Url;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReviewUploadLead.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -42,8 +41,8 @@ export class LeadMonitoringReviewComponent implements OnInit {
       response => {
         this.toastr.successMessage(response["Message"]);
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_RVW_MONITORING_PAGING],{});
-      }); 
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_RVW_MONITORING_PAGING], {});
+        });
       }
     );
   }

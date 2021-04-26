@@ -14,7 +14,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './mou-customer-inquiry.component.html'
 })
 export class MouCustomerInquiryComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   user: any;
 
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) { }

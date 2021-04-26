@@ -91,7 +91,6 @@ export class MouCustTcComponent implements OnInit {
             expiredDtValidation = [];
           }
           var formGroup = this.fb.group({
-            MouCustTcId: [item.MouCustTcId, [Validators.required]],
             MouCustId: [this.MouCustId, [Validators.required]],
             TcCode: [item.TcCode],
             TcName: [item.TcName],

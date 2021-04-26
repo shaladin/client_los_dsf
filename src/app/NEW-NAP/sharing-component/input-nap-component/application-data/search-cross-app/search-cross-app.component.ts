@@ -1,21 +1,14 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
-import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UCSearchComponent } from '@adins/ucsearch';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { URLConstant } from 'app/shared/constant/URLConstant';
-
 
 @Component({
   selector: 'app-search-cross-app',
-  templateUrl: './search-cross-app.component.html',
-  styleUrls: [],
-  providers: [NGXToastrService]
+  templateUrl: './search-cross-app.component.html'
 })
 export class SearchCrossAppComponent implements OnInit {
 
@@ -23,7 +16,6 @@ export class SearchCrossAppComponent implements OnInit {
   @Output() objTempOutput: EventEmitter<any> = new EventEmitter();
   @Input() ListCrossAppObjInput: any;
   constructor(
-    private toastr:NGXToastrService,
     private modalService: NgbModal,
   ) { }
 
@@ -36,10 +28,10 @@ export class SearchCrossAppComponent implements OnInit {
   }
 
   getListTemp(ev) {
-    this.tempData=ev.TempListObj;
+    this.tempData = ev.TempListObj;
   }
   addCritAppId;
-  MakeAddToTempObj(){
+  MakeAddToTempObj() {
     this.arrAddCrit = new Array();
     this.addCritAppId = new CriteriaObj();
     this.addCritAppId.DataType = "numeric";
@@ -48,7 +40,7 @@ export class SearchCrossAppComponent implements OnInit {
     this.addCritAppId.listValue = [this.ListCrossAppObjInput["appId"]];
     this.arrAddCrit.push(this.addCritAppId);
 
-    if(this.ListCrossAppObjInput["result"].length>0){
+    if (this.ListCrossAppObjInput["result"].length > 0) {
       var addCrit = new CriteriaObj();
       addCrit.DataType = "string";
       addCrit.propName = "ag.AGRMNT_NO";
@@ -56,7 +48,7 @@ export class SearchCrossAppComponent implements OnInit {
       addCrit.listValue = this.ListCrossAppObjInput["result"];
       this.arrAddCrit.push(addCrit);
     }
-    
+
     var addCrit = new CriteriaObj();
     addCrit.DataType = "string";
     addCrit.propName = "ag.AGRMNT_STAT";
@@ -65,14 +57,12 @@ export class SearchCrossAppComponent implements OnInit {
     this.arrAddCrit.push(addCrit);
 
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/CrossAppTempPaging.json";
-    this.tempPagingObj.enviromentUrl = environment.losUrl;
-    this.tempPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/CrossAppTempPaging.json";
     this.tempPagingObj.addCritInput = this.arrAddCrit;
-    this.tempPagingObj.isReady=true;
+    this.tempPagingObj.isReady = true;
   }
 
-  SaveToTemp(){
+  SaveToTemp() {
     this.objTempOutput.emit(this.tempData);
     this.modalService.dismissAll();
   }

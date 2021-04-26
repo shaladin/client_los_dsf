@@ -19,7 +19,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class MouCustomerRequestComponent implements OnInit {
   @ViewChild(UcpagingComponent) ucpaging;
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   user: any;
   
   readonly AddLink: string = NavigationConstant.MOU_REQ_DETAIL;

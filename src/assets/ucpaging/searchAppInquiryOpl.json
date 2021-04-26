@@ -153,7 +153,7 @@
       "isFromURL": true,
       "ddlType": "all",
       "url": "",
-      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "path": "/RefStatusLos/GetListKeyValueGrpCodeByCode",
       "label": "Contract Status",
       "items": [],
       "itemsUrl": [],

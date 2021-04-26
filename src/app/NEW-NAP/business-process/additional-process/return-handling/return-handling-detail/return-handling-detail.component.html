@@ -70,6 +70,11 @@
                     </th>
                   </tr>
                 </thead>
+                <tbody *ngIf="returnHandlingDObjs?.length == 0">
+                  <tr>
+                    <td colspan="100%">No Data Available</td>
+                  </tr>
+                </tbody>
                 <tbody>
                   <tr *ngFor="let item of returnHandlingDObjs; let i = index">
                     <td style="text-align: center;">{{i + 1}}</td>

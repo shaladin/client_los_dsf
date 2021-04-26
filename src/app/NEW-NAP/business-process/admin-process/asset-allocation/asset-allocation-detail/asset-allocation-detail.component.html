@@ -49,10 +49,8 @@
                         Serial No 3
                       </span>
                     </th>
-                    <th><span translate class="thead-header">Asset Location</span></th>
                   </tr>
                 </thead>
-                <!--<div formArrayName="ListAsset">-->
                 <tbody formArrayName="ListAsset">
                   <tr *ngIf="AssetAllocationForm.controls['ListAsset']['controls'].length == 0">
                     <td align="center" colspan="11">No data available</td>
@@ -81,7 +79,7 @@
                         [lookupInput]="dictAssetNumber[AssetAllocationForm.controls['ListAsset']['controls'][i]['controls'].No.value]"
                         [parentForm]="AssetAllocationForm"
                         [identifier]="'lookupAssetNumberObj' + AssetAllocationForm.controls['ListAsset']['controls'][i]['controls'].No.value"
-                        (lookup)="SetAssetNumber(i,$event)">
+                        (lookup)="SetAssetNumber(i,$event)" #dyna>
                       </lib-uclookupgeneric>
                     </td>
                     <td [formGroupName]="i" class="text-center">
@@ -93,12 +91,8 @@
                     <td [formGroupName]="i" class="text-center">
                       {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["LicensePlateNo"].value}}
                     </td>
-                    <td [formGroupName]="i" class="text-center">
-                      {{AssetAllocationForm.controls['ListAsset']['controls'][i]['controls']["AssetLocation"].value}}
-                    </td>
                   </tr>
                 </tbody>
-                <!--</div>-->
               </table>
 
             </div>
