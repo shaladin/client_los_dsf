@@ -34,11 +34,11 @@ export class CustMainDataPagingComponent implements OnInit {
   }
 
   makeCriteria() {
-    // var critObj = new CriteriaObj();
-    // critObj.restriction = AdInsConstant.RestrictionLike;
-    // critObj.propName = 'WTL.ACT_CODE';
-    // critObj.value = "CUST_MD_" + this.bizTemplateCode;
-    // this.arrCrit.push(critObj);
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'WTL.ACT_CODE';
+    critObj.value = "CUST_MD_" + this.bizTemplateCode;
+    this.arrCrit.push(critObj);
 
     // var critObj2 = new CriteriaObj();
     // critObj2.restriction = AdInsConstant.RestrictionIn;
