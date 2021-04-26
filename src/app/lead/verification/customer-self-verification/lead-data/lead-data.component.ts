@@ -19,6 +19,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqLeadInputLeadDataObj } from 'app/shared/model/Request/LEAD/ReqInputLeadDataObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-lead-data',
@@ -44,7 +45,7 @@ export class LeadDataComponent implements OnInit {
   leadInputLeadDataObj: ReqLeadInputLeadDataObj;
   getLeadAssetByLeadId: string;
   getLeadAppByLeadId: string;
-  getAssetMasterForLookupEmployee: string; 
+  getAssetMasterForLookup: string; 
   reqLeadAssetObj: LeadAssetObj;
   resLeadAssetObj: any;
   reqLeadAppObj: LeadAppObj;
@@ -90,7 +91,7 @@ export class LeadDataComponent implements OnInit {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
     this.getLeadAssetByLeadId = URLConstant.GetLeadAssetByLeadId;
     this.getLeadAppByLeadId = URLConstant.GetLeadAppByLeadId;
-    this.getAssetMasterForLookupEmployee = URLConstant.GetAssetMasterForLookupEmployee;
+    this.getAssetMasterForLookup = URLConstant.GetAssetMasterForLookup;
     this.getGeneralSettingByCode = URLConstant.GetGeneralSettingByCode;
     this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
     this.editLead = URLConstant.EditLead;
@@ -256,9 +257,9 @@ export class LeadDataComponent implements OnInit {
               DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt, 
             });
           }
-          this.reqAssetMasterObj = new AssetMasterObj();
-          this.reqAssetMasterObj.FullAssetCode = this.resLeadAssetObj.FullAssetCode;
-          this.http.post(this.getAssetMasterForLookupEmployee, this.reqAssetMasterObj).subscribe(
+          var reqByCode = new GenericObj();
+          reqByCode.Code = this.resLeadAssetObj.FullAssetCode;
+          this.http.post(this.getAssetMasterForLookup, reqByCode).subscribe(
             (response) => {
               this.resAssetMasterObj = response;
               this.InputLookupAssetObj.nameSelect = this.resAssetMasterObj.FullAssetName;
@@ -382,9 +383,9 @@ export class LeadDataComponent implements OnInit {
               DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt,
             
             });
-            this.reqAssetMasterObj = new AssetMasterObj();
-            this.reqAssetMasterObj.FullAssetCode = this.resLeadAssetObj.FullAssetCode;
-            this.http.post(this.getAssetMasterForLookupEmployee, this.reqAssetMasterObj).subscribe(
+            var reqByCode = new GenericObj();
+            reqByCode.Code = this.resLeadAssetObj.FullAssetCode;
+            this.http.post(this.getAssetMasterForLookup, reqByCode).subscribe(
               (response) => {
                 this.resAssetMasterObj = response;
                 this.InputLookupAssetObj.nameSelect = this.resAssetMasterObj.FullAssetName;

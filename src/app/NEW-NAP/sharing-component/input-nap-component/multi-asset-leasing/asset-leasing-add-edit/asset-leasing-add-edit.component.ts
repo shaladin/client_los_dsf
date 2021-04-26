@@ -20,6 +20,7 @@ import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-asset-leasing-add-edit',
@@ -76,7 +77,7 @@ export class AssetLeasingAddEditComponent implements OnInit {
   returnAppAssetObj: any;
   reqAssetMasterObj: any;
   resAssetMasterObj: any;
-  getAssetMasterForLookupEmployee: any;
+  getAssetMasterForLookup: any;
   getAppCollateralByAppId: any;
   getAppCollateralRegistByAppCollateralId: any;
   getListAppAssetSupplEmpByAppAssetId: any;
@@ -166,7 +167,7 @@ export class AssetLeasingAddEditComponent implements OnInit {
     this.getRefCoy = URLConstant.GetRefCoy;
     this.getAppCustUrl = URLConstant.GetAppCustByAppId;
     this.getAppAssetByAppAssetId = URLConstant.GetAppAssetByAppAssetId;
-    this.getAssetMasterForLookupEmployee = URLConstant.GetAssetMasterForLookupEmployee;
+    this.getAssetMasterForLookup = URLConstant.GetAssetMasterForLookup;
     this.getAppCollateralByAppId = URLConstant.GetAppCollateralByAppId;
     this.getAppCollateralRegistByAppCollateralId = URLConstant.GetAppCollateralRegistrationByAppCollateralId;
     this.getListAppAssetSupplEmpByAppAssetId = URLConstant.GetListAppAssetSupplEmpByAppAssetId;
@@ -387,9 +388,9 @@ copyToLocationAddr() {
             }
           );
 
-          this.reqAssetMasterObj = new AssetMasterObj();
-          this.reqAssetMasterObj.FullAssetCode = this.returnAppAssetObj.FullAssetCode;
-          this.http.post(this.getAssetMasterForLookupEmployee, this.reqAssetMasterObj).subscribe(
+          var reqByCode = new GenericObj();
+          reqByCode.Code = this.returnAppAssetObj.FullAssetCode;
+          this.http.post(this.getAssetMasterForLookup, reqByCode).subscribe(
             (response) => {
               this.resAssetMasterObj = response;
               this.InputLookupAssetObj.nameSelect = this.resAssetMasterObj.FullAssetName;
