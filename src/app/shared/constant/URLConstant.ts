@@ -135,8 +135,8 @@ export class URLConstant {
   // App Asset
   public static GetAppAssetForDealerDataByAppId = environment.losUrl + "/AppAsset/GetAppAssetForDealerDataByAppId";
   public static GetAppAssetForDealerDataByAppAssetId = environment.losUrl + "/AppAsset/GetAppAssetForDealerDataByAppAssetId";
-  public static GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode = environment.tempUrl + "/ProductOffering/GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode"
-  public static GetProdOfferingDByProdOfferingHIdAndCompCode = environment.tempUrl + "/ProductOffering/GetProdOfferingDByProdOfferingHIdAndCompCode";
+  public static GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode = environment.losUrl + "/ProductOffering/GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode"
+  public static GetProdOfferingDByProdOfferingHIdAndCompCode = environment.losUrl + "/ProductOffering/GetProdOfferingDByProdOfferingHIdAndCompCode";
   // App Commission
   public static GetAppCommissionDataDetailByAppId = environment.losUrl + "/AppCommission/GetAppCommissionDataDetailByAppId";
 
@@ -151,7 +151,7 @@ export class URLConstant {
   public static GetAssetAccessoryByCode = environment.FoundationR3Url + "/AssetAccessory/GetAssetAccessoryByCode";
 
   //Asset Master
-  public static GetAssetMasterForLookupEmployee = environment.FoundationR3Url + "/AssetMaster/GetAssetMasterForLookupEmployee";
+  public static GetAssetMasterForLookup = environment.FoundationR3Url + "/AssetMaster/GetAssetMasterForLookup";
 
   //GENERAL SETTING
   public static GetBusinessDt = "/GeneralSetting/GetBusinessDate";
@@ -576,7 +576,11 @@ export class URLConstant {
   public static MouCustExecutionHumanActivity = environment.losUrl + "/MouCust/MouCustExecutionHumanActivity";
 
   public static AddEditMouCustPersonalData = environment.losUrl + "/MouCust/AddEditMouCustPersonalData";
+  public static AddMouCustPersonalData = environment.losUrl + "/MouCust/AddMouCustPersonalData";
+  public static EditMouCustPersonalData = environment.losUrl + "/MouCust/EditMouCustPersonalData";
   public static AddEditMouCustCompanyData = environment.losUrl + "/MouCust/AddEditMouCustCompanyData";
+  public static AddMouCustCompanyData = environment.losUrl + "/MouCust/AddMouCustCompanyData";
+  public static EditMouCustCompanyData = environment.losUrl + "/MouCust/EditMouCustCompanyData";
   public static GetMouCustByMouCustId = environment.losUrl + "/MouCust/GetMouCustByMouCustId";
 
   // MOU CUST DUPCHECK
@@ -699,7 +703,6 @@ export class URLConstant {
   public static CheckAllDeliveryOrderData = environment.losUrl + "/DeliveryOrder/CheckAllDeliveryOrderData";
 
   //PURCHASE ORDER
-  public static SubmitPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitPurchaseOrder";
   public static AddPurchaseOrder = environment.losUrl + "/PurchaseOrderH/AddPurchaseOrder";
   public static EditPurchaseOrder = environment.losUrl + "/PurchaseOrderH/EditPurchaseOrder";
   public static SubmitNewPurchaseOrder = environment.losUrl + "/PurchaseOrderH/SubmitNewPurchaseOrder";
@@ -715,8 +718,8 @@ export class URLConstant {
   public static ResumeWorkflowNewPurchaseOrder = environment.losUrl + "/PurchaseOrderH/ResumeWorkflowNewPurchaseOrder";
 
   // LEAD
-  public static AddLeadCustPersonal = environment.losUrl + "/LeadCust/AddLeadCustPersonal";
-  public static EditLeadCustPersonal = environment.losUrl + "/LeadCust/EditLeadCustPersonal";
+  public static AddLeadCust = environment.losUrl + "/LeadCust/AddLeadCust";
+  public static EditLeadCust = environment.losUrl + "/LeadCust/EditLeadCust";
   public static AddLeadData = environment.losUrl + "/Lead/AddLeadData";
   public static EditLeadData = environment.losUrl + "/Lead/EditLeadData";
   public static GetLeadMonitoringByUploadMonitoringNoAndTrxType = environment.losUrl + "/Lead/GetLeadMonitoringByUploadMonitoringNoAndTrxType";
@@ -763,16 +766,13 @@ export class URLConstant {
   public static GetCustDataCompanyForViewByAppCustId = environment.losUrl + "/AppCust/GetCustDataCompanyForViewByAppCustId";
   public static GetAppCustCompanyByAppCustId = environment.losUrl + "/AppCust/GetAppCustCompanyByAppCustId";
   public static GetAppCustCompanyContactPersonByAppCustId = environment.losUrl + "/AppCust/GetAppCustCompanyContactPersonByAppCustId";
-  public static AddOrEditAppCustCompanyContactPerson = environment.losUrl + "/AppCust/AddOrEditAppCustCompanyContactPerson";
   public static AddAppCustCompanyContactPerson = environment.losUrl + "/AppCust/AddAppCustCompanyContactPerson";
   public static EditAppCustCompanyContactPerson = environment.losUrl + "/AppCust/EditAppCustCompanyContactPerson";
   public static GetAppCustCompanyLegalDocsByAppCustCompanyId = environment.losUrl + "/AppCustCompanyLegalDoc/GetAppCustCompanyLegalDocsByAppCustCompanyId";
-  public static AddEditAppCustCompanyLegalDoc = environment.losUrl + "/AppCustCompanyLegalDoc/AddEditAppCustCompanyLegalDoc";
   public static AddAppCustCompanyLegalDoc = environment.losUrl + "/AppCustCompanyLegalDoc/AddAppCustCompanyLegalDoc";
   public static EditAppCustCompanyLegalDoc = environment.losUrl + "/AppCustCompanyLegalDoc/EditAppCustCompanyLegalDoc";
   public static DeleteAppCustCompanyLegalDoc = environment.losUrl + "/AppCustCompanyLegalDoc/DeleteAppCustCompanyLegalDoc";
   public static GetAppCustCompanyFinDataByAppCustId = environment.losUrl + "/AppCustCompanyFinData/GetAppCustCompanyFinDataByAppCustId";
-  public static AddEditAppCustCompanyFinData = environment.losUrl + "/AppCustCompanyFinData/AddEditAppCustCompanyFinData";
   public static AddAppCustCompanyFinData = environment.losUrl + "/AppCustCompanyFinData/AddAppCustCompanyFinData";
   public static EditAppCustCompanyFinData = environment.losUrl + "/AppCustCompanyFinData/EditAppCustCompanyFinData";
 
@@ -801,7 +801,6 @@ export class URLConstant {
   public static GetListAppCustAttrContentForNewNap = environment.losUrl + "/AppCustAttrContent/GetListAppCustAttrContentForNewNap";
 
   // APP CUST OTHER INFO
-  public static AddEditCustCompletionOtherInfo = environment.losUrl + "/AppCustOtherInfo/AddEditCustCompletionOtherInfo";
   public static AddCustCompletionOtherInfo = environment.losUrl + "/AppCustOtherInfo/AddCustCompletionOtherInfo";
   public static EditCustCompletionOtherInfo = environment.losUrl + "/AppCustOtherInfo/EditCustCompletionOtherInfo";
   public static GetAppCustOtherInfoByAppCustId = environment.losUrl + "/AppCustOtherInfo/GetAppCustOtherInfoByAppCustId"
@@ -923,10 +922,8 @@ export class URLConstant {
   public static GetInsuranceDataByAppAssetIdForView = environment.losUrl + "/AppIns/GetInsDataByAppAssetIdForView";
   public static GetInsDataByAppIdAndAssetId = environment.losUrl + "/AppIns/GetInsDataByAppIdAndAssetId";
   public static GetInsDataByAppAssetId = environment.losUrl + "/AppIns/GetInsDataByAppAssetId";
-  public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
   public static AddInsuranceData = environment.losUrl + "/AppIns/AddInsuranceData";
   public static EditInsuranceData = environment.losUrl + "/AppIns/EditInsuranceData";
-  public static AddEditInsuranceDataMultiAsset = environment.losUrl + "/AppIns/AddEditInsuranceDataMultiAsset";
   public static AddInsuranceDataMultiAsset = environment.losUrl + "/AppIns/AddInsuranceDataMultiAsset";
   public static EditInsuranceDataMultiAsset = environment.losUrl + "/AppIns/EditInsuranceDataMultiAsset";
   public static GetListAppInsObjByAppIdForView = environment.losUrl + "/AppIns/GetListAppInsObjByAppIdForView";
@@ -1087,16 +1084,16 @@ export class URLConstant {
   public static MD_SubmitAppDupCheck = environment.losUrl + "/AppDupCheckMainData/SubmitAppDupCheck";
 
   // Product Offering
-  public static GetListProdOfferingDByProdOfferingCode = environment.tempUrl + "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
-  public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode = environment.tempUrl + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode";
-  public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL = environment.tempUrl + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL";
-  public static GetPayFreqByProdOfferingD = environment.tempUrl + "/ProductOffering/GetPayFreqByProdOfferingD";
-  public static GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion = environment.tempUrl + "/ProductOffering/GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion";
-  public static GetProdOfferingHByCode = environment.tempUrl + "/ProductOffering/GetProdOfferingHByCode";
+  public static GetListProdOfferingDByProdOfferingCode = environment.losUrl + "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
+  public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode = environment.losUrl + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode";
+  public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL = environment.losUrl + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL";
+  public static GetPayFreqByProdOfferingD = environment.losUrl + "/ProductOffering/GetPayFreqByProdOfferingD";
+  public static GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion = environment.losUrl + "/ProductOffering/GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion";
+  public static GetProdOfferingHByCode = environment.losUrl + "/ProductOffering/GetProdOfferingHByCode";
 
   //Ref Pay Freq
   public static GetPayFreqByProdOfferingCodeandRefProdCompntCode = environment.FoundationR3Url + "/RefPayFreq/GetPayFreqByProdOfferingCodeandRefProdCompntCode";
-  public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat = environment.tempUrl + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat";
+  public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat = environment.losUrl + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeAndACTProdStat";
 
   // ASSET TYPE
   public static GetAssetTypeById = environment.FoundationR3Url + "/AssetType/GetAssetTypeById";
@@ -1170,20 +1167,17 @@ export class URLConstant {
   public static SaveAppCustCompletion = environment.losUrl + "/AppCust/SaveAppCustCompletion";
 
   // App Cust Personal Job Data
-  public static AddEditAppCustPersonalJobData = environment.losUrl + "/AppCustPersonalJobData/AddEditAppCustPersonalJobData";
   public static AddAppCustPersonalJobData = environment.losUrl + "/AppCustPersonalJobData/AddAppCustPersonalJobData";
   public static EditAppCustPersonalJobData = environment.losUrl + "/AppCustPersonalJobData/EditAppCustPersonalJobData";
   public static GetAppCustPersonalJobData = environment.losUrl + "/AppCustPersonalJobData/GetAppCustPersonalJobData";
 
   //App Cust Emergency Contact
-  public static AddEditAppCustEmrgncCntct = environment.losUrl + "/AppCustEmrgncCntct/AddEditAppCustEmrgncCntct";
   public static AddAppCustEmrgncCntct = environment.losUrl + "/AppCustEmrgncCntct/AddAppCustEmrgncCntct";
   public static EditAppCustEmrgncCntct = environment.losUrl + "/AppCustEmrgncCntct/EditAppCustEmrgncCntct";
   public static GetAppCustEmrgncCntctByAppCustId = environment.losUrl + "/AppCustEmrgncCntct/GetAppCustEmrgncCntctByAppCustId";
 
   //App Cust Personal Fin Data
   public static GetAppCustPersonalFinDataByAppCustPersonalId = environment.losUrl + "/AppCustPersonalFinData/GetAppCustPersonalFinDataByAppCustPersonalId";
-  public static AddEditAppCustPersonalFinData = environment.losUrl + "/AppCustPersonalFinData/AddEditAppCustPersonalFinData";
   public static AddAppCustPersonalFinData = environment.losUrl + "/AppCustPersonalFinData/AddAppCustPersonalFinData";
   public static EditAppCustPersonalFinData = environment.losUrl + "/AppCustPersonalFinData/EditAppCustPersonalFinData";
 
@@ -1199,6 +1193,7 @@ export class URLConstant {
 
   //RETURN HANDLING
   public static GetReturnHandlingWithDetailByReturnHandlingHId = environment.losUrl + "/ReturnHandlingH/GetReturnHandlingWithDetailByReturnHandlingHId";
+  public static GetListReturnHandlingDByReturnHandlingHId = environment.losUrl + "/ReturnHandlingD/GetListReturnHandlingDByReturnHandlingHId";
   public static GetReturnHandlingDByAppIdAndMrReturnTaskCode = environment.losUrl + "/ReturnHandlingD/GetReturnHandlingDByAppIdAndMrReturnTaskCode";
   public static GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode = environment.losUrl + "/ReturnHandlingD/GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode"
   public static AddReturnHandlingD = environment.losUrl + "/ReturnHandlingD/AddReturnHandlingD";
@@ -1391,11 +1386,11 @@ export class URLConstant {
   public static GetListAssetReqInProgress = environment.AMSUrl + "/Api/Integration/GetListAssetReqInProgress";
 
   // REF BEHAVIOUR
-  public static GetRefBehaviourByBehaviourTypeCode = environment.tempUrl + "/RefBehaviour/GetRefBehaviourByBehaviourTypeCode";
+  public static GetRefBehaviourByBehaviourTypeCode = environment.losUrl + "/RefBehaviour/GetRefBehaviourByBehaviourTypeCode";
 
   //REF LOB
-  public static GetListKvpInstSchmByLobCode = environment.tempUrl + "/InstSchmMap/GetListKvpInstSchmByLobCode";
-  public static GetKvpRefFinMapByLobCode = environment.tempUrl + "/RefFinMap/GetKvpRefFinMapByLobCode";
+  public static GetListKvpInstSchmByLobCode = environment.losUrl + "/InstSchmMap/GetListKvpInstSchmByLobCode";
+  public static GetKvpRefFinMapByLobCode = environment.losUrl + "/RefFinMap/GetKvpRefFinMapByLobCode";
 
   // PRODUCT
   public static GetProdHById = environment.losUrl + "/Product/GetProdHById"

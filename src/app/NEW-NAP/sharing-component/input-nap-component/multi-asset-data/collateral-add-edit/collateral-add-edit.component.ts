@@ -32,6 +32,7 @@ import { AppCollateralAttrCustomObj } from 'app/shared/model/AppCollateralAttrCu
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CustomPatternObj } from 'app/shared/model/library/CustomPatternObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-collateral-add-edit',
@@ -119,7 +120,7 @@ export class CollateralAddEditComponent implements OnInit {
   assetCategoryObj: any;
   returnAssetCategoryObj: any;
   getAppCollateralByAppCollateralId: any;
-  getAssetMasterForLookupEmployee: any;
+  getAssetMasterForLookup: any;
   getAppCollateralRegistByAppCollateralId: any;
   reqAssetMasterObj: any;
   resAssetMasterObj: any;
@@ -190,7 +191,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.getListAssetTypeByCode = URLConstant.GetListAssetTypeByCode;
     this.getAssetCategoryById = URLConstant.GetAssetCategoryById;
     this.getAppCollateralByAppCollateralId = URLConstant.GetAppCollateralByAppCollateralId;
-    this.getAssetMasterForLookupEmployee = URLConstant.GetAssetMasterForLookupEmployee;
+    this.getAssetMasterForLookup = URLConstant.GetAssetMasterForLookup;
     this.getAppCollateralRegistByAppCollateralId = URLConstant.GetAppCollateralRegistrationByAppCollateralId;
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.isReady = false;
@@ -524,9 +525,9 @@ export class CollateralAddEditComponent implements OnInit {
             CollateralSeqNo: this.returnAppCollateralObj.CollateralSeqNo
           });
 
-          this.reqAssetMasterObj = new AssetMasterObj();
-          this.reqAssetMasterObj.FullAssetCode = this.returnAppCollateralObj.FullAssetCode;
-          this.http.post(this.getAssetMasterForLookupEmployee, this.reqAssetMasterObj).subscribe(
+          var reqByCode = new GenericObj();
+          reqByCode.Code = this.returnAppCollateralObj.FullAssetCode;
+          this.http.post(this.getAssetMasterForLookup, reqByCode).subscribe(
             (response) => {
               this.resAssetMasterObj = response;
               this.inputLookupObj.nameSelect = this.resAssetMasterObj.FullAssetName;

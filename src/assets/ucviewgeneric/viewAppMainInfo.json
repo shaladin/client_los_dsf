@@ -123,6 +123,11 @@
             "type": "text",
             "label": "Application Last Step",
             "property": "LastStep"
+          },
+          {
+            "type": "text",
+            "label": "Customer Checking Step",
+            "property": "CustCheckingStep"
           }
         ],
         "querystring": {

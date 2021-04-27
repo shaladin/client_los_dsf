@@ -22,6 +22,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { String } from 'typescript-string-operations';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ReqLeadInputLeadDataObj } from 'app/shared/model/Request/LEAD/ReqInputLeadDataObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 
 @Component({
@@ -58,7 +59,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   leadInputLeadDataObj: ReqLeadInputLeadDataObj;
   getLeadAssetByLeadId: string;
   getLeadAppByLeadId: string;
-  getAssetMasterForLookupEmployee: string;
+  getAssetMasterForLookup: string;
   serial1Disabled: boolean = false;
   serial2Disabled: boolean = false;
   serial3Disabled: boolean = false;
@@ -128,7 +129,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
     this.getLeadAssetByLeadId = URLConstant.GetLeadAssetByLeadId;
     this.getLeadAppByLeadId = URLConstant.GetLeadAppByLeadId;
-    this.getAssetMasterForLookupEmployee = URLConstant.GetAssetMasterForLookupEmployee;
+    this.getAssetMasterForLookup = URLConstant.GetAssetMasterForLookup;
     this.getListGeneralSettingByListGsCode = URLConstant.GetListGeneralSettingByListGsCode;
     this.getThirdPartyResultHByTrxTypeCodeAndTrxNo = URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo;
     this.checkRapindoUrl = URLConstant.CheckRapindo;
@@ -346,9 +347,9 @@ export class LeadInputLeadDataComponent implements OnInit {
             });
           }
 
-          this.reqAssetMasterObj = new AssetMasterObj();
-          this.reqAssetMasterObj.FullAssetCode = this.resLeadAssetObj.FullAssetCode;
-          this.http.post(this.getAssetMasterForLookupEmployee, this.reqAssetMasterObj).subscribe(
+          var reqByCode = new GenericObj();
+          reqByCode.Code = this.resLeadAssetObj.FullAssetCode;
+          this.http.post(this.getAssetMasterForLookup, reqByCode).subscribe(
             (response) => {
               this.resAssetMasterObj = response;
 
@@ -457,9 +458,9 @@ export class LeadInputLeadDataComponent implements OnInit {
 
           // this.AssetSelected = true;
 
-          this.reqAssetMasterObj = new AssetMasterObj();
-          this.reqAssetMasterObj.FullAssetCode = this.resLeadAssetObj.FullAssetCode;
-          this.http.post(this.getAssetMasterForLookupEmployee, this.reqAssetMasterObj).subscribe(
+          var reqByCode = new GenericObj();
+          reqByCode.Code = this.resLeadAssetObj.FullAssetCode;
+          this.http.post(this.getAssetMasterForLookup, reqByCode).subscribe(
             (response) => {
               this.resAssetMasterObj = response;
 
@@ -907,7 +908,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         if (this.originPage == "teleVerif") {
           if (this.confirmFraudCheck()) {
             // this.leadInputLeadDataObj.IsEdit = true;
-            this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+            this.http.post(URLConstant.SubmitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 if (this.originPage == "teleVerif") {
@@ -919,11 +920,11 @@ export class LeadInputLeadDataComponent implements OnInit {
         }
         else if (this.typePage == "update") {
 
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: this.submitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
+          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
 
         }
         else {
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: this.submitWorkflowLeadInput, paging: "/Lead/Lead/Paging" });
+          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/Lead/Paging" });
         }
       }
       else {
@@ -957,7 +958,7 @@ export class LeadInputLeadDataComponent implements OnInit {
           this.setLeadAsset();
           if (this.originPage == "teleVerif") {
             if (this.confirmFraudCheck()) {
-              this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+              this.http.post(URLConstant.SubmitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
                 (response) => {
                   this.toastr.successMessage(response["message"]);
                   if (this.originPage == "teleVerif") {
@@ -969,11 +970,11 @@ export class LeadInputLeadDataComponent implements OnInit {
             }
           }
           else if (this.typePage == "update") {
-            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: this.submitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
+            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
 
           }
           else {
-            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: this.submitWorkflowLeadInput, paging: "/Lead/Lead/Paging" });
+            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/Lead/Paging" });
           }
         }
       }
@@ -1004,7 +1005,7 @@ export class LeadInputLeadDataComponent implements OnInit {
         if (this.originPage == "teleVerif") {
 
           if (this.confirmFraudCheck()) {
-            this.http.post(this.submitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
+            this.http.post(URLConstant.SubmitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 if (this.originPage == "teleVerif") {
@@ -1015,10 +1016,10 @@ export class LeadInputLeadDataComponent implements OnInit {
           }
         }
         else if (this.typePage == "update") {
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: this.submitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
+          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
         }
         else {
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: this.submitWorkflowLeadInput, paging: "/Lead/Lead/Paging" });
+          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/Lead/Paging" });
         }
       }
     }

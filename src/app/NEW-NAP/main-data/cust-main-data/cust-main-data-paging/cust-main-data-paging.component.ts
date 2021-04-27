@@ -39,6 +39,12 @@ export class CustMainDataPagingComponent implements OnInit {
     critObj.propName = 'WTL.ACT_CODE';
     critObj.value = "CUST_MD_" + this.bizTemplateCode;
     this.arrCrit.push(critObj);
+
+    // var critObj2 = new CriteriaObj();
+    // critObj2.restriction = AdInsConstant.RestrictionIn;
+    // critObj2.propName = 'a.APP_CURR_STEP';
+    // critObj2.listValue = [CommonConstant.AppStepCust, CommonConstant.AppStepFamily, CommonConstant.AppStepGuar, CommonConstant.AppStepShr];
+    // this.arrCrit.push(critObj2);
   }
 
   async ngOnInit() {

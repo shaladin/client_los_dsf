@@ -27,12 +27,24 @@ export class NapDetailPagingComponent implements OnInit {
     });
   }
 
+  initListValueCurrStep(){
+    let tempList: Array<string> = new Array();
+    tempList = [CommonConstant.AppStepNapd, CommonConstant.AppStepRef, CommonConstant.AppStepApp, CommonConstant.AppStepAsset, CommonConstant.AppStepIns, CommonConstant.AppStepLIns, CommonConstant.AppStepFin, CommonConstant.AppStepTC, CommonConstant.AppStepUplDoc];
+    return tempList;
+  }
+
   makeCriteria() {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
     critObj.value = "NAPD_MD_" + this.bizTemplateCode;
     this.arrCrit.push(critObj);
+
+    // var critObj2 = new CriteriaObj();
+    // critObj2.restriction = AdInsConstant.RestrictionNotIn;
+    // critObj2.propName = 'a.APP_CURR_STEP';
+    // critObj2.listValue = this.initListValueCurrStep();
+    // this.arrCrit.push(critObj2);
   }
 
   async ngOnInit() {

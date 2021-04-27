@@ -1,9 +1,14 @@
 export class LeadFraudVerfObj{
-    LeadId:number;
-    VerifyStat:string;
+    LeadId: number;
+    VerifyStat: string;
     Notes : string;
     WfTaskListId : number;
-    constructor() { }
+    constructor() { 
+        this.LeadId = 0,
+        this.VerifyStat = "",
+        this.Notes = "",
+        this.WfTaskListId = 0
+    }
 }      
  
  

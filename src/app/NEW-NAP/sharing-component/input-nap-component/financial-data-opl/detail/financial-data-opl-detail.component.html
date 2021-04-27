@@ -82,7 +82,7 @@
                 </div>
                 <label class="col-md-3 adInsLabel" translate>Rental Amount (Per Period)</label>
                 <div class="col-md-3">
-                  <input type="" currencyMask id="rentAmt" class="form-control" formControlName="RentAmt"
+                  <input type="" currencyMask id="rentAmt" class="form-control" formControlName="RentAmt" (focusout)="resetCalculateRentalOrMargin()"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialDataForm.controls.RentAmt.invalid}">
                   <lib-uc-show-errors [control]="FinancialDataForm.controls.RentAmt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>

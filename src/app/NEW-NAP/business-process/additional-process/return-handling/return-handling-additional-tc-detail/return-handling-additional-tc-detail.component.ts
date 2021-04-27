@@ -27,10 +27,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 })
 export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
-  getAppUrl: string;
   getRefTcUrl: string;
-  rtnHandlingDUrl: string;
-  editRtnHandlingDUrl: string;
   isReturnHandling: boolean = false;
   modal: any;
   closeResult: any;
@@ -88,12 +85,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     });
   }
 
-  initUrl() {
-    this.getAppUrl = URLConstant.GetAppById;
-    this.rtnHandlingDUrl = URLConstant.GetReturnHandlingDByReturnHandlingDId;
-    this.editRtnHandlingDUrl = URLConstant.EditReturnHandlingD;
-  }
-
   initExistingTc() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppTc.json";
@@ -117,7 +108,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
     this.ClaimTask();
-    this.initUrl();
     this.appObj.Id = this.appId;
     this.initExistingTc();
     await this.GetAppData();
@@ -212,7 +202,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
           }
         }),
         mergeMap((response) => {
-          return this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData);
+          return this.http.post(URLConstant.EditReturnHandlingD, this.ReturnHandlingDData);
         })
       ).subscribe(
         (response) => {
@@ -224,13 +214,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
           console.log(error);
         }
       );
-
-      // this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
-      //   (response) => {
-      //     this.toastr.successMessage(response["message"]);
-      //     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-      //     this.router.navigate(["/Nap/AddProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } })
-      //   });
 
     }
   }
@@ -320,7 +303,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   }
 
   async GetAppData() {
-    await this.http.post(this.getAppUrl, this.appObj).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, this.appObj).toPromise().then(
       (response) => {
         this.AppObj = response;
       }
