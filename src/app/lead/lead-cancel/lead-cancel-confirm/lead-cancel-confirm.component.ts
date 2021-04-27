@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LeadConfirmCancelObj } from 'app/shared/model/Request/LEAD/LeadConfirmCancelObj.model';
 import { environment } from 'environments/environment';
@@ -19,7 +18,6 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   providers: [NGXToastrService]
 })
 export class LeadCancelConfirmComponent implements OnInit {
-  GetListLeadForLeadCancelByListLeadId = URLConstant.GetListLeadForLeadCancelByListLeadId;
   responseObj = new Array();
   LeadConfirmCancelForm = this.fb.group({
     CancelReason: ['', Validators.required],
@@ -57,8 +55,8 @@ export class LeadCancelConfirmComponent implements OnInit {
         this.tempWfTaskListArr = this.WfTaskListIds.split(',');
       }
     });
-    var tempObj = { 'ListLeadId': this.tempLeadArr };
-    this.http.post(this.GetListLeadForLeadCancelByListLeadId, tempObj).subscribe(
+    var tempObj = { 'Ids': this.tempLeadArr };
+    this.http.post(URLConstant.GetListLeadForLeadCancelByListLeadId, tempObj).subscribe(
       response => {
         this.responseObj = response['ReturnObject'];
       }
