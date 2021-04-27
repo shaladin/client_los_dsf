@@ -128,7 +128,14 @@ export class NapAddDetailComponent implements OnInit {
         });
     }
 
-    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, this.NapObj).subscribe(
+    await this.GetCustMainData();
+    this.MakeViewReturnInfoObj();
+  }
+
+  async GetCustMainData() {
+    let reqObj: GenericObj = new GenericObj();
+    reqObj.Id = this.appId;
+    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, reqObj).subscribe(
       (response) => {
         if (response.AppCustObj) 
         {
@@ -136,7 +143,6 @@ export class NapAddDetailComponent implements OnInit {
         }
       }
     );
-    this.MakeViewReturnInfoObj();
   }
 
   async initDms() {

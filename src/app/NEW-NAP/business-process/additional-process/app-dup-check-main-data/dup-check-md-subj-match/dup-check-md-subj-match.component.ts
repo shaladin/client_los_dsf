@@ -12,6 +12,7 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { ReqDupCheckAppCustObj } from 'app/shared/model/AppDupCheckCust/ReqDupCheckAppCustObj';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-dup-check-md-subj-match',
@@ -46,8 +47,8 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.getDupCheckData();
+  async ngOnInit() {
+    await this.getDupCheckData();
   }
 
   initViewMainInfo()
@@ -61,8 +62,10 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
     this.viewMainInfoObj.ddlEnvironments = [{ name: "AppNo", environment: environment.losR3Web }];
   }
 
-  getDupCheckData(){
-    this.http.post(URLConstant.GetAppCustMainDataByAppCustId, {"AppCustId": this.appCustId}).subscribe(
+  async getDupCheckData() {
+    let reqObj: GenericObj = new GenericObj();
+    reqObj.Id = this.appCustId;
+    await this.http.post(URLConstant.GetAppCustMainDataByAppCustId, reqObj).toPromise().then(
       response => {
         this.appCustObj = response['AppCustObj'];
         this.mrCustTypeCode = this.appCustObj.MrCustTypeCode;

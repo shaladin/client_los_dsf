@@ -26,6 +26,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { String } from 'typescript-string-operations';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-job-tab',
@@ -128,11 +129,8 @@ export class JobTabComponent implements OnInit {
     this.BusinessDt = this.UserAccess.BusinessDt;
     this.GetGeneralSetting();
     await this.InitLookup();
-    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
-      (response) => {
-        this.IsCustomer = response.AppCustObj.IsCustomer;
-      }
-    );
+
+    await this.GetCustMainData();
     this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel }).subscribe(
       (response) => {
         this.MrCustModelDescr = response.Descr;
@@ -158,6 +156,16 @@ export class JobTabComponent implements OnInit {
     this.InputOthBizAddrObj.inputField = this.InputFieldOthBizObj;
 
     this.GetData();
+  }
+
+  async GetCustMainData() {
+    let reqObj: GenericObj = new GenericObj();
+    reqObj.Id = this.AppCustId;
+    await this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppCustId, reqObj).toPromise().then(
+      (response) => {
+        this.IsCustomer = response.AppCustObj.IsCustomer;
+      }
+    );
   }
 
   async GetGeneralSetting() {

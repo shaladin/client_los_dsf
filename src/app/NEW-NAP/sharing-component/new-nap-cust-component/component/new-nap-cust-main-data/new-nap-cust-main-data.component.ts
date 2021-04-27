@@ -15,6 +15,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { CustMainDataCompanyObj } from 'app/shared/model/CustMainDataCompanyObj.Model';
 import { CustMainDataPersonalObj } from 'app/shared/model/CustMainDataPersonalObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -133,7 +134,7 @@ export class NewNapCustMainDataComponent implements OnInit {
     this.ResponseCustModel.emit(this.ParentForm.controls.MrCustModelCode.value);
   }
 
-  initcustMainDataMode() {
+  async initcustMainDataMode() {
     this.custDataObj = new CustDataObj();
     this.custDataObj.AppId = this.appId;
     if (this.appCustId) this.custDataObj.AppCustId = this.appCustId;
@@ -152,7 +153,7 @@ export class NewNapCustMainDataComponent implements OnInit {
         this.subjectTitle = 'Guarantor';
         this.ParentForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.ParentForm.controls.MrGenderCode.setValidators(Validators.required);
-        this.GetAppCustMainDataByAppId();
+        await this.GetAppCustMainDataByAppId();
         this.ResponseIsIncludeCustRelation.emit(this.isIncludeCustRelation);
         break;
       case CommonConstant.CustMainDataModeFamily:
@@ -161,7 +162,7 @@ export class NewNapCustMainDataComponent implements OnInit {
         this.subjectTitle = 'Family';
         this.ParentForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.ParentForm.controls.MrGenderCode.setValidators(Validators.required);
-        this.GetAppCustMainDataByAppId();
+        await this.GetAppCustMainDataByAppId();
         this.ResponseIsIncludeCustRelation.emit(this.isIncludeCustRelation);
         break;
       case CommonConstant.CustMainDataModeMgmntShrholder:
@@ -171,7 +172,7 @@ export class NewNapCustMainDataComponent implements OnInit {
         this.ParentForm.controls.EstablishmentDt.setValidators([Validators.required]);
         this.ParentForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.ParentForm.controls.MrJobPositionCode.setValidators(Validators.required);
-        this.GetAppCustMainDataByAppId();
+        await this.GetAppCustMainDataByAppId();
         this.ResponseIsIncludeCustRelation.emit(this.isIncludeCustRelation);
         break;
       default:
@@ -182,8 +183,10 @@ export class NewNapCustMainDataComponent implements OnInit {
   }
 
   AppCustData: AppCustObj = new AppCustObj();
-  GetAppCustMainDataByAppId() {
-    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, { 'Id': this.appId }).subscribe(
+  async GetAppCustMainDataByAppId() {
+    let reqObj: GenericObj = new GenericObj();
+    reqObj.Id = this.appId;
+    await this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, reqObj).toPromise().then(
       async (response) => {
         if (response.AppCustObj) {
           this.AppCustData = response.AppCustObj;
