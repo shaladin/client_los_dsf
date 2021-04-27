@@ -214,7 +214,8 @@ export class CustomerDataComponent implements OnInit {
           this.reqLeadCustAddrLegalObj = new LeadCustAddrObj();
           this.reqLeadCustAddrLegalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
           this.reqLeadCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
-          this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrLegalObj).subscribe(
+          var objLeadCustAddrLegalObj = {Id: this.resLeadCustObj.LeadCustId, Code: CommonConstant.AddrTypeLegal};
+          this.http.post(this.getLeadCustAddr, objLeadCustAddrLegalObj).subscribe(
             (response) => {
               this.resLeadCustAddrLegalObj = response;
               this.legalAddressObj = new LeadCustAddrObj();
@@ -245,7 +246,8 @@ export class CustomerDataComponent implements OnInit {
           this.reqLeadCustAddrResObj = new LeadCustAddrObj();
           this.reqLeadCustAddrResObj.LeadCustId = this.resLeadCustObj.LeadCustId;
           this.reqLeadCustAddrResObj.MrCustAddrTypeCode = CommonConstant.AddrTypeResidence;
-          this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrResObj).subscribe(
+          var objLeadCustAddrResObj = {Id: this.resLeadCustObj.LeadCustId, Code: CommonConstant.AddrTypeResidence};
+          this.http.post(this.getLeadCustAddr, objLeadCustAddrResObj).subscribe(
             (response) => {
               this.resLeadCustAddrResObj = response;
               this.residenceAddressObj = new LeadCustAddrObj();
@@ -448,7 +450,8 @@ export class CustomerDataComponent implements OnInit {
           this.reqLeadCustAddrLegalObj = new LeadCustAddrObj();
           this.reqLeadCustAddrLegalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
           this.reqLeadCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
-          this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrLegalObj).subscribe(
+          var objLeadCustAddrLegalObj = {Id: this.resLeadCustObj.LeadCustId, Code: CommonConstant.AddrTypeLegal};
+          this.http.post(this.getLeadCustAddr, objLeadCustAddrLegalObj).subscribe(
             (response) => {
               this.resLeadCustAddrLegalObj = response;
               this.legalAddressObj = new LeadCustAddrObj();
@@ -480,7 +483,8 @@ export class CustomerDataComponent implements OnInit {
           this.reqLeadCustAddrResObj = new LeadCustAddrObj();
           this.reqLeadCustAddrResObj.LeadCustId = this.resLeadCustObj.LeadCustId;
           this.reqLeadCustAddrResObj.MrCustAddrTypeCode = CommonConstant.AddrTypeResidence;
-          this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrResObj).subscribe(
+          var objLeadCustAddrResObj = {Id: this.resLeadCustObj.LeadCustId, Code: CommonConstant.AddrTypeResidence};
+          this.http.post(this.getLeadCustAddr, objLeadCustAddrResObj).subscribe(
             (response) => {
               this.resLeadCustAddrResObj = response;
               this.residenceAddressObj = new LeadCustAddrObj();
@@ -604,7 +608,8 @@ export class CustomerDataComponent implements OnInit {
             this.reqLeadCustAddrLegalObj = new LeadCustAddrObj();
             this.reqLeadCustAddrLegalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
             this.reqLeadCustAddrLegalObj.MrCustAddrTypeCode = CommonConstant.AddrTypeLegal;
-            this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrLegalObj).subscribe(
+            var objLeadCustAddrLegalObj = {Id: this.resLeadCustObj.LeadCustId, Code: CommonConstant.AddrTypeLegal};
+            this.http.post(this.getLeadCustAddr, objLeadCustAddrLegalObj).subscribe(
               (response) => {
                 this.resLeadCustAddrLegalObj = response;
 
@@ -636,7 +641,8 @@ export class CustomerDataComponent implements OnInit {
             this.reqLeadCustAddrResObj = new LeadCustAddrObj();
             this.reqLeadCustAddrResObj.LeadCustId = this.resLeadCustObj.LeadCustId;
             this.reqLeadCustAddrResObj.MrCustAddrTypeCode = CommonConstant.AddrTypeResidence;
-            this.http.post(this.getLeadCustAddr, this.reqLeadCustAddrResObj).subscribe(
+            var objLeadCustAddrResObj = {Id: this.resLeadCustObj.LeadCustId, Code: CommonConstant.AddrTypeResidence};
+            this.http.post(this.getLeadCustAddr, objLeadCustAddrResObj).subscribe(
               (response) => {
                 this.resLeadCustAddrResObj = response;
 
