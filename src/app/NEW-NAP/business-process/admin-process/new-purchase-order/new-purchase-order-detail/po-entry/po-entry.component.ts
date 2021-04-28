@@ -12,6 +12,7 @@ import { DatePipe, formatDate } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-po-entry',
@@ -128,7 +129,9 @@ export class PoEntryComponent implements OnInit {
     this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.AppData = response;
-        this.httpClient.post(URLConstant.GetProdOfferingHByCode, { ProdOfferingCode: this.AppData["ProdOfferingCode"] }).toPromise().then(
+        let GetProduct = new GenericObj();
+        GetProduct.Code = this.AppData["ProdOfferingCode"]
+        this.httpClient.post(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
           (response2) => {
             var productOfferinH = response2;
             this.httpClient.post(URLConstant.GetProdOfferingDByProdOfferingHIdAndCompCode, { ProdOfferingHId: productOfferinH["ProdOfferingHId"], RefProdCompntCode: CommonConstant.RefProdCompntCodeCrApvResExpDays }).subscribe(
@@ -167,7 +170,9 @@ export class PoEntryComponent implements OnInit {
     this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.AppData = response;
-        this.httpClient.post(URLConstant.GetProdOfferingHByCode, { ProdOfferingCode: this.AppData["ProdOfferingCode"] }).toPromise().then(
+        let GetProduct = new GenericObj();
+        GetProduct.Code  = this.AppData["ProdOfferingCode"]
+        this.httpClient.post(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
           (response2) => {
             var productOfferinH = response2;
             var datePipe = new DatePipe("locale");

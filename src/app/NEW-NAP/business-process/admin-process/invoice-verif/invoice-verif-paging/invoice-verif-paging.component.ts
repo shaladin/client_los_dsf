@@ -3,6 +3,7 @@ import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-invoice-verif-paging',
@@ -20,7 +21,9 @@ export class InvoiceVerifPagingComponent implements OnInit {
 
   getEvent(ev) {
     if(ev.Key == "prodOff"){
-      this.http.post(URLConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
+      let GetProduct = new GenericObj();
+      GetProduct.Code = ev.RowObj.ProdOfferingCode;
+      this.http.post(URLConstant.GetProdOfferingHByCode, GetProduct).subscribe(
         response => {
           window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
         });

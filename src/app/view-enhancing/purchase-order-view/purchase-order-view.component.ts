@@ -7,6 +7,7 @@ import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { ReqGetPurchaseOrderHDetailObj } from 'app/shared/model/Request/PurchaseOrder/ReqPOObj.model';
 
 @Component({
   selector: 'app-purchase-order-view',
@@ -45,7 +46,10 @@ export class PurchaseOrderViewComponent implements OnInit {
     this.ARFinancialInfo.viewInput = "./assets/ucviewgeneric/viewARFinancialInfo.json";
     this.ARFinancialInfo.viewEnvironment = environment.losUrl;
 
-    this.http.post(URLConstant.GetPurchaseOrderHDetailViewMultiAssetByAgrmntId, { PurchaseOrderHId: this.PurchaseOrderHId, AgrmntId: this.AgrmntId }).subscribe(
+    let GetPOObj = new ReqGetPurchaseOrderHDetailObj();
+     GetPOObj.AgrmntId = this.AgrmntId;
+     GetPOObj.PurchaseOrderHId = this.PurchaseOrderHId;
+    this.http.post(URLConstant.GetPurchaseOrderHDetailViewMultiAssetByAgrmntId, GetPOObj).subscribe(
       (response) => {
         this.ResponsePurchaseOrderHData = response["ResponsePurchaseOrderHObj"];
         this.MrFirstInstTypeCode = response["MrFirstInstTypeCode"];

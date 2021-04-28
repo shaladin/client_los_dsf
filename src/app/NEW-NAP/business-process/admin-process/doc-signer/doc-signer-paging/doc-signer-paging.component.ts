@@ -8,6 +8,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-doc-signer-paging',
@@ -64,7 +65,9 @@ export class DocSignerPagingComponent implements OnInit {
 
   getEvent(ev) {
     if (ev.Key == "prodOff") {
-      this.http.post(URLConstant.GetProdOfferingHByCode, { ProdOfferingCode: ev.RowObj.ProdOfferingCode }).subscribe(
+      let GetProduct = new GenericObj();
+      GetProduct.Code = ev.RowObj.ProdOfferingCode;
+      this.http.post(URLConstant.GetProdOfferingHByCode, GetProduct).subscribe(
         response => {
           AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response['ProdOfferingHId']);
         });
