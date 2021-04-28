@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { Observable } from "rxjs";
 import { URLConstant } from "app/shared/constant/URLConstant";
+import { ReqGetAppFinDataAndFeeObj } from "app/shared/model/Request/NAP/AgrAct/ReqAppFinDataAndFee.model";
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,7 @@ export class AdminProcessService {
         return this.http.post(URLConstant.GetAppAssetByAppIdAndCriteria, Obj);
     }
 
-    GetAppFinDataAndFeeByAppIdAndListAppAssetId(Obj: any): Observable<Object> {
+    GetAppFinDataAndFeeByAppIdAndListAppAssetId(Obj: ReqGetAppFinDataAndFeeObj): Observable<Object> {
         return this.http.post(URLConstant.GetAppFinDataAndFeeByAppIdAndListAppAssetId, Obj);
     }
 
