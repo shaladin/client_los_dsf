@@ -7,6 +7,7 @@ import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { TranslateService } from '@ngx-translate/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-app-main-info',
@@ -22,9 +23,20 @@ export class AppMainInfoComponent implements OnInit {
   }
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   @Input() AppId: number;
+  AppNo: number;
   AppObj: any;
 
-  constructor(private http: HttpClient, private translateService: TranslateService) { }
+  constructor(private http: HttpClient, private translateService: TranslateService, private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => {
+      if(params["AppId"] == "undefined"){
+        this.AppNo = params["AppNo"]
+        
+      }else{
+        this.AppId = params["AppId"];
+        
+      }
+    })
+   }
 
   ngOnInit() {
     console.log("rey");
@@ -42,7 +54,9 @@ export class AppMainInfoComponent implements OnInit {
         else if (this.AppObj.BizTemplateCode == CommonConstant.OPL) {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-opl-main-info.json";
         }
-        else {
+        else if (this.AppNo != null){
+          this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfoByAppNo.json";
+        }else{
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfo.json";
         }
         this.viewGenericObj.viewEnvironment = environment.losUrl;
