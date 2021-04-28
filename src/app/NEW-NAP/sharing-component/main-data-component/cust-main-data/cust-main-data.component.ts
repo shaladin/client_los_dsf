@@ -27,6 +27,7 @@ import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-cust-main-data',
@@ -501,7 +502,10 @@ export class CustMainDataComponent implements OnInit {
   }
 
   CopyAddress() {
-    this.http.post(URLConstant.GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode, { Id: this.appId, Code: CommonConstant.AddrTypeLegal }).subscribe(
+    let ReqByIdAndCodeObj = new GenericObj();
+    ReqByIdAndCodeObj.Id = this.appId;
+    ReqByIdAndCodeObj.Code = CommonConstant.AddrTypeLegal;
+    this.http.post(URLConstant.GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode, ReqByIdAndCodeObj).subscribe(
       (response) => {
         this.legalAddrObj.Addr = response["Addr"];
         this.legalAddrObj.AreaCode1 = response["AreaCode1"];

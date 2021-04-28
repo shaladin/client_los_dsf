@@ -15,6 +15,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { CustMainDataCompanyObj } from 'app/shared/model/CustMainDataCompanyObj.Model';
 import { CustMainDataPersonalObj } from 'app/shared/model/CustMainDataPersonalObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -465,7 +466,10 @@ export class NewNapCustMainDataComponent implements OnInit {
   }
 
   CopyAddress() {
-    this.http.post(URLConstant.GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode, { Id: this.appId, Code: CommonConstant.AddrTypeLegal }).subscribe(
+    let ReqByIdAndCodeObj = new GenericObj();
+    ReqByIdAndCodeObj.Id = this.appId;
+    ReqByIdAndCodeObj.Code = CommonConstant.AddrTypeLegal;
+    this.http.post(URLConstant.GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode, ReqByIdAndCodeObj).subscribe(
       (response) => {
         this.legalAddrObj.Addr = response["Addr"];
         this.legalAddrObj.AreaCode1 = response["AreaCode1"];
