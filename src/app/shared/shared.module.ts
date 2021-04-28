@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { FooterComponent } from "app/shared/footer/footer.component";
 import { NavbarComponent } from "app/shared/navbar/navbar.component";
@@ -16,7 +16,12 @@ import { DmsIframeComponent } from './dms-iframe/dms-iframe.component';
 import { AppModule } from 'app/app.module';
 import { SafePipe } from './pipe/safepipe';
 import { CookieModule } from 'ngx-cookie';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
 
+export function createTranslateLoader(http: HttpClient) {
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  }
 
 @NgModule({
     exports: [
@@ -36,7 +41,13 @@ import { CookieModule } from 'ngx-cookie';
         RouterModule,
         CommonModule,
         NgbModule,
-        TranslateModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [HttpClient]
+            }
+        }),
         ContextMenuModule.forRoot(),
         CookieModule.forRoot()
     ],
