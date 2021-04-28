@@ -50,6 +50,10 @@
                 <button (click)="clickMe()" translate>Click Me</button>
                 <button (click)="disableMe()">Disable Me</button>
                 <button (click)="enableMe()">Enable Me</button>
+                <select (change)="ChangeLanguage($event.target.value)">
+                    <option value="en">English</option>
+                    <option value="id">Indonesia</option>
+                </select>
             </div>
         </div>
     </div>

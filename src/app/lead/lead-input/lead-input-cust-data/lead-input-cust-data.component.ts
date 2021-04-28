@@ -1105,13 +1105,7 @@ export class LeadInputCustDataComponent implements OnInit {
     inputLeadCustObj.HomeCity = this.CustomerDataForm.controls["legalAddress"]["controls"].City.value;
 
     let inputLeadString = JSON.stringify(inputLeadCustObj);
-    console.log('inputLeadString = ', inputLeadString);
     let latestCustDataString = JSON.stringify(this.latestCustDataObj);
-    console.log('latestCustDataString = ', latestCustDataString);
-
-    console.log(latestCustDataString);
-    console.log(inputLeadString);
-    console.log(inputLeadString != latestCustDataString);
 
     if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && inputLeadString != latestCustDataString) {
       if (confirm("Recent Customer Main Data and Legal Address different with previous data. Are you sure want to submit without fraud check again?")) {
