@@ -247,11 +247,10 @@ export class NapAddDetailComponent implements OnInit {
 
   MakeViewReturnInfoObj() {
     if (this.ReturnHandlingHId > 0) {
-      var obj = {
-        ReturnHandlingHId: this.ReturnHandlingHId,
-        MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
-      }
-      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
+      let ReqByIdAndCodeObj = new GenericObj();
+      ReqByIdAndCodeObj.Id = this.ReturnHandlingHId;
+      ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingEditApp;
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
         (response) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({

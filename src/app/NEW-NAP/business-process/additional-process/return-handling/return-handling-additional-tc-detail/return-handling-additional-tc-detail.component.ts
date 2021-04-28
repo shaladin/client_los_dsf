@@ -312,11 +312,10 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
   MakeViewReturnInfoObj() {
     if (this.returnHandlingHId > 0) {
-      var obj = {
-        ReturnHandlingHId: this.returnHandlingHId,
-        MrReturnTaskCode: CommonConstant.ReturnHandlingAddTc
-      }
-      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
+      let ReqByIdAndCodeObj = new GenericObj();
+      ReqByIdAndCodeObj.Id = this.returnHandlingHId;
+      ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingAddTc;
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
         (response) => {
           this.returnHandlingDObj = response;
         });

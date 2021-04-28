@@ -15,6 +15,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: "phone-verification-subject",
@@ -178,11 +179,10 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   MakeViewReturnInfoObj() {
     if (this.returnHandlingHId > 0) {
-      var obj = {
-        ReturnHandlingHId: this.returnHandlingHId,
-        MrReturnTaskCode: CommonConstant.ReturnHandlingAddPhnVerf
-      }
-      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
+      let ReqByIdAndCodeObj = new GenericObj();
+      ReqByIdAndCodeObj.Id = this.returnHandlingHId;
+      ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingAddPhnVerf;
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
         (response) => {
           this.returnHandlingDObj = response;
         });

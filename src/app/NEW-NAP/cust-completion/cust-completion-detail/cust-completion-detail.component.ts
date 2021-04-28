@@ -13,6 +13,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { FormBuilder } from '@angular/forms';
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-cust-completion-detail',
@@ -87,11 +88,10 @@ export class CustCompletionDetailComponent implements OnInit {
 
   MakeViewReturnInfoObj() {
     if (this.ReturnHandlingHId > 0) {
-      var obj = {
-        ReturnHandlingHId: this.ReturnHandlingHId,
-        MrReturnTaskCode: CommonConstant.ReturnHandlingEditNAP4
-      }
-      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
+      let ReqByIdAndCodeObj = new GenericObj();
+      ReqByIdAndCodeObj.Id = this.ReturnHandlingHId;
+      ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingEditNAP4;
+      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
         (response) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
