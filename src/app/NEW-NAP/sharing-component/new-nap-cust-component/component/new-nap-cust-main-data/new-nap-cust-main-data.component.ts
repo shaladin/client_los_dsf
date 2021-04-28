@@ -465,7 +465,7 @@ export class NewNapCustMainDataComponent implements OnInit {
   }
 
   CopyAddress() {
-    this.http.post(URLConstant.GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode, { AppId: this.appId, MrCustAddrTypeCode: CommonConstant.AddrTypeLegal }).subscribe(
+    this.http.post(URLConstant.GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode, { Id: this.appId, Code: CommonConstant.AddrTypeLegal }).subscribe(
       (response) => {
         this.legalAddrObj.Addr = response["Addr"];
         this.legalAddrObj.AreaCode1 = response["AreaCode1"];
