@@ -13,6 +13,7 @@ import { environment } from 'environments/environment';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-app-add-detail',
@@ -101,7 +102,10 @@ export class AppAddDetailComponent implements OnInit {
 
   MakeViewReturnInfoObj() {
     if (this.mode == CommonConstant.ModeResultHandling) {
-      this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, {Id: this.appId, Code: CommonConstant.ReturnHandlingEditApp}).subscribe(
+      let ReqByIdAndCodeObj = new GenericObj();
+      ReqByIdAndCodeObj.Id = this.appId;
+      ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingEditApp;
+      this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
         (response) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({

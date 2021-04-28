@@ -19,6 +19,7 @@ import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-in
 import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -175,7 +176,10 @@ export class NapDetailFormComponent implements OnInit {
 
   MakeViewReturnInfoObj() {
     if (this.mode == CommonConstant.ModeResultHandling) {
-      this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, {Id: this.appId, Code: CommonConstant.ReturnHandlingEditApp}).subscribe(
+      let ReqByIdAndCodeObj = new GenericObj();
+      ReqByIdAndCodeObj.Id = this.appId;
+      ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingEditApp;
+      this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
         (response) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
