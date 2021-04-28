@@ -1,6 +1,6 @@
 export class MouCustCompanyFinDataObj {
     MouCustCompanyFinDataId: number;
-    MouCustId: number;
+    MouCustCompanyId: number;
     GrossMonthlyIncomeAmt: number;
     GrossProfitAmt: number;
     GrossMonthlyExpenseAmt: number;
@@ -29,7 +29,7 @@ export class MouCustCompanyFinDataObj {
 
 constructor() { 
     this.MouCustCompanyFinDataId = 0;
-    this.MouCustId = 0;
+    this.MouCustCompanyId = 0;
     this.GrossMonthlyIncomeAmt = 0;
     this.GrossMonthlyExpenseAmt = 0;
     this.GrossProfitAmt = 0;
