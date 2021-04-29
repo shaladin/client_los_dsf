@@ -12,6 +12,7 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { ReqDupCheckAppCustObj } from 'app/shared/model/AppDupCheckCust/ReqDupCheckAppCustObj';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ReqGetAppCustDupCheckObj } from 'app/shared/model/Request/NAP/DupCheck/ReqGetAppCustDupCheckObj.model';
 
 @Component({
   selector: 'app-dup-check-md-subj-match',
@@ -40,9 +41,9 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private router: Router, private location: Location) {
     this.route.queryParams.subscribe(params => {
-      if (params['AppId'] != null)  this.AppId = params['AppId'];
-      if (params['AppCustId'] != null)  this.appCustId = params['AppCustId'];
-      if (params['WfTaskListId'] != null)  this.WfTaskListId = params['WfTaskListId'];
+      if (params['AppId'] != null) this.AppId = params['AppId'];
+      if (params['AppCustId'] != null) this.appCustId = params['AppCustId'];
+      if (params['WfTaskListId'] != null) this.WfTaskListId = params['WfTaskListId'];
     });
   }
 
@@ -50,68 +51,59 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
     this.getDupCheckData();
   }
 
-  initViewMainInfo()
-  {
-    if(this.mrCustTypeCode == CommonConstant.CustTypePersonal)
+  initViewMainInfo() {
+    if (this.mrCustTypeCode == CommonConstant.CustTypePersonal)
       this.viewMainInfoObj.viewInput = "./assets/ucviewgeneric/viewDupCheckSubjectMatchPersonal.json";
-    else if(this.mrCustTypeCode == CommonConstant.CustTypeCompany)
+    else if (this.mrCustTypeCode == CommonConstant.CustTypeCompany)
       this.viewMainInfoObj.viewInput = "./assets/ucviewgeneric/viewDupCheckSubjectMatchCompany.json";
 
     this.viewMainInfoObj.viewEnvironment = environment.losUrl;
     this.viewMainInfoObj.ddlEnvironments = [{ name: "AppNo", environment: environment.losR3Web }];
   }
 
-  getDupCheckData(){
-    this.http.post(URLConstant.GetAppCustMainDataByAppCustId, {"AppCustId": this.appCustId}).subscribe(
+  getDupCheckData() {
+    this.http.post(URLConstant.GetAppCustMainDataByAppCustId, { Id: this.appCustId }).subscribe(
       response => {
         this.appCustObj = response['AppCustObj'];
         this.mrCustTypeCode = this.appCustObj.MrCustTypeCode;
         this.reqDupCheckAppCustObj.AppCustId = this.appCustId;
         this.reqDupCheckAppCustObj.RowVersion = this.appCustObj.RowVersion;
 
-        if(this.mrCustTypeCode == CommonConstant.CustTypePersonal)
-        {
+        let requestDupCheck = new ReqGetAppCustDupCheckObj();
+        
+        if (this.mrCustTypeCode == CommonConstant.CustTypePersonal) {
           this.appCustPersonalObj = response['AppCustPersonalObj'];
-          var requestDupCheck = {
-            "CustName": this.appCustObj.CustName,
-            "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
-            "MrCustModelCode": this.appCustObj.MrCustModelCode,
-            "MrIdTypeCode": this.appCustObj.MrIdTypeCode,
-            "MrIdType": response['AppCustObj'].MrIdType,
-            "IdNo": this.appCustObj.IdNo,
-            "TaxIdNo": this.appCustObj.TaxIdNo,
-            "BirthDt": this.appCustPersonalObj.BirthDt,
-            "MotherMaidenName": this.appCustPersonalObj.MotherMaidenName,
-            "MobilePhnNo1": this.appCustPersonalObj.MobilePhnNo1,          
-            "RowVersion": response['AppCustObj'].RowVersion,
-            "AppId": this.appCustObj.AppId
-          }
-        } 
-        else if(this.mrCustTypeCode == CommonConstant.CustTypeCompany)
-        {
+          requestDupCheck.CustName = this.appCustObj.CustName;
+          requestDupCheck.MrCustTypeCode = this.appCustObj.MrCustTypeCode;
+          requestDupCheck.MrCustModelCode = this.appCustObj.MrCustModelCode;
+          requestDupCheck.MrIdTypeCode = this.appCustObj.MrIdTypeCode;
+          requestDupCheck.IdNo = this.appCustObj.IdNo;
+          requestDupCheck.TaxIdNo = this.appCustObj.TaxIdNo;
+          requestDupCheck.BirthDt = this.appCustPersonalObj.BirthDt;
+          requestDupCheck.MotherMaidenName = this.appCustPersonalObj.MotherMaidenName;
+          requestDupCheck.MobilePhnNo1 = this.appCustPersonalObj.MobilePhnNo1;
+          requestDupCheck.RowVersion = response['AppCustObj'].RowVersion;
+          requestDupCheck.AppId = this.appCustObj.AppId;
+
+        }
+        else if (this.mrCustTypeCode == CommonConstant.CustTypeCompany) {
           this.appCustCompanyObj = response['AppCustCompanyObj'];
-          var requestDupCheck = {
-            "CustName": this.appCustObj.CustName,
-            "MrCustTypeCode": this.appCustObj.MrCustTypeCode,
-            "MrCustModelCode": this.appCustObj.MrCustModelCode,
-            "MrIdTypeCode": this.appCustObj.MrIdTypeCode,
-            "MrIdType": response['AppCustObj'].MrIdType,
-            "IdNo": this.appCustObj.IdNo,
-            "TaxIdNo": this.appCustObj.TaxIdNo,
-            "BirthDt" : this.appCustCompanyObj.EstablishmentDt,
-            "MotherMaidenName" : "",
-            "MobilePhnNo1" : "",
-            "RowVersion": response['AppCustObj'].RowVersion,
-            "AppId": this.appCustObj.AppId
-          }
+          requestDupCheck.CustName = this.appCustObj.CustName;
+          requestDupCheck.MrCustTypeCode = this.appCustObj.MrCustTypeCode;
+          requestDupCheck.MrCustModelCode = this.appCustObj.MrCustModelCode;
+          requestDupCheck.MrIdTypeCode = this.appCustObj.MrIdTypeCode;
+          requestDupCheck.IdNo = this.appCustObj.IdNo;
+          requestDupCheck.TaxIdNo = this.appCustObj.TaxIdNo;
+          requestDupCheck.BirthDt = this.appCustCompanyObj.EstablishmentDt;
+          requestDupCheck.RowVersion = response['AppCustObj'].RowVersion;
+          requestDupCheck.AppId = this.appCustObj.AppId;
         }
 
         //List Master Cust Duplicate Checking
         this.http.post(URLConstant.GetCustomerDuplicateCheck, requestDupCheck).subscribe(
           response => {
             this.listMasterCustDuplicate = response[CommonConstant.ReturnObj].CustDuplicate;
-            if(response[CommonConstant.ReturnStatus] == CommonConstant.RuleBehaviourLock) 
-            {
+            if (response[CommonConstant.ReturnStatus] == CommonConstant.RuleBehaviourLock) {
               this.isMasterLock = true;
               this.isLock = true;
             }
@@ -123,8 +115,8 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
         this.http.post(URLConstant.GetNegativeCustomerDuplicateCheck, requestDupCheck).subscribe(
           response => {
             this.listNegativeCustDuplicate = response[CommonConstant.ReturnObj].NegativeCustDuplicate;
-            this.isNegativeLock = (response[CommonConstant.ReturnStatus] == CommonConstant.RuleBehaviourLock) ;
-            if(this.isNegativeLock && this.listNegativeCustDuplicate.length > 0) this.listNegativeCustDuplicate.forEach(item => {
+            this.isNegativeLock = (response[CommonConstant.ReturnStatus] == CommonConstant.RuleBehaviourLock);
+            if (this.isNegativeLock && this.listNegativeCustDuplicate.length > 0) this.listNegativeCustDuplicate.forEach(item => {
               this.reqDupCheckAppCustObj.ListAppNegativeCustObj.push({
                 'NegativeCustNo': item['NegativeCustNo'],
                 'MrNegCustTypeCode': item['MrNegCustTypeCode'],
@@ -139,11 +131,11 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
         this.http.post(URLConstant.MD_GetAppCustDuplicateCheck, requestDupCheck).subscribe(
           response => {
             this.listAppCustDuplicate = response["ListDuplicateAppCust"];
-            if(response[CommonConstant.ReturnStatus] == CommonConstant.RuleBehaviourLock){
+            if (response[CommonConstant.ReturnStatus] == CommonConstant.RuleBehaviourLock) {
               this.isLock = true;
               this.isAppLock = true;
             }
-            else if(!this.isMasterLock) this.isLock = false;
+            else if (!this.isMasterLock) this.isLock = false;
           }
         );
 
@@ -152,7 +144,7 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
       });
   }
 
-  selectMasterCust(item){
+  selectMasterCust(item) {
     this.reqDupCheckAppCustObj.ApplicantNo = "";
     this.reqDupCheckAppCustObj.CustNo = item.CustNo;
     this.http.post(URLConstant.MD_EditApplicantNoCustNoAppCust, this.reqDupCheckAppCustObj).subscribe(
@@ -162,7 +154,7 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
     );
   }
 
-  selectAppCust(item){
+  selectAppCust(item) {
     this.reqDupCheckAppCustObj.CustNo = "";
     this.reqDupCheckAppCustObj.ApplicantNo = item.ApplicantNo;
     this.reqDupCheckAppCustObj.SourceAppCustId = item.AppCustId;
@@ -173,17 +165,15 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
     );
   }
 
-  checkNegCustOnChange(event, item)
-  {
-    if(event.checked) 
+  checkNegCustOnChange(event, item) {
+    if (event.checked)
       this.reqDupCheckAppCustObj.ListAppNegativeCustObj.push(item)
-    else 
-    {
+    else {
       var index = this.reqDupCheckAppCustObj.ListAppNegativeCustObj.indexOf(item);
-      if(index >= 0) this.reqDupCheckAppCustObj.ListAppNegativeCustObj.splice(index, 1);
+      if (index >= 0) this.reqDupCheckAppCustObj.ListAppNegativeCustObj.splice(index, 1);
     }
   }
-  
+
   buttonNewCustOnClick() {
     this.reqDupCheckAppCustObj.ApplicantNo = "";
     this.reqDupCheckAppCustObj.CustNo = "";
@@ -197,18 +187,18 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   buttonCancelOnClick() {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_MAIN_DATA_SUBJ_LIST], { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId });
   }
-  
-  viewMainInfoCallback(event){
-    if(event.Key == "customer"){
+
+  viewMainInfoCallback(event) {
+    if (event.Key == "customer") {
       var custObj = { CustNo: event.ViewObj.CustNo };
-      this.http.post(URLConstant.GetCustByCustNo, {TrxNo : event.ViewObj.CustNo}).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, { TrxNo: event.ViewObj.CustNo }).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }
       );
-  }
-  else if(event.Key == "application"){
-    AdInsHelper.OpenAppViewByAppId(event.ViewObj.AppId);
-  }
+    }
+    else if (event.Key == "application") {
+      AdInsHelper.OpenAppViewByAppId(event.ViewObj.AppId);
+    }
   }
 }
