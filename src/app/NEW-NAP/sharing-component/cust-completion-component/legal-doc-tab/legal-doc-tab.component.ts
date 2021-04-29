@@ -5,6 +5,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 
@@ -57,7 +58,9 @@ export class LegalDocTabComponent implements OnInit {
       this.IsDetail = true;
     }else if(event.Key == "delete"){
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-        this.http.post(URLConstant.DeleteAppCustCompanyLegalDoc,  {AppCustCompanyLegalDocId : event.RowObj["AppCustCompanyLegalDocId"]}).subscribe(
+        let tempObj: GenericObj = new GenericObj();
+        tempObj.Id = event.RowObj["AppCustCompanyLegalDocId"];
+        this.http.post(URLConstant.DeleteAppCustCompanyLegalDoc, tempObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             this.LoadListLegalDocData();

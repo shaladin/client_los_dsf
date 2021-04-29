@@ -3,12 +3,11 @@ import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
@@ -19,7 +18,7 @@ import { CustMainDataPersonalObj } from 'app/shared/model/CustMainDataPersonalOb
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { ResponseCustCompanyForCopyObj } from 'app/shared/model/ResponseCustCompanyForCopyObj.Model';
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
@@ -29,8 +28,7 @@ import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-new-nap-cust-main-data',
-  templateUrl: './new-nap-cust-main-data.component.html',
-  styles: []
+  templateUrl: './new-nap-cust-main-data.component.html'
 })
 export class NewNapCustMainDataComponent implements OnInit {
   private ucLookupExistingCust: UclookupgenericComponent;
@@ -39,7 +37,7 @@ export class NewNapCustMainDataComponent implements OnInit {
       this.ucLookupExistingCust = content;
     }
   }
-  
+
   @Input() ParentForm: FormGroup;
   @Input() custMainDataMode: string;
   @Input() appId: number;
@@ -97,7 +95,7 @@ export class NewNapCustMainDataComponent implements OnInit {
     private toastr: NGXToastrService,
     public formValidate: FormValidateService,
     private cookieService: CookieService
-  ) { 
+  ) {
     this.InputAppCustObjMainData = new Object();
     this.ResponseCustType = new EventEmitter<any>();
     this.ResponseIsExisting = new EventEmitter<any>();
@@ -131,7 +129,7 @@ export class NewNapCustMainDataComponent implements OnInit {
     this.ResponseCustType.emit(this.ParentForm.controls.MrCustTypeCode.value);
   }
 
-  CustModelHandler(){
+  CustModelHandler() {
     this.ResponseCustModel.emit(this.ParentForm.controls.MrCustModelCode.value);
   }
 
@@ -196,7 +194,6 @@ export class NewNapCustMainDataComponent implements OnInit {
 
   setLookup(custType: string = CommonConstant.CustTypePersonal, isChange: boolean = false) {
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCustObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.genericJson = "./assets/uclookup/lookupCustomer.json";
@@ -236,23 +233,23 @@ export class NewNapCustMainDataComponent implements OnInit {
     }
   }
 
-  RelationshipChange(relationship: string){
+  RelationshipChange(relationship: string) {
     let idxMarried = this.DictRefMaster[this.MasterMaritalStat].findIndex(x => x.Key == CommonConstant.MasteCodeMartialStatsMarried);
 
-    if(relationship == CommonConstant.MasteCodeRelationshipSpouse){
+    if (relationship == CommonConstant.MasteCodeRelationshipSpouse) {
       this.ParentForm.controls.MrMaritalStatCode.patchValue(this.DictRefMaster[this.MasterMaritalStat][idxMarried].Key);
       this.ParentForm.controls.MrMaritalStatCode.disable();
-    }else{
+    } else {
       this.ParentForm.controls.MrMaritalStatCode.patchValue(this.MaritalStatLookup != "" ? this.MaritalStatLookup : this.DictRefMaster[this.MasterMaritalStat][idxMarried].Key);
-      if(!this.isExisting) this.ParentForm.controls.MrMaritalStatCode.enable();
+      if (!this.isExisting) this.ParentForm.controls.MrMaritalStatCode.enable();
     }
     this.ParentForm.controls.MrMaritalStatCode.updateValueAndValidity();
   }
 
-  MaritalStatChange(maritalStat: string){
-    if(maritalStat == CommonConstant.MasteCodeMartialStatsMarried){
+  MaritalStatChange(maritalStat: string) {
+    if (maritalStat == CommonConstant.MasteCodeMartialStatsMarried) {
       this.ResponseIsMarried.emit(true);
-    }else{
+    } else {
       this.ResponseIsMarried.emit(false);
     }
   }
@@ -264,20 +261,20 @@ export class NewNapCustMainDataComponent implements OnInit {
     });
   }
 
-  async GetListActiveRefMaster(RefMasterTypeCode: string){
+  async GetListActiveRefMaster(RefMasterTypeCode: string) {
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: RefMasterTypeCode }).toPromise().then(
       (response) => {
         this.DictRefMaster[RefMasterTypeCode] = response[CommonConstant.ReturnObj];
       });
   }
-  
+
   async getRefMaster() {
     await this.GetListActiveRefMaster(this.MasterCustType);
     await this.GetListActiveRefMaster(this.MasterGender);
     await this.GetListActiveRefMaster(this.MasterMaritalStat);
     await this.GetListActiveRefMaster(this.MasterCompanyType);
     await this.GetListActiveRefMaster(this.MasterJobPosition);
-    
+
     await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel, MappingCode: this.MrCustTypeCode }).toPromise().then(
       (response) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
@@ -293,7 +290,7 @@ export class NewNapCustMainDataComponent implements OnInit {
         }
       });
 
-    if(this.DictRefMaster[this.MasterCustType].length != 0) await this.ParentForm.controls.MrCustTypeCode.patchValue(this.DictRefMaster[this.MasterCustType][0].Key)
+    if (this.DictRefMaster[this.MasterCustType].length != 0) await this.ParentForm.controls.MrCustTypeCode.patchValue(this.DictRefMaster[this.MasterCustType][0].Key)
     if (this.isIncludeCustRelation) {
       await this.getCustRelationship();
     }
@@ -483,7 +480,7 @@ export class NewNapCustMainDataComponent implements OnInit {
       });
   }
 
-  resetInput(custType: string = CommonConstant.CustTypePersonal) { 
+  resetInput(custType: string = CommonConstant.CustTypePersonal) {
     this.ParentForm.reset();
     this.ParentForm.patchValue({
       MrCustTypeCode: custType,
@@ -572,7 +569,8 @@ export class NewNapCustMainDataComponent implements OnInit {
       this.MaritalStatLookup = CustPersonalObj.MrMaritalStatCode;
       if (!IsCopyCust) {
         this.ParentForm.patchValue({
-          MrMaritalStatCode: CustPersonalObj.MrMaritalStatCode})
+          MrMaritalStatCode: CustPersonalObj.MrMaritalStatCode
+        })
         this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
       }
       this.RelationshipChange(CustObj.MrCustRelationshipCode);
@@ -632,7 +630,7 @@ export class NewNapCustMainDataComponent implements OnInit {
         IsOwner: CustCompanyMgmntShrholderObj.IsOwner,
         EstablishmentDt: CustCompanyMgmntShrholderObj.EstablishmentDt != null ? formatDate(CustCompanyMgmntShrholderObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US') : "",
       });
-      if (!IsCopyCust){
+      if (!IsCopyCust) {
         this.ParentForm.patchValue({
           RowVersionShareholder: CustCompanyMgmntShrholderObj.RowVersion
         });

@@ -7,7 +7,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustCompanyFinDataObj } from 'app/shared/model/AppCustCompanyFinDataObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 
 @Component({
@@ -64,10 +64,12 @@ export class FinancialCompanyComponent implements OnInit {
     this.GetFinData();
   }
 
+  isDataExist: boolean = false;
   GetFinData(){
     this.http.post<AppCustCompanyFinDataObj>(URLConstant.GetAppCustCompanyFinDataByAppCustId, { Id: this.AppCustId }).subscribe(
       async (response) => {
         if(response.AppCustCompanyFinDataId != 0){
+          this.isDataExist = true;
           this.FinancialForm.patchValue({
             GrossMonthlyIncomeAmt: response.GrossMonthlyIncomeAmt,
             ReturnOfInvestmentPrcnt: response.ReturnOfInvestmentPrcnt,
@@ -140,10 +142,18 @@ export class FinancialCompanyComponent implements OnInit {
       AppCustCompanyFinDataObj: this.AppCustCompanyFinData
     }
     
-    this.http.post(URLConstant.AddEditAppCustCompanyFinData, request).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.OutputTab.emit({IsComplete: true});
-      });
+    if (!this.isDataExist) {
+      this.http.post(URLConstant.AddAppCustCompanyFinData, request).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.OutputTab.emit({IsComplete: true});
+        });
+    } else {
+      this.http.post(URLConstant.EditAppCustCompanyFinData, request).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.OutputTab.emit({IsComplete: true});
+        });
+    }
   }
 }

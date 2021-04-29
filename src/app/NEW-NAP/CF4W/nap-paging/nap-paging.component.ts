@@ -18,8 +18,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   styleUrls: []
 })
 export class NapPagingComponent implements OnInit {
-
-  inputPagingObj: any;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: any;
   userAccess: any;
   Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
@@ -42,11 +41,7 @@ export class NapPagingComponent implements OnInit {
 
     this.arrCrit = new Array();
     this.makeCriteria();
-
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchApp.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApp.json";
     this.inputPagingObj.ddlEnvironments = [
       {

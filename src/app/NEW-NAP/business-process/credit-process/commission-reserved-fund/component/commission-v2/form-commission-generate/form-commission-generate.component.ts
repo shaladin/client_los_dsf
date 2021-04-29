@@ -11,6 +11,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
 import { AppCommissionDObj } from 'app/shared/model/AppCommissionDObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-form-commission-generate',
@@ -119,6 +120,7 @@ export class FormCommissionGenerateComponent implements OnInit {
       BankCode: [''],
       BankName: [''],
       MrIdTypeCode: [''],
+      MrTaxKindCode: [''],
       MrTaxCalcMethodCode: [''],
       TaxpayerNo: [''],
       TotalCommisionAmount: [0, Validators.pattern("^[0-9]+([,.][0-9]+)?$")],
@@ -368,7 +370,8 @@ export class FormCommissionGenerateComponent implements OnInit {
   }
 
   DeleteFromDatabase(AppCommissionHId) {
-    var obj = { AppCommissionHId: AppCommissionHId };
+    let obj: GenericObj = new GenericObj()
+    obj.Id = AppCommissionHId;
     this.http.post(URLConstant.DeleteAppCommissionData, obj).subscribe(
       (response) => {
       });
@@ -443,7 +446,8 @@ export class FormCommissionGenerateComponent implements OnInit {
       BankBranch: appCommObj.BankBranch,
       BankCode: appCommObj.BankCode,
       BankName: appCommObj.BankName,
-      MrIdTypeCode: appCommObj.MrTaxKindCode,
+      MrIdTypeCode: appCommObj.MrIdTypeCode,
+      MrTaxKindCode: appCommObj.MrTaxKindCode,
       MrTaxCalcMethodCode: appCommObj.MrTaxCalcMethodCode,
       TaxpayerNo: appCommObj.TaxpayerNo,
       TotalCommisionAmount: appCommObj.TotalCommissionAmt,
@@ -462,21 +466,21 @@ export class FormCommissionGenerateComponent implements OnInit {
     this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj);
     this.SetRule(code, indexFormObj, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
     
-    for (var i = 0; i < appCommObj.AppCommissionD.length; i++) {
-      let idxFromRuleObj = temp.findIndex(x => x.AllocationFrom == appCommObj.AppCommissionD[i].MrCommissionSourceCode);
+    for (var i = 0; i < appCommObj.AppCommissionDs.length; i++) {
+      let idxFromRuleObj = temp.findIndex(x => x.AllocationFrom == appCommObj.AppCommissionDs[i].MrCommissionSourceCode);
       if (idxFromRuleObj >= 0) {
         var allocAmt = 0;
         if (this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["value"][idxFromRuleObj].AllocationBehaviour != "LOCK") {
-          allocAmt = appCommObj.AppCommissionD[i].CommissionAmt;
+          allocAmt = appCommObj.AppCommissionDs[i].CommissionAmt;
         }
         this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"][idxFromRuleObj].patchValue({
-          AppCommissionDId: appCommObj.AppCommissionD[i].AppCommissionDId,
-          AppCommissionHId: appCommObj.AppCommissionD[i].AppCommissionHId,
+          AppCommissionDId: appCommObj.AppCommissionDs[i].AppCommissionDId,
+          AppCommissionHId: appCommObj.AppCommissionDs[i].AppCommissionHId,
           AllocationAmount: allocAmt,
-          TaxAmt: appCommObj.AppCommissionD[i].TaxAmt,
-          VatAmt: appCommObj.AppCommissionD[i].VatAmt,
-          PenaltyAmt: appCommObj.AppCommissionD[i].PenaltyAmt,
-          RowVersion: appCommObj.AppCommissionD[i].RowVersion,
+          TaxAmt: appCommObj.AppCommissionDs[i].TaxAmt,
+          VatAmt: appCommObj.AppCommissionDs[i].VatAmt,
+          PenaltyAmt: appCommObj.AppCommissionDs[i].PenaltyAmt,
+          RowVersion: appCommObj.AppCommissionDs[i].RowVersion,
         })
       } 
     }

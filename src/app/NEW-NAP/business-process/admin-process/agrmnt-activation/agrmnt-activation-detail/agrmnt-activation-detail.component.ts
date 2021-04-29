@@ -4,7 +4,6 @@ import { AdminProcessService, ReqAppAssetAgreementActivationObj } from 'app/NEW-
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { WhereValueObj } from 'app/shared/model/UcPagingObj.Model';
@@ -73,8 +72,6 @@ export class AgrmntActivationDetailComponent implements OnInit {
     this.ClaimTask(this.WfTaskListId);
 
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/AgrmntActivationTempPaging.json";
-    this.tempPagingObj.enviromentUrl = environment.losUrl;
-    this.tempPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/AgrmntActivationTempPaging.json";
     this.tempPagingObj.isReady = true;
     this.tempPagingObj.isSearched = true;
@@ -120,8 +117,6 @@ export class AgrmntActivationDetailComponent implements OnInit {
         })
       });
     }
-
-    
   }
 
   Submit() {

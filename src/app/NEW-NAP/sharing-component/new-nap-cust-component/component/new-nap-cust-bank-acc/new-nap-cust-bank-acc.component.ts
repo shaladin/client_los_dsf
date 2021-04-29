@@ -9,15 +9,14 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustBankStmntObj } from 'app/shared/model/AppCustBankStmntObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-new-nap-cust-bank-acc',
-  templateUrl: './new-nap-cust-bank-acc.component.html',
-  styles: []
+  templateUrl: './new-nap-cust-bank-acc.component.html'
 })
 export class NewNapCustBankAccComponent implements OnInit {
   @Input() AppCustId: number;
@@ -49,7 +48,6 @@ export class NewNapCustBankAccComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService,
     public formValidate: FormValidateService,
     private cookieService: CookieService
   ) { }
@@ -66,12 +64,11 @@ export class NewNapCustBankAccComponent implements OnInit {
 
     this.InputLookupBankObj = new InputLookupObj();
     this.InputLookupBankObj.urlJson = "./assets/uclookup/lookupBank.json";
-    this.InputLookupBankObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.InputLookupBankObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupBankObj.pagingJson = "./assets/uclookup/lookupBank.json";
     this.InputLookupBankObj.genericJson = "./assets/uclookup/lookupBank.json";
     this.InputLookupBankObj.isReady = true;
-    
+
     this.GetAppCustBankAccList();
     this.FormValidity(this.IsDetail, true);
   }
@@ -80,11 +77,11 @@ export class NewNapCustBankAccComponent implements OnInit {
     this.http.post<Array<AppCustBankAccObj>>(URLConstant.GetAppCustBankAccAndStatementForView, { Id: this.AppCustId }).subscribe(
       (response) => {
         this.AppCustBankAccList = response["AppCustBankAccList"];
-        this.OutputObj.emit({Key: 'IsDetail', Value: false, AppCustBankAccList: this.AppCustBankAccList});
+        this.OutputObj.emit({ Key: 'IsDetail', Value: false, AppCustBankAccList: this.AppCustBankAccList });
       });
   }
 
-  GetBank(event){
+  GetBank(event) {
     this.BankAccStmntForm.patchValue({
       BankCode: event.BankCode,
       BankName: event.BankName
@@ -113,23 +110,23 @@ export class NewNapCustBankAccComponent implements OnInit {
         break;
     }
     this.FormValidity(this.IsDetail);
-    this.OutputObj.emit({Key: 'IsDetail', Value: this.IsDetail, AppCustBankAccList: this.AppCustBankAccList});
+    this.OutputObj.emit({ Key: 'IsDetail', Value: this.IsDetail, AppCustBankAccList: this.AppCustBankAccList });
   }
 
-  SetForEdit(BankAccAndStmntObj: AppCustBankAccObj, index: number){
+  SetForEdit(BankAccAndStmntObj: AppCustBankAccObj, index: number) {
     this.EditedIndex = index;
     this.InputLookupBankObj.nameSelect = BankAccAndStmntObj.BankName;
-    this.InputLookupBankObj.jsonSelect = {BankName: BankAccAndStmntObj.BankName};
+    this.InputLookupBankObj.jsonSelect = { BankName: BankAccAndStmntObj.BankName };
 
 
     this.BankAccStmntForm.patchValue({
       BankCode: BankAccAndStmntObj.BankCode,
       BankName: BankAccAndStmntObj.BankName,
-      BankBranch : BankAccAndStmntObj.BankBranch,
-      BankAccName : BankAccAndStmntObj.BankAccName,
-      BankAccNo : BankAccAndStmntObj.BankAccNo,
-      IsDefault : BankAccAndStmntObj.IsDefault,
-      IsActive : BankAccAndStmntObj.IsActive,
+      BankBranch: BankAccAndStmntObj.BankBranch,
+      BankAccName: BankAccAndStmntObj.BankAccName,
+      BankAccNo: BankAccAndStmntObj.BankAccNo,
+      IsDefault: BankAccAndStmntObj.IsDefault,
+      IsActive: BankAccAndStmntObj.IsActive,
       RowVersion: BankAccAndStmntObj.RowVersion
     });
 
@@ -143,7 +140,7 @@ export class NewNapCustBankAccComponent implements OnInit {
     this.AppCustBankStmntList = BankAccAndStmntObj.AppCustBankStmntObjs;
   }
 
-  ClearForm(){
+  ClearForm() {
     this.BankAccStmntForm.patchValue({
       BankCode: "",
       BankName: "",
@@ -155,7 +152,7 @@ export class NewNapCustBankAccComponent implements OnInit {
     })
 
     this.InputLookupBankObj.nameSelect = "";
-    this.InputLookupBankObj.jsonSelect = {BankName: ""};
+    this.InputLookupBankObj.jsonSelect = { BankName: "" };
 
     // reset bank statement
     var bankStmnObjs = this.BankAccStmntForm.controls['BankStmntObjs'] as FormArray;
@@ -237,10 +234,10 @@ export class NewNapCustBankAccComponent implements OnInit {
     }
   }
 
-  DeleteBankAcc(index: number){
+  DeleteBankAcc(index: number) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.AppCustBankAccList.splice(index, 1);
-      this.OutputObj.emit({Key: 'IsDetail', Value: false, AppCustBankAccList: this.AppCustBankAccList});
+      this.OutputObj.emit({ Key: 'IsDetail', Value: false, AppCustBankAccList: this.AppCustBankAccList });
     }
   }
 
@@ -256,19 +253,19 @@ export class NewNapCustBankAccComponent implements OnInit {
     bankAccObj.BankAccNo = this.BankAccStmntForm.controls.BankAccNo.value;
     bankAccObj.IsDefault = this.BankAccStmntForm.controls.IsDefault.value;
     bankAccObj.IsActive = this.BankAccStmntForm.controls.IsActive.value;
-    
-    for(let i = 0; i < this.BankAccStmntForm.controls.BankStmntObjs.value.length; i++){
+
+    for (let i = 0; i < this.BankAccStmntForm.controls.BankStmntObjs.value.length; i++) {
       this.BankStmntObj = this.BankAccStmntForm.controls.BankStmntObjs.value[i]
       this.ListBankStmntObj.push(this.BankStmntObj);
     }
     bankAccObj.AppCustBankStmntObjs = this.ListBankStmntObj;
 
-    if(this.Mode == "Edit"){
+    if (this.Mode == "Edit") {
       this.AppCustBankAccList[this.EditedIndex] = bankAccObj;
-    }else{
+    } else {
       this.AppCustBankAccList.push(bankAccObj);
     }
-    this.OutputObj.emit({Key: 'IsDetail', Value: false, AppCustBankAccList: this.AppCustBankAccList});
+    this.OutputObj.emit({ Key: 'IsDetail', Value: false, AppCustBankAccList: this.AppCustBankAccList });
     enjiForm.resetForm();
 
     this.IsDetail = false;

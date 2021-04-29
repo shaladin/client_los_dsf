@@ -20,6 +20,7 @@ import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSy
 })
 export class AppViewComponent implements OnInit {
   AppId: number;
+  AppNo: string;
   arrValue = [];
   CustType: string = "";
   AppCustObj: any;
@@ -57,15 +58,25 @@ export class AppViewComponent implements OnInit {
 
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
 
-  constructor(private route: ActivatedRoute,
-    private http: HttpClient,
-    private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
-      this.AppId = params["AppId"];
+      if(params["AppId"] == 'undefined'){
+        this.AppNo = params["AppNo"]
+        
+      }else{
+        this.AppId = params["AppId"];
+      }
+      
     })
+    
   }
 
   async ngOnInit() : Promise<void> {
+    await this.http.post(URLConstant.GetAppByAppNo, {TrxNo: this.AppNo}).toPromise().then(
+      (response) => {
+        this.AppId = response['AppId'];
+      }
+    )
     this.arrValue.push(this.AppId);
     this.GetApp();
     this.GetIsUseDigitalization();

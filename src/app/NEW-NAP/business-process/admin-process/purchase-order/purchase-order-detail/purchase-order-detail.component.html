@@ -74,8 +74,8 @@
                             <tbody>
                                 <tr *ngFor="let item of AssetObj?.AppAssetListObj">
                                     <td class="text-left">{{item.FullAssetName}}</td>
-                                    <td class="text-right">{{item.AssetPriceAmt | number}}</td>
-                                    <td class="text-right">{{item.DownPaymentAmt | number}}</td>
+                                    <td class="text-right">{{item.AssetPriceAmt | number:'.2':'en-US'}}</td>
+                                    <td class="text-right">{{item.DownPaymentAmt | number:'.2':'en-US'}}</td>
                                     <td>{{item.SerialNo1}}</td>
                                     <td>{{item.SerialNo2}}</td>
                                     <td>{{item.SerialNo3}}</td>
@@ -93,42 +93,42 @@
                             <div class="col-md-6">
                                 <div class="row">
                                     <label class="col-md-6" translate>Total Asset Price </label>
-                                    <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.TotalAssetPriceAmt | number}}
+                                    <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.TotalAssetPriceAmt | number:'.2':'en-US'}}
                                     </label>
                                 </div>
                                 <div class="row">
                                     <label *ngIf="lobCode != 'FL4W'" class="col-md-6" translate>Down Payment Nett </label>
                                     <label *ngIf="lobCode == 'FL4W'" class="col-md-6" translate>Security Deposit Nett </label>
                                     <label
-                                        class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.DownPaymentNettAmt | number}}
+                                        class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.DownPaymentNettAmt | number:'.2':'en-US'}}
                                     </label>
                                 </div>
                                 <div class="row">
                                     <label class="col-md-6" translate>TDP At Coy </label>
-                                    <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.TdpPaidCoyAmt | number}}
+                                    <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.TdpPaidCoyAmt | number:'.2':'en-US'}}
                                     </label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
                                     <label class="col-md-6" translate>Insurance Premium </label>
-                                    <label class="col-md-6 text-right">{{TotalInsCustAmt | number}}
+                                    <label class="col-md-6 text-right">{{TotalInsCustAmt | number:'.2':'en-US'}}
                                     </label>
                                 </div>
                                 <div class="row">
                                     <label class="col-md-6" translate>Life Insurance Premium </label>
-                                    <label class="col-md-6 text-right">{{TotalLifeInsCustAmt | number}}
+                                    <label class="col-md-6 text-right">{{TotalLifeInsCustAmt | number:'.2':'en-US'}}
                                     </label>
                                 </div>
                                 <div *ngIf="AssetObj?.AgrmntObj.MrFirstInstTypeCode == 'AD'" class="row">
                                     <label class="col-md-6" translate>First Installment Amount </label>
-                                    <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.InstAmt | number}} </label>
+                                    <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj.InstAmt | number:'.2':'en-US'}} </label>
                                 </div>
                             </div>
                             <div class="col-md-6" *ngFor="let item of AssetObj?.AgrmntFeeListObj">
                                 <div class="row">
                                     <label class="col-md-6" translate>{{item.FeeName}} </label>
-                                    <label class="col-md-6 text-right">{{item.AppFeeAmt | number}} </label>
+                                    <label class="col-md-6 text-right">{{item.AppFeeAmt | number:'.2':'en-US'}} </label>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -136,7 +136,7 @@
                                     <div class="col-md-6">
                                         <div class="row">
                                             <label class="col-md-6" translate>Total Purchase Order </label>
-                                            <label class="col-md-6 text-right">{{TotalPurchaseOrderAmt | number}} </label>
+                                            <label class="col-md-6 text-right">{{TotalPurchaseOrderAmt | number:'.2':'en-US'}} </label>
                                         </div>
                                     </div>
                                 </div>
@@ -161,7 +161,7 @@
                                 <tr *ngFor="let item of AssetObj?.AgrmntSubsidyListObj">
                                     <td class="text-left">{{item.MrSubdAllocCode}}</td>
                                     <td class="text-left">{{item.MrSubdSourceCode}}</td>
-                                    <td class="text-right">{{item.SubsidyAmt | number}}</td>
+                                    <td class="text-right">{{item.SubsidyAmt | number:'.2':'en-US'}}</td>
                                 </tr>
                             </tbody>
                         </table>

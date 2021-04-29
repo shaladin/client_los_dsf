@@ -1,0 +1,133 @@
+{
+    "title": "Document Pickup Request",
+    "component": [
+        {
+            "type": "dropdown",
+            "name": "ROL.OFFICE_CODE",
+            "id": "OfficeNameId",
+            "value": "",
+            "placeholder": "",
+            "isFromURL": true,            
+            "ddlType": "all",
+            "url": "",
+            "path": "/RefOfficeLos/GetListKeyValueOfficeLos",
+            "label": "Office Name",
+            "items": [],
+            "itemsUrl": []            
+        }, 
+        {
+            "type": "dropdown",
+            "name": "A.APP_CURR_STEP",
+            "id": "CurrStepId",
+            "value": "",
+            "placeholder": "",
+            "isFromURL": true,            
+            "ddlType": "all",
+            "url": "",
+            "path": "/RefStatusLos/GetListKeyValueRefStatusForDocPickupRequest",
+            "label": "Application Step",
+            "items": [],
+            "itemsUrl": []            
+        }, 
+        {
+            "type": "textbox",
+            "name": "A.APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "App No",
+            "placeholder": "App No"
+        },
+        {
+            "type": "textbox",
+            "name": "AC.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": ""
+        },  
+        {
+            "type": "textbox",
+            "name": "A.PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "Product Offering Name",
+            "placeholder": ""
+        }            
+    ],
+    "querystring": {
+        "name": "searchDocPickupRequest"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "APPLICATION NO",
+            "name": "AppNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "CUSTOMER NAME",
+            "name": "CustName"
+        },        
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "PRODUCT OFFERING NAME",
+            "name": "ProdOfferingName"
+        }, 
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "APPLICATION STEP",
+            "name": "AppStep"
+        },               
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AppNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustName"
+        }, 
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ProdOfferingName"
+        }, 
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AppStep"
+        },            
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "NAP_ADD_PRCS_DOC_PICKUP_REQUEST_DETAIL",
+                    "param": [
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        },
+                        {
+                            "type": "AppCustId",
+                            "property": "AppCustId"
+                        }                        
+                    ]
+                }
+            ]
+        }
+    ]
+}

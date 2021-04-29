@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MouCustLglReviewObj } from 'app/shared/model/MouCustLglReviewObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustTcComponent } from 'app/MOU/mou-customer-request/mou-cust-tc/mou-cust-tc.component';
 import { environment } from 'environments/environment';
@@ -16,6 +15,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
 import { promise } from 'selenium-webdriver';
+import { ReqListMouCustLglReviewObj } from 'app/shared/model/Request/MOU/ReqListMouCustLglReviewObj.model';
 
 @Component({
   selector: 'app-legal-review-detail',
@@ -27,7 +27,7 @@ export class LegalReviewDetailComponent implements OnInit {
   MouCustId: number;
   WfTaskListId: any;
   GetListActiveRefMasterUrl: string = URLConstant.GetListActiveRefMaster;
-  AddEditRangeMouCustLglReview: string = URLConstant.AddEditRangeMouCustLglReview;
+  AddRangeMouCustLglReview: string = URLConstant.AddRangeMouCustLglReview;
   responseObj: any;
   responseRefMasterObj: any;
   GetMouCustTcForMouLglByCustMouIdUrl: string = URLConstant.GetMouCustTcForMouLglByCustMouId;
@@ -148,7 +148,7 @@ export class LegalReviewDetailComponent implements OnInit {
 
   SaveData(formObj: any, isSubmit: boolean) {
     if (this.LegalForm.valid) {
-      var mouObj = new MouCustLglReviewObj();
+      var mouObj = new ReqListMouCustLglReviewObj();
       for (let index = 0; index < this.responseRefMasterObj.length; index++) {
         var tempMouObj = {
           MouCustId: this.MouCustId,
@@ -160,7 +160,7 @@ export class LegalReviewDetailComponent implements OnInit {
       }
       mouObj.WfTaskListId = this.WfTaskListId;
       mouObj.IsSubmit = isSubmit;
-      this.http.post(this.AddEditRangeMouCustLglReview, mouObj).subscribe(
+      this.http.post(this.AddRangeMouCustLglReview, mouObj).subscribe(
         response => {
           this.toastr.successMessage(response['message']);
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{});

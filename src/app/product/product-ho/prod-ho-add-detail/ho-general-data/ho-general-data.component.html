@@ -1,0 +1,67 @@
+<div class="card-body">
+  <div class="px-3">
+    <form class="form form-horizontal" [formGroup]="FormProdComp" #enjiForm="ngForm"
+      (ngSubmit)="FormProdComp.valid && SubmitForm()">
+      <div class="col-md-12">
+        <div class="form-group row">
+          <label class="col-md-4  adInsLabel">Copy Product</label>
+          <div class="col-md-4">
+            <lib-uclookupgeneric width-75-per [lookupInput]="InputLookUpObj" [parentForm]='FormProdComp'
+              [enjiForm]="enjiForm" [identifier]="'indentifierTemp'" >
+            </lib-uclookupgeneric>
+          </div>
+          <div class="col-md-4">
+            <button type="button" (click)="reload()" class="btn btn-raised btn-primary margin-r-5">
+              <i class="far fa-check-square"></i> Copy
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12" formArrayName="groups"
+        *ngFor="let type of FormProdComp.controls['groups'].controls; let j = index">
+        <div class="form-group row" [formGroupName]="j">
+          <div class="col-md-12">
+            <h4 class="form-section">{{FormProdComp.controls['groups'].value[j].groupName}}</h4>
+          </div>
+          <div class="col-md-12" formArrayName="components"
+            *ngFor="let node of type.controls['components'].controls; let l = index">
+            <div class="form-group row" [formGroupName]="l">
+              <label class="col-md-4 ">{{type.controls['components'].value[l].ProdCompntName}}</label>
+              <div class="col-md-8" *ngIf="type.controls['components'].value[l].ProdCompntType == 'DDL'">
+                <select formControlName="CompntValue" class="form-control width-50-per" id="CompValue{{l}}"
+                  name="CompntValue{{l}}"
+                  (change)="onChangeEvent(type.controls['components'].value[l].RefProdCompntCode,$event,l,j);">
+                  <option  [value]="-1">-Select One-</option>
+                  <option *ngFor="let m of DictOptions[type.controls['components'].value[l].RefProdCompntCode]"
+                    value={{m.Key}}>{{m.Value}}</option>
+                </select>
+                <lib-uc-show-errors [control]="node.controls.CompntValue" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+              <div class="col-md-8" *ngIf="type.controls['components'].value[l].ProdCompntType == 'MULTI_DDL'">
+                <ng-multiselect-dropdown *ngIf="DictMultiOptions[type.controls['components'].value[l].RefProdCompntCode].length != 0" [placeholder]="'Search'" [data]="DictMultiOptions[type.controls['components'].value[l].RefProdCompntCode]"
+                [(ngModel)]="SelectedMultiDDLItems[type.controls['components'].value[l].RefProdCompntCode]" [ngModelOptions]="{standalone: true}" [settings]="dropdownSettings" (onDropDownClose)="onMultiDDLChangeEvent(type.controls['components'].value[l].RefProdCompntCode,l,j)">
+                </ng-multiselect-dropdown>
+                <lib-uc-show-errors [control]="node.controls.CompntValue" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+              <div class="col-md-8" *ngIf="type.controls['components'].value[l].ProdCompntType == 'AMT'">
+                <input type="text" class="form-control adInsInput width-25-per" formControlName="CompntValue">
+                <lib-uc-show-errors [control]="node.controls.CompntValue" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions right">
+        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+          <i class="far fa-window-close"></i> Cancel
+        </button>
+        <button type="submit" (click)="ClickSave('next')" class="btn btn-raised btn-primary">
+          <i class="far fa-check-square"></i> Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

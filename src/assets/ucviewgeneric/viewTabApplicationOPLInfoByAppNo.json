@@ -1,0 +1,90 @@
+{
+    "title": "",
+    "subsection": [
+        {
+            "subSectionId": "SalesInfoId",
+            "subSectionTitle": "Sales Information",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "text",
+                    "label": "Sales Officer",
+                    "property": "SalesOfficer"
+                },
+                {
+                    "type": "text",
+                    "label": "Sales Supervisor",
+                    "property": "SalesSpv"
+                },
+                {
+                    "type": "text",
+                    "label": "Sales Notes",
+                    "property": "SalesNotes"
+                }
+            ],
+            "querystring": {
+                "name": "viewTabApplicationInfoByAppNo_SalesInfoId"
+            }
+        },
+        {
+            "subSectionId": "AppsInfoId",
+            "subSectionTitle": "Application Information",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "text",
+                    "label": "Application Source",
+                    "property": "AppSource"
+                },
+                {
+                    "type": "text",
+                    "label": "Way of Payment",
+                    "property": "Wop"
+                },
+                {
+                    "type": "text",
+                    "label": "First Installment Type",
+                    "property": "FirstInstType"
+                },
+                {
+                    "type": "text",
+                    "label": "Customer Notification By",
+                    "property": "CustNotifyOpt"
+                },
+                {
+                    "type": "text",
+                    "label": "Payment Frequency",
+                    "property": "PayFreq"
+                },
+                {
+                    "type": "text",
+                    "label": "Rental Period (In Months)",
+                    "property": "Tenor"
+                }
+            ],
+            "querystring": {
+                "name": "viewTabApplicationOPLInfoByAppNo_AppsInfoId"
+            }
+        },
+        {
+            "subSectionId": "ResDataId",
+            "subSectionTitle": "Restructuring Data",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "text",
+                    "label": "Characteristic of Credit",
+                    "property": "CharacteristicOfCredit"
+                },
+                {
+                    "type": "text",
+                    "label": "Economic Sector (Slik)",
+                    "property": "EcoSecSlik"
+                }
+            ],
+            "querystring": {
+                "name": "viewTabApplicationOPLInfoByAppNo_ResDataId"
+            }
+        }
+    ]
+}

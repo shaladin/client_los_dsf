@@ -20,6 +20,7 @@ import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-asset-leasing-add-edit',
@@ -356,9 +357,9 @@ export class AssetLeasingAddEditComponent implements OnInit {
             }
           );
 
-          this.reqAssetMasterObj = new AssetMasterObj();
-          this.reqAssetMasterObj.FullAssetCode = this.returnAppAssetObj.FullAssetCode;
-          this.http.post(URLConstant.GetAssetMasterForLookupEmployee, this.reqAssetMasterObj).subscribe(
+          var reqByCode = new GenericObj();
+          reqByCode.Code = this.returnAppAssetObj.FullAssetCode;
+          this.http.post(URLConstant.GetAssetMasterForLookup, reqByCode).subscribe(
             (response) => {
               this.resAssetMasterObj = response;
               this.InputLookupAssetObj.nameSelect = this.resAssetMasterObj.FullAssetName;

@@ -6,18 +6,15 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'nap-detail-paging',
-  templateUrl: './nap-detail-paging.component.html',
-  styleUrls: []
+  templateUrl: './nap-detail-paging.component.html'
 })
 export class NapDetailPagingComponent implements OnInit {
-
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj>;
   bizTemplateCode: string;
   userAccess: any;
@@ -30,12 +27,24 @@ export class NapDetailPagingComponent implements OnInit {
     });
   }
 
+  initListValueCurrStep(){
+    let tempList: Array<string> = new Array();
+    tempList = [CommonConstant.AppStepNapd, CommonConstant.AppStepRef, CommonConstant.AppStepApp, CommonConstant.AppStepAsset, CommonConstant.AppStepIns, CommonConstant.AppStepLIns, CommonConstant.AppStepFin, CommonConstant.AppStepTC, CommonConstant.AppStepUplDoc];
+    return tempList;
+  }
+
   makeCriteria() {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
     critObj.value = "NAPD_MD_" + this.bizTemplateCode;
     this.arrCrit.push(critObj);
+
+    // var critObj2 = new CriteriaObj();
+    // critObj2.restriction = AdInsConstant.RestrictionNotIn;
+    // critObj2.propName = 'a.APP_CURR_STEP';
+    // critObj2.listValue = this.initListValueCurrStep();
+    // this.arrCrit.push(critObj2);
   }
 
   async ngOnInit() {
@@ -44,11 +53,8 @@ export class NapDetailPagingComponent implements OnInit {
     this.arrCrit = new Array();
     this.makeCriteria();
 
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj.title = "NAP 2 Paging";
     this.inputPagingObj._url = "./assets/ucpaging/searchAppCustMainData.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppCustMainData.json";
     this.inputPagingObj.ddlEnvironments = [
       {

@@ -996,27 +996,6 @@ export class AssetDataComponent implements OnInit {
             this.AssetDataForm.controls.DownPaymentAmt.enable();
           }
         }
-        // if (this.SetDpObj.DPGrossBehaviour == 'MIN') {
-        //   var tempDP = this.AssetDataForm.controls.AssetPriceAmt.value * this.SetDpObj.GrossDPPrctg / 100;
-        //   if (this.AssetDataForm.controls.DownPaymentAmt.value < tempDP) {
-        //     this.AssetDataForm.patchValue({
-        //       DownPaymentAmt: tempDP,
-        //       DownPaymentPrctg: this.SetDpObj.GrossDPPrctg
-        //     });
-        //   }
-        //   else {
-        //     if (this.AssetDataForm.controls.AssetPriceAmt.value != 0) {
-        //       this.AssetDataForm.patchValue({
-        //         DownPaymentPrctg: this.AssetDataForm.controls.DownPaymentAmt.value * 100 / this.AssetDataForm.controls.AssetPriceAmt.value
-        //       });
-        //     }
-        //     else {
-        //       this.AssetDataForm.patchValue({
-        //         DownPaymentPrctg: 0
-        //       });
-        //     }
-        //   }
-        // }
       });
   }
 

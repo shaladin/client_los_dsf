@@ -14,6 +14,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-nap1-from-lead-detail',
@@ -25,6 +26,7 @@ export class Nap1FromLeadDetailComponent implements OnInit {
   ProductOfferingIdentifier;
   ProductOfferingNameIdentifier;
   leadId: string;
+
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   constructor(
     private fb: FormBuilder,
@@ -116,8 +118,7 @@ export class Nap1FromLeadDetailComponent implements OnInit {
   MakeLookUpObj() {
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputLookupObjName.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObjName.urlEnviPaging = environment.losUrl;
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
@@ -188,23 +189,23 @@ export class Nap1FromLeadDetailComponent implements OnInit {
     napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
     napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
     napAppObj = this.CheckValue(napAppObj);
-    this.http.post(URLConstant.AddNap1FromLead, napAppObj).subscribe(
+    this.http.post<GenericObj>(URLConstant.AddNap1FromLead, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         if (this.bizTemplateCode == CommonConstant.CF4W) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": response["AppId"] });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": response.Id });
         }
         if (this.bizTemplateCode == CommonConstant.FL4W) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": response["AppId"] });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": response.Id });
         }
         if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response["AppId"] });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response.Id });
         }
         if (this.bizTemplateCode == CommonConstant.FCTR) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": response["AppId"] });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": response.Id });
         }
         if (this.bizTemplateCode == CommonConstant.CFNA) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": response["AppId"] });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": response.Id });
         }
       });
 

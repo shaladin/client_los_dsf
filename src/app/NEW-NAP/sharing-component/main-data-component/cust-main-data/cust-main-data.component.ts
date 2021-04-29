@@ -13,7 +13,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { CustMainDataCompanyObj } from 'app/shared/model/CustMainDataCompanyObj.Model';
 import { CustMainDataPersonalObj } from 'app/shared/model/CustMainDataPersonalObj.Model';
@@ -77,9 +77,9 @@ export class CustMainDataComponent implements OnInit {
   ddlIdTypeObj: UcDropdownListObj = new UcDropdownListObj();
   ddlMaritalStatObj: UcDropdownListObj = new UcDropdownListObj();
   ddlMasterJobPositionObj: UcDropdownListObj = new UcDropdownListObj();
-  MrCustRelationshipCodeObj:  Array<KeyValueObj> = new Array<KeyValueObj>();
-  ddlCustModelObj : UcDropdownListObj = new UcDropdownListObj();
-  CustModelObj : Array<KeyValueObj> = new Array<KeyValueObj>();
+  MrCustRelationshipCodeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+  ddlCustModelObj: UcDropdownListObj = new UcDropdownListObj();
+  CustModelObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   ArrAddCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   UserAccess: Object;
   custDataObj: CustDataObj;
@@ -215,7 +215,6 @@ export class CustMainDataComponent implements OnInit {
 
   setLookup(custType: string = CommonConstant.CustTypePersonal, isChange: boolean = false) {
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCustObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.genericJson = "./assets/uclookup/lookupCustomer.json";
@@ -825,35 +824,67 @@ export class CustMainDataComponent implements OnInit {
 
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       this.setDataCustomerPersonalForSave();
-      this.http.post(URLConstant.AddEditCustMainDataPersonal, this.custDataPersonalObj).subscribe(
-        (response) => {
-          if (response["StatusCode"] == 200) {
-            this.toastr.successMessage(response["message"]);
-            this.outputAfterSave.emit(this.custDataPersonalObj.AppCustPersonalObj);
+      if (this.appCustId == null || this.appCustId == 0) {
+        this.http.post(URLConstant.AddCustMainDataPersonal, this.custDataPersonalObj).subscribe(
+          (response) => {
+            if (response["StatusCode"] == 200) {
+              this.toastr.successMessage(response["message"]);
+              this.outputAfterSave.emit(this.custDataPersonalObj.AppCustPersonalObj);
+            }
+            else {
+              response["ErrorMessages"].forEach((message: string) => {
+                this.toastr.warningMessage(message["Message"]);
+              });
+            }
           }
-          else {
-            response["ErrorMessages"].forEach((message: string) => {
-              this.toastr.warningMessage(message["Message"]);
-            });
+        );
+      } else {
+        this.http.post(URLConstant.EditCustMainDataPersonal, this.custDataPersonalObj).subscribe(
+          (response) => {
+            if (response["StatusCode"] == 200) {
+              this.toastr.successMessage(response["message"]);
+              this.outputAfterSave.emit(this.custDataPersonalObj.AppCustPersonalObj);
+            }
+            else {
+              response["ErrorMessages"].forEach((message: string) => {
+                this.toastr.warningMessage(message["Message"]);
+              });
+            }
           }
-        }
-      );
+        );
+      }
     }
     else {
       this.setDataCustomerCompanyForSave();
-      this.http.post(URLConstant.AddEditCustMainDataCompany, this.custDataCompanyObj).subscribe(
-        (response) => {
-          if (response["StatusCode"] == 200) {
-            this.outputAfterSave.emit(this.custDataCompanyObj.AppCustObj);
-            this.toastr.successMessage(response["message"]);
+      if (this.appCustId == null || this.appCustId == 0) {
+        this.http.post(URLConstant.AddCustMainDataCompanyData, this.custDataCompanyObj).subscribe(
+          (response) => {
+            if (response["StatusCode"] == 200) {
+              this.outputAfterSave.emit(this.custDataCompanyObj.AppCustObj);
+              this.toastr.successMessage(response["message"]);
+            }
+            else {
+              response["ErrorMessages"].forEach((message: string) => {
+                this.toastr.warningMessage(message["Message"]);
+              });
+            }
           }
-          else {
-            response["ErrorMessages"].forEach((message: string) => {
-              this.toastr.warningMessage(message["Message"]);
-            });
+        );
+      } else {
+        this.http.post(URLConstant.EditCustMainDataCompanyData, this.custDataCompanyObj).subscribe(
+          (response) => {
+            if (response["StatusCode"] == 200) {
+              this.outputAfterSave.emit(this.custDataCompanyObj.AppCustObj);
+              this.toastr.successMessage(response["message"]);
+            }
+            else {
+              response["ErrorMessages"].forEach((message: string) => {
+                this.toastr.warningMessage(message["Message"]);
+              });
+            }
           }
-        }
-      );
+        );
+      }
     }
   }
 

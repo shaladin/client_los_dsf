@@ -1,0 +1,77 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header header-title">
+        <div class="row">
+          <div class="col-md-8">
+            <h4 class="form-section card-title" translate>Product Deactivate Approval</h4>
+          </div>
+        </div>
+      </div>
+      <lib-ucviewgeneric [viewGenericObj]="ViewGenericObj"> </lib-ucviewgeneric>
+      <div class="card">
+        <div class="card-body">
+          <br />
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th class="text-left">Product Offering Code</th>
+                <th class="text-left">Product Offering name</th>
+                <th class="text-left">Current Version</th>
+                <th class="text-left">End Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of ProdOfferVer">
+                <td class="text-left">{{item.ProdOfferingCode}}</td>
+                <td class="text-left">{{item.ProdOfferingName}}</td>
+                <td class="text-left">{{item.ProdOfferingVersion}}</td>
+                <td class="text-left">{{item.EndDt | date}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="px-3">
+            <br />
+            <div class="addEdit">
+              <form class="form form-horizontal" [formGroup]="ProdHDeactForm"
+                (ngSubmit)="ProdHDeactForm.valid && SaveForm()" #enjiForm="ngForm">
+                <div class="form-body">
+                  <div class="form-group row">
+                    <label class="col-md-3  adInsLabel" translate>Effective Date </label>
+                    <div class="col-md-3">
+                      <input type="date" class="form-control adInsInput" formControlName="EffectiveDate"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && ProdHDeactForm.controls.EffectiveDate.invalid }">
+                      <lib-uc-show-errors [control]="ProdHDeactForm.controls.EffectiveDate"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                  </div>
+         
+                </div>
+                <br>
+                <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady" #ApprovalComponent></lib-ucapprovalcreate>
+                <div class="card">
+                  <div class="card-body">
+                    <div class="px-3"> 
+                        <div class="form-actions right">
+                          <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" skipLocationChange translate>
+                            <i class="ft-x"></i> Cancel
+                          </button>
+                          <button type="submit" class="btn btn-raised btn-primary" translate>
+                            <i class="far fa-check-square"></i> Save
+                          </button>
+                        </div> 
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

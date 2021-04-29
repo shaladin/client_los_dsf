@@ -10,7 +10,7 @@ import { Validators, FormBuilder, FormArray, FormGroup } from '@angular/forms';
 import { AppCollateralDataObj } from 'app/shared/model/AppCollateralDataObj.Model';
 import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocObj.Model';
 import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -251,7 +251,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
             });
 
             this.items1 = this.AddCollForm.get('items1') as FormArray;
-            this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: AppCollateralObj.AssetTypeCode }).subscribe(
+            this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: AppCollateralObj.AssetTypeCode }).subscribe(
               (response: any) => {
                 while (this.items1.length) {
                   this.items1.removeAt(0);
@@ -276,7 +276,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
             this.inputLookupObj.nameSelect = AppCollateralObj.FullAssetName
             this.changeSerialNoValidators(AppCollateralObj.MrCollateralConditionCode.value);
             var AppCollateralRegistration: any;
-            this.http.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, {Id: AppCollateralObj.AppCollateralId}).subscribe(
+            this.http.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, { Id: AppCollateralObj.AppCollateralId }).subscribe(
               (response) => {
                 AppCollateralRegistration = response;
 
@@ -446,7 +446,6 @@ export class CollateralAddEditSingleComponent implements OnInit {
     this.inputObj = new InputSearchObj();
     this.inputObj._url = "./assets/ucpaging/searchAppCollateral.json";
     this.inputObj.enviromentUrl = environment.losUrl;
-    this.inputObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
 
     this.pageNow = 1;
     this.pageSize = 10;
@@ -517,7 +516,7 @@ export class CollateralAddEditSingleComponent implements OnInit {
       this.appCollateralDoc.DocNo = this.AddCollForm.value.items[i].DocNo;
       this.appCollateralDoc.ExpiredDt = this.AddCollForm.value.items[i].ACDExpiredDt;
       this.appCollateralDoc.DocNotes = this.AddCollForm.value.items[i].DocNotes;
-      if(this.type != 'Add') this.appCollateralDoc.RowVersion = this.AddCollForm.value.items[i].RowVersion;
+      if (this.type != 'Add') this.appCollateralDoc.RowVersion = this.AddCollForm.value.items[i].RowVersion;
       this.listAppCollateralDocObj.AppCollateralDocObj.push(this.appCollateralDoc);
     }
     this.appCollateralDataObj.ListAppCollateralDocObj = this.listAppCollateralDocObj.AppCollateralDocObj;

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
-import { MouCustConfirmCancelObj } from 'app/shared/model/MouCustConfirmCancelObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,13 +9,14 @@ import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ReqMouForEditConfirmCancelObj } from 'app/shared/model/Request/MOU/ReqMouForEditConfirmCancelObj.model';
 
 @Component({
   selector: 'app-mou-cancel',
   templateUrl: './mou-cancel.component.html'
 })
 export class MouCancelComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   user: any;
 
   constructor(
@@ -63,7 +63,7 @@ export class MouCancelComponent implements OnInit {
     }
     else if (event.Key == "cancel") {
       if (confirm("Are you sure to cancel this?")) {
-        var mouCancel = new MouCustConfirmCancelObj;
+        var mouCancel = new ReqMouForEditConfirmCancelObj;
         mouCancel.MouStat = CommonConstant.MouStatCancel;
         mouCancel.MouCustId = event.RowObj.MouCustId;
         mouCancel.WfTaskListId = event.RowObj.WfTaskListId;

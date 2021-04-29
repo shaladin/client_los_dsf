@@ -1,0 +1,2 @@
+<app-offering-list-office-mbr *ngIf="IsOn" [ProdOfferingHId]="ProdOfferingHId" (ComponentIsOn)="ChangeComponent($event)"></app-offering-list-office-mbr>
+<app-offering-search-office *ngIf="!IsOn" [ProdOfferingHId]="ProdOfferingHId" [ProdHId]="ProdHId" [ListOfficeMemberObjInput]="ListOfficeMemberObj" (ComponentIsOn)="ChangeComponent($event)"></app-offering-search-office>

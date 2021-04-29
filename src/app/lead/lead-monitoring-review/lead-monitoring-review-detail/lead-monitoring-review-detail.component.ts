@@ -20,7 +20,7 @@ import { CookieService } from 'ngx-cookie';
 })
 export class LeadMonitoringReviewDetailComponent implements OnInit {
 
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   UploadMonitoringHId: number;
   UploadNo: string;
@@ -52,12 +52,9 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
       this.claimTask();
     }
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewReviewMonitoringLead.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
 
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReviewMonitoringLeadDetail.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReviewMonitoringLeadDetail.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -93,7 +90,7 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
     this.http.post(URLConstant.UploadReview, uploadObj).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_RVW_MONITORING_PAGING],{});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_RVW_MONITORING_PAGING], {});
       }
     );
   }

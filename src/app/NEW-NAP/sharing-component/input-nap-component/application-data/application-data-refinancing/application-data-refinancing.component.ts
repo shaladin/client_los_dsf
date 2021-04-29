@@ -25,9 +25,9 @@ import { CookieService } from 'ngx-cookie';
 })
 export class ApplicationDataRefinancingComponent implements OnInit {
 
-  @Input() AppId: any;
+  @Input() AppId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
-  mode: any;
+  mode: string;
   ListCrossAppObj: any = {};
   isProdOfrUpToDate: boolean = true;
   missingProdOfrComp: string = "";
@@ -119,13 +119,10 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.ListCrossAppObj["appId"] = this.AppId;
     this.ListCrossAppObj["result"] = [];
     this.isInputLookupObj = false;
-    // this.makeLookUpObj();
     this.getAppModelInfo();
 
 
     this.applicationDDLitems = [];
-    // data dummy test
-    // data real
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustType);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeSlsRecom);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWOP);
@@ -371,7 +368,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
@@ -380,7 +376,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.inputLookupEconomicSectorObj = new InputLookupObj();
     this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    this.inputLookupEconomicSectorObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
     this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
@@ -596,9 +591,9 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     var tempListAppCrossObj = this.GetListAppCrossValue();
     var tempAppFindDataObj = this.GetAppFinDataValue();
     var obj = {
-      appObj: tempAppObj,
-      listAppCrossObj: tempListAppCrossObj,
-      appFinData: tempAppFindDataObj,
+      AppObj: tempAppObj,
+      ListAppCrossObj: tempListAppCrossObj,
+      AppFinData: tempAppFindDataObj,
       RowVersion: ""
     };
 

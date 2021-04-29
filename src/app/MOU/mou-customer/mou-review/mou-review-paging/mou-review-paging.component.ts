@@ -15,7 +15,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './mou-review-paging.component.html',
 })
 export class MouReviewPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   user: any;
   link: string;
@@ -32,8 +32,6 @@ export class MouReviewPagingComponent implements OnInit {
     else {
       this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouReview.json";
-      this.inputPagingObj.enviromentUrl = environment.losUrl;
-      this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouReview.json";
       this.inputPagingObj.ddlEnvironments = [
         {

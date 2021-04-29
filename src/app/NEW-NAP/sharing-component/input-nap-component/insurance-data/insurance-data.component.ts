@@ -21,7 +21,7 @@ import { AppInsAddCvgObj } from 'app/shared/model/AppInsAddCvgObj.Model';
 import { ResultSubsidySchmRuleObj } from 'app/shared/model//SubsidySchm/ResultSubsidySchmRuleObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { AppCollateralAccessoryObj } from 'app/shared/model/AppCollateralAccessoryObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -203,20 +203,28 @@ export class InsuranceDataComponent implements OnInit {
     }
     this.setSaveObj(insuredBy);
 
-    if (this.IsMultiAsset = "false") {
-      this.http.post(URLConstant.AddEditInsuranceData, this.saveObj).subscribe(
+    // if (this.IsMultiAsset = "false") {
+    if (this.appInsuranceObj == undefined || this.appInsObjObj == undefined) {
+      this.http.post(URLConstant.AddInsuranceData, this.saveObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["Message"]);
+          this.outputTab.emit();
+        });
+    } else {
+      this.http.post(URLConstant.EditInsuranceData, this.saveObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["Message"]);
           this.outputTab.emit();
         });
     }
-    else {
-      this.http.post(URLConstant.AddEditInsuranceDataMultiAsset, this.saveObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["Message"]);
-          this.outputTab.emit();
-        });
-    }
+    // }
+    // else {
+    //   this.http.post(URLConstant.AddEditInsuranceDataMultiAsset, this.saveObj).subscribe(
+    //     (response) => {
+    //       this.toastr.successMessage(response["Message"]);
+    //       this.outputTab.emit();
+    //     });
+    // }
   }
 
   Cancel() {

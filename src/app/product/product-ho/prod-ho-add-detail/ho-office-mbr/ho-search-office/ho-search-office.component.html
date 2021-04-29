@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title" translate>Office Search</h4>
+  </div>
+  <div class="card-body">
+    <lib-ucaddtotemp *ngIf="TempPagingObj.isReady" [tempPagingObj]="TempPagingObj" (callback)="getListTemp($event)">
+    </lib-ucaddtotemp>
+    <div class="card-header">
+      <div class="text-right">
+        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="GoBack()" translate>
+          <i class="fa fa-arrow-left"> </i> Back 
+        </button>
+        <button type="submit" (click)="SaveForm()" class="btn btn-raised btn-primary" translate>
+          <i class="far fa-check-square"></i> Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <lib-ucviewgeneric [viewGenericObj]="ViewGenericObj"> </lib-ucviewgeneric>
+      <div class="card-body">
+        <div class="px-3">
+          <aw-wizard #wizard navBarLayout="large-empty-symbols" [defaultStepIndex]="0">
+            <aw-wizard-step [stepTitle]="'General Data'" (stepEnter)="EnterTab('GeneralData')"
+              [navigationSymbol]="{ symbol: '1', fontFamily: 'FontAwesome' }">
+              <app-ho-general-data *ngIf="Type == 'GeneralData'" [ProdHId]="ProdHId" [ProdId]="ProdId"
+                (ApproverId)="ChangeComponent($event)"></app-ho-general-data>
+            </aw-wizard-step>
+            <aw-wizard-step [stepTitle]="'Product Component'" (stepEnter)="EnterTab('ProductComponent')"
+              [navigationSymbol]="{ symbol: '2', fontFamily: 'FontAwesome' }">
+              <app-ho-prod-compnt *ngIf="Type == 'ProductComponent'" [ProdHId]="ProdHId"></app-ho-prod-compnt>
+            </aw-wizard-step>
+            <aw-wizard-step [stepTitle]="'Office Member'" (stepEnter)="EnterTab('OfficeMember')"
+              [navigationSymbol]="{ symbol: '3', fontFamily: 'FontAwesome' }">
+              <app-ho-office-mbr *ngIf="Type == 'OfficeMember'" [ProdHId]="ProdHId"></app-ho-office-mbr>
+            </aw-wizard-step>
+          </aw-wizard>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

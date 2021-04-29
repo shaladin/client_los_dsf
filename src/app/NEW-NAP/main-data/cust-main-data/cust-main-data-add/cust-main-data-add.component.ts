@@ -16,11 +16,11 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { ReqAddNapFromCopyObj, ReqAddNapObj } from 'app/shared/model/Request/NAP/NewApplication/ReqAddNapObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'cust-main-data-add',
-  templateUrl: './cust-main-data-add.component.html',
-  providers: [NGXToastrService]
+  templateUrl: './cust-main-data-add.component.html'
 })
 export class CustMainDataAddComponent implements OnInit {
 
@@ -84,7 +84,6 @@ export class CustMainDataAddComponent implements OnInit {
 
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObjCopyProduct.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
@@ -92,8 +91,7 @@ export class CustMainDataAddComponent implements OnInit {
 
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputLookupObjName.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObjName.urlEnviPaging = environment.losUrl;
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
@@ -190,7 +188,6 @@ export class CustMainDataAddComponent implements OnInit {
     this.NapAppForm.get("ProductOfferingNameIdentifier").patchValue({
       value: ev.ProdOfferingName
     });
-    // this.inputLookupObjName.nameSelect = ev.ProdOfferingName;
     this.inputLookupObjName.isRequired = false;
     this.isCopyData = true;
   }
@@ -209,17 +206,21 @@ export class CustMainDataAddComponent implements OnInit {
         for (let i = 0; i < listD.length; i++) {
           if (listD[i].RefProdCompntCode == CommonConstant.RefProdCompntLob) {
             tempLobCode = listD[i].CompntValue;
-          } else if (listD[i].RefProdCompntCode == CommonConstant.RefProdCompntCurr) {
+          }
+          else if (listD[i].RefProdCompntCode == CommonConstant.RefProdCompntCurr) {
             tempCurrCode = listD[i].CompntValue;
             tempCurrDescr = listD[i].CompntValueDesc;
-          } else if (listD[i].RefProdCompntCode == CommonConstant.RefProdCompntPayFreq) {
+          }
+          else if (listD[i].RefProdCompntCode == CommonConstant.RefProdCompntPayFreq) {
             let listPayFreqCode = listD[i].CompntValue.split(";");
             if (listPayFreqCode.length == 1) {
               tempPayFreqCode = listD[i].CompntValue;
-            } else {
+            }
+            else {
               tempPayFreqCode = null;
             }
-          } else if (listD[i].RefProdCompntCode == CommonConstant.RefProdCompntProdType) {
+          }
+          else if (listD[i].RefProdCompntCode == CommonConstant.RefProdCompntProdType) {
             tempRefProdTypeCode = listD[i].CompntValue;
           }
         }
@@ -233,7 +234,8 @@ export class CustMainDataAddComponent implements OnInit {
           PayFreqCode: tempPayFreqCode,
           RefProdTypeCode: tempRefProdTypeCode
         });
-      });
+      }
+    );
   }
 
   SaveForm() {
@@ -257,7 +259,8 @@ export class CustMainDataAddComponent implements OnInit {
 
       requestAddNapObj = reqAddNapObj;
       AddNapUrl = URLConstant.AddNewApplication;
-    } else {
+    }
+    else {
 
       let reqAddNapFromCopyObj: ReqAddNapFromCopyObj = new ReqAddNapFromCopyObj();
 
@@ -265,34 +268,40 @@ export class CustMainDataAddComponent implements OnInit {
       reqAddNapFromCopyObj.OriOfficeCode = this.NapAppForm.getRawValue().OriOfficeCode;
 
       requestAddNapObj = reqAddNapFromCopyObj;
-      AddNapUrl = URLConstant.AddNewApplicationFromCopy;
+      if (this.bizTemplateCode === CommonConstant.OPL) {
+        AddNapUrl = URLConstant.AddNewApplicationOplFromCopy;
+      }
+      else {
+        AddNapUrl = URLConstant.AddNewApplicationFromCopy;
+      }
     }
 
-    this.http.post(AddNapUrl, requestAddNapObj).subscribe(
+    this.http.post<GenericObj>(AddNapUrl, requestAddNapObj).subscribe(
       (response) => {
         setTimeout(() => { this.spinner.show(); }, 10);
         this.toastr.successMessage(response["message"]);
         switch (this.bizTemplateCode) {
           case CommonConstant.CF4W:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": response["AppId"] });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": response.Id });
             break;
           case CommonConstant.CFRFN4W:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response["AppId"] });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response.Id });
             break;
           case CommonConstant.FCTR:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": response["AppId"] });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": response.Id });
             break;
           case CommonConstant.FL4W:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": response["AppId"] });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": response.Id });
             break;
           case CommonConstant.CFNA:
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": response["AppId"] });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": response.Id });
             break;
           case CommonConstant.OPL:
-            AdInsHelper.RedirectUrl(this.router, ["Nap/OPL/NAP1"], { "AppId": response["AppId"] });
+            AdInsHelper.RedirectUrl(this.router, ["Nap/OPL/NAP1"], { "AppId": response.Id });
             break;
         }
-      });
+      }
+    );
   }
 
   buttonCancelClick() {

@@ -48,6 +48,10 @@ import { AppCancelDetailComponent } from "./app-cancel/detail/app-cancel-detail.
 import { AppAssetCancelDetailComponent } from "./app-asset-cancel/detail/app-asset-cancel-detail.component";
 import { AppCancelPagingComponent } from "./app-cancel/paging/app-cancel-paging.component";
 import { AppAssetCancelPagingComponent } from "./app-asset-cancel/paging/app-asset-cancel-paging.component";
+import { DocPickupRequestPagingComponent } from './doc-pickup-request/doc-pickup-request-paging/doc-pickup-request-paging/doc-pickup-request-paging.component';
+import { DocPickupRequestDetailComponent } from './doc-pickup-request/doc-pickup-request-detail/doc-pickup-request-detail/doc-pickup-request-detail.component';
+
+
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -113,7 +117,11 @@ export const customCurrencyMaskConfig = {
     AppCancelPagingComponent,
     AppCancelDetailComponent,
     AppAssetCancelPagingComponent,
-    AppAssetCancelDetailComponent
+    AppAssetCancelDetailComponent,
+    DocPickupRequestPagingComponent,
+    DocPickupRequestDetailComponent
+    
+    
   ],
   providers: [
     NGXToastrService

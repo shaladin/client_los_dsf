@@ -1,14 +1,14 @@
 export class MouCustSignerObj{
-    MouCustSignerId: any;
-    WfTaskListId: any;
-    MouCustId: any;
-    MfSignerName1: any;
-    MfSignerJobPosition1: any;
-    MfSignerName2: any;
-    MfSignerJobPosition2: any;
-    CustSignerName1: any;
-    CustSignerJobPosition1: any;
-    CustSignerName2: any;
-    CustSignerJobPosition2: any;
-    RowVersion: any;
+    MouCustSignerId: number;
+    WfTaskListId: number;
+    MouCustId: number;
+    MfSignerName1: string;
+    MfSignerJobPosition1: string;
+    MfSignerName2: string;
+    MfSignerJobPosition2: string;
+    CustSignerName1: string;
+    CustSignerJobPosition1: string;
+    CustSignerName2: string;
+    CustSignerJobPosition2: string;
+    RowVersion: string;
 }

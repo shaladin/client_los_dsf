@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
@@ -13,8 +11,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
   templateUrl: './delivery-order-paging.component.html'
 })
 export class DeliveryOrderPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   bizTemplateCode: string;
+
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
@@ -28,10 +27,7 @@ export class DeliveryOrderPagingComponent implements OnInit {
   }
   
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchDeliveryOrder.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDeliveryOrder.json";
     this.inputPagingObj.addCritInput = new Array();
 
@@ -48,10 +44,7 @@ export class DeliveryOrderPagingComponent implements OnInit {
     critBizTemplate.value = this.bizTemplateCode;
 
     this.inputPagingObj.addCritInput.push(critBizTemplate);
-
-    
   }
- 
   
   GetCallBack(ev: any){ 
     if(ev.Key == "ViewProdOffering"){

@@ -37,10 +37,10 @@ export class AssetDataOplComponent implements OnInit {
   
   ddlSalesPersonObj: UcDropdownListObj = new UcDropdownListObj();
   isDdlSalesPersonReady: boolean = false;
-  ddlAdminHeadObj: UcDropdownListObj = new UcDropdownListObj();
-  isDdlAdminHeadReady: boolean = false;
-  ddlBranchManagerObj: UcDropdownListObj = new UcDropdownListObj();
-  isDdlBranchManagerReady: boolean = false;
+  // ddlAdminHeadObj: UcDropdownListObj = new UcDropdownListObj();
+  // isDdlAdminHeadReady: boolean = false;
+  // ddlBranchManagerObj: UcDropdownListObj = new UcDropdownListObj();
+  // isDdlBranchManagerReady: boolean = false;
   ddlAssetConditionObj: UcDropdownListObj = new UcDropdownListObj();
   ddlAssetUsageObj: UcDropdownListObj = new UcDropdownListObj();
   dllAppCustAddrObj: UcDropdownListObj = new UcDropdownListObj();
@@ -53,7 +53,6 @@ export class AssetDataOplComponent implements OnInit {
   inputAddressObjForLoc: InputAddressObj;
   
   listAsset: Array<any> = new Array<any>();
-  appAssetAccessoriesObjs: Array<AppAssetAccessoryObj>;
   originalAppAssetAccessory: Array<AppAssetAccessoryObj>;
   appAssetAttrObjs: Array<AppAssetAttrCustomObj>;
   InputLookupAcceObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
@@ -89,7 +88,8 @@ export class AssetDataOplComponent implements OnInit {
   vendorObj = {
     VendorId: 0,
     VendorCode: "",
-    MrVendorEmpPositionCodes: [CommonConstant.ADMIN_HEAD_JOB_CODE, CommonConstant.SALES_JOB_CODE, CommonConstant.BRANCH_MANAGER_JOB_CODE],
+    // MrVendorEmpPositionCodes: [CommonConstant.ADMIN_HEAD_JOB_CODE, CommonConstant.SALES_JOB_CODE, CommonConstant.BRANCH_MANAGER_JOB_CODE]
+    MrVendorEmpPositionCodes: [CommonConstant.SALES_JOB_CODE]
   };
 
   assetMasterObj = {
@@ -102,9 +102,9 @@ export class AssetDataOplComponent implements OnInit {
   InputLookupSupplAccObj: any;
   InputLookupAccObj: any;
   InputLookupAccSupObj: any;
-  AdminHeadObj: any;
+  // AdminHeadObj: any;
   SalesPersonObj: any;
-  BranchManagerObj: any;
+  // BranchManagerObj: any;
   OfficeCode: any;
   appData: any;
   AddrObj: any;
@@ -115,8 +115,9 @@ export class AssetDataOplComponent implements OnInit {
   AppCustCoyObj: any;
   AppCustAddrObj: any;
   AssetMasterObj: any;
-  EmpObj: any;
+  // EmpObj: any;
   VendorObj: any;
+  SupervisorObj: any;
   RefProdCmptAssetType: any;
   RefProdCmptSupplSchm: any;
   RefProdCmptAssetSchm: any;
@@ -218,14 +219,14 @@ export class AssetDataOplComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.ddlSalesPersonObj.isSelectOutput = true;
-    this.ddlAdminHeadObj.isSelectOutput = true;
-    this.ddlBranchManagerObj.isSelectOutput = true;
+    // this.ddlAdminHeadObj.isSelectOutput = true;
+    // this.ddlBranchManagerObj.isSelectOutput = true;
     this.ddlSalesPersonObj.customKey = "VendorEmpId"
     this.ddlSalesPersonObj.customValue = "VendorEmpName"
-    this.ddlAdminHeadObj.customKey = "VendorEmpId"
-    this.ddlAdminHeadObj.customValue = "VendorEmpName"
-    this.ddlBranchManagerObj.customKey = "VendorEmpId"
-    this.ddlBranchManagerObj.customValue = "VendorEmpName"
+    // this.ddlAdminHeadObj.customKey = "VendorEmpId"
+    // this.ddlAdminHeadObj.customValue = "VendorEmpName"
+    // this.ddlBranchManagerObj.customKey = "VendorEmpId"
+    // this.ddlBranchManagerObj.customValue = "VendorEmpName"
 
     this.isListAsset = true;
 
@@ -269,8 +270,8 @@ export class AssetDataOplComponent implements OnInit {
     this.salesSupervisor = "";
     this.branchManager = "";
     this.isDdlSalesPersonReady = false;
-    this.isDdlAdminHeadReady = false;
-    this.isDdlBranchManagerReady = false;
+    // this.isDdlAdminHeadReady = false;
+    // this.isDdlBranchManagerReady = false;
     this.copyFromAppCustAddrForDelivery = undefined;
     this.copyFromAppCustAddrForLocation = undefined;
 
@@ -297,9 +298,9 @@ export class AssetDataOplComponent implements OnInit {
     this.inputAddressObjForLoc.default = null;
     this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
     
-    this.AdminHeadObj = null;
+    // this.AdminHeadObj = null;
     this.SalesPersonObj = null;
-    this.BranchManagerObj = null;
+    // this.BranchManagerObj = null;
 
     this.AssetDataForm.patchValue({
       FullAssetName: "",
@@ -347,10 +348,11 @@ export class AssetDataOplComponent implements OnInit {
     this.index = index;
 
     this.allAssetDataObj = this.listAsset[this.index];
+    this.appAssetId = this.allAssetDataObj.AppAssetObj.AppAssetId;
 
-    this.AdminHeadObj = null;
+    // this.AdminHeadObj = null;
     this.SalesPersonObj = null;
-    this.BranchManagerObj = null;
+    // this.BranchManagerObj = null;
     this.vendorObj.VendorCode = this.allAssetDataObj.AppAssetObj.SupplCode;
     await this.GetVendor();
     this.GetVendorEmpList();
@@ -432,8 +434,8 @@ export class AssetDataOplComponent implements OnInit {
       this.InputLookupAcceObjs.push(InputLookupAccObj);
       this.InputLookupSupplObjs.push(InputLookupAccSupObj);
 
-      this.setAppAccessorySupplier(i, this.appAssetAccessoriesObjs[i].SupplCode);
-      this.setAppAccessory(i, this.appAssetAccessoriesObjs[i].AssetAccessoryCode);
+      this.setAppAccessorySupplier(i, this.allAssetDataObj.AppAssetAccessoryObjs[i].SupplCode);
+      this.setAppAccessory(i, this.allAssetDataObj.AppAssetAccessoryObjs[i].AssetAccessoryCode);
     }
 
     var appAttrObjs = this.AssetDataForm.controls["AppAssetAttrObjs"] as FormArray;
@@ -500,67 +502,130 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   SalesPersonChanged(event) {
+    this.salesSupervisor = "";
+    this.adminHead = "";
+    this.branchManager = "";
+    this.AssetDataForm.patchValue({
+      SalesPersonId: "",
+      SalesPersonName: "",
+      SalesPersonNo: "",
+      SalesPersonPositionCode: "",
+      AdminHeadName: "",
+      AdminHeadNo: "",
+      AdminHeadPositionCode: "",
+      BranchManagerName: "",
+      BranchManagerNo: "",
+      BranchManagerPositionCode: ""
+    });
     if (event.selectedObj != undefined) {
       var temp: any;
-      temp = this.EmpObj.filter(emp => emp.VendorEmpId == event.selectedValue);
+      temp = this.SalesPersonObj.filter(emp => emp.VendorEmpId == event.selectedValue);
       this.AssetDataForm.patchValue({
         SalesPersonId: temp[0].VendorEmpId,
         SalesPersonName: temp[0].VendorEmpName,
         SalesPersonNo: temp[0].VendorEmpNo,
-        SalesPersonPositionCode: temp[0].MrVendorEmpPositionCode,
+        SalesPersonPositionCode: temp[0].MrVendorEmpPositionCode
       });
-    }
-    else {
-      this.AssetDataForm.patchValue({
-        SalesPersonId: "",
-        SalesPersonName: "",
-        SalesPersonNo: "",
-        SalesPersonPositionCode: "",
-      });
+      if(temp[0].SupervisorId !== null) {
+        this.http.post(URLConstant.GetAllSupervisorFromSalesPersonBySupervisorId, { Id : temp[0].SupervisorId }).subscribe(
+          (response) => {
+            this.SupervisorObj = response[CommonConstant.ReturnObj];
+  
+            for(let i = 0; i < this.SupervisorObj.length; i++) {
+              switch (this.SupervisorObj[i].MrVendorEmpPositionCode) {
+                case CommonConstant.ADMIN_HEAD_JOB_CODE: {
+                  this.adminHead = this.SupervisorObj[i].VendorEmpName;
+                  this.AssetDataForm.patchValue({
+                    AdminHeadName: this.SupervisorObj[i].VendorEmpName,
+                    AdminHeadNo: this.SupervisorObj[i].VendorEmpNo,
+                    AdminHeadPositionCode: this.SupervisorObj[i].MrVendorEmpPositionCode
+                  });
+                  break;
+                }
+                case CommonConstant.BRANCH_MANAGER_JOB_CODE: {
+                  this.branchManager = this.SupervisorObj[i].VendorEmpName;
+                  this.AssetDataForm.patchValue({
+                    BranchManagerName: this.SupervisorObj[i].VendorEmpName,
+                    BranchManagerNo: this.SupervisorObj[i].VendorEmpNo,
+                    BranchManagerPositionCode: this.SupervisorObj[i].MrVendorEmpPositionCode
+                  });
+                  break;
+                }
+                case CommonConstant.SUPERVISOR_JOB_CODE: {
+                  this.salesSupervisor = this.SupervisorObj[i].VendorEmpName;
+                  break;
+                }
+                default: {
+                  break;
+                }
+              }
+              // if(this.SupervisorObj[i].MrVendorEmpPositionCode === CommonConstant.ADMIN_HEAD_JOB_CODE) {
+              //   this.adminHead = this.SupervisorObj[i].VendorEmpName;
+              //   this.AssetDataForm.patchValue({
+              //     AdminHeadName: this.SupervisorObj[i].VendorEmpName,
+              //     AdminHeadNo: this.SupervisorObj[i].VendorEmpNo,
+              //     AdminHeadPositionCode: this.SupervisorObj[i].MrVendorEmpPositionCode
+              //   });
+              // }
+              // else if(this.SupervisorObj[i].MrVendorEmpPositionCode === CommonConstant.BRANCH_MANAGER_JOB_CODE) {
+              //   this.branchManager = this.SupervisorObj[i].VendorEmpName;
+              //   this.AssetDataForm.patchValue({
+              //     BranchManagerName: this.SupervisorObj[i].VendorEmpName,
+              //     BranchManagerNo: this.SupervisorObj[i].VendorEmpNo,
+              //     BranchManagerPositionCode: this.SupervisorObj[i].MrVendorEmpPositionCode
+              //   });
+              // }
+              // else if(this.SupervisorObj[i].MrVendorEmpPositionCode === CommonConstant.SUPERVISOR_JOB_CODE) {
+              //   this.salesSupervisor = this.SupervisorObj[i].VendorEmpName;
+              // }
+            }
+          }
+        );
+      }
     }
   }
 
-  AdminHeadChanged(event) {
-    if (event.selectedObj != undefined) {
-      var temp: any;
-      temp = this.EmpObj.filter(emp => emp.VendorEmpId == event.selectedValue);
-      this.AssetDataForm.patchValue({
-        AdminHeadId: temp[0].VendorEmpId,
-        AdminHeadName: temp[0].VendorEmpName,
-        AdminHeadNo: temp[0].VendorEmpNo,
-        AdminHeadPositionCode: temp[0].MrVendorEmpPositionCode,
-      });
-    }
-    else {
-      this.AssetDataForm.patchValue({
-        AdminHeadId: "",
-        AdminHeadName: "",
-        AdminHeadNo: "",
-        AdminHeadPositionCode: "",
-      });
-    }
-  }
+  // AdminHeadChanged(event) {
+  //   if (event.selectedObj != undefined) {
+  //     var temp: any;
+  //     temp = this.EmpObj.filter(emp => emp.VendorEmpId == event.selectedValue);
+  //     this.AssetDataForm.patchValue({
+  //       AdminHeadId: temp[0].VendorEmpId,
+  //       AdminHeadName: temp[0].VendorEmpName,
+  //       AdminHeadNo: temp[0].VendorEmpNo,
+  //       AdminHeadPositionCode: temp[0].MrVendorEmpPositionCode,
+  //     });
+  //   }
+  //   else {
+  //     this.AssetDataForm.patchValue({
+  //       AdminHeadId: "",
+  //       AdminHeadName: "",
+  //       AdminHeadNo: "",
+  //       AdminHeadPositionCode: "",
+  //     });
+  //   }
+  // }
 
-  BranchManagerChanged(event) {
-    if (event.selectedObj != undefined) {
-      var temp: any;
-      temp = this.EmpObj.filter(emp => emp.VendorEmpId == event.selectedValue);
-      this.AssetDataForm.patchValue({
-        BranchManagerId: temp[0].VendorEmpId,
-        BranchManagerName: temp[0].VendorEmpName,
-        BranchManagerNo: temp[0].VendorEmpNo,
-        BranchManagerPositionCode: temp[0].MrVendorEmpPositionCode,
-      });
-    }
-    else {
-      this.AssetDataForm.patchValue({
-        BranchManagerId: "",
-        BranchManagerName: "",
-        BranchManagerNo: "",
-        BranchManagerPositionCode: "",
-      });
-    }
-  }
+  // BranchManagerChanged(event) {
+  //   if (event.selectedObj != undefined) {
+  //     var temp: any;
+  //     temp = this.EmpObj.filter(emp => emp.VendorEmpId == event.selectedValue);
+  //     this.AssetDataForm.patchValue({
+  //       BranchManagerId: temp[0].VendorEmpId,
+  //       BranchManagerName: temp[0].VendorEmpName,
+  //       BranchManagerNo: temp[0].VendorEmpNo,
+  //       BranchManagerPositionCode: temp[0].MrVendorEmpPositionCode,
+  //     });
+  //   }
+  //   else {
+  //     this.AssetDataForm.patchValue({
+  //       BranchManagerId: "",
+  //       BranchManagerName: "",
+  //       BranchManagerNo: "",
+  //       BranchManagerPositionCode: "",
+  //     });
+  //   }
+  // }
 
   SetAsset(event) {
     this.assetMasterObj.FullAssetCode = event.FullAssetCode;
@@ -699,7 +764,6 @@ export class AssetDataOplComponent implements OnInit {
   Back() {
     this.isListAsset = true;
     this.getListAllAssetData();
-    // this.findInvalidControls();
   }
 
   async SaveForm() {
@@ -1315,57 +1379,64 @@ export class AssetDataOplComponent implements OnInit {
   }
 
   GetVendorEmpList() {
+    this.salesSupervisor = "";
+    this.adminHead = "";
+    this.branchManager = "";
+    this.AssetDataForm.patchValue({
+      SalesPersonId: "",
+      SalesPersonName: "",
+      SalesPersonNo: "",
+      SalesPersonPositionCode: "",
+      AdminHeadName: "",
+      AdminHeadNo: "",
+      AdminHeadPositionCode: "",
+      BranchManagerName: "",
+      BranchManagerNo: "",
+      BranchManagerPositionCode: ""
+    });
     this.isDdlSalesPersonReady = false;
-    this.isDdlAdminHeadReady = false;
-    this.isDdlBranchManagerReady = false;
+    // this.isDdlAdminHeadReady = false;
+    // this.isDdlBranchManagerReady = false;
     this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, this.vendorObj).subscribe(
       (response) => {
-        this.EmpObj = response[CommonConstant.ReturnObj];
-        console.log("Isi dari EmpObj: ",this.EmpObj);
+        this.SalesPersonObj = response[CommonConstant.ReturnObj];
+        // this.EmpObj = response[CommonConstant.ReturnObj];
 
-        for(let i = 0; i < this.EmpObj.length; i++) {
-          if(this.EmpObj[i]["SupervisorId"] !== null && this.salesSupervisor !== undefined) {
-            var supervisor = {
-              "VendorEmpId": this.EmpObj[i]["SupervisorId"]
-            }
-            this.http.post(URLConstant.GetVendorEmpByVendorEmpId, {Id : this.EmpObj[i]["SupervisorId"]}).subscribe(
-              (response) => {
-                this.salesSupervisor = response["VendorEmpName"];
-              }
-            )
-            // break;
-          }
+        // for(let i = 0; i < this.EmpObj.length; i++) {
+        //   if(this.EmpObj[i]["SupervisorId"] !== null) {
+        //     this.http.post(URLConstant.GetVendorEmpByVendorEmpId, {Id : this.EmpObj[i]["SupervisorId"]}).subscribe(
+        //       (response) => {
+        //         this.salesSupervisor = response["VendorEmpName"];
+        //       }
+        //     )
+        //   }
 
-          if(this.EmpObj[i]["MrVendorEmpPositionCode"] === CommonConstant.ADMIN_HEAD_JOB_CODE && this.adminHead !== undefined) {
-            this.adminHead = this.EmpObj[i]["VendorEmpName"];
-          }
-          else if(this.EmpObj[i]["MrVendorEmpPositionCode"] === CommonConstant.BRANCH_MANAGER_JOB_CODE && this.branchManager !== undefined) {
-            this.branchManager = this.EmpObj[i]["VendorEmpName"];
-          }
+        //   if(this.EmpObj[i]["MrVendorEmpPositionCode"] === CommonConstant.ADMIN_HEAD_JOB_CODE) {
+        //     this.adminHead = this.EmpObj[i]["VendorEmpName"];
+        //   }
+        //   else if(this.EmpObj[i]["MrVendorEmpPositionCode"] === CommonConstant.BRANCH_MANAGER_JOB_CODE) {
+        //     this.branchManager = this.EmpObj[i]["VendorEmpName"];
+        //   }
+        // }
 
-          if(this.salesSupervisor !== undefined && this.adminHead !== undefined && this.branchManager !== undefined) {
-            break;
-          }
-        }
-
-        this.AdminHeadObj = this.EmpObj.filter(
-          emp => emp.MrVendorEmpPositionCode === CommonConstant.ADMIN_HEAD_JOB_CODE
-        );
-        this.SalesPersonObj = this.EmpObj.filter(
-          emp => emp.MrVendorEmpPositionCode === CommonConstant.SALES_JOB_CODE
-        );
-        this.BranchManagerObj = this.EmpObj.filter(
-          emp => emp.MrVendorEmpPositionCode === CommonConstant.BRANCH_MANAGER_JOB_CODE
-        );
-        if(this.AdminHeadObj.length > 0) {
-          this.isDdlAdminHeadReady = true;
-        }
+        // this.AdminHeadObj = this.EmpObj.filter(
+        //   emp => emp.MrVendorEmpPositionCode === CommonConstant.ADMIN_HEAD_JOB_CODE
+        // );
+        // this.SalesPersonObj = this.EmpObj.filter(
+        //   emp => emp.MrVendorEmpPositionCode === CommonConstant.SALES_JOB_CODE
+        // );
+        // this.BranchManagerObj = this.EmpObj.filter(
+        //   emp => emp.MrVendorEmpPositionCode === CommonConstant.BRANCH_MANAGER_JOB_CODE
+        // );
+        // if(this.AdminHeadObj.length > 0) {
+        //   this.isDdlAdminHeadReady = true;
+        // }
         if(this.SalesPersonObj.length > 0) {
           this.isDdlSalesPersonReady = true;
         }
-        if(this.BranchManagerObj.length > 0) {
-          this.isDdlBranchManagerReady = true;
-        }
+        // if(this.BranchManagerObj.length > 0) {
+        //   this.isDdlBranchManagerReady = true;
+        // }
       }
     );
   }
@@ -1431,6 +1502,7 @@ export class AssetDataOplComponent implements OnInit {
         this.allAssetDataObj.AppCollateralObj.IsMainCollateral = true;
       }
     }
+
     this.allAssetDataObj.AppAssetObj.AssetTypeCode = this.AssetDataForm.controls.AssetTypeCode.value;
     this.allAssetDataObj.AppAssetObj.AssetCategoryCode = this.AssetDataForm.controls.AssetCategoryCode.value;
     this.allAssetDataObj.AppAssetObj.SupplCode = this.AssetDataForm.controls.SupplCode.value;
@@ -1449,6 +1521,7 @@ export class AssetDataOplComponent implements OnInit {
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.AssetDataForm.controls.SalesPersonName.value;
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.AssetDataForm.controls.SalesPersonNo.value;
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = this.AssetDataForm.controls.SalesPersonPositionCode.value;
+    
     if (this.AssetDataForm.controls.BranchManagerNo.value != "") {
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = this.AssetDataForm.controls.BranchManagerName.value;
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = this.AssetDataForm.controls.BranchManagerNo.value;

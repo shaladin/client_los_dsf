@@ -140,7 +140,7 @@
       "label": "Current Application Step",
       "items": [],
       "itemsUrl": [],
-      "criteriaPropName": "StatusGrpCode",
+      "criteriaPropName": "Code",
       "criteriaPropValue": "APP_STEP"
     },
     {
@@ -153,11 +153,11 @@
       "isFromURL": true,
       "ddlType": "all",
       "url": "",
-      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "path": "/RefStatusLos/GetListKeyValueGrpCodeByCode",
       "label": "Contract Status",
       "items": [],
       "itemsUrl": [],
-      "criteriaPropName": "StatusGrpCode",
+      "criteriaPropName": "Code",
       "criteriaPropValue": "APP_STAT"
     }
   ],

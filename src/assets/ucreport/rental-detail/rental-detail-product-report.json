@@ -1,0 +1,45 @@
+{
+    "title": "REPORT RENTAL DETAIL PRODUCT",
+    "reportName": "RENTAL DETAIL PRODUCT REPORT",
+    "reportTemplateName": "RentalDetailProduct.rdlc",
+    "component": [
+      {
+        "type": "dropdown",
+        "label": "Office Name",
+        "name": "OfficeCode",
+        "datatype": "text",
+        "isFromURL": true,
+        "isSelectOne": true,
+        "url": "",
+        "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+        "items": [],
+        "itemsUrl": [],
+        "criteriaPropName": "",
+        "criteriaPropValue": "",
+        "isReportParam": false,
+        "isProviderParam": true
+      },
+      {
+        "type": "datepicker",
+        "label": "Period From",
+        "name": "PeriodFrom",
+        "datatype": "date",
+        "value": "BD-10",
+        "restriction": "gte",
+        "isReportParam": true,
+        "isProviderParam": true
+      },
+      {
+        "type": "datepicker",
+        "label": "Period To",
+        "name": "PeriodTo",
+        "datatype": "date",
+        "value": "BD+10",
+        "restriction": "lte",
+        "isReportParam": true,
+        "isProviderParam": true
+      }
+    ],
+    "exportTypeList": [
+    ]
+  }

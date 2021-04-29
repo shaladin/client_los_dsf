@@ -1,3 +1,4 @@
+import { environment } from "environments/environment";
 import { NavigationConstant } from "../constant/NavigationConstant";
 
 export class UcViewGenericObj {
@@ -5,13 +6,13 @@ export class UcViewGenericObj {
     viewEnvironment: string;
     navigationConst: any;
     ddlEnvironments: Array<EnviObj>;
-    whereValue: Array<WhereValueObj>;
+    whereValue: Array<any>;
 
     constructor() {
         this.viewInput = "";
-        this.viewEnvironment = "";
+        this.viewEnvironment = environment.losUrl;
         this.ddlEnvironments = new Array<EnviObj>();
-        this.whereValue = new Array<WhereValueObj>();
+        this.whereValue = new Array<any>();
         this.navigationConst = NavigationConstant;
     }
 }
@@ -26,11 +27,11 @@ export class EnviObj {
     }
 }
 
-export class WhereValueObj {
-    property: string;
-    value: any;
+// export class WhereValueObj {
+//     property: string;
+//     value: any;
 
-    constructor() {
-        this.property = "";
-    }
-}
+//     constructor() {
+//         this.property = "";
+//     }
+// }
