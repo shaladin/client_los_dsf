@@ -11,7 +11,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { ReqGetAppCustDupCheckObj } from 'app/shared/model/Request/NAP/DupCheck/ReqGetAppCustDupCheckObj.model';
+import { ReqGetAppCustDupCheckObj } from 'app/shared/model/Request/NAP/DupCheck/ReqGetCustDupCheckObj.model';
 
 @Component({
   selector: 'app-list-personal',

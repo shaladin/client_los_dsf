@@ -1,4 +1,4 @@
-export class ReqGetAppCustDupCheckObj {
+export class ReqGetCustDupCheckObj {
     CustName: string;
     MrCustTypeCode: string;
     MrCustModelCode: string;
@@ -8,7 +8,6 @@ export class ReqGetAppCustDupCheckObj {
     BirthDt: Date;
     MotherMaidenName: string;
     MobilePhnNo1: string;
-    AppId: number;
     RowVersion: string;
 
     constructor() {
@@ -21,7 +20,14 @@ export class ReqGetAppCustDupCheckObj {
         this.BirthDt = new Date();
         this.MotherMaidenName = "";
         this.MobilePhnNo1 = "";
-        this.AppId = 0;
         this.RowVersion = "";
+    }
+}
+export class ReqGetAppCustDupCheckObj extends ReqGetCustDupCheckObj{
+    AppId: number;
+
+    constructor() {
+        super();
+        this.AppId = 0;
     }
 }

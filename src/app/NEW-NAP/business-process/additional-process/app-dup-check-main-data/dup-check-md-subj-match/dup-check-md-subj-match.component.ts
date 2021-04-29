@@ -12,7 +12,7 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { ReqDupCheckAppCustObj } from 'app/shared/model/AppDupCheckCust/ReqDupCheckAppCustObj';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqGetAppCustDupCheckObj } from 'app/shared/model/Request/NAP/DupCheck/ReqGetAppCustDupCheckObj.model';
+import { ReqGetAppCustDupCheckObj } from 'app/shared/model/Request/NAP/DupCheck/ReqGetCustDupCheckObj.model';
 
 @Component({
   selector: 'app-dup-check-md-subj-match',
