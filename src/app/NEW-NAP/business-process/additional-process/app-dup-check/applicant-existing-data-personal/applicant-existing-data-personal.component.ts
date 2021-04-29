@@ -23,11 +23,6 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
   AppId: number;
   WfTaskListId: number;
   FondationUrl = environment.FoundationR3Url;
-  LOSUrl = environment.losUrl;
-  GetAppGuarantorDuplicateCheckUrl = this.LOSUrl + URLConstant.GetAppGuarantorDuplicateCheck;
-  GetSpouseDuplicateCheckUrl = this.LOSUrl + URLConstant.GetSpouseDuplicateCheck;
-  GetAppShareholderDuplicateCheckUrl = this.LOSUrl + URLConstant.GetAppShareholderDuplicateCheck;
-  GetCustDataByAppId = URLConstant.GetCustDataByAppId;
   AppCustObj: AppCustObj;
   AppCustPersonalObj: AppCustPersonalObj;
   ListAppGuarantorDuplicate: any;
@@ -70,7 +65,7 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
 
     //Get App Cust Data
     var appObj = { "Id": this.AppId };
-    this.http.post(this.GetCustDataByAppId, appObj).subscribe(
+    this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
       response => {
         this.AppCustObj = response['AppCustObj'];
 
@@ -97,18 +92,18 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
           "RowVersion": this.RowVersion
         }
         //List App guarantor Checking
-        this.http.post(this.GetAppGuarantorDuplicateCheckUrl, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetAppGuarantorDuplicateCheck, requestDupCheck).subscribe(
           response => {
             this.ListAppGuarantorDuplicate = response['ReturnObject'];
           });
         //List Spouse Duplicate Checking
-        this.http.post(this.GetSpouseDuplicateCheckUrl, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetSpouseDuplicateCheck, requestDupCheck).subscribe(
           response => {
             this.ListSpouseDuplicate = response['ReturnObject'];
           });
 
         //List App Shareholder Duplicate Checking
-        this.http.post(this.GetAppShareholderDuplicateCheckUrl, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetAppShareholderDuplicateCheck, requestDupCheck).subscribe(
           response => {
             this.ListAppShareholderDuplicate = response['ReturnObject'];
           });

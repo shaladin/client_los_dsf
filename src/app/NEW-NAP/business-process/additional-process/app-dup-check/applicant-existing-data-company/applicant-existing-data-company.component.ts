@@ -12,6 +12,7 @@ import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ReqGetMouCustDuplicateObj } from 'app/shared/model/Request/MOU/ReqGetMouCustDuplicateObj.model';
 
 @Component({
   selector: 'app-applicant-existing-data-company',
@@ -23,10 +24,6 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
   AppId: number;
   WfTaskListId: number;
   FondationUrl = environment.FoundationR3Url;
-  LOSUrl = environment.losUrl;
-  GetAppGuarantorDuplicateCheckUrl = this.LOSUrl + URLConstant.GetAppGuarantorDuplicateCheck;
-  GetAppShareholderDuplicateCheckUrl = this.LOSUrl + URLConstant.GetAppShareholderDuplicateCheck;
-  GetCustDataByAppId = URLConstant.GetCustDataByAppId;
   AppCustObj: AppCustObj;
   AppCustCompanyObj: AppCustCompanyObj;
   ListAppGuarantorDuplicate: any;
@@ -74,7 +71,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
 
     //Get App Cust Data
     var appObj = { "Id": this.AppId };
-    this.http.post(this.GetCustDataByAppId, appObj).subscribe(
+    this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
       response => {
         this.AppCustObj = response['AppCustObj'];
         var custObj = { CustNo: this.AppCustObj['CustNo'] };
@@ -86,7 +83,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
 
         this.RowVersion = response['AppCustObj'].RowVersion;
         this.AppCustCompanyObj = response['AppCustCompanyObj'];
-
+        
         var requestDupCheck = {
           "CustName": this.AppCustObj.CustName,
           "MrCustTypeCode": this.AppCustObj.MrCustTypeCode,
@@ -100,14 +97,14 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
           "RowVersion": this.RowVersion
         }
         //List App guarantor Checking
-        this.http.post(this.GetAppGuarantorDuplicateCheckUrl, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetAppGuarantorDuplicateCheck, requestDupCheck).subscribe(
           response => {
             this.ListAppGuarantorDuplicate = response['ReturnObject'];
           }
         );
 
         //List App Shareholder Duplicate Checking
-        this.http.post(this.GetAppShareholderDuplicateCheckUrl, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetAppShareholderDuplicateCheck, requestDupCheck).subscribe(
           response => {
             this.ListAppShareholderDuplicate = response['ReturnObject'];
           });

@@ -1069,10 +1069,10 @@ export class URLConstant {
   //App Duplicate Checking
   public static GetCustomerDuplicateCheck = environment.FoundationR3Url + "/CustDuplicateCheck/GetCustomerDuplicateCheck";
   public static GetNegativeCustomerDuplicateCheck = environment.FoundationR3Url + "/CustDuplicateCheck/GetNegativeCustomerDuplicateCheck";
-  public static GetAppCustDuplicateCheck = "/AppDupCheck/GetAppCustDuplicateCheck";
-  public static GetAppGuarantorDuplicateCheck = "/AppDupCheck/GetAppGuarantorDuplicateCheck";
-  public static GetSpouseDuplicateCheck = "/AppDupCheck/GetSpouseDuplicateCheck";
-  public static GetAppShareholderDuplicateCheck = "/AppDupCheck/GetAppShareholderDuplicateCheck";
+  public static GetAppCustDuplicateCheck = environment.losUrl + "/AppDupCheck/GetAppCustDuplicateCheck";
+  public static GetAppGuarantorDuplicateCheck = environment.losUrl + "/AppDupCheck/GetAppGuarantorDuplicateCheck";
+  public static GetSpouseDuplicateCheck = environment.losUrl + "/AppDupCheck/GetSpouseDuplicateCheck";
+  public static GetAppShareholderDuplicateCheck = environment.losUrl + "/AppDupCheck/GetAppShareholderDuplicateCheck";
   public static AddAppDupCheckCust = "/AppDupCheck/AddAppDupCheckCust";
   public static EditCustNoAppCust = environment.losUrl + "/AppDupCheck/EditCustNoAppCust";
   public static SubmitAppDupCheck = environment.losUrl + "/AppDupCheck/SubmitAppDupCheck";
