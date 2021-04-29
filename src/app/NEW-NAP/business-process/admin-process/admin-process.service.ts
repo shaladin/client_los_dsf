@@ -10,7 +10,7 @@ import { URLConstant } from "app/shared/constant/URLConstant";
 export class AdminProcessService {
     constructor(private http: HttpClient) { }
 
-    GetListAppAssetAgrmntActivation(Obj: any): Observable<Object> {
+    GetListAppAssetAgrmntActivation(Obj: ReqAppAssetAgreementActivationObj): Observable<Object> {
         return this.http.post(URLConstant.GetAppAssetByAppIdAndCriteria, Obj);
     }
 
@@ -21,4 +21,9 @@ export class AdminProcessService {
     SubmitAgrmntActivationByHuman(Obj: any): Observable<Object> {
         return this.http.post(URLConstant.SubmitAgrmntActivationByHuman, Obj);
     }
+}
+
+export class ReqAppAssetAgreementActivationObj {
+    AppId: number;
+    ListAppAssetId: Array<number>;
 }

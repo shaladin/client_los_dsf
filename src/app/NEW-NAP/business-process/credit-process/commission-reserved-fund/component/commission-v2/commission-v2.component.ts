@@ -22,6 +22,8 @@ import { TaxTrxDObj } from 'app/shared/model/Tax/TaxTrxD.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppCommissionDObj } from 'app/shared/model/AppCommissionDObj.Model';
 import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
+import { ReqGetAppCommissionRuleObj } from 'app/shared/model/AppCommissionRsvFund/ReqGetAppCommissionRuleObj.Model';
+import { ReqTaxObj } from 'app/shared/model/AppCommissionRsvFund/ReqTaxObj.Model';
 
 @Component({
   selector: 'app-commission-v2',
@@ -229,7 +231,7 @@ export class CommissionV2Component implements OnInit {
   RuleSupplierEmpData: any = {};
   RuleReferantorData: any = {};
   async GetRuleDataForForm() {
-    var obj = { AppId: this.AppId };
+    let obj: ReqGetAppCommissionRuleObj = { AppId: this.AppId, BizTemplateCode: this.BizTemplateCode };
     await this.http.post(URLConstant.GetAppCommissionRule, obj).toPromise().then(
       (response) => {
         // override hide suppl & suppl emp jika CFRFN4W ignore rule
@@ -384,7 +386,7 @@ export class CommissionV2Component implements OnInit {
     }
 
     if (listVendorCode.length > 0) {
-      var obj = {
+      let obj: ReqTaxObj = {
         AppId: this.AppId,
         VendorCode: listVendorCode,
         VendorEmpNo: listVendorEmpNo,

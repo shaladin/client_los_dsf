@@ -121,7 +121,6 @@ export class URLConstant {
   public static GetAppCommissionDataForEditByAppId = environment.losUrl + "/AppCommission/GetAppCommissionDataForEditByAppId";
   public static DeleteAppCommissionData = environment.losUrl + "/AppCommission/DeleteAppCommissionData";
   public static GetAppCommissionRule = environment.losUrl + "/AppCommission/GetAppCommissionRule";
-  public static GetAppCommissionTax = environment.losUrl + "/AppCommission/GetAppCommissionTax";
   public static GetAppCommissionTaxAndCalcGrossYield = environment.losUrl + "/AppCommission/GetAppCommissionTaxAndCalcGrossYield";
   public static CalCulateGrossYield = environment.losUrl + "/AppCommission/CalCulateGrossYield";
 
@@ -1092,7 +1091,7 @@ export class URLConstant {
   public static GetListAppSubsidyByAppId = environment.losUrl + "/AppSubsidy/GetListAppSubsidyByAppId";
   public static GetListSubsidyFromValue = environment.losUrl + "/AppSubsidy/GetListSubsidyFromValue";
   public static GetListSubsidyFromTypeCode = environment.losUrl + "/AppSubsidy/GetListSubsidyFromTypeCode";
-  public static GetListSubsidyAllocation = environment.losUrl + "/AppSubsidy/GetListSubsidyAllocation"
+  public static GetListSubsidyAllocation = environment.losUrl + "/AppSubsidy/GetListSubsidyAllocation";
   public static GetListSubsidySource = environment.losUrl + "/AppSubsidy/GetListSubsidySource";
   public static GetListSubsidyValueType = environment.losUrl + "/AppSubsidy/GetListSubsidyValueType";
   public static DeleteSubsidy = environment.losUrl + "/AppSubsidy/DeleteSubsidy";

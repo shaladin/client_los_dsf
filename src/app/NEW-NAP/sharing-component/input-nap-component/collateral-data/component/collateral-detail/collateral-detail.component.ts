@@ -589,7 +589,7 @@ export class CollateralDetailComponent implements OnInit {
       });
 
     } else {
-      await this.http.post(URLConstant.GetAppCollateralAndRegistrationByAppCollateralId, { AppId: AppId, AppCollateralId: AppCollateralId }).toPromise().then(
+      await this.http.post(URLConstant.GetAppCollateralAndRegistrationByAppCollateralId, { Id: AppCollateralId }).toPromise().then(
         async (response) => {
           this.appCollateralObj = response['AppCollateral'];
           this.appAssetId = this.appCollateralObj.AppAssetId;

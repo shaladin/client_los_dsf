@@ -18,8 +18,6 @@ import { CreditInvestigationPagingComponent } from "./credit-investigation/credi
 import { TabApplicationDataComponent } from "./credit-investigation/component/tab-application-data/tab-application-data.component";
 import { CustHistoryComponent } from "./credit-investigation/component/cust-history/cust-history.component";
 import { ViewApprovalComponent } from "./credit-investigation/component/cust-history/view-approval/view-approval.component";
-import { FormAddDynamicComponent } from "./commission-reserved-fund/component/commission/form-add-dynamic/form-add-dynamic.component";
-import { CommissionComponent } from "./commission-reserved-fund/component/commission/commission.component";
 import { CommissionReservedFundPagingComponent } from "./commission-reserved-fund/comission-reserved-fund-paging/commission-reserved-fund-paging.component";
 import { ReservedFundComponent } from "./commission-reserved-fund/component/reserved-fund/reserved-fund.component";
 import { CommissionReservedFundDetailComponent } from "./commission-reserved-fund/comission-reserved-fund-detail/commission-reserved-fund-detail.component";
@@ -123,9 +121,7 @@ export const customCurrencyMaskConfig = {
     CustHistoryComponent,
     CommissionReservedFundPagingComponent,
     CommissionReservedFundDetailComponent,
-    CommissionComponent,
     ReservedFundComponent,
-    FormAddDynamicComponent,
     FraudDetectionPagingComponent,
     FraudDetectionVerifComponent,
     CreditReviewMainComponent,
