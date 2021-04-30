@@ -6,7 +6,6 @@ export class ReqGetCustDupCheckObj {
     IdNo: string;
     TaxIdNo: string;
     BirthDt: Date;
-    MotherMaidenName: string;
     MobilePhnNo1: string;
     RowVersion: string;
 
@@ -18,16 +17,17 @@ export class ReqGetCustDupCheckObj {
         this.IdNo = "";
         this.TaxIdNo = "";
         this.BirthDt = new Date();
-        this.MotherMaidenName = "";
         this.MobilePhnNo1 = "";
         this.RowVersion = "";
     }
 }
 export class ReqGetAppCustDupCheckObj extends ReqGetCustDupCheckObj{
     AppId: number;
+    MotherMaidenName: string;
 
     constructor() {
         super();
         this.AppId = 0;
+        this.MotherMaidenName = "";
     }
 }

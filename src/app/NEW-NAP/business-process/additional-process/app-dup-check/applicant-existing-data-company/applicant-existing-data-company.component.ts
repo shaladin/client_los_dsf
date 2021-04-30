@@ -96,7 +96,6 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
         requestDupCheck.IdNo = this.AppCustObj.IdNo;
         requestDupCheck.TaxIdNo = this.AppCustObj.TaxIdNo;
         requestDupCheck.BirthDt = this.AppCustCompanyObj.EstablishmentDt;
-        requestDupCheck.MotherMaidenName = "-";
         requestDupCheck.MobilePhnNo1 = "-";
         requestDupCheck.RowVersion = this.RowVersion;
         

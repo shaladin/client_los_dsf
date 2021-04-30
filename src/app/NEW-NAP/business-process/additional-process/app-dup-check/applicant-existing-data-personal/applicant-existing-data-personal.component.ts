@@ -93,7 +93,6 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
         requestDupCheck.IdNo = this.AppCustObj.IdNo;
         requestDupCheck.TaxIdNo = this.AppCustObj.TaxIdNo;
         requestDupCheck.BirthDt = this.AppCustPersonalObj.BirthDt;
-        requestDupCheck.MotherMaidenName = this.AppCustPersonalObj.MotherMaidenName;
         requestDupCheck.MobilePhnNo1 = this.AppCustPersonalObj.MobilePhnNo1;
         requestDupCheck.RowVersion = this.RowVersion;
 
