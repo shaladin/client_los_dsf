@@ -10,6 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ReqAssetDataObj } from 'app/shared/model/Request/AppAsset/ReqAppAssetObj.model';
 
 @Component({
   selector: 'app-purchase-order-detail',
@@ -72,11 +73,12 @@ export class PurchaseOrderDetailComponent implements OnInit {
       poUrl = URLConstant.GetAllAssetDataForPOMultiAsset;
     }
 
-    var appAssetObj = {
-      AppId: this.AppId,
-      AgrmntId: this.AgrmntId,
-      SupplCode: this.SupplCode
-    }
+    
+    let appAssetObj : ReqAssetDataObj = new ReqAssetDataObj();
+    appAssetObj.AppId = this.AppId;
+    appAssetObj.AgrmntId = this.AgrmntId;
+    appAssetObj.SupplCode = this.SupplCode;
+
     await this.http.post(poUrl, appAssetObj).toPromise().then(
       (response) => {
         console.log(response);
