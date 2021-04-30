@@ -27,17 +27,6 @@
                                     <label class="col-md-6" translate>Supplier Bank Account No </label>
                                     <label class="col-md-6">{{AssetObj?.VendorBankAccObj.BankAccountNo}} </label>
                                 </div>
-                                <div class="row" style="display:none;">
-                                    <label class="col-md-6" translate>MoU </label>
-                                    <div class="col-md-6">
-                                        <select class="form-control" [(ngModel)]="MouNo" name="MouNo">
-                                            <option *ngFor="let item of AssetObj?.MouVendorListObj"
-                                                [value]="item.MouVendorNo">
-                                                {{item.MouVendorNo}}
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
