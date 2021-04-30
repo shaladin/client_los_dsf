@@ -16,7 +16,7 @@ import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqGetCurrProdOffDByProdOffCodeAndProdCompntCodeObj } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
+import { ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
@@ -127,7 +127,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         this.ProdOfferingName = this.result.ProdOfferingName;
         this.ProdOfferingCode = this.result.ProdOfferingCode;
         this.ProdOfferingVersion = this.result.ProdOfferingVersion;
-        var Obj2: ReqGetCurrProdOffDByProdOffCodeAndProdCompntCodeObj = new ReqGetCurrProdOffDByProdOffCodeAndProdCompntCodeObj();
+        var Obj2: ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj = new ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj();
         Obj2 = {
           ProdOfferingCode: this.result.ProdOfferingCode,
           RefProdCompntCode: CommonConstant.RefProdCompntCodeWayOfFinancing
@@ -139,7 +139,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           }
         );
 
-        var Obj3: ReqGetCurrProdOffDByProdOffCodeAndProdCompntCodeObj = new ReqGetCurrProdOffDByProdOffCodeAndProdCompntCodeObj();
+        var Obj3: ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj = new ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj();
         Obj3 = {
           ProdOfferingCode: this.result.ProdOfferingCode,
           RefProdCompntCode: CommonConstant.RefProdCompntCodePurposeOfFinancing

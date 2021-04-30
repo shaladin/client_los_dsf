@@ -11,6 +11,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { GenericListByIdObj } from 'app/shared/model/Generic/GenericListByIdObj.Model';
 
 @Component({
   selector: 'app-lead-cancel-confirm',
@@ -32,6 +33,7 @@ export class LeadCancelConfirmComponent implements OnInit {
   tempLeadIds: string;
   tempLeadArr: Array<string>;
   WfTaskListIds: string;
+  reqIdListObj: GenericListByIdObj = new GenericListByIdObj();
 
   readonly CancelLink: string = NavigationConstant.LEAD_CANCEL;
   constructor(
@@ -55,8 +57,8 @@ export class LeadCancelConfirmComponent implements OnInit {
         this.tempWfTaskListArr = this.WfTaskListIds.split(',');
       }
     });
-    var tempObj = { 'Ids': this.tempLeadArr };
-    this.http.post(URLConstant.GetListLeadForLeadCancelByListLeadId, tempObj).subscribe(
+    this.reqIdListObj = { 'Ids': this.tempLeadArr.map(Number) };
+    this.http.post(URLConstant.GetListLeadForLeadCancelByListLeadId, this.reqIdListObj).subscribe(
       response => {
         this.responseObj = response['ReturnObject'];
       }

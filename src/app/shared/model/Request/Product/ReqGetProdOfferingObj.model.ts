@@ -18,11 +18,20 @@ export class ReqProdOfferingVersionObj {
     }
   }
 
-  export class ReqGetCurrProdOffDByProdOffCodeAndProdCompntCodeObj {
+  export class ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj {
     ProdOfferingCode: string;
     RefProdCompntCode: string;
     constructor() {
       this.ProdOfferingCode = "";
       this.RefProdCompntCode = "";
+    }
+  }
+
+  export class ReqGetProdOffDByProdOffVersion extends ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj {
+    ProdOfferingVersion: string;
+
+    constructor() {
+      super();
+      this.ProdOfferingVersion = "";
     }
   }

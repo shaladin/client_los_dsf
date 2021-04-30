@@ -6,6 +6,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { map, mergeMap } from 'rxjs/operators';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 
 @Component({
   selector: 'app-collateral-data-cfna',
@@ -30,11 +31,11 @@ export class CollateralDataCfnaComponent implements OnInit {
         return response;
       }),
       mergeMap((response: AppObj) => {
-        var obj = {
-          ProdOfferingCode: response.ProdOfferingCode,
-          RefProdCompntCode: CommonConstant.CollateralNeeded,
-          ProdOfferingVersion: response.ProdOfferingVersion
-        };
+        var obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+        obj.ProdOfferingCode = response.ProdOfferingCode;
+        obj.RefProdCompntCode = CommonConstant.CollateralNeeded;
+        obj.ProdOfferingVersion = response.ProdOfferingVersion;
+
         return this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj);
       })
     ).subscribe(
