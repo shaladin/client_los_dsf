@@ -62,7 +62,10 @@ export class PoEntryComponent implements OnInit {
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = new Date(context["BusinessDt"]);
     if (!this.PurchaseOrderHId || this.PurchaseOrderHId == 0) {
-      let getAppLoanPurpose = this.httpClient.post(URLConstant.GetAppLoanPurposeByAppIdSupplCode, { AppId: this.AppId, SupplCode: this.SupplCode }).toPromise();
+      let reqAppLoanPurposeObj : GenericObj = new GenericObj();
+      reqAppLoanPurposeObj.Id = this.AppId;
+      reqAppLoanPurposeObj.Code = this.SupplCode;
+      let getAppLoanPurpose = this.httpClient.post(URLConstant.GetAppLoanPurposeByAppIdSupplCode, reqAppLoanPurposeObj).toPromise();
       let getListBankAcc = this.httpClient.post(URLConstant.GetListVendorBankAccByVendorCode, { Code: this.SupplCode }).toPromise();
       forkJoin([getAppLoanPurpose, getListBankAcc]).toPromise().then(
         (response) => {
