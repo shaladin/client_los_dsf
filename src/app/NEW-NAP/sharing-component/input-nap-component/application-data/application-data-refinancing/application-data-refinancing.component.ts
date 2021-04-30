@@ -301,11 +301,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   }
 
   getAppSrcData() {
-    var obj = {
-      RowVersion: ""
-    };
-
-    this.http.post(URLConstant.GetListKvpActiveRefAppSrc, obj).subscribe(
+    this.http.post(URLConstant.GetListKvpActiveRefAppSrc, null).subscribe(
       (response) => {
         this.applicationDDLitems["APP_SOURCE"] = response[CommonConstant.ReturnObj];
       });
