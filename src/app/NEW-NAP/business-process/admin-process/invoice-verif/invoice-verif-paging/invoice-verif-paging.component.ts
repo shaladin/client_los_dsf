@@ -23,9 +23,9 @@ export class InvoiceVerifPagingComponent implements OnInit {
     if(ev.Key == "prodOff"){
       let GetProduct = new GenericObj();
       GetProduct.Code = ev.RowObj.ProdOfferingCode;
-      this.http.post(URLConstant.GetProdOfferingHByCode, GetProduct).subscribe(
+      this.http.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).subscribe(
         response => {
-          window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response['ProdOfferingHId'], '_blank');
+          window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response.Id, '_blank');
         });
     }
   }

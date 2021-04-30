@@ -42,11 +42,11 @@ export class CreditApvResultExtPagingComponent implements OnInit {
 
   getEvent(ev){
     if(ev.Key == "prodOff"){
-      let GetProduct = new GenericObj();
+      let GetProduct : GenericObj = new GenericObj();
       GetProduct.Code = ev.RowObj.ProdOfferingCode;
-      this.http.post(URLConstant.GetProdOfferingHByCode, GetProduct).subscribe(
+      this.http.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).subscribe(
         response => {
-          AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response['ProdOfferingHId']);
+          AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response.Id);
         });
     }else if(ev.Key == "suppl"){
       this.http.post(URLConstant.GetVendorByVendorCode, {Code : ev.RowObj.SupplCode}).subscribe(

@@ -67,9 +67,9 @@ export class DocSignerPagingComponent implements OnInit {
     if (ev.Key == "prodOff") {
       let GetProduct = new GenericObj();
       GetProduct.Code = ev.RowObj.ProdOfferingCode;
-      this.http.post(URLConstant.GetProdOfferingHByCode, GetProduct).subscribe(
+      this.http.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).subscribe(
         response => {
-          AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response['ProdOfferingHId']);
+          AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response.Id);
         });
     } else if (ev.Key == "agrmnt") {
       AdInsHelper.OpenAgrmntViewByAgrmntId(ev.RowObj.AgrmntId);

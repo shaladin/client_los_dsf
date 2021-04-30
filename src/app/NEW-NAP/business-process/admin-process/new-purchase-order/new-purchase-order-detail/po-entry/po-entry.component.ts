@@ -131,10 +131,9 @@ export class PoEntryComponent implements OnInit {
         this.AppData = response;
         let GetProduct = new GenericObj();
         GetProduct.Code = this.AppData["ProdOfferingCode"]
-        this.httpClient.post(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
+        this.httpClient.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
           (response2) => {
-            var productOfferinH = response2;
-            this.httpClient.post(URLConstant.GetProdOfferingDByProdOfferingHIdAndCompCode, { ProdOfferingHId: productOfferinH["ProdOfferingHId"], RefProdCompntCode: CommonConstant.RefProdCompntCodeCrApvResExpDays }).subscribe(
+            this.httpClient.post(URLConstant.GetProdOfferingDByProdOfferingHIdAndCompCode, { ProdOfferingHId: response2.Id, RefProdCompntCode: CommonConstant.RefProdCompntCodeCrApvResExpDays }).subscribe(
               (response) => {
                 var a = formatDate(this.AppData["ApvDt"], 'yyyy-MM-dd', 'en-US');
                 this.Date = new Date(a);
@@ -172,11 +171,10 @@ export class PoEntryComponent implements OnInit {
         this.AppData = response;
         let GetProduct = new GenericObj();
         GetProduct.Code  = this.AppData["ProdOfferingCode"]
-        this.httpClient.post(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
+        this.httpClient.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
           (response2) => {
-            var productOfferinH = response2;
             var datePipe = new DatePipe("locale");
-            this.httpClient.post(URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode, { ProdOfferingHId: productOfferinH["ProdOfferingHId"], RefProdCompntGrpCode: ["OTHR"] }).subscribe(
+            this.httpClient.post(URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode, { ProdOfferingHId: response2.Id, RefProdCompntGrpCode: ["OTHR"] }).subscribe(
               (response) => {
                 var a = formatDate(this.AppData["ApvDt"], 'yyyy-MM-dd', 'en-US');
                 this.Date = new Date(a);
