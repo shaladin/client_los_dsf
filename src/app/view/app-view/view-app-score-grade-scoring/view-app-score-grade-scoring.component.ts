@@ -6,6 +6,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppScoreGradeObj } from 'app/shared/model/AppScoreGrade/AppScoreGradeObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: "view-app-score-grade-scoring",
@@ -25,8 +26,10 @@ export class ViewAppScoreGradeScoringComponent implements OnInit {
   }
 
   getAppScoreGradeScoring() {
-    var reqObj = { AppId: this.AppId, MrScoreTypeCode: CommonConstant.ScoreTypeScoring };
-    this.http.post<AppScoreGradeObj>(URLConstant.GetAppScoreGradeByAppIdAndMrScoreTypeCode, reqObj).subscribe(
+    let reqGetAppScoreObj : GenericObj = new GenericObj();
+    reqGetAppScoreObj.Id = this.AppId;
+    reqGetAppScoreObj.Code = CommonConstant.ScoreTypeScoring;
+    this.http.post<AppScoreGradeObj>(URLConstant.GetAppScoreGradeByAppIdAndMrScoreTypeCode, reqGetAppScoreObj).subscribe(
       (response) => {
         this.AppScoreGradeObj = response;
       });
