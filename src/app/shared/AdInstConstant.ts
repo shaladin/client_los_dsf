@@ -443,8 +443,6 @@ export class AdInsConstant {
   public static AddAppLifeInsH = environment.losUrl + "/AppLifeIns/AddAppLifeInsH";
   public static EditAppLifeInsH = environment.losUrl + "/AppLifeIns/EditAppLifeInsH";
   public static InitAppLifeInsH = environment.losUrl + "/AppLifeIns/InitAppLifeInsH";
-  public static GetRuleAdmFee = environment.losUrl + "/AppLifeIns/GetRuleAdmFee";
-  public static GetRuleRate = environment.losUrl + "/AppLifeIns/GetRuleRate";
   public static DeleteAppLifeIns = environment.losUrl + "/AppLifeIns/DeleteAppLifeIns";
   public static AddEditAppLifeInsH = environment.losUrl + "/AppLifeIns/AddEditAppLifeInsH";
 

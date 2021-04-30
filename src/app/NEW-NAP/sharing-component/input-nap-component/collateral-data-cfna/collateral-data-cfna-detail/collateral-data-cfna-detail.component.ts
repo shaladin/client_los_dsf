@@ -592,7 +592,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     }
     else {
       if (this.mode == "edit") {
-        this.http.post(URLConstant.GetAppCollateralAndRegistrationByAppCollateralId, { Id: AppCollateralId }).subscribe(
+        this.http.post(URLConstant.GetAppCollateralAndRegistrationByAppCollateralId, { AppId: AppId, AppCollateralId: AppCollateralId }).subscribe(
           async (response) => {
             this.appCollateralObj = response['AppCollateral'];
             console.log("appCollateralObj: " + JSON.stringify(this.appCollateralObj));
