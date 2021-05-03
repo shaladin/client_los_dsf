@@ -13,6 +13,7 @@ import { ReqDupCheckAppCustObj } from 'app/shared/model/AppDupCheckCust/ReqDupCh
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetAppCustDupCheckObj } from 'app/shared/model/Request/NAP/DupCheck/ReqGetCustDupCheckObj.model';
+import { ResAppDupCheckCustMainDataObj, ResListAppDupCheckCustMainDataObj } from 'app/shared/model/Response/NAP/DupCheck/ResAppDupCheckCustMainDataObj.model';
 
 @Component({
   selector: 'app-dup-check-md-subj-match',
@@ -27,7 +28,7 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   viewMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   listMasterCustDuplicate: Array<Object>;
   listNegativeCustDuplicate: Array<Object>;
-  listAppCustDuplicate: Array<Object>;
+  listAppCustDuplicate: Array<ResAppDupCheckCustMainDataObj> = new Array<ResAppDupCheckCustMainDataObj>();
   appCustObj: AppCustObj;
   appCustPersonalObj: AppCustPersonalObj;
   appCustCompanyObj: AppCustCompanyObj;
@@ -129,8 +130,8 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
 
         //List App Cust Duplicate Checking
         this.http.post(URLConstant.MD_GetAppCustDuplicateCheck, requestDupCheck).subscribe(
-          response => {
-            this.listAppCustDuplicate = response["ListDuplicateAppCust"];
+          (response : ResListAppDupCheckCustMainDataObj) => {
+            this.listAppCustDuplicate = response.ListDuplicateAppCust;
             if (response[CommonConstant.ReturnStatus] == CommonConstant.RuleBehaviourLock) {
               this.isLock = true;
               this.isAppLock = true;
