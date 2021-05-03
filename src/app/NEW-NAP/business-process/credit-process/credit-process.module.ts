@@ -23,8 +23,6 @@ import { CommissionComponent } from "./commission-reserved-fund/component/commis
 import { CommissionReservedFundPagingComponent } from "./commission-reserved-fund/comission-reserved-fund-paging/commission-reserved-fund-paging.component";
 import { ReservedFundComponent } from "./commission-reserved-fund/component/reserved-fund/reserved-fund.component";
 import { CommissionReservedFundDetailComponent } from "./commission-reserved-fund/comission-reserved-fund-detail/commission-reserved-fund-detail.component";
-import { FraudDetectionPagingComponent } from "./fraud-detection/fraud-detection-paging/fraud-detection-paging.component";
-import { FraudDetectionVerifComponent } from "./fraud-detection/fraud-detection-verif/fraud-detection-verif.component";
 import { CreditReviewMainComponent } from "./credit-review/credit-review-main/credit-review-main.component";
 import { CreditReviewPagingComponent } from "./credit-review/credit-review-paging/credit-review-paging.component";
 import { UcapprovalModule } from "@adins/ucapproval";
@@ -32,7 +30,6 @@ import { UcapprovebyModule } from "@adins/ucapproveby";
 import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.component';
 import { ProcessComponentModule } from "app/NEW-NAP/sharing-component/process-component/process-component.module";
 import { UcSubsectionModule } from "@adins/uc-subsection";
-import { FraudVerificationMultiAssetComponent } from "./fraud-verification-multi-asset/fraud-verification-multi-asset.component";
 import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-sharing-component.module";
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
@@ -126,14 +123,11 @@ export const customCurrencyMaskConfig = {
     CommissionComponent,
     ReservedFundComponent,
     FormAddDynamicComponent,
-    FraudDetectionPagingComponent,
-    FraudDetectionVerifComponent,
     CreditReviewMainComponent,
     CreditReviewPagingComponent,
     ViewApprovalComponent,
     CreditReviewMainComponent,
     CreditInquiryComponent, 
-    FraudVerificationMultiAssetComponent, 
     CreditApprovalDetailComponent,
     ViewApplicationDataMultiComponent,
     NewCreditInvestigationComponent,
