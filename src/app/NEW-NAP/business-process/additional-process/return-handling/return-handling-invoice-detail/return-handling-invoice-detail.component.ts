@@ -14,10 +14,10 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
-import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 
@@ -28,7 +28,7 @@ import { CookieService } from 'ngx-cookie';
 export class ReturnHandlingInvoiceDetailComponent implements OnInit {
 
   ReturnHandlingHId: number;
-  ReturnHandlingDObj: any;
+  ReturnHandlingDObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   AppId: number;
   IsReturnHandling: boolean;
   IsDetail: boolean = false;
@@ -124,8 +124,8 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
       let ReqByIdAndCodeObj = new GenericObj();
       ReqByIdAndCodeObj.Id = this.ReturnHandlingHId;
       ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingInvoice;
-      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
-        (response) => {
+      this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
+        (response : ResReturnHandlingDObj) => {
           this.ReturnHandlingDObj = response;
         });
     }

@@ -14,6 +14,7 @@ import { environment } from 'environments/environment';
 import { FormBuilder } from '@angular/forms';
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 
 @Component({
   selector: 'app-cust-completion-detail',
@@ -32,7 +33,7 @@ export class CustCompletionDetailComponent implements OnInit {
     ReturnExecNotes: ['']
   });
   ReturnHandlingHId: number = 0;
-  ResponseReturnInfoObj: ReturnHandlingDObj;
+  ResponseReturnInfoObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   OnFormReturnInfo: boolean = false;
   
   constructor(
@@ -91,8 +92,8 @@ export class CustCompletionDetailComponent implements OnInit {
       let ReqByIdAndCodeObj = new GenericObj();
       ReqByIdAndCodeObj.Id = this.ReturnHandlingHId;
       ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingEditNAP4;
-      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
-        (response) => {
+      this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
+        (response : ResReturnHandlingDObj) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
             ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes

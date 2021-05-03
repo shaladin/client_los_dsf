@@ -16,6 +16,7 @@ import { CookieService } from 'ngx-cookie';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 
 @Component({
   selector: "phone-verification-subject",
@@ -61,7 +62,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   scsCount: number = 0;
   blankCount: number = 0;
   addVerifResultObj: VerfResultObj;
-  returnHandlingDObj: any;
+  returnHandlingDObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   ReturnHandlingDData: ReturnHandlingDObj;
   ReturnHandlingHData: ReturnHandlingHObj;
   OnFormReturnInfo: boolean = false;
@@ -182,8 +183,8 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       let ReqByIdAndCodeObj = new GenericObj();
       ReqByIdAndCodeObj.Id = this.returnHandlingHId;
       ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingAddPhnVerf;
-      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
-        (response) => {
+      this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
+        (response : ResReturnHandlingDObj) => {
           this.returnHandlingDObj = response;
         });
     }
@@ -243,8 +244,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.rtnHandlingDObj.Id = this.returnHandlingHId;
     await this.http.post(URLConstant.AddVerfResult, this.rtnHandlingDObj).toPromise().then(
       (response) => {
-        this.returnHandlingDObj = response;
-
       }
     );
   }

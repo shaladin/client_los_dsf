@@ -16,6 +16,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 
 @Component({
   selector: 'app-commission-reserved-fund-detail',
@@ -29,7 +30,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   AllAppReservedFundObj: AllAppReservedFundObj;
   StepIndex: number = 1;
   private stepper: Stepper;
-  returnHandlingDObj: ReturnHandlingDObj;
+  returnHandlingDObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   showCancel: boolean = true;
   OnFormReturnInfo: boolean = false;
   BizTemplateCode: string;
@@ -155,8 +156,8 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       let ReqByIdAndCodeObj = new GenericObj();
       ReqByIdAndCodeObj.Id = this.ReturnHandlingHObj.ReturnHandlingHId;
       ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingEditComRsvFnd;
-      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
-        (response) => {
+      this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
+        (response : ResReturnHandlingDObj) => {
           this.returnHandlingDObj = response;
           this.HandlingForm.patchValue({
             ReturnHandlingExecNotes: this.returnHandlingDObj.ReturnHandlingExecNotes

@@ -12,6 +12,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 
 
 
@@ -28,7 +29,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   wfTaskListId: any;
   appCollateralObj: any;
   AppObj: any;
-  returnHandlingDObj: any;
+  returnHandlingDObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   ReturnHandlingDData: ReturnHandlingDObj;
   BizTemplateCode: string;
   IsViewReady: boolean = false;
@@ -139,8 +140,8 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
       let ReqByIdAndCodeObj = new GenericObj();
       ReqByIdAndCodeObj.Id = this.returnHandlingHId;
       ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingAddColtr;
-      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
-        (response) => {
+      this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
+        (response : ResReturnHandlingDObj) => {
           this.returnHandlingDObj = response;
         });
     }
