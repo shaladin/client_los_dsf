@@ -187,7 +187,7 @@ export class CommonConstant {
   public static ASSET_TYPE_CAR = "CAR";
   public static LICENSE_PLATE_NO = "LICENSE PLATE NO";
   public static OFFERING_VALIDITY_APV = "OFF_VLD_APV";
-  public static AppStatCancel = "CAN";
+
   //APV RESULT
   public static ApvResultReturn = "Return";
   public static ApvResultReturnFinal = "ReturnFinal";
@@ -706,4 +706,8 @@ export class CommonConstant {
 
   //PROD OFFERING
   public static PROD_OFF_STAT_ACT = "ACT";
+
+  //APP STAT
+  public static AppStatCancel = "CAN";
+  public static AppStatReject = "RJC";
 }

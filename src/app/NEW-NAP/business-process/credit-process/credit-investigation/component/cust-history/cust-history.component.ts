@@ -5,6 +5,7 @@ import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-cust-history',
@@ -47,7 +48,7 @@ export class CustHistoryComponent implements OnInit {
             (response) => {
               this.ExstAgrmnt = response;
             });
-          this.http.post(URLConstant.GetAppByCustNoAndAppStat, { CustNo: this.CustNo,AppStat:"REJECT" }).subscribe(
+          this.http.post(URLConstant.GetAppByCustNoAndAppStat, { CustNo: this.CustNo,AppStat: CommonConstant.AppStatReject }).subscribe(
             (response) => {
               this.AppRjct = response;
             });
