@@ -20,6 +20,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-guarantor-company',
@@ -37,6 +38,7 @@ export class GuarantorCompanyComponent implements OnInit {
   param: any;
   key: any;
   criteria: CriteriaObj[] = [];
+  CustCompanyIdObj: GenericObj;
   resultData: any;
   inputLookupObj: any;
   MrCompanyTypeCode: any;
@@ -291,8 +293,9 @@ export class GuarantorCompanyComponent implements OnInit {
               this.inputLookupObj1.nameSelect = "";
               this.inputLookupObj1.jsonSelect = {};
             }
-
-            this.http.post(URLConstant.GetCustCompanyContactPersonByCustCompanyId, { CustCompanyId: this.resultData.CustCompanyId }).subscribe(
+            this.CustCompanyIdObj = new GenericObj();
+            this.CustCompanyIdObj.Id = this.resultData.CustCompanyId;
+            this.http.post(URLConstant.GetCustCompanyContactPersonByCustCompanyId, this.CustCompanyIdObj).subscribe(
               (response) => {
                 this.resultData = response;
                 this.CompanyForm.patchValue({
