@@ -22,16 +22,6 @@ import { CookieService } from 'ngx-cookie';
 })
 export class FraudDetectionVerifComponent implements OnInit {
 
-  losUrl = environment.losUrl;
-  foundationUrl = environment.FoundationR3Url;
-  getAppById = URLConstant.GetAppById;
-  getCustDataByAppId = URLConstant.GetCustDataByAppId;
-  getAppDupCheckCustByAppId = URLConstant.GetCustomerDuplicateCheck;
-  getFraudDukcapilByIdNo = URLConstant.GetFraudDukcapilByIdNo;
-  addAppFraudVerf = URLConstant.AddAppFraudVerf;
-  getLeadByLeadId = URLConstant.GetLeadByLeadId;
-  getAppAssetByAppId = URLConstant.GetAppAssetByAppId;
-  getAssetNegativeDuplicateCheck = URLConstant.GetAssetNegativeDuplicateCheck;
   bussinessDt: any;
   appId: any;
   appCustObj: AppCustObj = new AppCustObj();
@@ -125,7 +115,7 @@ export class FraudDetectionVerifComponent implements OnInit {
       "VerifyStat": "Verified",
       "WfTaskId": this.WfTaskListId
     }
-    this.http.post(this.addAppFraudVerf, verfObj).subscribe(
+    this.http.post(URLConstant.AddAppFraudVerf, verfObj).subscribe(
       response => {
         var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_FRAUD_DETECTION_PAGING], { "BizTemplateCode": BizTemplateCode });
