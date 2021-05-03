@@ -263,8 +263,11 @@ export class URLConstant {
   public static DeleteRefEmpAndEmpBankAcc = "/RefEmp/DeleteRefEmpAndEmpBankAcc";
   public static GetListEmployeebyRefEmpId = "/EmpPosition/GetListEmployeebyRefEmpId";
   public static GetEmpListByOfficeIdAndIsActive = "/RefEmp/GetEmpListByOfficeIdAndIsActive";
-  public static GetRefEmpByEmpNo = "/RefEmp/GetRefEmpByEmpNo"
-  public static GetListRefEmpByGsValueandOfficeId = environment.FoundationR3Url + "/RefEmp/GetListRefEmpByGsValueandOfficeId"
+  public static GetRefEmpByEmpNo = "/RefEmp/GetRefEmpByEmpNo";
+  public static GetRefEmpSpvByEmpNo = environment.FoundationR3Url + "/RefEmp/GetRefEmpSpvByEmpNo";
+  public static GetListRefEmpByGsValueandOfficeId = environment.FoundationR3Url + "/RefEmp/GetListRefEmpByGsValueandOfficeId";
+  public static GetRefEmpForLookupEmployee = environment.FoundationR3Url + "/RefEmp/GetRefEmpForLookupEmployee";
+  public static GetRefEmpForLookupByUsername = environment.FoundationR3Url + "/RefEmp/GetRefEmpForLookupByUsername";
 
   //EMP_POSITION
   public static GetEmpPositionPaging = "/EmpPosition/GetEmpPositionPaging";
@@ -371,6 +374,7 @@ export class URLConstant {
 
   //REF ATTR
   public static GetListActiveRefAttrByAttrGroup = environment.FoundationR3Url + "/RefAttr/GetListActiveRefAttrByAttrGroup"
+  
   //REF PROV DISTRICT
   public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";
   public static GetRefProvDistrictByProvDistrictCode = environment.FoundationR3Url + "/RefProvDistrict/GetRefProvDistrictByProvDistrictCode";
@@ -422,6 +426,7 @@ export class URLConstant {
   public static EditExchangeRate = "/RefCurr/EditExchangeRate";
   public static GetExchangeRate = "/RefCurr/GetExchangeRate";
   public static GetListKvpActiveRefCurr = environment.FoundationR3Url + "/RefCurr/GetListKvpActiveRefCurr"
+ 
   //GENERIC
   public static GetObjectBySQL = "/Generic/GetObjectBySQL";
   public static AddObjectBySQL = "/Generic/AddObjectBySQL";
@@ -442,10 +447,6 @@ export class URLConstant {
 
   //REF MODULE
   public static GetListRefModuleKeyValue = "/RefModule/GetListRefModuleKeyValue";
-
-  //REF EMP
-  public static GetRefEmpForLookupEmployee = environment.FoundationR3Url + "/RefEmp/GetRefEmpForLookupEmployee";
-  public static GetRefEmpForLookupByUsername = environment.FoundationR3Url + "/RefEmp/GetRefEmpForLookupByUsername";
 
   //REF EMP LEAVE MANAGEMENT
   public static GetRefEmpLeaveMngmntPaging = "/RefEmpLeaveManagement/GetRefEmpLeaveMngmntPaging";
