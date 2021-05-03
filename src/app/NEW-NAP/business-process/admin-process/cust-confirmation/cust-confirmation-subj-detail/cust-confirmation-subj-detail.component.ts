@@ -16,6 +16,7 @@ import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
 
 @Component({
   selector: 'app-cust-confirmation-subj-detail',
@@ -147,10 +148,10 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   AppCustId: number = 0;
   async GetListCustData() {
     await this.http.post(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.AppId }).toPromise().then(
-      (response) => {
-        if (response["ListAppCustObj"].length > 0) {
-          for (let index = 0; index < response["ListAppCustObj"].length; index++) {
-            const element = response["ListAppCustObj"][index];
+      (response : ResListCustMainDataObj) => {
+        if (response.ListAppCustObj.length > 0) {
+          for (let index = 0; index < response.ListAppCustObj.length; index++) {
+            const element = response.ListAppCustObj[index];
             if (this.Subject == CommonConstant.RoleCustData) {
               if (element.IsCustomer) {
                 this.AppCustId = element.AppCustId;
