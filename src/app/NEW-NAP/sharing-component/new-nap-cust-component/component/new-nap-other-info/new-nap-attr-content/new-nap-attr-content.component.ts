@@ -9,7 +9,7 @@ import { AttrContent } from 'app/shared/model/CustCompletion/AttrContent.Model';
 import { RefAttr } from 'app/shared/model/CustCompletion/RefAttr.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { NewCustAttrContentObj } from 'app/shared/model/NewCustAttrContentObj.Model';
-import { ResGetAppCustAttrContentObj, ResGetListAppCustAttrContentObj } from 'app/shared/model/Request/NAP/NAP4/ResGetListAppCustAttrContentObj.model';
+import { ResGetAppCustAttrContentObj, ResGetListAppCustAttrContentObj } from 'app/shared/model/Response/NAP4/ResGetListAppCustAttrContentObj.model';
 import { environment } from 'environments/environment';
 
 @Component({
