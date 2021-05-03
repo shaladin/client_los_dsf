@@ -28,7 +28,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ResGetAppCustAddrByAppIdAndAddrTypeCodeObj } from 'app/shared/model/Response/CustMainData/ResGetAppCustAddrByAppIdAndAddrTypeCodeObj.model';
+import { ResGetAppCustAddrByAppIdAndAddrTypeCodeObj } from 'app/shared/model/Response/NAP/CustMainData/ResGetAppCustAddrByAppIdAndAddrTypeCodeObj.model';
 
 @Component({
   selector: 'app-cust-main-data',
