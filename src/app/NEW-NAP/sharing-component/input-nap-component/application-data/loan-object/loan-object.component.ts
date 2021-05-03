@@ -12,6 +12,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 
 @Component({
   selector: 'app-loan-object',
@@ -163,11 +164,11 @@ export class LoanObjectComponent implements OnInit {
         if (this.AppObj.LobCode == CommonConstant.CFNA) {
           this.isCFNA = true;
 
-          var objIsDisburse = {
-            ProdOfferingCode: this.AppObj.ProdOfferingCode,
-            RefProdCompntCode: CommonConstant.RefProdCompntCodeDisburseToCust,
-            ProdOfferingVersion: this.AppObj.ProdOfferingVersion
-          };
+          var objIsDisburse: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+          objIsDisburse.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+          objIsDisburse.RefProdCompntCode = CommonConstant.RefProdCompntCodeDisburseToCust;
+          objIsDisburse.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
           this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, objIsDisburse).toPromise().then(
             (response) => {
               if (response && response["StatusCode"] == "200" && response["ProdOfferingDId"] > 0) {
@@ -178,11 +179,11 @@ export class LoanObjectComponent implements OnInit {
                 this.CheckIsDisburseToCust();
 
                 if (response["CompntValue"] != 'Y') {
-                  var appObj = {
-                    ProdOfferingCode: this.AppObj.ProdOfferingCode,
-                    RefProdCompntCode: CommonConstant.RefProdCompntSupplSchm,
-                    ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
-                  };
+                  var appObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+                  appObj.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+                  appObj.RefProdCompntCode = CommonConstant.RefProdCompntSupplSchm;
+                  appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
                   this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
                     (response) => {
                       if (response && response["StatusCode"] == "200") {
