@@ -10,6 +10,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { String } from 'typescript-string-operations';
+import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 
 @Component({
   selector: 'app-asset-data-paging',
@@ -69,10 +70,10 @@ export class AssetDataPagingComponent implements OnInit {
             this.mouCustId = response['MouCustId'];
           }
           this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, { TrxNo: this.appObj["AppNo"], TrxTypeCode: "APP", FraudCheckType: "ASSET" }).toPromise().then(
-            (response) => {
-              if (response["ThirdPartyRsltHId"] != null) {
-                this.LastRequestedDate = response["ReqDt"];
-                this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+            (response : ResThirdPartyRsltHObj) => {
+              if (response.ThirdPartyRsltHId != null) {
+                this.LastRequestedDate = response.ReqDt;
+                this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
               }
             }
           );

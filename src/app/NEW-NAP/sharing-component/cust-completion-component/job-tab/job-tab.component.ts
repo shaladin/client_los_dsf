@@ -27,6 +27,7 @@ import { CookieService } from 'ngx-cookie';
 import { String } from 'typescript-string-operations';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj } from 'app/shared/model/Request/NAP/ThirdParty/ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj.model';
+import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 
 @Component({
   selector: 'app-job-tab',
@@ -575,9 +576,9 @@ export class JobTabComponent implements OnInit {
           ReqGetThirdPartyResultHObj.TrxTypeCode = CommonConstant.APP_TRX_TYPE_CODE;
           ReqGetThirdPartyResultHObj.TrxNo = response["AppNo"];
           this.http.post(URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo, ReqGetThirdPartyResultHObj).subscribe(
-            (response) => {
-              if (response["ThirdPartyRsltHId"] != 0 && response["ThirdPartyRsltHId"] != null) {
-                this.requestedDate = response["ReqDt"];
+            (response : ResThirdPartyRsltHObj) => {
+              if (response.ThirdPartyRsltHId != 0 && response.ThirdPartyRsltHId != null) {
+                this.requestedDate = response.ReqDt;
               }
             },
             (error) => {
