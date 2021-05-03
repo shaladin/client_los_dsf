@@ -28,6 +28,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ResGetAppCustAddrByAppIdAndAddrTypeCodeObj } from 'app/shared/model/Request/NAP/CustMainData/ResGetAppCustAddrByAppIdAndAddrTypeCodeObj.model';
 
 @Component({
   selector: 'app-cust-main-data',
@@ -506,16 +507,16 @@ export class CustMainDataComponent implements OnInit {
     ReqByIdAndCodeObj.Id = this.appId;
     ReqByIdAndCodeObj.Code = CommonConstant.AddrTypeLegal;
     this.http.post(URLConstant.GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode, ReqByIdAndCodeObj).subscribe(
-      (response) => {
-        this.legalAddrObj.Addr = response["Addr"];
-        this.legalAddrObj.AreaCode1 = response["AreaCode1"];
-        this.legalAddrObj.AreaCode2 = response["AreaCode2"];
-        this.legalAddrObj.AreaCode3 = response["AreaCode3"];
-        this.legalAddrObj.AreaCode4 = response["AreaCode4"];
-        this.legalAddrObj.City = response["City"];
+      (response : ResGetAppCustAddrByAppIdAndAddrTypeCodeObj) => {
+        this.legalAddrObj.Addr = response.Addr;
+        this.legalAddrObj.AreaCode1 = response.AreaCode1;
+        this.legalAddrObj.AreaCode2 = response.AreaCode2;
+        this.legalAddrObj.AreaCode3 = response.AreaCode3;
+        this.legalAddrObj.AreaCode4 = response.AreaCode4;
+        this.legalAddrObj.City = response.City;
 
-        this.inputAddressObj.inputField.inputLookupObj.nameSelect = response["Zipcode"];
-        this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["Zipcode"] };
+        this.inputAddressObj.inputField.inputLookupObj.nameSelect = response.Zipcode;
+        this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
         this.inputAddressObj.default = this.legalAddrObj;
       });
   }
