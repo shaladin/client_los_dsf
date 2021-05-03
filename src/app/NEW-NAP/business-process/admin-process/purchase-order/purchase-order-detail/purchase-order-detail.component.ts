@@ -11,6 +11,7 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqAssetDataObj } from 'app/shared/model/Request/AppAsset/ReqAppAssetObj.model';
+import { ResGetAllAssetDataForPOByAsset, ResGetAllAssetDataForPOByAssetObj } from 'app/shared/model/Response/PurchaseOrder/ResGetAllAssetDataForPO.model';
 
 @Component({
   selector: 'app-purchase-order-detail',
@@ -23,7 +24,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
   AppId: number;
   AppAssetId: number;
   SupplCode: string;
-  AssetObj: any;
+  AssetObj: ResGetAllAssetDataForPOByAsset = new ResGetAllAssetDataForPOByAsset();
   MouNo: string = "";
   Notes: string = "";
   Address: string = "";
@@ -79,37 +80,37 @@ export class PurchaseOrderDetailComponent implements OnInit {
     appAssetObj.AgrmntId = this.AgrmntId;
     appAssetObj.SupplCode = this.SupplCode;
 
-    await this.http.post(poUrl, appAssetObj).toPromise().then(
+    await this.http.post<ResGetAllAssetDataForPOByAssetObj>(poUrl, appAssetObj).toPromise().then(
       (response) => {
         console.log(response);
-        this.AssetObj = response[CommonConstant.ReturnObj];
-        if(this.AssetObj["PurchaseOrderHObj"] != null && this.AssetObj["PurchaseOrderHObj"]["PurchaseOrderHId"] != 0){
+        this.AssetObj = response.ReturnObject;
+        if(this.AssetObj.PurchaseOrderHId != 0){
           this.isDataExist = true;
-          this.Notes = this.AssetObj["PurchaseOrderHObj"]["Notes"];
-          this.purchaseOrderHObj.RowVersion = this.AssetObj["PurchaseOrderHObj"]["RowVersion"];
+          this.Notes = this.AssetObj.Notes;
+          this.purchaseOrderHObj.RowVersion = this.AssetObj.RowVersionPO;
         }
-        this.ProportionalValue = this.AssetObj["ProportionalValue"];
-        this.TotalInsCustAmt = this.AssetObj["TotalInsCustAmt"];
-        this.TotalLifeInsCustAmt = this.AssetObj["TotalLifeInsCustAmt"];
-        this.TotalPurchaseOrderAmt = this.AssetObj["TotalPurchaseOrderAmt"];
-        var tempAddr = this.AssetObj["AppCustAddrObj"].Addr == null ? '-' : this.AssetObj["AppCustAddrObj"].Addr;
-        var areaCode4 = this.AssetObj["AppCustAddrObj"].AreaCode4 == null ? '-' : this.AssetObj["AppCustAddrObj"].AreaCode4;
-        var areaCode3 = this.AssetObj["AppCustAddrObj"].AreaCode3 == null ? '-' : this.AssetObj["AppCustAddrObj"].AreaCode3;
-        var areaCode2 = this.AssetObj["AppCustAddrObj"].AreaCode2 == null ? '' : this.AssetObj["AppCustAddrObj"].AreaCode2;
-        var areaCode1 = this.AssetObj["AppCustAddrObj"].AreaCode1 == null ? '' : this.AssetObj["AppCustAddrObj"].AreaCode1;
-        var city = this.AssetObj["AppCustAddrObj"].City == null ? '' : this.AssetObj["AppCustAddrObj"].City;
-        var zipCode = this.AssetObj["AppCustAddrObj"].Zipcode == null ? '' : this.AssetObj["AppCustAddrObj"].Zipcode;
+        this.ProportionalValue = this.AssetObj.ProportionalValue;
+        this.TotalInsCustAmt = this.AssetObj.TotalInsCustAmt;
+        this.TotalLifeInsCustAmt = this.AssetObj.TotalLifeInsCustAmt;
+        this.TotalPurchaseOrderAmt = this.AssetObj.TotalPurchaseOrderAmt;
+        var tempAddr = this.AssetObj.AppCustAddrObj.Addr == null ? '-' : this.AssetObj.AppCustAddrObj.Addr;
+        var areaCode4 = this.AssetObj.AppCustAddrObj.AreaCode4 == null ? '-' : this.AssetObj.AppCustAddrObj.AreaCode4;
+        var areaCode3 = this.AssetObj.AppCustAddrObj.AreaCode3 == null ? '-' : this.AssetObj.AppCustAddrObj.AreaCode3;
+        var areaCode2 = this.AssetObj.AppCustAddrObj.AreaCode2 == null ? '' : this.AssetObj.AppCustAddrObj.AreaCode2;
+        var areaCode1 = this.AssetObj.AppCustAddrObj.AreaCode1 == null ? '' : this.AssetObj.AppCustAddrObj.AreaCode1;
+        var city = this.AssetObj.AppCustAddrObj.City == null ? '' : this.AssetObj.AppCustAddrObj.City;
+        var zipCode = this.AssetObj.AppCustAddrObj.Zipcode == null ? '' : this.AssetObj.AppCustAddrObj.Zipcode;
 
         this.Address = tempAddr + ' RT/RW: ' + areaCode4 + '/' +
           areaCode3 + ' ' + areaCode2 + ' ' + areaCode1 + ' ' + city + ' ' + zipCode;
-        this.PurchaseOrderExpiredDt = this.AssetObj["PurchaseOrderExpiredDt"];
+        this.PurchaseOrderExpiredDt = this.AssetObj.PurchaseOrderExpiredDt;
 
         this.purchaseOrderHObj.AgrmntId = this.AgrmntId;
         this.purchaseOrderHObj.SupplCode = this.SupplCode;
-        this.purchaseOrderHObj.BankCode = this.AssetObj["VendorBankAccObj"].BankCode;
-        this.purchaseOrderHObj.BankBranch = this.AssetObj["VendorBankAccObj"].BankName;
-        this.purchaseOrderHObj.BankAccNo = this.AssetObj["VendorBankAccObj"].BankAccountNo;
-        this.purchaseOrderHObj.BankAccName = this.AssetObj["VendorBankAccObj"].BankAccountName;
+        this.purchaseOrderHObj.BankCode = this.AssetObj.VendorBankAccObj.BankCode;
+        this.purchaseOrderHObj.BankBranch = this.AssetObj.VendorBankAccObj.BankName;
+        this.purchaseOrderHObj.BankAccNo = this.AssetObj.VendorBankAccObj.BankAccountNo;
+        this.purchaseOrderHObj.BankAccName = this.AssetObj.VendorBankAccObj.BankAccountName;
         this.purchaseOrderHObj.TotalPurchaseOrderAmt = this.TotalPurchaseOrderAmt;
       });
   }
@@ -131,11 +132,11 @@ export class PurchaseOrderDetailComponent implements OnInit {
       if (ListPORefMasterObj[i].Type == CommonConstant.PurchaseOrderItemTypeNonFee) {
         var tempPurchaseOrderDObj = new PurchaseOrderDObj();
         tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MrPoItemCode;
-        tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].SourceAgrmntFinDataField] ? this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].SourceAgrmntFinDataField] : 0;
+        tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj.AgrmntFinDataObj[ListPORefMasterObj[i].SourceAgrmntFinDataField] ? this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].SourceAgrmntFinDataField] : 0;
         TempListPurchaseOrderD.push(tempPurchaseOrderDObj);
       }
       if (ListPORefMasterObj[i].Type == CommonConstant.PurchaseOrderItemTypeFee) {
-        let tempAgrmntFeeObj = this.AssetObj["AgrmntFeeListObj"].find(x => x.MrFeeTypeCode == ListPORefMasterObj[i].SourceMrFeeTypeCode);
+        let tempAgrmntFeeObj = this.AssetObj.AgrmntFeeListObj.find(x => x.MrFeeTypeCode == ListPORefMasterObj[i].SourceMrFeeTypeCode);
         var tempPurchaseOrderDObj = new PurchaseOrderDObj();
         tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MrPoItemCode;
         tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
