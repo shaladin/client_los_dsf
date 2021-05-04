@@ -710,4 +710,7 @@ export class CommonConstant {
   //APP STAT
   public static AppStatCancel = "CAN";
   public static AppStatReject = "RJC";
+  
+  // GENERAL SETTING CODE
+  public static GS_CODE_SALES_OFFICER_CODE = "SALES_OFFICER_CODE";
 }

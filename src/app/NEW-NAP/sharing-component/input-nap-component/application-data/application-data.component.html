@@ -15,18 +15,17 @@
               <div class="form-group col-md-2 adins-required">
                 <label class="adInsLabel" translate>Sales Officer </label>
               </div>
-              <div class="col-md-4" *ngIf="isInputLookupObj">
+              <div class="col-md-4" *ngIf="isInputLookupObj && !isSalesOfficerCode">
                 <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='NapAppModelForm' [enjiForm]='enjiForm'
                   [identifier]="'employeeIdentifier'" (lookup)="getLookupEmployeeResponse($event)">
                 </lib-uclookupgeneric>
                 <lib-uc-show-errors [control]="NapAppModelForm.controls.SalesOfficerName" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
               </div>
+              <label class="col-md-4 adInsLabel" *ngIf="isSalesOfficerCode">{{NapAppModelForm.controls.SalesOfficerName.value}}</label>
               <!-- Sales Supervisor -->
               <label class="col-md-2 adInsLabel" translate>Sales Supervisor </label>
-              <label class="col-md-4 adInsLabel"
-                *ngIf="NapAppModelForm.controls.SalesHeadName.value">{{NapAppModelForm.controls.SalesHeadName.value}}
-              </label>
+              <label class="col-md-4 adInsLabel" *ngIf="NapAppModelForm.controls.SalesHeadName.value">{{NapAppModelForm.controls.SalesHeadName.value}}</label>
               <label class="col-md-4 adInsLabel" *ngIf="!NapAppModelForm.controls.SalesHeadName.value"> - </label>
             </div>
 

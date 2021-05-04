@@ -13,6 +13,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 
 @Component({
   selector: 'app-application-data-factoring',
@@ -537,12 +538,12 @@ export class ApplicationDataFactoringComponent implements OnInit {
     await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
       (response) => {
         this.responseApp = response
-      });
-    var prodObj = {
-      ProdOfferingCode: this.responseApp.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestTypeGeneral,
-      ProdOfferingVersion: this.responseApp.ProdOfferingVersion
-    }
+      }); 
+    var prodObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    prodObj.ProdOfferingCode = this.responseApp.ProdOfferingCode;
+    prodObj.RefProdCompntCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
+    prodObj.ProdOfferingVersion = this.responseApp.ProdOfferingVersion;
+
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, prodObj).toPromise().then(
       (response) => {
         this.responseProd = response;
