@@ -10,6 +10,7 @@ export class DMSObj{
     ViewCodeAwal: string;
     ViewThumb: string;
     Option : Array<DMSLabelValueObj> = new Array<DMSLabelValueObj>();
+    UsingDmsAdIns : string;
     constructor(){
     };
 }
