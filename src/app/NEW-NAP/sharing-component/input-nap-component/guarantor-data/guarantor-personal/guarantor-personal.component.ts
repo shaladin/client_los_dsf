@@ -18,6 +18,8 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 @Component({
   selector: 'app-guarantor-personal',
   templateUrl: './guarantor-personal.component.html',
@@ -161,17 +163,15 @@ export class GuarantorPersonalComponent implements OnInit {
     this.http.post(URLConstant.GetAppCustByAppId, AppCust).subscribe(
       (response) => {
         if (response["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
-          var refCustRelObj = {
+          var refCustRelObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarPersonalRelationship,
             MappingCode: CommonConstant.CustTypePersonal,
-            RowVersion: ""
           }
         }
         else {
-          var refCustRelObj = {
+          var refCustRelObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
             MappingCode: CommonConstant.CustTypePersonal,
-            RowVersion: ""
           }
         }
         this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refCustRelObj).subscribe(
@@ -223,7 +223,8 @@ export class GuarantorPersonalComponent implements OnInit {
       }
     );
 
-    var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
+    let obj: GenericObj = new GenericObj();
+    obj.Codes = [CommonConstant.RefMasterTypeCodeNationality];
     this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
         this.NationalityObj = response[CommonConstant.ReturnObj];

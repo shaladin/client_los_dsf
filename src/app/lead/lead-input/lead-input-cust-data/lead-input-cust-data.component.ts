@@ -33,6 +33,7 @@ import { String } from 'typescript-string-operations';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ReqInputLeadCustPersonalObj } from 'app/shared/model/Request/LEAD/ReqAddEditInputLeadCustPersonalObj.model';
 import { GenericByIdAndCodeObj } from 'app/shared/model/Generic/GenericByIdAndCodeObj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 
 @Component({
   selector: 'app-lead-input-cust-data',
@@ -58,9 +59,7 @@ export class LeadInputCustDataComponent implements OnInit {
   tempIdType: any;
   maritalStatCode: RefMasterObj;
   tempMrMaritalStatCode: any;
-  getListActiveRefMasterUrl: string;
-  getListActiveRefMasterWithMappingCodeAll: string;
-  custModel: RefMasterObj;
+  custModel: ReqRefMasterByTypeCodeAndMappingCodeObj;
   listCustModel: any;
   leadInputObj: ReqInputLeadCustPersonalObj;
   leadCustFacebookObj: LeadCustSocmedObj;
@@ -68,14 +67,6 @@ export class LeadInputCustDataComponent implements OnInit {
   leadCustTwitterObj: LeadCustSocmedObj;
   genderType: RefMasterObj;
   tempGender: any;
-  getLeadByLeadId: string;
-  getLeadCustByLeadId: string;
-  getLeadCustAddr: string;
-  getLeadCustPersonal: string;
-  getLeadCustPersonalFinData: string;
-  getLeadCustPersonalJobData: string;
-  getRefProfessionByCode: string;
-  getListLeadCustSocmed: string;
   reqLeadCustObj: LeadCustObj;
   resLeadCustObj: any;
   reqLeadCustPersonalObj: LeadCustPersonalObj;
@@ -120,7 +111,6 @@ export class LeadInputCustDataComponent implements OnInit {
   inputAddressObjForLegalAddr: any;
   inputAddressObjForResidenceAddr: InputAddressObj;
   generalSettingObj: GeneralSettingObj;
-  getGeneralSettingByCode: string;
   returnGeneralSettingObj: any;
   isNeedCheckBySystem: string;
   isUseDigitalization: string;
@@ -130,7 +120,6 @@ export class LeadInputCustDataComponent implements OnInit {
   leadNo: any;
   latestReqDtCheckIntegrator: string;
   thirdPartyRsltHId: any;
-  getThirdPartyResultHForFraudChecking: string;
   reqLatestJson: any;
   latestCustDataObj: LeadCustCompareObj;
   dmsObj: DMSObj;
@@ -141,18 +130,6 @@ export class LeadInputCustDataComponent implements OnInit {
     private fb: FormBuilder,
     private componentFactoryResolver: ComponentFactoryResolver,
     private cookieService: CookieService) {
-    this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getListActiveRefMasterWithMappingCodeAll = URLConstant.GetListActiveRefMasterWithMappingCodeAll;
-    this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
-    this.getLeadCustByLeadId = URLConstant.GetLeadCustByLeadId;
-    this.getLeadCustAddr = URLConstant.GetLeadCustAddrByLeadCustIdAndAddrTypeCode;
-    this.getLeadCustPersonal = URLConstant.GetLeadCustPersonalByLeadCustId;
-    this.getLeadCustPersonalFinData = URLConstant.GetLeadCustPersonalFinDataByLeadCustPersonalId;
-    this.getLeadCustPersonalJobData = URLConstant.GetLeadCustPersonalJobDataByLeadCustPersonalId;
-    this.getRefProfessionByCode = URLConstant.GetRefProfessionByCode;
-    this.getListLeadCustSocmed = URLConstant.GetListLeadCustSocmedByLeadCustId;
-    this.getGeneralSettingByCode = URLConstant.GetGeneralSettingByCode;
-    this.getThirdPartyResultHForFraudChecking = URLConstant.GetThirdPartyResultHForFraudChecking;
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
@@ -254,7 +231,7 @@ export class LeadInputCustDataComponent implements OnInit {
         this.leadObj = new LeadObj();
         this.leadObj.LeadId = this.LeadId;
         var leadObj = { Id: this.LeadId };
-        this.http.post(this.getLeadByLeadId, leadObj).subscribe(
+        this.http.post(URLConstant.GetLeadByLeadId, leadObj).subscribe(
           (response) => {
             this.returnLeadObj = response;
             this.leadNo = response['LeadNo'];
@@ -264,7 +241,7 @@ export class LeadInputCustDataComponent implements OnInit {
             this.thirdPartyObj.TrxNo = this.leadNo;
             this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
             if(this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0"){
-              this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+              this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
                 (response) => {
                   this.latestReqDtCheckIntegrator = response['ReqDt'];
                   this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
@@ -300,7 +277,7 @@ export class LeadInputCustDataComponent implements OnInit {
     );
     this.genderType = new RefMasterObj();
     this.genderType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
-    this.http.post(this.getListActiveRefMasterUrl, this.genderType).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.genderType).subscribe(
       (response) => {
         this.tempGender = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ Gender: this.tempGender[0].Key });
@@ -309,7 +286,7 @@ export class LeadInputCustDataComponent implements OnInit {
 
     this.idTypeCode = new RefMasterObj();
     this.idTypeCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    this.http.post(this.getListActiveRefMasterUrl, this.idTypeCode).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.idTypeCode).subscribe(
       (response) => {
         this.tempIdType = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ MrIdTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -317,17 +294,17 @@ export class LeadInputCustDataComponent implements OnInit {
 
     this.maritalStatCode = new RefMasterObj();
     this.maritalStatCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMaritalStat;
-    this.http.post(this.getListActiveRefMasterUrl, this.maritalStatCode).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.maritalStatCode).subscribe(
       (response) => {
         this.tempMrMaritalStatCode = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ MrMaritalStatCode: response[CommonConstant.ReturnObj][0]['Key'] });
       }
     );
 
-    this.custModel = new RefMasterObj();
+    this.custModel = new ReqRefMasterByTypeCodeAndMappingCodeObj();
     this.custModel.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustModel;
     this.custModel.MappingCode = CommonConstant.CustTypePersonal;
-    this.http.post(this.getListActiveRefMasterWithMappingCodeAll, this.custModel).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, this.custModel).subscribe(
       (response) => {
         this.listCustModel = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ CustModel: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -356,7 +333,7 @@ export class LeadInputCustDataComponent implements OnInit {
       this.reqLeadCustObj = new LeadCustObj();
       this.reqLeadCustObj.LeadId = this.CopyFrom;
       var objLeadCust = { Id: this.CopyFrom };
-      this.http.post(this.getLeadCustByLeadId, objLeadCust).subscribe(
+      this.http.post(URLConstant.GetLeadCustByLeadId, objLeadCust).subscribe(
         (response) => {
           this.resLeadCustObj = response;
           this.CustomerDataForm.patchValue({
@@ -389,7 +366,7 @@ export class LeadInputCustDataComponent implements OnInit {
           this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
           this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
           var objListLeadCustSocmed = { Id: this.resLeadCustObj.LeadCustId };
-          this.http.post(this.getListLeadCustSocmed, objListLeadCustSocmed).subscribe(
+          this.http.post(URLConstant.GetListLeadCustSocmedByLeadCustId, objListLeadCustSocmed).subscribe(
             (response) => {
               this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
               this.CustomerDataForm.patchValue({
@@ -465,7 +442,7 @@ export class LeadInputCustDataComponent implements OnInit {
           this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
           this.reqLeadCustPersonalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
           var objLeadCustPersonal = { Id: this.resLeadCustObj.LeadCustId };
-          this.http.post(this.getLeadCustPersonal, objLeadCustPersonal).subscribe(
+          this.http.post(URLConstant.GetLeadCustPersonalByLeadCustId, objLeadCustPersonal).subscribe(
             (response) => {
               this.resLeadCustPersonalObj = response;
               this.CustomerDataForm.patchValue({
@@ -482,7 +459,7 @@ export class LeadInputCustDataComponent implements OnInit {
               this.reqLeadCustPersonalJobDataObj = new LeadCustPersonalJobDataObj();
               this.reqLeadCustPersonalJobDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
               var objLeadCustPersonalJobData = { Id: this.resLeadCustPersonalObj.LeadCustPersonalId };
-              this.http.post(this.getLeadCustPersonalJobData, objLeadCustPersonalJobData).subscribe(
+              this.http.post(URLConstant.GetLeadCustPersonalJobDataByLeadCustPersonalId, objLeadCustPersonalJobData).subscribe(
                 (response) => {
                   this.resLeadCustPersonalJobDataObj = response;
                   this.CustomerDataForm.patchValue({
@@ -491,7 +468,7 @@ export class LeadInputCustDataComponent implements OnInit {
 
                   this.refProfessionObj = new RefProfessionObj();
                   this.refProfessionObj.ProfessionCode = this.resLeadCustPersonalJobDataObj.MrProfessionCode;
-                  this.http.post(this.getRefProfessionByCode, {Code : this.resLeadCustPersonalJobDataObj.MrProfessionCode}).subscribe(
+                  this.http.post(URLConstant.GetRefProfessionByCode, {Code : this.resLeadCustPersonalJobDataObj.MrProfessionCode}).subscribe(
                     (response) => {
                       this.returnRefProfessionObj = response;
                       this.professionLookUpObj.nameSelect = this.returnRefProfessionObj.ProfessionName;
@@ -503,7 +480,7 @@ export class LeadInputCustDataComponent implements OnInit {
               this.reqLeadCustPersonalFinDataObj = new LeadCustPersonalFinDataObj();
               this.reqLeadCustPersonalFinDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
               var objCustPersonalFinData = { Id: this.resLeadCustPersonalObj.LeadCustPersonalId };
-              this.http.post(this.getLeadCustPersonalFinData, objCustPersonalFinData).subscribe(
+              this.http.post(URLConstant.GetLeadCustPersonalFinDataByLeadCustPersonalId, objCustPersonalFinData).subscribe(
                 (response) => {
                   this.resLeadCustPersonalFinDataObj = response;
                   this.CustomerDataForm.patchValue({
@@ -519,7 +496,7 @@ export class LeadInputCustDataComponent implements OnInit {
       this.reqLeadCustObj = new LeadCustObj();
       this.reqLeadCustObj.LeadId = this.LeadId;
       var objLeadCust1 = { Id: this.LeadId };
-      this.http.post(this.getLeadCustByLeadId, objLeadCust1).subscribe(
+      this.http.post(URLConstant.GetLeadCustByLeadId, objLeadCust1).subscribe(
         (response) => {
           this.resLeadCustObj = response;
 
@@ -545,7 +522,7 @@ export class LeadInputCustDataComponent implements OnInit {
             this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
             this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
             var objListLeadCustSocmed1 = { Id: this.resLeadCustObj.LeadCustId };
-            this.http.post(this.getListLeadCustSocmed, objListLeadCustSocmed1).subscribe(
+            this.http.post(URLConstant.GetListLeadCustSocmedByLeadCustId, objListLeadCustSocmed1).subscribe(
               (response) => {
                 this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
                 this.CustomerDataForm.patchValue({
@@ -622,7 +599,7 @@ export class LeadInputCustDataComponent implements OnInit {
             this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
             this.reqLeadCustPersonalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
             var objLeadCustPersonal1 = { Id: this.resLeadCustObj.LeadCustId };
-            this.http.post(this.getLeadCustPersonal, objLeadCustPersonal1).subscribe(
+            this.http.post(URLConstant.GetLeadCustPersonalByLeadCustId, objLeadCustPersonal1).subscribe(
               (response) => {
                 this.resLeadCustPersonalObj = response;
                 this.CustomerDataForm.patchValue({
@@ -639,7 +616,7 @@ export class LeadInputCustDataComponent implements OnInit {
                 this.reqLeadCustPersonalJobDataObj = new LeadCustPersonalJobDataObj();
                 this.reqLeadCustPersonalJobDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
                 var objLeadCustPersonalJobData1 = { Id: this.resLeadCustPersonalObj.LeadCustPersonalId };
-                this.http.post(this.getLeadCustPersonalJobData, objLeadCustPersonalJobData1).subscribe(
+                this.http.post(URLConstant.GetLeadCustPersonalJobDataByLeadCustPersonalId, objLeadCustPersonalJobData1).subscribe(
                   (response) => {
                     this.resLeadCustPersonalJobDataObj = response;
                     this.CustomerDataForm.patchValue({
@@ -647,7 +624,7 @@ export class LeadInputCustDataComponent implements OnInit {
                     });
                     this.refProfessionObj = new RefProfessionObj();
                     this.refProfessionObj.ProfessionCode = this.resLeadCustPersonalJobDataObj.MrProfessionCode;
-                    this.http.post(this.getRefProfessionByCode, {Code : this.resLeadCustPersonalJobDataObj.MrProfessionCode}).subscribe(
+                    this.http.post(URLConstant.GetRefProfessionByCode, {Code : this.resLeadCustPersonalJobDataObj.MrProfessionCode}).subscribe(
                       (response) => {
                         this.returnRefProfessionObj = response;
                         this.professionLookUpObj.nameSelect = this.returnRefProfessionObj.ProfessionName;
@@ -668,7 +645,7 @@ export class LeadInputCustDataComponent implements OnInit {
                 this.reqLeadCustPersonalFinDataObj = new LeadCustPersonalFinDataObj();
                 this.reqLeadCustPersonalFinDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
                 var objCustPersonalFinData1 = { Id: this.resLeadCustPersonalObj.LeadCustPersonalId };
-                this.http.post(this.getLeadCustPersonalFinData, objCustPersonalFinData1).subscribe(
+                this.http.post(URLConstant.GetLeadCustPersonalFinDataByLeadCustPersonalId, objCustPersonalFinData1).subscribe(
                   (response) => {
                     this.resLeadCustPersonalFinDataObj = response;
                     this.CustomerDataForm.patchValue({
@@ -901,7 +878,7 @@ export class LeadInputCustDataComponent implements OnInit {
     this.reqLeadCustObj = new LeadCustObj();
     this.reqLeadCustObj.LeadId = this.LeadId;
     var objLeadCust2 = { Id: this.LeadId };
-    await this.http.post(this.getLeadCustByLeadId, objLeadCust2).toPromise().then(
+    await this.http.post(URLConstant.GetLeadCustByLeadId, objLeadCust2).toPromise().then(
       (response) => {
         this.resLeadCustObj = response;
         if (this.resLeadCustObj.LeadCustId != 0) {
@@ -919,7 +896,7 @@ export class LeadInputCustDataComponent implements OnInit {
           this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
           this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
           var objListLeadCustSocmed2 = { Id: this.resLeadCustObj.LeadCustId };
-          this.http.post(this.getListLeadCustSocmed, objListLeadCustSocmed2).subscribe(
+          this.http.post(URLConstant.GetListLeadCustSocmedByLeadCustId, objListLeadCustSocmed2).subscribe(
             (response) => {
               this.resLeadCustSocmedObj = response[CommonConstant.ReturnObj];
               this.CustomerDataForm.patchValue({
@@ -993,7 +970,7 @@ export class LeadInputCustDataComponent implements OnInit {
           this.reqLeadCustPersonalObj = new LeadCustPersonalObj();
           this.reqLeadCustPersonalObj.LeadCustId = this.resLeadCustObj.LeadCustId;
           var objLeadCustPersonal2 = { Id: this.resLeadCustObj.LeadCustId };
-          this.http.post(this.getLeadCustPersonal, objLeadCustPersonal2).subscribe(
+          this.http.post(URLConstant.GetLeadCustPersonalByLeadCustId, objLeadCustPersonal2).subscribe(
             (response) => {
               this.resLeadCustPersonalObj = response;
               this.CustomerDataForm.patchValue({
@@ -1009,7 +986,7 @@ export class LeadInputCustDataComponent implements OnInit {
               this.reqLeadCustPersonalJobDataObj = new LeadCustPersonalJobDataObj();
               this.reqLeadCustPersonalJobDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
               var objLeadCustPersonalJobData2 = { Id: this.resLeadCustPersonalObj.LeadCustPersonalId };
-              this.http.post(this.getLeadCustPersonalJobData, objLeadCustPersonalJobData2).subscribe(
+              this.http.post(URLConstant.GetLeadCustPersonalJobDataByLeadCustPersonalId, objLeadCustPersonalJobData2).subscribe(
                 (response) => {
                   this.resLeadCustPersonalJobDataObj = response;
                   this.CustomerDataForm.patchValue({
@@ -1017,7 +994,7 @@ export class LeadInputCustDataComponent implements OnInit {
                   });
                   this.refProfessionObj = new RefProfessionObj();
                   this.refProfessionObj.ProfessionCode = this.resLeadCustPersonalJobDataObj.MrProfessionCode;
-                  this.http.post(this.getRefProfessionByCode, {Code : this.resLeadCustPersonalJobDataObj.MrProfessionCode}).subscribe(
+                  this.http.post(URLConstant.GetRefProfessionByCode, {Code : this.resLeadCustPersonalJobDataObj.MrProfessionCode}).subscribe(
                     (response) => {
                       this.returnRefProfessionObj = response;
                       this.professionLookUpObj.nameSelect = this.returnRefProfessionObj.ProfessionName;
@@ -1028,7 +1005,7 @@ export class LeadInputCustDataComponent implements OnInit {
               this.reqLeadCustPersonalFinDataObj = new LeadCustPersonalFinDataObj();
               this.reqLeadCustPersonalFinDataObj.LeadCustPersonalId = this.resLeadCustPersonalObj.LeadCustPersonalId;
               var objCustPersonalFinData2 = { Id: this.resLeadCustPersonalObj.LeadCustPersonalId };
-              this.http.post(this.getLeadCustPersonalFinData, objCustPersonalFinData2).subscribe(
+              this.http.post(URLConstant.GetLeadCustPersonalFinDataByLeadCustPersonalId, objCustPersonalFinData2).subscribe(
                 (response) => {
                   this.resLeadCustPersonalFinDataObj = response;
                   this.CustomerDataForm.patchValue({
@@ -1050,7 +1027,7 @@ export class LeadInputCustDataComponent implements OnInit {
       this.setLeadCustPersonalJobData();
       this.http.post(URLConstant.CheckIntegrator, this.leadInputObj).subscribe(
         () => {
-          this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+          this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
             (response) => {
               this.latestReqDtCheckIntegrator = response['ReqDt'];
               this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];

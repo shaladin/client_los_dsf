@@ -9,6 +9,7 @@ import { AttrContent } from 'app/shared/model/CustCompletion/AttrContent.Model';
 import { RefAttr } from 'app/shared/model/CustCompletion/RefAttr.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { NewCustAttrContentObj } from 'app/shared/model/NewCustAttrContentObj.Model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -141,7 +142,7 @@ export class NewNapAttrContentComponent implements OnInit {
       }
       if (isUpdateValue == false) {
         if (refAttr.DefaultValue != null) {
-          var refMaster = {
+          let refMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
             RefMasterTypeCode: refAttr.AttrValue,
             MasterCode: refAttr.DefaultValue
           };

@@ -9,6 +9,7 @@ import { CrdRvwExposureDObj } from 'app/shared/model/CreditReview/CrdRvwExposure
 import { CrdRvwExposureHObj } from 'app/shared/model/CreditReview/CrdRvwExposureHObj.Model';
 import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureObj.Model';
 import { CrdRvwOvdObj } from 'app/shared/model/CreditReview/CrdRvwOvdObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-crd-rvw-fam-guar',
@@ -120,7 +121,8 @@ export class CrdRvwFamGuarComponent implements OnInit {
 
   DictRefMaster: { [Id: string]: string } = {};
   async GetListRefMasterByRefMasterTypeCodes() {
-    let tempReq = { refMasterTypeCodes: [this.RefMasterTypeCustPersonalRelationship, this.RefMasterTypeCustCompanyRelationship, this.RefMasterTypeCustGuarCompanyRelationship, this.RefMasterTypeCodeGuarPersonalRelationship] };
+    let tempReq: GenericObj = new GenericObj();
+    tempReq.Codes = [this.RefMasterTypeCustPersonalRelationship, this.RefMasterTypeCustCompanyRelationship, this.RefMasterTypeCustGuarCompanyRelationship, this.RefMasterTypeCodeGuarPersonalRelationship];
     await this.http.post<{ ReturnObject: any }>(URLConstant.GetListRefMasterByRefMasterTypeCodes, tempReq).toPromise().then(
       (response) => {
         for (let index = 0; index < response.ReturnObject.length; index++) {
