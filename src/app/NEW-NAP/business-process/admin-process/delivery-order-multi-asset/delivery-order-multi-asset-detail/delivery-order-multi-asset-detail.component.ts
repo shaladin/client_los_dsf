@@ -17,6 +17,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
+import { ReqGetDOMultiAssetInformationObj } from 'app/shared/model/Request/DeliveryOrder/ReqGetDOMultiAssetInformationObj.model';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail',
@@ -82,9 +83,11 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     if (this.wfTaskListId != null || this.wfTaskListId != undefined) {
       this.claimTask();
     }
-    var doRequest = { AppId: this.appId, AgrmntId: this.agrmntId };
+    let GetDoObj = new ReqGetDOMultiAssetInformationObj();
+    GetDoObj.AppId = this.appId;
+    GetDoObj.AgrmntId = this.agrmntId;
     let getDOAssetList = this.httpClient.post(URLConstant.GetAssetListForDOMultiAsset, { Id: this.agrmntId });
-    let getDOList = this.httpClient.post(URLConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
+    let getDOList = this.httpClient.post(URLConstant.GetListDeliveryOrderHByAppIdAgrmntId, GetDoObj);
     let checkAllDO = this.httpClient.post(URLConstant.CheckAllDeliveryOrderData, { Id: this.agrmntId });
     forkJoin([getDOAssetList, getDOList, checkAllDO]).subscribe(
       (response) => {
@@ -207,9 +210,11 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     modalCreateDO.result.then(
       (response) => {
         this.spinner.show();
-        var doRequest = { AppId: this.appId, AgrmntId: this.agrmntId };
+        let GetDoObj = new ReqGetDOMultiAssetInformationObj();
+        GetDoObj.AppId = this.appId;
+        GetDoObj.AgrmntId = this.agrmntId;
         let getDOAssetList = this.httpClient.post(URLConstant.GetAssetListForDOMultiAsset, { Id: this.agrmntId });
-        let getDOList = this.httpClient.post(URLConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
+        let getDOList = this.httpClient.post(URLConstant.GetListDeliveryOrderHByAppIdAgrmntId, GetDoObj);
         let checkAllDO = this.httpClient.post(URLConstant.CheckAllDeliveryOrderData, { Id: this.agrmntId });
         forkJoin([getDOAssetList, getDOList, checkAllDO]).subscribe(
           (response) => {
@@ -288,9 +293,11 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
           return response;
         }),
         mergeMap((response) => {
-          var doRequest = { AppId: this.appId, AgrmntId: this.agrmntId };
+          let GetDoObj = new ReqGetDOMultiAssetInformationObj();
+          GetDoObj.AppId = this.appId;
+          GetDoObj.AgrmntId = this.agrmntId;
           let getDOAssetList = this.httpClient.post(URLConstant.GetAssetListForDOMultiAsset, { Id: this.agrmntId });
-          let getDOList = this.httpClient.post(URLConstant.GetListDeliveryOrderHByAppIdAgrmntId, doRequest);
+          let getDOList = this.httpClient.post(URLConstant.GetListDeliveryOrderHByAppIdAgrmntId, GetDoObj);
           let checkAllDO = this.httpClient.post(URLConstant.CheckAllDeliveryOrderData, { Id: this.agrmntId });
           var tempResponse = [response];
           return forkJoin([getDOAssetList, getDOList, tempResponse, checkAllDO]);

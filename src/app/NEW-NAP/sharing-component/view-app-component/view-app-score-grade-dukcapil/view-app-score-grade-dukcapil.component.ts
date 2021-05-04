@@ -5,6 +5,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppScoreGradeObj } from 'app/shared/model/AppScoreGrade/AppScoreGradeObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ThirdPartyRsltHObj } from 'app/shared/model/ThirdPartyRsltHObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ResAppScoreGradeObj } from 'app/shared/model/Response/AppScore/ResGetAppScore.model';
 
 @Component({
   selector: "view-app-score-grade-dukcapil",
@@ -14,7 +16,7 @@ import { ThirdPartyRsltHObj } from 'app/shared/model/ThirdPartyRsltHObj.Model';
 
 export class ViewAppScoreGradeDukcapilComponent implements OnInit {
   @Input() AppId: number;
-  AppScoreGradeObj: AppScoreGradeObj = new AppScoreGradeObj();
+  AppScoreGradeObj: ResAppScoreGradeObj = new ResAppScoreGradeObj();
   GetFraudResult: string;
   thirdPartyRsltHObj: ThirdPartyRsltHObj;
   ResultThirdPartyObj: any;
@@ -37,8 +39,10 @@ export class ViewAppScoreGradeDukcapilComponent implements OnInit {
   }
 
   getAppScoreGradeDukcapil() {
-    var reqObj = { AppId: this.AppId, MrScoreTypeCode: CommonConstant.ScoreTypeDukcapil };
-    this.http.post<AppScoreGradeObj>(URLConstant.GetAppScoreGradeByAppIdAndMrScoreTypeCode, reqObj).subscribe(
+    let reqGetAppScoreObj : GenericObj = new GenericObj();
+    reqGetAppScoreObj.Id = this.AppId;
+    reqGetAppScoreObj.Code = CommonConstant.ScoreTypeDukcapil
+    this.http.post<ResAppScoreGradeObj>(URLConstant.GetAppScoreGradeByAppIdAndMrScoreTypeCode, reqGetAppScoreObj).subscribe(
       (response) => {
         this.AppScoreGradeObj = response;
       });
