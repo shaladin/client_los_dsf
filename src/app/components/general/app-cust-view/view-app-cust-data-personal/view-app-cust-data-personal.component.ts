@@ -6,7 +6,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
-import { ResAppCustAddrForViewObj, ResAppCustGrpForViewObj, ResCustDataPersonalForViewObj } from 'app/shared/model/Response/View/ResCustDataPersonalForViewObj.model';
+import { ResAppCustAddrForViewObj, ResAppCustForViewObj, ResAppCustGrpForViewObj, ResCustDataPersonalForViewObj } from 'app/shared/model/Response/View/ResCustDataForViewObj.model';
 import { ResAppCustBankAccForViewObj } from 'app/shared/model/Response/View/ResAppCustBankAccForViewObj.model';
 
 @Component({
@@ -29,7 +29,7 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
   isDataAlreadyLoaded: boolean = false;
 
   custModelCode: string;
-  appCustObj: AppCustObj = new AppCustObj();
+  appCustObj: ResAppCustForViewObj = new ResAppCustForViewObj();
   appCustAddrForViewObjs: Array<ResAppCustAddrForViewObj> = new Array<ResAppCustAddrForViewObj>();
   appCustBankAccObjs: Array<ResAppCustBankAccForViewObj> = new Array<ResAppCustBankAccForViewObj>();
   appCustGrpObjs: Array<ResAppCustGrpForViewObj> = new Array<ResAppCustGrpForViewObj>();
@@ -75,10 +75,7 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
     var reqObj = { AppId: this.appId }
     await this.http.post(URLConstant.GetCustDataPersonalForViewByAppId, reqObj).toPromise().then(
       (response : ResCustDataPersonalForViewObj) => {
-        this.appCustObj.IsFamily = response.IsFamily;
-        this.appCustObj.IsShareholder = response.IsShareholder;
-        this.appCustObj.IsGuarantor = response.IsGuarantor;
-        this.custModelCode = response.MrCustModelCode;
+        this.appCustObj = response.AppCustObj;
         this.appCustAddrForViewObjs = response.ListAppCustAddrObj;
         this.appCustBankAccObjs = response.ListAppCustBankAccObj;
         this.appCustGrpObjs = response.ListAppCustGrpObj;

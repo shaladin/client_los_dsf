@@ -6,7 +6,7 @@ import { environment } from 'environments/environment';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewAppCustDetailComponent } from '../view-app-cust-detail/view-app-cust-detail.component';
-import { ResAppCustAddrForViewObj, ResAppCustCompletionObj, ResAppCustGrpForViewObj, ResCustDataPersonalForViewObj } from 'app/shared/model/Response/View/ResCustDataPersonalForViewObj.model';
+import { ResAppCustAddrForViewObj, ResAppCustCompletionObj, ResAppCustForViewObj, ResAppCustGrpForViewObj, ResCustDataPersonalForViewObj } from 'app/shared/model/Response/View/ResCustDataForViewObj.model';
 import { ResAppCustBankAccForViewObj } from 'app/shared/model/Response/View/ResAppCustBankAccForViewObj.model';
 
 @Component({
@@ -37,7 +37,7 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
   detailMrCustTypeCode: string;
   detailCustomerTitle: string;
 
-  appCustObj: AppCustObj = new AppCustObj();
+  appCustObj: ResAppCustForViewObj = new ResAppCustForViewObj();
   custModelCode: string;
   appCustAddrForViewObjs: Array<ResAppCustAddrForViewObj> = new Array<ResAppCustAddrForViewObj>();
   appCustBankAccObjs: Array<ResAppCustBankAccForViewObj> = new Array<ResAppCustBankAccForViewObj>();
@@ -96,10 +96,7 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
 
     await this.http.post(url, reqObj).toPromise().then(
       (response : ResCustDataPersonalForViewObj) => {
-        this.appCustObj.IsFamily = response.IsFamily;
-        this.appCustObj.IsShareholder = response.IsShareholder;
-        this.appCustObj.IsGuarantor = response.IsGuarantor;
-        this.custModelCode = response.MrCustModelCode;
+        this.appCustObj = response.AppCustObj;
         this.appCustAddrForViewObjs = response.ListAppCustAddrObj;
         this.appCustBankAccObjs = response.ListAppCustBankAccObj;
         this.appCustGrpObjs = response.ListAppCustGrpObj;
