@@ -97,6 +97,7 @@ export class CommonConstant {
   public static AppStepShr = "SHR";
   public static AppStepRef = "REF";
   public static AppStepApp = "APP";
+  public static AppStepNapd = "NAPD";
   public static AppStepAsset = "ASSET";
   public static AppStepExpense = "EXPENSE";
   public static AppStepIns = "INS";
@@ -152,6 +153,8 @@ export class CommonConstant {
   public static SALES_JOB_CODE = "SALES_PERSON";
   public static ADMIN_HEAD_JOB_CODE = "ADMIN_HEAD";
   public static BRANCH_MANAGER_JOB_CODE = "BRANCH_MANAGER";
+  public static SUPERVISOR_JOB_CODE = "SUPERVISOR";
+  
   public static REF_REASON_MOU_GENERAL = "MOUC_GEN_RVW";
   public static REF_REASON_MOU_FACTORING = "MOUC_FCTR_RVW";
 
@@ -187,6 +190,7 @@ export class CommonConstant {
   public static AppStatCancel = "CAN";
   //APV RESULT
   public static ApvResultReturn = "Return";
+  public static ApvResultReturnFinal = "ReturnFinal";
   public static ApvResultRejectFinal = "RejectFinal";
 
   //REF PROD COMPNT
@@ -255,6 +259,8 @@ export class CommonConstant {
 
   //FIRST INST TYPE
   public static FirstInstTypeAdvance = "AD"
+  public static FirstInstTypeAdvanceString = "Advance"
+  public static FirstInstTypeArrearString = "Arrear"
 
   //FEE TYPE
   public static FeeTypeAmt = "AMT";
@@ -697,4 +703,10 @@ export class CommonConstant {
   public static PRD_HO_DEACT_APV_TYPE = "PROD_HO_DEACT_APV_TYPE";
   public static PRD_OFR_APV_TYPE = "PROD_OFR_APV_TYPE";
   public static PRD_OFR_DEACT_APV_TYPE = "PROD_OFR_DEACT_APV_TYPE";    
+
+  //PROD OFFERING
+  public static PROD_OFF_STAT_ACT = "ACT";
+
+  // GENERAL SETTING CODE
+  public static GS_CODE_SALES_OFFICER_CODE = "SALES_OFFICER_CODE";
 }

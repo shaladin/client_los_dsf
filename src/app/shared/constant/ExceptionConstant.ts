@@ -108,5 +108,13 @@ export class ExceptionConstant {
     public static STATEMENT_WITH_SAME_MONTH_AND_YEAR = "Cannot Input Statement With The Same Month and Year";
 
     public static EMPLOYMENT_ESTABLISHMENT_CANNOT_LESS_THAN = "Employment Establishment Date can not be less than ";
+    
+    public static START_DT_MUST_LESS_THAN_END_DT = "Start Date Must be Less than End Date";
+    public static END_DT_MUST_GREATER_THAN_BUSINESS_DT = "End Date Must be Greater than Business Date";
+    public static START_DT_MUST_GREATER_THAN_BUSINESS_DT = "Start Date Must be Greater than Business Date";
+    public static SELECT_PROD_OFF_TO_COPY = "Please select Product Offering to copied";
+    public static CONFIRM_PROD_OFF_TO_COPY = "This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?";
+    public static SELECT_PROD_TO_COPY = "Please select Product to copied";
+    public static CONFIRM_PROD_TO_COPY = "This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?";
 }
 

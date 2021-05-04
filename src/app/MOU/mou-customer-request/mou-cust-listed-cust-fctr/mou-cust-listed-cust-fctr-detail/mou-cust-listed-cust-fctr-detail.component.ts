@@ -16,7 +16,6 @@ export class MouCustListedCustFctrDetailComponent implements OnInit {
   inputLookupObj: InputLookupObj;
 
   MouListedCustFctrForm = this.fb.group({
-    MouListedCustFctrId: [0, [Validators.required]],
     MouCustId: [0, [Validators.required]],
     CustNo: ['', [Validators.required]],
     CustName: ['', [Validators.required]],

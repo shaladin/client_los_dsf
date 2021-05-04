@@ -4,9 +4,11 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
@@ -39,6 +41,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   AssetInfoObj: any;
   AssetObj: any;
   AssetTypeObj: any;
+  ListUsedAssetNumber: any;
 
   ListOfAsset: Array<any> = new Array<any>();
   AttributeList: Array<any> = new Array<any>();
@@ -78,6 +81,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetObj.isRequired = true;
+    this.InputLookupAssetObj.isReady = true;
 
     await this.SetMainInfo();
     await this.SetListOfAsset();
@@ -101,7 +105,6 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   }
 
   async SetListOfAsset() {
-    
     this.TotalPurchaseAsset = 0;
     this.TotalUseExistingStock = 0;
     
@@ -150,7 +153,8 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     }
   }
 
-  ChangeDetail(index: number, appAssetId: number) {
+  async ChangeDetail(index: number, appAssetId: number) {
+    console.log("AAA");
     this.AssetInfoObj = this.ListOfAsset[index];
     this.AppAssetId = appAssetId;
     this.Index = index;
@@ -164,16 +168,29 @@ export class RequisitionDecisionDetailComponent implements OnInit {
 
     this.ReqDecForm.controls.ManYear.disable();
 
-    var requestAppAssetId = {
-      Id: this.AppAssetId
-    };
-
-    this.http.post(URLConstant.GetListAppAssetAccessoryAndAppAssetAttrByAppAssetId, requestAppAssetId).subscribe(
+    var requestAppAssetId = { Id: this.AppAssetId };
+    await this.http.post(URLConstant.GetListAppAssetAccessoryAndAppAssetAttrByAppAssetId, requestAppAssetId).toPromise().then(
       (response) => {
         this.AttributeList = response["AppAssetAttrs"] ? response["AppAssetAttrs"] : new Array<any>();
         this.AccessoriesList = response["AppAssetAccesories"] ? response["AppAssetAccesories"] : new Array<any>();
       }
     );
+
+    var requestAppId = { Id: this.AppId };
+    await this.http.post(URLConstant.GetAssetAllocationDataByAppId, requestAppId).toPromise().then(
+      (response) => {
+        this.ListUsedAssetNumber = response["ListAssetNumber"];
+      }
+    );
+
+    var assetCrit = new Array();
+    var critAssetObj = new CriteriaObj();
+    critAssetObj.DataType = 'text';
+    critAssetObj.restriction = AdInsConstant.RestrictionNotIn;
+    critAssetObj.propName = 'AssetNo';
+    critAssetObj.listValue = this.ListUsedAssetNumber;
+    assetCrit.push(critAssetObj);
+    this.InputLookupAssetObj.addCritInput = assetCrit;
 
     this.IsSecondDetail = true;
   }
@@ -203,7 +220,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetAssetTypeByCode, {Code: this.AssetTypeCode }).subscribe(
+    this.http.post(URLConstant.GetAssetTypeByCode, { Code: this.AssetTypeCode }).subscribe(
       (response: any) => {
         this.AssetTypeObj = response;
       }
@@ -214,7 +231,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
     if(decisionCode === "EXISTING") {
       this.ReqDecForm.controls.AssetNo.setValidators(Validators.required);
       
-      if(this.AssetInfoObj.AssetNo !== null) {
+      if(this.AssetInfoObj.AssetNo !== "") {
         this.ReqDecForm.patchValue({
           AssetNo: this.AssetInfoObj.AssetNo
         });
@@ -238,7 +255,7 @@ export class RequisitionDecisionDetailComponent implements OnInit {
           }
         );
 
-        this.http.post(URLConstant.GetAssetTypeByCode, {Code: this.AssetTypeCode }).subscribe(
+        this.http.post(URLConstant.GetAssetTypeByCode, { Code: this.AssetTypeCode }).subscribe(
           (response: any) => {
             this.AssetTypeObj = response;
           }

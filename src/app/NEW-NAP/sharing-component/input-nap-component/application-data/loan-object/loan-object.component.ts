@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { FormBuilder, NgForm, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
@@ -12,6 +12,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 
 @Component({
   selector: 'app-loan-object',
@@ -34,7 +35,7 @@ export class LoanObjectComponent implements OnInit {
   AppObj: any;
   OfficeCode: string;
   RefProdCmptSupplSchm: any;
-  isCFNA : boolean = false;
+  isCFNA: boolean = false;
   isProdOfrUpToDate: boolean = true;
   missingProdOfrComp: string;
 
@@ -48,7 +49,7 @@ export class LoanObjectComponent implements OnInit {
   result: any;
   closeResult: string;
 
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private modalService: NgbModal) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private modalService: NgbModal) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.mode = params["mode"];
@@ -160,35 +161,35 @@ export class LoanObjectComponent implements OnInit {
       (response) => {
         this.AppObj = response;
         this.OfficeCode = this.AppObj.OriOfficeCode;
-        if(this.AppObj.LobCode == CommonConstant.CFNA){
+        if (this.AppObj.LobCode == CommonConstant.CFNA) {
           this.isCFNA = true;
 
-          var objIsDisburse = {
-            ProdOfferingCode: this.AppObj.ProdOfferingCode,
-            RefProdCompntCode: CommonConstant.RefProdCompntCodeDisburseToCust,
-            ProdOfferingVersion: this.AppObj.ProdOfferingVersion
-          };
+          var objIsDisburse: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+          objIsDisburse.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+          objIsDisburse.RefProdCompntCode = CommonConstant.RefProdCompntCodeDisburseToCust;
+          objIsDisburse.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
           this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, objIsDisburse).toPromise().then(
             (response) => {
-              if(response && response["StatusCode"] == "200" && response["ProdOfferingDId"] > 0){
+              if (response && response["StatusCode"] == "200" && response["ProdOfferingDId"] > 0) {
                 this.MainInfoForm.patchValue({
                   IsDisburseToCust: response["CompntValue"] == 'Y' ? true : false
                 });
-                
+
                 this.CheckIsDisburseToCust();
 
-                if(response["CompntValue"] != 'Y'){
-                  var appObj = {
-                    ProdOfferingCode: this.AppObj.ProdOfferingCode,
-                    RefProdCompntCode: CommonConstant.RefProdCompntSupplSchm,
-                    ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
-                  };
+                if (response["CompntValue"] != 'Y') {
+                  var appObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+                  appObj.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+                  appObj.RefProdCompntCode = CommonConstant.RefProdCompntSupplSchm;
+                  appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
                   this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
                     (response) => {
-                      if(response && response["StatusCode"] == "200"){
+                      if (response && response["StatusCode"] == "200") {
                         this.RefProdCmptSupplSchm = response;
                       }
-                      else{
+                      else {
                         // throw new Error("Suppl Schm component not found, please use the latest product offering");
                         this.isProdOfrUpToDate = false;
                         this.missingProdOfrComp = CommonConstant.RefProdCompntSupplSchm;
@@ -201,7 +202,7 @@ export class LoanObjectComponent implements OnInit {
                   );
                 }
               }
-              else{
+              else {
                 // throw new Error("Disburse To Cust component not found, please use the latest product offering");
                 this.isProdOfrUpToDate = false;
                 this.missingProdOfrComp = CommonConstant.RefProdCompntCodeDisburseToCust;
@@ -214,7 +215,7 @@ export class LoanObjectComponent implements OnInit {
             }
           );
         }
-        if(this.AppObj.BizTemplateCode == CommonConstant.CFRFN4W){
+        if (this.AppObj.BizTemplateCode == CommonConstant.CFRFN4W) {
           this.MainInfoForm.controls.IsDisburseToCust.setValue(true);
           this.MainInfoForm.controls.IsDisburseToCust.disable();
           this.AppLoanPurposeObj.IsDisburseToCust = true;
@@ -228,16 +229,14 @@ export class LoanObjectComponent implements OnInit {
   setLookup() {
     this.loanObjectInputLookupObj = new InputLookupObj();
     this.loanObjectInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupLoanObject.json";
-    this.loanObjectInputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.loanObjectInputLookupObj.urlEnviPaging = environment.losUrl;
     this.loanObjectInputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupLoanObject.json";
     this.loanObjectInputLookupObj.genericJson = "./assets/uclookup/NAP/lookupLoanObject.json";
 
     this.supplierInputLookupObj = new InputLookupObj();
-    this.supplierInputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.supplierInputLookupObj.urlEnviPaging = environment.FoundationR3Url;
-    this.supplierInputLookupObj.addCritInput = new Array();    
-    
+    this.supplierInputLookupObj.addCritInput = new Array();
+
 
     if (this.isCollateral) {
       this.supplierInputLookupObj.urlJson = "./assets/uclookup/NAP/lookupSupplierRefinancingLoanObj.json";
@@ -294,21 +293,21 @@ export class LoanObjectComponent implements OnInit {
     if (this.mode == "edit") {
       this.AppLoanPurposeObj.AppLoanPurposeId = this.objEdit.AppLoanPurposeId;
       this.AppLoanPurposeObj.RowVersion = this.objEdit.RowVersion;
-      if(this.isCFNA){
-      this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
-        (response) => {
-          this.http.post(URLConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
-            (response) => {
-              this.modal.close();
-              this.toastr.successMessage(response["message"]);
-              enjiForm.reset();
-              this.loadDataTable();
-            });
-        },
-        (error) => {
-          return;
-        });
-      }else{
+      if (this.isCFNA) {
+        this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
+          (response) => {
+            this.http.post(URLConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
+              (response) => {
+                this.modal.close();
+                this.toastr.successMessage(response["message"]);
+                enjiForm.reset();
+                this.loadDataTable();
+              });
+          },
+          (error) => {
+            return;
+          });
+      } else {
         this.http.post(URLConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
           (response) => {
             this.modal.close();
@@ -319,21 +318,21 @@ export class LoanObjectComponent implements OnInit {
       }
     }
     else {
-      if(this.isCFNA){
-      this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
-        (response) => {
-          this.http.post(URLConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
-            (response) => {
-              this.modal.close();
-              this.toastr.successMessage(response["message"]);
-              enjiForm.reset();
-              this.loadDataTable();
-            });
-        },
-        (error) => {
-          return;
-        });
-      }else{
+      if (this.isCFNA) {
+        this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
+          (response) => {
+            this.http.post(URLConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
+              (response) => {
+                this.modal.close();
+                this.toastr.successMessage(response["message"]);
+                enjiForm.reset();
+                this.loadDataTable();
+              });
+          },
+          (error) => {
+            return;
+          });
+      } else {
         this.http.post(URLConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
           (response) => {
             this.modal.close();
@@ -371,7 +370,7 @@ export class LoanObjectComponent implements OnInit {
   CheckIsDisburseToCust() {
     if (this.MainInfoForm.controls.IsDisburseToCust.value == true) {
       this.supplierInputLookupObj.isRequired = false;
-      if(this.MainInfoForm.controls.lookupValueSupplier){
+      if (this.MainInfoForm.controls.lookupValueSupplier) {
         this.MainInfoForm.controls.lookupValueSupplier["controls"].value.clearValidators();
         this.MainInfoForm.controls.lookupValueSupplier["controls"].value.setValue("");
         this.MainInfoForm.controls.lookupValueSupplier.updateValueAndValidity();
@@ -379,7 +378,7 @@ export class LoanObjectComponent implements OnInit {
       this.AppLoanPurposeObj.SupplCode = "";
     } else {
       this.supplierInputLookupObj.isRequired = true;
-      if(this.MainInfoForm.controls.lookupValueSupplier){
+      if (this.MainInfoForm.controls.lookupValueSupplier) {
         this.MainInfoForm.controls.lookupValueSupplier.setValidators(Validators.required);
         this.MainInfoForm.controls.lookupValueSupplier.updateValueAndValidity();
       }

@@ -1,5 +1,5 @@
 {
-    "title": "Product Offering Management",
+    "title": "Product Offering Deactivation",
     "exportExcel": false,
     "component": [
       {
@@ -104,11 +104,11 @@
             "path": "PRODUCT_OFFERING_DEACTIVATE_DETAIL",
             "param": [
               {
-                "type": "prodOfferingHId",
+                "type": "ProdOfferingHId",
                 "property": "prodOfferingHId"
               },
               {
-                "type": "prodOfferingId",
+                "type": "ProdOfferingId",
                 "property": "prodOfferingId"
               }
             ]

@@ -131,18 +131,6 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsFraudDetectionResult && IsUseDigitalization == '1'" label="Fraud Detection Result">
-              <ng-template matTabContent>
-                <app-view-fraud-detection-result [appId]="AppId" [mrCustTypeCode]="CustType" [isView]=true></app-view-fraud-detection-result>
-              </ng-template>
-            </mat-tab>
-
-            <!-- <mat-tab *ngIf="IsFraudDetectionMulti" label="Fraud Detection Result">
-              <ng-template matTabContent>
-                <app-view-app-fraud-verification [AppId]="AppId" [mrCustTypeCode]="CustType"></app-view-app-fraud-verification>
-              </ng-template>
-            </mat-tab> -->
-
             <mat-tab *ngIf="IsDeviation" label="Deviation">
               <ng-template matTabContent>
                 <app-tab-deviation [AppId]="AppId" [Type]='View'></app-tab-deviation>

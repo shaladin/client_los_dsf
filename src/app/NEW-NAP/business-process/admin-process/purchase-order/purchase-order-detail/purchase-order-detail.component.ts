@@ -10,6 +10,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ReqAssetDataObj } from 'app/shared/model/Request/AppAsset/ReqAppAssetObj.model';
+import { ResGetAllAssetDataForPOByAsset, ResGetAllAssetDataForPOByAssetObj } from 'app/shared/model/Response/PurchaseOrder/ResGetAllAssetDataForPO.model';
 
 @Component({
   selector: 'app-purchase-order-detail',
@@ -22,7 +24,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
   AppId: number;
   AppAssetId: number;
   SupplCode: string;
-  AssetObj: any;
+  AssetObj: ResGetAllAssetDataForPOByAsset = new ResGetAllAssetDataForPOByAsset();
   MouNo: string = "";
   Notes: string = "";
   Address: string = "";
@@ -60,7 +62,8 @@ export class PurchaseOrderDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  isDataExist: boolean = false;
+  async ngOnInit() {
     this.arrValue.push(this.AgrmntId);
     this.purchaseOrderHObj = new PurchaseOrderHObj();
 
@@ -71,36 +74,43 @@ export class PurchaseOrderDetailComponent implements OnInit {
       poUrl = URLConstant.GetAllAssetDataForPOMultiAsset;
     }
 
-    var appAssetObj = {
-      AppId: this.AppId,
-      AgrmntId: this.AgrmntId,
-      SupplCode: this.SupplCode
-    }
-    this.http.post(poUrl, appAssetObj).subscribe(
+    
+    let appAssetObj : ReqAssetDataObj = new ReqAssetDataObj();
+    appAssetObj.AppId = this.AppId;
+    appAssetObj.AgrmntId = this.AgrmntId;
+    appAssetObj.SupplCode = this.SupplCode;
+
+    await this.http.post<ResGetAllAssetDataForPOByAssetObj>(poUrl, appAssetObj).toPromise().then(
       (response) => {
-        this.AssetObj = response[CommonConstant.ReturnObj];
-        this.ProportionalValue = this.AssetObj["ProportionalValue"];
-        this.TotalInsCustAmt = this.AssetObj["TotalInsCustAmt"];
-        this.TotalLifeInsCustAmt = this.AssetObj["TotalLifeInsCustAmt"];
-        this.TotalPurchaseOrderAmt = this.AssetObj["TotalPurchaseOrderAmt"];
-        var tempAddr = this.AssetObj["AppCustAddrObj"].Addr == null ? '-' : this.AssetObj["AppCustAddrObj"].Addr;
-        var areaCode4 = this.AssetObj["AppCustAddrObj"].AreaCode4 == null ? '-' : this.AssetObj["AppCustAddrObj"].AreaCode4;
-        var areaCode3 = this.AssetObj["AppCustAddrObj"].AreaCode3 == null ? '-' : this.AssetObj["AppCustAddrObj"].AreaCode3;
-        var areaCode2 = this.AssetObj["AppCustAddrObj"].AreaCode2 == null ? '' : this.AssetObj["AppCustAddrObj"].AreaCode2;
-        var areaCode1 = this.AssetObj["AppCustAddrObj"].AreaCode1 == null ? '' : this.AssetObj["AppCustAddrObj"].AreaCode1;
-        var city = this.AssetObj["AppCustAddrObj"].City == null ? '' : this.AssetObj["AppCustAddrObj"].City;
-        var zipCode = this.AssetObj["AppCustAddrObj"].Zipcode == null ? '' : this.AssetObj["AppCustAddrObj"].Zipcode;
+        console.log(response);
+        this.AssetObj = response.ReturnObject;
+        if(this.AssetObj.PurchaseOrderHId != 0){
+          this.isDataExist = true;
+          this.Notes = this.AssetObj.Notes;
+          this.purchaseOrderHObj.RowVersion = this.AssetObj.RowVersionPO;
+        }
+        this.ProportionalValue = this.AssetObj.ProportionalValue;
+        this.TotalInsCustAmt = this.AssetObj.TotalInsCustAmt;
+        this.TotalLifeInsCustAmt = this.AssetObj.TotalLifeInsCustAmt;
+        this.TotalPurchaseOrderAmt = this.AssetObj.TotalPurchaseOrderAmt;
+        var tempAddr = this.AssetObj.AppCustAddrObj.Addr == null ? '-' : this.AssetObj.AppCustAddrObj.Addr;
+        var areaCode4 = this.AssetObj.AppCustAddrObj.AreaCode4 == null ? '-' : this.AssetObj.AppCustAddrObj.AreaCode4;
+        var areaCode3 = this.AssetObj.AppCustAddrObj.AreaCode3 == null ? '-' : this.AssetObj.AppCustAddrObj.AreaCode3;
+        var areaCode2 = this.AssetObj.AppCustAddrObj.AreaCode2 == null ? '' : this.AssetObj.AppCustAddrObj.AreaCode2;
+        var areaCode1 = this.AssetObj.AppCustAddrObj.AreaCode1 == null ? '' : this.AssetObj.AppCustAddrObj.AreaCode1;
+        var city = this.AssetObj.AppCustAddrObj.City == null ? '' : this.AssetObj.AppCustAddrObj.City;
+        var zipCode = this.AssetObj.AppCustAddrObj.Zipcode == null ? '' : this.AssetObj.AppCustAddrObj.Zipcode;
 
         this.Address = tempAddr + ' RT/RW: ' + areaCode4 + '/' +
           areaCode3 + ' ' + areaCode2 + ' ' + areaCode1 + ' ' + city + ' ' + zipCode;
-        this.PurchaseOrderExpiredDt = this.AssetObj["PurchaseOrderExpiredDt"];
+        this.PurchaseOrderExpiredDt = this.AssetObj.PurchaseOrderExpiredDt;
 
         this.purchaseOrderHObj.AgrmntId = this.AgrmntId;
         this.purchaseOrderHObj.SupplCode = this.SupplCode;
-        this.purchaseOrderHObj.BankCode = this.AssetObj["VendorBankAccObj"].BankCode;
-        this.purchaseOrderHObj.BankBranch = this.AssetObj["VendorBankAccObj"].BankName;
-        this.purchaseOrderHObj.BankAccNo = this.AssetObj["VendorBankAccObj"].BankAccountNo;
-        this.purchaseOrderHObj.BankAccName = this.AssetObj["VendorBankAccObj"].BankAccountName;
+        this.purchaseOrderHObj.BankCode = this.AssetObj.VendorBankAccObj.BankCode;
+        this.purchaseOrderHObj.BankBranch = this.AssetObj.VendorBankAccObj.BankName;
+        this.purchaseOrderHObj.BankAccNo = this.AssetObj.VendorBankAccObj.BankAccountNo;
+        this.purchaseOrderHObj.BankAccName = this.AssetObj.VendorBankAccObj.BankAccountName;
         this.purchaseOrderHObj.TotalPurchaseOrderAmt = this.TotalPurchaseOrderAmt;
       });
   }
@@ -109,6 +119,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     var tempRefMasterObj = new Array();
     await this.http.post(URLConstant.GetPurchaseOrderDPoItemCodeFromRuleByType, {}).toPromise().then(
       (response) => {
+        console.log(response);
         tempRefMasterObj = response["ListPoItems"];
 
       });
@@ -121,11 +132,11 @@ export class PurchaseOrderDetailComponent implements OnInit {
       if (ListPORefMasterObj[i].Type == CommonConstant.PurchaseOrderItemTypeNonFee) {
         var tempPurchaseOrderDObj = new PurchaseOrderDObj();
         tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MrPoItemCode;
-        tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].SourceAgrmntFinDataField] ? this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].SourceAgrmntFinDataField] : 0;
+        tempPurchaseOrderDObj.PurchaseOrderAmt = this.AssetObj.AgrmntFinDataObj[ListPORefMasterObj[i].SourceAgrmntFinDataField] ? this.AssetObj["AgrmntFinDataObj"][ListPORefMasterObj[i].SourceAgrmntFinDataField] : 0;
         TempListPurchaseOrderD.push(tempPurchaseOrderDObj);
       }
       if (ListPORefMasterObj[i].Type == CommonConstant.PurchaseOrderItemTypeFee) {
-        let tempAgrmntFeeObj = this.AssetObj["AgrmntFeeListObj"].find(x => x.MrFeeTypeCode == ListPORefMasterObj[i].SourceMrFeeTypeCode);
+        let tempAgrmntFeeObj = this.AssetObj.AgrmntFeeListObj.find(x => x.MrFeeTypeCode == ListPORefMasterObj[i].SourceMrFeeTypeCode);
         var tempPurchaseOrderDObj = new PurchaseOrderDObj();
         tempPurchaseOrderDObj.MrPoItemCode = ListPORefMasterObj[i].MrPoItemCode;
         tempPurchaseOrderDObj.PurchaseOrderAmt = tempAgrmntFeeObj.AppFeeAmt ? tempAgrmntFeeObj.AppFeeAmt : 0;
@@ -148,11 +159,20 @@ export class PurchaseOrderDetailComponent implements OnInit {
       requestPurchaseOrderHObj: this.purchaseOrderHObj,
       requestPurchaseOrderDObjs: listPurchaseOrderD
     }
-    this.http.post(URLConstant.SubmitPurchaseOrder, POObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT],{ "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId });
-        
-      });
+    if(!this.isDataExist){      
+      this.http.post(URLConstant.AddPurchaseOrder, POObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT],{ "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId });
+          
+        });
+    }else{      
+      this.http.post(URLConstant.EditPurchaseOrder, POObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT],{ "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId });
+          
+        });
+    }
   }
 }

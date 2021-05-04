@@ -24,10 +24,7 @@ import { AppAssetDataDetailComponent } from "./app-view/app-asset-data/app-asset
 import { AppInsuranceComponent } from "./app-view/app-insurance/app-insurance.component";
 import { AppInsuranceDetailComponent } from "./app-view/app-insurance/app-insurance-detail/app-insurance-detail.component";
 import { AppTcComponent } from "./app-view/app-tc/app-tc.component";
-
 import { ApprovalHistComponent } from "./app-view/approval-hist/approval-hist.component";
-import { FraudDetectionResultComponent } from "./app-view/fraud-detection-result/fraud-detection-result.component";
-import { FraudVerificationComponent } from "./app-view/fraud-verification/fraud-verification.component";
 import { InvoiceDataFctrComponent } from "./app-view/invoice-data-fctr/invoice-data-fctr.component";
 import { LifeInsuranceComponent } from "./app-view/life-insurance/life-insurance.component";
 import { TabAnalysisResultComponent } from "./app-view/tab-analysis-result/tab-analysis-result.component";
@@ -44,7 +41,6 @@ import { ViewAssetDataComponent } from "./app-view/view-asset-data/view-asset-da
 import { ViewCollateralDataComponent } from "./app-view/view-collateral-data/view-collateral-data.component";
 import { ViewCollateralMultiAssetComponent } from "./app-view/view-collateral-multi-asset/view-collateral-multi-asset.component";
 import { ViewFinancialComponent } from "./app-view/view-financial/view-financial.component";
-import { ViewFraudDetectionResultComponent } from "./app-view/view-fraud-detection-result/view-fraud-detection-result.component";
 import { ViewInsuranceComponent } from "./app-view/view-insurance/view-insurance.component";
 import { ViewPhoneVerifComponent } from "./app-view/view-phone-verif/view-phone-verif.component";
 import { ViewReservedFundComponent } from "./app-view/view-reserved-fund/view-reserved-fund.component";
@@ -133,8 +129,6 @@ import { MouMainInfoComponent } from './mou-main-info/mou-main-info.component';
     AppTcComponent,
     NewApplicationDataComponent,
     ApprovalHistComponent,
-    FraudDetectionResultComponent,
-    FraudVerificationComponent,
     InvoiceDataFctrComponent,
     LifeInsuranceComponent,
     TabAnalysisResultComponent,
@@ -150,7 +144,6 @@ import { MouMainInfoComponent } from './mou-main-info/mou-main-info.component';
     ViewCollateralDataComponent,
     ViewCollateralMultiAssetComponent,
     ViewFinancialComponent,
-    ViewFraudDetectionResultComponent,
     ViewInsuranceComponent,
     ViewPhoneVerifComponent,
     ViewReservedFundComponent,

@@ -25,6 +25,7 @@ import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { String } from 'typescript-string-operations';
 import { CustomPatternObj } from 'app/shared/model/library/CustomPatternObj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 
 @Component({
   selector: 'app-asset-data',
@@ -360,11 +361,11 @@ export class AssetDataComponent implements OnInit {
     }
 
     this.GenerataAppAssetAttr(false);
-    var appObj = {
-      ProdOfferingCode: this.AppObj.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefProdCompntAssetCond,
-      ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
-    };
+    var appObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    appObj.ProdOfferingCode = this.AppObj.ProdOfferingCode,
+    appObj.RefProdCompntCode = CommonConstant.RefProdCompntAssetCond,
+    appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion,
+
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
       (response) => {
         this.RefProdCmptAssetCond = response;
@@ -996,27 +997,6 @@ export class AssetDataComponent implements OnInit {
             this.AssetDataForm.controls.DownPaymentAmt.enable();
           }
         }
-        // if (this.SetDpObj.DPGrossBehaviour == 'MIN') {
-        //   var tempDP = this.AssetDataForm.controls.AssetPriceAmt.value * this.SetDpObj.GrossDPPrctg / 100;
-        //   if (this.AssetDataForm.controls.DownPaymentAmt.value < tempDP) {
-        //     this.AssetDataForm.patchValue({
-        //       DownPaymentAmt: tempDP,
-        //       DownPaymentPrctg: this.SetDpObj.GrossDPPrctg
-        //     });
-        //   }
-        //   else {
-        //     if (this.AssetDataForm.controls.AssetPriceAmt.value != 0) {
-        //       this.AssetDataForm.patchValue({
-        //         DownPaymentPrctg: this.AssetDataForm.controls.DownPaymentAmt.value * 100 / this.AssetDataForm.controls.AssetPriceAmt.value
-        //       });
-        //     }
-        //     else {
-        //       this.AssetDataForm.patchValue({
-        //         DownPaymentPrctg: 0
-        //       });
-        //     }
-        //   }
-        // }
       });
   }
 
@@ -2002,11 +1982,11 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetProdOfferingAssetCond() {
-    var obj = {
-      ProdOfferingCode: this.AppObj.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefProdCompAssetCond,
-      ProdOfferingVersion: this.AppObj.ProdOfferingVersion
-    };
+    var obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    obj.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+    obj.RefProdCompntCode = CommonConstant.RefProdCompAssetCond;
+    obj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {
         this.assetCondObj = response;
@@ -2533,34 +2513,34 @@ export class AssetDataComponent implements OnInit {
   }
 
   async GetRefProdCompt() {
-    var appObj = {
-      ProdOfferingCode: this.AppObj.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefProdCompntAssetType,
-      ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
-    };
+    var appObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    appObj.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+    appObj.RefProdCompntCode = CommonConstant.RefProdCompntAssetType;
+    appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
       (response) => {
         this.RefProdCmptAssetType = response;
       }
     );
 
-    appObj = {
-      ProdOfferingCode: this.AppObj.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefProdCompntSupplSchm,
-      ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
-    };
-    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
+    var appObj2: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    appObj2.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+    appObj2.RefProdCompntCode = CommonConstant.RefProdCompntSupplSchm;
+    appObj2.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj2).toPromise().then(
       (response) => {
         this.RefProdCmptSupplSchm = response;
       }
     );
 
-    appObj = {
-      ProdOfferingCode: this.AppObj.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefProdCompntAssetSchm,
-      ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
-    };
-    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
+    var appObj3: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    appObj3.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+    appObj3.RefProdCompntCode = CommonConstant.RefProdCompntAssetSchm;
+    appObj3.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj3).toPromise().then(
       (response) => {
         this.RefProdCmptAssetSchm = response;
       }

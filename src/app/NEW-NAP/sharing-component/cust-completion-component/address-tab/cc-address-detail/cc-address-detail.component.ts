@@ -20,7 +20,7 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
   styleUrls: ['./cc-address-detail.component.scss']
 })
 export class CcAddressDetailComponent implements OnInit {
-
+  @Input() MrCustTypeCode: string;
   @Input() InputObj: InputCustomAddrCustCmpltObj;
   @Output() OutputTab: EventEmitter<Object> = new EventEmitter();
   isUcAddressReady: boolean = false;
@@ -44,8 +44,7 @@ export class CcAddressDetailComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    public formValidate: FormValidateService) {
-  }
+    public formValidate: FormValidateService) { }
 
   ngOnInit() {
     this.AddrObj = new AddrObj();
@@ -53,6 +52,9 @@ export class CcAddressDetailComponent implements OnInit {
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
     this.inputAddressObj.showSubsection = false;
     this.inputAddressObj.showOwnership = true;
+    if (this.MrCustTypeCode === CommonConstant.CustTypeCompany) {
+      this.inputAddressObj.requiredPhn1 = true;
+    }
     this.isUcAddressReady = true;
 
     this.dllCopyAddressFromObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
@@ -62,10 +64,11 @@ export class CcAddressDetailComponent implements OnInit {
     this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCustAddrType, MappingCode: this.InputObj.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.CustTypePersonal : CommonConstant.CustTypeCompany }).subscribe(
       async (response) => {
         this.AddressTypeObj = response[CommonConstant.ReturnObj];
-        if(this.InputObj.MrCustTypeCode == CommonConstant.CustTypeCompany){
+        if(this.InputObj.MrCustTypeCode == CommonConstant.CustTypeCompany) {
           let idxCompany = this.AddressTypeObj.findIndex(x => x.Key == CommonConstant.AddrTypeCompany);
           if(idxCompany != -1) this.AddressTypeObj.splice(idxCompany, 1)
-        }else{
+        }
+        else {
           let idxEmergency = this.AddressTypeObj.findIndex(x => x.Key == CommonConstant.AddrTypeEmergency);
           if(idxEmergency != -1) this.AddressTypeObj.splice(idxEmergency, 1)
         }
@@ -75,7 +78,8 @@ export class CcAddressDetailComponent implements OnInit {
         this.LoadAddrForCopy();
         this.ResetForm();
         this.isDllAddressTypeReady = true;
-      });
+      }
+    );
 
     if (this.InputObj.AppCustAddrId != 0) {
       this.http.post<AppCustAddrObj>(URLConstant.GetAppCustAddrByAppCustAddrId, { Id: this.InputObj.AppCustAddrId }).subscribe(
@@ -88,9 +92,10 @@ export class CcAddressDetailComponent implements OnInit {
           this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
           this.inputAddressObj.default = this.AddrObj;
           this.isAddrObjReady = true;
-        });
+        }
+      );
     }
-    else{
+    else {
       this.isAddrObjReady = true;
     }
   }
@@ -111,7 +116,8 @@ export class CcAddressDetailComponent implements OnInit {
         this.copyAddressFromObj = response;
         this.AddressForm.patchValue({ CopyAddrFrom: response[0]['AppCustAddrId'] });
         this.isDllCopyAddressFromReady = true;
-      });
+      }
+    );
   }
 
   CopyAddress() {
@@ -142,7 +148,8 @@ export class CcAddressDetailComponent implements OnInit {
         this.inputAddressObj.inputField.inputLookupObj.nameSelect = response["Zipcode"];
         this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["Zipcode"] };
         this.inputAddressObj.default = this.AddrObj;
-      });
+      }
+    );
   }
 
   Cancel() {
@@ -158,7 +165,8 @@ export class CcAddressDetailComponent implements OnInit {
         this.toastr.warningMessage("There's Already " + ErrorOutput.Value + " Address")
         Flag = true;
       }
-    } else if (this.InputObj.Mode == "Edit") {
+    }
+    else if (this.InputObj.Mode == "Edit") {
       if (this.AddressForm.controls.MrCustAddrTypeCode.value != this.appCustAddrObj.MrCustAddrTypeCode && this.InputObj.ListInputedAddr.find(x => x.MrCustAddrTypeCode == this.AddressForm.controls.MrCustAddrTypeCode.value)) {
         let ErrorOutput = this.AddressTypeObj.find(x => x.Key == this.AddressForm.controls.MrCustAddrTypeCode.value);
         this.toastr.warningMessage("There's Already " + ErrorOutput.Value + " Address")
@@ -197,16 +205,16 @@ export class CcAddressDetailComponent implements OnInit {
             this.toastr.successMessage(response["message"]);
             this.OutputTab.emit({ IsDetail: false })
           },
-          (error) => {
-          });
+          (error) => { }
+        );
       } else {
         this.http.post(URLConstant.EditAppCustAddr, this.appCustAddrObj).toPromise().then(
           (response) => {
             this.toastr.successMessage(response["message"]);
             this.OutputTab.emit({ IsDetail: false })
           },
-          (error) => {
-          });
+          (error) => { }
+        );
       }
     }
   }

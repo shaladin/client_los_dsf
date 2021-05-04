@@ -12,7 +12,7 @@
         <div class="px-3">
           <form class="form form-horizontal" [formGroup]="RefProductHOForm"
             (ngSubmit)="RefProductHOForm.valid && SaveForm()" #enjiForm="ngForm">
-            <lib-ucSubsection [id]="'ProductHOInfoId'" [title]="'Product HO Information '+ mode" [panel]="'ProductHOInfo'"></lib-ucSubsection>
+            <lib-ucSubsection [id]="'ProductHOInfoId'" [title]="'Product HO Information '+ Mode" [panel]="'ProductHOInfo'"></lib-ucSubsection>
             <div id="ProductHOInfo">
               <div class="form-body">
                 <div class="form-group row adins-required">
@@ -54,7 +54,7 @@
                 <div class="form-group row adins-required">
                   <label class="col-md-3 adInsLabel"> End Date </label>
                   <div class="col-md-9">
-                    <input type="date" class="form-control adInsInput width-25-per" formControlName="EndDt" [min]="StartActiveDt | date: 'yyyy-MM-dd'"  
+                    <input type="date" class="form-control adInsInput width-25-per" formControlName="EndDt" [min]="StartDt | date: 'yyyy-MM-dd'"  
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && RefProductHOForm.controls.EndDt.invalid }">
                     <lib-uc-show-errors [control]="RefProductHOForm.controls.EndDt" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>

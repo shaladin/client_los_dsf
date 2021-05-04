@@ -3,35 +3,30 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-outstanding-tc-paging',
   templateUrl: './outstanding-tc-paging.component.html'
 })
 export class OutstandingTcPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
-  link: string;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
-  
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private router: Router) { 
+
+  constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.BizTemplateCode = params["BizTemplateCode"];
       }
-  });
+    });
   }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchOutstandingTC.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchOutstandingTC.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -41,7 +36,7 @@ export class OutstandingTcPagingComponent implements OnInit {
     ];
 
     this.inputPagingObj.addCritInput = new Array();
-    
+
     var critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.propName = 'A.BIZ_TEMPLATE_CODE';
@@ -51,12 +46,14 @@ export class OutstandingTcPagingComponent implements OnInit {
   }
 
   getEvent(ev) {
-    if(ev.Key == "prodOff"){
-      this.http.post(URLConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
+    if (ev.Key == "prodOff") {
+      let GetProduct = new GenericObj();
+      GetProduct.Code = ev.RowObj.ProdOfferingCode;
+      this.http.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).subscribe(
         response => {
-          AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response['ProdOfferingHId'])
+          AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response.Id)
         });
-    }else if(ev.Key == "agrmnt"){
+    } else if (ev.Key == "agrmnt") {
       AdInsHelper.OpenAgrmntViewByAgrmntId(ev.RowObj.AgrmntId);
     }
   }

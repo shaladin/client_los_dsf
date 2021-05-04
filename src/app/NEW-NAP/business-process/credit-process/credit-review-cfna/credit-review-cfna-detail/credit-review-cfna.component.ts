@@ -52,7 +52,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
   //   ReturnReasonDesc: [''],
   //   ReturnExecNotes: [''],
   // });
-  InputObj: UcInputRFAObj;
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   private createComponent: UcapprovalcreateComponent;
   responseListTypeCodes: Array<any>;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
@@ -351,7 +351,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
       ListDeviationResultObjs: this.ManualDeviationData,
       RequestRFAObj: this.ApprovalCreateOutput
     }
-    this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationDataNew, apiObj).subscribe(
+    this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode, });
       });
@@ -437,7 +437,6 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
       });
   }
   initInputApprovalObj(manualDevList = null){  
-    this.InputObj = new UcInputRFAObj(); 
     var Attributes = []
     var attribute1 = {
       "AttributeName": "Approval Amount",
@@ -458,18 +457,7 @@ export class CreditReviewCfnaComponent implements OnInit, AfterViewInit {
     if(manualDevList != null){
       listTypeCode = listTypeCode.concat(manualDevList);
      }
-     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
-    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = listTypeCode;
-    this.InputObj.EnvUrl = environment.FoundationR3Url;
-    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
-    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
-    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
-    this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
-    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
     this.InputObj.Reason = this.DDLRecommendation;

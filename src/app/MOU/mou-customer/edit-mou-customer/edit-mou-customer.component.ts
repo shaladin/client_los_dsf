@@ -20,7 +20,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class EditMouCustomerComponent implements OnInit {
   @ViewChild(UcpagingComponent) ucpaging;
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj>;
   user: any;
 

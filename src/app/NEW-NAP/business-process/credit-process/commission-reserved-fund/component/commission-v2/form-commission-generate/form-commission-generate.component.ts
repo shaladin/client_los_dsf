@@ -11,6 +11,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
 import { AppCommissionDObj } from 'app/shared/model/AppCommissionDObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-form-commission-generate',
@@ -369,7 +370,8 @@ export class FormCommissionGenerateComponent implements OnInit {
   }
 
   DeleteFromDatabase(AppCommissionHId) {
-    var obj = { AppCommissionHId: AppCommissionHId };
+    let obj: GenericObj = new GenericObj()
+    obj.Id = AppCommissionHId;
     this.http.post(URLConstant.DeleteAppCommissionData, obj).subscribe(
       (response) => {
       });

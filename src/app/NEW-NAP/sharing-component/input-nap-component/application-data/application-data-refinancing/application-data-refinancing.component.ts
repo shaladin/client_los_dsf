@@ -18,6 +18,7 @@ import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 
 @Component({
   selector: 'app-application-data-refinancing',
@@ -25,9 +26,9 @@ import { CookieService } from 'ngx-cookie';
 })
 export class ApplicationDataRefinancingComponent implements OnInit {
 
-  @Input() AppId: any;
+  @Input() AppId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
-  mode: any;
+  mode: string;
   ListCrossAppObj: any = {};
   isProdOfrUpToDate: boolean = true;
   missingProdOfrComp: string = "";
@@ -119,13 +120,10 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.ListCrossAppObj["appId"] = this.AppId;
     this.ListCrossAppObj["result"] = [];
     this.isInputLookupObj = false;
-    // this.makeLookUpObj();
     this.getAppModelInfo();
 
 
     this.applicationDDLitems = [];
-    // data dummy test
-    // data real
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustType);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeSlsRecom);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWOP);
@@ -165,11 +163,11 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   }
 
   getDDLFromProdOffering(refProdCompntCode: string) {
-    var obj = {
-      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-      RefProdCompntCode: refProdCompntCode,
-      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
-    };
+    var obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
+    obj.RefProdCompntCode = refProdCompntCode;
+    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
+
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
         var listDDL = response["DDLRefProdComptCode"];
@@ -178,11 +176,10 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   }
 
   getInterestTypeCode() {
-    var obj = {
-      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestTypeGeneral,
-      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
-    };
+    var obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
+    obj.RefProdCompntCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
+    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
 
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {
@@ -371,7 +368,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
@@ -380,7 +376,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.inputLookupEconomicSectorObj = new InputLookupObj();
     this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    this.inputLookupEconomicSectorObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
     this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";

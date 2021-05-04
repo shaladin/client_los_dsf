@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { HttpClient } from '@angular/common/http';
@@ -22,7 +21,7 @@ import { CookieService } from 'ngx-cookie';
   templateUrl: './pre-go-live-approval-paging.component.html'
 })
 export class PreGoLiveApprovalPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -41,11 +40,7 @@ export class PreGoLiveApprovalPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchPreGoLiveApproval.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPreGoLiveApproval.json";
     this.inputPagingObj.addCritInput = new Array();
 

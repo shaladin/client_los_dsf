@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ReqGetPurchaseOrderHDetailObj } from 'app/shared/model/Request/PurchaseOrder/ReqPOObj.model';
 
 @Component({
   selector: 'app-view-purchase-order-multi-asset-detail',
@@ -34,12 +35,11 @@ export class ViewPurchaseOrderMultiAssetDetailComponent implements OnInit {
   ResponsePurchaseOrderHData;
  
   async BindPOData(){
-    var obj = { 
-      AgrmntId: this.agrmntId,
-      SupplCode : this.supplCode,
-      PurchaseOrderHId : this.PurchaseOrderHId
-     };
-    await this.http.post(URLConstant.GetPurchaseOrderHDetailViewMultiAssetByAgrmntId, obj).toPromise().then(
+     let GetPOObj = new ReqGetPurchaseOrderHDetailObj();
+     GetPOObj.AgrmntId = this.agrmntId;
+     GetPOObj.SupplCode = this.supplCode;
+     GetPOObj.PurchaseOrderHId = this.PurchaseOrderHId;
+    await this.http.post(URLConstant.GetPurchaseOrderHDetailViewMultiAssetByAgrmntId, GetPOObj).toPromise().then(
       (response) => {
         this.ResponseAgrmntFinDataData=response["ResponseAgrmntFinDataObj"];
         this.ResponseAppAssetData=response["ResponseAppAssetObj"];

@@ -530,7 +530,8 @@ export class CommissionComponent implements OnInit {
 
   }
 
-  listAppCommissionHObj;
+  listAppCommissionHAddObj: Array<AppCommissionHObj> = new Array<AppCommissionHObj>();
+  listAppCommissionHEditObj: Array<AppCommissionHObj> = new Array<AppCommissionHObj>();
   private DataFilterAppCommH(FormObj, CommReceipientTypeCode) {
     var arr = FormObj.get('arr') as FormArray;
     var len = arr["controls"].length;
@@ -540,7 +541,11 @@ export class CommissionComponent implements OnInit {
       if (temp.ContentName == "") continue;
       tempAppCommHObj = this.PatchTempDataValue(temp, CommReceipientTypeCode);
 
-      this.listAppCommissionHObj.push(tempAppCommHObj);
+      if (tempAppCommHObj.AppCommissionHId == 0) {
+        this.listAppCommissionHAddObj.push(tempAppCommHObj);
+        continue;
+      }
+      this.listAppCommissionHEditObj.push(tempAppCommHObj);
     }
   }
 
@@ -627,7 +632,7 @@ export class CommissionComponent implements OnInit {
     if (this.CekMaxValueIncomeInfo()) {
       return;
     }
-    this.listAppCommissionHObj = new Array();
+    
     if (this.FormGetObj != null) {
       if (this.FormGetObj[CommonConstant.ContentSupplier] && this.FormGetObj[CommonConstant.ContentSupplier].value.arr.length > 0) {
         this.DataFilterAppCommH(this.FormGetObj[CommonConstant.ContentSupplier], CommonConstant.CommissionReceipientTypeCodeSupplier);
@@ -642,7 +647,8 @@ export class CommissionComponent implements OnInit {
       var obj = {
         AppId: this.AppId,
         GrossYield: this.Summary.GrossYield,
-        ListAppCommissionHObj: this.listAppCommissionHObj,
+        ListAppCommissionHAddObj: this.listAppCommissionHAddObj,
+        ListAppCommissionHEditObj: this.listAppCommissionHEditObj,
         RowVersion: ""
       };
       this.http.post(URLConstant.AddOrEditAppCommissionData, obj).subscribe(

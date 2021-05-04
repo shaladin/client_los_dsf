@@ -7,19 +7,15 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-credit-inquiry',
-  templateUrl: './credit-inquiry.component.html',
-  styleUrls: []
+  templateUrl: './credit-inquiry.component.html'
 })
 export class CreditInquiryComponent implements OnInit {
-
   inputPagingObj: UcPagingObj = new UcPagingObj();
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchCreditProcessInquiry.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditProcessInquiry.json";
     this.inputPagingObj.ddlEnvironments = [
       {

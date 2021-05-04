@@ -4,6 +4,7 @@ import { InputReportObj } from 'app/shared/model/library/InputReportObj.model';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-report',
@@ -21,14 +22,17 @@ export class ReportComponent implements OnInit {
   })
   isDisabled: boolean = false;
   lang: string = "Current Page";
+  tanggal: Date = new Date();
+  ml: any;
 
-  constructor(private fb: FormBuilder,) {
+  constructor(private fb: FormBuilder, public translate: TranslateService) {
     this.inputReportObj.JsonPath = "./assets/ucreport/ReportTest.json";
     this.inputReportObj.EnvironmentUrl = environment.FoundationR3Url;
     this.inputReportObj.ApiReportPath = "/Report/GenerateReportR3";
   }
 
   ngOnInit() {
+    console.log("testing");
     this.ddlOfficeObj.apiUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.ddlOfficeObj.requestObj = {
       RefMasterTypeCode: "BUILDING_OWNERSHIP"
@@ -38,7 +42,7 @@ export class ReportComponent implements OnInit {
   clickMe() {
     this.isDisabled = !this.isDisabled;
     console.log(this.JobDataForm.value);
-    
+
     let listF = this.JobDataForm.get("Deductions") as FormArray;
     let fgn = this.fb.group({
       DeductTypeList: ['', [Validators.required]],
@@ -60,4 +64,8 @@ export class ReportComponent implements OnInit {
     console.log(this.JobDataForm.value);
   }
 
+  ChangeLanguage(language: string) {
+    localStorage.setItem('lang', language);
+    this.translate.use(language);
+  }
 }

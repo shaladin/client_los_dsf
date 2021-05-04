@@ -14,6 +14,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
+import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -275,12 +276,14 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   LastStepHandler() {
-    this.NapObj.WfTaskListId = this.wfTaskListId;
     if (this.ReturnHandlingHId > 0) {
       this.IsSavedTC = true;
     }
     else {
-      this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
+      let reqObj: SubmitNapObj = new SubmitNapObj();
+      reqObj.AppId = this.NapObj.AppId;
+      reqObj.WfTaskListId = this.wfTaskListId;
+      this.http.post(URLConstant.SubmitNAP, reqObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ROS_PAGING], { BizTemplateCode: CommonConstant.OPL }); //Diganti ROS Bila Sudah Siap
@@ -297,6 +300,7 @@ export class NapAddDetailComponent implements OnInit {
     if (this.ReturnHandlingHId > 0) {
       var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
       ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
+      ReturnHandlingResult.ReturnHandlingHId = this.ResponseReturnInfoObj.ReturnHandlingHId;
       ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
       ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
       ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;

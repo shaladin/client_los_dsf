@@ -19,6 +19,7 @@ import { forkJoin } from 'rxjs';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
 import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
+import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -267,8 +268,10 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   LastStepHandler() {
-    this.NapObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
+    let reqObj: SubmitNapObj = new SubmitNapObj();
+    reqObj.AppId = this.NapObj.AppId;
+    reqObj.WfTaskListId = this.wfTaskListId;
+    this.http.post(URLConstant.SubmitNAP, reqObj).subscribe(
       (response) => {
         this.Cancel();
       })
@@ -276,14 +279,18 @@ export class NapDetailFormComponent implements OnInit {
 
   Submit() {
     if (this.ReturnHandlingHId > 0) {
-      var obj = {
-        ReturnHandlingDId: this.ResponseReturnInfoObj.ReturnHandlingDId,
-        ReturnHandlingNotes: this.ResponseReturnInfoObj.ReturnHandlingNotes,
-        ReturnHandlingExecNotes: this.FormReturnObj.value.ReturnExecNotes,
-        RowVersion: this.ResponseReturnInfoObj.RowVersion
-      };
+      var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+      ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
+      ReturnHandlingResult.ReturnHandlingHId = this.ResponseReturnInfoObj.ReturnHandlingHId;
+      ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
+      ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
+      ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;
+      ReturnHandlingResult.ReturnHandlingNotes = this.ResponseReturnInfoObj.ReturnHandlingNotes;
+      ReturnHandlingResult.ReturnHandlingExecNotes = this.FormReturnObj.controls['ReturnExecNotes'].value;
+      ReturnHandlingResult.RowVersion = this.ResponseReturnInfoObj.RowVersion;
 
-      this.http.post(URLConstant.EditReturnHandlingD, obj).subscribe(
+
+      this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
         (response) => {
         })
     }

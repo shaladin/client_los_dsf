@@ -13,6 +13,8 @@ import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMain
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 
 @Component({
   selector: 'app-nap-cust-main-data',
@@ -190,11 +192,13 @@ export class NapCustMainDataComponent implements OnInit {
   }
 
   LastStep(){
-    this.NapObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.SubmitNapCustMainData, this.NapObj).subscribe(
+    let reqObj: SubmitNapObj = new SubmitNapObj();
+    reqObj.AppId = this.NapObj.AppId;
+    reqObj.WfTaskListId = this.wfTaskListId;
+    this.http.post(URLConstant.SubmitNapCustMainData, reqObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP1/Paging"], { "BizTemplateCode": this.bizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
       }
     );
   }

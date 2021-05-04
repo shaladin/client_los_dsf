@@ -18,8 +18,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-nap-from-lead-detail',
-  templateUrl: './nap-from-lead-detail.component.html',
-  providers: [NGXToastrService]
+  templateUrl: './nap-from-lead-detail.component.html'
 })
 export class NapFromLeadDetailComponent implements OnInit {
 
@@ -118,8 +117,7 @@ export class NapFromLeadDetailComponent implements OnInit {
   MakeLookUpObj() {
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputLookupObjName.urlEnviPaging = environment.tempUrl;
+    this.inputLookupObjName.urlEnviPaging = environment.losUrl;
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;

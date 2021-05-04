@@ -21,7 +21,7 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": " l.MR_LEAD_SOURCE_CODE",
+            "name": "l.MR_LEAD_SOURCE_CODE",
             "id": "MrLeadSourceCodeId",
             "value": "",
             "placeholder": "Placeholder",

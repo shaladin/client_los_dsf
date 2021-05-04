@@ -12,6 +12,7 @@ import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { FormBuilder } from '@angular/forms';
+import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 
 @Component({
   selector: 'app-cust-completion-opl-detail',
@@ -120,7 +121,10 @@ export class CustCompletionOplDetailComponent implements OnInit {
   }
 
   buttonSubmitOnClick() {
-    this.http.post(URLConstant.SubmitAppCustCompletion, { "AppId": this.AppId, "WfTaskListId": this.wfTaskListId }).subscribe(
+    let reqObj: SubmitNapObj = new SubmitNapObj();
+    reqObj.AppId = this.AppId;
+    reqObj.WfTaskListId = this.wfTaskListId;
+    this.http.post(URLConstant.SubmitAppCustCompletion, reqObj).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);
         this.buttonBackOnClick();
@@ -136,6 +140,7 @@ export class CustCompletionOplDetailComponent implements OnInit {
     if (this.ReturnHandlingHId > 0) {
       var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
       ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
+      ReturnHandlingResult.ReturnHandlingHId = this.ResponseReturnInfoObj.ReturnHandlingHId;
       ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
       ReturnHandlingResult.MrReturnTaskCode = this.ResponseReturnInfoObj.MrReturnTaskCode;
       ReturnHandlingResult.ReturnStat = this.ResponseReturnInfoObj.ReturnStat;

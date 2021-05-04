@@ -42,6 +42,8 @@ import { LeadMonitoringReviewComponent } from './lead-monitoring-review/lead-mon
 import { LeadMonitoringReviewDetailComponent } from './lead-monitoring-review/lead-monitoring-review-detail/lead-monitoring-review-detail.component';
 import { UcaddtotempModule } from "@adins/ucaddtotemp";
 import { SharedModule } from "app/shared/shared.module";
+import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
+
 export const customCurrencyMaskConfig = {
   align: "left",
   allowNegative: true,
@@ -103,6 +105,9 @@ export const customCurrencyMaskConfig = {
   entryComponents: [
     UclookupgenericComponent,
     UcviewgenericComponent
+  ],
+  providers: [
+    NGXToastrService
   ]
 })
 

@@ -6,6 +6,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ReqDownloadRuleObj } from 'app/shared/model/Request/Product/ReqDownloadRuleObj.model';
+import { ReqGetProdOffCompntObj } from 'app/shared/model/Request/Product/ReqGetProdCompntObj.model';
 
 @Component({
   selector: 'uc-prod-offering-comp',
@@ -23,7 +24,6 @@ export class UcProdOfferingCompComponent implements OnInit {
   dictOptions: { [key: string]: any; } = {};
   dictBehaviour: {[key: string]: any;} = {};
   list = new Array();
-  UrlGetProdOfferingCompGrouped : any;
   dictMultiOptions: { [key: string]: any; } = {};
   selectedMultiDDLItems: { [key: string]: any; } = {};
   DlRuleObj  : ReqDownloadRuleObj = new ReqDownloadRuleObj();
@@ -49,6 +49,7 @@ export class UcProdOfferingCompComponent implements OnInit {
   };
 
   ngOnInit() {
+    console.log("aosdifjosidfj");
     this.FormProdOfferingComp = this.fb.group(
       {
         groups: this.fb.array([])
@@ -204,16 +205,13 @@ export class UcProdOfferingCompComponent implements OnInit {
 
   LoadProdComponent(ProdOfferingHId, CompGroups, IsFilterBizTmpltCode)
   {
-    this.UrlGetProdOfferingCompGrouped = URLConstant.GetProductOfferingComponentGrouped;
 
-    var ProdOfferingComponent = {
-      ProdOfferingHId : ProdOfferingHId,
-      GroupCodes: CompGroups.split(","),
-      IsFilterBizTmpltCode: IsFilterBizTmpltCode,
-      RowVersion: ""
-    }
+    var ProdOfferingComponent: ReqGetProdOffCompntObj = new ReqGetProdOffCompntObj();
+    ProdOfferingComponent.ProdOfferingHId = ProdOfferingHId,
+    ProdOfferingComponent.GroupCodes = CompGroups.split(","),
+    ProdOfferingComponent.IsFilterBizTmpltCode = IsFilterBizTmpltCode
 
-    this.http.post(this.UrlGetProdOfferingCompGrouped, ProdOfferingComponent).toPromise().then(
+    this.http.post(URLConstant.GetProductOfferingComponentGrouped, ProdOfferingComponent).toPromise().then(
       async (response) => {
         for (var i = 0; i < response[CommonConstant.ReturnObj]["ProdOffComponents"].length; i++) {
           var group = response[CommonConstant.ReturnObj]["ProdOffComponents"][i];

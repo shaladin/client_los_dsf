@@ -13,7 +13,6 @@ import { NotificationSidebarComponent } from 'app/shared/notification-sidebar/no
 import { ToggleFullscreenDirective } from "app/shared/directives/toggle-fullscreen.directive";
 import { ContextMenuModule } from 'ngx-contextmenu';
 import { DmsIframeComponent } from './dms-iframe/dms-iframe.component';
-import { AppModule } from 'app/app.module';
 import { SafePipe } from './pipe/safepipe';
 import { CookieModule } from 'ngx-cookie';
 

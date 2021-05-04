@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-doc-signer-cfna',
@@ -12,7 +13,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
   styles: []
 })
 export class DocSignerCfnaComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   link: string;
   BizTemplateCode: string;
 
@@ -26,25 +27,21 @@ export class DocSignerCfnaComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchNewDocSigner.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchNewDocSigner.json";
-    var whereValueObj = new WhereValueObj();
+    let whereValueObj = new WhereValueObj();
     whereValueObj.property = "BizTemplateCode";
     whereValueObj.value = this.BizTemplateCode;
     this.inputPagingObj.whereValue.push(whereValueObj);
-
-    // this.inputPagingObj.whereValue.push({property: "BizTemplateCode", value: ""});
-    // this.inputPagingObj.whereValue.find(x => x.property == "BizTemplateCode").value = this.BizTemplateCode;
   }
 
   getEvent(ev){
     if(ev.Key == "prodOff"){
-      this.http.post(URLConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
+      let GetProduct = new GenericObj();
+      GetProduct.Code = ev.RowObj.ProdOfferingCode;
+      this.http.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).subscribe(
         response => {
-          AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response['ProdOfferingHId']);
+          AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response.Id);
         },
         (error) => {
           console.log(error);

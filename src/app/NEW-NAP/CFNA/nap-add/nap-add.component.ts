@@ -10,7 +10,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
@@ -22,10 +21,8 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 @Component({
   selector: 'app-nap-add',
   templateUrl: './nap-add.component.html',
-  providers: [NGXToastrService]
 })
 export class NapAddComponent implements OnInit {
-
   @ViewChild('LookupOffering') ucLookupOffering: UclookupgenericComponent;
   @ViewChild('LookupCopyProduct') ucLookupCopyProduct: UclookupgenericComponent;
   inputLookupObjCopyProduct: InputLookupObj = new InputLookupObj();
@@ -116,7 +113,6 @@ export class NapAddComponent implements OnInit {
   MakeLookUpObj() {
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObjCopyProduct.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
@@ -124,8 +120,7 @@ export class NapAddComponent implements OnInit {
 
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputLookupObjName.urlEnviPaging = environment.tempUrl;
+    this.inputLookupObjName.urlEnviPaging = environment.losUrl;
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
@@ -174,11 +169,7 @@ export class NapAddComponent implements OnInit {
 
   GetOfficeDDL() {
     // Office DDL
-    var obj = {
-      RowVersion: ""
-    };
-    var url = URLConstant.GetListKvpActiveRefOfficeForPaging;
-    this.http.post(url, obj).subscribe(
+    this.http.post(URLConstant.GetListKvpActiveRefOfficeForPaging, {}).subscribe(
       (response) => {
         this.officeItems = response[CommonConstant.ReturnObj];
       });
@@ -214,28 +205,6 @@ export class NapAddComponent implements OnInit {
     }
   }
 
-  // SaveForm() {
-  //   var napAppObj = new NapAppModel();
-  //   napAppObj = this.NapAppForm.value;
-  //   napAppObj.AppCreatedDt = this.user.BusinessDt;
-  //   napAppObj.IsAppInitDone = false;
-  //   napAppObj.AppStat = CommonConstant.AppStepNew;
-  //   napAppObj.AppCurrStep = CommonConstant.AppStepNew;
-  //   napAppObj.BizTemplateCode = CommonConstant.CFNA;
-  //   napAppObj.LobCode = this.NapAppForm.controls.LobCode.value;
-  //   napAppObj.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
-  //   napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
-  //   napAppObj = this.CheckValue(napAppObj);
-
-  //   var url = URLConstant.AddApp;
-  //   this.http.post(url, napAppObj).subscribe(
-  //     (response) => {
-  //       this.toastr.successMessage(response["message"]);
-  //       AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFNA_ADD_DETAIL], { "AppId": response["AppId"] });
-        
-  //     });
-  // }
-  
   SaveForm() {
     let requestAddNapObj: Object = new Object();
     let AddNapUrl: string = "";
@@ -273,7 +242,7 @@ export class NapAddComponent implements OnInit {
       (response) => {
         setTimeout(() => { this.spinner.show(); }, 10);
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CFNA_ADD_DETAIL], { "AppId": response.Id });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_ADD_DETAIL], { "AppId": response.Id });
       });
   }
 
@@ -301,7 +270,6 @@ export class NapAddComponent implements OnInit {
     this.NapAppForm.get("ProductOfferingNameIdentifier").patchValue({
       value: ev.ProdOfferingName
     });
-    // this.inputLookupObjName.nameSelect = ev.ProdOfferingName;
     this.inputLookupObjName.isRequired = false;
     this.isCopyData = true;
   }

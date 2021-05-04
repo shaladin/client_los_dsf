@@ -39,7 +39,6 @@ import { ViewPhoneVerifComponent } from "./view-phone-verif/view-phone-verif.com
 import { ViewReservedFundComponent } from "./view-reserved-fund/view-reserved-fund.component";
 import { TabAnalysisResultComponent } from "./tab-analysis-result/tab-analysis-result.component";
 import { ApprovalHistComponent } from "./approval-hist/approval-hist.component";
-import { ViewFraudDetectionResultComponent } from "./view-fraud-detection-result/view-fraud-detection-result.component";
 import { ViewSurveyTaskListComponent } from "./view-survey-task-list/view-survey-task-list.component";
 import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.component";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
@@ -97,7 +96,6 @@ import { ViewAssetExpenseComponent } from './view-asset-expense/view-asset-expen
         ViewReservedFundComponent,
         TabAnalysisResultComponent,
         ApprovalHistComponent,
-        ViewFraudDetectionResultComponent,
         ViewSurveyTaskListComponent,
         ViewAssetDataComponent,
         TabDeviationComponent,

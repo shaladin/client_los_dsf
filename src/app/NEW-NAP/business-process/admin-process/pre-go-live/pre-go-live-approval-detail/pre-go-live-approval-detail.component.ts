@@ -16,6 +16,7 @@ import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
@@ -126,10 +127,10 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         this.ProdOfferingName = this.result.ProdOfferingName;
         this.ProdOfferingCode = this.result.ProdOfferingCode;
         this.ProdOfferingVersion = this.result.ProdOfferingVersion;
-        var Obj2 = {
+        var Obj2: ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj = new ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj();
+        Obj2 = {
           ProdOfferingCode: this.result.ProdOfferingCode,
-          RefProdCompntCode: CommonConstant.RefProdCompntCodeWayOfFinancing,
-          RowVersion: ""
+          RefProdCompntCode: CommonConstant.RefProdCompntCodeWayOfFinancing
         }
         this.http.post(URLConstant.GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode, Obj2).subscribe(
           (response) => {
@@ -138,10 +139,10 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           }
         );
 
-        var Obj3 = {
+        var Obj3: ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj = new ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj();
+        Obj3 = {
           ProdOfferingCode: this.result.ProdOfferingCode,
-          RefProdCompntCode: CommonConstant.RefProdCompntCodePurposeOfFinancing,
-          RowVersion: ""
+          RefProdCompntCode: CommonConstant.RefProdCompntCodePurposeOfFinancing
         }
         this.http.post(URLConstant.GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode, Obj3).subscribe(
           (response) => {
@@ -301,17 +302,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
     this.InputApvObj = new UcInputApprovalObj();
     this.InputApvObj.TaskId = this.taskId;
-    this.InputApvObj.EnvUrl = environment.FoundationR3Url;
-    this.InputApvObj.PathUrlGetLevelVoting = URLConstant.GetLevelVoting;
-    this.InputApvObj.PathUrlGetPossibleResult = URLConstant.GetPossibleResult;
-    this.InputApvObj.PathUrlSubmitApproval = URLConstant.SubmitApproval;
-    this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
-    this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
-    this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
-    this.InputApvObj.PathUrlReturnToLevel = URLConstant.ReturnLevel;
-    this.InputApvObj.PathUrlContinueToLevel = URLConstant.ContinueToLevel;
     this.InputApvObj.TrxNo = this.AgrmntNo;
-    this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.IsReady = true;
   }
