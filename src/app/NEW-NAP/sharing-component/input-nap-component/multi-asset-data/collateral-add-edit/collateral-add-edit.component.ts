@@ -56,9 +56,6 @@ export class CollateralAddEditComponent implements OnInit {
   custNo: string;
   branchObj: any;
   listBranchObj: any;
-  getListAppAssetData: any;
-  getListVendorEmp: any;
-  getListActiveRefMasterUrl: any;
   InputLookupSupplierObj: any;
   inputLookupCollNameObj: any;
   inputFieldLegalObj: any;
@@ -88,8 +85,6 @@ export class CollateralAddEditComponent implements OnInit {
   idTypeCode: any;
   ListAttrAnswer = [];
   tempIdType: any;
-  getAppCustAddrByAppCustAddrId: any;
-  getAppCustAddrUrl: any;
   appCustAddrObj: any;
   returnAppCustAddrObj: any;
   locationAddrObj: any;
@@ -103,7 +98,6 @@ export class CollateralAddEditComponent implements OnInit {
   inputFieldCollOwnerObj: any;
   ownerRelationshipObj: any;
   returnOwnerRelationshipObj: any;
-  addEditAllCollateralData: any;
   appCollateralDataObj: AppCollateralDataObj;
   assetRegionObj: any;
   returnAssetRegionObj: any;
@@ -113,15 +107,10 @@ export class CollateralAddEditComponent implements OnInit {
   transmitionAttrObj: AppCollateralAttrObj;
   bpkbCityIssuerAttrObj: AppCollateralAttrObj;
   bpkbIssueDateAttrObj: AppCollateralAttrObj;
-  getListAssetTypeByCode: any;
   collTypeObj: any;
   returnCollTypeObj: any;
-  getAssetCategoryById: any;
   assetCategoryObj: any;
   returnAssetCategoryObj: any;
-  getAppCollateralByAppCollateralId: any;
-  getAssetMasterForLookup: any;
-  getAppCollateralRegistByAppCollateralId: any;
   reqAssetMasterObj: any;
   resAssetMasterObj: any;
   appCollateralRegistObj: any;
@@ -182,17 +171,6 @@ export class CollateralAddEditComponent implements OnInit {
   AppCollateralAttrObj: any;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService) {
-    this.getListAppAssetData = URLConstant.GetListAppAssetData;
-    this.getListVendorEmp = URLConstant.GetListVendorEmpByVendorIdAndPosition;
-    this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getAppCustAddrByAppCustAddrId = URLConstant.GetAppCustAddrByAppCustAddrId;
-    this.getAppCustAddrUrl = URLConstant.GetListAppCustAddrByAppId;
-    this.addEditAllCollateralData = URLConstant.AddEditAllCollateralData;
-    this.getListAssetTypeByCode = URLConstant.GetListAssetTypeByCode;
-    this.getAssetCategoryById = URLConstant.GetAssetCategoryById;
-    this.getAppCollateralByAppCollateralId = URLConstant.GetAppCollateralByAppCollateralId;
-    this.getAssetMasterForLookup = URLConstant.GetAssetMasterForLookup;
-    this.getAppCollateralRegistByAppCollateralId = URLConstant.GetAppCollateralRegistrationByAppCollateralId;
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.isReady = false;
 
@@ -368,7 +346,7 @@ export class CollateralAddEditComponent implements OnInit {
 
   GetListAddr() {
     this.appObj.Id = this.AppId;
-    this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
+    this.http.post(URLConstant.GetListAppCustAddrByAppId, this.appObj).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({
@@ -436,7 +414,7 @@ export class CollateralAddEditComponent implements OnInit {
     // this.appCustAddrObj = new AppCustAddrObj();
     // this.appCustAddrObj.AppCustAddrId = this.AddCollForm.controls["LocationAddrType"].value;
     var appCustAddrObj = { Id: this.AddCollForm.controls["LocationAddrType"].value };
-    this.http.post(this.getAppCustAddrByAppCustAddrId, appCustAddrObj).subscribe(
+    this.http.post(URLConstant.GetAppCustAddrByAppCustAddrId, appCustAddrObj).subscribe(
       (response) => {
         this.returnAppCustAddrObj = response;
 
@@ -461,7 +439,7 @@ export class CollateralAddEditComponent implements OnInit {
     // this.collOwnerObj = new AppCustAddrObj();
     // this.collOwnerObj.AppCustAddrId = this.AddCollForm.controls["CollateralOwnerAddr"].value;
     var collOwnerObj = { Id: this.AddCollForm.controls["CollateralOwnerAddr"].value };
-    this.http.post(this.getAppCustAddrByAppCustAddrId, collOwnerObj).subscribe(
+    this.http.post(URLConstant.GetAppCustAddrByAppCustAddrId, collOwnerObj).subscribe(
       (response) => {
         this.returnCollOwnerObj = response;
 
@@ -502,7 +480,7 @@ export class CollateralAddEditComponent implements OnInit {
       this.appCollateralObj.AppCollateralId = this.AppCollateralId;
       this.appCollateralObj.Id = this.AppCollateralId;
       this.appAssetId = this.appCollateralObj.AppAssetId;
-      this.http.post(this.getAppCollateralByAppCollateralId, this.appCollateralObj).subscribe(
+      this.http.post(URLConstant.GetAppCollateralByAppCollateralId, this.appCollateralObj).subscribe(
         (response) => {
           this.returnAppCollateralObj = response;
           if (this.returnAppCollateralObj.CollateralStat == CommonConstant.AssetStatNew) {
@@ -527,7 +505,7 @@ export class CollateralAddEditComponent implements OnInit {
 
           var reqByCode = new GenericObj();
           reqByCode.Code = this.returnAppCollateralObj.FullAssetCode;
-          this.http.post(this.getAssetMasterForLookup, reqByCode).subscribe(
+          this.http.post(URLConstant.GetAssetMasterForLookup, reqByCode).subscribe(
             (response) => {
               this.resAssetMasterObj = response;
               this.inputLookupObj.nameSelect = this.resAssetMasterObj.FullAssetName;
@@ -543,7 +521,7 @@ export class CollateralAddEditComponent implements OnInit {
       this.appCollateralRegistObj = new AppCollateralRegistrationObj();
       this.appCollateralRegistObj.AppCollateralId = this.AppCollateralId;
       this.appCollateralRegistObj.Id = this.AppCollateralId;
-      this.http.post(this.getAppCollateralRegistByAppCollateralId, this.appCollateralRegistObj).subscribe(
+      this.http.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, this.appCollateralRegistObj).subscribe(
         (response) => {
           this.returnAppCollateralRegistObj = response;
           this.AddCollForm.patchValue({
@@ -678,7 +656,7 @@ export class CollateralAddEditComponent implements OnInit {
 
     this.idTypeCode = new RefMasterObj();
     this.idTypeCode.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    this.http.post(this.getListActiveRefMasterUrl, this.idTypeCode).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.idTypeCode).subscribe(
       (response) => {
         this.tempIdType = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({ MrIdTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -686,7 +664,7 @@ export class CollateralAddEditComponent implements OnInit {
 
     this.ownerRelationshipObj = new RefMasterObj();
     this.ownerRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
-    this.http.post(this.getListActiveRefMasterUrl, this.ownerRelationshipObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.ownerRelationshipObj).subscribe(
       (response) => {
         this.returnOwnerRelationshipObj = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({ OwnerRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -695,7 +673,7 @@ export class CollateralAddEditComponent implements OnInit {
 
     this.assetRegionObj = new RefMasterObj();
     this.assetRegionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetInsRegion;
-    this.http.post(this.getListActiveRefMasterUrl, this.assetRegionObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.assetRegionObj).subscribe(
       (response) => {
         this.returnAssetRegionObj = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({ AssetRegion: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -703,7 +681,7 @@ export class CollateralAddEditComponent implements OnInit {
     );
 
     this.collTypeObj = new AssetTypeObj();
-    this.http.post(this.getListAssetTypeByCode, this.collTypeObj).subscribe(
+    this.http.post(URLConstant.GetListAssetTypeByCode, this.collTypeObj).subscribe(
       (response) => {
         this.returnCollTypeObj = response[CommonConstant.ReturnObj];
         if (this.mode != 'editColl') {
@@ -1034,7 +1012,7 @@ export class CollateralAddEditComponent implements OnInit {
         this.setCollateralAttribute();
         this.appCollateralDataObj.AppCollateralObj.AppAssetId = null;
         this.appCollateralDataObj.AppCollateralObj.AgrmntId = null;
-        this.http.post(this.addEditAllCollateralData, this.appCollateralDataObj).subscribe(
+        this.http.post(URLConstant.AddEditAllCollateralData, this.appCollateralDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             this.collValue.emit({ mode: 'paging' });
@@ -1056,7 +1034,7 @@ export class CollateralAddEditComponent implements OnInit {
         this.appCollateralDataObj.AppCollateralRegistrationObj.AppCollateralRegistrationId = this.returnAppCollateralRegistObj.AppCollateralRegistrationId;
         this.appCollateralDataObj.AppCollateralRegistrationObj.AppCollateralId = this.returnAppCollateralRegistObj.AppCollateralId;
         this.appCollateralDataObj.AppCollateralRegistrationObj.RowVersion = this.returnAppCollateralRegistObj.RowVersion;
-        this.http.post(this.addEditAllCollateralData, this.appCollateralDataObj).subscribe(
+        this.http.post(URLConstant.AddEditAllCollateralData, this.appCollateralDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             //this.router.navigate(["/Nap/AssetData/Paging"]);

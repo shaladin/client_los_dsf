@@ -8,6 +8,7 @@ import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoO
 import { CrdRvwCustPhnStatusObj } from 'app/shared/model/CreditReview/CrdRvwCustPhnStatusObj.Model';
 import { CrdRvwDiffAppToMasterCustObj } from 'app/shared/model/CreditReview/CrdRvwDiffAppToMasterCustObj.Model';
 import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureObj.Model';
+import { ReqCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditReview/ReqCrdRvwObj.Model';
 import { ResponseCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditReview/ResponseCrdRvwDiffAppToInPrcAppCustObj.Model';
 
 @Component({
@@ -69,7 +70,8 @@ export class CrdRvwCustCompanyInfoComponent implements OnInit {
   
   responseCrdRvwDiffAppToInPrcAppCustObj: ResponseCrdRvwDiffAppToInPrcAppCustObj = new ResponseCrdRvwDiffAppToInPrcAppCustObj();
   async GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId() {
-    await this.http.post<ResponseCrdRvwDiffAppToInPrcAppCustObj>(URLConstant.GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, IsGenerateDict: true }).toPromise().then(
+    let reqObj: ReqCrdRvwDiffAppToInPrcAppCustObj = { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, IsGenerateDict: true };
+    await this.http.post<ResponseCrdRvwDiffAppToInPrcAppCustObj>(URLConstant.GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId, reqObj).toPromise().then(
       (response) => {
         this.responseCrdRvwDiffAppToInPrcAppCustObj = response;
       }
