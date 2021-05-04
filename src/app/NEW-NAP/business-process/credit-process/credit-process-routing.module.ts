@@ -8,13 +8,10 @@ import { CreditReviewPagingComponent } from './credit-review/credit-review-pagin
 import { CreditReviewMainComponent } from './credit-review/credit-review-main/credit-review-main.component';
 import { CommissionReservedFundDetailComponent } from './commission-reserved-fund/comission-reserved-fund-detail/commission-reserved-fund-detail.component';
 import { CommissionReservedFundPagingComponent } from './commission-reserved-fund/comission-reserved-fund-paging/commission-reserved-fund-paging.component';
-import { FraudDetectionVerifComponent } from './fraud-detection/fraud-detection-verif/fraud-detection-verif.component';
-import { FraudDetectionPagingComponent } from './fraud-detection/fraud-detection-paging/fraud-detection-paging.component';
 import { PhoneVerificationSubjectComponent } from './phone-verification/phone-verification-subject/phone-verification-subject.component';
 import { PhoneVerificationSubjectVerifComponent } from './phone-verification/phone-verification-subject-verif/phone-verification-subject-verif.component';
 import { PhoneVerificationSubjectViewComponent } from './phone-verification/phone-verification-subject-view/phone-verification-subject-view.component';
 import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.component';
-import { FraudVerificationMultiAssetComponent } from './fraud-verification-multi-asset/fraud-verification-multi-asset.component';
 import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
 import { NewCreditInvestigationDetailComponent } from './new-credit-investigation/new-credit-investigation-detail/new-credit-investigation-detail.component';
 import { NewCreditInvestigationComponent } from './new-credit-investigation/new-credit-investigation.component';
@@ -176,36 +173,8 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstant.FRAUD_DETECTION_DETAIL,
-        component: FraudDetectionVerifComponent,
-        data: {
-          title: 'Fraud Detection'
-        }
-      },
-      {
-        path: PathConstant.FRAUD_DETECTION_PAGING,
-        component: FraudDetectionPagingComponent,
-        data: {
-          title: 'Fraud Detection Paging'
-        }
-      },
-      {
-        path: PathConstant.FRAUD_VERIF_MULTI_ASSET_PAGING,
-        component: FraudVerificationMultiAssetComponent,
-        data: {
-          title: 'Fraud Verification'
-        }
-      },
-      {
         path: PathConstant.CRD_INQUIRY_PAGING,
         component: CreditInquiryComponent,
-        data: {
-          title: 'Credit Process Inquiry'
-        }
-      },
-      {
-        path: PathConstant.FRAUD_DETECTION_NEG_ASSET_DUP_CHECK,
-      component: FraudVerificationMultiAssetComponent,
         data: {
           title: 'Credit Process Inquiry'
         }

@@ -100,9 +100,7 @@ export class AssetDataAddEditComponent implements OnInit {
   returnAppAssetSupplEmpObj: any;
   vendorObj: any;
   returnVendorObj: any;
-  appAssetSupplEmpSalesObj: any;
   salesAppAssetSupplEmpObj: any;
-  appAssetSupplEmpHeadObj: any;
   headAppAssetSupplEmpObj: any;
   appAssetSupplEmpBranchObj: any;
   branchAppAssetSupplEmpObj: any;
@@ -675,10 +673,10 @@ export class AssetDataAddEditComponent implements OnInit {
             SupplName: this.returnVendorObj.VendorName,
           });
 
-          this.appAssetSupplEmpHeadObj = new AppAssetSupplEmpObj();
-          this.appAssetSupplEmpHeadObj.AppAssetId = this.AppAssetId;
-          this.appAssetSupplEmpHeadObj.MrSupplEmpPositionCode = CommonConstant.ADMIN_HEAD_JOB_CODE;
-          this.http.post(URLConstant.GetAppAssetSupplEmpByAppAssetIdAndCode, this.appAssetSupplEmpHeadObj).subscribe(
+          let getAppAssetSupplEmpByAdminHead = new GenericObj();
+          getAppAssetSupplEmpByAdminHead.Id = this.AppAssetId;
+          getAppAssetSupplEmpByAdminHead.Code = CommonConstant.ADMIN_HEAD_JOB_CODE;
+          this.http.post(URLConstant.GetAppAssetSupplEmpByAppAssetIdAndMrSupplEmpPositionCode, getAppAssetSupplEmpByAdminHead).subscribe(
             (response) => {
               this.headAppAssetSupplEmpObj = response;
               var obj = {
@@ -702,10 +700,10 @@ export class AssetDataAddEditComponent implements OnInit {
                 });
             });
 
-          this.appAssetSupplEmpSalesObj = new AppAssetSupplEmpObj();
-          this.appAssetSupplEmpSalesObj.AppAssetId = this.AppAssetId;
-          this.appAssetSupplEmpSalesObj.MrSupplEmpPositionCode = CommonConstant.SALES_JOB_CODE;
-          this.http.post(URLConstant.GetAppAssetSupplEmpByAppAssetIdAndCode, this.appAssetSupplEmpSalesObj).subscribe(
+          let getAppAssetSupplEmpBySales = new GenericObj();
+          getAppAssetSupplEmpBySales.Id = this.AppAssetId;
+          getAppAssetSupplEmpBySales.Code = CommonConstant.SALES_JOB_CODE;
+          this.http.post(URLConstant.GetAppAssetSupplEmpByAppAssetIdAndMrSupplEmpPositionCode, getAppAssetSupplEmpBySales).subscribe(
             (response) => {
               this.salesAppAssetSupplEmpObj = response;
               var obj = {

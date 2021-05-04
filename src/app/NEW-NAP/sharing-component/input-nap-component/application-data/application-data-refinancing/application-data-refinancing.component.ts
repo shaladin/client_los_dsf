@@ -18,6 +18,7 @@ import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 
 @Component({
   selector: 'app-application-data-refinancing',
@@ -162,11 +163,11 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   }
 
   getDDLFromProdOffering(refProdCompntCode: string) {
-    var obj = {
-      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-      RefProdCompntCode: refProdCompntCode,
-      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
-    };
+    var obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
+    obj.RefProdCompntCode = refProdCompntCode;
+    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
+
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
         var listDDL = response["DDLRefProdComptCode"];
@@ -175,11 +176,10 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   }
 
   getInterestTypeCode() {
-    var obj = {
-      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestTypeGeneral,
-      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
-    };
+    var obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
+    obj.RefProdCompntCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
+    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
 
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {

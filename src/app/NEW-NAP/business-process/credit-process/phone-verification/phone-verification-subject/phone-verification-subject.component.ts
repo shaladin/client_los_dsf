@@ -238,16 +238,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     }
   }
 
-  async GetReturnHandlingD() {
-    this.rtnHandlingDObj.ReturnHandlingDId = this.returnHandlingHId;
-    this.rtnHandlingDObj.Id = this.returnHandlingHId;
-    await this.http.post(URLConstant.AddVerfResult, this.rtnHandlingDObj).toPromise().then(
-      (response) => {
-        this.returnHandlingDObj = response;
-
-      }
-    );
-  }
+  
 
   View(VerifResultHid, SubjectName) {
     var link = environment.losR3Web + "/Nap/CreditProcess/PhoneVerification/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName;
