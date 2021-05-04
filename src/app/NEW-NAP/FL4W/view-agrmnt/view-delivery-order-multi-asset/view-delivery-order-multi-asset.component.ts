@@ -5,6 +5,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ReqGetDOMultiAssetInformationObj } from 'app/shared/model/Request/DeliveryOrder/ReqGetDOMultiAssetInformationObj.model';
 @Component({
   selector: 'app-view-delivery-order-multi-asset',
   templateUrl: './view-delivery-order-multi-asset.component.html'
@@ -13,7 +14,6 @@ export class ViewDeliveryOrderMultiAssetComponent implements OnInit {
   @Input() AgrmntId: number;
   doList: Array<any>;
   AppId: number;
-  GetListDeliveryOrderHByAppIdAgrmntId: string;
 
   readonly CancelLink: string = NavigationConstant.NAP_FL4W_VIEW_DO_DETAIL;
   constructor(private route: ActivatedRoute, private http: HttpClient) {
@@ -25,11 +25,10 @@ export class ViewDeliveryOrderMultiAssetComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.GetListDeliveryOrderHByAppIdAgrmntId = URLConstant.GetListDeliveryOrderHByAppIdAgrmntId;
-    var doObj = new DeliveryOrderHObj();
-    doObj.AgrmntId = this.AgrmntId;
-    doObj.AppId = this.AppId;
-    this.http.post(this.GetListDeliveryOrderHByAppIdAgrmntId, doObj).subscribe(
+    let GetDoObj = new ReqGetDOMultiAssetInformationObj();
+    GetDoObj.AppId = this.AppId;
+    GetDoObj.AgrmntId = this.AgrmntId;
+    this.http.post(URLConstant.GetListDeliveryOrderHByAppIdAgrmntId, GetDoObj).subscribe(
       (response) => {
         this.doList = response["DeliveryOrderHObjs"];
       });
