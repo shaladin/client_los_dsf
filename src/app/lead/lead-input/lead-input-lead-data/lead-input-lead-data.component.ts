@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -7,22 +7,21 @@ import { environment } from 'environments/environment';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
-import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Model';
 import { LeadAppObj } from 'app/shared/model/Request/LEAD/LeadAppObj.model';
 import { LeadAssetObj } from 'app/shared/model/Request/LEAD/LeadAssetObj.model';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { ThirdPartyRsltHObj } from 'app/shared/model/ThirdPartyRsltHObj.Model';
 import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { String } from 'typescript-string-operations';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ReqLeadInputLeadDataObj } from 'app/shared/model/Request/LEAD/ReqInputLeadDataObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
+import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 
 
 @Component({
@@ -93,11 +92,10 @@ export class LeadInputLeadDataComponent implements OnInit {
     InstallmentAmt: ['', Validators.required],
     items: this.fb.array([]),
   });
-  getListGeneralSettingByListGsCode: string;
   getLeadByLeadId: string;
   submitWorkflowLeadInput: string;
-  generalSettingObj: GeneralSettingObj;
-  returnGeneralSettingObj: any;
+  generalSettingObj: GenericListByCodeObj;
+  returnGeneralSettingObj: Array<ResGeneralSettingObj>;
   lobKta = new Array();
   leadObj: LeadObj;
   returnLeadObj: any;
@@ -130,7 +128,6 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.getLeadAssetByLeadId = URLConstant.GetLeadAssetByLeadId;
     this.getLeadAppByLeadId = URLConstant.GetLeadAppByLeadId;
     this.getAssetMasterForLookup = URLConstant.GetAssetMasterForLookup;
-    this.getListGeneralSettingByListGsCode = URLConstant.GetListGeneralSettingByListGsCode;
     this.getThirdPartyResultHByTrxTypeCodeAndTrxNo = URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo;
     this.checkRapindoUrl = URLConstant.CheckRapindo;
     this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
@@ -214,18 +211,17 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.InputLookupAssetObj.pagingJson = "./assets/uclookup/Lead/lookupAsset.json";
     this.InputLookupAssetObj.genericJson = "./assets/uclookup/Lead/lookupAsset.json";
 
-    this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeLobKta);
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
-
-    this.http.post(this.getListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
+    this.generalSettingObj = new GenericListByCodeObj();
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeLobKta);
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
+    this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
       (response) => {
-        this.returnGeneralSettingObj = response;
+        this.returnGeneralSettingObj = response['ResGetListGeneralSettingObj'];
 
-        var gsLobKta = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeLobKta);
-        var gsNeedCheckBySystem = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
-        var gsUseDigitalization = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        var gsLobKta = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeLobKta);
+        var gsNeedCheckBySystem = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
 
         if (gsLobKta != undefined) {
           this.lobKta = gsLobKta.GsValue.split(",");

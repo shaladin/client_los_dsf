@@ -25,7 +25,6 @@ import { MouCustAddrObj } from 'app/shared/model/MouCustAddrObj.Model';
 import { MouCustSocmedObj } from 'app/shared/model/MouCustSocmedObj.Model';
 import { MouCustGrpObj } from 'app/shared/model/MouCustGrpObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
 import { AppCustCompareObj } from 'app/shared/model/AppCustCompareObj.Model';
 import { MouCustObjForAddTrxData } from 'app/shared/model/MouCustObjForAddTrxData.Model';
@@ -33,6 +32,8 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { String } from 'typescript-string-operations';
+import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
+import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 
 @Component({
   selector: 'app-mou-cust-tab',
@@ -46,8 +47,8 @@ export class MouCustTabComponent implements OnInit {
 
   isNeedCheckBySystem: string;
   isUseDigitalization: string;
-  generalSettingObj: GeneralSettingObj;
-  returnGeneralSettingObj: any;
+  generalSettingObj: GenericListByCodeObj;
+  returnGeneralSettingObj: Array<ResGeneralSettingObj>;
   mouObj: MouCustObj = new MouCustObj();
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
   latestCustDataObj: AppCustCompareObj;
@@ -1510,16 +1511,16 @@ export class MouCustTabComponent implements OnInit {
   }
 
   GetGS() {
-    this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
+    this.generalSettingObj = new GenericListByCodeObj();
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
 
-    this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
+    this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
       (response) => {
-        this.returnGeneralSettingObj = response;
+        this.returnGeneralSettingObj = response['ResGetListGeneralSettingObj'];
 
-        var gsNeedCheckBySystem = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
-        var gsUseDigitalization = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        var gsNeedCheckBySystem = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
         
         if(gsNeedCheckBySystem != undefined){
           this.isNeedCheckBySystem = gsNeedCheckBySystem.GsValue;
