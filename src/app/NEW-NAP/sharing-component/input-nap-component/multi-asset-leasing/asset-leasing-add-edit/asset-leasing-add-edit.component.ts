@@ -12,10 +12,8 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AllAssetDataObj } from 'app/shared/model/AllAssetDataObj.Model';
 import { RefCoyObj } from 'app/shared/model/RefCoyObj.Model';
-import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
-import { AppAssetSupplEmpObj } from 'app/shared/model/AppAssetSupplEmpObj.Model';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -28,7 +26,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 })
 export class AssetLeasingAddEditComponent implements OnInit {
   //@Input() type: string = "addAsset";
-  @Input() mode: string; 
+  @Input() mode: string;
   @Input() AppAssetId: number;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
   @Output() assetValue: EventEmitter<object> = new EventEmitter();
@@ -38,15 +36,12 @@ export class AssetLeasingAddEditComponent implements OnInit {
   LobCode: string;
   pageType: string = "add";
   custType: string;
-  branchObj : any;
+  branchObj: any;
   listBranchObj: any;
   salesObj: any;
   listSalesObj: any;
   adminHeadObj: any;
   listAdminHeadObj: any;
-  getListAppAssetData: any;
-  getListVendorEmp: any;
-  getListActiveRefMasterUrl: any;
   InputLookupSupplierObj: any;
   InputLookupAssetObj: any;
   inputAssetLocAddressObj: any;
@@ -58,30 +53,19 @@ export class AssetLeasingAddEditComponent implements OnInit {
   returnUserRelationshipObj: any;
   inputFieldLocationAddrObj: InputFieldObj;
   locationAddrObj: AppCustAddrObj;
-  getAppCustAddrUrl: any;
   AppCustAddrObj: any;
-  getAppCustAddrByAppCustAddrId: any;
   appCustAddrObj: any;
   returnAppCustAddrObj: any;
-  allAssetDataObj : AllAssetDataObj;
-  addEditAllAssetDataUrl: any;
-  getRefCoy: any;
+  allAssetDataObj: AllAssetDataObj;
   refCoyObj: any;
   returnRefCoyObj: any;
-  getAppCustUrl: any;
   appCustObj: any;
   assetUsageObj: any
   returnAssetUsageObj: any;
-  getAppAssetByAppAssetId: any;
   appAssetObj: any;
   returnAppAssetObj: any;
   reqAssetMasterObj: any;
   resAssetMasterObj: any;
-  getAssetMasterForLookup: any;
-  getAppCollateralByAppId: any;
-  getAppCollateralRegistByAppCollateralId: any;
-  getListAppAssetSupplEmpByAppAssetId: any;
-  getVendorForLookup: any;
   appCollateralObj: any;
   returnAppCollateralObj: any;
   appCollateralRegistObj: any;
@@ -100,49 +84,49 @@ export class AssetLeasingAddEditComponent implements OnInit {
   SerialNoList: any;
 
   AssetDataForm = this.fb.group({
-    SupplName:[''],
-    SupplCode:[''],
+    SupplName: [''],
+    SupplCode: [''],
 
-    BranchManagerName:[''],
-    BranchManagerNo:[''],
-    BranchManagerCode:[''],
+    BranchManagerName: [''],
+    BranchManagerNo: [''],
+    BranchManagerCode: [''],
 
-    SalesPersonName:[''],
-    SalesPersonNo:[''],
-    SalesPersonCode:[''],
+    SalesPersonName: [''],
+    SalesPersonNo: [''],
+    SalesPersonCode: [''],
 
-    AdminHeadName:[''],
-    AdminHeadNo:[''],
-    AdminHeadCode:[''],
+    AdminHeadName: [''],
+    AdminHeadNo: [''],
+    AdminHeadCode: [''],
 
-    FullAssetCode:[''],
-    FullAssetName:[''],
-    AssetCategoryCode:[''],
-    AssetTypeCode:[''],
-    MrDownPaymentTypeCode:[''],
-    AssetPrice:[''],
-    DownPayment:[''],
-    MrAssetConditionCode:[''],
-    AssetUsage:[''],
-    LicensePlate:[''],
-    ChassisNo:[''],
-    ManufacturingYear:[''],
-    EngineNo:[''],
-    Notes:[''],
+    FullAssetCode: [''],
+    FullAssetName: [''],
+    AssetCategoryCode: [''],
+    AssetTypeCode: [''],
+    MrDownPaymentTypeCode: [''],
+    AssetPrice: [''],
+    DownPayment: [''],
+    MrAssetConditionCode: [''],
+    AssetUsage: [''],
+    LicensePlate: [''],
+    ChassisNo: [''],
+    ManufacturingYear: [''],
+    EngineNo: [''],
+    Notes: [''],
 
     SelfUsage: [false],
-    Username:[''],
-    UserRelationship:[''],
-    OwnerName:[''],
-    OwnerIdType:[''],
-    OwnerIdNo:[''],
-    OwnerAddr:[''],
-    OwnerAreaCode1:[''],
-    OwnerAreaCode2:[''],
-    OwnerAreaCode3:[''],
-    OwnerAreaCode4:[''],
-    OwnerZipcode:[''],
-    OwnerMobilePhn:[''],
+    Username: [''],
+    UserRelationship: [''],
+    OwnerName: [''],
+    OwnerIdType: [''],
+    OwnerIdNo: [''],
+    OwnerAddr: [''],
+    OwnerAreaCode1: [''],
+    OwnerAreaCode2: [''],
+    OwnerAreaCode3: [''],
+    OwnerAreaCode4: [''],
+    OwnerZipcode: [''],
+    OwnerMobilePhn: [''],
 
     LocationAddrType: [''],
     items: this.fb.array([])
@@ -156,69 +140,54 @@ export class AssetLeasingAddEditComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private fb: FormBuilder) { 
-    this.getListAppAssetData = URLConstant.GetListAppAssetData;
-    this.getListVendorEmp = URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition;
-    this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getAppCustAddrUrl = URLConstant.GetListAppCustAddrByAppId;
-    this.getAppCustAddrByAppCustAddrId = URLConstant.GetAppCustAddrByAppCustAddrId;
-    this.addEditAllAssetDataUrl = URLConstant.AddEditAllAssetData;
-    this.getRefCoy = URLConstant.GetRefCoy;
-    this.getAppCustUrl = URLConstant.GetAppCustByAppId;
-    this.getAppAssetByAppAssetId = URLConstant.GetAppAssetByAppAssetId;
-    this.getAssetMasterForLookup = URLConstant.GetAssetMasterForLookup;
-    this.getAppCollateralByAppId = URLConstant.GetAppCollateralByAppId;
-    this.getAppCollateralRegistByAppCollateralId = URLConstant.GetAppCollateralRegistrationByAppCollateralId;
-    this.getListAppAssetSupplEmpByAppAssetId = URLConstant.GetListAppAssetSupplEmpByAppAssetId;
-    this.getVendorForLookup = URLConstant.GetVendorForLookup;
-
+    private fb: FormBuilder) {
     this.route.queryParams.subscribe(params => {
       if (params["AppAssetId"] != null) {
-         this.AppAssetId = params["AppAssetId"];
-       }
-       if (params["mode"] != null) {
+        this.AppAssetId = params["AppAssetId"];
+      }
+      if (params["mode"] != null) {
         this.pageType = params["mode"];
-       }
-       if (params["AppId"] != null) {
+      }
+      if (params["AppId"] != null) {
         this.AppId = params["AppId"];
-       }
-       if (params["LobCode"] != null) {
+      }
+      if (params["LobCode"] != null) {
         this.LobCode = params["LobCode"];
-       }
+      }
     });
   }
 
-back(){
-  this.assetValue.emit({mode : 'paging'});
-}
+  back() {
+    this.assetValue.emit({ mode: 'paging' });
+  }
 
-SetAsset(event) {
-  this.AssetDataForm.patchValue({
-    FullAssetCode: event.FullAssetCode,
-    FullAssetName: event.FullAssetName,
-    AssetCategoryCode: event.AssetCategoryCode,
-    AssetTypeCode: event.AssetTypeCode
-  });
-}
+  SetAsset(event) {
+    this.AssetDataForm.patchValue({
+      FullAssetCode: event.FullAssetCode,
+      FullAssetName: event.FullAssetName,
+      AssetCategoryCode: event.AssetCategoryCode,
+      AssetTypeCode: event.AssetTypeCode
+    });
+  }
 
-GetListAddr() {
-  this.appObj.Id = this.AppId;
-  this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
-    (response) => {
-      this.AppCustAddrObj = response[CommonConstant.ReturnObj];
-      this.AssetDataForm.patchValue({ LocationAddrType: response[CommonConstant.ReturnObj][0]['AppCustAddrId'] });
-    }
-  );
-}
+  GetListAddr() {
+    this.appObj.Id = this.AppId;
+    this.http.post(URLConstant.GetListAppCustAddrByAppId, this.appObj).toPromise().then(
+      (response) => {
+        this.AppCustAddrObj = response[CommonConstant.ReturnObj];
+        this.AssetDataForm.patchValue({ LocationAddrType: response[CommonConstant.ReturnObj][0]['AppCustAddrId'] });
+      }
+    );
+  }
 
-copyToLocationAddr() {
-  // this.appCustAddrObj = new AppCustAddrObj();
-  // this.appCustAddrObj.AppCustAddrId = this.AssetDataForm.controls["LocationAddrType"].value;
-  var appCustAddrObj = { Id: this.AssetDataForm.controls["LocationAddrType"].value };
-  this.http.post(this.getAppCustAddrByAppCustAddrId, appCustAddrObj).subscribe(
-    (response) => {
+  copyToLocationAddr() {
+    // this.appCustAddrObj = new AppCustAddrObj();
+    // this.appCustAddrObj.AppCustAddrId = this.AssetDataForm.controls["LocationAddrType"].value;
+    var appCustAddrObj = { Id: this.AssetDataForm.controls["LocationAddrType"].value };
+    this.http.post(URLConstant.GetAppCustAddrByAppCustAddrId, appCustAddrObj).subscribe(
+      (response) => {
         this.returnAppCustAddrObj = response;
-        
+
         this.locationAddrObj = new AppCustAddrObj();
         this.locationAddrObj.Addr = this.returnAppCustAddrObj.Addr;
         this.locationAddrObj.AreaCode3 = this.returnAppCustAddrObj.AreaCode3;
@@ -231,14 +200,14 @@ copyToLocationAddr() {
         this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
         this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
         this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCustAddrObj.Zipcode;
-        this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = {Zipcode: this.returnAppCustAddrObj.Zipcode};
+        this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCustAddrObj.Zipcode };
         this.inputAddressObjForLoc.default = this.locationAddrObj;
         this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
-    });
-}
+      });
+  }
 
-  SetSupplier(event){
-    this.AssetDataForm.patchValue({ 
+  SetSupplier(event) {
+    this.AssetDataForm.patchValue({
       SupplName: event.VendorName,
       SupplCode: event.VendorCode
     });
@@ -246,45 +215,45 @@ copyToLocationAddr() {
     this.branchObj = new VendorEmpObj();
     this.branchObj.VendorId = event.VendorId;
     this.branchObj.MrVendorEmpPositionCode = 'BRANCH_MANAGER';
-    this.http.post(this.getListVendorEmp, this.branchObj).subscribe(
-    (response) => {
+    this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, this.branchObj).subscribe(
+      (response) => {
         this.listBranchObj = response[CommonConstant.ReturnObj];
-        this.AssetDataForm.patchValue({ 
+        this.AssetDataForm.patchValue({
           BranchManagerNo: response[CommonConstant.ReturnObj][0]['Key'],
-          BranchManagerName: response[CommonConstant.ReturnObj][0]['Value'] 
+          BranchManagerName: response[CommonConstant.ReturnObj][0]['Value']
         });
-    });
+      });
 
     this.salesObj = new VendorEmpObj();
     this.salesObj.VendorId = event.VendorId;
     this.salesObj.MrVendorEmpPositionCode = 'SALES_PERSON';
-    this.http.post(this.getListVendorEmp, this.salesObj).subscribe(
-    (response) => {
+    this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, this.salesObj).subscribe(
+      (response) => {
         this.listSalesObj = response[CommonConstant.ReturnObj];
-        this.AssetDataForm.patchValue({ 
+        this.AssetDataForm.patchValue({
           SalesPersonNo: response[CommonConstant.ReturnObj][0]['Key'],
           SalesPersonName: response[CommonConstant.ReturnObj][0]['Value']
         });
-    });
+      });
 
     this.adminHeadObj = new VendorEmpObj();
     this.adminHeadObj.VendorId = event.VendorId;
     this.adminHeadObj.MrVendorEmpPositionCode = 'ADMIN_HEAD';
-    this.http.post(this.getListVendorEmp, this.adminHeadObj).subscribe(
-    (response) => {
+    this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, this.adminHeadObj).subscribe(
+      (response) => {
         this.listAdminHeadObj = response[CommonConstant.ReturnObj];
-        this.AssetDataForm.patchValue({ 
+        this.AssetDataForm.patchValue({
           AdminHeadNo: response[CommonConstant.ReturnObj][0]['Key'],
-          AdminHeadName: response[CommonConstant.ReturnObj][0]['Value'] 
+          AdminHeadName: response[CommonConstant.ReturnObj][0]['Value']
         });
-    });
+      });
   }
 
   GetAppCust() {
     var appObj = {
       Id: this.AppId,
     };
-    this.http.post(this.getAppCustUrl, appObj).subscribe(
+    this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
       (response) => {
         this.appCustObj = response;
         this.AssetDataForm.patchValue({
@@ -316,19 +285,19 @@ copyToLocationAddr() {
     };
   }
 
-  BranchChanged(event){
+  BranchChanged(event) {
     this.AssetDataForm.patchValue({
       BranchManagerName: this.listBranchObj.find(x => x.Key == event.target.value).Value
     });
   }
 
-  SalesChanged(event){
+  SalesChanged(event) {
     this.AssetDataForm.patchValue({
       SalesPersonName: this.listSalesObj.find(x => x.Key == event.target.value).Value
     });
   }
 
-  AdminChanged(event){
+  AdminChanged(event) {
     this.AssetDataForm.patchValue({
       AdminHeadName: this.listAdminHeadObj.find(x => x.Key == event.target.value).Value
     });
@@ -341,15 +310,15 @@ copyToLocationAddr() {
     this.inputAddressObjForLoc.title = "Asset Location";
     this.inputAddressObjForLoc.showAllPhn = false;
     this.inputAddressObjForLoc.showOwnership = false;
-                        
-    if(this.mode == 'editAsset'){
+
+    if (this.mode == 'editAsset') {
       this.appAssetObj = new AppAssetObj();
       this.appAssetObj.AppAssetId = this.AppAssetId;
       var appAssetObj = { Id: this.AppAssetId };
-      this.http.post(this.getAppAssetByAppAssetId, appAssetObj).subscribe(
-      (response) => {
+      this.http.post(URLConstant.GetAppAssetByAppAssetId, appAssetObj).subscribe(
+        (response) => {
           this.returnAppAssetObj = response;
-          this.AssetDataForm.patchValue({ 
+          this.AssetDataForm.patchValue({
             MrAssetConditionCode: this.returnAppAssetObj.MrAssetConditionCode,
             AssetUsage: this.returnAppAssetObj.MrAssetUsageCode,
             ChassisNo: this.returnAppAssetObj.SerialNo1,
@@ -364,7 +333,7 @@ copyToLocationAddr() {
           });
 
           this.items = this.AssetDataForm.get('items') as FormArray;
-          this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: this.returnAppAssetObj.AssetTypeCode }).subscribe(
+          this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: this.returnAppAssetObj.AssetTypeCode }).subscribe(
             (response: any) => {
               while (this.items.length) {
                 this.items.removeAt(0);
@@ -388,7 +357,7 @@ copyToLocationAddr() {
 
           var reqByCode = new GenericObj();
           reqByCode.Code = this.returnAppAssetObj.FullAssetCode;
-          this.http.post(this.getAssetMasterForLookup, reqByCode).subscribe(
+          this.http.post(URLConstant.GetAssetMasterForLookup, reqByCode).subscribe(
             (response) => {
               this.resAssetMasterObj = response;
               this.InputLookupAssetObj.nameSelect = this.resAssetMasterObj.FullAssetName;
@@ -397,11 +366,11 @@ copyToLocationAddr() {
                 FullAssetCode: this.resAssetMasterObj.FullAssetCode,
                 FullAssetName: this.resAssetMasterObj.FullAssetName,
               });
-          });
+            });
 
           this.vendorObj = new VendorObj();
           this.vendorObj.VendorCode = this.returnAppAssetObj.SupplCode;
-          this.http.post(this.getVendorForLookup, this.vendorObj).subscribe(
+          this.http.post(URLConstant.GetVendorForLookup, this.vendorObj).subscribe(
             (response) => {
               this.returnVendorObj = response;
               this.InputLookupSupplierObj.nameSelect = this.returnVendorObj.VendorName;
@@ -415,21 +384,30 @@ copyToLocationAddr() {
               getAppAssetSupplEmpByBranchManager.Id = this.AppAssetId;
               getAppAssetSupplEmpByBranchManager.Code = CommonConstant.BRANCH_MANAGER_JOB_CODE;
               this.http.post(URLConstant.GetAppAssetSupplEmpByAppAssetIdAndMrSupplEmpPositionCode, getAppAssetSupplEmpByBranchManager).subscribe(
-              (response) => {
-                this.branchAppAssetSupplEmpObj = response;
-
-                this.branchObj = new VendorEmpObj();
-                this.branchObj.VendorId = this.returnVendorObj.VendorId;
-                this.branchObj.MrVendorEmpPositionCode = 'BRANCH_MANAGER';
-                this.http.post(this.getListVendorEmp, this.branchObj).subscribe(
                 (response) => {
-                    this.listBranchObj = response[CommonConstant.ReturnObj];
-                    this.AssetDataForm.patchValue({
-                      BranchManagerNo: this.branchAppAssetSupplEmpObj.SupplEmpNo,
-                      BranchManagerName: this.branchAppAssetSupplEmpObj.SupplEmpName
-                    });
+                  this.branchAppAssetSupplEmpObj = response;
+
+                  this.branchObj = new VendorEmpObj();
+                  this.branchObj.VendorId = this.returnVendorObj.VendorId;
+                  this.branchObj.MrVendorEmpPositionCode = 'BRANCH_MANAGER';
+                  this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, this.branchObj).subscribe(
+                    (response) => {
+                      this.branchAppAssetSupplEmpObj = response;
+
+                      this.branchObj = new VendorEmpObj();
+                      this.branchObj.VendorId = this.returnVendorObj.VendorId;
+                      this.branchObj.MrVendorEmpPositionCode = 'BRANCH_MANAGER';
+                      this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, this.branchObj).subscribe(
+                        (response) => {
+                          this.listBranchObj = response[CommonConstant.ReturnObj];
+                          this.AssetDataForm.patchValue({
+                            BranchManagerNo: this.branchAppAssetSupplEmpObj.SupplEmpNo,
+                            BranchManagerName: this.branchAppAssetSupplEmpObj.SupplEmpName
+                          });
+                        });
+                    }
+                  );
                 });
-              });
 
               let getAppAssetSupplEmpByAdminHead = new GenericObj();
               getAppAssetSupplEmpByAdminHead.Id = this.AppAssetId;
@@ -441,12 +419,20 @@ copyToLocationAddr() {
                 this.adminHeadObj = new VendorEmpObj();
                 this.adminHeadObj.VendorId = this.returnVendorObj.VendorId;
                 this.adminHeadObj.MrVendorEmpPositionCode = 'ADMIN_HEAD';
-                this.http.post(this.getListVendorEmp, this.adminHeadObj).subscribe(
+                this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, this.adminHeadObj).subscribe(
                 (response) => {
-                    this.listAdminHeadObj = response[CommonConstant.ReturnObj];
-                    this.AssetDataForm.patchValue({
-                      AdminHeadNo: this.headAppAssetSupplEmpObj.SupplEmpNo,
-                      AdminHeadName: this.headAppAssetSupplEmpObj.SupplEmpName
+                  this.headAppAssetSupplEmpObj = response;
+
+                  this.adminHeadObj = new VendorEmpObj();
+                  this.adminHeadObj.VendorId = this.returnVendorObj.VendorId;
+                  this.adminHeadObj.MrVendorEmpPositionCode = 'ADMIN_HEAD';
+                  this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, this.adminHeadObj).subscribe(
+                    (response) => {
+                      this.listAdminHeadObj = response[CommonConstant.ReturnObj];
+                      this.AssetDataForm.patchValue({
+                        AdminHeadNo: this.headAppAssetSupplEmpObj.SupplEmpNo,
+                        AdminHeadName: this.headAppAssetSupplEmpObj.SupplEmpName
+                      });
                     });
                 });
               });
@@ -461,52 +447,60 @@ copyToLocationAddr() {
                 this.salesObj = new VendorEmpObj();
                 this.salesObj.VendorId = this.returnVendorObj.VendorId;
                 this.salesObj.MrVendorEmpPositionCode = 'SALES_PERSON';
-                this.http.post(this.getListVendorEmp, this.salesObj).subscribe(
+                this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, this.salesObj).subscribe(
                 (response) => {
-                    this.listSalesObj = response[CommonConstant.ReturnObj];
-                    this.AssetDataForm.patchValue({
-                      SalesPersonNo: this.salesAppAssetSupplEmpObj.SupplEmpNo,
-                      SalesPersonName: this.salesAppAssetSupplEmpObj.SupplEmpName
+                  this.salesAppAssetSupplEmpObj = response;
+
+                  this.salesObj = new VendorEmpObj();
+                  this.salesObj.VendorId = this.returnVendorObj.VendorId;
+                  this.salesObj.MrVendorEmpPositionCode = 'SALES_PERSON';
+                  this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, this.salesObj).subscribe(
+                    (response) => {
+                      this.listSalesObj = response[CommonConstant.ReturnObj];
+                      this.AssetDataForm.patchValue({
+                        SalesPersonNo: this.salesAppAssetSupplEmpObj.SupplEmpNo,
+                        SalesPersonName: this.salesAppAssetSupplEmpObj.SupplEmpName
+                      });
                     });
                 });
               });
             });
         });
 
-        this.appCollateralObj = new AppCollateralObj();
-        this.appCollateralObj.AppId = this.AppId;
-        this.appCollateralObj.Id = this.AppId;
-        this.http.post(this.getAppCollateralByAppId, this.appCollateralObj).subscribe(
+      this.appCollateralObj = new AppCollateralObj();
+      this.appCollateralObj.AppId = this.AppId;
+      this.appCollateralObj.Id = this.AppId;
+      this.http.post(URLConstant.GetAppCollateralByAppId, this.appCollateralObj).subscribe(
         (response) => {
           this.returnAppCollateralObj = response;
 
           this.appCollateralRegistObj = new AppCollateralRegistrationObj();
           this.appCollateralRegistObj.AppCollateralId = this.returnAppCollateralObj.AppCollateralId;
           this.appCollateralRegistObj.Id = this.returnAppCollateralObj.AppCollateralId;
-          this.http.post(this.getAppCollateralRegistByAppCollateralId, this.appCollateralRegistObj).subscribe(
-          (response) => {
-            this.returnAppCollateralRegistObj = response;
-            this.AssetDataForm.patchValue({
-              Username: this.returnAppCollateralRegistObj.UserName,
-              UserRelationship: this.returnAppCollateralRegistObj.MrUserRelationshipCode
+          this.http.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, this.appCollateralRegistObj).subscribe(
+            (response) => {
+              this.returnAppCollateralRegistObj = response;
+              this.AssetDataForm.patchValue({
+                Username: this.returnAppCollateralRegistObj.UserName,
+                UserRelationship: this.returnAppCollateralRegistObj.MrUserRelationshipCode
+              });
+
+              this.locationAddrObj = new AppCustAddrObj();
+              this.locationAddrObj.Addr = this.returnAppCollateralRegistObj.LocationAddr;
+              this.locationAddrObj.AreaCode3 = this.returnAppCollateralRegistObj.LocationAreaCode3;
+              this.locationAddrObj.AreaCode4 = this.returnAppCollateralRegistObj.LocationAreaCode4;
+              this.locationAddrObj.AreaCode1 = this.returnAppCollateralRegistObj.LocationAreaCode1;
+              this.locationAddrObj.AreaCode2 = this.returnAppCollateralRegistObj.LocationAreaCode2;
+              this.locationAddrObj.City = this.returnAppCollateralRegistObj.LocationCity;
+
+              this.inputFieldLocationAddrObj = new InputFieldObj();
+              this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
+              this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
+              this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCollateralRegistObj.LocationZipcode;
+              this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = { Zipcode: this.returnAppCollateralRegistObj.LocationZipcode };
+              this.inputAddressObjForLoc.default = this.locationAddrObj;
+              this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
             });
-
-            this.locationAddrObj = new AppCustAddrObj();
-            this.locationAddrObj.Addr = this.returnAppCollateralRegistObj.LocationAddr;
-            this.locationAddrObj.AreaCode3 = this.returnAppCollateralRegistObj.LocationAreaCode3;
-            this.locationAddrObj.AreaCode4 = this.returnAppCollateralRegistObj.LocationAreaCode4;
-            this.locationAddrObj.AreaCode1 = this.returnAppCollateralRegistObj.LocationAreaCode1;
-            this.locationAddrObj.AreaCode2 = this.returnAppCollateralRegistObj.LocationAreaCode2;
-            this.locationAddrObj.City = this.returnAppCollateralRegistObj.LocationCity;
-
-            this.inputFieldLocationAddrObj = new InputFieldObj();
-            this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
-            this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
-            this.inputFieldLocationAddrObj.inputLookupObj.nameSelect = this.returnAppCollateralRegistObj.LocationZipcode;
-            this.inputFieldLocationAddrObj.inputLookupObj.jsonSelect = {Zipcode: this.returnAppCollateralRegistObj.LocationZipcode};
-            this.inputAddressObjForLoc.default = this.locationAddrObj;
-            this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
-          });
         });
     }
 
@@ -532,7 +526,7 @@ copyToLocationAddr() {
 
     this.assetConditionObj = new RefMasterObj();
     this.assetConditionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
-    this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.assetConditionObj).subscribe(
       (response) => {
         this.returnAssetConditionObj = response[CommonConstant.ReturnObj];
         this.AssetDataForm.patchValue({ MrAssetConditionCode: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -541,7 +535,7 @@ copyToLocationAddr() {
 
     this.downPaymentObj = new RefMasterObj();
     this.downPaymentObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDownPaymentType;
-    this.http.post(this.getListActiveRefMasterUrl, this.downPaymentObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.downPaymentObj).subscribe(
       (response) => {
         this.returnDownPaymentObj = response[CommonConstant.ReturnObj];
         this.AssetDataForm.patchValue({ MrDownPaymentTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -550,7 +544,7 @@ copyToLocationAddr() {
 
     this.userRelationshipObj = new RefMasterObj();
     this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
-    this.http.post(this.getListActiveRefMasterUrl, this.userRelationshipObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.userRelationshipObj).subscribe(
       (response) => {
         this.returnUserRelationshipObj = response[CommonConstant.ReturnObj];
         this.AssetDataForm.patchValue({ UserRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -559,7 +553,7 @@ copyToLocationAddr() {
 
     this.assetUsageObj = new RefMasterObj();
     this.assetUsageObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
-    this.http.post(this.getListActiveRefMasterUrl, this.assetUsageObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.assetUsageObj).subscribe(
       (response) => {
         this.returnAssetUsageObj = response[CommonConstant.ReturnObj];
         this.AssetDataForm.patchValue({
@@ -569,10 +563,10 @@ copyToLocationAddr() {
     );
 
     this.refCoyObj = new RefCoyObj();
-    this.http.post(this.getRefCoy, this.refCoyObj).subscribe(
+    this.http.post(URLConstant.GetRefCoy, this.refCoyObj).subscribe(
       (response) => {
         this.returnRefCoyObj = response;
-        this.AssetDataForm.patchValue({ 
+        this.AssetDataForm.patchValue({
           OwnerName: this.returnRefCoyObj.FullName,
           OwnerIdType: "NPWP",
           OwnerIdNo: this.returnRefCoyObj.TaxIdNo,
@@ -588,7 +582,7 @@ copyToLocationAddr() {
     );
   }
 
-  setSupplierInfo(){
+  setSupplierInfo() {
     this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpName = this.AssetDataForm.controls["AdminHeadName"].value;
     this.allAssetDataObj.AppAssetSupplEmpAdminObj.SupplEmpNo = this.AssetDataForm.controls["AdminHeadNo"].value;
     this.allAssetDataObj.AppAssetSupplEmpAdminObj.MrSupplEmpPositionCode = "ADMIN_HEAD";
@@ -596,9 +590,8 @@ copyToLocationAddr() {
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpName = this.AssetDataForm.controls["SalesPersonName"].value;
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.SupplEmpNo = this.AssetDataForm.controls["SalesPersonNo"].value;
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = "SALES_PERSON";
-    
-    if(this.AssetDataForm.controls["BranchManagerName"].value == "")
-    {
+
+    if (this.AssetDataForm.controls["BranchManagerName"].value == "") {
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = "-";
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = "-";
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.MrSupplEmpPositionCode = "-";
@@ -610,8 +603,8 @@ copyToLocationAddr() {
   }
 
   // MrDownPaymentTypeCode:[''],
-  
-  setAssetInfo(){
+
+  setAssetInfo() {
     this.allAssetDataObj.AppAssetObj.AppId = this.AppId;
     this.allAssetDataObj.AppAssetObj.FullAssetName = this.AssetDataForm.controls["FullAssetName"].value;
     this.allAssetDataObj.AppAssetObj.MrAssetConditionCode = this.AssetDataForm.controls["MrAssetConditionCode"].value;
@@ -628,7 +621,7 @@ copyToLocationAddr() {
 
     this.allAssetDataObj.AppAssetObj.AssetSeqNo = 1;
     this.allAssetDataObj.AppAssetObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
-    
+
     if (this.AppAssetId == 0) {
       this.allAssetDataObj.AppAssetObj.AssetStat = "NEW";
       this.allAssetDataObj.AppCollateralObj.CollateralStat = "NEW";
@@ -659,7 +652,7 @@ copyToLocationAddr() {
 
   }
 
-  setAssetUser(){
+  setAssetUser() {
     this.allAssetDataObj.AppCollateralRegistrationObj.UserName = this.AssetDataForm.controls["Username"].value;
     this.allAssetDataObj.AppCollateralRegistrationObj.MrUserRelationshipCode = this.AssetDataForm.controls["UserRelationship"].value;
     this.allAssetDataObj.AppCollateralRegistrationObj.OwnerName = this.AssetDataForm.controls["OwnerName"].value;
@@ -672,10 +665,10 @@ copyToLocationAddr() {
     this.allAssetDataObj.AppCollateralRegistrationObj.OwnerAreaCode4 = this.AssetDataForm.controls["OwnerAreaCode4"].value;
     this.allAssetDataObj.AppCollateralRegistrationObj.OwnerZipcode = this.AssetDataForm.controls["OwnerZipcode"].value;
     this.allAssetDataObj.AppCollateralRegistrationObj.OwnerMobilePhnNo = this.AssetDataForm.controls["OwnerMobilePhn"].value;
-    
+
   }
 
-  setAssetLocation(){
+  setAssetLocation() {
     this.allAssetDataObj.AppCollateralRegistrationObj.LocationAddr = this.AssetDataForm.controls["assetLocationAddress"]["controls"].Addr.value;
     this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode1 = this.AssetDataForm.controls["assetLocationAddress"]["controls"].AreaCode1.value;
     this.allAssetDataObj.AppCollateralRegistrationObj.LocationAreaCode2 = this.AssetDataForm.controls["assetLocationAddress"]["controls"].AreaCode2.value;
@@ -686,23 +679,21 @@ copyToLocationAddr() {
   }
 
   SaveForm() {
-    if(this.mode == 'addAsset')
-    {
+    if (this.mode == 'addAsset') {
       this.allAssetDataObj = new AllAssetDataObj();
       this.setSupplierInfo();
       this.setAssetInfo();
       this.setAssetUser();
       this.setAssetLocation();
       this.allAssetDataObj.AppAssetObj.AppAssetId = 0;
-      this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
+      this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           //this.router.navigate(["/Nap/AssetData/Paging"]);
-          this.assetValue.emit({mode : 'paging'});
+          this.assetValue.emit({ mode: 'paging' });
         });
     }
-    else
-    {
+    else {
       this.allAssetDataObj = new AllAssetDataObj();
       this.setSupplierInfo();
       this.setAssetInfo();
@@ -714,11 +705,11 @@ copyToLocationAddr() {
       this.allAssetDataObj.AppAssetObj.AppAssetId = this.AppAssetId;
       this.allAssetDataObj.AppCollateralObj.AppCollateralId = this.returnAppCollateralObj.AppCollateralId;
       this.allAssetDataObj.AppCollateralRegistrationObj.AppCollateralRegistrationId = this.returnAppCollateralRegistObj.AppCollateralRegistrationId;
-      this.http.post(this.addEditAllAssetDataUrl, this.allAssetDataObj).subscribe(
+      this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           //this.router.navigate(["/Nap/AssetData/Paging"]);
-          this.assetValue.emit({mode : 'paging'});
+          this.assetValue.emit({ mode: 'paging' });
         });
     }
   }

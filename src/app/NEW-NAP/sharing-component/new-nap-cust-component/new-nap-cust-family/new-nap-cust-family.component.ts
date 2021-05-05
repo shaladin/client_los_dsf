@@ -7,6 +7,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
 @Component({
   selector: 'app-new-nap-cust-family',
   templateUrl: './new-nap-cust-family.component.html',
@@ -95,7 +96,7 @@ export class NewNapCustFamilyComponent implements OnInit {
     this.custDataObj.AppId = this.appId;
     this.custDataObj.IsFamily = true;
     await this.http.post(URLConstant.GetListAppCustMainDataByAppId, this.custDataObj).toPromise().then(
-      (response) => {
+      (response : ResListCustMainDataObj) => {
         this.inputGridObj.resultData = {
           Data: ""
         }

@@ -16,6 +16,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { ResAppCustForListCustMainDataObj, ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
 
 @Component({
   selector: 'app-cust-confirmation-detail',
@@ -139,11 +140,11 @@ export class CustConfirmationDetailComponent implements OnInit {
       });
   }
 
-  ListAppCustFamily: Array<AppCustObj> = new Array<AppCustObj>();
+  ListAppCustFamily: Array<ResAppCustForListCustMainDataObj> = new Array<ResAppCustForListCustMainDataObj>();
   async GetListAppCustFamilyMainDataByAppId() {
     let flag: boolean = false;
-    await this.http.post<{ ListAppCustObj: Array<AppCustObj> }>(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.AppId, IsFamily: true }).toPromise().then(
-      (response) => {
+    await this.http.post(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.AppId, IsFamily: true }).toPromise().then(
+      (response : ResListCustMainDataObj) => {
         this.ListAppCustFamily = response.ListAppCustObj;
         if (this.ListAppCustFamily.findIndex(x => x.MrCustRelationshipCode == CommonConstant.RoleFamilyData) > -1) flag = true;
       }

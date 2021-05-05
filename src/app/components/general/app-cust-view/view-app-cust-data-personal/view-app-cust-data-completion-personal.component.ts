@@ -1,15 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AppCustAddrForViewObj } from 'app/shared/model/AppCustAddr/AppCustAddrForViewObj.Model';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
-import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
-import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersonalContactPersonObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewAppCustDetailComponent } from '../view-app-cust-detail/view-app-cust-detail.component';
+import { ResAppCustAddrForViewObj, ResAppCustCompletionObj, ResAppCustForViewObj, ResAppCustGrpForViewObj, ResCustDataPersonalForViewObj } from 'app/shared/model/Response/View/ResCustDataForViewObj.model';
+import { ResAppCustBankAccForViewObj } from 'app/shared/model/Response/View/ResAppCustBankAccForViewObj.model';
 
 @Component({
   selector: 'app-view-app-cust-data-completion-personal',
@@ -39,13 +37,12 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
   detailMrCustTypeCode: string;
   detailCustomerTitle: string;
 
-  appCustObj: AppCustObj;
+  appCustObj: ResAppCustForViewObj = new ResAppCustForViewObj();
   custModelCode: string;
-  appCustAddrForViewObjs: Array<AppCustAddrForViewObj>;
-  appCustBankAccObjs: Array<AppCustBankAccObj>;
-  appCustGrpObjs: Array<AppCustGrpObj>;
-  appCustPersonalContactPersonObjs: Array<AppCustPersonalContactPersonObj>;
-  appCustFamilyObjs: Array<Object>;
+  appCustAddrForViewObjs: Array<ResAppCustAddrForViewObj> = new Array<ResAppCustAddrForViewObj>();
+  appCustBankAccObjs: Array<ResAppCustBankAccForViewObj> = new Array<ResAppCustBankAccForViewObj>();
+  appCustGrpObjs: Array<ResAppCustGrpForViewObj> = new Array<ResAppCustGrpForViewObj>();
+  appCustFamilyObjs: Array<ResAppCustCompletionObj> = new Array<ResAppCustCompletionObj>();
 
   constructor(private http: HttpClient, private modalService: NgbModal) {
   }
@@ -98,14 +95,12 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
     }
 
     await this.http.post(url, reqObj).toPromise().then(
-      (response) => {
-        this.appCustObj = response["AppCustObj"];
-        this.custModelCode = response["MrCustModelCode"];
-        this.appCustAddrForViewObjs = response["AppCustAddrForViewObjs"];
-        this.appCustBankAccObjs = response["AppCustBankAccObjs"];
-        this.appCustGrpObjs = response["AppCustGrpObjs"];
-        this.appCustPersonalContactPersonObjs = response["AppCustPersonalContactPersonObjs"] == null ? new Array<AppCustPersonalContactPersonObj>() : response["AppCustPersonalContactPersonObjs"];
-        this.appCustFamilyObjs = response["AppCustFamilyObjs"];
+      (response : ResCustDataPersonalForViewObj) => {
+        this.appCustObj = response.AppCustObj;
+        this.appCustAddrForViewObjs = response.ListAppCustAddrObj;
+        this.appCustBankAccObjs = response.ListAppCustBankAccObj;
+        this.appCustGrpObjs = response.ListAppCustGrpObj;
+        this.appCustFamilyObjs = response.ListAppCustFamilyObj;
 
         // filter family yg punya relationship
         if(this.appCustFamilyObjs && this.appCustFamilyObjs.length > 0) {

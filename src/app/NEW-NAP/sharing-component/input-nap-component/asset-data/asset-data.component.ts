@@ -22,7 +22,6 @@ import { AppAssetAttrCustomObj } from 'app/shared/model/AppAsset/AppAssetAttrCus
 import { AppAssetAttrObj } from 'app/shared/model/AppAssetAttrObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { String } from 'typescript-string-operations';
 import { CustomPatternObj } from 'app/shared/model/library/CustomPatternObj.model';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
@@ -290,7 +289,7 @@ export class AssetDataComponent implements OnInit {
   inputAddressObjForLoc: InputAddressObj;
   isDiffWithRefAttr: any;
 
-  generalSettingObj: GeneralSettingObj = new GeneralSettingObj();
+  generalSettingObj: GenericListByCodeObj = new GenericListByCodeObj();
   IntegratorCheckBySystemGsValue: string = "1";
   IsUseDigitalization: string;
   SerialNoRegex: string;
@@ -618,16 +617,17 @@ export class AssetDataComponent implements OnInit {
   }
 
   async GetGS() {
-    this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
+    this.generalSettingObj = new GenericListByCodeObj();
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
 
-    await this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
+    await this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
       (response) => {
-        var returnGeneralSettingObj = response;
+        var returnGeneralSettingObj: Array<ResGeneralSettingObj> = new Array<ResGeneralSettingObj>();
+        returnGeneralSettingObj = response['ResGetListGeneralSettingObj'];
 
-        var gsNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
-        var gsUseDigitalization = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        var gsNeedCheckBySystem = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
 
         if (gsNeedCheckBySystem != undefined) {
           this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;

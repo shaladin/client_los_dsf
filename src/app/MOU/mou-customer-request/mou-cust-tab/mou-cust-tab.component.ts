@@ -25,7 +25,6 @@ import { MouCustAddrObj } from 'app/shared/model/MouCustAddrObj.Model';
 import { MouCustSocmedObj } from 'app/shared/model/MouCustSocmedObj.Model';
 import { MouCustGrpObj } from 'app/shared/model/MouCustGrpObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
 import { AppCustCompareObj } from 'app/shared/model/AppCustCompareObj.Model';
 import { MouCustObjForAddTrxData } from 'app/shared/model/MouCustObjForAddTrxData.Model';
@@ -33,6 +32,9 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { String } from 'typescript-string-operations';
+import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
+import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
+import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 
 @Component({
   selector: 'app-mou-cust-tab',
@@ -46,8 +48,8 @@ export class MouCustTabComponent implements OnInit {
 
   isNeedCheckBySystem: string;
   isUseDigitalization: string;
-  generalSettingObj: GeneralSettingObj;
-  returnGeneralSettingObj: any;
+  generalSettingObj: GenericListByCodeObj;
+  returnGeneralSettingObj: Array<ResGeneralSettingObj>;
   mouObj: MouCustObj = new MouCustObj();
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
   latestCustDataObj: AppCustCompareObj;
@@ -1476,10 +1478,10 @@ export class MouCustTabComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-            (response) => {
-              this.latestReqDtCheckIntegrator = response['ReqDt'];
-              this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-              this.reqLatestJson = JSON.parse(response['ReqJson']);
+            (response : ResThirdPartyRsltHObj) => {
+              this.latestReqDtCheckIntegrator = response.ReqDt;
+              this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
+              this.reqLatestJson = JSON.parse(response.ReqJson);
               if (this.reqLatestJson != null && this.reqLatestJson != "") {
                 this.latestCustDataObj = new AppCustCompareObj();
 
@@ -1510,16 +1512,16 @@ export class MouCustTabComponent implements OnInit {
   }
 
   GetGS() {
-    this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
+    this.generalSettingObj = new GenericListByCodeObj();
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
 
-    this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
+    this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
       (response) => {
-        this.returnGeneralSettingObj = response;
+        this.returnGeneralSettingObj = response['ResGetListGeneralSettingObj'];
 
-        var gsNeedCheckBySystem = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
-        var gsUseDigitalization = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        var gsNeedCheckBySystem = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
         
         if(gsNeedCheckBySystem != undefined){
           this.isNeedCheckBySystem = gsNeedCheckBySystem.GsValue;
@@ -1544,40 +1546,34 @@ export class MouCustTabComponent implements OnInit {
             this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
             if(this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0"){
               this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-                (response) => {
+                (response : ResThirdPartyRsltHObj) => {
                   if (response != null) {
-                    this.latestReqDtCheckIntegrator = response['ReqDt'];
-                    this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-                    this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-                      (response) => {
-                        this.latestReqDtCheckIntegrator = response['ReqDt'];
-                        this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-                        this.reqLatestJson = JSON.parse(response['ReqJson']);
-                        if (this.reqLatestJson != null && this.reqLatestJson != "") {
-                          this.latestCustDataObj = new AppCustCompareObj();
-  
-                          this.latestCustDataObj.CustName = this.reqLatestJson['CustName'];
-                          this.latestCustDataObj.Gender = this.reqLatestJson['Gender'];
-                          this.latestCustDataObj.BirthPlace = this.reqLatestJson['BirthPlace'];
-                          this.latestCustDataObj.BirthDt = formatDate(new Date(this.reqLatestJson['BirthDt']), 'yyyy-MM-dd', 'en-US');
-                          this.latestCustDataObj.MaritalStatus = this.reqLatestJson['MaritalStatus'];
-                          this.latestCustDataObj.CustPhnNo = this.reqLatestJson['CustPhnNo'];
-                          this.latestCustDataObj.CustEmail = this.reqLatestJson['CustEmail'];
-                          this.latestCustDataObj.IdNo = this.reqLatestJson['IdNo'];
-                          this.latestCustDataObj.IdType = this.reqLatestJson['IdType'];
-                          this.latestCustDataObj.TaxNo = this.reqLatestJson['TaxNo'];
-                          if (this.reqLatestJson["CustType"] == CommonConstant.CustTypePersonal) {
-                            this.latestCustDataObj.HomeAddr = this.reqLatestJson['HomeAddr'];
-                            this.latestCustDataObj.HomeRt = this.reqLatestJson['HomeRt'];
-                            this.latestCustDataObj.HomeRw = this.reqLatestJson['HomeRw'];
-                            this.latestCustDataObj.HomeZipCode = this.reqLatestJson['HomeZipCode'];
-                            this.latestCustDataObj.HomeKelurahan = this.reqLatestJson['HomeKelurahan'];
-                            this.latestCustDataObj.HomeKecamatan = this.reqLatestJson['HomeKecamatan'];
-                            this.latestCustDataObj.HomeCity = this.reqLatestJson['HomeCity'];
-                          }
-                        }
+                    this.latestReqDtCheckIntegrator = response.ReqDt;
+                    this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
+                    this.reqLatestJson = JSON.parse(response.ReqJson);
+                    if (this.reqLatestJson != null && this.reqLatestJson != "") {
+                      this.latestCustDataObj = new AppCustCompareObj();
+
+                      this.latestCustDataObj.CustName = this.reqLatestJson['CustName'];
+                      this.latestCustDataObj.Gender = this.reqLatestJson['Gender'];
+                      this.latestCustDataObj.BirthPlace = this.reqLatestJson['BirthPlace'];
+                      this.latestCustDataObj.BirthDt = formatDate(new Date(this.reqLatestJson['BirthDt']), 'yyyy-MM-dd', 'en-US');
+                      this.latestCustDataObj.MaritalStatus = this.reqLatestJson['MaritalStatus'];
+                      this.latestCustDataObj.CustPhnNo = this.reqLatestJson['CustPhnNo'];
+                      this.latestCustDataObj.CustEmail = this.reqLatestJson['CustEmail'];
+                      this.latestCustDataObj.IdNo = this.reqLatestJson['IdNo'];
+                      this.latestCustDataObj.IdType = this.reqLatestJson['IdType'];
+                      this.latestCustDataObj.TaxNo = this.reqLatestJson['TaxNo'];
+                      if (this.reqLatestJson["CustType"] == CommonConstant.CustTypePersonal) {
+                        this.latestCustDataObj.HomeAddr = this.reqLatestJson['HomeAddr'];
+                        this.latestCustDataObj.HomeRt = this.reqLatestJson['HomeRt'];
+                        this.latestCustDataObj.HomeRw = this.reqLatestJson['HomeRw'];
+                        this.latestCustDataObj.HomeZipCode = this.reqLatestJson['HomeZipCode'];
+                        this.latestCustDataObj.HomeKelurahan = this.reqLatestJson['HomeKelurahan'];
+                        this.latestCustDataObj.HomeKecamatan = this.reqLatestJson['HomeKecamatan'];
+                        this.latestCustDataObj.HomeCity = this.reqLatestJson['HomeCity'];
                       }
-                    );
+                    }
                   }
                 }
               );

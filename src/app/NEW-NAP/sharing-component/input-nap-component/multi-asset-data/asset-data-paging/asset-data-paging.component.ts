@@ -8,8 +8,10 @@ import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { String } from 'typescript-string-operations';
+import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
+import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
+import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 
 @Component({
   selector: 'app-asset-data-paging',
@@ -27,10 +29,8 @@ export class AssetDataPagingComponent implements OnInit {
   listAppAssetObj: Array<AppAssetObj> = new Array();
   appCollateralObj: any;
   listAppCollateralObj: Array<AppCollateralObj> = new Array();
-  getListAppAssetData: any;
   gridAssetDataObj: any;
   gridAppCollateralObj: any;
-  getListAppCollateral: any;
   AppAssetId: number;
   AppCollateralId: number;
   editAsset: string;
@@ -38,7 +38,7 @@ export class AssetDataPagingComponent implements OnInit {
   selectedAsset: any;
   units: number = 0;
   appObj: any;
-  generalSettingObj: GeneralSettingObj;
+  generalSettingObj: GenericListByCodeObj;
   IntegratorCheckBySystemGsValue: string = "1";
   IsUseDigitalization: string;
   LastRequestedDate: any;
@@ -50,9 +50,6 @@ export class AssetDataPagingComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private toastr: NGXToastrService) {
-    this.getListAppAssetData = URLConstant.GetAppAssetListByAppId;
-    this.getListAppCollateral = URLConstant.GetListAdditionalCollateralByAppId;
-
     this.route.queryParams.subscribe(params => {
       if (params["IdCust"] != null) {
         this.IdCust = params["IdCust"];
@@ -61,18 +58,18 @@ export class AssetDataPagingComponent implements OnInit {
   }
 
   async GetThirdPartyResultH() {
-    if(this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0"){
+    if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
       this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
         (response) => {
           this.appObj = response;
-          if(response['MouCustId'] != null){
+          if (response['MouCustId'] != null) {
             this.mouCustId = response['MouCustId'];
           }
           this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, { TrxNo: this.appObj["AppNo"], TrxTypeCode: "APP", FraudCheckType: "ASSET" }).toPromise().then(
-            (response) => {
-              if (response["ThirdPartyRsltHId"] != null) {
-                this.LastRequestedDate = response["ReqDt"];
-                this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
+            (response : ResThirdPartyRsltHObj) => {
+              if (response.ThirdPartyRsltHId != null) {
+                this.LastRequestedDate = response.ReqDt;
+                this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
               }
             }
           );
@@ -98,7 +95,7 @@ export class AssetDataPagingComponent implements OnInit {
       this.toastr.warningMessage("Must have atleast 1 asset.");
     }
   }
-  
+
   addAsset() {
     this.outputValue.emit({ mode: 'addAsset' });
   }
@@ -112,29 +109,30 @@ export class AssetDataPagingComponent implements OnInit {
   }
 
   async GetGS() {
-    this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
+    this.generalSettingObj = new GenericListByCodeObj();
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
 
-    await this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
+    await this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
       (response) => {
-        var returnGeneralSettingObj = response;
+        var returnGeneralSettingObj: Array<ResGeneralSettingObj> = new Array<ResGeneralSettingObj>();
+        returnGeneralSettingObj = response['ResGetListGeneralSettingObj'];
 
-        var gsNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
-        var gsUseDigitalization = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        var gsNeedCheckBySystem = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
         
         if(gsNeedCheckBySystem != undefined){
           this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
-        }else{
+        } else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
         }
 
-        if(gsUseDigitalization != undefined){
+        if (gsUseDigitalization != undefined) {
           this.IsUseDigitalization = gsUseDigitalization.GsValue;
-        }else{
+        } else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
         }
-        
+
         this.GetThirdPartyResultH();
       }
     );
@@ -238,7 +236,7 @@ export class AssetDataPagingComponent implements OnInit {
 
   getListDataAsset() {
     var appAssetObj = { Id: this.AppId };
-    this.http.post(this.getListAppAssetData, appAssetObj).subscribe(
+    this.http.post(URLConstant.GetAppAssetListByAppId, appAssetObj).subscribe(
       (response) => {
         this.listAppAssetObj = response[CommonConstant.ReturnObj];
 
@@ -271,7 +269,7 @@ export class AssetDataPagingComponent implements OnInit {
     this.appCollateralObj = new AppCollateralObj();
     this.appCollateralObj.AppId = this.AppId;
     this.appCollateralObj.Id = this.AppId;
-    this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
+    this.http.post(URLConstant.GetListAdditionalCollateralByAppId, this.appCollateralObj).subscribe(
       (response) => {
         this.listAppCollateralObj = response[CommonConstant.ReturnObj];
 
@@ -293,7 +291,7 @@ export class AssetDataPagingComponent implements OnInit {
     this.appCollateralObj = new AppCollateralObj();
     this.appCollateralObj.AppId = this.AppId;
     this.appCollateralObj.Id = this.AppId;
-    this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
+    this.http.post(URLConstant.GetListAdditionalCollateralByAppId, this.appCollateralObj).subscribe(
       (response) => {
         this.listAppCollateralObj = response[CommonConstant.ReturnObj];
 
@@ -317,7 +315,7 @@ export class AssetDataPagingComponent implements OnInit {
       return;
     }
     if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
-      
+
       if (!this.IsCalledIntegrator) {
         if (confirm("Submit without Integrator ? ")) {
           this.outputValue.emit({ mode: 'submit' });
