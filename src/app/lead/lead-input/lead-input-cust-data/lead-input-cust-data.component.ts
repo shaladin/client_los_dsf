@@ -36,6 +36,7 @@ import { GenericByIdAndCodeObj } from 'app/shared/model/Generic/GenericByIdAndCo
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-lead-input-cust-data',
@@ -234,10 +235,10 @@ export class LeadInputCustDataComponent implements OnInit {
         this.leadObj = new LeadObj();
         this.leadObj.LeadId = this.LeadId;
         var leadObj = { Id: this.LeadId };
-        this.http.post(URLConstant.GetLeadByLeadId, leadObj).subscribe(
-          (response) => {
+        this.http.post(URLConstant.GetLeadNoByLeadId, leadObj).subscribe(
+          (response: GenericObj) => {
             this.returnLeadObj = response;
-            this.leadNo = response['LeadNo'];
+            this.leadNo = response.TrxNo;
 
             this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
             this.thirdPartyObj.TrxTypeCode = CommonConstant.LEAD_TRX_TYPE_CODE;
