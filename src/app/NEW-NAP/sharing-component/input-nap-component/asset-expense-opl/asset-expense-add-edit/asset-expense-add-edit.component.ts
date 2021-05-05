@@ -608,7 +608,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
           if(addCvgTpl != null && addCvgTpl != undefined){
             tplAmt = addCvgTpl.SumInsuredAmt;
           }
-          
+
           this.CheckIsUseTpl(tplAmt);
           //this.bindInsAddCvgTypeRuleObj(appInsMainCvgObj);
           this.GenerateMainAndAddCvgTableFromDB(appInsMainCvgObj);
@@ -2490,9 +2490,5 @@ export class AssetExpenseAddEditComponent implements OnInit {
       }
     }
     console.log(invalid);
-  }
-
-  Test(){
-    console.log(this.InsuranceDataForm);
   }
 }

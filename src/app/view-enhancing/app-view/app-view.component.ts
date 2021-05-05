@@ -141,7 +141,6 @@ export class AppViewComponent implements OnInit {
       (response) => {
         this.bizTemplateCode = response["BizTemplateCode"];
         this.CustType = response["MrCustTypeCode"];
-        console.log(this.bizTemplateCode);
 
         if (this.bizTemplateCode == CommonConstant.FCTR) {
           this.IsCollateral = false;
@@ -232,7 +231,6 @@ export class AppViewComponent implements OnInit {
     this.http.post(URLConstant.GetGeneralSettingByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).subscribe(
       (response) => {
         this.IsUseDigitalization = response["GsValue"];
-        console.log(this.IsUseDigitalization); 
       }
     )
   }
