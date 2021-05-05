@@ -42,6 +42,17 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { UcapprovalcreateModule } from "@adins/ucapprovalcreate";
 import { UcapprovalR3Module } from "@adins/ucapproval-r3";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
+import { CreditReviewMainComponent } from "./credit-review/credit-review-main/credit-review-main.component";
+import { CreditReviewPagingComponent } from "./credit-review/credit-review-paging/credit-review-paging.component";
+import { CreditReviewCfnaDetailComponent } from './credit-review-cfna/credit-review-cfna-detail/credit-review-cfna-detail.component';
+import { CreditReviewCfnaPagingComponent } from './credit-review-cfna/credit-review-cfna-paging/credit-review-cfna-paging.component';
+import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
+import { CreditApprovalPagingComponent } from './credit-approval/credit-approval-paging/credit-approval-paging.component';
+import { CreditApprovalCfnaPagingComponent } from './credit-approval-cfna/credit-approval-cfna-paging/credit-approval-cfna-paging.component';
+import { CreditApprovalCfnaDetailComponent } from './credit-approval-cfna/credit-approval-cfna-detail/credit-approval-cfna-detail.component';
+import { CustHistoryComponent } from './credit-investigation/component/cust-history/cust-history.component';
+import { TabApplicationDataComponent } from './credit-investigation/component/tab-application-data/tab-application-data.component';
+import { ViewApplicationDataMultiComponent } from './credit-investigation/component/view-application-data-multi/view-application-data-multi.component';
 
 
 export const customCurrencyMaskConfig = {
@@ -109,6 +120,17 @@ export const customCurrencyMaskConfig = {
     CreditReviewCrPagingComponent,
     CreditApprovalCrDetailComponent,
     CreditApprovalCrPagingComponent,
+    CreditReviewPagingComponent,
+    CreditReviewMainComponent,
+    CreditReviewCfnaDetailComponent,
+    CreditReviewCfnaPagingComponent,
+    CreditApprovalDetailComponent,
+    CreditApprovalPagingComponent,
+    CreditApprovalCfnaPagingComponent,
+    CreditApprovalCfnaDetailComponent,
+    CustHistoryComponent,
+    TabApplicationDataComponent,
+    ViewApplicationDataMultiComponent
   ],
   providers: [
     NGXToastrService
