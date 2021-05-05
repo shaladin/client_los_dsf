@@ -1,18 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AppCustAddrForViewObj } from 'app/shared/model/AppCustAddr/AppCustAddrForViewObj.Model';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
-import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
-import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
-import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
-import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { ViewAppCustDetailComponent } from '../view-app-cust-detail/view-app-cust-detail.component';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ResAppCustAddrForViewObj, ResAppCustCompanyLegalDocForViewObj, ResAppCustCompanyMgmntShrholderForViewObj, ResAppCustForViewObj, ResAppCustGrpForViewObj, ResCustDataCompanyForViewObj } from 'app/shared/model/Response/View/ResCustDataForViewObj.model';
+import { ResAppCustBankAccForViewObj } from 'app/shared/model/Response/View/ResAppCustBankAccForViewObj.model';
 
 @Component({
   selector: 'app-view-app-cust-data-completion-company',
@@ -42,13 +37,12 @@ export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
   detailMrCustTypeCode: string;
   detailCustomerTitle: string;
 
-  appCustObj: AppCustObj;
-  appCustAddrForViewObjs: Array<AppCustAddrForViewObj>;
-  appCustBankAccObjs: Array<AppCustBankAccObj>;
-  appCustSocmedObjs: Array<AppCustSocmedObj>;
-  appCustGrpObjs: Array<AppCustGrpObj>;
-  appCustCompanyMgmntShrholderObjs: Array<AppCustCompanyMgmntShrholderObj>;
-  appCustCompanyLegalDocObjs: Array<AppCustCompanyLegalDocObj>;
+  appCustObj: ResAppCustForViewObj = new ResAppCustForViewObj();
+  appCustAddrForViewObjs: Array<ResAppCustAddrForViewObj> = new Array<ResAppCustAddrForViewObj>();
+  appCustBankAccObjs: Array<ResAppCustBankAccForViewObj> = new Array<ResAppCustBankAccForViewObj>();
+  appCustGrpObjs: Array<ResAppCustGrpForViewObj> = new Array<ResAppCustGrpForViewObj>();
+  appCustCompanyMgmntShrholderObjs: Array<ResAppCustCompanyMgmntShrholderForViewObj> = new Array<ResAppCustCompanyMgmntShrholderForViewObj>();
+  appCustCompanyLegalDocObjs: Array<ResAppCustCompanyLegalDocForViewObj> = new Array<ResAppCustCompanyLegalDocForViewObj>();
 
   constructor(private http: HttpClient, private modalService: NgbModal) { }
 
@@ -90,14 +84,13 @@ export class ViewAppCustDataCompletionCompanyComponent implements OnInit {
     }
 
     await this.http.post(url, reqObj).toPromise().then(
-      (response) => {
-        this.appCustObj = response["AppCustObj"];
-        this.appCustAddrForViewObjs = response["AppCustAddrObjs"];
-        this.appCustCompanyMgmntShrholderObjs = response["AppCustCompanyMgmntShrholderObjs"];
-        this.appCustBankAccObjs = response["AppCustBankAccObjs"];
-        this.appCustCompanyLegalDocObjs = response["AppCustCompanyLegalDocObjs"];
-        this.appCustSocmedObjs = response["AppCustSocmedObjs"];
-        this.appCustGrpObjs = response["AppCustGrpObjs"];
+      (response : ResCustDataCompanyForViewObj) => {
+        this.appCustObj = response.AppCustObj;
+        this.appCustAddrForViewObjs = response.ListAppCustAddrObj;
+        this.appCustCompanyMgmntShrholderObjs = response.ListAppCustCompanyMgmntShrholderObj;
+        this.appCustBankAccObjs = response.ListAppCustBankAccObj;
+        this.appCustCompanyLegalDocObjs = response.ListAppCustCompanyLegalDocObj;
+        this.appCustGrpObjs = response.ListAppCustGrpObj;
 
         if(this.appCustObj.IsFamily) this.customerTitle = 'Family';
         else if(this.appCustObj.IsShareholder) this.customerTitle = 'Shareholder';

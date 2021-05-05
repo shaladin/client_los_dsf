@@ -63,9 +63,6 @@ export class AssetDataAddEditComponent implements OnInit {
   listSalesObj: any;
   adminHeadObj: any;
   listAdminHeadObj: any;
-  getListAppAssetData: any;
-  getListVendorEmp: any;
-  getListActiveRefMasterUrl: any;
   InputLookupSupplierObj: any;
   InputLookupAssetObj: any;
   inputAssetLocAddressObj: any;
@@ -82,32 +79,19 @@ export class AssetDataAddEditComponent implements OnInit {
   AddrResidenceObj: any;
   inputFieldLocationAddrObj: InputFieldObj;
   locationAddrObj: AppCustAddrObj;
-  getAppCustAddrUrl: any;
   AppCustAddrObj: any;
-  getAppCustAddrByAppCustAddrId: any;
   appCustAddrObj: any;
   returnAppCustAddrObj: any;
   allAssetDataObj: AllAssetDataObj;
-  addEditAllAssetDataUrl: any;
-  getRefCoy: any;
   refCoyObj: any;
   returnRefCoyObj: any;
-  getAppCustUrl: any;
   appCustObj: any;
   assetUsageObj: any
   returnAssetUsageObj: any;
-  getAllAssetDataByAppAssetId: any;
   appAssetObj: any;
   returnAppAssetObj: any;
   reqAssetMasterObj: any;
   resAssetMasterObj: any;
-  getAssetMasterForLookup: any;
-  getAppCollateralByAppId: any;
-  getAppCollateralByAppAssetId: string;
-  getAppCollateralRegistByAppCollateralId: any;
-  getListAppAssetSupplEmpByAppAssetId: any;
-  getVendorForLookup: any;
-  getAppAssetSupplEmpByAppAssetIdAndCode: any;
   appCollateralObj: any;
   returnAppCollateralObj: any;
   appCollateralRegistObj: any;
@@ -116,9 +100,7 @@ export class AssetDataAddEditComponent implements OnInit {
   returnAppAssetSupplEmpObj: any;
   vendorObj: any;
   returnVendorObj: any;
-  appAssetSupplEmpSalesObj: any;
   salesAppAssetSupplEmpObj: any;
-  appAssetSupplEmpHeadObj: any;
   headAppAssetSupplEmpObj: any;
   appAssetSupplEmpBranchObj: any;
   branchAppAssetSupplEmpObj: any;
@@ -238,22 +220,6 @@ export class AssetDataAddEditComponent implements OnInit {
   ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService) {
-    this.getListAppAssetData = URLConstant.GetListAppAssetData;
-    this.getListVendorEmp = URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition;
-    this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getAppCustAddrUrl = URLConstant.GetListAppCustAddrByAppId;
-    this.getAppCustAddrByAppCustAddrId = URLConstant.GetAppCustAddrByAppCustAddrId;
-    this.addEditAllAssetDataUrl = URLConstant.AddEditAllAssetData;
-    this.getRefCoy = URLConstant.GetRefCoy;
-    this.getAppCustUrl = URLConstant.GetAppCustByAppId;
-    this.getAllAssetDataByAppAssetId = URLConstant.GetAllAssetDataByAppAssetId;
-    this.getAssetMasterForLookup = URLConstant.GetAssetMasterForLookup;
-    this.getAppCollateralByAppId = URLConstant.GetAppCollateralByAppId;
-    this.getAppCollateralByAppAssetId = URLConstant.GetAppCollateralByAppAssetId;
-    this.getAppCollateralRegistByAppCollateralId = URLConstant.GetAppCollateralRegistrationByAppCollateralId;
-    this.getListAppAssetSupplEmpByAppAssetId = URLConstant.GetListAppAssetSupplEmpByAppAssetId;
-    this.getVendorForLookup = URLConstant.GetVendorForLookup;
-    this.getAppAssetSupplEmpByAppAssetIdAndCode = URLConstant.GetAppAssetSupplEmpByAppAssetIdAndCode;
     this.originalAssetAccs = new Array<AppAssetAccessoryObj>();
 
     this.route.queryParams.subscribe(params => {
@@ -301,7 +267,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
   GetListAddr() {
     this.appObj.Id = this.AppId;
-    this.http.post(this.getAppCustAddrUrl, this.appObj).toPromise().then(
+    this.http.post(URLConstant.GetListAppCustAddrByAppId, this.appObj).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.AssetDataForm.patchValue({ LocationAddrType: response[CommonConstant.ReturnObj][0]['AppCustAddrId'] });
@@ -313,7 +279,7 @@ export class AssetDataAddEditComponent implements OnInit {
     // this.appCustAddrObj = new AppCustAddrObj();
     // this.appCustAddrObj.AppCustAddrId = this.AssetDataForm.controls["LocationAddrType"].value;
     var appCustAddrObj = { Id: this.AssetDataForm.controls["LocationAddrType"].value };
-    this.http.post(this.getAppCustAddrByAppCustAddrId, appCustAddrObj).subscribe(
+    this.http.post(URLConstant.GetAppCustAddrByAppCustAddrId, appCustAddrObj).subscribe(
       (response) => {
         this.returnAppCustAddrObj = response;
 
@@ -379,7 +345,7 @@ export class AssetDataAddEditComponent implements OnInit {
     var appObj = {
       Id: this.AppId,
     };
-    this.http.post(this.getAppCustUrl, appObj).subscribe(
+    this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
       (response) => {
         this.appCustObj = response;
         this.AssetDataForm.patchValue({
@@ -659,7 +625,7 @@ export class AssetDataAddEditComponent implements OnInit {
       this.appAssetObj = new AppAssetObj();
       this.appAssetObj.AppAssetId = this.AppAssetId;
       var appAssetObj = { Id: this.AppAssetId };
-      await this.http.post(this.getAllAssetDataByAppAssetId, appAssetObj).toPromise().then(
+      await this.http.post(URLConstant.GetAllAssetDataByAppAssetId, appAssetObj).toPromise().then(
         (response) => {
           this.returnAppAssetObj = response["ResponseAppAssetObj"];
           this.AssetDataForm.patchValue({
@@ -684,7 +650,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
       var reqByCode = new GenericObj();
       reqByCode.Code = this.returnAppAssetObj.FullAssetCode;
-      this.http.post(this.getAssetMasterForLookup, reqByCode).subscribe(
+      this.http.post(URLConstant.GetAssetMasterForLookup, reqByCode).subscribe(
         (response) => {
           this.resAssetMasterObj = response;
           this.InputLookupAssetObj.nameSelect = this.resAssetMasterObj.FullAssetName;
@@ -697,7 +663,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
       this.vendorObj = new VendorObj();
       this.vendorObj.VendorCode = this.returnAppAssetObj.SupplCode;
-      this.http.post(this.getVendorForLookup, this.vendorObj).subscribe(
+      this.http.post(URLConstant.GetVendorForLookup, this.vendorObj).subscribe(
         (response) => {
           this.returnVendorObj = response;
           this.InputLookupSupplierObj.nameSelect = this.returnVendorObj.VendorName;
@@ -707,10 +673,10 @@ export class AssetDataAddEditComponent implements OnInit {
             SupplName: this.returnVendorObj.VendorName,
           });
 
-          this.appAssetSupplEmpHeadObj = new AppAssetSupplEmpObj();
-          this.appAssetSupplEmpHeadObj.AppAssetId = this.AppAssetId;
-          this.appAssetSupplEmpHeadObj.MrSupplEmpPositionCode = CommonConstant.ADMIN_HEAD_JOB_CODE;
-          this.http.post(this.getAppAssetSupplEmpByAppAssetIdAndCode, this.appAssetSupplEmpHeadObj).subscribe(
+          let getAppAssetSupplEmpByAdminHead = new GenericObj();
+          getAppAssetSupplEmpByAdminHead.Id = this.AppAssetId;
+          getAppAssetSupplEmpByAdminHead.Code = CommonConstant.ADMIN_HEAD_JOB_CODE;
+          this.http.post(URLConstant.GetAppAssetSupplEmpByAppAssetIdAndMrSupplEmpPositionCode, getAppAssetSupplEmpByAdminHead).subscribe(
             (response) => {
               this.headAppAssetSupplEmpObj = response;
               var obj = {
@@ -734,10 +700,10 @@ export class AssetDataAddEditComponent implements OnInit {
                 });
             });
 
-          this.appAssetSupplEmpSalesObj = new AppAssetSupplEmpObj();
-          this.appAssetSupplEmpSalesObj.AppAssetId = this.AppAssetId;
-          this.appAssetSupplEmpSalesObj.MrSupplEmpPositionCode = CommonConstant.SALES_JOB_CODE;
-          this.http.post(this.getAppAssetSupplEmpByAppAssetIdAndCode, this.appAssetSupplEmpSalesObj).subscribe(
+          let getAppAssetSupplEmpBySales = new GenericObj();
+          getAppAssetSupplEmpBySales.Id = this.AppAssetId;
+          getAppAssetSupplEmpBySales.Code = CommonConstant.SALES_JOB_CODE;
+          this.http.post(URLConstant.GetAppAssetSupplEmpByAppAssetIdAndMrSupplEmpPositionCode, getAppAssetSupplEmpBySales).subscribe(
             (response) => {
               this.salesAppAssetSupplEmpObj = response;
               var obj = {
@@ -763,7 +729,7 @@ export class AssetDataAddEditComponent implements OnInit {
       this.appCollateralObj = new AppCollateralObj();
       this.appCollateralObj.AppAssetId = this.AppAssetId;
       this.appCollateralObj.Id = this.AppAssetId;
-      this.http.post(this.getAppCollateralByAppAssetId, this.appCollateralObj).subscribe(
+      this.http.post(URLConstant.GetAppCollateralByAppAssetId, this.appCollateralObj).subscribe(
         (response) => {
           this.returnAppCollateralObj = response;
           this.appCollateralObj.IsMainCollateral = this.returnAppCollateralObj.IsMainCollateral;
@@ -771,7 +737,7 @@ export class AssetDataAddEditComponent implements OnInit {
           this.appCollateralRegistObj = new AppCollateralRegistrationObj();
           this.appCollateralRegistObj.AppCollateralId = this.returnAppCollateralObj.AppCollateralId;
           this.appCollateralRegistObj.Id = this.returnAppCollateralObj.AppCollateralId;
-          this.http.post(this.getAppCollateralRegistByAppCollateralId, this.appCollateralRegistObj).subscribe(
+          this.http.post(URLConstant.GetAppCollateralRegistrationByAppCollateralId, this.appCollateralRegistObj).subscribe(
             (response) => {
               this.returnAppCollateralRegistObj = response;
               this.AssetDataForm.patchValue({
@@ -938,7 +904,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
     this.assetConditionObj = new RefMasterObj();
     this.assetConditionObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;
-    this.http.post(this.getListActiveRefMasterUrl, this.assetConditionObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.assetConditionObj).subscribe(
       (response) => {
         this.returnAssetConditionObj = response[CommonConstant.ReturnObj];
         if (this.mode != 'editAsset') {
@@ -956,7 +922,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
     this.downPaymentObj = new RefMasterObj();
     this.downPaymentObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDownPaymentType;
-    this.http.post(this.getListActiveRefMasterUrl, this.downPaymentObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.downPaymentObj).subscribe(
       (response) => {
         this.returnDownPaymentObj = response[CommonConstant.ReturnObj];
         this.AssetDataForm.patchValue({ MrDownPaymentTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -966,7 +932,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
     this.userRelationshipObj = new RefMasterObj();
     this.userRelationshipObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
-    this.http.post(this.getListActiveRefMasterUrl, this.userRelationshipObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.userRelationshipObj).subscribe(
       (response) => {
         this.returnUserRelationshipObj = response[CommonConstant.ReturnObj];
         this.AssetDataForm.patchValue({ UserRelationship: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -975,7 +941,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
     this.assetUsageObj = new RefMasterObj();
     this.assetUsageObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetUsage;
-    this.http.post(this.getListActiveRefMasterUrl, this.assetUsageObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.assetUsageObj).subscribe(
       (response) => {
         this.returnAssetUsageObj = response[CommonConstant.ReturnObj];
         if (this.mode != 'editAsset') {
@@ -987,7 +953,7 @@ export class AssetDataAddEditComponent implements OnInit {
     );
 
     this.refCoyObj = new RefCoyObj();
-    this.http.post(this.getRefCoy, this.refCoyObj).subscribe(
+    this.http.post(URLConstant.GetRefCoy, this.refCoyObj).subscribe(
       (response) => {
         this.returnRefCoyObj = response;
         this.AssetDataForm.patchValue({

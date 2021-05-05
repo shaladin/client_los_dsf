@@ -34,6 +34,7 @@ import { CookieService } from 'ngx-cookie';
 import { String } from 'typescript-string-operations';
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
+import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 
 @Component({
   selector: 'app-mou-cust-tab',
@@ -1477,10 +1478,10 @@ export class MouCustTabComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-            (response) => {
-              this.latestReqDtCheckIntegrator = response['ReqDt'];
-              this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-              this.reqLatestJson = JSON.parse(response['ReqJson']);
+            (response : ResThirdPartyRsltHObj) => {
+              this.latestReqDtCheckIntegrator = response.ReqDt;
+              this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
+              this.reqLatestJson = JSON.parse(response.ReqJson);
               if (this.reqLatestJson != null && this.reqLatestJson != "") {
                 this.latestCustDataObj = new AppCustCompareObj();
 
@@ -1545,40 +1546,34 @@ export class MouCustTabComponent implements OnInit {
             this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
             if(this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0"){
               this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-                (response) => {
+                (response : ResThirdPartyRsltHObj) => {
                   if (response != null) {
-                    this.latestReqDtCheckIntegrator = response['ReqDt'];
-                    this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-                    this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-                      (response) => {
-                        this.latestReqDtCheckIntegrator = response['ReqDt'];
-                        this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-                        this.reqLatestJson = JSON.parse(response['ReqJson']);
-                        if (this.reqLatestJson != null && this.reqLatestJson != "") {
-                          this.latestCustDataObj = new AppCustCompareObj();
-  
-                          this.latestCustDataObj.CustName = this.reqLatestJson['CustName'];
-                          this.latestCustDataObj.Gender = this.reqLatestJson['Gender'];
-                          this.latestCustDataObj.BirthPlace = this.reqLatestJson['BirthPlace'];
-                          this.latestCustDataObj.BirthDt = formatDate(new Date(this.reqLatestJson['BirthDt']), 'yyyy-MM-dd', 'en-US');
-                          this.latestCustDataObj.MaritalStatus = this.reqLatestJson['MaritalStatus'];
-                          this.latestCustDataObj.CustPhnNo = this.reqLatestJson['CustPhnNo'];
-                          this.latestCustDataObj.CustEmail = this.reqLatestJson['CustEmail'];
-                          this.latestCustDataObj.IdNo = this.reqLatestJson['IdNo'];
-                          this.latestCustDataObj.IdType = this.reqLatestJson['IdType'];
-                          this.latestCustDataObj.TaxNo = this.reqLatestJson['TaxNo'];
-                          if (this.reqLatestJson["CustType"] == CommonConstant.CustTypePersonal) {
-                            this.latestCustDataObj.HomeAddr = this.reqLatestJson['HomeAddr'];
-                            this.latestCustDataObj.HomeRt = this.reqLatestJson['HomeRt'];
-                            this.latestCustDataObj.HomeRw = this.reqLatestJson['HomeRw'];
-                            this.latestCustDataObj.HomeZipCode = this.reqLatestJson['HomeZipCode'];
-                            this.latestCustDataObj.HomeKelurahan = this.reqLatestJson['HomeKelurahan'];
-                            this.latestCustDataObj.HomeKecamatan = this.reqLatestJson['HomeKecamatan'];
-                            this.latestCustDataObj.HomeCity = this.reqLatestJson['HomeCity'];
-                          }
-                        }
+                    this.latestReqDtCheckIntegrator = response.ReqDt;
+                    this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
+                    this.reqLatestJson = JSON.parse(response.ReqJson);
+                    if (this.reqLatestJson != null && this.reqLatestJson != "") {
+                      this.latestCustDataObj = new AppCustCompareObj();
+
+                      this.latestCustDataObj.CustName = this.reqLatestJson['CustName'];
+                      this.latestCustDataObj.Gender = this.reqLatestJson['Gender'];
+                      this.latestCustDataObj.BirthPlace = this.reqLatestJson['BirthPlace'];
+                      this.latestCustDataObj.BirthDt = formatDate(new Date(this.reqLatestJson['BirthDt']), 'yyyy-MM-dd', 'en-US');
+                      this.latestCustDataObj.MaritalStatus = this.reqLatestJson['MaritalStatus'];
+                      this.latestCustDataObj.CustPhnNo = this.reqLatestJson['CustPhnNo'];
+                      this.latestCustDataObj.CustEmail = this.reqLatestJson['CustEmail'];
+                      this.latestCustDataObj.IdNo = this.reqLatestJson['IdNo'];
+                      this.latestCustDataObj.IdType = this.reqLatestJson['IdType'];
+                      this.latestCustDataObj.TaxNo = this.reqLatestJson['TaxNo'];
+                      if (this.reqLatestJson["CustType"] == CommonConstant.CustTypePersonal) {
+                        this.latestCustDataObj.HomeAddr = this.reqLatestJson['HomeAddr'];
+                        this.latestCustDataObj.HomeRt = this.reqLatestJson['HomeRt'];
+                        this.latestCustDataObj.HomeRw = this.reqLatestJson['HomeRw'];
+                        this.latestCustDataObj.HomeZipCode = this.reqLatestJson['HomeZipCode'];
+                        this.latestCustDataObj.HomeKelurahan = this.reqLatestJson['HomeKelurahan'];
+                        this.latestCustDataObj.HomeKecamatan = this.reqLatestJson['HomeKecamatan'];
+                        this.latestCustDataObj.HomeCity = this.reqLatestJson['HomeCity'];
                       }
-                    );
+                    }
                   }
                 }
               );

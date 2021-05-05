@@ -22,6 +22,7 @@ import { ReqLeadInputLeadDataObj } from 'app/shared/model/Request/LEAD/ReqInputL
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
+import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 
 
 @Component({
@@ -46,8 +47,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   isNeedCheckBySystem: string;
   isUseDigitalization: string;
   checkRapindoUrl: string;
-  latestReqDtCheckRapindo: string;
-  getThirdPartyResultHByTrxTypeCodeAndTrxNo: string;
+  latestReqDtCheckRapindo: Date;
   leadNo: string;
   reqLatestJson: any;
   latestCheckChassisNo: string = "";
@@ -116,7 +116,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   SerialNoList: any;
   items: FormArray;
   isAbleToSubmit: boolean = false;
-  thirdPartyRsltHId: string;
+  thirdPartyRsltHId: number;
   getThirdPartyResultHForFraudChecking: string;
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
   isAlreadySubmittedByIntegrator: boolean = false;
@@ -128,7 +128,6 @@ export class LeadInputLeadDataComponent implements OnInit {
     this.getLeadAssetByLeadId = URLConstant.GetLeadAssetByLeadId;
     this.getLeadAppByLeadId = URLConstant.GetLeadAppByLeadId;
     this.getAssetMasterForLookup = URLConstant.GetAssetMasterForLookup;
-    this.getThirdPartyResultHByTrxTypeCodeAndTrxNo = URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo;
     this.checkRapindoUrl = URLConstant.CheckRapindo;
     this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
     this.editLead = URLConstant.EditLead;
@@ -253,10 +252,10 @@ export class LeadInputLeadDataComponent implements OnInit {
             this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_ASSET;
             if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
               this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-                (response) => {
-                  this.latestReqDtCheckRapindo = response['ReqDt'];
-                  this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-                  this.reqLatestJson = JSON.parse(response['ReqJson']);
+                (response : ResThirdPartyRsltHObj) => {
+                  this.latestReqDtCheckRapindo = response.ReqDt;
+                  this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
+                  this.reqLatestJson = JSON.parse(response.ReqJson);
                   if (this.reqLatestJson != null && this.reqLatestJson != "") {
                     this.latestCheckChassisNo = this.reqLatestJson['AppAssetObj'][0]['SerialNo1'];
                   }
@@ -1040,10 +1039,10 @@ export class LeadInputLeadDataComponent implements OnInit {
           (response1) => {
             this.isAlreadySubmittedByIntegrator = true;
             this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-              (response) => {
-                this.latestReqDtCheckRapindo = response['ReqDt'];
-                this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-                this.reqLatestJson = JSON.parse(response['ReqJson']);
+              (response : ResThirdPartyRsltHObj) => {
+                this.latestReqDtCheckRapindo = response.ReqDt;
+                this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
+                this.reqLatestJson = JSON.parse(response.ReqJson);
                 if (this.reqLatestJson != null && this.reqLatestJson != "") {
                   this.latestCheckChassisNo = this.reqLatestJson['AppAssetObj'][0]['SerialNo1'];
                 }
