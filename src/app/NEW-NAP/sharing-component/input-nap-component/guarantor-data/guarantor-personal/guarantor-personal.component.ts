@@ -139,22 +139,22 @@ export class GuarantorPersonalComponent implements OnInit {
       this.inputLookupObj1.isReady = true;
     }
 
-    var idTypeObj = {
+    var idTypeObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType,
-      RowVersion: ""
-    }
-    var genderObj = {
+      MappingCode: ""
+    };
+    var genderObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender,
-      RowVersion: ""
-    }
-    var maritalObj = {
+      MappingCode: ""
+    };
+    var maritalObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMaritalStat,
-      RowVersion: ""
-    }
-    var religionObj = {
+      MappingCode: ""
+    };
+    var religionObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReligion,
-      RowVersion: ""
-    }
+      MappingCode: ""
+    };
 
     var AppCust = {
       Id: this.AppId,

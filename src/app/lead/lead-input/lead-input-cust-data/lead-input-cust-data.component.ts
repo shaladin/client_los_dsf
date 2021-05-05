@@ -242,7 +242,7 @@ export class LeadInputCustDataComponent implements OnInit {
             this.thirdPartyObj.TrxNo = this.leadNo;
             this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
             if(this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0"){
-              this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+              this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
                 (response : ResThirdPartyRsltHObj) => {
                   this.latestReqDtCheckIntegrator = response.ReqDt;
                   this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
@@ -1028,7 +1028,7 @@ export class LeadInputCustDataComponent implements OnInit {
       this.setLeadCustPersonalJobData();
       this.http.post(URLConstant.CheckIntegrator, this.leadInputObj).subscribe(
         () => {
-          this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
+          this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
             (response : ResThirdPartyRsltHObj) => {
               this.latestReqDtCheckIntegrator = response.ReqDt;
               this.thirdPartyRsltHId = response.ThirdPartyRsltHId;

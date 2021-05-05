@@ -145,21 +145,21 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
       this.inputLookupObj1.isReady = true;
     }
 
-    var idTypeObj = {
+    var idTypeObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType,
-      RowVersion: ""
+      MappingCode: ""
     }
-    var genderObj = {
+    var genderObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender,
-      RowVersion: ""
+      MappingCode: ""
     }
-    var maritalObj = {
+    var maritalObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMaritalStat,
-      RowVersion: ""
+      MappingCode: ""
     }
-    var religionObj = {
+    var religionObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReligion,
-      RowVersion: ""
+      MappingCode: ""
     }
     this.http.post(URLConstant.GetListActiveRefMaster, idTypeObj).subscribe(
       (response) => {
