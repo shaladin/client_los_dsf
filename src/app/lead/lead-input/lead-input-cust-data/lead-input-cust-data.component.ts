@@ -21,7 +21,6 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
 import { LeadCustCompareObj } from 'app/shared/model/LeadCustCompareObj.Model';
@@ -34,6 +33,8 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ReqInputLeadCustPersonalObj } from 'app/shared/model/Request/LEAD/ReqAddEditInputLeadCustPersonalObj.model';
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 import { GenericByIdAndCodeObj } from 'app/shared/model/Generic/GenericByIdAndCodeObj.model';
+import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
+import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 
 @Component({
   selector: 'app-lead-input-cust-data',
@@ -120,9 +121,9 @@ export class LeadInputCustDataComponent implements OnInit {
   });
   inputAddressObjForLegalAddr: any;
   inputAddressObjForResidenceAddr: InputAddressObj;
-  generalSettingObj: GeneralSettingObj;
+  generalSettingObj: GenericListByCodeObj;
   getGeneralSettingByCode: string;
-  returnGeneralSettingObj: any;
+  returnGeneralSettingObj: Array<ResGeneralSettingObj>;
   isNeedCheckBySystem: string;
   isUseDigitalization: string;
   leadObj: LeadObj;
@@ -231,14 +232,14 @@ export class LeadInputCustDataComponent implements OnInit {
     this.professionLookUpObj.isRequired = true;
 
 
-    this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
-    this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
+    this.generalSettingObj = new GenericListByCodeObj();
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
+    this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
       (response) => {
-        this.returnGeneralSettingObj = response;
-        var gsNeedCheckBySystem = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
-        var gsUseDigitalization = this.returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        this.returnGeneralSettingObj = response['ResGetListGeneralSettingObj'];
+        var gsNeedCheckBySystem = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
         
         if(gsNeedCheckBySystem != undefined){
           this.isNeedCheckBySystem = gsNeedCheckBySystem.GsValue;

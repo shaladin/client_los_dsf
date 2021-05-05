@@ -121,7 +121,6 @@ export class URLConstant {
   public static GetAppCommissionDataForEditByAppId = environment.losUrl + "/AppCommission/GetAppCommissionDataForEditByAppId";
   public static DeleteAppCommissionData = environment.losUrl + "/AppCommission/DeleteAppCommissionData";
   public static GetAppCommissionRule = environment.losUrl + "/AppCommission/GetAppCommissionRule";
-  public static GetAppCommissionTax = environment.losUrl + "/AppCommission/GetAppCommissionTax";
   public static GetAppCommissionTaxAndCalcGrossYield = environment.losUrl + "/AppCommission/GetAppCommissionTaxAndCalcGrossYield";
   public static CalCulateGrossYield = environment.losUrl + "/AppCommission/CalCulateGrossYield";
 
@@ -1059,10 +1058,10 @@ export class URLConstant {
   //App Duplicate Checking
   public static GetCustomerDuplicateCheck = environment.FoundationR3Url + "/CustDuplicateCheck/GetCustomerDuplicateCheck";
   public static GetNegativeCustomerDuplicateCheck = environment.FoundationR3Url + "/CustDuplicateCheck/GetNegativeCustomerDuplicateCheck";
-  public static GetAppCustDuplicateCheck = "/AppDupCheck/GetAppCustDuplicateCheck";
-  public static GetAppGuarantorDuplicateCheck = "/AppDupCheck/GetAppGuarantorDuplicateCheck";
-  public static GetSpouseDuplicateCheck = "/AppDupCheck/GetSpouseDuplicateCheck";
-  public static GetAppShareholderDuplicateCheck = "/AppDupCheck/GetAppShareholderDuplicateCheck";
+  public static GetAppCustDuplicateCheck = environment.losUrl + "/AppDupCheck/GetAppCustDuplicateCheck";
+  public static GetAppGuarantorDuplicateCheck = environment.losUrl + "/AppDupCheck/GetAppGuarantorDuplicateCheck";
+  public static GetSpouseDuplicateCheck = environment.losUrl + "/AppDupCheck/GetSpouseDuplicateCheck";
+  public static GetAppShareholderDuplicateCheck = environment.losUrl + "/AppDupCheck/GetAppShareholderDuplicateCheck";
   public static AddAppDupCheckCust = "/AppDupCheck/AddAppDupCheckCust";
   public static EditCustNoAppCust = environment.losUrl + "/AppDupCheck/EditCustNoAppCust";
   public static SubmitAppDupCheck = environment.losUrl + "/AppDupCheck/SubmitAppDupCheck";
@@ -1100,7 +1099,7 @@ export class URLConstant {
   public static GetListAppSubsidyByAppId = environment.losUrl + "/AppSubsidy/GetListAppSubsidyByAppId";
   public static GetListSubsidyFromValue = environment.losUrl + "/AppSubsidy/GetListSubsidyFromValue";
   public static GetListSubsidyFromTypeCode = environment.losUrl + "/AppSubsidy/GetListSubsidyFromTypeCode";
-  public static GetListSubsidyAllocation = environment.losUrl + "/AppSubsidy/GetListSubsidyAllocation"
+  public static GetListSubsidyAllocation = environment.losUrl + "/AppSubsidy/GetListSubsidyAllocation";
   public static GetListSubsidySource = environment.losUrl + "/AppSubsidy/GetListSubsidySource";
   public static GetListSubsidyValueType = environment.losUrl + "/AppSubsidy/GetListSubsidyValueType";
   public static DeleteSubsidy = environment.losUrl + "/AppSubsidy/DeleteSubsidy";

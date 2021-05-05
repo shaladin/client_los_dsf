@@ -11,6 +11,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { forkJoin } from 'rxjs';
+import { ReqGetListSubsidyDataByAppIdAndSubsidyFromTypeObj } from 'app/shared/model/AppSubsidy/ReqGetListSubsidyDataByAppIdAndSubsidyFromTypeObj.Model';
+import { ReqGetSubsidySourceObj } from 'app/shared/model/AppSubsidy/ReqGetSubsidySourceObj.Model';
+import { ReqGetSubsidyValueTypeObj } from 'app/shared/model/AppSubsidy/ReqGetSubsidyValueTypeObj.Model';
 
 @Component({
   selector: 'app-subsidy-add-edit-cfna',
@@ -196,7 +199,8 @@ export class SubsidyAddEditCFNAComponent implements OnInit {
     }
 
     LoadDDLFromValue(fromTypeCode: string) {
-      this.http.post(URLConstant.GetListSubsidyFromValue, { AppId: this.AppId, SubsidyFromType : fromTypeCode  }).subscribe(
+      let reqObj: ReqGetListSubsidyDataByAppIdAndSubsidyFromTypeObj = { AppId: this.AppId, SubsidyFromType: fromTypeCode };
+      this.http.post(URLConstant.GetListSubsidyFromValue, reqObj).subscribe(
         (response) => {
           this.FromValueOptions = response[CommonConstant.ReturnObj];
         }
@@ -204,7 +208,8 @@ export class SubsidyAddEditCFNAComponent implements OnInit {
     }
     
     LoadDDLSubsidyAlloc(fromTypeCode: string) {
-      this.http.post(URLConstant.GetListSubsidyAllocation, { SubsidyFromType: fromTypeCode, AppId: this.AppId }).subscribe(
+      let reqObj: ReqGetListSubsidyDataByAppIdAndSubsidyFromTypeObj = { AppId: this.AppId, SubsidyFromType: fromTypeCode };
+      this.http.post(URLConstant.GetListSubsidyAllocation, reqObj).subscribe(
         (response) => {
           this.AllocCodeOptions = response[CommonConstant.ReturnObj];
         }
@@ -212,7 +217,8 @@ export class SubsidyAddEditCFNAComponent implements OnInit {
     }
 
     LoadDDLSubsidySource(fromTypeCode: string, allocCode: string) {
-      this.http.post(URLConstant.GetListSubsidySource, { SubsidyFromType: fromTypeCode, SubsidyAllocCode: allocCode, AppId : this.AppId }).subscribe(
+      let reqObj: ReqGetSubsidySourceObj = { AppId: this.AppId, SubsidyFromType: fromTypeCode, SubsidyAllocCode: allocCode };
+      this.http.post(URLConstant.GetListSubsidySource, reqObj).subscribe(
         (response) => {
           this.SourceCodeOptions = response[CommonConstant.ReturnObj];
         }
@@ -220,12 +226,8 @@ export class SubsidyAddEditCFNAComponent implements OnInit {
     }
   
     LoadDDLSubsidyValueType(fromTypeCode: string, allocCode: string, sourceCode : string) {
-      this.http.post(URLConstant.GetListSubsidyValueType, 
-                      { SubsidyFromType: fromTypeCode, 
-                        SubsidyAllocCode: allocCode,
-                        SubsidySourceCode: sourceCode,
-                        AppId : this.AppId
-                      }).subscribe(
+      let reqObj: ReqGetSubsidyValueTypeObj = { AppId: this.AppId, SubsidyFromType: fromTypeCode, SubsidyAllocCode: allocCode, SubsidySourceCode: sourceCode };
+      this.http.post(URLConstant.GetListSubsidyValueType, reqObj).subscribe(
         (response) => {
           this.ValueTypeOptions = response[CommonConstant.ReturnObj];
 

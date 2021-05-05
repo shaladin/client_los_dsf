@@ -12,7 +12,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
@@ -49,7 +48,6 @@ export class ApplicationDataComponent implements OnInit {
   PayFreqTimeOfYear: number;
   FirstInstType: string;
   resMouCustObj;
-  mouCustObj;
   CustNo: string;
   isProdOfrUpToDate: boolean = true;
   missingProdOfrComp: string = "";
@@ -181,12 +179,7 @@ export class ApplicationDataComponent implements OnInit {
       (response) => {
         this.CustNo = response["CustNo"];
 
-        this.mouCustObj = new MouCustObj();
-        this.mouCustObj.CustNo = this.CustNo;
-        this.mouCustObj.StartDt = user.BusinessDt;
-        this.mouCustObj.MrMouTypeCode = CommonConstant.GENERAL;
-
-        this.http.post(URLConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
+        this.http.post(URLConstant.GetListMouCustByCustNo, {CustNo: this.CustNo, StartDt: user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL}).subscribe(
           (response) => {
             this.resMouCustObj = response[CommonConstant.ReturnObj];
 
