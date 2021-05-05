@@ -99,13 +99,13 @@
                             <th class="text-right"><span class="thead-header" name='balanceAmt' translate>Balance Amount</span></th>
                         </tr>
                         </thead>
-                        <tbody *ngIf = "appCustBankAccObjs[i].AppCustBankStmntObjs?.length == 0">
+                        <tbody *ngIf = "appCustBankAccObjs[i].ListAppCustBankAccStmntObj?.length == 0">
                             <tr>
                             <td colspan="100%">No Data Available</td>
                             </tr>
                         </tbody>
                         <tbody>
-                        <ng-container *ngFor="let item of appCustBankAccObjs[i].AppCustBankStmntObjs">
+                        <ng-container *ngFor="let item of appCustBankAccObjs[i].ListAppCustBankAccStmntObj">
                             <tr>
                                 <td class="text-center">{{item.Month}}</td>
                                 <td class="text-center">{{item.Year}}</td>

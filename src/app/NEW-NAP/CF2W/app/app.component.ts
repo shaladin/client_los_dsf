@@ -155,9 +155,7 @@ export class AppComponent implements OnInit {
     //DDL Var Type Code
     var refMasterSalesRecommendation = new RefMasterObj();
     refMasterSalesRecommendation.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSlsRecom;
-    var AppSourceObj = {
-      RowVersion: ""
-    };
+
     var PayFreqCodeObj = {
       RowVersion: ""
     };
@@ -197,7 +195,7 @@ export class AppComponent implements OnInit {
         }
       }
     );
-    this.http.post(URLConstant.GetListKvpActiveRefAppSrc, AppSourceObj).subscribe(
+    this.http.post(URLConstant.GetListKvpActiveRefAppSrc, null).subscribe(
       (response) => {
         this.tempMrAppSourceCode = response[CommonConstant.ReturnObj];
         if (this.tempMrAppSourceCode.length > 0) {

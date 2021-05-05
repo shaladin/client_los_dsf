@@ -10,6 +10,7 @@ import { CrdRvwExposureHObj } from 'app/shared/model/CreditReview/CrdRvwExposure
 import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureObj.Model';
 import { CrdRvwOvdObj } from 'app/shared/model/CreditReview/CrdRvwOvdObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ResAppCustForListCustMainDataObj, ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
 
 @Component({
   selector: 'app-crd-rvw-fam-guar',
@@ -63,11 +64,11 @@ export class CrdRvwFamGuarComponent implements OnInit {
   }
 
   //#region Get Data
-  ListAppCustFamily: Array<AppCustObj> = new Array<AppCustObj>();
+  ListAppCustFamily: Array<ResAppCustForListCustMainDataObj> = new Array<ResAppCustForListCustMainDataObj>();
   async GetListAppCustFamilyMainDataByAppId() {
     if (this.crdRvwCustInfoObj.MrCustTypeCode != this.CustTypePersonal) return;
-    await this.http.post<{ ListAppCustObj: Array<AppCustObj> }>(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.appId, IsFamily: true }).toPromise().then(
-      (response) => {
+    await this.http.post(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.appId, IsFamily: true }).toPromise().then(
+      (response : ResListCustMainDataObj) => {
         this.ListAppCustFamily = response.ListAppCustObj;
         for (let index = 0; index < this.ListAppCustFamily.length; index++) {
           const element = this.ListAppCustFamily[index];
@@ -82,10 +83,10 @@ export class CrdRvwFamGuarComponent implements OnInit {
     );
   }
 
-  ListAppCustShareholder: Array<AppCustObj> = new Array<AppCustObj>();
+  ListAppCustShareholder: Array<ResAppCustForListCustMainDataObj> = new Array<ResAppCustForListCustMainDataObj>();
   async GetListAppCustShareholderMainDataByAppId() {
     if (this.crdRvwCustInfoObj.MrCustTypeCode != this.CustTypeCompany) return;
-    await this.http.post<{ ListAppCustObj: Array<AppCustObj> }>(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.appId, IsShareholder: true }).toPromise().then(
+    await this.http.post<ResListCustMainDataObj>(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.appId, IsShareholder: true }).toPromise().then(
       (response) => {
         this.ListAppCustShareholder = response.ListAppCustObj;
         for (let index = 0; index < this.ListAppCustShareholder.length; index++) {
@@ -101,9 +102,9 @@ export class CrdRvwFamGuarComponent implements OnInit {
     );
   }
 
-  ListAppCustGuarantor: Array<AppCustObj> = new Array<AppCustObj>();
+  ListAppCustGuarantor: Array<ResAppCustForListCustMainDataObj> = new Array<ResAppCustForListCustMainDataObj>();
   async GetListAppCustGuarantorMainDataByAppId() {
-    await this.http.post<{ ListAppCustObj: Array<AppCustObj> }>(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.appId, IsGuarantor: true }).toPromise().then(
+    await this.http.post<ResListCustMainDataObj>(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.appId, IsGuarantor: true }).toPromise().then(
       (response) => {
         this.ListAppCustGuarantor = response.ListAppCustObj;
         for (let index = 0; index < this.ListAppCustGuarantor.length; index++) {

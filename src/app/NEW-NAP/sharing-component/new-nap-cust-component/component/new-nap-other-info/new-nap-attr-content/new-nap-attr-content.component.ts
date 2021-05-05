@@ -10,6 +10,7 @@ import { RefAttr } from 'app/shared/model/CustCompletion/RefAttr.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { NewCustAttrContentObj } from 'app/shared/model/NewCustAttrContentObj.Model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { ResGetAppCustAttrContentObj, ResGetListAppCustAttrContentObj } from 'app/shared/model/Response/NAP/NAP 4/ResGetListAppCustAttrContentObj.model';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -24,7 +25,7 @@ export class NewNapAttrContentComponent implements OnInit {
   @Input() AppCustId: number;
   @Input() title: string;
   @Input() IsAttrSubmitted: boolean;
-  ListAttrContent: Array<AttrContent> = new Array<AttrContent>();
+  ListAttrContent: Array<ResGetAppCustAttrContentObj> = new Array<ResGetAppCustAttrContentObj>();
   RefAttrList: Array<RefAttr> = new Array<RefAttr>();
   ListInputLookUpObj = new Array();
   IsFormReady: boolean = false;
@@ -42,9 +43,9 @@ export class NewNapAttrContentComponent implements OnInit {
     var custGrp = {
       AttrGroup: this.AttrGroup
     };
-    await this.httpClient.post<Array<AttrContent>>(URLConstant.GetListAppCustAttrContentForNewNap, { AppCustId: this.AppCustId, AttrGroup: this.AttrGroup }).toPromise().then(
-      (response) => {
-        this.ListAttrContent = response["ResponseAppCustAttrContentObjs"]
+    await this.httpClient.post(URLConstant.GetListAppCustAttrContentForNewNap, { AppCustId: this.AppCustId, AttrGroup: this.AttrGroup }).toPromise().then(
+      (response : ResGetListAppCustAttrContentObj) => {
+        this.ListAttrContent = response.ResponseAppCustAttrContentObjs;
         this.httpClient.post<Array<RefAttr>>(URLConstant.GetListActiveRefAttrByAttrGroup, custGrp).subscribe(
           async (response) => {
             this.RefAttrList = response[CommonConstant.ReturnObj];
@@ -57,7 +58,12 @@ export class NewNapAttrContentComponent implements OnInit {
                 this.AttrContent = new AttrContent();
                 let isUpdateValue = false;
                 if (this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode)) {
-                  this.AttrContent = this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode);
+                  let foundAttrContent = this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode);
+                  this.AttrContent.AttrCode = foundAttrContent.AttrCode;
+                  this.AttrContent.AttrName = foundAttrContent.AttrName;
+                  this.AttrContent.AttrValue = foundAttrContent.AttrValue;
+                  this.AttrContent.Descr = foundAttrContent.Descr;
+                  this.AttrContent.MasterCode = foundAttrContent.MasterCode;
                   isUpdateValue = true;
                 }
 
@@ -197,7 +203,12 @@ export class NewNapAttrContentComponent implements OnInit {
               this.AttrContent = new AttrContent();
               let isUpdateValue = false;
               if (this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode)) {
-                this.AttrContent = this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode);
+                let foundAttrContent = this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode);
+                this.AttrContent.AttrCode = foundAttrContent.AttrCode;
+                this.AttrContent.AttrName = foundAttrContent.AttrName;
+                this.AttrContent.AttrValue = foundAttrContent.AttrValue;
+                this.AttrContent.Descr = foundAttrContent.Descr;
+                this.AttrContent.MasterCode = foundAttrContent.MasterCode;
                 isUpdateValue = true;
               }
 

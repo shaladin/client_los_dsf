@@ -44,7 +44,6 @@ import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.compon
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 import { SharedModule } from "app/shared/shared.module";
 import { TabDeviationComponent } from './tab-deviation/tab-deviation.component';
-import { FraudDetectionDataModule } from "app/NEW-NAP/business-process/credit-process/credit-review/fraud-detection-data/fraud-detection-data.module";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { ViewAssetExpenseComponent } from './view-asset-expense/view-asset-expense.component';
 
@@ -70,8 +69,7 @@ import { ViewAssetExpenseComponent } from './view-asset-expense/view-asset-expen
         UcapprovalHistoryModule,
         UcShowErrorsModule,
         AppCustViewComponentsModule,
-        SharedModule,
-        FraudDetectionDataModule
+        SharedModule
     ],
     declarations: [
         AppMainInfoComponent,
