@@ -1,0 +1,152 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header header-title">
+        <div class="row">
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="px-3">
+          <lib-ucSubsection [id]="'existAgrId'" [title]="'Existing Agreement'" [panel]="'existAgr'">
+          </lib-ucSubsection>
+          <div id="existAgr">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header">No</span></th>
+                  <th>
+                    <span translate class="thead-header" name='AgrmntNo'>Agreement No</span>
+                  </th>
+                  <th>
+                    <span style="float: left;" translate class="thead-header" name='ProdOffering'>Product
+                      Offering</span>
+                  </th>
+                  <th><span translate class="thead-header" name='GoLiveDt'>Go Live Date</span>
+                  <th>
+                    <span  style="float: right;"  translate class="thead-header" name='InstallmentAmt'>Installment Amount</span>
+                  </th>
+                  <th>
+                    <span translate style="float: right;" class="thead-header" name='OSAR'>Total Installment Amount</span>
+                  </th>
+                  <th>
+                    <span translate style="float: center;" class="thead-header" name='Stat'>Status</span>
+                  </th>
+                  <th>
+                    <span style="float: left;"  translate class="thead-header" name='Sales'>Sales</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="ExstAgrmnt == undefined || ExstAgrmnt?.length == 0">
+                  <td align="center" colspan="8">No data found</td>
+                </tr>
+                <tr *ngFor="let item of ExstAgrmnt; let i = index">
+                  <td>{{i+1}}</td>
+                  <td *ngIf="item.AgrmntNo!=null">{{item.AgrmntNo}}</td>
+                  <td *ngIf="item.AgrmntNo==null"> - </td>
+                  <td style="text-align: left;" *ngIf="item.ProdOfferingName!=null">{{item.ProdOfferingName}}</td>
+                  <td *ngIf="item.ProdOfferingName==null"> - </td>
+                  <td *ngIf="item.GoLiveDt != null">{{item.GoLiveDt | date: 'dd-MMM-yyyy'}}</td>
+                  <td *ngIf="item.GoLiveDt == null"> - </td>
+                  <td style="text-align: right;" *ngIf="item.InstAmt!=null">{{item.InstAmt | number:'.2':'en-US'}}</td>
+                  <td style="text-align: right;" *ngIf="item.InstAmt==null"> - </td>
+                  <td style="text-align: right;" *ngIf="item.InstAmt!=null">
+                    {{item.InstAmt*item.NumOfInst | number:'.2':'en-US'}}</td>
+                  <td style="text-align: right;" *ngIf="item.TotalInsCustAmt==null"> - </td>
+                  <td style="text-align: center;">{{item.AgrmntStat}}</td>
+                  <td style="text-align: left;" *ngIf="item.SalesName!=null">{{item.SalesName}}</td>
+                  <td *ngIf="item.SalesName==null"> - </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <lib-ucSubsection [id]="'appRjcId'" [title]="'Application Reject'" [panel]="'appRjc'">
+          </lib-ucSubsection>
+          <div id="appRjc">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header">No</span></th>
+                  <th>
+                    <span translate class="thead-header" name='AgrmntNo'>Application No</span>
+                  </th>
+                  <th>
+                    <span style="float: left;" translate class="thead-header" name='ProdOffering'>Product
+                      Offering</span>
+                  </th>
+                  <th><span style="float: left;"  translate class="thead-header" name='GoLiveDt'>Sales</span>
+                  <th>
+                    <span style="float: right;" translate class="thead-header" name='InstallmentAmt'>Total NTF</span>
+                  </th>
+                  <th>
+                    <span translate class="thead-header" name='OSAR'>View Approval</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="AppRjct == undefined || AppRjct?.length == 0">
+                  <td align="center" colspan="6">No data found</td>
+                </tr>
+                <tr *ngFor="let item of AppRjct; let i = index">
+                  <td>{{i+1}}</td>
+                  <td *ngIf="item.AppNo!=null">{{item.AppNo}}</td>
+                  <td *ngIf="item.AppNo==null"> - </td>
+                  <td style="text-align: left;" *ngIf="item.ProdOfferingName!=null">{{item.ProdOfferingName}}</td>
+                  <td *ngIf="item.ProdOfferingName==null"> - </td>
+                  <td style="text-align: left;" *ngIf="item.SalesName!=null">{{item.SalesName}}</td>
+                  <td *ngIf="item.SalesName==null"> - </td>
+                  <td style="text-align: right;"*ngIf="item.TotalNTF!=null">{{item.TotalNTF}}</td>
+                  <td style="text-align: right;" *ngIf="item.TotalNTF==null"> - </td>
+                  <td>View</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <lib-ucSubsection [id]="'appPrcId'" [title]="'Application In Process'" [panel]="'appPrc'">
+          </lib-ucSubsection>
+          <div id="appPrc">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header">No</span></th>
+                  <th>
+                    <span translate class="thead-header" name='AgrmntNo'>Application No</span>
+                  </th>
+                  <th>
+                    <span style="float: left;" translate class="thead-header" name='ProdOffering'>Product
+                      Offering</span>
+                  </th>
+                  <th><span style="float: left;" translate class="thead-header" name='GoLiveDt'>Sales</span>
+                  <th>
+                    <span style="float: right;" translate class="thead-header" name='InstallmentAmt'>Total NTF</span>
+                  </th>
+                  <th>
+                    <span translate class="thead-header" name='OSAR'>Application Step</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="AppPrcs == undefined || AppPrcs?.length == 0">
+                  <td align="center" colspan="6">No data found</td>
+                </tr>
+                <tr *ngFor="let item of AppPrcs; let i = index">
+                  <td>{{i+1}}</td>
+                  <td *ngIf="item.AppNo!=null">{{item.AppNo}}</td>
+                  <td *ngIf="item.AppNo==null"> - </td>
+                  <td style="text-align: left;" *ngIf="item.ProdOfferingName!=null">{{item.ProdOfferingName}}</td>
+                  <td *ngIf="item.ProdOfferingName==null"> - </td>
+                  <td style="text-align: left;" *ngIf="item.SalesName!=null">{{item.SalesName}}</td>
+                  <td *ngIf="item.SalesName==null"> - </td>
+                  <td style="text-align: right;" *ngIf="item.TotalNTF!=null">{{item.TotalNTF}}</td>
+                  <td style="text-align: right;" *ngIf="item.TotalNTF==null"> - </td>
+                  <td *ngIf="item.AppCurrStep!=null">{{item.AppCurrStep}}</td>
+                  <td *ngIf="item.AppCurrStep==null"> - </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -14,6 +14,14 @@ import { CreditReviewCrPagingComponent } from './credit-review-cr/credit-review-
 import { CreditApprovalCrPagingComponent } from './credit-approval-cr/credit-approval-cr-paging/credit-approval-cr-paging.component';
 import { CreditApprovalCrDetailComponent } from './credit-approval-cr/credit-approval-cr-detail/credit-approval-cr-detail.component';
 import { PathConstant } from 'app/shared/constant/PathConstant';
+import { CreditReviewPagingComponent } from './credit-review/credit-review-paging/credit-review-paging.component';
+import { CreditReviewMainComponent } from './credit-review/credit-review-main/credit-review-main.component';
+import { CreditReviewCfnaPagingComponent } from './credit-review-cfna/credit-review-cfna-paging/credit-review-cfna-paging.component';
+import { CreditReviewCfnaDetailComponent } from './credit-review-cfna/credit-review-cfna-detail/credit-review-cfna-detail.component';
+import { CreditApprovalPagingComponent } from './credit-approval/credit-approval-paging/credit-approval-paging.component';
+import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
+import { CreditApprovalCfnaPagingComponent } from './credit-approval-cfna/credit-approval-cfna-paging/credit-approval-cfna-paging.component';
+import { CreditApprovalCfnaDetailComponent } from './credit-approval-cfna/credit-approval-cfna-detail/credit-approval-cfna-detail.component';
 
 
 const routes: Routes = [
@@ -110,6 +118,62 @@ const routes: Routes = [
           data: {
               title: 'Credit Approval Detail'
           }
+      },
+      {
+        path: PathConstant.CRD_REVIEW_PAGING,
+        component: CreditReviewPagingComponent,
+        data: {
+          title: 'Credit Review Paging'
+        }
+      },
+      {
+        path: PathConstant.CRD_REVIEW_MAIN,
+        component: CreditReviewMainComponent,
+        data: {
+          title: 'Credit Review Main'
+        }
+      },
+      {
+        path: PathConstant.CRD_REVIEW_CFNA_PAGING,
+        component: CreditReviewCfnaPagingComponent,
+        data: {
+          title: 'Credit Review Paging'
+        }
+      },
+      {
+        path: PathConstant.CRD_REVIEW_CFNA_MAIN,
+        component: CreditReviewCfnaDetailComponent,
+        data: {
+          title: 'Credit Review Main'
+        }
+      },
+      {
+        path: PathConstant.CRD_APPRV_PAGING,
+        component: CreditApprovalPagingComponent,
+        data: {
+          title: 'Credit Approval Paging'
+        }
+      },
+      {
+        path: PathConstant.CRD_APPRV_DETAIL,
+        component: CreditApprovalDetailComponent,
+        data: {
+          title: 'Credit Approval Detail'
+        }
+      },
+      {
+        path: PathConstant.CRD_APPRV_CFNA_PAGING,
+        component: CreditApprovalCfnaPagingComponent,
+        data: {
+          title: 'Credit Approval Paging'
+        }
+      },
+      {
+        path: PathConstant.CRD_APPRV_CFNA_DETAIL,
+        component: CreditApprovalCfnaDetailComponent,
+        data: {
+          title: 'Credit Approval Detail'
+        }
       }
     ]
   }
