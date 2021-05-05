@@ -8,6 +8,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AttrContent } from 'app/shared/model/CustCompletion/AttrContent.Model';
 import { RefAttr } from 'app/shared/model/CustCompletion/RefAttr.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { ReqRefAttrByAttrGroupObj } from 'app/shared/model/Request/RefAttr/ReqRefAttrByAttrGroupObj.model';
 import { ResGetAppCustAttrContentObj, ResGetListAppCustAttrContentObj } from 'app/shared/model/Response/NAP/NAP 4/ResGetListAppCustAttrContentObj.model';
 import { environment } from 'environments/environment';
 @Component({
@@ -33,9 +34,8 @@ export class AttrContentComponentComponent implements OnInit {
   AttrContent: AttrContent;
 
   async ngOnInit() {
-    var custGrp = {
-      AttrGroup: this.AttrGroup
-    };
+    let custGrp: ReqRefAttrByAttrGroupObj = new ReqRefAttrByAttrGroupObj();
+    custGrp.AttrGroup = this.AttrGroup;
     await this.httpClient.post(URLConstant.GetListAppCustAttrContentByAppCustIdAndAttrGroup, { AppCustId: this.AppCustId, AttrGroup: this.AttrGroup }).toPromise().then(
       (response : ResGetListAppCustAttrContentObj) => {
         this.ListAttrContent = response.ResponseAppCustAttrContentObjs;
