@@ -63,7 +63,7 @@
                 <div class="form-group row">
                   <label class="col-md-2" for="mainCvg" translate>Main Coverage</label>
                   <div class="col-md-4">
-                    <lib-ucdropdownlist *ngIf="isDdlinsMainCvgTypeRuleReady" [dropdownListObj]="ddlInsMainCvgTypeRuleObj" [parentForm]="InsuranceDataForm" [enjiForm]="enjiForm"
+                    <lib-ucdropdownlist *ngIf="showGenerate" [dropdownListObj]="ddlInsMainCvgTypeRuleObj" [parentForm]="InsuranceDataForm" [enjiForm]="enjiForm"
                       [identifier]="'InsMainCvgType'" [genericList]="insMainCvgTypeRuleObj" (callback)="changeMainCvgddl($event)"></lib-ucdropdownlist>
                   </div>
                 </div>
@@ -75,10 +75,17 @@
                       class="custom-control display-inline-block">
                       <div [formGroupName]="i">
                         <label [hidden]="insAddCvgTypeRuleObj[i].Value == 'Loading'">
-                          <input type="checkbox" class="checkboxLabel" formControlName="Value"> {{addDdl[i].Value}}
+                          <input type="checkbox" class="checkboxLabel" formControlName="Value" (change)="CheckIsUseTpl()"> {{addDdl[i].Value}}
                         </label>
                       </div>
                     </label>
+                  </div>
+                </div>
+                <div [hidden]="addDdl.length < 1 || isTpl == false" class="form-group row">
+                  <label class="col-md-2" translate>TPL Amount</label>
+                  <div class="col-md-4">
+                    <lib-ucdropdownlist *ngIf="showGenerate" [dropdownListObj]="ddlTplSumInsuredAmtObj" [parentForm]="InsuranceDataForm" [enjiForm]="enjiForm"
+                      [identifier]="'SumInsuredTplAmt'" [genericList]="tplAmtObjs" (callback)="SumInsuredAmtAddCvgChanged()"></lib-ucdropdownlist>
                   </div>
                 </div>
                 <div class="form-actions right">
@@ -90,6 +97,20 @@
               <div class="form-group row">
                 <label class="col-md-2" for="paidBy" translate>Total Premi</label>
                 <label class="col-md-4" for="paidBy" translate>{{InsuranceDataForm.controls.TotalInsInscoAmt.value  | number:'.2':'en-US'}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" for="insDiscAmt" translate>Insurance Discount</label>
+                <div class="col-md-4">
+                  <input type="" currencyMask id="insDiscAmt" class="form-control" formControlName="InsDiscAmt"
+                    [options]="{ allowNegative: false, nullable: false }"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsDiscAmt.invalid }">
+                  <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsDiscAmt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-2" translate>Total Premi - Discount</label>
+                <label class="col-md-4" translate>{{InsuranceDataForm.controls.TotalInsInscoAmt.value - InsuranceDataForm.controls.InsDiscAmt.value | number:'.2':'en-US'}}</label>
               </div>
             </div>
             <div>
@@ -357,6 +378,9 @@
           <div class="form-actions right">
             <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
               <i class="ft-x"></i> Cancel
+            </button>
+            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Test()" translate>
+              <i class="ft-x"></i> Test
             </button>
             <button type="submit" class="btn btn-raised btn-primary" translate>
               <i class="far fa-check-square"></i> Save
