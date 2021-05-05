@@ -39,6 +39,7 @@ import { AppAssetAttrCustomObj } from 'app/shared/model/AppAsset/AppAssetAttrCus
 import { AppAssetAttrObj } from 'app/shared/model/AppAssetAttrObj.Model';
 import { CustomPatternObj } from 'app/shared/model/library/CustomPatternObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj } from 'app/shared/model/Request/Vendor/ReqVendorEmp.model';
 
 @Component({
   selector: 'app-asset-data-add-edit',
@@ -107,7 +108,6 @@ export class AssetDataAddEditComponent implements OnInit {
   getAppCollateralRegistByAppCollateralId: any;
   getListAppAssetSupplEmpByAppAssetId: any;
   getVendorForLookup: any;
-  getAppAssetSupplEmpByAppAssetIdAndCode: any;
   appCollateralObj: any;
   returnAppCollateralObj: any;
   appCollateralRegistObj: any;
@@ -116,9 +116,7 @@ export class AssetDataAddEditComponent implements OnInit {
   returnAppAssetSupplEmpObj: any;
   vendorObj: any;
   returnVendorObj: any;
-  appAssetSupplEmpSalesObj: any;
   salesAppAssetSupplEmpObj: any;
-  appAssetSupplEmpHeadObj: any;
   headAppAssetSupplEmpObj: any;
   appAssetSupplEmpBranchObj: any;
   branchAppAssetSupplEmpObj: any;
@@ -253,7 +251,6 @@ export class AssetDataAddEditComponent implements OnInit {
     this.getAppCollateralRegistByAppCollateralId = URLConstant.GetAppCollateralRegistrationByAppCollateralId;
     this.getListAppAssetSupplEmpByAppAssetId = URLConstant.GetListAppAssetSupplEmpByAppAssetId;
     this.getVendorForLookup = URLConstant.GetVendorForLookup;
-    this.getAppAssetSupplEmpByAppAssetIdAndCode = URLConstant.GetAppAssetSupplEmpByAppAssetIdAndCode;
     this.originalAssetAccs = new Array<AppAssetAccessoryObj>();
 
     this.route.queryParams.subscribe(params => {
@@ -348,11 +345,10 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   GetSalesList() {
-    var Obj = {
-      VendorId: this.salesObj.VendorId,
-      MrVendorEmpPositionCodes: [CommonConstant.SALES_JOB_CODE]
-    }
-    this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, Obj).subscribe(
+    let ReqGetListActiveVendorSales : ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj = new ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj;
+    ReqGetListActiveVendorSales.VendorId =this.salesObj.VendorId;
+    ReqGetListActiveVendorSales.MrVendorEmpPositionCodes = [CommonConstant.SALES_JOB_CODE];
+    this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, ReqGetListActiveVendorSales).subscribe(
       (response) => {
         this.EmpObj = response[CommonConstant.ReturnObj];
         this.listSalesObj = this.EmpObj.filter(
@@ -362,11 +358,10 @@ export class AssetDataAddEditComponent implements OnInit {
   }
 
   GetAdminHeadList() {
-    var Obj = {
-      VendorId: this.salesObj.VendorId,
-      MrVendorEmpPositionCodes: [CommonConstant.ADMIN_HEAD_JOB_CODE]
-    }
-    this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, Obj).subscribe(
+    let ReqGetListActiveVendorAdminHead : ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj = new ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj;
+    ReqGetListActiveVendorAdminHead.VendorId = this.salesObj.VendorId;
+    ReqGetListActiveVendorAdminHead.MrVendorEmpPositionCodes = [CommonConstant.ADMIN_HEAD_JOB_CODE];
+    this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, ReqGetListActiveVendorAdminHead).subscribe(
       (response) => {
         this.EmpObj = response[CommonConstant.ReturnObj];
         this.listAdminHeadObj = this.EmpObj.filter(
@@ -707,17 +702,16 @@ export class AssetDataAddEditComponent implements OnInit {
             SupplName: this.returnVendorObj.VendorName,
           });
 
-          this.appAssetSupplEmpHeadObj = new AppAssetSupplEmpObj();
-          this.appAssetSupplEmpHeadObj.AppAssetId = this.AppAssetId;
-          this.appAssetSupplEmpHeadObj.MrSupplEmpPositionCode = CommonConstant.ADMIN_HEAD_JOB_CODE;
-          this.http.post(this.getAppAssetSupplEmpByAppAssetIdAndCode, this.appAssetSupplEmpHeadObj).subscribe(
+          let getAppAssetSupplEmpByAdminHead = new GenericObj();
+          getAppAssetSupplEmpByAdminHead.Id = this.AppAssetId;
+          getAppAssetSupplEmpByAdminHead.Code = CommonConstant.ADMIN_HEAD_JOB_CODE;
+          this.http.post(URLConstant.GetAppAssetSupplEmpByAppAssetIdAndMrSupplEmpPositionCode, getAppAssetSupplEmpByAdminHead).subscribe(
             (response) => {
               this.headAppAssetSupplEmpObj = response;
-              var obj = {
-                VendorId : this.returnVendorObj.VendorId,
-                MrVendorEmpPositionCodes : [CommonConstant.ADMIN_HEAD_JOB_CODE]
-              };
-              this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, obj).subscribe(
+              let ReqGetListActiveVendor : ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj = new ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj;
+              ReqGetListActiveVendor.VendorId = this.returnVendorObj.VendorId;
+              ReqGetListActiveVendor.MrVendorEmpPositionCodes = [CommonConstant.ADMIN_HEAD_JOB_CODE];
+              this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, ReqGetListActiveVendor).subscribe(
                 (response) => {
                   this.listAdminHeadObj = response[CommonConstant.ReturnObj];
                   if (this.headAppAssetSupplEmpObj.AppAssetSupplEmpId != 0) {
@@ -734,17 +728,16 @@ export class AssetDataAddEditComponent implements OnInit {
                 });
             });
 
-          this.appAssetSupplEmpSalesObj = new AppAssetSupplEmpObj();
-          this.appAssetSupplEmpSalesObj.AppAssetId = this.AppAssetId;
-          this.appAssetSupplEmpSalesObj.MrSupplEmpPositionCode = CommonConstant.SALES_JOB_CODE;
-          this.http.post(this.getAppAssetSupplEmpByAppAssetIdAndCode, this.appAssetSupplEmpSalesObj).subscribe(
+          let getAppAssetSupplEmpBySales = new GenericObj();
+          getAppAssetSupplEmpBySales.Id = this.AppAssetId;
+          getAppAssetSupplEmpBySales.Code = CommonConstant.SALES_JOB_CODE;
+          this.http.post(URLConstant.GetAppAssetSupplEmpByAppAssetIdAndMrSupplEmpPositionCode, getAppAssetSupplEmpBySales).subscribe(
             (response) => {
               this.salesAppAssetSupplEmpObj = response;
-              var obj = {
-                VendorId: this.returnVendorObj.VendorId,
-                MrVendorEmpPositionCodes: [CommonConstant.SALES_JOB_CODE]
-              }
-              this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, obj).subscribe(
+              let ReqGetListActiveVendorSales : ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj = new ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj;
+              ReqGetListActiveVendorSales.VendorId = this.returnVendorObj.VendorId;
+              ReqGetListActiveVendorSales.MrVendorEmpPositionCodes = [CommonConstant.SALES_JOB_CODE];
+              this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, ReqGetListActiveVendorSales).subscribe(
                 (response) => {
                   this.listSalesObj = response[CommonConstant.ReturnObj];
                   var temp: any;

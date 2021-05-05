@@ -12,6 +12,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ReqGetListBankByVendorEmpNoAndCodeObj } from 'app/shared/model/Request/Vendor/ReqVendorEmp.model';
 
 @Component({
   selector: 'app-form-add-dynamic',
@@ -92,11 +93,10 @@ export class FormAddDynamicComponent implements OnInit {
           }
         });
     } else if (content == CommonConstant.ContentSupplierEmp) {
-      obj = {
-        VendorEmpNo: code,
-        VendorCode: this.FormObj.value.arr[idx].SupplCode,
-      };
-      this.http.post<VendorBankAccObj>(URLConstant.GetListBankByVendorEmpNoAndVendorCode, obj).subscribe(
+      let ReqGetListBankObj : ReqGetListBankByVendorEmpNoAndCodeObj = new ReqGetListBankByVendorEmpNoAndCodeObj();
+      ReqGetListBankObj.VendorEmpNo = code;
+      ReqGetListBankObj.VendorCode = this.FormObj.value.arr[idx].SupplCode;
+      this.http.post<VendorBankAccObj>(URLConstant.GetListBankByVendorEmpNoAndVendorCode, ReqGetListBankObj).subscribe(
         (response) => {
           var len = response[CommonConstant.ReturnObj].length;
           for (var i = 0; i < len; i++) {

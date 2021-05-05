@@ -22,6 +22,7 @@ import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
+import { ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj } from 'app/shared/model/Request/Vendor/ReqVendorEmp.model';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -1397,7 +1398,10 @@ export class AssetDataOplComponent implements OnInit {
     this.isDdlSalesPersonReady = false;
     // this.isDdlAdminHeadReady = false;
     // this.isDdlBranchManagerReady = false;
-    this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, this.vendorObj).subscribe(
+    let ReqGetListActiveVendorSales : ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj = new ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj;
+    ReqGetListActiveVendorSales.VendorId = this.vendorObj.VendorId;
+    ReqGetListActiveVendorSales.MrVendorEmpPositionCodes = this.vendorObj.MrVendorEmpPositionCodes;
+    this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, ReqGetListActiveVendorSales).subscribe(
       (response) => {
         this.SalesPersonObj = response[CommonConstant.ReturnObj];
         // this.EmpObj = response[CommonConstant.ReturnObj];

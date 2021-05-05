@@ -82,7 +82,6 @@ export class AssetLeasingAddEditComponent implements OnInit {
   getAppCollateralRegistByAppCollateralId: any;
   getListAppAssetSupplEmpByAppAssetId: any;
   getVendorForLookup: any;
-  getAppAssetSupplEmpByAppAssetIdAndCode: any;
   appCollateralObj: any;
   returnAppCollateralObj: any;
   appCollateralRegistObj: any;
@@ -172,7 +171,6 @@ export class AssetLeasingAddEditComponent implements OnInit {
     this.getAppCollateralRegistByAppCollateralId = URLConstant.GetAppCollateralRegistrationByAppCollateralId;
     this.getListAppAssetSupplEmpByAppAssetId = URLConstant.GetListAppAssetSupplEmpByAppAssetId;
     this.getVendorForLookup = URLConstant.GetVendorForLookup;
-    this.getAppAssetSupplEmpByAppAssetIdAndCode = URLConstant.GetAppAssetSupplEmpByAppAssetIdAndCode;
 
     this.route.queryParams.subscribe(params => {
       if (params["AppAssetId"] != null) {
@@ -413,10 +411,10 @@ copyToLocationAddr() {
                 SupplName: this.returnVendorObj.VendorName,
               });
 
-              this.appAssetSupplEmpBranchObj = new AppAssetSupplEmpObj();
-              this.appAssetSupplEmpBranchObj.AppAssetId = this.AppAssetId;
-              this.appAssetSupplEmpBranchObj.MrSupplEmpPositionCode = "BRANCH_MANAGER";
-              this.http.post(this.getAppAssetSupplEmpByAppAssetIdAndCode, this.appAssetSupplEmpBranchObj).subscribe(
+              let getAppAssetSupplEmpByBranchManager = new GenericObj();
+              getAppAssetSupplEmpByBranchManager.Id = this.AppAssetId;
+              getAppAssetSupplEmpByBranchManager.Code = CommonConstant.BRANCH_MANAGER_JOB_CODE;
+              this.http.post(URLConstant.GetAppAssetSupplEmpByAppAssetIdAndMrSupplEmpPositionCode, getAppAssetSupplEmpByBranchManager).subscribe(
               (response) => {
                 this.branchAppAssetSupplEmpObj = response;
 
@@ -433,10 +431,10 @@ copyToLocationAddr() {
                 });
               });
 
-              this.appAssetSupplEmpHeadObj = new AppAssetSupplEmpObj();
-              this.appAssetSupplEmpHeadObj.AppAssetId = this.AppAssetId;
-              this.appAssetSupplEmpHeadObj.MrSupplEmpPositionCode = "ADMIN_HEAD";
-              this.http.post(this.getAppAssetSupplEmpByAppAssetIdAndCode, this.appAssetSupplEmpHeadObj).subscribe(
+              let getAppAssetSupplEmpByAdminHead = new GenericObj();
+              getAppAssetSupplEmpByAdminHead.Id = this.AppAssetId;
+              getAppAssetSupplEmpByAdminHead.Code = CommonConstant.ADMIN_HEAD_JOB_CODE;
+              this.http.post(URLConstant.GetAppAssetSupplEmpByAppAssetIdAndMrSupplEmpPositionCode, getAppAssetSupplEmpByAdminHead).subscribe(
               (response) => {
                 this.headAppAssetSupplEmpObj = response;
 
@@ -453,10 +451,10 @@ copyToLocationAddr() {
                 });
               });
 
-              this.appAssetSupplEmpSalesObj = new AppAssetSupplEmpObj();
-              this.appAssetSupplEmpSalesObj.AppAssetId = this.AppAssetId;
-              this.appAssetSupplEmpSalesObj.MrSupplEmpPositionCode = "SALES_PERSON";
-              this.http.post(this.getAppAssetSupplEmpByAppAssetIdAndCode, this.appAssetSupplEmpSalesObj).subscribe(
+              let getAppAssetSupplEmpBySalesPerson = new GenericObj();
+              getAppAssetSupplEmpBySalesPerson.Id = this.AppAssetId;
+              getAppAssetSupplEmpBySalesPerson.Code = CommonConstant.SALES_JOB_CODE;
+              this.http.post(URLConstant.GetAppAssetSupplEmpByAppAssetIdAndMrSupplEmpPositionCode, getAppAssetSupplEmpBySalesPerson).subscribe(
               (response) => {
                 this.salesAppAssetSupplEmpObj = response;
 

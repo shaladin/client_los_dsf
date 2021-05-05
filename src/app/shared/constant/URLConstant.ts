@@ -72,7 +72,7 @@ export class URLConstant {
   public static CopyAppAsset = environment.losUrl + "/AppAsset/CopyAppAsset"
   // App Asset Suppl Emp
   public static GetListAppAssetSupplEmpByListAppAssetId = environment.losUrl + "/AppAssetSupplEmp/GetListAppAssetSupplEmpByListAppAssetId";
-  public static GetAppAssetSupplEmpByAppAssetIdAndCode = environment.losUrl + "/AppAssetSupplEmp/GetAppAssetSupplEmpByAppAssetIdAndCode";
+  public static GetAppAssetSupplEmpByAppAssetIdAndMrSupplEmpPositionCode = environment.losUrl + "/AppAssetSupplEmp/GetAppAssetSupplEmpByAppAssetIdAndMrSupplEmpPositionCode";
 
   // App Referantor
   public static AddAppReferantor = environment.losUrl + "/AppReferantor/AddAppReferantor";

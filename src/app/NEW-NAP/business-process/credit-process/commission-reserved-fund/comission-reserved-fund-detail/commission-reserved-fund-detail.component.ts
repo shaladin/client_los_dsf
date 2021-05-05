@@ -132,8 +132,10 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   GetAndUpdateAppStep() {
     // this.NapObj.AppId = this.ReturnHandlingHObj.AppId;
     var appObj = { Id: this.ReturnHandlingHObj.AppId };
+    console.log(appObj);
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response: AppObj) => {
+        console.log(response);
         if (response) {
           this.NapObj = response;
           if (this.NapObj.AppCurrStep != CommonConstant.AppStepComm && this.NapObj.AppCurrStep != CommonConstant.AppStepRSVFund) {
@@ -191,6 +193,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
 
   NextStep(Step) {
     this.NapObj.AppCurrStep = Step;
+    console.log(this.NapObj);
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       () => {
         this.tempTotalRsvFundAmt = this.viewIncomeInfoObj.ReservedFundAllocatedAmount;

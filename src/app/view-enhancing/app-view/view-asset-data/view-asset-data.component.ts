@@ -52,7 +52,7 @@ export class ViewAssetDataComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.appObj.Id = this.appId;
-
+    console.log(this.BizTemplateCode);
     if(this.BizTemplateCode === CommonConstant.OPL) {
       await this.GetListAllAssetData();
     }
