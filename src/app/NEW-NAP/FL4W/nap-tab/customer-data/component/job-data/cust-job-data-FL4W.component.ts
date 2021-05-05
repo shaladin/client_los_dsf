@@ -17,6 +17,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ResListKeyValueObj } from 'app/shared/model/Response/Generic/ResListKeyValueObj.model';
 
 @Component({
   selector: 'app-cust-job-data-FL4W',
@@ -46,10 +49,6 @@ export class CustJobDataFL4WComponent implements OnInit {
     IndustryTypeCode: ""
   };
 
-  custModelReqObj = {
-    MrCustTypeCode: ""
-  }
-
   jobDataAddrObj: AddrObj;
   inputFieldJobDataObj: InputFieldObj;
 
@@ -61,7 +60,7 @@ export class CustJobDataFL4WComponent implements OnInit {
   JobStatObj: any;
   CompanyScaleObj: any;
   InvestmentTypeObj: any;
-  CustModelObj: any;
+  CustModelObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   businessDt: Date = new Date();
   inputAddressObjForJobData: InputAddressObj;
 
@@ -312,9 +311,10 @@ export class CustJobDataFL4WComponent implements OnInit {
   }
 
   bindCustModelObj() {
-    this.custModelReqObj.MrCustTypeCode = CommonConstant.CustTypePersonal;
-    this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
-      (response) => {
+    var custModelReqObj = new GenericObj();
+    custModelReqObj.Code = CommonConstant.CustTypePersonal;
+    this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, custModelReqObj).toPromise().then(
+      (response : ResListKeyValueObj) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
         if (this.CustModelObj.length > 0 && this.custModelCode == undefined) {
           this.custModelCode = this.CustModelObj[0].Key;
