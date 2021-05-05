@@ -1820,7 +1820,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
     var ListMapCodes = new Array<string>();
     ListMapCodes.push(CommonConstant.OPL);
     this.ddlInsAssetCoverPeriodObj.apiUrl = URLConstant.GetListActiveRefMasterByRefMasterCodeAndMappingCodes;
-    this.ddlInsAssetCoverPeriodObj.requestObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsCoverPeriod, MappingCodes: ListMapCodes };
+    this.ddlInsAssetCoverPeriodObj.requestObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInsCoverPeriod, MappingCode: ListMapCodes };
     this.ddlInsAssetCoverPeriodObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
     this.ddlInsAssetCoverPeriodObj.isSelectOutput = true;
   }

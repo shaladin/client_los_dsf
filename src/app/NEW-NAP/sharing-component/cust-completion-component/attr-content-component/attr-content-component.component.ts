@@ -8,6 +8,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AttrContent } from 'app/shared/model/CustCompletion/AttrContent.Model';
 import { RefAttr } from 'app/shared/model/CustCompletion/RefAttr.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { ResGetAppCustAttrContentObj, ResGetListAppCustAttrContentObj } from 'app/shared/model/Response/NAP/NAP 4/ResGetListAppCustAttrContentObj.model';
 import { environment } from 'environments/environment';
 @Component({
@@ -136,7 +137,7 @@ export class AttrContentComponentComponent implements OnInit {
       }
       if (isUpdateValue == false) {
         if (refAttr.DefaultValue != null) {
-          var refMaster = {
+          let refMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
             RefMasterTypeCode: refAttr.AttrValue,
             MasterCode: refAttr.DefaultValue
           };

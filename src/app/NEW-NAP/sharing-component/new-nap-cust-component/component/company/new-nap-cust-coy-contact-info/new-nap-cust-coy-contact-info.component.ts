@@ -13,6 +13,7 @@ import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompany/
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { CookieService } from 'ngx-cookie';
 
@@ -86,7 +87,8 @@ export class NewNapCustCompanyContactInfoComponent implements OnInit {
   }
 
   async GetListActiveRefMaster(RefMasterTypeCode: string) {
-    await this.http.post<any>(URLConstant.GetRefMasterListKeyValueActiveByCode, { "RefMasterTypeCode": RefMasterTypeCode }).toPromise().then(
+    let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: RefMasterTypeCode, MappingCode: "" };
+    await this.http.post<any>(URLConstant.GetRefMasterListKeyValueActiveByCode, tempReq).toPromise().then(
       (response) => {
         this.DictRefMaster[RefMasterTypeCode] = response["ReturnObject"];
       }

@@ -107,9 +107,7 @@ eventColl(ev){
     this.gridAppCollateralObj.pagingJson = "./assets/ucgridview/gridAppCollateral.json";
     this.gridAppCollateralObj.deleteUrl = URLConstant.DeleteAppCollateral;
     
-    this.appCollateralObj = new AppCollateralObj();
-    this.appCollateralObj.AppCollateralId = "-";
-    this.http.post(URLConstant.GetListAppCollateral, this.appCollateralObj).subscribe(
+    this.http.post(URLConstant.GetListAppCollateral, {}).subscribe(
       (response) => {
           this.listAppCollateralObj = response[CommonConstant.ReturnObj];
 
