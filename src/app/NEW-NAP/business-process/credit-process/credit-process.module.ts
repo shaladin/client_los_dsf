@@ -12,8 +12,6 @@ import { PhoneVerificationPagingComponent } from "./phone-verification/phone-ver
 import { PhoneVerificationSubjectComponent } from "./phone-verification/phone-verification-subject/phone-verification-subject.component";
 import { PhoneVerificationSubjectViewComponent } from "./phone-verification/phone-verification-subject-view/phone-verification-subject-view.component";
 import { PhoneVerificationSubjectVerifComponent } from "./phone-verification/phone-verification-subject-verif/phone-verification-subject-verif.component";
-import { FormAddDynamicComponent } from "./commission-reserved-fund/component/commission/form-add-dynamic/form-add-dynamic.component";
-import { CommissionComponent } from "./commission-reserved-fund/component/commission/commission.component";
 import { CommissionReservedFundPagingComponent } from "./commission-reserved-fund/comission-reserved-fund-paging/commission-reserved-fund-paging.component";
 import { ReservedFundComponent } from "./commission-reserved-fund/component/reserved-fund/reserved-fund.component";
 import { CommissionReservedFundDetailComponent } from "./commission-reserved-fund/comission-reserved-fund-detail/commission-reserved-fund-detail.component";
@@ -96,9 +94,7 @@ export const customCurrencyMaskConfig = {
     PhoneVerificationSubjectVerifComponent,
     CommissionReservedFundPagingComponent,
     CommissionReservedFundDetailComponent,
-    CommissionComponent,
     ReservedFundComponent,
-    FormAddDynamicComponent,
     CreditInquiryComponent, 
     CommissionV2Component,
     FormCommissionGenerateComponent,

@@ -22,10 +22,8 @@ export class AssetLeasingPagingComponent implements OnInit {
   listAppAssetObj: any;
   appCollateralObj: any;
   listAppCollateralObj: any;
-  getListAppAssetData: any;
   gridAssetDataObj: any;
   gridAppCollateralObj: any;
-  getListAppCollateral: any;
   AppAssetId: number;
   AppCollateralId: number;
   AppId: number;
@@ -33,8 +31,6 @@ export class AssetLeasingPagingComponent implements OnInit {
   editColl: string;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) { 
-    this.getListAppAssetData = URLConstant.GetListAppAssetData;
-    this.getListAppCollateral = URLConstant.GetListAppCollateral;
 
     this.route.queryParams.subscribe(params => {
       if (params["IdCust"] != null) {
@@ -95,9 +91,7 @@ eventColl(ev){
     this.gridAssetDataObj = new InputGridObj();
     this.gridAssetDataObj.pagingJson = "./assets/ucgridview/gridAssetData.json";
     
-    this.appAssetObj = new AppAssetObj();
-    this.appAssetObj.AppAssetId = "-";
-    this.http.post(this.getListAppAssetData, this.appAssetObj).subscribe(
+    this.http.post(URLConstant.GetListAppAssetData, {}).subscribe(
       (response) => {
           this.listAppAssetObj = response[CommonConstant.ReturnObj];
 
@@ -115,7 +109,7 @@ eventColl(ev){
     
     this.appCollateralObj = new AppCollateralObj();
     this.appCollateralObj.AppCollateralId = "-";
-    this.http.post(this.getListAppCollateral, this.appCollateralObj).subscribe(
+    this.http.post(URLConstant.GetListAppCollateral, this.appCollateralObj).subscribe(
       (response) => {
           this.listAppCollateralObj = response[CommonConstant.ReturnObj];
 

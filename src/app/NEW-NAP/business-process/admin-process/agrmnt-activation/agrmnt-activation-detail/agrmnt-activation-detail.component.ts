@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdminProcessService } from 'app/NEW-NAP/business-process/admin-process/admin-process.service';
+import { AdminProcessService, ReqAppAssetAgreementActivationObj } from 'app/NEW-NAP/business-process/admin-process/admin-process.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
@@ -98,7 +98,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
       this.AppFees = null;
       this.AppFinData = null;
     }else{
-      let obj = {
+      let obj: ReqAppAssetAgreementActivationObj = {
         AppId: this.AppId,
         ListAppAssetId: this.listSelectedId
       };

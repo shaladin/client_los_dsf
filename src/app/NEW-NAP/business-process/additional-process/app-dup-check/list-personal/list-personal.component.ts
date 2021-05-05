@@ -24,9 +24,7 @@ export class ListPersonalComponent implements OnInit {
   WfTaskListId: number;
   FondationUrl = environment.FoundationR3Url;
   LOSUrl = environment.losUrl;
-  GetCustomerDuplicateCheckUrl = URLConstant.GetCustomerAndNegativeCustDuplicateCheck;
   GetNegativeCustomerDuplicateCheckUrl = this.FondationUrl + URLConstant.GetNegativeCustomerDuplicateCheck;
-  GetAppCustDuplicateCheckUrl = this.LOSUrl + URLConstant.GetAppCustDuplicateCheck;
   AddAppDupCheckCustUrl = this.LOSUrl + URLConstant.AddAppDupCheckCust;
   GetCustDataByAppId = URLConstant.GetCustDataByAppId;
   AppCustObj: AppCustObj;
@@ -83,7 +81,7 @@ export class ListPersonalComponent implements OnInit {
         requestDupCheck.AppId = this.AppCustObj.AppId;
 
         //List Cust Duplicate And List Negative Cust Duplicate Checking
-        this.http.post(this.GetCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetCustomerAndNegativeCustDuplicateCheck, requestDupCheck).subscribe(
           response => {
             this.ListCustomerDuplicate = response[CommonConstant.ReturnObj].CustDuplicate;
             this.ListNegativeCust = response[CommonConstant.ReturnObj].NegativeCustDuplicate;
@@ -91,7 +89,7 @@ export class ListPersonalComponent implements OnInit {
 
 
         //List App Cust Duplicate Checking
-        this.http.post(this.GetAppCustDuplicateCheckUrl, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetAppCustDuplicateCheck, requestDupCheck).subscribe(
           response => {
             this.ListAppCustDuplicate = response[CommonConstant.ReturnObj];
           });

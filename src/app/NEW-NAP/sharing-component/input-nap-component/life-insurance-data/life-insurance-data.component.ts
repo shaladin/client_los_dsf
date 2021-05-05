@@ -367,17 +367,6 @@ export class LifeInsuranceDataComponent implements OnInit {
       //   SeqNo: LifeInsD.SeqNo
       // }
       this.LifeInsObj.ListAppLifeInsD.push(LifeInsD);
-      // this.http.post(URLConstant.GetRuleRate, object).toPromise().then(
-      //   response => {
-      //     LifeInsD.BaseRate = response["BaseRate"];
-      //     LifeInsD.CustRate = response["CustRate"];
-      //     LifeInsD.InscoRate = response["InscoRate"];
-      //     LifeInsD.SumInsured = response["SumInsured"];
-      //     LifeInsD.DiscRate = response["DiscRate"];
-      //     LifeInsD.DiscRateToInsco = response["DiscRateToInsco"];
-      //     this.LifeInsObj.ListAppLifeInsD.push(LifeInsD);
-      //   }
-      // );
     } else {
       var index = this.LifeInsObj.ListAppLifeInsD.findIndex(x => x.InsuredName == this.ListObj[i].InsuredName);
       this.LifeInsObj.ListAppLifeInsD.splice(index, 1);
