@@ -78,7 +78,6 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   };
 
   ngOnInit() {
-    console.log(this.BizTemplateCode);
     this.isShow = false;
     this.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
 
@@ -134,10 +133,8 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   GetAndUpdateAppStep() {
     // this.NapObj.AppId = this.ReturnHandlingHObj.AppId;
     var appObj = { Id: this.ReturnHandlingHObj.AppId };
-    console.log(appObj);
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response: AppObj) => {
-        console.log(response);
         if (response) {
           this.NapObj = response;
           if (this.NapObj.AppCurrStep != CommonConstant.AppStepComm && this.NapObj.AppCurrStep != CommonConstant.AppStepRSVFund) {
@@ -272,7 +269,6 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   isShow: boolean = false;
   DictRemainingIncomeForm: any = {};
   GetDictRemaining(ev) {
-    console.log(ev);
     this.DictRemainingIncomeForm = ev;
     this.isShow = true;
   }
