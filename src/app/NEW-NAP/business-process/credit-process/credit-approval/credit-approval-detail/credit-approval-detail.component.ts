@@ -22,8 +22,7 @@ import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSy
 
 @Component({
   selector: 'app-credit-approval-detail',
-  templateUrl: './credit-approval-detail.component.html',
-  styleUrls: []
+  templateUrl: './credit-approval-detail.component.html'
 })
 export class CreditApprovalDetailComponent implements OnInit {
   appId: number;
@@ -208,7 +207,17 @@ export class CreditApprovalDetailComponent implements OnInit {
 
     this.InputApvObj = new UcInputApprovalObj();
     this.InputApvObj.TaskId = this.taskId;
+    this.InputApvObj.EnvUrl = environment.FoundationR3Url;
+    this.InputApvObj.PathUrlGetLevelVoting = URLConstant.GetLevelVoting;
+    this.InputApvObj.PathUrlGetPossibleResult = URLConstant.GetPossibleResult;
+    this.InputApvObj.PathUrlSubmitApproval = URLConstant.SubmitApproval;
+    this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
+    this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
+    this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
+    this.InputApvObj.PathUrlReturnToLevel = URLConstant.ReturnLevel;
+    this.InputApvObj.PathUrlContinueToLevel = URLConstant.ContinueToLevel;
     this.InputApvObj.TrxNo = this.AppObj.AppNo;
+    this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.IsReady = true;
   }

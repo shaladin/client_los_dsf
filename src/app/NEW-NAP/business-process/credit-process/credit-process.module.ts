@@ -9,22 +9,12 @@ import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { CreditProcessSharingRoutingModule } from "./credit-process-routing.module";
 import { PhoneVerificationPagingComponent } from "./phone-verification/phone-verification-paging/phone-verification-paging.component";
-import { CreditApprovalPagingComponent } from './credit-approval/credit-approval-paging/credit-approval-paging.component';
 import { PhoneVerificationSubjectComponent } from "./phone-verification/phone-verification-subject/phone-verification-subject.component";
 import { PhoneVerificationSubjectViewComponent } from "./phone-verification/phone-verification-subject-view/phone-verification-subject-view.component";
 import { PhoneVerificationSubjectVerifComponent } from "./phone-verification/phone-verification-subject-verif/phone-verification-subject-verif.component";
-import { CreditInvestigationDetailComponent } from "./credit-investigation/credit-investigation-detail/credit-investigation-detail.component";
-import { CreditInvestigationPagingComponent } from "./credit-investigation/credit-investigation-paging/credit-investigation-paging.component";
-import { TabApplicationDataComponent } from "./credit-investigation/component/tab-application-data/tab-application-data.component";
-import { CustHistoryComponent } from "./credit-investigation/component/cust-history/cust-history.component";
-import { ViewApprovalComponent } from "./credit-investigation/component/cust-history/view-approval/view-approval.component";
-import { FormAddDynamicComponent } from "./commission-reserved-fund/component/commission/form-add-dynamic/form-add-dynamic.component";
-import { CommissionComponent } from "./commission-reserved-fund/component/commission/commission.component";
 import { CommissionReservedFundPagingComponent } from "./commission-reserved-fund/comission-reserved-fund-paging/commission-reserved-fund-paging.component";
 import { ReservedFundComponent } from "./commission-reserved-fund/component/reserved-fund/reserved-fund.component";
 import { CommissionReservedFundDetailComponent } from "./commission-reserved-fund/comission-reserved-fund-detail/commission-reserved-fund-detail.component";
-import { CreditReviewMainComponent } from "./credit-review/credit-review-main/credit-review-main.component";
-import { CreditReviewPagingComponent } from "./credit-review/credit-review-paging/credit-review-paging.component";
 import { UcapprovalModule } from "@adins/ucapproval";
 import { UcapprovebyModule } from "@adins/ucapproveby";
 import { CreditInquiryComponent } from './credit-inquiry/credit-inquiry.component';
@@ -33,18 +23,10 @@ import { UcSubsectionModule } from "@adins/uc-subsection";
 import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-sharing-component.module";
 import { UcviewgenericModule } from "@adins/ucviewgeneric";
 import { NgxCurrencyModule, CurrencyMaskInputMode } from "ngx-currency";
-import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
 import { ViewAppComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-app-component.module";
-import { ViewApplicationDataMultiComponent } from "./credit-investigation/component/view-application-data-multi/view-application-data-multi.component";
 import { ViewMainInfoComponentModule } from "app/NEW-NAP/sharing-component/view-main-info-component/view-main-info-component.module";
-import { NewCreditInvestigationComponent } from './new-credit-investigation/new-credit-investigation.component';
-import { NewCreditInvestigationDetailComponent } from './new-credit-investigation/new-credit-investigation-detail/new-credit-investigation-detail.component';
 import { CommissionV2Component } from './commission-reserved-fund/component/commission-v2/commission-v2.component';
 import { FormCommissionGenerateComponent } from './commission-reserved-fund/component/commission-v2/form-commission-generate/form-commission-generate.component';
-import { CreditReviewCfnaComponent } from './credit-review-cfna/credit-review-cfna-detail/credit-review-cfna.component';
-import { CreditReviewCfnaPagingComponent } from './credit-review-cfna/credit-review-cfna-paging/credit-review-cfna-paging.component';
-import { CreditApprovalCfnaComponent } from './credit-approval-cfna/credit-approval-cfna-detail/credit-approval-cfna.component';
-import { CreditApprovalCfnaPagingComponent } from './credit-approval-cfna/credit-approval-cfna-paging/credit-approval-cfna-paging.component';
 import { CommissionCfnaComponent } from './commission-reserved-fund/component/commission-cfna/commission-cfna.component';
 import { CreditReviewComponent } from "./credit-review-prototype/credit-review-paging/credit-review-paging.component";
 import { CreditReviewDetailPersonalComponent } from "./credit-review-prototype/credit-review-detail-personal/credit-review-detail-personal.component";
@@ -58,8 +40,17 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { UcapprovalcreateModule } from "@adins/ucapprovalcreate";
 import { UcapprovalR3Module } from "@adins/ucapproval-r3";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
-import { FraudDetectionDataModule } from "./credit-review/fraud-detection-data/fraud-detection-data.module";
-
+import { CreditReviewMainComponent } from "./credit-review/credit-review-main/credit-review-main.component";
+import { CreditReviewPagingComponent } from "./credit-review/credit-review-paging/credit-review-paging.component";
+import { CreditReviewCfnaDetailComponent } from './credit-review-cfna/credit-review-cfna-detail/credit-review-cfna-detail.component';
+import { CreditReviewCfnaPagingComponent } from './credit-review-cfna/credit-review-cfna-paging/credit-review-cfna-paging.component';
+import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
+import { CreditApprovalPagingComponent } from './credit-approval/credit-approval-paging/credit-approval-paging.component';
+import { CreditApprovalCfnaPagingComponent } from './credit-approval-cfna/credit-approval-cfna-paging/credit-approval-cfna-paging.component';
+import { CreditApprovalCfnaDetailComponent } from './credit-approval-cfna/credit-approval-cfna-detail/credit-approval-cfna-detail.component';
+import { CustHistoryComponent } from './credit-investigation/component/cust-history/cust-history.component';
+import { TabApplicationDataComponent } from './credit-investigation/component/tab-application-data/tab-application-data.component';
+import { ViewApplicationDataMultiComponent } from './credit-investigation/component/view-application-data-multi/view-application-data-multi.component';
 
 
 export const customCurrencyMaskConfig = {
@@ -105,39 +96,19 @@ export const customCurrencyMaskConfig = {
     UcapprovalcreateModule,
     UcapprovalHistoryModule,
     UcapprovalR3Module,
-    UcapprovalgeneralinfoModule,
-    FraudDetectionDataModule
+    UcapprovalgeneralinfoModule
   ],
   declarations: [
-    CreditApprovalPagingComponent,
     PhoneVerificationPagingComponent,
     PhoneVerificationSubjectComponent,
     PhoneVerificationSubjectViewComponent,
     PhoneVerificationSubjectVerifComponent,
-    CreditInvestigationDetailComponent,
-    CreditInvestigationPagingComponent,
-    TabApplicationDataComponent,
-    CustHistoryComponent,
     CommissionReservedFundPagingComponent,
     CommissionReservedFundDetailComponent,
-    CommissionComponent,
     ReservedFundComponent,
-    FormAddDynamicComponent,
-    CreditReviewMainComponent,
-    CreditReviewPagingComponent,
-    ViewApprovalComponent,
-    CreditReviewMainComponent,
     CreditInquiryComponent, 
-    CreditApprovalDetailComponent,
-    ViewApplicationDataMultiComponent,
-    NewCreditInvestigationComponent,
-    NewCreditInvestigationDetailComponent,
     CommissionV2Component,
     FormCommissionGenerateComponent,
-    CreditReviewCfnaComponent,
-    CreditReviewCfnaPagingComponent,
-    CreditApprovalCfnaComponent,
-    CreditApprovalCfnaPagingComponent,
     CommissionCfnaComponent,
     CreditReviewComponent,
     CreditReviewDetailPersonalComponent,
@@ -145,6 +116,17 @@ export const customCurrencyMaskConfig = {
     CreditReviewCrPagingComponent,
     CreditApprovalCrDetailComponent,
     CreditApprovalCrPagingComponent,
+    CreditReviewPagingComponent,
+    CreditReviewMainComponent,
+    CreditReviewCfnaDetailComponent,
+    CreditReviewCfnaPagingComponent,
+    CreditApprovalDetailComponent,
+    CreditApprovalPagingComponent,
+    CreditApprovalCfnaPagingComponent,
+    CreditApprovalCfnaDetailComponent,
+    CustHistoryComponent,
+    TabApplicationDataComponent,
+    ViewApplicationDataMultiComponent
   ],
   providers: [
     NGXToastrService

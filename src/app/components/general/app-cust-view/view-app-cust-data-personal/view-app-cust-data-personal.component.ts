@@ -1,15 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
-import { AppCustAddrForViewObj } from 'app/shared/model/AppCustAddr/AppCustAddrForViewObj.Model';
-import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
-import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersonalContactPersonObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { ResAppCustAddrForViewObj, ResAppCustForViewObj, ResAppCustGrpForViewObj, ResCustDataPersonalForViewObj } from 'app/shared/model/Response/View/ResCustDataForViewObj.model';
+import { ResAppCustBankAccForViewObj } from 'app/shared/model/Response/View/ResAppCustBankAccForViewObj.model';
 
 @Component({
   selector: 'app-view-app-cust-data-personal',
@@ -31,12 +29,12 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
   isDataAlreadyLoaded: boolean = false;
 
   custModelCode: string;
-  appCustObj: AppCustObj;
-  appCustAddrForViewObjs: Array<AppCustAddrForViewObj>;
-  appCustBankAccObjs: Array<AppCustBankAccObj>;
-  appCustSocmedObjs: Array<AppCustSocmedObj>;
-  appCustGrpObjs: Array<AppCustGrpObj>;
-  appCustPersonalContactPersonObjs: Array<AppCustPersonalContactPersonObj>;
+  appCustObj: ResAppCustForViewObj = new ResAppCustForViewObj();
+  appCustAddrForViewObjs: Array<ResAppCustAddrForViewObj> = new Array<ResAppCustAddrForViewObj>();
+  appCustBankAccObjs: Array<ResAppCustBankAccForViewObj> = new Array<ResAppCustBankAccForViewObj>();
+  appCustGrpObjs: Array<ResAppCustGrpForViewObj> = new Array<ResAppCustGrpForViewObj>();
+  appCustPersonalContactPersonObjs: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();
+  appCustSocmedObjs: Array<AppCustSocmedObj> = new Array<AppCustSocmedObj>(); 
 
   constructor(private http: HttpClient) {
   }
@@ -76,14 +74,11 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
   async getCustData() {
     var reqObj = { AppId: this.appId }
     await this.http.post(URLConstant.GetCustDataPersonalForViewByAppId, reqObj).toPromise().then(
-      (response) => {
-        this.appCustObj = response["AppCustObj"];
-        this.custModelCode = response["MrCustModelCode"];
-        this.appCustAddrForViewObjs = response["AppCustAddrForViewObjs"];
-        this.appCustBankAccObjs = response["AppCustBankAccObjs"];
-        this.appCustSocmedObjs = response["AppCustSocmedObjs"];
-        this.appCustGrpObjs = response["AppCustGrpObjs"];
-        this.appCustPersonalContactPersonObjs = response["AppCustPersonalContactPersonObjs"] == null ? new Array<AppCustPersonalContactPersonObj>() : response["AppCustPersonalContactPersonObjs"];
+      (response : ResCustDataPersonalForViewObj) => {
+        this.appCustObj = response.AppCustObj;
+        this.appCustAddrForViewObjs = response.ListAppCustAddrObj;
+        this.appCustBankAccObjs = response.ListAppCustBankAccObj;
+        this.appCustGrpObjs = response.ListAppCustGrpObj;
       });
   }
 }
