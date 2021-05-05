@@ -21,11 +21,10 @@ import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
 
 @Component({
-  selector: 'app-credit-approval-cfna',
-  templateUrl: './credit-approval-cfna.component.html',
-  styleUrls: []
+  selector: 'app-credit-approval-cfna-detail',
+  templateUrl: './credit-approval-cfna-detail.component.html'
 })
-export class CreditApprovalCfnaComponent implements OnInit {
+export class CreditApprovalCfnaDetailComponent implements OnInit {
   appId: number;
   mrCustTypeCode: string;
   viewObj: string;
@@ -177,7 +176,8 @@ export class CreditApprovalCfnaComponent implements OnInit {
   }
 
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+    var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": BizTemplateCode });
   }
 
   async initInputApprovalObj() {
@@ -193,7 +193,17 @@ export class CreditApprovalCfnaComponent implements OnInit {
 
     this.InputApvObj = new UcInputApprovalObj();
     this.InputApvObj.TaskId = this.taskId;
+    this.InputApvObj.EnvUrl = environment.FoundationR3Url;
+    this.InputApvObj.PathUrlGetLevelVoting = URLConstant.GetLevelVoting;
+    this.InputApvObj.PathUrlGetPossibleResult = URLConstant.GetPossibleResult;
+    this.InputApvObj.PathUrlSubmitApproval = URLConstant.SubmitApproval;
+    this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
+    this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
+    this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
+    this.InputApvObj.PathUrlReturnToLevel = URLConstant.ReturnLevel;
+    this.InputApvObj.PathUrlContinueToLevel = URLConstant.ContinueToLevel;
     this.InputApvObj.TrxNo = this.AppObj.AppNo;
+    this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.IsReady = true;
   }

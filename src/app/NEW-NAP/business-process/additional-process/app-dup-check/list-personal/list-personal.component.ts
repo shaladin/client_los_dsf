@@ -11,6 +11,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { ReqGetAppCustDupCheckObj } from 'app/shared/model/Request/NAP/DupCheck/ReqGetCustDupCheckObj.model';
 
 @Component({
   selector: 'app-list-personal',
@@ -66,19 +67,19 @@ export class ListPersonalComponent implements OnInit {
         this.AppCustPersonalObj = response['AppCustPersonalObj'];
         this.AppCustAddrObj = response['AppCustAddrLegalObj'];
 
-        var requestDupCheck = {
-          "CustName": this.AppCustObj.CustName,
-          "MrCustTypeCode": this.AppCustObj.MrCustTypeCode,
-          "MrCustModelCode": this.AppCustObj.MrCustModelCode,
-          "MrIdTypeCode": this.AppCustObj.MrIdTypeCode,
-          "IdNo": this.AppCustObj.IdNo,
-          "TaxIdNo": this.AppCustObj.TaxIdNo,
-          "BirthDt": this.AppCustPersonalObj.BirthDt,
-          "MotherMaidenName": this.AppCustPersonalObj.MotherMaidenName,
-          "MobilePhnNo1": this.AppCustPersonalObj.MobilePhnNo1,
-          "RowVersion": this.RowVersion,
-          "AppId": this.AppId
-        }
+        let requestDupCheck = new ReqGetAppCustDupCheckObj();
+        requestDupCheck.CustName = this.AppCustObj.CustName;
+        requestDupCheck.MrCustTypeCode = this.AppCustObj.MrCustTypeCode;
+        requestDupCheck.MrCustModelCode = this.AppCustObj.MrCustModelCode;
+        requestDupCheck.MrIdTypeCode = this.AppCustObj.MrIdTypeCode;
+        requestDupCheck.IdNo = this.AppCustObj.IdNo;
+        requestDupCheck.TaxIdNo = this.AppCustObj.TaxIdNo;
+        requestDupCheck.BirthDt = this.AppCustPersonalObj.BirthDt;
+        requestDupCheck.MotherMaidenName = this.AppCustPersonalObj.MotherMaidenName;
+        requestDupCheck.MobilePhnNo1 = this.AppCustPersonalObj.MobilePhnNo1;
+        requestDupCheck.RowVersion = this.RowVersion;
+        requestDupCheck.AppId = this.AppCustObj.AppId;
+
         //List Cust Duplicate And List Negative Cust Duplicate Checking
         this.http.post(URLConstant.GetCustomerAndNegativeCustDuplicateCheck, requestDupCheck).subscribe(
           response => {

@@ -142,10 +142,6 @@ export class URLConstant {
   // App Referantor
   public static GetAppReferantorForAppsData = environment.losUrl + "/AppReferantor/GetAppReferantorForAppsData";
 
-  //CUST TYPE
-  public static GetAppByCustNoAndIsAppInitDone = environment.losUrl + "/Application/GetAppByCustNoAndIsAppInitDone";
-  public static GetAppByCustNoAndAppStat = environment.losUrl + "/Application/GetAppByCustNoAndAppStat";
-
   //Asset Accessory
   public static GetAssetAccessoryByCode = environment.FoundationR3Url + "/AssetAccessory/GetAssetAccessoryByCode";
 
@@ -901,7 +897,6 @@ export class URLConstant {
 
   //AGRMNT
   public static GetAgrmntByAgrmntId = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntId";
-  public static GetAgrmntByCustNo = environment.losUrl + "/Agrmnt/GetAgrmntByCustNo";
   public static GetAgrmntByAppId = environment.losUrl + "/Agrmnt/GetAgrmntByAppId";
   public static GetAgrmntByAgrmntNo = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntNo";
   public static GetAgrmtSummaryByAgrmntId = environment.losUrl + "/Agrmnt/GetAgrmtSummaryByAgrmntId";

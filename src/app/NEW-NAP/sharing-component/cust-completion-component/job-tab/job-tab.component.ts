@@ -12,7 +12,6 @@ import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -26,6 +25,10 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { String } from 'typescript-string-operations';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
+import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
+import { ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj } from 'app/shared/model/Request/NAP/ThirdParty/ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj.model';
+import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 
 @Component({
   selector: 'app-job-tab',
@@ -162,17 +165,17 @@ export class JobTabComponent implements OnInit {
   }
 
   async GetGeneralSetting() {
-    var generalSettingObj = new GeneralSettingObj();
+    var generalSettingObj = new GenericListByCodeObj();
+    generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
 
-    generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
-    generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
-
-    await this.http.post<GeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, generalSettingObj).toPromise().then(
+    await this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, generalSettingObj).toPromise().then(
       (response) => {
-        var returnGeneralSettingObj = response;
+        var returnGeneralSettingObj: Array<ResGeneralSettingObj> = new Array<ResGeneralSettingObj>();
+        returnGeneralSettingObj = response['ResGetListGeneralSettingObj'];
 
-        var gsNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
-        var gsUseDigitalization = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        var gsNeedCheckBySystem = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
 
         if (gsNeedCheckBySystem != undefined) {
           this.IsIntegratorCheckBySystem = gsNeedCheckBySystem.GsValue;
@@ -570,10 +573,13 @@ export class JobTabComponent implements OnInit {
         }
         this.bizTemplateCode = response["BizTemplateCode"];
         if (this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0") {
-          this.http.post(URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo, { TrxTypeCode: CommonConstant.APP_TRX_TYPE_CODE, TrxNo: response["AppNo"] }).subscribe(
-            (response) => {
-              if (response["ThirdPartyRsltHId"] != 0 && response["ThirdPartyRsltHId"] != null) {
-                this.requestedDate = response["ReqDt"];
+          let ReqGetThirdPartyResultHObj = new ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj();
+          ReqGetThirdPartyResultHObj.TrxTypeCode = CommonConstant.APP_TRX_TYPE_CODE;
+          ReqGetThirdPartyResultHObj.TrxNo = response["AppNo"];
+          this.http.post(URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo, ReqGetThirdPartyResultHObj).subscribe(
+            (response : ResThirdPartyRsltHObj) => {
+              if (response.ThirdPartyRsltHId != 0 && response.ThirdPartyRsltHId != null) {
+                this.requestedDate = response.ReqDt;
               }
             },
             (error) => {

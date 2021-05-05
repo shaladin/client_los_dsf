@@ -12,8 +12,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-view-application-data-multi',
-  templateUrl: './view-application-data-multi.component.html',
-  styleUrls: []
+  templateUrl: './view-application-data-multi.component.html'
 })
 export class ViewApplicationDataMultiComponent implements OnInit {
 
