@@ -25,6 +25,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { String } from 'typescript-string-operations';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 import { ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj } from 'app/shared/model/Request/NAP/ThirdParty/ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj.model';
@@ -137,7 +138,11 @@ export class JobTabComponent implements OnInit {
         this.IsCustomer = response.AppCustObj.IsCustomer;
       }
     );
-    this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel }).subscribe(
+    let refMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel,
+      MasterCode: this.CustModelCode
+    };
+    this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).subscribe(
       (response) => {
         this.MrCustModelDescr = response.Descr;
         this.CheckCustModel();

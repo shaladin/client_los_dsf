@@ -15,6 +15,7 @@ import { CookieService } from 'ngx-cookie';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 
 @Component({
   selector: 'app-return-handling-detail',
@@ -195,7 +196,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
     }
     if (!refMasterTypeCode) return;
 
-    var refMasterObj = { RefMasterTypeCode: refMasterTypeCode, MappingCode: this.MrCustTypeCode };
+    let refMasterObj: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: refMasterTypeCode, MappingCode: this.MrCustTypeCode };
     await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refMasterObj).toPromise().then(
       (response) => {
         this.taskObj = response[CommonConstant.ReturnObj];

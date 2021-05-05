@@ -14,6 +14,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 
 @Component({
   selector: 'app-application-data-factoring',
@@ -63,7 +65,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
   refMasterInterestType: RefMasterObj = new RefMasterObj();
-  refMasterInsScheme: RefMasterObj = new RefMasterObj();
+  refMasterInsScheme: ReqRefMasterByTypeCodeAndMappingCodeObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
   refMasterInsType: RefMasterObj = new RefMasterObj();
   refMasterRecommendation: RefMasterObj = new RefMasterObj();
   refMasterWOP: RefMasterObj = new RefMasterObj();
@@ -475,7 +477,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
       this.inputLookupEconomicSectorObj.jsonSelect = { Descr: this.resultData["MrSlikSecEcoDescr"] };
     }
     else {
-      var reqSecObj = new RefMasterObj();
+      let reqSecObj: ReqRefMasterByTypeCodeAndMasterCodeObj = new ReqRefMasterByTypeCodeAndMasterCodeObj();
       reqSecObj.MasterCode = this.defaultSlikSecEcoCode;
       reqSecObj.RefMasterTypeCode = "SLIK_SEC_ECO";
       this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(

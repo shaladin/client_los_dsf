@@ -20,6 +20,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 
 @Component({
   selector: 'app-guarantor-company',
@@ -155,14 +156,14 @@ export class GuarantorCompanyComponent implements OnInit {
     }
 
 
-    var refCompObj = {
+    var refCompObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType,
-      RowVersion: ""
-    }
-    var refJobObj = {
+      MappingCode: ""
+    };
+    var refJobObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition,
-      RowVersion: ""
-    }
+      MappingCode: ""
+    };
     var AppCust = {
       Id: this.AppId,
       RowVersion: ""
@@ -170,17 +171,15 @@ export class GuarantorCompanyComponent implements OnInit {
     this.http.post(URLConstant.GetAppCustByAppId, AppCust).subscribe(
       (response) => {
         if (response["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
-          var refCustRelObj = {
+          var refCustRelObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarPersonalRelationship,
             MappingCode: CommonConstant.CustTypeCompany,
-            RowVersion: ""
           }
         }
         else {
-          var refCustRelObj = {
+          var refCustRelObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
             MappingCode: CommonConstant.CustTypeCompany,
-            RowVersion: ""
           }
         }
 
@@ -485,10 +484,10 @@ export class GuarantorCompanyComponent implements OnInit {
   }
 
   getDocType() {
-    var legalDocObj = {
+    var legalDocObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeLegalDocType,
-      RowVersion: ""
-    }
+      MappingCode: ""
+    };
     this.http.post(URLConstant.GetListActiveRefMaster, legalDocObj).subscribe(
       (response) => {
         this.DocObjs = response[CommonConstant.ReturnObj];

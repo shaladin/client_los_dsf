@@ -12,6 +12,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 
 @Component({
@@ -34,7 +35,7 @@ export class CcAddressDetailComponent implements OnInit {
   dllCopyAddressFromObj: UcDropdownListObj = new UcDropdownListObj();
   isDllAddressTypeReady: boolean = false;
   isDllCopyAddressFromReady: boolean = false;
-  isAddrObjReady :boolean = false;
+  isAddrObjReady: boolean = false;
 
   AddressForm = this.fb.group({
     MrCustAddrTypeCode: [],
@@ -61,16 +62,17 @@ export class CcAddressDetailComponent implements OnInit {
     this.dllCopyAddressFromObj.customKey = "AppCustAddrId";
     this.dllCopyAddressFromObj.customValue = "MrCustAddrTypeDescr";
 
-    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCustAddrType, MappingCode: this.InputObj.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.CustTypePersonal : CommonConstant.CustTypeCompany }).subscribe(
+    let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCustAddrType, MappingCode: this.InputObj.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.CustTypePersonal : CommonConstant.CustTypeCompany };
+    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).subscribe(
       async (response) => {
         this.AddressTypeObj = response[CommonConstant.ReturnObj];
-        if(this.InputObj.MrCustTypeCode == CommonConstant.CustTypeCompany) {
+        if (this.InputObj.MrCustTypeCode == CommonConstant.CustTypeCompany) {
           let idxCompany = this.AddressTypeObj.findIndex(x => x.Key == CommonConstant.AddrTypeCompany);
-          if(idxCompany != -1) this.AddressTypeObj.splice(idxCompany, 1)
+          if (idxCompany != -1) this.AddressTypeObj.splice(idxCompany, 1)
         }
         else {
           let idxEmergency = this.AddressTypeObj.findIndex(x => x.Key == CommonConstant.AddrTypeEmergency);
-          if(idxEmergency != -1) this.AddressTypeObj.splice(idxEmergency, 1)
+          if (idxEmergency != -1) this.AddressTypeObj.splice(idxEmergency, 1)
         }
         this.AddressForm.patchValue({
           MrCustAddrTypeCode: this.AddressTypeObj[0].Key
@@ -174,7 +176,7 @@ export class CcAddressDetailComponent implements OnInit {
       }
     }
 
-    if(!Flag){
+    if (!Flag) {
       this.appCustAddrObj.AppCustAddrId = this.InputObj.AppCustAddrId;
       this.appCustAddrObj.MrCustAddrTypeCode = this.AddressForm.controls.MrCustAddrTypeCode.value;
       this.appCustAddrObj.AppCustId = this.InputObj.AppCustId;
@@ -198,7 +200,7 @@ export class CcAddressDetailComponent implements OnInit {
       this.appCustAddrObj.PhnExt3 = this.AddressForm.controls["Address"]["controls"].PhnExt3.value == null ? "" : this.AddressForm.controls["Address"]["controls"].PhnExt3.value;
       this.appCustAddrObj.FaxArea = this.AddressForm.controls["Address"]["controls"].FaxArea.value;
       this.appCustAddrObj.Fax = this.AddressForm.controls["Address"]["controls"].Fax.value;
-  
+
       if (this.InputObj.Mode == "Add") {
         this.http.post(URLConstant.AddAppCustAddr, this.appCustAddrObj).toPromise().then(
           (response) => {
