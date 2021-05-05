@@ -28,6 +28,8 @@ import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product
 import { ResGetVendorEmpSpvByEmpNoObj, ResGetVendorEmpByVendorIdAndEmpNoObj } from 'app/shared/model/Response/VendorEmp/ResVendorEmp.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj } from 'app/shared/model/Request/Vendor/ReqVendorEmp.model';
+import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
+import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 
 @Component({
   selector: 'app-asset-data',
