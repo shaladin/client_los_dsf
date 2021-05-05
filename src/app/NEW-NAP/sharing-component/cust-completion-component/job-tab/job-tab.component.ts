@@ -26,6 +26,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { String } from 'typescript-string-operations';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj } from 'app/shared/model/Request/NAP/ThirdParty/ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj.model';
+import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 
 @Component({
   selector: 'app-job-tab',
@@ -570,10 +572,13 @@ export class JobTabComponent implements OnInit {
         }
         this.bizTemplateCode = response["BizTemplateCode"];
         if (this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0") {
-          this.http.post(URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo, { TrxTypeCode: CommonConstant.APP_TRX_TYPE_CODE, TrxNo: response["AppNo"] }).subscribe(
-            (response) => {
-              if (response["ThirdPartyRsltHId"] != 0 && response["ThirdPartyRsltHId"] != null) {
-                this.requestedDate = response["ReqDt"];
+          let ReqGetThirdPartyResultHObj = new ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj();
+          ReqGetThirdPartyResultHObj.TrxTypeCode = CommonConstant.APP_TRX_TYPE_CODE;
+          ReqGetThirdPartyResultHObj.TrxNo = response["AppNo"];
+          this.http.post(URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo, ReqGetThirdPartyResultHObj).subscribe(
+            (response : ResThirdPartyRsltHObj) => {
+              if (response.ThirdPartyRsltHId != 0 && response.ThirdPartyRsltHId != null) {
+                this.requestedDate = response.ReqDt;
               }
             },
             (error) => {

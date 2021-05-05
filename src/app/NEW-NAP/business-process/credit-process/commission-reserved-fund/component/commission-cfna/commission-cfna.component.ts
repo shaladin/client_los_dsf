@@ -16,6 +16,8 @@ import { ResponseTaxObj } from 'app/shared/model/Tax/ResponseTax.Model';
 import { TaxTrxDObj } from 'app/shared/model/Tax/TaxTrxD.Model';
 import { AppCommissionDObj } from 'app/shared/model/AppCommissionDObj.Model';
 import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
+import { ReqGetAppCommissionRuleObj } from 'app/shared/model/AppCommissionRsvFund/ReqGetAppCommissionRuleObj.Model';
+import { ReqTaxObj } from 'app/shared/model/AppCommissionRsvFund/ReqTaxObj.Model';
 
 @Component({
   selector: 'app-commission-cfna',
@@ -241,7 +243,7 @@ export class CommissionCfnaComponent implements OnInit {
   RuleSupplierEmpData: any = {};
   RuleReferantorData: any = {};
   async GetRuleDataForForm() {
-    var obj = { AppId: this.AppId, BizTemplateCode: this.BizTemplateCode };
+    let obj: ReqGetAppCommissionRuleObj = { AppId: this.AppId, BizTemplateCode: this.BizTemplateCode };
     await this.http.post(URLConstant.GetAppCommissionRule, obj).toPromise().then(
       (response) => {
         console.log("Cek Rule");
@@ -415,7 +417,7 @@ export class CommissionCfnaComponent implements OnInit {
     // console.log(listTrxAmt);
 
     if (listVendorCode.length > 0) {
-      var obj = {
+      let obj: ReqTaxObj = {
         AppId: this.AppId,
         VendorCode: listVendorCode,
         VendorEmpNo: listVendorEmpNo,

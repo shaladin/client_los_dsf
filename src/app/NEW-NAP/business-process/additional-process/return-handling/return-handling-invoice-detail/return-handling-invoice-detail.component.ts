@@ -11,12 +11,13 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppInvoiceFctrObj } from 'app/shared/model/AppInvoiceFctrObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
-import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 
@@ -27,7 +28,7 @@ import { CookieService } from 'ngx-cookie';
 export class ReturnHandlingInvoiceDetailComponent implements OnInit {
 
   ReturnHandlingHId: number;
-  ReturnHandlingDObj: any;
+  ReturnHandlingDObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   AppId: number;
   IsReturnHandling: boolean;
   IsDetail: boolean = false;
@@ -120,12 +121,11 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
 
   MakeViewReturnInfoObj() {
     if (this.ReturnHandlingHId > 0) {
-      var obj = {
-        ReturnHandlingHId: this.ReturnHandlingHId,
-        MrReturnTaskCode: CommonConstant.ReturnHandlingInvoice
-      }
-      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
-        (response) => {
+      let ReqByIdAndCodeObj = new GenericObj();
+      ReqByIdAndCodeObj.Id = this.ReturnHandlingHId;
+      ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingInvoice;
+      this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
+        (response : ResReturnHandlingDObj) => {
           this.ReturnHandlingDObj = response;
         });
     }

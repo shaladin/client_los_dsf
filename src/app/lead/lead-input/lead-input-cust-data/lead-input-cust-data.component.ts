@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter, ViewContaine
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators, NgForm } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
@@ -32,6 +32,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { String } from 'typescript-string-operations';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ReqInputLeadCustPersonalObj } from 'app/shared/model/Request/LEAD/ReqAddEditInputLeadCustPersonalObj.model';
+import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 import { GenericByIdAndCodeObj } from 'app/shared/model/Generic/GenericByIdAndCodeObj.model';
 
 @Component({
@@ -128,7 +129,7 @@ export class LeadInputCustDataComponent implements OnInit {
   returnLeadObj: Object;
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
   leadNo: any;
-  latestReqDtCheckIntegrator: string;
+  latestReqDtCheckIntegrator: Date;
   thirdPartyRsltHId: any;
   getThirdPartyResultHForFraudChecking: string;
   reqLatestJson: any;
@@ -265,10 +266,10 @@ export class LeadInputCustDataComponent implements OnInit {
             this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
             if(this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0"){
               this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-                (response) => {
-                  this.latestReqDtCheckIntegrator = response['ReqDt'];
-                  this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-                  this.reqLatestJson = JSON.parse(response['ReqJson']);
+                (response : ResThirdPartyRsltHObj) => {
+                  this.latestReqDtCheckIntegrator = response.ReqDt;
+                  this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
+                  this.reqLatestJson = JSON.parse(response.ReqJson);
                   if (this.reqLatestJson != null && this.reqLatestJson != "") {
                     //   this.latestCheckChassisNo = this.reqLatestJson['AppAssetObj'][0]['SerialNo1'];
                     this.latestCustDataObj = new LeadCustCompareObj();
@@ -1051,10 +1052,10 @@ export class LeadInputCustDataComponent implements OnInit {
       this.http.post(URLConstant.CheckIntegrator, this.leadInputObj).subscribe(
         () => {
           this.http.post(this.getThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-            (response) => {
-              this.latestReqDtCheckIntegrator = response['ReqDt'];
-              this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-              this.reqLatestJson = JSON.parse(response['ReqJson']);
+            (response : ResThirdPartyRsltHObj) => {
+              this.latestReqDtCheckIntegrator = response.ReqDt;
+              this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
+              this.reqLatestJson = JSON.parse(response.ReqJson);
               if (this.reqLatestJson != null && this.reqLatestJson != "") {
                 this.latestCustDataObj = new LeadCustCompareObj();
                 this.latestCustDataObj.CustName = this.reqLatestJson['CustName'];

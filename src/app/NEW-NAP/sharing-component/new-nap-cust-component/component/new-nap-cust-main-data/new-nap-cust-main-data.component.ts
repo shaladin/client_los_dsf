@@ -15,10 +15,12 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { CustMainDataCompanyObj } from 'app/shared/model/CustMainDataCompanyObj.Model';
 import { CustMainDataPersonalObj } from 'app/shared/model/CustMainDataPersonalObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ResGetAppCustAddrByAppIdAndAddrTypeCodeObj } from 'app/shared/model/Response/NAP/CustMainData/ResGetAppCustAddrByAppIdAndAddrTypeCodeObj.model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { ResponseCustCompanyForCopyObj } from 'app/shared/model/ResponseCustCompanyForCopyObj.Model';
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
@@ -465,17 +467,20 @@ export class NewNapCustMainDataComponent implements OnInit {
   }
 
   CopyAddress() {
-    this.http.post(URLConstant.GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode, { AppId: this.appId, MrCustAddrTypeCode: CommonConstant.AddrTypeLegal }).subscribe(
-      (response) => {
-        this.legalAddrObj.Addr = response["Addr"];
-        this.legalAddrObj.AreaCode1 = response["AreaCode1"];
-        this.legalAddrObj.AreaCode2 = response["AreaCode2"];
-        this.legalAddrObj.AreaCode3 = response["AreaCode3"];
-        this.legalAddrObj.AreaCode4 = response["AreaCode4"];
-        this.legalAddrObj.City = response["City"];
+    let ReqByIdAndCodeObj = new GenericObj();
+    ReqByIdAndCodeObj.Id = this.appId;
+    ReqByIdAndCodeObj.Code = CommonConstant.AddrTypeLegal;
+    this.http.post(URLConstant.GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode, ReqByIdAndCodeObj).subscribe(
+      (response : ResGetAppCustAddrByAppIdAndAddrTypeCodeObj) => {
+        this.legalAddrObj.Addr = response.Addr;
+        this.legalAddrObj.AreaCode1 = response.AreaCode1;
+        this.legalAddrObj.AreaCode2 = response.AreaCode2;
+        this.legalAddrObj.AreaCode3 = response.AreaCode3;
+        this.legalAddrObj.AreaCode4 = response.AreaCode4;
+        this.legalAddrObj.City = response.City;
 
-        this.inputAddressObj.inputField.inputLookupObj.nameSelect = response["Zipcode"];
-        this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["Zipcode"] };
+        this.inputAddressObj.inputField.inputLookupObj.nameSelect = response.Zipcode;
+        this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
         this.inputAddressObj.default = this.legalAddrObj;
       });
   }
