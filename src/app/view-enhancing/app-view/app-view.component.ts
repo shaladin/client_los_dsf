@@ -46,6 +46,7 @@ export class AppViewComponent implements OnInit {
   IsDeviation: boolean = true;
   IsAssetExpense: boolean = true;
   IsPefindoResult: boolean = true;
+  IsSurveyResult: boolean = true;
   bizTemplateCode: string = "";
   isDmsReady: boolean;
   dmsObj: DMSObj;
@@ -153,6 +154,7 @@ export class AppViewComponent implements OnInit {
           this.IsDeviation = false;
           this.IsAssetExpense = false;
           this.IsPefindoResult = false;
+          this.IsSurveyResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
           this.IsAsset = false;
@@ -163,6 +165,7 @@ export class AppViewComponent implements OnInit {
           this.IsDeviation = false;
           this.IsAssetExpense = false;
           this.IsPefindoResult = false;
+          this.IsSurveyResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.CF4W) {
           this.IsCollateral = false;
@@ -173,6 +176,7 @@ export class AppViewComponent implements OnInit {
           this.IsDeviation = false;
           this.IsAssetExpense = false;
           this.IsPefindoResult = false;
+          this.IsSurveyResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.FL4W) {
           this.IsAsset = false;
@@ -183,6 +187,7 @@ export class AppViewComponent implements OnInit {
           this.IsDeviation = false;
           this.IsAssetExpense = false;
           this.IsPefindoResult = false;
+          this.IsSurveyResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.CFNA) {
           this.IsAsset = false;
@@ -193,6 +198,7 @@ export class AppViewComponent implements OnInit {
           this.IsDeviation = false;
           this.IsAssetExpense = false;
           this.IsPefindoResult = false;
+          this.IsSurveyResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.OPL) {
           this.IsCollateral = false;
