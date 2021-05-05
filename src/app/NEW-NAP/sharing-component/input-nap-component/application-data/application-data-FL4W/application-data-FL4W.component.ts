@@ -21,7 +21,7 @@ import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { ReqListMouCustLglReviewObj } from 'app/shared/model/Request/MOU/ReqListMouCustLglReviewObj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 
 
 @Component({
@@ -162,11 +162,11 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   getDDLFromProdOffering(refProdCompntCode: string) {
-    var obj = {
-      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-      RefProdCompntCode: refProdCompntCode,
-      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
-    };
+    var obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
+    obj.RefProdCompntCode = refProdCompntCode;
+    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
+
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
 
@@ -182,11 +182,10 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   getInterestTypeCode() {
-    let obj = {
-      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestTypeGeneral,
-      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
-    };
+    let obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
+    obj.RefProdCompntCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
+    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
 
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {

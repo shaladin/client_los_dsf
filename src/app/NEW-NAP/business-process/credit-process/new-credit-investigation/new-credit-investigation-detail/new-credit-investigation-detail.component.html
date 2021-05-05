@@ -18,16 +18,6 @@
           <app-new-application-data [AppId]="appId"></app-new-application-data>
         </ng-template>
       </mat-tab>
-      <mat-tab label="Fraud Detection Result">
-        <ng-template matTabContent>
-          <app-fraud-detection-result [appId]="appId" [mrCustTypeCode]="mrCustTypeCode"></app-fraud-detection-result>
-        </ng-template>
-      </mat-tab>
-      <!-- <mat-tab label="Fraud Detection Result">
-        <ng-template matTabContent>
-          <app-view-app-fraud-verification [AppId]="appId" [mrCustTypeCode]="mrCustTypeCode"></app-view-app-fraud-verification>
-        </ng-template>
-      </mat-tab> -->
       <mat-tab label="Customer History">
         <ng-template matTabContent>
           <app-cust-history [AppId]="appId"></app-cust-history>

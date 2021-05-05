@@ -39,12 +39,10 @@ export class AppViewComponent implements OnInit {
   IsCommission: boolean = true;
   IsReservedFund: boolean = true;
   IsPhoneVerification: boolean = true;
-  IsFraudDetectionResult: boolean = true;
   IsAnalysisResult: boolean = true;
   IsCollateral: boolean = true;
   IsMultiCollateral: boolean = true;
   IsApprovalHist: boolean = true;
-  IsFraudDetectionMulti: boolean = true;
   IsDeviation: boolean = true;
   IsAssetExpense: boolean = true;
   IsPefindoResult: boolean = true;
@@ -151,7 +149,6 @@ export class AppViewComponent implements OnInit {
           this.IsPhoneVerification = false;
           this.IsAsset = false;
           this.IsMultiAsset = false;
-          this.IsFraudDetectionMulti = false;
           this.IsInsurance = false;
           this.IsDeviation = false;
           this.IsAssetExpense = false;
@@ -163,7 +160,6 @@ export class AppViewComponent implements OnInit {
           this.IsInvoice = false;
           this.IsMultiAsset = false;
           this.IsMultiInsurance = false;
-          this.IsFraudDetectionMulti = false;
           this.IsDeviation = false;
           this.IsAssetExpense = false;
           this.IsPefindoResult = false;
@@ -174,7 +170,6 @@ export class AppViewComponent implements OnInit {
           this.IsInvoice = false;
           this.IsMultiAsset = false;
           this.IsMultiInsurance = false;
-          this.IsFraudDetectionMulti = false;
           this.IsDeviation = false;
           this.IsAssetExpense = false;
           this.IsPefindoResult = false;
@@ -194,7 +189,6 @@ export class AppViewComponent implements OnInit {
           this.IsInvoice = false;
           this.IsMultiAsset = false;
           this.IsMultiInsurance = false;
-          this.IsFraudDetectionMulti = false;
           this.IsCollateral = false;
           this.IsDeviation = false;
           this.IsAssetExpense = false;
@@ -210,10 +204,8 @@ export class AppViewComponent implements OnInit {
           this.IsReservedFund = false;
           this.IsPhoneVerification = false;
           this.IsMultiAsset = false;
-          this.IsFraudDetectionMulti = false;
           this.IsInsurance = false;
           this.IsLifeInsurance = false;
-          this.IsFraudDetectionResult = false;
           this.IsMultiCollateral = false;
         }
       }

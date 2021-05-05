@@ -32,12 +32,10 @@ export class ApplicationViewComponent implements OnInit {
   IsCommission : boolean = true;
   IsReservedFund : boolean = true;
   IsPhoneVerification : boolean = true;
-  IsFraudDetectionResult : boolean = true;
   IsAnalysisResult : boolean = true;
   IsCollateral : boolean = true;
   IsMultiCollateral : boolean = true;
   IsApprovalHist: boolean = true;
-  IsFraudDetectionMulti: boolean = true;
   bizTemplateCode : string = "";
   appNo: string;
   constructor(private route: ActivatedRoute, private http: HttpClient) { 
@@ -72,7 +70,6 @@ export class ApplicationViewComponent implements OnInit {
           this.IsPhoneVerification = false;
           this.IsAsset = false;
           this.IsMultiAsset = false;
-          this.IsFraudDetectionMulti = false;
           this.IsInsurance = false;
         }
         else if(this.bizTemplateCode == CommonConstant.CFRFN4W){
@@ -81,7 +78,6 @@ export class ApplicationViewComponent implements OnInit {
           this.IsInvoice = false;
           this.IsMultiAsset = false;
           this.IsMultiInsurance = false;
-          this.IsFraudDetectionMulti = false;
         }
         else if(this.bizTemplateCode == CommonConstant.CF4W){
           this.IsCollateral = false;
@@ -89,7 +85,6 @@ export class ApplicationViewComponent implements OnInit {
           this.IsInvoice = false;
           this.IsMultiAsset = false;
           this.IsMultiInsurance = false;
-          this.IsFraudDetectionMulti = false;
         }
         else if(this.bizTemplateCode == CommonConstant.FL4W)
         {
@@ -104,7 +99,6 @@ export class ApplicationViewComponent implements OnInit {
           this.IsInvoice = false;
           this.IsMultiAsset = false;
           this.IsMultiInsurance = false;
-          this.IsFraudDetectionMulti = false;
           this.IsCollateral = false;
         }
       }

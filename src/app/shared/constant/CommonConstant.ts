@@ -706,4 +706,7 @@ export class CommonConstant {
 
   //PROD OFFERING
   public static PROD_OFF_STAT_ACT = "ACT";
+
+  // GENERAL SETTING CODE
+  public static GS_CODE_SALES_OFFICER_CODE = "SALES_OFFICER_CODE";
 }
