@@ -71,13 +71,15 @@ export class AppViewComponent implements OnInit {
   }
 
   async ngOnInit() : Promise<void> {
-    await this.http.post(URLConstant.GetAppByAppNo, {TrxNo: this.AppNo}).toPromise().then(
-      (response) => {
-        this.AppId = response['AppId'];
-      }
-    )
+    if(this.AppId == 0){
+      await this.http.post(URLConstant.GetAppByAppNo, {TrxNo: this.AppNo}).toPromise().then(
+        (response) => {
+          this.AppId = response['AppId'];
+        }
+      )
+    }
     this.arrValue.push(this.AppId);
-    this.GetApp();
+    await this.GetApp();
     this.GetIsUseDigitalization();
     // this.viewAppMainInfo.ReloadUcViewGeneric();
     await this.InitDms();
@@ -131,12 +133,12 @@ export class AppViewComponent implements OnInit {
     }  
   }
 
-  GetApp() {
+  async GetApp() {
     var appObj = {
       Id: this.AppId,
     };
 
-    this.http.post(URLConstant.GetAppById, appObj).subscribe(
+    await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
       (response) => {
         this.bizTemplateCode = response["BizTemplateCode"];
         this.CustType = response["MrCustTypeCode"];
@@ -235,7 +237,6 @@ export class AppViewComponent implements OnInit {
     this.http.post(URLConstant.GetGeneralSettingByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).subscribe(
       (response) => {
         this.IsUseDigitalization = response["GsValue"];
-        console.log(this.IsUseDigitalization); 
       }
     )
   }
