@@ -92,7 +92,7 @@ export class PreGoLiveComponent implements OnInit {
   async ngOnInit(): Promise<void>{
     let reqGetRfaLogByTrxNoAndApvCategoryObj = new ReqGetRfaLogByTrxNoAndApvCategoryObj();
     reqGetRfaLogByTrxNoAndApvCategoryObj.TrxNo = this.AgrmntNo;
-    reqGetRfaLogByTrxNoAndApvCategoryObj.ApvCategory = CommonConstant.ApvCategoryPreGoLive
+    reqGetRfaLogByTrxNoAndApvCategoryObj.ApvCategory = CommonConstant.ApvCategoryPreGoLive;
     this.http.post(URLConstant.GetRfaLogByTrxNoAndApvCategory, reqGetRfaLogByTrxNoAndApvCategoryObj).subscribe(
       (response) => {
         this.ListRfaLogObj = response["ListRfaLogObj"];

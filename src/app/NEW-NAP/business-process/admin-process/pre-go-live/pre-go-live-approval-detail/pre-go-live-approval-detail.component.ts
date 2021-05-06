@@ -92,7 +92,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     this.arrValue.push(this.AgrmntId);
     let reqGetRfaLogByTrxNoAndApvCategoryObj = new ReqGetRfaLogByTrxNoAndApvCategoryObj();
     reqGetRfaLogByTrxNoAndApvCategoryObj.TrxNo = this.TrxNo;
-    reqGetRfaLogByTrxNoAndApvCategoryObj.ApvCategory = CommonConstant.ApvCategoryPreGoLive
+    reqGetRfaLogByTrxNoAndApvCategoryObj.ApvCategory = CommonConstant.ApvCategoryPreGoLive;
     this.http.post(URLConstant.GetRfaLogByTrxNoAndApvCategory, reqGetRfaLogByTrxNoAndApvCategoryObj).subscribe(
       (response) => {
         this.result = response;
