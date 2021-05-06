@@ -1,9 +1,11 @@
-export class GenericObj{
+export class GenericObj {
     Id: number;
     Code: string;
+    Codes: string[];
     TrxNo: string;
     EmpNo: string;
     RowVersion: string;
-    constructor(){        
+    constructor() {
+        this.Codes = new Array();
     }
 }

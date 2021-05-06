@@ -341,13 +341,19 @@ export class FormCommissionGenerateComponent implements OnInit {
   SetDefaultDDLBankAcc(idxForm: number, idxDefault: number) {
     var ddlObj = this.parentForm.controls[this.identifier]["controls"][idxForm].controls.DropDownList.value[idxDefault];
 
-    this.parentForm.controls[this.identifier]["controls"][idxForm].patchValue({
-      BankAccountNo: ddlObj.Key,
-      BankAccountName: ddlObj.Value,
-      BankBranch: ddlObj.BankBranch,
-      BankCode: ddlObj.BankCode,
-      BankName: ddlObj.BankName
-    });
+    if (ddlObj != undefined || ddlObj != null) {
+      console.log(this.parentForm.controls[this.identifier]["controls"][idxForm]);
+      this.parentForm.controls[this.identifier]["controls"][idxForm].patchValue({
+        BankAccountNo: ddlObj.Key,
+        BankAccountName: ddlObj.Value,
+        BankBranch: ddlObj.BankBranch,
+        BankCode: ddlObj.BankCode,
+        BankName: ddlObj.BankName
+      });
+      return;
+    }
+    this.toastr.warningMessage("This " + this.FormInputObj['labelName'] + ": " + this.parentForm.controls[this.identifier]["controls"][idxForm].value.ContentNameValue + " has no bank account");
+    return;
   }
 
   DeleteDataForm(idx) {

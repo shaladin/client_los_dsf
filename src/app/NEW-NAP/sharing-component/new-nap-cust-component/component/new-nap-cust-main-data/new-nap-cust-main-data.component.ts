@@ -20,6 +20,7 @@ import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { ResGetAppCustAddrByAppIdAndAddrTypeCodeObj } from 'app/shared/model/Response/NAP/CustMainData/ResGetAppCustAddrByAppIdAndAddrTypeCodeObj.model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { ResponseCustCompanyForCopyObj } from 'app/shared/model/ResponseCustCompanyForCopyObj.Model';
@@ -264,7 +265,8 @@ export class NewNapCustMainDataComponent implements OnInit {
   }
 
   async GetListActiveRefMaster(RefMasterTypeCode: string) {
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: RefMasterTypeCode }).toPromise().then(
+    let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: RefMasterTypeCode, MappingCode: "" };
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, tempReq).toPromise().then(
       (response) => {
         this.DictRefMaster[RefMasterTypeCode] = response[CommonConstant.ReturnObj];
       });
@@ -277,7 +279,8 @@ export class NewNapCustMainDataComponent implements OnInit {
     await this.GetListActiveRefMaster(this.MasterCompanyType);
     await this.GetListActiveRefMaster(this.MasterJobPosition);
 
-    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel, MappingCode: this.MrCustTypeCode }).toPromise().then(
+    let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel, MappingCode: this.MrCustTypeCode };
+    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).toPromise().then(
       (response) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
       }
@@ -301,16 +304,14 @@ export class NewNapCustMainDataComponent implements OnInit {
   getCustRelationship() {
     if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
       if (this.ParentForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal) {
-        var refCustRelObj = {
+        var refCustRelObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
           RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
           MappingCode: CommonConstant.CustTypePersonal,
-          RowVersion: ""
         }
       } else {
-        var refCustRelObj = {
+        var refCustRelObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
           RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
           MappingCode: CommonConstant.CustTypeCompany,
-          RowVersion: ""
         }
       }
       this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refCustRelObj).subscribe(
@@ -319,7 +320,9 @@ export class NewNapCustMainDataComponent implements OnInit {
         }
       );
     } else {
-      this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship }).subscribe(
+      let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
+      tempReq.RefMasterTypeCode = this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
+      this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).subscribe(
         async (response) => {
           this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
           if (this.ParentForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMainCustMarried) await this.removeSpouse();
