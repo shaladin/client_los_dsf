@@ -12,6 +12,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
 import { AppCommissionDObj } from 'app/shared/model/AppCommissionDObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ReqGetListBankByVendorEmpNoAndCodeObj } from 'app/shared/model/Request/Vendor/ReqVendorEmp.model';
 
 @Component({
   selector: 'app-form-commission-generate',
@@ -296,11 +297,10 @@ export class FormCommissionGenerateComponent implements OnInit {
           this.SetDefaultDDLBankAcc(idx, idxDefault);
         });
     } else if (content == CommonConstant.ContentSupplierEmp) {
-      obj = {
-        VendorEmpNo: code,
-        VendorCode: this.parentForm.value[this.identifier][idx].SupplCode,
-      };
-      this.http.post<VendorBankAccObj>(URLConstant.GetListBankByVendorEmpNoAndVendorCode, obj).subscribe(
+      let ReqGetListBankObj : ReqGetListBankByVendorEmpNoAndCodeObj = new ReqGetListBankByVendorEmpNoAndCodeObj();
+      ReqGetListBankObj.VendorEmpNo = code;
+      ReqGetListBankObj.VendorCode = this.parentForm.value[this.identifier][idx].SupplCode;
+      this.http.post<VendorBankAccObj>(URLConstant.GetListBankByVendorEmpNoAndVendorCode, ReqGetListBankObj).subscribe(
         (response) => {
           var len = response["ReturnObject"].length;
           for (var i = 0; i < len; i++) {
