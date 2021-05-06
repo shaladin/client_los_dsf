@@ -20,7 +20,7 @@ import { CookieService } from 'ngx-cookie';
 })
 export class LeadMonitoringReviewDetailComponent implements OnInit {
 
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   UploadMonitoringHId: number;
   UploadNo: string;

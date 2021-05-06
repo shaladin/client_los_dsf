@@ -35,6 +35,6 @@ export class DashBoardComponent implements OnInit {
     this.url = environment.DashboardURL;
     this.officeCode = context[CommonConstant.OFFICE_CODE];
     this.roleCode = context[CommonConstant.ROLE_CODE];
-    this.Item = { Url: environment.FoundationR3Url + "/ThingsToDo/GetThingsToDoByRole", Module: CommonConstant.LOAN_ORIGINATION };
+    this.Item = { Url: environment.FoundationR3Url + "/ThingsToDo/GetThingsToDoByRole", ModuleCode: CommonConstant.LOAN_ORIGINATION };
   }
 }

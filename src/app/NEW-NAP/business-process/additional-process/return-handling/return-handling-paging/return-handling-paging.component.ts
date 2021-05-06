@@ -11,7 +11,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
   templateUrl: './return-handling-paging.component.html'
 })
 export class ReturnHandlingPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
 
   constructor(

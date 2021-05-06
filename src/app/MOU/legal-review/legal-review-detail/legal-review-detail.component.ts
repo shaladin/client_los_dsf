@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MouCustLglReviewObj } from 'app/shared/model/MouCustLglReviewObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustTcComponent } from 'app/MOU/mou-customer-request/mou-cust-tc/mou-cust-tc.component';
 import { environment } from 'environments/environment';
@@ -16,6 +15,8 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
 import { promise } from 'selenium-webdriver';
+import { ReqListMouCustLglReviewObj } from 'app/shared/model/Request/MOU/ReqListMouCustLglReviewObj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 
 @Component({
   selector: 'app-legal-review-detail',
@@ -26,13 +27,8 @@ export class LegalReviewDetailComponent implements OnInit {
 
   MouCustId: number;
   WfTaskListId: any;
-  GetListActiveRefMasterUrl: string = URLConstant.GetListActiveRefMaster;
-  AddEditRangeMouCustLglReview: string = URLConstant.AddEditRangeMouCustLglReview;
   responseObj: any;
   responseRefMasterObj: any;
-  GetMouCustTcForMouLglByCustMouIdUrl: string = URLConstant.GetMouCustTcForMouLglByCustMouId;
-  GetMouCustLglReviewByMouCustIdUrl: string = URLConstant.GetMouCustLglReviewByMouCustId;
-  EditRangeMouCustLglReviewUrl: string = URLConstant.EditRangeMouCustLglReview;
   responseMouTcObj: any;
   items: FormArray;
   termConditions: FormArray;
@@ -46,8 +42,6 @@ export class LegalReviewDetailComponent implements OnInit {
       termConditions: this.fb.array([])
     }
   );
-  GetRefMasterByRefMasterTypeCodeUrl: string = URLConstant.GetRefMasterByRefMasterTypeCode;
-  EditListMouCustTc: string = URLConstant.EditListMouCustTc;
   @ViewChild("MouTc") public mouTc: MouCustTcComponent;
   responseMouObj: Array<any> = new Array<any>();
   UploadViewlink: string;
@@ -98,12 +92,12 @@ export class LegalReviewDetailComponent implements OnInit {
       }
     );
     var mouObj = { "Id": this.MouCustId };
-    this.http.post(this.GetMouCustLglReviewByMouCustIdUrl, mouObj).subscribe(
+    this.http.post(URLConstant.GetMouCustLglReviewByMouCustId, mouObj).subscribe(
       response => {
         this.responseMouObj = response['ReturnObject'];
 
-        var refLglReviewObj = { "RefMasterTypeCode": CommonConstant.RefMasterTypeLegalReview };
-        this.http.post(this.GetListActiveRefMasterUrl, refLglReviewObj).subscribe(
+        var refLglReviewObj: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeLegalReview, MappingCode: "" };
+        this.http.post(URLConstant.GetListActiveRefMaster, refLglReviewObj).subscribe(
           (response) => {
             var lengthDataReturnObj = response[CommonConstant.ReturnObj].length;
             this.responseRefMasterObj = response[CommonConstant.ReturnObj];
@@ -148,7 +142,7 @@ export class LegalReviewDetailComponent implements OnInit {
 
   SaveData(formObj: any, isSubmit: boolean) {
     if (this.LegalForm.valid) {
-      var mouObj = new MouCustLglReviewObj();
+      var mouObj = new ReqListMouCustLglReviewObj();
       for (let index = 0; index < this.responseRefMasterObj.length; index++) {
         var tempMouObj = {
           MouCustId: this.MouCustId,
@@ -160,7 +154,7 @@ export class LegalReviewDetailComponent implements OnInit {
       }
       mouObj.WfTaskListId = this.WfTaskListId;
       mouObj.IsSubmit = isSubmit;
-      this.http.post(this.AddEditRangeMouCustLglReview, mouObj).subscribe(
+      this.http.post(URLConstant.AddRangeMouCustLglReview, mouObj).subscribe(
         response => {
           this.toastr.successMessage(response['message']);
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{});

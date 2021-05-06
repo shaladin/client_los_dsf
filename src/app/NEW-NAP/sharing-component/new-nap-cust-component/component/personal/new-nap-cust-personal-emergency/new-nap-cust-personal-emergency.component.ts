@@ -15,6 +15,7 @@ import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
@@ -108,7 +109,9 @@ export class NewNapCustPersonalEmergencyComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship }).subscribe(
+    let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
+    tempReq.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
+    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).subscribe(
       async (response) => {
         this.MrCustRelationshipObj = response[CommonConstant.ReturnObj];
         this.MrCustRelationshipSpouseObj = this.MrCustRelationshipObj.find(x => x.Key == CommonConstant.MasteCodeRelationshipSpouse);

@@ -39,15 +39,14 @@ import { ViewPhoneVerifComponent } from "./view-phone-verif/view-phone-verif.com
 import { ViewReservedFundComponent } from "./view-reserved-fund/view-reserved-fund.component";
 import { TabAnalysisResultComponent } from "./tab-analysis-result/tab-analysis-result.component";
 import { ApprovalHistComponent } from "./approval-hist/approval-hist.component";
-import { ViewFraudDetectionResultComponent } from "./view-fraud-detection-result/view-fraud-detection-result.component";
 import { ViewSurveyTaskListComponent } from "./view-survey-task-list/view-survey-task-list.component";
 import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.component";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 import { SharedModule } from "app/shared/shared.module";
 import { TabDeviationComponent } from './tab-deviation/tab-deviation.component';
-import { FraudDetectionDataModule } from "app/NEW-NAP/business-process/credit-process/credit-review/fraud-detection-data/fraud-detection-data.module";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { ViewAssetExpenseComponent } from './view-asset-expense/view-asset-expense.component';
+import { ViewSurveyComponent } from './view-survey/view-survey.component';
 
 @NgModule({
     imports: [
@@ -71,8 +70,7 @@ import { ViewAssetExpenseComponent } from './view-asset-expense/view-asset-expen
         UcapprovalHistoryModule,
         UcShowErrorsModule,
         AppCustViewComponentsModule,
-        SharedModule,
-        FraudDetectionDataModule
+        SharedModule
     ],
     declarations: [
         AppMainInfoComponent,
@@ -97,11 +95,11 @@ import { ViewAssetExpenseComponent } from './view-asset-expense/view-asset-expen
         ViewReservedFundComponent,
         TabAnalysisResultComponent,
         ApprovalHistComponent,
-        ViewFraudDetectionResultComponent,
         ViewSurveyTaskListComponent,
         ViewAssetDataComponent,
         TabDeviationComponent,
         ViewAssetExpenseComponent,
+        ViewSurveyComponent,
     ],
     entryComponents: [
         UclookupgenericComponent,

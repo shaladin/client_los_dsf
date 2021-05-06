@@ -5,6 +5,7 @@ import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tab-application',
@@ -13,15 +14,32 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 export class TabApplicationComponent implements OnInit {
   @Input() appId;
   @Input() BizTemplateCode: string = "";
+  AppNo: string;
   viewProdMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   inputGridObj: InputGridObj;
   IsGridLoanReady: boolean = false;
   isReady: boolean = false;
   isLoanObjectNeeded: boolean = false;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => {      
+      if(params["AppId"] == "undefined"){
+        this.AppNo = params["AppNo"];
+        
+      }else{
+        this.appId = params["AppId"];
+      }
+    })
+   }
 
   async ngOnInit() {
+
+    await this.http.post(URLConstant.GetAppByAppNo, {TrxNo: this.AppNo}).toPromise().then(
+      (response) => {
+        this.appId = response["AppId"];        
+      }
+    )
+
     if(this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W || this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.OPL) {
       this.isLoanObjectNeeded = false;
     }
@@ -41,7 +59,12 @@ export class TabApplicationComponent implements OnInit {
       });
     }
     else if (this.BizTemplateCode == CommonConstant.OPL) {
-      this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationOPLInfo.json";
+      if(this.AppNo != "undefined"){
+        this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationOPLInfoByAppNo.json";
+      }else{
+        this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationOPLInfo.json";
+      }
+      
     }
     else {
       this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationInfo.json";

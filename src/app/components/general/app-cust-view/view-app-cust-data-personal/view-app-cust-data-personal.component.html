@@ -73,13 +73,13 @@
                             <th class="text-right"><span class="thead-header" name='balanceAmt' translate>Balance Amount</span></th>
                         </tr>
                         </thead>
-                        <tbody *ngIf = "appCustBankAccObjs[i].AppCustBankStmntObjs?.length == 0">
+                        <tbody *ngIf = "appCustBankAccObjs[i].ListAppCustBankAccStmntObj?.length == 0">
                             <tr>
                                 <td colspan="100%">No Data Available</td>
                             </tr>
                         </tbody>
                         <tbody>
-                        <ng-container *ngFor="let item of appCustBankAccObjs[i].AppCustBankStmntObjs">
+                        <ng-container *ngFor="let item of appCustBankAccObjs[i].ListAppCustBankAccStmntObj">
                             <tr>
                                 <td class="text-center">{{item.MonthName}}</td>
                                 <td class="text-center">{{item.Year}}</td>
@@ -92,37 +92,6 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="px-3">
-        <lib-ucSubsection [id]="'SocialMediaId'" [title]="'Social Media'" [panel]="'SocialMedia'">
-        </lib-ucSubsection>
-        <div id="SocialMedia">
-            <table class="table table-responsive-md text-center table-hover">
-                <thead>
-                <tr class="table-header">
-                    <th class="text-center"><span class="thead-header" name='no' translate>No</span> </th>
-                    <th class="text-center"><span class="thead-header" name='socmed' translate>Social Media</span></th>
-                    <th class="text-center"><span class="thead-header" name='socmedId' translate>Social Media ID</span></th>
-                </tr>
-                </thead>
-                <tbody *ngIf = "appCustSocmedObjs?.length == 0">
-                <ng-container>                
-                    <tr>
-                        <td colspan="100%">No Data Available</td>
-                    </tr>
-                </ng-container>                
-                </tbody>
-                <tbody *ngIf = "appCustSocmedObjs?.length > 0">
-                <ng-container *ngFor="let item of appCustSocmedObjs; let i=index">
-                    <tr>
-                        <td class="text-center">{{i + 1}}</td>
-                        <td class="text-center">{{item.MrSocmedName}}</td>
-                        <td class="text-center">{{item.SocmedId}}</td>
-                    </tr>
-                </ng-container>
-                </tbody>
-            </table>
         </div>
     </div>
     <div class="px-3">

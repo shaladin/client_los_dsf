@@ -7,7 +7,7 @@ import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
-import { LeadForRejectObj } from 'app/shared/model/LeadForRejectObj.model';
+import { LeadForRejectObj } from 'app/shared/model/Request/LEAD/LeadForRejectObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';

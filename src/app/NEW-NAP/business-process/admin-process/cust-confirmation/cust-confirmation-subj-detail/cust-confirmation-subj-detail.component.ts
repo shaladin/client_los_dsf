@@ -16,6 +16,9 @@ import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
+import { ReqVerfQuestionAnswerObj } from 'app/shared/model/Request/Verification/ReqVerfQuestionAnswerObj.model';
 
 @Component({
   selector: 'app-cust-confirmation-subj-detail',
@@ -81,7 +84,11 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
 
     await this.GetData();
 
-    await this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.Subject, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeVerfSubjRelation }).toPromise().then(
+    let refMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeVerfSubjRelation,
+      MasterCode: this.Subject
+    };
+    await this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
       (response) => {
         this.SubjectResponse = response;
       });
@@ -102,7 +109,10 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         })
       });
 
-    await this.http.post(URLConstant.GetVerfQuestionAnswerListByAppIdAndSubject, { AppId: this.AppId, Subject: this.Subject }).toPromise().then(
+    let GetVerfQuestionAnswerObj = new ReqVerfQuestionAnswerObj();
+    GetVerfQuestionAnswerObj.AppId = this.AppId;
+    GetVerfQuestionAnswerObj.Subject = this.Subject;
+    await this.http.post(URLConstant.GetVerfQuestionAnswerListByAppIdAndSubject, GetVerfQuestionAnswerObj).toPromise().then(
       (response) => {
         this.verfQuestionAnswerObj = response[CommonConstant.ReturnObj];
         if (this.verfQuestionAnswerObj != null && this.verfQuestionAnswerObj.VerfQuestionAnswerListObj.length != 0) {
@@ -147,10 +157,10 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   AppCustId: number = 0;
   async GetListCustData() {
     await this.http.post(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.AppId }).toPromise().then(
-      (response) => {
-        if (response["ListAppCustObj"].length > 0) {
-          for (let index = 0; index < response["ListAppCustObj"].length; index++) {
-            const element = response["ListAppCustObj"][index];
+      (response : ResListCustMainDataObj) => {
+        if (response.ListAppCustObj.length > 0) {
+          for (let index = 0; index < response.ListAppCustObj.length; index++) {
+            const element = response.ListAppCustObj[index];
             if (this.Subject == CommonConstant.RoleCustData) {
               if (element.IsCustomer) {
                 this.AppCustId = element.AppCustId;

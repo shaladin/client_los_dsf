@@ -45,12 +45,6 @@ export class NapCustMainDataComponent implements OnInit {
     "GUAR": 4,
   };
 
-  ResponseReturnInfoObj;
-  FormReturnObj = this.fb.group({
-    ReturnExecNotes: ['']
-  });
-  OnFormReturnInfo = false;
-
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -110,7 +104,6 @@ export class NapCustMainDataComponent implements OnInit {
       linear: false,
       animation: true
     })
-    this.MakeViewReturnInfoObj();
   }
 
   async GetCustMainData() {
@@ -131,22 +124,6 @@ export class NapCustMainDataComponent implements OnInit {
     AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP1/Paging"], { "BizTemplateCode": this.bizTemplateCode });
   }
 
-  MakeViewReturnInfoObj() {
-    if (this.mode == CommonConstant.ModeResultHandling) {
-      var obj = {
-        AppId: this.appId,
-        MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
-      }
-      this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
-        (response) => {
-          this.ResponseReturnInfoObj = response;
-          this.FormReturnObj.patchValue({
-            ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
-          });
-          this.OnFormReturnInfo = true;
-        });
-    }
-  }
 
   ChangeTab(AppStep) {
     switch (AppStep) {

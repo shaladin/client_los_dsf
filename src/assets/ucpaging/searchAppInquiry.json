@@ -126,6 +126,23 @@
       "itemsUrl": [],
       "criteriaPropName": "Code",
       "criteriaPropValue": "APP_STAT"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "A.CUST_CHECKING_STEP",
+      "id": "CustCheckingStepId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "label": "Customer Checking Step",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "Code",
+      "criteriaPropValue": "CUST_CHECKING_STEP"
     }
   ],
   "querystring": {
@@ -191,6 +208,12 @@
       "position": "left",
       "label": "Application Status",
       "name": "A.APP_STAT"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Checking Step",
+      "name": "A.CUST_CHECKING_STEP"
     }
   ],
   "bodyList": [
@@ -247,6 +270,11 @@
       "type": "text",
       "position": "left",
       "property": "appStat"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustCheckingStep"
     }
   ]
 }

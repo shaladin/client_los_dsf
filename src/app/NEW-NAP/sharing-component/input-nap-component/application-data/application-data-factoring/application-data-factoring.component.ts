@@ -13,6 +13,9 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 
 @Component({
   selector: 'app-application-data-factoring',
@@ -62,7 +65,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
   refMasterInterestType: RefMasterObj = new RefMasterObj();
-  refMasterInsScheme: RefMasterObj = new RefMasterObj();
+  refMasterInsScheme: ReqRefMasterByTypeCodeAndMappingCodeObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
   refMasterInsType: RefMasterObj = new RefMasterObj();
   refMasterRecommendation: RefMasterObj = new RefMasterObj();
   refMasterWOP: RefMasterObj = new RefMasterObj();
@@ -474,7 +477,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
       this.inputLookupEconomicSectorObj.jsonSelect = { Descr: this.resultData["MrSlikSecEcoDescr"] };
     }
     else {
-      var reqSecObj = new RefMasterObj();
+      let reqSecObj: ReqRefMasterByTypeCodeAndMasterCodeObj = new ReqRefMasterByTypeCodeAndMasterCodeObj();
       reqSecObj.MasterCode = this.defaultSlikSecEcoCode;
       reqSecObj.RefMasterTypeCode = "SLIK_SEC_ECO";
       this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(
@@ -537,12 +540,12 @@ export class ApplicationDataFactoringComponent implements OnInit {
     await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
       (response) => {
         this.responseApp = response
-      });
-    var prodObj = {
-      ProdOfferingCode: this.responseApp.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestTypeGeneral,
-      ProdOfferingVersion: this.responseApp.ProdOfferingVersion
-    }
+      }); 
+    var prodObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    prodObj.ProdOfferingCode = this.responseApp.ProdOfferingCode;
+    prodObj.RefProdCompntCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
+    prodObj.ProdOfferingVersion = this.responseApp.ProdOfferingVersion;
+
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, prodObj).toPromise().then(
       (response) => {
         this.responseProd = response;

@@ -12,6 +12,7 @@ import { DatePipe, formatDate } from '@angular/common';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-po-entry',
@@ -61,7 +62,10 @@ export class PoEntryComponent implements OnInit {
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = new Date(context["BusinessDt"]);
     if (!this.PurchaseOrderHId || this.PurchaseOrderHId == 0) {
-      let getAppLoanPurpose = this.httpClient.post(URLConstant.GetAppLoanPurposeByAppIdSupplCode, { AppId: this.AppId, SupplCode: this.SupplCode }).toPromise();
+      let reqAppLoanPurposeObj : GenericObj = new GenericObj();
+      reqAppLoanPurposeObj.Id = this.AppId;
+      reqAppLoanPurposeObj.Code = this.SupplCode;
+      let getAppLoanPurpose = this.httpClient.post(URLConstant.GetAppLoanPurposeByAppIdSupplCode, reqAppLoanPurposeObj).toPromise();
       let getListBankAcc = this.httpClient.post(URLConstant.GetListVendorBankAccByVendorCode, { Code: this.SupplCode }).toPromise();
       forkJoin([getAppLoanPurpose, getListBankAcc]).toPromise().then(
         (response) => {
@@ -128,10 +132,11 @@ export class PoEntryComponent implements OnInit {
     this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.AppData = response;
-        this.httpClient.post(URLConstant.GetProdOfferingHByCode, { ProdOfferingCode: this.AppData["ProdOfferingCode"] }).toPromise().then(
+        let GetProduct = new GenericObj();
+        GetProduct.Code = this.AppData["ProdOfferingCode"]
+        this.httpClient.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
           (response2) => {
-            var productOfferinH = response2;
-            this.httpClient.post(URLConstant.GetProdOfferingDByProdOfferingHIdAndCompCode, { ProdOfferingHId: productOfferinH["ProdOfferingHId"], RefProdCompntCode: CommonConstant.RefProdCompntCodeCrApvResExpDays }).subscribe(
+            this.httpClient.post(URLConstant.GetProdOfferingDByProdOfferingHIdAndCompCode, { ProdOfferingHId: response2.Id, RefProdCompntCode: CommonConstant.RefProdCompntCodeCrApvResExpDays }).subscribe(
               (response) => {
                 var a = formatDate(this.AppData["ApvDt"], 'yyyy-MM-dd', 'en-US');
                 this.Date = new Date(a);
@@ -167,11 +172,12 @@ export class PoEntryComponent implements OnInit {
     this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.AppData = response;
-        this.httpClient.post(URLConstant.GetProdOfferingHByCode, { ProdOfferingCode: this.AppData["ProdOfferingCode"] }).toPromise().then(
+        let GetProduct = new GenericObj();
+        GetProduct.Code  = this.AppData["ProdOfferingCode"]
+        this.httpClient.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
           (response2) => {
-            var productOfferinH = response2;
             var datePipe = new DatePipe("locale");
-            this.httpClient.post(URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode, { ProdOfferingHId: productOfferinH["ProdOfferingHId"], RefProdCompntGrpCode: ["OTHR"] }).subscribe(
+            this.httpClient.post(URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode, { ProdOfferingHId: response2.Id, RefProdCompntGrpCode: ["OTHR"] }).subscribe(
               (response) => {
                 var a = formatDate(this.AppData["ApvDt"], 'yyyy-MM-dd', 'en-US');
                 this.Date = new Date(a);

@@ -6,7 +6,7 @@
                 <label class="col-md-2 no-padding" translate>{{lang}}</label>
                 <label class="col-md-2 no-padding" translate>{{tanggal}}</label>
                 <label class="col-md-2 no-padding" translate>{{tanggal | date: 'dd-MMM-yyyy'}}</label>
-                <label class="col-md-2 no-padding" translate>{{tanggal | date: (ml != undefined || ml != '') ? ml : 'dd-MMM-yyyy'}}</label>
+                <label class="col-md-2 no-padding" translate>{{tanggal | date: (ml != undefined && ml != '') ? ml : 'dd-MMM-yyyy'}}</label>
                 <!-- 
                 <form class="form form-horizontal" [formGroup]="JobDataForm" (ngSubmit)="JobDataForm.valid"
                     #enjiForm="ngForm">
@@ -50,6 +50,10 @@
                 <button (click)="clickMe()" translate>Click Me</button>
                 <button (click)="disableMe()">Disable Me</button>
                 <button (click)="enableMe()">Enable Me</button>
+                <select (change)="ChangeLanguage($event.target.value)">
+                    <option value="en">English</option>
+                    <option value="id">Indonesia</option>
+                </select>
             </div>
         </div>
     </div>

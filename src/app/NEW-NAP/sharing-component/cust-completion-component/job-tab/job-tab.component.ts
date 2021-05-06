@@ -12,7 +12,6 @@ import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -27,6 +26,11 @@ import { CookieService } from 'ngx-cookie';
 import { String } from 'typescript-string-operations';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
+import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
+import { ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj } from 'app/shared/model/Request/NAP/ThirdParty/ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj.model';
+import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 
 @Component({
   selector: 'app-job-tab',
@@ -106,6 +110,7 @@ export class JobTabComponent implements OnInit {
     OthBizNotes: [''],
   })
   IsNeedIntegrator: boolean = false;
+  IsWellKnownBeforeChanged: boolean = true;
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -169,17 +174,17 @@ export class JobTabComponent implements OnInit {
   }
 
   async GetGeneralSetting() {
-    var generalSettingObj = new GeneralSettingObj();
+    var generalSettingObj = new GenericListByCodeObj();
+    generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
 
-    generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
-    generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
-
-    await this.http.post<GeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, generalSettingObj).toPromise().then(
+    await this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, generalSettingObj).toPromise().then(
       (response) => {
-        var returnGeneralSettingObj = response;
+        var returnGeneralSettingObj: Array<ResGeneralSettingObj> = new Array<ResGeneralSettingObj>();
+        returnGeneralSettingObj = response['ResGetListGeneralSettingObj'];
 
-        var gsNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
-        var gsUseDigitalization = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        var gsNeedCheckBySystem = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
 
         if (gsNeedCheckBySystem != undefined) {
           this.IsIntegratorCheckBySystem = gsNeedCheckBySystem.GsValue;
@@ -208,7 +213,6 @@ export class JobTabComponent implements OnInit {
     var datePipe = new DatePipe("en-US");
     this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustId }).subscribe(
       (response) => {
-        console.log(response);
         if (response.AppCustPersonalJobDataObj != null) {
           this.isDataEdit = true;
           this.JobDataForm.patchValue({
@@ -240,8 +244,10 @@ export class JobTabComponent implements OnInit {
           this.InputLookupProfessionObj.jsonSelect = { ProfessionName: response.AppCustPersonalJobDataObj.MrProfessionName };
           this.InputLookupIndustryTypeObj.nameSelect = response.AppCustPersonalJobDataObj.IndustryTypeName;
           this.InputLookupIndustryTypeObj.jsonSelect = { IndustryTypeName: response.AppCustPersonalJobDataObj.IndustryTypeName };
-          this.InputLookupCompanyObj.nameSelect = response.AppCustPersonalJobDataObj.CoyName;
-          this.InputLookupCompanyObj.jsonSelect = { Descr: response.AppCustPersonalJobDataObj.CoyName };
+          if(this.IsWellknownCoy){
+            this.InputLookupCompanyObj.nameSelect = response.AppCustPersonalJobDataObj.CoyName;
+            this.InputLookupCompanyObj.jsonSelect = { Descr: response.AppCustPersonalJobDataObj.CoyName };
+          }
         }
 
         if (response.JobAddr.AppCustAddrId != 0) {
@@ -428,7 +434,6 @@ export class JobTabComponent implements OnInit {
       OthBizAddrObj: this.OthBizDataAddrObj
     }
 
-    console.log(requestObj);
     if (!this.isDataEdit) {
       this.http.post(URLConstant.AddAppCustPersonalJobData, requestObj).subscribe(
         (response) => {
@@ -577,10 +582,13 @@ export class JobTabComponent implements OnInit {
         }
         this.bizTemplateCode = response["BizTemplateCode"];
         if (this.IsUseDigitalization == "1" && this.IsIntegratorCheckBySystem == "0") {
-          this.http.post(URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo, { TrxTypeCode: CommonConstant.APP_TRX_TYPE_CODE, TrxNo: response["AppNo"] }).subscribe(
-            (response) => {
-              if (response["ThirdPartyRsltHId"] != 0 && response["ThirdPartyRsltHId"] != null) {
-                this.requestedDate = response["ReqDt"];
+          let ReqGetThirdPartyResultHObj = new ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj();
+          ReqGetThirdPartyResultHObj.TrxTypeCode = CommonConstant.APP_TRX_TYPE_CODE;
+          ReqGetThirdPartyResultHObj.TrxNo = response["AppNo"];
+          this.http.post(URLConstant.GetThirdPartyResultHByTrxTypeCodeAndTrxNo, ReqGetThirdPartyResultHObj).subscribe(
+            (response : ResThirdPartyRsltHObj) => {
+              if (response.ThirdPartyRsltHId != 0 && response.ThirdPartyRsltHId != null) {
+                this.requestedDate = response.ReqDt;
               }
             },
             (error) => {
@@ -712,6 +720,14 @@ export class JobTabComponent implements OnInit {
 
   isWellknownCoyChecked(event: any) {
     this.IsWellknownCoy = event.target.checked;
+    if(event.target.checked == false){
+      this.JobDataForm.controls.lookupCompanyData.disable();
+    }
+    else if(this.IsWellKnownBeforeChanged != true){
+      this.JobDataForm.controls.lookupCompanyData.enable();
+    }
+    this.IsWellKnownBeforeChanged = event.target.checked;
+    this.InputLookupCompanyObj.isRequired = event.target.checked;
   }
 
   getCoy(event: any) {

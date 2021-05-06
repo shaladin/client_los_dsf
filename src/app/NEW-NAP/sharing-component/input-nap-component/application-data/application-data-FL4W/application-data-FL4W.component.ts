@@ -9,7 +9,6 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
 import { ActivatedRoute } from '@angular/router';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
@@ -22,6 +21,8 @@ import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 
 
 @Component({
@@ -118,7 +119,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
   salesRecommendationItems = [];
   isInputLookupObj;
   inputLookupEconomicSectorObj;
-  mouCustObj;
   resMouCustObj;
   CustNo: string;
   ngOnInit() {
@@ -150,12 +150,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       (response) => {
         this.CustNo = response["CustNo"];
 
-        this.mouCustObj = new MouCustObj();
-        this.mouCustObj.CustNo = this.CustNo;
-        this.mouCustObj.StartDt = user.BusinessDt;
-        this.mouCustObj.MrMouTypeCode = CommonConstant.GENERAL;
-
-        this.http.post(URLConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
+        this.http.post(URLConstant.GetListMouCustByCustNo, {CustNo: this.CustNo, StartDt: user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL}).subscribe(
           (response) => {
             this.resMouCustObj = response[CommonConstant.ReturnObj];
           }
@@ -168,11 +163,11 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   getDDLFromProdOffering(refProdCompntCode: string) {
-    var obj = {
-      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-      RefProdCompntCode: refProdCompntCode,
-      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
-    };
+    var obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
+    obj.RefProdCompntCode = refProdCompntCode;
+    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
+
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
 
@@ -188,11 +183,10 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   getInterestTypeCode() {
-    let obj = {
-      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestTypeGeneral,
-      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
-    };
+    let obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
+    obj.RefProdCompntCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
+    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
 
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {
@@ -318,11 +312,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   getAppSrcData() {
-    var obj = {
-      RowVersion: ""
-    };
-
-    this.http.post(URLConstant.GetListKvpActiveRefAppSrc, obj).subscribe(
+    this.http.post(URLConstant.GetListKvpActiveRefAppSrc, null).subscribe(
       (response) => {
         this.applicationDDLitems["APP_SOURCE"] = response[CommonConstant.ReturnObj];
       });
@@ -396,7 +386,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       this.inputLookupEconomicSectorObj.jsonSelect = { Descr: this.resultResponse["MrSlikSecEcoDescr"] };
     }
     else {
-      var reqSecObj = new RefMasterObj();
+      let reqSecObj: ReqRefMasterByTypeCodeAndMasterCodeObj = new ReqRefMasterByTypeCodeAndMasterCodeObj();
       reqSecObj.MasterCode = this.defaultSlikSecEcoCode;
       reqSecObj.RefMasterTypeCode = "SLIK_SEC_ECO";
       this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(

@@ -12,7 +12,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
@@ -24,6 +23,8 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 
 @Component({
   selector: 'app-application-data',
@@ -48,7 +49,6 @@ export class ApplicationDataComponent implements OnInit {
   PayFreqTimeOfYear: number;
   FirstInstType: string;
   resMouCustObj;
-  mouCustObj;
   CustNo: string;
   isProdOfrUpToDate: boolean = true;
   missingProdOfrComp: string = "";
@@ -127,8 +127,17 @@ export class ApplicationDataComponent implements OnInit {
   slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
 
-  constructor(private fb: FormBuilder, private http: HttpClient,
-    private toastr: NGXToastrService, private modalService: NgbModal, private route: ActivatedRoute, private cookieService: CookieService) {
+  generalSettingObj: any;
+  salesOfficerCode : Array<string> = new Array();
+  isSalesOfficerCode: boolean = false;
+  refEmpSpvObj: any;
+
+  constructor(private fb: FormBuilder,
+    private http: HttpClient,
+    private toastr: NGXToastrService,
+    private modalService: NgbModal,
+    private route: ActivatedRoute,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.appId = params["AppId"];
     });
@@ -171,12 +180,7 @@ export class ApplicationDataComponent implements OnInit {
       (response) => {
         this.CustNo = response["CustNo"];
 
-        this.mouCustObj = new MouCustObj();
-        this.mouCustObj.CustNo = this.CustNo;
-        this.mouCustObj.StartDt = user.BusinessDt;
-        this.mouCustObj.MrMouTypeCode = CommonConstant.GENERAL;
-
-        this.http.post(URLConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
+        this.http.post(URLConstant.GetListMouCustByCustNo, {CustNo: this.CustNo, StartDt: user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL}).subscribe(
           (response) => {
             this.resMouCustObj = response[CommonConstant.ReturnObj];
 
@@ -186,6 +190,32 @@ export class ApplicationDataComponent implements OnInit {
             // }
           }
         );
+      }
+    );
+
+    this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).subscribe(
+      (response) => {
+        this.generalSettingObj = response;
+        this.salesOfficerCode = this.generalSettingObj.GsValue.split(',');
+        if(this.salesOfficerCode.some(x => x === user.JobTitleCode)) {
+          this.isSalesOfficerCode = true;
+          this.NapAppModelForm.patchValue({
+            SalesOfficerNo: user.EmpNo,
+            SalesOfficerName: user.EmpName
+          });
+
+          this.http.post(URLConstant.GetRefEmpSpvByEmpNo, { TrxNo: user.EmpNo }).subscribe(
+            (response) => {
+              this.refEmpSpvObj = response;
+              if(this.refEmpSpvObj !== null) {
+                this.NapAppModelForm.patchValue({
+                  SalesHeadNo: this.refEmpSpvObj.EmpNo,
+                  SalesHeadName: this.refEmpSpvObj.EmpName
+                });
+              }
+            }
+          );
+        }
       }
     );
   }
@@ -216,11 +246,10 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   getDDLFromProdOffering(refProdCompntCode: string) {
-    var obj = {
-      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-      RefProdCompntCode: refProdCompntCode,
-      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
-    };
+    var obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion(); 
+    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
+    obj.RefProdCompntCode = refProdCompntCode;
+    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
         var listDDL = response["DDLRefProdComptCode"];
@@ -231,15 +260,15 @@ export class ApplicationDataComponent implements OnInit {
             MrFirstInstTypeCode: this.applicationDDLitems['FIRSTINSTTYPE'][0].Key
           });
         }
-      });
+      }
+    );
   }
 
   getInterestTypeCode() {
-    var obj = {
-      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestTypeGeneral,
-      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
-    };
+    var obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion(); 
+    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
+    obj.RefProdCompntCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
+    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
 
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {
@@ -258,7 +287,8 @@ export class ApplicationDataComponent implements OnInit {
       },
       (error) => {
         console.log(error);
-      });
+      }
+    );
   }
 
   GetCrossInfoData() {
@@ -272,7 +302,8 @@ export class ApplicationDataComponent implements OnInit {
         for (var i = 0; i < this.resultCrossApp.length; i++) {
           this.ListCrossAppObj["result"].push(this.resultCrossApp[i].CrossAgrmntNo);
         }
-      });
+      }
+    );
   }
 
   applicationDDLitems;
@@ -363,7 +394,8 @@ export class ApplicationDataComponent implements OnInit {
         this.initDdlMrFirstInstType();
         this.initDdlPayFreq();
         this.getPayFregData();
-      });
+      }
+    );
   }
 
   getAppSrcData() {
@@ -391,7 +423,8 @@ export class ApplicationDataComponent implements OnInit {
           this.PayFreqTimeOfYear = this.DictRefPayFreq[this.resultResponse.PayFreqCode].TimeOfYear;
         }
         this.ChangeNumOfInstallmentTenor();
-      });
+      }
+    );
   }
 
 
@@ -438,7 +471,8 @@ export class ApplicationDataComponent implements OnInit {
             });
           }
         }
-      });
+      }
+    );
   }
 
   getLookupEmployeeResponse(ev) {
@@ -447,9 +481,9 @@ export class ApplicationDataComponent implements OnInit {
       SalesOfficerName: ev.SalesOfficerName,
       SalesHeadNo: ev.SalesHeadNo,
       SalesHeadName: ev.SalesHeadName
-
     });
   }
+
   getLookupEconomicSector(ev) {
     this.NapAppModelForm.patchValue({
       MrSlikSecEcoCode: ev.MasterCode
@@ -478,12 +512,11 @@ export class ApplicationDataComponent implements OnInit {
       this.inputLookupEconomicSectorObj.jsonSelect = { Descr: this.resultResponse["MrSlikSecEcoDescr"] };
     }
     else {
-      var reqSecObj = new RefMasterObj();
+      let reqSecObj: ReqRefMasterByTypeCodeAndMasterCodeObj = new ReqRefMasterByTypeCodeAndMasterCodeObj();
       reqSecObj.MasterCode = this.defaultSlikSecEcoCode;
       reqSecObj.RefMasterTypeCode = "SLIK_SEC_ECO";
       this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(
         (response) => {
-          console.log(response);
           this.slikSecDescr = response['Descr'];
           this.inputLookupEconomicSectorObj.nameSelect = response['Descr'];
           this.inputLookupEconomicSectorObj.jsonSelect = { Descr: response['Descr'] };
@@ -524,14 +557,14 @@ export class ApplicationDataComponent implements OnInit {
   async GetGSValueSalesOfficer() {
     await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
       (response) => {
-        console.log(response);
         var addCrit3 = new CriteriaObj();
         addCrit3.DataType = "text";
         addCrit3.propName = "rbt.JOB_TITLE_CODE";
         addCrit3.restriction = AdInsConstant.RestrictionIn;
         addCrit3.listValue = [response.GsValue];
         this.arrAddCrit.push(addCrit3);
-      });
+      }
+    );
   }
 
   ChangeNumOfInstallmentTenor() {
@@ -562,7 +595,8 @@ export class ApplicationDataComponent implements OnInit {
   ChangeCharacteristicOfCredit() {
     if (this.NapAppModelForm.value.CharaCredit == CommonConstant.CharacteristicOfCreditTypeCredit) {
       this.NapAppModelForm.controls.WayRestructure.setValidators(Validators.required);
-    } else {
+    }
+    else {
       this.NapAppModelForm.controls.WayRestructure.clearValidators();
     }
     this.NapAppModelForm.controls.WayRestructure.updateValueAndValidity();
@@ -690,13 +724,15 @@ export class ApplicationDataComponent implements OnInit {
         AppFinData: tempAppFindDataObj,
         RowVersion: ""
       };
-      if (this.BizTemplateCode != CommonConstant.OPL)
+      if (this.BizTemplateCode != CommonConstant.OPL) {
         obj['AppCustMailingAddr'] = this.getMailingAddrForSave();
+      }
       this.http.post(URLConstant.EditAppAddAppCross, obj).subscribe(
         (response) => {
           this.toastr.successMessage('Save Application Data Success!');
           this.outputTab.emit();
-        });
+        }
+      );
     }
   }
 
@@ -719,9 +755,11 @@ export class ApplicationDataComponent implements OnInit {
   private getDismissReason(reason): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+    }
+    else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
       return 'by clicking on a backdrop';
-    } else {
+    }
+    else {
       return `with: ${reason}`;
     }
   }

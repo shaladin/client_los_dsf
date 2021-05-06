@@ -424,33 +424,15 @@
             <table class="table table-responsive-md text-center table-hover">
               <thead>
                 <tr class="table-header">
-                  <th>
-                    <span class="thead-header" translate>Asset Seq No</span>
-                  </th>
-                  <th>
-                    <span class="thead-header" translate>App Asset No</span>
-                  </th>
-                  <th class="text-left">
-                    <span class="thead-header" translate>Asset Name</span>
-                  </th>
-                  <th class="text-right">
-                    <span class="thead-header" translate>Asset Value</span>
-                  </th>
-                  <th class="text-right">
-                    <span class="thead-header" translate>Residual Value (% / Amt)</span>
-                  </th>
-                  <th class="text-right">
-                    <span class="thead-header" translate>Asset Expense</span>
-                  </th>
-                  <th class="text-right">
-                    <span class="thead-header" translate>Margin (% / Amt)</span>
-                  </th>
-                  <th class="text-right">
-                    <span class="thead-header" translate>Rental Amount</span>
-                  </th>
-                  <th class="text-right">
-                    <span class="thead-header" translate>Gross Yield (%)</span>
-                  </th>
+                  <th><span class="thead-header" translate>Asset Seq No</span></th>
+                  <th><span class="thead-header" translate>App Asset No</span></th>
+                  <th><span class="thead-header" translate>Asset Name</span></th>
+                  <th><span class="thead-header" translate>Security Deposit</span></th>
+                  <th><span class="thead-header" translate>Total Cost</span></th>
+                  <th><span class="thead-header" translate>Margin</span></th>
+                  <th><span class="thead-header" translate>Total Rental Amount</span></th>
+                  <th><span class="thead-header" translate>Rental Amount (Per Period)</span></th>
+                  <th><span class="thead-header" translate>Gross Yield (%)</span></th>
                 </tr>
               </thead>
   
@@ -469,10 +451,10 @@
                   <td class="text-left">
                     {{item.AssetName}} - {{item.Color}} - {{item.AssetCondition}}
                   </td>
-                  <td class="text-right">{{item.AssetValue | number:'.2':'en-US'}}</td>
-                  <td class="text-right">{{item.ResidualValueAmt.ResidualValuePrcnt | number:'.6':'en-US'}}% / {{item.ResidualValueAmt | number:'.2':'en-US'}}</td>
-                  <td class="text-right">{{item.AssetExpense | number:'.2':'en-US'}}</td>
-                  <td class="text-right">{{item.MarginPrcnt | number:'.6':'en-US'}}% / {{item.MarginAmt | number:'.2':'en-US'}}</td>
+                  <td class="text-right">{{item.SecurityDepositAmt | number:'.2':'en-US'}}</td>
+                  <td class="text-right">{{item.TotalCostBeforeMargin | number:'.2':'en-US'}}</td>
+                  <td class="text-right">{{item.MarginAmt | number:'.2':'en-US'}}</td>
+                  <td class="text-right">{{item.TotalCostAfterMargin | number:'.2':'en-US'}}</td>
                   <td class="text-right">{{item.RentAmt | number:'.2':'en-US'}}</td>
                   <td class="text-right">{{item.GrossYieldPrcnt | number:'.6':'en-US'}}%</td>
                 </tr>
@@ -486,32 +468,34 @@
             <div class="form-group row">
               <label class="col-md-3 adins-label" translate>Rental Period</label>
               <label class="col-md-3 adins-label text-right">{{listAsset[0]?.Tenor}} / {{listAsset[0]?.FirstInstType}}</label>
+              <label class="col-md-3 adins-label" translate>Total Margin</label>
+              <label class="col-md-3 adins-label text-right">{{TotalMarginAmt | number:'.2':'en-US'}}</label>
             </div>
 
             <div class="form-group row">
               <label class="col-md-3 adins-label" translate>Total # of Asset</label>
               <label class="col-md-3 adins-label text-right">{{listAsset[0]?.TotalAsset}}</label>
+              <label class="col-md-3 adins-label" translate><b>Total Rental Amount</b></label>
+              <label class="col-md-3 adins-label text-right"><b>{{TotalCostAfterMargin | number:'.2':'en-US'}}</b></label>
             </div>
             
             <div class="form-group row">
-              <label class="col-md-3 adins-label" translate>Total Asset Value</label>
+              <label class="col-md-3 adins-label" translate>Total Asset Price (After Discount + Accessory)</label>
               <label class="col-md-3 adins-label text-right">{{TotalAssetValue | number:'.2':'en-US'}}</label>
-              <label class="col-md-3 adins-label" translate>Total Rental Amount per Period</label>
-              <label class="col-md-3 adins-label text-right">{{TotalRentAmt | number:'.2':'en-US'}}</label>
+              <label class="col-md-3 adins-label" translate>Rental Amount (Per Period)</label>
+              <label class="col-md-3 adins-label text-right">{{TotalRentAmtPerPeriod | number:'.2':'en-US'}}</label>
             </div>
             
             <div class="form-group row">
-              <label class="col-md-3 adins-label" translate>Total Asset Residual Value (% / Amt)</label>
-              <label class="col-md-3 adins-label text-right">{{TotalAssetResidualValuePrcnt | number:'.6':'en-US'}}% / {{TotalAssetResidualValueAmt | number:'.2':'en-US'}}</label>
-              <label class="col-md-3 adins-label" translate>Total Rental Amount + VAT per Period</label>
+              <label class="col-md-3 adins-label" translate>Total Asset Residual Value</label>
+              <label class="col-md-3 adins-label text-right">{{TotalAssetResidualValueAmt | number:'.2':'en-US'}}</label>
+              <label class="col-md-3 adins-label" translate>Rental Amount + VAT (Per Period)</label>
               <label class="col-md-3 adins-label text-right">{{TotalRentAfterVatAmt | number:'.2':'en-US'}}</label>
             </div>
             
             <div class="form-group row">
               <label class="col-md-3 adins-label" translate>Total Depreciation</label>
               <label class="col-md-3 adins-label text-right">{{TotalDepreciationAmt | number:'.2':'en-US'}}</label>
-              <label class="col-md-3 adins-label" translate>Gross Yield</label>
-              <label class="col-md-3 adins-label text-right">{{GrossYieldPrcnt | number:'.6':'en-US'}}%</label>
             </div>
             
             <div class="form-group row">
@@ -520,22 +504,26 @@
             </div>
             
             <div class="form-group row">
-              <label class="col-md-3 adins-label" translate><b>Total Cost Before Margin</b></label>
+              <label class="col-md-3 adins-label" translate>Total COF Interest</label>
+              <label class="col-md-3 adins-label text-right">{{TotalCofInterestAmt | number:'.2':'en-US'}}</label>
+            </div>
+            
+            <div class="form-group row">
+              <label class="col-md-3 adins-label" translate><b>Total Cost</b></label>
               <label class="col-md-3 adins-label text-right"><b>{{TotalCostBeforeMargin | number:'.2':'en-US'}}</b></label>
-              <label class="col-md-3 adins-label" translate>Fee Non Capitalized</label>
+            </div>
+            
+            <div class="form-group row">
+              <label class="col-md-3 adins-label" translate>Total Fee Non Capitalized</label>
               <label class="col-md-3 adins-label text-right">{{FeeNonCapitalized | number:'.2':'en-US'}}</label>
             </div>
             
             <div class="form-group row">
-              <label class="col-md-3 adins-label" translate>Total Margin Amount (% / Amt)</label>
-              <label class="col-md-3 adins-label text-right">{{TotalMarginPrcnt | number:'.6':'en-US'}}% / {{TotalMarginAmt | number:'.2':'en-US'}}</label>
               <label class="col-md-3 adins-label" translate>Total Security Deposit</label>
               <label class="col-md-3 adins-label text-right">{{TotalSecurityDepositAmt | number:'.2':'en-US'}}</label>
             </div>
             
             <div class="form-group row">
-              <label class="col-md-3 adins-label" translate><b>Total Cost After Margin</b></label>
-              <label class="col-md-3 adins-label text-right"><b>{{TotalCostAfterMargin | number:'.2':'en-US'}}</b></label>
               <label class="col-md-3 adins-label" translate><b>Total Paid In Advance</b></label>
               <label class="col-md-3 adins-label text-right"><b>{{TotalPaidInAdvance | number:'.2':'en-US'}}</b></label>
             </div>

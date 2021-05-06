@@ -16,6 +16,7 @@ import { CookieService } from 'ngx-cookie';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
+import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -187,14 +188,13 @@ export class DocSignerDetailComponent implements OnInit {
     if (this.mode = "edit") return;
     this.inputLookupAppCustCompanyShareHolder1Obj.isReady = false;
     await this.http.post(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.AppId, IsShareholder: true }).toPromise().then(
-      (response) => {
-        console.log(response);
-        if (response["ListAppCustObj"].length > 0) {
-          this.inputLookupAppCustCompanyShareHolder1Obj.jsonSelect = { MgmntShrholderName: response["ListAppCustObj"][0].CustName };
+      (response : ResListCustMainDataObj) => {
+        if (response.ListAppCustObj.length > 0) {
+          this.inputLookupAppCustCompanyShareHolder1Obj.jsonSelect = { MgmntShrholderName: response.ListAppCustObj[0].CustName };
           this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
           this.DocSignerForm.patchValue({
-            MrJobPositionMgmntShrholder1Code: response["ListAppCustObj"][0].MrJobPositionCode,
-            MrJobPositionMgmntShrholder1Name: response["ListAppCustObj"][0].MrJobPositionCodeDesc,
+            MrJobPositionMgmntShrholder1Code: response.ListAppCustObj[0].MrJobPositionCode,
+            MrJobPositionMgmntShrholder1Name: response.ListAppCustObj[0].MrJobPositionCodeDesc,
           })
         }
       });

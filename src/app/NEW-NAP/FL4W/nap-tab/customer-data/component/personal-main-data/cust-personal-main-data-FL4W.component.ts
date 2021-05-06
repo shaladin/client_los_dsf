@@ -12,6 +12,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-cust-personal-main-data-FL4W',
@@ -342,7 +343,8 @@ export class CustPersonalMainDataFL4WComponent implements OnInit {
   }
 
   async bindNationalityObj() {
-    var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
+    let obj: GenericObj = new GenericObj();
+    obj.Codes = [CommonConstant.RefMasterTypeCodeNationality];
     await this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
         this.NationalityObj = response[CommonConstant.ReturnObj];

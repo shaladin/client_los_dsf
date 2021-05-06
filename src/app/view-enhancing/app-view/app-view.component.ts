@@ -20,6 +20,7 @@ import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSy
 })
 export class AppViewComponent implements OnInit {
   AppId: number;
+  AppNo: string;
   arrValue = [];
   CustType: string = "";
   AppCustObj: any;
@@ -38,15 +39,14 @@ export class AppViewComponent implements OnInit {
   IsCommission: boolean = true;
   IsReservedFund: boolean = true;
   IsPhoneVerification: boolean = true;
-  IsFraudDetectionResult: boolean = true;
   IsAnalysisResult: boolean = true;
   IsCollateral: boolean = true;
   IsMultiCollateral: boolean = true;
   IsApprovalHist: boolean = true;
-  IsFraudDetectionMulti: boolean = true;
   IsDeviation: boolean = true;
   IsAssetExpense: boolean = true;
   IsPefindoResult: boolean = true;
+  IsSurveyResult: boolean = true;
   bizTemplateCode: string = "";
   isDmsReady: boolean;
   dmsObj: DMSObj;
@@ -57,17 +57,29 @@ export class AppViewComponent implements OnInit {
 
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
 
-  constructor(private route: ActivatedRoute,
-    private http: HttpClient,
-    private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
-      this.AppId = params["AppId"];
+      if(params["AppId"] == 'undefined'){
+        this.AppNo = params["AppNo"]
+        
+      }else{
+        this.AppId = params["AppId"];
+      }
+      
     })
+    
   }
 
   async ngOnInit() : Promise<void> {
+    if(this.AppId == 0){
+      await this.http.post(URLConstant.GetAppByAppNo, {TrxNo: this.AppNo}).toPromise().then(
+        (response) => {
+          this.AppId = response['AppId'];
+        }
+      )
+    }
     this.arrValue.push(this.AppId);
-    this.GetApp();
+    await this.GetApp();
     this.GetIsUseDigitalization();
     // this.viewAppMainInfo.ReloadUcViewGeneric();
     await this.InitDms();
@@ -121,12 +133,12 @@ export class AppViewComponent implements OnInit {
     }  
   }
 
-  GetApp() {
+  async GetApp() {
     var appObj = {
       Id: this.AppId,
     };
 
-    this.http.post(URLConstant.GetAppById, appObj).subscribe(
+    await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
       (response) => {
         this.bizTemplateCode = response["BizTemplateCode"];
         this.CustType = response["MrCustTypeCode"];
@@ -140,11 +152,11 @@ export class AppViewComponent implements OnInit {
           this.IsPhoneVerification = false;
           this.IsAsset = false;
           this.IsMultiAsset = false;
-          this.IsFraudDetectionMulti = false;
           this.IsInsurance = false;
           this.IsDeviation = false;
           this.IsAssetExpense = false;
           this.IsPefindoResult = false;
+          this.IsSurveyResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
           this.IsAsset = false;
@@ -152,10 +164,10 @@ export class AppViewComponent implements OnInit {
           this.IsInvoice = false;
           this.IsMultiAsset = false;
           this.IsMultiInsurance = false;
-          this.IsFraudDetectionMulti = false;
           this.IsDeviation = false;
           this.IsAssetExpense = false;
           this.IsPefindoResult = false;
+          this.IsSurveyResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.CF4W) {
           this.IsCollateral = false;
@@ -163,10 +175,10 @@ export class AppViewComponent implements OnInit {
           this.IsInvoice = false;
           this.IsMultiAsset = false;
           this.IsMultiInsurance = false;
-          this.IsFraudDetectionMulti = false;
           this.IsDeviation = false;
           this.IsAssetExpense = false;
           this.IsPefindoResult = false;
+          this.IsSurveyResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.FL4W) {
           this.IsAsset = false;
@@ -177,17 +189,18 @@ export class AppViewComponent implements OnInit {
           this.IsDeviation = false;
           this.IsAssetExpense = false;
           this.IsPefindoResult = false;
+          this.IsSurveyResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.CFNA) {
           this.IsAsset = false;
           this.IsInvoice = false;
           this.IsMultiAsset = false;
           this.IsMultiInsurance = false;
-          this.IsFraudDetectionMulti = false;
           this.IsCollateral = false;
           this.IsDeviation = false;
           this.IsAssetExpense = false;
           this.IsPefindoResult = false;
+          this.IsSurveyResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.OPL) {
           this.IsCollateral = false;
@@ -199,10 +212,8 @@ export class AppViewComponent implements OnInit {
           this.IsReservedFund = false;
           this.IsPhoneVerification = false;
           this.IsMultiAsset = false;
-          this.IsFraudDetectionMulti = false;
           this.IsInsurance = false;
           this.IsLifeInsurance = false;
-          this.IsFraudDetectionResult = false;
           this.IsMultiCollateral = false;
         }
       }
@@ -226,7 +237,6 @@ export class AppViewComponent implements OnInit {
     this.http.post(URLConstant.GetGeneralSettingByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).subscribe(
       (response) => {
         this.IsUseDigitalization = response["GsValue"];
-        console.log(this.IsUseDigitalization); 
       }
     )
   }

@@ -21,7 +21,7 @@ import { CookieService } from 'ngx-cookie';
   templateUrl: './pre-go-live-approval-paging.component.html'
 })
 export class PreGoLiveApprovalPagingComponent implements OnInit {
-  inputPagingObj: UcPagingObj;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
   Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));

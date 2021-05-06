@@ -34,13 +34,15 @@ import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompanyC
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
 import { CustObjForAddTrxData } from 'app/shared/model/CustObjForAddTrxData.Model';
 import { AppCustCompareObj } from 'app/shared/model/AppCustCompareObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { String } from 'typescript-string-operations';
+import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
+import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
+import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 
 @Component({
   selector: 'app-customer-data',
@@ -146,7 +148,7 @@ export class CustomerDataComponent implements OnInit {
   isSpouseOk: boolean = true;
   IsSpouseExist: boolean = false;
   appData: AppObj;
-  generalSettingObj: GeneralSettingObj;
+  generalSettingObj: GenericListByCodeObj;
   returnGeneralSettingObj: any;
   appObj: any;
   returnAppObj: any;
@@ -234,13 +236,12 @@ export class CustomerDataComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-            (response) => {
-              this.latestReqDtCheckIntegrator = response['ReqDt'];
-              this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-              this.reqLatestJson = JSON.parse(response['ReqJson']);
+            (response: ResThirdPartyRsltHObj) => {
+              this.latestReqDtCheckIntegrator = response.ReqDt;
+              this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
+              this.reqLatestJson = JSON.parse(response.ReqJson);
               if (this.reqLatestJson != null && this.reqLatestJson != "") {
                 this.latestCustDataObj = new AppCustCompareObj();
-
                 this.latestCustDataObj.CustName = this.reqLatestJson['CustName'];
                 this.latestCustDataObj.Gender = this.reqLatestJson['Gender'];
                 this.latestCustDataObj.BirthPlace = this.reqLatestJson['BirthPlace'];
@@ -271,24 +272,25 @@ export class CustomerDataComponent implements OnInit {
 
   }
   GetGS() {
-    this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
+    this.generalSettingObj = new GenericListByCodeObj();
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
 
-    this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
+    this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).subscribe(
       (response) => {
-        var returnGeneralSettingObj = response;
+        var returnGeneralSettingObj: Array<ResGeneralSettingObj> = new Array<ResGeneralSettingObj>();
+        returnGeneralSettingObj = response['ResGetListGeneralSettingObj'];
 
-        var gsNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
-        var gsUseDigitalization = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        var gsNeedCheckBySystem = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
         
         if(gsNeedCheckBySystem != undefined){
           this.isNeedCheckBySystem = gsNeedCheckBySystem.GsValue;
-        }else{
+        } else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
         }
 
-        if(gsUseDigitalization != undefined) {
+        if (gsUseDigitalization != undefined) {
           this.isUseDigitalization = gsUseDigitalization.GsValue;
         }
         else {
@@ -298,51 +300,45 @@ export class CustomerDataComponent implements OnInit {
         // this.appObj = new AppObj();
         // this.appObj.AppId = this.appId;
         var appObj = { Id: this.appId };
-        if(this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0"){
+        if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
           this.http.post(URLConstant.GetAppById, appObj).subscribe(
             (response) => {
               this.returnAppObj = response;
-  
+
               this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
               this.thirdPartyObj.TrxTypeCode = CommonConstant.APP_TRX_TYPE_CODE;
               this.thirdPartyObj.TrxNo = this.returnAppObj["AppNo"];
               this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
               this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-                (response) => {
+                (response: ResThirdPartyRsltHObj) => {
                   if (response != null) {
-                    this.latestReqDtCheckIntegrator = response['ReqDt'];
-                    this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-                    this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-                      (response) => {
-                        this.latestReqDtCheckIntegrator = response['ReqDt'];
-                        this.thirdPartyRsltHId = response['ThirdPartyRsltHId'];
-                        this.reqLatestJson = JSON.parse(response['ReqJson']);
-                        if (this.reqLatestJson != null && this.reqLatestJson != "") {
-                          this.latestCustDataObj = new AppCustCompareObj();
-  
-                          this.latestCustDataObj.CustName = this.reqLatestJson['CustName'];
-                          this.latestCustDataObj.Gender = this.reqLatestJson['Gender'];
-                          this.latestCustDataObj.BirthPlace = this.reqLatestJson['BirthPlace'];
-                          this.latestCustDataObj.BirthDt = formatDate(new Date(this.reqLatestJson['BirthDt']), 'yyyy-MM-dd', 'en-US');
-                          this.latestCustDataObj.MaritalStatus = this.reqLatestJson['MaritalStatus'];
-                          this.latestCustDataObj.CustPhnNo = this.reqLatestJson['CustPhnNo'];
-                          this.latestCustDataObj.CustEmail = this.reqLatestJson['CustEmail'];
-                          this.latestCustDataObj.IdNo = this.reqLatestJson['IdNo'];
-                          this.latestCustDataObj.IdType = this.reqLatestJson['IdType'];
-                          this.latestCustDataObj.TaxNo = this.reqLatestJson['TaxNo'];
-                          this.latestCustDataObj.Profession = this.reqLatestJson['Profession'];
-                          if (this.reqLatestJson["CustType"] == CommonConstant.CustTypePersonal) {
-                            this.latestCustDataObj.HomeAddr = this.reqLatestJson['HomeAddr'];
-                            this.latestCustDataObj.HomeRt = this.reqLatestJson['HomeRt'];
-                            this.latestCustDataObj.HomeRw = this.reqLatestJson['HomeRw'];
-                            this.latestCustDataObj.HomeZipCode = this.reqLatestJson['HomeZipCode'];
-                            this.latestCustDataObj.HomeKelurahan = this.reqLatestJson['HomeKelurahan'];
-                            this.latestCustDataObj.HomeKecamatan = this.reqLatestJson['HomeKecamatan'];
-                            this.latestCustDataObj.HomeCity = this.reqLatestJson['HomeCity'];
-                          }
-                        }
+                    this.latestReqDtCheckIntegrator = response.ReqDt;
+                    this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
+                    this.reqLatestJson = JSON.parse(response.ReqJson);
+                    if (this.reqLatestJson != null && this.reqLatestJson != "") {
+                      this.latestCustDataObj = new AppCustCompareObj();
+                      this.latestCustDataObj.CustName = this.reqLatestJson['CustName'];
+                      this.latestCustDataObj.Gender = this.reqLatestJson['Gender'];
+                      this.latestCustDataObj.BirthPlace = this.reqLatestJson['BirthPlace'];
+                      this.latestCustDataObj.BirthDt = formatDate(new Date(this.reqLatestJson['BirthDt']), 'yyyy-MM-dd', 'en-US');
+                      this.latestCustDataObj.MaritalStatus = this.reqLatestJson['MaritalStatus'];
+                      this.latestCustDataObj.CustPhnNo = this.reqLatestJson['CustPhnNo'];
+                      this.latestCustDataObj.CustEmail = this.reqLatestJson['CustEmail'];
+                      this.latestCustDataObj.IdNo = this.reqLatestJson['IdNo'];
+                      this.latestCustDataObj.IdType = this.reqLatestJson['IdType'];
+                      this.latestCustDataObj.TaxNo = this.reqLatestJson['TaxNo'];
+                      this.latestCustDataObj.Profession = this.reqLatestJson['Profession'];
+                      if (this.reqLatestJson["CustType"] == CommonConstant.CustTypePersonal) {
+                        this.latestCustDataObj.HomeAddr = this.reqLatestJson['HomeAddr'];
+                        this.latestCustDataObj.HomeRt = this.reqLatestJson['HomeRt'];
+                        this.latestCustDataObj.HomeRw = this.reqLatestJson['HomeRw'];
+                        this.latestCustDataObj.HomeZipCode = this.reqLatestJson['HomeZipCode'];
+                        this.latestCustDataObj.HomeKelurahan = this.reqLatestJson['HomeKelurahan'];
+                        this.latestCustDataObj.HomeKecamatan = this.reqLatestJson['HomeKecamatan'];
+                        this.latestCustDataObj.HomeCity = this.reqLatestJson['HomeCity'];
                       }
-                    );
+                    }
+
                   }
                 }
               );
@@ -854,40 +850,40 @@ export class CustomerDataComponent implements OnInit {
   setAppCustPersonalJobData(custModelCode) {
     var appCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
     if (custModelCode == CommonConstant.CustModelProfessional) {
-     appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
-     appCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
-     appCustPersonalJobDataObj.ProfessionalNo = this.CustDataForm.controls["jobData"]["controls"].ProfessionalNo.value;
-     appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-     appCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
-     appCustPersonalJobDataObj.AppCustAddrJobObj = this.setAppCustAddrJob();
+      appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
+      appCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
+      appCustPersonalJobDataObj.ProfessionalNo = this.CustDataForm.controls["jobData"]["controls"].ProfessionalNo.value;
+      appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
+      appCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+      appCustPersonalJobDataObj.AppCustAddrJobObj = this.setAppCustAddrJob();
     }
 
     if (custModelCode == CommonConstant.CustModelEmployee) {
-     appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
-     appCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
-     appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-     appCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
-     appCustPersonalJobDataObj.IsMfEmp = this.CustDataForm.controls["jobData"]["controls"].IsMfEmp.value;
-     appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
-     appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
-     appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
-     appCustPersonalJobDataObj.NumOfEmployee = this.CustDataForm.controls["jobData"]["controls"].NumOfEmployee.value;
-     appCustPersonalJobDataObj.MrJobStatCode = this.CustDataForm.controls["jobData"]["controls"].MrJobStatCode.value;
-     appCustPersonalJobDataObj.AppCustAddrJobObj = this.setAppCustAddrJob();
+      appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
+      appCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
+      appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
+      appCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+      appCustPersonalJobDataObj.IsMfEmp = this.CustDataForm.controls["jobData"]["controls"].IsMfEmp.value;
+      appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
+      appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
+      appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
+      appCustPersonalJobDataObj.NumOfEmployee = this.CustDataForm.controls["jobData"]["controls"].NumOfEmployee.value;
+      appCustPersonalJobDataObj.MrJobStatCode = this.CustDataForm.controls["jobData"]["controls"].MrJobStatCode.value;
+      appCustPersonalJobDataObj.AppCustAddrJobObj = this.setAppCustAddrJob();
     }
 
     if (custModelCode == CommonConstant.CustModelSmallMediumEnterprise) {
-     appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
-     appCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
-     appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-     appCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
-     appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
-     appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
-     appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
-     appCustPersonalJobDataObj.NumOfEmployee = this.CustDataForm.controls["jobData"]["controls"].NumOfEmployee.value;
-     appCustPersonalJobDataObj.MrJobStatCode = this.CustDataForm.controls["jobData"]["controls"].MrJobStatCode.value;
-     appCustPersonalJobDataObj.MrInvestmentTypeCode = this.CustDataForm.controls["jobData"]["controls"].MrInvestmentTypeCode.value;
-     appCustPersonalJobDataObj.AppCustAddrJobObj = this.setAppCustAddrJob();
+      appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
+      appCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
+      appCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
+      appCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+      appCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
+      appCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
+      appCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
+      appCustPersonalJobDataObj.NumOfEmployee = this.CustDataForm.controls["jobData"]["controls"].NumOfEmployee.value;
+      appCustPersonalJobDataObj.MrJobStatCode = this.CustDataForm.controls["jobData"]["controls"].MrJobStatCode.value;
+      appCustPersonalJobDataObj.MrInvestmentTypeCode = this.CustDataForm.controls["jobData"]["controls"].MrInvestmentTypeCode.value;
+      appCustPersonalJobDataObj.AppCustAddrJobObj = this.setAppCustAddrJob();
     }
 
     if (custModelCode == CommonConstant.CustModelNonProfessional) {
@@ -1148,27 +1144,27 @@ export class CustomerDataComponent implements OnInit {
             this.custDataPersonalObj = new CustDataPersonalObj();
             this.custDataPersonalObj.AppCustObj = response["AppCustObj"];
             this.custDataPersonalObj.AppCustPersonalObj = response["AppCustPersonalObj"];
-            if(response["AppCustAddrLegalObj"] == null){
+            if (response["AppCustAddrLegalObj"] == null) {
               this.custDataPersonalObj.AppCustAddrLegalObj = new AppCustAddrObj();
             }
-            else{
+            else {
               this.custDataPersonalObj.AppCustAddrLegalObj = response["AppCustAddrLegalObj"];
 
             }
-            if(response["AppCustAddrResidenceObj"] == null){
+            if (response["AppCustAddrResidenceObj"] == null) {
               this.custDataPersonalObj.AppCustAddrResidenceObj = new AppCustAddrObj();
             }
-            else{
+            else {
               this.custDataPersonalObj.AppCustAddrResidenceObj = response["AppCustAddrResidenceObj"];
             }
-            
-            if(response["AppCustAddrMailingObj"] == null){
+
+            if (response["AppCustAddrMailingObj"] == null) {
               this.custDataPersonalObj.AppCustAddrMailingObj = new AppCustAddrObj();
             }
-            else{
-            this.custDataPersonalObj.AppCustAddrMailingObj = response["AppCustAddrMailingObj"];
+            else {
+              this.custDataPersonalObj.AppCustAddrMailingObj = response["AppCustAddrMailingObj"];
             }
-            
+
             this.custDataPersonalObj.AppCustPersonalContactPersonObjs = response["AppCustPersonalContactPersonObjs"];
             this.listAppCustPersonalContactInformation = this.custDataPersonalObj.AppCustPersonalContactPersonObjs;
             this.custDataPersonalObj.AppCustPersonalFinDataObj = response["AppCustPersonalFinDataObj"];
@@ -1804,8 +1800,8 @@ export class CustomerDataComponent implements OnInit {
 
       inputLeadCustObj.CustName = this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value;
       inputLeadCustObj.IdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
-      if ((this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") 
-          && (this.latestCustDataObj.TaxNo != this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value 
+      if ((this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0")
+        && (this.latestCustDataObj.TaxNo != this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value
           || this.latestCustDataObj.CustName != this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value)) {
         if (confirm("Recent Customer Main Data different with previous data. Are you sure want to submit without fraud check ?")) {
           return true;

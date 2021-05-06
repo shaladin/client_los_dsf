@@ -29,15 +29,6 @@
           <app-view-application-data-multi [AppId]=appId></app-view-application-data-multi>
         </ng-template>
       </mat-tab>
-      <mat-tab *ngIf="IsUseDigitalization == '1'" label="Fraud Detection Data">
-        <ng-template matTabContent>
-          <!-- <app-view-fraud-detection-result [appId]=appId [mrCustTypeCode]="CustTypeCode">
-          </app-view-fraud-detection-result> -->
-          <app-fraud-detection-data [AppId]="appId"></app-fraud-detection-data>
-          
-        </ng-template>
-      </mat-tab>
-
       <mat-tab label="Deviation">
         <ng-template matTabContent>
           <app-tab-deviation  [AppId]="appId" [IsEditManualDeviation]="false"></app-tab-deviation>        

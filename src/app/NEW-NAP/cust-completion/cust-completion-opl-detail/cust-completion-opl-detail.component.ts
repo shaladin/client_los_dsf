@@ -13,6 +13,8 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { FormBuilder } from '@angular/forms';
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 
 @Component({
   selector: 'app-cust-completion-opl-detail',
@@ -31,7 +33,7 @@ export class CustCompletionOplDetailComponent implements OnInit {
     ReturnExecNotes: ['']
   });
   ReturnHandlingHId: number = 0;
-  ResponseReturnInfoObj: ReturnHandlingDObj;
+  ResponseReturnInfoObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   OnFormReturnInfo: boolean = false;
 
   constructor(private route: ActivatedRoute,
@@ -80,12 +82,11 @@ export class CustCompletionOplDetailComponent implements OnInit {
 
   MakeViewReturnInfoObj() {
     if (this.ReturnHandlingHId > 0) {
-      var obj = {
-        ReturnHandlingHId: this.ReturnHandlingHId,
-        MrReturnTaskCode: CommonConstant.ReturnHandlingEditCust
-      }
-      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
-        (response) => {
+      let ReqByIdAndCodeObj = new GenericObj();
+      ReqByIdAndCodeObj.Id = this.ReturnHandlingHId;
+      ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingEditCust;
+      this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
+        (response : ResReturnHandlingDObj) => {
           this.ResponseReturnInfoObj = response;
           console.log("Isi dari ResponseReturnInfoObj: ", this.ResponseReturnInfoObj);
           this.FormReturnObj.patchValue({

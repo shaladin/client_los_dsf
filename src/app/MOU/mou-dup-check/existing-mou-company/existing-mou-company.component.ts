@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ReqGetMouCustDuplicateObj } from 'app/shared/model/Request/MOU/ReqGetMouCustDuplicateObj.model';
 
 @Component({
   selector: 'app-existing-mou-company',
@@ -20,9 +21,6 @@ export class ExistingMouCompanyComponent implements OnInit {
   MouCustId: number;
   WfTaskListId: number;
   FondationUrl = environment.FoundationR3Url;
-  LOSUrl = environment.losUrl;
-  GetAppGuarantorDuplicateCheckUrl = this.LOSUrl + URLConstant.GetAppGuarantorDuplicateCheck;
-  GetAppShareholderDuplicateCheckUrl = this.LOSUrl + URLConstant.GetAppShareholderDuplicateCheck;
   MouCustObj: MouCustObj;
   MouCustCompanyObj: MouCustCompanyObj;
   ListDuplicateAppGuarantor: any;
@@ -76,40 +74,38 @@ export class ExistingMouCompanyComponent implements OnInit {
         this.RowVersion = response['MouCustObj'].RowVersion;
         this.MouCustCompanyObj = response['MouCustCompanyObj'];
 
-        var requestDupCheck = {
-          "CustName": this.MouCustObj.CustName,
-          "MrCustTypeCode": this.MouCustObj.MrCustTypeCode,
-          "MrCustModelCode": this.MouCustObj.CustModelCode,
-          "MrIdTypeCode": this.MouCustObj.MrIdTypeCode,
-          "IdNo": this.MouCustObj.IdNo,
-          "TaxIdNo": this.MouCustObj.TaxIdNo,
-          "BirthDt": this.MouCustCompanyObj.EstablishmentDt,
-          "MotherMaidenName": "-",
-          "MobilePhnNo1": "-",
-          "RowVersion": this.RowVersion
-        }
-
+        var ReqDupCheckObj = new ReqGetMouCustDuplicateObj();
+        ReqDupCheckObj.CustName =  this.MouCustObj.CustName;
+        ReqDupCheckObj.MrCustTypeCode = this.MouCustObj.MrCustTypeCode;
+        ReqDupCheckObj.MrCustModelCode = this.MouCustObj.CustModelCode;
+        ReqDupCheckObj.MrIdTypeCode = this.MouCustObj.MrIdTypeCode;
+        ReqDupCheckObj.IdNo = this.MouCustObj.IdNo;
+        ReqDupCheckObj.TaxIdNo =  this.MouCustObj.TaxIdNo;
+        ReqDupCheckObj.BirthDt =  this.MouCustCompanyObj.EstablishmentDt;
+        ReqDupCheckObj.MobilePhnNo1 = "-";
+        ReqDupCheckObj.RowVersion = this.RowVersion;
+        
         //List App guarantor Checking
-        this.http.post(this.GetAppGuarantorDuplicateCheckUrl, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetAppGuarantorDuplicateCheck, ReqDupCheckObj).subscribe(
           response => {
             this.ListDuplicateAppGuarantor = response['ReturnObject'];
           }
         );
 
         //List App Shareholder Duplicate Checking
-        this.http.post(this.GetAppShareholderDuplicateCheckUrl, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetAppShareholderDuplicateCheck, ReqDupCheckObj).subscribe(
           response => {
             this.ListDuplicateAppShareholder = response['ReturnObject'];
           });
 
         //List Mou Guarantor Checking
-        this.http.post(URLConstant.GetMouGuarantorDuplicateCheck, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetMouGuarantorDuplicateCheck, ReqDupCheckObj).subscribe(
           response => {
             this.ListDuplicateMouGuarantor = response['ReturnObject'];
           });
 
         //List Mou Shareholder Duplicate Checking
-        this.http.post(URLConstant.GetMouShareholderDuplicateCheck, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetMouShareholderDuplicateCheck, ReqDupCheckObj).subscribe(
           response => {
             this.ListDuplicateMouShareholder = response['ReturnObject'];
           });

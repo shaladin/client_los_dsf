@@ -16,9 +16,9 @@ import { formatDate } from '@angular/common';
 import { map, mergeMap } from 'rxjs/operators';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { NumberValueAccessor } from '@angular/forms/src/directives';
 import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 
 @Component({
   selector: 'app-return-handling-additional-tc-detail',
@@ -39,7 +39,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   returnHandlingHId: number;
   wfTaskListId: number;
   AppObj: any;
-  returnHandlingDObj: any;
+  returnHandlingDObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   ReturnHandlingDData: ReturnHandlingDObj;
   BizTemplateCode: string;
   listAddTc: Array<AppTCObj> = new Array<AppTCObj>();
@@ -312,12 +312,11 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
   MakeViewReturnInfoObj() {
     if (this.returnHandlingHId > 0) {
-      var obj = {
-        ReturnHandlingHId: this.returnHandlingHId,
-        MrReturnTaskCode: CommonConstant.ReturnHandlingAddTc
-      }
-      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
-        (response) => {
+      let ReqByIdAndCodeObj = new GenericObj();
+      ReqByIdAndCodeObj.Id = this.returnHandlingHId;
+      ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingAddTc;
+      this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
+        (response : ResReturnHandlingDObj) => {
           this.returnHandlingDObj = response;
         });
     }

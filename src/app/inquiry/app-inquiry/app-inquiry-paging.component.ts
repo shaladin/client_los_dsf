@@ -43,7 +43,7 @@ export class AppInquiryPagingComponent implements OnInit {
         },
         {
           name: "B.AGRMNT_STAT",
-          environment: environment.FoundationR3Url
+          environment: environment.losUrl
         }
       ];
     }
@@ -65,6 +65,10 @@ export class AppInquiryPagingComponent implements OnInit {
         },
         {
           name: "B.AGRMNT_STAT",
+          environment: environment.FoundationR3Url
+        },
+        {
+          name: "A.CUST_CHECKING_STEP",
           environment: environment.FoundationR3Url
         }
       ];

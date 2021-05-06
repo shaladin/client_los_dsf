@@ -73,6 +73,8 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_APP_CAN_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.APP_CAN_DETAIL;
   public static NAP_ADD_PRCS_APP_ASSET_CAN_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.APP_ASSET_CAN_PAGING; //"/Nap/AddProcess/AppAssetCancel/Paging"
   public static NAP_ADD_PRCS_APP_ASSET_CAN_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.APP_ASSET_CAN_DETAIL; 
+  public static NAP_ADD_PRCS_DOC_PICKUP_REQUEST_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.DOC_PICKUP_REQUEST_PAGING; //"/Nap/AddProcess/DocumentPickupRequest/Paging"
+  public static NAP_ADD_PRCS_DOC_PICKUP_REQUEST_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.DOC_PICKUP_REQUEST_DETAIL;//"/Nap/AddProcess/DocumentPickupRequest/Detail"
   //#endregion
 
   //#region AdminProcess
