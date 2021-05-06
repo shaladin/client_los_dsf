@@ -1,0 +1,87 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <form class="form form-horizontal">
+          <div class="form-body">
+            <div class="px-3">
+              <lib-ucSubsection [id]="'SurveyTaskListId'" [title]="'Survey Result'" [panel]="'SurveyTaskList'">
+              </lib-ucSubsection>
+              <div class="form-body" id="SurveyTaskList">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th>
+                        <span class="thead-header" translate>Survey Task No / Resurvey Ref</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Surveyee Model</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Survey Object</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>SURVEYEE OBJECT</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Surveyee Name</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Address</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Survey Type</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Surveyor Name</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Survey Form Scheme</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Survey Task Status</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>Result Date</span>
+                      </th>
+                      <th>
+                        <span class="thead-header" translate>View Result</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of TaskList">
+                      <td>
+                        <div *ngIf="item.ResurveyRef == ''">
+                          {{item.SrvyTaskNo}}
+                        </div>
+                        <div *ngIf="item.ResurveyRef != ''">
+                          {{item.SrvyTaskNo}}/{{item.ResurveyRef}}
+                        </div>
+                      </td>
+                      <td>{{item.SurveyeeModel}}</td>
+                      <td>{{item.MrSrvyObjTypeCode}}</td>
+                      <td>{{item.SurveyeeObject}}</td>
+                      <td>
+                        <a href="#" onclick="return false" (click)="customerView(item.CustId)">{{item.CustName}}</a>
+                      </td>
+                      <td>{{item.CustAddr}}</td>
+                      <td>{{item.MrSurveyTypeCode}}</td>
+                      <td>{{item.SurveyorName}}</td>
+                      <td>{{item.SrvyFormSchmName}}</td>
+                      <td>{{item.MrSurveyTaskStatCode}}</td>
+                      <td>{{item.ResultDt | date: 'dd-MMM-yyyy'}}</td>
+                      <td><a href="#" onclick="return false" (click)="viewResult(item.SrvyTaskId)"><i class="fas fa-pencil-alt"></i>
+                        </a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
