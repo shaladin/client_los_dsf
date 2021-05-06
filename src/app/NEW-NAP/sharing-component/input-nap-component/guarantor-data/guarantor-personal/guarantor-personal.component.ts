@@ -19,6 +19,7 @@ import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 @Component({
   selector: 'app-guarantor-personal',
   templateUrl: './guarantor-personal.component.html',
@@ -138,22 +139,22 @@ export class GuarantorPersonalComponent implements OnInit {
       this.inputLookupObj1.isReady = true;
     }
 
-    var idTypeObj = {
+    var idTypeObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType,
-      RowVersion: ""
-    }
-    var genderObj = {
+      MappingCode: ""
+    };
+    var genderObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender,
-      RowVersion: ""
-    }
-    var maritalObj = {
+      MappingCode: ""
+    };
+    var maritalObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMaritalStat,
-      RowVersion: ""
-    }
-    var religionObj = {
+      MappingCode: ""
+    };
+    var religionObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReligion,
-      RowVersion: ""
-    }
+      MappingCode: ""
+    };
 
     var AppCust = {
       Id: this.AppId,
@@ -162,17 +163,15 @@ export class GuarantorPersonalComponent implements OnInit {
     this.http.post(URLConstant.GetAppCustByAppId, AppCust).subscribe(
       (response) => {
         if (response["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
-          var refCustRelObj = {
+          var refCustRelObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarPersonalRelationship,
             MappingCode: CommonConstant.CustTypePersonal,
-            RowVersion: ""
           }
         }
         else {
-          var refCustRelObj = {
+          var refCustRelObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
             MappingCode: CommonConstant.CustTypePersonal,
-            RowVersion: ""
           }
         }
         this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refCustRelObj).subscribe(
@@ -224,7 +223,8 @@ export class GuarantorPersonalComponent implements OnInit {
       }
     );
 
-    var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
+    let obj: GenericObj = new GenericObj();
+    obj.Codes = [CommonConstant.RefMasterTypeCodeNationality];
     this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
         this.NationalityObj = response[CommonConstant.ReturnObj];

@@ -12,10 +12,8 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AllAssetDataObj } from 'app/shared/model/AllAssetDataObj.Model';
 import { RefCoyObj } from 'app/shared/model/RefCoyObj.Model';
-import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
-import { AppAssetSupplEmpObj } from 'app/shared/model/AppAssetSupplEmpObj.Model';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -38,7 +36,6 @@ export class AssetLeasingAddEditComponent implements OnInit {
   LobCode: string;
   pageType: string = "add";
   custType: string;
-  branchObj: any;
   listBranchObj: any;
   salesObj: any;
   listSalesObj: any;
@@ -214,10 +211,10 @@ export class AssetLeasingAddEditComponent implements OnInit {
       SupplCode: event.VendorCode
     });
 
-    this.branchObj = new VendorEmpObj();
-    this.branchObj.VendorId = event.VendorId;
-    this.branchObj.MrVendorEmpPositionCode = 'BRANCH_MANAGER';
-    this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, this.branchObj).subscribe(
+    let branchObj : GenericObj = new GenericObj();
+    branchObj.Id = event.VendorId;
+    branchObj.Code = 'BRANCH_MANAGER';
+    this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, branchObj).subscribe(
       (response) => {
         this.listBranchObj = response[CommonConstant.ReturnObj];
         this.AssetDataForm.patchValue({
@@ -226,10 +223,10 @@ export class AssetLeasingAddEditComponent implements OnInit {
         });
       });
 
-    this.salesObj = new VendorEmpObj();
-    this.salesObj.VendorId = event.VendorId;
-    this.salesObj.MrVendorEmpPositionCode = 'SALES_PERSON';
-    this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, this.salesObj).subscribe(
+    let salesObj : GenericObj = new GenericObj();
+    salesObj.Id = event.VendorId;
+    salesObj.Code = 'SALES_PERSON';
+    this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, salesObj).subscribe(
       (response) => {
         this.listSalesObj = response[CommonConstant.ReturnObj];
         this.AssetDataForm.patchValue({
@@ -238,10 +235,10 @@ export class AssetLeasingAddEditComponent implements OnInit {
         });
       });
 
-    this.adminHeadObj = new VendorEmpObj();
-    this.adminHeadObj.VendorId = event.VendorId;
-    this.adminHeadObj.MrVendorEmpPositionCode = 'ADMIN_HEAD';
-    this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, this.adminHeadObj).subscribe(
+    let adminHeadObj : GenericObj = new GenericObj();
+    adminHeadObj.Id = event.VendorId;
+    adminHeadObj.Code = 'ADMIN_HEAD';
+    this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, adminHeadObj).subscribe(
       (response) => {
         this.listAdminHeadObj = response[CommonConstant.ReturnObj];
         this.AssetDataForm.patchValue({
@@ -389,17 +386,17 @@ export class AssetLeasingAddEditComponent implements OnInit {
                 (response) => {
                   this.branchAppAssetSupplEmpObj = response;
 
-                  this.branchObj = new VendorEmpObj();
-                  this.branchObj.VendorId = this.returnVendorObj.VendorId;
-                  this.branchObj.MrVendorEmpPositionCode = 'BRANCH_MANAGER';
-                  this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, this.branchObj).subscribe(
+                  let branchObj : GenericObj = new GenericObj();
+                  branchObj.Id = this.returnVendorObj.VendorId;
+                  branchObj.Code = 'BRANCH_MANAGER';
+                  this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, branchObj).subscribe(
                     (response) => {
                       this.branchAppAssetSupplEmpObj = response;
 
-                      this.branchObj = new VendorEmpObj();
-                      this.branchObj.VendorId = this.returnVendorObj.VendorId;
-                      this.branchObj.MrVendorEmpPositionCode = 'BRANCH_MANAGER';
-                      this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, this.branchObj).subscribe(
+                      let branchMngrObj : GenericObj = new GenericObj();
+                      branchMngrObj.Id = this.returnVendorObj.VendorId;
+                      branchMngrObj.Code = 'BRANCH_MANAGER';
+                      this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, branchMngrObj).subscribe(
                         (response) => {
                           this.listBranchObj = response[CommonConstant.ReturnObj];
                           this.AssetDataForm.patchValue({
@@ -418,17 +415,17 @@ export class AssetLeasingAddEditComponent implements OnInit {
               (response) => {
                 this.headAppAssetSupplEmpObj = response;
 
-                this.adminHeadObj = new VendorEmpObj();
-                this.adminHeadObj.VendorId = this.returnVendorObj.VendorId;
-                this.adminHeadObj.MrVendorEmpPositionCode = 'ADMIN_HEAD';
-                this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, this.adminHeadObj).subscribe(
+                let adminHeadObj : GenericObj = new GenericObj();
+                adminHeadObj.Id = this.returnVendorObj.VendorId;
+                adminHeadObj.Code = 'ADMIN_HEAD';
+                this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, adminHeadObj).subscribe(
                 (response) => {
                   this.headAppAssetSupplEmpObj = response;
 
-                  this.adminHeadObj = new VendorEmpObj();
-                  this.adminHeadObj.VendorId = this.returnVendorObj.VendorId;
-                  this.adminHeadObj.MrVendorEmpPositionCode = 'ADMIN_HEAD';
-                  this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, this.adminHeadObj).subscribe(
+                  let reqAdminHeadObj : GenericObj = new GenericObj();
+                  reqAdminHeadObj.Id = this.returnVendorObj.VendorId;
+                  reqAdminHeadObj.Code = 'ADMIN_HEAD';
+                  this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, reqAdminHeadObj).subscribe(
                     (response) => {
                       this.listAdminHeadObj = response[CommonConstant.ReturnObj];
                       this.AssetDataForm.patchValue({
@@ -446,17 +443,17 @@ export class AssetLeasingAddEditComponent implements OnInit {
               (response) => {
                 this.salesAppAssetSupplEmpObj = response;
 
-                this.salesObj = new VendorEmpObj();
-                this.salesObj.VendorId = this.returnVendorObj.VendorId;
-                this.salesObj.MrVendorEmpPositionCode = 'SALES_PERSON';
-                this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, this.salesObj).subscribe(
+                let salesObj : GenericObj = new GenericObj();
+                salesObj.Id = this.returnVendorObj.VendorId;
+                salesObj.Code = 'SALES_PERSON';
+                this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, salesObj).subscribe(
                 (response) => {
                   this.salesAppAssetSupplEmpObj = response;
 
-                  this.salesObj = new VendorEmpObj();
-                  this.salesObj.VendorId = this.returnVendorObj.VendorId;
-                  this.salesObj.MrVendorEmpPositionCode = 'SALES_PERSON';
-                  this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, this.salesObj).subscribe(
+                  let reqSalesObj : GenericObj = new GenericObj();
+                  reqSalesObj.Id = this.returnVendorObj.VendorId;
+                  reqSalesObj.Code = 'SALES_PERSON';
+                  this.http.post(URLConstant.GetListKeyValueVendorEmpByVendorIdAndPosition, reqSalesObj).subscribe(
                     (response) => {
                       this.listSalesObj = response[CommonConstant.ReturnObj];
                       this.AssetDataForm.patchValue({
