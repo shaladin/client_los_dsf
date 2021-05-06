@@ -75,6 +75,7 @@ export class BankSectionComponent implements OnInit {
   GetAppCustBankAccList() {
     this.http.post<Array<AppCustBankAccObj>>(URLConstant.GetAppCustBankAccAndStatementForView, { Id: this.AppCustId }).subscribe(
       (response) => {
+        console.log(response);
         this.AppCustBankAccList = response["AppCustBankAccList"]
       });
   }

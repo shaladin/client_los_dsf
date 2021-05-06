@@ -14,6 +14,7 @@ export class AppCustBankAccObj {
     IsActive: boolean;
     BankInfo: string;
     AppCustBankStmntObjs: Array<any>;
+    ListAppCustBankAccStmntObj: Array<any>;
     RowVersion: string[];
     
 constructor() { 
