@@ -10,6 +10,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
 
 @Component({
   selector: 'app-doc-signer',
@@ -18,6 +19,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class DocSignerComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
+  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
   arrCrit: Array<CriteriaObj>;
   user: any;
 
@@ -62,7 +64,8 @@ export class DocSignerComponent implements OnInit {
 
   getEvent(event) {
     if (event.Key == "customer") {
-      this.http.post(URLConstant.GetCustByCustNo, { TrxNo: event.RowObj.CustNo }).subscribe(
+      this.CustNoObj.CustNo = event.RowObj.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }

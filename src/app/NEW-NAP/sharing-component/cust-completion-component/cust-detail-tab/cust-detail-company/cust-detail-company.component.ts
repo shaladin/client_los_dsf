@@ -18,6 +18,7 @@ import { CookieService } from 'ngx-cookie';
 import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { ActivatedRoute } from '@angular/router';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
 
 @Component({
   selector: 'app-cust-detail-company',
@@ -36,6 +37,7 @@ export class CustDetailCompanyComponent implements OnInit {
   businessDt: Date = new Date();
   CustModelObj: Array<KeyValueObj> = new Array();
   ddlCustModelObj: UcDropdownListObj = new UcDropdownListObj();
+  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
   industryTypeObj = {
     IndustryTypeCode: ""
   };
@@ -164,7 +166,8 @@ export class CustDetailCompanyComponent implements OnInit {
         this.AppCustCompanyObj.RowVersion = response.AppCustCompanyObj.RowVersion;
 
         if (response.AppCustGrpObj != null && response.AppCustGrpObj.CustNo != "") {
-          this.http.post(URLConstant.GetCustByCustNo, { TrxNo: response.AppCustGrpObj.CustNo }).subscribe(
+          this.CustNoObj.CustNo = response.AppCustGrpObj.CustNo;
+          this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
             (responseCustGrp) => {
               this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
               this.lookupCustGrpObj.jsonSelect = { CustName: responseCustGrp["CustName"] };

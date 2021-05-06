@@ -12,6 +12,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
 
 @Component({
   selector: 'app-mou-cust-listed-cust-fctr',
@@ -23,6 +24,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
   @Output() OutputData: EventEmitter<any> = new EventEmitter();
   listedCusts: Array<MouCustListedCustFctrObj>;
   inputLookupObj: InputLookupObj;
+  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
   dictLookup: {[key: string]: any;} = {};
   InputLookupCustomerObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
 
@@ -63,7 +65,8 @@ export class MouCustListedCustFctrComponent implements OnInit {
   }
 
   async setCustName(i, custNo){
-    await this.http.post(URLConstant.GetCustByCustNo, {TrxNo: custNo}).toPromise().then(
+    this.CustNoObj.CustNo = custNo;
+    await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
       (response) => {
         console.log(response);
         
@@ -100,8 +103,8 @@ export class MouCustListedCustFctrComponent implements OnInit {
   }
 
   openView(custNo) {
-    var link: string;
-    this.httpClient.post(URLConstant.GetCustByCustNo, {TrxNo : custNo}).subscribe(
+    this.CustNoObj.CustNo = custNo;
+    this.httpClient.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
       response => {
         AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
       });

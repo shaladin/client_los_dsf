@@ -19,6 +19,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
 import { ReqVerfQuestionAnswerObj } from 'app/shared/model/Request/Verification/ReqVerfQuestionAnswerObj.model';
+import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
 
 @Component({
   selector: 'app-cust-confirmation-subj-detail',
@@ -34,6 +35,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   leadObj: LeadObj = new LeadObj();
   appObj: AppObj = new AppObj();
   RefStatusList: Array<KeyValueObj> = new Array<KeyValueObj>();
+  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
   PhnList: Array<KeyValueObj> = new Array<KeyValueObj>();
   verfQuestionAnswerObj: VerfQuestionAnswerCustomObj = new VerfQuestionAnswerCustomObj();
   newVerfResultHObj: VerfResultHObj = new VerfResultHObj();
@@ -365,8 +367,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       AdInsHelper.OpenLeadViewByLeadId(this.leadObj.LeadId);
     }
     else if (key == "cust") {
-      var custObj = { CustNo: this.CustNo };
-      this.http.post(URLConstant.GetCustByCustNo, {TrxNo : this.CustNo}).subscribe(
+      this.CustNoObj.CustNo = this.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         });

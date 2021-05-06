@@ -8,6 +8,7 @@ import { map, mergeMap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
 
 @Component({
   selector: 'app-main-info',
@@ -34,6 +35,7 @@ export class MainInfoComponent implements OnInit {
   custUrl: string;
   mouUrl: string;
   mouCustStatView: string;
+  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
 
   constructor(private fb: FormBuilder, private http: HttpClient, public datepipe: DatePipe) { }
 
@@ -44,8 +46,8 @@ export class MainInfoComponent implements OnInit {
         return response;
       }),
       mergeMap((response) => {
-        var custObj = { CustNo: response['CustNo'] };
-        let getCustData = this.http.post(URLConstant.GetCustByCustNo, {TrxNo : response['CustNo']});
+        this.CustNoObj.CustNo = response['CustNo'];
+        let getCustData = this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj);
         var tempResponse = [response];
         return forkJoin([tempResponse, getCustData]);
       })

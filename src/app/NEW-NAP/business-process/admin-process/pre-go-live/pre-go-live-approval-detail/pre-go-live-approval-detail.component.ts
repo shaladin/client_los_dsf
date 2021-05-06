@@ -17,6 +17,7 @@ import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHisto
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
+import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
@@ -58,6 +59,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   count1: number = 0;
   ListRfaLogObj: any;
   listPreGoLiveAppvrObj: Array<any> = new Array<any>();
+  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
 
   AppId: any;
   AgrmntId: any;
@@ -232,8 +234,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     } else if (key == 'mou') {
       AdInsHelper.OpenMOUCustViewByMouCustId(this.MouCustId);
     } else if (key == 'cust') {
-      var custObj = { CustNo: this.CustNo };
-      this.http.post(URLConstant.GetCustByCustNo, {TrxNo : this.CustNo}).subscribe(
+      this.CustNoObj.CustNo = this.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"])
         });
@@ -282,8 +284,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   openView(custNo) {
-    var custObj = { CustNo: custNo };
-    this.http.post(URLConstant.GetCustByCustNo, {TrxNo : custNo}).subscribe(
+    this.CustNoObj.CustNo = custNo;
+    this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
       response => {
         AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
       });

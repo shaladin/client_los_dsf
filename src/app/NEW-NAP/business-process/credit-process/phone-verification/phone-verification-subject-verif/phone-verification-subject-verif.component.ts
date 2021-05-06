@@ -14,6 +14,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ReqVerfQuestionAnswerObj } from 'app/shared/model/Request/Verification/ReqVerfQuestionAnswerObj.model';
 import { ReqPhoneNumberObj } from 'app/shared/model/Request/PhoneVerification/ReqPhoneNumberObj.Model';
+import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
 
 
 
@@ -90,6 +91,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   verifResultHDetailObj: any;
   listVerifResultHObj: any;
   verfResultDListObjs: Array<VerfResultDObj>;
+  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
   ResultObj: any;
   SubjectRelationObj: any;
   PhoneNumberObj: any;
@@ -243,8 +245,8 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   async GetCust() {
-    var custObj = { CustNo: this.AppCustObj['CustNo'] };
-    await this.http.post(URLConstant.GetCustByCustNo, {TrxNo : this.AppCustObj['CustNo']}).toPromise().then(
+    this.CustNoObj.CustNo = this.AppCustObj['CustNo'];
+    await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
       (response) => {
         this.custId = response["CustId"];
       })

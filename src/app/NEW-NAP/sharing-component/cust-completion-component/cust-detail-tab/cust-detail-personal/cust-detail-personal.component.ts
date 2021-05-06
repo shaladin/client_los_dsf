@@ -13,6 +13,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
 import { ResponseAppCustCompletionPersonalDataObj } from 'app/shared/model/ResponseAppCustCompletionPersonalDataObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
@@ -39,6 +40,7 @@ export class CustDetailPersonalComponent implements OnInit {
   NationalityObj: Array<Object> = new Array();
   EducationObj: Array<KeyValueObj> = new Array();
   ReligionObj: Array<KeyValueObj> = new Array();
+  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
   CustDetailForm = this.fb.group({
     FamilyCardNo: ['', Validators.pattern("^[0-9]+$")],
     NoOfDependents: ['', Validators.pattern("^[0-9]+$")],
@@ -182,7 +184,8 @@ export class CustDetailPersonalComponent implements OnInit {
         this.AppCustObj.RowVersion = response.AppCustObj.RowVersion;
         this.AppCustPersonalObj.RowVersion = response.AppCustPersonalObj.RowVersion;
         if (response.AppCustGrpObj != null && response.AppCustGrpObj.CustNo != "") {
-          this.http.post(URLConstant.GetCustByCustNo, { TrxNo: response.AppCustGrpObj.CustNo }).subscribe(
+          this.CustNoObj.CustNo = response.AppCustGrpObj.CustNo;
+          this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
             (responseCustGrp) => {
               this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
               this.lookupCustGrpObj.jsonSelect = { CustName: responseCustGrp["CustName"]};

@@ -13,6 +13,7 @@ import { CustCompanyObj } from 'app/shared/model/CustCompanyObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
 import { ResponseAppCustCompletionCompanyDataObj } from 'app/shared/model/ResponseAppCustCompletionCompanyDataObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
@@ -36,6 +37,7 @@ export class NewNapCustCompanyFullDataComponent implements OnInit {
   AppCustCompanyObj: AppCustCompanyObj = new AppCustCompanyObj(); 
   businessDt: Date = new Date();
   CustModelObj: Array<KeyValueObj> = new Array();
+  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
   industryTypeObj = {
     IndustryTypeCode: ""
   };
@@ -85,7 +87,8 @@ export class NewNapCustCompanyFullDataComponent implements OnInit {
       MrCustModelCode: custObj.MrCustModelCode
     });
     if(custGrpObj && custGrpObj[0].CustNo){
-      this.http.post(URLConstant.GetCustByCustNo, {TrxNo: custGrpObj[0].CustNo}).toPromise().then(
+      this.CustNoObj.CustNo = custGrpObj[0].CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
         (responseCustGrp) => {
           this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
           this.lookupCustGrpObj.jsonSelect = {CustName: responseCustGrp["CustName"]};
@@ -151,7 +154,8 @@ export class NewNapCustCompanyFullDataComponent implements OnInit {
         this.AppCustCompanyObj.RowVersion = response.AppCustCompanyObj.RowVersion;
 
         if(response.AppCustGrpObj != null && response.AppCustGrpObj.CustNo != ""){
-          this.http.post(URLConstant.GetCustByCustNo, {TrxNo: response.AppCustGrpObj.CustNo}).subscribe(
+          this.CustNoObj.CustNo = response.AppCustGrpObj.CustNo;
+          this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
             (responseCustGrp) => {
               this.lookupCustGrpObj.nameSelect = responseCustGrp["CustName"];
               this.lookupCustGrpObj.jsonSelect = {CustName: responseCustGrp["CustName"]};

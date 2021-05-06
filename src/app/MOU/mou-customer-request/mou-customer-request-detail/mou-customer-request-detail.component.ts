@@ -14,6 +14,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -32,6 +33,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   custId: number;
   custUrl: string;
   RevolvingTypeList: Array<KeyValueObj> = new Array<KeyValueObj>();
+  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
 
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
@@ -122,8 +124,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
           this.MOUMainInfoForm.patchValue({
             ...response
           });
-          var custObj = { CustNo: response['CustNo'] };
-          this.httpClient.post(URLConstant.GetCustByCustNo, {TrxNo : response['CustNo']}).subscribe(
+          this.CustNoObj.CustNo = response['CustNo'];
+          this.httpClient.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
             (response: any) => {
               this.custId = response['CustId'];
             });

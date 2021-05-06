@@ -7,6 +7,7 @@ import { HttpClient } from "@angular/common/http";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { ReqByCustNoObj } from "app/shared/model/Request/ReqByCustNoObj.model";
 
 @Component({
   selector: 'app-purchase-tracking-inquiry',
@@ -16,6 +17,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 export class PurchaseTrackingInquiryComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
+  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
   isReady: boolean = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
@@ -55,7 +57,8 @@ export class PurchaseTrackingInquiryComponent implements OnInit {
       AdInsHelper.OpenAgrmntViewByAgrmntId(event.RowObj.AgrmntId);
     }
     else if (event.Key == "Customer") {
-      this.http.post(URLConstant.GetCustByCustNo, { TrxNo: event.RowObj.CustNo }).subscribe(
+      this.CustNoObj.CustNo = event.RowObj.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }

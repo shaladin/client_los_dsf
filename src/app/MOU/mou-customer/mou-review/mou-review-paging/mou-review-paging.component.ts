@@ -9,6 +9,7 @@ import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
 
 @Component({
   selector: 'app-mou-review-paging',
@@ -16,6 +17,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class MouReviewPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
+  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   user: any;
   link: string;
@@ -44,7 +46,8 @@ export class MouReviewPagingComponent implements OnInit {
 
   GetCallBack(event) {
     if (event.Key == "customer") {
-      this.http.post(URLConstant.GetCustByCustNo, {TrxNo : event.RowObj.CustNo}).subscribe(
+      this.CustNoObj.CustNo = event.RowObj.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         });

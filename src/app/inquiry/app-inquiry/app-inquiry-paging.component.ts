@@ -8,6 +8,7 @@ import { AdInsHelper } from "app/shared/AdInsHelper";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from "app/shared/constant/CommonConstant";
+import { ReqByCustNoObj } from "app/shared/model/Request/ReqByCustNoObj.model";
 
 @Component({
   selector: "app-inquiry-paging",
@@ -15,6 +16,7 @@ import { CommonConstant } from "app/shared/constant/CommonConstant";
 })
 export class AppInquiryPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
+  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
   BizTemplateCode: string;
   isReady: boolean = false;
 
@@ -87,7 +89,8 @@ export class AppInquiryPagingComponent implements OnInit {
 
   getEvent(event) {
     if(event.Key == "customer"){
-      this.http.post(URLConstant.GetCustByCustNo, { TrxNo: event.RowObj.custNo }).subscribe(
+      this.CustNoObj.CustNo = event.RowObj.custNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }

@@ -11,6 +11,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { environment } from 'environments/environment';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetMouCustDuplicateObj } from 'app/shared/model/Request/MOU/ReqGetMouCustDuplicateObj.model';
+import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
 
 @Component({
   selector: 'app-existing-mou-company',
@@ -36,6 +37,7 @@ export class ExistingMouCompanyComponent implements OnInit {
   RowVersion: any;
   cust: any;
   custUrl: string;
+  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -64,8 +66,9 @@ export class ExistingMouCompanyComponent implements OnInit {
     this.http.post(URLConstant.GetMouCustByMouCustId, { "Id": this.MouCustId }).subscribe(
       response => {
         this.MouCustObj = response['MouCustObj'];
-        var custObj = { CustNo: this.MouCustObj['CustNo'] };
-        this.http.post(URLConstant.GetCustByCustNo, {TrxNo : this.MouCustObj['CustNo']}).subscribe(
+
+        this.CustNoObj.CustNo = this.MouCustObj['CustNo'];
+        this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
           response => {
             this.cust = response;
           }

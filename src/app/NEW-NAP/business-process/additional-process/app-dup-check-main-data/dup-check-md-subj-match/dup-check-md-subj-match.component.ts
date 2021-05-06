@@ -15,6 +15,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ReqGetAppCustDupCheckObj } from 'app/shared/model/Request/NAP/DupCheck/ReqGetCustDupCheckObj.model';
 import { ResAppDupCheckCustMainDataObj, ResListAppDupCheckCustMainDataObj } from 'app/shared/model/Response/NAP/DupCheck/ResAppDupCheckCustMainDataObj.model';
+import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
 
 @Component({
   selector: 'app-dup-check-md-subj-match',
@@ -34,6 +35,7 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   appCustPersonalObj: AppCustPersonalObj;
   appCustCompanyObj: AppCustCompanyObj;
   reqDupCheckAppCustObj: ReqDupCheckAppCustObj = new ReqDupCheckAppCustObj();
+  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
   mrCustTypeCode: string;
   isLock: boolean = true;
   isMasterLock: boolean = false;
@@ -194,8 +196,8 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
 
   viewMainInfoCallback(event) {
     if (event.Key == "customer") {
-      var custObj = { CustNo: event.ViewObj.CustNo };
-      this.http.post(URLConstant.GetCustByCustNo, { TrxNo: event.ViewObj.CustNo }).subscribe(
+      this.CustNoObj.CustNo = event.ViewObj.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }

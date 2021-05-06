@@ -13,6 +13,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetCustDupCheckObj } from 'app/shared/model/Request/NAP/DupCheck/ReqGetCustDupCheckObj.model';
+import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
 
 @Component({
   selector: 'app-applicant-existing-data-personal',
@@ -38,6 +39,7 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
   RowVersion: any;
   cust: any;
   custUrl: string;
+  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
@@ -70,8 +72,8 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
       response => {
         this.AppCustObj = response['AppCustObj'];
 
-        var custObj = { CustNo: this.AppCustObj['CustNo'] };
-        this.http.post(URLConstant.GetCustByCustNo, {TrxNo : this.AppCustObj['CustNo']}).subscribe(
+        this.CustNoObj.CustNo = this.AppCustObj['CustNo'];
+        this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
           response => {
             this.cust = response;
           }
