@@ -17,6 +17,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 
 @Component({
   selector: 'app-mou-review-general',
@@ -112,7 +113,8 @@ export class MouReviewGeneralComponent implements OnInit {
         this.MrCustTypeCode = response['MrCustTypeCode'];
       });
 
-    await this.http.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.REF_REASON_MOU_GENERAL }).toPromise().then(
+    let tempReq: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.REF_REASON_MOU_GENERAL };
+    await this.http.post(URLConstant.GetListActiveRefReason, tempReq).toPromise().then(
       (response) => {
         this.listReason = response[CommonConstant.ReturnObj];
         this.MouReviewDataForm.patchValue({

@@ -12,6 +12,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
 import { AppCommissionDObj } from 'app/shared/model/AppCommissionDObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ReqGetListBankByVendorEmpNoAndCodeObj } from 'app/shared/model/Request/Vendor/ReqVendorEmp.model';
 
 @Component({
   selector: 'app-form-commission-generate',
@@ -296,11 +297,10 @@ export class FormCommissionGenerateComponent implements OnInit {
           this.SetDefaultDDLBankAcc(idx, idxDefault);
         });
     } else if (content == CommonConstant.ContentSupplierEmp) {
-      obj = {
-        VendorEmpNo: code,
-        VendorCode: this.parentForm.value[this.identifier][idx].SupplCode,
-      };
-      this.http.post<VendorBankAccObj>(URLConstant.GetListBankByVendorEmpNoAndVendorCode, obj).subscribe(
+      let ReqGetListBankObj : ReqGetListBankByVendorEmpNoAndCodeObj = new ReqGetListBankByVendorEmpNoAndCodeObj();
+      ReqGetListBankObj.VendorEmpNo = code;
+      ReqGetListBankObj.VendorCode = this.parentForm.value[this.identifier][idx].SupplCode;
+      this.http.post<VendorBankAccObj>(URLConstant.GetListBankByVendorEmpNoAndVendorCode, ReqGetListBankObj).subscribe(
         (response) => {
           var len = response["ReturnObject"].length;
           for (var i = 0; i < len; i++) {
@@ -341,13 +341,19 @@ export class FormCommissionGenerateComponent implements OnInit {
   SetDefaultDDLBankAcc(idxForm: number, idxDefault: number) {
     var ddlObj = this.parentForm.controls[this.identifier]["controls"][idxForm].controls.DropDownList.value[idxDefault];
 
-    this.parentForm.controls[this.identifier]["controls"][idxForm].patchValue({
-      BankAccountNo: ddlObj.Key,
-      BankAccountName: ddlObj.Value,
-      BankBranch: ddlObj.BankBranch,
-      BankCode: ddlObj.BankCode,
-      BankName: ddlObj.BankName
-    });
+    if (ddlObj != undefined || ddlObj != null) {
+      console.log(this.parentForm.controls[this.identifier]["controls"][idxForm]);
+      this.parentForm.controls[this.identifier]["controls"][idxForm].patchValue({
+        BankAccountNo: ddlObj.Key,
+        BankAccountName: ddlObj.Value,
+        BankBranch: ddlObj.BankBranch,
+        BankCode: ddlObj.BankCode,
+        BankName: ddlObj.BankName
+      });
+      return;
+    }
+    this.toastr.warningMessage("This " + this.FormInputObj['labelName'] + ": " + this.parentForm.controls[this.identifier]["controls"][idxForm].value.ContentNameValue + " has no bank account");
+    return;
   }
 
   DeleteDataForm(idx) {

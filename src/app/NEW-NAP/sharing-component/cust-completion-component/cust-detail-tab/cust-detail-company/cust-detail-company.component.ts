@@ -17,6 +17,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { ActivatedRoute } from '@angular/router';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 
 @Component({
   selector: 'app-cust-detail-company',
@@ -88,6 +89,7 @@ export class CustDetailCompanyComponent implements OnInit {
 
   GetCustModel() {
     this.ddlCustModelObj.apiUrl = URLConstant.GetListActiveRefMasterWithMappingCodeAll;
+    this.ddlCustModelObj.requestObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
     this.ddlCustModelObj.requestObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel, MappingCode: CommonConstant.CustTypeCompany };
   }
 

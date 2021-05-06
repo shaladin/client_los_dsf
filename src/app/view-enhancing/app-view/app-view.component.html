@@ -153,6 +153,12 @@
               <ng-template matTabContent>
               </ng-template>
             </mat-tab>
+
+            <mat-tab *ngIf="IsSurveyResult" label="Survey Result">
+              <ng-template matTabContent>
+                <app-view-survey [AppNo]="AppNo"></app-view-survey>
+              </ng-template>
+            </mat-tab>
           </mat-tab-group>
         </div>
 

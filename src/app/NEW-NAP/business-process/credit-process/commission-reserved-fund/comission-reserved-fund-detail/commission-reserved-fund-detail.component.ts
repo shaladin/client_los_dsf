@@ -78,7 +78,6 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   };
 
   ngOnInit() {
-    console.log(this.BizTemplateCode);
     this.isShow = false;
     this.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
 
@@ -192,6 +191,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
 
   NextStep(Step) {
     this.NapObj.AppCurrStep = Step;
+    console.log(this.NapObj);
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       () => {
         this.tempTotalRsvFundAmt = this.viewIncomeInfoObj.ReservedFundAllocatedAmount;
@@ -269,7 +269,6 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   isShow: boolean = false;
   DictRemainingIncomeForm: any = {};
   GetDictRemaining(ev) {
-    console.log(ev);
     this.DictRemainingIncomeForm = ev;
     this.isShow = true;
   }

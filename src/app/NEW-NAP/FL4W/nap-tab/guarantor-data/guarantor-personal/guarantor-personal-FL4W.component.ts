@@ -18,6 +18,8 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 
 @Component({
   selector: 'app-guarantor-personal-FL4W',
@@ -143,21 +145,21 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
       this.inputLookupObj1.isReady = true;
     }
 
-    var idTypeObj = {
+    var idTypeObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType,
-      RowVersion: ""
+      MappingCode: null
     }
-    var genderObj = {
+    var genderObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender,
-      RowVersion: ""
+      MappingCode: null
     }
-    var maritalObj = {
+    var maritalObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMaritalStat,
-      RowVersion: ""
+      MappingCode: null
     }
-    var religionObj = {
+    var religionObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReligion,
-      RowVersion: ""
+      MappingCode: null
     }
     this.http.post(URLConstant.GetListActiveRefMaster, idTypeObj).subscribe(
       (response) => {
@@ -178,16 +180,14 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     this.http.post(URLConstant.GetAppCustByAppId, AppCust).subscribe(
       (response) => {
         if (response["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
-          var refCustRelObj = {
+          var refCustRelObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarPersonalRelationship,
             MappingCode: CommonConstant.CustTypePersonal,
-            RowVersion: ""
           }
         } else {
-          var refCustRelObj = {
+          var refCustRelObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
             RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
             MappingCode: CommonConstant.CustTypePersonal,
-            RowVersion: ""
           }
         }
         this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refCustRelObj).subscribe(
@@ -227,7 +227,8 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
         }
       }
     );
-    var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
+    let obj: GenericObj = new GenericObj();
+    obj.Codes = [CommonConstant.RefMasterTypeCodeNationality];
     this.http.post(URLConstant.GetListRefMasterByRefMasterTypeCodes, obj).toPromise().then(
       (response) => {
         this.MrNationalityCode = response[CommonConstant.ReturnObj];
@@ -362,6 +363,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
 
   // GuarantorName="";
   lookupGuarantor(event) {
+    console.log("INIII");
     this.tempCustNo = event.CustNo;
     this.inputLookupObj.isReadonly = true;
     this.http.post(URLConstant.GetCustByCustId, { Id: event.CustId }).subscribe(
@@ -406,9 +408,10 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
             }
 
           });
-        this.http.post(URLConstant.GetCustAddrByMrCustAddrType, {
-          CustId: event.CustId, MrCustAddrTypeCode: CommonConstant.AddrTypeLegal
-        }).subscribe(
+        let reqObj: GenericObj = new GenericObj();
+        reqObj.Id = event.CustId;
+        reqObj.Code = CommonConstant.AddrTypeLegal;
+        this.http.post(URLConstant.GetCustAddrByMrCustAddrType, reqObj).subscribe(
           (response) => {
             this.resultData = response;
             this.AddrObj = new AddrObj();

@@ -4,7 +4,7 @@ export class CalcInsAddCvgObj {
     Rate: number;
     RateType: string;
     AddCoverageTypeCode: string;
-    RateToInsco: string;
+    RateToInsco: number;
 constructor() { 
     }
 }

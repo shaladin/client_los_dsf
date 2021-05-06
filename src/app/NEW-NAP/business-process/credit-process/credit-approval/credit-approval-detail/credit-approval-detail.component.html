@@ -1,0 +1,72 @@
+<div class="card" i18n>
+  <div class="card-header">
+    <h4 class="card-title" translate> Credit Approval </h4>
+  </div>
+  <div class="card-body">
+    <app-app-main-info [AppId]="appId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info>
+    <mat-tab-group>
+      <mat-tab label="Summary">
+        <ng-template matTabContent>
+          <view-summary-app [AppId] = "appId">
+          </view-summary-app>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Customer Data">
+        <ng-template matTabContent>
+          <app-view-app-cust-data-personal [appId]="appId" *ngIf="mrCustTypeCode=='PERSONAL'">
+          </app-view-app-cust-data-personal>
+          <app-view-app-cust-data-company [appId]="appId" *ngIf="mrCustTypeCode=='COMPANY'">
+          </app-view-app-cust-data-company>
+        </ng-template>
+      </mat-tab>
+      <mat-tab *ngIf="BizTemplateCode != 'FL4W'" label="Application Data">
+        <ng-template matTabContent>
+          <app-tab-application-data [AppId]="appId"></app-tab-application-data>
+        </ng-template>
+      </mat-tab>
+      <mat-tab *ngIf="BizTemplateCode == 'FL4W'" label="Application Data">
+        <ng-template matTabContent>
+          <app-view-application-data-multi [AppId]=appId></app-view-application-data-multi>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Deviation">
+        <ng-template matTabContent>
+          <app-tab-deviation  [AppId]="appId" [IsEditManualDeviation]="false"></app-tab-deviation>        
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Customer History">
+        <ng-template matTabContent>
+          <app-cust-history [AppId]="appId"></app-cust-history>
+        </ng-template>
+      </mat-tab>
+      <mat-tab *ngIf="SysConfigResultObj.ConfigValue == '1'" label="Document">
+        <ng-template matTabContent>
+          <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
+        </ng-template>
+      </mat-tab>
+      <mat-tab *ngIf="BizTemplateCode != 'CFRFN4W'" label="Analysis Result">
+        <ng-template matTabContent>
+          <app-tab-analysis-result [appId]="appId"></app-tab-analysis-result>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+    
+    <div class="ng-star-inserted">
+      <div class="row margin-bot-15">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="px-3">
+                <app-approval-hist [AppNo]="appNo" [AppId]="appId"></app-approval-hist>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+        
+    <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady"></lib-ucapprovalgeneralinfo>
+  
+    <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)" (onCancel)="onCancelClick()"></lib-ucapprovalR3>
+  </div>
+</div>

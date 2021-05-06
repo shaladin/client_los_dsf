@@ -46,6 +46,7 @@ import { SharedModule } from "app/shared/shared.module";
 import { TabDeviationComponent } from './tab-deviation/tab-deviation.component';
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { ViewAssetExpenseComponent } from './view-asset-expense/view-asset-expense.component';
+import { ViewSurveyComponent } from './view-survey/view-survey.component';
 
 @NgModule({
     imports: [
@@ -98,6 +99,7 @@ import { ViewAssetExpenseComponent } from './view-asset-expense/view-asset-expen
         ViewAssetDataComponent,
         TabDeviationComponent,
         ViewAssetExpenseComponent,
+        ViewSurveyComponent,
     ],
     entryComponents: [
         UclookupgenericComponent,

@@ -47,6 +47,7 @@ export class AppViewComponent implements OnInit {
   IsDeviation: boolean = true;
   IsAssetExpense: boolean = true;
   IsPefindoResult: boolean = true;
+  IsSurveyResult: boolean = true;
   bizTemplateCode: string = "";
   isDmsReady: boolean;
   dmsObj: DMSObj;
@@ -73,11 +74,9 @@ export class AppViewComponent implements OnInit {
   }
 
   async ngOnInit() : Promise<void> {
-    console.log("MashinoApp")
     this.arrValue.push(this.AppId);
-    this.GetApp();
+    await this.GetApp();
     this.GetIsUseDigitalization();
-    // this.viewAppMainInfo.ReloadUcViewGeneric();
     await this.InitDms();
   }
 
@@ -174,12 +173,12 @@ export class AppViewComponent implements OnInit {
     }
   }
 
-  GetApp() {
+  async GetApp() {
     var appObj = {
       Id: this.AppId,
     };
 
-    this.http.post(URLConstant.GetAppById, appObj).subscribe(
+    await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
       (response) => {
         this.bizTemplateCode = response["BizTemplateCode"];
         this.CustType = response["MrCustTypeCode"];
@@ -197,6 +196,7 @@ export class AppViewComponent implements OnInit {
           this.IsDeviation = false;
           this.IsAssetExpense = false;
           this.IsPefindoResult = false;
+          this.IsSurveyResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
           this.IsAsset = false;
@@ -207,6 +207,7 @@ export class AppViewComponent implements OnInit {
           this.IsDeviation = false;
           this.IsAssetExpense = false;
           this.IsPefindoResult = false;
+          this.IsSurveyResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.CF4W) {
           this.IsCollateral = false;
@@ -217,6 +218,7 @@ export class AppViewComponent implements OnInit {
           this.IsDeviation = false;
           this.IsAssetExpense = false;
           this.IsPefindoResult = false;
+          this.IsSurveyResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.FL4W) {
           this.IsAsset = false;
@@ -227,6 +229,7 @@ export class AppViewComponent implements OnInit {
           this.IsDeviation = false;
           this.IsAssetExpense = false;
           this.IsPefindoResult = false;
+          this.IsSurveyResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.CFNA) {
           this.IsAsset = false;
@@ -237,6 +240,7 @@ export class AppViewComponent implements OnInit {
           this.IsDeviation = false;
           this.IsAssetExpense = false;
           this.IsPefindoResult = false;
+          this.IsSurveyResult = false;
         }
         else if (this.bizTemplateCode == CommonConstant.OPL) {
           this.IsCollateral = false;
@@ -273,7 +277,6 @@ export class AppViewComponent implements OnInit {
     this.http.post(URLConstant.GetGeneralSettingByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).subscribe(
       (response) => {
         this.IsUseDigitalization = response["GsValue"];
-        console.log(this.IsUseDigitalization); 
       }
     )
   }
