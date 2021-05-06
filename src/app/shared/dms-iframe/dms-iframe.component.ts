@@ -27,7 +27,6 @@ export class DmsIframeComponent implements OnInit {
   constructor() { }
   
   ngOnInit() {
-    console.log("Mashino")
     this.rootServer = "";
     if(this.dmsObj.UsingDmsAdIns == "1")
     {
