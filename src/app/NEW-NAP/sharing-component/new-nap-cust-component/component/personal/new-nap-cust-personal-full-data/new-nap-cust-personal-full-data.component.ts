@@ -83,7 +83,7 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
         });
       });
 
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeDefLocalNationality }).toPromise().then(
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeDefLocalNationality }).toPromise().then(
       (response) => {
         this.Country = response;
         this.lookupCountryObj.urlJson = "./assets/uclookup/lookupCustomerCountry.json";

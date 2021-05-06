@@ -48,7 +48,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   AgrmntNo: string;
   TaskListId: number;
   BizTemplateCode: string;
-  SubjectResponse: RefMasterObj = new RefMasterObj();
+  SubjectResponse: KeyValueObj = new KeyValueObj();
   cust: any;
   isFailed: boolean = false;
 
@@ -88,7 +88,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeVerfSubjRelation,
       MasterCode: this.Subject
     };
-    await this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
+    await this.http.post<KeyValueObj>(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
       (response) => {
         this.SubjectResponse = response;
       });

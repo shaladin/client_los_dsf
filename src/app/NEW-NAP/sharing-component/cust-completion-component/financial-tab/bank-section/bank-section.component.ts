@@ -140,14 +140,14 @@ export class BankSectionComponent implements OnInit {
 
     this.CheckDefault();
 
-    if (BankAccAndStmntObj.AppCustBankStmntObjs != undefined) {
+    if (BankAccAndStmntObj.ListAppCustBankAccStmntObj != undefined) {
       var bankStmnObjs = this.BankAccStmntForm.controls['BankStmntObjs'] as FormArray;
-      for (let i = 0; i < BankAccAndStmntObj.AppCustBankStmntObjs.length; i++) {
-        bankStmnObjs.push(this.AddGroup(BankAccAndStmntObj.AppCustBankStmntObjs[i]));
+      for (let i = 0; i < BankAccAndStmntObj.ListAppCustBankAccStmntObj.length; i++) {
+        bankStmnObjs.push(this.AddGroup(BankAccAndStmntObj.ListAppCustBankAccStmntObj[i]));
       }
     }
 
-    this.AppCustBankStmntList = BankAccAndStmntObj.AppCustBankStmntObjs;
+    this.AppCustBankStmntList = BankAccAndStmntObj.ListAppCustBankAccStmntObj;
   }
 
   ClearForm() {

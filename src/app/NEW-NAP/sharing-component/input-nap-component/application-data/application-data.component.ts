@@ -127,7 +127,6 @@ export class ApplicationDataComponent implements OnInit {
   slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
 
-  generalSettingObj: any;
   salesOfficerCode : Array<string> = new Array();
   isSalesOfficerCode: boolean = false;
   refEmpSpvObj: any;
@@ -193,10 +192,9 @@ export class ApplicationDataComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).subscribe(
-      (response) => {
-        this.generalSettingObj = response;
-        this.salesOfficerCode = this.generalSettingObj.GsValue.split(',');
+    this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).subscribe(
+      (response: GeneralSettingObj) => {
+        this.salesOfficerCode = response.GsValue.split(',');
         if(this.salesOfficerCode.some(x => x === user.JobTitleCode)) {
           this.isSalesOfficerCode = true;
           this.NapAppModelForm.patchValue({
@@ -515,11 +513,11 @@ export class ApplicationDataComponent implements OnInit {
       let reqSecObj: ReqRefMasterByTypeCodeAndMasterCodeObj = new ReqRefMasterByTypeCodeAndMasterCodeObj();
       reqSecObj.MasterCode = this.defaultSlikSecEcoCode;
       reqSecObj.RefMasterTypeCode = "SLIK_SEC_ECO";
-      this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(
-        (response) => {
-          this.slikSecDescr = response['Descr'];
-          this.inputLookupEconomicSectorObj.nameSelect = response['Descr'];
-          this.inputLookupEconomicSectorObj.jsonSelect = { Descr: response['Descr'] };
+      this.http.post(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(
+        (response: KeyValueObj) => {
+          this.slikSecDescr = response.Value;
+          this.inputLookupEconomicSectorObj.nameSelect = response.Value;
+          this.inputLookupEconomicSectorObj.jsonSelect = { Descr: response.Value };
         });
     }
     this.isInputLookupObj = true;
@@ -555,7 +553,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   async GetGSValueSalesOfficer() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
       (response) => {
         var addCrit3 = new CriteriaObj();
         addCrit3.DataType = "text";

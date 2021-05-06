@@ -113,7 +113,6 @@ export class LeadInputCustDataComponent implements OnInit {
   inputAddressObjForLegalAddr: any;
   inputAddressObjForResidenceAddr: InputAddressObj;
   generalSettingObj: GenericListByCodeObj;
-  getGeneralSettingByCode: string;
   returnGeneralSettingObj: Array<ResGeneralSettingObj>;
   isNeedCheckBySystem: string;
   isUseDigitalization: string;

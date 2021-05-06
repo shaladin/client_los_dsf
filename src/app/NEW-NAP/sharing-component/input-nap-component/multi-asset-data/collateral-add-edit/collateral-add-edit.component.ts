@@ -740,7 +740,7 @@ export class CollateralAddEditComponent implements OnInit {
     this.GenerateAppCollateralAttr(false);
 
 
-    this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSSerialNoRegex }).subscribe(
+    this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSSerialNoRegex }).subscribe(
       (response) => {
         this.SerialNoRegex = response["GsValue"];
 

@@ -12,7 +12,6 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ResponseJobDataPersonalObj } from 'app/shared/model/ResponseJobDataPersonalObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
@@ -66,9 +65,9 @@ export class NewNapCustPersonalJobComponent implements OnInit {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel,
       MasterCode: this.CustModelCode
     };
-    await this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
+    await this.http.post<KeyValueObj>(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
       (response) => {
-        this.MrCustModelDescr = response.Descr;
+        this.MrCustModelDescr = response.Value;
         this.CheckCustModel();
         this.InitLookup();
       }
