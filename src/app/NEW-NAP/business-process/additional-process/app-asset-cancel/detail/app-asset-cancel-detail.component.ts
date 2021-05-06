@@ -11,6 +11,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 
 @Component({
   selector: 'app-asset-cancel-detail',
@@ -41,7 +42,7 @@ export class AppAssetCancelDetailComponent implements OnInit {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-asset-opl-main-info.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
-    var refReasonObj = {
+    var refReasonObj: ReqGetByTypeCodeObj = {
       RefReasonTypeCode: CommonConstant.RefReasonTypeCodeAppAgrCncl
     }
 

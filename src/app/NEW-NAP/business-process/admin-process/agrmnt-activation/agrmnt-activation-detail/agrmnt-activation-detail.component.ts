@@ -12,6 +12,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ReqGetAppFinDataAndFeeObj } from 'app/shared/model/Request/NAP/AgrAct/ReqAppFinDataAndFee.model';
+import { ResAgrmntActivationFinDataAndFeeObj, ResAppFeeObj, ResponseAppFinDataObj } from 'app/shared/model/Response/NAP/AgrAct/ResAgrmntActivationFinDataAndFeeObj.model';
 
 @Component({
   selector: 'app-agrmnt-activation-detail',
@@ -20,8 +21,8 @@ import { ReqGetAppFinDataAndFeeObj } from 'app/shared/model/Request/NAP/AgrAct/R
 })
 export class AgrmntActivationDetailComponent implements OnInit {
   AssetObj: any;
-  AppFees: any;
-  AppFinData: any;
+  AppFees: Array<ResAppFeeObj> = new Array<ResAppFeeObj>();
+  AppFinData: ResponseAppFinDataObj = new ResponseAppFinDataObj();
   listSelectedId: Array<number> = new Array<number>();
   AppId: number;
   isOverwrite: boolean;
@@ -111,9 +112,9 @@ export class AgrmntActivationDetailComponent implements OnInit {
         objFinDataAndFee.AppId = this.AppId;
         objFinDataAndFee.ListAppAssetId = this.listSelectedId;
         objFinDataAndFee.IsEnd = this.IsEnd;
-        this.adminProcessSvc.GetAppFinDataAndFeeByAppIdAndListAppAssetId(objFinDataAndFee).subscribe((response) => {
-          this.AppFees = response["ListAppFeeObj"];
-          this.AppFinData = response["AppFinDataObj"];
+        this.adminProcessSvc.GetAppFinDataAndFeeByAppIdAndListAppAssetId(objFinDataAndFee).subscribe((response : ResAgrmntActivationFinDataAndFeeObj) => {
+          this.AppFees = response.ListAppFeeObj;
+          this.AppFinData = response.AppFinDataObj;
         })
       });
     }

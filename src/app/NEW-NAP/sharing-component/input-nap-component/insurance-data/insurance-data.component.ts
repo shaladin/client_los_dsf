@@ -701,7 +701,8 @@ export class InsuranceDataComponent implements OnInit {
       var index = this.ruleObj.MainCoverageType.findIndex(x => x == this.InsuranceDataForm.controls.InsMainCvgType.value);
       obj.CustMainPremiRate = this.ruleObj.MainRateToCust[index];
       obj.InscoMainPremiRate = this.ruleObj.MainRateToInsco[index];
-      obj.StdMainPremiRate = this.ruleObj.BaseRatePercentage[index];
+      // StdMainPremiRate di set 0 karena di rule mau di hapus, tar field table juga mau di hapus
+      obj.StdMainPremiRate = 0;
       (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray).push(this.addGroup(i, obj, ManufYearDiff));
       ManufYearDiff++;
       yearCount -= 12;
@@ -844,8 +845,10 @@ export class InsuranceDataComponent implements OnInit {
           BaseCalculation: this.ruleObj.BaseCalc[index],
           InscoAddPremiRate: inscoAddPremiRate,
           InscoAddPremiAmt: 0,
-          StdAddPremiRate: this.ruleObj.BaseRate[index]
+          StdAddPremiRate: 0
         });
+        // StdAddPremiRate di set 0 karena di rule mau di hapus, tar field table juga mau di hapus
+
         (group.controls.AppInsAddCvgs as FormArray).push(control);
       }
     });
