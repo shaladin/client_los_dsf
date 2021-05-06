@@ -477,6 +477,7 @@ export class URLConstant {
   public static EditLead = environment.losUrl + "/Lead/EditLead";
   public static DeleteLead = environment.losUrl + "/Lead/DeleteLead";
   public static GetLeadByLeadId = environment.losUrl + "/Lead/GetLeadByLeadId";
+  public static GetLeadNoByLeadId = environment.losUrl + "/Lead/GetLeadNoByLeadId";
   public static GetLeadByLeadNo = environment.losUrl + "/Lead/GetLeadByLeadNo";
   public static GetLeadForUpdateByLeadId = environment.losUrl + "/Lead/GetLeadForUpdateByLeadId";
   public static GetLeadForUpdateByLeadNo = environment.losUrl + "/Lead/GetLeadForUpdateByLeadNo";

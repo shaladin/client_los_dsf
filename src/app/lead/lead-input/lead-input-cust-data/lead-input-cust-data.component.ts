@@ -233,10 +233,10 @@ export class LeadInputCustDataComponent implements OnInit {
         this.leadObj = new LeadObj();
         this.leadObj.LeadId = this.LeadId;
         var leadObj = { Id: this.LeadId };
-        this.http.post(URLConstant.GetLeadByLeadId, leadObj).subscribe(
-          (response) => {
+        this.http.post(URLConstant.GetLeadNoByLeadId, leadObj).subscribe(
+          (response: GenericObj) => {
             this.returnLeadObj = response;
-            this.leadNo = response['LeadNo'];
+            this.leadNo = response.TrxNo;
 
             this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
             this.thirdPartyObj.TrxTypeCode = CommonConstant.LEAD_TRX_TYPE_CODE;
