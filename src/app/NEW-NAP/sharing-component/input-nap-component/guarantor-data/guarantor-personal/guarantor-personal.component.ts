@@ -18,6 +18,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 @Component({
   selector: 'app-guarantor-personal',
   templateUrl: './guarantor-personal.component.html',
@@ -358,7 +359,10 @@ export class GuarantorPersonalComponent implements OnInit {
         );
         this.clearExpDt();
       });
-    this.http.post(URLConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: "LEGAL" }).subscribe(
+      let reqObj: GenericObj = new GenericObj();
+      reqObj.Id = event.CustId;
+      reqObj.Code = CommonConstant.AddrTypeLegal;
+      this.http.post(URLConstant.GetCustAddrByMrCustAddrType, reqObj).subscribe(
       (response) => {
         this.resultData = response;
         this.AddrObj = new AddrObj();

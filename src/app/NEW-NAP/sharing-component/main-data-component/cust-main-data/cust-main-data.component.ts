@@ -138,7 +138,6 @@ export class CustMainDataComponent implements OnInit {
   });
 
   async ngOnInit() {
-    console.log("INIII");
     this.ddlMrCustRelationshipCodeObj.isSelectOutput = true;
     this.ddlIdTypeObj.isSelectOutput = true;
     this.ddlIdTypeObj.customKey = "MasterCode";

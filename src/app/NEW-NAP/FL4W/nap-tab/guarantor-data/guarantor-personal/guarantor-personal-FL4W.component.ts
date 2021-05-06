@@ -18,6 +18,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-guarantor-personal-FL4W',
@@ -362,6 +363,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
 
   // GuarantorName="";
   lookupGuarantor(event) {
+    console.log("INIII");
     this.tempCustNo = event.CustNo;
     this.inputLookupObj.isReadonly = true;
     this.http.post(URLConstant.GetCustByCustId, { Id: event.CustId }).subscribe(
@@ -406,9 +408,10 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
             }
 
           });
-        this.http.post(URLConstant.GetCustAddrByMrCustAddrType, {
-          CustId: event.CustId, MrCustAddrTypeCode: CommonConstant.AddrTypeLegal
-        }).subscribe(
+        let reqObj: GenericObj = new GenericObj();
+        reqObj.Id = event.CustId;
+        reqObj.Code = CommonConstant.AddrTypeLegal;
+        this.http.post(URLConstant.GetCustAddrByMrCustAddrType, reqObj).subscribe(
           (response) => {
             this.resultData = response;
             this.AddrObj = new AddrObj();

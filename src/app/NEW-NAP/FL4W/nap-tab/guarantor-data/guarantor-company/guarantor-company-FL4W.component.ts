@@ -304,7 +304,10 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
             );
           }
         );
-        this.http.post(URLConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: CommonConstant.AddrTypeLegal }).subscribe(
+        let reqObj: GenericObj = new GenericObj();
+        reqObj.Id = event.CustId;
+        reqObj.Code = CommonConstant.AddrTypeLegal;
+        this.http.post(URLConstant.GetCustAddrByMrCustAddrType, reqObj).subscribe(
           (response) => {
             this.resultData = response;
             this.CompanyForm.patchValue({
