@@ -19,6 +19,7 @@ import { CookieService } from 'ngx-cookie';
 import { ReqAddLeadObj, ReqEditLeadObj } from 'app/shared/model/Request/LEAD/ReqAddEditLeadObj.model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ResGetListRefEmpForLookupObj } from 'app/shared/model/Response/RefEmp/ResRefEmpObj.model';
 
 @Component({
   selector: 'app-lead-input-main-info',
@@ -59,22 +60,22 @@ export class LeadInputMainInfoComponent implements OnInit {
   pageType: string = "add";
   leadPersonalLookUpObj: InputLookupObj;
   cmoObj: RefEmpForLookupObj;
-  returnCmoObj: any;
+  returnCmoObj: ResGetListRefEmpForLookupObj;
   surveyorObj: RefEmpForLookupObj;
-  returnSurveyorObj: any;
+  returnSurveyorObj: ResGetListRefEmpForLookupObj;
   salesObj: RefEmpForLookupObj;
-  returnSalesObj: any;
+  returnSalesObj: ResGetListRefEmpForLookupObj;
   leadIdExist: any;
   getExistLeadObj: LeadObj;
   returnExistLead: any;
   vendorExistObj: VendorObj;
   returnVendorExistObj: any;
   cmoExistObj: RefEmpForLookupObj;
-  returnCmoExistObj: any;
+  returnCmoExistObj: ResGetListRefEmpForLookupObj;
   surveyorExistObj: RefEmpForLookupObj;
-  returnSurveyorExistObj: any;
+  returnSurveyorExistObj: ResGetListRefEmpForLookupObj;
   salesExistObj: RefEmpForLookupObj;
-  returnSalesExistObj: any;
+  returnSalesExistObj: ResGetListRefEmpForLookupObj;
   leadExistObj: LeadObj;
   returnLeadExistObj: any;
   critObj: CriteriaObj = new CriteriaObj();
@@ -180,7 +181,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
         this.cmoExistObj = new RefEmpForLookupObj();
         this.cmoExistObj.Username = this.returnExistLead.CmoUsername;
-        this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.cmoExistObj).subscribe(
+        this.http.post<ResGetListRefEmpForLookupObj>(URLConstant.GetRefEmpForLookupByUsername, this.cmoExistObj).subscribe(
           (response) => {
             this.returnCmoExistObj = response;
             this.cmoNameLookUpObj.nameSelect = this.returnCmoExistObj.Username;
@@ -190,7 +191,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
         this.surveyorExistObj = new RefEmpForLookupObj();
         this.surveyorExistObj.Username = this.returnExistLead.SurveyorUsername;
-        this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.surveyorExistObj).subscribe(
+        this.http.post<ResGetListRefEmpForLookupObj>(URLConstant.GetRefEmpForLookupByUsername, this.surveyorExistObj).subscribe(
           (response) => {
             this.returnSurveyorExistObj = response;
             this.surveyorNameLookUpObj.nameSelect = this.returnSurveyorExistObj.Username;
@@ -199,7 +200,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
         this.salesExistObj = new RefEmpForLookupObj();
         this.salesExistObj.Username = this.returnExistLead.TeleMarketingUsername;
-        this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.salesExistObj).subscribe(
+        this.http.post<ResGetListRefEmpForLookupObj>(URLConstant.GetRefEmpForLookupByUsername, this.salesExistObj).subscribe(
           (response) => {
             this.returnSalesExistObj = response;
             this.salesNameLookUpObj.nameSelect = this.returnSalesExistObj.Username;
@@ -276,7 +277,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
           this.cmoObj = new RefEmpForLookupObj();
           this.cmoObj.Username = this.returnLead.CmoUsername;
-          this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.cmoObj).subscribe(
+          this.http.post<ResGetListRefEmpForLookupObj>(URLConstant.GetRefEmpForLookupByUsername, this.cmoObj).subscribe(
             (response) => {
               this.returnCmoObj = response;
               this.cmoNameLookUpObj.nameSelect = this.returnCmoObj.Username;
@@ -285,7 +286,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
           this.surveyorObj = new RefEmpForLookupObj();
           this.surveyorObj.Username = this.returnLead.SurveyorUsername;
-          this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.surveyorObj).subscribe(
+          this.http.post<ResGetListRefEmpForLookupObj>(URLConstant.GetRefEmpForLookupByUsername, this.surveyorObj).subscribe(
             (response) => {
               this.returnSurveyorObj = response;
               this.surveyorNameLookUpObj.nameSelect = this.returnSurveyorObj.Username;
@@ -294,7 +295,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
           this.salesObj = new RefEmpForLookupObj();
           this.salesObj.Username = this.returnLead.TeleMarketingUsername;
-          this.http.post(URLConstant.GetRefEmpForLookupByUsername, this.salesObj).subscribe(
+          this.http.post<ResGetListRefEmpForLookupObj>(URLConstant.GetRefEmpForLookupByUsername, this.salesObj).subscribe(
             (response) => {
               this.returnSalesObj = response;
               this.salesNameLookUpObj.nameSelect = this.returnSalesObj.Username;

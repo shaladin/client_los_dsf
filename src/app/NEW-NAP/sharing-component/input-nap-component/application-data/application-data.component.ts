@@ -25,6 +25,8 @@ import { CookieService } from 'ngx-cookie';
 import { UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ResRefEmpObj } from 'app/shared/model/Response/RefEmp/ResRefEmpObj.model';
 
 @Component({
   selector: 'app-application-data',
@@ -130,7 +132,7 @@ export class ApplicationDataComponent implements OnInit {
   generalSettingObj: any;
   salesOfficerCode : Array<string> = new Array();
   isSalesOfficerCode: boolean = false;
-  refEmpSpvObj: any;
+  refEmpSpvObj: ResRefEmpObj;
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -204,7 +206,10 @@ export class ApplicationDataComponent implements OnInit {
             SalesOfficerName: user.EmpName
           });
 
-          this.http.post(URLConstant.GetRefEmpSpvByEmpNo, { TrxNo: user.EmpNo }).subscribe(
+          let ReqGetRefEmpSpvByEmpNo: GenericObj = new GenericObj();
+          ReqGetRefEmpSpvByEmpNo.EmpNo = user.EmpNo;
+
+          this.http.post<ResRefEmpObj>(URLConstant.GetRefEmpSpvByEmpNo, ReqGetRefEmpSpvByEmpNo).subscribe(
             (response) => {
               this.refEmpSpvObj = response;
               if(this.refEmpSpvObj !== null) {
