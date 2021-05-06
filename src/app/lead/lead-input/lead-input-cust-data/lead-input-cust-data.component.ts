@@ -32,10 +32,10 @@ import { String } from 'typescript-string-operations';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ReqInputLeadCustPersonalObj } from 'app/shared/model/Request/LEAD/ReqAddEditInputLeadCustPersonalObj.model';
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
-import { GenericByIdAndCodeObj } from 'app/shared/model/Generic/GenericByIdAndCodeObj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-lead-input-cust-data',
@@ -379,7 +379,7 @@ export class LeadInputCustDataComponent implements OnInit {
               });
             });
 
-          var objLeadCustAddrLegalObj: GenericByIdAndCodeObj = new GenericByIdAndCodeObj();
+          var objLeadCustAddrLegalObj: GenericObj = new GenericObj();
           objLeadCustAddrLegalObj.Id = this.resLeadCustObj.LeadCustId;
           objLeadCustAddrLegalObj.Code = CommonConstant.AddrTypeLegal;
           this.http.post(URLConstant.GetLeadCustAddrByLeadCustIdAndAddrTypeCode, objLeadCustAddrLegalObj).subscribe(
@@ -410,7 +410,7 @@ export class LeadInputCustDataComponent implements OnInit {
               this.inputAddressObjForLegalAddr.inputField = this.inputLegalAddressObj;
             });
 
-          var objLeadCustAddrResObj: GenericByIdAndCodeObj = new GenericByIdAndCodeObj();
+          var objLeadCustAddrResObj: GenericObj = new GenericObj();
           objLeadCustAddrResObj.Id = this.resLeadCustObj.LeadCustId;
           objLeadCustAddrResObj.Code = CommonConstant.AddrTypeResidence;
           this.http.post(URLConstant.GetLeadCustAddrByLeadCustIdAndAddrTypeCode, objLeadCustAddrResObj).subscribe(
@@ -535,7 +535,7 @@ export class LeadInputCustDataComponent implements OnInit {
                 });
               });
 
-            var objLeadCustAddrLegalObj: GenericByIdAndCodeObj = new GenericByIdAndCodeObj();
+            var objLeadCustAddrLegalObj: GenericObj = new GenericObj();
             objLeadCustAddrLegalObj.Id = this.resLeadCustObj.LeadCustId;
             objLeadCustAddrLegalObj.Code = CommonConstant.AddrTypeLegal;
             this.http.post(URLConstant.GetLeadCustAddrByLeadCustIdAndAddrTypeCode, objLeadCustAddrLegalObj).subscribe(
@@ -567,7 +567,7 @@ export class LeadInputCustDataComponent implements OnInit {
                 this.inputAddressObjForLegalAddr.inputField = this.inputLegalAddressObj;
               });
 
-            var objLeadCustAddrResObj: GenericByIdAndCodeObj = new GenericByIdAndCodeObj();
+            var objLeadCustAddrResObj: GenericObj = new GenericObj();
             objLeadCustAddrResObj.Id = this.resLeadCustObj.LeadCustId;
             objLeadCustAddrResObj.Code = CommonConstant.AddrTypeResidence;
             this.http.post(URLConstant.GetLeadCustAddrByLeadCustIdAndAddrTypeCode, objLeadCustAddrResObj).subscribe(
@@ -909,7 +909,7 @@ export class LeadInputCustDataComponent implements OnInit {
               });
             });
 
-          var objLeadCustAddrLegalObj: GenericByIdAndCodeObj = new GenericByIdAndCodeObj();
+          var objLeadCustAddrLegalObj: GenericObj = new GenericObj();
           objLeadCustAddrLegalObj.Id = this.resLeadCustObj.LeadCustId;
           objLeadCustAddrLegalObj.Code = CommonConstant.AddrTypeLegal;
           this.http.post(URLConstant.GetLeadCustAddrByLeadCustIdAndAddrTypeCode, objLeadCustAddrLegalObj).subscribe(
@@ -940,7 +940,7 @@ export class LeadInputCustDataComponent implements OnInit {
               this.inputAddressObjForLegalAddr.inputField = this.inputLegalAddressObj;
             });
 
-          var objLeadCustAddrResObj: GenericByIdAndCodeObj = new GenericByIdAndCodeObj();
+          var objLeadCustAddrResObj: GenericObj = new GenericObj();
           objLeadCustAddrResObj.Id = this.resLeadCustObj.LeadCustId;
           objLeadCustAddrResObj.Code = CommonConstant.AddrTypeResidence;
           this.http.post(URLConstant.GetLeadCustAddrByLeadCustIdAndAddrTypeCode, objLeadCustAddrResObj).subscribe(
