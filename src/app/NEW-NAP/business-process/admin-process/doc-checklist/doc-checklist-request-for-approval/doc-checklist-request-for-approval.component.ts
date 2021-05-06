@@ -13,6 +13,7 @@ import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { RFADocChecklist } from 'app/shared/model/DocChecklist/RFADocChecklist.Model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 
 @Component({
   selector: 'app-doc-checklist-request-for-approval',
@@ -62,7 +63,7 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
   }
 
   async LoadRefReason() {
-    var refReasonObj = {
+    var refReasonObj: ReqGetByTypeCodeObj = {
       RefReasonTypeCode: CommonConstant.RefReasonTypeDocChecklist
     }
     await this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).toPromise().then(

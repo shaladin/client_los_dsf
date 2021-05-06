@@ -141,19 +141,19 @@ export class GuarantorPersonalComponent implements OnInit {
 
     var idTypeObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType,
-      MappingCode: ""
+      MappingCode: null
     };
     var genderObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender,
-      MappingCode: ""
+      MappingCode: null
     };
     var maritalObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMaritalStat,
-      MappingCode: ""
+      MappingCode: null
     };
     var religionObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReligion,
-      MappingCode: ""
+      MappingCode: null
     };
 
     var AppCust = {

@@ -18,6 +18,7 @@ import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValue
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ResProdOfferingVersionObj } from 'app/shared/model/Response/Product/ResProdOfferingObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 
 @Component({
   selector: 'app-prod-ho-deact-detail',
@@ -63,7 +64,8 @@ export class ProdHoDeactDetailComponent implements OnInit {
     this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformation.json";
     this.ViewGenericObj.viewEnvironment = environment.losUrl;
 
-    await this.http.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeProdDeactivate }).toPromise().then(
+    let tempReq: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeProdDeactivate };
+    await this.http.post(URLConstant.GetListActiveRefReason, tempReq).toPromise().then(
       (response : GenericKeyValueListObj) => {
         this.AllRefReasonMethod = response.ReturnObject; 
         if (this.AllRefReasonMethod.length > 0) {

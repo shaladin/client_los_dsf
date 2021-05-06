@@ -160,15 +160,15 @@ export class GuarantorCompanyComponent implements OnInit {
 
     var refCompObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType,
-      MappingCode: ""
+      MappingCode: null
     };
     var refJobObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition,
-      MappingCode: ""
+      MappingCode: null
     };
     var AppCust = {
       Id: this.AppId,
-      RowVersion: ""
+      RowVersion: null
     }
     this.http.post(URLConstant.GetAppCustByAppId, AppCust).subscribe(
       (response) => {
@@ -492,7 +492,7 @@ export class GuarantorCompanyComponent implements OnInit {
   getDocType() {
     var legalDocObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeLegalDocType,
-      MappingCode: ""
+      MappingCode: null
     };
     this.http.post(URLConstant.GetListActiveRefMaster, legalDocObj).subscribe(
       (response) => {

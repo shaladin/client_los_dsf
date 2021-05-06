@@ -137,7 +137,7 @@ export class NewNapCustMainDataComponent implements OnInit {
     this.ResponseCustModel.emit(this.ParentForm.controls.MrCustModelCode.value);
   }
 
-  initcustMainDataMode() {
+  async initcustMainDataMode() {
     this.custDataObj = new CustDataObj();
     this.custDataObj.AppId = this.appId;
     if (this.appCustId) this.custDataObj.AppCustId = this.appCustId;
@@ -156,7 +156,7 @@ export class NewNapCustMainDataComponent implements OnInit {
         this.subjectTitle = 'Guarantor';
         this.ParentForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.ParentForm.controls.MrGenderCode.setValidators(Validators.required);
-        this.GetAppCustMainDataByAppId();
+        await this.GetAppCustMainDataByAppId();
         this.ResponseIsIncludeCustRelation.emit(this.isIncludeCustRelation);
         break;
       case CommonConstant.CustMainDataModeFamily:
@@ -165,7 +165,7 @@ export class NewNapCustMainDataComponent implements OnInit {
         this.subjectTitle = 'Family';
         this.ParentForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.ParentForm.controls.MrGenderCode.setValidators(Validators.required);
-        this.GetAppCustMainDataByAppId();
+        await this.GetAppCustMainDataByAppId();
         this.ResponseIsIncludeCustRelation.emit(this.isIncludeCustRelation);
         break;
       case CommonConstant.CustMainDataModeMgmntShrholder:
@@ -175,7 +175,7 @@ export class NewNapCustMainDataComponent implements OnInit {
         this.ParentForm.controls.EstablishmentDt.setValidators([Validators.required]);
         this.ParentForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.ParentForm.controls.MrJobPositionCode.setValidators(Validators.required);
-        this.GetAppCustMainDataByAppId();
+        await this.GetAppCustMainDataByAppId();
         this.ResponseIsIncludeCustRelation.emit(this.isIncludeCustRelation);
         break;
       default:
@@ -186,8 +186,10 @@ export class NewNapCustMainDataComponent implements OnInit {
   }
 
   AppCustData: AppCustObj = new AppCustObj();
-  GetAppCustMainDataByAppId() {
-    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, { 'Id': this.appId }).subscribe(
+  async GetAppCustMainDataByAppId() {
+    let reqObj: GenericObj = new GenericObj();
+    reqObj.Id = this.appId;
+    await this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, reqObj).toPromise().then(
       async (response) => {
         if (response.AppCustObj) {
           this.AppCustData = response.AppCustObj;
@@ -266,7 +268,7 @@ export class NewNapCustMainDataComponent implements OnInit {
   }
 
   async GetListActiveRefMaster(RefMasterTypeCode: string) {
-    let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: RefMasterTypeCode, MappingCode: "" };
+    let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: RefMasterTypeCode, MappingCode: null };
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, tempReq).toPromise().then(
       (response) => {
         this.DictRefMaster[RefMasterTypeCode] = response[CommonConstant.ReturnObj];

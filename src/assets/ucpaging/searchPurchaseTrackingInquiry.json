@@ -101,7 +101,7 @@
             "type": "sort",
             "position": "center",
             "label": "Asset Allocation Date",
-            "name": "AAAO.ASSET_ALLOCATION_DT"
+            "name": "AALLOCO.ASSET_ALLOCATION_DT"
         },
         {
             "type": "label",
