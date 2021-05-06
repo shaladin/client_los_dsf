@@ -107,11 +107,6 @@ export class NapCustMainDataComponent implements OnInit {
         }
       }
     );
-
-    this.stepper = new Stepper(document.querySelector('#stepper1'), {
-      linear: false,
-      animation: true
-    })
   }
   
   Back() {

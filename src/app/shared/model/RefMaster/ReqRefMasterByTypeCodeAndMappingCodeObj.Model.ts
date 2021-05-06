@@ -3,6 +3,6 @@ export class ReqRefMasterByTypeCodeAndMappingCodeObj {
     MappingCode: string;
     constructor() {
         this.RefMasterTypeCode = "";
-        this.MappingCode = "";
+        this.MappingCode = null;
     }
 }
