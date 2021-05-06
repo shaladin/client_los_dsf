@@ -22,6 +22,7 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 
 
 @Component({
@@ -385,7 +386,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       this.inputLookupEconomicSectorObj.jsonSelect = { Descr: this.resultResponse["MrSlikSecEcoDescr"] };
     }
     else {
-      var reqSecObj = new RefMasterObj();
+      let reqSecObj: ReqRefMasterByTypeCodeAndMasterCodeObj = new ReqRefMasterByTypeCodeAndMasterCodeObj();
       reqSecObj.MasterCode = this.defaultSlikSecEcoCode;
       reqSecObj.RefMasterTypeCode = "SLIK_SEC_ECO";
       this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(

@@ -25,6 +25,7 @@ export class AppAssetInsOplObj {
   TotalInscoDiscAmt: number;
   TotalInsCustAmt: number;
   TotalCustFeeAmt: number;
+  InsDiscAmt: number;
   constructor() {
     this.AppAssetId = 0;
     this.InscoBranchCode = "";
@@ -47,5 +48,6 @@ export class AppAssetInsOplObj {
     this.TotalInscoDiscAmt = 0;
     this.TotalInsCustAmt = 0;
     this.TotalCustFeeAmt = 0;
+    this.InsDiscAmt = 0;
   }
 }
