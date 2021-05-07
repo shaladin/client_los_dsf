@@ -99,6 +99,11 @@ export class AppViewComponent implements OnInit {
       this.dmsObj.User = currentUserContext.UserName;
       this.dmsObj.Role = currentUserContext.RoleCode;
       this.agrNo = "";
+      await this.http.post(URLConstant.GetAgrmntByAppId, {Id: this.AppId}).subscribe(
+        (response) => {
+          this.agrNo = response['AgrmntNo'];
+        }
+      );
       this.dmsObj.ViewCode = "APP";
       this.dmsObj.UsingDmsAdIns = this.usingDmsAdins;
       this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
