@@ -11,12 +11,8 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
-<<<<<<< HEAD
-import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
-import { formatDate } from '@angular/common';
-=======
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
->>>>>>> b33ee1e1a1537e62d740f53ec1cd5815e2817497
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-app-view',
@@ -85,7 +81,7 @@ export class AppViewComponent implements OnInit {
   }
 
   async InitDms() {
-    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.SYS_CONFIG_USING_DMS_ADINS}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.SYS_CONFIG_USING_DMS_ADINS}).toPromise().then(
       (response) => {
         this.usingDmsAdins = response["ConfigValue"];
       },
