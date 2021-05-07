@@ -10,6 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 
 @Component({
   selector: 'app-application-agreement-cancellation-detail',
@@ -60,7 +61,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
       },
     ];
 
-    var refReasonObj = {
+    var refReasonObj: ReqGetByTypeCodeObj = {
       RefReasonTypeCode: CommonConstant.RefReasonTypeCodeAppAgrCncl
     }
     this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).subscribe(

@@ -9,6 +9,7 @@ import { AttrContent } from 'app/shared/model/CustCompletion/AttrContent.Model';
 import { RefAttr } from 'app/shared/model/CustCompletion/RefAttr.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { NewCustAttrContentObj } from 'app/shared/model/NewCustAttrContentObj.Model';
+import { ReqRefAttrByAttrGroupObj } from 'app/shared/model/Request/RefAttr/ReqRefAttrByAttrGroupObj.model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { ResGetAppCustAttrContentObj, ResGetListAppCustAttrContentObj } from 'app/shared/model/Response/NAP/NAP 4/ResGetListAppCustAttrContentObj.model';
 import { environment } from 'environments/environment';
@@ -40,9 +41,8 @@ export class NewNapAttrContentComponent implements OnInit {
   }
 
   async ngOnInit() {
-    var custGrp = {
-      AttrGroup: this.AttrGroup
-    };
+    let custGrp: ReqRefAttrByAttrGroupObj = new ReqRefAttrByAttrGroupObj();
+    custGrp.AttrGroup = this.AttrGroup;
     await this.httpClient.post(URLConstant.GetListAppCustAttrContentForNewNap, { AppCustId: this.AppCustId, AttrGroup: this.AttrGroup }).toPromise().then(
       (response : ResGetListAppCustAttrContentObj) => {
         this.ListAttrContent = response.ResponseAppCustAttrContentObjs;
@@ -189,9 +189,8 @@ export class NewNapAttrContentComponent implements OnInit {
         attrContent.MasterCode = custAttrContentObjs[i].MasterCode;
         this.ListAttrContent.push(attrContent);
       }
-      var custGrp = {
-        AttrGroup: this.AttrGroup
-      };
+      let custGrp: ReqRefAttrByAttrGroupObj = new ReqRefAttrByAttrGroupObj();
+      custGrp.AttrGroup = this.AttrGroup;
       this.httpClient.post<Array<RefAttr>>(URLConstant.GetListActiveRefAttrByAttrGroup, custGrp).subscribe(
         async (response) => {
           this.RefAttrList = response[CommonConstant.ReturnObj];

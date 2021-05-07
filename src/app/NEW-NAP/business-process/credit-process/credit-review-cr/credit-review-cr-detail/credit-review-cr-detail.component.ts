@@ -19,6 +19,7 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 
 @Component({
   selector: 'app-credit-review-cr-detail',
@@ -198,7 +199,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   DDLData: { [id: string]: Array<{ Key: string, Value: string }> } = {};
   readonly DDLRecomendation: string = "RECOMENDED";
   async BindDDLRecommendation() {
-    let Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
+    let Obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
     await this.http.post(URLConstant.GetListActiveRefReason, Obj).toPromise().then(
       (response) => {
         this.DDLData[this.DDLRecomendation] = response[CommonConstant.ReturnObj];
@@ -207,7 +208,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   readonly DDLReason: string = "REASON";
   async BindDDLReasonReturn() {
-    let obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
+    let obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
     await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
       (response) => {
         this.DDLData[this.DDLReason] = response[CommonConstant.ReturnObj];

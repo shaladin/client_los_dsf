@@ -11,6 +11,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 
 @Component({
   selector: 'app-sharing-pre-go-live-request-for-approval',
@@ -83,7 +84,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   }
 
   async LoadRefReason() {
-    var refReasonObj = {
+    var refReasonObj: ReqGetByTypeCodeObj = {
       RefReasonTypeCode: CommonConstant.RefReasonTypeCodePreGlvApv
     }
     await this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).toPromise().then(

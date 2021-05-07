@@ -107,7 +107,7 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Document">
+            <mat-tab label="Document">
               <ng-template matTabContent>
                 <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
               </ng-template>
@@ -151,6 +151,12 @@
 
             <mat-tab *ngIf="IsPefindoResult" label="Pefindo Result">
               <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsSurveyResult" label="Survey Result">
+              <ng-template matTabContent>
+                <app-view-survey [AppNo]="AppNo"></app-view-survey>
               </ng-template>
             </mat-tab>
           </mat-tab-group>
