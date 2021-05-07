@@ -84,7 +84,6 @@ export class AssetDataAddEditComponent implements OnInit {
   appCustAddrObj: any;
   returnAppCustAddrObj: any;
   allAssetDataObj: AllAssetDataObj;
-  refCoyObj: any;
   returnRefCoyObj: any;
   appCustObj: any;
   assetUsageObj: any
@@ -949,8 +948,7 @@ export class AssetDataAddEditComponent implements OnInit {
       }
     );
 
-    this.refCoyObj = new RefCoyObj();
-    this.http.post(URLConstant.GetRefCoy, this.refCoyObj).subscribe(
+    this.http.post(URLConstant.GetRefCoy, null).subscribe(
       (response) => {
         this.returnRefCoyObj = response;
         this.AssetDataForm.patchValue({

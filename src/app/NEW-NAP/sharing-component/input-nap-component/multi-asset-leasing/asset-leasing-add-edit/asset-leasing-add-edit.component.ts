@@ -6,12 +6,10 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
-import { VendorEmpObj } from 'app/shared/model/VendorEmp.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AllAssetDataObj } from 'app/shared/model/AllAssetDataObj.Model';
-import { RefCoyObj } from 'app/shared/model/RefCoyObj.Model';
 import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { VendorObj } from 'app/shared/model/Vendor.Model';
@@ -56,7 +54,6 @@ export class AssetLeasingAddEditComponent implements OnInit {
   appCustAddrObj: any;
   returnAppCustAddrObj: any;
   allAssetDataObj: AllAssetDataObj;
-  refCoyObj: any;
   returnRefCoyObj: any;
   appCustObj: any;
   assetUsageObj: any
@@ -561,8 +558,7 @@ export class AssetLeasingAddEditComponent implements OnInit {
       }
     );
 
-    this.refCoyObj = new RefCoyObj();
-    this.http.post(URLConstant.GetRefCoy, this.refCoyObj).subscribe(
+    this.http.post(URLConstant.GetRefCoy, null).subscribe(
       (response) => {
         this.returnRefCoyObj = response;
         this.AssetDataForm.patchValue({
