@@ -5,7 +5,6 @@ export class AppInsAddCvgObj {
     AddCvgTypeName: string;
     SumInsuredPrcnt: number;
     SumInsuredAmt: number;
-    StdAddPremiRate: number;
     InscoAddPremiRate: number;
     CustAddPremiRate: number;
     InscoAddPremiAmt: number;

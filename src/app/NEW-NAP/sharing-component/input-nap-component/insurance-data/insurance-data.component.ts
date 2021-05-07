@@ -310,7 +310,6 @@ export class InsuranceDataComponent implements OnInit {
         insCoverage.IsMainIns = true;
         insCoverage.SumInsuredPrcnt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].SumInsuredPrcnt.value;
         insCoverage.SumInsuredAmt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].SumInsuredAmt.value;
-        insCoverage.StdMainPremiRate = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].StdMainPremiRate.value;
         insCoverage.CustMainPremiRate = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].CustMainPremiRate.value;
         insCoverage.InscoMainPremiRate = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].InscoMainPremiRate.value;
         insCoverage.CustMainPremiAmt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].CustMainPremiAmt.value;
@@ -326,11 +325,9 @@ export class InsuranceDataComponent implements OnInit {
             addCoverage.SumInsuredPrcnt = insCoverage.SumInsuredPrcnt;
             addCoverage.SumInsuredAmt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].SumInsuredAmt.value;
             if (this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].PremiumType.value == CommonConstant.PremiumTypeAmt) {
-              addCoverage.StdAddPremiRate = 0;
               addCoverage.InscoAddPremiRate = 0;
               addCoverage.CustAddPremiRate = 0;
             } else {
-              addCoverage.StdAddPremiRate = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].StdAddPremiRate.value;
               addCoverage.InscoAddPremiRate = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].InscoAddPremiRate.value;
               addCoverage.CustAddPremiRate = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].CustAddPremiRate.value;
             }
@@ -418,7 +415,6 @@ export class InsuranceDataComponent implements OnInit {
         insCoverage.IsMainIns = true;
         insCoverage.SumInsuredPrcnt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].SumInsuredPrcnt.value;
         insCoverage.SumInsuredAmt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].SumInsuredAmt.value;
-        insCoverage.StdMainPremiRate = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].StdMainPremiRate.value;
         insCoverage.CustMainPremiRate = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].CustMainPremiRate.value;
         insCoverage.InscoMainPremiRate = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].InscoMainPremiRate.value;
         insCoverage.CustMainPremiAmt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].CustMainPremiAmt.value;
@@ -434,11 +430,10 @@ export class InsuranceDataComponent implements OnInit {
             addCoverage.SumInsuredPrcnt = insCoverage.SumInsuredPrcnt;
             addCoverage.SumInsuredAmt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].SumInsuredAmt.value;
             if (this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].PremiumType.value == CommonConstant.PremiumTypeAmt) {
-              addCoverage.StdAddPremiRate = 0;
+
               addCoverage.InscoAddPremiRate = 0;
               addCoverage.CustAddPremiRate = 0;
             } else {
-              addCoverage.StdAddPremiRate = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].StdAddPremiRate.value;
               addCoverage.InscoAddPremiRate = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].InscoAddPremiRate.value;
               addCoverage.CustAddPremiRate = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j]["controls"].CustAddPremiRate.value;
             }
@@ -688,7 +683,7 @@ export class InsuranceDataComponent implements OnInit {
     var month: number = 12;
 
     for (let i = 0; i < noOfYear; i++) {
-      var obj = { Tenor: 0, SumInsuredPrcnt: 0, CustMainPremiRate: 0, InscoMainPremiRate: 0, StdMainPremiRate: 0 };
+      var obj = { Tenor: 0, SumInsuredPrcnt: 0, CustMainPremiRate: 0, InscoMainPremiRate: 0 };
 
       if (yearCount - 12 >= 0) {
         month = 12;
@@ -701,8 +696,6 @@ export class InsuranceDataComponent implements OnInit {
       var index = this.ruleObj.MainCoverageType.findIndex(x => x == this.InsuranceDataForm.controls.InsMainCvgType.value);
       obj.CustMainPremiRate = this.ruleObj.MainRateToCust[index];
       obj.InscoMainPremiRate = this.ruleObj.MainRateToInsco[index];
-      // StdMainPremiRate di set 0 karena di rule mau di hapus, tar field table juga mau di hapus
-      obj.StdMainPremiRate = 0;
       (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray).push(this.addGroup(i, obj, ManufYearDiff));
       ManufYearDiff++;
       yearCount -= 12;
@@ -761,7 +754,6 @@ export class InsuranceDataComponent implements OnInit {
       SumInsuredPrcnt: obj.SumInsuredPrcnt,
       SumInsuredAmt: 0,
       MrMainCvgTypeCode: this.defaultInsMainCvgType,
-      StdMainPremiRate: obj.StdMainPremiRate,
       CustMainPremiRate: obj.CustMainPremiRate,
       CustMainPremiAmt: 0,
       InscoMainPremiRate: obj.InscoMainPremiRate,
@@ -818,9 +810,7 @@ export class InsuranceDataComponent implements OnInit {
                 BaseCalculation: this.ruleObj["BaseCalc"][i],
                 // InscoAddPremiRate: inscoAddPremiRate,
                 InscoAddPremiRate: this.ruleObj["RateToInsco"][i],
-                InscoAddPremiAmt: 0,
-                // StdAddPremiRate: this.ruleObj.BaseRate[index]
-                StdAddPremiRate: this.ruleObj["BaseRate"][i]
+                InscoAddPremiAmt: 0
               });
               (group.controls.AppInsAddCvgs as FormArray).push(control);
             }
@@ -845,9 +835,7 @@ export class InsuranceDataComponent implements OnInit {
           BaseCalculation: this.ruleObj.BaseCalc[index],
           InscoAddPremiRate: inscoAddPremiRate,
           InscoAddPremiAmt: 0,
-          StdAddPremiRate: 0
         });
-        // StdAddPremiRate di set 0 karena di rule mau di hapus, tar field table juga mau di hapus
 
         (group.controls.AppInsAddCvgs as FormArray).push(control);
       }
@@ -862,7 +850,6 @@ export class InsuranceDataComponent implements OnInit {
       SumInsuredPrcnt: insMainCvg.SumInsuredPrcnt,
       SumInsuredAmt: insMainCvg.SumInsuredAmt,
       MrMainCvgTypeCode: insMainCvg.MrMainCvgTypeCode,
-      StdMainPremiRate: insMainCvg.StdMainPremiRate,
       CustMainPremiRate: insMainCvg.CustMainPremiRate,
       CustMainPremiAmt: insMainCvg.CustMainPremiAmt,
       InscoMainPremiRate: insMainCvg.InscoMainPremiRate,
@@ -919,7 +906,6 @@ export class InsuranceDataComponent implements OnInit {
                 BaseCalculation: this.ruleObj.BaseCalc[index],
                 InscoAddPremiRate: inscoAddPremiRate,
                 InscoAddPremiAmt: check == undefined ? 0 : check.InscoAddPremiAmt,
-                StdAddPremiRate: this.ruleObj.BaseRate[index]
               });
               (group.controls.AppInsAddCvgs as FormArray).push(control);
             }
@@ -939,7 +925,6 @@ export class InsuranceDataComponent implements OnInit {
           BaseCalculation: this.ruleObj.BaseCalc[index],
           InscoAddPremiRate: inscoAddPremiRate,
           InscoAddPremiAmt: check == undefined ? 0 : check.InscoAddPremiAmt,
-          StdAddPremiRate: this.ruleObj.BaseRate[index]
         });
         (group.controls.AppInsAddCvgs as FormArray).push(control);
       }
@@ -960,7 +945,6 @@ export class InsuranceDataComponent implements OnInit {
     var index = this.ruleObj.MainCoverageType.findIndex(x => x == mainCoverageType);
     this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i].patchValue({
       CustMainPremiRate: this.ruleObj.MainRateToCust[index],
-      StdMainPremiRate: this.ruleObj.BaseRatePercentage[index],
       InscoMainPremiRate: this.ruleObj.MainRateToInsco[index]
     });
     for (let j = 0; j < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"].length; j++) {
@@ -984,7 +968,6 @@ export class InsuranceDataComponent implements OnInit {
       this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
         CustAddPremiRate: custAddPremiRate,
         InscoAddPremiRate: inscoAddPremiRate,
-        StdAddPremiRate: this.ruleObj.BaseRate[indexAdd]
       });
     }
   }
@@ -1000,7 +983,6 @@ export class InsuranceDataComponent implements OnInit {
     this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
       CustAddPremiRate: addCvgTplObj.PremiToCust,
       InscoAddPremiRate: addCvgTplObj.PremiToInsco,
-      StdAddPremiRate: addCvgTplObj.BaseRate
     });
   }
 
