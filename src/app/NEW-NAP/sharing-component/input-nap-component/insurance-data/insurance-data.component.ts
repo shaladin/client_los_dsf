@@ -29,6 +29,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InsRateAddCvgRuleObj } from 'app/shared/model/InsRateAddCvgRuleObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { ReqGetVendorByCategoryCodeAndOfficeCodeObj } from 'app/shared/model/Request/Vendor/ReqVendor.model';
 
 @Component({
   selector: 'app-insurance-data',
@@ -1607,8 +1608,10 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   async bindInscoBranchObj() {
-    var inscoBranchObj = { MrVendorCategory: CommonConstant.VendorCategoryAssetInscoBranch, OfficeCode: this.appObj.OriOfficeCode };
-    await this.http.post(URLConstant.GetListKeyValueActiveVendorByCategoryCodeAndOfficeCode, inscoBranchObj).toPromise().then(
+    let ReqInscoBranchObj : ReqGetVendorByCategoryCodeAndOfficeCodeObj = new ReqGetVendorByCategoryCodeAndOfficeCodeObj();
+    ReqInscoBranchObj.MrVendorCategory = CommonConstant.VendorCategoryAssetInscoBranch;
+    ReqInscoBranchObj.OfficeCode = this.appObj.OriOfficeCode;
+    await this.http.post(URLConstant.GetListKeyValueActiveVendorByCategoryCodeAndOfficeCode, ReqInscoBranchObj).toPromise().then(
       (response) => {
         this.inscoBranchObj = response[CommonConstant.ReturnObj];
         if (this.inscoBranchObj.length > 0 && this.inscoBranchObj.length == 1) {
