@@ -11,6 +11,10 @@ export class AdInsConstant {
   public static RestrictionIsNotNull = "isnotnull";
   public static RestrictionOr = "Or"; //pastikan ada 1 criteria sebelumnya
   public static RestrictionOrNeq = "OrNeq"; //pastikan ada 1 criteria sebelumnya
+  public static JoinTypeInner = "INNER";
+  public static JoinTypeLeft = "LEFT";
+
+
   public static showData = "10,50,100";
   public static TimeoutSession = 6000000;
   public static GetListProduct = "http://creator_websvr:7272/NEW_FINANCING/api/Catalog/getPopularViewByCriteria";
