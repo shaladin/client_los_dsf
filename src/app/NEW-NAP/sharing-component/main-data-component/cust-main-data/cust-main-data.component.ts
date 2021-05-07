@@ -330,8 +330,6 @@ export class CustMainDataComponent implements OnInit {
       });
 
     if (this.DictRefMaster[this.MasterCustType].length != 0) await this.CustMainDataForm.controls.MrCustTypeCode.patchValue(this.DictRefMaster[this.MasterCustType][0].Key);
-    
-    console.log(this.isIncludeCustRelation);
     if (this.isIncludeCustRelation) {
       await this.getCustRelationship();
     }
@@ -352,7 +350,6 @@ export class CustMainDataComponent implements OnInit {
       }
       this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refCustRelObj).subscribe(
         (response) => {
-          console.log(response);
           this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
           this.isDdlMrCustRelationshipReady = true
         }
@@ -362,7 +359,6 @@ export class CustMainDataComponent implements OnInit {
       tempReq.RefMasterTypeCode = this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
       this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).subscribe(
         async (response) => {
-          console.log(response);
           this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
           if (this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMarried) await this.removeSpouse();
           this.isDdlMrCustRelationshipReady = true

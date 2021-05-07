@@ -19,6 +19,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-application-data-refinancing',
@@ -379,12 +380,12 @@ export class ApplicationDataRefinancingComponent implements OnInit {
       let reqSecObj: ReqRefMasterByTypeCodeAndMasterCodeObj = new ReqRefMasterByTypeCodeAndMasterCodeObj();
       reqSecObj.MasterCode = this.defaultSlikSecEcoCode;
       reqSecObj.RefMasterTypeCode = "SLIK_SEC_ECO";
-      this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(
-        (response) => {
+      this.http.post(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(
+        (response: KeyValueObj) => {
           console.log(response);
-          this.slikSecDescr = response['Descr'];
-          this.inputLookupEconomicSectorObj.nameSelect = response['Descr'];
-          this.inputLookupEconomicSectorObj.jsonSelect = { Descr: response['Descr'] };
+          this.slikSecDescr = response.Value;
+          this.inputLookupEconomicSectorObj.nameSelect = response.Value;
+          this.inputLookupEconomicSectorObj.jsonSelect = { Descr: response.Value };
         });
     }
     this.isInputLookupObj = true;
@@ -421,9 +422,8 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   }
 
   async GetGSValueSalesOfficer() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
       (response) => {
-        console.log(response);
         var addCrit3 = new CriteriaObj();
         addCrit3.DataType = "text";
         addCrit3.propName = "rbt.JOB_TITLE_CODE";

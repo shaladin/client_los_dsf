@@ -13,8 +13,8 @@ import { ReqDupCheckAppCustObj } from 'app/shared/model/AppDupCheckCust/ReqDupCh
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ReqGetAppCustDupCheckObj } from 'app/shared/model/Request/NAP/DupCheck/ReqGetCustDupCheckObj.model';
 import { ResAppDupCheckCustMainDataObj, ResListAppDupCheckCustMainDataObj } from 'app/shared/model/Response/NAP/DupCheck/ResAppDupCheckCustMainDataObj.model';
+import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
 
 @Component({
   selector: 'app-dup-check-md-subj-match',
@@ -73,7 +73,7 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
         this.reqDupCheckAppCustObj.AppCustId = this.appCustId;
         this.reqDupCheckAppCustObj.RowVersion = this.appCustObj.RowVersion;
 
-        let requestDupCheck = new ReqGetAppCustDupCheckObj();
+        let requestDupCheck: DuplicateCustObj = new DuplicateCustObj();
         
         if (this.mrCustTypeCode == CommonConstant.CustTypePersonal) {
           this.appCustPersonalObj = response['AppCustPersonalObj'];
@@ -87,7 +87,6 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
           requestDupCheck.MotherMaidenName = this.appCustPersonalObj.MotherMaidenName;
           requestDupCheck.MobilePhnNo1 = this.appCustPersonalObj.MobilePhnNo1;
           requestDupCheck.RowVersion = response['AppCustObj'].RowVersion;
-          requestDupCheck.AppId = this.appCustObj.AppId;
 
         }
         else if (this.mrCustTypeCode == CommonConstant.CustTypeCompany) {
@@ -100,7 +99,6 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
           requestDupCheck.TaxIdNo = this.appCustObj.TaxIdNo;
           requestDupCheck.BirthDt = this.appCustCompanyObj.EstablishmentDt;
           requestDupCheck.RowVersion = response['AppCustObj'].RowVersion;
-          requestDupCheck.AppId = this.appCustObj.AppId;
         }
 
         //List Master Cust Duplicate Checking

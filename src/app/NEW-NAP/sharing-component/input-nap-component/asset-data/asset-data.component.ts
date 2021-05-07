@@ -30,6 +30,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj } from 'app/shared/model/Request/Vendor/ReqVendorEmp.model';
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 
 @Component({
   selector: 'app-asset-data',
@@ -381,9 +382,9 @@ export class AssetDataComponent implements OnInit {
       }
     );
     
-    await this.http.post(URLConstant.GetGeneralSettingByCode, {Code: CommonConstant.GSSerialNoRegex}).toPromise().then(
-      (response) => {
-        this.SerialNoRegex = response["GsValue"];
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, {Code: CommonConstant.GSSerialNoRegex}).toPromise().then(
+      (response: GeneralSettingObj) => {
+        this.SerialNoRegex = response.GsValue;
 
         let obj: CustomPatternObj = {
           pattern: this.SerialNoRegex,

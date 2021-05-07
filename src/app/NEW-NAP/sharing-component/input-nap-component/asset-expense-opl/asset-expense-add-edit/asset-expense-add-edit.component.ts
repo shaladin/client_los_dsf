@@ -2260,7 +2260,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
   }
 
   async GetGSValueInputFeeType() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeInputOPLFeeType }).toPromise().then(
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeInputOPLFeeType }).toPromise().then(
       (response) => {
         this.InsuranceDataForm.patchValue({
           FeeInputType: response.GsValue
@@ -2271,7 +2271,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
   }
   isInputTypeLock: boolean = false;
   async GetGSValueInputFeeTypeBehaviour() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeInputOPLFeeBehaviour }).toPromise().then(
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeInputOPLFeeBehaviour }).toPromise().then(
       (response) => {
         if (response.GsValue == "LOCK") {
           this.isInputTypeLock = true;
