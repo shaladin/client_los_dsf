@@ -1099,7 +1099,7 @@ export class NewNapCustDetailComponent implements OnInit {
         bankAccObj.IsDefault = bank.IsDefault;
         bankAccObj.IsActive = bank.IsActive;
         obj["BankAccObj"] = bankAccObj;
-        obj["ListBankStmntObj"] = bank.AppCustBankStmntObjs;
+        obj["ListBankStmntObj"] = bank.ListAppCustBankAccStmntObj;
         appCustBankAccRequest.push(obj);
       }
       var requestPersonal = {
@@ -1188,7 +1188,7 @@ export class NewNapCustDetailComponent implements OnInit {
         bankAccObj.IsDefault = bank.IsDefault;
         bankAccObj.IsActive = bank.IsActive;
         obj["BankAccObj"] = bankAccObj;
-        obj["ListBankStmntObj"] = bank.AppCustBankStmntObjs;
+        obj["ListBankStmntObj"] = bank.ListAppCustBankAccStmntObj;
         appCustBankAccRequest.push(obj);
       }
       this.setAttrContent();

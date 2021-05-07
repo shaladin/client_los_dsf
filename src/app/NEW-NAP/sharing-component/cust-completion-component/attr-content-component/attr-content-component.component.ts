@@ -12,6 +12,7 @@ import { ReqRefAttrByAttrGroupObj } from 'app/shared/model/Request/RefAttr/ReqRe
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { ResGetAppCustAttrContentObj, ResGetListAppCustAttrContentObj } from 'app/shared/model/Response/NAP/NAP 4/ResGetListAppCustAttrContentObj.model';
 import { environment } from 'environments/environment';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 @Component({
   selector: 'app-attr-content-component',
   templateUrl: './attr-content-component.component.html',
@@ -141,9 +142,9 @@ export class AttrContentComponentComponent implements OnInit {
             RefMasterTypeCode: refAttr.AttrValue,
             MasterCode: refAttr.DefaultValue
           };
-          await this.httpClient.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
-            (response) => {
-              this.tempLookup[refAttr.AttrCode].jsonSelect = { Descr: response['Descr'] }
+          await this.httpClient.post(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
+            (response: KeyValueObj) => {
+              this.tempLookup[refAttr.AttrCode].jsonSelect = { Descr: response.Value }
             });
         }
       } else {

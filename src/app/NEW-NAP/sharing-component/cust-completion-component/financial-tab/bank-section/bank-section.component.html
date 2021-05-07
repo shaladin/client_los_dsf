@@ -49,8 +49,13 @@
                     </th>
                   </tr>
                 </thead>
+                <tbody *ngIf="item.ListAppCustBankAccStmntObj?.length == 0">
+                  <tr>
+                    <td colspan="100%">No Data Available</td>
+                  </tr>
+                </tbody>
                 <tbody>
-                  <tr *ngFor="let stmnt of item.AppCustBankStmntObjs">
+                  <tr *ngFor="let stmnt of item.ListAppCustBankAccStmntObj">
                     <td style="text-align: left;">{{stmnt.Month}}</td>
                     <td style="text-align: left;">{{stmnt.Year}}</td>
                     <td style="text-align: left;">{{stmnt.DebitAmt | number:'.2':'en-US'}}</td>

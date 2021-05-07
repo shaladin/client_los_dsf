@@ -19,6 +19,7 @@ export const environment = {
   WorkflowR3Url: 'http://R3App-Server.ad-ins.com/WORKFLOW_SIT_CY4',
   WebSocketURL: 'http://r3app-server.ad-ins.com/FOUNDATION_SIT_CY4',
   DashboardURL: 'http://r3app-server.ad-ins.com/Dashboard',
+  dmsURL: 'http://kfx-svr/LITEDMS_OPL/LiteDMS/pageconfins.aspx',
   ChipperKeyLocalStorage: "AdInsFOU2020OKOK", // 256 bit atau 16 karakter
   ChipperKeyCookie: "AdInsFOU12345678", // 256 bit atau 16 karakter & harus sama dengan BE
   Module: "LOS"

@@ -1,7 +1,7 @@
 <div class="card-body">
   <div class="px-3">
     <form class="col-md-12 form-horizontal" [formGroup]="FormProdOfferingComp" #enjiForm="ngForm" (ngSubmit)="FormProdOfferingComp.valid && NextDetail()">
-      <ng-container *ngIf="ShowComparison == false">
+      <ng-container *ngIf="!ShowComparison">
         <div class="col-md-12" formArrayName="groups" *ngFor="let type of FormProdOfferingComp.controls['groups'].controls; let j = index">
           <div class="form-group row" [formGroupName]="j">
             <div class="col-md-12" *ngIf="type.controls['components'].controls.length > 0">
@@ -9,51 +9,55 @@
             </div>
             <div class="col-md-12" formArrayName="components" *ngFor="let node of type.controls['components'].controls; let l = index">
               <div class="form-group row" [formGroupName]="l">
-                <label class="col-md-3 " *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE'">{{type.controls['components'].value[l].ProdCompntName}}</label>
-                <label class="col-md-4 " *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode != 'RULE'">{{type.controls['components'].value[l].ProdCompntName}}</label>
+                <div class="col-md-3" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE'" [ngClass]="{'adins-required': type.controls['components'].value[l].IsProdOffering}">
+                  <label class="" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE'">{{type.controls['components'].value[l].ProdCompntName}}</label>
+                </div>
+                <div class="col-md-4" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode != 'RULE'" [ngClass]="{'adins-required': type.controls['components'].value[l].IsProdOffering}">
+                  <label class="" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode != 'RULE'">{{type.controls['components'].value[l].ProdCompntName}}</label>
+                </div>
                 <span class="material-icons col-md-1 pointer" style="cursor: pointer;" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE'" (click)="DownloadRule(type.controls['components'].value[l].OfferingCompntValue,type.controls['components'].value[l].OfferingCompntValueDesc)">
                   get_app
                 </span>
-                <label class="col-md-4" *ngIf="type.controls['components'].value[l].IsProdOffering == false">{{type.controls['components'].value[l].HOCompntValueDesc}}</label>
-                <div class="col-md-4" *ngIf="type.controls['components'].value[l].ProdCompntType == 'DDL' && type.controls['components'].value[l].IsProdOffering == true">
+                <label class="col-md-4" *ngIf="!type.controls['components'].value[l].IsProdOffering">{{type.controls['components'].value[l].HOCompntValueDesc}}</label>
+                <div class="col-md-4" *ngIf="type.controls['components'].value[l].ProdCompntType == 'DDL' && type.controls['components'].value[l].IsProdOffering">
                   <select formControlName="OfferingCompntValue" class="form-control width-95-per" name="OfferingCompntValue" (change)="onChangeCompntEvent(type.controls['components'].value[l].RefProdCompntCode,$event,l,j);">
                     <option *ngFor="let m of dictOptions[type.controls['components'].value[l].RefProdCompntCode]" value={{m.Key}}>{{m.Value}}</option>
                   </select>
                   <lib-uc-show-errors [control]="type.controls['components'].controls[l].controls.OfferingCompntValue" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <div class="col-md-4" *ngIf="type.controls['components'].value[l].ProdCompntType == 'MULTI_DDL' && type.controls['components'].value[l].IsProdOffering == true">
+                <div class="col-md-4" *ngIf="type.controls['components'].value[l].ProdCompntType == 'MULTI_DDL' && type.controls['components'].value[l].IsProdOffering">
                   <ng-multiselect-dropdown *ngIf="dictMultiOptions[type.controls['components'].value[l].RefProdCompntCode].length != 0" [placeholder]="'Search'" [data]="dictMultiOptions[type.controls['components'].value[l].RefProdCompntCode]"
                                            [(ngModel)]="selectedMultiDDLItems[type.controls['components'].value[l].RefProdCompntCode]" [ngModelOptions]="{standalone: true}" [settings]="dropdownSettings" (onDropDownClose)="onMultiDDLChangeEvent(type.controls['components'].value[l].RefProdCompntCode,l,j)">
                   </ng-multiselect-dropdown>
                   <lib-uc-show-errors [control]="node.controls.OfferingCompntValue" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <div class="col-md-4" *ngIf="type.controls['components'].value[l].ProdCompntType == 'AMT' && type.controls['components'].value[l].IsProdOffering == true">
+                <div class="col-md-4" *ngIf="type.controls['components'].value[l].ProdCompntType == 'AMT' && type.controls['components'].value[l].IsProdOffering">
                   <input type="number" class="form-control adInsInput width-95-per" formControlName="OfferingCompntValue">
                   <lib-uc-show-errors [control]="type.controls['components'].controls[l].controls.OfferingCompntValue" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <div class="col-md-4" *ngIf="ShowBehaviour == true && type.controls['components'].value[l].IsProdOffering == true">
+                <div class="col-md-4" *ngIf="ShowBehaviour == true && type.controls['components'].value[l].IsProdOffering">
                   <select formControlName="OfferingMrProdBehaviour" class="form-control" name="OfferingMrProdBehaviour">
                     <option *ngFor="let m of dictBehaviour[type.controls['components'].value[l].RefProdCompntCode]" value={{m.Key}}>{{m.Value}}</option>
                   </select>
                   <lib-uc-show-errors [control]="type.controls['components'].controls[l].controls.OfferingMrProdBehaviour" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <label class="col-md-4" *ngIf="ShowBehaviour == true && type.controls['components'].value[l].IsProdOffering == false">{{GetBehaviourValue(type.controls['components'].value[l].RefProdCompntCode, type.controls['components'].value[l].HOMrProdBehaviour )}}</label>
+                <label class="col-md-4" *ngIf="ShowBehaviour == true && !type.controls['components'].value[l].IsProdOffering">{{GetBehaviourValue(type.controls['components'].value[l].RefProdCompntCode, type.controls['components'].value[l].HOMrProdBehaviour )}}</label>
               </div>
             </div>
           </div>
         </div>
       </ng-container>
-      <ng-container *ngIf="ShowComparison == true">
-        <div class="form-group-row" *ngIf="ShowBehaviour == true">
+      <ng-container *ngIf="ShowComparison">
+        <div class="form-group-row" *ngIf="ShowBehaviour">
           <label class="col-md-2"></label>
           <label class="col-md-5 text-center">Product Head Office</label>
           <label class="col-md-5 text-center">Product Offering</label>
         </div>
-        <div class="form-group-row" *ngIf="ShowBehaviour == false">
+        <div class="form-group-row" *ngIf="!ShowBehaviour">
           <label class="col-md-2"></label>
           <label class="col-md-3 text-center">Product Head Office</label>
           <label class="col-md-3 text-center">Product Offering</label>
@@ -65,30 +69,32 @@
             </div>
             <div class="col-md-12" formArrayName="components" *ngFor="let node of type.controls['components'].controls; let l = index">
               <div class="form-group row" [formGroupName]="l">
-                <label class="col-md-2">{{type.controls['components'].value[l].ProdCompntName}}</label>
+                <div class="col-md-2" [ngClass]="{'adins-required': type.controls['components'].value[l].IsProdOffering}">
+                  <label class="">{{type.controls['components'].value[l].ProdCompntName}}</label>
+                </div>
                 <label class="col-md-2">{{type.controls['components'].value[l].HOCompntValueDesc}}</label>
                 <span class="material-icons col-md-1 pointer" style="cursor: pointer;" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE' || FormProdOfferingComp.controls['groups'].value[j].groupCode == 'SCORE'" (click)="DownloadRule(type.controls['components'].value[l].HOCompntValue,type.controls['components'].value[l].HOCompntValueDesc)">
                   get_app
                 </span>
                 <label class="col-md-1" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode != 'RULE' && FormProdOfferingComp.controls['groups'].value[j].groupCode != 'SCORE'"> </label>
                 <label class="col-md-2" *ngIf="ShowBehaviour == true">{{GetBehaviourValue(type.controls['components'].value[l].RefProdCompntCode, type.controls['components'].value[l].HOMrProdBehaviour )}}</label>
-                <div class="col-md-2" *ngIf="type.controls['components'].value[l].ProdCompntType == 'DDL' && type.controls['components'].value[l].IsProdOffering == true">
+                <div class="col-md-2" *ngIf="type.controls['components'].value[l].ProdCompntType == 'DDL' && type.controls['components'].value[l].IsProdOffering">
                   <select formControlName="OfferingCompntValue" class="form-control width-95-per" (change)="onChangeCompntEvent(type.controls['components'].value[l].RefProdCompntCode,$event,l,j);">
                     <option *ngFor="let m of dictOptions[type.controls['components'].value[l].RefProdCompntCode]" value={{m.Key}}>{{m.Value}}</option>
                   </select>
                   <lib-uc-show-errors [control]="type.controls['components'].controls[l].controls.OfferingCompntValue" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <div class="col-md-2" *ngIf="type.controls['components'].value[l].ProdCompntType == 'AMT' && type.controls['components'].value[l].IsProdOffering == true">
+                <div class="col-md-2" *ngIf="type.controls['components'].value[l].ProdCompntType == 'AMT' && type.controls['components'].value[l].IsProdOffering">
                   <input type="number" class="form-control width-95-per" formControlName="OfferingCompntValue">
                   <lib-uc-show-errors [control]="type.controls['components'].controls[l].controls.OfferingCompntValue" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <span class="material-icons col-md-1 pointer" style="cursor: pointer;" *ngIf="(FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE' || FormProdOfferingComp.controls['groups'].value[j].groupCode == 'SCORE') && type.controls['components'].value[l].IsProdOffering == true" (click)="DownloadRule(type.controls['components'].getRawValue()[l].OfferingCompntValue,type.controls['components'].value[l].OfferingCompntValueDesc)">
+                <span class="material-icons col-md-1 pointer" style="cursor: pointer;" *ngIf="(FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE' || FormProdOfferingComp.controls['groups'].value[j].groupCode == 'SCORE') && type.controls['components'].value[l].IsProdOffering" (click)="DownloadRule(type.controls['components'].getRawValue()[l].OfferingCompntValue,type.controls['components'].value[l].OfferingCompntValueDesc)">
                   get_app
                 </span>
                 <label class="col-md-1" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode != 'RULE' && FormProdOfferingComp.controls['groups'].value[j].groupCode != 'SCORE'"> </label>
-                <div class="col-md-2" *ngIf="ShowBehaviour == true && type.controls['components'].value[l].IsProdOffering == true">
+                <div class="col-md-2" *ngIf="ShowBehaviour == true && type.controls['components'].value[l].IsProdOffering">
                   <select formControlName="OfferingMrProdBehaviour" class="form-control" name="OfferingMrProdBehaviour">
                     <option *ngFor="let m of dictBehaviour[type.controls['components'].value[l].RefProdCompntCode]" value={{m.Key}}>{{m.Value}}</option>
                   </select>
