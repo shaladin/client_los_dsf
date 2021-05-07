@@ -1,4 +1,4 @@
-export class ResponseSysConfigResultObj {
+export class ResSysConfigResultObj {
     SysConfigResultId : number;
     ConfigCode : string;
     ConfigDesc : string;

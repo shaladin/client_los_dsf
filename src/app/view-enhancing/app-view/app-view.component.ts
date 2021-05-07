@@ -11,8 +11,12 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+<<<<<<< HEAD
 import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
 import { formatDate } from '@angular/common';
+=======
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+>>>>>>> b33ee1e1a1537e62d740f53ec1cd5815e2817497
 
 @Component({
   selector: 'app-app-view',
@@ -56,7 +60,7 @@ export class AppViewComponent implements OnInit {
   appNo: any;
   custNo: any;
   IsUseDigitalization: string;
-  SysConfigResultObj: ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
+  SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
 

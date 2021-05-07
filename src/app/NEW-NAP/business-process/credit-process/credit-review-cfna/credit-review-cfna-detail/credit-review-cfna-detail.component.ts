@@ -1,4 +1,4 @@
-import { AfterViewInit, ApplicationRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ApplicationRef, Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -20,7 +20,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
-import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 
 @Component({
@@ -45,7 +45,7 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
   custNo: string;
   IsUseDigitalization: string;
   IsViewReady: boolean = false;
-  SysConfigResultObj: ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
+  SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
   // ReturnForm = this.fb.group({
   //   ReturnReason: [''],
@@ -150,7 +150,7 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
     console.log(this.createComponent)
   }
   async InitDms() {
-    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
     });
