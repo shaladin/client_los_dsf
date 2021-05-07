@@ -109,12 +109,12 @@ export class HoGeneralDataComponent implements OnInit {
           compDescr = this.LOBDescrSelected;
         }
         else {
-          compValue = -1;
+          compValue = "";
           compDescr = "-Select One-";
         }
       }
       else if (obj.CompntValue == "" || this.DictOptions[obj.RefProdCompntCode] == null || this.DictOptions[obj.RefProdCompntCode].find(f => f.Key == obj.CompntValue) == null) {
-        compValue = -1;
+        compValue = "";
         compDescr = "-Select One-";
       }
       else {

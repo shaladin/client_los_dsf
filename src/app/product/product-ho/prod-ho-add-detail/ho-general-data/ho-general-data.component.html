@@ -25,13 +25,13 @@
           </div>
           <div class="col-md-12" formArrayName="components"
             *ngFor="let node of type.controls['components'].controls; let l = index">
-            <div class="form-group row" [formGroupName]="l">
+            <div class="form-group row adins-required" [formGroupName]="l">
               <label class="col-md-4 ">{{type.controls['components'].value[l].ProdCompntName}}</label>
               <div class="col-md-8" *ngIf="type.controls['components'].value[l].ProdCompntType == 'DDL'">
                 <select formControlName="CompntValue" class="form-control width-50-per" id="CompValue{{l}}"
                   name="CompntValue{{l}}"
                   (change)="onChangeEvent(type.controls['components'].value[l].RefProdCompntCode,$event,l,j);">
-                  <option  [value]="-1">-Select One-</option>
+                  <option  [value]="">-Select One-</option>
                   <option *ngFor="let m of DictOptions[type.controls['components'].value[l].RefProdCompntCode]"
                     value={{m.Key}}>{{m.Value}}</option>
                 </select>
