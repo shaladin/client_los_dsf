@@ -26,6 +26,11 @@
               </th>
             </tr>
           </thead>
+          <tbody *ngIf="ListProdOfferingBranchMbr?.length == 0">
+            <tr>
+              <td colspan="100%">No Data Available</td>
+            </tr>
+          </tbody>
           <tbody>
             <tr *ngFor="let item of ListProdOfferingBranchMbr; let i = index;">
               <td>{{item.OfficeCode}}</td>
