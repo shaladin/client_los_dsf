@@ -95,37 +95,6 @@
         </div>
     </div>
     <div class="px-3">
-        <lib-ucSubsection [id]="'SocialMediaId'" [title]="'Social Media'" [panel]="'SocialMedia'">
-        </lib-ucSubsection>
-        <div id="SocialMedia">
-            <table class="table table-responsive-md text-center table-hover">
-                <thead>
-                <tr class="table-header">
-                    <th class="text-center"><span class="thead-header" name='no' translate>No</span> </th>
-                    <th class="text-center"><span class="thead-header" name='socmed' translate>Social Media</span></th>
-                    <th class="text-center"><span class="thead-header" name='socmedId' translate>Social Media ID</span></th>
-                </tr>
-                </thead>
-                <tbody *ngIf = "appCustSocmedObjs?.length == 0">
-                <ng-container>                
-                    <tr>
-                        <td colspan="100%">No Data Available</td>
-                    </tr>
-                </ng-container>                
-                </tbody>
-                <tbody *ngIf = "appCustSocmedObjs?.length > 0">
-                <ng-container *ngFor="let item of appCustSocmedObjs; let i=index">
-                    <tr>
-                        <td class="text-center">{{i + 1}}</td>
-                        <td class="text-center">{{item.MrSocmedName}}</td>
-                        <td class="text-center">{{item.SocmedId}}</td>
-                    </tr>
-                </ng-container>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="px-3">
         <lib-ucSubsection [id]="'CustGrpId'" [title]="'Customer Group Member'" [panel]="'CustGrp'">
         </lib-ucSubsection>
         <div id="CustGrp">

@@ -17,6 +17,7 @@ import { ResGetListProdOfferingBranchMbrObj, ResProdOfferingBranchOfficeMbrObj }
 import { environment } from 'environments/environment';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 
 @Component({
   selector: 'app-prod-offering-deact-detail',
@@ -68,7 +69,7 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
     this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformation.json";
     this.ViewGenericObj.viewEnvironment = environment.losUrl;
 
-    let obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeProdDeactivate };
+    let obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeProdDeactivate };
     await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
       (response : GenericKeyValueListObj) => {
         if (response.ReturnObject.length > 0) {

@@ -13,6 +13,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 
 @Component({
   selector: 'app-invoice-verif-detail',
@@ -105,7 +106,8 @@ export class InvoiceVerifDetailComponent implements OnInit {
   }
 
   GetListVerifStatus() {
-    this.httpClient.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeInvoiceDataVerif }).toPromise().then(
+    let tempReq: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeInvoiceDataVerif };
+    this.httpClient.post(URLConstant.GetListActiveRefReason, tempReq).toPromise().then(
       (response) => {
         this.listRefReason = response[CommonConstant.ReturnObj];
       });

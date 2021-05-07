@@ -21,6 +21,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { CookieService } from 'ngx-cookie';
 import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 
 @Component({
   selector: 'app-application-review-detail',
@@ -157,7 +158,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
   DDLData: { [id: string]: Array<{ Key: string, Value: string }> } = {};
   readonly DDLRecomendation: string = "RECOMENDED";
   async BindDDLRecommendation() {
-    let Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
+    let Obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
     await this.http.post(URLConstant.GetListActiveRefReason, Obj).toPromise().then(
       (response) => {
         this.DDLData[this.DDLRecomendation] = response[CommonConstant.ReturnObj];
@@ -167,7 +168,8 @@ export class ApplicationReviewDetailComponent implements OnInit {
 
   BindDDLReasonReturn() {
     this.DdlReasonObj.apiUrl = URLConstant.GetListActiveRefReason;
-    this.DdlReasonObj.requestObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
+    let tempReq: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
+    this.DdlReasonObj.requestObj = tempReq;
     this.DdlReasonObj.isSelectOutput = true;
   }
   //#endregion
