@@ -10,7 +10,9 @@
           <div class="col-md-12" formArrayName="components"
             *ngFor="let node of type.controls['components'].controls; let l = index">
             <div class="form-group row" [formGroupName]="l">
-              <label class="col-md-4 ">{{type.controls['components'].value[l].ProdCompntName}}</label>
+              <div class="col-md-4 adins-required">
+                <label class="">{{type.controls['components'].value[l].ProdCompntName}}</label>
+              </div>
               <div class="col-md-5" *ngIf="type.controls['components'].value[l].ProdCompntType == 'DDL'">
                   <select formControlName="CompntValue" class="form-control width-75-per" style="margin-right:0px;"
                           (change)="onChangeEvent(type.controls['components'].value[l].RefProdCompntCode,$event,l,j);">
