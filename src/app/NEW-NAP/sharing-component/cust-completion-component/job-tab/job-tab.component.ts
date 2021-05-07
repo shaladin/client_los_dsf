@@ -136,9 +136,9 @@ export class JobTabComponent implements OnInit {
     await this.InitLookup();
 
     await this.GetCustMainData();
-    this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel }).subscribe(
+    this.http.post<KeyValueObj>(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel }).subscribe(
       (response) => {
-        this.MrCustModelDescr = response.Descr;
+        this.MrCustModelDescr = response.Value;
         this.CheckCustModel();
       }
     );

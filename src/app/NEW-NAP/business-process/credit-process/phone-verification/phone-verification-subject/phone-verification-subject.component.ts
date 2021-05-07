@@ -17,6 +17,7 @@ import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { ReqGetVerfResultObj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
 
 @Component({
   selector: "phone-verification-subject",
@@ -47,7 +48,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     Id:0
   };
 
-  verfResObj =
+  verfResObj: ReqGetVerfResultObj =
     {
       TrxRefNo: "",
       MrVerfTrxTypeCode: CommonConstant.VerfTrxTypeCodePhn,
