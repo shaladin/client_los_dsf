@@ -82,6 +82,11 @@
               <th class="text-left">Product Status</th>
             </tr>
           </thead>
+          <tbody *ngIf="ProdVersionObj?.length == 0">
+            <tr>
+              <td colspan="100%">No Data Available</td>
+            </tr>
+          </tbody>
           <tbody>
             <tr *ngFor="let item of ProdVersionObj">
               <td>{{item.ProdVersion}}</td>
