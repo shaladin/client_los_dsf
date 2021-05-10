@@ -122,10 +122,10 @@ export class CustBankAccountComponent implements OnInit {
       IsDefault: this.listBankAcc[i].IsDefault
     });
 
-    if (this.listBankAcc[i].AppCustBankStmntObjs != undefined) {
-      for (let j = 0; j < this.listBankAcc[i].AppCustBankStmntObjs.length; j++) {
+    if (this.listBankAcc[i].ListAppCustBankAccStmntObj != undefined) {
+      for (let j = 0; j < this.listBankAcc[i].ListAppCustBankAccStmntObj.length; j++) {
         var bankStmnObjs = this.CustBankAccountForm.controls['BankStmntObjs'] as FormArray;
-        bankStmnObjs.push(this.addGroup(this.listBankAcc[i].AppCustBankStmntObjs[j]));
+        bankStmnObjs.push(this.addGroup(this.listBankAcc[i].ListAppCustBankAccStmntObj[j]));
       }
     }
 
@@ -165,7 +165,7 @@ export class CustBankAccountComponent implements OnInit {
     this.appCustBankAccObj.BankAccNo = this.CustBankAccountForm.controls.BankAccNo.value;
     this.appCustBankAccObj.BalanceAmt = 0;
     this.appCustBankAccObj.IsDefault = this.CustBankAccountForm.controls.IsDefault.value;
-    this.appCustBankAccObj.AppCustBankStmntObjs = new Array<AppCustBankStmntObj>();
+    this.appCustBankAccObj.ListAppCustBankAccStmntObj = new Array<AppCustBankStmntObj>();
     for (let i = 0; i < this.CustBankAccountForm.controls["BankStmntObjs"].value.length; i++) {
       var appCustBankStmntObj = new AppCustBankStmntObj();
       appCustBankStmntObj.Month = this.CustBankAccountForm.controls["BankStmntObjs"].value[i].Month;
@@ -173,10 +173,10 @@ export class CustBankAccountComponent implements OnInit {
       appCustBankStmntObj.DebitAmt = this.CustBankAccountForm.controls["BankStmntObjs"].value[i].DebitAmt;
       appCustBankStmntObj.CreditAmt = this.CustBankAccountForm.controls["BankStmntObjs"].value[i].CreditAmt;
       appCustBankStmntObj.BalanceAmt = this.CustBankAccountForm.controls["BankStmntObjs"].value[i].BalanceAmt;
-      this.appCustBankAccObj.AppCustBankStmntObjs.push(appCustBankStmntObj);
+      this.appCustBankAccObj.ListAppCustBankAccStmntObj.push(appCustBankStmntObj);
     }
 
-    if (this.appCustBankAccObj.AppCustBankStmntObjs.length > 0) {
+    if (this.appCustBankAccObj.ListAppCustBankAccStmntObj.length > 0) {
       this.appCustBankAccObj.IsBankStmnt = true;
     } else {
       this.appCustBankAccObj.IsBankStmnt = false;

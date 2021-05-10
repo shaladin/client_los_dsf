@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
-import { AdInsConstant } from "../AdInstConstant";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { URLConstant } from "../constant/URLConstant";
+import { GenericObj } from "../model/Generic/GenericObj.Model";
 
 // GetListUploadTypeKeyValue
 
@@ -26,6 +26,7 @@ export class UploadService {
     GetListRefRoleByUploadTypeId: any;
     GetListUploadSettingDByUploadSettingHId: any;
     foundationUrl: string = environment.FoundationR3Url;
+    ReqGenericObj: GenericObj = new GenericObj();
 
     constructor(private http: HttpClient) {
         this.GetUploadTypeByUploadTypeId = this.foundationUrl + URLConstant.GetUploadTypeByUploadTypeId;
@@ -62,6 +63,7 @@ export class UploadService {
     }
 
     getListUploadSettingDByUploadSettingHId(uploadSettingObject: any): Observable<Object> {
-      return this.http.post(this.GetListUploadSettingDByUploadSettingHId, uploadSettingObject);
+        this.ReqGenericObj.Id = uploadSettingObject.UploadSettingHId;
+      return this.http.post(this.GetListUploadSettingDByUploadSettingHId, this.ReqGenericObj);
   }
 }

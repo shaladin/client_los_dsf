@@ -11,6 +11,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppLifeInsRuleObj } from 'app/shared/model/AppLifeIns/AppLifeInsRuleObj.Model';
+import { ReqGetVendorByCategoryCodeAndOfficeCodeObj } from 'app/shared/model/Request/Vendor/ReqVendor.model';
 
 @Component({
   selector: 'app-life-insurance-data',
@@ -127,9 +128,12 @@ export class LifeInsuranceDataComponent implements OnInit {
         this.LifeInscoBranchNameObj.OfficeCode = response["OriOfficeCode"];
       }
     );
-    await this.http.post<Array<object>>(URLConstant.GetListActiveVendorByCategoryCodeAndOfficeCode, this.LifeInscoBranchNameObj).toPromise().then(
+    let ReqGetListActiveVendor : ReqGetVendorByCategoryCodeAndOfficeCodeObj = new ReqGetVendorByCategoryCodeAndOfficeCodeObj();
+    ReqGetListActiveVendor.MrVendorCategory = this.LifeInscoBranchNameObj.MrVendorCategory;
+    ReqGetListActiveVendor.OfficeCode = this.LifeInscoBranchNameObj.OfficeCode;
+    await this.http.post(URLConstant.GetListActiveVendorByCategoryCodeAndOfficeCode, ReqGetListActiveVendor).toPromise().then(
       (response) => {
-        this.LifeInscoBranchName = response;
+        this.LifeInscoBranchName = response[CommonConstant.ReturnObj];
       }
     );
 

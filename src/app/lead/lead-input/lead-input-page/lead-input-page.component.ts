@@ -13,7 +13,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-lead-input-page',
@@ -31,7 +31,7 @@ export class LeadInputPageComponent implements OnInit {
   viewLeadHeaderMainInfo: UcViewGenericObj = new UcViewGenericObj();
   pageType: string;
   dmsObj: DMSObj;
-  SysConfigResultObj : ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
+  SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
   @ViewChild("LeadMainInfo", { read: ViewContainerRef }) leadMainInfo: ViewContainerRef;
   AppStepIndex: number = 1;
   customObj: any;
@@ -60,7 +60,7 @@ export class LeadInputPageComponent implements OnInit {
   }
 
   async ngOnInit() : Promise<void> {
-    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
       });

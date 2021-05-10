@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
-import { environment } from 'environments/environment';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ReqGetVerfResult3Obj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
 
 @Component({
   selector: 'app-cust-confirmation-subj-view',
@@ -102,7 +102,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
           }
         );
 
-        var verfResultHObj = {
+        var verfResultHObj: ReqGetVerfResult3Obj = {
           VerfResultId: this.VerfResultHObj.VerfResultId,
           MrVerfSubjectRelationCode: this.VerfResultHObj.MrVerfSubjectRelationCode
         };
@@ -120,9 +120,9 @@ export class CustConfirmationSubjViewComponent implements OnInit {
         this.VerfResultHObjDetail = response;
       });
 
-    var verfResultDObj = {
-      VerfResultHId: TempVerfResultHId
-    };
+    let verfResultDObj: GenericObj = new GenericObj();
+    verfResultDObj.Id = TempVerfResultHId;
+    
     this.http.post(URLConstant.GetListVerfResultDInQuestionGrp, verfResultDObj).subscribe(
       (response) => {
         this.VerfResultDListObj = response[CommonConstant.ReturnObj];

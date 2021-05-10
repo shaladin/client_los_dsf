@@ -130,14 +130,14 @@ export class NewNapCustBankAccComponent implements OnInit {
       RowVersion: BankAccAndStmntObj.RowVersion
     });
 
-    if (BankAccAndStmntObj.AppCustBankStmntObjs != undefined) {
+    if (BankAccAndStmntObj.ListAppCustBankAccStmntObj != undefined) {
       var bankStmnObjs = this.BankAccStmntForm.controls['BankStmntObjs'] as FormArray;
-      for (let i = 0; i < BankAccAndStmntObj.AppCustBankStmntObjs.length; i++) {
-        bankStmnObjs.push(this.AddGroup(BankAccAndStmntObj.AppCustBankStmntObjs[i]));
+      for (let i = 0; i < BankAccAndStmntObj.ListAppCustBankAccStmntObj.length; i++) {
+        bankStmnObjs.push(this.AddGroup(BankAccAndStmntObj.ListAppCustBankAccStmntObj[i]));
       }
     }
 
-    this.AppCustBankStmntList = BankAccAndStmntObj.AppCustBankStmntObjs;
+    this.AppCustBankStmntList = BankAccAndStmntObj.ListAppCustBankAccStmntObj;
   }
 
   ClearForm() {
@@ -258,7 +258,7 @@ export class NewNapCustBankAccComponent implements OnInit {
       this.BankStmntObj = this.BankAccStmntForm.controls.BankStmntObjs.value[i]
       this.ListBankStmntObj.push(this.BankStmntObj);
     }
-    bankAccObj.AppCustBankStmntObjs = this.ListBankStmntObj;
+    bankAccObj.ListAppCustBankAccStmntObj = this.ListBankStmntObj;
 
     if (this.Mode == "Edit") {
       this.AppCustBankAccList[this.EditedIndex] = bankAccObj;

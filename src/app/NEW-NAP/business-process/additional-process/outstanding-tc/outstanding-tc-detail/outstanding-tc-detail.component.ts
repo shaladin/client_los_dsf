@@ -16,7 +16,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
   selector: 'app-outstanding-tc-detail',
@@ -35,7 +35,7 @@ export class OutstandingTcDetailComponent implements OnInit {
   appNo: string = "";
   mouCustNo: string = "";
   isDmsReady: boolean;
-  SysConfigResultObj : ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
+  SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
   constructor(private fb: FormBuilder, private http: HttpClient, private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
@@ -54,7 +54,7 @@ export class OutstandingTcDetailComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
-    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
       });

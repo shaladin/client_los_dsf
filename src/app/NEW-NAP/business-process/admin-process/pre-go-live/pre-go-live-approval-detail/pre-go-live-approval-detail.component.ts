@@ -18,6 +18,7 @@ import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalG
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
+import { ReqGetRfaLogByTrxNoAndApvCategoryObj } from 'app/shared/model/Request/NAP/PreGoLive/ReqGetRfaLogByTrxNoAndApvCategoryObj.model';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
@@ -91,7 +92,10 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
   ngOnInit() {
     this.arrValue.push(this.AgrmntId);
-    this.http.post(URLConstant.GetRfaLogByTrxNoAndApvCategory, { TrxNo: this.TrxNo, ApvCategory: CommonConstant.ApvCategoryPreGoLive }).subscribe(
+    let reqGetRfaLogByTrxNoAndApvCategoryObj = new ReqGetRfaLogByTrxNoAndApvCategoryObj();
+    reqGetRfaLogByTrxNoAndApvCategoryObj.TrxNo = this.TrxNo;
+    reqGetRfaLogByTrxNoAndApvCategoryObj.ApvCategory = CommonConstant.ApvCategoryPreGoLive;
+    this.http.post(URLConstant.GetRfaLogByTrxNoAndApvCategory, reqGetRfaLogByTrxNoAndApvCategoryObj).subscribe(
       (response) => {
         this.result = response;
         this.ListRfaLogObj = response["ListRfaLogObj"];

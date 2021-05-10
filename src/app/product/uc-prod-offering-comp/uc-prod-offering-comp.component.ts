@@ -213,6 +213,7 @@ export class UcProdOfferingCompComponent implements OnInit {
 
     this.http.post(URLConstant.GetProductOfferingComponentGrouped, ProdOfferingComponent).toPromise().then(
       async (response) => {
+        console.log(response);
         for (var i = 0; i < response[CommonConstant.ReturnObj]["ProdOffComponents"].length; i++) {
           var group = response[CommonConstant.ReturnObj]["ProdOffComponents"][i];
           var fa_group = this.FormProdOfferingComp.controls['groups'] as FormArray;

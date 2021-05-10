@@ -20,7 +20,7 @@ import { forkJoin } from 'rxjs';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
-import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 
 @Component({
@@ -58,7 +58,7 @@ export class CreditReviewMainComponent implements OnInit {
   isDmsReady: boolean = false;
   IsUseDigitalization: string;
   IsViewReady: boolean = false;
-  SysConfigResultObj: ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
+  SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
   // ReturnForm = this.fb.group({
   //   ReturnReason: [''],
@@ -140,7 +140,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async InitDms() {
-    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
     });
@@ -480,9 +480,9 @@ export class CreditReviewMainComponent implements OnInit {
   async GetIsUseDigitalization() {
     var generalSettingObj = new GeneralSettingObj();
     generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
-    await this.http.post(URLConstant.GetGeneralSettingByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).toPromise().then(
-      (response) => {
-        this.IsUseDigitalization = response["GsValue"];
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).toPromise().then(
+      (response: GeneralSettingObj) => {
+        this.IsUseDigitalization = response.GsValue;
       }
     )
   }

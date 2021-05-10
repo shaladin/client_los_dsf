@@ -84,7 +84,6 @@ export class AssetDataAddEditComponent implements OnInit {
   appCustAddrObj: any;
   returnAppCustAddrObj: any;
   allAssetDataObj: AllAssetDataObj;
-  refCoyObj: any;
   returnRefCoyObj: any;
   appCustObj: any;
   assetUsageObj: any
@@ -660,9 +659,9 @@ export class AssetDataAddEditComponent implements OnInit {
           });
         });
 
-      this.vendorObj = new VendorObj();
-      this.vendorObj.VendorCode = this.returnAppAssetObj.SupplCode;
-      this.http.post(URLConstant.GetVendorForLookup, this.vendorObj).subscribe(
+      let ReqGetVendorLookup : GenericObj = new GenericObj();
+      ReqGetVendorLookup.Code = this.returnAppAssetObj.SupplCode;
+      this.http.post(URLConstant.GetVendorForLookup, ReqGetVendorLookup).subscribe(
         (response) => {
           this.returnVendorObj = response;
           this.InputLookupSupplierObj.nameSelect = this.returnVendorObj.VendorName;
@@ -797,7 +796,7 @@ export class AssetDataAddEditComponent implements OnInit {
         let getAssetCond = this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETCOND", ProdOfferingVersion: response.ProdOfferingVersion });
         let getAssetType = this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETTYPE", ProdOfferingVersion: response.ProdOfferingVersion });
         let getAssetSchm = this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, { ProdOfferingCode: response.ProdOfferingCode, RefProdCompntCode: "ASSETSCHM", ProdOfferingVersion: response.ProdOfferingVersion });
-        let RegexSerialNo = this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSSerialNoRegex });
+        let RegexSerialNo = this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSSerialNoRegex });
 
         return forkJoin([getVendorSchmCode, getAssetCond, getAssetType, getAssetSchm, RegexSerialNo]);
       })
@@ -949,8 +948,7 @@ export class AssetDataAddEditComponent implements OnInit {
       }
     );
 
-    this.refCoyObj = new RefCoyObj();
-    this.http.post(URLConstant.GetRefCoy, this.refCoyObj).subscribe(
+    this.http.post(URLConstant.GetRefCoy, null).subscribe(
       (response) => {
         this.returnRefCoyObj = response;
         this.AssetDataForm.patchValue({

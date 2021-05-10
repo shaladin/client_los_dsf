@@ -16,7 +16,7 @@ import { CookieService } from 'ngx-cookie';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetDOMultiAssetInformationObj } from 'app/shared/model/Request/DeliveryOrder/ReqGetDOMultiAssetInformationObj.model';
 
 @Component({
@@ -50,7 +50,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   appNo: string;
   dmsAppObj: DMSObj;
   mouCustNo: string;
-  SysConfigResultObj : ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
+  SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
 
   constructor(
     private httpClient: HttpClient,
@@ -123,7 +123,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         this.isFinal = response[2]["IsFinal"];
       }
     );
-        await this.httpClient.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+        await this.httpClient.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
       });
