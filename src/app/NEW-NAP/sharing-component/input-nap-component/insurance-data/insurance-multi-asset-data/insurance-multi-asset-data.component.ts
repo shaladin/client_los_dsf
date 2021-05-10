@@ -30,6 +30,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InsRateAddCvgRuleObj } from 'app/shared/model/InsRateAddCvgRuleObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { ReqGetVendorByCategoryCodeAndOfficeCodeObj } from 'app/shared/model/Request/Vendor/ReqVendor.model';
 
 @Component({
   selector: 'app-insurance-multi-asset-data',
@@ -1690,8 +1691,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   bindInscoBranchObj() {
-    var inscoBranchObj = { MrVendorCategory: CommonConstant.VendorCategoryAssetInscoBranch, OfficeCode: this.appObj.OriOfficeCode };
-    this.http.post(URLConstant.GetListKeyValueActiveVendorByCategoryCodeAndOfficeCode, inscoBranchObj).subscribe(
+    let ReqInscoBranchObj : ReqGetVendorByCategoryCodeAndOfficeCodeObj = new ReqGetVendorByCategoryCodeAndOfficeCodeObj();
+    ReqInscoBranchObj.MrVendorCategory = CommonConstant.VendorCategoryAssetInscoBranch;
+    ReqInscoBranchObj.OfficeCode = this.appObj.OriOfficeCode;
+    this.http.post(URLConstant.GetListKeyValueActiveVendorByCategoryCodeAndOfficeCode, ReqInscoBranchObj).subscribe(
       (response) => {
         this.inscoBranchObj = response[CommonConstant.ReturnObj];
       }

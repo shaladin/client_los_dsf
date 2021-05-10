@@ -364,9 +364,9 @@ export class AssetLeasingAddEditComponent implements OnInit {
               });
             });
 
-          this.vendorObj = new VendorObj();
-          this.vendorObj.VendorCode = this.returnAppAssetObj.SupplCode;
-          this.http.post(URLConstant.GetVendorForLookup, this.vendorObj).subscribe(
+          let ReqGetVendorLookup : GenericObj = new GenericObj();
+          ReqGetVendorLookup.Code = this.returnAppAssetObj.SupplCode;
+          this.http.post(URLConstant.GetVendorForLookup, ReqGetVendorLookup).subscribe(
             (response) => {
               this.returnVendorObj = response;
               this.InputLookupSupplierObj.nameSelect = this.returnVendorObj.VendorName;
