@@ -105,18 +105,6 @@ export class DeliveryOrderDetailComponent implements OnInit {
       }
     );
 
-    var refMasterTypeObj = {
-      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustRelationship,
-    }
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterTypeObj).subscribe(
-      (response) => {
-        this.itemType = response[CommonConstant.ReturnObj];
-        this.DeliveryOrderForm.patchValue({
-          MrCustRelationshipCode: this.itemType[0].Key
-        });
-      }
-    );
-
     this.items = this.DeliveryOrderForm.get('items') as FormArray;
     this.listItem = this.DeliveryOrderForm.get('listItem') as FormArray;
 
@@ -131,6 +119,21 @@ export class DeliveryOrderDetailComponent implements OnInit {
         this.FullAssetName = this.appAssetObj.FullAssetName;
         this.MrAssetUsageCode = this.appAssetObj.MrAssetUsageCode;
         this.AssetCategoryCode = this.appAssetObj.AssetCategoryCode;
+
+        this.http.post(URLConstant.GetAppCustByAppId, {Id : this.appAssetObj.AppId}).subscribe(
+          (response) => {
+            var refMasterTypeObj = {
+              RefMasterTypeCode: response["MrCustTypeCode"] == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship,
+            }
+            this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterTypeObj).subscribe(
+              (response) => {
+                this.itemType = response[CommonConstant.ReturnObj];
+                this.DeliveryOrderForm.patchValue({
+                  MrCustRelationshipCode: this.itemType[0].Key
+                });
+              }
+            );
+          });
 
         this.DeliveryOrderForm.patchValue({
           ManufacturingYear: this.appAssetObj.ManufacturingYear
