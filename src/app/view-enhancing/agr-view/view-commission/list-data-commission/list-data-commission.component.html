@@ -3,11 +3,9 @@
 <div class="form-body" [id]="'formInformation' + FormInputObj['content']">
   <div class="form-body">
     <div style="margin-bottom: 30px;" class="row" *ngFor="let item of FormInputObj['listData']">
-      
       <div class="col-md-12">
         <label class="adInsLabel" style="font-weight: bold;"> {{item.CommissionRecipientRefNoDesc}} </label>
       </div>
-
       <div class="col-md-6">
         <div class="form-group row" *ngIf="FormInputObj['content'] == 'SupplierEmployee'">
           <div class="col-md-6">
@@ -17,7 +15,6 @@
             <label class="adInsLabel"> {{item.SupplierName}} </label>
           </div>
         </div>
-
         <div class="form-group row" *ngIf="FormInputObj['content'] == 'SupplierEmployee'">
           <div class="col-md-6">
             <label class="adInsLabel" translate> Job Position </label>
@@ -26,34 +23,30 @@
             <label class="adInsLabel"> {{item.ReservedField2}} </label>
           </div>
         </div>
-
         <div class="form-group row">
           <div class="col-md-6">
-            <label class="adInsLabel"> translate Total Commission Amount </label>
+            <label class="adInsLabel" translate> Total Commission Amount </label>
           </div>
           <div class="col-md-6">
-            <label class="adInsLabel"> {{item.TotalCommissionAmt}} </label>
+            <label class="adInsLabel"> {{item.TotalCommissionAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
-
         <div class="form-group row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> Tax Amount </label>
           </div>
           <div class="col-md-6">
-            <label class="adInsLabel"> {{item.TaxAmt}} </label>
+            <label class="adInsLabel"> {{item.TaxAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
-
         <div class="form-group row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> Vat Amount </label>
           </div>
           <div class="col-md-6">
-            <label class="adInsLabel"> {{item.VatAmt}} </label>
+            <label class="adInsLabel"> {{item.VatAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
-
         <div class="form-group row">
           <div class="col-md-6">
             <label class="adInsLabel" translate> Bank Account </label>
@@ -62,23 +55,19 @@
             <label class="adInsLabel"> {{item.BankCode + ' - ' + item.BankAccNo + ' - ' + item.BankAccName}} </label>
           </div>
         </div>
-
-        
       </div>
-
       <div class="col-md-6">
-        <div *ngFor="let appCommissionDObj of item.ListappCommissionDObj; let i = index">              
+        <div *ngFor="let appCommissionDObj of item.AgrmntCommDObjs; let i = index">
           <div class="form-group row">
             <div class="col-md-6">
-              <label class="adInsLabel"> Allocate from {{appCommissionDObj.MrCommissionSourceCodeDesc}} </label>
+              <label class="adInsLabel" translate> Allocate from {{appCommissionDObj.MrCommissionSourceCodeDesc}} </label>
             </div>
             <div class="col-md-6">
-              <label class="adInsLabel"> {{appCommissionDObj.CommissionAmt}} </label>
+              <label class="adInsLabel"> {{appCommissionDObj.CommissionAmt | number:'.2':'en-US'}} </label>
             </div>
           </div>
         </div>
       </div>
-
     </div>
     <br>
   </div>
