@@ -78,6 +78,15 @@ export class AppViewComponent implements OnInit {
         }
       )
     }
+
+    if(this.AppNo == null){
+      await this.http.post(URLConstant.GetAppById, {Id: this.AppId}).toPromise().then(
+        (response) => {
+          this.AppNo = response['AppNo'];
+        }
+      )
+    }
+
     this.arrValue.push(this.AppId);
     await this.GetApp();
     this.GetIsUseDigitalization();
