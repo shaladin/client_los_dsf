@@ -24,10 +24,12 @@ import { UcthingstodoModule } from '@adins/ucthingstodo';
 import { UcdropdownlistModule } from '@adins/ucdropdownlist';
 import { UcreportModule } from "@adins/ucreport";
 import { UcTestingComponent } from './uc-testing/uc-testing.component';
+import { UcTestComponent } from './uc-test/uc-test.component';
     
 @NgModule({
     declarations: [
         UcTestingComponent,
+        UcTestComponent,
     ],
     exports: [
         FormsModule,
@@ -51,7 +53,8 @@ import { UcTestingComponent } from './uc-testing/uc-testing.component';
         UcthingstodoModule,
         UcdropdownlistModule,
         UcreportModule,
-        UcTestingComponent
+        UcTestingComponent,
+        UcTestComponent
         //  UcapprovalModule
     ],
     imports: [
