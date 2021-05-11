@@ -27,9 +27,18 @@ export class DmsIframeComponent implements OnInit {
   constructor() { }
   
   ngOnInit() {
-    this.rootServer = environment.DMSUrl;
-    this.dmsKey = CommonConstant.DmsKey;
-    this.dmsIv = CommonConstant.DmsIV;
+    this.rootServer = "";
+    if(this.dmsObj.UsingDmsAdIns == "1")
+    {
+      this.rootServer = environment.dmsURL;
+      this.dmsKey = CommonConstant.DmsKeyR2;
+      this.dmsIv = CommonConstant.DmsIVR2;
+    }
+    else if(this.dmsObj.UsingDmsAdIns == "2"){
+      this.rootServer = environment.DMSUrl;
+      this.dmsKey = CommonConstant.DmsKey;
+      this.dmsIv = CommonConstant.DmsIV;
+    }
     if (this.dmsObj != undefined && this.dmsObj != null) {
       this.urlLink = this.dmsUrl();
       this.noParamGiven = false;
@@ -37,10 +46,32 @@ export class DmsIframeComponent implements OnInit {
   }
 
   dmsUrl() {
-    let ObjFinalForm = "js=" + JSON.stringify(this.dmsObj) + "&cftsv=" + formatDate(new Date(), 'dd-MM-yyyy HH:mm', 'en-US').toString();
-    this.prm = AdInsHelper.Encrypt128CBC(ObjFinalForm, this.dmsKey, this.dmsIv);
-    this.prm = encodeURIComponent(this.prm);
-    return this.rootServer + "?app=" + this.appName + "&prm=" + this.prm;
+    if(this.dmsObj.UsingDmsAdIns == "1")
+    {
+      let parameter = this.dmsObj.User + ";" + this.dmsObj.ViewCode + ";";
+      let oentities = parameter;
+      for(let i = 0; i < this.dmsObj.MetadataObject.length; i++)
+      {
+        if(this.dmsObj.MetadataObject[i].label == CommonConstant.DmsTimestamp){
+          this.dmsObj.MetadataObject[i].value = formatDate(new Date(), 'MM/dd/yyyy HH:mm:ss', 'en-US').toString()
+        }
+        oentities += this.dmsObj.MetadataObject[i].value + ";";
+      }
+      oentities += this.dmsObj.Role + ";";
+      oentities += "1234567";
+      this.prm = AdInsHelper.Encrypt128CBC(oentities, this.dmsKey, this.dmsIv);
+      this.prm = encodeURIComponent(this.prm);
+      let url = this.rootServer + "?prm=" + this.prm;
+      return url;
+    }
+    else if (this.dmsObj.UsingDmsAdIns == "2")
+    {
+      let ObjFinalForm = "js=" + JSON.stringify(this.dmsObj) + "&cftsv=" + formatDate(new Date(), 'dd-MM-yyyy HH:mm', 'en-US').toString();
+      this.prm = AdInsHelper.Encrypt128CBC(ObjFinalForm, this.dmsKey, this.dmsIv);
+      this.prm = encodeURIComponent(this.prm);
+      return this.rootServer + "?app=" + this.appName + "&prm=" + this.prm;
+    }
+
   }
 
   Cancel(){

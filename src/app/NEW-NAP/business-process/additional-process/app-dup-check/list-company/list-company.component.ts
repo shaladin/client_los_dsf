@@ -11,7 +11,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { ReqGetAppCustDupCheckObj } from 'app/shared/model/Request/NAP/DupCheck/ReqGetCustDupCheckObj.model';
+import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
 
 @Component({
   selector: 'app-list-company',
@@ -22,11 +22,6 @@ export class ListCompanyComponent implements OnInit {
 
   AppId: number;
   WfTaskListId: number;
-  FondationUrl = environment.FoundationR3Url;
-  LOSUrl = environment.losUrl;
-  GetNegativeCustomerDuplicateCheckUrl = this.FondationUrl + URLConstant.GetNegativeCustomerDuplicateCheck;
-  GetCustDataByAppId = URLConstant.GetCustDataByAppId;
-  AddAppDupCheckCustUrl = this.LOSUrl + URLConstant.AddAppDupCheckCust;
   AppCustObj: AppCustObj;
   AppCustCompanyObj: AppCustCompanyObj;
   AppCustAddrObj: AppCustAddrObj;
@@ -59,14 +54,14 @@ export class ListCompanyComponent implements OnInit {
     this.AppCustAddrObj = new AppCustAddrObj();
 
     var appObj = { "Id": this.AppId };
-    this.http.post(this.GetCustDataByAppId, appObj).subscribe(
+    this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
       response => {
         this.AppCustObj = response['AppCustObj'];
         this.RowVersion = response['AppCustObj'].RowVersion;
         this.AppCustCompanyObj = response['AppCustCompanyObj'];
         this.AppCustAddrObj = response['AppCustAddrLegalObj'];
 
-        let requestDupCheck = new ReqGetAppCustDupCheckObj();
+        let requestDupCheck: DuplicateCustObj = new DuplicateCustObj();
         requestDupCheck.CustName = this.AppCustObj.CustName;
         requestDupCheck.MrCustTypeCode = this.AppCustObj.MrCustTypeCode;
         requestDupCheck.MrCustModelCode = this.AppCustObj.MrCustModelCode;
@@ -75,7 +70,6 @@ export class ListCompanyComponent implements OnInit {
         requestDupCheck.TaxIdNo = this.AppCustObj.TaxIdNo;
         requestDupCheck.BirthDt = this.AppCustCompanyObj.EstablishmentDt;
         requestDupCheck.RowVersion = this.RowVersion;
-        requestDupCheck.AppId = this.AppCustObj.AppId;
 
         //List Cust And Negative Cust Dup Check
         this.http.post(URLConstant.GetCustomerAndNegativeCustDuplicateCheck, requestDupCheck).subscribe(

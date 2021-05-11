@@ -34,7 +34,6 @@ export class ViewAppCustDataPersonalComponent implements OnInit {
   appCustBankAccObjs: Array<ResAppCustBankAccForViewObj> = new Array<ResAppCustBankAccForViewObj>();
   appCustGrpObjs: Array<ResAppCustGrpForViewObj> = new Array<ResAppCustGrpForViewObj>();
   appCustPersonalContactPersonObjs: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();
-  appCustSocmedObjs: Array<AppCustSocmedObj> = new Array<AppCustSocmedObj>(); 
 
   constructor(private http: HttpClient) {
   }

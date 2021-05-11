@@ -163,7 +163,7 @@ export class CustBankAccountFL4WComponent implements OnInit {
     this.appCustBankAccObj.BankAccNo = this.CustBankAccountForm.controls.BankAccNo.value;
     this.appCustBankAccObj.BalanceAmt = 0;
     this.appCustBankAccObj.IsDefault = this.CustBankAccountForm.controls.IsDefault.value;
-    this.appCustBankAccObj.AppCustBankStmntObjs = new Array<AppCustBankStmntObj>();
+    this.appCustBankAccObj.ListAppCustBankAccStmntObj = new Array<AppCustBankStmntObj>();
     for (let i = 0; i < this.CustBankAccountForm.controls["BankStmntObjs"].value.length; i++) {
       var appCustBankStmntObj = new AppCustBankStmntObj();
       appCustBankStmntObj.Month = this.CustBankAccountForm.controls["BankStmntObjs"].value[i].Month;
@@ -171,10 +171,10 @@ export class CustBankAccountFL4WComponent implements OnInit {
       appCustBankStmntObj.DebitAmt = this.CustBankAccountForm.controls["BankStmntObjs"].value[i].DebitAmt;
       appCustBankStmntObj.CreditAmt = this.CustBankAccountForm.controls["BankStmntObjs"].value[i].CreditAmt;
       appCustBankStmntObj.BalanceAmt = this.CustBankAccountForm.controls["BankStmntObjs"].value[i].BalanceAmt;
-      this.appCustBankAccObj.AppCustBankStmntObjs.push(appCustBankStmntObj);
+      this.appCustBankAccObj.ListAppCustBankAccStmntObj.push(appCustBankStmntObj);
     }
 
-    if (this.appCustBankAccObj.AppCustBankStmntObjs.length > 0) {
+    if (this.appCustBankAccObj.ListAppCustBankAccStmntObj.length > 0) {
       this.appCustBankAccObj.IsBankStmnt = true;
     } else {
       this.appCustBankAccObj.IsBankStmnt = false;

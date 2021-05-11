@@ -15,6 +15,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ResListKeyValueObj } from 'app/shared/model/Response/Generic/ResListKeyValueObj.model';
 
 @Component({
   selector: 'app-cust-company-main-data',
@@ -50,10 +53,7 @@ export class CustCompanyMainDataComponent implements OnInit {
   InputLookupIndustryTypeObj: any;
   IdTypeObj: any;
   CompanyTypeObj: any;
-  CustModelObj: any;
-  custModelReqObj = {
-    MrCustTypeCode: ""
-  };
+  CustModelObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   UserAccess: any;
   MaxDate: Date;
 
@@ -237,9 +237,10 @@ export class CustCompanyMainDataComponent implements OnInit {
   }
 
   bindCustModelObj() {
-    this.custModelReqObj.MrCustTypeCode = CommonConstant.CustTypeCompany;
-    this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
-      (response) => {
+    var custModelReqObj = new GenericObj();
+    custModelReqObj.Code = CommonConstant.CustTypeCompany;
+    this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, custModelReqObj).toPromise().then(
+      (response : ResListKeyValueObj) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
         if (this.CustModelObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "")) {
           this.parentForm.controls[this.identifier].patchValue({

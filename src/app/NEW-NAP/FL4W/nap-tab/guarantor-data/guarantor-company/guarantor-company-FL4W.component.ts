@@ -20,6 +20,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 
 @Component({
@@ -37,6 +38,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
   @Output() close: EventEmitter<any> = new EventEmitter();
   @Input() ListCustNoCompany: any[];
   criteria: CriteriaObj[] = [];
+  CustCompanyIdObj: GenericObj;
   resultData: any;
   inputLookupObj: InputLookupObj;
   MrCompanyTypeCode: any;
@@ -160,12 +162,12 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
 
     var refCompObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType,
-      MappingCode: ""
+      MappingCode: null
     };
 
     var AppCust = {
       Id: this.AppId,
-      RowVersion: ""
+      RowVersion: null
     }
     this.http.post(URLConstant.GetAppCustByAppId, AppCust).subscribe(
       (response) => {
@@ -197,7 +199,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
 
     var refJobObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition,
-      MappingCode: ""
+      MappingCode: null
     }
     this.http.post(URLConstant.GetListActiveRefMaster, refCompObj).subscribe(
       (response) => {
@@ -285,7 +287,9 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
                 });
               }
             );
-            this.http.post(URLConstant.GetCustCompanyContactPersonByCustCompanyId, { CustCompanyId: this.resultData.CustCompanyId }).subscribe(
+            this.CustCompanyIdObj = new GenericObj();
+            this.CustCompanyIdObj.Id = this.resultData.CustCompanyId;
+            this.http.post(URLConstant.GetCustCompanyContactPersonByCustCompanyId, this.CustCompanyIdObj).subscribe(
               (response) => {
                 this.resultData = response;
                 this.CompanyForm.patchValue({
@@ -299,7 +303,10 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
             );
           }
         );
-        this.http.post(URLConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: CommonConstant.AddrTypeLegal }).subscribe(
+        let reqObj: GenericObj = new GenericObj();
+        reqObj.Id = event.CustId;
+        reqObj.Code = CommonConstant.AddrTypeLegal;
+        this.http.post(URLConstant.GetCustAddrByMrCustAddrType, reqObj).subscribe(
           (response) => {
             this.resultData = response;
             this.CompanyForm.patchValue({
@@ -517,7 +524,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
   getDocType() {
     var legalDocObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeLegalDocType,
-      MappingCode: ""
+      MappingCode: null
     };
     this.http.post(URLConstant.GetListActiveRefMaster, legalDocObj).subscribe(
       (response) => {

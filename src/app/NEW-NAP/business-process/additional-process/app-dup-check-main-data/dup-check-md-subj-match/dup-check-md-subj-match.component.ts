@@ -12,8 +12,9 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { ReqDupCheckAppCustObj } from 'app/shared/model/AppDupCheckCust/ReqDupCheckAppCustObj';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqGetAppCustDupCheckObj } from 'app/shared/model/Request/NAP/DupCheck/ReqGetCustDupCheckObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResAppDupCheckCustMainDataObj, ResListAppDupCheckCustMainDataObj } from 'app/shared/model/Response/NAP/DupCheck/ResAppDupCheckCustMainDataObj.model';
+import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
 
 @Component({
   selector: 'app-dup-check-md-subj-match',
@@ -48,8 +49,8 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.getDupCheckData();
+  async ngOnInit() {
+    await this.getDupCheckData();
   }
 
   initViewMainInfo() {
@@ -62,15 +63,17 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
     this.viewMainInfoObj.ddlEnvironments = [{ name: "AppNo", environment: environment.losR3Web }];
   }
 
-  getDupCheckData() {
-    this.http.post(URLConstant.GetAppCustMainDataByAppCustId, { Id: this.appCustId }).subscribe(
+  async getDupCheckData() {
+    let reqObj: GenericObj = new GenericObj();
+    reqObj.Id = this.appCustId;
+    await this.http.post(URLConstant.GetAppCustMainDataByAppCustId, reqObj).toPromise().then(
       response => {
         this.appCustObj = response['AppCustObj'];
         this.mrCustTypeCode = this.appCustObj.MrCustTypeCode;
         this.reqDupCheckAppCustObj.AppCustId = this.appCustId;
         this.reqDupCheckAppCustObj.RowVersion = this.appCustObj.RowVersion;
 
-        let requestDupCheck = new ReqGetAppCustDupCheckObj();
+        let requestDupCheck: DuplicateCustObj = new DuplicateCustObj();
         
         if (this.mrCustTypeCode == CommonConstant.CustTypePersonal) {
           this.appCustPersonalObj = response['AppCustPersonalObj'];
@@ -84,7 +87,6 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
           requestDupCheck.MotherMaidenName = this.appCustPersonalObj.MotherMaidenName;
           requestDupCheck.MobilePhnNo1 = this.appCustPersonalObj.MobilePhnNo1;
           requestDupCheck.RowVersion = response['AppCustObj'].RowVersion;
-          requestDupCheck.AppId = this.appCustObj.AppId;
 
         }
         else if (this.mrCustTypeCode == CommonConstant.CustTypeCompany) {
@@ -97,7 +99,6 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
           requestDupCheck.TaxIdNo = this.appCustObj.TaxIdNo;
           requestDupCheck.BirthDt = this.appCustCompanyObj.EstablishmentDt;
           requestDupCheck.RowVersion = response['AppCustObj'].RowVersion;
-          requestDupCheck.AppId = this.appCustObj.AppId;
         }
 
         //List Master Cust Duplicate Checking

@@ -141,19 +141,19 @@ export class GuarantorPersonalComponent implements OnInit {
 
     var idTypeObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType,
-      MappingCode: ""
+      MappingCode: null
     };
     var genderObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender,
-      MappingCode: ""
+      MappingCode: null
     };
     var maritalObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMaritalStat,
-      MappingCode: ""
+      MappingCode: null
     };
     var religionObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReligion,
-      MappingCode: ""
+      MappingCode: null
     };
 
     var AppCust = {
@@ -359,7 +359,10 @@ export class GuarantorPersonalComponent implements OnInit {
         );
         this.clearExpDt();
       });
-    this.http.post(URLConstant.GetCustAddrByMrCustAddrType, { CustId: event.CustId, MrCustAddrTypeCode: "LEGAL" }).subscribe(
+      let reqObj: GenericObj = new GenericObj();
+      reqObj.Id = event.CustId;
+      reqObj.Code = CommonConstant.AddrTypeLegal;
+      this.http.post(URLConstant.GetCustAddrByMrCustAddrType, reqObj).subscribe(
       (response) => {
         this.resultData = response;
         this.AddrObj = new AddrObj();

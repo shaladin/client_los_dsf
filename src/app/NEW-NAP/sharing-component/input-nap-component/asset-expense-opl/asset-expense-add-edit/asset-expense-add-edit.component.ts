@@ -654,7 +654,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
     var month: number = 12;
 
     for (let i = 0; i < noOfYear; i++) {
-      var obj = { Tenor: 0, SumInsuredPrcnt: 0, CustMainPremiRate: 0, InscoMainPremiRate: 0, StdMainPremiRate: 0 };
+      var obj = { Tenor: 0, SumInsuredPrcnt: 0, CustMainPremiRate: 0, InscoMainPremiRate: 0 };
 
       if (yearCount - 12 >= 0) {
         month = 12;
@@ -667,7 +667,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
       var index = this.ruleObj.InsRateMainCvgRuleObjs.findIndex(x => x.MainCoverageType == this.InsuranceDataForm.controls.InsMainCvgType.value);
       obj.CustMainPremiRate = this.ruleObj.InsRateMainCvgRuleObjs[index].RateToCust;
       obj.InscoMainPremiRate = this.ruleObj.InsRateMainCvgRuleObjs[index].RateToInsco;
-      //obj.StdMainPremiRate = this.ruleObj.BaseRatePercentage[index];
       (this.InsuranceDataForm.controls.AppInsMainCvgs as FormArray).push(this.addGroup(i, obj, ManufYearDiff, this.defaultInsMainCvgType));
       ManufYearDiff++;
       yearCount -= 12;
@@ -785,7 +784,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
       SumInsuredPrcnt: obj.SumInsuredPrcnt,
       SumInsuredAmt: 0,
       MrMainCvgTypeCode: mainCvg,
-      StdMainPremiRate: obj.StdMainPremiRate,
       CustMainPremiRate: obj.CustMainPremiRate,
       CustMainPremiAmt: 0,
       InscoMainPremiRate: obj.InscoMainPremiRate,
@@ -846,8 +844,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
                   // InscoAddPremiRate: inscoAddPremiRate,
                   InscoAddPremiRate: filtered[i].RateToInsco,
                   InscoAddPremiAmt: 0,
-                  // StdAddPremiRate: this.ruleObj.BaseRate[index]
-                  // StdAddPremiRate: this.ruleObj["BaseRate"][i]
                 });
                 (group.controls.AppInsAddCvgs as FormArray).push(control);
               }
@@ -872,7 +868,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
             BaseCalculation: filtered[index].BaseCalc,
             InscoAddPremiRate: inscoAddPremiRate,
             InscoAddPremiAmt: 0
-            //StdAddPremiRate: this.ruleObj.BaseRate[index]
           });
           (group.controls.AppInsAddCvgs as FormArray).push(control);
         }
@@ -888,7 +883,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
       SumInsuredPrcnt: insMainCvg.SumInsuredPrcnt,
       SumInsuredAmt: insMainCvg.SumInsuredAmt,
       MrMainCvgTypeCode: insMainCvg.MrMainCvgTypeCode,
-      //StdMainPremiRate: insMainCvg.StdMainPremiRate,
       CustMainPremiRate: insMainCvg.CustMainPremiRate,
       CustMainPremiAmt: insMainCvg.CustMainPremiAmt,
       InscoMainPremiRate: insMainCvg.InscoMainPremiRate,
@@ -947,7 +941,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
                 BaseCalculation: this.ruleObj.InsRateAddCvgRuleObjs[index].BaseCalc,
                 InscoAddPremiRate: inscoAddPremiRate,
                 InscoAddPremiAmt: check == undefined ? 0 : check.InscoAddPremiAmt
-                //StdAddPremiRate: this.ruleObj.BaseRate[index]
               });
               (group.controls.AppInsAddCvgs as FormArray).push(control);
             }
@@ -967,7 +960,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
           BaseCalculation: this.ruleObj.InsRateAddCvgRuleObjs[index].BaseCalc,
           InscoAddPremiRate: inscoAddPremiRate,
           InscoAddPremiAmt: check == undefined ? 0 : check.InscoAddPremiAmt,
-          //StdAddPremiRate: this.ruleObj.BaseRate[index]
         });
         (group.controls.AppInsAddCvgs as FormArray).push(control);
       }
@@ -983,7 +975,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
 
   ReGenerateAddCvgTable(mainCvg, i) {
     (this.InsuranceDataForm.controls.AppInsMainCvgs['controls'][i]['controls']['AppInsAddCvgs'] as FormArray) = this.fb.array([]);
-    //obj.StdMainPremiRate = this.ruleObj.BaseRatePercentage[index];
     this.resetAddtional(i, mainCvg);
   }
 
@@ -1039,8 +1030,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
                   // InscoAddPremiRate: inscoAddPremiRate,
                   InscoAddPremiRate: filtered[j].RateToInsco,
                   InscoAddPremiAmt: 0,
-                  // StdAddPremiRate: this.ruleObj.BaseRate[index]
-                  // StdAddPremiRate: this.ruleObj["BaseRate"][i]
                 });
                 (this.InsuranceDataForm.controls.AppInsMainCvgs['controls'][i]['controls']['AppInsAddCvgs'] as FormArray).push(control);
                 //(group.controls.AppInsAddCvgs as FormArray).push(control);
@@ -1066,7 +1055,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
             BaseCalculation: filtered[index].BaseCalc,
             InscoAddPremiRate: inscoAddPremiRate,
             InscoAddPremiAmt: 0
-            //StdAddPremiRate: this.ruleObj.BaseRate[index]
           });
           (this.InsuranceDataForm.controls.AppInsMainCvgs['controls'][i]['controls']['AppInsAddCvgs'] as FormArray).push(control);
           //(group.controls.AppInsAddCvgs as FormArray).push(control);
@@ -1099,7 +1087,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
     var index = this.ruleObj.InsRateMainCvgRuleObjs.findIndex(x => x.MainCoverageType == mainCoverageType);
     this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i].patchValue({
       CustMainPremiRate: this.ruleObj.InsRateMainCvgRuleObjs[index].RateToCust,
-      //StdMainPremiRate: this.ruleObj.BaseRatePercentage[index],
       InscoMainPremiRate: this.ruleObj.InsRateMainCvgRuleObjs[index].RateToInsco
     });
     for (let j = 0; j < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"].length; j++) {
@@ -1123,7 +1110,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
       this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"][j].patchValue({
         CustAddPremiRate: custAddPremiRate,
         InscoAddPremiRate: inscoAddPremiRate,
-        //StdAddPremiRate: this.ruleObj.BaseRate[indexAdd]
       });
     }
   }
@@ -2274,7 +2260,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
   }
 
   async GetGSValueInputFeeType() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeInputOPLFeeType }).toPromise().then(
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeInputOPLFeeType }).toPromise().then(
       (response) => {
         this.InsuranceDataForm.patchValue({
           FeeInputType: response.GsValue
@@ -2285,7 +2271,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
   }
   isInputTypeLock: boolean = false;
   async GetGSValueInputFeeTypeBehaviour() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeInputOPLFeeBehaviour }).toPromise().then(
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeInputOPLFeeBehaviour }).toPromise().then(
       (response) => {
         if (response.GsValue == "LOCK") {
           this.isInputTypeLock = true;

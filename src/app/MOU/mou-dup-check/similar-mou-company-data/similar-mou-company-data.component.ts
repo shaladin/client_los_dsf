@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,7 +8,7 @@ import { MouCustCompanyObj } from 'app/shared/model/MouCustCompanyObj.Model';
 import { MouCustAddrObj } from 'app/shared/model/MouCustAddrObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqMouCustDuplicateObj } from 'app/shared/model/Request/MOU/ReqGetMouCustDuplicateObj.model';
+import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
 
 @Component({
   selector: 'app-similar-mou-company-data',
@@ -20,18 +19,14 @@ export class SimilarMouCompanyDataComponent implements OnInit {
 
   MouCustId: number;
   WfTaskListId: number;
-  FondationUrl = environment.FoundationR3Url;
-  LOSUrl = environment.losUrl;
-  GetNegativeCustomerDuplicateCheckUrl = this.FondationUrl + URLConstant.GetNegativeCustomerDuplicateCheck;
-  AddAppDupCheckCustUrl = this.LOSUrl + URLConstant.AddAppDupCheckCust;
   MouCustObj: MouCustObj; 
   MouCustCompanyObj: MouCustCompanyObj;
   MouCustAddrObj: MouCustAddrObj;
   RowVersion: any;
-  ListCustomerDuplicate: any;
-  ListNegativeCust: any;
-  ListAppCustDuplicate: any;
-  ListMouCustDuplicate: any;
+  ListCustomerDuplicate: Array<any> = new Array();
+  ListNegativeCust: Array<any> = new Array();
+  ListAppCustDuplicate: Array<any> = new Array();
+  ListMouCustDuplicate: Array<any> = new Array();
 
   constructor(
     private http: HttpClient,
@@ -61,7 +56,7 @@ export class SimilarMouCompanyDataComponent implements OnInit {
         this.MouCustCompanyObj = response['MouCustCompanyObj'];
         this.MouCustAddrObj = response['MouCustAddrLegalObj'];
 
-        var ReqDupCheckObj = new ReqMouCustDuplicateObj();
+        let ReqDupCheckObj: DuplicateCustObj = new DuplicateCustObj();
         ReqDupCheckObj.CustName =  this.MouCustObj.CustName;
         ReqDupCheckObj.MrCustTypeCode = this.MouCustObj.MrCustTypeCode;
         ReqDupCheckObj.MrCustModelCode = this.MouCustObj.CustModelCode;
@@ -71,7 +66,6 @@ export class SimilarMouCompanyDataComponent implements OnInit {
         ReqDupCheckObj.BirthDt =  this.MouCustCompanyObj.EstablishmentDt;
         ReqDupCheckObj.MobilePhnNo1 = "";
         ReqDupCheckObj.RowVersion = this.RowVersion;
-        ReqDupCheckObj.MouCustId = this.MouCustId;
         ReqDupCheckObj.MotherMaidenName = "";
 
         //List Cust And Negative Cust Dup Check

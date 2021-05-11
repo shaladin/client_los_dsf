@@ -8,7 +8,6 @@ import { VerfQuestionAnswerCustomObj } from 'app/shared/model/VerfQuestionAnswer
 import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -19,6 +18,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
 import { ReqVerfQuestionAnswerObj } from 'app/shared/model/Request/Verification/ReqVerfQuestionAnswerObj.model';
+import { ReqGetVerfResult3Obj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
 
 @Component({
   selector: 'app-cust-confirmation-subj-detail',
@@ -48,7 +48,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   AgrmntNo: string;
   TaskListId: number;
   BizTemplateCode: string;
-  SubjectResponse: RefMasterObj = new RefMasterObj();
+  SubjectResponse: KeyValueObj = new KeyValueObj();
   cust: any;
   isFailed: boolean = false;
 
@@ -88,7 +88,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeVerfSubjRelation,
       MasterCode: this.Subject
     };
-    await this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
+    await this.http.post<KeyValueObj>(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
       (response) => {
         this.SubjectResponse = response;
       });
@@ -182,7 +182,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   }
 
   async GetListVerfResultH(id, code) {
-    var verfResultHObj = {
+    var verfResultHObj: ReqGetVerfResult3Obj = {
       VerfResultId: id,
       MrVerfSubjectRelationCode: code
     };

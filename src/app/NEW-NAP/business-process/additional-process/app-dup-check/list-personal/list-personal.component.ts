@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'environments/environment';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,7 +10,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { ReqGetAppCustDupCheckObj } from 'app/shared/model/Request/NAP/DupCheck/ReqGetCustDupCheckObj.model';
+import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
 
 @Component({
   selector: 'app-list-personal',
@@ -22,11 +21,6 @@ export class ListPersonalComponent implements OnInit {
 
   AppId: number;
   WfTaskListId: number;
-  FondationUrl = environment.FoundationR3Url;
-  LOSUrl = environment.losUrl;
-  GetNegativeCustomerDuplicateCheckUrl = this.FondationUrl + URLConstant.GetNegativeCustomerDuplicateCheck;
-  AddAppDupCheckCustUrl = this.LOSUrl + URLConstant.AddAppDupCheckCust;
-  GetCustDataByAppId = URLConstant.GetCustDataByAppId;
   AppCustObj: AppCustObj;
   AppCustPersonalObj: AppCustPersonalObj;
   AppCustAddrObj: AppCustAddrObj;
@@ -60,14 +54,14 @@ export class ListPersonalComponent implements OnInit {
 
     //Get App Cust Data
     var appObj = { "Id": this.AppId };
-    this.http.post(this.GetCustDataByAppId, appObj).subscribe(
+    this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
       response => {
         this.AppCustObj = response['AppCustObj'];
         this.RowVersion = response['AppCustObj'].RowVersion;
         this.AppCustPersonalObj = response['AppCustPersonalObj'];
         this.AppCustAddrObj = response['AppCustAddrLegalObj'];
 
-        let requestDupCheck = new ReqGetAppCustDupCheckObj();
+        let requestDupCheck: DuplicateCustObj = new DuplicateCustObj();
         requestDupCheck.CustName = this.AppCustObj.CustName;
         requestDupCheck.MrCustTypeCode = this.AppCustObj.MrCustTypeCode;
         requestDupCheck.MrCustModelCode = this.AppCustObj.MrCustModelCode;
@@ -78,7 +72,6 @@ export class ListPersonalComponent implements OnInit {
         requestDupCheck.MotherMaidenName = this.AppCustPersonalObj.MotherMaidenName;
         requestDupCheck.MobilePhnNo1 = this.AppCustPersonalObj.MobilePhnNo1;
         requestDupCheck.RowVersion = this.RowVersion;
-        requestDupCheck.AppId = this.AppCustObj.AppId;
 
         //List Cust Duplicate And List Negative Cust Duplicate Checking
         this.http.post(URLConstant.GetCustomerAndNegativeCustDuplicateCheck, requestDupCheck).subscribe(
