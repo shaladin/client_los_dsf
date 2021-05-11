@@ -1,3 +1,8 @@
+<app-uc-test id="ucSearch" style="width:100%;" [searchInput]='inputObj' [pageSize]="pageSize"
+    (result)="getResult($event)"></app-uc-test>
+
+
+
 <div class="col-md-12">
     <div class="card">
         <div class="card-body">
@@ -6,7 +11,8 @@
                 <label class="col-md-2 no-padding" translate>{{lang}}</label>
                 <label class="col-md-2 no-padding" translate>{{tanggal}}</label>
                 <label class="col-md-2 no-padding" translate>{{tanggal | date: 'dd-MMM-yyyy'}}</label>
-                <label class="col-md-2 no-padding" translate>{{tanggal | date: (ml != undefined && ml != '') ? ml : 'dd-MMM-yyyy'}}</label>
+                <label class="col-md-2 no-padding" translate>{{tanggal | date: (ml != undefined && ml != '') ? ml :
+                    'dd-MMM-yyyy'}}</label>
                 <!-- 
                 <form class="form form-horizontal" [formGroup]="JobDataForm" (ngSubmit)="JobDataForm.valid"
                     #enjiForm="ngForm">

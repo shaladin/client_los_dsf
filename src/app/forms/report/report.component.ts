@@ -5,6 +5,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { TranslateService } from '@ngx-translate/core';
+import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
 
 @Component({
   selector: 'app-report',
@@ -12,6 +13,8 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./report.component.scss']
 })
 export class ReportComponent implements OnInit {
+
+  inputObj: InputSearchObj = new InputSearchObj();
 
   inputReportObj: InputReportObj = new InputReportObj();
   ddlOfficeObj: UcDropdownListObj = new UcDropdownListObj();
@@ -33,10 +36,40 @@ export class ReportComponent implements OnInit {
 
   ngOnInit() {
     console.log("testing");
+
+    this.inputObj = new InputSearchObj();
+    this.inputObj._url = "./assets/ucpaging/searchAppInquiry.json";
+    this.inputObj.ddlEnvironments = [
+      {
+        name: "A.ORI_OFFICE_CODE",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "A.APP_STAT",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "ISNULL(B.AGRMNT_CURR_STEP,A.APP_CURR_STEP)",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "B.AGRMNT_STAT",
+        environment: environment.FoundationR3Url
+      },
+      {
+        name: "A.CUST_CHECKING_STEP",
+        environment: environment.FoundationR3Url
+      }
+    ];
+
     this.ddlOfficeObj.apiUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.ddlOfficeObj.requestObj = {
       RefMasterTypeCode: "BUILDING_OWNERSHIP"
     };
+  }
+
+  getResult(ev) {
+    console.log(ev);
   }
 
   clickMe() {
