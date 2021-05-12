@@ -70,52 +70,54 @@
         <lib-ucSubsection [id]="'BankAccountId'" [title]="'Bank Account'" [panel]="'BankAccount'">
         </lib-ucSubsection>
         <div id="BankAccount">
-            <div *ngFor="let item of appCustBankAccObjs; let i=index">
-                <lib-ucSubsection [id]="'BankAccInfo' + i + 'id'" [title]="item.BankInfo" [panel]="'BankAccInfo' + i">
-                </lib-ucSubsection>
-                <div [id]="'BankAccInfo' + i">
-                    <div class="form-body">
-                        <div class="form-group row">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label class="label-control" translate> Bank Branch </label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="label-control" translate> {{item.BankBranch}}
-                                        </label>
+            <div class="px-3">
+                <div *ngFor="let item of appCustBankAccObjs; let i=index">
+                    <lib-ucSubsection [id]="'BankAccInfo' + i + 'id'" [title]="item.BankInfo" [panel]="'BankAccInfo' + i">
+                    </lib-ucSubsection>
+                    <div [id]="'BankAccInfo' + i">
+                        <div class="form-body">
+                            <div class="form-group row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="label-control" translate> Bank Branch </label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="label-control" translate> {{item.BankBranch}}
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <table class="table table-responsive-md text-center table-hover">
+                            <thead>
+                            <tr class="table-header">
+                                <th class="text-center"><span class="thead-header" name='month' translate>Month</span> </th>
+                                <th class="text-center"><span class="thead-header" name='year' translate>Year</span></th>
+                                <th class="text-right"><span class="thead-header" name='debit' translate>Debit</span></th>
+                                <th class="text-right"><span class="thead-header" name='credit' translate>Credit</span></th>
+                                <th class="text-right"><span class="thead-header" name='balanceAmt' translate>Balance Amount</span></th>
+                            </tr>
+                            </thead>
+                            <tbody *ngIf = "appCustBankAccObjs[i].ListAppCustBankAccStmntObj?.length == 0">
+                                <tr>
+                                <td colspan="100%">No Data Available</td>
+                                </tr>
+                            </tbody>
+                            <tbody>
+                            <ng-container *ngFor="let item of appCustBankAccObjs[i].ListAppCustBankAccStmntObj">
+                                <tr>
+                                    <td class="text-center">{{item.Month}}</td>
+                                    <td class="text-center">{{item.Year}}</td>
+                                    <td class="text-right">{{item.DebitAmt | number:'.2':'en-US'}}</td>
+                                    <td class="text-right">{{item.CreditAmt | number:'.2':'en-US'}}</td>
+                                    <td class="text-right">{{item.BalanceAmt | number:'.2':'en-US'}}</td>
+                                </tr>
+                            </ng-container>
+                            </tbody>
+                        </table>
                     </div>
-                    <table class="table table-responsive-md text-center table-hover">
-                        <thead>
-                        <tr class="table-header">
-                            <th class="text-center"><span class="thead-header" name='month' translate>Month</span> </th>
-                            <th class="text-center"><span class="thead-header" name='year' translate>Year</span></th>
-                            <th class="text-right"><span class="thead-header" name='debit' translate>Debit</span></th>
-                            <th class="text-right"><span class="thead-header" name='credit' translate>Credit</span></th>
-                            <th class="text-right"><span class="thead-header" name='balanceAmt' translate>Balance Amount</span></th>
-                        </tr>
-                        </thead>
-                        <tbody *ngIf = "appCustBankAccObjs[i].ListAppCustBankAccStmntObj?.length == 0">
-                            <tr>
-                            <td colspan="100%">No Data Available</td>
-                            </tr>
-                        </tbody>
-                        <tbody>
-                        <ng-container *ngFor="let item of appCustBankAccObjs[i].ListAppCustBankAccStmntObj">
-                            <tr>
-                                <td class="text-center">{{item.Month}}</td>
-                                <td class="text-center">{{item.Year}}</td>
-                                <td class="text-right">{{item.DebitAmt | number:'.2':'en-US'}}</td>
-                                <td class="text-right">{{item.CreditAmt | number:'.2':'en-US'}}</td>
-                                <td class="text-right">{{item.BalanceAmt | number:'.2':'en-US'}}</td>
-                            </tr>
-                        </ng-container>
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
