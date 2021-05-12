@@ -18,8 +18,14 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 export class FinancialCompanyComponent implements OnInit {
   @Input() AppCustId: number;
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
+  
   IsDetail: boolean = false;
-  AttrGroup: string = CommonConstant.AttrGroupCustCompanyFinData;
+  // AttrGroup: string = CommonConstant.AttrGroupCustCompanyFinData;
+  AttrGroups: Array<string> = [
+    CommonConstant.AttrGroupCustCompanyFinDataIncome,
+    CommonConstant.AttrGroupCustCompanyFinDataExpense,
+    CommonConstant.AttrGroupCustCompanyFinDataOther
+  ];
   AppCustCompanyFinData: AppCustCompanyFinDataObj = new AppCustCompanyFinDataObj();
   CustAttrRequest: Array<Object>;
   MrSourceOfIncomeTypeObj: Array<KeyValueObj> = new Array();
@@ -120,7 +126,7 @@ export class FinancialCompanyComponent implements OnInit {
           AppCustId: this.AppCustId,
           RefAttrCode: formValue[key]["AttrCode"],
           AttrValue: formValue[key]["AttrValue"],
-          AttrGroup: this.AttrGroup
+          AttrGroup: formValue[key]["AttrGroup"]
         };
         this.CustAttrRequest.push(custAttr);}
 
@@ -129,7 +135,7 @@ export class FinancialCompanyComponent implements OnInit {
   }
 
   SaveForm() {
-    if (this.FinancialForm.get('AttrList') != undefined){
+    if (this.FinancialForm.get('AttrList') != undefined) {
       this.SetAttrContent();
     }
     
@@ -138,8 +144,9 @@ export class FinancialCompanyComponent implements OnInit {
     this.AppCustCompanyFinData.AppCustId = this.AppCustId;
 
     let request = {
-      ListAppCustAttrObj: this.CustAttrRequest,
-      AppCustCompanyFinDataObj: this.AppCustCompanyFinData
+      ListAppCustFinDataAttrObj: this.CustAttrRequest,
+      AppCustCompanyFinDataObj: this.AppCustCompanyFinData,
+      AttrGroups: this.AttrGroups
     }
     
     if (!this.isDataExist) {
@@ -147,13 +154,16 @@ export class FinancialCompanyComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.OutputTab.emit({IsComplete: true});
-        });
-    } else {
+        }
+      );
+    }
+    else {
       this.http.post(URLConstant.EditAppCustCompanyFinData, request).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.OutputTab.emit({IsComplete: true});
-        });
+        }
+      );
     }
   }
 }
