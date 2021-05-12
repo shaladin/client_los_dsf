@@ -34,6 +34,12 @@ export class ViewAssetCollateralDetailComponent implements OnInit {
         this.appAssetSupplEmp = response[1];
         this.appCollateralRegistration = response[2];
 
+        this.httpClient.post(URLConstant.GetAssetTypeByCode, {Code: this.appAsset.AssetTypeCode }).subscribe(
+          (responseAsset: any) => {
+            this.AssetTypeObj = responseAsset;
+          }
+        );
+
         for (const item of this.appAssetSupplEmp.ReturnObject) {
           if(item.MrSupplEmpPositionCode == CommonConstant.SALES_JOB_CODE){
             this.salesName = item.SupplEmpName;
@@ -45,12 +51,6 @@ export class ViewAssetCollateralDetailComponent implements OnInit {
             this.adminHeadName = item.SupplEmpName;
           }
         }
-      }
-    );
-
-    this.httpClient.post(URLConstant.GetAssetTypeByCode, {Code: this.appAsset.AssetTypeCode }).subscribe(
-      (response: any) => {
-        this.AssetTypeObj = response;
       }
     );
   }
