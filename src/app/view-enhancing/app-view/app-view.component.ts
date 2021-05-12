@@ -74,6 +74,22 @@ export class AppViewComponent implements OnInit {
   }
 
   async ngOnInit() : Promise<void> {
+    if(this.AppId == 0){
+      await this.http.post(URLConstant.GetAppByAppNo, {TrxNo: this.AppNo}).toPromise().then(
+        (response) => {
+          this.AppId = response['AppId'];
+        }
+      )
+    }
+
+    if(this.AppNo == null){
+      await this.http.post(URLConstant.GetAppById, {Id: this.AppId}).toPromise().then(
+        (response) => {
+          this.AppNo = response['AppNo'];
+        }
+      )
+    }
+
     this.arrValue.push(this.AppId);
     await this.GetApp();
     this.GetIsUseDigitalization();

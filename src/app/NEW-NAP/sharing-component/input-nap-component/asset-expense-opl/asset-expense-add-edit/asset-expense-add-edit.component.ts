@@ -210,9 +210,8 @@ export class AssetExpenseAddEditComponent implements OnInit {
 
   SaveForm() {
     if (this.InsuranceDataForm.controls.InsAssetCoveredBy.value == CommonConstant.InsuredByCompany) {
-      var custDiscAmt = this.InsuranceDataForm.controls.TotalCustDiscAmt.value;
-      var totalPremiToCust = this.InsuranceDataForm.controls.TotalCustMainPremiAmt.value + this.InsuranceDataForm.controls.TotalCustAddPremiAmt.value + this.InsuranceDataForm.controls.TotalCustFeeAmt.value;
-      var insCpltzAmt = this.InsuranceDataForm.controls.InsCpltzAmt.value;
+      var insDiscAmt = this.InsuranceDataForm.controls.InsDiscAmt.value;
+      var totalPremi = this.InsuranceDataForm.controls.TotalCustMainPremiAmt.value + this.InsuranceDataForm.controls.TotalCustAddPremiAmt.value + this.InsuranceDataForm.controls.TotalCustFeeAmt.value;
       if (this.isGenerate == false) {
         this.toastr.warningMessage(ExceptionConstant.CLICK_GENERATE_INSURANCE);
         return;
@@ -221,12 +220,8 @@ export class AssetExpenseAddEditComponent implements OnInit {
         this.toastr.warningMessage(ExceptionConstant.CLICK_CALCULATE_INSURANCE);
         return;
       }
-      if (custDiscAmt > totalPremiToCust) {
-        this.toastr.warningMessage(ExceptionConstant.DISCOUNT_AMOUNT_CANNOT_HIGHER_THAN + "Total Premi to Customer.");
-        return;
-      }
-      if (insCpltzAmt > totalPremiToCust - custDiscAmt) {
-        this.toastr.warningMessage(ExceptionConstant.CAPITALIZE_AMOUNT_CANNOT_HIGHER_THAN + "Total Premi to Customer after Discount.");
+      if (insDiscAmt > totalPremi) {
+        this.toastr.warningMessage(ExceptionConstant.DISCOUNT_AMOUNT_CANNOT_HIGHER_THAN + "Total Premi.");
         return;
       }
     }
@@ -1066,6 +1061,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
   changeMainCvgddl(event: UcDropdownListCallbackObj) {
     this.bindAddCheckbox(event.selectedValue);
     this.addCheckbox(undefined);
+    this.CheckIsUseTpl();
   }
 
   CheckIsUseTpl(tplAmt: number = 0) {
