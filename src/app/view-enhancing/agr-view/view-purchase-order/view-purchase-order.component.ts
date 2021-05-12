@@ -19,24 +19,20 @@ export class ViewPurchaseOrderComponent implements OnInit {
   
   constructor(private http: HttpClient) { }
 
-  async ngOnInit() {
-    await this.BindPOData();
-  }
-
-  async BindPOData() {
+  ngOnInit() {
     var obj = { Id: this.agrmntId };
-    await this.http.post(URLConstant.GetPurchaseOrderHDetailViewByAgrmntId, obj).toPromise().then(
+    this.http.post(URLConstant.GetPurchaseOrderHDetailViewByAgrmntId, obj).toPromise().then(
       (response) => {
         this.ResponseAgrmntFinDataData = response["ResponseAgrmntFinDataObj"];
         this.ResponseAppAssetData = response["ResponseAppAssetObj"];
         this.ResponsePurchaseOrderHData = response["ResponsePurchaseOrderHObj"];
         this.ResponseAppLoanPurposeWithSupplierNameObj = response["ResponseAppLoanPurposeWithSupplierNameObj"];
-      }
-    );
-
-    this.http.post(URLConstant.GetAssetTypeByCode, {Code: this.ResponseAppAssetData.AssetTypeCode }).subscribe(
-      (response: any) => {
-        this.AssetTypeObj = response;
+        
+        this.http.post(URLConstant.GetAssetTypeByCode, {Code: this.ResponseAppAssetData.AssetTypeCode }).subscribe(
+          (responseAsset: any) => {
+            this.AssetTypeObj = responseAsset;
+          }
+        );
       }
     );
   }

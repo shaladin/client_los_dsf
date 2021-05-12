@@ -9,6 +9,7 @@ import { forkJoin } from 'rxjs';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 
 
 @Component({
@@ -53,6 +54,7 @@ export class AgreementViewContainerComponent implements OnInit {
   agrNo: string;
   appId: string;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
+  IsNeedPO: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -67,7 +69,6 @@ export class AgreementViewContainerComponent implements OnInit {
 
   async ngOnInit() : Promise<void> {
     this.arrValue.push(this.AgrmntId);
-    await this.GetAgrmnt();
     await this.GetAppAndAppCustDetailByAgrmntId();
     await this.InitDms();
   }
@@ -124,15 +125,29 @@ export class AgreementViewContainerComponent implements OnInit {
     }  
   }
 
-  async GetAppAndAppCustDetailByAgrmntId() {
+  GetAppAndAppCustDetailByAgrmntId() {
     var obj = { Id: this.AgrmntId };
-    await this.http.post(URLConstant.GetAppAndAppCustDetailByAgrmntId, obj).toPromise().then(
+    this.http.post(URLConstant.GetAppAndAppCustDetailByAgrmntId, obj).toPromise().then(
       (response) => {
         this.ResponseAppDetailData = response;
+
+        let objIsDisburse: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+        objIsDisburse.ProdOfferingCode = this.ResponseAppDetailData.ProdOfferingCode;
+        objIsDisburse.RefProdCompntCode = CommonConstant.RefProdCompntCodeDisburseToCust;
+        objIsDisburse.ProdOfferingVersion = this.ResponseAppDetailData.ProdOfferingVersion;
+
+        this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, objIsDisburse).toPromise().then(
+          (response) => {
+            if (response && response["StatusCode"] == "200" && response["ProdOfferingDId"] > 0) {
+              this.IsNeedPO = response["CompntValue"] == 'N' ? true : false
+            }
+
+            this.GetAgrmnt();
+          });
       });
   }
 
-  async GetAgrmnt() {
+  GetAgrmnt() {
     var agrmntObj = {
       Id: this.AgrmntId,
     };
@@ -151,9 +166,11 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsTC = false;
           this.IsReservedFund = false;
           this.IsDeliveryOrder = false;
-          this.IsPurchaseOrder = false;
           this.IsInvoiceData = false;
           this.IsLoanData = false;
+          if(!this.IsNeedPO){
+            this.IsPurchaseOrder = false;
+          }
         }
         else if (this.BizTemplateCode == CommonConstant.CFRFN4W) {
           this.IsAsset = false;
@@ -201,6 +218,9 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsDeliveryOrder = false;
           this.IsInvoiceData = false;
           this.IsCollateral = false;
+          if(!this.IsNeedPO){
+            this.IsPurchaseOrder = false;
+          }
         }
         this.IsReady = true;
       });
