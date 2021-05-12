@@ -61,7 +61,7 @@
         <div *ngFor="let appCommissionDObj of item.ListappCommissionDObj; let i = index">
           <div class="form-group row">
             <div class="col-md-6">
-              <label class="adInsLabel"> Allocate from {{appCommissionDObj.MrCommissionSourceCodeDesc}} </label>
+              <label class="adInsLabel" translate> Allocate from {{appCommissionDObj.MrCommissionSourceCodeDesc}} </label>
             </div>
             <div class="col-md-6">
               <label class="adInsLabel"> {{appCommissionDObj.CommissionAmt | number:'.2':'en-US'}} </label>

@@ -15,6 +15,9 @@ export class URLConstant {
   // APPROVAL
   public static GetApprovalScreenViewInfo = environment.FoundationR3Url + "/Approval/GetApprovalScreenViewInfo";
 
+  // THINGS TO DO
+  public static GetListWfTaskListByUsernameAndRoleCodeAndOfficeCodeForThingsToDo = "ServiceTask/GetListWfTaskListByUsernameAndRoleCodeAndOfficeCodeForThingsToDo";
+
   // New Application
   public static AddNewApplication = environment.losUrl + "/Application/AddNewApplication";
   public static AddNewApplicationFromCopy = environment.losUrl + "/Application/AddNewApplicationFromCopy";
@@ -424,7 +427,7 @@ export class URLConstant {
   public static EditExchangeRate = "/RefCurr/EditExchangeRate";
   public static GetExchangeRate = "/RefCurr/GetExchangeRate";
   public static GetListKvpActiveRefCurr = environment.FoundationR3Url + "/RefCurr/GetListKvpActiveRefCurr"
- 
+
   //GENERIC
   public static GetObjectBySQL = "/Generic/GetObjectBySQL";
   public static AddObjectBySQL = "/Generic/AddObjectBySQL";
@@ -1013,7 +1016,7 @@ export class URLConstant {
   public static GetListAppCustAddrDataForCopyByAppId = environment.losUrl + "/AppCustAddr/GetListAppCustAddrDataForCopyByAppId";
   public static GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode = environment.losUrl + "/AppCustAddr/GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode";
   public static GetListAppCustAddrByAppCustIdForDocPickupRequest = environment.losUrl + "/AppCustAddr/GetListAppCustAddrByAppCustIdForDocPickupRequest";
-  
+
 
   //App Fee
   public static GetListAppFeeByAppId = environment.losUrl + "/AppFee/GetListAppFeeByAppId";
@@ -1049,7 +1052,7 @@ export class URLConstant {
   public static EditAppSubsidy = environment.losUrl + "/AppSubsidy/EditAppSubsidy";
 
   //Fraud Detection
-  public static GetAppDupCheckCustByAppId = environment.losUrl + "/FraudDetection/GetAppDupCheckCustByAppId"; 
+  public static GetAppDupCheckCustByAppId = environment.losUrl + "/FraudDetection/GetAppDupCheckCustByAppId";
   public static GetListAppNegativeCheckCustByAppId = environment.losUrl + "/AppDupCheck/GetListAppNegativeCheckCustByAppId";
 
   //Fraud Verif
@@ -1428,7 +1431,7 @@ export class URLConstant {
   public static ReviewProdOffering = environment.losUrl + "/ProductOffering/ReviewProdOffering";
   public static GetProdOfferingByProdOfferingId = environment.losUrl + "/ProductOffering/GetProdOfferingByProdOfferingId";
   public static SubmitProdOffering = environment.losUrl + "/ProductOffering/SubmitProdOffering";
-  
+
   // PRODUCT COMPONENT
   public static GetProductHOComponent = environment.losUrl + "/ProductComponent/GetProductHOComponent";
   public static GetProductHOComponentGrouped = environment.losUrl + "/ProductComponent/GetProductHOComponentGrouped";
@@ -1443,7 +1446,7 @@ export class URLConstant {
 
   // GO LIVE (LMS)
   public static CheckGoLivePayment = environment.LMSUrl + "/Api/Integration/CheckGoLivePayment";
-  
+
   //Check DMS
   public static GetSysConfigPncplResultByCode = environment.FoundationR3Url + "/SysConfigResult/GetSysConfigPncplResultByCode";
 }
