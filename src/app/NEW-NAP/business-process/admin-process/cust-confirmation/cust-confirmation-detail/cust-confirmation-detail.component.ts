@@ -17,7 +17,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { ResAppCustForListCustMainDataObj, ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
-import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 
 @Component({
   selector: 'app-cust-confirmation-detail',
@@ -32,7 +32,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   TaskListId: any;
   AgrmntNo: string;
   VerfResultList = new Array<VerfResultHObj>();
-  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
+  CustNoObj: GenericObj = new GenericObj();
   IsSkip: boolean = false;
   appObj: AppObj = new AppObj();
   verfResultObj: VerfResultObj = new VerfResultObj();

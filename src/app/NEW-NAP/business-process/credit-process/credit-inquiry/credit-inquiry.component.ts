@@ -4,7 +4,7 @@ import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 
 @Component({
   selector: 'app-credit-inquiry',
@@ -12,7 +12,7 @@ import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
 })
 export class CreditInquiryComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
+  CustNoObj: GenericObj = new GenericObj();
 
   constructor(private http: HttpClient) { }
 

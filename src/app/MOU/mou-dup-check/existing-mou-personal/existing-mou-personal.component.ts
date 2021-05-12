@@ -12,7 +12,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ReqGetMouCustDuplicateObj } from 'app/shared/model/Request/MOU/ReqGetMouCustDuplicateObj.model';
-import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 
 @Component({
   selector: 'app-existing-mou-personal',
@@ -47,7 +47,7 @@ export class ExistingMouPersonalComponent implements OnInit {
   RowVersion: any;
   cust: any;
   custUrl: string;
-  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
+  CustNoObj: GenericObj = new GenericObj();
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,

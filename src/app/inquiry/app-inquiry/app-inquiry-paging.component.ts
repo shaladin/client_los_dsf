@@ -8,7 +8,7 @@ import { AdInsHelper } from "app/shared/AdInsHelper";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from "app/shared/constant/CommonConstant";
-import { ReqByCustNoObj } from "app/shared/model/Request/ReqByCustNoObj.model";
+import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
 
 @Component({
   selector: "app-inquiry-paging",
@@ -16,7 +16,7 @@ import { ReqByCustNoObj } from "app/shared/model/Request/ReqByCustNoObj.model";
 })
 export class AppInquiryPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
+  CustNoObj: GenericObj = new GenericObj();
   BizTemplateCode: string;
   isReady: boolean = false;
 

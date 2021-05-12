@@ -10,7 +10,7 @@ import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-legal-review-paging',
@@ -18,7 +18,7 @@ import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
 })
 export class LegalReviewPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
+  CustNoObj: GenericObj = new GenericObj();
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   user: any;
 

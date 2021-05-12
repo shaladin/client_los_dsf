@@ -6,7 +6,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 
 @Component({
   selector: 'app-mou-main-info',
@@ -24,7 +24,7 @@ export class MouMainInfoComponent implements OnInit {
   @Input() MouCustId : number;
   whereValue = [];
   MouCustObj: MouCustObj = new MouCustObj();
-  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
+  CustNoObj: GenericObj = new GenericObj();
 
   constructor(private http: HttpClient) { }
 

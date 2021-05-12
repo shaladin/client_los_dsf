@@ -13,7 +13,7 @@ import { CustCompanyObj } from 'app/shared/model/CustCompanyObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
-import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ResponseAppCustCompletionCompanyDataObj } from 'app/shared/model/ResponseAppCustCompletionCompanyDataObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
@@ -37,7 +37,7 @@ export class NewNapCustCompanyFullDataComponent implements OnInit {
   AppCustCompanyObj: AppCustCompanyObj = new AppCustCompanyObj(); 
   businessDt: Date = new Date();
   CustModelObj: Array<KeyValueObj> = new Array();
-  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
+  CustNoObj: GenericObj = new GenericObj();
   industryTypeObj = {
     IndustryTypeCode: ""
   };

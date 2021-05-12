@@ -8,7 +8,7 @@ import { map, mergeMap } from 'rxjs/operators';
 import { forkJoin } from 'rxjs';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 
 @Component({
   selector: 'app-main-info',
@@ -35,7 +35,7 @@ export class MainInfoComponent implements OnInit {
   custUrl: string;
   mouUrl: string;
   mouCustStatView: string;
-  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
+  CustNoObj: GenericObj = new GenericObj();
 
   constructor(private fb: FormBuilder, private http: HttpClient, public datepipe: DatePipe) { }
 

@@ -5,7 +5,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 
 @Component({
   selector: 'app-mou-view-listed-cust-factoring',
@@ -13,7 +13,7 @@ import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
 })
 export class MouViewListedCustFactoringComponent implements OnInit {
   responseCustListed: Array<any>;
-  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
+  CustNoObj: GenericObj = new GenericObj();
   @Input() MouCustId : number;
   constructor(private http : HttpClient) { } 
 

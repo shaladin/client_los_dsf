@@ -18,7 +18,7 @@ import { CookieService } from 'ngx-cookie';
 import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { ActivatedRoute } from '@angular/router';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
-import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 
 @Component({
   selector: 'app-cust-detail-company',
@@ -37,7 +37,7 @@ export class CustDetailCompanyComponent implements OnInit {
   businessDt: Date = new Date();
   CustModelObj: Array<KeyValueObj> = new Array();
   ddlCustModelObj: UcDropdownListObj = new UcDropdownListObj();
-  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
+  CustNoObj: GenericObj = new GenericObj();
   industryTypeObj = {
     IndustryTypeCode: ""
   };

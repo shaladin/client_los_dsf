@@ -7,7 +7,7 @@ import { HttpClient } from "@angular/common/http";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { ReqByCustNoObj } from "app/shared/model/Request/ReqByCustNoObj.model";
+import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
 
 @Component({
   selector: 'app-purchase-tracking-inquiry',
@@ -17,7 +17,7 @@ import { ReqByCustNoObj } from "app/shared/model/Request/ReqByCustNoObj.model";
 export class PurchaseTrackingInquiryComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
-  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
+  CustNoObj: GenericObj = new GenericObj();
   isReady: boolean = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {

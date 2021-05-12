@@ -11,7 +11,7 @@ import { CrdRvwExposureHObj } from 'app/shared/model/CreditReview/CrdRvwExposure
 import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureObj.Model';
 import { NegCustObj } from 'app/shared/model/CreditReview/NegCustObj.model';
 import { ReqGetCrdRvwExposureHObj } from 'app/shared/model/CreditReview/ReqGetCrdRvwExposureHObj.Model';
-import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 
 @Component({
   selector: 'app-crd-rvw-cust-info',
@@ -19,7 +19,7 @@ import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
   styleUrls: ['./crd-rvw-cust-info.component.scss']
 })
 export class CrdRvwCustInfoComponent implements OnInit {
-  ReqCustNo: ReqByCustNoObj = new ReqByCustNoObj();
+  ReqCustNo: GenericObj = new GenericObj();
   @Input() appId: number = 0;
   @Input() crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
 

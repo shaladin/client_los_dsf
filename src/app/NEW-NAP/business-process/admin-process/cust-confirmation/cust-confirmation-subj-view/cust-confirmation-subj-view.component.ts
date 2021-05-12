@@ -11,8 +11,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ReqGetVerfResult3Obj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
 
 @Component({
@@ -34,7 +33,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
   VerfResultObj: VerfResultObj;
   VerfResultHObj: VerfResultHObj = new VerfResultHObj();
   VerfResultHObjDetail: VerfResultHObj = new VerfResultHObj();
-  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
+  CustNoObj: GenericObj = new GenericObj();
   VerfResultDListObj = new Array<VerfResultDObj>();
   IsVerfDetail: boolean = false;
   cust: any;

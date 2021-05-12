@@ -14,7 +14,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ReqVerfQuestionAnswerObj } from 'app/shared/model/Request/Verification/ReqVerfQuestionAnswerObj.model';
 import { ReqPhoneNumberObj } from 'app/shared/model/Request/PhoneVerification/ReqPhoneNumberObj.Model';
-import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ReqGetVerfResult4Obj, ReqGetVerfResultObj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
 
 
@@ -91,7 +91,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   verifResultHDetailObj: any;
   listVerifResultHObj: any;
   verfResultDListObjs: Array<VerfResultDObj>;
-  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
+  CustNoObj: GenericObj = new GenericObj();
   ResultObj: any;
   SubjectRelationObj: any;
   PhoneNumberObj: any;

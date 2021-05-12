@@ -12,7 +12,7 @@ import { CustPersonalObj } from 'app/shared/model/CustPersonalObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { ReqByCustNoObj } from 'app/shared/model/Request/ReqByCustNoObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ResponseAppCustCompletionPersonalDataObj } from 'app/shared/model/ResponseAppCustCompletionPersonalDataObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
@@ -37,7 +37,7 @@ export class NewNapCustPersonalFullDataComponent implements OnInit {
   LocalCountry: any;
   AppCustGrpObj: AppCustGrpObj = new AppCustGrpObj();
   ListAppCustGrpObj: Array<AppCustGrpObj> = new Array<AppCustGrpObj>();
-  CustNoObj: ReqByCustNoObj = new ReqByCustNoObj();
+  CustNoObj: GenericObj = new GenericObj();
   lookupCountryObj: InputLookupObj = new InputLookupObj();
   lookupCustGrpObj: InputLookupObj = new InputLookupObj();
   SalutationObj: Array<KeyValueObj> = new Array();
