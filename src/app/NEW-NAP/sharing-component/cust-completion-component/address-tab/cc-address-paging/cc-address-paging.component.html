@@ -48,5 +48,5 @@
   </div>
 </div>
 <div *ngIf="IsDetail">
-<app-cc-address-detail [InputObj]="InputObj" (OutputTab)="GetEvent($event)"> </app-cc-address-detail>
+  <app-cc-address-detail [InputObj]="InputObj" (OutputTab)="GetEvent($event)" [MrCustTypeCode]="MrCustTypeCode"></app-cc-address-detail>
 </div>

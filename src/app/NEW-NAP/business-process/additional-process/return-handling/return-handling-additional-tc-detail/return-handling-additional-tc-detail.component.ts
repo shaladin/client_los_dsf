@@ -16,8 +16,9 @@ import { formatDate } from '@angular/common';
 import { map, mergeMap } from 'rxjs/operators';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { NumberValueAccessor } from '@angular/forms/src/directives';
 import { CookieService } from 'ngx-cookie';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 
 @Component({
   selector: 'app-return-handling-additional-tc-detail',
@@ -26,10 +27,7 @@ import { CookieService } from 'ngx-cookie';
 })
 export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
-  getAppUrl: string;
   getRefTcUrl: string;
-  rtnHandlingDUrl: string;
-  editRtnHandlingDUrl: string;
   isReturnHandling: boolean = false;
   modal: any;
   closeResult: any;
@@ -41,7 +39,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   returnHandlingHId: number;
   wfTaskListId: number;
   AppObj: any;
-  returnHandlingDObj: any;
+  returnHandlingDObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   ReturnHandlingDData: ReturnHandlingDObj;
   BizTemplateCode: string;
   listAddTc: Array<AppTCObj> = new Array<AppTCObj>();
@@ -87,12 +85,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     });
   }
 
-  initUrl() {
-    this.getAppUrl = URLConstant.GetAppById;
-    this.rtnHandlingDUrl = URLConstant.GetReturnHandlingDByReturnHandlingDId;
-    this.editRtnHandlingDUrl = URLConstant.EditReturnHandlingD;
-  }
-
   initExistingTc() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppTc.json";
@@ -116,7 +108,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
     this.ClaimTask();
-    this.initUrl();
     this.appObj.Id = this.appId;
     this.initExistingTc();
     await this.GetAppData();
@@ -211,7 +202,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
           }
         }),
         mergeMap((response) => {
-          return this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData);
+          return this.http.post(URLConstant.EditReturnHandlingD, this.ReturnHandlingDData);
         })
       ).subscribe(
         (response) => {
@@ -223,13 +214,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
           console.log(error);
         }
       );
-
-      // this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
-      //   (response) => {
-      //     this.toastr.successMessage(response["message"]);
-      //     var lobCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-      //     this.router.navigate(["/Nap/AddProcess/ReturnHandlingAddTc/Paging"], { queryParams: { BizTemplateCode: lobCode } })
-      //   });
 
     }
   }
@@ -319,7 +303,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   }
 
   async GetAppData() {
-    await this.http.post(this.getAppUrl, this.appObj).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, this.appObj).toPromise().then(
       (response) => {
         this.AppObj = response;
       }
@@ -328,12 +312,11 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
   MakeViewReturnInfoObj() {
     if (this.returnHandlingHId > 0) {
-      var obj = {
-        ReturnHandlingHId: this.returnHandlingHId,
-        MrReturnTaskCode: CommonConstant.ReturnHandlingAddTc
-      }
-      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
-        (response) => {
+      let ReqByIdAndCodeObj = new GenericObj();
+      ReqByIdAndCodeObj.Id = this.returnHandlingHId;
+      ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingAddTc;
+      this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
+        (response : ResReturnHandlingDObj) => {
           this.returnHandlingDObj = response;
         });
     }
@@ -418,8 +401,8 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
             appTcObj.IsExpDtMandatory = response["IsExpDtMandatory"];
           }
           this.http.post(URLConstant.AddAppTc, this.ReqTCObj).subscribe(
-            (response: Array<AppTCObj>) => {
-              appTcObj.AppTcId = response[0].AppTcId;
+            (response: Array<GenericObj>) => {
+              appTcObj.AppTcId = response[0].Id;
               appTcObj.RowVersion = response[0].RowVersion;
               fa_apptc.push(this.AddTcControl(appTcObj));
             });

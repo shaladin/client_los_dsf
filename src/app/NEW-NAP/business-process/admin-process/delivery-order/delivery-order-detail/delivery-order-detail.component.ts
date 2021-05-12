@@ -8,7 +8,6 @@ import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model'
 import { ListAppCollateralDocObj } from 'app/shared/model/ListAppCollateralDocObj.Model';
 import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -18,8 +17,8 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
-import { promise } from 'selenium-webdriver';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-delivery-order-detail',
@@ -61,7 +60,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
   appNo: string;
   dmsAppObj: DMSObj;
   mouCustNo: string;
-  SysConfigResultObj : ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
+  SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_DO_PAGING;
   constructor(private fb: FormBuilder, private http: HttpClient,
@@ -106,18 +105,6 @@ export class DeliveryOrderDetailComponent implements OnInit {
       }
     );
 
-    var refMasterTypeObj = {
-      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustRelationship,
-    }
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterTypeObj).subscribe(
-      (response) => {
-        this.itemType = response[CommonConstant.ReturnObj];
-        this.DeliveryOrderForm.patchValue({
-          MrCustRelationshipCode: this.itemType[0].Key
-        });
-      }
-    );
-
     this.items = this.DeliveryOrderForm.get('items') as FormArray;
     this.listItem = this.DeliveryOrderForm.get('listItem') as FormArray;
 
@@ -132,6 +119,21 @@ export class DeliveryOrderDetailComponent implements OnInit {
         this.FullAssetName = this.appAssetObj.FullAssetName;
         this.MrAssetUsageCode = this.appAssetObj.MrAssetUsageCode;
         this.AssetCategoryCode = this.appAssetObj.AssetCategoryCode;
+
+        this.http.post(URLConstant.GetAppCustByAppId, {Id : this.appAssetObj.AppId}).subscribe(
+          (response) => {
+            var refMasterTypeObj = {
+              RefMasterTypeCode: response["MrCustTypeCode"] == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship,
+            }
+            this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterTypeObj).subscribe(
+              (response) => {
+                this.itemType = response[CommonConstant.ReturnObj];
+                this.DeliveryOrderForm.patchValue({
+                  MrCustRelationshipCode: this.itemType[0].Key
+                });
+              }
+            );
+          });
 
         this.DeliveryOrderForm.patchValue({
           ManufacturingYear: this.appAssetObj.ManufacturingYear
@@ -191,7 +193,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
           });
       }
     );
-    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
       });
@@ -318,22 +320,24 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.listAppTCObj.AppTCObj = new Array();
 
     for (var i = 0; i < this.DeliveryOrderForm.value.TCList["length"]; i++) {
+      const tempAppTc = this.DeliveryOrderForm.getRawValue().TCList[i];
       this.appTC = new AppTCObj();
-      this.appTC.AppId = this.DeliveryOrderForm.value.TCList[i].AppId;
-      this.appTC.AppTcId = this.DeliveryOrderForm.value.TCList[i].AppTcId;
-      this.appTC.TcCode = this.DeliveryOrderForm.value.TCList[i].TcCode;
-      this.appTC.TcName = this.DeliveryOrderForm.value.TCList[i].TcName;
-      this.appTC.PriorTo = this.DeliveryOrderForm.value.TCList[i].PriorTo;
-      this.appTC.IsChecked = this.DeliveryOrderForm.getRawValue().TCList[i].IsChecked;
-      this.appTC.ExpiredDt = this.DeliveryOrderForm.getRawValue().TCList[i].ExpiredDt;
-      this.appTC.IsMandatory = this.DeliveryOrderForm.value.TCList[i].IsMandatory;
-      this.appTC.PromisedDt = this.DeliveryOrderForm.getRawValue().TCList[i].PromisedDt;
-      this.appTC.CheckedDt = this.DeliveryOrderForm.value.TCList[i].CheckedDt;
-      this.appTC.Notes = this.DeliveryOrderForm.value.TCList[i].Notes;
-      this.appTC.IsAdditional = this.DeliveryOrderForm.value.TCList[i].IsAdditional;
+      this.appTC.AppId = tempAppTc.AppId;
+      this.appTC.AppTcId = tempAppTc.AppTcId;
+      this.appTC.TcCode = tempAppTc.TcCode;
+      this.appTC.TcName = tempAppTc.TcName;
+      this.appTC.PriorTo = tempAppTc.PriorTo;
+      this.appTC.IsChecked = tempAppTc.IsChecked;
+      this.appTC.ExpiredDt = tempAppTc.ExpiredDt;
+      this.appTC.IsMandatory = tempAppTc.IsMandatory;
+      this.appTC.PromisedDt = tempAppTc.PromisedDt;
+      this.appTC.CheckedDt = tempAppTc.CheckedDt;
+      this.appTC.Notes = tempAppTc.Notes;
+      this.appTC.IsAdditional = tempAppTc.IsAdditional;
+      this.appTC.RowVersion = tempAppTc.RowVersion;
 
       var prmsDt = new Date(this.appTC.PromisedDt);
-      var prmsDtForm = this.DeliveryOrderForm.value.TCList[i].PromisedDt;
+      var prmsDtForm = tempAppTc.PromisedDt;
       if (this.appTC.IsChecked == false) {
         if (prmsDtForm != null) {
           if (prmsDt < businessDt) {
@@ -345,6 +349,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
       this.listAppTCObj.AppTCObj.push(this.appTC);
     }
 
+    this.deliveryOrderObj.AgrmntId = this.AgrmntId;
     this.deliveryOrderObj.TaskListId = this.TaskListId;
     this.deliveryOrderObj.AppAssetObj = appAsset;
     this.deliveryOrderObj.DeliveryOrderHObj = deliveryOrderH;

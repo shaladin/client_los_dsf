@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueModel';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
@@ -15,6 +14,8 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 
 @Component({
   selector: 'app-return-handling-detail',
@@ -100,7 +101,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
 
     this.http.post(URLConstant.AddReturnHandlingD, reqObj).subscribe(
       (response) => {
-        this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
+        this.GetListReturnHandlingDByReturnHandlingHId();
         this.toastr.successMessage(response["message"]);
       }
     );
@@ -118,7 +119,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
 
       this.http.post(URLConstant.RequestReturnTask, reqObj).subscribe(
         (response) => {
-          this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
+          this.GetListReturnHandlingDByReturnHandlingHId();
           this.toastr.successMessage(response["message"]);
         }
       );
@@ -133,11 +134,20 @@ export class ReturnHandlingDetailComponent implements OnInit {
 
       this.http.post(URLConstant.DeleteReturnHandlingD, reqObj).subscribe(
         (response) => {
-          this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
+          this.GetListReturnHandlingDByReturnHandlingHId();
           this.toastr.successMessage(response["message"]);
         }
       );
     }
+  }
+
+  async GetListReturnHandlingDByReturnHandlingHId() {
+    var reqObj = new ReturnHandlingHObj();
+    reqObj.Id = this.returnHandlingHId;
+    await this.http.post(URLConstant.GetListReturnHandlingDByReturnHandlingHId, reqObj).toPromise().then(
+      (response) => {
+        this.returnHandlingDObjs = response["ReturnHandlingDObjs"] == null ? new Array() : response["ReturnHandlingDObjs"];
+      });
   }
 
   async getReturnHandling() {
@@ -146,7 +156,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
     await this.http.post(URLConstant.GetReturnHandlingWithDetailByReturnHandlingHId, reqObj).toPromise().then(
       (response) => {
         this.returnHandlingHObj = response["ReturnHandlingHObj"];
-        this.returnHandlingDObjs = response["ReturnHandlingDObjs"];
+        this.returnHandlingDObjs = response["ReturnHandlingDObjs"] == null ? new Array() : response["ReturnHandlingDObjs"];
         if (this.returnHandlingHObj.ReturnFromTrxType == CommonConstant.TrxTypeCodePhn) {
           this.ReturnHandlingForm.patchValue({
             MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
@@ -186,7 +196,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
     }
     if (!refMasterTypeCode) return;
 
-    var refMasterObj = { RefMasterTypeCode: refMasterTypeCode, MappingCode: this.MrCustTypeCode };
+    let refMasterObj: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: refMasterTypeCode, MappingCode: this.MrCustTypeCode };
     await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refMasterObj).toPromise().then(
       (response) => {
         this.taskObj = response[CommonConstant.ReturnObj];

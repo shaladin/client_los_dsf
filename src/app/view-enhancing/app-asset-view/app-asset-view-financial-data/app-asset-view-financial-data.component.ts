@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Input } from '@angular/core';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
@@ -14,7 +15,6 @@ export class AppAssetViewFinancialDataComponent implements OnInit {
   RentalCalculationObj: any;
 
   RentAmtAndVat: number = 0;
-  TotalRentAmtAndVat: number = 0;
   TotalAssetExpense: number = 0;
   FeeNonCapitalized: number = 0;
   TotalCostAfterMargin: number = 0;
@@ -35,19 +35,16 @@ export class AppAssetViewFinancialDataComponent implements OnInit {
       (response) => {
         this.RentalCalculationObj = response;
         
-        if(this.RentalCalculationObj !== null) {
-          this.RentAmtAndVat = this.RentalCalculationObj.RentalAmt + this.RentalCalculationObj.RentalVatAmt;
-          this.TotalRentAmtAndVat = this.RentalCalculationObj.Tenor * this.RentAmtAndVat;
-          this.TotalAssetExpense = this.RentalCalculationObj.TotalInsuranceAmt + this.RentalCalculationObj.TotalMaintAmt + this.RentalCalculationObj.TotalOthExpenseAmt + this.RentalCalculationObj.TotalFeeAmt;
-          this.FeeNonCapitalized = this.RentalCalculationObj.TotalFeeAmt - this.RentalCalculationObj.TotalFeeCapitalizedAmt;
-          this.TotalCostAfterMargin = this.RentalCalculationObj.TotalCostBeforeMargin + this.RentalCalculationObj.MarginAmt;
-          
-          if(this.RentalCalculationObj.FirstInstType === "Advance") {
-            this.TotalPaidInAdvance = this.FeeNonCapitalized + this.RentalCalculationObj.SecurityDepositAmt + this.RentAmtAndVat;
-          }
-          else if(this.RentalCalculationObj.FirstInstType === "Arrear") {
-            this.TotalPaidInAdvance = this.FeeNonCapitalized + this.RentalCalculationObj.SecurityDepositAmt;
-          }
+        this.RentAmtAndVat = this.RentalCalculationObj.RentalAmt + this.RentalCalculationObj.RentalVatAmt;
+        this.TotalAssetExpense = this.RentalCalculationObj.TotalInsuranceAmt + this.RentalCalculationObj.TotalMaintAmt + this.RentalCalculationObj.TotalOthExpenseAmt + this.RentalCalculationObj.TotalFeeAmt;
+        this.FeeNonCapitalized = this.RentalCalculationObj.TotalFeeAmt - this.RentalCalculationObj.TotalFeeCapitalizedAmt;
+        this.TotalCostAfterMargin = this.RentalCalculationObj.TotalCostBeforeMargin + this.RentalCalculationObj.MarginAmt;
+        
+        if(this.RentalCalculationObj.FirstInstType === CommonConstant.FirstInstTypeAdvanceString) {
+          this.TotalPaidInAdvance = this.FeeNonCapitalized + this.RentalCalculationObj.SecurityDepositAmt + this.RentAmtAndVat;
+        }
+        else if(this.RentalCalculationObj.FirstInstType === CommonConstant.FirstInstTypeArrearString) {
+          this.TotalPaidInAdvance = this.FeeNonCapitalized + this.RentalCalculationObj.SecurityDepositAmt;
         }
       }
     );

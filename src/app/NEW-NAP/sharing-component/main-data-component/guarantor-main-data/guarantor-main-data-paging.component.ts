@@ -7,6 +7,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
+import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
 
 @Component({
   selector: 'app-guarantor-main-data-paging',
@@ -85,7 +86,7 @@ export class GuarantorMainDataPagingComponent implements OnInit {
     this.custDataObj.AppId = this.appId;
     this.custDataObj.IsGuarantor = true;
     this.http.post(URLConstant.GetListAppCustMainDataByAppId, this.custDataObj).subscribe(
-      (response) => {
+      (response : ResListCustMainDataObj) => {
         this.inputGridObj.resultData = {
           Data: ""
         }

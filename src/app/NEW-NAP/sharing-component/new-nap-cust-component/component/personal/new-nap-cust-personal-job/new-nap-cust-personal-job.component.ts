@@ -1,22 +1,17 @@
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { DatePipe, formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { FormGroup, Validators } from '@angular/forms';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
-import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { ResponseJobDataPersonalObj } from 'app/shared/model/ResponseJobDataPersonalObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
@@ -24,8 +19,7 @@ import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-new-nap-cust-personal-job',
-  templateUrl: './new-nap-cust-personal-job.component.html',
-  styles: []
+  templateUrl: './new-nap-cust-personal-job.component.html'
 })
 export class NewNapCustPersonalJobComponent implements OnInit {
   private ucLookupProfession: UclookupgenericComponent;
@@ -56,22 +50,24 @@ export class NewNapCustPersonalJobComponent implements OnInit {
   UserAccess: any;
 
   constructor(
-    private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService,
     public formValidate: FormValidateService,
     private cookieService: CookieService
-  ) { 
+  ) {
     this.IsJobSubmitted = false;
   }
 
-  async ngOnInit() : Promise<void> {
+  async ngOnInit(): Promise<void> {
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = this.UserAccess.BusinessDt;
 
-    await this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel}).toPromise().then(
+    let refMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel,
+      MasterCode: this.CustModelCode
+    };
+    await this.http.post<KeyValueObj>(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
       (response) => {
-        this.MrCustModelDescr = response.Descr;
+        this.MrCustModelDescr = response.Value;
         this.CheckCustModel();
         this.InitLookup();
       }
@@ -85,7 +81,7 @@ export class NewNapCustPersonalJobComponent implements OnInit {
 
   async GetData(isCopy: boolean, custPersonalJobData: AppCustPersonalJobDataObj) {
     var datePipe = new DatePipe("en-US");
-    if(!isCopy){
+    if (!isCopy) {
       await this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustId }).toPromise().then(
         (response) => {
           if (response.AppCustPersonalJobDataObj != null) {
@@ -116,12 +112,12 @@ export class NewNapCustPersonalJobComponent implements OnInit {
             this.InputLookupIndustryTypeObj.nameSelect = response.AppCustPersonalJobDataObj.IndustryTypeName;
             this.InputLookupIndustryTypeObj.jsonSelect = { IndustryTypeName: response.AppCustPersonalJobDataObj.IndustryTypeName };
           }
-          
+
         },
         error => {
           console.log(error);
         });
-    }else{
+    } else {
       if (custPersonalJobData != null) {
         this.ParentForm.patchValue({
           MrProfessionCode: custPersonalJobData.MrProfessionCode,
@@ -148,27 +144,27 @@ export class NewNapCustPersonalJobComponent implements OnInit {
         this.InputLookupProfessionObj.jsonSelect = { ProfessionName: custPersonalJobData.MrProfessionName };
         this.InputLookupIndustryTypeObj.nameSelect = custPersonalJobData.IndustryTypeName;
         this.InputLookupIndustryTypeObj.jsonSelect = { IndustryTypeName: custPersonalJobData.IndustryTypeName };
-      }     
-    }  
+      }
+    }
   }
 
-  CheckCustModel(){
-    if(this.CustModelCode == CommonConstant.CustModelEmployee){
+  CheckCustModel() {
+    if (this.CustModelCode == CommonConstant.CustModelEmployee) {
       this.ParentForm.controls.MrJobPositionCode.setValidators([Validators.required]);
       this.ParentForm.controls.MrJobStatCode.setValidators([Validators.required]);
       this.ParentForm.controls.EmploymentEstablishmentDt.setValidators([Validators.required]);
       this.ParentForm.controls.CoyName.setValidators([Validators.required]);
-    }else if(this.CustModelCode == CommonConstant.CustModelProfessional){
+    } else if (this.CustModelCode == CommonConstant.CustModelProfessional) {
       this.ParentForm.controls.EmploymentEstablishmentDt.setValidators([Validators.required]);
       this.ParentForm.controls.MrJobPositionCode.clearValidators();
       this.ParentForm.controls.MrJobStatCode.clearValidators();
       this.ParentForm.controls.CoyName.clearValidators();
-    }else if(this.CustModelCode == CommonConstant.CustModelNonProfessional){
+    } else if (this.CustModelCode == CommonConstant.CustModelNonProfessional) {
       this.ParentForm.controls.MrJobPositionCode.clearValidators();
       this.ParentForm.controls.MrJobStatCode.clearValidators();
       this.ParentForm.controls.EmploymentEstablishmentDt.clearValidators();
       this.ParentForm.controls.CoyName.clearValidators();
-    }else if(this.CustModelCode == CommonConstant.CustModelSmallMediumEnterprise){
+    } else if (this.CustModelCode == CommonConstant.CustModelSmallMediumEnterprise) {
       this.ParentForm.controls.EmploymentEstablishmentDt.clearValidators();
       this.ParentForm.controls.MrJobPositionCode.setValidators([Validators.required]);
       this.ParentForm.controls.MrJobStatCode.clearValidators();
@@ -201,12 +197,12 @@ export class NewNapCustPersonalJobComponent implements OnInit {
 
     if (CustModelCode == CommonConstant.CustModelNonProfessional || CustModelCode == CommonConstant.CustModelProfessional) {
       this.InputLookupIndustryTypeObj.isRequired = false;
-      if(this.ParentForm.controls.lookupIndustryType != undefined){
+      if (this.ParentForm.controls.lookupIndustryType != undefined) {
         this.ParentForm.controls.lookupIndustryType['controls']['value'].clearValidators();
       }
     } else {
       this.InputLookupIndustryTypeObj.isRequired = true;
-      if(this.ParentForm.controls.lookupIndustryType != undefined){
+      if (this.ParentForm.controls.lookupIndustryType != undefined) {
         this.ParentForm.controls.lookupIndustryType['controls']['value'].setValidators([Validators.required]);
       }
     }
@@ -254,14 +250,12 @@ export class NewNapCustPersonalJobComponent implements OnInit {
 
   InitLookup() {
     this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
-    this.InputLookupProfessionObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.InputLookupProfessionObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.addCritInput = new Array();
 
     this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
-    this.InputLookupIndustryTypeObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";

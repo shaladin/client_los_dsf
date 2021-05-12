@@ -1,0 +1,77 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header header-title">
+        <div class="row">
+          <div class="col-md-8">
+            <h4 class="card-title" translate> {{Mode}} Product Offering </h4>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="ProdOfferingForm" (ngSubmit)="ProdOfferingForm.valid && SaveForm()" #enjiForm="ngForm">
+            <div class="form-body">
+              <lib-ucSubsection [id]="'ProductOfferingInfoId'" [title]="'Main Information'" [panel]="'ProductOfferingInfo'"></lib-ucSubsection>
+              <div id="ProductOfferingInfo">
+                <div *ngIf="Mode != 'edit'" class="form-group row adins-required">
+                  <label class="col-md-3 adInsLabel">Product Name </label>
+                  <div  class="col-md-3">
+                    <lib-uclookupgeneric [lookupInput]="InputLookupObj" [parentForm]="ProdOfferingForm"
+                      [enjiForm]="enjiForm" [identifier]="ProdName" (lookup)="handleOutput($event)">
+                    </lib-uclookupgeneric>
+                  </div>
+                </div>
+                <div *ngIf="Mode == 'edit'" class="form-group row">
+                  <label class="col-md-3 adInsLabel">Product Name </label>
+                  <div  class="col-md-3">
+                  <label class="col-md-9 adInsLabel">{{ProductName}}</label>
+                  </div>
+                </div>
+                <div class="form-group row adins-required">
+                  <label class="col-md-3 adInsLabel">Product Offering Code </label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control adInsInput width-75-per" formControlName="ProdOfferingCode"
+                      size="50">
+                  </div>
+                </div>
+                <div class="form-group row adins-required">
+                  <label class="col-md-3 adInsLabel">Product Offering Name </label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control adInsInput width-75-per" formControlName="ProdOfferingName">
+                  </div>
+                </div>
+                <div class="form-group row adins-required">
+                  <label class="col-md-3 adInsLabel">Offering Description </label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control adInsInput width-75-per" formControlName="ProdOfferingDescr">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 adInsLabel">Start Active Date </label>
+                  <div class="col-md-9">
+                    <input type="date" [min]="BusinessDt | date: 'yyyy-MM-dd'" (change)="updateMinDtForEndDt()" class="form-control adInsInput width-25-per" formControlName="StartDt">
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 adInsLabel">End Date </label>
+                  <div class="col-md-9">
+                    <input type="date" class="form-control adInsInput width-25-per" [min]="StartActiveDt | date: 'yyyy-MM-dd'"  formControlName="EndDt">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+                <i class="far fa-window-close"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="far fa-check-square"></i> Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

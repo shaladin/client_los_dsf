@@ -5,11 +5,14 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { CustomClaimWorkflowObj } from 'app/shared/model/Workflow/CustomClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
+import { CookieService } from 'ngx-cookie';
 import { PreGoLiveOplService } from '../pre-go-live-opl.service';
 
 @Component({
@@ -21,7 +24,7 @@ export class PreGoLiveOplDetailComponent implements OnInit {
   ListItem: Array<any> = new Array<any>();
   ApvDt: string;
   AppId: number;
-  WfTaskListId: number;
+  WfTaskListIds: string;
   
   ListAppAssetId: Array<number> = new Array<number>();
 
@@ -42,18 +45,20 @@ export class PreGoLiveOplDetailComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private toastr: NGXToastrService,
-    private http: HttpClient) {
+    private http: HttpClient, 
+    private cookieService: CookieService) {
       this.route.queryParams.subscribe(params => {
         if (params["AppId"] != null) {
           this.AppId = params["AppId"];
         }
-        if (params["WfTaskListId"] != null) {
-          this.WfTaskListId = params["WfTaskListId"];
+        if (params["WfTaskListIds"] != null) {
+          this.WfTaskListIds = params["WfTaskListIds"];
         }
       });
     }
 
   async ngOnInit() {
+    this.claimTask();
     await this.SetMainInfo();
     await this.SetListItem();
     await this.SetTCInfo();
@@ -106,14 +111,20 @@ export class PreGoLiveOplDetailComponent implements OnInit {
   }
 
   SaveForm() {
+    var WfTaskListIdNum : Array<number> = new Array<number>();
+    var WfTaskListIdsStr = this.WfTaskListIds.split(";");
+    for (let i = 0; i < WfTaskListIdsStr.length; i++) {
+      const idString = WfTaskListIdsStr[i];
+      WfTaskListIdNum.push(Number.parseInt(idString));
+    }
     var requestPreGoLiveObj = {
       EffDt: this.PreGoLiveForm.value.EffDt,
       Notes: this.PreGoLiveForm.value.Notes,
       AppAssetIds: this.ListAppAssetId,
-      WfTaskListId: this.WfTaskListId
+      WfTaskListIds: WfTaskListIdNum
     }
 
-    this.http.post(URLConstant.SubmitPreGoLive, requestPreGoLiveObj).subscribe(
+    this.http.post(URLConstant.SubmitPreGoLiveOpl, requestPreGoLiveObj).subscribe(
       (response: any) => {
         this.toastr.successMessage("");
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_OPL_PAGING], { BizTemplateCode: "OPL" });
@@ -129,4 +140,16 @@ export class PreGoLiveOplDetailComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.ViewObj.ProdOfferingCode, event.ViewObj.ProdOfferingVersion);
     }
   }
+  
+  claimTask() {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    var wfClaimObj: CustomClaimWorkflowObj = new CustomClaimWorkflowObj();
+    wfClaimObj.listWFTaskListID = this.WfTaskListIds.split(";");
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
+    this.http.post(URLConstant.ClaimListTask, wfClaimObj).subscribe(
+      (response) => {
+      });
+  }
+
+
 }

@@ -12,7 +12,6 @@ export class AppInsMainCvgObj {
     IsMainIns: boolean;
     SumInsuredPrcnt: number;
     SumInsuredAmt: number;
-    StdMainPremiRate: number;
     InscoMainPremiRate: number;
     CustMainPremiRate: number;
     InscoMainPremiAmt: number;

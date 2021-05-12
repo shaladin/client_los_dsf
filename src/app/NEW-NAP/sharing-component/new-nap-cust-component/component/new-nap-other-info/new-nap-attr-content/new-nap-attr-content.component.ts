@@ -9,12 +9,15 @@ import { AttrContent } from 'app/shared/model/CustCompletion/AttrContent.Model';
 import { RefAttr } from 'app/shared/model/CustCompletion/RefAttr.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { NewCustAttrContentObj } from 'app/shared/model/NewCustAttrContentObj.Model';
+import { ReqRefAttrByAttrGroupObj } from 'app/shared/model/Request/RefAttr/ReqRefAttrByAttrGroupObj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { ResGetAppCustAttrContentObj, ResGetListAppCustAttrContentObj } from 'app/shared/model/Response/NAP/NAP 4/ResGetListAppCustAttrContentObj.model';
 import { environment } from 'environments/environment';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-new-nap-attr-content',
-  templateUrl: './new-nap-attr-content.component.html',
-  styles: []
+  templateUrl: './new-nap-attr-content.component.html'
 })
 export class NewNapAttrContentComponent implements OnInit {
   @Input() enjiForm: NgForm;
@@ -24,7 +27,7 @@ export class NewNapAttrContentComponent implements OnInit {
   @Input() AppCustId: number;
   @Input() title: string;
   @Input() IsAttrSubmitted: boolean;
-  ListAttrContent: Array<AttrContent> = new Array<AttrContent>();
+  ListAttrContent: Array<ResGetAppCustAttrContentObj> = new Array<ResGetAppCustAttrContentObj>();
   RefAttrList: Array<RefAttr> = new Array<RefAttr>();
   ListInputLookUpObj = new Array();
   IsFormReady: boolean = false;
@@ -36,39 +39,43 @@ export class NewNapAttrContentComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.IsAttrSubmitted = false;
-   }
+  }
 
   async ngOnInit() {
-    var custGrp = {
-      AttrGroup: this.AttrGroup
-    };
-    await this.httpClient.post<Array<AttrContent>>(URLConstant.GetListAppCustAttrContentForNewNap, { AppCustId: this.AppCustId, AttrGroup: this.AttrGroup }).toPromise().then(
-      (response) => {
-        this.ListAttrContent = response["ResponseAppCustAttrContentObjs"]
+    let custGrp: ReqRefAttrByAttrGroupObj = new ReqRefAttrByAttrGroupObj();
+    custGrp.AttrGroup = this.AttrGroup;
+    await this.httpClient.post(URLConstant.GetListAppCustAttrContentForNewNap, { AppCustId: this.AppCustId, AttrGroup: this.AttrGroup }).toPromise().then(
+      (response : ResGetListAppCustAttrContentObj) => {
+        this.ListAttrContent = response.ResponseAppCustAttrContentObjs;
         this.httpClient.post<Array<RefAttr>>(URLConstant.GetListActiveRefAttrByAttrGroup, custGrp).subscribe(
           async (response) => {
             this.RefAttrList = response[CommonConstant.ReturnObj];
 
             var parentFormGroup = new Object();
-             
-            if(this.RefAttrList.length > 0){
+
+            if (this.RefAttrList.length > 0) {
               this.IsFormReady = false;
-              for (const refAttr of this.RefAttrList) { 
+              for (const refAttr of this.RefAttrList) {
                 this.AttrContent = new AttrContent();
                 let isUpdateValue = false;
-                if(this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode) ){
-                  this.AttrContent = this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode);
+                if (this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode)) {
+                  let foundAttrContent = this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode);
+                  this.AttrContent.AttrCode = foundAttrContent.AttrCode;
+                  this.AttrContent.AttrName = foundAttrContent.AttrName;
+                  this.AttrContent.AttrValue = foundAttrContent.AttrValue;
+                  this.AttrContent.Descr = foundAttrContent.Descr;
+                  this.AttrContent.MasterCode = foundAttrContent.MasterCode;
                   isUpdateValue = true;
                 }
-  
+
                 var formGroupObject = new Object();
                 formGroupObject["AttrCode"] = [refAttr.AttrCode];
-                formGroupObject["IsMandatory"] = [refAttr.IsMandatory]; 
-                
-                await this.setFormGroupValue(refAttr, formGroupObject, parentFormGroup, isUpdateValue); 
+                formGroupObject["IsMandatory"] = [refAttr.IsMandatory];
+
+                await this.setFormGroupValue(refAttr, formGroupObject, parentFormGroup, isUpdateValue);
               }
               this.ListInputLookUpObj.push(this.tempLookup);
-              if(this.parentForm.controls[this.identifier]){
+              if (this.parentForm.controls[this.identifier]) {
                 this.parentForm.removeControl(this.identifier);
               }
               this.parentForm.addControl(this.identifier, this.fb.group(parentFormGroup));
@@ -89,7 +96,7 @@ export class NewNapAttrContentComponent implements OnInit {
     });
   }
 
-  async setFormGroupValue(refAttr: RefAttr, formGroupObject: object, parentFormGroup, isUpdateValue: boolean ){
+  async setFormGroupValue(refAttr: RefAttr, formGroupObject: object, parentFormGroup, isUpdateValue: boolean) {
     if (isUpdateValue == false) {
       if (refAttr.AttrInputType == 'T' && refAttr.PatternValue != "" && refAttr.PatternValue != null) {
         if (refAttr.IsMandatory == true) {
@@ -128,51 +135,50 @@ export class NewNapAttrContentComponent implements OnInit {
     }
     parentFormGroup[refAttr.AttrCode] = this.fb.group(formGroupObject);
 
-    if (refAttr.AttrInputType == 'RM') { 
-     this.tempLookup[refAttr.AttrCode] = new InputLookupObj();
-     this.tempLookup[refAttr.AttrCode].urlJson = "./assets/uclookup/lookupRefMaster.json";
-     this.tempLookup[refAttr.AttrCode].urlQryPaging = URLConstant.GetPagingObjectBySQL;
-     this.tempLookup[refAttr.AttrCode].urlEnviPaging = environment.FoundationR3Url;
-     this.tempLookup[refAttr.AttrCode].pagingJson = "./assets/uclookup/lookupRefMaster.json";
-     this.tempLookup[refAttr.AttrCode].genericJson = "./assets/uclookup/lookupRefMaster.json";
-     this.tempLookup[refAttr.AttrCode].title = refAttr["AttrName"];
+    if (refAttr.AttrInputType == 'RM') {
+      this.tempLookup[refAttr.AttrCode] = new InputLookupObj();
+      this.tempLookup[refAttr.AttrCode].urlJson = "./assets/uclookup/lookupRefMaster.json";
+      this.tempLookup[refAttr.AttrCode].urlEnviPaging = environment.FoundationR3Url;
+      this.tempLookup[refAttr.AttrCode].pagingJson = "./assets/uclookup/lookupRefMaster.json";
+      this.tempLookup[refAttr.AttrCode].genericJson = "./assets/uclookup/lookupRefMaster.json";
+      this.tempLookup[refAttr.AttrCode].title = refAttr["AttrName"];
       if (refAttr.IsMandatory == true) {
         this.tempLookup[refAttr.AttrCode].isRequired = true;
       } else {
         this.tempLookup[refAttr.AttrCode].isRequired = false;
-      } 
-      if (isUpdateValue == false) { 
+      }
+      if (isUpdateValue == false) {
         if (refAttr.DefaultValue != null) {
-          var refMaster = {
+          let refMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
             RefMasterTypeCode: refAttr.AttrValue,
             MasterCode: refAttr.DefaultValue
           };
-          await this.httpClient.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
-            (response) => {
-              this.tempLookup[refAttr.AttrCode].jsonSelect = { Descr: response['Descr'] };
-              this.tempLookup[refAttr.AttrCode].nameSelect = response['Descr'];
+          await this.httpClient.post(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
+            (response: KeyValueObj) => {
+              this.tempLookup[refAttr.AttrCode].jsonSelect = { Descr: response.Value };
+              this.tempLookup[refAttr.AttrCode].nameSelect = response.Value;
             });
-        } 
+        }
       } else {
         this.tempLookup[refAttr.AttrCode].jsonSelect = { Descr: this.AttrContent.Descr }
         this.tempLookup[refAttr.AttrCode].nameSelect = this.AttrContent.Descr;
-      } 
+      }
       var arrAddCrit = new Array();
       var critAssetObj = new CriteriaObj();
       critAssetObj.DataType = 'text';
       critAssetObj.restriction = AdInsConstant.RestrictionEq;
       critAssetObj.propName = 'REF_MASTER_TYPE_CODE';
-      critAssetObj.value = this.AttrContent == undefined || this.AttrContent.MasterCode == undefined ? refAttr.AttrValue : this.AttrContent.MasterCode;   
+      critAssetObj.value = this.AttrContent == undefined || this.AttrContent.MasterCode == undefined ? refAttr.AttrValue : this.AttrContent.MasterCode;
       arrAddCrit.push(critAssetObj);
       this.tempLookup[refAttr.AttrCode].addCritInput = arrAddCrit;
       this.tempLookup[refAttr.AttrCode].isReady = true;
     }
   }
 
-  CopyCustAttrContent(custAttrContentObjs: Array<NewCustAttrContentObj>){
-    if(custAttrContentObjs.length > 0){
+  CopyCustAttrContent(custAttrContentObjs: Array<NewCustAttrContentObj>) {
+    if (custAttrContentObjs.length > 0) {
       this.ListAttrContent = Array<AttrContent>();
-      for(let i = 0; i < custAttrContentObjs.length; i++){
+      for (let i = 0; i < custAttrContentObjs.length; i++) {
         var attrContent = new AttrContent();
         attrContent.AttrCode = custAttrContentObjs[i].AttrCode;
         attrContent.AttrInputType = custAttrContentObjs[i].AttrInputType;
@@ -182,31 +188,35 @@ export class NewNapAttrContentComponent implements OnInit {
         attrContent.Descr = custAttrContentObjs[i].Descr;
         attrContent.IsMandatory = custAttrContentObjs[i].IsMandatory;
         attrContent.MasterCode = custAttrContentObjs[i].MasterCode;
-        this.ListAttrContent.push(attrContent);       
+        this.ListAttrContent.push(attrContent);
       }
-      var custGrp = {
-        AttrGroup: this.AttrGroup
-      };
+      let custGrp: ReqRefAttrByAttrGroupObj = new ReqRefAttrByAttrGroupObj();
+      custGrp.AttrGroup = this.AttrGroup;
       this.httpClient.post<Array<RefAttr>>(URLConstant.GetListActiveRefAttrByAttrGroup, custGrp).subscribe(
         async (response) => {
           this.RefAttrList = response[CommonConstant.ReturnObj];
 
           var parentFormGroup = new Object();
-           
-          if(this.RefAttrList.length > 0){
-            for (const refAttr of this.RefAttrList) { 
+
+          if (this.RefAttrList.length > 0) {
+            for (const refAttr of this.RefAttrList) {
               this.AttrContent = new AttrContent();
               let isUpdateValue = false;
-              if(this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode) ){
-                this.AttrContent = this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode);
+              if (this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode)) {
+                let foundAttrContent = this.ListAttrContent.find(x => x.AttrCode == refAttr.AttrCode);
+                this.AttrContent.AttrCode = foundAttrContent.AttrCode;
+                this.AttrContent.AttrName = foundAttrContent.AttrName;
+                this.AttrContent.AttrValue = foundAttrContent.AttrValue;
+                this.AttrContent.Descr = foundAttrContent.Descr;
+                this.AttrContent.MasterCode = foundAttrContent.MasterCode;
                 isUpdateValue = true;
               }
 
               var formGroupObject = new Object();
               formGroupObject["AttrCode"] = [refAttr.AttrCode];
-              formGroupObject["IsMandatory"] = [refAttr.IsMandatory]; 
-              
-              await this.setFormGroupValue(refAttr, formGroupObject, parentFormGroup, isUpdateValue); 
+              formGroupObject["IsMandatory"] = [refAttr.IsMandatory];
+
+              await this.setFormGroupValue(refAttr, formGroupObject, parentFormGroup, isUpdateValue);
             }
             this.ListInputLookUpObj.push(this.tempLookup);
             this.parentForm.removeControl(this.identifier);
@@ -214,8 +224,8 @@ export class NewNapAttrContentComponent implements OnInit {
             this.IsFormReady = true;
           }
         });
-    } 
+    }
   }
-    
+
 
 }

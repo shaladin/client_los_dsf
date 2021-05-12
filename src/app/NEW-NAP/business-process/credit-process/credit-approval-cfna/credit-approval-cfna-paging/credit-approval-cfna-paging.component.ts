@@ -18,8 +18,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-credit-approval-cfna-paging',
-  templateUrl: './credit-approval-cfna-paging.component.html',
-  styleUrls: []
+  templateUrl: './credit-approval-cfna-paging.component.html'
 })
 export class CreditApprovalCfnaPagingComponent implements OnInit {
   BizTemplateCode: string;

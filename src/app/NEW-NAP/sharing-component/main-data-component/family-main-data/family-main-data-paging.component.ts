@@ -7,6 +7,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
 @Component({
   selector: 'app-family-main-data-paging',
   templateUrl: './family-main-data-paging.component.html',
@@ -90,7 +91,7 @@ export class FamilyMainDataPagingComponent implements OnInit {
     this.custDataObj.AppId = this.appId;
     this.custDataObj.IsFamily = true;
     this.http.post(URLConstant.GetListAppCustMainDataByAppId, this.custDataObj).subscribe(
-      (response) => {
+      (response : ResListCustMainDataObj) => {
         this.inputGridObj.resultData = {
           Data: ""
         }

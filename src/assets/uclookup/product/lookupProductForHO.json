@@ -1,0 +1,68 @@
+{
+    "sectionTitle": "Search Product",
+    "exportExcel": false,
+    "component": [
+      {
+        "type": "textbox",
+        "name": "P.PROD_CODE",
+        "id": "ProdCodeId",
+        "value": "",
+        "label": "Product Code",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "P.PROD_NAME",
+        "id": "ProdNameId",
+        "value": "",
+        "label": "Product Name",
+        "placeholder": "Placeholder"
+      }
+    ],
+    "querystring": {
+        "name": "lookupProductForHO"
+    },
+        "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Prod Code",
+            "name": "ProdCode"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Prod Name",
+            "name": "ProdName"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ProdCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ProdName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "ProdName"
+                }
+            ]
+        }
+    ],
+    "propertyId": "ProdName", 
+    "propertyName": "ProdName" 
+}

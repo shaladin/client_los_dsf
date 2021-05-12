@@ -1,0 +1,110 @@
+{
+    "title": "Product HO Deactivation",
+    "exportExcel": false,
+    "component": [
+      {
+        "type": "textbox",
+        "name": "A.PROD_CODE",
+        "id": "prodCodeId",
+        "value": "",
+        "label": "Product Code",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "A.PROD_NAME",
+        "id": "prodNameId",
+        "value": "",
+        "label": "Product Name",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "datepicker",
+        "datatype": "date",
+        "name": "A.END_DT",
+        "id": "endDtLte",
+        "value": "",
+        "restriction": "Lte",
+        "label": "End Date <=",
+        "placeholder": "Placeholder"
+      }
+  
+    ],
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Product Code",
+        "name": "prodCode"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Product Name",
+        "name": "prodName"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Current Version",
+        "name": "prodVersion"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "End Date",
+        "name": "endDt"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Deactivate"
+      }
+    ],
+    "querystring": {
+      "name": "searchProductHODeactivate"
+    },
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "left",
+        "property": "prodCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "prodName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "prodVersion"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "endDt"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "edit",
+            "path": "PRODUCT_HO_DEACTIVATE_DETAIL",
+            "param": [
+              {
+                "type": "ProdHId",
+                "property": "prodHId"
+              },
+              {
+                "type": "ProdId",
+                "property": "prodId"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  

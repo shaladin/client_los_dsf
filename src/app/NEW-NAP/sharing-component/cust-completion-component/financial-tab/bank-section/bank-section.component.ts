@@ -8,11 +8,12 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustBankStmntObj } from 'app/shared/model/AppCustBankStmntObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-bank-section',
@@ -62,7 +63,6 @@ export class BankSectionComponent implements OnInit {
 
     this.InputLookupBankObj = new InputLookupObj();
     this.InputLookupBankObj.urlJson = "./assets/uclookup/lookupBank.json";
-    this.InputLookupBankObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.InputLookupBankObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupBankObj.pagingJson = "./assets/uclookup/lookupBank.json";
     this.InputLookupBankObj.genericJson = "./assets/uclookup/lookupBank.json";
@@ -75,6 +75,7 @@ export class BankSectionComponent implements OnInit {
   GetAppCustBankAccList() {
     this.http.post<Array<AppCustBankAccObj>>(URLConstant.GetAppCustBankAccAndStatementForView, { Id: this.AppCustId }).subscribe(
       (response) => {
+        console.log(response);
         this.AppCustBankAccList = response["AppCustBankAccList"]
       });
   }
@@ -110,14 +111,14 @@ export class BankSectionComponent implements OnInit {
     this.OutputObj.emit({ Key: 'IsDetail', Value: this.IsDetail });
   }
 
-  CheckDefault(){
-    if(this.BankAccStmntForm.controls.IsDefault.value){
+  CheckDefault() {
+    if (this.BankAccStmntForm.controls.IsDefault.value) {
       this.BankAccStmntForm.patchValue({
-        IsActive : true
+        IsActive: true
       });
       this.BankAccStmntForm.controls.IsActive.disable();
     }
-    else{
+    else {
       this.BankAccStmntForm.controls.IsActive.enable();
     }
   }
@@ -139,14 +140,14 @@ export class BankSectionComponent implements OnInit {
 
     this.CheckDefault();
 
-    if (BankAccAndStmntObj.AppCustBankStmntObjs != undefined) {
+    if (BankAccAndStmntObj.ListAppCustBankAccStmntObj != undefined) {
       var bankStmnObjs = this.BankAccStmntForm.controls['BankStmntObjs'] as FormArray;
-      for (let i = 0; i < BankAccAndStmntObj.AppCustBankStmntObjs.length; i++) {
-        bankStmnObjs.push(this.AddGroup(BankAccAndStmntObj.AppCustBankStmntObjs[i]));
+      for (let i = 0; i < BankAccAndStmntObj.ListAppCustBankAccStmntObj.length; i++) {
+        bankStmnObjs.push(this.AddGroup(BankAccAndStmntObj.ListAppCustBankAccStmntObj[i]));
       }
     }
 
-    this.AppCustBankStmntList = BankAccAndStmntObj.AppCustBankStmntObjs;
+    this.AppCustBankStmntList = BankAccAndStmntObj.ListAppCustBankAccStmntObj;
   }
 
   ClearForm() {
@@ -246,7 +247,9 @@ export class BankSectionComponent implements OnInit {
 
   DeleteBankAcc(BankAccAndStmntObj: AppCustBankAccObj) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      this.http.post(URLConstant.DeleteAppCustBankAccAndStmnt, { BankAccObj: BankAccAndStmntObj }).subscribe(
+      let tempObj: GenericObj = new GenericObj();
+      tempObj.Id = BankAccAndStmntObj.AppCustBankAccId;
+      this.http.post(URLConstant.DeleteAppCustBankAccAndStmnt, tempObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.GetAppCustBankAccList();
@@ -291,6 +294,7 @@ export class BankSectionComponent implements OnInit {
     if (this.Mode != "Edit") {
       this.http.post(URLConstant.AddAppCustBankAccAndStmnt, reqObj).subscribe(
         (response) => {
+          if (response["StatusCode"] != 200) return;
           this.toastr.successMessage(response["message"]);
           this.OutputObj.emit({ Key: 'IsDetail', Value: false });
           this.GetAppCustBankAccList();
@@ -299,6 +303,7 @@ export class BankSectionComponent implements OnInit {
     } else {
       this.http.post(URLConstant.EditAppCustBankAccAndStmnt, reqObj).subscribe(
         (response) => {
+          if (response["StatusCode"] != 200) return;
           this.toastr.successMessage(response["message"]);
           this.OutputObj.emit({ Key: 'IsDetail', Value: false });
           this.GetAppCustBankAccList();

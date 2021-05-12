@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'environments/environment';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -11,6 +10,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
 
 @Component({
   selector: 'app-list-personal',
@@ -21,13 +21,6 @@ export class ListPersonalComponent implements OnInit {
 
   AppId: number;
   WfTaskListId: number;
-  FondationUrl = environment.FoundationR3Url;
-  LOSUrl = environment.losUrl;
-  GetCustomerDuplicateCheckUrl = URLConstant.GetCustomerAndNegativeCustDuplicateCheck;
-  GetNegativeCustomerDuplicateCheckUrl = this.FondationUrl + URLConstant.GetNegativeCustomerDuplicateCheck;
-  GetAppCustDuplicateCheckUrl = this.LOSUrl + URLConstant.GetAppCustDuplicateCheck;
-  AddAppDupCheckCustUrl = this.LOSUrl + URLConstant.AddAppDupCheckCust;
-  GetCustDataByAppId = URLConstant.GetCustDataByAppId;
   AppCustObj: AppCustObj;
   AppCustPersonalObj: AppCustPersonalObj;
   AppCustAddrObj: AppCustAddrObj;
@@ -61,28 +54,27 @@ export class ListPersonalComponent implements OnInit {
 
     //Get App Cust Data
     var appObj = { "Id": this.AppId };
-    this.http.post(this.GetCustDataByAppId, appObj).subscribe(
+    this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
       response => {
         this.AppCustObj = response['AppCustObj'];
         this.RowVersion = response['AppCustObj'].RowVersion;
         this.AppCustPersonalObj = response['AppCustPersonalObj'];
         this.AppCustAddrObj = response['AppCustAddrLegalObj'];
 
-        var requestDupCheck = {
-          "CustName": this.AppCustObj.CustName,
-          "MrCustTypeCode": this.AppCustObj.MrCustTypeCode,
-          "MrCustModelCode": this.AppCustObj.MrCustModelCode,
-          "MrIdTypeCode": this.AppCustObj.MrIdTypeCode,
-          "IdNo": this.AppCustObj.IdNo,
-          "TaxIdNo": this.AppCustObj.TaxIdNo,
-          "BirthDt": this.AppCustPersonalObj.BirthDt,
-          "MotherMaidenName": this.AppCustPersonalObj.MotherMaidenName,
-          "MobilePhnNo1": this.AppCustPersonalObj.MobilePhnNo1,
-          "RowVersion": this.RowVersion,
-          "AppId": this.AppId
-        }
+        let requestDupCheck: DuplicateCustObj = new DuplicateCustObj();
+        requestDupCheck.CustName = this.AppCustObj.CustName;
+        requestDupCheck.MrCustTypeCode = this.AppCustObj.MrCustTypeCode;
+        requestDupCheck.MrCustModelCode = this.AppCustObj.MrCustModelCode;
+        requestDupCheck.MrIdTypeCode = this.AppCustObj.MrIdTypeCode;
+        requestDupCheck.IdNo = this.AppCustObj.IdNo;
+        requestDupCheck.TaxIdNo = this.AppCustObj.TaxIdNo;
+        requestDupCheck.BirthDt = this.AppCustPersonalObj.BirthDt;
+        requestDupCheck.MotherMaidenName = this.AppCustPersonalObj.MotherMaidenName;
+        requestDupCheck.MobilePhnNo1 = this.AppCustPersonalObj.MobilePhnNo1;
+        requestDupCheck.RowVersion = this.RowVersion;
+
         //List Cust Duplicate And List Negative Cust Duplicate Checking
-        this.http.post(this.GetCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetCustomerAndNegativeCustDuplicateCheck, requestDupCheck).subscribe(
           response => {
             this.ListCustomerDuplicate = response[CommonConstant.ReturnObj].CustDuplicate;
             this.ListNegativeCust = response[CommonConstant.ReturnObj].NegativeCustDuplicate;
@@ -90,7 +82,7 @@ export class ListPersonalComponent implements OnInit {
 
 
         //List App Cust Duplicate Checking
-        this.http.post(this.GetAppCustDuplicateCheckUrl, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetAppCustDuplicateCheck, requestDupCheck).subscribe(
           response => {
             this.ListAppCustDuplicate = response[CommonConstant.ReturnObj];
           });

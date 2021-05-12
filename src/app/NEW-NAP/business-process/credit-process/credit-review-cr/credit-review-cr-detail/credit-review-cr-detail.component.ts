@@ -13,13 +13,13 @@ import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
 import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
-import { RFAPreGoLiveObj } from 'app/shared/model/RFAPreGoLiveObj.Model';
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 
 @Component({
   selector: 'app-credit-review-cr-detail',
@@ -41,7 +41,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   UserAccess: any;
   Arr: FormArray;
   BizTemplateCode: string = "";
-  InputObj: UcInputRFAObj;
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean = false;
   IsViewReady: boolean = false;
   readonly apvBaseUrl = environment.ApprovalR3Url;
@@ -116,7 +116,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   //#region Get Local Data
   ManualDeviationData: Array<DeviationResultObj> = new Array<DeviationResultObj>();
   BindManualDeviationData(ev) {
-    this.IsReady = false;
+    // this.IsReady = false;
     this.ref.tick();
     this.ManualDeviationData = ev;
     let manualDevList = []
@@ -199,7 +199,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   DDLData: { [id: string]: Array<{ Key: string, Value: string }> } = {};
   readonly DDLRecomendation: string = "RECOMENDED";
   async BindDDLRecommendation() {
-    let Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
+    let Obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
     await this.http.post(URLConstant.GetListActiveRefReason, Obj).toPromise().then(
       (response) => {
         this.DDLData[this.DDLRecomendation] = response[CommonConstant.ReturnObj];
@@ -208,7 +208,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   readonly DDLReason: string = "REASON";
   async BindDDLReasonReturn() {
-    let obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
+    let obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
     await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
       (response) => {
         this.DDLData[this.DDLReason] = response[CommonConstant.ReturnObj];
@@ -292,7 +292,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   PlafondAmt: number = 0;
   initInputApprovalObj(manualDevList = null) {
-    this.InputObj = new UcInputRFAObj();
     var Attributes = [];
     var attribute1 = {
       "AttributeName": "Approval Amount",
@@ -313,18 +312,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
     if (manualDevList != null) {
       listTypeCode = listTypeCode.concat(manualDevList);
     }
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
-    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = listTypeCode;
-    this.InputObj.EnvUrl = environment.FoundationR3Url;
-    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
-    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
-    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
-    this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
-    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
     this.InputObj.Reason = this.DDLData[this.DDLRecomendation];

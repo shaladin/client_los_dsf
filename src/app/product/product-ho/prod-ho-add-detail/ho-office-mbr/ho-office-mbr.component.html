@@ -1,0 +1,2 @@
+<app-ho-list-office-mbr *ngIf="isOn" [ProdHId]="ProdHId" (ComponentIsOn)="ChangeComponent($event)"></app-ho-list-office-mbr>
+<app-ho-search-office *ngIf="!isOn" [ProdHId]="ProdHId" [ListOfficeMemberObjInput]="ListOfficeMemberObj" (ComponentIsOn)="ChangeComponent($event)"></app-ho-search-office>

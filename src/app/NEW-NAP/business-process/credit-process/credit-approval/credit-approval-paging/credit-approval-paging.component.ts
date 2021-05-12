@@ -17,10 +17,10 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
+
 @Component({
   selector: 'app-credit-approval-paging',
-  templateUrl: './credit-approval-paging.component.html',
-  providers: [NGXToastrService]
+  templateUrl: './credit-approval-paging.component.html'
 })
 export class CreditApprovalPagingComponent implements OnInit {
   BizTemplateCode: string;

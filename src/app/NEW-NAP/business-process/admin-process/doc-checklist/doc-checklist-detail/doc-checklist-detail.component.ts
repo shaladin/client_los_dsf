@@ -39,12 +39,8 @@ export class DocChecklistDetailComponent implements OnInit {
 
 
   MainInfoForm = this.fb.group({
-    AgrmntCreatedDt: ['', Validators.required],
-    EffectiveDt: ['', Validators.required],
-    Notes: ['', Validators.required],
     ApprovalStatus: ['']
   })
-  listAppTCObj: ListAppTCObj;
   ListAppTCObj: ListAppTCObj;
 
   count1: number = 0;
@@ -140,11 +136,11 @@ export class DocChecklistDetailComponent implements OnInit {
 
   }
 
-  SaveForm(flag = true) {
+  SaveForm() {
     var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
 
-    this.listAppTCObj = new ListAppTCObj();
-    this.listAppTCObj.AppTCObj = new Array();
+    this.ListAppTCObj = new ListAppTCObj();
+    this.ListAppTCObj["ListAppTcObj"] = new Array();
 
     for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
       this.appTC = new AppTCObj();
@@ -172,11 +168,11 @@ export class DocChecklistDetailComponent implements OnInit {
           }
         }
       }
-      this.listAppTCObj.AppTCObj.push(this.appTC);
+      this.ListAppTCObj["ListAppTcObj"].push(this.appTC);
 
     }
 
-    this.DocChecklistObj.rAppTcObj = this.listAppTCObj;
+    this.DocChecklistObj.RListAppTcObj = this.ListAppTCObj;
     this.DocChecklistObj.TaskListId = this.TaskListId;
 
     this.http.post(URLConstant.SubmitDocChecklist, this.DocChecklistObj).subscribe(

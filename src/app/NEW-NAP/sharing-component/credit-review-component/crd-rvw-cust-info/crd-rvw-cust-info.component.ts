@@ -10,6 +10,7 @@ import { CrdRvwExposureDObj } from 'app/shared/model/CreditReview/CrdRvwExposure
 import { CrdRvwExposureHObj } from 'app/shared/model/CreditReview/CrdRvwExposureHObj.Model';
 import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureObj.Model';
 import { NegCustObj } from 'app/shared/model/CreditReview/NegCustObj.model';
+import { ReqGetCrdRvwExposureHObj } from 'app/shared/model/CreditReview/ReqGetCrdRvwExposureHObj.Model';
 
 @Component({
   selector: 'app-crd-rvw-cust-info',
@@ -36,7 +37,7 @@ export class CrdRvwCustInfoComponent implements OnInit {
 
   async ngOnInit() {
     this.crdRvwCustInfoObj.AppId = this.appId;
-    await this.GetListCrdRvwExposureByCrdRvwCustInfoId();
+    await this.GetCrdRvwExposureByCrdRvwCustInfoIdAndRelationType();
     await this.GetAppCustBankAccList();
     await this.GetListNegativeCustByCustNo();
   }
@@ -45,8 +46,9 @@ export class CrdRvwCustInfoComponent implements OnInit {
   CustCrdRvwExposureObj: CrdRvwExposureDObj = new CrdRvwExposureDObj();
   CustGroupCrdRvwExposureObj: CrdRvwExposureDObj = new CrdRvwExposureDObj();
   ObligorCrdRvwExposureObj: CrdRvwExposureDObj = new CrdRvwExposureDObj();
-  async GetListCrdRvwExposureByCrdRvwCustInfoId() {
-    await this.http.post<CrdRvwExposureHObj>(URLConstant.GetCrdRvwExposureByCrdRvwCustInfoIdAndRelationType, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RelationType: CommonConstant.CrdRvwRelationTypeCustomer }).toPromise().then(
+  async GetCrdRvwExposureByCrdRvwCustInfoIdAndRelationType() {
+    let reqObj: ReqGetCrdRvwExposureHObj = { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, RelationType: CommonConstant.CrdRvwRelationTypeCustomer };
+    await this.http.post<CrdRvwExposureHObj>(URLConstant.GetCrdRvwExposureByCrdRvwCustInfoIdAndRelationType, reqObj).toPromise().then(
       (response) => {
         for (let index = 0; index < response.ListCrdRvwExposureDObj.length; index++) {
           const element = response.ListCrdRvwExposureDObj[index];

@@ -1,0 +1,119 @@
+{
+    "title": "Product Offering Deactivation",
+    "exportExcel": false,
+    "component": [
+      {
+        "type": "textbox",
+        "name": "A.PROD_OFFERING_CODE",
+        "id": "prodCodeId",
+        "value": "",
+        "label": "Product Offering Code",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "A.PROD_OFFERING_NAME",
+        "id": "prodNameId",
+        "value": "",
+        "label": "Product Offering Name",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "datepicker",
+        "datatype": "date",
+        "name": "A.END_DT",
+        "id": "endDtLte",
+        "value": "",
+        "restriction": "Lte",
+        "label": "End Date <=",
+        "placeholder": "Placeholder"
+      }
+  
+    ],
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Product Offering Code",
+        "name": "prodOfferingCode"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Product Offering Name",
+        "name": "prodOfferingName"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Current Version",
+        "name": "prodOfferingVersion"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "End Date",
+        "name": "endDt"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Status"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Deactive"
+      }
+    ],
+    "querystring": {
+      "name": "searchProductOfferingDeactivate"
+    },
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "left",
+        "property": "prodOfferingCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "prodOfferingName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "prodOfferingVersion"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "endDt"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "conditionStatDesc"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "edit",
+            "path": "PRODUCT_OFFERING_DEACTIVATE_DETAIL",
+            "param": [
+              {
+                "type": "ProdOfferingHId",
+                "property": "prodOfferingHId"
+              },
+              {
+                "type": "ProdOfferingId",
+                "property": "prodOfferingId"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }  

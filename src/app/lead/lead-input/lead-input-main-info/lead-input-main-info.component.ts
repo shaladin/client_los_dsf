@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
 import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -17,21 +16,22 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { ReqAddLeadObj, ReqEditLeadObj } from 'app/shared/model/Request/LEAD/ReqAddEditLeadObj.model';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-lead-input-main-info',
-  templateUrl: './lead-input-main-info.component.html',
-  providers: [DecimalPipe, NGXToastrService]
+  templateUrl: './lead-input-main-info.component.html'
 })
 export class LeadInputMainInfoComponent implements OnInit {
   user: any;
-  LeadId: string;
-  addLead: string;
-  editLead: string;
-  getLeadByLeadId: string;
+  LeadId: any;
   returnLead: any;
   responseLead: any;
   leadObj: LeadObj;
+  addLeadObj: ReqAddLeadObj = new ReqAddLeadObj();
+  editLeadObj: ReqEditLeadObj = new ReqEditLeadObj();
   getLeadObj: LeadObj;
   cmoNameLookUpObj: InputLookupObj;
   surveyorNameLookUpObj: InputLookupObj;
@@ -41,10 +41,6 @@ export class LeadInputMainInfoComponent implements OnInit {
   tempSurveyorUsername: any;
   tempSalesUsername: any;
   tempAgencyCode: any;
-  getListRefOffice: string;
-  getListActiveRefMasterUrl: string;
-  getVendorByVendorCode: string;
-  getLeadPersonalForLookup: string;
   listRefOffice: Array<any>;
   refOfficeObj: RefOfficeObj;
   listRefLob: Array<any>;
@@ -61,7 +57,7 @@ export class LeadInputMainInfoComponent implements OnInit {
   returnSurveyorObj: any;
   salesObj: RefEmpForLookupObj;
   returnSalesObj: any;
-  leadIdExist: string;
+  leadIdExist: any;
   getExistLeadObj: LeadObj;
   returnExistLead: any;
   vendorExistObj: VendorObj;
@@ -74,6 +70,8 @@ export class LeadInputMainInfoComponent implements OnInit {
   returnSalesExistObj: any;
   leadExistObj: LeadObj;
   returnLeadExistObj: any;
+  critObj: CriteriaObj = new CriteriaObj();
+  arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   MainInfoForm = this.fb.group({
     OfficeCode: ['', [Validators.required]],
     OfficeName: [''],
@@ -87,13 +85,6 @@ export class LeadInputMainInfoComponent implements OnInit {
   isCopyButtonDisabled: boolean = true;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
-    this.addLead = URLConstant.AddLead;
-    this.editLead = URLConstant.EditLead;
-    this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
-    this.getListRefOffice = URLConstant.GetListKvpActiveRefOfficeForPaging;
-    this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getVendorByVendorCode = URLConstant.GetVendorByVendorCode;
-    this.getLeadPersonalForLookup = URLConstant.GetLeadPersonalForLookupCopy;
     this.route.queryParams.subscribe(params => {
       if (params["mode"] != null) {
         this.pageType = params["mode"];
@@ -112,14 +103,14 @@ export class LeadInputMainInfoComponent implements OnInit {
     AdInsHelper.OpenLeadViewByLeadId(this.LeadId);
   }
 
-  backHandler(){
-    if(this.pageType == "update"){
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_UPDATE_PAGING],{});
-      }
-      else{
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_PAGING],{});
-      }
-  
+  backHandler() {
+    if (this.pageType == "update") {
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_UPDATE_PAGING], {});
+    }
+    else {
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_PAGING], {});
+    }
+
   }
 
   getLookUpAgency(event) {
@@ -147,7 +138,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.getExistLeadObj = new LeadObj();
     this.getExistLeadObj.LeadId = this.leadIdExist;
     var getExistLeadObj = { Id: this.leadIdExist };
-    this.http.post(this.getLeadByLeadId, getExistLeadObj).subscribe(
+    this.http.post(URLConstant.GetLeadByLeadId, getExistLeadObj).subscribe(
       (response) => {
         this.returnExistLead = response;
         this.MainInfoForm.patchValue({
@@ -161,19 +152,14 @@ export class LeadInputMainInfoComponent implements OnInit {
 
         this.vendorExistObj = new VendorObj();
         this.vendorExistObj.VendorCode = this.returnExistLead.AgencyCode;
-        this.http.post(this.getVendorByVendorCode, {Code : this.returnExistLead.AgencyCode}).subscribe(
+        this.http.post(URLConstant.GetVendorByVendorCode, { Code: this.returnExistLead.AgencyCode }).subscribe(
           (response) => {
             this.returnVendorExistObj = response;
             this.agencyLookUpObj.nameSelect = this.returnVendorExistObj.VendorName;
             this.agencyLookUpObj.jsonSelect = this.returnVendorExistObj;
             this.tempAgencyCode = this.returnVendorExistObj.VendorCode;
           });
-        // this.cmoNameLookUpObj.nameSelect = this.returnExistLead.CmoUsername;
-        // this.cmoNameLookUpObj.jsonSelect = this.returnExistLead;
-        // this.surveyorNameLookUpObj.nameSelect = this.returnExistLead.SurveyorUsername;
-        // this.surveyorNameLookUpObj.jsonSelect = this.returnExistLead;
-        // this.salesNameLookUpObj.nameSelect = this.returnExistLead.TeleMarketingUsername;
-        // this.salesNameLookUpObj.jsonSelect = this.returnExistLead;
+          
         this.tempCmoUsername = this.returnExistLead.CmoUsername;
         this.tempSurveyorUsername = this.returnExistLead.SurveyorUsername;
         this.tempSalesUsername = this.returnExistLead.TeleMarketingUsername;
@@ -212,11 +198,11 @@ export class LeadInputMainInfoComponent implements OnInit {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MakeLookUpObj();
     this.GetOfficeDDL();
-    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    this.http.post(this.getListActiveRefMasterUrl, { RefMasterTypeCode: "LOB" }).subscribe(
+    this.http.post(URLConstant.GetListActiveLob, {}).subscribe(
       (response) => {
         this.listRefLob = response[CommonConstant.ReturnObj];
         this.MainInfoForm.patchValue({
@@ -227,7 +213,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
     this.leadSource = new RefMasterObj();
     this.leadSource.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeLeadSource;
-    this.http.post(this.getListActiveRefMasterUrl, this.leadSource).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.leadSource).subscribe(
       (response) => {
         this.listLeadSource = response[CommonConstant.ReturnObj];
         this.MainInfoForm.patchValue({ LeadSource: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -237,7 +223,7 @@ export class LeadInputMainInfoComponent implements OnInit {
       this.getLeadObj = new LeadObj();
       this.getLeadObj.LeadId = this.LeadId;
       var getLeadObj = { Id: this.LeadId };
-      this.http.post(this.getLeadByLeadId, getLeadObj).subscribe(
+      this.http.post(URLConstant.GetLeadByLeadId, getLeadObj).subscribe(
         (response) => {
           this.returnLead = response;
           this.MainInfoForm.patchValue({
@@ -254,7 +240,7 @@ export class LeadInputMainInfoComponent implements OnInit {
             this.leadExistObj = new LeadObj();
             this.leadExistObj.LeadId = this.returnLead.LeadCopyId;
             var leadExistObj = { Id: this.returnLead.LeadCopyId };
-            this.http.post(this.getLeadPersonalForLookup, leadExistObj).subscribe(
+            this.http.post(URLConstant.GetLeadPersonalForLookupCopy, leadExistObj).subscribe(
               (response) => {
                 this.returnLeadExistObj = response;
               });
@@ -262,7 +248,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
           this.vendorObj = new VendorObj();
           this.vendorObj.VendorCode = this.returnLead.AgencyCode;
-          this.http.post(this.getVendorByVendorCode, {Code : this.returnLead.AgencyCode}).subscribe(
+          this.http.post(URLConstant.GetVendorByVendorCode, { Code: this.returnLead.AgencyCode }).subscribe(
             (response) => {
               this.returnVendorObj = response;
               this.agencyLookUpObj.nameSelect = this.returnVendorObj.VendorName;
@@ -270,12 +256,6 @@ export class LeadInputMainInfoComponent implements OnInit {
               this.tempAgencyCode = this.returnVendorObj.VendorCode;
             });
 
-          // this.cmoNameLookUpObj.nameSelect = this.returnLead.CmoUsername;
-          // this.cmoNameLookUpObj.jsonSelect = this.returnLead;
-          // this.surveyorNameLookUpObj.nameSelect = this.returnLead.SurveyorUsername;
-          // this.surveyorNameLookUpObj.jsonSelect = this.returnLead;
-          // this.salesNameLookUpObj.nameSelect = this.returnLead.TeleMarketingUsername;
-          // this.salesNameLookUpObj.jsonSelect = this.returnLead;
           this.tempCmoUsername = this.returnLead.CmoUsername;
           this.tempSurveyorUsername = this.returnLead.SurveyorUsername;
           this.tempSalesUsername = this.returnLead.TeleMarketingUsername;
@@ -318,6 +298,13 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.leadPersonalLookUpObj.urlEnviPaging = environment.losUrl;
     this.leadPersonalLookUpObj.pagingJson = "./assets/uclookup/lookupLeadPersonal.json";
     this.leadPersonalLookUpObj.genericJson = "./assets/uclookup/lookupLeadPersonal.json";
+    if(this.user.MrOfficeTypeCode != "CG" && this.user.MrOfficeTypeCode != CommonConstant.HeadOffice){
+      this.critObj.restriction = AdInsConstant.RestrictionEq;
+      this.critObj.propName = 'L.ORI_OFFICE_CODE';
+      this.critObj.value = this.user.OfficeCode;
+      this.arrCrit.push(this.critObj);
+      this.leadPersonalLookUpObj.addCritInput = this.arrCrit;
+    }
 
     this.agencyLookUpObj = new InputLookupObj();
     this.agencyLookUpObj.isRequired = false;
@@ -354,9 +341,6 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.salesNameLookUpObj.isRequired = true;
   }
   OfficeChanged(event) {
-    // this.MainInfoForm.patchValue({
-    //   OfficeName: this.listRefOffice.find(x => x.Key == event.target.value).Value
-    // });
     this.MainInfoForm.patchValue({
       OfficeCode: event.target.selectedOptions[0].value,
       OfficeName: event.target.selectedOptions[0].text,
@@ -371,13 +355,9 @@ export class LeadInputMainInfoComponent implements OnInit {
 
   GetOfficeDDL() {
     this.refOfficeObj = new RefOfficeObj();
-    this.http.post(this.getListRefOffice, this.refOfficeObj).subscribe(
+    this.http.post(URLConstant.GetListKvpActiveRefOfficeForPaging, this.refOfficeObj).subscribe(
       (response) => {
         this.listRefOffice = response[CommonConstant.ReturnObj];
-        // this.MainInfoForm.patchValue({
-        //   OfficeCode: response[CommonConstant.ReturnObj][0]['Key'],
-        //   OfficeName: response[CommonConstant.ReturnObj][0]['Value']
-        // });
 
         if (this.user.MrOfficeTypeCode == "CG" || this.user.MrOfficeTypeCode == CommonConstant.HeadOffice) {
           this.MainInfoForm.patchValue({
@@ -385,7 +365,6 @@ export class LeadInputMainInfoComponent implements OnInit {
             OfficeCode: this.listRefOffice[0].Key,
             OfficeName: this.listRefOffice[0].Value,
           });
-          // this.MainInfoForm.controls.OfficeCode.setValidators([Validators.required]);    
         }
         else {
           this.MainInfoForm.controls.OfficeCode.disable();
@@ -398,85 +377,62 @@ export class LeadInputMainInfoComponent implements OnInit {
       });
   }
 
-
-  setLead() {
-    this.leadObj.LeadNo = "0";
-    this.leadObj.LeadCopyId = this.leadIdExist;
-    this.leadObj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
-    // this.leadObj.OriOfficeName = this.MainInfoForm.controls["OfficeName"].value;
-    this.leadObj.CrtOfficeCode = this.MainInfoForm.controls["CrtOfficeCode"].value;
-    this.leadObj.LeadDt = new Date();
-    this.leadObj.OrderNo = this.MainInfoForm.controls["OrderNo"].value;
-    this.leadObj.LobCode = this.MainInfoForm.controls["LobCode"].value;
-    this.leadObj.MrLeadSourceCode = this.MainInfoForm.controls["LeadSource"].value;
-    this.leadObj.LeadStat = CommonConstant.LeadStatNew;
-    this.leadObj.LeadStep = CommonConstant.LeadStatNew;
-    this.leadObj.AgencyCode = this.tempAgencyCode;
-    this.leadObj.CmoUsername = this.tempCmoUsername;
-    this.leadObj.SurveyorUsername = this.tempSurveyorUsername;
-    this.leadObj.TeleMarketingUsername = this.tempSalesUsername;
+  setLeadObj(obj: any) {
+    obj.LeadCopyId = this.leadIdExist;
+    obj.OriOfficeCode = this.MainInfoForm.controls["OfficeCode"].value;
+    obj.CrtOfficeCode = this.MainInfoForm.controls["CrtOfficeCode"].value;
+    obj.LeadDt = new Date();
+    obj.OrderNo = this.MainInfoForm.controls["OrderNo"].value;
+    obj.LobCode = this.MainInfoForm.controls["LobCode"].value;
+    obj.MrLeadSourceCode = this.MainInfoForm.controls["LeadSource"].value;
+    obj.LeadStat = CommonConstant.LeadStatNew;
+    obj.LeadStep = CommonConstant.LeadStatNew;
+    obj.AgencyCode = this.tempAgencyCode;
+    obj.CmoUsername = this.tempCmoUsername;
+    obj.SurveyorUsername = this.tempSurveyorUsername;
+    obj.TeleMarketingUsername = this.tempSalesUsername;
   }
 
-  SaveForm() {
+  SaveForm(isNext: boolean = false) {
     if (this.MainInfoForm.valid) {
       if (this.pageType == "edit" || this.pageType == "update") {
-        this.leadObj = new LeadObj();
-        this.leadObj.LeadId = this.LeadId;
-        this.leadObj.RowVersion = this.returnLead.RowVersion;
-        this.setLead();
-        this.http.post(this.editLead, this.leadObj).subscribe(
+        this.editLeadObj.LeadId = this.LeadId;
+        this.editLeadObj.RowVersion = this.returnLead.RowVersion;
+        this.setLeadObj(this.editLeadObj);
+        this.http.post(URLConstant.EditLead, this.editLeadObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            if (this.pageType == "edit"){
-              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_INPUT_PAGE],{ "LeadId": this.LeadId, "mode": this.pageType });
+            if(isNext){
+              if (this.pageType == "edit") {
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_INPUT_PAGE], { "LeadId": this.LeadId, "mode": this.pageType });
+              }
+              else {
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_INPUT_PAGE], { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId });
+              }
             }
             else{
-              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_INPUT_PAGE],{ "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId });
+              if (this.pageType == "edit") {
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_PAGING], {});
+              }
+              else {
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_UPDATE_PAGING], {});
+              }
             }
           }
         );
       } else {
-        this.leadObj = new LeadObj();
-        this.setLead();
-        this.http.post(this.addLead, this.leadObj).subscribe(
+        this.setLeadObj(this.addLeadObj);
+        this.http.post(URLConstant.AddLead, this.addLeadObj).subscribe(
           (response) => {
             this.responseLead = response;
-            this.LeadId = this.responseLead.LeadId;
+            this.LeadId = this.responseLead.Id;
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_INPUT_PAGE],{ "LeadId": this.LeadId, "CopyFrom": this.leadIdExist });
-          }
-        );
-      }
-    }
-  }
-
-  save() {
-    if (this.MainInfoForm.valid) {
-      if (this.pageType == "edit" || this.pageType == "update") {
-        this.leadObj = new LeadObj();
-        this.leadObj.LeadId = this.LeadId;
-        this.leadObj.RowVersion = this.returnLead.RowVersion;
-        this.setLead();
-        this.http.post(this.editLead, this.leadObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            if(this.pageType == "edit"){
-              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_PAGING],{});
+            if(isNext){
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_INPUT_PAGE], { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist });
             }
             else{
-              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_UPDATE_PAGING],{});
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_PAGING], {});
             }
-          }
-        );
-      } else {
-        this.leadObj = new LeadObj();
-        this.setLead();
-        this.http.post(this.addLead, this.leadObj).subscribe(
-          (response) => {
-            this.responseLead = response;
-            this.LeadId = this.responseLead.LeadId;
-            this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_PAGING],{});
           }
         );
       }

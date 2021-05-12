@@ -22,9 +22,15 @@ import { AppAssetAttrCustomObj } from 'app/shared/model/AppAsset/AppAssetAttrCus
 import { AppAssetAttrObj } from 'app/shared/model/AppAssetAttrObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { String } from 'typescript-string-operations';
 import { CustomPatternObj } from 'app/shared/model/library/CustomPatternObj.model';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
+import { ResGetVendorEmpSpvByEmpNoObj, ResGetVendorEmpByVendorIdAndEmpNoObj } from 'app/shared/model/Response/VendorEmp/ResVendorEmp.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj } from 'app/shared/model/Request/Vendor/ReqVendorEmp.model';
+import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
+import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
+import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 
 @Component({
   selector: 'app-asset-data',
@@ -241,9 +247,9 @@ export class AssetDataComponent implements OnInit {
   AddrResidenceObj: any;
   appAssetObj: any;
   DistrictObj: any;
-  VendorEmpSalesObj: any;
-  VendorAdminHeadObj: any;
-  VendorEmpBMObj: any;
+  VendorEmpSalesObj: ResGetVendorEmpByVendorIdAndEmpNoObj;
+  VendorAdminHeadObj: ResGetVendorEmpByVendorIdAndEmpNoObj;
+  VendorEmpBMObj: ResGetVendorEmpByVendorIdAndEmpNoObj;
   AppCustObj: any;
   RefProdCmptAssetType: any;
   RefProdCmptAssetCond: any;
@@ -286,7 +292,7 @@ export class AssetDataComponent implements OnInit {
   inputAddressObjForLoc: InputAddressObj;
   isDiffWithRefAttr: any;
 
-  generalSettingObj: GeneralSettingObj = new GeneralSettingObj();
+  generalSettingObj: GenericListByCodeObj = new GenericListByCodeObj();
   IntegratorCheckBySystemGsValue: string = "1";
   IsUseDigitalization: string;
   SerialNoRegex: string;
@@ -360,11 +366,11 @@ export class AssetDataComponent implements OnInit {
     }
 
     this.GenerataAppAssetAttr(false);
-    var appObj = {
-      ProdOfferingCode: this.AppObj.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefProdCompntAssetCond,
-      ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
-    };
+    var appObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    appObj.ProdOfferingCode = this.AppObj.ProdOfferingCode,
+    appObj.RefProdCompntCode = CommonConstant.RefProdCompntAssetCond,
+    appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion,
+
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
       (response) => {
         this.RefProdCmptAssetCond = response;
@@ -376,9 +382,9 @@ export class AssetDataComponent implements OnInit {
       }
     );
     
-    await this.http.post(URLConstant.GetGeneralSettingByCode, {Code: CommonConstant.GSSerialNoRegex}).toPromise().then(
-      (response) => {
-        this.SerialNoRegex = response["GsValue"];
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, {Code: CommonConstant.GSSerialNoRegex}).toPromise().then(
+      (response: GeneralSettingObj) => {
+        this.SerialNoRegex = response.GsValue;
 
         let obj: CustomPatternObj = {
           pattern: this.SerialNoRegex,
@@ -614,16 +620,17 @@ export class AssetDataComponent implements OnInit {
   }
 
   async GetGS() {
-    this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
+    this.generalSettingObj = new GenericListByCodeObj();
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
 
-    await this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
+    await this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
       (response) => {
-        var returnGeneralSettingObj = response;
+        var returnGeneralSettingObj: Array<ResGeneralSettingObj> = new Array<ResGeneralSettingObj>();
+        returnGeneralSettingObj = response['ResGetListGeneralSettingObj'];
 
-        var gsNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
-        var gsUseDigitalization = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        var gsNeedCheckBySystem = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
 
         if (gsNeedCheckBySystem != undefined) {
           this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
@@ -996,27 +1003,6 @@ export class AssetDataComponent implements OnInit {
             this.AssetDataForm.controls.DownPaymentAmt.enable();
           }
         }
-        // if (this.SetDpObj.DPGrossBehaviour == 'MIN') {
-        //   var tempDP = this.AssetDataForm.controls.AssetPriceAmt.value * this.SetDpObj.GrossDPPrctg / 100;
-        //   if (this.AssetDataForm.controls.DownPaymentAmt.value < tempDP) {
-        //     this.AssetDataForm.patchValue({
-        //       DownPaymentAmt: tempDP,
-        //       DownPaymentPrctg: this.SetDpObj.GrossDPPrctg
-        //     });
-        //   }
-        //   else {
-        //     if (this.AssetDataForm.controls.AssetPriceAmt.value != 0) {
-        //       this.AssetDataForm.patchValue({
-        //         DownPaymentPrctg: this.AssetDataForm.controls.DownPaymentAmt.value * 100 / this.AssetDataForm.controls.AssetPriceAmt.value
-        //       });
-        //     }
-        //     else {
-        //       this.AssetDataForm.patchValue({
-        //         DownPaymentPrctg: 0
-        //       });
-        //     }
-        //   }
-        // }
       });
   }
 
@@ -2002,11 +1988,11 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetProdOfferingAssetCond() {
-    var obj = {
-      ProdOfferingCode: this.AppObj.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefProdCompAssetCond,
-      ProdOfferingVersion: this.AppObj.ProdOfferingVersion
-    };
+    var obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    obj.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+    obj.RefProdCompntCode = CommonConstant.RefProdCompAssetCond;
+    obj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {
         this.assetCondObj = response;
@@ -2041,21 +2027,25 @@ export class AssetDataComponent implements OnInit {
           SupplName: this.VendorObj.VendorName,
           SupplCode: this.VendorObj.VendorCode,
         });
-        this.vendorEmpSalesObj.VendorId = this.VendorObj.VendorId;
-        this.vendorEmpAdminObj.VendorId = this.VendorObj.VendorId;
-        this.vendorEmpBMObj.VendorId = this.VendorObj.VendorId;
         if (this.appAssetObj.ResponseAdminHeadSupp != null) {
-          this.vendorEmpAdminObj.VendorEmpNo = this.appAssetObj.ResponseAdminHeadSupp.SupplEmpNo;
-          this.GetVendorEmpAdminHead();
+          let GetVendorEmpAdminHead : GenericObj = new GenericObj();
+          GetVendorEmpAdminHead.Id = this.VendorObj.VendorId;
+          GetVendorEmpAdminHead.Code = this.appAssetObj.ResponseAdminHeadSupp.SupplEmpNo;
+          this.GetVendorEmpAdminHead(GetVendorEmpAdminHead);
         }
         if (this.appAssetObj.ResponseSalesPersonSupp != null) {
-          this.vendorEmpSalesObj.VendorEmpNo = this.appAssetObj.ResponseSalesPersonSupp.SupplEmpNo;
-          this.GetVendorEmpSalesPerson();
+          let GetVendorEmpSales : GenericObj = new GenericObj();
+          GetVendorEmpSales.Id = this.VendorObj.VendorId;
+          GetVendorEmpSales.Code = this.appAssetObj.ResponseSalesPersonSupp.SupplEmpNo;
+          this.GetVendorEmpSalesPerson(GetVendorEmpSales);
         }
         if (this.appAssetObj.ResponseBranchManagerSupp != null) {
-          this.vendorEmpBMObj.VendorEmpNo = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpNo;
-          this.GetVendorEmpSalesPerson();
+          let GetVendorEmpBM : GenericObj = new GenericObj();
+          GetVendorEmpBM.Id = this.VendorObj.VendorId;
+          GetVendorEmpBM.Code = this.appAssetObj.ResponseBranchManagerSupp.SupplEmpNo;
+          this.GetVendorEmpBM(GetVendorEmpBM);
         }
+
         this.vendorObj.VendorId = this.VendorObj.VendorId;
         this.GetVendorEmpList();
         this.InputLookupSupplierObj.jsonSelect = this.VendorObj;
@@ -2078,8 +2068,8 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  GetVendorEmpSalesPerson() {
-    this.http.post(URLConstant.GetVendorEmpByVendorIdVendorEmpNo, this.vendorEmpSalesObj).subscribe(
+  GetVendorEmpSalesPerson(ReqGetVendorEmpSales : GenericObj) {
+    this.http.post<ResGetVendorEmpByVendorIdAndEmpNoObj>(URLConstant.GetVendorEmpByVendorIdVendorEmpNo, ReqGetVendorEmpSales).subscribe(
       (response) => {
         this.VendorEmpSalesObj = response;
         this.AssetDataForm.patchValue({
@@ -2090,8 +2080,8 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  GetVendorEmpAdminHead() {
-    this.http.post(URLConstant.GetVendorEmpByVendorIdVendorEmpNo, this.vendorEmpAdminObj).subscribe(
+  GetVendorEmpAdminHead(ReqGetVendorEmpAdminHead : GenericObj) {
+    this.http.post<ResGetVendorEmpByVendorIdAndEmpNoObj>(URLConstant.GetVendorEmpByVendorIdVendorEmpNo, ReqGetVendorEmpAdminHead).subscribe(
       (response) => {
         this.VendorAdminHeadObj = response;
         this.AssetDataForm.patchValue({
@@ -2101,8 +2091,8 @@ export class AssetDataComponent implements OnInit {
     );
   }
 
-  GetVendorEmpBM() {
-    this.http.post(URLConstant.GetVendorEmpByVendorIdVendorEmpNo, this.vendorEmpBMObj).subscribe(
+  GetVendorEmpBM(ReqGetVendorEmpBM: GenericObj) {
+    this.http.post<ResGetVendorEmpByVendorIdAndEmpNoObj>(URLConstant.GetVendorEmpByVendorIdVendorEmpNo, ReqGetVendorEmpBM).subscribe(
       (response) => {
         this.VendorEmpBMObj = response;
         this.AssetDataForm.patchValue({
@@ -2113,7 +2103,10 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetVendorEmpList() {
-    this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, this.vendorObj).subscribe(
+    let ReqGetListActiveVendor : ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj = new ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj;
+    ReqGetListActiveVendor.VendorId = this.vendorObj.VendorId;
+    ReqGetListActiveVendor.MrVendorEmpPositionCodes = this.vendorObj.MrVendorEmpPositionCodes;
+    this.http.post(URLConstant.GetListActiveVendorEmpByVendorIdAndPositionCodes, ReqGetListActiveVendor).subscribe(
       (response) => {
         this.EmpObj = response[CommonConstant.ReturnObj];
 
@@ -2361,7 +2354,9 @@ export class AssetDataComponent implements OnInit {
   }
 
   GetVendorEmpSupervisi() {
-    this.http.post(URLConstant.GetVendorEmpSupervisorByVendorEmpNo, { TrxNo: this.vendorEmpObj.VendorEmpNo }).subscribe(
+    let ReqGerVendorEmpSpvByVendorEmpNo : GenericObj = new GenericObj();
+    ReqGerVendorEmpSpvByVendorEmpNo.EmpNo = this.vendorEmpObj.VendorEmpNo;
+    this.http.post<ResGetVendorEmpSpvByEmpNoObj>(URLConstant.GetVendorEmpSupervisorByVendorEmpNo, ReqGerVendorEmpSpvByVendorEmpNo).subscribe(
       (response) => {
         this.BranchManagerObj = response;
         if (this.BranchManagerObj.VendorEmpName != null) {
@@ -2533,34 +2528,34 @@ export class AssetDataComponent implements OnInit {
   }
 
   async GetRefProdCompt() {
-    var appObj = {
-      ProdOfferingCode: this.AppObj.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefProdCompntAssetType,
-      ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
-    };
+    var appObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    appObj.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+    appObj.RefProdCompntCode = CommonConstant.RefProdCompntAssetType;
+    appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
       (response) => {
         this.RefProdCmptAssetType = response;
       }
     );
 
-    appObj = {
-      ProdOfferingCode: this.AppObj.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefProdCompntSupplSchm,
-      ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
-    };
-    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
+    var appObj2: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    appObj2.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+    appObj2.RefProdCompntCode = CommonConstant.RefProdCompntSupplSchm;
+    appObj2.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj2).toPromise().then(
       (response) => {
         this.RefProdCmptSupplSchm = response;
       }
     );
 
-    appObj = {
-      ProdOfferingCode: this.AppObj.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefProdCompntAssetSchm,
-      ProdOfferingVersion: this.AppObj.ProdOfferingVersion,
-    };
-    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
+    var appObj3: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    appObj3.ProdOfferingCode = this.AppObj.ProdOfferingCode;
+    appObj3.RefProdCompntCode = CommonConstant.RefProdCompntAssetSchm;
+    appObj3.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
+
+    await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj3).toPromise().then(
       (response) => {
         this.RefProdCmptAssetSchm = response;
       }

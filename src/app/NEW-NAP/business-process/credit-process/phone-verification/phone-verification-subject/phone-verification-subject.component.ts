@@ -15,6 +15,9 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { ReqGetVerfResultObj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
 
 @Component({
   selector: "phone-verification-subject",
@@ -22,14 +25,6 @@ import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandli
   providers: [NGXToastrService]
 })
 export class PhoneVerificationSubjectComponent implements OnInit {
-
-
-  getPhoneVerifSubjUrl: any;
-  getVerfResultUrl: any;
-  getAppUrl: any;
-  addVerfResultUrl: any;
-  rtnHandlingDUrl: any;
-  editRtnHandlingDUrl: any;
 
   isReturnHandling: boolean = false;
 
@@ -53,7 +48,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     Id:0
   };
 
-  verfResObj =
+  verfResObj: ReqGetVerfResultObj =
     {
       TrxRefNo: "",
       MrVerfTrxTypeCode: CommonConstant.VerfTrxTypeCodePhn,
@@ -68,7 +63,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   scsCount: number = 0;
   blankCount: number = 0;
   addVerifResultObj: VerfResultObj;
-  returnHandlingDObj: any;
+  returnHandlingDObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   ReturnHandlingDData: ReturnHandlingDObj;
   ReturnHandlingHData: ReturnHandlingHObj;
   OnFormReturnInfo: boolean = false;
@@ -91,22 +86,12 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     });
   }
 
-  initUrl() {
-    this.getPhoneVerifSubjUrl = URLConstant.GetAppPhoneVerifSubjectListByAppId;
-    this.getAppUrl = URLConstant.GetAppById;
-    this.getVerfResultUrl = URLConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode;
-    this.addVerfResultUrl = URLConstant.AddVerfResult;
-    this.rtnHandlingDUrl = URLConstant.GetReturnHandlingDByReturnHandlingDId;
-    this.editRtnHandlingDUrl = URLConstant.EditReturnHandlingD;
-  }
-
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
 
     if (this.wfTaskListId != null || this.wfTaskListId != undefined)
       this.claimTask();
 
-    this.initUrl();
     this.appObj.AppId = this.appId;
     this.appObj.Id = this.appId;
     await this.GetAppData();
@@ -134,7 +119,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       }
       if (this.isReturnHandling == true) {
         this.setReturnHandlingD();
-        this.http.post(this.editRtnHandlingDUrl, this.ReturnHandlingDData).subscribe(
+        this.http.post(URLConstant.EditReturnHandlingD, this.ReturnHandlingDData).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_PHN_VRF_PAGING], { "BizTemplateCode": this.BizTemplateCode });
@@ -184,7 +169,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   async GetAppData() {
     var appObj = { Id: this.appId };
-    await this.http.post(this.getAppUrl, appObj).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
       (response) => {
 
         this.AppObj = response;
@@ -196,19 +181,18 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   MakeViewReturnInfoObj() {
     if (this.returnHandlingHId > 0) {
-      var obj = {
-        ReturnHandlingHId: this.returnHandlingHId,
-        MrReturnTaskCode: CommonConstant.ReturnHandlingAddPhnVerf
-      }
-      this.http.post<ReturnHandlingDObj>(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, obj).subscribe(
-        (response) => {
+      let ReqByIdAndCodeObj = new GenericObj();
+      ReqByIdAndCodeObj.Id = this.returnHandlingHId;
+      ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingAddPhnVerf;
+      this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
+        (response : ResReturnHandlingDObj) => {
           this.returnHandlingDObj = response;
         });
     }
   }
 
   GetPhnVerfSubjData() {
-    this.http.post(this.getPhoneVerifSubjUrl, this.appObj).subscribe(
+    this.http.post(URLConstant.GetAppPhoneVerifSubjectListByAppId, this.appObj).subscribe(
       (response) => {
         this.phoneVerifObj = response[CommonConstant.ReturnObj];
         this.tempBlank = this.phoneVerifObj.filter(
@@ -226,7 +210,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   }
 
   async GetVerfResultData() {
-    await this.http.post(this.getVerfResultUrl, this.verfResObj).toPromise().then(
+    await this.http.post(URLConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode, this.verfResObj).toPromise().then(
       (response) => {
         this.verifResultObj = response;
 
@@ -249,23 +233,12 @@ export class PhoneVerificationSubjectComponent implements OnInit {
       this.addVerifResultObj.LobName = this.AppObj.LobCode;
       this.addVerifResultObj.Notes = "-";
 
-      await this.http.post(this.addVerfResultUrl, this.addVerifResultObj).toPromise().then(
+      await this.http.post(URLConstant.AddVerfResult, this.addVerifResultObj).toPromise().then(
         () => {
         }
       );
     }
-  }
-
-  async GetReturnHandlingD() {
-    this.rtnHandlingDObj.ReturnHandlingDId = this.returnHandlingHId;
-    this.rtnHandlingDObj.Id = this.returnHandlingHId;
-    await this.http.post(this.rtnHandlingDUrl, this.rtnHandlingDObj).toPromise().then(
-      (response) => {
-        this.returnHandlingDObj = response;
-
-      }
-    );
-  }
+  }  
 
   View(VerifResultHid, SubjectName) {
     var link = environment.losR3Web + "/Nap/CreditProcess/PhoneVerification/Subject/View?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName;

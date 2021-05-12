@@ -85,8 +85,8 @@
                 <span class="bs-stepper-label">Term & Conditions</span>
               </button>
             </div>
-            <div class="line" *ngIf="SysConfigResultObj?.ConfigValue == 1"></div>
-            <div class="step" data-target="#upload-tab" *ngIf="SysConfigResultObj?.ConfigValue == 1">
+            <div class="line" [hidden]="SysConfigResultObj?.ConfigValue == 0"></div>
+            <div class="step" data-target="#upload-tab" [hidden]="SysConfigResultObj?.ConfigValue == 0">
               <button type="button" class="step-trigger" role="tab" aria-controls="upload-tab" id="upload-tab-trigger"
                       [disabled]="!(AppStepIndex >= 7)" (click)="ChangeTab('UPL_DOC')">
                 <span class="bs-stepper-circle">7</span>

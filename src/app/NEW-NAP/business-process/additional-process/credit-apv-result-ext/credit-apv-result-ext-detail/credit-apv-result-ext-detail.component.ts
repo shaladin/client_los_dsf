@@ -55,12 +55,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   }
 
   GetMainData() {
-
-    var RequestMainDataObj = {
-      AppId: this.AppId,
-      AgrmntId: this.AgrmntId
-    }
-    this.http.post(URLConstant.GetCreditApvResultExtMainData, RequestMainDataObj).subscribe(
+    this.http.post(URLConstant.GetCreditApvResultExtMainData, {AppId: this.AppId, AgrmntId: this.AgrmntId}).subscribe(
       response => {
         this.CrdApvMainDataObj = response;
         this.CrdApvRestExtForm.patchValue({

@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 
@@ -13,28 +12,24 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
   templateUrl: './cust-confirmation-paging.component.html'
 })
 export class CustConfirmationPagingComponent implements OnInit {
-
-  inputPagingObj: any;
+  inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit = [];
-  bizTemplateCode :any;
+  bizTemplateCode: string;
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
         this.bizTemplateCode = params["BizTemplateCode"];
-        localStorage.setItem("BizTemplateCode",this.bizTemplateCode);
+        localStorage.setItem("BizTemplateCode", this.bizTemplateCode);
       }
-      else{
+      else {
         this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
       }
     });
   }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchCustConfirmation.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCustConfirmation.json";
     this.inputPagingObj.ddlEnvironments = [
       {
@@ -58,9 +53,9 @@ export class CustConfirmationPagingComponent implements OnInit {
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
 
-  GetCallBack(ev: any){
-    if(ev.Key == "ViewProdOffering"){
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion); 
+  GetCallBack(ev: any) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
   }
 

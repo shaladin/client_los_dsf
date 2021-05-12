@@ -1,0 +1,55 @@
+<div class="card-body">
+  <div class="px-3">
+    <form class="form form-horizontal" [formGroup]="FormProdComp" #enjiForm="ngForm" (ngSubmit)="FormProdComp.valid && SubmitForm()">
+      <div class="col-md-12" formArrayName="groups"
+        *ngFor="let type of FormProdComp.controls['groups'].controls; let j = index">
+        <div class="form-group row" [formGroupName]="j">
+          <div class="col-md-12">
+            <h4 class="form-section">{{FormProdComp.controls['groups'].value[j].groupName}}</h4>
+          </div>
+          <div class="col-md-12" formArrayName="components"
+            *ngFor="let node of type.controls['components'].controls; let l = index">
+            <div class="form-group row" [formGroupName]="l">
+              <div class="col-md-4 adins-required">
+                <label class="">{{type.controls['components'].value[l].ProdCompntName}}</label>
+              </div>
+              <div class="col-md-5" *ngIf="type.controls['components'].value[l].ProdCompntType == 'DDL'">
+                  <select formControlName="CompntValue" class="form-control width-75-per" style="margin-right:0px;"
+                          (change)="onChangeEvent(type.controls['components'].value[l].RefProdCompntCode,$event,l,j);">
+                    <option *ngFor="let m of dictOptions[type.controls['components'].value[l].RefProdCompntCode]"
+                            value={{m.Key}}>
+                      {{m.Value}}
+                    </option>
+                  </select>
+                  <lib-uc-show-errors [control]="node.controls.CompntValue" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+              </div>
+              <div class="col-md-5" *ngIf="type.controls['components'].value[l].ProdCompntType == 'AMT'">
+                <input type="text" class="form-control adInsInput width-75-per" formControlName="CompntValue">
+                <lib-uc-show-errors [control]="node.controls.CompntValue" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
+              <span class="material-icons col-md-1 pointer" style="border-right: 1px solid grey; cursor: pointer;" *ngIf="FormProdComp.controls['groups'].value[j].groupCode == 'RULE' || FormProdComp.controls['groups'].value[j].groupCode == 'SCORE'" (click)="DownloadRule(type.controls['components'].value[l].CompntValue,type.controls['components'].value[l].CompntValueDesc)">
+                get_app
+              </span>
+              <label class="col-md-1" *ngIf="FormProdComp.controls['groups'].value[j].groupCode != 'RULE' && FormProdComp.controls['groups'].value[j].groupCode != 'SCORE'" style="border-right: 1px solid grey"> </label>
+              <div class="col-md-2">
+                <select formControlName="MrProdBehaviour" class="form-control">
+                  <option *ngFor="let m of dictBehaviour[type.controls['components'].value[l].BehaviourType]" value={{m.Key}}>{{m.Value}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions right">
+        <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+          <i class="far fa-window-close"></i> Cancel
+        </button>
+        <button type="submit" (click)="ClickSave('next')" class="btn btn-raised btn-primary">
+          <i class="far fa-check-square"></i> Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

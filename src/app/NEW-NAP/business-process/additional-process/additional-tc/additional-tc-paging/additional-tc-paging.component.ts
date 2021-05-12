@@ -2,10 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-additional-tc-paging',
@@ -28,10 +26,8 @@ export class AdditionalTcPagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/new-nap/business-process/additional-process/search-additional-tc-paging.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/new-nap/business-process/additional-process/search-additional-tc-paging.json";
-    
+
     this.inputPagingObj.addCritInput = new Array();
     var critLobObj = new CriteriaObj();
     critLobObj.restriction = AdInsConstant.RestrictionEq;
@@ -41,16 +37,16 @@ export class AdditionalTcPagingComponent implements OnInit {
 
     this.isReady = true;
   }
-  
+
   getEvent(event: any) {
-    if(event.Key === "Application") {
+    if (event.Key === "Application") {
       AdInsHelper.OpenAppViewByAppId(event.RowObj.AppId);
     }
-    else if(event.Key === "Agreement") {
+    else if (event.Key === "Agreement") {
       AdInsHelper.OpenAgrmntViewByAgrmntId(event.RowObj.AgrmntId);
     }
-    else if(event.Key === "Product") {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.RowObj.ProdOfferingCode,event.RowObj.ProdOfferingVersion); 
+    else if (event.Key === "Product") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(event.RowObj.ProdOfferingCode, event.RowObj.ProdOfferingVersion);
     }
   }
 }

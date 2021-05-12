@@ -11,6 +11,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ReqGetMouCustDuplicateObj } from 'app/shared/model/Request/MOU/ReqGetMouCustDuplicateObj.model';
 
 @Component({
   selector: 'app-existing-mou-personal',
@@ -22,10 +23,6 @@ export class ExistingMouPersonalComponent implements OnInit {
   MouCustId: number;
   WfTaskListId: number;
   FondationUrl = environment.FoundationR3Url;
-  LOSUrl = environment.losUrl;
-  GetAppGuarantorDuplicateCheckUrl = this.LOSUrl + URLConstant.GetAppGuarantorDuplicateCheck;
-  GetSpouseDuplicateCheckUrl = this.LOSUrl + URLConstant.GetSpouseDuplicateCheck;
-  GetAppShareholderDuplicateCheckUrl = this.LOSUrl + URLConstant.GetAppShareholderDuplicateCheck;
   MouCustObj: MouCustObj;
   MouCustPersonalObj: MouCustPersonalObj;
   ListDuplicateAppGuarantor: any;
@@ -89,52 +86,50 @@ export class ExistingMouPersonalComponent implements OnInit {
 
         this.RowVersion = response['MouCustObj'].RowVersion;
         this.MouCustPersonalObj = response['MouCustPersonalObj'];
-
-        var requestDupCheck = {
-          "CustName": this.MouCustObj.CustName,
-          "MrCustTypeCode": this.MouCustObj.MrCustTypeCode,
-          "MrCustModelCode": this.MouCustObj.CustModelCode,
-          "MrIdTypeCode": this.MouCustObj.MrIdTypeCode,
-          "IdNo": this.MouCustObj.IdNo,
-          "TaxIdNo": this.MouCustObj.TaxIdNo,
-          "BirthDt": this.MouCustPersonalObj.BirthDt,
-          "MotherMaidenName": this.MouCustPersonalObj.MotherMaidenName,
-          "MobilePhnNo1": this.MouCustPersonalObj.MobilePhnNo1,
-          "RowVersion": this.RowVersion
-        }
+        
+        var ReqDupCheckObj = new ReqGetMouCustDuplicateObj();
+        ReqDupCheckObj.CustName =  this.MouCustObj.CustName;
+        ReqDupCheckObj.MrCustTypeCode = this.MouCustObj.MrCustTypeCode;
+        ReqDupCheckObj.MrCustModelCode = this.MouCustObj.CustModelCode;
+        ReqDupCheckObj.MrIdTypeCode = this.MouCustObj.MrIdTypeCode;
+        ReqDupCheckObj.IdNo = this.MouCustObj.IdNo;
+        ReqDupCheckObj.TaxIdNo =  this.MouCustObj.TaxIdNo;
+        ReqDupCheckObj.BirthDt =  this.MouCustPersonalObj.BirthDt;
+        ReqDupCheckObj.MobilePhnNo1 = this.MouCustPersonalObj.MobilePhnNo1;
+        ReqDupCheckObj.RowVersion = this.RowVersion;
 
         //List App guarantor Checking
-        this.http.post(this.GetAppGuarantorDuplicateCheckUrl, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetAppGuarantorDuplicateCheck, ReqDupCheckObj).subscribe(
           response => {
             this.ListDuplicateAppGuarantor = response['ReturnObject'];
           });
 
         //List Spouse Duplicate Checking
-        this.http.post(this.GetSpouseDuplicateCheckUrl, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetSpouseDuplicateCheck, ReqDupCheckObj).subscribe(
           response => {
             this.ListDuplicateAppSpouse = response['ReturnObject'];
           });
 
         //List App Shareholder Duplicate Checking
-        this.http.post(this.GetAppShareholderDuplicateCheckUrl, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetAppShareholderDuplicateCheck, ReqDupCheckObj).subscribe(
           response => {
             this.ListDuplicateAppShareholder = response['ReturnObject'];
           });
 
         //List Mou Guarantor Checking
-        this.http.post(URLConstant.GetMouGuarantorDuplicateCheck, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetMouGuarantorDuplicateCheck, ReqDupCheckObj).subscribe(
           response => {
             this.ListDuplicateMouGuarantor = response['ReturnObject'];
           });
 
         //List Spouse Duplicate Checking
-        this.http.post(URLConstant.GetMouSpouseDuplicateCheck, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetMouSpouseDuplicateCheck, ReqDupCheckObj).subscribe(
           response => {
             this.ListDuplicateMouSpouse = response['ReturnObject'];
           });
 
         //List Mou Shareholder Duplicate Checking
-        this.http.post(URLConstant.GetMouShareholderDuplicateCheck, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetMouShareholderDuplicateCheck, ReqDupCheckObj).subscribe(
           response => {
             this.ListDuplicateMouShareholder = response['ReturnObject'];
           });

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, ViewChild, Input, EventEmitter } from '@angular/core';
-import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { Validators, FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
@@ -27,6 +27,8 @@ import { AppCollateralAttrCustomObj } from 'app/shared/model/AppCollateralAttrCu
 import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { String } from 'typescript-string-operations';
+import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
+import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 
 @Component({
   selector: 'app-collateral-data-cfna-detail',
@@ -121,7 +123,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   inputAddressObjForOwner: InputAddressObj;
   inputAddressObjForLoc: InputAddressObj;
   isDiffWithRefAttr: boolean = false;
-  generalSettingObj: any;
+  generalSettingObj: GenericListByCodeObj;
   IntegratorCheckBySystemGsValue: string = "1";
   IsUseDigitalization: string;
   currentChassisNo: string = "";
@@ -460,107 +462,6 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
         }
       });
   }
-
-  // getAppCollData(AppId: number = 0, AppCollateralId: number = 0, IsExisting: boolean = false) {
-  //   this.http.post(URLConstant.GetAppCollateralAndRegistrationByAppCollateralId, { AppId: AppId, AppCollateralId: AppCollateralId }).subscribe(
-  //     (response) => {
-  //       this.appCollateralObj = response['AppCollateral'];
-  //       this.collateralRegistrationObj = response['AppCollateralRegistration'];
-  //       if (!IsExisting) {
-  //         if (this.appCollateralObj.AppCollateralId != 0) {
-  //           this.mode = "edit";
-  //           // if(this.collateralRegistrationObj.MrUserRelationshipCode == 'SELF'){
-  //           //   this.AddCollForm.controls.UserName.disable();
-  //           //   this.AddCollForm.controls.MrUserRelationshipCode.disable();
-  //           // }
-  //         } else {
-  //           if (this.mode = "add") {
-  //             this.editAppCollateralObj = response['AppCollateral'];
-  //             this.editCollateralRegistrationObj = response['AppCollateralRegistration'];
-  //             this.AddCollForm.patchValue({
-  //               CollateralStat: "NEW"
-  //             });
-  //           }
-  //           return true;
-  //         }
-  //         this.editAppCollateralObj = response['AppCollateral'];
-  //         this.editCollateralRegistrationObj = response['AppCollateralRegistration'];
-  //         this.AddCollForm.patchValue({
-  //           CollateralStat: this.editAppCollateralObj.CollateralStat
-  //         });
-  //       } else {
-  //         this.AddCollForm.patchValue({
-  //           CollateralStat: "EXISTING"
-  //         });
-  //       }
-
-  //       if (this.appCollateralObj.AppCollateralId == 0) {
-  //         return true;
-  //       } else {
-  //         if (this.isSingleAsset) {
-  //           this.mode = "edit";
-  //         }
-  //       }
-
-  //       this.AddCollForm.patchValue({
-  //         AssetTypeCode: this.appCollateralObj.AssetTypeCode,
-  //         FullAssetCode: this.appCollateralObj.FullAssetCode,
-  //         AssetCategoryCode: this.appCollateralObj.AssetCategoryCode,
-  //         MrCollateralConditionCode: this.appCollateralObj.MrCollateralConditionCode,
-  //         MrCollateralUsageCode: this.appCollateralObj.MrCollateralUsageCode,
-  //         CollateralValueAmt: this.appCollateralObj.CollateralValueAmt,
-  //         CollateralNotes: this.appCollateralObj.CollateralNotes,
-  //         AssetTaxDt: formatDate(this.appCollateralObj.AssetTaxDt, 'yyyy-MM-dd', 'en-US'),
-  //         CollateralPrcnt: this.appCollateralObj.CollateralPrcnt,
-  //         IsMainCollateral: this.appCollateralObj.IsMainCollateral,
-  //         ManufacturingYear: this.appCollateralObj.ManufacturingYear,
-  //         RowVersionCollateral: this.appCollateralObj.RowVersion,
-
-  //         AppCollateralRegistrationId: this.collateralRegistrationObj.AppCollateralRegistrationId,
-  //         OwnerName: this.collateralRegistrationObj.OwnerName,
-  //         OwnerIdNo: this.collateralRegistrationObj.OwnerIdNo,
-  //         MrIdTypeCode: this.collateralRegistrationObj.MrIdTypeCode,
-  //         OwnerMobilePhnNo: this.collateralRegistrationObj.OwnerMobilePhnNo,
-  //         MrOwnerRelationshipCode: this.collateralRegistrationObj.MrOwnerRelationshipCode,
-  //         UserName: this.collateralRegistrationObj.UserName,
-  //         MrUserRelationshipCode: this.collateralRegistrationObj.MrUserRelationshipCode,
-  //         RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
-  //       });
-
-  //       if (this.AddCollForm.controls.MrUserRelationshipCode.value == "SELF") {
-  //         this.AddCollForm.patchValue({
-  //           SelfUsage: true
-  //         })
-  //       }
-
-  //       this.changeSerialNoValidators(this.appCollateralObj.MrCollateralConditionCode);
-  //       // SEMENTARA DI COMMENT BUAT CFNA
-  //       // this.onItemChange(this.appCollateralObj.AssetTypeCode);
-  //       this.inputLookupExistColl.nameSelect = this.appCollateralObj.FullAssetName;
-  //       this.inputLookupExistColl.jsonSelect = { FullAssetName: this.appCollateralObj.FullAssetName };
-  //       this.inputLookupColl.nameSelect = this.appCollateralObj.FullAssetName;
-  //       this.inputLookupColl.jsonSelect = { FullAssetName: this.appCollateralObj.FullAssetName };
-  //       // set data Location Address
-  //       this.LocationAddrObj.Addr = this.collateralRegistrationObj.LocationAddr;
-  //       this.LocationAddrObj.AreaCode1 = this.collateralRegistrationObj.LocationAreaCode1;
-  //       this.LocationAddrObj.AreaCode2 = this.collateralRegistrationObj.LocationAreaCode2;
-  //       this.LocationAddrObj.AreaCode3 = this.collateralRegistrationObj.LocationAreaCode3;
-  //       this.LocationAddrObj.AreaCode4 = this.collateralRegistrationObj.LocationAreaCode4;
-  //       this.LocationAddrObj.City = this.collateralRegistrationObj.LocationCity;
-  //       this.inputFieldLocationObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.LocationZipcode;
-  //       this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.LocationZipcode };
-
-  //       // set data Owner Address
-  //       this.OwnerAddrObj.Addr = this.collateralRegistrationObj.OwnerAddr;
-  //       this.OwnerAddrObj.AreaCode1 = this.collateralRegistrationObj.OwnerAreaCode1;
-  //       this.OwnerAddrObj.AreaCode2 = this.collateralRegistrationObj.OwnerAreaCode2;
-  //       this.OwnerAddrObj.AreaCode3 = this.collateralRegistrationObj.OwnerAreaCode3;
-  //       this.OwnerAddrObj.AreaCode4 = this.collateralRegistrationObj.OwnerAreaCode4;
-  //       this.OwnerAddrObj.City = this.collateralRegistrationObj.OwnerCity;
-  //       this.inputFieldLegalObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.OwnerZipcode;
-  //       this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.OwnerZipcode };
-  //     })
-  // }
 
   collateralPortionHandler(){
     const fullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
@@ -906,16 +807,17 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   }
 
   async GetGS() {
-    this.generalSettingObj = new GeneralSettingObj();
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
-    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization);
+    this.generalSettingObj = new GenericListByCodeObj();
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    this.generalSettingObj.Codes.push(CommonConstant.GSCodeIsUseDigitalization);
 
-    await this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
+    await this.http.post<ResListGeneralSettingObj>(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
       (response) => {
-        var returnGeneralSettingObj = response;
+        var returnGeneralSettingObj: Array<ResGeneralSettingObj> = new Array<ResGeneralSettingObj>();
+        returnGeneralSettingObj = response['ResGetListGeneralSettingObj'];
 
-        var gsNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
-        var gsUseDigitalization = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        var gsNeedCheckBySystem = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
         
         if(gsNeedCheckBySystem != undefined){
           this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;

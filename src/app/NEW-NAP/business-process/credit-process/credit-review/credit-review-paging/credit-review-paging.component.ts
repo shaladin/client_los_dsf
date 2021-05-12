@@ -10,8 +10,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-credit-review-paging',
-  templateUrl: './credit-review-paging.component.html',
-  styleUrls: []
+  templateUrl: './credit-review-paging.component.html'
 })
 export class CreditReviewPagingComponent implements OnInit {
   BizTemplateCode: string;
@@ -55,10 +54,10 @@ export class CreditReviewPagingComponent implements OnInit {
 
     this.inputPagingObj.addCritInput = arrCrit;
   }
+  
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
   }
-
 }

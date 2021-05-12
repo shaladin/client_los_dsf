@@ -1,4 +1,8 @@
+import { environment } from "environments/environment";
+import { AdInsConstant } from "../AdInstConstant";
+import { URLConstant } from "../constant/URLConstant";
 import { CriteriaObj } from "./CriteriaObj.model";
+import { IntegrationObj } from "./library/IntegrationObj.model";
 
 export class InputSearchObj {
     _url: string;
@@ -10,17 +14,21 @@ export class InputSearchObj {
     ddlEnvironments: Array<EnviObj>;
     whereValue: Array<WhereValueObj>;
     switchValue: Array<SwitchValueObj>;
+    integrationObj: IntegrationObj;
+    isJoinExAPI: boolean;
     
     constructor() {
         this._url = "";
-        this.enviromentUrl = "";
+        this.enviromentUrl = environment.losUrl;
         this.title = "";
-        this.apiQryPaging = "";
+        this.apiQryPaging = URLConstant.GetPagingObjectBySQL;
         this.arrCritObj = null;
         this.addCritInput = new Array<CriteriaObj>();
         this.ddlEnvironments = new Array<EnviObj>();
         this.whereValue = new Array<WhereValueObj>();
         this.switchValue = new Array<SwitchValueObj>();
+        this.integrationObj = new IntegrationObj();
+        this.isJoinExAPI = false;
     }
 }
 

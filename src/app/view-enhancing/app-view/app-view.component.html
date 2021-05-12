@@ -107,7 +107,7 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Document">
+            <mat-tab label="Document">
               <ng-template matTabContent>
                 <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
               </ng-template>
@@ -131,18 +131,6 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="IsFraudDetectionResult && IsUseDigitalization == '1'" label="Fraud Detection Result">
-              <ng-template matTabContent>
-                <app-view-fraud-detection-result [appId]="AppId" [mrCustTypeCode]="CustType" [isView]=true></app-view-fraud-detection-result>
-              </ng-template>
-            </mat-tab>
-
-            <!-- <mat-tab *ngIf="IsFraudDetectionMulti" label="Fraud Detection Result">
-              <ng-template matTabContent>
-                <app-view-app-fraud-verification [AppId]="AppId" [mrCustTypeCode]="CustType"></app-view-app-fraud-verification>
-              </ng-template>
-            </mat-tab> -->
-
             <mat-tab *ngIf="IsDeviation" label="Deviation">
               <ng-template matTabContent>
                 <app-tab-deviation [AppId]="AppId" [Type]='View'></app-tab-deviation>
@@ -163,6 +151,12 @@
 
             <mat-tab *ngIf="IsPefindoResult" label="Pefindo Result">
               <ng-template matTabContent>
+              </ng-template>
+            </mat-tab>
+
+            <mat-tab *ngIf="IsSurveyResult" label="Survey Result">
+              <ng-template matTabContent>
+                <app-view-survey [AppNo]="AppNo"></app-view-survey>
               </ng-template>
             </mat-tab>
           </mat-tab-group>

@@ -103,7 +103,7 @@
               </ng-template>
             </mat-tab>
 
-            <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == '1'" label="Document">
+            <mat-tab label="Document">
               <ng-template matTabContent>
                 <app-dms-iframe *ngIf="isDmsReady" [dmsObj]="dmsObj"></app-dms-iframe>
               </ng-template>
@@ -126,24 +126,6 @@
                 <view-phone-verif [appId]="AppId"></view-phone-verif>
               </ng-template>
             </mat-tab>
-
-            <mat-tab *ngIf="IsFraudDetectionResult" label="Fraud Detection Result">
-              <ng-template matTabContent>
-                <app-view-fraud-detection-result [appId]="AppId" [mrCustTypeCode]="CustType" [isView]=true></app-view-fraud-detection-result>
-              </ng-template>
-            </mat-tab>
-
-            <!-- <mat-tab *ngIf="IsFraudDetectionMulti" label="Fraud Detection Result">
-              <ng-template matTabContent>
-                <app-view-app-fraud-verification [AppId]="AppId" [mrCustTypeCode]="CustType"></app-view-app-fraud-verification>
-              </ng-template>
-            </mat-tab> -->
-
-            <!-- <mat-tab label="Deviation">
-              <ng-template matTabContent>
-                <app-tab-deviation [AppId]="AppId" [Type]='View'></app-tab-deviation>
-              </ng-template>
-            </mat-tab> -->
 
             <mat-tab *ngIf="IsAnalysisResult" label="Analysis Result">
               <ng-template matTabContent>

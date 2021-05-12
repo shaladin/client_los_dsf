@@ -1,0 +1,78 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header header-title">
+        <div class="row">
+          <div class="col-md-8">
+            <h4 class="card-title" translate>Product HO Registration </h4>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="RefProductHOForm"
+            (ngSubmit)="RefProductHOForm.valid && SaveForm()" #enjiForm="ngForm">
+            <lib-ucSubsection [id]="'ProductHOInfoId'" [title]="'Product HO Information '+ Mode" [panel]="'ProductHOInfo'"></lib-ucSubsection>
+            <div id="ProductHOInfo">
+              <div class="form-body">
+                <div class="form-group row adins-required">
+                  <label class="col-md-3 adInsLabel">Product Code </label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control adInsInput width-25-per" formControlName="ProdCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && RefProductHOForm.controls.ProdCode.invalid }">
+                    <lib-uc-show-errors [control]="RefProductHOForm.controls.ProdCode" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row adins-required">
+                  <label class="col-md-3 adInsLabel">Product Name </label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control adInsInput width-25-per" formControlName="ProdName"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && RefProductHOForm.controls.ProdName.invalid }">
+                    <lib-uc-show-errors [control]="RefProductHOForm.controls.ProdName" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row adins-required">
+                  <label class="col-md-3 adInsLabel">Product Description </label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control adInsInput width-25-per" formControlName="ProdDescr"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && RefProductHOForm.controls.ProdDescr.invalid }">
+                    <lib-uc-show-errors [control]="RefProductHOForm.controls.ProdDescr" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row adins-required">
+                  <label class="col-md-3 adInsLabel"> Start Active Date </label>
+                  <div class="col-md-9">
+                    <input type="date" class="form-control adInsInput width-25-per" formControlName="StartDt"  [min]="BusinessDt | date: 'yyyy-MM-dd'"  (change)="updateMinDtForEndDt()"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && RefProductHOForm.controls.StartDt.invalid }">
+                    <lib-uc-show-errors [control]="RefProductHOForm.controls.StartDt" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row adins-required">
+                  <label class="col-md-3 adInsLabel"> End Date </label>
+                  <div class="col-md-9">
+                    <input type="date" class="form-control adInsInput width-25-per" formControlName="EndDt" [min]="StartDt | date: 'yyyy-MM-dd'"  
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && RefProductHOForm.controls.EndDt.invalid }">
+                    <lib-uc-show-errors [control]="RefProductHOForm.controls.EndDt" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+                <i class="far fa-window-close"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="far fa-check-square"></i> Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

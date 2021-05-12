@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdminProcessService } from 'app/NEW-NAP/business-process/admin-process/admin-process.service';
+import { AdminProcessService, ReqAppAssetAgreementActivationObj } from 'app/NEW-NAP/business-process/admin-process/admin-process.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { WhereValueObj } from 'app/shared/model/UcPagingObj.Model';
@@ -12,6 +11,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { ReqGetAppFinDataAndFeeObj } from 'app/shared/model/Request/NAP/AgrAct/ReqAppFinDataAndFee.model';
+import { ResAgrmntActivationFinDataAndFeeObj, ResAppFeeObj, ResponseAppFinDataObj } from 'app/shared/model/Response/NAP/AgrAct/ResAgrmntActivationFinDataAndFeeObj.model';
 
 @Component({
   selector: 'app-agrmnt-activation-detail',
@@ -20,9 +21,9 @@ import { CookieService } from 'ngx-cookie';
 })
 export class AgrmntActivationDetailComponent implements OnInit {
   AssetObj: any;
-  AppFees: any;
-  AppFinData: any;
-  listSelectedId: any = new Array();
+  AppFees: Array<ResAppFeeObj> = new Array<ResAppFeeObj>();
+  AppFinData: ResponseAppFinDataObj = new ResponseAppFinDataObj();
+  listSelectedId: Array<number> = new Array<number>();
   AppId: number;
   isOverwrite: boolean;
   AgrmntNo: string;
@@ -73,8 +74,6 @@ export class AgrmntActivationDetailComponent implements OnInit {
     this.ClaimTask(this.WfTaskListId);
 
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/AgrmntActivationTempPaging.json";
-    this.tempPagingObj.enviromentUrl = environment.losUrl;
-    this.tempPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/AgrmntActivationTempPaging.json";
     this.tempPagingObj.isReady = true;
     this.tempPagingObj.isSearched = true;
@@ -100,7 +99,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
       this.AppFees = null;
       this.AppFinData = null;
     }else{
-      let obj = {
+      let obj: ReqAppAssetAgreementActivationObj = {
         AppId: this.AppId,
         ListAppAssetId: this.listSelectedId
       };
@@ -109,19 +108,16 @@ export class AgrmntActivationDetailComponent implements OnInit {
         this.AssetObj = response["ListAppAsset"];
         if (this.AssetObj.length == 0)
           this.IsEnd = true;
-        let objFinDataAndFee = {
-          AppId: this.AppId,
-          ListAppAssetId: this.listSelectedId,
-          IsEnd: this.IsEnd
-        };
-        this.adminProcessSvc.GetAppFinDataAndFeeByAppIdAndListAppAssetId(objFinDataAndFee).subscribe((response) => {
-          this.AppFees = response["ListAppFeeObj"];
-          this.AppFinData = response["AppFinDataObj"];
+        let objFinDataAndFee = new ReqGetAppFinDataAndFeeObj();
+        objFinDataAndFee.AppId = this.AppId;
+        objFinDataAndFee.ListAppAssetId = this.listSelectedId;
+        objFinDataAndFee.IsEnd = this.IsEnd;
+        this.adminProcessSvc.GetAppFinDataAndFeeByAppIdAndListAppAssetId(objFinDataAndFee).subscribe((response : ResAgrmntActivationFinDataAndFeeObj) => {
+          this.AppFees = response.ListAppFeeObj;
+          this.AppFinData = response.AppFinDataObj;
         })
       });
     }
-
-    
   }
 
   Submit() {

@@ -9,35 +9,35 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { NapAppCrossObj } from 'app/shared/model/NapAppCrossObj.Model';
 import { ActivatedRoute } from '@angular/router';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValueObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 
 
 @Component({
   selector: 'app-application-data-FL4W',
-  templateUrl: './application-data-FL4W.component.html',
-  styleUrls: []
+  templateUrl: './application-data-FL4W.component.html'
 })
 export class ApplicationDataFL4WComponent implements OnInit {
 
-  @Input() AppId: any;
+  @Input() AppId: number;
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   FirstInstType: string;
-  mode: any;
+  mode: string;
   ListCrossAppObj: any = {};
   constructor(
     private fb: FormBuilder,
@@ -119,7 +119,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
   salesRecommendationItems = [];
   isInputLookupObj;
   inputLookupEconomicSectorObj;
-  mouCustObj;
   resMouCustObj;
   CustNo: string;
   ngOnInit() {
@@ -127,11 +126,8 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.ListCrossAppObj["appId"] = this.AppId;
     this.ListCrossAppObj["result"] = [];
     this.isInputLookupObj = false;
-    // this.makeLookUpObj();
     this.getAppModelInfo();
     this.applicationDDLitems = [];
-    // data dummy test
-    // data real
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustType);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeSlsRecom);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWOP);
@@ -154,18 +150,9 @@ export class ApplicationDataFL4WComponent implements OnInit {
       (response) => {
         this.CustNo = response["CustNo"];
 
-        this.mouCustObj = new MouCustObj();
-        this.mouCustObj.CustNo = this.CustNo;
-        this.mouCustObj.StartDt = user.BusinessDt;
-        this.mouCustObj.MrMouTypeCode = CommonConstant.GENERAL;
-
-        this.http.post(URLConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
+        this.http.post(URLConstant.GetListMouCustByCustNo, {CustNo: this.CustNo, StartDt: user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL}).subscribe(
           (response) => {
             this.resMouCustObj = response[CommonConstant.ReturnObj];
-            // if(this.resMouCustObj.length > 0)
-            // {
-            //   this.NapAppModelForm.patchValue({ MouCustId: this.resMouCustObj[0].Key });
-            // }
           }
         );
       });
@@ -176,11 +163,11 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   getDDLFromProdOffering(refProdCompntCode: string) {
-    var obj = {
-      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-      RefProdCompntCode: refProdCompntCode,
-      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
-    };
+    var obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
+    obj.RefProdCompntCode = refProdCompntCode;
+    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
+
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL, obj).subscribe(
       (response) => {
 
@@ -196,11 +183,10 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   getInterestTypeCode() {
-    var obj = {
-      ProdOfferingCode: this.resultResponse.ProdOfferingCode,
-      RefProdCompntCode: CommonConstant.RefMasterTypeCodeInterestTypeGeneral,
-      ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
-    };
+    let obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+    obj.ProdOfferingCode = this.resultResponse.ProdOfferingCode;
+    obj.RefProdCompntCode = CommonConstant.RefMasterTypeCodeInterestTypeGeneral;
+    obj.ProdOfferingVersion = this.resultResponse.ProdOfferingVersion;
 
     this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj).subscribe(
       (response) => {
@@ -216,13 +202,10 @@ export class ApplicationDataFL4WComponent implements OnInit {
   ChangeInterestType() {
     if (this.NapAppModelForm.value.InterestType == CommonConstant.InterestTypeFixed) {
       this.isFixedRate = true;
-      // this.NapAppModelForm.controls.FloatingPeriod.clearValidators();
     }
     else {
       this.isFixedRate = false;
-      // this.NapAppModelForm.controls.FloatingPeriod.setValidators(Validators.required);
     }
-    // this.NapAppModelForm.controls.FloatingPeriod.updateValueAndValidity();
   }
   ChangeCharacteristicOfCredit() {
     if (this.NapAppModelForm.value.CharaCredit == CommonConstant.CharacteristicOfCreditTypeCredit) {
@@ -329,11 +312,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   getAppSrcData() {
-    var obj = {
-      RowVersion: ""
-    };
-
-    this.http.post(URLConstant.GetListKvpActiveRefAppSrc, obj).subscribe(
+    this.http.post(URLConstant.GetListKvpActiveRefAppSrc, null).subscribe(
       (response) => {
         this.applicationDDLitems["APP_SOURCE"] = response[CommonConstant.ReturnObj];
       });
@@ -390,7 +369,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
-    this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
@@ -399,7 +377,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.inputLookupEconomicSectorObj = new InputLookupObj();
     this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    this.inputLookupEconomicSectorObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
     this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
@@ -409,15 +386,15 @@ export class ApplicationDataFL4WComponent implements OnInit {
       this.inputLookupEconomicSectorObj.jsonSelect = { Descr: this.resultResponse["MrSlikSecEcoDescr"] };
     }
     else {
-      var reqSecObj = new RefMasterObj();
+      let reqSecObj: ReqRefMasterByTypeCodeAndMasterCodeObj = new ReqRefMasterByTypeCodeAndMasterCodeObj();
       reqSecObj.MasterCode = this.defaultSlikSecEcoCode;
       reqSecObj.RefMasterTypeCode = "SLIK_SEC_ECO";
-      this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(
-        (response) => {
+      this.http.post(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(
+        (response: KeyValueObj) => {
           console.log(response);
-          this.slikSecDescr = response['Descr'];
-          this.inputLookupEconomicSectorObj.nameSelect = response['Descr'];
-          this.inputLookupEconomicSectorObj.jsonSelect = { Descr: response['Descr'] };
+          this.slikSecDescr = response.Value;
+          this.inputLookupEconomicSectorObj.nameSelect = response.Value;
+          this.inputLookupEconomicSectorObj.jsonSelect = { Descr: response.Value };
         });
     }
     this.isInputLookupObj = true;
@@ -453,9 +430,8 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   async GetGSValueSalesOfficer() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
       (response) => {
-        console.log(response);
         var addCrit3 = new CriteriaObj();
         addCrit3.DataType = "text";
         addCrit3.propName = "rbt.JOB_TITLE_CODE";
@@ -603,13 +579,13 @@ export class ApplicationDataFL4WComponent implements OnInit {
     var tempListAppCrossObj = this.GetListAppCrossValue();
     var tempAppFindDataObj = this.GetAppFinDataValue();
     var obj = {
-      appObj: tempAppObj,
-      listAppCrossObj: tempListAppCrossObj,
-      appFinData: tempAppFindDataObj,
+      AppObj: tempAppObj,
+      ListAppCrossObj: tempListAppCrossObj,
+      AppFinData: tempAppFindDataObj,
       RowVersion: this.resultResponse.RowVersion
     };
 
-     obj['appCustMailingAddr'] = this.getMailingAddrForSave();
+    obj['AppCustMailingAddr'] = this.getMailingAddrForSave();
     this.http.post(URLConstant.EditAppAddAppCross, obj).subscribe(
       (response) => {
         this.outputTab.emit();

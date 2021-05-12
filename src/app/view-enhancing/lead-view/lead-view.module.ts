@@ -20,6 +20,8 @@ import { LeadViewComponent } from "./lead-view.component";
 import { ViewLeadDataComponent } from "./view-lead-data/view-lead-data.component";
 import { ViewCustomerDataComponent } from "./view-customer-data/view-customer-data.component";
 import { LeadViewRoutingModule } from "./lead-view-routing.module";
+import { SharedModule } from "app/shared/shared.module";
+import { TranslateModule } from "@ngx-translate/core";
 
 
 @NgModule({
@@ -42,18 +44,21 @@ import { LeadViewRoutingModule } from "./lead-view-routing.module";
         SharingComponentModule,
         UcapprovalhistModule,
         UcShowErrorsModule,
+        TranslateModule
     ],
     declarations: [
         LeadViewComponent,
         ViewLeadDataComponent,
         ViewCustomerDataComponent
-
     ],
     entryComponents: [
         UclookupgenericComponent,
         UcviewgenericComponent,
         UcgridviewComponent,
         UcapprovalhistComponent,
+    ],
+    exports: [
+        TranslateModule
     ]
 
 })

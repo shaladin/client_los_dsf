@@ -13,6 +13,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { ReqAddNapFromCopyObj, ReqAddNapObj } from 'app/shared/model/Request/NAP/NewApplication/ReqAddNapObj.model';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-app-add-free',
@@ -32,7 +35,7 @@ export class AppAddFreeComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    private toastr: NGXToastrService, private cookieService: CookieService
+    private toastr: NGXToastrService, private cookieService: CookieService, private spinner: NgxSpinnerService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params["LobCode"] != null) {
@@ -126,7 +129,6 @@ export class AppAddFreeComponent implements OnInit {
   MakeLookUpObj() {
     this.inputLookupObjCopyProduct = new InputLookupObj();
     this.inputLookupObjCopyProduct.urlJson = "./assets/uclookup/NAP/lookupApp.json";
-    this.inputLookupObjCopyProduct.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjCopyProduct.urlEnviPaging = environment.losUrl;
     this.inputLookupObjCopyProduct.pagingJson = "./assets/uclookup/NAP/lookupApp.json";
     this.inputLookupObjCopyProduct.genericJson = "./assets/uclookup/NAP/lookupApp.json";
@@ -134,8 +136,7 @@ export class AppAddFreeComponent implements OnInit {
 
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputLookupObjName.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObjName.urlEnviPaging = environment.losUrl;
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
@@ -154,11 +155,7 @@ export class AppAddFreeComponent implements OnInit {
 
   GetOfficeDDL() {
     // Office DDL
-    var obj = {
-      RowVersion: ""
-    };
-    var url = environment.FoundationR3Url + URLConstant.GetListKvpActiveRefOffice;
-    this.http.post(url, obj).subscribe(
+    this.http.post(URLConstant.GetListKvpActiveRefOffice, {}).subscribe(
       (response) => {
         this.officeItems = response[CommonConstant.ReturnObj];
         this.NapAppForm.patchValue({
@@ -188,29 +185,70 @@ export class AppAddFreeComponent implements OnInit {
     return obj;
   }
 
+  // SaveForm() {
+  //   // this.router.navigate(["Nap/AppAddDetail"], { queryParams: { "AppId": response["AppId"] } });
+  //   var napAppObj = new NapAppModel();
+  //   napAppObj = this.NapAppForm.value;
+  //   napAppObj.AppCreatedDt = this.user.BusinessDt;
+  //   napAppObj.IsAppInitDone = false;
+  //   napAppObj.AppStat = CommonConstant.AppStepNew;
+  //   napAppObj.AppCurrStep = CommonConstant.AppStepNew;
+
+  //   napAppObj = this.CheckValue(napAppObj);
+  //   if (this.user.MrOfficeTypeCode == CommonConstant.HeadOffice) {
+  //     napAppObj.OriOfficeCode = this.user.OfficeCode;
+  //   } else if (this.user.MrOfficeTypeCode == CommonConstant.CenterGroup) {
+
+  //   }
+
+  //   var url = URLConstant.AddApp;
+  //   this.http.post(url, napAppObj).subscribe(
+  //     (response) => {
+  //       this.toastr.successMessage(response["message"]);
+  //       AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CF2W_ADD_DETAIL], { "AppId": response["AppId"], "LobCode": this.LobCode });
+  //     });
+
+  // }
+  
   SaveForm() {
-    // this.router.navigate(["Nap/AppAddDetail"], { queryParams: { "AppId": response["AppId"] } });
-    var napAppObj = new NapAppModel();
-    napAppObj = this.NapAppForm.value;
-    napAppObj.AppCreatedDt = this.user.BusinessDt;
-    napAppObj.IsAppInitDone = false;
-    napAppObj.AppStat = CommonConstant.AppStepNew;
-    napAppObj.AppCurrStep = CommonConstant.AppStepNew;
+    let requestAddNapObj: Object = new Object();
+    let AddNapUrl: string = "";
+    let tempFormObj = this.NapAppForm.getRawValue();
+    if (tempFormObj.AppNo == "") {
+      let reqAddNapObj: ReqAddNapObj = new ReqAddNapObj();
 
-    napAppObj = this.CheckValue(napAppObj);
-    if (this.user.MrOfficeTypeCode == CommonConstant.HeadOffice) {
-      napAppObj.OriOfficeCode = this.user.OfficeCode;
-    } else if (this.user.MrOfficeTypeCode == CommonConstant.CenterGroup) {
+      reqAddNapObj.OriOfficeCode = tempFormObj.OriOfficeCode;
+      reqAddNapObj.OriOfficeName = tempFormObj.OriOfficeName;
+      reqAddNapObj.CrtOfficeCode = tempFormObj.CrtOfficeCode;
+      reqAddNapObj.CrtOfficeName = tempFormObj.CrtOfficeName;
+      reqAddNapObj.ProdOfferingCode = tempFormObj.ProdOfferingCode;
+      reqAddNapObj.ProdOfferingName = tempFormObj.ProdOfferingName;
+      reqAddNapObj.ProdOfferingVersion = tempFormObj.ProdOfferingVersion;
+      reqAddNapObj.CurrCode = tempFormObj.CurrCode;
+      reqAddNapObj.LobCode = tempFormObj.LobCode;
+      reqAddNapObj.RefProdTypeCode = tempFormObj.RefProdTypeCode;
+      reqAddNapObj.PayFreqCode = tempFormObj.PayFreqCode;
+      reqAddNapObj.BizTemplateCode = CommonConstant.CF2W;
 
+      requestAddNapObj = reqAddNapObj;
+      AddNapUrl = URLConstant.AddNewApplication;
+    } else {
+
+      let reqAddNapFromCopyObj: ReqAddNapFromCopyObj = new ReqAddNapFromCopyObj();
+
+      reqAddNapFromCopyObj.AppNo = tempFormObj.AppNo;
+      reqAddNapFromCopyObj.OriOfficeCode = tempFormObj.OriOfficeCode;
+
+      requestAddNapObj = reqAddNapFromCopyObj;
+      AddNapUrl = URLConstant.AddNewApplicationFromCopy;
     }
 
-    var url = URLConstant.AddApp;
-    this.http.post(url, napAppObj).subscribe(
+    this.http.post<GenericObj>(AddNapUrl, requestAddNapObj).subscribe(
       (response) => {
+        setTimeout(() => { this.spinner.show(); }, 10);
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CF2W_ADD_DETAIL], { "AppId": response["AppId"], "LobCode": this.LobCode });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CF2W_ADD_DETAIL], { "AppId": response.Id, "LobCode": this.LobCode });
       });
-
   }
 
   getLookupAppResponseCopy(ev: any) {

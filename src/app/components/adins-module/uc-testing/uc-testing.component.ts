@@ -5,7 +5,7 @@ import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/l
 @Component({
   selector: 'app-uc-testing',
   templateUrl: './uc-testing.component.html',
-  styleUrls: ['./uc-testing.component.scss'],
+  styleUrls: ['./uc-testing.component.css'],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class UcTestingComponent implements OnInit {

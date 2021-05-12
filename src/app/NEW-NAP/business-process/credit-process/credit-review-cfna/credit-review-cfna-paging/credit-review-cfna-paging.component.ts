@@ -9,8 +9,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-credit-review-cfna-paging',
-  templateUrl: './credit-review-cfna-paging.component.html',
-  styleUrls: []
+  templateUrl: './credit-review-cfna-paging.component.html'
 })
 export class CreditReviewCfnaPagingComponent implements OnInit {
   BizTemplateCode: string;

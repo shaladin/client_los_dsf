@@ -6,13 +6,15 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
+import { TranslateService } from '@ngx-translate/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-app-main-info',
   templateUrl: './app-main-info.component.html'
 })
 export class AppMainInfoComponent implements OnInit {
-  private viewGeneric : UcviewgenericComponent;
+  private viewGeneric: UcviewgenericComponent;
   whereValue = [];
   @ViewChild('viewGeneric') set content(content: UcviewgenericComponent) {
     if (content) { // initially setter gets called with undefined
@@ -21,11 +23,25 @@ export class AppMainInfoComponent implements OnInit {
   }
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   @Input() AppId: number;
+  AppNo: number;
   AppObj: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private translateService: TranslateService, private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => {
+      if(params["AppId"] == "undefined"){
+        this.AppNo = params["AppNo"]
+        
+      }else{
+        this.AppId = params["AppId"];
+        
+      }
+    })
+   }
 
   ngOnInit() {
+    console.log("rey");
+    console.log(localStorage.getItem('lang'));
+    this.translateService.use(localStorage.getItem('lang') || 'en');
     this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.AppObj = response;
@@ -38,7 +54,9 @@ export class AppMainInfoComponent implements OnInit {
         else if (this.AppObj.BizTemplateCode == CommonConstant.OPL) {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-opl-main-info.json";
         }
-        else {
+        else if (this.AppNo != null){
+          this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfoByAppNo.json";
+        }else{
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfo.json";
         }
         this.viewGenericObj.viewEnvironment = environment.losUrl;
@@ -64,7 +82,7 @@ export class AppMainInfoComponent implements OnInit {
     );
   }
 
-  ReloadUcViewGeneric(){
+  ReloadUcViewGeneric() {
     this.viewGeneric.initiateForm();
   }
 

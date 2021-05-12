@@ -22,6 +22,8 @@ import { TaxTrxDObj } from 'app/shared/model/Tax/TaxTrxD.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppCommissionDObj } from 'app/shared/model/AppCommissionDObj.Model';
 import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
+import { ReqGetAppCommissionRuleObj } from 'app/shared/model/AppCommissionRsvFund/ReqGetAppCommissionRuleObj.Model';
+import { ReqTaxObj } from 'app/shared/model/AppCommissionRsvFund/ReqTaxObj.Model';
 
 @Component({
   selector: 'app-commission-v2',
@@ -229,7 +231,7 @@ export class CommissionV2Component implements OnInit {
   RuleSupplierEmpData: any = {};
   RuleReferantorData: any = {};
   async GetRuleDataForForm() {
-    var obj = { AppId: this.AppId };
+    let obj: ReqGetAppCommissionRuleObj = { AppId: this.AppId, BizTemplateCode: this.BizTemplateCode };
     await this.http.post(URLConstant.GetAppCommissionRule, obj).toPromise().then(
       (response) => {
         // override hide suppl & suppl emp jika CFRFN4W ignore rule
@@ -384,7 +386,7 @@ export class CommissionV2Component implements OnInit {
     }
 
     if (listVendorCode.length > 0) {
-      var obj = {
+      let obj: ReqTaxObj = {
         AppId: this.AppId,
         VendorCode: listVendorCode,
         VendorEmpNo: listVendorEmpNo,
@@ -497,6 +499,7 @@ export class CommissionV2Component implements OnInit {
       }
       this.CommissionForm.controls[identifier]["controls"][i].patchValue({
         MrIdTypeCode: tempRespTaxObj.MrIdTypeCode,
+        MrTaxKindCode: tempRespTaxObj.MrTaxKindCode,
         MrTaxCalcMethodCode: tempRespTaxObj.MrTaxCalcMethodCode,
         TaxpayerNo: tempRespTaxObj.TaxpayerNo,
         TotalTaxAmount: totalTaxAmount,
@@ -520,14 +523,16 @@ export class CommissionV2Component implements OnInit {
     if (0 > this.RemainingAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
     if (this.CekMaxValueIncomeInfo()) return;
 
-    let listAppCommissionHObj: Array<AppCommissionHObj> = new Array<AppCommissionHObj>();
-    this.GetListAppCommObj(this.identifierSupplier, listAppCommissionHObj);
-    this.GetListAppCommObj(this.identifierSupplierEmp, listAppCommissionHObj);
-    this.GetListAppCommObj(this.identifierReferantor, listAppCommissionHObj);
+    let listAppCommissionHAddObj: Array<AppCommissionHObj> = new Array<AppCommissionHObj>();
+    let listAppCommissionHEditObj: Array<AppCommissionHObj> = new Array<AppCommissionHObj>();
+    this.GetListAppCommObj(this.identifierSupplier, listAppCommissionHAddObj, listAppCommissionHEditObj);
+    this.GetListAppCommObj(this.identifierSupplierEmp, listAppCommissionHAddObj, listAppCommissionHEditObj);
+    this.GetListAppCommObj(this.identifierReferantor, listAppCommissionHAddObj, listAppCommissionHEditObj);
     var obj = {
       AppId: this.AppId,
       GrossYield: this.Summary.GrossYield,
-      ListAppCommissionHObj: listAppCommissionHObj
+      ListAppCommissionHAddObj: listAppCommissionHAddObj,
+      ListAppCommissionHEditObj: listAppCommissionHEditObj
     };
     this.http.post(URLConstant.AddOrEditAppCommissionData, obj).subscribe(
       (response) => {
@@ -547,7 +552,7 @@ export class CommissionV2Component implements OnInit {
     return flag;
   }
 
-  GetListAppCommObj(identifier: string, listAppCommissionHObj: Array<AppCommissionHObj>) {
+  GetListAppCommObj(identifier: string, listAppCommissionHAddObj: Array<AppCommissionHObj>, listAppCommissionHEditObj: Array<AppCommissionHObj>) {
     let listData = this.CommissionForm.get(identifier) as FormArray;
     for (var i = 0; i < listData.value.length; i++) {
       var tempData = new AppCommissionHObj();
@@ -556,7 +561,11 @@ export class CommissionV2Component implements OnInit {
       if (identifier == this.identifierSupplier) tempData = this.PatchAppCommHData(temp, CommonConstant.CommissionReceipientTypeCodeSupplier);
       if (identifier == this.identifierSupplierEmp) tempData = this.PatchAppCommHData(temp, CommonConstant.CommissionReceipientTypeCodeSupplierEmp);
       if (identifier == this.identifierReferantor) tempData = this.PatchAppCommHData(temp, CommonConstant.CommissionReceipientTypeCodeReferantor);
-      listAppCommissionHObj.push(tempData);
+      if (tempData.AppCommissionHId == 0) {
+        listAppCommissionHAddObj.push(tempData);
+        continue;
+      }
+      listAppCommissionHEditObj.push(tempData);
     }
   }
 
@@ -578,7 +587,7 @@ export class CommissionV2Component implements OnInit {
     temp.TotalDisburseAmt = AppCommH.TotalDisburseAmount;
     temp.MrCommissionRecipientTypeCode = CommReceipientTypeCode;
     temp.CommissionRecipientRefNo = AppCommH.ContentName;
-    temp.MrTaxKindCode = AppCommH.MrIdTypeCode;
+    temp.MrTaxKindCode = AppCommH.MrTaxKindCode;
     temp.MrTaxCalcMethodCode = AppCommH.MrTaxCalcMethodCode;
     temp.TaxpayerNo = AppCommH.TaxpayerNo;
     temp.RowVersion = AppCommH.RowVersion;

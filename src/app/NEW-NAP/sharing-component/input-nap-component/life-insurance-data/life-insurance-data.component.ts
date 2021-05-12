@@ -11,6 +11,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppLifeInsRuleObj } from 'app/shared/model/AppLifeIns/AppLifeInsRuleObj.Model';
+import { ReqGetVendorByCategoryCodeAndOfficeCodeObj } from 'app/shared/model/Request/Vendor/ReqVendor.model';
 
 @Component({
   selector: 'app-life-insurance-data',
@@ -127,9 +128,12 @@ export class LifeInsuranceDataComponent implements OnInit {
         this.LifeInscoBranchNameObj.OfficeCode = response["OriOfficeCode"];
       }
     );
-    await this.http.post<Array<object>>(URLConstant.GetListActiveVendorByCategoryCodeAndOfficeCode, this.LifeInscoBranchNameObj).toPromise().then(
+    let ReqGetListActiveVendor : ReqGetVendorByCategoryCodeAndOfficeCodeObj = new ReqGetVendorByCategoryCodeAndOfficeCodeObj();
+    ReqGetListActiveVendor.MrVendorCategory = this.LifeInscoBranchNameObj.MrVendorCategory;
+    ReqGetListActiveVendor.OfficeCode = this.LifeInscoBranchNameObj.OfficeCode;
+    await this.http.post(URLConstant.GetListActiveVendorByCategoryCodeAndOfficeCode, ReqGetListActiveVendor).toPromise().then(
       (response) => {
-        this.LifeInscoBranchName = response;
+        this.LifeInscoBranchName = response[CommonConstant.ReturnObj];
       }
     );
 
@@ -319,15 +323,27 @@ export class LifeInsuranceDataComponent implements OnInit {
     if (this.IsChecked) {
       if (this.checkSubject() == false) return;
       this.LifeInsObj.AppId = this.AppId;
-      this.LifeInsObj.RowVersion = this.result.RowVersion;
-      this.http.post(URLConstant.AddEditAppLifeInsH, this.LifeInsObj).subscribe(
-        response => {
-          this.toastr.successMessage(response["message"]);
-          // this.wizard.goToNextStep()
-          this.outputTab.emit();
-        });
+      if (this.mode == "add") {
+        this.http.post(URLConstant.AddAppLifeInsH, this.LifeInsObj).subscribe(
+          response => {
+            this.toastr.successMessage(response["message"]);
+            // this.wizard.goToNextStep()
+            this.outputTab.emit();
+          });
+      } else {
+        this.LifeInsObj.RowVersion = this.result.RowVersion;
+        this.http.post(URLConstant.EditAppLifeInsH, this.LifeInsObj).subscribe(
+          response => {
+            this.toastr.successMessage(response["message"]);
+            // this.wizard.goToNextStep()
+            this.outputTab.emit();
+          });
+      }
     } else {
-      this.LifeInsObj.AppLifeInsHId = this.AppLifeInsHId;
+      if (this.AppLifeInsHId == 0){
+        this.outputTab.emit();
+        return;
+      }
       this.http.post(URLConstant.DeleteAppLifeIns, { Id: this.AppLifeInsHId }).subscribe(
         response => {
           this.toastr.successMessage(response["message"]);
@@ -355,17 +371,6 @@ export class LifeInsuranceDataComponent implements OnInit {
       //   SeqNo: LifeInsD.SeqNo
       // }
       this.LifeInsObj.ListAppLifeInsD.push(LifeInsD);
-      // this.http.post(URLConstant.GetRuleRate, object).toPromise().then(
-      //   response => {
-      //     LifeInsD.BaseRate = response["BaseRate"];
-      //     LifeInsD.CustRate = response["CustRate"];
-      //     LifeInsD.InscoRate = response["InscoRate"];
-      //     LifeInsD.SumInsured = response["SumInsured"];
-      //     LifeInsD.DiscRate = response["DiscRate"];
-      //     LifeInsD.DiscRateToInsco = response["DiscRateToInsco"];
-      //     this.LifeInsObj.ListAppLifeInsD.push(LifeInsD);
-      //   }
-      // );
     } else {
       var index = this.LifeInsObj.ListAppLifeInsD.findIndex(x => x.InsuredName == this.ListObj[i].InsuredName);
       this.LifeInsObj.ListAppLifeInsD.splice(index, 1);
