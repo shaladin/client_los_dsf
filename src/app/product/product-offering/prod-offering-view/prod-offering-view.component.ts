@@ -34,7 +34,6 @@ export class ProdOfferingViewComponent implements OnInit {
   GetProdOfferByVerCode: ProdOfferingCodeVersionObj = new ProdOfferingCodeVersionObj();
   ProdOfferingBranchMbrObj: Array<ResProdOfferingBranchOfficeMbrObj> = new Array<ResProdOfferingBranchOfficeMbrObj>();
   ListProdOfferingVersionObj: Array<ResGetProdOfferingHVersionObj> = new Array<ResGetProdOfferingHVersionObj>();
-  ProdOfferingCodeVersion: ResGetProdOfferingHVersionObj = new ResGetProdOfferingHVersionObj();
   
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
@@ -57,10 +56,9 @@ export class ProdOfferingViewComponent implements OnInit {
   async LoadMainInfo() {
     this.GetProdOfferByVerCode.ProdOfferingCode = this.ProdOfferingCode;
     this.GetProdOfferByVerCode.ProdOfferingVersion = this.ProdOfferingVersion;
-    await this.http.post<ResGetProdOfferingHVersionObj>(URLConstant.GetProdOfferingHByCodeAndVersion, this.GetProdOfferByVerCode).toPromise().then(
+    await this.http.post<GenericObj>(URLConstant.GetProdOfferingHByCodeAndVersion, this.GetProdOfferByVerCode).toPromise().then(
       response => {
-        this.ProdOfferingCodeVersion = response;
-        this.ProdOfferingHId = this.ProdOfferingCodeVersion.ProdOfferingHId
+        this.ProdOfferingHId = response.Id;
       }
     );
   }

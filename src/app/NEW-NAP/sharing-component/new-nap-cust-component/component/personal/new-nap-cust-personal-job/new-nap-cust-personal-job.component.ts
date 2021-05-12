@@ -11,7 +11,7 @@ import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDa
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { ResponseJobDataPersonalObj } from 'app/shared/model/ResponseJobDataPersonalObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
@@ -61,9 +61,13 @@ export class NewNapCustPersonalJobComponent implements OnInit {
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = this.UserAccess.BusinessDt;
 
-    await this.http.post<RefMasterObj>(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { MasterCode: this.CustModelCode, RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel }).toPromise().then(
+    let refMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel,
+      MasterCode: this.CustModelCode
+    };
+    await this.http.post<KeyValueObj>(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
       (response) => {
-        this.MrCustModelDescr = response.Descr;
+        this.MrCustModelDescr = response.Value;
         this.CheckCustModel();
         this.InitLookup();
       }

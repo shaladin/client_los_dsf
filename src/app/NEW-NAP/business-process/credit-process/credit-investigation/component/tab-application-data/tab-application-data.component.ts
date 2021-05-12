@@ -8,8 +8,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-tab-application-data',
-  templateUrl: './tab-application-data.component.html',
-  styleUrls: []
+  templateUrl: './tab-application-data.component.html'
 })
 export class TabApplicationDataComponent implements OnInit {
 

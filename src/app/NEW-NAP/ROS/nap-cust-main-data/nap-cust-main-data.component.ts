@@ -15,6 +15,7 @@ import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-nap-cust-main-data',
@@ -44,12 +45,6 @@ export class NapCustMainDataComponent implements OnInit {
     "GUAR": 4,
   };
 
-  ResponseReturnInfoObj;
-  FormReturnObj = this.fb.group({
-    ReturnExecNotes: ['']
-  });
-  OnFormReturnInfo = false;
-
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -67,7 +62,7 @@ export class NapCustMainDataComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 0;
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
@@ -103,44 +98,32 @@ export class NapCustMainDataComponent implements OnInit {
       }
     );
 
-    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, this.NapObj).subscribe(
+    await this.GetCustMainData();
+
+    this.stepper = new Stepper(document.querySelector('#stepper1'), {
+      linear: false,
+      animation: true
+    })
+  }
+
+  async GetCustMainData() {
+    let reqObj: GenericObj = new GenericObj();
+    reqObj.Id = this.appId;
+    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, reqObj).subscribe(
       (response) => {
-        if (response.AppCustObj) 
-        {
+        if (response.AppCustObj) {
           this.MrCustTypeCode = response.AppCustObj.MrCustTypeCode;
           this.appCustId = response.AppCustObj.AppCustId;
           this.isMarried = response.AppCustPersonalObj != undefined && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried ? true : false;
         }
       }
     );
-
-    this.stepper = new Stepper(document.querySelector('#stepper1'), {
-      linear: false,
-      animation: true
-    })
-    this.MakeViewReturnInfoObj();
   }
-
+  
   Back() {
     AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP1/Paging"], { "BizTemplateCode": this.bizTemplateCode });
   }
 
-  MakeViewReturnInfoObj() {
-    if (this.mode == CommonConstant.ModeResultHandling) {
-      var obj = {
-        AppId: this.appId,
-        MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
-      }
-      this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
-        (response) => {
-          this.ResponseReturnInfoObj = response;
-          this.FormReturnObj.patchValue({
-            ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
-          });
-          this.OnFormReturnInfo = true;
-        });
-    }
-  }
 
   ChangeTab(AppStep) {
     switch (AppStep) {
@@ -162,22 +145,14 @@ export class NapCustMainDataComponent implements OnInit {
     this.ucViewMainProd.initiateForm();
   }
 
-  getEvent(event) {
+  async getEvent(event) {
     this.isMarried = event.MrMaritalStatCode != undefined && event.MrMaritalStatCode == 'MARRIED'? true : false;
     this.MrCustTypeCode = event.MrCustTypeCode != undefined? event.MrCustTypeCode : CommonConstant.CustTypePersonal;
     this.NextStep(this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.AppStepFamily : CommonConstant.AppStepShr);
     
     //Fix untuk data kosong saat kembali ke step cust jika save new cust
     if(!this.appCustId){
-      this.http.post(URLConstant.GetAppCustMainDataByAppId, this.NapObj).subscribe(
-        (response) => {
-          if (response['AppCustObj']){
-            this.MrCustTypeCode = response['AppCustObj']['MrCustTypeCode'];
-            this.appCustId = response['AppCustObj'].AppCustId;
-            this.isMarried = response['AppCustPersonalObj'] != undefined && response['AppCustPersonalObj'].MrMaritalStatCode == 'MARRIED'? true : false;
-          }
-        }
-      );
+      await this.GetCustMainData();
     }
   }
 

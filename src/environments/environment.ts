@@ -6,7 +6,7 @@
 export const environment = {
   production: false,
   navbarColor: 'transparent',
-  // losUrl: 'http://localhost:5001',
+  //losUrl: 'http://localhost:5001',
   // FoundationR3Url: 'http://localhost:5000',
   losUrl: 'http://r3app-server.ad-ins.com/LOS',
   FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_R3',
@@ -19,6 +19,8 @@ export const environment = {
   WorkflowR3Url: 'http://R3App-Server.ad-ins.com/WORKFLOW_R3',
   WebSocketURL: 'http://r3app-server.ad-ins.com/FOUNDATION_R3',
   DashboardURL: 'http://r3app-server.ad-ins.com/Dashboard',
+  dmsURL: 'http://kfx-svr/LITEDMS_OPL/LiteDMS/pageconfins.aspx',
+  WFThingsToDoUrl: 'http://r3impl-appsvr.ad-ins.com/WORKFLOW_OPL/',
   ChipperKeyLocalStorage: "AdInsFOU2020OKOK", // 256 bit atau 16 karakter
   ChipperKeyCookie: "AdInsFOU12345678", // 256 bit atau 16 karakter & harus sama dengan BE
   Module:"LOS"

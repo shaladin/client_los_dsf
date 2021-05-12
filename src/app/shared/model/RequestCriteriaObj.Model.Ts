@@ -1,4 +1,6 @@
+import { AdInsConstant } from "../AdInstConstant";
 import { CriteriaObj } from "../model/CriteriaObj.model";
+import { IntegrationObj } from "./library/IntegrationObj.model";
 
 export class RequestCriteriaObj{
     includeCount:boolean;
@@ -9,6 +11,8 @@ export class RequestCriteriaObj{
     criteria:CriteriaObj[];
     isLoading : boolean;
     queryString: any;
+    integrationObj: IntegrationObj;
+    joinType: string;
     
     constructor()
     {
@@ -16,5 +20,7 @@ export class RequestCriteriaObj{
         this.includeData = true;
         this.isLoading = true;
         this.queryString = '';
+        this.integrationObj = new IntegrationObj();
+        this.joinType = AdInsConstant.JoinTypeInner;
     }
 }

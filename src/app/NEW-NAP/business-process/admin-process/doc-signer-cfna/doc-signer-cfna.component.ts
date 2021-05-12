@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-doc-signer-cfna',
@@ -36,9 +37,11 @@ export class DocSignerCfnaComponent implements OnInit {
 
   getEvent(ev){
     if(ev.Key == "prodOff"){
-      this.http.post(URLConstant.GetProdOfferingHByCode, {ProdOfferingCode : ev.RowObj.ProdOfferingCode}).subscribe(
+      let GetProduct = new GenericObj();
+      GetProduct.Code = ev.RowObj.ProdOfferingCode;
+      this.http.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).subscribe(
         response => {
-          AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response['ProdOfferingHId']);
+          AdInsHelper.OpenProdOfferingViewByProdOfferingHId(response.Id);
         },
         (error) => {
           console.log(error);

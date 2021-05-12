@@ -10,15 +10,15 @@ import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
-import { forkJoin } from 'rxjs';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-info-component/app-main-info/app-main-info.component';
-import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -33,7 +33,7 @@ export class NapDetailFormComponent implements OnInit {
   mode: string;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   NapObj: AppObj;
-  ResponseReturnInfoObj: any;
+  ResponseReturnInfoObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
   ListAsset: any;
@@ -56,7 +56,7 @@ export class NapDetailFormComponent implements OnInit {
   isDmsReady: boolean = false;
   dmsObj: DMSObj;
   appNo: string;
-  SysConfigResultObj: ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
+  SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING2;
   readonly BackLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
@@ -75,7 +75,7 @@ export class NapDetailFormComponent implements OnInit {
 
   async ngOnInit() : Promise<void> {
     //check DMS
-    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
     });
@@ -175,12 +175,11 @@ export class NapDetailFormComponent implements OnInit {
 
   MakeViewReturnInfoObj() {
     if (this.mode == CommonConstant.ModeResultHandling) {
-      var obj = {
-        AppId: this.appId,
-        MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
-      }
-      this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, obj).subscribe(
-        (response) => {
+      let ReqByIdAndCodeObj = new GenericObj();
+      ReqByIdAndCodeObj.Id = this.appId;
+      ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingEditApp;
+      this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
+        (response : ResReturnHandlingDObj) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
             ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes

@@ -5,6 +5,7 @@ import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { UcThingsToDoObj } from 'app/shared/model/library/UcThingsToDoObj.model';
 
 export interface Chart {
   type: ChartType;
@@ -20,7 +21,7 @@ export interface Chart {
   styleUrls: []
 })
 export class DashBoardComponent implements OnInit {
-  Item: any;
+  Item: UcThingsToDoObj = new UcThingsToDoObj();
 
   username: string;
   url: string;
@@ -35,6 +36,10 @@ export class DashBoardComponent implements OnInit {
     this.url = environment.DashboardURL;
     this.officeCode = context[CommonConstant.OFFICE_CODE];
     this.roleCode = context[CommonConstant.ROLE_CODE];
-    this.Item = { Url: environment.FoundationR3Url + "/ThingsToDo/GetThingsToDoByRole", ModuleCode: CommonConstant.LOAN_ORIGINATION };
+    this.Item.Url = environment.FoundationR3Url + "/ThingsToDo/GetThingsToDoByRole";
+    this.Item.RequestObj.ModuleCode = CommonConstant.LOAN_ORIGINATION;
+    this.Item.RequestObj.IntegrationObj.RequestObj.Office = this.officeCode;
+    this.Item.RequestObj.IntegrationObj.RequestObj.Role =this.roleCode;
+    this.Item.RequestObj.IntegrationObj.RequestObj.UserName = this.username;
   }
 }

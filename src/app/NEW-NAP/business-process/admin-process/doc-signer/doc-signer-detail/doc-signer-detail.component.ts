@@ -14,6 +14,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
+import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -87,10 +90,6 @@ export class DocSignerDetailComponent implements OnInit {
   }
 
   async getAllData() {
-    var obj = {
-      AppId: this.AppId
-    }
-
     var agrmntObj = {
       Id: this.AgrmntId
     }
@@ -99,29 +98,14 @@ export class DocSignerDetailComponent implements OnInit {
       Id: this.AppId
     }
 
+    await this.GetCustMainData();
+
     await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).toPromise().then(
       (response) => {
         this.result2 = response;
         this.OfficeCode = this.result2.OfficeCode;
         this.CustNo = this.result2.CustNo;
       });
-
-    await this.http.post(URLConstant.GetAppCustMainDataByAppId, obj).toPromise().then(
-      (response) => {
-        this.ResponseAppCustObj = response;
-        if (this.ResponseAppCustObj.AppCustObj != undefined) {
-          this.MrCustTypeCode = this.ResponseAppCustObj.AppCustObj.MrCustTypeCode;
-          if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-            this.http.post(URLConstant.GetAppCustPersonalDataAndSpouseByAppId, appObj).toPromise().then(
-              (response) => {
-                this.ResponseAppCustDataObj = response;
-                this.CustFullName = this.ResponseAppCustDataObj.CustFullName;
-                this.ContactPersonName = this.ResponseAppCustDataObj.ContactPersonName;
-              });
-          }
-        }
-      });
-
 
     await this.http.post(URLConstant.GetAppAssetDataByAppId, appObj).toPromise().then(
       (response) => {
@@ -177,18 +161,40 @@ export class DocSignerDetailComponent implements OnInit {
       });
   }
 
+  async GetCustMainData() {
+    let reqObj: GenericObj = new GenericObj();
+    reqObj.Id = this.AppId;
+    await this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, reqObj).toPromise().then(
+      async (response) => {
+        this.ResponseAppCustObj = response;
+        if (this.ResponseAppCustObj.AppCustObj != undefined) {
+          this.MrCustTypeCode = this.ResponseAppCustObj.AppCustObj.MrCustTypeCode;
+          if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+            var appObj = {
+              Id: this.AppId
+            }
+            await this.http.post(URLConstant.GetAppCustPersonalDataAndSpouseByAppId, appObj).toPromise().then(
+              (response) => {
+                this.ResponseAppCustDataObj = response;
+                this.CustFullName = this.ResponseAppCustDataObj.CustFullName;
+                this.ContactPersonName = this.ResponseAppCustDataObj.ContactPersonName;
+              });
+          }
+        }
+      });
+  }
+  
   async setDefaultShareholder() {
     if (this.mode = "edit") return;
     this.inputLookupAppCustCompanyShareHolder1Obj.isReady = false;
     await this.http.post(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.AppId, IsShareholder: true }).toPromise().then(
-      (response) => {
-        console.log(response);
-        if (response["ListAppCustObj"].length > 0) {
-          this.inputLookupAppCustCompanyShareHolder1Obj.jsonSelect = { MgmntShrholderName: response["ListAppCustObj"][0].CustName };
+      (response : ResListCustMainDataObj) => {
+        if (response.ListAppCustObj.length > 0) {
+          this.inputLookupAppCustCompanyShareHolder1Obj.jsonSelect = { MgmntShrholderName: response.ListAppCustObj[0].CustName };
           this.inputLookupAppCustCompanyShareHolder1Obj.isReady = true;
           this.DocSignerForm.patchValue({
-            MrJobPositionMgmntShrholder1Code: response["ListAppCustObj"][0].MrJobPositionCode,
-            MrJobPositionMgmntShrholder1Name: response["ListAppCustObj"][0].MrJobPositionCodeDesc,
+            MrJobPositionMgmntShrholder1Code: response.ListAppCustObj[0].MrJobPositionCode,
+            MrJobPositionMgmntShrholder1Name: response.ListAppCustObj[0].MrJobPositionCodeDesc,
           })
         }
       });

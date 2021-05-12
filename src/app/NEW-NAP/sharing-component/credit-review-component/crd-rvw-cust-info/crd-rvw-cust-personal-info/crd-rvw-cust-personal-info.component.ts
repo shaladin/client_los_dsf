@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -9,9 +8,10 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
 import { CrdRvwCustPersInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustPersInfo.Model';
 import { CrdRvwCustPhnStatusObj } from 'app/shared/model/CreditReview/CrdRvwCustPhnStatusObj.Model';
-import { CrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditReview/CrdRvwDiffAppToInPrcAppCustObj.Model';
 import { CrdRvwDiffAppToMasterCustObj } from 'app/shared/model/CreditReview/CrdRvwDiffAppToMasterCustObj.Model';
+import { ReqCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditReview/ReqCrdRvwObj.Model';
 import { ResponseCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditReview/ResponseCrdRvwDiffAppToInPrcAppCustObj.Model';
+import { ReqGetVerfResult2Obj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -56,7 +56,8 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
 
   responseCrdRvwDiffAppToInPrcAppCustObj: ResponseCrdRvwDiffAppToInPrcAppCustObj = new ResponseCrdRvwDiffAppToInPrcAppCustObj();
   async GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId() {
-    await this.http.post<ResponseCrdRvwDiffAppToInPrcAppCustObj>(URLConstant.GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId, { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, IsGenerateDict: true }).toPromise().then(
+    let reqObj: ReqCrdRvwDiffAppToInPrcAppCustObj = { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, IsGenerateDict: true };
+    await this.http.post<ResponseCrdRvwDiffAppToInPrcAppCustObj>(URLConstant.GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId, reqObj).toPromise().then(
       (response) => {
         this.responseCrdRvwDiffAppToInPrcAppCustObj = response;
       }
@@ -137,7 +138,7 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
   }
   async ClickLinkPhoneVerif() {
     console.log("click phn verif");
-    let tempReqObj: object = { TrxRefNo: this.crdRvwCustInfoObj.AppNo, MrVerfTrxTypeCode: "PHN_VERIF", MrVerfObjCode: "CUSTOMER" };
+    let tempReqObj: ReqGetVerfResult2Obj = { TrxRefNo: this.crdRvwCustInfoObj.AppNo, MrVerfTrxTypeCode: "PHN_VERIF", MrVerfObjCode: "CUSTOMER" };
     await this.http.post<{ VerfResultHId: number }>(URLConstant.GetVerfResultHsByTrxRefNoAndMrVerfTrxTypeCodeAndMrVerfObjCode, tempReqObj).toPromise().then(
       (response) => {
         if (response != null || response != undefined) {

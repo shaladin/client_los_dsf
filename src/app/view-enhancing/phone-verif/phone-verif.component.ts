@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ReqGetVerfResult4Obj, ReqGetVerfResultObj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
 import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 
@@ -20,17 +22,12 @@ export class PhoneVerifComponent implements OnInit {
   appId: number = 0;
   verfResultHId: number = 0;
 
-  appObj = {
-    Id: 0,
-  };
-
-  verfResObj = {
+  verfResObj: ReqGetVerfResultObj = {
     TrxRefNo: "",
     MrVerfTrxTypeCode: CommonConstant.VerfTrxTypeCodePhn,
   };
 
-  verfResHObj = {
-    VerfResultHId: 0,
+  verfResHObj: ReqGetVerfResult4Obj = {
     VerfResultId: 0,
     MrVerfObjectCode: "",
   };
@@ -60,8 +57,6 @@ export class PhoneVerifComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.appObj.Id = this.appId;
-    this.verfResHObj.VerfResultHId = this.verfResultHId;
     this.arrValue.push(this.appId);
     await this.GetAppData();
     await this.GetVerfResultData();
@@ -70,7 +65,9 @@ export class PhoneVerifComponent implements OnInit {
   }
 
   async GetAppData() {
-    await this.http.post<AppObj>(URLConstant.GetAppById, this.appObj).toPromise().then(
+    let tempReq: GenericObj = new GenericObj();
+    tempReq.Id = this.appId;
+    await this.http.post<AppObj>(URLConstant.GetAppById, tempReq).toPromise().then(
       (response) => {
         this.AppObj = response;
         this.verfResObj.TrxRefNo = this.AppObj.AppNo;
@@ -96,7 +93,7 @@ export class PhoneVerifComponent implements OnInit {
     );
   }
 
-  async GetListVerfResulHtData(verfResHObj) {
+  async GetListVerfResulHtData(verfResHObj: ReqGetVerfResult4Obj) {
     await this.http.post<{ responseVerfResultHCustomObjs: Array<VerfResultHObj> }>(URLConstant.GetVerfResultHsByVerfResultIdAndObjectCode, verfResHObj).toPromise().then(
       (response) => {
         this.listVerifResultHObj = response.responseVerfResultHCustomObjs;
@@ -108,8 +105,9 @@ export class PhoneVerifComponent implements OnInit {
     this.verifResultHDetailObj = this.listVerifResultHObj.filter(
       vrh => vrh.VerfResultHId === VerfResultHId);
     this.isViewSubDetail = true;
-    this.verfResDObj.VerfResultHId = VerfResultHId;
-    this.http.post(URLConstant.GetListVerfResultDInQuestionGrp, this.verfResDObj).subscribe(
+    let verfResultDObj: GenericObj = new GenericObj();
+    verfResultDObj.Id = VerfResultHId;
+    this.http.post(URLConstant.GetListVerfResultDInQuestionGrp, verfResultDObj).subscribe(
       (response) => {
         this.listVerifResultDObj = response[CommonConstant.ReturnObj];
       }

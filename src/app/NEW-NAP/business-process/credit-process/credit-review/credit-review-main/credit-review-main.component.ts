@@ -20,12 +20,12 @@ import { forkJoin } from 'rxjs';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
-import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 
 @Component({
   selector: 'app-credit-review-main',
-  templateUrl: './credit-review-main.component.html',
-  styleUrls: []
+  templateUrl: './credit-review-main.component.html'
 })
 export class CreditReviewMainComponent implements OnInit {
 
@@ -58,7 +58,7 @@ export class CreditReviewMainComponent implements OnInit {
   isDmsReady: boolean = false;
   IsUseDigitalization: string;
   IsViewReady: boolean = false;
-  SysConfigResultObj: ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
+  SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
   // ReturnForm = this.fb.group({
   //   ReturnReason: [''],
@@ -140,7 +140,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async InitDms() {
-    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
     });
@@ -272,7 +272,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async BindDDLRecommendation() {
-    var Obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
+    var Obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
     await this.http.post(URLConstant.GetListActiveRefReason, Obj).toPromise().then(
       (response) => {
         this.DDLRecommendation = response[CommonConstant.ReturnObj];
@@ -280,7 +280,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   async BindDDLReasonReturn() {
-    var obj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
+    var obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
     await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
       (response) => {
         this.DDLReasonReturn = response[CommonConstant.ReturnObj];
@@ -347,7 +347,7 @@ export class CreditReviewMainComponent implements OnInit {
       ListDeviationResultObjs: this.ManualDeviationData,
       RequestRFAObj: this.ApprovalCreateOutput
     }
-    this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
+    this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationDataNew, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
@@ -453,14 +453,26 @@ export class CreditReviewMainComponent implements OnInit {
     if (manualDevList != null) {
       listTypeCode = listTypeCode.concat(manualDevList);
     }
-    
+
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
+    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = listTypeCode;
+    this.InputObj.EnvUrl = environment.FoundationR3Url;
+    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
+    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
+    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
+    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
+    this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
+    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
+    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_CRD_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
     this.InputObj.Reason = this.DDLRecommendation;
     this.InputObj.TrxNo = this.AppNo
     this.IsReady = true;
   }
+
   cancel() {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
   }
@@ -468,9 +480,9 @@ export class CreditReviewMainComponent implements OnInit {
   async GetIsUseDigitalization() {
     var generalSettingObj = new GeneralSettingObj();
     generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
-    await this.http.post(URLConstant.GetGeneralSettingByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).toPromise().then(
-      (response) => {
-        this.IsUseDigitalization = response["GsValue"];
+    await this.http.post(URLConstant.GetGeneralSettingValueByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).toPromise().then(
+      (response: GeneralSettingObj) => {
+        this.IsUseDigitalization = response.GsValue;
       }
     )
   }

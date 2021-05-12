@@ -27,9 +27,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 export class LeadInputMainInfoComponent implements OnInit {
   user: any;
   LeadId: any;
-  addLead: string;
-  editLead: string;
-  getLeadByLeadId: string;
   returnLead: any;
   responseLead: any;
   leadObj: LeadObj;
@@ -44,10 +41,6 @@ export class LeadInputMainInfoComponent implements OnInit {
   tempSurveyorUsername: any;
   tempSalesUsername: any;
   tempAgencyCode: any;
-  getListRefOffice: string;
-  getListActiveRefMasterUrl: string;
-  getVendorByVendorCode: string;
-  getLeadPersonalForLookup: string;
   listRefOffice: Array<any>;
   refOfficeObj: RefOfficeObj;
   listRefLob: Array<any>;
@@ -92,13 +85,6 @@ export class LeadInputMainInfoComponent implements OnInit {
   isCopyButtonDisabled: boolean = true;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
-    this.addLead = URLConstant.AddLead;
-    this.editLead = URLConstant.EditLead;
-    this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
-    this.getListRefOffice = URLConstant.GetListKvpActiveRefOfficeForPaging;
-    this.getListActiveRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getVendorByVendorCode = URLConstant.GetVendorByVendorCode;
-    this.getLeadPersonalForLookup = URLConstant.GetLeadPersonalForLookupCopy;
     this.route.queryParams.subscribe(params => {
       if (params["mode"] != null) {
         this.pageType = params["mode"];
@@ -152,7 +138,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.getExistLeadObj = new LeadObj();
     this.getExistLeadObj.LeadId = this.leadIdExist;
     var getExistLeadObj = { Id: this.leadIdExist };
-    this.http.post(this.getLeadByLeadId, getExistLeadObj).subscribe(
+    this.http.post(URLConstant.GetLeadByLeadId, getExistLeadObj).subscribe(
       (response) => {
         this.returnExistLead = response;
         this.MainInfoForm.patchValue({
@@ -166,7 +152,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
         this.vendorExistObj = new VendorObj();
         this.vendorExistObj.VendorCode = this.returnExistLead.AgencyCode;
-        this.http.post(this.getVendorByVendorCode, { Code: this.returnExistLead.AgencyCode }).subscribe(
+        this.http.post(URLConstant.GetVendorByVendorCode, { Code: this.returnExistLead.AgencyCode }).subscribe(
           (response) => {
             this.returnVendorExistObj = response;
             this.agencyLookUpObj.nameSelect = this.returnVendorExistObj.VendorName;
@@ -216,7 +202,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.MakeLookUpObj();
     this.GetOfficeDDL();
 
-    this.http.post(this.getListActiveRefMasterUrl, { RefMasterTypeCode: "LOB" }).subscribe(
+    this.http.post(URLConstant.GetListActiveLob, {}).subscribe(
       (response) => {
         this.listRefLob = response[CommonConstant.ReturnObj];
         this.MainInfoForm.patchValue({
@@ -227,7 +213,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
     this.leadSource = new RefMasterObj();
     this.leadSource.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeLeadSource;
-    this.http.post(this.getListActiveRefMasterUrl, this.leadSource).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.leadSource).subscribe(
       (response) => {
         this.listLeadSource = response[CommonConstant.ReturnObj];
         this.MainInfoForm.patchValue({ LeadSource: response[CommonConstant.ReturnObj][0]['Key'] });
@@ -237,7 +223,7 @@ export class LeadInputMainInfoComponent implements OnInit {
       this.getLeadObj = new LeadObj();
       this.getLeadObj.LeadId = this.LeadId;
       var getLeadObj = { Id: this.LeadId };
-      this.http.post(this.getLeadByLeadId, getLeadObj).subscribe(
+      this.http.post(URLConstant.GetLeadByLeadId, getLeadObj).subscribe(
         (response) => {
           this.returnLead = response;
           this.MainInfoForm.patchValue({
@@ -254,7 +240,7 @@ export class LeadInputMainInfoComponent implements OnInit {
             this.leadExistObj = new LeadObj();
             this.leadExistObj.LeadId = this.returnLead.LeadCopyId;
             var leadExistObj = { Id: this.returnLead.LeadCopyId };
-            this.http.post(this.getLeadPersonalForLookup, leadExistObj).subscribe(
+            this.http.post(URLConstant.GetLeadPersonalForLookupCopy, leadExistObj).subscribe(
               (response) => {
                 this.returnLeadExistObj = response;
               });
@@ -262,7 +248,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
           this.vendorObj = new VendorObj();
           this.vendorObj.VendorCode = this.returnLead.AgencyCode;
-          this.http.post(this.getVendorByVendorCode, { Code: this.returnLead.AgencyCode }).subscribe(
+          this.http.post(URLConstant.GetVendorByVendorCode, { Code: this.returnLead.AgencyCode }).subscribe(
             (response) => {
               this.returnVendorObj = response;
               this.agencyLookUpObj.nameSelect = this.returnVendorObj.VendorName;
@@ -369,7 +355,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
   GetOfficeDDL() {
     this.refOfficeObj = new RefOfficeObj();
-    this.http.post(this.getListRefOffice, this.refOfficeObj).subscribe(
+    this.http.post(URLConstant.GetListKvpActiveRefOfficeForPaging, this.refOfficeObj).subscribe(
       (response) => {
         this.listRefOffice = response[CommonConstant.ReturnObj];
 
@@ -413,7 +399,7 @@ export class LeadInputMainInfoComponent implements OnInit {
         this.editLeadObj.LeadId = this.LeadId;
         this.editLeadObj.RowVersion = this.returnLead.RowVersion;
         this.setLeadObj(this.editLeadObj);
-        this.http.post(this.editLead, this.editLeadObj).subscribe(
+        this.http.post(URLConstant.EditLead, this.editLeadObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             if(isNext){
@@ -436,7 +422,7 @@ export class LeadInputMainInfoComponent implements OnInit {
         );
       } else {
         this.setLeadObj(this.addLeadObj);
-        this.http.post(this.addLead, this.addLeadObj).subscribe(
+        this.http.post(URLConstant.AddLead, this.addLeadObj).subscribe(
           (response) => {
             this.responseLead = response;
             this.LeadId = this.responseLead.Id;

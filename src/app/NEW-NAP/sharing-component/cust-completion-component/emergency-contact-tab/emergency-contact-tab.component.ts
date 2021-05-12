@@ -18,6 +18,7 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 
 @Component({
   selector: 'app-emergency-contact-tab',
@@ -120,7 +121,9 @@ export class EmergencyContactTabComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship }).subscribe(
+    let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
+    tempReq.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
+    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).subscribe(
       async (response) => {
         this.MrCustRelationshipObj = response[CommonConstant.ReturnObj];
         if (!this.IsMarried) {

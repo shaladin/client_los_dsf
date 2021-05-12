@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { MouCustTcComponent } from 'app/MOU/mou-customer-request/mou-cust-tc/mou-cust-tc.component';
-import { environment } from 'environments/environment';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
@@ -13,9 +12,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
-import { promise } from 'selenium-webdriver';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqListMouCustLglReviewObj } from 'app/shared/model/Request/MOU/ReqListMouCustLglReviewObj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 
 @Component({
   selector: 'app-legal-review-detail',
@@ -26,13 +25,8 @@ export class LegalReviewDetailComponent implements OnInit {
 
   MouCustId: number;
   WfTaskListId: any;
-  GetListActiveRefMasterUrl: string = URLConstant.GetListActiveRefMaster;
-  AddRangeMouCustLglReview: string = URLConstant.AddRangeMouCustLglReview;
   responseObj: any;
   responseRefMasterObj: any;
-  GetMouCustTcForMouLglByCustMouIdUrl: string = URLConstant.GetMouCustTcForMouLglByCustMouId;
-  GetMouCustLglReviewByMouCustIdUrl: string = URLConstant.GetMouCustLglReviewByMouCustId;
-  EditRangeMouCustLglReviewUrl: string = URLConstant.EditRangeMouCustLglReview;
   responseMouTcObj: any;
   items: FormArray;
   isItemsReady: boolean = false;
@@ -40,15 +34,13 @@ export class LegalReviewDetailComponent implements OnInit {
   link: any;
   mouCustObj: any;
   resultData: any;
-  SysConfigResultObj : ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
+  SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
   LegalForm = this.fb.group(
     {
       items: this.fb.array([]),
       termConditions: this.fb.array([])
     }
   );
-  GetRefMasterByRefMasterTypeCodeUrl: string = URLConstant.GetRefMasterByRefMasterTypeCode;
-  EditListMouCustTc: string = URLConstant.EditListMouCustTc;
   @ViewChild("MouTc") public mouTc: MouCustTcComponent;
   responseMouObj: Array<any> = new Array<any>();
   UploadViewlink: string;
@@ -74,7 +66,7 @@ export class LegalReviewDetailComponent implements OnInit {
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
-    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
       });
@@ -99,12 +91,12 @@ export class LegalReviewDetailComponent implements OnInit {
       }
     );
     var mouObj = { "Id": this.MouCustId };
-    this.http.post(this.GetMouCustLglReviewByMouCustIdUrl, mouObj).subscribe(
+    this.http.post(URLConstant.GetMouCustLglReviewByMouCustId, mouObj).subscribe(
       response => {
         this.responseMouObj = response['ReturnObject'];
 
-        var refLglReviewObj = { "RefMasterTypeCode": CommonConstant.RefMasterTypeLegalReview };
-        this.http.post(this.GetListActiveRefMasterUrl, refLglReviewObj).subscribe(
+        var refLglReviewObj: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeLegalReview, MappingCode: null };
+        this.http.post(URLConstant.GetListActiveRefMaster, refLglReviewObj).subscribe(
           (response) => {
             var lengthDataReturnObj = response[CommonConstant.ReturnObj].length;
             this.responseRefMasterObj = response[CommonConstant.ReturnObj];
@@ -162,7 +154,7 @@ export class LegalReviewDetailComponent implements OnInit {
       }
       mouObj.WfTaskListId = this.WfTaskListId;
       mouObj.IsSubmit = isSubmit;
-      this.http.post(this.AddRangeMouCustLglReview, mouObj).subscribe(
+      this.http.post(URLConstant.AddRangeMouCustLglReview, mouObj).subscribe(
         response => {
           this.toastr.successMessage(response['message']);
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_LEGAL_RVW_PAGING],{});

@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
 
 @Component({
   selector: 'app-similar-mou-personal-data',
@@ -21,9 +22,6 @@ export class SimilarMouPersonalDataComponent implements OnInit {
   WfTaskListId: number;
   FondationUrl = environment.FoundationR3Url;
   LOSUrl = environment.losUrl;
-  GetCustomerDuplicateCheckUrl = URLConstant.GetCustomerAndNegativeCustDuplicateCheck;
-  GetNegativeCustomerDuplicateCheckUrl = this.FondationUrl + URLConstant.GetNegativeCustomerDuplicateCheck;
-  GetAppCustDuplicateCheckUrl = this.LOSUrl + URLConstant.GetAppCustDuplicateCheck;
   AddAppDupCheckCustUrl = this.LOSUrl + URLConstant.AddAppDupCheckCust;
   MouCustObj: MouCustObj;
   MouCustPersonalObj: MouCustPersonalObj;
@@ -62,21 +60,20 @@ export class SimilarMouPersonalDataComponent implements OnInit {
         this.MouCustPersonalObj = response['MouCustPersonalObj'];
         this.MouCustAddrObj = response['MouCustAddrLegalObj'];
 
-        var requestDupCheck = {
-          "CustName": this.MouCustObj.CustName,
-          "MrCustTypeCode": this.MouCustObj.MrCustTypeCode,
-          "MrCustModelCode": this.MouCustObj.CustModelCode,
-          "MrIdTypeCode": this.MouCustObj.MrIdTypeCode,
-          "IdNo": this.MouCustObj.IdNo,
-          "TaxIdNo": this.MouCustObj.TaxIdNo,
-          "BirthDt": this.MouCustPersonalObj.BirthDt,
-          "MotherMaidenName": this.MouCustPersonalObj.MotherMaidenName,
-          "MobilePhnNo1": this.MouCustPersonalObj.MobilePhnNo1,          
-          "RowVersion": this.RowVersion,
-          "MouCustId": this.MouCustId
-        }
+        let ReqDupCheckObj: DuplicateCustObj = new DuplicateCustObj();
+        ReqDupCheckObj.CustName =  this.MouCustObj.CustName;
+        ReqDupCheckObj.MrCustTypeCode = this.MouCustObj.MrCustTypeCode;
+        ReqDupCheckObj.MrCustModelCode = this.MouCustObj.CustModelCode;
+        ReqDupCheckObj.MrIdTypeCode = this.MouCustObj.MrIdTypeCode;
+        ReqDupCheckObj.IdNo = this.MouCustObj.IdNo;
+        ReqDupCheckObj.TaxIdNo =  this.MouCustObj.TaxIdNo;
+        ReqDupCheckObj.BirthDt =  this.MouCustPersonalObj.BirthDt;
+        ReqDupCheckObj.MobilePhnNo1 = this.MouCustPersonalObj.MobilePhnNo1;
+        ReqDupCheckObj.RowVersion = this.RowVersion;
+        ReqDupCheckObj.MotherMaidenName = this.MouCustPersonalObj.MotherMaidenName;
+ 
         //List Cust Duplicate And List Negative Cust Duplicate Checking
-        this.http.post(this.GetCustomerDuplicateCheckUrl, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetCustomerAndNegativeCustDuplicateCheck, ReqDupCheckObj).subscribe(
           response => {
             this.ListCustomerDuplicate = response[CommonConstant.ReturnObj].CustDuplicate;
             this.ListNegativeCust = response[CommonConstant.ReturnObj].NegativeCustDuplicate;
@@ -84,14 +81,14 @@ export class SimilarMouPersonalDataComponent implements OnInit {
             
 
         //List App Cust Duplicate Checking
-        this.http.post(this.GetAppCustDuplicateCheckUrl, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetAppCustDuplicateCheck, ReqDupCheckObj).subscribe(
           response => {
             this.ListAppCustDuplicate = response[CommonConstant.ReturnObj];
           });
 
           
         //List Mou Cust Duplicate Checking
-        this.http.post(URLConstant.GetMouCustDuplicateCheck, requestDupCheck).subscribe(
+        this.http.post(URLConstant.GetMouCustDuplicateCheck, ReqDupCheckObj).subscribe(
           response => {
             this.ListMouCustDuplicate = response[CommonConstant.ReturnObj];
           });

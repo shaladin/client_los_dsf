@@ -17,8 +17,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { ResponseSysConfigResultObj } from 'app/shared/model/Response/ResponseSysConfigResultObj.Model';
-import { promise } from 'selenium-webdriver';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
@@ -61,7 +60,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
   appNo: string;
   dmsAppObj: DMSObj;
   mouCustNo: string;
-  SysConfigResultObj : ResponseSysConfigResultObj = new ResponseSysConfigResultObj();
+  SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_DO_PAGING;
   constructor(private fb: FormBuilder, private http: HttpClient,
@@ -106,18 +105,6 @@ export class DeliveryOrderDetailComponent implements OnInit {
       }
     );
 
-    var refMasterTypeObj = {
-      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustRelationship,
-    }
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterTypeObj).subscribe(
-      (response) => {
-        this.itemType = response[CommonConstant.ReturnObj];
-        this.DeliveryOrderForm.patchValue({
-          MrCustRelationshipCode: this.itemType[0].Key
-        });
-      }
-    );
-
     this.items = this.DeliveryOrderForm.get('items') as FormArray;
     this.listItem = this.DeliveryOrderForm.get('listItem') as FormArray;
 
@@ -132,6 +119,21 @@ export class DeliveryOrderDetailComponent implements OnInit {
         this.FullAssetName = this.appAssetObj.FullAssetName;
         this.MrAssetUsageCode = this.appAssetObj.MrAssetUsageCode;
         this.AssetCategoryCode = this.appAssetObj.AssetCategoryCode;
+
+        this.http.post(URLConstant.GetAppCustByAppId, {Id : this.appAssetObj.AppId}).subscribe(
+          (response) => {
+            var refMasterTypeObj = {
+              RefMasterTypeCode: response["MrCustTypeCode"] == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship,
+            }
+            this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterTypeObj).subscribe(
+              (response) => {
+                this.itemType = response[CommonConstant.ReturnObj];
+                this.DeliveryOrderForm.patchValue({
+                  MrCustRelationshipCode: this.itemType[0].Key
+                });
+              }
+            );
+          });
 
         this.DeliveryOrderForm.patchValue({
           ManufacturingYear: this.appAssetObj.ManufacturingYear
@@ -191,7 +193,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
           });
       }
     );
-    await this.http.post<ResponseSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
       });

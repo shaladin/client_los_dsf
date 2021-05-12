@@ -23,6 +23,7 @@ import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDa
 import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 import { CustMainDataCompanyObj } from 'app/shared/model/CustMainDataCompanyObj.Model';
 import { CustMainDataPersonalObj } from 'app/shared/model/CustMainDataPersonalObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResponseAppCustCompletionCompanyDataObj } from 'app/shared/model/ResponseAppCustCompletionCompanyDataObj.Model';
 import { ResponseAppCustCompletionPersonalDataObj } from 'app/shared/model/ResponseAppCustCompletionPersonalDataObj.Model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
@@ -354,16 +355,16 @@ export class NewNapCustDetailComponent implements OnInit {
     var userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = userAccess[CommonConstant.BUSINESS_DT];
     var url = URLConstant.GetAppCustMainDataByAppId;
-    var req;
+    var req: GenericObj = new GenericObj();
     var isGetAppCust = false;
     
     if(this.AppCustIdInput > 0 && this.custMainDataMode != CommonConstant.CustMainDataModeCust){
       url = URLConstant.GetAppCustMainDataByAppCustId;
-      req = { AppCustId: this.AppCustIdInput };
+      req.Id = this.AppCustIdInput;
       isGetAppCust = true;
     }
     else if(this.custMainDataMode == CommonConstant.CustMainDataModeCust){
-      req = { AppId: this.AppId };
+      req.Id = this.AppId;
       isGetAppCust = true;
     }
     if(isGetAppCust){
@@ -414,7 +415,9 @@ export class NewNapCustDetailComponent implements OnInit {
       this.IsDataLoaded = true;
     }
     if (this.custMainDataMode != CommonConstant.CustMainDataModeCust) {
-      this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, { AppId: this.AppId }).subscribe(
+      let reqObj: GenericObj = new GenericObj();
+      reqObj.Id = this.AppId;
+      this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, reqObj).subscribe(
         async (response) => {
           if (response.AppCustObj) {
             this.AppCustDataForChecking = response.AppCustObj;
@@ -1096,7 +1099,7 @@ export class NewNapCustDetailComponent implements OnInit {
         bankAccObj.IsDefault = bank.IsDefault;
         bankAccObj.IsActive = bank.IsActive;
         obj["BankAccObj"] = bankAccObj;
-        obj["ListBankStmntObj"] = bank.AppCustBankStmntObjs;
+        obj["ListBankStmntObj"] = bank.ListAppCustBankAccStmntObj;
         appCustBankAccRequest.push(obj);
       }
       var requestPersonal = {
@@ -1185,7 +1188,7 @@ export class NewNapCustDetailComponent implements OnInit {
         bankAccObj.IsDefault = bank.IsDefault;
         bankAccObj.IsActive = bank.IsActive;
         obj["BankAccObj"] = bankAccObj;
-        obj["ListBankStmntObj"] = bank.AppCustBankStmntObjs;
+        obj["ListBankStmntObj"] = bank.ListAppCustBankAccStmntObj;
         appCustBankAccRequest.push(obj);
       }
       this.setAttrContent();

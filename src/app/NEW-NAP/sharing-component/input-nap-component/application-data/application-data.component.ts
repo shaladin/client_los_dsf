@@ -12,7 +12,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
-import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { ActivatedRoute } from '@angular/router';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
@@ -25,6 +24,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 
 @Component({
   selector: 'app-application-data',
@@ -49,7 +49,6 @@ export class ApplicationDataComponent implements OnInit {
   PayFreqTimeOfYear: number;
   FirstInstType: string;
   resMouCustObj;
-  mouCustObj;
   CustNo: string;
   isProdOfrUpToDate: boolean = true;
   missingProdOfrComp: string = "";
@@ -128,7 +127,6 @@ export class ApplicationDataComponent implements OnInit {
   slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
 
-  generalSettingObj: any;
   salesOfficerCode : Array<string> = new Array();
   isSalesOfficerCode: boolean = false;
   refEmpSpvObj: any;
@@ -181,12 +179,7 @@ export class ApplicationDataComponent implements OnInit {
       (response) => {
         this.CustNo = response["CustNo"];
 
-        this.mouCustObj = new MouCustObj();
-        this.mouCustObj.CustNo = this.CustNo;
-        this.mouCustObj.StartDt = user.BusinessDt;
-        this.mouCustObj.MrMouTypeCode = CommonConstant.GENERAL;
-
-        this.http.post(URLConstant.GetListMouCustByCustNo, this.mouCustObj).subscribe(
+        this.http.post(URLConstant.GetListMouCustByCustNo, {CustNo: this.CustNo, StartDt: user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL}).subscribe(
           (response) => {
             this.resMouCustObj = response[CommonConstant.ReturnObj];
 
@@ -199,10 +192,9 @@ export class ApplicationDataComponent implements OnInit {
       }
     );
 
-    this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).subscribe(
-      (response) => {
-        this.generalSettingObj = response;
-        this.salesOfficerCode = this.generalSettingObj.GsValue.split(',');
+    this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).subscribe(
+      (response: GeneralSettingObj) => {
+        this.salesOfficerCode = response.GsValue.split(',');
         if(this.salesOfficerCode.some(x => x === user.JobTitleCode)) {
           this.isSalesOfficerCode = true;
           this.NapAppModelForm.patchValue({
@@ -518,14 +510,14 @@ export class ApplicationDataComponent implements OnInit {
       this.inputLookupEconomicSectorObj.jsonSelect = { Descr: this.resultResponse["MrSlikSecEcoDescr"] };
     }
     else {
-      var reqSecObj = new RefMasterObj();
+      let reqSecObj: ReqRefMasterByTypeCodeAndMasterCodeObj = new ReqRefMasterByTypeCodeAndMasterCodeObj();
       reqSecObj.MasterCode = this.defaultSlikSecEcoCode;
       reqSecObj.RefMasterTypeCode = "SLIK_SEC_ECO";
-      this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(
-        (response) => {
-          this.slikSecDescr = response['Descr'];
-          this.inputLookupEconomicSectorObj.nameSelect = response['Descr'];
-          this.inputLookupEconomicSectorObj.jsonSelect = { Descr: response['Descr'] };
+      this.http.post(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, reqSecObj).subscribe(
+        (response: KeyValueObj) => {
+          this.slikSecDescr = response.Value;
+          this.inputLookupEconomicSectorObj.nameSelect = response.Value;
+          this.inputLookupEconomicSectorObj.jsonSelect = { Descr: response.Value };
         });
     }
     this.isInputLookupObj = true;
@@ -561,7 +553,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   async GetGSValueSalesOfficer() {
-    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
+    await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
       (response) => {
         var addCrit3 = new CriteriaObj();
         addCrit3.DataType = "text";

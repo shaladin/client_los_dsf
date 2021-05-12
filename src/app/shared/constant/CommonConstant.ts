@@ -187,7 +187,7 @@ export class CommonConstant {
   public static ASSET_TYPE_CAR = "CAR";
   public static LICENSE_PLATE_NO = "LICENSE PLATE NO";
   public static OFFERING_VALIDITY_APV = "OFF_VLD_APV";
-  public static AppStatCancel = "CAN";
+
   //APV RESULT
   public static ApvResultReturn = "Return";
   public static ApvResultReturnFinal = "ReturnFinal";
@@ -622,7 +622,11 @@ export class CommonConstant {
   //FRAUD CHECK TYPE
   public static FRAUD_CHCK_ASSET = "ASSET";
   public static FRAUD_CHCK_CUST = "CUST";
+
+
   //DMS
+  public static DmsKeyR2 = "1234567891234567";
+  public static DmsIVR2 = "1234567891234567";
   public static DmsKey = "PHL7KV8RR0VG30K4";
   public static DmsIV = "0G7HFV96AVWXUQ51";
   public static DmsNoCust = "No Customer";
@@ -630,6 +634,12 @@ export class CommonConstant {
   public static DmsNoAgr = "No Agreement";
   public static DmsMouId = "Mou Id";
   public static DmsLeadId = "Lead Id";
+  public static DmsOfficeCode = "Office Code";
+  public static DmsCustName = "Cust Name";
+  public static DmsDealerName = "Dealer Name";
+  public static DmsExpiredDate = "Expired Date";
+  public static DmsTimestamp = "Tiemstamp";
+  public static DmsRoleName = "Role Name";
   public static DmsOverideSecurity = "OverideSecurity";
   public static DmsOverideUpload = "Upload";
   public static DmsOverideView = "View";
@@ -672,6 +682,7 @@ export class CommonConstant {
 
   //SYS CONFIG
   public static ConfigCodeIsUseDms = "IS_USE_DMS";
+  public static SYS_CONFIG_USING_DMS_ADINS = "USING_DMS_ADINS"
   
   //interest input type
   public static InterestInputTypeAmt = "AMT";
@@ -707,6 +718,10 @@ export class CommonConstant {
   //PROD OFFERING
   public static PROD_OFF_STAT_ACT = "ACT";
 
+  //APP STAT
+  public static AppStatCancel = "CAN";
+  public static AppStatReject = "RJC";
+  
   // GENERAL SETTING CODE
   public static GS_CODE_SALES_OFFICER_CODE = "SALES_OFFICER_CODE";
 }

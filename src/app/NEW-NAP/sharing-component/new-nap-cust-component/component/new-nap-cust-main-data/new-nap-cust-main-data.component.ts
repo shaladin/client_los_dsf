@@ -15,10 +15,14 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { CustMainDataCompanyObj } from 'app/shared/model/CustMainDataCompanyObj.Model';
 import { CustMainDataPersonalObj } from 'app/shared/model/CustMainDataPersonalObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ResListKeyValueObj } from 'app/shared/model/Response/Generic/ResListKeyValueObj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { ResGetAppCustAddrByAppIdAndAddrTypeCodeObj } from 'app/shared/model/Response/NAP/CustMainData/ResGetAppCustAddrByAppIdAndAddrTypeCodeObj.model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { ResponseCustCompanyForCopyObj } from 'app/shared/model/ResponseCustCompanyForCopyObj.Model';
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
@@ -133,7 +137,7 @@ export class NewNapCustMainDataComponent implements OnInit {
     this.ResponseCustModel.emit(this.ParentForm.controls.MrCustModelCode.value);
   }
 
-  initcustMainDataMode() {
+  async initcustMainDataMode() {
     this.custDataObj = new CustDataObj();
     this.custDataObj.AppId = this.appId;
     if (this.appCustId) this.custDataObj.AppCustId = this.appCustId;
@@ -152,7 +156,7 @@ export class NewNapCustMainDataComponent implements OnInit {
         this.subjectTitle = 'Guarantor';
         this.ParentForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.ParentForm.controls.MrGenderCode.setValidators(Validators.required);
-        this.GetAppCustMainDataByAppId();
+        await this.GetAppCustMainDataByAppId();
         this.ResponseIsIncludeCustRelation.emit(this.isIncludeCustRelation);
         break;
       case CommonConstant.CustMainDataModeFamily:
@@ -161,7 +165,7 @@ export class NewNapCustMainDataComponent implements OnInit {
         this.subjectTitle = 'Family';
         this.ParentForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.ParentForm.controls.MrGenderCode.setValidators(Validators.required);
-        this.GetAppCustMainDataByAppId();
+        await this.GetAppCustMainDataByAppId();
         this.ResponseIsIncludeCustRelation.emit(this.isIncludeCustRelation);
         break;
       case CommonConstant.CustMainDataModeMgmntShrholder:
@@ -171,7 +175,7 @@ export class NewNapCustMainDataComponent implements OnInit {
         this.ParentForm.controls.EstablishmentDt.setValidators([Validators.required]);
         this.ParentForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.ParentForm.controls.MrJobPositionCode.setValidators(Validators.required);
-        this.GetAppCustMainDataByAppId();
+        await this.GetAppCustMainDataByAppId();
         this.ResponseIsIncludeCustRelation.emit(this.isIncludeCustRelation);
         break;
       default:
@@ -182,8 +186,10 @@ export class NewNapCustMainDataComponent implements OnInit {
   }
 
   AppCustData: AppCustObj = new AppCustObj();
-  GetAppCustMainDataByAppId() {
-    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, { 'Id': this.appId }).subscribe(
+  async GetAppCustMainDataByAppId() {
+    let reqObj: GenericObj = new GenericObj();
+    reqObj.Id = this.appId;
+    await this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, reqObj).toPromise().then(
       async (response) => {
         if (response.AppCustObj) {
           this.AppCustData = response.AppCustObj;
@@ -262,7 +268,8 @@ export class NewNapCustMainDataComponent implements OnInit {
   }
 
   async GetListActiveRefMaster(RefMasterTypeCode: string) {
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: RefMasterTypeCode }).toPromise().then(
+    let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: RefMasterTypeCode, MappingCode: null };
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, tempReq).toPromise().then(
       (response) => {
         this.DictRefMaster[RefMasterTypeCode] = response[CommonConstant.ReturnObj];
       });
@@ -275,7 +282,8 @@ export class NewNapCustMainDataComponent implements OnInit {
     await this.GetListActiveRefMaster(this.MasterCompanyType);
     await this.GetListActiveRefMaster(this.MasterJobPosition);
 
-    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel, MappingCode: this.MrCustTypeCode }).toPromise().then(
+    let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel, MappingCode: this.MrCustTypeCode };
+    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).toPromise().then(
       (response) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
       }
@@ -299,16 +307,14 @@ export class NewNapCustMainDataComponent implements OnInit {
   getCustRelationship() {
     if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
       if (this.ParentForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal) {
-        var refCustRelObj = {
+        var refCustRelObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
           RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
           MappingCode: CommonConstant.CustTypePersonal,
-          RowVersion: ""
         }
       } else {
-        var refCustRelObj = {
+        var refCustRelObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
           RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
           MappingCode: CommonConstant.CustTypeCompany,
-          RowVersion: ""
         }
       }
       this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, refCustRelObj).subscribe(
@@ -317,7 +323,9 @@ export class NewNapCustMainDataComponent implements OnInit {
         }
       );
     } else {
-      this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, { RefMasterTypeCode: this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship }).subscribe(
+      let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
+      tempReq.RefMasterTypeCode = this.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.RefMasterTypeCodeCustPersonalRelationship : CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
+      this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).subscribe(
         async (response) => {
           this.MrCustRelationshipCodeObj = response[CommonConstant.ReturnObj];
           if (this.ParentForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal && !this.isMainCustMarried) await this.removeSpouse();
@@ -353,8 +361,10 @@ export class NewNapCustMainDataComponent implements OnInit {
     this.ParentForm.controls.MrCustTypeCode.setValue(this.MrCustTypeCode);
 
     if (!FirstInit) {
-      this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, { MrCustTypeCode: custType == CommonConstant.CustTypePersonal ? CommonConstant.CustTypePersonal : CommonConstant.CustTypeCompany }).subscribe(
-        (response) => {
+      var custModelReqObj = new GenericObj();
+      custModelReqObj.Code = this.MrCustTypeCode;
+      this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, custModelReqObj).subscribe(
+        (response : ResListKeyValueObj) => {
           this.CustModelObj = response[CommonConstant.ReturnObj];
         }
       );
@@ -465,17 +475,20 @@ export class NewNapCustMainDataComponent implements OnInit {
   }
 
   CopyAddress() {
-    this.http.post(URLConstant.GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode, { AppId: this.appId, MrCustAddrTypeCode: CommonConstant.AddrTypeLegal }).subscribe(
-      (response) => {
-        this.legalAddrObj.Addr = response["Addr"];
-        this.legalAddrObj.AreaCode1 = response["AreaCode1"];
-        this.legalAddrObj.AreaCode2 = response["AreaCode2"];
-        this.legalAddrObj.AreaCode3 = response["AreaCode3"];
-        this.legalAddrObj.AreaCode4 = response["AreaCode4"];
-        this.legalAddrObj.City = response["City"];
+    let ReqByIdAndCodeObj = new GenericObj();
+    ReqByIdAndCodeObj.Id = this.appId;
+    ReqByIdAndCodeObj.Code = CommonConstant.AddrTypeLegal;
+    this.http.post(URLConstant.GetAppCustAddrCustomerByAppIdAndMrAddrTypeCode, ReqByIdAndCodeObj).subscribe(
+      (response : ResGetAppCustAddrByAppIdAndAddrTypeCodeObj) => {
+        this.legalAddrObj.Addr = response.Addr;
+        this.legalAddrObj.AreaCode1 = response.AreaCode1;
+        this.legalAddrObj.AreaCode2 = response.AreaCode2;
+        this.legalAddrObj.AreaCode3 = response.AreaCode3;
+        this.legalAddrObj.AreaCode4 = response.AreaCode4;
+        this.legalAddrObj.City = response.City;
 
-        this.inputAddressObj.inputField.inputLookupObj.nameSelect = response["Zipcode"];
-        this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["Zipcode"] };
+        this.inputAddressObj.inputField.inputLookupObj.nameSelect = response.Zipcode;
+        this.inputAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response.Zipcode };
         this.inputAddressObj.default = this.legalAddrObj;
       });
   }
