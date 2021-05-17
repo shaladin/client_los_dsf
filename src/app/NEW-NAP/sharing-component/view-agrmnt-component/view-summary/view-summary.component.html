@@ -121,7 +121,7 @@
     <div *ngIf="SummaryObj?.AppCustPersonal">
       <label class="col-md-2  adInsLabel" translate>Payment Frequency</label>
       <label class="col-md-4  adinslabel" translate
-        *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.PayFreqCode}}</label>
+        *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.PayFreqCodeDesc}}</label>
       <label class="col-md-2  adInsLabel" translate>Effective Date</label>
       <label class="col-md-4  adinslabel" translate
         *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.EffectiveDt | date: 'dd-MMMM-yyyy'}}</label>
@@ -157,7 +157,7 @@
     <div>
       <label class="col-md-2  adInsLabel" translate>Asset Condition</label>
       <label class="col-md-4  adinslabel" translate
-        *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.MrAssetConditionCode}}</label>
+        *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.MrAssetConditionCodeDesc}}</label>
       <label class="col-md-2  adInsLabel" translate>Down Payment</label>
       <label class="col-md-4  adinslabel" translate
         *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.DownPaymentAmt | number:'.2':'en-US'}}</label>
