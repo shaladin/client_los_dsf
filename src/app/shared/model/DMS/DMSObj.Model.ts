@@ -12,5 +12,6 @@ export class DMSObj{
     Option : Array<DMSLabelValueObj> = new Array<DMSLabelValueObj>();
     UsingDmsAdIns : string;
     constructor(){
+        this.UsingDmsAdIns = "2";
     };
 }

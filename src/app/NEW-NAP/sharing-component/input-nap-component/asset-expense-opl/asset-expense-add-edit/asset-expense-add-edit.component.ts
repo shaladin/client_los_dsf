@@ -696,7 +696,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
     this.groupedAddCvgType.forEach((o) => {
       if (o == CommonConstant.MrAddCvgTypeCodeLoading) {
         var isLoadingExist = this.insAddCvgTypeRuleObj.find(x => x.Key == CommonConstant.MrAddCvgTypeCodeLoading);
-        if (!isLoadingExist && ManufYearDiff + noOfYear >= minAssetAgeFrom) {          
+        if (isLoadingExist != undefined && ManufYearDiff + noOfYear >= minAssetAgeFrom) {          
           var item = this.insAddCvgTypeObj.find(x => x.Key == o);
           this.insAddCvgTypeRuleObj.push(item);
         }

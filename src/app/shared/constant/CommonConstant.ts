@@ -226,6 +226,12 @@ export class CommonConstant {
   public static AttrGroupCustPersonalOther = "CUST_PERSONAL_OTH"
   public static AttrGroupCustCompanyFinData = "CUST_COMPANY_FINDATA"
   public static AttrGroupCustPersonalFinData = "CUST_PERSONAL_FINDATA"
+  public static AttrGroupCustPersonalFinDataIncome = "CUST_PERSONAL_FINDATA_INCOME"
+  public static AttrGroupCustPersonalFinDataExpense = "CUST_PERSONAL_FINDATA_EXPENSE"
+  public static AttrGroupCustPersonalFinDataOther = "CUST_PERSONAL_FINDATA_OTHER"
+  public static AttrGroupCustCompanyFinDataIncome = "CUST_COMPANY_FINDATA_INCOME"
+  public static AttrGroupCustCompanyFinDataExpense = "CUST_COMPANY_FINDATA_EXPENSE"
+  public static AttrGroupCustCompanyFinDataOther = "CUST_COMPANY_FINDATA_OTHER"
 
   //Interest Type
   public static InterestTypeFixed = "FIXED";

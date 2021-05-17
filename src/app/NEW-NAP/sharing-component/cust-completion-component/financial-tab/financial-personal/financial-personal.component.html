@@ -4,7 +4,7 @@
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="FinancialForm" (ngSubmit)="FinancialForm.valid && SaveForm()"
           #enjiForm="ngForm">
-          <lib-ucSubsection [id]="'FinancialId'" [title]="'Financial Data'" [panel]="'Financial'">
+          <lib-ucSubsection [id]="'FinancialId'" [title]="'Financial Information'" [panel]="'Financial'">
           </lib-ucSubsection>
           <div id="Financial">
             <div class="row">
@@ -105,8 +105,10 @@
               </div>
             </div>
           </div>
-          <app-attr-content-component [title]="'Financial Attribute'" [AppCustId]="AppCustId" [enjiForm]="enjiForm"
-            [parentForm]="FinancialForm" [identifier]="'AttrList'" [AttrGroup]="AttrGroup"></app-attr-content-component>
+          <app-attr-content-component [title]="'Financial Attribute Information'" [AppCustId]="AppCustId" [enjiForm]="enjiForm"
+            [parentForm]="FinancialForm" [identifier]="'AttrList'" [AttrGroups]="AttrGroups"
+            (IncomeAmt)="CalculateIncomeAmt($event)" (ExpenseAmt)="CalculateExpenseAmt($event)"></app-attr-content-component>
+            <!-- [AttrGroup]="AttrGroup" -->
           <app-bank-section [AppCustId]="AppCustId" [AppCustBankAccList]="AppCustBankAccList" (OutputObj)="GetEvent($event)"></app-bank-section>
           <div class="form-actions right" *ngIf="!IsDetail">
             <button type="submit" (click)="formValidate.scrollIfFormHasErrors(FinancialForm)"

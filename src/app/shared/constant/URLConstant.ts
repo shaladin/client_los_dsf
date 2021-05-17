@@ -374,7 +374,8 @@ export class URLConstant {
 
   //REF ATTR
   public static GetListActiveRefAttrByAttrGroup = environment.FoundationR3Url + "/RefAttr/GetListActiveRefAttrByAttrGroup"
-
+  public static GetListActiveRefAttrByListAttrGroup = environment.FoundationR3Url + "/RefAttr/GetListActiveRefAttrByListAttrGroup"
+  
   //REF PROV DISTRICT
   public static GetRefProvDistrictPaging = "/RefProvDistrict/GetRefProvDistrictPaging";
   public static GetRefProvDistrictByProvDistrictCode = environment.FoundationR3Url + "/RefProvDistrict/GetRefProvDistrictByProvDistrictCode";
@@ -801,6 +802,9 @@ export class URLConstant {
   // APP CUST ATTR CONTENT 
   public static GetListAppCustAttrContentByAppCustIdAndAttrGroup = environment.losUrl + "/AppCustAttrContent/GetListAppCustAttrContentByAppCustIdAndAttrGroup"
   public static GetListAppCustAttrContentForNewNap = environment.losUrl + "/AppCustAttrContent/GetListAppCustAttrContentForNewNap";
+
+  // APP CUST ATTR CONTENT
+  public static GetListAppCustFinDataAttrContentByAppCustIdAndListAttrGroup = environment.losUrl + "/AppCustFinDataAttrContent/GetListAppCustFinDataAttrContentByAppCustIdAndListAttrGroup";
 
   // APP CUST OTHER INFO
   public static AddCustCompletionOtherInfo = environment.losUrl + "/AppCustOtherInfo/AddCustCompletionOtherInfo";
