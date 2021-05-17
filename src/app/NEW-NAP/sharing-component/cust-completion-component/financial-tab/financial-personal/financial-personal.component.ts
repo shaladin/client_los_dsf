@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
@@ -16,17 +15,26 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
   styleUrls: ['./financial-personal.component.scss']
 })
 export class FinancialPersonalComponent implements OnInit {
-
   @Input() AppCustId: number;
   @Input() AppCustPersonalId: number;
   @Input() IsMarried: boolean;
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
+
   IsDetail: boolean = false;
-  AttrGroup: string = CommonConstant.AttrGroupCustPersonalFinData;
+  // AttrGroup: string = CommonConstant.AttrGroupCustPersonalFinData;
+  AttrGroups: Array<string> = [
+    CommonConstant.AttrGroupCustPersonalFinDataIncome,
+    CommonConstant.AttrGroupCustPersonalFinDataExpense,
+    CommonConstant.AttrGroupCustPersonalFinDataOther
+  ];
   AppCustPersonalFinData: AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
   CustAttrRequest: Array<Object>;
   MrSourceOfIncomeTypeObj: Array<KeyValueObj> = new Array();
   AppCustBankAccList: Array<AppCustBankAccObj> = new Array();
+  IncomeList: Array<{Index: number, Amount: number}> = new Array<{Index: number, Amount: number}>();
+  TotalIncomeListAmt: number = 0;
+  ExpenseList: Array<{Index: number, Amount: number}> = new Array<{Index: number, Amount: number}>();
+  TotalExpenseListAmt: number = 0;
 
   FinancialForm = this.fb.group({
     AppCustPersonalId: [0],
@@ -105,12 +113,13 @@ export class FinancialPersonalComponent implements OnInit {
     let NettIncomeAmt = FormData.NettIncomeAmt;
 
     if (FormData.IsJoinIncome) {
-      TotalIncomeAmt = MonthlyIncomeAmt + SpouseMonthlyIncomeAmt + OtherIncomeAmt;
-    } else {
-      TotalIncomeAmt = MonthlyIncomeAmt + OtherIncomeAmt;
+      TotalIncomeAmt = MonthlyIncomeAmt + SpouseMonthlyIncomeAmt + OtherIncomeAmt + this.TotalIncomeListAmt;
+    }
+    else {
+      TotalIncomeAmt = MonthlyIncomeAmt + OtherIncomeAmt + this.TotalIncomeListAmt;
     }
 
-    NettIncomeAmt = TotalIncomeAmt - (MonthlyExpenseAmt + MonthlyInstallmentAmt + OtherMonthlyInstAmt);
+    NettIncomeAmt = TotalIncomeAmt - (MonthlyExpenseAmt + MonthlyInstallmentAmt + OtherMonthlyInstAmt + this.TotalExpenseListAmt);
 
     this.FinancialForm.patchValue({
       TotalIncomeAmt: TotalIncomeAmt,
@@ -130,11 +139,10 @@ export class FinancialPersonalComponent implements OnInit {
             AppCustId: this.AppCustId,
             RefAttrCode: formValue[key]["AttrCode"],
             AttrValue: formValue[key]["AttrValue"],
-            AttrGroup: this.AttrGroup
+            AttrGroup: formValue[key]["AttrGroup"]
           };
           this.CustAttrRequest.push(custAttr);
         }
-
       }
     }
   }
@@ -148,8 +156,9 @@ export class FinancialPersonalComponent implements OnInit {
     this.AppCustPersonalFinData.AppCustPersonalId = this.AppCustPersonalId;
 
     let request = {
-      ListAppCustAttrObj: this.CustAttrRequest,
-      AppCustPersonalFinDataObj: this.AppCustPersonalFinData
+      ListAppCustFinDataAttrObj: this.CustAttrRequest,
+      AppCustPersonalFinDataObj: this.AppCustPersonalFinData,
+      AttrGroups: this.AttrGroups
     }
     if (!this.isDataExist) {
       this.http.post(URLConstant.AddAppCustPersonalFinData, request).subscribe(
@@ -157,13 +166,42 @@ export class FinancialPersonalComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
           this.OutputTab.emit({ IsComplete: true });
         });
-    } else {
+    }
+    else {
       this.http.post(URLConstant.EditAppCustPersonalFinData, request).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.OutputTab.emit({ IsComplete: true });
-        });
+        }
+      );
+    }
+  }
+
+  CalculateIncomeAmt(event: any) {
+    let objectAmount = this.IncomeList.find(f => f.Index === event.Index);
+    if(objectAmount === undefined) {
+      this.IncomeList.push({Index: event.Index, Amount: event.Amount});
+    }
+    else {
+      objectAmount.Amount = event.Amount;
     }
 
+    this.TotalIncomeListAmt = 0
+    this.IncomeList.forEach(fe => this.TotalIncomeListAmt += fe.Amount);
+    this.CalculateFinData();
+  }
+
+  CalculateExpenseAmt(event: any) {
+    let objectAmount = this.ExpenseList.find(f => f.Index === event.Index);
+    if(objectAmount === undefined) {
+      this.ExpenseList.push({Index: event.Index, Amount: event.Amount});
+    }
+    else {
+      objectAmount.Amount = event.Amount;
+    }
+
+    this.TotalExpenseListAmt = 0
+    this.ExpenseList.forEach(fe => this.TotalExpenseListAmt += fe.Amount);
+    this.CalculateFinData();
   }
 }

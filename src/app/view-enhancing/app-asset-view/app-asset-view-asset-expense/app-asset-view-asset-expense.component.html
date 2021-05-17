@@ -50,7 +50,7 @@
               
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Total Premi</label>
-                <label class="col-md-3 adins-label text-right">{{InsuranceObj?.TotalPremi | number:'1.2-2':'en-US'}}</label>
+                <label class="col-md-3 adins-label text-right">{{InsuranceObj?.TotalPremi + InsuranceObj?.InsDiscAmt | number:'1.2-2':'en-US'}}</label>
               </div>
 
               <div class="form-group row">
@@ -60,7 +60,7 @@
 
               <div class="form-group row">
                 <label class="col-md-3 adins-label" translate>Total Premi - Discount</label>
-                <label class="col-md-3 adins-label text-right">{{InsuranceObj?.TotalPremi - InsuranceObj?.InsDiscAmt | number:'1.2-2':'en-US'}}</label>
+                <label class="col-md-3 adins-label text-right">{{InsuranceObj?.TotalPremi | number:'1.2-2':'en-US'}}</label>
               </div>
             </div>
 
