@@ -125,29 +125,34 @@ export class AgreementViewContainerComponent implements OnInit {
     }  
   }
 
-  GetAppAndAppCustDetailByAgrmntId() {
+  async GetAppAndAppCustDetailByAgrmntId() {
     var obj = { Id: this.AgrmntId };
     this.http.post(URLConstant.GetAppAndAppCustDetailByAgrmntId, obj).toPromise().then(
-      (response) => {
+      async (response) => {
         this.ResponseAppDetailData = response;
 
-        let objIsDisburse: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
-        objIsDisburse.ProdOfferingCode = this.ResponseAppDetailData.ProdOfferingCode;
-        objIsDisburse.RefProdCompntCode = CommonConstant.RefProdCompntCodeDisburseToCust;
-        objIsDisburse.ProdOfferingVersion = this.ResponseAppDetailData.ProdOfferingVersion;
+        if(this.ResponseAppDetailData.BizTemplateCode == CommonConstant.FCTR || this.ResponseAppDetailData.BizTemplateCode == CommonConstant.CFNA){
+          let objIsDisburse: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+          objIsDisburse.ProdOfferingCode = this.ResponseAppDetailData.ProdOfferingCode;
+          objIsDisburse.RefProdCompntCode = CommonConstant.RefProdCompntCodeDisburseToCust;
+          objIsDisburse.ProdOfferingVersion = this.ResponseAppDetailData.ProdOfferingVersion;
+          await this.GetIsNeedPO(objIsDisburse);
+        }
 
-        this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, objIsDisburse).toPromise().then(
-          (response) => {
-            if (response && response["StatusCode"] == "200" && response["ProdOfferingDId"] > 0) {
-              this.IsNeedPO = response["CompntValue"] == 'N' ? true : false
-            }
-
-            this.GetAgrmnt();
-          });
+        await this.GetAgrmnt();
       });
   }
 
-  GetAgrmnt() {
+  async GetIsNeedPO(requestObj : ReqGetProdOffDByProdOffVersion){
+    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, requestObj).subscribe(
+      (response) => {
+        if (response && response["StatusCode"] == "200" && response["ProdOfferingDId"] > 0) {
+          this.IsNeedPO = response["CompntValue"] == 'N' ? true : false;
+        }
+      });
+  }
+
+  async GetAgrmnt() {
     var agrmntObj = {
       Id: this.AgrmntId,
     };
