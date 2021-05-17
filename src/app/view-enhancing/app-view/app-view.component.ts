@@ -43,7 +43,7 @@ export class AppViewComponent implements OnInit {
   IsAnalysisResult: boolean = true;
   IsCollateral: boolean = true;
   IsMultiCollateral: boolean = true;
-  IsApprovalHist: boolean = true;
+  IsApprovalHist: boolean = false;
   IsDeviation: boolean = true;
   IsAssetExpense: boolean = true;
   IsPefindoResult: boolean = true;
@@ -53,51 +53,54 @@ export class AppViewComponent implements OnInit {
   dmsObj: DMSObj;
   usingDmsAdins: string;
   agrNo: any;
-  appNo: any;
   custNo: any;
   IsUseDigitalization: string;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
+  OriOfficeCode: string;
 
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
-      if(params["AppId"] == 'undefined'){
+      if (params["AppId"] == 'undefined') {
         this.AppNo = params["AppNo"]
-        
-      }else{
+
+      } else {
         this.AppId = params["AppId"];
       }
-      
+
     })
-    
+
   }
 
-  async ngOnInit() : Promise<void> {
-    if(this.AppId == 0){
-      await this.http.post(URLConstant.GetAppByAppNo, {TrxNo: this.AppNo}).toPromise().then(
+  async ngOnInit(): Promise<void> {
+    if (this.AppId == 0) {
+      await this.http.post(URLConstant.GetAppByAppNo, { TrxNo: this.AppNo }).toPromise().then(
         (response) => {
           this.AppId = response['AppId'];
         }
       )
-    }
-
-    if(this.AppNo == null){
-      await this.http.post(URLConstant.GetAppById, {Id: this.AppId}).toPromise().then(
+    } else if (this.AppNo == null) {
+      await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
         (response) => {
           this.AppNo = response['AppNo'];
+          this.bizTemplateCode = response["BizTemplateCode"];
+          this.CustType = response["MrCustTypeCode"];
+          this.AppId = response["AppId"];
+          this.OriOfficeCode = response["OriOfficeCode"];
+          this.IsApprovalHist = true;
         }
       )
     }
 
     this.arrValue.push(this.AppId);
-    await this.GetApp();
+    await this.CheckBizTemplate();
     this.GetIsUseDigitalization();
     await this.InitDms();
   }
 
   async InitDms() {
-    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.SYS_CONFIG_USING_DMS_ADINS}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.SYS_CONFIG_USING_DMS_ADINS }).toPromise().then(
       (response) => {
         this.usingDmsAdins = response["ConfigValue"];
       },
@@ -106,16 +109,15 @@ export class AppViewComponent implements OnInit {
         this.isDmsReady = false;
       }
     );
-    
-    if(this.usingDmsAdins == '1')
-    {
+
+    if (this.usingDmsAdins == '1') {
       this.isDmsReady = false;
       this.dmsObj = new DMSObj();
       let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
       this.dmsObj.User = currentUserContext.UserName;
       this.dmsObj.Role = currentUserContext.RoleCode;
       this.agrNo = "";
-      await this.http.post(URLConstant.GetAgrmntByAppId, {Id: this.AppId}).subscribe(
+      await this.http.post(URLConstant.GetAgrmntByAppId, { Id: this.AppId }).subscribe(
         (response) => {
           this.agrNo = response['AgrmntNo'];
         }
@@ -123,31 +125,25 @@ export class AppViewComponent implements OnInit {
       this.dmsObj.ViewCode = "APP";
       this.dmsObj.UsingDmsAdIns = this.usingDmsAdins;
       this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
-  
-      await this.http.post(URLConstant.GetAppById, {Id: this.AppId}).subscribe(
+
+
+      let reqAppId = { Id: this.AppId };
+      this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsOfficeCode, this.OriOfficeCode));
+      this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.AppNo));
+      this.http.post(URLConstant.GetAppCustByAppId, reqAppId).subscribe(
         (response) => {
-          let appId = response['AppId'];
-          let reqAppId = { Id : appId };
-          let appNo = response['AppNo'];
-          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsOfficeCode, response['OriOfficeCode']));
-          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, appNo));
-          this.http.post(URLConstant.GetAppCustByAppId, reqAppId).subscribe(
-            (response) => {
-              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['CustNo']));
-              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
-              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsCustName, response['CustName']));
-              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsDealerName, "TEST DEALER"));
-              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsExpiredDate, formatDate(new Date(), 'MM/dd/yyyy', 'en-US').toString()));
-              this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsTimestamp, formatDate(new Date(), 'MM/dd/yyyy HH:mm:ss', 'en-US').toString()));
-              
-              this.isDmsReady = true;
-            }
-          );
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['CustNo']));
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsCustName, response['CustName']));
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsDealerName, "TEST DEALER"));
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsExpiredDate, formatDate(new Date(), 'MM/dd/yyyy', 'en-US').toString()));
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsTimestamp, formatDate(new Date(), 'MM/dd/yyyy HH:mm:ss', 'en-US').toString()));
+
+          this.isDmsReady = true;
         }
       );
     }
-    else if(this.usingDmsAdins == '2')
-    {
+    else if (this.usingDmsAdins == '2') {
       this.isDmsReady = false;
       this.dmsObj = new DMSObj();
       let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -155,22 +151,18 @@ export class AppViewComponent implements OnInit {
       this.dmsObj.Role = currentUserContext.RoleCode;
       this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
       var appObj = { Id: this.AppId };
-  
-      let getApp = this.http.post(URLConstant.GetAppById, appObj);
-      let getAppCust = this.http.post(URLConstant.GetAppCustByAppId, appObj);
-  
-      forkJoin([getApp, getAppCust]).subscribe(
+
+      await this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
         (response) => {
-          this.appNo = response[0]['AppNo'];
-          this.custNo = response[1]['CustNo'];
-  
+          this.custNo = response['CustNo'];
+
           if (this.custNo != null && this.custNo != '') {
             this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
           }
           else {
             this.dmsObj.MetadataParent = null;
           }
-          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.AppNo));
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
           let mouCustId = response[0]['MouCustId'];
           if (mouCustId != null && mouCustId != '') {
@@ -187,103 +179,91 @@ export class AppViewComponent implements OnInit {
           }
         }
       );
-    } 
-    else
-    {
+    }
+    else {
       this.isDmsReady = false;
     }
   }
 
-  async GetApp() {
-    var appObj = {
-      Id: this.AppId,
-    };
-
-    await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
-      (response) => {
-        this.bizTemplateCode = response["BizTemplateCode"];
-        this.CustType = response["MrCustTypeCode"];
-
-        if (this.bizTemplateCode == CommonConstant.FCTR) {
-          this.IsCollateral = false;
-          this.IsGuarantor = false;
-          this.IsReferantor = false;
-          this.IsCommission = false;
-          this.IsReservedFund = false;
-          this.IsPhoneVerification = false;
-          this.IsAsset = false;
-          this.IsMultiAsset = false;
-          this.IsInsurance = false;
-          this.IsDeviation = false;
-          this.IsAssetExpense = false;
-          this.IsPefindoResult = false;
-          this.IsSurveyResult = false;
-        }
-        else if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
-          this.IsAsset = false;
-          this.IsMultiCollateral = false;
-          this.IsInvoice = false;
-          this.IsMultiAsset = false;
-          this.IsMultiInsurance = false;
-          this.IsDeviation = false;
-          this.IsAssetExpense = false;
-          this.IsPefindoResult = false;
-          this.IsSurveyResult = false;
-        }
-        else if (this.bizTemplateCode == CommonConstant.CF4W) {
-          this.IsCollateral = false;
-          this.IsMultiCollateral = false;
-          this.IsInvoice = false;
-          this.IsMultiAsset = false;
-          this.IsMultiInsurance = false;
-          this.IsDeviation = false;
-          this.IsAssetExpense = false;
-          this.IsPefindoResult = false;
-          this.IsSurveyResult = false;
-        }
-        else if (this.bizTemplateCode == CommonConstant.FL4W) {
-          this.IsAsset = false;
-          this.IsCollateral = false;
-          this.IsMultiCollateral = false;
-          this.IsInvoice = false;
-          this.IsInsurance = false;
-          this.IsDeviation = false;
-          this.IsAssetExpense = false;
-          this.IsPefindoResult = false;
-          this.IsSurveyResult = false;
-        }
-        else if (this.bizTemplateCode == CommonConstant.CFNA) {
-          this.IsAsset = false;
-          this.IsInvoice = false;
-          this.IsMultiAsset = false;
-          this.IsMultiInsurance = false;
-          this.IsCollateral = false;
-          this.IsDeviation = false;
-          this.IsAssetExpense = false;
-          this.IsPefindoResult = false;
-          this.IsSurveyResult = false;
-        }
-        else if (this.bizTemplateCode == CommonConstant.OPL) {
-          this.IsCollateral = false;
-          this.IsReferantor = false;
-          this.IsInvoice = false;
-          this.IsMultiInsurance = false;
-          this.IsCommission = false;
-          this.IsCollateral = false;
-          this.IsReservedFund = false;
-          this.IsPhoneVerification = false;
-          this.IsMultiAsset = false;
-          this.IsInsurance = false;
-          this.IsLifeInsurance = false;
-          this.IsMultiCollateral = false;
-        }
-      }
-    );
+  async CheckBizTemplate() {
+    if (this.bizTemplateCode == CommonConstant.FCTR) {
+      this.IsCollateral = false;
+      this.IsGuarantor = false;
+      this.IsReferantor = false;
+      this.IsCommission = false;
+      this.IsReservedFund = false;
+      this.IsPhoneVerification = false;
+      this.IsAsset = false;
+      this.IsMultiAsset = false;
+      this.IsInsurance = false;
+      this.IsDeviation = false;
+      this.IsAssetExpense = false;
+      this.IsPefindoResult = false;
+      this.IsSurveyResult = false;
+    }
+    else if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
+      this.IsAsset = false;
+      this.IsMultiCollateral = false;
+      this.IsInvoice = false;
+      this.IsMultiAsset = false;
+      this.IsMultiInsurance = false;
+      this.IsDeviation = false;
+      this.IsAssetExpense = false;
+      this.IsPefindoResult = false;
+      this.IsSurveyResult = false;
+    }
+    else if (this.bizTemplateCode == CommonConstant.CF4W) {
+      this.IsCollateral = false;
+      this.IsMultiCollateral = false;
+      this.IsInvoice = false;
+      this.IsMultiAsset = false;
+      this.IsMultiInsurance = false;
+      this.IsDeviation = false;
+      this.IsAssetExpense = false;
+      this.IsPefindoResult = false;
+      this.IsSurveyResult = false;
+    }
+    else if (this.bizTemplateCode == CommonConstant.FL4W) {
+      this.IsAsset = false;
+      this.IsCollateral = false;
+      this.IsMultiCollateral = false;
+      this.IsInvoice = false;
+      this.IsInsurance = false;
+      this.IsDeviation = false;
+      this.IsAssetExpense = false;
+      this.IsPefindoResult = false;
+      this.IsSurveyResult = false;
+    }
+    else if (this.bizTemplateCode == CommonConstant.CFNA) {
+      this.IsAsset = false;
+      this.IsInvoice = false;
+      this.IsMultiAsset = false;
+      this.IsMultiInsurance = false;
+      this.IsCollateral = false;
+      this.IsDeviation = false;
+      this.IsAssetExpense = false;
+      this.IsPefindoResult = false;
+      this.IsSurveyResult = false;
+    }
+    else if (this.bizTemplateCode == CommonConstant.OPL) {
+      this.IsCollateral = false;
+      this.IsReferantor = false;
+      this.IsInvoice = false;
+      this.IsMultiInsurance = false;
+      this.IsCommission = false;
+      this.IsCollateral = false;
+      this.IsReservedFund = false;
+      this.IsPhoneVerification = false;
+      this.IsMultiAsset = false;
+      this.IsInsurance = false;
+      this.IsLifeInsurance = false;
+      this.IsMultiCollateral = false;
+    }
   }
 
   tabChangeEvent(tabChangeEvent: MatTabChangeEvent) {
     if (tabChangeEvent.index == 0) {
-      this.GetApp();
+      this.CheckBizTemplate();
     }
     // const componentFactory = this.componentFactoryResolver.resolveComponentFactory(AppMainInfoComponent);
     // this.mainInfoContainer.clear();
@@ -292,10 +272,9 @@ export class AppViewComponent implements OnInit {
   }
 
   GetIsUseDigitalization() {
-
     var generalSettingObj = new GeneralSettingObj();
     generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
-    this.http.post(URLConstant.GetGeneralSettingValueByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).subscribe(
+    this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeIsUseDigitalization }).subscribe(
       (response: GeneralSettingObj) => {
         this.IsUseDigitalization = response.GsValue;
       }
