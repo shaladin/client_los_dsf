@@ -48,6 +48,12 @@ export class DupCheckMdPagingComponent implements OnInit {
     critLobObj.propName = 'RL.BIZ_TMPLT_CODE';
     critLobObj.value = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.inputPagingObj.addCritInput.push(critLobObj);
+
+    var critWorflowAct = new CriteriaObj();
+    critWorflowAct.restriction = AdInsConstant.RestrictionEq;
+    critWorflowAct.propName = 'WTL.ACT_CODE';
+    critWorflowAct.value = "CDC_MANUAL";
+    this.inputPagingObj.addCritInput.push(critWorflowAct);
   }
 
   NextScreen(event) {
