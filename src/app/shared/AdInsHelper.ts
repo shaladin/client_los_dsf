@@ -94,6 +94,11 @@ export class AdInsHelper {
     window.open(environment.FoundationR3Web + NavigationConstant.VIEW_FOU_CUST_PERSONAL_DETAIL + "?CustId=" + CustId + "&Token=" + token, "_blank");
   }
 
+  public static OpenCustomerCoyViewByCustId(CustId){
+    var token = localStorage.getItem("Token");
+    window.open(environment.FoundationR3Web + NavigationConstant.VIEW_FOU_CUST_COY_DETAIL + "?CustId=" + CustId + "&Token=" + token, "_blank");
+  }
+
   public static OpenAppViewByAppId(AppId) {
     var token = localStorage.getItem("Token");
     window.open(environment.losR3Web + NavigationConstant.VIEW_APP + "?AppId=" + AppId + "&Token=" + token, "_blank");
