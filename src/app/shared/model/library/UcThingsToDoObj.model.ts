@@ -14,11 +14,11 @@ export class UcThingsToDoObj {
 
 export class ThingsToDoReqObj {
     ModuleCode: string;
-    IntegrationObj: ThingsToDoIntegrationObj;
+    IntegrationObj: Array<ThingsToDoIntegrationObj>;
 
     constructor() {
         this.ModuleCode = CommonConstant.LOAN_ORIGINATION;
-        this.IntegrationObj = new ThingsToDoIntegrationObj();
+        this.IntegrationObj = new Array<ThingsToDoIntegrationObj>();
     }
 }
 
