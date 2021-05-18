@@ -38,8 +38,8 @@ export class DashBoardComponent implements OnInit {
     this.roleCode = context[CommonConstant.ROLE_CODE];
     this.Item.Url = environment.FoundationR3Url + "/ThingsToDo/GetThingsToDoByRole";
     this.Item.RequestObj.ModuleCode = CommonConstant.LOAN_ORIGINATION;
-    this.Item.RequestObj.IntegrationObj.RequestObj.Office = this.officeCode;
-    this.Item.RequestObj.IntegrationObj.RequestObj.Role =this.roleCode;
-    this.Item.RequestObj.IntegrationObj.RequestObj.UserName = this.username;
+    this.Item.RequestObj.IntegrationObj[0].RequestObj.Office = this.officeCode;
+    this.Item.RequestObj.IntegrationObj[0].RequestObj.Role =this.roleCode;
+    this.Item.RequestObj.IntegrationObj[0].RequestObj.UserName = this.username;
   }
 }

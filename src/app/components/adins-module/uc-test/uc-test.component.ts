@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, ElementRef, Inject, Renderer2, EventEmitter, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, NgForm } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { DOCUMENT } from '@angular/platform-browser';
 import { trigger, transition, style, animate, state } from '@angular/animations';
@@ -204,7 +204,13 @@ export class UcTestComponent implements OnInit {
     return this.http.post(url, criteria);
   }
 
-  searchClick() {
+  test(ev) {
+    console.log(ev.valid);
+  }
+
+  searchClick(ev) {
+    console.log(ev);
+
     let order = null;
     if (this.configuration.orderby != null) {
       order = {
@@ -216,7 +222,9 @@ export class UcTestComponent implements OnInit {
     this.search(this.apiUrl, this.pageNow, this.pageSize, order, this.arrCrit);
   }
 
-  reset() {
+  reset(ev: NgForm) {
+    ev.resetForm();
+
     this.ExportType = this.ExportTypeList[0].key;
     this.initiateForm();
   }
@@ -243,15 +251,16 @@ export class UcTestComponent implements OnInit {
       let critObj = new CriteriaObj();
       let component = this.myForm.nativeElement[i];
 
-      if (component.getAttribute('data-required') != null && component.getAttribute('data-required') == "true") {
-        let val = component.value.trim();
-        if (val == "") {
-          IsBreak = true;
-          let label = component.getAttribute('label');
-          this.toastr.warning("Please input " + label);
-          break;
-        }
-      }
+      // popup message if required
+      // if (component.getAttribute('data-required') != null && component.getAttribute('data-required') == "true") {
+      //   let val = component.value.trim();
+      //   if (val == "") {
+      //     IsBreak = true;
+      //     let label = component.getAttribute('label');
+      //     this.toastr.warning("Please input " + label);
+      //     break;
+      //   }
+      // }
 
       critObj.DataType = component.getAttribute('data-type');
       //Ini khusus kalau dari Drop Down

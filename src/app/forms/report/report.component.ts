@@ -15,6 +15,8 @@ import { InputSearchObj } from 'app/shared/model/InputSearchObj.Model';
 export class ReportComponent implements OnInit {
 
   inputObj: InputSearchObj = new InputSearchObj();
+  pageSize: number = 10;
+  test_uppercase: string = "asd";
 
   inputReportObj: InputReportObj = new InputReportObj();
   ddlOfficeObj: UcDropdownListObj = new UcDropdownListObj();
@@ -66,6 +68,11 @@ export class ReportComponent implements OnInit {
     this.ddlOfficeObj.requestObj = {
       RefMasterTypeCode: "BUILDING_OWNERSHIP"
     };
+  }
+
+  test(ev)
+  {
+    console.log(ev);
   }
 
   getResult(ev) {
