@@ -39,6 +39,7 @@ import { AdInsHelper } from '../../../../../shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { UcDropdownListCallbackObj, UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { InsAddCvgObj } from 'app/shared/model/InsuranceOpl/InsAddCvgObj.Model';
+import { values } from 'core-js/core/array';
 
 @Component({
   selector: 'app-asset-expense-add-edit',
@@ -2249,18 +2250,21 @@ export class AssetExpenseAddEditComponent implements OnInit {
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.inpFeeObj = response[CommonConstant.ReturnObj];
+        
+        //sorting berdasarkan value
+        this.inpFeeObj = this.inpFeeObj.sort((a,b) => (a.Value > b.Value ? -1 : 1));        
         this.GetGSValueInputFeeType();
-
+        
       }
     );
   }
-
+  
   async GetGSValueInputFeeType() {
     await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeInputOPLFeeType }).toPromise().then(
       (response) => {
         this.InsuranceDataForm.patchValue({
           FeeInputType: response.GsValue
-        });
+        });               
         this.changeInputFee();
         this.GetGSValueInputFeeTypeBehaviour();
       });
@@ -2277,7 +2281,7 @@ export class AssetExpenseAddEditComponent implements OnInit {
         }
       });
   }
-  isIncludeVAT: boolean = false;
+  isIncludeVAT: boolean = false;  
   changeInputFee() {
     if (this.InsuranceDataForm.controls.FeeInputType.value == "VAT") {
       this.isIncludeVAT = true;
