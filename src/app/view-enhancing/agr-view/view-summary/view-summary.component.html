@@ -119,7 +119,7 @@
     <div *ngIf="SummaryObj?.AppCustPersonal">
       <label class="col-md-2  adInsLabel" translate>Payment Frequency</label>
       <label class="col-md-4  adinslabel" translate
-        *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.PayFreqCode}}</label>
+        *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.PayFreqCodeDesc}}</label>
       <label class="col-md-2  adInsLabel" translate>Effective Date</label>
       <label class="col-md-4  adinslabel" translate
         *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.EffectiveDt | date: 'dd-MMMM-yyyy'}}</label>
@@ -156,7 +156,7 @@
       <div>
         <label class="col-md-2  adInsLabel" translate>Asset Condition</label>
         <label class="col-md-4  adinslabel" translate
-          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.MrAssetConditionCode}}</label>
+          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.MrAssetConditionCodeDesc}}</label>
         <label class="col-md-2  adInsLabel" translate>Down Payment</label>
         <label class="col-md-4  adinslabel" translate
           *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppAsset.DownPaymentAmt | number:'.2':'en-US'}}</label>
@@ -238,7 +238,7 @@
       <div>
         <label class="col-md-2  adInsLabel" translate>Collateral Condition</label>
         <label class="col-md-4  adinslabel" translate
-          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppCollateral.MrCollateralConditionCode}}</label>
+          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppCollateral.MrCollateralConditionCodeDesc}}</label>
         <label class="col-md-2  adInsLabel" translate
           *ngIf="SummaryObj?.AppAsset?.SerialNo1Label">{{SummaryObj.AppAsset.SerialNo1Label}}</label>
         <label class="col-md-4  adinslabel" translate
@@ -247,7 +247,7 @@
       <div>
         <label class="col-md-2  adInsLabel" translate>Collateral Usage</label>
         <label class="col-md-4  adinslabel" translate
-          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppCollateral.MrCollateralUsageCode}}</label>
+          *ngIf="SummaryObj?.AppAsset">{{SummaryObj.AppCollateral.MrCollateralUsageCodeDesc}}</label>
         <label class="col-md-2  adInsLabel" translate
           *ngIf="SummaryObj?.AppAsset?.SerialNo2Label">{{SummaryObj.AppAsset.SerialNo2Label}}</label>
         <label class="col-md-4  adinslabel" translate
