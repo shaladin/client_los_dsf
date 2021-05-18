@@ -126,37 +126,32 @@ export class AgreementViewContainerComponent implements OnInit {
   }
 
   async GetAppAndAppCustDetailByAgrmntId() {
-    var obj = { Id: this.AgrmntId };
-    this.http.post(URLConstant.GetAppAndAppCustDetailByAgrmntId, obj).toPromise().then(
-      async (response) => {
-        this.ResponseAppDetailData = response;
-
-        if(this.ResponseAppDetailData.BizTemplateCode == CommonConstant.FCTR || this.ResponseAppDetailData.BizTemplateCode == CommonConstant.CFNA){
-          let objIsDisburse: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
-          objIsDisburse.ProdOfferingCode = this.ResponseAppDetailData.ProdOfferingCode;
-          objIsDisburse.RefProdCompntCode = CommonConstant.RefProdCompntCodeDisburseToCust;
-          objIsDisburse.ProdOfferingVersion = this.ResponseAppDetailData.ProdOfferingVersion;
-          await this.GetIsNeedPO(objIsDisburse);
-        }
-
-        await this.GetAgrmnt();
-      });
-  }
-
-  async GetIsNeedPO(requestObj : ReqGetProdOffDByProdOffVersion){
-    this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, requestObj).subscribe(
+    await this.http.post(URLConstant.GetAppAndAppCustDetailByAgrmntId, { Id: this.AgrmntId }).toPromise().then(
       (response) => {
-        if (response && response["StatusCode"] == "200" && response["ProdOfferingDId"] > 0) {
-          this.IsNeedPO = response["CompntValue"] == 'N' ? true : false;
-        }
+        this.ResponseAppDetailData = response;
+        this.GetIsNeedPO();
+        this.GetAgrmnt();
       });
   }
 
-  async GetAgrmnt() {
-    var agrmntObj = {
-      Id: this.AgrmntId,
-    };
-    this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
+  GetIsNeedPO(){
+    if(this.ResponseAppDetailData.BizTemplateCode == CommonConstant.FCTR || this.ResponseAppDetailData.BizTemplateCode == CommonConstant.CFNA){
+      let objIsDisburse: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
+      objIsDisburse.ProdOfferingCode = this.ResponseAppDetailData.ProdOfferingCode;
+      objIsDisburse.RefProdCompntCode = CommonConstant.RefProdCompntCodeDisburseToCust;
+      objIsDisburse.ProdOfferingVersion = this.ResponseAppDetailData.ProdOfferingVersion;
+
+      this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, objIsDisburse).subscribe(
+        (response) => {
+          if (response && response["StatusCode"] == "200" && response["ProdOfferingDId"] > 0) {
+            this.IsNeedPO = response["CompntValue"] == 'N' ? true : false;
+          }
+        });
+    }
+  }
+
+  GetAgrmnt() {
+    this.http.post(URLConstant.GetAgrmntByAgrmntId, { Id: this.AgrmntId }).subscribe(
       (response) => {
         this.BizTemplateCode = response["BizTemplateCode"];
         this.AppId = response['AppId'];
