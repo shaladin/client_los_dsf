@@ -14,6 +14,7 @@ import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalG
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { environment } from 'environments/environment';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-credit-approval-cr-detail',
@@ -32,6 +33,7 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   BizTemplateCode: string;
   AppObj: AppObj;
   IsViewReady: boolean = false;
+  getEvent: Array<any> = new Array<any>();
 
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
   readonly CustTypeCompany: string = CommonConstant.CustTypeCompany;
@@ -39,7 +41,8 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   constructor(private toastr: NGXToastrService,
     private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient) {
+    private http: HttpClient,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -129,7 +132,51 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    this.onCancelClick();
+    this.getEvent = event;
+    let isReturn: boolean = false;
+    let isReject: boolean = false;
+    let isReturnIndex: number = 0;
+
+    for(let i in this.getEvent){
+      if(this.getEvent[i].ApvResult.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
+        isReturn = true;
+        isReturnIndex = parseInt(i);
+      }
+      if(this.getEvent[i].ApvResult.toLowerCase() == CommonConstant.ApvResultRejectFinal.toLowerCase()) {
+        isReject = true;
+      }
+    }
+
+    if(isReject){
+      var NegCustObj = {
+        AppId: this.appId,
+        MrNegCustSourceCode: CommonConstant.NegCustSourceCodeConfins,
+        NegCustCause: event['reason']
+      };
+      this.http.post(URLConstant.AddNegativeCustByAppId, NegCustObj).subscribe(
+        (response) => {
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+        });
+    }
+    else if(isReturn){
+      var returnHandlingHObj = new ReturnHandlingHObj();
+      var user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+
+      returnHandlingHObj.AppId = this.appId;
+      returnHandlingHObj.AgrmntId = null;
+      returnHandlingHObj.ReturnBy = user.UserName;
+      returnHandlingHObj.ReturnDt = user.BusinessDt;
+      returnHandlingHObj.ReturnNotes = event[isReturnIndex]['notes'];
+      returnHandlingHObj.ReturnFromTrxType = this.AppObj.AppCurrStep;
+
+      this.http.post(URLConstant.AddReturnHandlingH, returnHandlingHObj).subscribe(
+        (response) => {
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+        });
+    }
+    else{
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+    }
   }
 
   onAvailableNextTask() {
