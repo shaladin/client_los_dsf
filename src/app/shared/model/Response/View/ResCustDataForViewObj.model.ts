@@ -83,10 +83,14 @@ export class ResAppCustBankAccStmntForViewObj {
 }
 
 export class ResAppCustGrpForViewObj {
-    CustName : boolean;
+    CustName : string;
+    CustNo : string;
+    ApplicantNo : string;
 
     constructor(){
-        this.CustName = false;
+        this.CustName = "";
+        this.CustNo = "";
+        this.ApplicantNo = "";
     }
 }
 

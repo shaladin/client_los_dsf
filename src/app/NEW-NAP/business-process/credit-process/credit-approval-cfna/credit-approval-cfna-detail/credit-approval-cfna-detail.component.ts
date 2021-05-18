@@ -46,6 +46,7 @@ export class CreditApprovalCfnaDetailComponent implements OnInit {
   IsUseDigitalization: string;
   IsViewReady: boolean = false;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
+  getEvent: Array<any> = new Array<any>();
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -75,6 +76,7 @@ export class CreditApprovalCfnaDetailComponent implements OnInit {
     });
   }
   async ngOnInit(): Promise<void> {
+    console.log("MAsuk sdfpoiskej");
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
@@ -153,7 +155,33 @@ export class CreditApprovalCfnaDetailComponent implements OnInit {
 
   }
   onApprovalSubmited(event) {
-    if (event[0].ApvResult.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
+    this.getEvent = event;
+    let isReturn: boolean = false;
+    let isReject: boolean = false;
+    let isReturnIndex: number = 0;
+
+    for(let i in this.getEvent){
+      if(this.getEvent[i].ApvResult.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
+        isReturn = true;
+        isReturnIndex = parseInt(i);
+      }
+      if(this.getEvent[i].ApvResult.toLowerCase() == CommonConstant.ApvResultRejectFinal.toLowerCase()) {
+        isReject = true;
+      }
+    }
+
+    if(isReject){
+      var NegCustObj = {
+        AppId: this.appId,
+        MrNegCustSourceCode: CommonConstant.NegCustSourceCodeConfins,
+        NegCustCause: event['reason']
+      };
+      this.http.post(URLConstant.AddNegativeCustByAppId, NegCustObj).subscribe(
+        (response) => {
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+        });
+    }
+    else if(isReturn){
       var returnHandlingHObj = new ReturnHandlingHObj();
       var user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
@@ -161,15 +189,15 @@ export class CreditApprovalCfnaDetailComponent implements OnInit {
       returnHandlingHObj.AgrmntId = null;
       returnHandlingHObj.ReturnBy = user.UserName;
       returnHandlingHObj.ReturnDt = user.BusinessDt;
-      returnHandlingHObj.ReturnNotes = event[0].notes;
+      returnHandlingHObj.ReturnNotes = event[isReturnIndex]['notes'];
       returnHandlingHObj.ReturnFromTrxType = this.AppObj.AppCurrStep;
 
       this.http.post(URLConstant.AddReturnHandlingH, returnHandlingHObj).subscribe(
         (response) => {
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
         });
-
-    } else {
+    }
+    else{
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
     }
   }

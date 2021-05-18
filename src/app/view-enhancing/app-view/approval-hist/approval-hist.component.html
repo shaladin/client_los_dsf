@@ -1,24 +1,26 @@
 <div *ngIf="BizTemplateCode !== 'OPL'">
-  <lib-ucSubsection [id]="'CreditApprovalHistoryId'" [title]="'Credit Approval History'"
-    [panel]="'CreditApprovalHistory'">
-  </lib-ucSubsection>
-  <div id="CreditApprovalHistory">
-    <lib-ucapprovalHistory *ngIf="IsCrdApvReady"  [InputObj]="CrdApvObj">
-    </lib-ucapprovalHistory>
+  <div *ngIf="BizTemplateCode !== 'FCTR'">
+    <lib-ucSubsection [id]="'CreditApprovalHistoryId'" [title]="'Credit Approval History'"
+      [panel]="'CreditApprovalHistory'">
+    </lib-ucSubsection>
+    <div id="CreditApprovalHistory">
+      <lib-ucapprovalHistory *ngIf="IsCrdApvReady" [InputObj]="CrdApvObj">
+      </lib-ucapprovalHistory>
+    </div>
+
+    <lib-ucSubsection [id]="'PackageValidityId'" [title]="'Offering Validity Checking Approval History'"
+      [panel]="'PackageValidity'">
+    </lib-ucSubsection>
+    <div id="PackageValidity">
+      <lib-ucapprovalHistory *ngIf="IsOfferingReady" [InputObj]="OfferingObj">
+      </lib-ucapprovalHistory>
+    </div>
   </div>
-  
-  <lib-ucSubsection [id]="'PackageValidityId'" [title]="'Offering Validity Checking Approval History'"
-    [panel]="'PackageValidity'">
-  </lib-ucSubsection>
-  <div id="PackageValidity">
-    <lib-ucapprovalHistory *ngIf="IsOfferingReady"  [InputObj]="OfferingObj">
-    </lib-ucapprovalHistory>
-  </div>
-  
+
   <lib-ucSubsection [id]="'PreGoId'" [title]="'Pre Go Live Approval'" [panel]="'PreGo'">
   </lib-ucSubsection>
   <div id="PreGo">
-    <lib-ucapprovalHistory *ngIf="IsPregoliveApvReady"  [InputObj]="PregoliveApvObj">
+    <lib-ucapprovalHistory *ngIf="IsPregoliveApvReady" [InputObj]="PregoliveApvObj">
     </lib-ucapprovalHistory>
   </div>
 </div>
@@ -27,21 +29,21 @@
   <lib-ucSubsection [id]="'ApvHistId'" [title]="'Approval History List'" [panel]="'ApvHist'">
   </lib-ucSubsection>
   <div id="ApvHist">
-    <lib-ucapprovalHistory *ngIf="IsApvHistReady"  [InputObj]="ApvHistObj">
+    <lib-ucapprovalHistory *ngIf="IsApvHistReady" [InputObj]="ApvHistObj">
     </lib-ucapprovalHistory>
   </div>
-  
+
   <!-- <lib-ucSubsection [id]="'ReturnHandlingApvId'" [title]="'Return Handling Task History List'" [panel]="'ReturnHandlingApv'">
   </lib-ucSubsection>
   <div id="ReturnHandlingApv">
     <lib-ucapprovalHistory *ngIf="IsReturnHandlingApvReady"  [InputObj]="ReturnHandlingApvObj">
     </lib-ucapprovalHistory>
   </div> -->
-  
+
   <lib-ucSubsection [id]="'DocCheckApvId'" [title]="'Document Checklist Approval History List'" [panel]="'DocCheckApv'">
   </lib-ucSubsection>
   <div id="DocCheckApv">
-    <lib-ucapprovalHistory *ngIf="IsDocChecklistApvReady"  [InputObj]="DocChecklistApvObj">
+    <lib-ucapprovalHistory *ngIf="IsDocChecklistApvReady" [InputObj]="DocChecklistApvObj">
     </lib-ucapprovalHistory>
   </div>
 </div>

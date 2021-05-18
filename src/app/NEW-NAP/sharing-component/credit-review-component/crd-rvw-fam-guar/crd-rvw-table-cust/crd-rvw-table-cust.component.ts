@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { CrdRvwExposureDObj } from 'app/shared/model/CreditReview/CrdRvwExposureDObj.Model';
 import { CrdRvwOvdObj } from 'app/shared/model/CreditReview/CrdRvwOvdObj.Model';
+import { ResAppCustForListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
 
 @Component({
   selector: 'app-crd-rvw-table-cust',
@@ -12,7 +12,7 @@ import { CrdRvwOvdObj } from 'app/shared/model/CreditReview/CrdRvwOvdObj.Model';
 export class CrdRvwTableCustComponent implements OnInit {
 
   @Input() CustType: string = "";
-  @Input() ListAppCust: Array<AppCustObj> = new Array<AppCustObj>();
+  @Input() ListAppCust: Array<ResAppCustForListCustMainDataObj> = new Array<ResAppCustForListCustMainDataObj>();
   @Input() DictCrdRvwExposure: { [Id: string]: CrdRvwExposureDObj } = {};
   @Input() DictCrdRvwExposureHId: { [Id: string]: number } = {};
   @Input() DictCrdRvwGuarantorExposure: { [Id: string]: CrdRvwOvdObj } = {};
