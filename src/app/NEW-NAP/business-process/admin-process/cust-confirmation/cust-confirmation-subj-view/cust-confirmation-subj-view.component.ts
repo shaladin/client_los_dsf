@@ -11,7 +11,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ReqGetVerfResult3Obj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
 
 @Component({
@@ -33,6 +33,7 @@ export class CustConfirmationSubjViewComponent implements OnInit {
   VerfResultObj: VerfResultObj;
   VerfResultHObj: VerfResultHObj = new VerfResultHObj();
   VerfResultHObjDetail: VerfResultHObj = new VerfResultHObj();
+  CustNoObj: GenericObj = new GenericObj();
   VerfResultDListObj = new Array<VerfResultDObj>();
   IsVerfDetail: boolean = false;
   cust: any;
@@ -141,7 +142,8 @@ export class CustConfirmationSubjViewComponent implements OnInit {
     else if (key == "agreement") {
       AdInsHelper.OpenAgrmntViewByAgrmntId(this.AgrmntObj.AgrmntId);
     }else if( key == "customer"){
-      this.http.post(URLConstant.GetCustByCustNo, {TrxNo: this.AgrmntObj.CustNo}).subscribe(
+      this.CustNoObj.CustNo = this.AgrmntObj.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         });

@@ -11,6 +11,7 @@ import { CrdRvwExposureHObj } from 'app/shared/model/CreditReview/CrdRvwExposure
 import { CrdRvwExposureObj } from 'app/shared/model/CreditReview/CrdRvwExposureObj.Model';
 import { NegCustObj } from 'app/shared/model/CreditReview/NegCustObj.model';
 import { ReqGetCrdRvwExposureHObj } from 'app/shared/model/CreditReview/ReqGetCrdRvwExposureHObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 
 @Component({
   selector: 'app-crd-rvw-cust-info',
@@ -18,9 +19,10 @@ import { ReqGetCrdRvwExposureHObj } from 'app/shared/model/CreditReview/ReqGetCr
   styleUrls: ['./crd-rvw-cust-info.component.scss']
 })
 export class CrdRvwCustInfoComponent implements OnInit {
-
+  ReqCustNo: GenericObj = new GenericObj();
   @Input() appId: number = 0;
   @Input() crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
+  @Input() captureStat: string = "";
 
   //#region Exposure Type
   readonly ExposureCustTypeCode: string = CommonConstant.ExposureCustTypeCode;
@@ -76,7 +78,8 @@ export class CrdRvwCustInfoComponent implements OnInit {
 
   ListNegCust: Array<NegCustObj> = new Array<NegCustObj>();
   async GetListNegativeCustByCustNo() {
-    await this.http.post<{ ListNegativeCustObj: Array<NegCustObj> }>(URLConstant.GetListNegativeCustByCustNo, { TrxNo: this.crdRvwCustInfoObj.CustNo }).toPromise().then(
+    this.ReqCustNo.CustNo = this.crdRvwCustInfoObj.CustNo;
+    await this.http.post<{ ListNegativeCustObj: Array<NegCustObj> }>(URLConstant.GetListNegativeCustByCustNo, this.ReqCustNo).toPromise().then(
       (response) => {
         // console.log(response);
         this.ListNegCust = response.ListNegativeCustObj;

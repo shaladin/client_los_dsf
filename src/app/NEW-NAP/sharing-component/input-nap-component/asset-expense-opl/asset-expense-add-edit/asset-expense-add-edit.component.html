@@ -286,6 +286,9 @@
               <lib-ucSubsection [id]="'feeId'" [title]="'Fee'" [panel]="'fee'">
               </lib-ucSubsection>
               <div id="fee">
+                <div class="form-group row">
+                  <label class="col-md-4" for="paidBy" translate>Input Fee Type</label>
+                </div>
                 <mat-radio-group formControlName="FeeInputType" name="MrCustTypeCode" (change)="changeInputFee()">
                   <mat-radio-button [disabled]="isInputTypeLock" class="custom-control custom-radio display-inline-block" *ngFor="let item of inpFeeObj"
                     [value]="item.Key">

@@ -26,7 +26,7 @@ import { CookieService } from 'ngx-cookie';
   templateUrl: './return-handling-invoice-detail.component.html'
 })
 export class ReturnHandlingInvoiceDetailComponent implements OnInit {
-
+  ReqByIdObj: GenericObj = new GenericObj();
   ReturnHandlingHId: number;
   ReturnHandlingDObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   AppId: number;
@@ -144,7 +144,8 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
   }
 
   GetListInvoice() {
-    this.http.post(URLConstant.GetListAppInvoiceFctrByAppId, { AppId: this.AppId }).subscribe((response) => {
+    this.ReqByIdObj.Id = this.AppId;
+    this.http.post(URLConstant.GetListAppInvoiceFctrByAppId, this.ReqByIdObj).subscribe((response) => {
       this.inputGridObj.resultData = {
         Data: ""
       }
@@ -155,7 +156,8 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
   }
 
   GetAppInvoiceFctrData(AppInvoiceFctrId: number) {
-    this.http.post(URLConstant.GetAppInvoiceFctrByAppInvoiceFctrId, { AppInvoiceFctrId: AppInvoiceFctrId }).subscribe(
+    this.ReqByIdObj.Id = AppInvoiceFctrId;
+    this.http.post(URLConstant.GetAppInvoiceFctrByAppInvoiceFctrId, this.ReqByIdObj).subscribe(
       (response: AppInvoiceFctrObj) => {
         this.RHInvoiceForm.patchValue({
           AppInvoiceFctrId: response.AppInvoiceFctrId,
