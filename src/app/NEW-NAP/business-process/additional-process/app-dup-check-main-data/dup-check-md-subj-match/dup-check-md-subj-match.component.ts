@@ -14,6 +14,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResAppDupCheckCustMainDataObj, ResListAppDupCheckCustMainDataObj } from 'app/shared/model/Response/NAP/DupCheck/ResAppDupCheckCustMainDataObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
 
 @Component({
@@ -34,6 +35,7 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   appCustPersonalObj: AppCustPersonalObj;
   appCustCompanyObj: AppCustCompanyObj;
   reqDupCheckAppCustObj: ReqDupCheckAppCustObj = new ReqDupCheckAppCustObj();
+  CustNoObj: GenericObj = new GenericObj();
   mrCustTypeCode: string;
   isLock: boolean = true;
   isMasterLock: boolean = false;
@@ -192,8 +194,8 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
 
   viewMainInfoCallback(event) {
     if (event.Key == "customer") {
-      var custObj = { CustNo: event.ViewObj.CustNo };
-      this.http.post(URLConstant.GetCustByCustNo, { TrxNo: event.ViewObj.CustNo }).subscribe(
+      this.CustNoObj.CustNo = event.ViewObj.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }
