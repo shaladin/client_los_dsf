@@ -10,6 +10,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqMouForEditConfirmCancelObj } from 'app/shared/model/Request/MOU/ReqMouForEditConfirmCancelObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-mou-cancel',
@@ -17,6 +18,7 @@ import { ReqMouForEditConfirmCancelObj } from 'app/shared/model/Request/MOU/ReqM
 })
 export class MouCancelComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
+  CustNoObj: GenericObj = new GenericObj();
   user: any;
 
   constructor(
@@ -55,8 +57,8 @@ export class MouCancelComponent implements OnInit {
 
   getEvent(event) {
     if (event.Key == "customer") {
-      var link: string;
-      this.http.post(URLConstant.GetCustByCustNo, {TrxNo : event.RowObj.CustNo}).subscribe(
+      this.CustNoObj.CustNo = event.RowObj.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         });

@@ -9,6 +9,7 @@ import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 
 @Component({
   selector: 'app-cust-grp-member-FL4W',
@@ -43,10 +44,7 @@ export class CustGrpMemberFL4WComponent implements OnInit {
 
   InputLookupCustomerObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   lookupCustomerIdentifiers: Array<string> = new Array<string>();
-
-  custObj = {
-    CustNo: ""
-  };
+  CustNoObj: GenericObj = new GenericObj();
 
   custMasterObj: any;
 
@@ -193,8 +191,8 @@ export class CustGrpMemberFL4WComponent implements OnInit {
   }
 
   async setCustNameAndCustRelationship(i, custNo){
-    this.custObj.CustNo = custNo;
-    await this.http.post(URLConstant.GetCustByCustNo, {TrxNo : custNo}).toPromise().then(
+    this.CustNoObj.CustNo = custNo;
+    await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
       (response) => {
         this.custMasterObj = response;
         this.dictLookup[i].nameSelect = response["CustName"];
