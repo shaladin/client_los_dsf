@@ -18,6 +18,7 @@ export class UcPagingObj {
     delay: number;
     isSearched: boolean;
     navigationConst: any;
+    listEnvironments: Array<EnvisObj>;
 
     constructor() {
         this._url = "";
@@ -29,11 +30,14 @@ export class UcPagingObj {
         this.arrCritObj = null;
         this.addCritInput = new Array<CriteriaObj>();
         this.ddlEnvironments = new Array<EnviObj>();
+        this.listEnvironments = new Array<EnvisObj>();
+        this.listEnvironments.push({ environment: "FOU", url: environment.FoundationR3Url });
+        this.listEnvironments.push({ environment: "LOS", url: environment.losUrl });
         this.whereValue = new Array<WhereValueObj>();
         this.isHideSearch = false;
         this.delay = 0;
         this.isSearched = false;
-        this.navigationConst = NavigationConstant
+        this.navigationConst = NavigationConstant;
     }
 }
 export class EnviObj {
@@ -51,5 +55,14 @@ export class WhereValueObj {
 
     constructor() {
         this.property = "";
+    }
+}
+export class EnvisObj {
+    environment: string;
+    url: string;
+
+    constructor() {
+        this.environment = "";
+        this.url = "";
     }
 }
