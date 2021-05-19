@@ -21,6 +21,7 @@ export class CrdRvwCustInfoComponent implements OnInit {
 
   @Input() appId: number = 0;
   @Input() crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
+  @Input() captureStat: string = "";
 
   //#region Exposure Type
   readonly ExposureCustTypeCode: string = CommonConstant.ExposureCustTypeCode;

@@ -518,6 +518,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeResidualType = "RESIDUAL_TYPE";
   public static RefMasterTypeCodeOperatingMargin = "OPERATING_MARGIN_TYPE";
   public static RefMasterTypeCodeCashflowItem = "CASHFLOW_ITEM";
+  public static RefMasterTypeCodeCaptureStat = "CAPTURE_STAT";
   //RATE TYPE
   public static RateTypeFlat = "FLT";
   public static RateTypeEffective = "EFCTV";
