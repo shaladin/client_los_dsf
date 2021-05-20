@@ -6,7 +6,6 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { MatTabChangeEvent } from '@angular/material';
 import { AppMainInfoComponent } from '../app-main-info/app-main-info.component';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -48,6 +47,7 @@ export class AppViewComponent implements OnInit {
   IsAssetExpense: boolean = true;
   IsPefindoResult: boolean = true;
   IsSurveyResult: boolean = true;
+  IsCustomerOpl: boolean = true;
   bizTemplateCode: string = "";
   isDmsReady: boolean;
   dmsObj: DMSObj;
@@ -60,17 +60,17 @@ export class AppViewComponent implements OnInit {
 
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute,
+    private http: HttpClient,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] == 'undefined') {
         this.AppNo = params["AppNo"]
-
-      } else {
+      }
+      else {
         this.AppId = params["AppId"];
       }
-
     })
-
   }
 
   async ngOnInit(): Promise<void> {
@@ -80,7 +80,8 @@ export class AppViewComponent implements OnInit {
           this.AppId = response['AppId'];
         }
       )
-    } else if (this.AppNo == null) {
+    }
+    else if (this.AppNo == null) {
       await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
         (response) => {
           this.AppNo = response['AppNo'];
@@ -125,7 +126,6 @@ export class AppViewComponent implements OnInit {
       this.dmsObj.ViewCode = "APP";
       this.dmsObj.UsingDmsAdIns = this.usingDmsAdins;
       this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
-
 
       let reqAppId = { Id: this.AppId };
       this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsOfficeCode, this.OriOfficeCode));
@@ -201,6 +201,7 @@ export class AppViewComponent implements OnInit {
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
       this.IsAnalysisResult = false;
+      this.IsCustomerOpl = false;
     }
     else if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
       this.IsAsset = false;
@@ -212,6 +213,7 @@ export class AppViewComponent implements OnInit {
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
+      this.IsCustomerOpl = false;
     }
     else if (this.bizTemplateCode == CommonConstant.CF4W) {
       this.IsCollateral = false;
@@ -223,6 +225,7 @@ export class AppViewComponent implements OnInit {
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
+      this.IsCustomerOpl = false;
     }
     else if (this.bizTemplateCode == CommonConstant.FL4W) {
       this.IsAsset = false;
@@ -234,6 +237,7 @@ export class AppViewComponent implements OnInit {
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
+      this.IsCustomerOpl = false;
     }
     else if (this.bizTemplateCode == CommonConstant.CFNA) {
       this.IsAsset = false;
@@ -245,8 +249,10 @@ export class AppViewComponent implements OnInit {
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
+      this.IsCustomerOpl = false;
     }
     else if (this.bizTemplateCode == CommonConstant.OPL) {
+      this.IsCustomer = false;
       this.IsCollateral = false;
       this.IsReferantor = false;
       this.IsInvoice = false;
