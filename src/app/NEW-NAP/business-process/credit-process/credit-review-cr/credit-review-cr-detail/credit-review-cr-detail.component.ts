@@ -20,6 +20,8 @@ import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-credit-review-cr-detail',
@@ -262,11 +264,22 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   isShow: boolean = false;
+  captureStat: string = "";
   async GetCrdRvwCustInfoByAppId() {
     await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.crdRvwCustInfoObj = response;
         this.isShow = true;
+      }
+    );
+
+    let refMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCaptureStat,
+      MasterCode: this.crdRvwCustInfoObj.CaptureStat
+    };
+    await this.http.post<KeyValueObj>(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
+      (response) => {
+        this.captureStat = response.Value;
       }
     );
   }

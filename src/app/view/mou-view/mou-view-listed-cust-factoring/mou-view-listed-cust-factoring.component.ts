@@ -5,6 +5,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 
 @Component({
   selector: 'app-mou-view-listed-cust-factoring',
@@ -12,6 +13,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class MouViewListedCustFactoringComponent implements OnInit {
   responseCustListed: Array<any>;
+  CustNoObj: GenericObj = new GenericObj();
   @Input() MouCustId : number;
   constructor(private http : HttpClient) { } 
 
@@ -24,9 +26,8 @@ export class MouViewListedCustFactoringComponent implements OnInit {
       });
   }
   openView(custNo){
-    var link: string;
-    var custObj = { CustNo: custNo };
-    this.http.post(URLConstant.GetCustByCustNo, {TrxNo : custNo}).subscribe(
+    this.CustNoObj.CustNo = custNo;
+    this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
       response => {
         AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
       });
