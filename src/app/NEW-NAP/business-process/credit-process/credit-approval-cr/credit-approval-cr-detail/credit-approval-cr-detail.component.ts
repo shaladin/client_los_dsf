@@ -148,15 +148,7 @@ export class CreditApprovalCrDetailComponent implements OnInit {
     }
 
     if(isReject){
-      var NegCustObj = {
-        AppId: this.appId,
-        MrNegCustSourceCode: CommonConstant.NegCustSourceCodeConfins,
-        NegCustCause: event['reason']
-      };
-      this.http.post(URLConstant.AddNegativeCustByAppId, NegCustObj).subscribe(
-        (response) => {
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
-        });
     }
     else if(isReturn){
       var returnHandlingHObj = new ReturnHandlingHObj();
