@@ -1,7 +1,7 @@
 {
     "title": "Report Rental Detail Supplier",
     "reportName": "Rental Detail Supplier Report",
-    "reportTemplateName": "RENTAL_DETAIL_SUPPLIER",
+    "reportTemplateCode": "RENTAL_DETAIL_SUPPLIER",
     "component": [
       {
         "type": "dropdown",

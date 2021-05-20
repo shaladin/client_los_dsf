@@ -13,7 +13,7 @@ export class RentalSummaryBrandTypeModelReportComponent implements OnInit {
   constructor() { 
     this.inputReportObj.JsonPath = "./assets/ucreport/rental-summary/rental-summary-brand-type-model-report.json";
     this.inputReportObj.EnvironmentUrl = environment.FoundationR3Url;
-    this.inputReportObj.ApiReportPath = "/Report/GenerateReportSync"; 
+    this.inputReportObj.ApiReportPath = "/Report/GenerateReportR3"; 
     this.inputReportObj.ddlEnvironments = [
       {
         name: 'OfficeCode',

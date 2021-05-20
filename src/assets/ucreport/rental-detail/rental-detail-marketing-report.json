@@ -1,7 +1,7 @@
 {
     "title": "Report Rental Detail Marketing",
     "reportName": "Rental Detail Marketing Report",
-    "reportTemplateName": "RENTAL_DETAIL_MARKETING",
+    "reportTemplateCode": "RENTAL_DETAIL_MARKETING",
     "component": [
       {
         "type": "dropdown",
@@ -12,21 +12,6 @@
         "isSelectOne": true,
         "url": "",
         "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
-        "items": [],
-        "itemsUrl": [],
-        "criteriaPropName": "",
-        "criteriaPropValue": "",
-        "paramAssignment": 1
-      },
-      {
-        "type": "dropdown",
-        "label": "Marketing Officer",
-        "name": "MarketingOff",
-        "datatype": "text",
-        "isFromURL": true,
-        "isSelectOne": true,
-        "url": "",
-        "path": "/RefEmp/GetListKvpMarketingEmpForPaging",
         "items": [],
         "itemsUrl": [],
         "criteriaPropName": "",

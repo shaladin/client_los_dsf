@@ -1,7 +1,7 @@
 {
     "title": "Report Rental Detail Product",
     "reportName": "Rental Detail Product Report",
-    "reportTemplateName": "RENTAL_DETAIL_PRODUCT",
+    "reportTemplateCode": "RENTAL_DETAIL_PRODUCT",
     "component": [
       {
         "type": "dropdown",
