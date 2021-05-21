@@ -19,6 +19,7 @@ import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ResListKeyValueObj } from 'app/shared/model/Response/Generic/ResListKeyValueObj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 
 @Component({
   selector: 'app-cust-job-data',
@@ -65,6 +66,7 @@ export class CustJobDataComponent implements OnInit {
 
   testing: Date = new Date();
   inputAddressObjForJobData: InputAddressObj;
+  custModelReqObj: ReqRefMasterByTypeCodeAndMappingCodeObj;
 
   constructor(
     private fb: FormBuilder,
@@ -311,9 +313,10 @@ export class CustJobDataComponent implements OnInit {
   }
 
   bindCustModelObj() {
-    var custModelReqObj = new GenericObj();
-    custModelReqObj.Code = CommonConstant.CustTypePersonal;
-    this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, custModelReqObj).toPromise().then(
+    this.custModelReqObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
+    this.custModelReqObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustModel;
+    this.custModelReqObj.MappingCode = CommonConstant.CustTypePersonal;
+    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, this.custModelReqObj).subscribe(
       (response : ResListKeyValueObj) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
         if (this.CustModelObj.length > 0 && this.custModelCode == undefined) {

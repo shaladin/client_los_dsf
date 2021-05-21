@@ -94,6 +94,7 @@ export class CustMainDataComponent implements OnInit {
   rowVersionAppCustCompany: string[];
   rowVersionAppCustAddr: string[];
   rowVersionMgmntShrholder: string[];
+  custModelReqObj: ReqRefMasterByTypeCodeAndMappingCodeObj;
   readonly MasterGender = CommonConstant.RefMasterTypeCodeGender;
   readonly MasterCustType = CommonConstant.RefMasterTypeCodeCustType;
   readonly MasterMaritalStat = CommonConstant.RefMasterTypeCodeMaritalStat;
@@ -399,9 +400,10 @@ export class CustMainDataComponent implements OnInit {
     this.CustMainDataForm.controls.MrCustTypeCode.setValue(this.MrCustTypeCode);
 
     if (!FirstInit) {
-      var custModelReqObj = new GenericObj();
-      custModelReqObj.Code = this.MrCustTypeCode;
-      this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, custModelReqObj).subscribe(
+      this.custModelReqObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
+      this.custModelReqObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustModel;
+      this.custModelReqObj.MappingCode = this.MrCustTypeCode;
+      this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, this.custModelReqObj).subscribe(
         (response : ResListKeyValueObj) => {
           this.CustModelObj = response[CommonConstant.ReturnObj];
         }
