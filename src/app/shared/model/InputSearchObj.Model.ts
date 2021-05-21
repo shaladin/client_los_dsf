@@ -12,6 +12,7 @@ export class InputSearchObj {
     arrCritObj: any;
     addCritInput: Array<CriteriaObj>;
     ddlEnvironments: Array<EnviObj>;
+    listEnvironments: Array<EnvisObj>;
     whereValue: Array<WhereValueObj>;
     switchValue: Array<SwitchValueObj>;
     integrationObj: IntegrationObj;
@@ -25,6 +26,9 @@ export class InputSearchObj {
         this.arrCritObj = null;
         this.addCritInput = new Array<CriteriaObj>();
         this.ddlEnvironments = new Array<EnviObj>();
+        this.listEnvironments = new Array<EnvisObj>();
+        this.listEnvironments.push({ environment: "FOU", url: environment.FoundationR3Url });
+        this.listEnvironments.push({ environment: "LOS", url: environment.losUrl });
         this.whereValue = new Array<WhereValueObj>();
         this.switchValue = new Array<SwitchValueObj>();
         this.integrationObj = new IntegrationObj();
@@ -57,5 +61,15 @@ export class SwitchValueObj {
 
     constructor() {
         this.property = "";
+    }
+}
+
+export class EnvisObj {
+    environment: string;
+    url: string;
+
+    constructor() {
+        this.environment = "";
+        this.url = "";
     }
 }
