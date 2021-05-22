@@ -329,17 +329,31 @@ const routes: Routes = [
         }
       },
       {
-        path: 'AssetAllocation/Paging',
+        path: PathConstant.ASSET_ALLOC_PAGING,
         component: AssetAllocationPagingComponent,
         data: {
           title: 'Asset Allocation Paging'
         }
       },
       {
-        path: 'AssetAllocation/Detail',
+        path: PathConstant.ASSET_ALLOC_DETAIL,
         component: AssetAllocationDetailComponent,
         data: {
           title: 'Asset Allocation Detail'
+        }
+      },
+      {
+        path: PathConstant.INVOICE_VERIF_DETAIL_LIST_INV,
+        component: InvoiceVerifDetailListOfInvoiceComponent,
+        data: {
+          title: 'Invoice Detail List Of Invoice'
+        }
+      },
+      {
+        path: PathConstant.INVOICE_VERIF_INV_DSF,
+        component:InvoiceVerifDetailDFComponent,
+        data:{
+          title: 'Invoice Detail DF'
         }
       }
     ]
