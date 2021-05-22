@@ -1,23 +1,17 @@
 {
-    "isSeq": true,
+  "isSeq": true,
   "headerList": [
     {
       "type": "sort",
       "position": "left",
       "label": "Shareholder Name",
-      "name": "CustName"
+      "name": "MgmntShrholderName"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Shareholder Type",
-      "name": "MrCustTypeDescr"
-    },
-    {
-      "type": "sort",
-      "position": "left",
-      "label": "Shareholder Relationship",
-      "name": "MrCustRelationshipDescr"
+      "name": "CustTypeName"
     },
     {
       "type": "sort",
@@ -54,17 +48,12 @@
     {
       "type": "text",
       "position": "left",
-      "property": "CustName"
+      "property": "MgmntShrholderName"
     },
     {
       "type": "text",
       "position": "left",
-      "property": "MrCustTypeDescr"
-    },
-    {
-      "type": "text",
-      "position": "left",
-      "property": "MrCustRelationshipDescr"
+      "property": "CustTypeName"
     },
     {
       "type": "date",
@@ -92,4 +81,4 @@
       "property": "IsActive"
     }
   ]
-  }
+}
