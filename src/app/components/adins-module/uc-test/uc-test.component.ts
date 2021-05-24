@@ -150,6 +150,13 @@ export class UcTestComponent implements OnInit {
                   break;
                 }
               }
+            } else if (this.searchInput.listEnvironments != undefined && this.searchInput.listEnvironments.length != 0) {
+              for (let y = 0; y < this.searchInput.listEnvironments.length; y++) {
+                if (data.component[i].environment == this.searchInput.listEnvironments[y].environment) {
+                  data.component[i].fullpath = this.searchInput.listEnvironments[y].url + data.component[i].path;
+                  break;
+                }
+              }
             } else {
               data.component[i].fullpath = data.component[i].url;
             }
