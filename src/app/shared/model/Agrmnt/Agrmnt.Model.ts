@@ -44,6 +44,7 @@ export class AgrmntObj {
     RsvField5: string;
     DocPrintNeedsStat: string;
     RowVersion: string;
+    FirstInstTypeName: string;
 
     constructor() {
         this.AgrmntId = 0;
@@ -91,5 +92,6 @@ export class AgrmntObj {
         this.RsvField5 = "";
         this.DocPrintNeedsStat = "";
         this.RowVersion = "";
+        this.FirstInstTypeName = "";
     }
 }
