@@ -1,0 +1,136 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "CustCompanyFinDataId",
+        "subSectionTitle": "Financial",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "currency",
+            "label": "Monthly Income",
+            "property": "MonthlyIncomeAmt"
+          },
+          {
+            "type": "currency",
+            "label": "Monthly Expense",
+            "property": "MonthlyExpenseAmt"
+          },
+          {
+            "type": "text",
+            "label": "Return Of Investment (%)",
+            "property": "ReturnOfInvestmentPrcnt"
+          },
+          {
+            "type": "text",
+            "label": "Return Of Equity (%)",
+            "property": "ReturnOfEquityPrcnt"
+          },
+          {
+            "type": "text",
+            "label": "Return Of Asset (%)",
+            "property": "ReturnOfAssetPrcnt"
+          },
+          {
+            "type": "text",
+            "label": "Profit Margin (%)",
+            "property": "ProfitMarginPrcnt"
+          },
+          {
+            "type": "text",
+            "label": "Current Ratio (%)",
+            "property": "CurrentRatioPrcnt"
+          },
+          {
+            "type": "text",
+            "label": "Debt Equity (%)",
+            "property": "DebtEquityPrcnt"
+          },
+          {
+            "type": "text",
+            "label": "Inventory Turn Over (%)",
+            "property": "InvTurnOverPrcnt"
+          },
+          {
+            "type": "text",
+            "label": "Ar Turn Over (%)",
+            "property": "ArTurnOverPrcnt"
+          },
+          {
+            "type": "text",
+            "label": "Growth (%)",
+            "property": "GrowthPrcnt"
+          },
+          {
+            "type": "currency",
+            "label": "Working Capital (Amt)",
+            "property": "WorkingCapitalAmt"
+          },
+          {
+            "type": "currency",
+            "label": "Other Monthly Installment",
+            "property": "OthMonthlyInstAmt"
+          },
+          {
+            "type": "date",
+            "label": "Date As Of",
+            "property": "DateAsOf"
+          },
+          {
+            "type": "currency",
+            "label": "Revenue",
+            "property": "Revenue"
+          },
+          {
+            "type": "currency",
+            "label": "OPR Cost",
+            "property": "OprCost"
+          },
+          {
+            "type": "currency",
+            "label": "Profit Before Tax",
+            "property": "ProfitBeforeTax"
+          },
+          {
+            "type": "currency",
+            "label": "Current Asset",
+            "property": "CurrAsset"
+          },
+          {
+            "type": "currency",
+            "label": "Net Fixed Asset",
+            "property": "NetFixedAsset"
+          },
+          {
+            "type": "currency",
+            "label": "Total Asset",
+            "property": "TotalAsset"
+          },
+          {
+            "type": "currency",
+            "label": "Current Liabilities",
+            "property": "CurrLiablts"
+          },
+          {
+            "type": "currency",
+            "label": "Long Term Liabilities",
+            "property": "LongTermLiablts"
+          },
+          {
+            "type": "currency",
+            "label": "Shareholder Equity",
+            "property": "ShareholderEquity"
+          },
+          {
+            "type": "currency",
+            "label": "Current Ratio",
+            "property": "CurrRatio"
+          }
+        ],
+        "querystring": {
+          "name": "viewLtkmCustCompanyFinData"
+        }
+      }
+    ]
+  }
+  

@@ -1,0 +1,44 @@
+{
+    "title": "",
+    "subsection": [{
+      "subSectionId": "MainInfo",
+      "subSectionTitle": "Main Information",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [{
+          "type": "text",
+          "label": "Ltkm No",
+          "property": "LtkmNo"
+        },
+        {
+          "type": "text",
+          "label": "Office Request",
+          "property": "OfficeName"
+        },
+        {
+          "type": "text",
+          "label": "Customer Name",
+          "property": "CustName"
+        },
+        {
+          "type": "text",
+          "label": "LTKM Step",
+          "property": "LtkmStep"
+        },
+        {
+          "type": "callback",
+          "key": "ViewCust",
+          "label": "Customer No",
+          "property": "CustNo"
+        },
+        {
+          "type": "callback",
+          "key": "ViewApp",
+          "label": "Application No",
+          "property": "AppNo"
+        }
+      ],
+      "querystring": {
+        "name": "viewLtkmMainInformation"
+      }
+    }]
+  }

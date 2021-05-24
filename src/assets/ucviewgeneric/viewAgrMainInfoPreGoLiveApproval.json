@@ -1,9 +1,9 @@
 {
-  "title": "",
+  "title": "Request Pre Go Live",
   "subsection": [
     {
       "subSectionId": "AgrMainInformationId",
-      "subSectionTitle": "Request Pre Go Live Main Information",
+      "subSectionTitle": "Main Information",
       "mainInfoPath": "/Generic/GetDataViewBySQL",
       "mainInfo": [
         {

@@ -12,7 +12,7 @@
           "property": "AppNo",
           "name": "AppNo",
           "path": "VIEW_APP",
-          "target" : "_blank",
+          "target": "_blank",
           "param": [
             {
               "type": "AppId",
@@ -20,7 +20,7 @@
             }
           ]
         },
-        {            
+		{            
           "type" : "switch", 
           "case" : [ 
             {
@@ -87,14 +87,19 @@
           "property": "AgrmntNo",
           "name": "AgrmntNo",
           "path": "VIEW_AGRMNT",
-          "target" : "_blank",
+          "target": "_blank",
           "param": [
             {
               "type": "AgrmntId",
               "property": "AgrmntId"
             }
           ]
-        }, 
+        },
+        {
+          "type": "text",
+          "label": "Number of Asset",
+          "property": "NumOfAsset"
+        },
         {
           "type": "text",
           "label": "Customer Name",
@@ -109,6 +114,16 @@
           "type": "text",
           "label": "Tenor",
           "property": "Tenor"
+        },
+        {
+          "type": "text",
+          "label": "Agreement Current Step",
+          "property": "CurrStep"
+        },
+        {
+          "type": "text",
+          "label": "Agreement Last Step",
+          "property": "LastStep"
         },
         {
           "type": "callback",
