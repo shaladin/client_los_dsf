@@ -421,7 +421,6 @@ export class PathConstant {
     //#region FOU-View-Module
     public static VIEW_FOU_CUST_PERSONAL_DETAIL = "Customer/PersonalDetail";
     public static VIEW_FOU_CUST_COY_DETAIL = "Customer/CoyDetail"
-    public static VIEW_FOU_OFFERING = "Offering";
     public static VIEW_FOU_VENDOR_BRANCH = "Vendor/VendorBranch";
     public static VIEW_FOU_SRVY_TASK = "Survey/SurveyTask";
     public static VIEW_FOU_SRVY_ORDER = "Survey/SurveyOrder";

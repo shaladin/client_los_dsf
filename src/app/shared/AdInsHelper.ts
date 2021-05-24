@@ -110,7 +110,7 @@ export class AdInsHelper {
 
   public static OpenProdOfferingViewByCodeAndVersion(Code, Version) {
     var token = localStorage.getItem("Token");
-    window.open(environment.FoundationR3Web + NavigationConstant.VIEW_FOU_OFFERING + "?prodOfferingHId=0&prodOfferingCode=" + Code + "&prodOfferingVersion=" + Version + "&Token=" + token, "_blank");
+    window.open(environment.losR3Web + NavigationConstant.VIEW_OFFERING + "?prodOfferingHId=0&prodOfferingCode=" + Code + "&prodOfferingVersion=" + Version + "&Token=" + token, "_blank");
   }
 
   public static OpenLeadViewByLeadId(LeadId) {
@@ -130,7 +130,7 @@ export class AdInsHelper {
 
   public static OpenProdOfferingViewByProdOfferingHId(ProdOfferingHId) {
     var token = localStorage.getItem("Token");
-    window.open(environment.FoundationR3Web + NavigationConstant.VIEW_FOU_OFFERING + "?prodOfferingHId=" + ProdOfferingHId + "&Token=" + token, '_blank');
+    window.open(environment.losR3Web + NavigationConstant.VIEW_OFFERING + "?prodOfferingHId=" + ProdOfferingHId + "&Token=" + token, '_blank');
   }
 
   public static OpenVendorBranchViewByVendorId(VendorId) {
