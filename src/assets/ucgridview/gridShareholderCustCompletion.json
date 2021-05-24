@@ -5,13 +5,19 @@
       "type": "sort",
       "position": "left",
       "label": "Shareholder Name",
-      "name": "MgmntShrholderName"
+      "name": "CustName"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Shareholder Type",
-      "name": "CustTypeName"
+      "name": "MrCustTypeDescr"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Shareholder Relationship",
+      "name": "MrCustRelationshipDescr"
     },
     {
       "type": "sort",
@@ -48,12 +54,17 @@
     {
       "type": "text",
       "position": "left",
-      "property": "MgmntShrholderName"
+      "property": "CustName"
     },
     {
       "type": "text",
       "position": "left",
-      "property": "CustTypeName"
+      "property": "MrCustTypeDescr"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "MrCustRelationshipDescr"
     },
     {
       "type": "date",

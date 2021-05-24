@@ -13,6 +13,9 @@ export class PathConstant {
     public static LR_INQUIRY = "Inquiry";
     public static LR_INTEGRATION = "Integration";
     public static LR_BACKDOOR = "Backdoor";
+    public static LR_LTKM = "Ltkm";
+    public static LR_TRIAL_CALC = "TrialCalculation";
+    public static LR_TASK_REASSIGN = "TaskReassignment";
     //#endregion
 
     //#region Common-Path
@@ -20,6 +23,7 @@ export class PathConstant {
     public static PAGES = "Pages";
     public static NAP1 = "NAP1";
     public static NAP2 = "NAP2";
+    public static NAP4 = "NAP4";
     public static PAGING = "Paging";
     public static MAIN = "Main";
     public static ADD = "Add";
@@ -79,6 +83,7 @@ export class PathConstant {
     public static NAP_MAIN_DATA = "MainData";
     public static NAP_CUST_COMPL = "CustCompletion";
     public static NAP_APP_PRCS = "ApplicationProcess";
+    public static NAP_DLFN = "DLFN";
     //#endregion
     
     //#region Nap-CF2W
@@ -117,6 +122,9 @@ export class PathConstant {
     public static NAP_FROM_MOU_DETAIL = PathConstant.NAP_FROM_MOU + "/" + PathConstant.DETAIL;
     public static NAP1_FROM_LEAD_PAGING = PathConstant.NAP1_FROM_LEAD + "/" + PathConstant.PAGING;
     public static NAP1_FROM_LEAD_DETAIL = PathConstant.NAP1_FROM_LEAD + "/" + PathConstant.DETAIL;
+    public static NAP_SIMPLE_LEAD = "NapFromSimpleLead";
+    public static NAP_SIMPLE_LEAD_PAGING = PathConstant.NAP_SIMPLE_LEAD + "/" + PathConstant.PAGING;
+    public static NAP_SIMPLE_LEAD_DETAIL = PathConstant.NAP_SIMPLE_LEAD + "/" + PathConstant.DETAIL;
     //#endregion
 
     //#region Nap-View
@@ -131,6 +139,9 @@ export class PathConstant {
     public static CRD_APPRVL_RES_EXT_PAGING = PathConstant.CRD_APPRVL_RES_EXT + "/" + PathConstant.PAGING;
     public static CRD_APPRVL_RES_EXT_DETAIL = PathConstant.CRD_APPRVL_RES_EXT + "/" + PathConstant.DETAIL;
     public static CRD_APPRVL_RES_EXT_ASSET_INQUIRY = PathConstant.CRD_APPRVL_RES_EXT + "/AssetInquiry";
+    public static CRD_APPR_RES_EXT_APPRVL = "CreditApvResultExtApproval";
+    public static CRD_APPR_RES_EXT_APPRVL_PAGING = PathConstant.CRD_APPR_RES_EXT_APPRVL + "/" + PathConstant.PAGING;
+    public static CRD_APPR_RES_EXT_APPRVL_DETAIL = PathConstant.CRD_APPR_RES_EXT_APPRVL + "/" + PathConstant.DETAIL;
     public static OUTSTANDING_TC = "OutstandingTC";
     public static OUTSTANDING_TC_PAGING = PathConstant.OUTSTANDING_TC + "/" + PathConstant.PAGING;
     public static OUTSTANDING_TC_DETAIL = PathConstant.OUTSTANDING_TC + "/" + PathConstant.DETAIL;
@@ -141,6 +152,9 @@ export class PathConstant {
     public static RETURN_HANDLING_EDIT_APP_PAGING = PathConstant.RETURN_HANDLING + "/EditAppPaging";
     public static RETURN_HANDLING_EDIT_CUST_PAGING = PathConstant.RETURN_HANDLING + "/editcustpaging";
     public static RETURN_HANDLING_SRVY = PathConstant.RETURN_HANDLING + "/Survey";
+    public static RETURN_HANDLING_SRVY_VERIF_PAGING = PathConstant.RETURN_HANDLING + "/SurveyVerif" + PathConstant.PAGING;
+    public static RETURN_HANDLING_NAP2 = PathConstant.RETURN_HANDLING + PathConstant.NAP2;
+    public static RETURN_HANDLING_NAP4 = PathConstant.RETURN_HANDLING + PathConstant.NAP4;
     public static APP_DUP_CHECK = "AppDupCheck";
     public static APP_EXIST_DATA = "ApplicantExistingData";
     public static APP_DUP_CHECK_PAGING = PathConstant.APP_DUP_CHECK + "/" + PathConstant.PAGING;
@@ -177,6 +191,16 @@ export class PathConstant {
     public static DOC_PICKUP_REQUEST = "DocumentPickupRequest";
     public static DOC_PICKUP_REQUEST_PAGING = PathConstant.DOC_PICKUP_REQUEST + "/" + PathConstant.PAGING;
     public static DOC_PICKUP_REQUEST_DETAIL= PathConstant.DOC_PICKUP_REQUEST + "/" + PathConstant.DETAIL;
+    public static EDIT_APP_AFT_APV = "EditAppAftApv";
+    public static EDIT_APP_AFT_APV_PAGING = PathConstant.EDIT_APP_AFT_APV + "/" + PathConstant.PAGING;
+    public static EDIT_APP_AFT_APV_INQUIRY = PathConstant.EDIT_APP_AFT_APV + "/" + PathConstant.INQUIRY;
+    public static EDIT_APP_AFT_APV_DETAIL= PathConstant.EDIT_APP_AFT_APV + "/" + PathConstant.DETAIL;
+    public static EDIT_APP_AFT_APV_VIEW= PathConstant.EDIT_APP_AFT_APV + "/" + PathConstant.VIEW;
+    public static EDIT_APP_AFT_APV_APPRV= PathConstant.EDIT_APP_AFT_APV + "/" + PathConstant.APPRV;
+    public static EDIT_APP_AFT_APV_APPRV_PAGING = PathConstant.EDIT_APP_AFT_APV_APPRV + "/" + PathConstant.PAGING;
+    public static EDIT_APP_AFT_APV_APPRV_DETAIL= PathConstant.EDIT_APP_AFT_APV_APPRV + "/" + PathConstant.DETAIL;
+    public static COPY_CANCEL_APP_CROSS_BL = "CopyCancelledApplicationCrossBl";
+    public static COPY_CANCEL_APP_CROSS_BL_DETAIL = PathConstant.COPY_CANCEL_APP_CROSS_BL + "/" + PathConstant.DETAIL;
 
     //#endregion
 
@@ -233,6 +257,8 @@ export class PathConstant {
     public static INVOICE_VERIF = "InvoiceVerif";
     public static INVOICE_VERIF_PAGING = PathConstant.INVOICE_VERIF + "/" + PathConstant.PAGING;
     public static INVOICE_VERIF_DETAIL = PathConstant.INVOICE_VERIF + "/" + PathConstant.DETAIL;
+    public static INVOICE_VERIF_DETAIL_LIST_INV = PathConstant.INVOICE_VERIF + "/" + PathConstant.DETAIL + "/listOfInvoice";
+    public static INVOICE_VERIF_INV_DSF = PathConstant.INVOICE_VERIF + "/InvoiceDetailDF";
     public static DOC_CHECK_LIST = "DocChecklist";
     public static DOC_CHECK_LIST_PAGING = PathConstant.DOC_CHECK_LIST + "/" + PathConstant.PAGING;
     public static DOC_CHECK_LIST_DETAIL = PathConstant.DOC_CHECK_LIST + "/" + PathConstant.DETAIL;
@@ -317,6 +343,7 @@ export class PathConstant {
     public static MOU_CUST_RVW_PAGING = PathConstant.MOU_CUST + "/ReviewPaging";
     public static MOU_CUST_RVW_GENERAL = PathConstant.MOU_CUST + "/ReviewGeneral";
     public static MOU_CUST_RVW_FCTR = PathConstant.MOU_CUST + "/ReviewFactoring";
+    public static MOU_CUST_RVW_DFLN = PathConstant.MOU_CUST + "/ReviewDLFN";
     public static MOU_CUST_APPRV = PathConstant.MOU_CUST + "/Approval";
     public static MOU_CUST_APPRV_GENERAL = PathConstant.MOU_CUST + "/ApprovalGeneral";
     public static MOU_CUST_APPRV_FCTR = PathConstant.MOU_CUST + "/ApprovalFactoring";
@@ -338,6 +365,41 @@ export class PathConstant {
     public static MOU_DUP_CHECK_EXIST_COY = PathConstant.MOU_DUP_CHECK + "/ExistingCompany";
     public static MOU_EDIT_CUST_PAGING = "EditMouCustomer/" + PathConstant.PAGING;
     public static MOU_TEST_UPLOAD = "TestUpload";
+    public static MOU_VIEW = "MouView";
+    public static MOU_FREEZE = "FreezeUnfreeze";
+    public static MOU_FREEZE_PAGING = PathConstant.MOU_FREEZE + "/" + PathConstant.PAGING;
+    public static MOU_FREEZE_DETAIL = PathConstant.MOU_FREEZE + "/" + PathConstant.DETAIL;
+    public static MOU_FREEZE_INQUIRY = PathConstant.MOU_FREEZE + "/" + PathConstant.INQUIRY;
+    public static MOU_FREEZE_VIEW = PathConstant.MOU_FREEZE + "/" + PathConstant.VIEW;
+    public static MOU_FREEZE_APV = "FreezeUnfreezeApv";
+    public static MOU_FREEZE_APV_PAGING = PathConstant.MOU_FREEZE_APV + "/" + PathConstant.PAGING;
+    public static MOU_FREEZE_APV_DETAIL = PathConstant.MOU_FREEZE_APV + "/" + PathConstant.DETAIL;
+    public static CHANGE_MOU_REQ = "ChangeMouRequest";
+    public static CHANGE_MOU_REQ_PAGING = PathConstant.CHANGE_MOU_REQ + "/" + PathConstant.PAGING;
+    public static CHANGE_MOU_REQ_DETAIL = PathConstant.CHANGE_MOU_REQ + "/" + PathConstant.DETAIL;
+    public static CHANGE_MOU_REQ_DETAIL_CUST_TYPE = PathConstant.CHANGE_MOU_REQ + "/" + PathConstant.DETAIL + "/Customer/:MOUType";
+    public static CHANGE_MOU = "ChangeMou";
+    public static CHANGE_MOU_INQUIRY = PathConstant.CHANGE_MOU + "/" + PathConstant.INQUIRY;
+    public static CHANGE_MOU_CANCEL = PathConstant.CHANGE_MOU + "/" + PathConstant.CANCEL;
+    public static CHANGE_MOU_EXEC_PAGING = PathConstant.CHANGE_MOU + "/ExecPaging";
+    public static CHANGE_MOU_EXEC_DETAIL = PathConstant.CHANGE_MOU + "/ExecDetail";
+    public static CHANGE_MOU_CUST_ASSET = PathConstant.CHANGE_MOU + "/CustAsset";
+    public static CHANGE_MOU_RVW_PAGING = PathConstant.CHANGE_MOU + "/ReviewPaging";
+    public static CHANGE_MOU_RVW_DETAIL_GEN = PathConstant.CHANGE_MOU + "/ReviewDetailGen";
+    public static CHANGE_MOU_RVW_DETAIL_FCTR = PathConstant.CHANGE_MOU + "/ReviewDetailFctr";
+    public static CHANGE_MOU_RVW_DETAIL_FIN = PathConstant.CHANGE_MOU + "/ReviewFinancing";
+    public static CHANGE_MOU_APV_PAGING = PathConstant.CHANGE_MOU + "/ApvPaging";
+    public static CHANGE_MOU_APV_DETAIL_GEN = PathConstant.CHANGE_MOU + "/ApvDetailGen";
+    public static CHANGE_MOU_APV_DETAIL_FCTR = PathConstant.CHANGE_MOU + "/ApvDetailFctr";
+    public static CHANGE_MOU_APV_DETAIL_FIN = PathConstant.CHANGE_MOU + "/ApvDetailFinancing";
+    public static CHANGE_MOU_RTN_PAGING = PathConstant.CHANGE_MOU + "/ReturnPaging";
+    public static CHANGE_MOU_RTN_DETAIL = PathConstant.CHANGE_MOU + "/ReturnDetail";
+    public static CHANGE_MOU_REQ_ADD_COLL = PathConstant.CHANGE_MOU + "/RequestAddColl";
+    public static CHANGE_MOU_CUST_ASSET_DETAIL = PathConstant.CHANGE_MOU_CUST_ASSET + "/" + PathConstant.DETAIL;
+    public static CHANGE_MOU_DETAIL = "ChangeMouDetail";
+    public static CHANGE_MOU_DETAIL_GEN = PathConstant.CHANGE_MOU_DETAIL + "/General";
+    public static CHANGE_MOU_DETAIL_FCTR = PathConstant.CHANGE_MOU_DETAIL + "/Factoring";
+    public static CHANGE_MOU_DETAIL_DLFN = PathConstant.CHANGE_MOU_DETAIL + "/Dealerfinancing";
     //#endregion
 
     //#region Lead-Module
@@ -356,14 +418,56 @@ export class PathConstant {
     public static LEAD_INQUIRY = "LeadInquiry";
     public static LEAD_TELE_VERIF = "TeleVerif";
     public static LEAD_TELE_VERIF_PAGING = PathConstant.LEAD_TELE_VERIF + "/" + PathConstant.PAGING;
-    public static LEAD_TELE_VERIF_DETAIL = PathConstant.LEAD_TELE_VERIF + "/" + PathConstant.DETAIL;V
+    public static LEAD_TELE_VERIF_DETAIL = PathConstant.LEAD_TELE_VERIF + "/" + PathConstant.DETAIL;
     public static LEAD_UPDATE = "LeadUpdate";
     public static LEAD_UPDATE_PAGING = PathConstant.LEAD_UPDATE + "/" + PathConstant.PAGING;
     public static LEAD_MONITORING = "Monitoring";
     public static LEAD_RVW_MONITORING = "ReviewMonitoring";
     public static LEAD_RVW_MONITORING_PAGING = PathConstant.LEAD_RVW_MONITORING + "/" + PathConstant.PAGING;
     public static LEAD_RVW_MONITORING_DETAIL = PathConstant.LEAD_RVW_MONITORING + "/" + PathConstant.DETAIL;
+    public static SIMPLE_LEAD = "SimpleLead";
+    public static SIMPLE_LEAD_PAGING = PathConstant.SIMPLE_LEAD + "/" + PathConstant.PAGING;
+    public static SIMPLE_LEAD_DETAIL = PathConstant.SIMPLE_LEAD + "/" + PathConstant.DETAIL;
+    public static SIMPLE_LEAD_MAIN_INFO = PathConstant.SIMPLE_LEAD + "/MainInfo";
+    public static SIMPLE_LEAD_MONITORING = PathConstant.SIMPLE_LEAD + "/" + PathConstant.LEAD_MONITORING;
+    public static SIMPLE_LEAD_RVW_MONITORING_PAGING = PathConstant.SIMPLE_LEAD + "/" + PathConstant.LEAD_RVW_MONITORING_PAGING;
+    public static SIMPLE_LEAD_RVW_MONITORING_DETAIL = PathConstant.SIMPLE_LEAD + "/" + PathConstant.LEAD_RVW_MONITORING_DETAIL;
+    public static SIMPLE_LEAD_FRAUD_VERIF = "SimpleLeadFraudVerif";
+    public static SIMPLE_LEAD_FRAUD_VERIF_PAGING = PathConstant.SIMPLE_LEAD_FRAUD_VERIF + "/" + PathConstant.PAGING;
+    public static SIMPLE_LEAD_FRAUD_VERIF_DETAIL = PathConstant.SIMPLE_LEAD_FRAUD_VERIF + "/" + PathConstant.DETAIL;
+    public static SIMPLE_LEAD_UPD = "SimpleLeadUpdate";
+    public static SIMPLE_LEAD_UPD_PAGING = PathConstant.SIMPLE_LEAD_UPD + "/" + PathConstant.PAGING;
+    public static POTENTIAL_RO = "PotentialRo";
+    public static POTENTIAL_RO_PAGING = PathConstant.POTENTIAL_RO + "/" + PathConstant.PAGING;
+    public static POTENTIAL_RO_INQUIRY = PathConstant.POTENTIAL_RO + "/" + PathConstant.INQUIRY;
+    public static POTENTIAL_RO_VIEW = PathConstant.POTENTIAL_RO + "/" + PathConstant.VIEW;
+    public static POTENTIAL_RO_EXEC = PathConstant.POTENTIAL_RO + "/Execution";
+    public static POTENTIAL_RO_TEL_OFFER = PathConstant.POTENTIAL_RO + "/RoTelemkOffer";
+    public static POTENTIAL_RO_TEL_OFFER_PAGING = PathConstant.POTENTIAL_RO_TEL_OFFER + "/" + PathConstant.PAGING;
+    public static POTENTIAL_RO_TEL_OFFER_DETAIL = PathConstant.POTENTIAL_RO_TEL_OFFER + "/" + PathConstant.DETAIL;
+    public static POTENTIAL_RO_TEL_OFFER_VERIF = PathConstant.POTENTIAL_RO_TEL_OFFER + "/" + PathConstant.VERIF;
     //#endregion
+    
+    //#region LTKM-Module
+    public static REQ = "Request";
+    public static VERIFY = "Verify";
+    public static VERIFY_PAGING = PathConstant.VERIFY + "/" + PathConstant.PAGING;
+    public static VERIFY_DETAIL = PathConstant.VERIFY + "/" + PathConstant.DETAIL;
+    public static VERIFY_APV = "VerifyApproval";
+    public static VERIFY_APV_PAGING = PathConstant.VERIFY_APV + "/" + PathConstant.PAGING;
+    public static VERIFY_APV_DETAIL = PathConstant.VERIFY_APV + "/" + PathConstant.DETAIL;
+    public static RTN_HANDLING = "ReturnHandling";
+    public static RTN_HANDLING_PAGING = PathConstant.RTN_HANDLING + "/" + PathConstant.PAGING;
+    public static RTN_HANDLING_DETAIL = PathConstant.RTN_HANDLING + "/" + PathConstant.DETAIL;
+    //#endregion
+
+    //#region task-reassignment-Module
+    public static TASK_REASSIGN_APV = "TaskReassignmentApproval";
+    public static TASK_REASSIGN_APV_PAGING = PathConstant.TASK_REASSIGN_APV + "/" + PathConstant.PAGING;
+    public static TASK_REASSIGN_APV_DETAIL = PathConstant.TASK_REASSIGN_APV + "/" + PathConstant.DETAIL;
+    //#endregion
+    
+    public static TRIAL_CALC = "Trial-Calculation";
 
     //#region Report-Module
     public static REPORT_MARKETING = "RptMarketing";
@@ -416,6 +520,7 @@ export class PathConstant {
     public static VIEW_PURCHASE_TRACKING = "PurchaseTracking";
     public static VIEW_APP_ASSET = "AppAsset";
     public static VIEW_APP_LIST = "AppList";
+    public static VIEW_CHANGE_MOU = "ChangeMouView";
     //#endregion
 
     //#region FOU-View-Module

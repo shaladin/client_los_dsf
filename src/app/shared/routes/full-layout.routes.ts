@@ -38,6 +38,10 @@ export const Full_ROUTES: Routes = [
     loadChildren: './lead/lead.module#LeadModule'
   },
   {
+    path: PathConstant.LR_LTKM,
+    loadChildren: './ltkm/ltkm.module#LtkmModule'
+  },
+  {
     path: PathConstant.LR_INQUIRY,
     loadChildren: './inquiry/inquiry.module#InquiryModule'
   },
@@ -67,5 +71,13 @@ export const Full_ROUTES: Routes = [
   {
     path: PathConstant.REPORT,
     loadChildren: './report/report.module#ReportModule'
+  },
+  {
+    path: PathConstant.LR_TRIAL_CALC,
+    loadChildren: './trial-calculation/trial-calculation.module#TrialCalculationModule'
+  },
+  {
+    path: PathConstant.LR_TASK_REASSIGN,
+    loadChildren: './task-reassignment/task-reassignment.module#TaskReassignmentModule'
   }
 ];

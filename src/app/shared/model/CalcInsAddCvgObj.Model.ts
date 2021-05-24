@@ -5,6 +5,7 @@ export class CalcInsAddCvgObj {
     RateType: string;
     AddCoverageTypeCode: string;
     RateToInsco: string;
-constructor() { 
+    SeatCount: number;
+    constructor() {
     }
 }
