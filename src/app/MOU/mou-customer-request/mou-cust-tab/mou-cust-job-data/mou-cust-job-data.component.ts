@@ -17,6 +17,7 @@ import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ResListKeyValueObj } from 'app/shared/model/Response/Generic/ResListKeyValueObj.model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 
 @Component({
   selector: 'app-mou-cust-job-data',
@@ -56,6 +57,7 @@ export class MouCustJobDataComponent implements OnInit {
   CompanyScaleObj: any;
   InvestmentTypeObj: any;
   CustModelObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+  custModelReqObj: ReqRefMasterByTypeCodeAndMappingCodeObj;
 
   testing: Date = new Date();
 
@@ -305,12 +307,13 @@ export class MouCustJobDataComponent implements OnInit {
   }
 
   bindCustModelObj() {
-    var custModelReqObj = new GenericObj();
-    custModelReqObj.Code =  CommonConstant.CustTypePersonal;
-    this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, custModelReqObj).toPromise().then(
+    this.custModelReqObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
+    this.custModelReqObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustModel;
+    this.custModelReqObj.MappingCode = CommonConstant.CustTypePersonal;
+    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, this.custModelReqObj).subscribe(
       (response : ResListKeyValueObj) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
-        if (this.CustModelObj.length > 0 && this.custModelCode == undefined) {
+        if (this.CustModelObj.length > 0 && (this.custModelCode == undefined || this.custModelCode == "")) {
           this.custModelCode = this.CustModelObj[0].Key;
           this.parentForm.controls[this.identifier].patchValue({
             CustModelCode: this.CustModelObj[0].Key
