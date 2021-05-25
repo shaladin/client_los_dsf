@@ -5,7 +5,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
-import { CalcIrregularObj } from 'app/shared/model/AppFinData/CalcIrregularObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -16,17 +15,17 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
   templateUrl: './schm-irregular-cfna.component.html',
 })
 export class SchmIrregularCFNAComponent implements OnInit {
-  @Input() AppId: number;
+  @Input() AppId: number = 0;
   @Input() ParentForm: FormGroup;
   @Input() NumOfInst: number;
+  @Input() TrialCalc: boolean = false;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
-  calcIrregularObj: CalcIrregularObj = new CalcIrregularObj();
   listInstallment: any;
   responseCalc: any;
   result: AppObj = new AppObj();
-  PriceLabel: string= "Financing Amount";
+  PriceLabel: string = "Financing Amount";
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -36,13 +35,16 @@ export class SchmIrregularCFNAComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.SetEntryInstallment();
-    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-      (response) => {
-        this.result = response;
-        if(this.result.BizTemplateCode == CommonConstant.CFRFN4W ){
-          this.PriceLabel = "Financing Amount";
-        }
-      });
+    if (this.AppId != 0) {
+      this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
+        (response) => {
+          this.result = response;
+          if (this.result.BizTemplateCode == CommonConstant.CFRFN4W) {
+            this.PriceLabel = "Financing Amount";
+          }
+        });
+      this.TrialCalc = false;
+    }
   }
 
   LoadDDLRateType() {
@@ -101,18 +103,18 @@ export class SchmIrregularCFNAComponent implements OnInit {
   }
 
   CalculateAmortization() {
-    this.calcIrregularObj = this.ParentForm.value;
-    this.calcIrregularObj["IsRecalculate"] = false;
-    
-    var IdxKosong = this.calcIrregularObj.ListEntryInst.findIndex(x => x.InstAmt == 0);
-    if(IdxKosong != -1){
+    var calcIrregularObj = this.ParentForm.value;
+    calcIrregularObj["IsRecalculate"] = false;
+
+    var IdxKosong = calcIrregularObj.ListEntryInst.findIndex(x => x.InstAmt == 0);
+    if (IdxKosong != -1) {
       this.toastr.warningMessage(ExceptionConstant.INPUT_INST_AMOUNT + (IdxKosong + 1));
       return;
     }
-    if(this.ValidateFee() == false){
+    if (this.ValidateFee() == false) {
       return;
     }
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateIrregular", this.calcIrregularObj).subscribe(
+    this.http.post<ResponseCalculateObj>(this.GetUrlCalc(), calcIrregularObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
 
@@ -146,6 +148,11 @@ export class SchmIrregularCFNAComponent implements OnInit {
     );
   }
 
+  GetUrlCalc(): string {
+    if (!this.TrialCalc) return URLConstant.CalculateIrregular;
+    return URLConstant.CalculateIrregularForTrialCalc;
+  }
+
   EffectiveRatePrcntInput_FocusOut() {
     var EffectiveRatePrcnt = this.ParentForm.get("EffectiveRatePrcnt").value
     var SupplEffectiveRatePrcnt = this.ParentForm.get("SupplEffectiveRatePrcnt").value
@@ -173,11 +180,11 @@ export class SchmIrregularCFNAComponent implements OnInit {
     });
   }
 
-  ValidateFee(){
-    for(let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++){
-      if(this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
-          && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt){
-        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
+  ValidateFee() {
+    for (let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++) {
+      if (this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
+        && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt) {
+        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " + this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
         return false;
       }
     }

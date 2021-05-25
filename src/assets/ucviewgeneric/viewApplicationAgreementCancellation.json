@@ -1,95 +1,95 @@
 {
-    "title": "",
-    "subsection": [
-      {
-        "subSectionId": "ApplicationAgreementCancellation",
-        "subSectionTitle": "Main Information",
-        "mainInfoPath": "/Generic/GetDataViewBySQL",
-        "mainInfo": [
-          {
-            "type": "link",
-            "label": "Application No",
-            "property": "AppNo",
-            "name": "AppNo",
-            "path": "VIEW_APP",
-            "target": "_blank",
-            "param": [
-              {
-                "type": "AppId",
-                "property": "AppId"
-              }
-            ]
-          },
-          {
-            "type": "link",
-            "label": "Mou No",
-            "property": "MouCustNo",
-            "name": "MouCustNo",
-            "isHide": true,
-            "path": "VIEW_MOU_CUST",
-            "target": "_blank",
-            "param": [
-              {
-                "type": "MouCustId",
-                "property": "MouCustId"
-              }
-            ]
-          }, 
-          {
-            "type": "text",
-            "label": "Installment Amount",
-            "property": "InstAmt"
-          },
-          {
-            "type": "link",
-            "label": "Agreement No",
-            "property": "AgrmntNo",
-            "name": "AgrmntNo",
-            "path": "VIEW_AGRMNT",
-            "target": "_blank",
-            "param": [
-              {
-                "type": "AgrmntId",
-                "property": "AgrmntId"
-              }
-            ]
-          },
-          {
-            "type": "text",
-            "label": "Number Of Installment",
-            "property": "NumOfInst"
-          },
-          {
-            "type": "text",
-            "label": "Customer Name",
-            "property": "CustName"
-          },
-          {
-            "type": "callback",
-            "label": "Product Offering Name",
-            "key": "ViewProdOffering",
-            "position": "left",
-            "property": "ProdOfferingName"
-          },
-          {
-            "type": "text",
-            "label": "Application Status",
-            "property": "Stat"
-          },
-          {
-            "type": "text",
-            "label": "Application Current Step",
-            "property": "CurrStep"
-          },
-          {
-            "type": "text",
-            "label": "Application Last Step",
-            "property": "LastStep"
-          }
-        ],
-        "querystring": {
-          "name": "viewApplicationAgreementCancellation"
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "ApplicationAgreementCancellation",
+      "subSectionTitle": "Main Information",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "link",
+          "label": "Application No",
+          "property": "AppNo",
+          "name": "AppNo",
+          "path": "VIEW_APP",
+          "target": "_blank",
+          "param": [
+            {
+              "type": "AppId",
+              "property": "AppId"
+            }
+          ]
+        },
+        {
+          "type": "link",
+          "label": "Mou No",
+          "property": "MouCustNo",
+          "name": "MouCustNo",
+          "isHide": true,
+          "path": "VIEW_MOU_CUST",
+          "target": "_blank",
+          "param": [
+            {
+              "type": "MouCustId",
+              "property": "MouCustId"
+            }
+          ]
+        }, 
+        {
+          "type": "currency",
+          "label": "Installment Amount",
+          "property": "InstAmt"
+        },
+        {
+          "type": "link",
+          "label": "Agreement No",
+          "property": "AgrmntNo",
+          "name": "AgrmntNo",
+          "path": "VIEW_AGRMNT",
+          "target": "_blank",
+          "param": [
+            {
+              "type": "AgrmntId",
+              "property": "AgrmntId"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Number Of Installment",
+          "property": "NumOfInst"
+        },
+        {
+          "type": "text",
+          "label": "Customer Name",
+          "property": "CustName"
+        },
+        {
+          "type": "callback",
+          "label": "Product Offering Name",
+          "key": "ViewProdOffering",
+          "position": "left",
+          "property": "ProdOfferingName"
+        },
+        {
+          "type": "text",
+          "label": "Application Status",
+          "property": "Stat"
+        },
+        {
+          "type": "text",
+          "label": "Application Current Step",
+          "property": "CurrStep"
+        },
+        {
+          "type": "text",
+          "label": "Application Last Step",
+          "property": "LastStep"
         }
+      ],
+      "querystring": {
+        "name": "viewApplicationAgreementCancellation"
       }
-    ]
-  }
+    }
+  ]
+}

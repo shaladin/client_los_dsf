@@ -78,7 +78,7 @@
                 },
                 {
                     "type": "text",
-                    "label": "Customer Model",
+                    "label": "Customer Model Code",
                     "property": "MrCustModelCode"
                 }
             ],

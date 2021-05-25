@@ -1,4 +1,5 @@
 import { PurchaseOrderDObj } from "./PurchaseOrderDObj.Model";
+import { VendorBankAccObj } from "./VendorBankAcc.Model";
 
 export class PurchaseOrderHObj {
     PurchaseOrderHId: number;
@@ -17,6 +18,7 @@ export class PurchaseOrderHObj {
     MouNo: string;
     PurchaseOrderDList: Array<PurchaseOrderDObj>;
     SupplName: string;
+    VendorBankAccObjs: Array<VendorBankAccObj>;
     RowVersion: string;
 
     constructor() {

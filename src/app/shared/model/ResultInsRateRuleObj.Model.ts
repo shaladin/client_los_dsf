@@ -21,8 +21,13 @@ export class ResultInsRateRuleObj {
     AssetAgeMax: number;
     CustStampdutyFeeToCust: number;
     InscoStampdutyFeeToCust: number;
+    AdminFeeToCustBhv: string;
+    CustStampdutyFeeToCustBhv: string;
+    PaidByYearNo: Array<number>;
+    PaidBy: Array<string>;
+    PaidByBhv: Array<string>;
 
-constructor() { 
+    constructor() {
 
     }
 }
