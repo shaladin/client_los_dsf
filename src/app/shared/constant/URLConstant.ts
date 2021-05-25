@@ -25,6 +25,7 @@ export class URLConstant {
 
   // APP Application
   public static AddApp = environment.losUrl + "/Application/AddApp";
+  public static AddAppFromCopyCancledApp = environment.losUrl + "/Application/AddAppFromCopyCancledApp";
   public static AddAppMaindata = environment.losUrl + "/Application/AddAppMainData";
   public static GetAppById = environment.losUrl + "/Application/GetAppById";
   public static GetAppByAppNo = environment.losUrl + "/Application/GetAppByAppNo";

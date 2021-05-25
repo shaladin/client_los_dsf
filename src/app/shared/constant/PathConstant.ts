@@ -16,6 +16,7 @@ export class PathConstant {
     public static LR_LTKM = "Ltkm";
     public static LR_TRIAL_CALC = "TrialCalculation";
     public static LR_TASK_REASSIGN = "TaskReassignment";
+    public static UNAUTHORIZED = "Unauthorized";
     //#endregion
 
     //#region Common-Path
@@ -353,7 +354,6 @@ export class PathConstant {
     public static MOU_CUST_OUTSTANDING_TC = PathConstant.MOU_CUST + "/OutstandingTC";
     public static MOU_CUST_OUTSTANDING_TC_PAGING = PathConstant.MOU_CUST_OUTSTANDING_TC + "/" + PathConstant.PAGING;
     public static MOU_CUST_OUTSTANDING_TC_DETAIL = PathConstant.MOU_CUST_OUTSTANDING_TC + "/" + PathConstant.DETAIL;
-    public static MOU_UNAUTHORIZED_PAGE = "UnauthorizedPage";
     public static MOU_EXECUTION = "Execution";
     public static MOU_EXECUTION_PAGING = PathConstant.MOU_EXECUTION + "/" + PathConstant.PAGING;
     public static MOU_EXECUTION_DETAIL = PathConstant.MOU_EXECUTION + "/" + PathConstant.DETAIL;

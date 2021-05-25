@@ -1,0 +1,46 @@
+<form class="form form-horizontal" [formGroup]="EditPoForm" #formDirective="ngForm" (ngSubmit)="EditPoForm.valid  && SaveData()"
+            #enjiForm="ngForm">
+  <lib-ucSubsection [id]="'PoDataId'" [title]="'Purchase Order Data'" [panel]="'PoData'">
+  </lib-ucSubsection>
+    <div class="form-body" id="PoData">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <label class="col-md-6 adInsLabel"> Purchase Order No</label>
+            <label class="col-md-6 adInsLabel"> {{PurchaseOrderHObj.PurchaseOrderNo}} </label>
+          </div>
+          <div class="row">
+            <label class="col-md-6 adInsLabel"> Purchase Order Date</label>
+            <label class="col-md-6 adInsLabel"> {{PurchaseOrderHObj.PurchaseOrderDt | date:'shortDate'}} </label>
+          </div>
+          <div class="row">
+            <label class="col-md-6 adInsLabel"> Purchase Order Expired Date</label>
+            <label class="col-md-6 adInsLabel"> {{PurchaseOrderHObj.PurchaseOrderExpiredDt | date:'shortDate'}} </label>
+          </div>
+          <div class="row">
+            <label class="col-md-6 adInsLabel"> Supplier Bank Account</label>
+            <div class="col-md-6">
+              <select class="form-control adInsInput" formControlName="BankAccountDestination"
+              [ngClass]="{ 'is-invalid': enjiForm.submitted && EditPoForm.controls.BankAccountDestination.invalid }">
+                <option *ngFor="let item of PurchaseOrderHObj.VendorBankAccObjs" [ngValue]="item.VendorBankAccId">{{item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo}}</option>
+                </select>
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-md-6 adInsLabel"> Total Purchase Order Amount</label>
+            <label class="col-md-6 adInsLabel"> {{PurchaseOrderHObj.TotalPurchaseOrderAmt | number:'.2':'en-US'}} </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions right">
+        <button type="button"  class="btn btn-raised btn-warning mr-1" (click)="CancelClick()" translate>
+            <i class="ft-x"></i> Cancel
+        </button>
+        <button type="button" (click)="SaveData()"
+            class="btn btn-raised btn-primary" translate>
+            <i class="far fa-check-square"></i> Save
+        </button>
+      </div>
+    </div>
+</form>

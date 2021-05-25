@@ -79,5 +79,9 @@ export const Full_ROUTES: Routes = [
   {
     path: PathConstant.LR_TASK_REASSIGN,
     loadChildren: './task-reassignment/task-reassignment.module#TaskReassignmentModule'
+  },
+  {
+    path: PathConstant.UNAUTHORIZED,
+    loadChildren: './unauthorized/unauthorized.module.ts#UnauthorizedModule'
   }
 ];

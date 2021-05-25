@@ -79,6 +79,7 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_CRD_APPR_RES_EXT_APPRVL_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.CRD_APPR_RES_EXT_APPRVL_DETAIL;//"/Nap/AddProcess/CreditApvResultExtApproval/Detail"
   public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_PAGING;//"/Nap/AddProcess/EditAppAftApv/Paging"
   public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_DETAIL;//"/Nap/AddProcess/EditAppAftApv/Detail"
+  public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_VIEW = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_VIEW;//"/Nap/AddProcess/EditAppAftApv/View"
   public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_APPRV_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_APPRV_PAGING;//"/Nap/AddProcess/EditAppAftApv/Approval/Paging"
   public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_APPRV_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_APPRV_DETAIL;//"/Nap/AddProcess/EditAppAftApv/Approval/Detail"
   public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_INQUIRY = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_INQUIRY;//"/Nap/AddProcess/EditAppAftApv/Inquiry"
@@ -261,7 +262,6 @@ export class NavigationConstant {
   //#endregion
 
   //#region MOU
-  public static MOU_UNAUTHORIZED_PAGE = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_UNAUTHORIZED_PAGE; //"/Mou/UnauthorizedPage"
   public static MOU_CUST_CANCEL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_CANCEL; //'/Mou/Cust/Cancel'
   public static MOU_CUST_INQUIRY = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_INQUIRY; //'/Mou/Cust/Inquiry'
   public static MOU_CUST_DOC_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_DOC_PAGING; //'/Mou/CustomerDoc/Paging'
@@ -379,6 +379,10 @@ export class NavigationConstant {
   //#region REQUISITION DECISION
   public static REQUISITION_DECISION_PAGING = "/" + PathConstant.REQUISITION_DECISION + "/" + PathConstant.PAGING_LOWERCASE; //'/requisitiondecision/paging'
   public static REQUISITION_DECISION_DETAIL = "/" + PathConstant.REQUISITION_DECISION + "/" + PathConstant.DETAIL_LOWERCASE; //'/requisitiondecision/detail'
+  //#endregion
+
+  //#region UNAUTHORIZED
+  public static UNAUTHORIZE_PAGE = "/" + PathConstant.UNAUTHORIZED; //"/Unauthorized"
   //#endregion
 
   //PRODUCT
