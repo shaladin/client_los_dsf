@@ -1,0 +1,92 @@
+<div class="col-md-12 text-left">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="card-title" translate> Ltkm Verify Approval </h4>
+    </div>
+    <app-ltkm-mi [arrValue]="arrValue"></app-ltkm-mi>
+    <mat-tab-group mat-align-tabs="center">
+      <mat-tab label="Summary">
+        <ng-template matTabContent>
+          <view-ltkm-summary-app [LtkmCustId]="LtkmCustId">
+          </view-ltkm-summary-app>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Customer Data">
+        <ng-template matTabContent>
+          <app-view-ltkm-cust-data-company *ngIf="mrCustTypeCode == 'COMPANY'" [LtkmCustId]="LtkmCustId">
+          </app-view-ltkm-cust-data-company>
+          <app-view-ltkm-cust-data-personal *ngIf="mrCustTypeCode == 'PERSONAL'" [LtkmCustId]="LtkmCustId">
+          </app-view-ltkm-cust-data-personal>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Customer History">
+        <ng-template matTabContent>
+          <view-ltkm-cust-history [LtkmCustId]="LtkmCustId"></view-ltkm-cust-history>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Approval History">
+        <ng-template matTabContent>
+          <app-ltkm-approval-hist [LtkmNo]="LtkmNo"></app-ltkm-approval-hist>
+        </ng-template>
+      </mat-tab>
+
+    </mat-tab-group>
+    <div class="card-body">
+      <div class="px-3">
+        <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady">
+        </lib-ucapprovalgeneralinfo>
+        <!-- <lib-ucapprovalHistory [InputObj]="InputApprovalHistoryObj" *ngIf="IsReady">
+        </lib-ucapprovalHistory> -->
+        <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady && !isReturnOn" (result)="onApprovalSubmited($event)"
+          (onCancel)="onCancelClick()"></lib-ucapprovalR3>
+
+        <form class="form form-horizontal" (ngSubmit)="FormObj.valid &&SaveForm()" [formGroup]="FormObj" #enjiForm="ngForm">
+          <lib-ucSubsection *ngIf="isReturnOn" [id]="'formReturnCreditReviewId'" [title]="'Return LTKM'"
+            [panel]="'formReturnCreditReview'">
+          </lib-ucSubsection>
+          <div *ngIf="isReturnOn" class="form-body" [id]="'formReturnCreditReview'">
+            <div class="form-group row adins-required">
+              <div class="form-group col-md-2">
+                <label class="adInsLabel">Return Reason</label>
+              </div>
+              <div class="col-md-4">
+                <select class="form-control adInsInput" style="width: auto" formControlName="Reason"
+                  (change)="onChangeReason($event)"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Reason.invalid}">
+                  <option value="">-Select One-</option>
+                  <option *ngFor="let it of DDLReasonReturn" value="{{it.Key}}">
+                    {{it.Value}}
+                  </option>
+                </select>
+                <lib-uc-show-errors [control]="Reason" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>
+
+            </div>
+
+            <div class="form-group row adins-required">
+              <div class="form-group col-md-2">
+                <label class="adInsLabel">Return Notes</label>
+              </div>
+              <div class="col-md-4">
+                <textarea type="textarea" row="5" class="form-control" formControlName="Notes"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && FormObj.controls.Notes.invalid}"></textarea>
+                <lib-uc-show-errors [control]="Notes" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="form-actions right" *ngIf= "IsGsReturn">
+            <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>
+              <i class="ft-x"></i> {{isReturnOn ? 'Cancel Return' : 'Return'}}
+            </button>
+            <button *ngIf="isReturnOn" type="submit" class="btn btn-raised btn-primary" translate>
+              <i class="far fa-check-square"></i> Submit Return
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

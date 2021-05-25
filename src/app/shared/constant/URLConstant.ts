@@ -269,6 +269,7 @@ export class URLConstant {
   public static DeleteRefEmpAndEmpBankAcc = "/RefEmp/DeleteRefEmpAndEmpBankAcc";
   public static GetListEmployeebyRefEmpId = "/EmpPosition/GetListEmployeebyRefEmpId";
   public static GetEmpListByOfficeIdAndIsActive = "/RefEmp/GetEmpListByOfficeIdAndIsActive";
+  public static GetListRefEmpByGsValueandOfficeCode = "/RefEmp/GetListRefEmpByGsValueandOfficeCode";
   public static GetRefEmpByEmpNo = "/RefEmp/GetRefEmpByEmpNo";
   public static GetRefEmpSpvByEmpNo = environment.FoundationR3Url + "/RefEmp/GetRefEmpSpvByEmpNo";
   public static GetListRefEmpByGsValueandOfficeId = environment.FoundationR3Url + "/RefEmp/GetListRefEmpByGsValueandOfficeId";
@@ -379,6 +380,9 @@ export class URLConstant {
   public static GetListActiveRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterByRefMasterTypeCode";
   public static GetListActiveRefMasterByRefMasterCodeAndMappingCodes = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterByRefMasterCodeAndMappingCodes";
 
+  //REF CUST MODEL
+  public static GetListKeyValueByMrCustTypeCode = environment.FoundationR3Url + "/RefCustModel/GetListKeyValueByMrCustTypeCode";
+  
   //REF ATTR
   public static GetListActiveRefAttrByAttrGroup = environment.FoundationR3Url + "/RefAttr/GetListActiveRefAttrByAttrGroup"
   public static GetListActiveRefAttrByListAttrGroup = environment.FoundationR3Url + "/RefAttr/GetListActiveRefAttrByListAttrGroup"

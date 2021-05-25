@@ -8,6 +8,7 @@ export class CommonConstant {
   public static EDIT = 'Edit';
   public static DELETE = 'Delete';
   public static UPDATE = 'Update';
+  public static CANCEL = 'Cancel';
 
   // Behaviour
   public static DEFAULT = 'DEF';

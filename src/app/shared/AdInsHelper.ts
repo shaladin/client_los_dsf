@@ -89,61 +89,66 @@ export class AdInsHelper {
     return "0";
   }
 
-  public static OpenCustomerViewByCustId(CustId) {
+  public static OpenLtkmViewByLtkmCustId(LtkmCustId: number) {
+    var token = localStorage.getItem("Token");
+    window.open(environment.losR3Web + NavigationConstant.LTKM_VIEW + "?LtkmCustId=" + LtkmCustId + "&Token=" + token, "_blank");
+  }
+
+  public static OpenCustomerViewByCustId(CustId: number) {
     var token = localStorage.getItem("Token");
     window.open(environment.FoundationR3Web + NavigationConstant.VIEW_FOU_CUST_PERSONAL_DETAIL + "?CustId=" + CustId + "&Token=" + token, "_blank");
   }
 
-  public static OpenCustomerCoyViewByCustId(CustId){
+  public static OpenCustomerCoyViewByCustId(CustId: number){
     var token = localStorage.getItem("Token");
     window.open(environment.FoundationR3Web + NavigationConstant.VIEW_FOU_CUST_COY_DETAIL + "?CustId=" + CustId + "&Token=" + token, "_blank");
   }
 
-  public static OpenAppViewByAppId(AppId) {
+  public static OpenAppViewByAppId(AppId: number) {
     var token = localStorage.getItem("Token");
     window.open(environment.losR3Web + NavigationConstant.VIEW_APP + "?AppId=" + AppId + "&Token=" + token, "_blank");
   }
-  public static OpenPhoneVerifViewByAppId(AppId, VerfResultHId, Name) {
+  public static OpenPhoneVerifViewByAppId(AppId: number, VerfResultHId: number, Name: string) {
     var token = localStorage.getItem("Token");
     window.open(environment.losR3Web + NavigationConstant.VIEW_PHN_VERIF + "?AppId=" + AppId + "&VerfResultHId=" + VerfResultHId + "&Name=" + Name + "&Token=" + token, "_blank");
   }
 
-  public static OpenProdOfferingViewByCodeAndVersion(Code, Version) {
+  public static OpenProdOfferingViewByCodeAndVersion(Code: string, Version: number) {
     var token = localStorage.getItem("Token");
     window.open(environment.FoundationR3Web + NavigationConstant.VIEW_FOU_OFFERING + "?prodOfferingHId=0&prodOfferingCode=" + Code + "&prodOfferingVersion=" + Version + "&Token=" + token, "_blank");
   }
 
-  public static OpenLeadViewByLeadId(LeadId) {
+  public static OpenLeadViewByLeadId(LeadId: number) {
     var token = localStorage.getItem("Token");
     window.open(environment.losR3Web + NavigationConstant.VIEW_LEAD + '?LeadId=' + LeadId + "&Token=" + token, "_blank");
   }
 
-  public static OpenAgrmntViewByAgrmntId(AgrmntId) {
+  public static OpenAgrmntViewByAgrmntId(AgrmntId: number) {
     var token = localStorage.getItem("Token");
     window.open(environment.losR3Web + NavigationConstant.VIEW_AGRMNT + "?AgrmntId=" + AgrmntId + "&Token=" + token, "_blank");
   }
 
-  public static OpenMOUCustViewByMouCustId(MouCustId) {
+  public static OpenMOUCustViewByMouCustId(MouCustId: number) {
     var token = localStorage.getItem("Token");
     window.open(environment.losR3Web + NavigationConstant.VIEW_MOU_CUST + "?MouCustId=" + MouCustId + "&Token=" + token, "_blank");
   }
 
-  public static OpenProdOfferingViewByProdOfferingHId(ProdOfferingHId) {
+  public static OpenProdOfferingViewByProdOfferingHId(ProdOfferingHId: number) {
     var token = localStorage.getItem("Token");
     window.open(environment.FoundationR3Web + NavigationConstant.VIEW_FOU_OFFERING + "?prodOfferingHId=" + ProdOfferingHId + "&Token=" + token, '_blank');
   }
 
-  public static OpenVendorBranchViewByVendorId(VendorId) {
+  public static OpenVendorBranchViewByVendorId(VendorId: number) {
     var token = localStorage.getItem("Token");
     window.open(environment.FoundationR3Web + NavigationConstant.VIEW_FOU_VENDOR_BRANCH + "?VendorId=" + VendorId + "&Token=" + token, '_blank');
   }
 
-  public static OpenSrvyTaskViewBySrvyTaskId(SrvyTaskId) {
+  public static OpenSrvyTaskViewBySrvyTaskId(SrvyTaskId: number) {
     var token = localStorage.getItem("Token");
     window.open(environment.FoundationR3Web + NavigationConstant.VIEW_FOU_SRVY_TASK + "?SrvyTaskId=" + SrvyTaskId + "&Token=" + token, '_blank');
   }
 
-  public static OpenSrvyOrderViewBySrvyOrderId(SrvyOrderId) {
+  public static OpenSrvyOrderViewBySrvyOrderId(SrvyOrderId: number) {
     var token = localStorage.getItem("Token");
     window.open(environment.FoundationR3Web + NavigationConstant.VIEW_FOU_SRVY_ORDER + "?SrvyOrderId=" + SrvyOrderId + "&Token=" + token, '_blank');
   }

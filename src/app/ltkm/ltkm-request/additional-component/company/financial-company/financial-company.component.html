@@ -1,0 +1,364 @@
+<div formGroupName="{{identifier}}">
+
+    <div *ngIf="!isLockMode" class="pull-right">
+        <button type="button" class="addButton" translate (click)="GetFinData(ListLtkmCustCoyFinData.length)"><i
+                class="ft-plus-circle"></i> Add</button>
+    </div>
+    <lib-ucSubsection [id]="'FinancialId'" [title]="'Financial Data'" [panel]="'Financial'">
+    </lib-ucSubsection>
+    <div id="Financial">
+
+        <div id="ListCustFinData" class="mb-3">
+            <div *ngIf="ListLtkmCustCoyFinData?.length != 0">
+                <table class="table table-stripped table-bordered">
+                    <thead>
+                        <tr class="table-header">
+                            <th class="text-center" translate>Date</th>
+                            <th class="text-center" translate>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="ListLtkmCustCoyFinData?.length > 0">
+                        <tr *ngFor="let item of ListLtkmCustCoyFinData; let i = index">
+                            <td class="text-center">{{item.DateAsOf | date: 'dd-MMM-yyyy'}}</td>
+                            <td class="text-center"><a href="javascript:;" (click)="GetFinData(i)"><i
+                                        class="ft-edit-2 font-medium-3 mr-2"></i></a></td>
+                        </tr>
+                        <tr *ngIf="ListLtkmCustCoyFinData.length <= 0">
+                            <td class="text-center" colspan="2" translate>No Data Available</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #ModalCoyFinData let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">
+                {{IsAddFinData ? 'Add Financial Data' : 'Financial Data Date as of '}}
+                {{parentForm['controls'][identifier]['controls']['DateAsOf'].value | date: 'dd-MMM-yyyy'}}
+            </h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()"><span
+                    aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-4 adins-required-label" translate>Monthly Income</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="GrossMonthlyIncomeAmt"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['GrossMonthlyIncomeAmt'].invalid}"
+                                [options]="{allowNegative: false}">
+                            <lib-uc-show-errors
+                                [control]="parentForm['controls'][identifier]['controls']['GrossMonthlyIncomeAmt']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Return Of Investment(%)</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="ReturnOfInvestmentPrcnt"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['ReturnOfInvestmentPrcnt'].invalid}"
+                                [options]="{suffix:'%', max:100, allowNegative: false}">
+                            <lib-uc-show-errors
+                                [control]="parentForm['controls'][identifier]['controls']['ReturnOfInvestmentPrcnt']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Return Of Asset(%)</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="ReturnOfAssetPrcnt"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['ReturnOfAssetPrcnt'].invalid}"
+                                [options]="{suffix:'%', max:100, allowNegative: false}">
+                            <lib-uc-show-errors
+                                [control]="parentForm['controls'][identifier]['controls']['ReturnOfAssetPrcnt']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Current Ratio(%)</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="CurrentRatioPrcnt"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['CurrentRatioPrcnt'].invalid}"
+                                [options]="{suffix:'%', max:100, allowNegative: false}">
+                            <lib-uc-show-errors
+                                [control]="parentForm['controls'][identifier]['controls']['CurrentRatioPrcnt']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Invetory Turn Over(%)</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="InvTurnOverPrcnt"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['InvTurnOverPrcnt'].invalid}"
+                                [options]="{suffix:'%', max:100, allowNegative: false}">
+                            <lib-uc-show-errors
+                                [control]="parentForm['controls'][identifier]['controls']['InvTurnOverPrcnt']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Growth(%)</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="GrowthPrcnt"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['GrowthPrcnt'].invalid}"
+                                [options]="{suffix:'%', max:100, allowNegative: false}">
+                            <lib-uc-show-errors
+                                [control]="parentForm['controls'][identifier]['controls']['GrowthPrcnt']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Other Monthly Installment</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="OthMonthlyInstAmt"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['OthMonthlyInstAmt'].invalid}"
+                                [options]="{allowNegative: false}">
+                            <lib-uc-show-errors
+                                [control]="parentForm['controls'][identifier]['controls']['OthMonthlyInstAmt']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Revenue</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="Revenue"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['Revenue'].invalid}"
+                                [options]="{allowNegative: false}">
+                            <lib-uc-show-errors [control]="parentForm['controls'][identifier]['controls']['Revenue']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Profit Before Tax</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="ProfitBeforeTax"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['ProfitBeforeTax'].invalid}"
+                                [options]="{allowNegative: false}">
+                            <lib-uc-show-errors
+                                [control]="parentForm['controls'][identifier]['controls']['ProfitBeforeTax']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Nett Fixed Asset</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="NetFixedAsset"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['NetFixedAsset'].invalid}"
+                                [options]="{allowNegative: false}">
+                            <lib-uc-show-errors
+                                [control]="parentForm['controls'][identifier]['controls']['NetFixedAsset']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Current Liabilities</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="CurrLiablts"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['CurrLiablts'].invalid}"
+                                [options]="{allowNegative: false}">
+                            <lib-uc-show-errors
+                                [control]="parentForm['controls'][identifier]['controls']['CurrLiablts']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Shareholder Equity</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="ShareholderEquity"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['ShareholderEquity'].invalid}"
+                                [options]="{allowNegative: false}">
+                            <lib-uc-show-errors
+                                [control]="parentForm['controls'][identifier]['controls']['ShareholderEquity']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Monthly Expense</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="GrossMonthlyExpenseAmt"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['GrossMonthlyExpenseAmt'].invalid}"
+                                [options]="{allowNegative: false}">
+                            <lib-uc-show-errors
+                                [control]="parentForm['controls'][identifier]['controls']['GrossMonthlyExpenseAmt']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Return Of Equity(%)</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="ReturnOfEquityPrcnt"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['ReturnOfEquityPrcnt'].invalid}"
+                                [options]="{suffix:'%', max:100, allowNegative: false}">
+                            <lib-uc-show-errors
+                                [control]="parentForm['controls'][identifier]['controls']['ReturnOfEquityPrcnt']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Profit Margin(%)</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="ProfitMarginPrcnt"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['ProfitMarginPrcnt'].invalid}"
+                                [options]="{suffix:'%', max:100, allowNegative: false}">
+                            <lib-uc-show-errors
+                                [control]="parentForm['controls'][identifier]['controls']['ProfitMarginPrcnt']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Debt Equity Ratio(%)</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="DebtEquityRatioPrcnt"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['DebtEquityRatioPrcnt'].invalid}"
+                                [options]="{suffix:'%', max:100, allowNegative: false}">
+                            <lib-uc-show-errors
+                                [control]="parentForm['controls'][identifier]['controls']['DebtEquityRatioPrcnt']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>AR Turn Over(%)</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="ArTurnOverPrcnt"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['ArTurnOverPrcnt'].invalid}"
+                                [options]="{suffix:'%', max:100, allowNegative: false}">
+                            <lib-uc-show-errors
+                                [control]="parentForm['controls'][identifier]['controls']['ArTurnOverPrcnt']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Working Capital (Amount)</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="WorkingCapitalAmt"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['WorkingCapitalAmt'].invalid}"
+                                [options]="{allowNegative: false}">
+                            <lib-uc-show-errors
+                                [control]="parentForm['controls'][identifier]['controls']['WorkingCapitalAmt']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Operational Cost</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="OprCost"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['OprCost'].invalid}"
+                                [options]="{allowNegative: false}">
+                            <lib-uc-show-errors [control]="parentForm['controls'][identifier]['controls']['OprCost']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Current Asset</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="CurrAsset"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['CurrAsset'].invalid}"
+                                [options]="{allowNegative: false}">
+                            <lib-uc-show-errors [control]="parentForm['controls'][identifier]['controls']['CurrAsset']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Total Asset</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="TotalAsset"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['TotalAsset'].invalid}"
+                                [options]="{allowNegative: false}">
+                            <lib-uc-show-errors [control]="parentForm['controls'][identifier]['controls']['TotalAsset']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Long Term Liabilities</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="LongTermLiablts"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['LongTermLiablts'].invalid}"
+                                [options]="{allowNegative: false}">
+                            <lib-uc-show-errors
+                                [control]="parentForm['controls'][identifier]['controls']['LongTermLiablts']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4" translate>Current Ratio</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="" currencyMask
+                                class="form-control" formControlName="CurrRatio"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['CurrRatio'].invalid}"
+                                [options]="{allowNegative: false}">
+                            <lib-uc-show-errors [control]="parentForm['controls'][identifier]['controls']['CurrRatio']"
+                                [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                        </div>
+                    </div>
+                    <div class="form-group row adins-required">
+                        <label class="col-md-4 adInsLabel" for="DateAsOf" translate>Date As Of</label>
+                        <div class="col-md-8">
+                            <input [attr.disabled]="isLockMode == true ? true : null" type="date"
+                                class="form-control adInsInput" formControlName="DateAsOf"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm['controls'][identifier]['controls']['DateAsOf'].invalid }" />
+                            <lib-uc-show-errors [control]="parentForm['controls'][identifier]['controls']['DateAsOf']"
+                                [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-warning btn-raised" (click)="CloseModal()" translate><i
+                    class="far fa-window-close"></i> Cancel</button>
+            <button *ngIf="!isLockMode" #btnclosemodal (click)="SaveModal()" data-dismiss="modal" type="button"
+                class="btn btn-raised btn-primary" translate><i class="far fa-check-square"></i>
+                Save</button>
+        </div>
+    </ng-template>
+</div>
