@@ -101,6 +101,7 @@ export class ExceptionConstant {
     public static MUST_INPUT_ACTIVE_SIGNER = "At Least 1 Active Signer is Required";
     public static TOTAL_SHARE_MUST_100 = "Total Share % must be 100%";
     public static CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP = "This Customer already self customer for this NAP";
+    public static SUPPLIER_BANK_ACC_NOT_SET = "Please input a valid Bank Account Data for this supplier";
 
     public static GS_CODE_NOT_FOUND = "General Setting {0} not found.";
     
