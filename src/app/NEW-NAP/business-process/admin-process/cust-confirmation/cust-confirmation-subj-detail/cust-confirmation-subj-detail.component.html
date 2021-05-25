@@ -5,7 +5,7 @@
   <div class="card-body">
     <div class="px-3">
       <form class="form form-horizontal" [formGroup]="CustConfirm" #formDirective="ngForm"
-        (ngSubmit)="CustConfirm.valid && SaveForm(formDirective)" #enjiForm="ngForm">
+        (ngSubmit)="CustConfirm.valid && AddDetail(formDirective)" #enjiForm="ngForm">
         <lib-ucSubsection [id]="'CustConfirmationId'" [title]="'Customer Confirmation'" [panel]="'CustConfirmation'">
         </lib-ucSubsection>
         <div class="form-group row" id="CustConfirmation">
@@ -134,8 +134,8 @@
             </div>
           </div>
           <div class="form-actions right">
-            <button type="submit" class="btn btn-raised btn-primary" id="saveHistory" translate>
-              <i class="far fa-check-square"></i> Save History
+            <button type="submit" class="btn btn-raised btn-primary" translate>
+              <i class="far fa-check-square"></i> Add Detail
             </button>
           </div>
           <!-- History List -->
@@ -168,7 +168,7 @@
               translate>
               <i class="ft-x"></i> Cancel
             </button>
-            <button type="submit" class="btn btn-raised btn-primary" translate id="save" translate>
+            <button type="button" class="btn btn-raised btn-primary" (click)="Save()" translate>
               <i class="far fa-check-square"></i> Save
             </button>
           </div>
