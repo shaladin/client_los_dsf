@@ -1,7 +1,5 @@
-import { AgrmntCommissionHObj } from "../AgrmntCommissionHObj.Model";
-import { AppAssetAttrCustomObj } from "../AppAsset/AppAssetAttrCustom.Model";
+import { AgrmntCommissionHObj } from "../Agrmnt/AgrmntCommissionHObj.model";
 import { AppAssetObj } from "../AppAssetObj.model";
-import { AppCollateralAttrObj } from "../AppCollateralAttrObj.Model";
 import { AppCollateralObj } from "../AppCollateralObj.Model";
 import { AppCollateralRegistrationObj } from "../AppCollateralRegistrationObj.Model";
 import { PurchaseOrderHObj } from "../PurchaseOrderHObj.Model";

@@ -10,4 +10,5 @@ export class DuplicateCustObj {
   MobilePhnNo1: string;
   Status: string;
   RowVersion: string;
+  AppId : number;
 }

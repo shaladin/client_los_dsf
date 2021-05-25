@@ -27,7 +27,7 @@ import { RequestNewPasswordComponent } from "./request-new-password/request-new-
 import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 
 export const customCurrencyMaskConfig = {     
-    align: "left",     
+    align: "right",
     allowNegative: true,     
     allowZero: true,     
     decimal: ".",     
@@ -36,7 +36,7 @@ export const customCurrencyMaskConfig = {
     suffix: "",     
     thousands: ",",     
     nullable: false,
-    inputMode: CurrencyMaskInputMode.NATURAL };
+    inputMode: CurrencyMaskInputMode.FINANCIAL };
 
 @NgModule({
     imports: [

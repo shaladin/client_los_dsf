@@ -115,7 +115,7 @@ export class AdInsHelper {
 
   public static OpenProdOfferingViewByCodeAndVersion(Code: string, Version: number) {
     var token = localStorage.getItem("Token");
-    window.open(environment.FoundationR3Web + NavigationConstant.VIEW_FOU_OFFERING + "?prodOfferingHId=0&prodOfferingCode=" + Code + "&prodOfferingVersion=" + Version + "&Token=" + token, "_blank");
+    window.open(environment.losR3Web + NavigationConstant.VIEW_OFFERING + "?prodOfferingHId=0&prodOfferingCode=" + Code + "&prodOfferingVersion=" + Version + "&Token=" + token, "_blank");
   }
 
   public static OpenLeadViewByLeadId(LeadId: number) {
@@ -135,7 +135,7 @@ export class AdInsHelper {
 
   public static OpenProdOfferingViewByProdOfferingHId(ProdOfferingHId: number) {
     var token = localStorage.getItem("Token");
-    window.open(environment.FoundationR3Web + NavigationConstant.VIEW_FOU_OFFERING + "?prodOfferingHId=" + ProdOfferingHId + "&Token=" + token, '_blank');
+    window.open(environment.losR3Web + NavigationConstant.VIEW_OFFERING + "?prodOfferingHId=" + ProdOfferingHId + "&Token=" + token, '_blank');
   }
 
   public static OpenVendorBranchViewByVendorId(VendorId: number) {
@@ -160,6 +160,11 @@ export class AdInsHelper {
 
   public static CreateUserAccess(response) {
     // unused
+  }
+
+  public static OpenEditAppAfterApv(TrxHId, AgrmntId) {
+    var token = localStorage.getItem("Token");
+    window.open(environment.losR3Web + NavigationConstant.NAP_ADD_PRCS_EDIT_APP_AFT_APV_VIEW + "?EditAppAftApvTrxHId=" + TrxHId + "&AgrmntId="+  AgrmntId + "&Token=" + token, "_blank");
   }
 
   public static IsGrantAccess(formPath) {
@@ -257,5 +262,9 @@ export class AdInsHelper {
     var decrypted = CryptoJS.AES.decrypt(chipperText, chipperKeyArr, { iv: iv });
     var plainText = decrypted.toString(CryptoJS.enc.Utf8);
     return plainText;
+  }
+
+  public static RedirectUnauthorized(router: Router) {
+    this.RedirectUrl(router, [NavigationConstant.UNAUTHORIZE_PAGE], {});
   }
 }
