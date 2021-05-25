@@ -88,7 +88,8 @@ export class ExceptionConstant {
     public static MAX_DATA = "Maximum {50} Data";
     public static INPUT_SPOUSE_CONTACT_INFO = "Please Input Spouse in Contact Information";
     public static INCORRECT_PASSWORD = "Password Mismatch";
-    public static PLEASE_COMPLETE_MANDATORY_INPUT = "Please Complete Mandatory Input"; 
+    public static PLEASE_COMPLETE_MANDATORY_INPUT = "Please Complete Mandatory Input";
+    public static INPUT_MIN_1_HISTORY = "Please Input At Least 1 History"; 
 
     public static CANT_HAVE_THE_SAME_CUST_MEMBER = " cannot have the same customer group member as No ";
     public static CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER = " cannot have the same relationship as customer group member No ";
@@ -116,5 +117,6 @@ export class ExceptionConstant {
     public static CONFIRM_PROD_OFF_TO_COPY = "This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?";
     public static SELECT_PROD_TO_COPY = "Please select Product to copied";
     public static CONFIRM_PROD_TO_COPY = "This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?";
+    
 }
 
