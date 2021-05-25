@@ -13,7 +13,6 @@ import { ReqDupCheckAppCustObj } from 'app/shared/model/AppDupCheckCust/ReqDupCh
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResAppDupCheckCustMainDataObj, ResListAppDupCheckCustMainDataObj } from 'app/shared/model/Response/NAP/DupCheck/ResAppDupCheckCustMainDataObj.model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
 
 @Component({

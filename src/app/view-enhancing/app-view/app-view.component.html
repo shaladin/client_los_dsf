@@ -23,6 +23,13 @@
               </ng-template>
             </mat-tab>
 
+            <mat-tab *ngIf="IsCustomerOpl" label="Customer">
+              <ng-template matTabContent>
+                <app-app-cust-data-personal-opl [appId]="AppId" *ngIf="CustType=='PERSONAL'"></app-app-cust-data-personal-opl>
+                <app-app-cust-data-company-opl [appId]="AppId" *ngIf="CustType=='COMPANY'"></app-app-cust-data-company-opl>
+              </ng-template>
+            </mat-tab>
+
             <mat-tab *ngIf="IsGuarantor" label="Guarantor">
               <ng-template matTabContent>
                 <app-guarantor [AppId]="AppId"></app-guarantor>

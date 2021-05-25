@@ -422,6 +422,10 @@ export class JobTabComponent implements OnInit {
       this.PrevJobDataAddrObj.Zipcode = this.JobDataForm.controls["PrevJobAddrZipcode"]["value"].value;
       this.PrevJobDataAddrObj.Notes = this.JobDataForm.controls["PrevJobNotes"].value;
       this.PrevJobDataAddrObj.RowVersion = this.PrevJobAddrObj.RowVersion;
+    }else{
+      this.JobDataAddrObj = null;
+      this.OthBizDataAddrObj = null;
+      this.PrevJobDataAddrObj = null;
     }
 
     let requestObj = {
