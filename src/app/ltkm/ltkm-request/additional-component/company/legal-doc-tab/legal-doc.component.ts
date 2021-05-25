@@ -38,7 +38,7 @@ export class LtkmLegalDocComponent implements OnInit {
     IsExpDateMandatory: boolean;
     currentIndex: number = -1;
 
-    Mode: string = "Add";
+    Mode: string = CommonConstant.ADD;
     Title: string = "Legal Document Detail"
 
     constructor(private fb: FormBuilder,
@@ -79,9 +79,7 @@ export class LtkmLegalDocComponent implements OnInit {
             RowVersion: ['']
         }));
 
-        this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {
-            RefMasterTypeCode: CommonConstant.RefMasterTypeCodeLegalDocType
-        }).subscribe(
+        this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeLegalDocType }).subscribe(
             (response) => {
                 this.LegalDocTypeObj = response[CommonConstant.ReturnObj];
             });
@@ -102,26 +100,30 @@ export class LtkmLegalDocComponent implements OnInit {
         })
     }
 
+    readonly ModeAddConst: string = CommonConstant.ADD;
+    readonly ModeEditConst: string = CommonConstant.EDIT;
+    readonly ModeDelConst: string = CommonConstant.DELETE;
+    readonly ModeCanConst: string = CommonConstant.CANCEL;
     LegalDocHandler(Mode: string, legalcustcompanyobj: LtkmCustCompanyLegalDocObj = undefined, index: number) {
         this.ClearForm();
         switch (Mode) {
-            case "Add":
+            case this.ModeAddConst:
                 this.IsDetail = true;
-                this.Mode = "Add";
+                this.Mode = this.ModeAddConst;
                 this.setForAdd();
                 break;
-            case "Edit":
+            case this.ModeEditConst:
                 this.SetForEdit(legalcustcompanyobj, index);
                 this.currentIndex = index;
                 this.IsDetail = true;
-                this.Mode = "Edit";
+                this.Mode = this.ModeEditConst;
                 this.Title = "Edit Bank Account";
                 break;
-            case "Delete":
+            case this.ModeDelConst:
                 this.IsDetail = false;
                 this.DeleteLegalDoc(index);
                 break;
-            case "Cancel":
+            case this.ModeCanConst:
                 this.IsDetail = false;
                 break;
         }
@@ -185,9 +187,7 @@ export class LtkmLegalDocComponent implements OnInit {
 
     ChangeLegalDocType(ev, ForEdit: boolean = false) {
         var idx = ev.selectedIndex;
-        this.http.post(URLConstant.GetDocIsExpDtMandatory, {
-            DocCode: this.LegalDocTypeObj[idx].Key
-        }).subscribe(
+        this.http.post(URLConstant.GetDocIsExpDtMandatory, { Code: this.LegalDocTypeObj[idx].Key }).subscribe(
             (response) => {
                 this.IsExpDateMandatory = response["IsExpDtMandatory"];
                 if (!ForEdit) {
@@ -209,9 +209,7 @@ export class LtkmLegalDocComponent implements OnInit {
     }
 
     LoadListLegalDocData() {
-        this.http.post(URLConstant.GetAppCustCompanyLegalDocsByAppCustCompanyId, {
-            AppCustCompanyId: this.AppCustCompanyId
-        }).subscribe(
+        this.http.post(URLConstant.GetAppCustCompanyLegalDocsByAppCustCompanyId, { Id: this.AppCustCompanyId }).subscribe(
             (response) => {
                 this.InputGridObj.resultData = {
                     Data: ""
@@ -244,7 +242,7 @@ export class LtkmLegalDocComponent implements OnInit {
             this.LtkmCustCompanyLegalDoc.DocNotes = this.parentForm['controls'][this.identifier]['controls'].DocNotes.value;
 
 
-            if (this.Mode != "Edit") {
+            if (this.Mode != this.ModeEditConst) {
                 this.listLtkmCustCompanyLegalDoc.push(this.LtkmCustCompanyLegalDoc);
                 this.LtkmCustCompanyLegalDoc = new LtkmCustCompanyLegalDocObj();
                 this.IsDetail = false;

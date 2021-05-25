@@ -9,6 +9,8 @@ export class CommonConstant {
   public static DELETE = 'Delete';
   public static UPDATE = 'Update';
   public static CANCEL = 'Cancel';
+  public static REQ = 'request';
+  public static RTN = 'return';
 
   // Behaviour
   public static DEFAULT = 'DEF';

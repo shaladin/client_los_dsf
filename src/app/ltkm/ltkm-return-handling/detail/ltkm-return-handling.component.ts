@@ -1,41 +1,64 @@
 import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { CustDataPersonalObj } from 'app/shared/model/CustDataPersonalObj.Model';
+import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
+import { AppCustGrpObj } from 'app/shared/model/AppCustGrpObj.Model';
+import { CustDataCompanyObj } from 'app/shared/model/CustDataCompanyObj.Model';
 import { formatDate } from '@angular/common';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
+import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompanyMgmntShrholderObj.Model';
 import { AppCustPersonalContactPersonObj } from 'app/shared/model/AppCustPersonalContactPersonObj.Model';
+import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { MatRadioChange } from '@angular/material/radio/typings/public-api';
+import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
+import { AppCustPersonalJobDataObj } from 'app/shared/model/AppCustPersonalJobDataObj.Model';
+import { AppCustCompanyFinDataObj } from 'app/shared/model/AppCustCompanyFinDataObj.Model';
 import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompanyContactPersonObj.Model';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
+import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CustPersonalMainDataComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/personal-main-data/cust-personal-main-data.component';
 import { CustPersonalContactInformationComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/personal-contact-information/cust-personal-contact-information.component';
-import { LtkmOtherInfoComponent } from './additional-component/other-info/other-info.component';
-import { LtkmFinancialPersonalComponent } from './additional-component/financial-personal/financial-personal.component';
-import { LtkmCustJobDataComponent } from './additional-component/cust-job-data/cust-job-data.component';
-import { LtkmCustGrpMemberComponent } from './additional-component/cust-grp-member/cust-grp-member.component';
-import { LtkmAttrContentComponentComponent } from './additional-component/attr-content/attr-content-component.component';
-import { LtkmCustPersonalMainDataComponent } from './additional-component/cust-personal-main-data/cust-personal-main-data.component';
-import { LtkmEmergencyContactComponent } from './additional-component/emergency-contact/emergency-contact.component';
-import { LtkmFamilyMainDataPagingComponent } from './additional-component/family-main-data/family-main-data-paging.component';
-import { LtkmCcContactInformationTabComponent } from './additional-component/company/cc-contact-information-tab/cc-contact-information.component';
-import { LtkmFinancialCompanyComponent } from './additional-component/company/financial-company/financial-company.component';
-import { LtkmLegalDocComponent } from './additional-component/company/legal-doc-tab/legal-doc.component';
-import { LtkmMgmntShrholderComponent } from './additional-component/company/mgmnt-shrholder/mgmnt-shrholder.component';
-import { LtkmBankSectionComponent } from './additional-component/bank-section/bank-section.component';
-import { LtkmCustCompanyMainDataComponent } from './additional-component/company/cust-company-main-data/cust-company-main-data.component';
+import { CustJobDataComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/job-data/cust-job-data.component';
+import { CustGrpMemberComponent } from 'app/NEW-NAP/sharing-component/input-nap-component/customer-data/component/cust-grp-member/cust-grp-member.component';
+import { LtkmOtherInfoComponent } from 'app/ltkm/ltkm-request/additional-component/other-info/other-info.component';
+import { LtkmFinancialPersonalComponent } from 'app/ltkm/ltkm-request/additional-component/financial-personal/financial-personal.component';
+import { LtkmCustJobDataComponent } from 'app/ltkm/ltkm-request/additional-component/cust-job-data/cust-job-data.component';
+import { LtkmCustGrpMemberComponent } from 'app/ltkm/ltkm-request/additional-component/cust-grp-member/cust-grp-member.component';
+import { LtkmAttrContentComponentComponent } from 'app/ltkm/ltkm-request/additional-component/attr-content/attr-content-component.component';
+import { LtkmCustPersonalMainDataComponent } from 'app/ltkm/ltkm-request/additional-component/cust-personal-main-data/cust-personal-main-data.component';
+import { LtkmCcContactInformationTabComponent } from 'app/ltkm/ltkm-request/additional-component/company/cc-contact-information-tab/cc-contact-information.component';
+import { LtkmLegalDocComponent } from 'app/ltkm/ltkm-request/additional-component/company/legal-doc-tab/legal-doc.component';
+import { LtkmFinancialCompanyComponent } from 'app/ltkm/ltkm-request/additional-component/company/financial-company/financial-company.component';
+import { LtkmBankSectionComponent } from 'app/ltkm/ltkm-request/additional-component/bank-section/bank-section.component';
+import { LtkmMgmntShrholderComponent } from 'app/ltkm/ltkm-request/additional-component/company/mgmnt-shrholder/mgmnt-shrholder.component';
+import { LtkmCustCompanyMainDataComponent } from 'app/ltkm/ltkm-request/additional-component/company/cust-company-main-data/cust-company-main-data.component';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
-import { LtkmCustDataPersonalObj } from 'app/shared/model/LTKM/LtkmCustDataPersonalObj.Model';
+import { LtkmEmergencyContactComponent } from 'app/ltkm/ltkm-request/additional-component/emergency-contact/emergency-contact.component';
+import { LtkmFamilyMainDataPagingComponent } from 'app/ltkm/ltkm-request/additional-component/family-main-data/family-main-data-paging.component';
 import { CustDataCompanyLtkmObj } from 'app/shared/model/LTKM/CustDataCompanyLtkmObj.Model';
+import { LtkmCustCompanyContactPersonObj } from 'app/shared/model/LTKM/LtkmCustCompanyContactPersonObj.Model';
+import { LtkmCustCompanyMgmntShrholderObj } from 'app/shared/model/LTKM/LtkmCustCompanyMgmntShrholderObj.Model';
+import { LtkmCustCompanyLegalDocObj } from 'app/shared/model/LTKM/LtkmCustCompanyLegalDocObj.Model';
+import { LtkmCustCompanyFinDataObj } from 'app/shared/model/LTKM/LtkmCustCompanyFinDataObj.Model';
+import { LtkmCustCompanyObj } from 'app/shared/model/LTKM/LtkmCustCompanyObj.Model';
+import { CustDataLtkmObj } from 'app/shared/model/CustDataLtkmObj.Model';
+import { LtkmCustDataPersonalObj } from 'app/shared/model/LTKM/LtkmCustDataPersonalObj.Model';
 import { LtkmCustOtherInfoObj } from 'app/shared/model/LTKM/LtkmCustOtherInfoObj.Model';
 import { LtkmAttrContent } from 'app/shared/model/LTKM/LtkmAttrContent.Model';
 import { LtkmCustBankAccObj } from 'app/shared/model/LTKM/LtkmCustBankAccObj.Model';
@@ -43,27 +66,20 @@ import { LtkmCustPersonalFinDataObj } from 'app/shared/model/LTKM/LtkmCustPerson
 import { LtkmCustEmrgncCntctObj } from 'app/shared/model/LTKM/LtkmCustEmrgncCntctObj.Model';
 import { LtkmCustPersonalJobDataObj } from 'app/shared/model/LTKM/LtkmCustPersonalJobDataObj.Model';
 import { LtkmCustGrpObj } from 'app/shared/model/LTKM/LtkmCustGrpObj.Model';
-import { LtkmCustCompanyContactPersonObj } from 'app/shared/model/LTKM/LtkmCustCompanyContactPersonObj.Model';
-import { LtkmCustCompanyMgmntShrholderObj } from 'app/shared/model/LTKM/LtkmCustCompanyMgmntShrholderObj.Model';
-import { LtkmCustCompanyLegalDocObj } from 'app/shared/model/LTKM/LtkmCustCompanyLegalDocObj.Model';
-import { LtkmCustCompanyFinDataObj } from 'app/shared/model/LTKM/LtkmCustCompanyFinDataObj.Model';
 import { LtkmCustObj } from 'app/shared/model/LTKM/LtkmCustObj.Model';
-import { LtkmCustCompanyObj } from 'app/shared/model/LTKM/LtkmCustCompanyObj.Model';
 import { LtkmCustPersonalObj } from 'app/shared/model/LTKM/LtkmCustPersonalObj.Model';
 import { LtkmCustAddrObj } from 'app/shared/model/LTKM/LtkmCustAddrObj.Model';
-import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { CookieService } from 'ngx-cookie';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 @Component({
-    selector: 'app-ltkm-request',
-    templateUrl: './ltkm-request.component.html',
+    selector: 'app-ltkm-return-handling',
+    templateUrl: './ltkm-return-handling.component.html',
     styleUrls: []
 })
 
-export class LtkmRequestComponent implements OnInit {
+export class LtkmReturnHandlingComponent implements OnInit {
     @ViewChild(LtkmCustPersonalMainDataComponent) mainDataComponent;
     @ViewChild(CustPersonalContactInformationComponent) custContactInformationComponent;
     @ViewChild(LtkmCustJobDataComponent) custJobDataComponent;
@@ -102,6 +118,11 @@ export class LtkmRequestComponent implements OnInit {
     @Output() outputTab: EventEmitter<any> = new EventEmitter();
     @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
+    readonly modeReqConst: string = CommonConstant.REQ;
+    readonly modeRtnConst: string = CommonConstant.RTN;
+
+    UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    custDataObj: CustDataLtkmObj;
     custDataPersonalObj: LtkmCustDataPersonalObj = new LtkmCustDataPersonalObj();
     custDataCompanyObj: CustDataCompanyLtkmObj = new CustDataCompanyLtkmObj();
     legalAddrObj: AddrObj;
@@ -128,15 +149,15 @@ export class LtkmRequestComponent implements OnInit {
     isBindDataDone: boolean = false;
     isExisting: boolean = false;
 
-    CustTypeObj: Array<KeyValueObj>;
-    copyToResidenceTypeObj: Array<KeyValueObj> = [
+    CustTypeObj: any;
+    copyToResidenceTypeObj: any = [
         {
             Key: "LEGAL",
             Value: "Legal"
         },
     ];
 
-    copyToMailingTypeObj: Array<KeyValueObj> = [
+    copyToMailingTypeObj: any = [
         {
             Key: "LEGAL",
             Value: "Legal"
@@ -147,7 +168,7 @@ export class LtkmRequestComponent implements OnInit {
         }
     ];
 
-    copyToMailingCompanyTypeObj: Array<KeyValueObj> = [
+    copyToMailingCompanyTypeObj: any = [
         {
             Key: "LEGAL",
             Value: "Legal"
@@ -155,7 +176,7 @@ export class LtkmRequestComponent implements OnInit {
     ];
 
     defCustModelCode: string;
-    MrCustTypeCode: string;
+    MrCustTypeCode: any;
     isMarried: boolean = true;
     spouseGender: string = CommonConstant.MasterCodeGenderFemale;
     isSpouseOk: boolean = true;
@@ -165,7 +186,7 @@ export class LtkmRequestComponent implements OnInit {
     //urs-los-057
     ltkmCustOtherInfo: LtkmCustOtherInfoObj;
 
-    pageTitle: string = 'LTKM REQUEST DETAIL';
+    pageTitle: string = 'LTKM RETURN HANDLING DETAIL';
     listAttrContentFinData = new Array<LtkmAttrContent>();
     listAttrContentCustData = new Array<LtkmAttrContent>();
     listLtkmCustBankAccObjs = new Array<LtkmCustBankAccObj>();
@@ -186,7 +207,7 @@ export class LtkmRequestComponent implements OnInit {
     AttrGroup: string = CommonConstant.AttrGroupCustPersonalOther;
     AttrGroupFinData: string = CommonConstant.AttrGroupCustPersonalFinData;
     isLockMode: boolean = true;
-    private mode: string = "request";
+    private mode: string = this.modeReqConst;
     private WfTaskListId: number;
     ReturnHandlingId: number;
     FinFormIsDetail: boolean = false;
@@ -195,10 +216,6 @@ export class LtkmRequestComponent implements OnInit {
     isLockLookupCust: boolean = false;
     listFamily: Array<any> = new Array();
 
-    readonly modeReqConst: string = CommonConstant.REQ;
-    readonly modeRtnConst: string = CommonConstant.RTN;
-
-    UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     constructor(
         private router: Router,
         private fb: FormBuilder,
@@ -209,17 +226,17 @@ export class LtkmRequestComponent implements OnInit {
         this.route.queryParams.subscribe(params => {
             if (params["AppId"] != undefined && params["AppId"] != null) {
                 this.appId = params["AppId"];
-            }            
+            }
             if (params["LtkmCustId"] != undefined && params["LtkmCustId"] != null) {
                 this.LtkmCustId = params["LtkmCustId"];
-            }            
+            }
             if (params["WfTaskListId"] != undefined && params["WfTaskListId"] != null) {
                 this.WfTaskListId = params["WfTaskListId"];
                 if (this.WfTaskListId != undefined) {
                     this.mode = this.modeRtnConst;
                 }
             }
-        })
+        });
     }
 
     async ngOnInit(): Promise<void> {
@@ -284,7 +301,7 @@ export class LtkmRequestComponent implements OnInit {
     async claimTask() {
         var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
         wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-        wfClaimObj.pUserID = this.UserAccess[CommonConstant.USER_NAME];
+        wfClaimObj.pUserID = this.UserAccess.UserName;
         this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
             (response) => {
             });
@@ -292,7 +309,6 @@ export class LtkmRequestComponent implements OnInit {
 
     SaveForm() {
         if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
-            //comment urs-los-057, tidak perlu cek per komponent, karna hanya perlu liat cust no saja.
             var custDataPersonalObj = new LtkmCustDataPersonalObj();
             custDataPersonalObj = this.setCustPersonalObjForSave();
             var personalAnalysisObj: any;
@@ -315,7 +331,7 @@ export class LtkmRequestComponent implements OnInit {
             }
 
             var sendPersonalObj;
-            let personalPath: string = "";
+            var personalPath: string = "";
 
             if (this.mode == this.modeRtnConst) {
                 personalPath = URLConstant.SaveLtkmReturnHandlingPersonal;
@@ -356,6 +372,7 @@ export class LtkmRequestComponent implements OnInit {
             custDataCompanyObj = this.setCustCompanyObjForSave();//perlu review
 
             var coyAnalysisObj: any;
+
             if (this.mode == this.modeReqConst) {
                 coyAnalysisObj = {
                     Notes: this.CustDataCompanyForm.controls["ltkmAnalysis"]["controls"].Notes.value,
@@ -395,7 +412,7 @@ export class LtkmRequestComponent implements OnInit {
                 (response) => {
                     if (response["StatusCode"] == 200) {
                         this.toastr.successMessage(response["message"]);
-                        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
+                        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD]);
                     }
                     else {
                         response["ErrorMessages"].forEach((message: string) => {
@@ -409,7 +426,8 @@ export class LtkmRequestComponent implements OnInit {
     }
 
     Cancel() {
-        this.router.navigate(["/dashboard/dash-board"]);
+        //richard now here
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD]);
     }
 
     setCustPersonalObjForSave() {
@@ -421,16 +439,6 @@ export class LtkmRequestComponent implements OnInit {
         custDataPersonalObj.LtkmCustAddrMailingObj = this.setAppCustAddrMailing();
         custDataPersonalObj.LtkmCustPersonalFinDataObj = this.listLtkmCustPersonalFinDataObjs;
 
-        //ini isspouse utk app sih, buat valiasi klo cust tdk punya spouse keluarwaning
-        // var CheckSpouseContactInfo = this.listAppCustPersonalContactInformation.find(
-        //   x => x.MrCustRelationshipCode == CommonConstant.MasteCodeRelationshipSpouse);
-        // if (CheckSpouseContactInfo == null && this.isMarried == true) {
-        //   this.isSpouseOk = false;
-        // }
-        // else {
-        //   this.isSpouseOk = true;
-        // }
-        // custDataPersonalObj.AppCustPersonalContactPersonObjs = this.listAppCustPersonalContactInformation;
         custDataPersonalObj.LtkmCustBankAccObjs = this.listLtkmCustBankAccObjs;
         custDataPersonalObj.LtkmCustObj.MrCustModelCode = this.CustDataForm.controls["jobData"]["controls"].CustModelCode.value;
         custDataPersonalObj.LtkmCustPersonalJobDataObj = this.setAppCustPersonalJobData(custDataPersonalObj.LtkmCustObj.MrCustModelCode);
@@ -589,7 +597,6 @@ export class LtkmRequestComponent implements OnInit {
 
         } else if (type == ExceptionConstant.DateErrorMessageBirthDate && d1 > max17Yodt) {
             this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
-            // this.toastr.errorMessage(type + "  can not be more than " + Max17YO);
             this.isExpiredBirthDt = true;
         }
         else {
@@ -622,9 +629,6 @@ export class LtkmRequestComponent implements OnInit {
                 appCustObj.IsExistingCust = false;
             }
 
-            // if(this.isExisting){
-            //   appCustObj.RowVersion = this.custDataPersonalObj.LtkmCustObj.RowVersion;
-            // }
         }
 
         if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
@@ -643,10 +647,6 @@ export class LtkmRequestComponent implements OnInit {
             } else {
                 appCustObj.IsExistingCust = false;
             }
-
-            // if(this.isExisting){
-            //   appCustObj.RowVersion = this.custDataCompanyObj.AppCustObj.RowVersion;
-            // }
         }
 
         appCustObj.IsCustomer = true;
@@ -663,10 +663,6 @@ export class LtkmRequestComponent implements OnInit {
         appCustCompanyObj.IsAffiliated = this.CustDataCompanyForm.controls["companyMainData"]["controls"].IsAffiliated.value;
         appCustCompanyObj.EstablishmentDt = this.CustDataCompanyForm.controls["companyMainData"]["controls"].EstablishmentDt.value;
         this.CekDt(appCustCompanyObj.EstablishmentDt, ExceptionConstant.DateErrorMessageEstablishmentDate);
-
-        // if(this.isExisting){
-        //   appCustCompanyObj.RowVersion = this.custDataCompanyObj.AppCustCompanyObj.RowVersion;
-        // }
 
         return appCustCompanyObj;
     }
@@ -695,9 +691,6 @@ export class LtkmRequestComponent implements OnInit {
         appCustPersonalObj.NoOfResidence = this.CustDataForm.controls["personalMainData"]["controls"].NoOfResidence.value;
         appCustPersonalObj.NoOfDependents = this.CustDataForm.controls["personalMainData"]["controls"].NoOfDependents.value;
 
-        // if(this.isExisting){
-        //   appCustPersonalObj.RowVersion = this.custDataPersonalObj.LtkmCustPersonalObj.RowVersion;
-        // }
         return appCustPersonalObj;
     }
 
@@ -772,10 +765,6 @@ export class LtkmRequestComponent implements OnInit {
         appCustAddrResidenceObj.MrHouseOwnershipCode = this.CustDataForm.controls["residenceAddr"]["controls"].MrHouseOwnershipCode.value;
         appCustAddrResidenceObj.StayLength = this.CustDataForm.controls["residenceAddr"]["controls"].StayLength.value;
         appCustAddrResidenceObj.SubZipcode = this.CustDataForm.controls["residenceAddr"]["controls"].SubZipcode.value;
-
-        // if(this.isExisting){
-        //   appCustAddrResidenceObj.RowVersion = this.custDataPersonalObj.LtkmCustAddrResidenceObj.RowVersion;
-        // }
 
         return appCustAddrResidenceObj;
     }
@@ -857,31 +846,9 @@ export class LtkmRequestComponent implements OnInit {
         appCustAddrJobObj.MrHouseOwnershipCode = this.CustDataForm.controls["jobDataAddr"]["controls"].MrHouseOwnershipCode.value;
         appCustAddrJobObj.Zipcode = this.CustDataForm.controls["jobDataAddrZipcode"]["controls"].value.value;
         appCustAddrJobObj.SubZipcode = this.CustDataForm.controls["jobDataAddr"]["controls"].SubZipcode.value;
-        // if(this.isExisting){
-        //   appCustAddrJobObj.RowVersion = this.custDataPersonalObj.LtkmCustPersonalJobDataObj.LtkmCustAddrJobObj.RowVersion;
-        // }
-
         return appCustAddrJobObj;
     }
 
-    // setAppCustPersonalFinData() {
-    //   var appCustPersonalFinDataObj = new LtkmCustPersonalFinDataObj();
-    //   for (let index = 0; index < this.CustDataForm.controls["FinData"].length; index++) {
-    //     const element = array[index];
-    //   }
-    //   appCustPersonalFinDataObj.MonthlyIncomeAmt = this.CustDataForm.controls["FinData"]["controls"].MonthlyIncomeAmt.value;
-    //   appCustPersonalFinDataObj.MonthlyExpenseAmt = this.CustDataForm.controls["FinData"]["controls"].MonthlyExpenseAmt.value;
-    //   appCustPersonalFinDataObj.MrSourceOfIncomeTypeCode = this.CustDataForm.controls["FinData"]["controls"].MrSourceOfIncomeTypeCode.value;
-    //   appCustPersonalFinDataObj.MonthlyInstallmentAmt = this.CustDataForm.controls["FinData"]["controls"].MonthlyInstallmentAmt.value;
-    //   appCustPersonalFinDataObj.IsJoinIncome = this.CustDataForm.controls["FinData"]["controls"].IsJoinIncome.value;
-    //   appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt = this.CustDataForm.controls["FinData"]["controls"].SpouseMonthlyIncomeAmt.value;
-
-    //   if(this.isExisting){
-    //     appCustPersonalFinDataObj.RowVersion = this.custDataPersonalObj.LtkmCustPersonalFinDataObj.RowVersion;
-    //   }
-
-    //   return appCustPersonalFinDataObj;
-    // }
     readonly InputAddressObjForCc_Identifier: string = "CcDataAddr";
     SetReqAddrObj(obj: any) {
         let TempAddr = obj[this.InputAddressObjForCc_Identifier];
@@ -944,9 +911,8 @@ export class LtkmRequestComponent implements OnInit {
     }
 
     CheckDt(inputDate: Date, type: string) {
-        let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-        let MaxDate = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
-        let Max17YO = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+        let MaxDate = formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+        let Max17YO = formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
         let max17Yodt = new Date(Max17YO);
         let d1 = new Date(inputDate);
         let d2 = new Date(MaxDate);
@@ -1481,11 +1447,11 @@ export class LtkmRequestComponent implements OnInit {
             return;
         }
 
-        await this.http.post(URLConstant.GetCustDataByLtkmCustId, custDataObj).toPromise().then(
+        await this.http.post(URLConstant.GetCustDataByLtkmCustId, this.custDataObj).toPromise().then(
             async (response) => {
                 if (response["AppCustObj"]["LtkmCustId"] > 0) {
                     if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
-                        await this.http.post<Array<LtkmAttrContent>>(URLConstant.GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup, { LtkmCustId: this.LtkmCustId, AttrGroup: this.AttrGroup }).toPromise().then(
+                        await this.http.post<Array<LtkmAttrContent>>(URLConstant.GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup, { LtkmCustId: this.LtkmCustId, AttrGroup: CommonConstant.AttrGroupCustPersonalOther }).toPromise().then(
                             (response) => {
                                 this.listAttrContentCustData = response["ResponseLtkmCustAttrContentObjs"]
                             });
@@ -1542,12 +1508,12 @@ export class LtkmRequestComponent implements OnInit {
                     }
 
                     if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypeCompany) {
-                        await this.http.post<Array<LtkmAttrContent>>(URLConstant.GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup, { LtkmCustId: this.LtkmCustId, AttrGroup: this.AttrGroup }).toPromise().then(
+                        await this.http.post<Array<LtkmAttrContent>>(URLConstant.GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup, { LtkmCustId: this.LtkmCustId, AttrGroup: CommonConstant.AttrGroupCustCompanyOther }).toPromise().then(
                             (response) => {
                                 this.listAttrContentCustDataCoy = response["ResponseLtkmCustAttrContentObjs"]
                             });
 
-                        await this.http.post<Array<LtkmAttrContent>>(URLConstant.GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup, { LtkmCustId: this.LtkmCustId, AttrGroup: CommonConstant.AttrGroupCustPersonalFinData }).toPromise().then(
+                        await this.http.post<Array<LtkmAttrContent>>(URLConstant.GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup, { LtkmCustId: this.LtkmCustId, AttrGroup: CommonConstant.AttrGroupCustCompanyFinData }).toPromise().then(
                             (response) => {
                                 this.listAttrContentFinDataCoy = response["ResponseLtkmCustAttrContentObjs"]
                             });
@@ -2070,12 +2036,12 @@ export class LtkmRequestComponent implements OnInit {
     }
 
     async bindCustTypeObj() {
-        let reqTempObj: ReqRefMasterByTypeCodeAndMappingCodeObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
-        reqTempObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
-        reqTempObj.MappingCode = null;
-        await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, reqTempObj).toPromise().then(
+        await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).toPromise().then(
             (response) => {
                 this.CustTypeObj = response[CommonConstant.ReturnObj];
+                // if (this.CustTypeObj.length > 0) {
+                //   this.MrCustTypeCode = this.CustTypeObj[0].Key;
+                // }
             }
         );
     }

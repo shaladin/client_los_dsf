@@ -216,7 +216,7 @@ export class AdInsHelper {
     return encrypted
   }
 
-  public static RedirectUrl(router: Router, url: Array<string>, queryParams: {}) {
+  public static RedirectUrl(router: Router, url: Array<string>, queryParams: {} = {}) {
     router.navigate(url, { queryParams: queryParams, skipLocationChange: false });
   }
 

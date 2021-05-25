@@ -981,7 +981,6 @@ export class URLConstant {
 
   //AGRMNT
   public static GetAgrmntByAgrmntId = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntId";
-  public static GetAgrmntByCustNo = environment.losUrl + "/Agrmnt/GetAgrmntByCustNo";
   public static GetAgrmntByAppId = environment.losUrl + "/Agrmnt/GetAgrmntByAppId";
   public static GetAgrmntByAgrmntNo = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntNo";
   public static GetAgrmtSummaryByAgrmntId = environment.losUrl + "/Agrmnt/GetAgrmtSummaryByAgrmntId";
@@ -1400,6 +1399,9 @@ export class URLConstant {
   public static GetLtkmCustBankAccAndStatementForView = environment.losUrl + "/LtkmCustData/GetLtkmCustBankAccAndStatementForView";
   public static DeleteLtkmCustBankAccAndStmnt = environment.losUrl + "/LtkmCustData/DeleteLtkmCustBankAccAndStmnt";
 
+  public static GetListLtkmAppPrcsByCustNoAndIsAppInitDone = environment.losUrl + "/LtkmCustData/GetListLtkmAppPrcsByCustNoAndIsAppInitDone";
+  public static GetLtkmAppRjcByCustNoAndAppStat = environment.losUrl + "/LtkmCustData/GetLtkmAppRjcByCustNoAndAppStat";
+  public static GetLtkmExistAgrmntByCustNoAndIsAppInitDone = environment.losUrl + "/LtkmCustData/GetLtkmExistAgrmntByCustNoAndIsAppInitDone";
   //ltkm cust attr content
   public static GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup = environment.losUrl + "/LtkmCustData/GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup";
 
