@@ -1,138 +1,138 @@
 {
-    "title": "",
-    "subsection": [
-      {
-        "subSectionId": "AgrMainInformationId",
-        "subSectionTitle": "Main Information",
-        "mainInfoPath": "/Generic/GetDataViewBySQL",
-        "mainInfo": [ 
-          {
-            "type": "link",
-            "label": "Application No",
-            "property": "AppNo",
-            "name": "AppNo",
-            "path": "VIEW_APP",
-            "target" : "_blank",
-            "param": [
-              {
-                "type": "AppId",
-                "property": "AppId"
-              }
-            ]
-          }, 
-          {            
-            "type" : "switch", 
-            "case" : [
-              {
-                "conditions": [                  
-                  {
-                    "property" : "BizTemplateCode",
-                    "value" : "CFNA",
-                    "restriction" : "EQ"
-                  }
-                ],
-                "result": {
-                  "type": "text",
-                  "label": "Number Of Collateral",
-                  "property" : "NumOfColl"
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "AgrMainInformationId",
+      "subSectionTitle": "Main Information",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "link",
+          "label": "Application No",
+          "property": "AppNo",
+          "name": "AppNo",
+          "path": "VIEW_APP",
+          "target": "_blank",
+          "param": [
+            {
+              "type": "AppId",
+              "property": "AppId"
+            }
+          ]
+        },
+        {
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
+                {
+                  "property": "BizTemplateCode",
+                  "value": "CFNA",
+                  "restriction": "EQ"
                 }
-              },
-              {
-                "conditions": [                  
-                  {
-                    "property" : "BizTemplateCode",
-                    "value" : "CFRFN4W",
-                    "restriction" : "EQ"
-                  }
-                ],
-                "result": {
-                  "type": "text",
-                  "label": "Number Of Collateral",
-                  "property" : "NumOfColl"
-                }
-              },
-              {
-                "conditions": [                  
-                  {
-                    "property" : "BizTemplateCode",
-                    "value" : "FCTR",
-                    "restriction" : "EQ"
-                  }
-                ],
-                "result": {
-                  "type": "text",
-                  "label": "Number Of Collateral",
-                  "property" : "NumOfColl"
-                }
+              ],
+              "result": {
+                "type": "text",
+                "label": "Number Of Collateral",
+                "property": "NumOfColl"
               }
-            ]
-          },
-          {
-            "type": "text",
-            "label": "Customer Name",
-            "property": "CustName"
-          },
-          {
-            "type": "text",
-            "label": "Original Office",
-            "property": "OfficeName"
-          },
-          {
-            "type": "text",
-            "label": "Tenor",
-            "property": "Tenor"
-          },
-          {
-            "type": "callback",
-            "key": "ViewProdOffering",
-            "label": "Product Offering",
-            "property": "ProdOfferingName"
-          },
-          {
-            "type": "link",
-            "label": "Lead No.",
-            "property": "LeadNo",
-            "name": "LeadNo",
-            "isHide": true,
-            "position": "left",
-            "path": "VIEW_LEAD",
-            "target": "_blank",
-            "param": [
-              { 
-                "type": "LeadId",
-                "property": "LeadId" 
+            },
+            {
+              "conditions": [
+                {
+                  "property": "BizTemplateCode",
+                  "value": "CFRFN4W",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "text",
+                "label": "Number Of Collateral",
+                "property": "NumOfColl"
               }
-            ]
-          },
-          {
-            "type": "text",
-            "label": "Customer Model",
-            "property": "MrCustModelDescr"
-          },
-          {
-            "type": "text",
-            "label": "Application Status",
-            "property": "Stat"
-          },
-          {
-            "type": "text",
-            "label": "Application Current Step",
-            "property": "CurrStep"
-          },
-          {
-            "type": "text",
-            "label": "Application Last Step",
-            "property": "LastStep"
-          },
-          {
-            "type": "text",
-            "label": "Customer Checking Step",
-            "property": "CustCheckingStep"
-          }
-        ],
-        "querystring": {
-          "name": "viewAppMainInfo"
+            },
+            {
+              "conditions": [
+                {
+                  "property": "BizTemplateCode",
+                  "value": "FCTR",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "text",
+                "label": "Number Of Collateral",
+                "property": "NumOfColl"
+              }
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Customer Name",
+          "property": "CustName"
+        },
+        {
+          "type": "text",
+          "label": "Original Office",
+          "property": "OfficeName"
+        },
+        {
+          "type": "text",
+          "label": "Tenor",
+          "property": "Tenor"
+        },
+        {
+          "type": "callback",
+          "key": "ViewProdOffering",
+          "label": "Product Offering",
+          "property": "ProdOfferingName"
+        },
+        {
+          "type": "link",
+          "label": "Lead No.",
+          "property": "LeadNo",
+          "name": "LeadNo",
+          "isHide": true,
+          "position": "left",
+          "path": "VIEW_LEAD",
+          "target": "_blank",
+          "param": [
+            {
+              "type": "LeadId",
+              "property": "LeadId"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Customer Model",
+          "property": "MrCustModelDescr"
+        },
+        {
+          "type": "text",
+          "label": "Application Status",
+          "property": "Stat"
+        },
+        {
+          "type": "text",
+          "label": "Application Current Step",
+          "property": "CurrStep"
+        },
+        {
+          "type": "text",
+          "label": "Application Last Step",
+          "property": "LastStep"
+        },
+        {
+          "type": "text",
+          "label": "Customer Checking Step",
+          "property": "CustCheckingStep"
         }
+      ],
+      "querystring": {
+        "name": "viewAppMainInfo"
       }
-    ]
-  }
+    }
+  ]
+}

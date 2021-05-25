@@ -1,0 +1,105 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "AgrMainInformationId",
+        "subSectionTitle": "Main Information",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "link",
+            "label": "Application No",
+            "property": "AppNo",
+            "name": "AppNo",
+            "path": "/View/AppView",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "AppId",
+                "property": "AppId"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "label": "Agreement Parent",
+            "property": "AgrmntParentNo"
+          },
+          {
+            "type": "switch",
+            "case": [
+              {
+                "conditions": [
+                  {
+                    "property": "BizTemplateCode",
+                    "value": "CFNA",
+                    "restriction": "NEQ"
+                  }
+                ],
+                "result": {
+                  "type": "text",
+                  "label": "Number Of Asset",
+                  "property": "NumOfAsset"
+                }
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "label": "Customer Name",
+            "property": "CustName"
+          },
+          {
+            "type": "text",
+            "label": "Original Office",
+            "property": "OfficeName"
+          },
+          {
+            "type": "text",
+            "label": "Tenor",
+            "property": "Tenor"
+          },
+          {
+            "type": "callback",
+            "key": "ViewProdOffering",
+            "label": "Product Offering",
+            "property": "ProdOfferingName"
+          },
+          {
+            "type": "link",
+            "label": "Lead No.",
+            "property": "LeadNo",
+            "name": "LeadNo",
+            "isHide": true,
+            "position": "left",
+            "path": "/View/Lead",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "LeadId",
+                "property": "LeadId"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "label": "Application Status",
+            "property": "Stat"
+          },
+          {
+            "type": "text",
+            "label": "Application Current Step",
+            "property": "CurrStep"
+          },
+          {
+            "type": "text",
+            "label": "Application Last Step",
+            "property": "LastStep"
+          }
+        ],
+        "querystring": {
+          "name": "viewAppMainInfoCFNA"
+        }
+      }
+    ]
+  }
