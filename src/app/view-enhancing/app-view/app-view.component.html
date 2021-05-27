@@ -154,6 +154,11 @@
               <ng-template matTabContent>
                 <app-approval-hist [BizTemplateCode]="bizTemplateCode" [AppNo]="AppNo" [AppId]="AppId"></app-approval-hist>
               </ng-template>
+            </mat-tab>           
+            <mat-tab  label="Highlight Comment">
+              <ng-template matTabContent>
+                <app-view-highlight-comment [appId]="AppId"></app-view-highlight-comment>
+              </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsPefindoResult" label="Pefindo Result">

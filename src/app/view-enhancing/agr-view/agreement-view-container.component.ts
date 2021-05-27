@@ -10,6 +10,7 @@ import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 
 @Component({
@@ -55,20 +56,24 @@ export class AgreementViewContainerComponent implements OnInit {
   appId: string;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   IsNeedPO: boolean = false;
+  RdlcReport: RdlcReportObjv2 = new RdlcReportObjv2();
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient, private cookieService: CookieService
+    private http: HttpClient, private cookieService: CookieService,
+    private toastr: NGXToastrService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params["AgrmntId"] != null) {
         this.AgrmntId = params["AgrmntId"];
+        this.BizTemplateCode = params["BizTemplateCode"];
       }
     });
   }
 
   async ngOnInit() : Promise<void> {
     this.arrValue.push(this.AgrmntId);
+    await this.GetAgrmnt();
     await this.GetAppAndAppCustDetailByAgrmntId();
     await this.InitDms();
   }
@@ -126,6 +131,7 @@ export class AgreementViewContainerComponent implements OnInit {
   }
 
   async GetAppAndAppCustDetailByAgrmntId() {
+  
     await this.http.post(URLConstant.GetAppAndAppCustDetailByAgrmntId, { Id: this.AgrmntId }).toPromise().then(
       (response) => {
         this.ResponseAppDetailData = response;
@@ -166,6 +172,7 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsTC = false;
           this.IsReservedFund = false;
           this.IsDeliveryOrder = false;
+          this.IsPurchaseOrder = false;
           this.IsInvoiceData = false;
           this.IsLoanData = false;
           if(!this.IsNeedPO){
@@ -213,6 +220,7 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsLoanData = false;
           this.IsInsuranceFL4W = false;
           this.IsLifeInsurance = false;
+          this.IsFinancial = false;
           this.IsTC = false;
           this.IsReservedFund = false;
           this.IsDeliveryOrder = false;
@@ -222,7 +230,53 @@ export class AgreementViewContainerComponent implements OnInit {
             this.IsPurchaseOrder = false;
           }
         }
+        else if (this.BizTemplateCode == CommonConstant.DF) {
+          this.IsAsset = false;
+          this.IsInsuranceFL4W = false;
+          this.IsLifeInsurance = false;
+          this.IsPurchaseOrder = false;
+          this.IsDeliveryOrder = false;
+          this.IsLoanData = false;
+        }
         this.IsReady = true;
+      });
+  }
+  printCustomerCard(){
+    let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+    this.RdlcReport.RequestingUsername = currentUserContext.UserName;
+    this.RdlcReport.ReportInfo.ReportName = "DOC_CUSTAGRLIST";
+    this.RdlcReport.ReportInfo.ReportTemplateCode = "DOC_CUSTAGRLIST";
+    this.RdlcReport.ReportInfo.ReportParameters = new Array<ReportParamObjv2>();
+    this.RdlcReport.ReportInfo.ExportFormat = 0;
+  
+    let reportParamObj: ReportParamObjv2 = new ReportParamObjv2();
+    reportParamObj.paramKey = "AgrmntId";
+    reportParamObj.paramValue = this.AgrmntId;
+    reportParamObj.paramAssignment = 1;
+    
+    
+    this.RdlcReport.ReportInfo.ReportParameters.push(reportParamObj);
+  
+    this.http.post(URLConstant.GenerateReportR3, this.RdlcReport).subscribe(
+      (response) => {
+        let linkSource: string = 'data:application/pdf;base64,' + response["ReportFile"];
+        let fileName: string = this.AgrmntId + ".pdf";
+        const downloadLink = document.createElement("a");
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName;
+  
+        if (response["ReportFile"] != undefined) {
+          // downloadLink.click();
+          // this.toastr.successMessage(response['message']);
+  
+          var iframe = "<iframe width='100%' height='100%' src='" + linkSource + "'></iframe>";
+          var x = window.open();
+          x.document.open();
+          x.document.write(iframe);
+          x.document.close();
+        } else {
+          this.toastr.warningMessage(response['message']);
+        }
       });
   }
 }

@@ -16,25 +16,17 @@ import { UcgridviewModule, UcgridviewComponent } from "@adins/ucgridview";
 import { UcapprovalhistModule, UcapprovalhistComponent } from "@adins/ucapprovalhist";
 
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
-import { MouViewComponent } from "./mou-view.component";
-import { MouViewRoutingModule } from "./mou-view-routing.module";
-import { MouViewDetailComponent } from "./mou-view-detail/mou-view-detail.component";
-import { MouViewAddcollComponent } from "./mou-view-addcoll/mou-view-addcoll.component";
-import { MouViewApprovalHistoryComponent } from "./mou-view-approval-history/mou-view-approval-history.component";
-import { MouViewDocComponent } from "./mou-view-doc/mou-view-doc.component";
-import { MouViewFeeComponent } from "./mou-view-fee/mou-view-fee.component";
-import { MouViewLegalComponent } from "./mou-view-legal/mou-view-legal.component";
-import { MouViewListedCustFactoringComponent } from "./mou-view-listed-cust-factoring/mou-view-listed-cust-factoring.component";
-import { MouViewSurveyComponent } from "./mou-view-survey/mou-view-survey.component";
-import { MouViewTcComponent } from "./mou-view-tc/mou-view-tc.component";
 import { SharedModule } from "app/shared/shared.module";
-import { MouViewChangeMouHistoryComponent } from "./mou-view-change-mou-history/mou-view-change-mou-history.component";
-import { MouViewFreezeUnfreezeHistoryComponent } from "./mou-view-freeze-unfreeze-history/mou-view-freeze-unfreeze-history.component";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
-import { ViewModule } from "../view.module";
+import { ChangeMouViewAddcollComponent } from "./change-mou-view-addcoll/change-mou-view-addcoll.component";
+import { ChangeMouViewDetailComponent } from "./change-mou-view-detail/change-mou-view-detail.component";
+import { ChangeMouViewComponent } from "./change-mou-view.component";
+import { ChangeMouViewRoutingModule } from "./change-mou-view-routing.module";
+import { ChangeMouMainInfoComponent } from "../change-mou-main-info/change-mou-main-info.component";
+
 @NgModule({
     imports: [
-        MouViewRoutingModule,
+        ChangeMouViewRoutingModule,
         CommonModule,
         FormsModule,
         HttpModule,
@@ -53,22 +45,13 @@ import { ViewModule } from "../view.module";
         UcapprovalhistModule,
         UcShowErrorsModule,
         SharedModule,
-        UcapprovalHistoryModule,
-        ViewModule
+        UcapprovalHistoryModule
     ],
     declarations: [
-        MouViewComponent,
-        MouViewDetailComponent,
-        MouViewAddcollComponent,
-        MouViewApprovalHistoryComponent,
-        MouViewDocComponent,
-        MouViewFeeComponent,
-        MouViewLegalComponent,
-        MouViewListedCustFactoringComponent,
-        MouViewSurveyComponent,
-        MouViewTcComponent,
-        MouViewChangeMouHistoryComponent,
-        MouViewFreezeUnfreezeHistoryComponent
+        ChangeMouViewAddcollComponent,
+        ChangeMouViewDetailComponent,
+        ChangeMouViewComponent,
+        ChangeMouMainInfoComponent
     ],
     entryComponents: [
         UclookupgenericComponent,
@@ -78,4 +61,4 @@ import { ViewModule } from "../view.module";
     ]
 
 })
-export class MouViewModule { }
+export class ChangeMouViewModule { }
