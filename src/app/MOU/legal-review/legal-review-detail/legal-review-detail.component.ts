@@ -29,6 +29,7 @@ export class LegalReviewDetailComponent implements OnInit {
   responseRefMasterObj: any;
   responseMouTcObj: any;
   items: FormArray;
+  isItemsReady: boolean = false;
   termConditions: FormArray;
   link: any;
   mouCustObj: any;
@@ -108,6 +109,7 @@ export class LegalReviewDetailComponent implements OnInit {
               }) as FormGroup;
               this.items.push(eachDataDetail);
             }
+            this.isItemsReady = true;
           }
         );
       }

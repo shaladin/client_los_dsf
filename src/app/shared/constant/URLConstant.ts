@@ -665,9 +665,6 @@ export class URLConstant {
   public static GetRefIndustryTypeByCode = environment.FoundationR3Url + "/RefIndustryType/GetRefIndustryTypeByIndustryTypeCode";
   public static GetRefIndustryTypeByRefIndustryTypeId = environment.FoundationR3Url + "/RefIndustryType/GetRefIndustryTypeByRefIndustryTypeId";
 
-  //REF CUST MODEL
-  public static GetListKeyValueByMrCustTypeCode = environment.FoundationR3Url + "/RefCustModel/GetListKeyValueByMrCustTypeCode";
-
   // REF LOB
   public static GetListActiveLob = environment.FoundationR3Url + "/RefLob/GetListKeyValueActiveByCode";
 
@@ -764,6 +761,7 @@ export class URLConstant {
   //CUST DATA COMPANY
   public static GetCustDataForViewByAppId = environment.losUrl + "/AppCust/GetCustDataForViewByAppId";
   public static GetCustDataPersonalForViewByAppId = environment.losUrl + "/AppCust/GetCustDataPersonalForViewByAppId";
+  public static GetCustSpouseDataPersonalForViewByAppId = environment.losUrl + "/AppCust/GetCustSpouseDataPersonalForViewByAppId";
   public static GetCustDataPersonalForViewByAppCustId = environment.losUrl + "/AppCust/GetCustDataPersonalForViewByAppCustId";
   public static GetCustDataCompanyForViewByAppId = environment.losUrl + "/AppCust/GetCustDataCompanyForViewByAppId";
   public static GetCustDataCompanyForViewByAppCustId = environment.losUrl + "/AppCust/GetCustDataCompanyForViewByAppCustId";

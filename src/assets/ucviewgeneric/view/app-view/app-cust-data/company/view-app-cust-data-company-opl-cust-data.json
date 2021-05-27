@@ -1,0 +1,41 @@
+{
+    "title": "",
+    "subsection": [
+        {
+            "subSectionId": "CustPersonalDataId",
+            "subSectionTitle": "Customer Data",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "callback",
+                    "key": "Customer",
+                    "label": "Customer No",
+                    "property": "CustNo"
+                },
+                {
+                    "type": "text",
+                    "label": "Type / Customer Model Name",
+                    "property": "TypeAndCustModelName"
+                },
+                {
+                    "type": "text",
+                    "label": "Customer Name",
+                    "property": "CustName"
+                },
+                {
+                    "type": "text",
+                    "label": "Company Type",
+                    "property": "CoyType"
+                },
+                {
+                    "type": "text",
+                    "label": "NPWP",
+                    "property": "TaxIdNo"
+                }
+            ],
+            "querystring": {
+                "name": "viewAppCustDataCompanyOplCustData"
+            }
+        }
+    ]
+}

@@ -1,8 +1,17 @@
 export class RefEmpForLookupObj {
-    RefEmpId: any;
-    EmpName: any;
-    EmpNo: any;
-    RoleCode: any;
-    RoleName: any;
-    Username: any;
+    RefEmpId: number;
+    EmpName: string;
+    EmpNo: string;
+    RoleCode: string;
+    RoleName: string;
+    Username: string;
+
+    constructor() {
+        this.RefEmpId = 0;
+        this.EmpName = "";
+        this.EmpNo = "";
+        this.RoleCode = "";
+        this.RoleName = "";
+        this.Username = "";
+    }
 }

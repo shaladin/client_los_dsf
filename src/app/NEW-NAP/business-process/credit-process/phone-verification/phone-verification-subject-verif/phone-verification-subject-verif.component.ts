@@ -14,7 +14,9 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ReqVerfQuestionAnswerObj } from 'app/shared/model/Request/Verification/ReqVerfQuestionAnswerObj.model';
 import { ReqPhoneNumberObj } from 'app/shared/model/Request/PhoneVerification/ReqPhoneNumberObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ReqGetVerfResult4Obj, ReqGetVerfResultObj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 
 
@@ -90,6 +92,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   verifResultHDetailObj: any;
   listVerifResultHObj: any;
   verfResultDListObjs: Array<VerfResultDObj>;
+  CustNoObj: GenericObj = new GenericObj();
   ResultObj: any;
   SubjectRelationObj: any;
   PhoneNumberObj: any;
@@ -144,8 +147,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     }
   }
 
-  SaveForm(formDirective: FormGroupDirective) {
-    var activeButton = document.activeElement.id;
+  AddDetail(formDirective: FormGroupDirective) {
     if (this.isQuestionLoaded == false) {
       this.toastr.warningMessage("Can't process further because questions are not loaded");
     }
@@ -154,21 +156,24 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
       this.http.post(URLConstant.AddVerfResultHeaderAndVerfResultDetail, this.PhoneDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          if (activeButton == "save") {
-            if (this.isReturnHandling == false) {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT], { AppId: this.appId, WfTaskListId: this.wfTaskListId });
-            }
-            if (this.isReturnHandling == true) {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT], { AppId: this.appId, ReturnHandlingHId: this.returnHandlingHId, WfTaskListId: this.wfTaskListId });
-            }
-          }
-          else {
             this.GetVerfResultHData();
             this.GetListVerfResulHtData(this.verfResHObj);
             formDirective.resetForm();
             this.clearform();
-          }
         });
+    }
+  }
+
+  Save(){
+    if(this.listVerifResultHObj.length < 1){
+      this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_HISTORY);
+    }else{
+      if (this.isReturnHandling == false) {
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT], { AppId: this.appId, WfTaskListId: this.wfTaskListId });
+      }
+      if (this.isReturnHandling == true) {
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT], { AppId: this.appId, ReturnHandlingHId: this.returnHandlingHId, WfTaskListId: this.wfTaskListId });
+      }
     }
   }
 
@@ -242,8 +247,8 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   }
 
   async GetCust() {
-    var custObj = { CustNo: this.AppCustObj['CustNo'] };
-    await this.http.post(URLConstant.GetCustByCustNo, { TrxNo: this.AppCustObj['CustNo'] }).toPromise().then(
+    this.CustNoObj.CustNo = this.AppCustObj['CustNo'];
+    await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
       (response) => {
         this.custId = response["CustId"];
       })

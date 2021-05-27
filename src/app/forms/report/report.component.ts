@@ -41,28 +41,6 @@ export class ReportComponent implements OnInit {
 
     this.inputObj = new InputSearchObj();
     this.inputObj._url = "./assets/ucpaging/searchAppInquiry.json";
-    this.inputObj.ddlEnvironments = [
-      {
-        name: "A.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      },
-      {
-        name: "A.APP_STAT",
-        environment: environment.FoundationR3Url
-      },
-      {
-        name: "ISNULL(B.AGRMNT_CURR_STEP,A.APP_CURR_STEP)",
-        environment: environment.FoundationR3Url
-      },
-      {
-        name: "B.AGRMNT_STAT",
-        environment: environment.FoundationR3Url
-      },
-      {
-        name: "A.CUST_CHECKING_STEP",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     this.ddlOfficeObj.apiUrl = AdInsConstant.GetRefMasterListKeyValueActiveByCode;
     this.ddlOfficeObj.requestObj = {

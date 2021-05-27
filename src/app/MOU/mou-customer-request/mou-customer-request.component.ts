@@ -10,6 +10,7 @@ import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 
 @Component({
   selector: 'app-mou-customer-request',
@@ -20,6 +21,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 export class MouCustomerRequestComponent implements OnInit {
   @ViewChild(UcpagingComponent) ucpaging;
   inputPagingObj: UcPagingObj = new UcPagingObj();
+  CustNoObj: GenericObj = new GenericObj();
   user: any;
   
   readonly AddLink: string = NavigationConstant.MOU_REQ_DETAIL;
@@ -49,9 +51,9 @@ export class MouCustomerRequestComponent implements OnInit {
   }
 
   customerView(ev) {
-    var custNo = ev.RowObj.CustNo;
-    var custId: number
-    this.http.post(URLConstant.GetCustByCustNo, {TrxNo : custNo}).subscribe(
+    var custId: number;
+    this.CustNoObj.CustNo = ev.RowObj.CustNo;
+    this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
       (response) => {
         custId = response['CustId'];
         AdInsHelper.OpenCustomerViewByCustId(custId);

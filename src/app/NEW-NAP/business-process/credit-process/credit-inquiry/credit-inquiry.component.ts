@@ -4,6 +4,7 @@ import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 
 @Component({
   selector: 'app-credit-inquiry',
@@ -11,6 +12,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class CreditInquiryComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
+  CustNoObj: GenericObj = new GenericObj();
 
   constructor(private http: HttpClient) { }
 
@@ -37,7 +39,8 @@ export class CreditInquiryComponent implements OnInit {
       AdInsHelper.OpenAppViewByAppId(ev.RowObj.AppId);
     }
     else if (ev.Key == "customer") {
-      this.http.post(URLConstant.GetCustByCustNo, { TrxNo: ev.RowObj.CustNo }).subscribe(
+      this.CustNoObj.CustNo = ev.RowObj.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         (response) => {
           AdInsHelper.OpenCustomerViewByCustId(response['CustId']);
         }

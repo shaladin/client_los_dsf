@@ -22,15 +22,17 @@
             <lib-ucSubsection [id]="'Review'" [title]="'Review Result'" [panel]="'ReviewId'"></lib-ucSubsection>
             <div id="ReviewId">
               <div formArrayName="items">
-                <div *ngFor="let item of items.controls; let i = index;">
-                  <div class="form-group row" [formGroupName]="i">
-                    <label class="col-md-4 adins-required-label" translate> {{item.controls.ReviewComponentName.value}}
-                    </label>
-                    <div class="col-md-7">
-                      <input type="text" class="form-control adInsInput" formControlName="values" required
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalForm.controls.items['controls'][i]['controls'].values.invalid}">
-                      <lib-uc-show-errors [control]="LegalForm.controls.items['controls'][i]['controls'].values"
-                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                <div *ngIf="isItemsReady">
+                  <div *ngFor="let item of items.controls; let i = index;">
+                    <div class="form-group row" [formGroupName]="i">
+                      <label class="col-md-4 adins-required-label" translate> {{item.controls.ReviewComponentName.value}}
+                      </label>
+                      <div class="col-md-7">
+                        <input type="text" class="form-control adInsInput" formControlName="values" required
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && LegalForm.controls.items['controls'][i]['controls'].values.invalid}">
+                        <lib-uc-show-errors [control]="LegalForm.controls.items['controls'][i]['controls'].values"
+                          [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </div>
                     </div>
                   </div>
                 </div>

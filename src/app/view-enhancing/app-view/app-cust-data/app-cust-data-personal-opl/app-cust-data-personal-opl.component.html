@@ -1,0 +1,4 @@
+<div *ngIf="isDataAlreadyLoaded">
+  <lib-ucviewgeneric [viewGenericObj]="viewCustDataObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
+  <lib-ucviewgeneric *ngIf="isSpouseExists" [viewGenericObj]="viewSpouseDataObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
+</div>

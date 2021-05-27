@@ -28,7 +28,7 @@ export class FinancialPersonalComponent implements OnInit {
     CommonConstant.AttrGroupCustPersonalFinDataOther
   ];
   AppCustPersonalFinData: AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
-  CustAttrRequest: Array<Object>;
+  CustAttrRequest: Array<Object> = new Array<Object>();
   MrSourceOfIncomeTypeObj: Array<KeyValueObj> = new Array();
   AppCustBankAccList: Array<AppCustBankAccObj> = new Array();
   IncomeList: Array<{Index: number, Amount: number}> = new Array<{Index: number, Amount: number}>();
