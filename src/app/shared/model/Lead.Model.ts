@@ -1,6 +1,6 @@
 export class LeadObj {
     LeadId: number;
-    TaskListId: string;
+    TaskListId: number;
     LeadNo: string;
     LeadCopyId: number;
     OriOfficeCode: string;
@@ -22,6 +22,6 @@ export class LeadObj {
     MrCancelReasonCode: string;
     CancelNotes: string;
     DuplicateLeadId: string;
-    RowVersion: any;
+    RowVersion: string;
     IsSubmit: boolean;
 }

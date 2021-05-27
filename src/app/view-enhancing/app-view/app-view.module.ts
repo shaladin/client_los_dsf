@@ -42,12 +42,13 @@ import { ViewSurveyTaskListComponent } from "./view-survey-task-list/view-survey
 import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.component";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 import { SharedModule } from "app/shared/shared.module";
-import { TabDeviationComponent } from './tab-deviation/tab-deviation.component';
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { ViewAssetExpenseComponent } from './view-asset-expense/view-asset-expense.component';
 import { ViewSurveyComponent } from './view-survey/view-survey.component';
 import { AppCustDataPersonalOplComponent } from './app-cust-data/app-cust-data-personal-opl/app-cust-data-personal-opl.component';
 import { AppCustDataCompanyOplComponent } from './app-cust-data/app-cust-data-company-opl/app-cust-data-company-opl.component';
+import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-sharing-component.module";
+import { TabDeviationComponent } from "./tab-deviation/tab-deviation.component";
 
 @NgModule({
     imports: [
@@ -71,7 +72,9 @@ import { AppCustDataCompanyOplComponent } from './app-cust-data/app-cust-data-co
         UcapprovalHistoryModule,
         UcShowErrorsModule,
         AppCustViewComponentsModule,
-        SharedModule
+        ViewSharingComponentModule,
+        SharedModule,
+        UcapprovalHistoryModule,
     ],
     declarations: [
         AppMainInfoComponent,
@@ -97,7 +100,7 @@ import { AppCustDataCompanyOplComponent } from './app-cust-data/app-cust-data-co
         TabAnalysisResultComponent,
         ApprovalHistComponent,
         ViewSurveyTaskListComponent,
-        ViewAssetDataComponent,
+        ViewAssetDataComponent
         TabDeviationComponent,
         ViewAssetExpenseComponent,
         ViewSurveyComponent,

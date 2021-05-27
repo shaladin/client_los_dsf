@@ -19,6 +19,10 @@ export class CommonConstant {
   public static MOU_FRZ_REQ = 'REQ';
   public static MOU_FRZ_APV = 'APV';
 
+  //PHN VERF SUBJECT DATA
+  public static PHN_VERF_RES_SCS = "SCS";
+  public static PHN_VERF_RES_FAIL = "FAIL";
+
   //Application Item
   public static MENU = "Menu";
   public static ENVIRONMENT_MODULE = 'EnvironmentModule';

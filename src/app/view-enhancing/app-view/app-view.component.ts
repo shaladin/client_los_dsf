@@ -24,6 +24,7 @@ export class AppViewComponent implements OnInit {
   arrValue = [];
   CustType: string = "";
   AppCustObj: any;
+  @ViewChild("mainInfoContainerA", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
   IsCustomer: boolean = true;
   IsGuarantor: boolean = true;
   IsReferantor: boolean = true;
@@ -265,6 +266,16 @@ export class AppViewComponent implements OnInit {
       this.IsInsurance = false;
       this.IsLifeInsurance = false;
       this.IsMultiCollateral = false;
+    }
+    else if (this.bizTemplateCode == CommonConstant.DF) {
+      this.IsGuarantor = false;
+      this.IsReferantor = false;
+      this.IsAsset = false;
+      this.IsMultiInsurance = false;
+      this.IsInsurance = false;
+      this.IsLifeInsurance = false;
+      this.IsMultiCollateral = false;
+      this.IsMultiAsset = false;
     }
   }
 

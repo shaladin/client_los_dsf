@@ -944,9 +944,8 @@ export class LtkmRequestComponent implements OnInit {
     }
 
     CheckDt(inputDate: Date, type: string) {
-        let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-        let MaxDate = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
-        let Max17YO = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+        let MaxDate = formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+        let Max17YO = formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
         let max17Yodt = new Date(Max17YO);
         let d1 = new Date(inputDate);
         let d2 = new Date(MaxDate);

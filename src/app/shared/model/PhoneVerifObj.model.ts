@@ -1,13 +1,13 @@
 export class PhoneVerifObj {
-  IdSource: any;
-  Subject: any;
-  SubjectName: any;
-  PhoneNumber: any;
-  PhoneType: any;
-  DatetimeVerif: Date;
-  Result: any;
-  SubjectRelation: any;
-  Notes: any;
+  IdSource: number;
+  Subject: string;
+  SubjectName: string;
+  PhoneNumber: string;
+  PhoneType: string;
+  DatetimeVerif: string;
+  Result: string;
+  SubjectRelation: string;
+  Notes: string;
 
   constructor() {
     this.IdSource = 0;
