@@ -82,6 +82,6 @@ export const Full_ROUTES: Routes = [
   },
   {
     path: PathConstant.UNAUTHORIZED,
-    loadChildren: './unauthorized/unauthorized.module.ts#UnauthorizedModule'
+    loadChildren: './unauthorized/unauthorized.module#UnauthorizedModule'
   }
 ];

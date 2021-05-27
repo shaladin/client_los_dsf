@@ -1,0 +1,167 @@
+{
+    "title": "Telemarketing Offering",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "ROP.CUST_NO",
+            "id": "CustNoId",
+            "value": "",
+            "label": "Customer No.",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "ROP.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "ROP.AGRMNT_NO",
+            "id": "AgrmntNoId",
+            "value": "",
+            "label": "Agreement No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "ROP.RO_POTENTIAL_NO",
+            "id": "RoPotentialNoId",
+            "value": "",
+            "label": "Ro Potential No.",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "GROP.BATCH_NO",
+            "id": "BatchNoId",
+            "value": "",
+            "label": "Batch No.",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "datepicker",
+            "name": "ROP.PROMISE_TO_LOAN_DT",
+            "id": "RoPromiseToLoadDtGteId",
+            "value": "",
+            "label": "Promise to Loan Date >=",
+            "restriction": "gte",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "datepicker",
+            "name": "ROP.PROMISE_TO_LOAN_DT",
+            "id": "RoPromiseToLoadDtLteId",
+            "value": "",
+            "label": "Promise to Loan Date <=",
+            "restriction": "lte",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "name": "searchRoTelemkOfferPaging"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Customer No",
+            "name": "ROP.CUST_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "ROP.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Agreement No",
+            "name": "ROP.AGRMNT_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "RO Potential No",
+            "name": "ROP.RO_POTENTIAL_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Promise to Loan Date",
+            "name": "ROP.PROMISE_TO_LOAN_DT"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Batch No",
+            "name": "GROP.BATCH_NO"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "callback",
+            "position": "center",
+            "property": "CustNo",
+            "key": "customer"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "AgrmntNo",
+            "target": "_blank",
+            "path": "VIEW_AGRMNT",
+            "param": [
+                {
+                    "type": "AgrmntId",
+                    "property": "AgrmntId"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "RoPotentialNo"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "PromiseToLoanDt"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "BatchNo"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/Lead/PotentialRo/RoTelemkOffer/Detail",
+                    "param": [
+                        {
+                            "type": "RoPotentialNo",
+                            "property": "RoPotentialNo"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,223 @@
+{
+    "title": "Simple Lead Monitoring",
+    "exportExcel": true,
+    "component": [
+        {
+            "type": "dropdown",
+            "name": "UMH.OFFICE_CODE",
+            "id": "OriOfficeNameId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "datatype": "text",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+            "label": "Office Name",
+            "isQueryIn": true,
+            "items": [],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "UMH.FILE_NAME",
+            "id": "FileNameId",
+            "value": "",
+            "label": "File Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "UMH.UPLOAD_MONITORING_NO",
+            "id": "UploadMonitoringNoId",
+            "value": "",
+            "label": "Upload No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "UL.UPLOAD_STATUS",
+            "id": "UploadStatusId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "path": "/RefStatus/GetRefStatusByTrxTypeCode",
+            "label": "Upload Status",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "TrxTypeCode",
+            "criteriaPropValue": "UPLOAD"
+        }
+    ],
+    "querystring": {
+        "name": "searchLeadMonitoring"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "UPLOAD NO",
+            "name": "UMH.UPLOAD_MONITORING_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "OFFICE NAME",
+            "name": "RO.OFFICE_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "FILE NAME",
+            "name": "UMH.FILE_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "right",
+            "label": "TOTAL RECORD",
+            "name": "UMH.TOTAL_RECORD"
+        },
+        {
+            "type": "sort",
+            "position": "right",
+            "label": "TOTAL RECORD PROCESSED",
+            "name": "UMH.TOTAL_RECORD_PROCESSED"
+        },
+        {
+            "type": "sort",
+            "position": "right",
+            "label": "TOTAL RECORD ERROR",
+            "name": "UMH.TOTAL_RECORD_ERROR"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "UPLOAD STATUS",
+            "name": "STAT.DESCR"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "ERROR MESSAGE",
+            "name": "UL.ERROR_MESSAGE"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "DOWNLOAD"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "UploadMonitoringNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OfficeName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "FileName"
+        },
+        {
+            "type": "text",
+            "position": "right",
+            "property": "TotalRecord"
+        },
+        {
+            "type": "text",
+            "position": "right",
+            "property": "TotalRecordProcessed"
+        },
+        {
+            "type": "text",
+            "position": "right",
+            "property": "TotalRecordError"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "UploadStatusDescr"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ErrorMessage"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "property": "UploadStatus",
+                                    "value": "CAN",
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "ErrorMessage",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "property": "UploadMonitoringNo"
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "UploadStatus",
+                                    "value": "ERR",
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "ErrorMessage",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "property": "UploadMonitoringNo"
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "UploadStatus",
+                                    "value": "RJC",
+                                    "restriction": "EQ"
+                                },
+                                {
+                                    "property": "ErrorMessage",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "property": "UploadMonitoringNo"
+                            },
+                            "isHide": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
