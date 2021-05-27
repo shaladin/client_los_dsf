@@ -1,0 +1,112 @@
+<div formGroupName="{{identifier}}">
+    <lib-ucSubsection [id]="'lktmanalysisId'" [title]="'LTKM ANALYSIS'" [panel]="'lktmanalysis'">
+    </lib-ucSubsection>
+    <div id="lktmanalysis">
+      <div class="form-group row"><label class="col-md-3 adInsLabel adins-required-label" translate="">MF
+          Suspicious Transaction due to</label>
+        <div class="col-md-4">
+          <select class="form-control" formControlName="MrSuspiciousTrxDueToCode" style="width:100%;"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MrSuspiciousTrxDueToCode.invalid}">
+            <option value="">-Select One-</option>
+            <option *ngFor="let item of DictRefMaster[MasterSuspciousTrxDueTo]" [value]="item.Key">
+              {{item.Value}}
+            </option>
+          </select>
+          <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MrSuspiciousTrxDueToCode"
+            [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+  
+      <div class="form-group row"><label class="col-md-3 adInsLabel adins-required-label" translate="">MF
+          Suspicious For</label>
+        <div class="col-md-4">
+          <select class="form-control" formControlName="MrSuspiciousForCode" style="width:100%;"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MrSuspiciousForCode.invalid}">
+            <option value="">-Select One-</option>
+            <option *ngFor="let item of DictRefMaster[MasterSuspciousFor]" [value]="item.Key">
+              {{item.Value}}
+            </option>
+          </select>
+          <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MrSuspiciousForCode"
+            [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+  
+      <div class="form-group row"><label class="col-md-3 adInsLabel adins-required-label" translate="">MF
+          Source Indication</label>
+        <div class="col-md-4">
+          <select class="form-control" formControlName="MrSourceIndicationCode" style="width:100%;"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MrSourceIndicationCode.invalid}">
+            <option value="">-Select One-</option>
+            <option *ngFor="let item of DictRefMaster[MasterSourceIndication]" [value]="item.Key">
+              {{item.Value}}
+            </option>
+          </select>
+          <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MrSourceIndicationCode"
+            [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+  
+      <div class="form-group row"><label class="col-md-3 adInsLabel adins-required-label" translate="">MF
+          Level Indication</label>
+        <div class="col-md-4">
+          <select class="form-control" formControlName="MrLevelIndicationCode" style="width:100%;"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MrLevelIndicationCode.invalid}">
+            <option value="">-Select One-</option>
+            <option *ngFor="let item of DictRefMaster[MasterLevelIndication]" [value]="item.Key">
+              {{item.Value}}
+            </option>
+          </select>
+          <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MrLevelIndicationCode"
+            [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+  
+      <div class="form-group row"><label class="col-md-3 adInsLabel" translate="">LTKM
+          Analysis Notes</label>
+        <div class="col-md-4">
+          <textarea type="text" class="form-control adInsInput" formControlName="Notes"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].Notes.invalid }"></textarea>
+          <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].Notes" [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+    </div>
+    <lib-ucSubsection [id]="'assignmoid'" [title]="'ASSIGN MO'" [panel]="'assignmo'">
+    </lib-ucSubsection>
+    <div id="assignmo">
+      <div class="form-group row"><label class="col-md-3 adInsLabel adins-required-label" translate="">MF
+          Office MO</label>
+        <div class="col-md-4">
+          <select class="form-control adInsInput" formControlName="OfficeCode" (change)="OfficeChanged()">
+            <option value="">-Select One-</option>
+            <option *ngFor="let ram of listRefOffice" [value]="ram.Key">
+              {{ram.Value}}
+            </option>
+          </select>
+          <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].OfficeCode"
+            [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+  
+      <div class="form-group row"><label class="col-md-3 adInsLabel adins-required-label" translate="">MF
+          Assign User MO</label>
+        <div class="col-md-4">
+          <select (change)="EmpChanged()" class="form-control adInsInput" formControlName="EmpNo">
+            <option value="">-Select One-</option>
+            <option *ngFor="let ram of allInSalesOffice" [value]="ram.EmpNo">
+              {{ram.EmpName}}
+            </option>
+          </select>
+          <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].EmpNo" [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+  
+    </div>
+  </div>

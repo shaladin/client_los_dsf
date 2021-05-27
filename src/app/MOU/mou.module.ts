@@ -35,7 +35,6 @@ import { TestUploadComponent } from './test-upload/test-upload.component';
 import { MouCancelComponent } from "./mou-cancel/mou-cancel.component";
 import { MouOsTcPagingComponent } from './mou-os-tc/mou-os-tc-paging/mou-os-tc-paging.component';
 import { MouOsTcDetailComponent } from './mou-os-tc/mou-os-tc-detail/mou-os-tc-detail.component';
-import { UnauthorizedPageComponent } from "./unauthorized-page/unauthorized-page.component";
 import { AdInsModule } from "app/components/adins-module/adins.module";
 import { MatTabsModule } from "@angular/material";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
@@ -71,6 +70,7 @@ import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
  
 import { SharedModule } from "app/shared/shared.module";
 import { MouMainInfoComponent } from './mou-main-info/mou-main-info.component';
+import { UnauthorizedPageComponent } from "app/unauthorized/unauthorized.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -148,7 +148,6 @@ export const customCurrencyMaskConfig = {
     MouCancelComponent,
     MouOsTcPagingComponent,
     MouOsTcDetailComponent,
-    UnauthorizedPageComponent,
     MouExecutionPagingComponent,
     MouExecutionDetailComponent,
     MouCustTabComponent,

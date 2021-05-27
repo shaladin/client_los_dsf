@@ -1,94 +1,99 @@
 {
-    "title": "Customer Main Data",
-    "subsection": [
-      {
-        "subSectionId": "NewApplication",
-        "subSectionTitle": "Main Information",
-        "mainInfoPath": "/Generic/GetDataViewBySQL",
-        "mainInfo": [
-          {
-            "type": "link",
-            "label": "Application No",
-            "property": "AppNo",
-            "name": "AppNo",
-            "position": "left",
-            "path": "VIEW_APP",
-            "target": "_blank",
-            "param": [
-              { 
-                "type": "AppId",
-                "property": "AppId" 
-              }
-            ]
-          },
-          {
-            "type": "text",
-            "label": "Original Office",
-            "property": "OriOfficeName"
-          },
-          {
-            "type" : "switch", 
-            "case" : [ 
-              {
-                "conditions" : [ 
-                  {
-                    "property" : "BizTemplateCode", 
-                    "value" : "FL4W",
-                    "restriction": "EQ"
-                  }
-                ],
-                  "result" : {
-                    "type": "text",
-                    "label": "Lessee Name",
-                    "property": "CustName"
+  "title": "Customer Main Data",
+  "subsection": [
+    {
+      "subSectionId": "NewApplication",
+      "subSectionTitle": "Main Information",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "link",
+          "label": "Application No",
+          "property": "AppNo",
+          "name": "AppNo",
+          "position": "left",
+          "path": "VIEW_APP",
+          "target": "_blank",
+          "param": [
+            { 
+              "type": "AppId",
+              "property": "AppId" 
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Original Office",
+          "property": "OriOfficeName"
+        },
+        {
+          "type": "text",
+          "label": "Customer Name",
+          "property": "CustName"
+        },
+        {
+          "type" : "switch", 
+          "case" : [ 
+            {
+              "conditions" : [ 
+                {
+                  "property" : "BizTemplateCode", 
+                  "value" : "FL4W",
+                  "restriction": "EQ"
                 }
-              },
-              {
-                "conditions" : [ 
-                  {
-                    "property" : "BizTemplateCode", 
-                    "value" : "FL4W",
-                    "restriction": "NEQ"
-                  }
-                ],
-                  "result" : {
-                    "type": "text",
-                    "label": "Customer Name",
-                    "property": "CustName"
-                  }
+              ],
+                "result" : {
+                  "type": "text",
+                  "label": "Lessee Name",
+                  "property": "CustName"
               }
-            ]
-          },
-          {
-            "type": "callback",
-            "key": "ViewProdOffering",
-            "label": "Product Offering",
-            "property": "ProdOfferingName"
-          },
-          {
-            "type": "text",
-            "label": "Application Status",
-            "property": "Stat"
-          },
-          {
-            "type": "text",
-            "label": "Application Current Step",
-            "property": "CurrStep"
-          },
-          {
-            "type": "text",
-            "label": "Application Last Step",
-            "property": "LastStep"
-          },
-          {
-            "type": "text",
-            "label": "Customer Checking Step",
-            "property": "CustCheckingStep"
-          }
-        ],
-        "querystring": {
-          "name": "viewCustCompletionData"
+            },
+            {
+              "conditions" : [ 
+                {
+                  "property" : "BizTemplateCode", 
+                  "value" : "FL4W",
+                  "restriction": "NEQ"
+                }
+              ],
+                "result" : {
+                  "type": "text",
+                  "label": "Customer Name",
+                  "property": "CustName"
+                }
+            }
+          ]
+        },
+        {
+          "type": "callback",
+          "key": "ViewProdOffering",
+          "label": "Product Offering",
+          "property": "ProdOfferingName"
+        },
+        {
+          "type": "text",
+          "label": "Application Status",
+          "property": "Stat"
+        },
+        {
+          "type": "text",
+          "label": "Application Current Step",
+          "property": "CurrStep"
+        },
+        {
+          "type": "text",
+          "label": "Application Last Step",
+          "property": "LastStep"
+        },
+        {
+          "type": "text",
+          "label": "Customer Checking Step",
+          "property": "CustCheckingStep"
         }
+      ],
+      "querystring": {
+        "name": "viewCustCompletionData"
       }
-    ]
-  }
+    }
+  ]
+}

@@ -38,11 +38,6 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     ExecNotes: ['', Validators.maxLength(4000)],
   });
 
-  appObj = {
-    AppId: 0,
-    Id: 0
-  };
-
   rtnHandlingDObj = {
     ReturnHandlingDId: 0,
     Id:0
@@ -75,8 +70,6 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
     this.ClaimTask();
-    this.appObj.AppId = this.appId;
-    this.appObj.Id = this.appId;
     await this.GetAppData();
     await this.GetAppCollateralData();
     if (this.isReturnHandling == true) {
@@ -148,7 +141,10 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   }
 
   GetAppCollateralData() {
-    this.http.post(URLConstant.GetListAppCollateralByAppId, this.appObj).subscribe(
+    var obj = {
+      Id: this.appId,
+    }
+    this.http.post(URLConstant.GetListAppCollateralByAppId, obj).subscribe(
       (response) => {
         this.appCollateralObj = response[CommonConstant.ReturnObj];
       }

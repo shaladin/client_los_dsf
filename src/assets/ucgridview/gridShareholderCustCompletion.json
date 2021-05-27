@@ -1,5 +1,5 @@
 {
-    "isSeq": true,
+  "isSeq": true,
   "headerList": [
     {
       "type": "sort",
@@ -92,4 +92,4 @@
       "property": "IsActive"
     }
   ]
-  }
+}

@@ -1,0 +1,136 @@
+{
+  "title": "MOU Freeze Unfreeze",
+  "component": [
+    {
+      "type": "textbox",
+      "name": "MC.MOU_CUST_NO",
+      "id": "MouCustNo",
+      "value": "",
+      "label": "Mou No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "MC.CUST_NAME",
+      "id": "CustName",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "MC.MOU_STAT",
+      "id": "MouStat",
+      "value": "",
+      "label": "Mou Status",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "name": "ISNULL(MC.IS_FREEZE,0)",
+      "id": "ddlIsFreeze",
+      "label": "Mou Freeze",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromUrl": false,
+      "ddlType": "all",
+      "items": [
+        {
+          "key": "1",
+          "value": "Yes"
+        },
+        {
+          "key": "0",
+          "value": "No"
+        }
+      ],
+      "itemsUrl": []
+    }
+  ],
+  "querystring": {
+    "name": "searchMouFreezeUnfreeze"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "MOU NO",
+      "name": "MC.MOU_CUST_NO"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "CUSTOMER NAME",
+      "name": "MC.CUST_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "MOU STATUS",
+      "name": "MC.MOU_STAT"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "MOU FREEZE",
+      "name": "ISNULL(MC.IS_FREEZE,0)"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "ACTION"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "link",
+      "position": "center",
+      "property": "MouCustNo",
+      "target": "_blank",
+      "path": "VIEW_MOU_CUST",
+      "param": [
+        {
+          "type": "MouCustId",
+          "property": "MouCustId"
+        }
+      ]
+    },
+    {
+      "type": "callback",
+      "key": "customer",
+      "position": "center",
+      "property": "CustName"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "MouStat"
+    },
+    {
+      "type": "boolean",
+      "position": "center",
+      "property": "IsFreeze"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "edit",
+          "path": "/Mou/FreezeUnfreeze/Detail",
+          "param": [
+            {
+              "type": "MouCustId",
+              "property": "MouCustId"
+            },
+            {
+              "type": "mode",
+              "property": "edit"
+            }
+          ],
+          "icon": "ft-edit-2"
+        }
+      ]
+    }
+  ]
+}

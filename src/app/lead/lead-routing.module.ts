@@ -141,6 +141,118 @@ const routes: Routes = [
         data: {
           title: 'Lead Review Monitoring Detail'
         }
+      },
+      {
+        path: PathConstant.POTENTIAL_RO_PAGING,
+        component: GeneratePotentialRoComponent,
+        data: {
+          title: 'Lead Review Monitoring Detail'
+        }
+      },
+      {
+        path: PathConstant.POTENTIAL_RO_TEL_OFFER_PAGING,
+        component: RoTelemkOfferPagingComponent,
+        data: {
+          title: 'RO Telemarketing Offering'
+        }
+      },
+      {
+        path: PathConstant.POTENTIAL_RO_TEL_OFFER_DETAIL,
+        component: RoTelemkOfferDetailComponent,
+        data: {
+          title: 'RO Telemarketing Offering Detail'
+        }
+      },
+      {
+        path: PathConstant.POTENTIAL_RO_TEL_OFFER_VERIF,
+        component: RoTelemkOfferVerifComponent,
+        data: {
+          title: 'RO Telemarketing Offering Verification'
+        }
+      },
+      {
+        path: PathConstant.POTENTIAL_RO_INQUIRY,
+        component: RoPotentialInquiryComponent,
+        data: {
+          title: 'RO Potential Inquiry'
+        }
+      },
+      {
+        path: PathConstant.POTENTIAL_RO_VIEW,
+        component: RoPotentialViewComponent,
+        data: {
+          title: 'RO Potential View'
+        }
+      },
+      {
+        path: PathConstant.POTENTIAL_RO_EXEC,
+        component: RoPotentialExecutionComponent,
+        data: {
+          title: 'RO Potential Execution'
+        }
+      },
+      {
+        path: PathConstant.SIMPLE_LEAD_PAGING,
+        component: NewLeadInputComponent,
+        data: {
+          title: 'Lead Input Paging'
+        }
+      },
+      {
+        path: PathConstant.SIMPLE_LEAD_DETAIL,
+        component: NewLeadInputPageComponent,
+        data: {
+          title: 'Lead Detail'
+        }
+      },
+      {
+        path: PathConstant.SIMPLE_LEAD_MAIN_INFO,
+        component: NewLeadInputMainInfoComponent,
+        data: {
+          title: 'Lead Input Main Info'
+        }
+      },
+      {
+        path: PathConstant.SIMPLE_LEAD_MONITORING,
+        component: SimpleLeadMonitoringComponent,
+        data: {
+          title: 'Simple Lead Monitoring'
+        }
+      },
+      {
+        path: PathConstant.SIMPLE_LEAD_RVW_MONITORING_PAGING,
+        component: SimpleLeadMonitoringReviewComponent,
+        data: {
+          title: 'Simple Lead Review Monitoring'
+        }
+      },
+      {
+        path: PathConstant.SIMPLE_LEAD_RVW_MONITORING_DETAIL,
+        component: SimpleLeadMonitoringReviewDetailComponent,
+        data: {
+          title: 'Simple Lead Review Monitoring Detail'
+        }
+      },
+      {
+        path: PathConstant.SIMPLE_LEAD_FRAUD_VERIF_PAGING,
+        component: NewFraudVerifComponent,
+        data: {
+          title: 'Fraud verif paging'
+        },
+      },
+      {
+        path: PathConstant.SIMPLE_LEAD_FRAUD_VERIF_DETAIL,
+        component: NewFraudVerifDetailComponent,
+        data: {
+          title: 'Fraud verif detail'
+        },
+      },
+      {
+        path: PathConstant.SIMPLE_LEAD_UPD_PAGING,
+        component: NewLeadUpdateComponent,
+        data: {
+          title: 'Lead Update Paging'
+        }
       }
     ]
   }

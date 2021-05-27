@@ -54,6 +54,7 @@ export class AppObj {
     BizTemplateCode: string;
     MrCustTypeCode: string;
     RowVersion: string;
+    CrdApvResultExpDt: Date;
 
     constructor() {
         this.AppId = 0;
@@ -108,5 +109,6 @@ export class AppObj {
         this.BizTemplateCode = "";
         this.MrCustTypeCode = "";
         this.RowVersion = "";
+        this.CrdApvResultExpDt = new Date();
     }
 }

@@ -27,7 +27,7 @@ export class FinancialCompanyComponent implements OnInit {
     CommonConstant.AttrGroupCustCompanyFinDataOther
   ];
   AppCustCompanyFinData: AppCustCompanyFinDataObj = new AppCustCompanyFinDataObj();
-  CustAttrRequest: Array<Object>;
+  CustAttrRequest: Array<Object> = new Array<Object>();
   MrSourceOfIncomeTypeObj: Array<KeyValueObj> = new Array();
   AppCustBankAccList: Array<AppCustBankAccObj> = new Array();
 

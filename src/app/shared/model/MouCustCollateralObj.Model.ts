@@ -18,6 +18,7 @@ export class MouCustCollateralObj{
     CollateralValueAmt: number;
     CollateralPrcnt: number;
     CollateralPortionAmt: number;
+    AssetTaxDate: Date;
     CollateralNotes: string;
     ManufacturingYear: number;
     RsvField1: string;
@@ -25,5 +26,6 @@ export class MouCustCollateralObj{
     RsvField3: string;
     RsvField4: string;
     RsvField5: string;
+    ListCollateralId: number[];
     RowVersion: string;
 }

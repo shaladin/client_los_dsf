@@ -26,9 +26,18 @@
           "property": "CustName"
         },
         {
-          "type": "text",
+          "type": "link",
           "label": "Copy From",
-          "property": "LeadCopyId"
+          "property": "LeadCopyNo",
+          "name": "LeadCopyNo",
+          "path": "/View/Lead",
+          "target" : "_blank",
+          "param": [
+            {
+              "type": "LeadId",
+              "property": "LeadCopyId"
+            }
+          ]
         },
         {
           "type": "text",

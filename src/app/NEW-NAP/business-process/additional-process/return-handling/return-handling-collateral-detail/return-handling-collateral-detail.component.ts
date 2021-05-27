@@ -551,9 +551,6 @@ export class ReturnHandlingCollateralDetailComponent implements OnInit {
   }
 
   async AssetTypeChanged(Code) {
-    var assetTypeObj = {
-      AssetTypeCode: Code
-    };
     await this.http.post(URLConstant.GetAssetTypeByCode, {Code: Code}).toPromise().then(
       (response) => {
         this.AssetTypeObj = response;

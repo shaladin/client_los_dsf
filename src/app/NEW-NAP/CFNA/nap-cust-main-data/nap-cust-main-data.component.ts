@@ -39,6 +39,7 @@ export class NapCustMainDataComponent implements OnInit {
   bizTemplateCode: string;
   appCustId: number = 0;
   IsViewReady: boolean = false;
+  from:string;
 
   AppStep = {
     "NEW": 1,
@@ -61,6 +62,10 @@ export class NapCustMainDataComponent implements OnInit {
       }
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
+      }
+      if(params["from"]!= null)
+      {
+        this.from = params["from"];
       }
     });
   }

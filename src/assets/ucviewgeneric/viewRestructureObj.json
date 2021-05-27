@@ -1,0 +1,36 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "RestDataId",
+        "subSectionTitle": "Restructuring Data",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Characteristic of Credit",
+            "property": "CharOfCredit"
+          },
+          {
+            "type": "text",
+            "label": "Previous Agreement No",
+            "property": "PrevAgrmntNo"
+          },
+          {
+            "type": "text",
+            "label": "Way of Restructure",
+            "property": "WayOfRest"
+          },
+          {
+            "type": "text",
+            "label": "Economic Sector (Slik)",
+            "property": "SlikSecEco"
+          }
+        ],
+        "querystring": {
+          "name": "viewGovermentRegulation"
+        }
+      }
+    ]
+  }
+  
