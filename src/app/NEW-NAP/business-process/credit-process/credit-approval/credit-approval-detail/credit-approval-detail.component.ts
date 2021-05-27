@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
@@ -15,8 +15,10 @@ import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalG
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { CustHighlightCommentObj } from 'app/shared/model/CustHighlightCommentObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { ViewHighlightCommentComponent } from 'app/NEW-NAP/sharing-component/view-app-component/view-highlight-comment/view-highlight-comment.component';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 
 @Component({
@@ -44,11 +46,21 @@ export class CreditApprovalDetailComponent implements OnInit {
   appNo: string;
   rootServer: string;
   isDmsReady: boolean = false;
+  custHighlightCommentObj: CustHighlightCommentObj = null;
   IsUseDigitalization: string;
   IsViewReady: boolean = false;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   getEvent: Array<any> = new Array<any>();
 
+  private viewHighlightCommentComponent: ViewHighlightCommentComponent;
+  @ViewChild(ViewHighlightCommentComponent) set content(
+    content: ViewHighlightCommentComponent
+  ) {
+    if (content) {
+      // initially setter gets called with undefined
+      this.viewHighlightCommentComponent = content;
+    }
+  } ;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -235,6 +247,10 @@ export class CreditApprovalDetailComponent implements OnInit {
     this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.IsReady = true;
+  }
+
+  GetCommnet(event){
+    this.custHighlightCommentObj = event;
   }
 
   async GetIsUseDigitalization() {

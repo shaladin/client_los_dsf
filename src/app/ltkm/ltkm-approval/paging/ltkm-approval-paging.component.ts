@@ -22,7 +22,6 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class LtkmApprovalPagingComponent implements OnInit {
   arrCrit: Array<CriteriaObj>;
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   inputPagingObj: UcPagingObj = new UcPagingObj();
   constructor(

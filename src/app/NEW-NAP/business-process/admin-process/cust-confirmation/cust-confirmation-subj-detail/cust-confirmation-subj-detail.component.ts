@@ -6,7 +6,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
 import { VerfQuestionAnswerCustomObj } from 'app/shared/model/VerfQuestionAnswer/VerfQuestionAnswerCustom.Model';
 import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
-import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
+import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultD.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';

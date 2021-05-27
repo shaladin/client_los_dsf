@@ -56,7 +56,6 @@ export class LtkmVerifyDetailComponent implements OnInit {
     ltkmReq: LtkmReqObj;
     ltkmAnalysisNotes: string = "";
 
-    currentUserContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     // ReturnForm = this.fb.group({
     //   ReturnReason: [''],
     //   ReturnReasonDesc: [''],
@@ -97,7 +96,6 @@ export class LtkmVerifyDetailComponent implements OnInit {
         this.DDLReasonReturn = new Array();
         this.AppStepIndex = 0;
         this.Arr = this.FormObj.get('arr') as FormArray;
-        this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
         this.ManualDeviationData = new Array();
         this.isExistedManualDeviationData = false;
         this.isReturnOn = false;
@@ -113,7 +111,7 @@ export class LtkmVerifyDetailComponent implements OnInit {
     };
     CustTypeCode;
     Arr;
-    UserAccess;
+    UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     ResponseExistCreditReview;
     DDLReason;
     DDLReasonReturn;
@@ -262,7 +260,7 @@ export class LtkmVerifyDetailComponent implements OnInit {
     ClaimTask() {
         var wfClaimObj = new ClaimWorkflowObj();
         wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-        wfClaimObj.pUserID = this.currentUserContext.UserName;
+        wfClaimObj.pUserID = this.UserAccess.UserName;
 
         this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
             (response) => {
@@ -282,8 +280,8 @@ export class LtkmVerifyDetailComponent implements OnInit {
             "TypeCode": "AML_APV_TYPE",
             "Attributes": Attributes,
         };
-        this.InputObj.RequestedBy = this.currentUserContext.UserName;
-        this.InputObj.OfficeCode = this.currentUserContext.OfficeCode;
+        this.InputObj.RequestedBy = this.UserAccess.UserName;
+        this.InputObj.OfficeCode = this.UserAccess.OfficeCode;
         this.InputObj.ApvTypecodes = [TypeCode];
         this.InputObj.EnvUrl = environment.FoundationR3Url;
         this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;

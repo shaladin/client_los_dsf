@@ -156,6 +156,7 @@ export class NavigationConstant {
   public static NAP_CRD_PRCS_PHN_VRF_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_PAGING; //"/Nap/CreditProcess/PhoneVerification/Paging"
   public static NAP_CRD_PRCS_PHN_VRF_SUBJECT = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_SUBJECT; //"/Nap/CreditProcess/PhoneVerification/Subject"
   public static NAP_CRD_PRCS_PHN_VRF_SUBJECT_VERIF = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_SUBJECT_VERIF; //"/Nap/CreditProcess/PhoneVerification/Subject/Verif"
+  public static NAP_CRD_PRCS_PHN_VRF_SUBJECT_VIEW = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_SUBJECT_VIEW; //"/Nap/CreditProcess/PhoneVerification/Subject/View"
   //#endregion
 
   //#region CF2W
