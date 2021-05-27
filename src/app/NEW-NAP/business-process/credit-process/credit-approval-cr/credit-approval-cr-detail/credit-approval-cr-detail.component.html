@@ -3,7 +3,7 @@
     <app-app-main-info [AppId]="appId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info>
     <div class="card-body">
       <div class="px-3">
-        <app-crd-rvw-cust-info *ngIf="crdRvwCustInfoObj.AppCustId > 0" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
+        <app-crd-rvw-cust-info *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [captureStat]="captureStat">
         </app-crd-rvw-cust-info>
         <app-crd-rvw-fam-guar *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
         </app-crd-rvw-fam-guar>
