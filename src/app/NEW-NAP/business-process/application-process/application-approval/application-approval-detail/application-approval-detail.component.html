@@ -7,11 +7,13 @@
         </app-crd-rvw-cust-info>
         <app-crd-rvw-fam-guar *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
         </app-crd-rvw-fam-guar>
-        <app-crd-rvw-legal-doc *ngIf="isShow && crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" [AppCustCompanyId]="crdRvwCustInfoObj.AppCustCompanyId"></app-crd-rvw-legal-doc>
+        <app-crd-rvw-legal-doc *ngIf="isShow && crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany"
+          [AppCustCompanyId]="crdRvwCustInfoObj.AppCustCompanyId"></app-crd-rvw-legal-doc>
 
         <app-crd-rvw-third-party-checking *ngIf="AppObj.AppNo != ''" [AppNo]="AppObj.AppNo">
         </app-crd-rvw-third-party-checking>
-        <app-crd-rvw-app-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId" [BizTemplateCode]="BizTemplateCode">
+        <app-crd-rvw-app-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId"
+          [BizTemplateCode]="BizTemplateCode">
         </app-crd-rvw-app-info>
 
         <app-app-rvw-summary-asset *ngIf="isShow" [AppId]="appId"></app-app-rvw-summary-asset>
@@ -26,7 +28,7 @@
             <div class="card-body">
               <div class="px-3">
                 <lib-ucSubsection [id]="'CreditApprovalHistoryId'" [title]="'Application Approval History'"
-                                  [panel]="'CreditApprovalHistory'">
+                  [panel]="'CreditApprovalHistory'">
                 </lib-ucSubsection>
                 <div id="CreditApprovalHistory">
                   <lib-ucapprovalHistory *ngIf="IsCrdApvReady" [InputObj]="CrdApvObj">
@@ -40,10 +42,17 @@
     </div>
 
     <!-- <lib-ucapproval [inputObj]="inputObj" [showCancel]="'true'" (onCancel)="onCancelClick()" (nextTask)="onAvailableNextTask()" (result)="onApprovalSubmited($event)">
-  </lib-ucapproval>  -->
+    </lib-ucapproval>  -->
 
     <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady"></lib-ucapprovalgeneralinfo>
 
-    <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)" (onCancel)="onCancelClick()"></lib-ucapprovalR3>
+    <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"
+      (onCancel)="onCancelClick()"></lib-ucapprovalR3>    
+      <div class="form-actions right">
+        <button type="button" class="btn btn-raised btn-primary float-right" [routerLink]="[PefindoLink]"
+          [queryParams]="{AppId: this.appId}" translate>
+          <i class="far fa-check-square"></i> View Pefindo
+        </button>
+      </div>    
   </div>
 </div>

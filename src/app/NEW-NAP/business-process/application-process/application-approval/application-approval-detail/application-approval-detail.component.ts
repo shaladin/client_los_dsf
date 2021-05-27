@@ -35,6 +35,7 @@ export class ApplicationApprovalDetailComponent implements OnInit {
   CrdApvObj: UcInputApprovalHistoryObj;
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
   readonly CustTypeCompany: string = CommonConstant.CustTypeCompany;
+  readonly PefindoLink: string = NavigationConstant.PEFINDO_VIEW;
   IsCrdApvReady: boolean = false;
   constructor(private toastr: NGXToastrService,
     private route: ActivatedRoute,

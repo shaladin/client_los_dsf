@@ -672,8 +672,8 @@ export class URLConstant {
   public static GetListActiveLob = environment.FoundationR3Url + "/RefLob/GetListKeyValueActiveByCode";
 
   //CUST
-  public static GetCustByCustNo = environment.FoundationR3Url + "/Cust/GetCustByCustNo";
-  public static GetCustByCustId = environment.FoundationR3Url + "/Cust/GetCustByCustId";
+  public static GetCustByCustNo = environment.FoundationR3Url + "/Cust/GetCustByCustNo";  
+  public static GetCustByCustId = environment.FoundationR3Url + "/Cust/GetCustByCustId";  
   public static GetCustPersonalByCustId = environment.FoundationR3Url + "/CustPersonal/GetCustPersonalByCustId";
   public static GetCustCompanyByCustId = environment.FoundationR3Url + "/CustCompany/GetCustCompanyByCustId";
   public static GetCustAddrByMrCustAddrType = environment.FoundationR3Url + "/CustAddr/GetCustAddrByMrCustAddrType";
@@ -685,6 +685,7 @@ export class URLConstant {
   public static GetCustPersonalForCopyMgmntShrholderByCustId = environment.FoundationR3Url + "/Cust/GetCustPersonalForCopyMgmntShrholderByCustId";
   public static GetCustCompanyForCopyMgmntShrholderByCustId = environment.FoundationR3Url + "/Cust/GetCustCompanyForCopyMgmntShrholderByCustId";
   public static GetListKeyValueMobilePhnByAppId = environment.losUrl + "/AppCust/GetListKeyValueMobilePhnByAppId";
+  
 
   //CUST DATA COMPANY
   public static AddEditCustDataCompany = environment.losUrl + "/AppCust/AddEditCustDataCompany";
@@ -1449,4 +1450,7 @@ export class URLConstant {
 
   //Check DMS
   public static GetSysConfigPncplResultByCode = environment.FoundationR3Url + "/SysConfigResult/GetSysConfigPncplResultByCode";
+
+  //PEFINDO
+  public static GetPefindoCustomReport = environment.losUrl + "/Pefindo/GetCustomReport";
 }

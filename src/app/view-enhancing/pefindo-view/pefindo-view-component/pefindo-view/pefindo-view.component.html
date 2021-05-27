@@ -1,0 +1,42 @@
+<div class="col-md-12">
+  <div class="card">    
+    <div class="card-body">
+      <div class="px-3">
+        <lib-ucSubsection [id]="'PersonalInformationId'" [title]="'Personal Information'"
+          [panel]="'personalInformation'">
+        </lib-ucSubsection>
+        <div id="personalInformation">         
+          <div *ngIf="isPersonal">
+            <app-pefindo-personal-info-view [PefindoData]="PefindoData"></app-pefindo-personal-info-view>
+          </div>
+          <div *ngIf="isCompany">
+            <app-pefindo-personal-info-coy-view [PefindoData]="PefindoData"></app-pefindo-personal-info-coy-view>
+          </div>
+        </div>
+        <lib-ucSubsection [id]="'DashboardInformationId'" [title]="'Dashboard'" [panel]="'dashboardInformation'">
+        </lib-ucSubsection>
+        <div id="dashboardInformation">
+          <app-pefindo-dashboard-view [PefindoData]="PefindoData"></app-pefindo-dashboard-view>
+        </div>
+        <lib-ucSubsection [id]="'ScoreInformationId'" [title]="'Score'" [panel]="'scoreInformation'">
+        </lib-ucSubsection>
+        <div id="scoreInformation">
+          <app-pefindo-score-view [ScoreData]="ScoreData"></app-pefindo-score-view>
+        </div>
+        <lib-ucSubsection [id]="'ContractsInformationId'" [title]="'Contracts'" [panel]="'contractsInformation'">
+        </lib-ucSubsection>
+        <div id="contractsInformation">
+          <app-pefindo-contracts-view [Contracts]="ContractsData"></app-pefindo-contracts-view>
+        </div>
+        <lib-ucSubsection [id]="'ContractsSummaryInformationId'" [title]="'Contracts Summary'" [panel]="'contractsSummaryInformation'">
+        </lib-ucSubsection>
+        <div id="contractsSummaryInformation">
+          <app-pefindo-contract-summary-view [ContractsSummary]="ContractsSummary"></app-pefindo-contract-summary-view>
+        </div>
+        <lib-ucSubsection [id]="'OtherDataInformationId'" [title]="'Other Data'" [panel]="'otherDataInformation'">
+        </lib-ucSubsection>
+        <app-pefindo-other-data-view [OtherData]="OtherData"></app-pefindo-other-data-view>        
+      </div>
+    </div>
+  </div>
+</div>

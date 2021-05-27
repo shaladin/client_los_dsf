@@ -56,6 +56,8 @@ export class ApplicationReviewDetailComponent implements OnInit {
   });
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
+  readonly PefindoLink: string = NavigationConstant.PEFINDO_VIEW;
+
   DdlReasonObj: UcDropdownListObj = new UcDropdownListObj();
   constructor(private route: ActivatedRoute,
     private http: HttpClient,
