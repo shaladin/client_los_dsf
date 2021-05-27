@@ -18,7 +18,9 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
 import { ReqVerfQuestionAnswerObj } from 'app/shared/model/Request/Verification/ReqVerfQuestionAnswerObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ReqGetVerfResult3Obj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-cust-confirmation-subj-detail',
@@ -34,6 +36,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   leadObj: LeadObj = new LeadObj();
   appObj: AppObj = new AppObj();
   RefStatusList: Array<KeyValueObj> = new Array<KeyValueObj>();
+  CustNoObj: GenericObj = new GenericObj();
   PhnList: Array<KeyValueObj> = new Array<KeyValueObj>();
   verfQuestionAnswerObj: VerfQuestionAnswerCustomObj = new VerfQuestionAnswerCustomObj();
   newVerfResultHObj: VerfResultHObj = new VerfResultHObj();
@@ -261,26 +264,31 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     }
   }
 
-  SaveForm(formDirective: FormGroupDirective) {
-    var activeButton = document.activeElement.id;
+  AddDetail(formDirective: FormGroupDirective) {
     var FormValue = this.CustConfirm.value.VerfResultDForm;
     var VerfResultDList = new Array<VerfResultDObj>();
-    for (let i = 0; i < FormValue.length; i++) {
-      var currGrp = FormValue[i].VerfQuestionAnswerList;
-      for (let j = 0; j < currGrp.length; j++) {
-        var currAnswer = currGrp[j].ResultGrp;
-        var VerfResultD = new VerfResultDObj();
-        VerfResultD.VerfQuestionAnswerId = currAnswer.VerfQuestionAnswerId;
-        VerfResultD.VerfQuestionText = currAnswer.VerfQuestionText;
-        VerfResultD.Answer = currAnswer.Answer;
-        VerfResultD.Notes = currAnswer.Notes;
-        VerfResultD.SeqNo = currAnswer.SeqNo;
-        VerfResultD.Score = currAnswer.Score;
-        VerfResultD.VerfQuestionGroupCode = currAnswer.VerfQuestionGroupCode;
 
-        VerfResultDList.push(VerfResultD);
+    if(this.CustConfirm.controls.MrVerfResultHStatCode.value == CommonConstant.VerfResultStatSuccess){
+      for (let i = 0; i < FormValue.length; i++) {
+        var currGrp = FormValue[i].VerfQuestionAnswerList;
+        for (let j = 0; j < currGrp.length; j++) {
+          var currAnswer = currGrp[j].ResultGrp;
+          var VerfResultD = new VerfResultDObj();
+          VerfResultD.VerfQuestionAnswerId = currAnswer.VerfQuestionAnswerId;
+          VerfResultD.VerfQuestionText = currAnswer.VerfQuestionText;
+          VerfResultD.Answer = currAnswer.Answer;
+          VerfResultD.Notes = currAnswer.Notes;
+          VerfResultD.SeqNo = currAnswer.SeqNo;
+          VerfResultD.Score = currAnswer.Score;
+          VerfResultD.VerfQuestionGroupCode = currAnswer.VerfQuestionGroupCode;
+  
+          VerfResultDList.push(VerfResultD);
+        }
       }
+    }else{
+      VerfResultDList = null;
     }
+    
     var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     var todaydate = new Date();
     businessDt.setHours(todaydate.getHours(), todaydate.getMinutes(), todaydate.getSeconds());
@@ -303,15 +311,18 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.http.post(URLConstant.AddVerfResultHeaderAndVerfResultDetail, VerfResultHeaderDetail).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        if (activeButton == "save") {
-          AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode });
-        }
-        else {
           this.GetListVerfResultH(this.newVerfResultHObj.VerfResultId, this.newVerfResultHObj.MrVerfSubjectRelationCode);
           formDirective.resetForm();
           this.clearform(CommonConstant.VerfResultStatSuccess, false);
-        }
       });
+  }
+
+  Save(){
+    if(this.VerfResultHList.length < 1){
+      this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_HISTORY);
+    }else{
+      AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode });
+    }
   }
 
   ResultHandler() {
@@ -365,8 +376,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       AdInsHelper.OpenLeadViewByLeadId(this.leadObj.LeadId);
     }
     else if (key == "cust") {
-      var custObj = { CustNo: this.CustNo };
-      this.http.post(URLConstant.GetCustByCustNo, {TrxNo : this.CustNo}).subscribe(
+      this.CustNoObj.CustNo = this.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         });

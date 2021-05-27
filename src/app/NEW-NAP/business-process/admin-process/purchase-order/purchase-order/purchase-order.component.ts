@@ -57,6 +57,7 @@ export class PurchaseOrderComponent implements OnInit {
   }
 
   async ngOnInit() {
+    console.log("INIII");
     this.arrValue.push(this.AgrmntId);
     var appAssetObj = {
       Id: this.AgrmntId

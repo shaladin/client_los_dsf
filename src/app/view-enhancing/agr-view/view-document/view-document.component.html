@@ -3,7 +3,7 @@
   </lib-ucSubsection>
   <div id="docsigner">
     <div class="px-3">
-      <div *ngIf="BizTemplateCode != 'FCTR'">
+      <div *ngIf="BizTemplateCode != 'FCTR' && BizTemplateCode != 'CFNA'">
         <lib-ucSubsection [id]="'SupplierSignerId'" [title]="'Supplier Signer'"
             [panel]="'SupplierSigner'"></lib-ucSubsection>
         <div class="form-body" id="SupplierSigner">

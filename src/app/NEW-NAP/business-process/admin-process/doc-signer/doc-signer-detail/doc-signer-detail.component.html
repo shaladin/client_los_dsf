@@ -189,6 +189,10 @@
                                     </div>
                                 </div>
                             </div>
+                            <lib-ucSubsection [id]="'CustomerSignerId'" [title]="'Customer Signer'"
+                                    [panel]="'CustomerSigner'">
+                                </lib-ucSubsection>
+                            <div class="form-body" id="CustomerSigner">
                             <div class="form-group row">
                                 <label class="col-md-5 adInsLabel" translate>Customer Signer</label>
                                 <label class="col-md-5 adInsLabel">{{this.CustFullName}}</label>
@@ -198,6 +202,7 @@
                                 <label class="col-md-5 adInsLabel">{{this.ContactPersonName}}</label>
                             </div>
                         </div>
+                    </div>
                         <div class="form-actions right">
                             <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CanceLink]"
                                 [queryParams]="{'BizTemplateCode': BizTemplateCode}" translate>

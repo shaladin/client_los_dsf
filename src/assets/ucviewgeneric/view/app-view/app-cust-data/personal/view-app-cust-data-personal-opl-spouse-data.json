@@ -1,0 +1,61 @@
+{
+    "title": "",
+    "subsection": [
+        {
+            "subSectionId": "CustPersonalSpouseDataId",
+            "subSectionTitle": "Spouse Data",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "callback",
+                    "key": "Customer",
+                    "label": "Customer No",
+                    "property": "CustNo"
+                },
+                {
+                    "type": "text",
+                    "label": "Type / Customer Model Name",
+                    "property": "TypeAndCustModelName"
+                },
+                {
+                    "type": "text",
+                    "label": "Customer Name",
+                    "property": "CustName"
+                },
+                {
+                    "type": "text",
+                    "label": "ID Type / ID No",
+                    "property": "IdTypeAndIdNo"
+                },
+                {
+                    "type": "date",
+                    "label": "ID Expired Date",
+                    "property": "IdExpiredDt"
+                },
+                {
+                    "type": "text",
+                    "label": "Gender",
+                    "property": "GenderName"
+                },
+                {
+                    "type": "text",
+                    "label": "Birth Place / Date",
+                    "property": "BirthPlaceAndDate"
+                },
+                {
+                    "type": "text",
+                    "label": "NPWP",
+                    "property": "TaxIdNo"
+                },
+                {
+                    "type": "text",
+                    "label": "Mother Maiden Name",
+                    "property": "MotherMaidenName"
+                }
+            ],
+            "querystring": {
+                "name": "viewAppCustDataPersonalOplCustData"
+            }
+        }
+    ]
+}

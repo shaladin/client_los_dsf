@@ -6,6 +6,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 
 @Component({
   selector: 'app-mou-main-info',
@@ -21,6 +22,7 @@ export class MouMainInfoComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   @Input() MouCustId: number;
   MouCustObj: MouCustObj = new MouCustObj();
+  CustNoObj: GenericObj = new GenericObj();
 
   constructor(private http: HttpClient) { }
 
@@ -49,7 +51,8 @@ export class MouMainInfoComponent implements OnInit {
       if (!this.MouCustObj.IsExistingCust) {
         AdInsHelper.OpenMOUCustViewByMouCustId(this.MouCustId);
       } else {
-        this.http.post(URLConstant.GetCustByCustNo, { TrxNo: this.MouCustObj.CustNo }).subscribe(
+        this.CustNoObj.CustNo = this.MouCustObj.CustNo;
+        this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
           responseCust => {
             AdInsHelper.OpenCustomerViewByCustId(responseCust["CustId"]);
           });
