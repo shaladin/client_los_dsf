@@ -20,6 +20,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -73,6 +74,7 @@ export class NapDetailFormComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
+    private spinner: NgxSpinnerService,
     private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -327,6 +329,8 @@ export class NapDetailFormComponent implements OnInit {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) => {
+        this.spinner.show();
+        setTimeout(() => { this.spinner.hide(); }, 1500);
       }
     )
   }
