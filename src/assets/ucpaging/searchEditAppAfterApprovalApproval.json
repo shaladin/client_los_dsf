@@ -1,0 +1,190 @@
+{
+    "title": "Edit App After Approval - Approval",
+    "exportExcel": false,
+    "component": [
+      {
+        "type": "textbox",
+        "name": "EAAATH.EDIT_APP_AFT_APV_TRX_NO",
+        "id": "EditAppAftApvTrxNoId",
+        "value": "",
+        "label": "Edit App After Approval Transaction No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "A.AGRMNT_NO",
+        "id": "AgrmntNoId",
+        "value": "",
+        "label": "Agreement No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "A.CUST_NO",
+        "id": "CustNoId",
+        "value": "",
+        "label": "Customer No",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "A.CUST_NAME",
+        "id": "CustNameId",
+        "value": "",
+        "label": "Customer Name",
+        "placeholder": "Placeholder"
+      }
+    ],
+    "querystring": {
+      "name": "searchEditAppAfterApprovalApproval"
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Edit App After Approval Transaction No",
+        "name": "EditAppAftApvTrxNo"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Agreement No",
+        "name": "AgrmntNo"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Customer No",
+        "name": "CustNo"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Customer Name",
+        "name": "CustName"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Approval No",
+        "name": "APV_NO"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Request By",
+        "name": "REQUEST_BY"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Request Date",
+        "name": "REQUEST_DATE"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Main User Id",
+        "name": "MAIN_USER_ID"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Current User Id",
+        "name": "CURRENT_USER_ID"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Process"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Hold"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Take Back"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "EditAppAftApvTrxNo"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "AgrmntNo"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "CustNo"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "CustName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "APV_NO"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "REQUEST_BY"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "REQUEST_DATE"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "MAIN_USER_ID"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "CURRENT_USER_ID"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "callback",
+            "key": "Process"
+          }
+        ]
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "callback",
+            "key": "HoldTask"
+          }
+        ]
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "callback",
+            "key": "TakeBack"
+          }
+        ]
+      }
+    ]
+  }
+  

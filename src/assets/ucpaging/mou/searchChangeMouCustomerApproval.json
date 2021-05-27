@@ -1,7 +1,15 @@
 {
-    "title": "MOU Approval",
+    "title": "Change MOU Approval",
     "exportExcel": false,
     "component": [
+        {
+            "type": "textbox",
+            "name": "TL.TRX_NO",
+            "id": "TrxNoId",
+            "value": "",
+            "label": "Transaction No",
+            "placeholder": "Placeholder"
+        },
         {
             "type": "textbox",
             "name": "A.MOU_CUST_NO",
@@ -70,7 +78,7 @@
         }
     ],
     "querystring": {
-        "name": "searchMouCustomerApproval"
+        "name": "searchChangeMouCustApproval"
     },
     "headerList": [
         {
@@ -78,6 +86,12 @@
             "position": "center",
             "label": "SLA",
             "name": "SlaColor"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "TRANSACTION NO",
+            "name": "TL.TRX_NO"
         },
         {
             "type": "sort",
@@ -132,6 +146,11 @@
             "type": "sla",
             "position": "center",
             "property": "SlaColor"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "TrxNo"
         },
         {
             "type": "text",
@@ -198,8 +217,8 @@
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
-                                        "type": "MouCustId",
-                                        "property": "MouCustId"
+                                        "type": "ChangeMouTrxId",
+                                        "property": "ChangeMouTrxId"
                                     },
                                     {
                                         "type": "TaskId",
@@ -208,10 +227,6 @@
                                     {
                                         "type": "InstanceId",
                                         "property": "InstanceId"
-                                    },
-                                    {
-                                        "type": "ApvReqId",
-                                        "property": "ApvReqId"
                                     }
                                 ]
                             },
@@ -231,8 +246,8 @@
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
-                                        "type": "MouCustId",
-                                        "property": "MouCustId"
+                                        "type": "ChangeMouTrxId",
+                                        "property": "ChangeMouTrxId"
                                     },
                                     {
                                         "type": "TaskId",
@@ -241,10 +256,6 @@
                                     {
                                         "type": "InstanceId",
                                         "property": "InstanceId"
-                                    },
-                                    {
-                                        "type": "ApvReqId",
-                                        "property": "ApvReqId"
                                     }
                                 ]
                             },
@@ -264,8 +275,8 @@
                                 "icon": "ft-edit-2",
                                 "param": [
                                     {
-                                        "type": "MouCustId",
-                                        "property": "MouCustId"
+                                        "type": "ChangeMouTrxId",
+                                        "property": "ChangeMouTrxId"
                                     },
                                     {
                                         "type": "TaskId",
@@ -274,10 +285,6 @@
                                     {
                                         "type": "InstanceId",
                                         "property": "InstanceId"
-                                    },
-                                    {
-                                        "type": "ApvReqId",
-                                        "property": "ApvReqId"
                                     }
                                 ]
                             },

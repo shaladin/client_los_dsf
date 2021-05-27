@@ -1,5 +1,5 @@
 {
-  "title": "Return Handling",
+  "title": "Return Handling - Additional Survey Verification",
   "exportExcel": false,
   "component": [
     {
@@ -23,23 +23,23 @@
       "name": "A.PROD_OFFERING_NAME",
       "id": "ProdOfferingNameId",
       "value": "",
-      "label": "Prod Offering Name",
+      "label": "Product Offering Name",
       "placeholder": "Placeholder"
     },
     {
       "type": "dropdown",
-      "name": "A.ORI_OFFICE_CODE",
+      "name": "a.ORI_OFFICE_CODE",
       "id": "OfficeNameId",
-      "value": "",
+      "value": "Office",
       "placeholder": "Placeholder",
       "isFromURL": true,
       "ddlType": "all",
-      "isQueryIn": true,
       "url": "",
       "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office",
       "items": [],
-      "itemsUrl": []
+      "itemsUrl": [],
+      "isQueryIn": true
     },
     {
       "type": "dropdown",
@@ -71,9 +71,6 @@
       "placeholder": "Placeholder"
     }
   ],
-  "querystring": {
-    "name": "searchReturnHandling"
-  },
   "headerList": [
     {
       "type": "sort",
@@ -85,37 +82,31 @@
       "type": "sort",
       "position": "left",
       "label": "Claim By",
-      "name": "WTL.USERNAME"
+      "name": "ClaimBy"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Office",
-      "name": "A.ORI_OFFICE_NAME"
+      "name": "a.ORI_OFFICE_NAME"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "Application No",
-      "name": "A.APP_NO"
+      "name": "a.APP_NO"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Customer Name",
-      "name": "AC.CUST_NAME"
+      "name": "ac.CUST_NAME"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Product Offering Name",
-      "name": "A.PROD_OFFERING_NAME"
-    },
-    {
-      "type": "sort",
-      "position": "center",
-      "label": "Status",
-      "name": "VRS.DESCR"
+      "name": "a.PROD_OFFERING_NAME"
     },
     {
       "type": "label",
@@ -123,6 +114,9 @@
       "label": "Action"
     }
   ],
+  "querystring": {
+    "name": "searchReturnHandlingSurveyVerif"
+  },
   "bodyList": [
     {
       "type": "sla",
@@ -137,7 +131,7 @@
     {
       "type": "text",
       "position": "left",
-      "property": "OriOfficeName"
+      "property": "OfficeName"
     },
     {
       "type": "link",
@@ -164,11 +158,6 @@
       "property": "ProdOfferingName"
     },
     {
-      "type": "text",
-      "position": "center",
-      "property": "ReturnHStatusName"
-    },
-    {
       "type": "action",
       "position": "center",
       "action": [
@@ -186,7 +175,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "BACK_TO_DETAIL",
+                "path": "/Nap/CreditProcess/SurveyVerif/Subject",
                 "icon": "ft-edit-2",
                 "param": [
                   {
@@ -194,16 +183,12 @@
                     "property": "AppId"
                   },
                   {
-                    "type": "ReturnHandlingHId",
-                    "property": "ReturnHandlingHId"
-                  },
-                  {
                     "type": "WfTaskListId",
                     "property": "WfTaskListId"
                   },
                   {
-                    "type": "MrCustTypeCode",
-                    "property": "MrCustTypeCode"
+                    "type": "ReturnHandlingHId",
+                    "property": "ReturnHandlingHId"
                   }
                 ]
               },
@@ -220,7 +205,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "BACK_TO_DETAIL",
+                "path": "/Nap/CreditProcess/SurveyVerif/Subject",
                 "icon": "ft-edit-2",
                 "param": [
                   {
@@ -228,16 +213,12 @@
                     "property": "AppId"
                   },
                   {
-                    "type": "ReturnHandlingHId",
-                    "property": "ReturnHandlingHId"
-                  },
-                  {
                     "type": "WfTaskListId",
                     "property": "WfTaskListId"
                   },
                   {
-                    "type": "MrCustTypeCode",
-                    "property": "MrCustTypeCode"
+                    "type": "ReturnHandlingHId",
+                    "property": "ReturnHandlingHId"
                   }
                 ]
               },
