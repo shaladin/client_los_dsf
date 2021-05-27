@@ -395,7 +395,7 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.LEAD_UPDATE_PAGING, Title: 'Lead Update', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.LEAD_TELE_VERIF_PAGING, Title: 'Tele Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.LEAD_CANCEL, Title: 'Lead Cancel', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
-      { Path: NavigationConstant.LEAD_FRAUD_VERIF_PAGING, Title: 'Fraud Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+      //{ Path: NavigationConstant.LEAD_FRAUD_VERIF_PAGING, Title: 'Fraud Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.LEAD_INQUIRY, Title: 'Lead Inquiry', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
       { Path: NavigationConstant.LEAD_VERIF, Title: 'Lead Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
     ], Params: []
