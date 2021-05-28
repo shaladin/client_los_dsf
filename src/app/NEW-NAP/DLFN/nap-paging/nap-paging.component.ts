@@ -78,7 +78,7 @@ export class NapPagingComponent implements OnInit {
           let CenterGrpOfficeMbrObjs: Array<CenterGrpOfficeMbrObj> = response["ListCenterGrpOfficeMbr"];
 
           let listDataTemp = new Array();
-          for (var i = 0; i < CenterGrpOfficeMbrObjs.length; i++) {
+          for (let i = 0; i < CenterGrpOfficeMbrObjs.length; i++) {
             listDataTemp.push(CenterGrpOfficeMbrObjs[i].RefOfficeCode);
           }
           critObj.listValue = listDataTemp;
