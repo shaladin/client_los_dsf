@@ -11,6 +11,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { CalcRegularFixObjForTrialCalc } from 'app/shared/model/AppFinData/CalcRegularFixObjForTrialCalc.Model';
 
 @Component({
   selector: 'app-schm-reguler-fix-FL4W',
@@ -20,24 +21,30 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
   @Output() RefreshSubsidy = new EventEmitter();
+  @Input() TrialCalc: boolean;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
+  calcRegFixObjForTrialCalc: CalcRegularFixObjForTrialCalc = new CalcRegularFixObjForTrialCalc();
   listInstallment: any;
   responseCalc: any;
   result: AppObj = new AppObj();
   PriceLabel: string = "Asset Price";
+  IsTrialCalc: boolean = false;
 
-  constructor(private fb: FormBuilder,
+  constructor(
+  private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService) { }
+    private toastr: NGXToastrService
+    ) { }
 
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
+    if (this.AppId != null) {
     this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.result = response;
@@ -45,6 +52,11 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
           this.PriceLabel = "Financing Amount";
         }
       });
+      this.IsTrialCalc = false;
+    }
+    else if (this.TrialCalc != null && this.TrialCalc) {
+      this.IsTrialCalc = true;
+    }
   }
 
   LoadDDLRateType() {
@@ -109,6 +121,7 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
       return;
     }
 
+    if (!this.IsTrialCalc) {
     this.calcRegFixObj = this.ParentForm.getRawValue();
     this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentRegularFix, this.calcRegFixObj).subscribe(
       (response) => {
@@ -149,6 +162,48 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
         }
       }
     );
+  } else {
+      this.calcRegFixObjForTrialCalc = this.ParentForm.getRawValue();
+      this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentRegularFixForTrialCalc, this.calcRegFixObjForTrialCalc).subscribe(
+        (response) => {
+          this.listInstallment = response.InstallmentTable;
+          this.ParentForm.patchValue({
+            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+
+            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+            FlatRatePrcnt: response.FlatRatePrcnt,
+            InstAmt: response.InstAmt,
+
+            GrossYieldPrcnt: response.GrossYieldPrcnt,
+
+            TotalInterestAmt: response.TotalInterestAmt,
+            TotalAR: response.TotalARAmt,
+
+            NtfAmt: response.NtfAmt,
+            ApvAmt: response.ApvAmt,
+
+            TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+            LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+
+            DownPaymentGrossAmt: response.DownPaymentGrossAmt,
+            DownPaymentNettAmt: response.DownPaymentNettAmt,
+
+            SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
+            CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
+            SupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt
+          })
+          this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
+          this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
+          this.SetInstallmentTable();
+          this.SetNeedReCalculate(false);
+
+          if (this.ParentForm.controls.IsSubsidyRateExist.value == true) {
+            this.RefreshSubsidy.emit();
+          }
+        }
+      );
+    }
   }
 
   SetInstallmentTable() {

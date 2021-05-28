@@ -39,6 +39,10 @@ import { ViewAppScoreGradeDukcapilComponent } from "./view-app-score-grade-dukca
 import { ViewSummaryAppCfnaComponent } from './view-summary-app-cfna/view-summary-app-cfna.component';
 import { ViewSummaryAppROSComponent } from "./view-summary-app-ros/view-summary-app-ros.component";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
+import { FraudDetectionResultComponent } from './fraud-detection-result/fraud-detection-result.component';
+import { FraudVerificationComponent } from './fraud-verification/fraud-verification.component';
+import { ViewFraudDetectionResultComponent } from './view-fraud-detection-result/view-fraud-detection-result.component';
+import { ViewSurveyVerifComponent } from './view-survey-verif/view-survey-verif.component';
 
 @NgModule({
   exports: [
@@ -73,7 +77,10 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
     ViewAppScoreGradeDukcapilComponent,
     NewApplicationDataComponent,
     ViewSummaryAppCfnaComponent,
-    ViewSummaryAppROSComponent
+    ViewSummaryAppROSComponent,
+    FraudDetectionResultComponent,
+    FraudVerificationComponent,
+    ViewFraudDetectionResultComponent,
   ],
   imports: [
     CommonModule,
@@ -116,7 +123,10 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
     ViewAppScoreGradeDsrComponent,
     ViewAppScoreGradeDukcapilComponent,
     ViewSummaryAppCfnaComponent,
-    ViewSummaryAppROSComponent
+    ViewSummaryAppROSComponent,
+    FraudDetectionResultComponent,
+    FraudVerificationComponent,
+    ViewFraudDetectionResultComponent
   ],
   providers: [
     NGXToastrService
