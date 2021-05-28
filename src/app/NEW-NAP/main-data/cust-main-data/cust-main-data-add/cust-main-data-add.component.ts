@@ -17,6 +17,7 @@ import { CookieService } from 'ngx-cookie';
 import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { ReqAddNapFromCopyObj, ReqAddNapObj } from 'app/shared/model/Request/NAP/NewApplication/ReqAddNapObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'cust-main-data-add',
@@ -31,7 +32,9 @@ export class CustMainDataAddComponent implements OnInit {
   dropdownListObj: UcDropdownListObj = new UcDropdownListObj();
   bizTemplateCode: string;
   isCopyData: boolean = false;
-  user: any;
+  user: CurrentUserContext;
+  DF: string = CommonConstant.DF;
+  FCTR: string= CommonConstant.FCTR;
 
   NapAppForm = this.fb.group({
     AppNo: [''],
@@ -297,7 +300,7 @@ export class CustMainDataAddComponent implements OnInit {
             AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": response.Id });
             break;
           case CommonConstant.OPL:
-            AdInsHelper.RedirectUrl(this.router, ["Nap/OPL/NAP1"], { "AppId": response.Id });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ROS_NAP1], { "AppId": response.Id });
             break;
         }
       }

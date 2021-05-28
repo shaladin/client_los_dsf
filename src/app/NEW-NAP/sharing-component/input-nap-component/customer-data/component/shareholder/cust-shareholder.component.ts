@@ -15,27 +15,34 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { RegexService } from 'app/shared/services/regex.services';
+import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-cust-shareholder',
   templateUrl: './cust-shareholder.component.html',
-  styleUrls: [],
-  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
-
+  styles:[
+    '.disabledLink { color: #ccc; pointer-events:none;}'
+  ],
+  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
+  providers: [RegexService]
 })
 
 export class CustShareholderComponent implements OnInit {
 
+  @Input() isLockMode: boolean = false;
   @Input() listShareholder: Array<AppCustCompanyMgmntShrholderObj> = new Array<AppCustCompanyMgmntShrholderObj>();
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 
-  mode: any;
-  currentEditedIndex: any;
-  selectedCustNo: any;
-  selectedIndustryTypeCode: any;
+  mode: string;
+  currentEditedIndex: number;
+  selectedCustNo: string;
+  selectedIndustryTypeCode: string;
 
-  closeResult: any;
+  closeResult: string;
   appCustCompanyMgmntShrholderObj: AppCustCompanyMgmntShrholderObj;
 
   refMasterObj = {
@@ -46,27 +53,26 @@ export class CustShareholderComponent implements OnInit {
     IndustryTypeCode: ""
   };
 
-  InputLookupCustomerObj: any;
-  InputLookupIndustryTypeObj: any;
+  InputLookupCustomerObj: InputLookupObj;
+  InputLookupIndustryTypeObj: InputLookupObj;
+  InputLookupCustomerCoyObj:InputLookupObj;
 
-  CustTypeObj: any;
-  defaultCustType: any;
-  GenderObj: any;
-  defaultGender: any;
-  IdTypeObj: any;
-  defaultIdType: any;
-  JobPositionObj: any;
-  defaultJobPosition: any;
-  CompanyTypeObj: any;
-  defaultCompanyType: any;
-  industryTypeName: any;
+  CustTypeObj: Array<KeyValueObj>;
+  defaultCustType: string;
+  GenderObj: Array<KeyValueObj>;
+  defaultGender: string;
+  IdTypeObj: Array<KeyValueObj>;
+  defaultIdType: string;
+  JobPositionObj: Array<KeyValueObj>;
+  defaultJobPosition: string;
+  CompanyTypeObj: Array<KeyValueObj>;
+  defaultCompanyType: string;
+  industryTypeName: string;
   isCust: boolean = false;
-  selectedCustTypeName: any;
-  selectedJobPositionName: any;
-  defaultCustTypeName: any;
-  defaultJobPositionName: any;
-
-
+  selectedCustTypeName: string;
+  selectedJobPositionName: string;
+  defaultCustTypeName: string;
+  defaultJobPositionName: string;
 
   CustShareholderForm = this.fb.group({
     MrCustTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
@@ -87,19 +93,21 @@ export class CustShareholderComponent implements OnInit {
     IsGuarantor: [false]
   });
 
-
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private modalService: NgbModal, private cookieService: CookieService) {
+    private modalService: NgbModal, 
+    private cookieService: CookieService,
+    private regexService: RegexService,) {
 
   }
 
-  UserAccess: any;
+  UserAccess: CurrentUserContext;
   MaxDate: Date;
   Max17YO: Date;
   ngOnInit() {
+    this.customPattern = new Array<CustomPatternObj>();
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = new Date(this.UserAccess.BusinessDt);
     this.Max17YO = new Date(this.UserAccess.BusinessDt);
@@ -179,6 +187,7 @@ export class CustShareholderComponent implements OnInit {
     this.CustShareholderForm.controls.IdExpiredDt.enable();
     this.CustShareholderForm.controls.MrCompanyTypeCode.enable();
     this.CustShareholderForm.controls.EstablishmentDt.enable();
+    this.CustShareholderForm.controls.TaxIdNo.enable();
     this.isCust = false;
   }
 
@@ -196,12 +205,14 @@ export class CustShareholderComponent implements OnInit {
     critObj.value = custTypeCode;
     arrCrit.push(critObj);
     this.InputLookupCustomerObj.addCritInput = arrCrit;
+    this.InputLookupCustomerCoyObj.addCritInput = arrCrit;
   }
 
   add(content) {
     this.mode = "add";
     this.clearForm();
     this.setCriteriaLookupCustomer(this.defaultCustType);
+    this.setValidatorPattern(true);
     this.open(content);
   }
 
@@ -229,6 +240,7 @@ export class CustShareholderComponent implements OnInit {
       });
       if (this.listShareholder[i].CustNo != undefined && this.listShareholder[i].CustNo != "") {
         this.InputLookupCustomerObj.isReadonly = true;
+        this.InputLookupCustomerCoyObj.isReadonly = true;
         this.CustShareholderForm.controls.MrGenderCode.disable();
         this.CustShareholderForm.controls.MrIdTypeCode.disable();
         this.CustShareholderForm.controls.IdExpiredDt.disable();
@@ -261,6 +273,7 @@ export class CustShareholderComponent implements OnInit {
       this.setCriteriaLookupCustomer(this.listShareholder[i].MrCustTypeCode);
       if (this.listShareholder[i].CustNo != undefined && this.listShareholder[i].CustNo != "") {
         this.InputLookupCustomerObj.isReadonly = true;
+        this.InputLookupCustomerCoyObj.isReadonly = true;
         this.CustShareholderForm.controls.MrCompanyTypeCode.disable();
         this.CustShareholderForm.controls.EstablishmentDt.disable();
         this.CustShareholderForm.controls.TaxIdNo.disable();
@@ -270,8 +283,12 @@ export class CustShareholderComponent implements OnInit {
 
     this.InputLookupCustomerObj.nameSelect = this.listShareholder[i].MgmntShrholderName;
     this.InputLookupCustomerObj.jsonSelect = { CustName: this.listShareholder[i].MgmntShrholderName };
+    this.InputLookupCustomerCoyObj.nameSelect = this.listShareholder[i].MgmntShrholderName;
+    this.InputLookupCustomerCoyObj.jsonSelect = {CustName: this.listShareholder[i].MgmntShrholderName};
+
     this.selectedCustNo = this.listShareholder[i].CustNo;
     this.setValidator(this.listShareholder[i].MrCustTypeCode);
+    this.setValidatorPattern();
     this.open(content);
   }
 
@@ -312,6 +329,7 @@ export class CustShareholderComponent implements OnInit {
   CopyCustomer(event) {
     this.selectedCustNo = event.CustNo;
     this.InputLookupCustomerObj.isReadonly = true;
+    this.InputLookupCustomerCoyObj.isReadonly = true;
 
     var custObj = { CustId: event.CustId };
     var url;
@@ -493,6 +511,14 @@ export class CustShareholderComponent implements OnInit {
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.isReadonly = false;
 
+    this.InputLookupCustomerCoyObj= new InputLookupObj();
+    this.InputLookupCustomerCoyObj.urlJson = "./assets/uclookup/lookUpExistingCustCompany.json";
+    this.InputLookupCustomerCoyObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupCustomerCoyObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCustomerCoyObj.pagingJson = "./assets/uclookup/lookUpExistingCustCompany.json";
+    this.InputLookupCustomerCoyObj.genericJson = "./assets/uclookup/lookUpExistingCustCompany.json";
+    this.InputLookupCustomerCoyObj.isReadonly = false;
+
     this.InputLookupIndustryTypeObj = new InputLookupObj();
     this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
@@ -544,6 +570,10 @@ export class CustShareholderComponent implements OnInit {
         this.IdTypeObj = response[CommonConstant.ReturnObj];
         if (this.IdTypeObj.length > 0) {
           this.defaultIdType = this.IdTypeObj[0].Key
+        }
+        if(this.IdTypeObj != undefined)
+        {
+          this.getInitPattern();
         }
       }
     );
@@ -603,5 +633,61 @@ export class CustShareholderComponent implements OnInit {
         IdExpiredDt: ''
       });
     }
+    this.setValidatorPattern();
   }
+
+  //START URS-LOS-041
+  controlNameIdNo: any = 'IdNo';
+  controlNameIdType: any = 'MrIdTypeCode';
+  customPattern: Array<CustomPatternObj>;
+  initIdTypeCode: any;
+  resultPattern: any;
+
+  getInitPattern() {
+    this.regexService.getListPattern().subscribe(
+      response => {
+        this.resultPattern = response[CommonConstant.ReturnObj];
+        if(this.resultPattern != undefined)
+        {
+          for (let i = 0; i < this.resultPattern.length; i++) {
+            let patternObj: CustomPatternObj = new CustomPatternObj();
+            let pattern: string = this.resultPattern[i].Value;
+    
+            patternObj.pattern = pattern;
+            patternObj.invalidMsg = this.regexService.getErrMessage(pattern);
+            this.customPattern.push(patternObj);
+          }
+          this.setValidatorPattern(true);
+        }
+      }
+    );
+  }
+  setValidatorPattern(onInit: boolean = false){
+    console.log("hi");
+    let idTypeValue: string;
+
+    if(onInit){
+      idTypeValue = this.defaultIdType;
+    }else{
+      idTypeValue = this.CustShareholderForm.controls[this.controlNameIdType].value;
+    }
+
+    if (this.resultPattern != undefined) {
+      var result = this.resultPattern.find(x => x.Key == idTypeValue)
+
+      if (result != undefined) {
+        var pattern = result.Value;
+        if (pattern != undefined) {
+          this.setValidatorControl(pattern);
+        }
+      }
+    }
+  }
+  setValidatorControl(pattern: string) {
+    if (pattern != undefined) {
+      this.CustShareholderForm.controls[this.controlNameIdNo].setValidators(Validators.pattern(pattern));
+      this.CustShareholderForm.controls[this.controlNameIdNo].updateValueAndValidity();
+    }
+  }
+  //END OF URS-LOS-041
 }

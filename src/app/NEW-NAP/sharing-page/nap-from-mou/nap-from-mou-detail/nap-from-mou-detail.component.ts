@@ -15,6 +15,7 @@ import { CookieService } from 'ngx-cookie';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-nap-from-mou-detail',
@@ -22,9 +23,6 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
   styleUrls: ['./nap-from-mou-detail.component.scss']
 })
 export class NapFromMouDetailComponent implements OnInit {
-  param;
-  ProductOfferingIdentifier;
-  ProductOfferingNameIdentifier;
   MouCustId: number;
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   constructor(
@@ -88,10 +86,8 @@ export class NapFromMouDetailComponent implements OnInit {
     RsvField5: ['']
   });
 
-  inputLookupObjCopyProduct;
   inputLookupObjName;
-  officeItems;
-  user;
+  user : CurrentUserContext;
 
   MouCustObj: MouCustObj;
   bizTemplateCode: string;

@@ -8,6 +8,7 @@ import { ViewDeliveryOrderAssetDetailComponent } from '../view-delivery-order-as
 import { NgxSpinnerService } from 'ngx-spinner';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 
 @Component({
   selector: 'app-view-delivery-order-detail',
@@ -15,11 +16,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
   styleUrls: ['./view-delivery-order-detail.component.scss']
 })
 export class ViewDeliveryOrderDetailComponent implements OnInit {
-  GetListAppAssetByDOHId: string;
   DOHId: number;
-  assetDetailList: Array<any>;
-  GetDeliveryOrderHByDeliveryOrderHId: string;
-  doData: any;
+  assetDetailList: Array<AppAssetObj>;
+  doData: DeliveryOrderHObj;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal, private spinner: NgxSpinnerService) {
     this.route.queryParams.subscribe(params => {
@@ -30,18 +29,16 @@ export class ViewDeliveryOrderDetailComponent implements OnInit {
   }
 
   async ngOnInit(){
-    this.GetListAppAssetByDOHId = URLConstant.GetListAppAssetByDOHId;
-    this.GetDeliveryOrderHByDeliveryOrderHId = URLConstant.GetDeliveryOrderHByDeliveryOrderHId;
     // var doObj = new DeliveryOrderHObj();
     // doObj.DeliveryOrderHId = this.DOHId;
     var doObj = { Id: this.DOHId };
-    this.http.post(this.GetListAppAssetByDOHId, doObj).subscribe(
+    this.http.post(URLConstant.GetListAppAssetByDOHId, doObj).subscribe(
       (response) => { 
        this.assetDetailList = response[CommonConstant.ReturnObj];
       });
 
-    this.http.post(this.GetDeliveryOrderHByDeliveryOrderHId, { Id: this.DOHId }).subscribe(
-      (response) => { 
+    this.http.post(URLConstant.GetDeliveryOrderHByDeliveryOrderHId, { Id: this.DOHId }).subscribe(
+      (response:any) => { 
         this.doData = response;
       });
   }

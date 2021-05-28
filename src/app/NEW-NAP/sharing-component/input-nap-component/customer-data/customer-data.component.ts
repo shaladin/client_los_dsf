@@ -43,6 +43,7 @@ import { String } from 'typescript-string-operations';
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
+import { AppCustAssetObj } from 'app/shared/model/AppCustAsset/AppCustAssetObj.Model';
 
 @Component({
   selector: 'app-customer-data',
@@ -114,6 +115,7 @@ export class CustomerDataComponent implements OnInit {
   getRefMasterUrl: any;
   addEditCustDataPersonalUrl: any;
   getCustDataUrl: any;
+  ListAppCustAsset: Array<AppCustAssetObj>;
 
   CustTypeObj: any;
   copyToResidenceTypeObj: any = [
@@ -141,6 +143,7 @@ export class CustomerDataComponent implements OnInit {
     }
   ];
 
+  LeadId: number;
   defCustModelCode: string;
   MrCustTypeCode: any;
   isMarried: boolean = true;
@@ -148,6 +151,7 @@ export class CustomerDataComponent implements OnInit {
   isSpouseOk: boolean = true;
   IsSpouseExist: boolean = false;
   appData: AppObj;
+  AppCustId: number;
   generalSettingObj: GenericListByCodeObj;
   returnGeneralSettingObj: any;
   appObj: any;
@@ -165,7 +169,9 @@ export class CustomerDataComponent implements OnInit {
     private route: ActivatedRoute, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.appId = params["AppId"];
+      this.LeadId = params["LeadId"];
     })
+    this.ListAppCustAsset = new Array<AppCustAssetObj>();
   }
 
   async ngOnInit(): Promise<void> {
@@ -195,7 +201,13 @@ export class CustomerDataComponent implements OnInit {
     this.initUrl();
     await this.bindCustTypeObj();
     this.initAddrObj();
-    await this.getCustData();
+
+    if (this.LeadId) {
+      await this.getCustDataByLead();
+    } else {
+      await this.getCustData();
+    }
+
     await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
       (response: AppObj) => {
         this.appData = response;
@@ -367,10 +379,13 @@ export class CustomerDataComponent implements OnInit {
         }
       }
 
-      if (this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W) {
-        if (custDataPersonalObj.AppCustBankAccObjs.length <= 0) {
-          this.toastr.warningMessage("Must Have At Least 1 Bank Account");
-          return false;
+      if (this.appData) {
+        console.log(this.appData)
+        if (this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W) {
+          if (custDataPersonalObj.AppCustBankAccObjs.length <= 0) {
+            this.toastr.warningMessage("Must Have At Least 1 Bank Account");
+            return false;
+          }
         }
       }
 
@@ -473,6 +488,8 @@ export class CustomerDataComponent implements OnInit {
     custDataPersonalObj.AppCustSocmedObjs = this.setAppCustSocmedObj();
     custDataPersonalObj.AppCustGrpObjs = this.setAppCustGrpObj();
 
+    custDataPersonalObj.AppCustAssetList = this.ListAppCustAsset;
+
     return custDataPersonalObj;
   }
 
@@ -488,6 +505,7 @@ export class CustomerDataComponent implements OnInit {
     custDataCompanyObj.AppCustBankAccObjs = this.listAppCustBankAccCompany;
     custDataCompanyObj.AppCustCompanyLegalDocObjs = this.listLegalDoc;
     custDataCompanyObj.AppCustGrpObjs = this.setAppCustGrpObj();
+    custDataCompanyObj.AppCustAssetList = this.ListAppCustAsset;
 
     return custDataCompanyObj;
   }
@@ -895,6 +913,7 @@ export class CustomerDataComponent implements OnInit {
 
     if (this.isExisting) {
       appCustPersonalJobDataObj.RowVersion = this.custDataPersonalObj.AppCustPersonalJobDataObj.RowVersion;
+      appCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
     }
 
     return appCustPersonalJobDataObj;
@@ -964,6 +983,10 @@ export class CustomerDataComponent implements OnInit {
 
   getAppCustLegalDoc(event) {
     this.listLegalDoc = event;
+  }
+
+  GetAppCustAsset(e) {
+    this.ListAppCustAsset = e;
   }
 
   copyToContactPersonAddr(event) {
@@ -1229,6 +1252,401 @@ export class CustomerDataComponent implements OnInit {
         this.isBindDataDone = true;
       }
     );
+  }
+
+  initCustData(response) {
+    this.AppCustId = response["AppCustObj"]["AppCustId"];
+    if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
+      this.isExisting = true;
+      this.custDataPersonalObj = new CustDataPersonalObj();
+      this.custDataPersonalObj.AppCustObj = response["AppCustObj"];
+      this.custDataPersonalObj.AppCustPersonalObj = response["AppCustPersonalObj"];
+      this.custDataPersonalObj.AppCustAddrLegalObj = response["AppCustAddrLegalObj"];
+      this.custDataPersonalObj.AppCustAddrResidenceObj = response["AppCustAddrResidenceObj"];
+      this.custDataPersonalObj.AppCustAddrMailingObj = response["AppCustAddrMailingObj"];
+      this.custDataPersonalObj.AppCustPersonalContactPersonObjs = response["AppCustPersonalContactPersonObjs"];
+      this.listAppCustPersonalContactInformation = this.custDataPersonalObj.AppCustPersonalContactPersonObjs;
+      this.custDataPersonalObj.AppCustPersonalFinDataObj = response["AppCustPersonalFinDataObj"];
+      this.custDataPersonalObj.AppCustBankAccObjs = response["AppCustBankAccObjs"];
+      this.listAppCustBankAcc = this.custDataPersonalObj.AppCustBankAccObjs;
+      this.custDataPersonalObj.AppCustPersonalJobDataObj = response["AppCustPersonalJobDataObj"];
+      this.custDataPersonalObj.AppCustSocmedObjs = response["AppCustSocmedObjs"];
+      this.custDataPersonalObj.AppCustGrpObjs = response["AppCustGrpObjs"];
+
+      if (this.custDataPersonalObj.AppCustObj.AppCustId != 0) {
+        this.defCustModelCode = this.custDataPersonalObj.AppCustObj.MrCustModelCode;
+      }
+
+
+      this.setAddrLegalObj(CommonConstant.CustTypePersonal);
+      this.setAddrResidenceObj();
+      this.setAddrMailingObj(CommonConstant.CustTypePersonal);
+
+      this.appCustPersonalId = this.custDataPersonalObj.AppCustPersonalObj.AppCustPersonalId;
+      this.MrCustTypeCode = this.custDataPersonalObj.AppCustObj.MrCustTypeCode;
+      this.spouseGender = this.custDataPersonalObj.AppCustPersonalObj.MrGenderCode;
+      this.isMarried = this.custDataPersonalObj.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried ? true : false;
+
+      this.CheckSpouseExist();
+    }
+
+    if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypeCompany) {
+      this.isExisting = true;
+      this.custDataCompanyObj = new CustDataCompanyObj();
+      this.custDataCompanyObj.AppCustObj = response["AppCustObj"];
+      this.custDataCompanyObj.AppCustCompanyObj = response["AppCustCompanyObj"];
+      this.custDataCompanyObj.AppCustAddrLegalObj = response["AppCustAddrLegalObj"];
+      this.custDataCompanyObj.AppCustAddrMailingObj = response["AppCustAddrMailingObj"];
+      this.custDataCompanyObj.AppCustCompanyMgmntShrholderObjs = response["AppCustCompanyMgmntShrholderObjs"];
+      this.listShareholder = this.custDataCompanyObj.AppCustCompanyMgmntShrholderObjs;
+      this.custDataCompanyObj.AppCustCompanyContactPersonObjs = response["AppCustCompanyContactPersonObjs"];
+      this.listContactPersonCompany = this.custDataCompanyObj.AppCustCompanyContactPersonObjs;
+      this.custDataCompanyObj.AppCustCompanyFinDataObj = response["AppCustCompanyFinDataObj"];
+      if (response["AppCustCompanyFinDataObj"] != undefined) {
+        if (response["AppCustCompanyFinDataObj"].DateAsOf != undefined && response["AppCustCompanyFinDataObj"].DateAsOf != null) {
+          this.custDataCompanyObj.AppCustCompanyFinDataObj.DateAsOf = formatDate(response["AppCustCompanyFinDataObj"].DateAsOf, 'yyyy-MM-dd', 'en-US');
+        }
+      }
+      this.custDataCompanyObj.AppCustBankAccObjs = response["AppCustBankAccObjs"];
+      this.listAppCustBankAccCompany = this.custDataCompanyObj.AppCustBankAccObjs;
+      this.custDataCompanyObj.AppCustCompanyLegalDocObjs = response["AppCustCompanyLegalDocObjs"];
+      this.listLegalDoc = this.custDataCompanyObj.AppCustCompanyLegalDocObjs;
+      this.custDataCompanyObj.AppCustGrpObjs = response["AppCustGrpObjs"];
+
+      this.setAddrLegalObj(CommonConstant.CustTypeCompany);
+      this.setAddrMailingObj(CommonConstant.CustTypeCompany);
+
+      this.MrCustTypeCode = this.custDataCompanyObj.AppCustObj.MrCustTypeCode;
+    }
+  }
+
+  async getCustDataByLead() {
+    //get lead
+    let resp3 = await this.http.post<any>(URLConstant.GetLeadCustByLeadId, { LeadId: this.LeadId }).toPromise();
+    if (resp3 == undefined) return;
+
+    //get cust id
+    let resp2 = await this.http.post<any>(URLConstant.GetCustByCustNo, { CustNo: resp3.CustNo }).toPromise()
+    if (resp2 == undefined) return;
+
+    //get cust data
+    let resp = await this.http.post<any>(URLConstant.GetCustPersonalForCopyByCustId, { CustId: resp2.CustId }).toPromise();
+    if (resp == undefined) return;
+
+    let response = this.MapFouCustResponseToLosCust(resp)
+    this.initCustData(response)
+    this.isBindDataDone = true;
+
+
+  }
+
+  MapFouCustResponseToLosCust(resp) {
+    let response: any = {
+      AppCustObj: {},
+      AppCustPersonalObj: {},
+      AppCustAddrLegalObj: {},
+      AppCustAddrResidenceObj: {},
+      AppCustAddrMailingObj: {},
+      AppCustPersonalContactPersonObjs: [],
+      AppCustPersonalFinDataObj: {},
+      AppCustBankAccObjs: [],
+      AppCustPersonalJobDataObj: {},
+      AppCustGrpObjs: [],
+    };
+
+    if (resp.CustObj) {
+      response.AppCustObj = {
+        AppCustId: -1,
+        CustNo: resp.CustObj.CustNo,
+        CustName: resp.CustObj.CustName,
+        MrCustTypeCode: resp.CustObj.MrCustTypeCode,
+        CustModelCode: resp.CustObj.MrCustModelCode,
+        MrCustModelCode: resp.CustObj.MrCustModelCode,
+        MrIdTypeCode: resp.CustObj.MrIdTypeCode,
+        IdNo: resp.CustObj.IdNo,
+        IdExpiredDt: resp.CustObj.IdExpiredDt,
+        TaxIdNo: resp.CustObj.TaxIdNo,
+        IsVip: resp.CustObj.IsVip,
+        IsAffiliateWithMf: resp.CustObj.IsAffiliateWithMf,
+        IsCustomer: 1,
+        VipNotes: resp.CustObj.VipNotes,
+      }
+    }
+
+    if (resp.CustPersonalObj) {
+      response.AppCustPersonalObj = {
+        AppCustId: -1,
+        CustFullName: resp.CustPersonalObj.CustFullName,
+        NickName: resp.CustPersonalObj.NickName,
+        BirthPlace: resp.CustPersonalObj.BirthPlace,
+        BirthDt: resp.CustPersonalObj.BirthDt,
+        MotherMaidenName: resp.CustPersonalObj.MotherMaidenName,
+        MrGenderCode: resp.CustPersonalObj.MrGenderCode,
+        MrReligionCode: resp.CustPersonalObj.MrReligionCode,
+        MrEducationCode: resp.CustPersonalObj.MrEducationCode,
+        MrNationalityCode: resp.CustPersonalObj.MrNationalityCode,
+        NationalityCountryCode: resp.CustPersonalObj.WnaCountryCode,
+        MrMaritalStatCode: resp.CustPersonalObj.MrMaritalStatCode,
+        FamilyCardNo: resp.CustPersonalObj.FamilyCardNo,
+        NoOfResidence: resp.CustPersonalObj.NoOfResidence,
+        NoOfDependents: resp.CustPersonalObj.NoOfDependents,
+        MobilePhnNo1: resp.CustPersonalObj.MobilePhnNo1,
+        MobilePhnNo2: resp.CustPersonalObj.MobilePhnNo2,
+        MobilePhnNo3: resp.CustPersonalObj.MobilePhnNo3,
+        Email1: resp.CustPersonalObj.Email1,
+        Email2: resp.CustPersonalObj.Email2,
+        Email3: resp.CustPersonalObj.Email3,
+        CustPrefixName: resp.CustPersonalObj.CustPrefixName,
+        CustSuffixName: resp.CustPersonalObj.CustSuffixName,
+        IsRestInPeace: resp.CustPersonalObj.IsRestInPeace,
+        MrSalutationCode: resp.CustPersonalObj.MrSalutationCode,
+      }
+    }
+
+    if (resp.CustAddrLegalObj) {
+      response.AppCustAddrLegalObj = {
+        AppCustId: -1,
+        MrCustAddrTypeCode: resp.CustAddrLegalObj.MrCustAddrTypeCode,
+        MrHouseOwnershipCode: resp.CustAddrLegalObj.MrBuildingOwnershipCode,
+        Addr: resp.CustAddrLegalObj.Addr,
+        AreaCode1: resp.CustAddrLegalObj.AreaCode1,
+        AreaCode2: resp.CustAddrLegalObj.AreaCode2,
+        AreaCode3: resp.CustAddrLegalObj.AreaCode3,
+        AreaCode4: resp.CustAddrLegalObj.AreaCode4,
+        City: resp.CustAddrLegalObj.City,
+        Zipcode: resp.CustAddrLegalObj.Zipcode,
+        SubZipcode: resp.CustAddrLegalObj.SubZipcode,
+        PhnArea1: resp.CustAddrLegalObj.PhnArea1,
+        Phn1: resp.CustAddrLegalObj.Phn1,
+        PhnExt1: resp.CustAddrLegalObj.PhnExt1,
+        PhnArea2: resp.CustAddrLegalObj.PhnArea2,
+        Phn2: resp.CustAddrLegalObj.Phn2,
+        PhnExt2: resp.CustAddrLegalObj.PhnExt2,
+        FaxArea: resp.CustAddrLegalObj.FaxArea,
+        Fax: resp.CustAddrLegalObj.Fax,
+        FullAddr: resp.CustAddrLegalObj.Addr + " " +
+          resp.CustAddrLegalObj.AreaCode3 + " " +
+          resp.CustAddrLegalObj.AreaCode4 + " " +
+          resp.CustAddrLegalObj.AreaCode1 + " " +
+          resp.CustAddrLegalObj.AreaCode2 + " " +
+          resp.CustAddrLegalObj.City + " " +
+          resp.CustAddrLegalObj.Zipcode,
+        StayLength: resp.CustAddrLegalObj.StayLength,
+      }
+    }
+
+    if (resp.CustAddrResidenceObj) {
+      response.AppCustAddrResidenceObj = {
+        AppCustId: -1,
+        MrCustAddrTypeCode: resp.CustAddrResidenceObj.MrCustAddrTypeCode,
+        MrHouseOwnershipCode: resp.CustAddrResidenceObj.MrBuildingOwnershipCode,
+        Addr: resp.CustAddrResidenceObj.Addr,
+        AreaCode1: resp.CustAddrResidenceObj.AreaCode1,
+        AreaCode2: resp.CustAddrResidenceObj.AreaCode2,
+        AreaCode3: resp.CustAddrResidenceObj.AreaCode3,
+        AreaCode4: resp.CustAddrResidenceObj.AreaCode4,
+        City: resp.CustAddrResidenceObj.City,
+        Zipcode: resp.CustAddrResidenceObj.Zipcode,
+        SubZipcode: resp.CustAddrResidenceObj.SubZipcode,
+        PhnArea1: resp.CustAddrResidenceObj.PhnArea1,
+        Phn1: resp.CustAddrResidenceObj.Phn1,
+        PhnExt1: resp.CustAddrResidenceObj.PhnExt1,
+        PhnArea2: resp.CustAddrResidenceObj.PhnArea2,
+        Phn2: resp.CustAddrResidenceObj.Phn2,
+        PhnExt2: resp.CustAddrResidenceObj.PhnExt2,
+        FaxArea: resp.CustAddrResidenceObj.FaxArea,
+        Fax: resp.CustAddrResidenceObj.Fax,
+        FullAddr: resp.CustAddrResidenceObj.Addr + " " +
+          resp.CustAddrResidenceObj.AreaCode3 + " " +
+          resp.CustAddrResidenceObj.AreaCode4 + " " +
+          resp.CustAddrResidenceObj.AreaCode1 + " " +
+          resp.CustAddrResidenceObj.AreaCode2 + " " +
+          resp.CustAddrResidenceObj.City + " " +
+          resp.CustAddrResidenceObj.Zipcode,
+        StayLength: resp.CustAddrResidenceObj.StayLength,
+      }
+    }
+
+    if (resp.CustAddrMailingObj) {
+      response.AppCustAddrMailingObj = {
+        AppCustId: -1,
+        MrCustAddrTypeCode: resp.CustAddrMailingObj.MrCustAddrTypeCode,
+        MrHouseOwnershipCode: resp.CustAddrMailingObj.MrBuildingOwnershipCode,
+        Addr: resp.CustAddrMailingObj.Addr,
+        AreaCode1: resp.CustAddrMailingObj.AreaCode1,
+        AreaCode2: resp.CustAddrMailingObj.AreaCode2,
+        AreaCode3: resp.CustAddrMailingObj.AreaCode3,
+        AreaCode4: resp.CustAddrMailingObj.AreaCode4,
+        City: resp.CustAddrMailingObj.City,
+        Zipcode: resp.CustAddrMailingObj.Zipcode,
+        SubZipcode: resp.CustAddrMailingObj.SubZipcode,
+        PhnArea1: resp.CustAddrMailingObj.PhnArea1,
+        Phn1: resp.CustAddrMailingObj.Phn1,
+        PhnExt1: resp.CustAddrMailingObj.PhnExt1,
+        PhnArea2: resp.CustAddrMailingObj.PhnArea2,
+        Phn2: resp.CustAddrMailingObj.Phn2,
+        PhnExt2: resp.CustAddrMailingObj.PhnExt2,
+        FaxArea: resp.CustAddrMailingObj.FaxArea,
+        Fax: resp.CustAddrMailingObj.Fax,
+        FullAddr: resp.CustAddrMailingObj.Addr + " " +
+          resp.CustAddrMailingObj.AreaCode3 + " " +
+          resp.CustAddrMailingObj.AreaCode4 + " " +
+          resp.CustAddrMailingObj.AreaCode1 + " " +
+          resp.CustAddrMailingObj.AreaCode2 + " " +
+          resp.CustAddrMailingObj.City + " " +
+          resp.CustAddrMailingObj.Zipcode,
+        StayLength: resp.CustAddrMailingObj.StayLength,
+      }
+    }
+
+    if (resp.CustPersonalContactPersonObjs) {
+      response.AppCustPersonalContactPersonObjs = resp.CustPersonalContactPersonObjs.map(x => {
+        return {
+          ContactPersonName: x.ContactPersonName,
+          MrIdTypeCode: x.MrIdTypeCode,
+          IdNo: x.IdNo,
+          BirthPlace: x.BirthPlace,
+          BirthDt: x.BirthDt,
+          MotherMaidenName: x.MotherMaidenName,
+          MrGenderCode: x.MrGenderCode,
+          GenderName: x.GenderName,
+          MrReligionCode: x.MrReligionCode,
+          MrEducationCode: x.MrEducationCode,
+          MrJobProfessionCode: x.MrJobProfessionCode,
+          MrMaritalStatCode: x.MrMaritalStatCode,
+          MrNationalityCode: x.MrNationalityCode,
+          NationalityCountryCode: x.NationalityCountryCode,
+          MrCustRelationshipCode: x.MrCustRelationshipCode,
+          RelationshipName: x.RelationshipName,
+          ContactPersonCustNo: x.ContactPersonCustNo,
+          IsEmergencyContact: x.IsEmergencyContact,
+          IsFamily: x.IsFamily,
+          MobilePhnNo1: x.MobilePhnNo1,
+          MobilePhnNo2: x.MobilePhnNo2,
+          Email: x.Email,
+          Addr: x.Addr,
+          AreaCode1: x.AreaCode1,
+          AreaCode2: x.AreaCode2,
+          AreaCode3: x.AreaCode3,
+          AreaCode4: x.AreaCode4,
+          City: x.City,
+          Zipcode: x.Zipcode,
+          SubZipcode: x.SubZipcode,
+          FullAddr: x.Addr + " " +
+            x.AreaCode3 + " " +
+            x.AreaCode4 + " " +
+            x.AreaCode1 + " " +
+            x.AreaCode2 + " " +
+            x.City + " " +
+            x.Zipcode,
+        }
+      })
+    }
+
+    if (resp.CustPersonalFinDataObj) {
+      response.AppCustPersonalFinDataObj = {
+        AppCustPersonalId: -1,
+        MonthlyIncomeAmt: resp.CustPersonalFinDataObj.MonthlyIncomeAmt,
+        MonthlyExpenseAmt: resp.CustPersonalFinDataObj.MonthlyExpenseAmt,
+        MonthlyInstallmentAmt: resp.CustPersonalFinDataObj.MonthlyInstallmentAmt,
+        MrSourceOfIncomeTypeCode: resp.CustPersonalFinDataObj.MrSourceOfIncomeCode,
+        SpouseMonthlyIncomeAmt: resp.CustPersonalFinDataObj.SpouseMonthlyIncomeAmt,
+        IsJoinIncome: resp.CustPersonalFinDataObj.IsJoinIncome,
+        OtherIncomeAmt: resp.CustPersonalFinDataObj.OtherIncomeAmt,
+        OtherMonthlyInstAmt: resp.CustPersonalFinDataObj.OtherMonthlyInstAmt,
+        TotalIncomeAmt: resp.CustPersonalFinDataObj.TotalIncomeAmt,
+        NettIncomeAmt: resp.CustPersonalFinDataObj.NettIncomeAmt,
+        DateAsOf: resp.CustPersonalFinDataObj.DateAsOf,
+      }
+    }
+
+    if (resp.CustBankAccObjs) {
+      response.AppCustBankAccObjs = resp.CustBankAccObjs.map(x => {
+        return {
+          AppCustBankAccId: x.AppCustBankAccId,
+          AppCustId: x.AppCustId,
+          BankCode: x.BankCode,
+          BankName: x.BankName,
+          BankBranch: x.BankBranch,
+          BankAccNo: x.BankAccNo,
+          BankAccName: x.BankAccName,
+          IsBankStmnt: x.IsBankStmnt,
+          BankBranchRegRptCode: x.BankBranchRegRptCode,
+          BalanceAmt: x.BalanceAmt,
+          IsDefault: x.IsDefault,
+          IsActive: x.IsActive,
+          AppCustBankStmntObjs: x.AppCustBankStmntObjs,
+        }
+      })
+    }
+
+    if (resp.CustPersonalJobDataObj) {
+      response.AppCustPersonalJobDataObj = {
+        AppCustPersonalJobDataId: resp.CustPersonalJobDataObj.AppCustPersonalJobDataId,
+        AppCustPersonalId: -1,
+        MrProfessionCode: resp.CustPersonalJobDataObj.MrProfessionCode,
+        CompanyName: resp.CustPersonalJobDataObj.CompanyName,
+        PrevCoyName: resp.CustPersonalJobDataObj.PrevCoyName,
+        OthBizName: resp.CustPersonalJobDataObj.OthBizName,
+        OthBizType: resp.CustPersonalJobDataObj.OthBizType,
+        MrJobPositionCode: resp.CustPersonalJobDataObj.MrJobPositionCode,
+        OthBizJobPosition: resp.CustPersonalJobDataObj.OthBizJobPosition,
+        MrJobStatCode: resp.CustPersonalJobDataObj.MrJobStatCode,
+        IsMfEmp: resp.CustPersonalJobDataObj.IsMfEmp,
+        IndustryTypeCode: resp.CustPersonalJobDataObj.IndustryTypeCode,
+        OthBizIndustryTypeCode: resp.CustPersonalJobDataObj.OthBizIndustryTypeCode,
+        MrCompanyScaleCode: resp.CustPersonalJobDataObj.MrCompanyScaleCode,
+        EstablishmentDt: resp.CustPersonalJobDataObj.EstablishmentDt,
+        PrevEmploymentDt: resp.CustPersonalJobDataObj.PrevEmploymentDt,
+        OthBizEstablishmentDt: resp.CustPersonalJobDataObj.OthBizEstablishmentDt,
+        MrJobTitleCode: resp.CustPersonalJobDataObj.MrJobTitleCode,
+        ProfessionalNo: resp.CustPersonalJobDataObj.ProfessionalNo,
+        MrInvestmentTypeCode: resp.CustPersonalJobDataObj.MrInvestmentTypeCode,
+        AppCustAddrJobObj: {
+          MrCustAddrTypeCode: resp.CustPersonalJobDataObj.AppCustAddrJobObj.MrCustAddrTypeCode,
+          MrHouseOwnershipCode: resp.CustPersonalJobDataObj.AppCustAddrJobObj.MrBuildingOwnershipCode,
+          Addr: resp.CustPersonalJobDataObj.AppCustAddrJobObj.Addr,
+          AreaCode1: resp.CustPersonalJobDataObj.AppCustAddrJobObj.AreaCode1,
+          AreaCode2: resp.CustPersonalJobDataObj.AppCustAddrJobObj.AreaCode2,
+          AreaCode3: resp.CustPersonalJobDataObj.AppCustAddrJobObj.AreaCode3,
+          AreaCode4: resp.CustPersonalJobDataObj.AppCustAddrJobObj.AreaCode4,
+          City: resp.CustPersonalJobDataObj.AppCustAddrJobObj.City,
+          Zipcode: resp.CustPersonalJobDataObj.AppCustAddrJobObj.Zipcode,
+          SubZipcode: resp.CustPersonalJobDataObj.AppCustAddrJobObj.SubZipcode,
+          PhnArea1: resp.CustPersonalJobDataObj.AppCustAddrJobObj.PhnArea1,
+          Phn1: resp.CustPersonalJobDataObj.AppCustAddrJobObj.Phn1,
+          PhnExt1: resp.CustPersonalJobDataObj.AppCustAddrJobObj.PhnExt1,
+          PhnArea2: resp.CustPersonalJobDataObj.AppCustAddrJobObj.PhnArea2,
+          Phn2: resp.CustPersonalJobDataObj.AppCustAddrJobObj.Phn2,
+          PhnExt2: resp.CustPersonalJobDataObj.AppCustAddrJobObj.PhnExt2,
+          FaxArea: resp.CustPersonalJobDataObj.AppCustAddrJobObj.FaxArea,
+          Fax: resp.CustPersonalJobDataObj.AppCustAddrJobObj.Fax,
+          FullAddr: resp.CustPersonalJobDataObj.AppCustAddrJobObj.Addr + " " +
+            resp.CustPersonalJobDataObj.AppCustAddrJobObj.AreaCode3 + " " +
+            resp.CustPersonalJobDataObj.AppCustAddrJobObj.AreaCode4 + " " +
+            resp.CustPersonalJobDataObj.AppCustAddrJobObj.AreaCode1 + " " +
+            resp.CustPersonalJobDataObj.AppCustAddrJobObj.AreaCode2 + " " +
+            resp.CustPersonalJobDataObj.AppCustAddrJobObj.City + " " +
+            resp.CustPersonalJobDataObj.AppCustAddrJobObj.Zipcode,
+          StayLength: resp.CustPersonalJobDataObj.AppCustAddrJobObj.StayLength,
+        },
+        NumOfEmployee: resp.CustPersonalJobDataObj.NumOfEmployee,
+      }
+    }
+
+    if (resp.CustGrpObjs) {
+      response.AppCustGrpObjs = resp.CustGrpObjs.map(x => {
+        return {
+          AppCustGrpId: x.AppCustGrpId,
+          AppCustId: x.AppCustId,
+          CustNo: x.CustNo,
+          MrCustRelationshipCode: x.MrCustRelationshipCode,
+          CustGrpNotes: x.CustGrpNotes,
+        }
+      })
+    }
+
+    return response;
   }
 
   initAddrObj() {
@@ -1789,6 +2207,9 @@ export class CustomerDataComponent implements OnInit {
       if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0" && inputLeadString != latestCustDataString) {
         if (confirm("Recent Customer Main Data and Legal Address different with previous data. Are you sure want to submit without fraud check ?")) {
           return true;
+        }
+        else {
+          return false;
         }
       }
       else {

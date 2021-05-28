@@ -15,6 +15,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-nap1-from-lead-detail',
@@ -22,8 +23,6 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 })
 export class Nap1FromLeadDetailComponent implements OnInit {
 
-  param;
-  ProductOfferingIdentifier;
   ProductOfferingNameIdentifier;
   leadId: string;
 
@@ -90,10 +89,9 @@ export class Nap1FromLeadDetailComponent implements OnInit {
     RsvField5: ['']
   });
 
-  inputLookupObjCopyProduct;
   inputLookupObjName;
   officeItems;
-  user;
+  user : CurrentUserContext;
 
   leadObj: LeadObj;
   bizTemplateCode: string;

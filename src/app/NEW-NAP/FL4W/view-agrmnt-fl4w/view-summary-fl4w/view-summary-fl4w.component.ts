@@ -8,12 +8,12 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   styleUrls: ['./view-summary-fl4w.component.scss']
 })
 export class ViewSummaryFl4wComponent implements OnInit {
-  @Input() AgrmntId: any;
+  @Input() AgrmntId: number;
   totalRsvFund: number;
   agrmntObj = {
     Id: 0,
   };
-  totalInsPremi: any;
+  totalInsPremi: number;
   SummaryObj: any;
 
   constructor(private http: HttpClient) { }

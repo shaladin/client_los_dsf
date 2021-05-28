@@ -10,6 +10,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-cust-legal-doc-FL4W',
@@ -26,17 +27,17 @@ export class CustLegalDocFL4WComponent implements OnInit {
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 
-  mode: any;
-  currentEditedIndex: any;
-  closeResult: any;
+  mode: string;
+  currentEditedIndex: number;
+  closeResult: string;
   appCustCompanyLegalDocObj: AppCustCompanyLegalDocObj;
   refMasterObj = {
     RefMasterTypeCode: ""
   };
-  LegalDocTypeObj: any;
-  defaultLegalDocType: any;
-  selectedLegalDocName: any;
-  defaultLegalDocName: any;
+  LegalDocTypeObj: Array<KeyValueObj>;
+  defaultLegalDocType: string;
+  selectedLegalDocName: string;
+  defaultLegalDocName: string;
 
 
   LegalDocForm = this.fb.group({
@@ -48,7 +49,6 @@ export class CustLegalDocFL4WComponent implements OnInit {
     DocNotes: ['', Validators.maxLength(1000)],
     ReleaseLocation: ['', Validators.maxLength(200)]
   });
-  dateErrorMessage: any;
 
 
   constructor(private fb: FormBuilder, private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {

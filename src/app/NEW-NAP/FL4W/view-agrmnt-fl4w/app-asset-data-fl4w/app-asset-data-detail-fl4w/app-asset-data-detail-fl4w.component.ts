@@ -4,6 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { forkJoin } from 'rxjs';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
+import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
 
 @Component({
   selector: 'app-app-asset-data-detail-fl4w',
@@ -12,10 +15,10 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class AppAssetDataDetailFl4wComponent implements OnInit {
   @Input() AppAssetId: number;
   @Input() AgrmntId: number;
-  appAsset: any;
+  appAsset: AppAssetObj;
   appAssetSupplEmp: any;
-  appCollateralRegistration: any;
-  AssetTypeObj: any;
+  appCollateralRegistration: AppCollateralRegistrationObj;
+  AssetTypeObj: AssetTypeObj;
   salesName: string;
   branchManagerName: string;
   adminHeadName: string;

@@ -40,6 +40,8 @@ import { CookieService } from 'ngx-cookie';
 import { UcDropdownListCallbackObj, UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { InsAddCvgObj } from 'app/shared/model/InsuranceOpl/InsAddCvgObj.Model';
 import { values } from 'core-js/core/array';
+import { MaintenancePackageObj } from 'app/shared/model/MaintenancePackageObj.Model';
+import { MaintenancePackageDetailObj } from 'app/shared/model/MaintenancePackageDetailObj.Model';
 
 @Component({
   selector: 'app-asset-expense-add-edit',
@@ -55,11 +57,11 @@ export class AssetExpenseAddEditComponent implements OnInit {
   defaultInsAssetRegion: string;
   IsMultiAsset: string = "false";
   isCanBeAddedMaintenance: boolean = true;
-  InputLookupServiceObj: any;
+  InputLookupServiceObj: InputLookupObj;
   InputLookupServiceObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   dictServiceLookup: { [key: string]: any; } = {};
   items: FormArray;
-  InputLookupSparePartObj: any;
+  InputLookupSparePartObj: InputLookupObj;
   InputLookupSparePartObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   dictSparePartLookup: { [key: string]: any; } = {};
 
@@ -85,8 +87,8 @@ export class AssetExpenseAddEditComponent implements OnInit {
   isCanSave: boolean = true;
   insuredByObj: Array<KeyValueObj>;
   paidByObj: Array<KeyValueObj>;
-  packageTypeRuleObj: any;
-  packageDetailObj: any;
+  packageTypeRuleObj: Array<MaintenancePackageObj>;
+  packageDetailObj: Array<MaintenancePackageDetailObj>;
   insMainCvgTypeObj: Array<KeyValueObj>;
   otherExpenseObj: Array<KeyValueObj>;
   feeObj: Array<KeyValueObj>;

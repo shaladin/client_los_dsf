@@ -20,6 +20,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ResListKeyValueObj } from 'app/shared/model/Response/Generic/ResListKeyValueObj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-cust-job-data',
@@ -30,7 +31,7 @@ import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMas
 })
 
 export class CustJobDataComponent implements OnInit {
-
+  @Input() isLockMode: boolean = null;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
@@ -52,16 +53,16 @@ export class CustJobDataComponent implements OnInit {
   jobDataAddrObj: AddrObj;
   inputFieldJobDataObj: InputFieldObj;
 
-  InputLookupProfessionObj: any;
-  selectedProfessionCode: any;
-  InputLookupIndustryTypeObj: any;
-  selectedIndustryTypeCode: any;
+  InputLookupProfessionObj: InputLookupObj;
+  selectedProfessionCode: string;
+  InputLookupIndustryTypeObj: InputLookupObj;
+  selectedIndustryTypeCode: string;
   IsInitJobData: boolean = true;
   IsCopy: boolean = false;
-  JobPositionObj: any;
-  JobStatObj: any;
-  CompanyScaleObj: any;
-  InvestmentTypeObj: any;
+  JobPositionObj: Array<KeyValueObj>;
+  JobStatObj: Array<KeyValueObj>;
+  CompanyScaleObj: Array<KeyValueObj>;
+  InvestmentTypeObj: Array<KeyValueObj>;
   CustModelObj: Array<KeyValueObj> = new Array<KeyValueObj>();
 
   testing: Date = new Date();
@@ -71,32 +72,56 @@ export class CustJobDataComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient, private cookieService: CookieService) {
-
   }
 
   MaxDate: Date;
-  UserAccess: any;
+  UserAccess: CurrentUserContext;
+
   ngOnInit() {
     this.inputAddressObjForJobData = new InputAddressObj();
     this.inputAddressObjForJobData.showSubsection = false;
     this.inputAddressObjForJobData.showPhn3 = false;
 
+    if(this.isLockMode){
+      this.inputAddressObjForJobData.isReadonly = true;
+      this.inputAddressObjForJobData.isRequired = false;
+      this.inputAddressObjForJobData.inputField.inputLookupObj.isReadonly = true;
+      this.inputAddressObjForJobData.inputField.inputLookupObj.isDisable = true;
+    }
+
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
     this.parentForm.removeControl(this.identifier);
-    this.parentForm.addControl(this.identifier, this.fb.group({
-      CustModelCode: ['', [Validators.required, Validators.maxLength(50)]],
-      ProfessionalNo: ['', Validators.maxLength(50)],
-      EstablishmentDt: [''],
-      JobTitleName: ['', Validators.maxLength(50)],
-      IsMfEmp: [false],
-      CompanyName: ['', [Validators.required, Validators.maxLength(100)]],
-      MrJobPositionCode: ['', Validators.maxLength(50)],
-      MrCompanyScaleCode: ['', Validators.maxLength(50)],
-      NumOfEmployee: [0, Validators.min(0)],
-      MrJobStatCode: ['', Validators.maxLength(50)],
-      MrInvestmentTypeCode: ['', Validators.maxLength(50)]
-    }));
+
+    if(this.isLockMode){
+      this.parentForm.addControl(this.identifier, this.fb.group({
+        CustModelCode: [''],
+        ProfessionalNo: [''],
+        EstablishmentDt: [''],
+        JobTitleName: [''],
+        IsMfEmp: [false],
+        CompanyName: [''],
+        MrJobPositionCode: [''],
+        MrCompanyScaleCode: [''],
+        NumOfEmployee: [0],
+        MrJobStatCode: [''],
+        MrInvestmentTypeCode: ['']
+      }));
+    }else{
+      this.parentForm.addControl(this.identifier, this.fb.group({
+        CustModelCode: ['', [Validators.required, Validators.maxLength(50)]],
+        ProfessionalNo: ['', Validators.maxLength(50)],
+        EstablishmentDt: [''],
+        JobTitleName: ['', Validators.maxLength(50)],
+        IsMfEmp: [false],
+        CompanyName: ['', [Validators.required, Validators.maxLength(100)]],
+        MrJobPositionCode: ['', Validators.maxLength(50)],
+        MrCompanyScaleCode: ['', Validators.maxLength(50)],
+        NumOfEmployee: [0, Validators.min(0)],
+        MrJobStatCode: ['', Validators.maxLength(50)],
+        MrInvestmentTypeCode: ['', Validators.maxLength(50)]
+      }));
+    }
 
     this.inputFieldJobDataObj = new InputFieldObj();
     this.inputFieldJobDataObj.inputLookupObj = new InputLookupObj();
@@ -209,12 +234,22 @@ export class CustJobDataComponent implements OnInit {
     this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
 
+    if(this.isLockMode)
+    {
+      this.InputLookupProfessionObj.isDisable = true;
+    }
+
     this.InputLookupIndustryTypeObj = new InputLookupObj();
     this.InputLookupIndustryTypeObj.urlJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
+    
+    if(this.isLockMode)
+    {
+      this.InputLookupIndustryTypeObj.isDisable = true;
+    }
   }
 
   bindAppCustPersonalJobData() {

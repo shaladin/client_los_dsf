@@ -27,12 +27,10 @@ import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMas
 
 export class CustCompanyMainDataFL4WComponent implements OnInit {
 
-  @Input() appId;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
   @Input() custDataCompanyObj: CustDataCompanyObj = new CustDataCompanyObj();
-  @Input() custType: any;
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
 
   businessDt: Date = new Date();
@@ -42,14 +40,12 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
   refIndustryObj = {
     IndustryTypeCode: ""
   };
-  selectedCustNo: any;
-  selectedIndustryTypeCode: any;
+  selectedCustNo: string;
   custDataObj: CustDataObj;
 
-  InputLookupCustomerObj: any;
-  InputLookupIndustryTypeObj: any;
-  IdTypeObj: any;
-  CompanyTypeObj: any;
+  InputLookupCustomerObj: InputLookupObj;
+  InputLookupIndustryTypeObj: InputLookupObj;
+  CompanyTypeObj: Array<KeyValueObj>;
   CustModelObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   custModelReqObj: ReqRefMasterByTypeCodeAndMappingCodeObj;
 
@@ -196,7 +192,7 @@ export class CustCompanyMainDataFL4WComponent implements OnInit {
     this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
-    this.InputLookupIndustryTypeObj.required = true;
+    this.InputLookupIndustryTypeObj.isRequired = true;
   }
 
   async bindCompanyTypeObj() {
