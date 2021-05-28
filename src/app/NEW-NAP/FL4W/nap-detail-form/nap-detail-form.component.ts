@@ -37,15 +37,14 @@ export class NapDetailFormComponent implements OnInit {
   ResponseReturnInfoObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
-  ListAsset: any;
   custType: string = CommonConstant.CustTypeCompany;
   stepperMode: string = CommonConstant.CustTypeCompany;
   showCancel: boolean = true;
-  getApp: any;
   Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   IsDataReady: boolean = false;
+  BizTemplateCode: string;
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
 
   FormReturnObj = this.fb.group({
@@ -82,6 +81,9 @@ export class NapDetailFormComponent implements OnInit {
         this.mode = 'ReturnHandling';
         this.showCancel = false
       }
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+      }
     });
 
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -89,12 +91,12 @@ export class NapDetailFormComponent implements OnInit {
     };
   }
 
-  async ngOnInit() : Promise<void> {
+  async ngOnInit(): Promise<void> {
     //check DMS
-    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
-    });
+      });
 
     this.ClaimTask();
     this.NapObj.AppId = this.appId;
@@ -105,7 +107,7 @@ export class NapDetailFormComponent implements OnInit {
       this.IsDataReady = true;
     }
     else {
-      var appObj = { Id: this.appId };
+      let appObj = { Id: this.appId };
       this.http.post(URLConstant.GetAppById, appObj).subscribe(
         (response: AppObj) => {
           if (response) {
@@ -126,14 +128,14 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   async initDms() {
-    if(this.SysConfigResultObj.ConfigValue == '1'){
+    if (this.SysConfigResultObj.ConfigValue == '1') {
       this.isDmsReady = false;
       this.dmsObj = new DMSObj();
       let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
       this.dmsObj.User = currentUserContext.UserName;
       this.dmsObj.Role = currentUserContext.RoleCode;
       this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-      var appObj = { Id: this.appId };
+      let appObj = { Id: this.appId };
       this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
         response => {
           this.appNo = this.NapObj.AppNo;
@@ -147,7 +149,7 @@ export class NapDetailFormComponent implements OnInit {
           else {
             this.dmsObj.MetadataParent = null;
           }
-  
+
           let mouId = this.NapObj.MouCustId;
           if (mouId != null && mouId != 0) {
             let mouObj = { Id: mouId };
@@ -164,7 +166,7 @@ export class NapDetailFormComponent implements OnInit {
           }
         }
       );
-    } 
+    }
   }
 
   Cancel() {
@@ -227,7 +229,7 @@ export class NapDetailFormComponent implements OnInit {
       ReqByIdAndCodeObj.Id = this.ReturnHandlingHId;
       ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingEditApp;
       this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
-        (response : ResReturnHandlingDObj) => {
+        (response: ResReturnHandlingDObj) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
             ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
@@ -261,10 +263,10 @@ export class NapDetailFormComponent implements OnInit {
     )
   }
 
-  CheckIsUseDms(){
-    if(this.SysConfigResultObj.ConfigValue == '1'){
+  CheckIsUseDms() {
+    if (this.SysConfigResultObj.ConfigValue == '1') {
       this.NextStep(CommonConstant.AppStepUplDoc);
-    }else{
+    } else {
       this.LastStepHandler();
     }
   }
@@ -325,7 +327,7 @@ export class NapDetailFormComponent implements OnInit {
 
   Submit() {
     if (this.ReturnHandlingHId > 0) {
-      var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+      let ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
       ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
       ReturnHandlingResult.ReturnHandlingHId = this.ResponseReturnInfoObj.ReturnHandlingHId;
       ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
@@ -346,7 +348,7 @@ export class NapDetailFormComponent implements OnInit {
 
   ClaimTask() {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new AppObj();
+    let wfClaimObj = new AppObj();
     wfClaimObj.AppId = this.appId;
     wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
     wfClaimObj.WfTaskListId = this.wfTaskListId;
