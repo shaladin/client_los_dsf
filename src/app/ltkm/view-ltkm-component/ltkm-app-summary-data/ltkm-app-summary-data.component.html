@@ -421,7 +421,7 @@
         <label class="col-md-2  adinslabel" translate
           *ngIf="SummaryObj?.AppFinData != undefined">{{this.SummaryObj.AppFinData.TotalDownPaymentGrossAmt | number:'.2':'en-US'}}</label>
         <label class="col-md-2  adinslabel" translate *ngIf="SummaryObj?.AppFinData == undefined"></label>
-        <label class="col-md-4  adInsLabel" translate>TDP Paid at Coy</label>
+        <label class="col-md-4  adInsLabel" translate>TDP Paid at MF</label>
         <label class="col-md-2  adinslabel" translate
           *ngIf="SummaryObj?.AppFinData">{{this.SummaryObj.AppFinData.TdpPaidCoyAmt | number:'.2':'en-US'}}</label>
       </div>
