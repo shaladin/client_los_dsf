@@ -11,6 +11,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { String } from 'typescript-string-operations';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 
 @Component({
   selector: 'app-schm-data-dlfn',
@@ -27,8 +28,7 @@ export class SchmDataDlfnComponent implements OnInit {
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
-  listInstallment: any;
-  responseCalc: any;
+  listInstallment: Array<InstallmentObj>;
   result: AppObj = new AppObj();
   PriceLabel: string = "Asset Price";
 

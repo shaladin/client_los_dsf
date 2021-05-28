@@ -11,6 +11,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
+import { ResGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 
 @Component({
   selector: 'app-schm-even-principal-dlfn',
@@ -25,8 +27,7 @@ export class SchmEvenPrincipalDlfnComponent implements OnInit {
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcEvenPrincipleObj: CalcEvenPrincipleObj = new CalcEvenPrincipleObj();
-  listInstallment: any;
-  responseCalc: any;
+  listInstallment: Array<InstallmentObj>;
   IsAppFeePrcntValid: boolean = true;
 
   constructor(
@@ -152,9 +153,9 @@ export class SchmEvenPrincipalDlfnComponent implements OnInit {
     var generalSettingObj = {
       Code: "DAYS_IN_YEAR"
     }
-    var result: any;
+    var result: ResGeneralSettingObj;
     this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).subscribe(
-      (response) => {
+      (response: ResGeneralSettingObj) => {
         result = response;
         var DaysInYear = 365;
         if (result.GsValue != undefined && result.GsValue != "") {

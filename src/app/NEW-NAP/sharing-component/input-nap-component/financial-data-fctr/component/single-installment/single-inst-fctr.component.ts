@@ -8,6 +8,7 @@ import { CalcSingleInstObj } from 'app/shared/model/AppFinData/CalcSingleInstObj
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 
 @Component({
   selector: 'app-single-inst-fctr',
@@ -21,8 +22,7 @@ export class SingleInstFctrComponent implements OnInit {
   InterestTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcSingleInstObj: CalcSingleInstObj = new CalcSingleInstObj();
-  listInstallment: any;
-  responseCalc: any;
+  listInstallment: Array<InstallmentObj>;
   IsAppFeePrcntValid: boolean = true;
 
 

@@ -7,6 +7,7 @@ import { CalcProvisionFee } from 'app/shared/model/AppFee/CalcProvisionFee.Model
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-fee-fctr',
@@ -21,7 +22,7 @@ export class FeeFctrComponent implements OnInit {
   appFeeObj: AppFeeObj = new AppFeeObj();
   listAppFeeObj: Array<AppFeeObj> = new Array<AppFeeObj>();
   isSubmitted: boolean;
-  TempProvisionSource: any;
+  TempProvisionSource: Array<KeyValueObj>;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

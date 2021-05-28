@@ -8,6 +8,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
+import { ResGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 
 @Component({
   selector: 'app-single-inst-dlfn',
@@ -22,10 +24,9 @@ export class SingleInstDlfnComponent implements OnInit {
   InterestTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcSingleInstObj: CalcSingleInstObj = new CalcSingleInstObj();
-  listInstallment: any;
-  responseCalc: any;
+  listInstallment: Array<InstallmentObj>;
   IsAppFeePrcntValid: boolean = true;
-  TempTotalDisbAmt: any = 0;
+  TempTotalDisbAmt = 0;
 
 
   constructor(
@@ -146,9 +147,9 @@ export class SingleInstDlfnComponent implements OnInit {
     var generalSettingObj = {
       Code: "DAYS_IN_YEAR"
     }
-    var result: any;
+    var result: ResGeneralSettingObj;
     this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).subscribe(
-      (response) => {
+      (response: ResGeneralSettingObj) => {
         result = response;
         var DaysInYear = 365;
         if (result.GsValue != undefined && result.GsValue != "") {
