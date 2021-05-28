@@ -1,0 +1,83 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header header-title">
+        <div class="row">
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="NapAppForm" (ngSubmit)="NapAppForm.valid && SaveForm()"
+            #enjiForm="ngForm">
+            <!-- Main Info -->
+            <lib-ucSubsection [id]="'addAppId'" [title]="'Add Application'" [panel]="'addApp'">
+            </lib-ucSubsection>
+            <div class="form-body" id="addApp">
+              <div class="form-group row adins-required">
+                <label class="col-md-3 adInsLabel">Office </label>
+                <div class="col-md-4">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="OriOfficeCode"
+                    (change)="ChangeValueOffice($event)"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppForm.controls.OriOfficeCode.invalid }">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let it of officeItems" value="{{it.Key}}">
+                      {{it.Value}} </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-md-3 adInsLabel">Copy Application From </label>
+                <div class="col-md-4">
+                  <label class=" adInsLabel">{{this.AppNo}} </label>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-3 adInsLabel adins-required-label" translate>Line Of Business </label>
+                <div class="col-md-4">
+                  <select class="form-control adInsInput" formControlName="LobCode" (change)="LobChanged($event)"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppForm.controls.LobCode.invalid }">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let ram of listRefLob" [value]="ram.Key">
+                      {{ram.Value}}
+                    </option>
+                  </select>
+                  <lib-uc-show-errors [control]="NapAppForm.controls.LobCode" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-md-3 adInsLabel adins-required-label">Product Offering Name </label>
+                <div class="col-md-4" *ngIf="!isCopyData">
+                  <lib-uclookupgeneric [lookupInput]="inputLookupObjName" [parentForm]='NapAppForm'
+                    [enjiForm]='enjiForm' [identifier]="'ProductOfferingNameIdentifier'" #LookupOffering
+                    (lookup)="getLookupAppResponseName($event)">
+                  </lib-uclookupgeneric>
+                </div>
+                <label class="col-md-4 adInsLabel" *ngIf="isCopyData">{{NapAppForm.controls.ProdOfferingName.value}}
+                </label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel">Currency </label>
+                <label class="col-md-4 adInsLabel">{{this.CurrCode}} </label>
+              </div>
+            </div>
+            <div class="form-actions right">
+              <!-- <button type="button" (click)="testData()" class="btn btn-raised btn-warning mr-1" translate>
+                <i class="fa fa-arrow-circle-left"></i> testData
+              </button> -->
+              <button type="button" class="btn btn-raised btn-warning mr-1"
+                [routerLink]="['/Nap/AddProcess/CopyCancelledAppDsf']" [queryParams]="{LobCode:'CF4W'}" translate>
+                <i class="fa fa-arrow-circle-left"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="fa fa-arrow-circle-right"></i> Next
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

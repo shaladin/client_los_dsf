@@ -34,7 +34,6 @@ import { LtkmMgmntShrholderComponent } from './additional-component/company/mgmn
 import { LtkmBankSectionComponent } from './additional-component/bank-section/bank-section.component';
 import { LtkmCustCompanyMainDataComponent } from './additional-component/company/cust-company-main-data/cust-company-main-data.component';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
-import { CustDataLtkmObj } from 'app/shared/model/CustDataLtkmObj.Model';
 import { LtkmCustDataPersonalObj } from 'app/shared/model/LTKM/LtkmCustDataPersonalObj.Model';
 import { CustDataCompanyLtkmObj } from 'app/shared/model/LTKM/CustDataCompanyLtkmObj.Model';
 import { LtkmCustOtherInfoObj } from 'app/shared/model/LTKM/LtkmCustOtherInfoObj.Model';
@@ -52,6 +51,12 @@ import { LtkmCustObj } from 'app/shared/model/LTKM/LtkmCustObj.Model';
 import { LtkmCustCompanyObj } from 'app/shared/model/LTKM/LtkmCustCompanyObj.Model';
 import { LtkmCustPersonalObj } from 'app/shared/model/LTKM/LtkmCustPersonalObj.Model';
 import { LtkmCustAddrObj } from 'app/shared/model/LTKM/LtkmCustAddrObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { CookieService } from 'ngx-cookie';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 @Component({
     selector: 'app-ltkm-request',
     templateUrl: './ltkm-request.component.html',
@@ -97,14 +102,6 @@ export class LtkmRequestComponent implements OnInit {
     @Output() outputTab: EventEmitter<any> = new EventEmitter();
     @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
-
-    refMasterObj = {
-        RefMasterTypeCode: "",
-    };
-    countryObj = {
-        CountryCode: ""
-    };
-    custDataObj: CustDataLtkmObj;
     custDataPersonalObj: LtkmCustDataPersonalObj = new LtkmCustDataPersonalObj();
     custDataCompanyObj: CustDataCompanyLtkmObj = new CustDataCompanyLtkmObj();
     legalAddrObj: AddrObj;
@@ -113,14 +110,14 @@ export class LtkmRequestComponent implements OnInit {
     inputFieldLegalCompanyObj: InputFieldObj;
     residenceAddrObj: AddrObj;
     inputFieldResidenceObj: InputFieldObj;
-    copyFromResidence: any;
+    copyFromResidence: string;
     mailingAddrObj: AddrObj;
     inputFieldMailingObj: InputFieldObj;
-    copyFromMailing: any;
+    copyFromMailing: string;
     mailingAddrCompanyObj: AddrObj;
     inputFieldMailingCompanyObj: InputFieldObj;
-    copyFromMailingCompany: any;
-    appCustPersonalId: any;
+    copyFromMailingCompany: string;
+    appCustPersonalId: number;
     listAppCustPersonalContactInformation: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>(); inputAddressObjForLegal: InputAddressObj;
     inputAddressObjForResidence: InputAddressObj;
     inputAddressObjForMailing: InputAddressObj;
@@ -130,19 +127,16 @@ export class LtkmRequestComponent implements OnInit {
     listContactPersonCompany: Array<AppCustCompanyContactPersonObj> = new Array<AppCustCompanyContactPersonObj>();
     isBindDataDone: boolean = false;
     isExisting: boolean = false;
-    getRefMasterUrl: any;
-    addEditCustDataPersonalUrl: any;
-    getCustDataUrl: any;
 
-    CustTypeObj: any;
-    copyToResidenceTypeObj: any = [
+    CustTypeObj: Array<KeyValueObj>;
+    copyToResidenceTypeObj: Array<KeyValueObj> = [
         {
             Key: "LEGAL",
             Value: "Legal"
         },
     ];
 
-    copyToMailingTypeObj: any = [
+    copyToMailingTypeObj: Array<KeyValueObj> = [
         {
             Key: "LEGAL",
             Value: "Legal"
@@ -153,7 +147,7 @@ export class LtkmRequestComponent implements OnInit {
         }
     ];
 
-    copyToMailingCompanyTypeObj: any = [
+    copyToMailingCompanyTypeObj: Array<KeyValueObj> = [
         {
             Key: "LEGAL",
             Value: "Legal"
@@ -161,7 +155,7 @@ export class LtkmRequestComponent implements OnInit {
     ];
 
     defCustModelCode: string;
-    MrCustTypeCode: any;
+    MrCustTypeCode: string;
     isMarried: boolean = true;
     spouseGender: string = CommonConstant.MasterCodeGenderFemale;
     isSpouseOk: boolean = true;
@@ -194,7 +188,6 @@ export class LtkmRequestComponent implements OnInit {
     isLockMode: boolean = true;
     private mode: string = "request";
     private WfTaskListId: number;
-    private LtkmNo: string;
     ReturnHandlingId: number;
     FinFormIsDetail: boolean = false;
     BankFormIsDetail: boolean = false;
@@ -202,29 +195,29 @@ export class LtkmRequestComponent implements OnInit {
     isLockLookupCust: boolean = false;
     listFamily: Array<any> = new Array();
 
+    readonly modeReqConst: string = CommonConstant.REQ;
+    readonly modeRtnConst: string = CommonConstant.RTN;
+
+    UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     constructor(
         private router: Router,
         private fb: FormBuilder,
         private http: HttpClient,
         private toastr: NGXToastrService,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+        private cookieService: CookieService) {
         this.route.queryParams.subscribe(params => {
-            this.appId = params["AppId"];
-        })
-        this.route.queryParams.subscribe(params => {
-            this.LtkmCustId = params["LtkmCustId"];
-        })
-        this.route.queryParams.subscribe(params => {
-            if (params["WfTaskListId"] != undefined) {
+            if (params["AppId"] != undefined && params["AppId"] != null) {
+                this.appId = params["AppId"];
+            }            
+            if (params["LtkmCustId"] != undefined && params["LtkmCustId"] != null) {
+                this.LtkmCustId = params["LtkmCustId"];
+            }            
+            if (params["WfTaskListId"] != undefined && params["WfTaskListId"] != null) {
                 this.WfTaskListId = params["WfTaskListId"];
                 if (this.WfTaskListId != undefined) {
-                    this.mode = 'return';
+                    this.mode = this.modeRtnConst;
                 }
-            }
-        })
-        this.route.queryParams.subscribe(params => {
-            if (params["LtkmNo"] != undefined) {
-                this.LtkmNo = params["LtkmNo"];
             }
         })
     }
@@ -262,10 +255,9 @@ export class LtkmRequestComponent implements OnInit {
         this.inputAddressObjForMailingCoy.showPhn3 = false;
         this.inputAddressObjForMailingCoy.showOwnership = true;
 
-        this.initUrl();
         await this.bindCustTypeObj();
         this.initAddrObj();
-        if (this.mode == 'request') {
+        if (this.mode == this.modeReqConst) {
             this.isLockMode = true;
             this.isLockLookupCust = false;
             this.disableInput();
@@ -278,7 +270,7 @@ export class LtkmRequestComponent implements OnInit {
             }
         }
         await this.getCustData();
-        await this.http.post(URLConstant.GetAppById, { AppId: this.appId }).toPromise().then(
+        await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
             (response: AppObj) => {
                 this.appData = response;
             }
@@ -290,84 +282,22 @@ export class LtkmRequestComponent implements OnInit {
     }
 
     async claimTask() {
-        var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
         var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
         wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-        wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
+        wfClaimObj.pUserID = this.UserAccess[CommonConstant.USER_NAME];
         this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
             (response) => {
             });
     }
 
     SaveForm() {
-        // if(this.FinFormIsDetail || this.BankFormIsDetail)
-        // {
-        //   this.toastr.errorMessage("Please close all form detail");
-        //   return;
-        // }
-        // if(this.mode != 'request'){
-        //   if(this.MrCustTypeCode == CommonConstant.CustTypePersonal)
-        //   {
-        //     if(!this.CustDataForm.valid){
-        //       return;
-        //     }
-        //   }
-        //   if(this.MrCustTypeCode == CommonConstant.CustTypeCompany)
-        //   {
-        //     if(!this.CustDataForm.valid){
-        //       return;
-        //     }
-        //   }
-        // }
-
         if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
             //comment urs-los-057, tidak perlu cek per komponent, karna hanya perlu liat cust no saja.
             var custDataPersonalObj = new LtkmCustDataPersonalObj();
             custDataPersonalObj = this.setCustPersonalObjForSave();
-            // for (let i = 0; i < custDataPersonalObj.AppCustGrpObjs.length; i++) {
-            //   for (let j = i+1; j < custDataPersonalObj.AppCustGrpObjs.length; j++) {
-            //     if (custDataPersonalObj.AppCustGrpObjs[i]["CustNo"] == custDataPersonalObj.AppCustGrpObjs[j]["CustNo"] ) {
-            //       this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j+1));
-            //       return;
-            //     }
-
-            //     if (custDataPersonalObj.AppCustGrpObjs[i]["MrCustRelationshipCode"] == custDataPersonalObj.AppCustGrpObjs[j]["MrCustRelationshipCode"]) {
-            //       this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j+1));
-            //       return;
-            //     }
-            //   }
-            // }
-
-            // if(this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W){
-            //   if(custDataPersonalObj.AppCustBankAccObjs.length <= 0){
-            //     this.toastr.errorMessage("Must Have At Least 1 Bank Account");
-            //     return false;
-            //   }
-            // }
-
-            // if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt || this.isExpiredDate) return;
-
-            // if (this.isSpouseOk) {
-            //   this.http.post(this.addEditCustDataPersonalUrl, custDataPersonalObj).subscribe(
-            //     (response) => {
-            //       if (response["StatusCode"] == 200) {
-            //         this.toastr.successMessage(response["message"]);
-            //         this.EmitToMainComp();
-            //       }
-            //       else {
-            //         response["ErrorMessages"].forEach((message: string) => {
-            //           this.toastr.errorMessage(message["Message"]);
-            //         });
-            //       }
-            //     }
-            //   );
-            // }
-            // else {
-            //   this.toastr.warningMessage(ExceptionConstant.INPUT_SPOUSE_CONTACT_INFO);
-            // }
             var personalAnalysisObj: any;
 
-            if (this.mode == 'request') {
+            if (this.mode == this.modeReqConst) {
                 personalAnalysisObj = {
                     Notes: this.CustDataForm.controls["ltkmAnalysis"]["controls"].Notes.value,
                     CustNo: this.mainDataComponent.selectedCustNo,
@@ -384,31 +314,32 @@ export class LtkmRequestComponent implements OnInit {
                 }
             }
 
-            var sendPersonalObj = {
-                requestCustDataPersonalObj: custDataPersonalObj,
-                requestLtkmReqObj: personalAnalysisObj,
-                mode: this.mode,
-                WfTaskListId: this.WfTaskListId,
-                LtkmCustId: this.LtkmCustId
-            }
+            var sendPersonalObj;
+            let personalPath: string = "";
 
-            var personalPath: string = "";
-
-            if (this.mode == 'return') {
+            if (this.mode == this.modeRtnConst) {
                 personalPath = URLConstant.SaveLtkmReturnHandlingPersonal;
+                sendPersonalObj = {
+                    requestCustDataPersonalObj: custDataPersonalObj,
+                    WfTaskListId: this.WfTaskListId,
+                    LtkmCustId: this.LtkmCustId
+                };
             } else {
                 personalPath = URLConstant.SaveLtkmRequestPersonal;
+                sendPersonalObj = {
+                    requestCustDataPersonalObj: custDataPersonalObj,
+                    requestLtkmReqObj: personalAnalysisObj,
+                };
             }
 
             this.http.post(personalPath, sendPersonalObj).subscribe(
                 (response) => {
                     if (response["StatusCode"] == 200) {
                         this.toastr.successMessage(response["message"]);
-                        if (this.mode == 'request') {
-                            // AdInsHelper.RedirectUrl(this.router,["/Ltkm/Request"],{});
-                            this.router.navigate(["/dashboard/dash-board"]);
-                        } else if (this.mode == 'return') {
-                            AdInsHelper.RedirectUrl(this.router, ["/Ltkm/ReturnHandling/Paging"], {});
+                        if (this.mode == this.modeReqConst) {
+                            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
+                        } else if (this.mode == this.modeRtnConst) {
+                            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LTKM_RTN_HANDLING_PAGING], {});
                         }
                     }
                     else {
@@ -421,53 +352,11 @@ export class LtkmRequestComponent implements OnInit {
         }
 
         if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
-            //comment urs-los-057, tidak perlu cek per komponent, karna hanya perlu liat cust no saja.
-            // var totalSharePrcnt = 0;
-
-            // if (this.listShareholder != undefined) {
-            //   for (let i = 0; i < this.listShareholder.length; i++) {
-            //     totalSharePrcnt += this.listShareholder[i].SharePrcnt;
-            //   }
-            // }
-
-            // if (totalSharePrcnt != 100) {
-            //   this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_PERCENTAGE_MUST_100);
-            //   return;
-            // }
-
             var custDataCompanyObj = new CustDataCompanyLtkmObj();
             custDataCompanyObj = this.setCustCompanyObjForSave();//perlu review
-            // for (let i = 0; i < custDataCompanyObj.AppCustGrpObjs.length; i++) {
-            //   for (let j = i+1; j < custDataCompanyObj.AppCustGrpObjs.length; j++) {
-            //     if (custDataCompanyObj.AppCustGrpObjs[i]["CustNo"] == custDataCompanyObj.AppCustGrpObjs[j]["CustNo"] ) {
-            //       this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_CUST_MEMBER + (j+1));
-            //       return;
-            //     }
-
-            //     if (custDataCompanyObj.AppCustGrpObjs[i]["MrCustRelationshipCode"] == custDataCompanyObj.AppCustGrpObjs[j]["MrCustRelationshipCode"]) {
-            //       this.toastr.errorMessage("No " + (i+1) + ExceptionConstant.CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER + (j+1));
-            //       return;
-            //     }
-            //   }
-            // }
-
-            // if(this.appData.BizTemplateCode === CommonConstant.CFNA || this.appData.BizTemplateCode === CommonConstant.CFRFN4W){
-            //   if(custDataCompanyObj.AppCustBankAccObjs.length <= 0){
-            //     this.toastr.errorMessage("Must Have At Least 1 Bank Account");
-            //     return false;
-            //   }
-            // }
-            // if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
-            // this.http.post(URLConstant.AddEditCustDataCompany, custDataCompanyObj).subscribe(
-            //   (response) => {
-            //     this.toastr.successMessage(response["message"]);
-            //     this.EmitToMainComp();
-            //   });
 
             var coyAnalysisObj: any;
-            var personalObj: any;
-
-            if (this.mode == 'request') {
+            if (this.mode == this.modeReqConst) {
                 coyAnalysisObj = {
                     Notes: this.CustDataCompanyForm.controls["ltkmAnalysis"]["controls"].Notes.value,
                     CustNo: this.LtkmCustCompanyMainDataComponent.selectedCustNo,
@@ -484,29 +373,29 @@ export class LtkmRequestComponent implements OnInit {
                 }
             }
 
-            var sendCoyObj = {
-                requestCustDataCompanyLtkmObj: custDataCompanyObj,
-                requestCustDataPersonalObj: personalObj,
-                requestLtkmReqObj: coyAnalysisObj,
-                mode: this.mode,
-                WfTaskListId: this.WfTaskListId,
-                LtkmCustId: this.LtkmCustId
-            }
-
+            var sendCoyObj;
             var coyPath: string = "";
 
-            if (this.mode == 'return') {
+            if (this.mode == this.modeRtnConst) {
                 coyPath = URLConstant.SaveLtkmReturnHandlingCompany;
+                sendCoyObj = {
+                    requestCustDataCompanyLtkmObj: custDataCompanyObj,
+                    WfTaskListId: this.WfTaskListId,
+                    LtkmCustId: this.LtkmCustId
+                };
             } else {
                 coyPath = URLConstant.SaveLtkmRequestCompany;
+                sendCoyObj = {
+                    requestCustDataCompanyLtkmObj: custDataCompanyObj,
+                    requestLtkmReqObj: coyAnalysisObj,
+                };
             }
 
             this.http.post(coyPath, sendCoyObj).subscribe(
                 (response) => {
                     if (response["StatusCode"] == 200) {
                         this.toastr.successMessage(response["message"]);
-                        // AdInsHelper.RedirectUrl(this.router,["/Ltkm/Request"],{});
-                        this.router.navigate(["/dashboard/dash-board"]);
+                        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
                     }
                     else {
                         response["ErrorMessages"].forEach((message: string) => {
@@ -675,9 +564,8 @@ export class LtkmRequestComponent implements OnInit {
     isExpiredEstablishmentDt: boolean = false;
     isExpiredDate: boolean = false;
     CekDt(inputDate: Date, type: string) {
-        var UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-        var MaxDate = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
-        var Max17YO = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+        var MaxDate = formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+        var Max17YO = formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
         let max17Yodt = new Date(Max17YO);
         let d1 = new Date(inputDate);
         let d2 = new Date(MaxDate);
@@ -836,10 +724,6 @@ export class LtkmRequestComponent implements OnInit {
 
             appCustAddrLegalObj.MrHouseOwnershipCode = this.CustDataForm.controls["legalAddr"]["controls"].MrHouseOwnershipCode.value;
             appCustAddrLegalObj.StayLength = this.CustDataForm.controls["legalAddr"]["controls"].StayLength.value;
-
-            // if(this.isExisting){
-            //   appCustAddrLegalObj.RowVersion = this.custDataPersonalObj.LtkmCustAddrLegalObj.RowVersion;
-            // }
         }
 
         if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
@@ -862,10 +746,6 @@ export class LtkmRequestComponent implements OnInit {
             appCustAddrLegalObj.SubZipcode = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].SubZipcode.value;
 
             appCustAddrLegalObj.MrHouseOwnershipCode = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].MrHouseOwnershipCode.value;
-
-            // if(this.isExisting){
-            //   appCustAddrLegalObj.RowVersion = this.custDataCompanyObj.AppCustAddrLegalObj.RowVersion;
-            // }
         }
 
         return appCustAddrLegalObj;
@@ -1064,9 +944,8 @@ export class LtkmRequestComponent implements OnInit {
     }
 
     CheckDt(inputDate: Date, type: string) {
-        let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-        let MaxDate = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
-        let Max17YO = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+        let MaxDate = formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+        let Max17YO = formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
         let max17Yodt = new Date(Max17YO);
         let d1 = new Date(inputDate);
         let d2 = new Date(MaxDate);
@@ -1592,8 +1471,8 @@ export class LtkmRequestComponent implements OnInit {
     }
 
     async getCustData() {
-        this.custDataObj = new CustDataLtkmObj();
-        this.custDataObj.LtkmCustId = this.LtkmCustId;
+        let custDataObj: GenericObj = new GenericObj();
+        custDataObj.Id = this.LtkmCustId;
 
         if (this.LtkmCustId == undefined || this.LtkmCustId == 0 || this.LtkmCustId == null) {
             this.MrCustTypeCode = this.CustTypeObj[0].Key;
@@ -1601,7 +1480,7 @@ export class LtkmRequestComponent implements OnInit {
             return;
         }
 
-        await this.http.post(this.getCustDataUrl, this.custDataObj).toPromise().then(
+        await this.http.post(URLConstant.GetCustDataByLtkmCustId, custDataObj).toPromise().then(
             async (response) => {
                 if (response["AppCustObj"]["LtkmCustId"] > 0) {
                     if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
@@ -2189,31 +2068,13 @@ export class LtkmRequestComponent implements OnInit {
         }
     }
 
-    initUrl() {
-        this.addEditCustDataPersonalUrl = URLConstant.AddEditCustDataPersonal;
-        this.getCustDataUrl = URLConstant.GetCustDataByLtkmCustId;
-        this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-    }
-
-    // bindCopyFrom(){
-    //   this.CustDataForm.patchValue({
-    //     CopyFromResidence: this.copyToResidenceTypeObj[0].Key,
-    //     CopyFromMailing: this.copyToMailingTypeObj[0].Key
-    //   });
-
-    //   this.CustDataCompanyForm.patchValue({
-    //     CopyFromMailing: this.copyToMailingCompanyTypeObj[0].Key
-    //   });
-    // }
-
     async bindCustTypeObj() {
-        this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
-        await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
+        let reqTempObj: ReqRefMasterByTypeCodeAndMappingCodeObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
+        reqTempObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
+        reqTempObj.MappingCode = null;
+        await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, reqTempObj).toPromise().then(
             (response) => {
                 this.CustTypeObj = response[CommonConstant.ReturnObj];
-                // if (this.CustTypeObj.length > 0) {
-                //   this.MrCustTypeCode = this.CustTypeObj[0].Key;
-                // }
             }
         );
     }

@@ -4,7 +4,7 @@
     <div id="LegalDocSection">
       <div *ngIf="!IsDetail">
         <div *ngIf="!isLockMode" class="button-right margin-15">
-          <button type="button" class="btn btn-raised btn-primary" (click)="LegalDocHandler('Add')" translate>
+          <button type="button" class="btn btn-raised btn-primary" (click)="LegalDocHandler(ModeAddConst)" translate>
             <i class="ft-plus-circle"></i> Add
           </button>
         </div>
@@ -40,11 +40,11 @@
                 <td class="text-center">{{item.DocExpiredDt | date: 'dd-MMM-yyyy'}}</td>
                 <td class="text-center">{{item.NotaryName }}</td>
                 <td>
-                  <a class="success p-0" (click)="LegalDocHandler('Edit', listLtkmCustCompanyLegalDoc[i], i)">
+                  <a class="success p-0" (click)="LegalDocHandler(ModeEditConst, listLtkmCustCompanyLegalDoc[i], i)">
                     <i class="ft-edit-2 font-medium-3 mr-2"></i>
                   </a>
                   <a *ngIf="!isLockMode" class="warning p-0"
-                    (click)="LegalDocHandler('Delete', listLtkmCustCompanyLegalDoc[i], i)">
+                    (click)="LegalDocHandler(ModeDelConst, listLtkmCustCompanyLegalDoc[i], i)">
                     <i class="ft-trash-2 font-medium-3 mr-2"></i>
                   </a>
                 </td>
@@ -157,7 +157,7 @@
           </div>
         </div>
         <div class="form-actions right">
-          <button type="button" (click)="LegalDocHandler('Cancel')" class="btn btn-raised btn-warning mr-1">
+          <button type="button" (click)="LegalDocHandler(ModeCanConst)" class="btn btn-raised btn-warning mr-1">
             <i class="ft-x"></i> Cancel
           </button>
           <button type="submit" *ngIf="!isLockMode" (click)="SaveForm(enjiForm)" class="btn btn-raised btn-primary mr-1">

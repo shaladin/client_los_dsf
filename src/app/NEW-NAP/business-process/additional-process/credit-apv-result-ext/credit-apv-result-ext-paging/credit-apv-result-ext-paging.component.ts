@@ -17,6 +17,7 @@ export class CreditApvResultExtPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   link: string;
   BizTemplateCode: string;
+  allowedStep = ['AGR', 'PO'];
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private router: Router) { 
     this.route.queryParams.subscribe(params => {
@@ -38,6 +39,13 @@ export class CreditApvResultExtPagingComponent implements OnInit {
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.value = this.BizTemplateCode;
     this.inputPagingObj.addCritInput.push(critObj);
+
+    let addCrit: CriteriaObj = new CriteriaObj();
+    addCrit.DataType = "text";
+    addCrit.propName = "A.APP_CURR_STEP";
+    addCrit.restriction = AdInsConstant.RestrictionIn;
+    addCrit.listValue = this.allowedStep;
+    this.inputPagingObj.addCritInput.push(addCrit);
   }
 
   getEvent(ev){

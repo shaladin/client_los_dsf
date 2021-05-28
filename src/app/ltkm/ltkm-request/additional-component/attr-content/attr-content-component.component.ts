@@ -34,16 +34,11 @@ export class LtkmAttrContentComponentComponent implements OnInit {
     AttrContent: LtkmAttrContent;
 
     async ngOnInit() {
-
         this.setData();
     }
 
     setData() {
-        console.log('richard check');
-        var custGrp = {
-            AttrGroup: this.AttrGroup
-        };
-        this.httpClient.post<Array<RefAttr>>(URLConstant.GetListActiveRefAttrByAttrGroup, custGrp).subscribe(
+        this.httpClient.post<Array<RefAttr>>(URLConstant.GetListActiveRefAttrByAttrGroup, { AttrGroup: this.AttrGroup }).subscribe(
             async (response) => {
                 this.RefAttrList = response[CommonConstant.ReturnObj];
 
@@ -171,11 +166,7 @@ export class LtkmAttrContentComponentComponent implements OnInit {
             }
             if (isUpdateValue == false) {
                 if (refAttr.DefaultValue != null) {
-                    var refMaster = {
-                        RefMasterTypeCode: refAttr.AttrValue,
-                        MasterCode: refAttr.DefaultValue
-                    };
-                    await this.httpClient.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
+                    await this.httpClient.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, { RefMasterTypeCode: refAttr.AttrValue, MasterCode: refAttr.DefaultValue }).toPromise().then(
                         (response) => {
                             this.tempLookup[refAttr.AttrCode].jsonSelect = { Descr: response['Descr'] }
                         });

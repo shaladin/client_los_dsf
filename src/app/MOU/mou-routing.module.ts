@@ -22,7 +22,6 @@ import { MouOsTcDetailComponent } from './mou-os-tc/mou-os-tc-detail/mou-os-tc-d
 import { MouCustomerInquiryComponent } from './mou-customer/mou-customer-inquiry/mou-customer-inquiry.component';
 import { TestUploadComponent } from './test-upload/test-upload.component';
 import { MouCancelComponent } from './mou-cancel/mou-cancel.component';
-import { UnauthorizedPageComponent } from './unauthorized-page/unauthorized-page.component';
 import { MouExecutionPagingComponent } from './mou-execution/mou-execution-paging/mou-execution-paging.component';
 import { MouExecutionDetailComponent } from './mou-execution/mou-execution-detail/mou-execution-detail.component';
 import { MouDupCheckPagingComponent } from './mou-dup-check/mou-dup-check-paging/mou-dup-check-paging.component';
@@ -195,13 +194,6 @@ const routes: Routes = [
         component: MouOsTcDetailComponent,
         data: {
           title: "MOU Outstanding TC"
-        }
-      },
-      {
-        path: PathConstant.MOU_UNAUTHORIZED_PAGE,
-        component: UnauthorizedPageComponent,
-        data: {
-          title: "Unauthorized Page"
         }
       },
       {

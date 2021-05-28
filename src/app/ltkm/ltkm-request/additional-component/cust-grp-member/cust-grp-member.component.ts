@@ -8,6 +8,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { LtkmCustGrpObj } from 'app/shared/model/LTKM/LtkmCustGrpObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
     selector: 'app-ltkm-cust-grp-member',
@@ -23,34 +24,21 @@ export class LtkmCustGrpMemberComponent implements OnInit {
     @Input() isLockMode: boolean = false;
     @Input() enjiForm: NgForm;
     @Input() parentForm: FormGroup;
-    @Input() identifier: any;
+    @Input() identifier: string;
     @Input() ltkmCustGrpObjs: Array<LtkmCustGrpObj>;
 
-    refMasterObj = {
-        RefMasterTypeCode: "",
-    };
     custDataObj: CustDataObj;
+    dictLookup: { [key: string]: InputLookupObj; } = {};
+    CustRelationshipObjs: Array<{ list: Array<KeyValueObj> }> = new Array();
 
-    dictLookup: { [key: string]: any; } = {};
-
-    CustRelationshipObjs: [{
-        list: []
-    }] = [{ list: [] }];
-
-    CustRelationshipPersonalObj: any;
-    CustRelationshipCompanyObj: any;
-    defaultCustRelationshipPersonalCode: any;
-    defaultCustRelationshipCompanyCode: any;
+    CustRelationshipPersonalObj: Array<KeyValueObj>;
+    CustRelationshipCompanyObj: Array<KeyValueObj>;
+    defaultCustRelationshipPersonalCode: string;
+    defaultCustRelationshipCompanyCode: string;
 
     InputLookupCustomerObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
     lookupCustomerIdentifiers: Array<string> = new Array<string>();
-
-    custObj = {
-        CustNo: ""
-    };
-
     custMasterObj: any;
-
 
     constructor(
         private fb: FormBuilder,
@@ -72,7 +60,7 @@ export class LtkmCustGrpMemberComponent implements OnInit {
     addCustGrp() {
         var custSocmedObjs = this.parentForm.controls[this.identifier] as FormArray;
         var length = this.parentForm.value[this.identifier].length;
-        var max = 0;
+        var max: number = 0;
         if (length > 0) {
             max = this.parentForm.value[this.identifier][length - 1].No;
         }
@@ -83,20 +71,9 @@ export class LtkmCustGrpMemberComponent implements OnInit {
         this.dictLookup[max + 1] = InputLookupCustomerObj;
 
         this.CustRelationshipObjs.push({ list: [] });
-
-        // if(this.identifier == AdInsConstant.CustGrupIndentifierTypePersonal){
-        //   this.CustRelationshipObjs.push({list: []});
-        // }
-
-        // if(this.identifier == AdInsConstant.CustGrupIndentifierTypeCompany){
-        //   this.CustRelationshipObjs.push({list: this.CustRelationshipCompanyObj});
-        //   this.parentForm.controls[this.identifier]["controls"][max].patchValue({
-        //     MrCustRelationshipCode: this.defaultCustRelationshipCompanyCode
-        //   });
-        // }
     }
 
-    deleteCustGrp(i) {
+    deleteCustGrp(i: number) {
         if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
             var custCustGrpObjs = this.parentForm.controls[this.identifier] as FormArray;
             var no = custCustGrpObjs.controls[i]["controls"]["No"].value;
@@ -106,7 +83,7 @@ export class LtkmCustGrpMemberComponent implements OnInit {
         }
     }
 
-    initLookup() {
+    initLookup(): InputLookupObj {
         var InputLookupCustomerObj = new InputLookupObj();
         InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustGrp.json";
         InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
@@ -129,7 +106,7 @@ export class LtkmCustGrpMemberComponent implements OnInit {
         return InputLookupCustomerObj;
     }
 
-    CopyCustomer(event, i) {
+    CopyCustomer(event, i: number) {
         this.parentForm.controls[this.identifier]["controls"][i].patchValue({
             CustNo: event.CustNo,
             CustName: event.CustName
@@ -175,7 +152,7 @@ export class LtkmCustGrpMemberComponent implements OnInit {
         this.bindAppGrp();
     }
 
-    addGroup(appCustGrpObj: LtkmCustGrpObj, i) {
+    addGroup(appCustGrpObj: LtkmCustGrpObj, i: number) {
         if (this.isLockMode) {
             if (appCustGrpObj == undefined) {
                 return this.fb.group({
@@ -219,9 +196,8 @@ export class LtkmCustGrpMemberComponent implements OnInit {
         }
     }
 
-    async setCustNameAndCustRelationship(i, custNo) {
-        this.custObj.CustNo = custNo;
-        await this.http.post(URLConstant.GetCustByCustNo, this.custObj).toPromise().then(
+    async setCustNameAndCustRelationship(i: number, custNo: string) {
+        await this.http.post(URLConstant.GetCustByCustNo, { CustNo: custNo }).toPromise().then(
             (response) => {
                 this.custMasterObj = response;
                 this.dictLookup[i].nameSelect = response["CustName"];
@@ -245,24 +221,22 @@ export class LtkmCustGrpMemberComponent implements OnInit {
 
 
     async bindCustRelationshipPersonalObj() {
-        this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
-        await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+        await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship }).toPromise().then(
             (response) => {
                 this.CustRelationshipPersonalObj = response[CommonConstant.ReturnObj];
                 if (this.CustRelationshipPersonalObj.length > 0) {
-                    this.defaultCustRelationshipPersonalCode = this.CustRelationshipPersonalObj[0].Key
+                    this.defaultCustRelationshipPersonalCode = this.CustRelationshipPersonalObj[0].Key;
                 }
             }
         );
     }
 
     async bindCustRelationshipCompanyObj() {
-        this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
-        await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+        await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustCompanyRelationship }).toPromise().then(
             (response) => {
                 this.CustRelationshipCompanyObj = response[CommonConstant.ReturnObj];
                 if (this.CustRelationshipCompanyObj.length > 0) {
-                    this.defaultCustRelationshipCompanyCode = this.CustRelationshipCompanyObj[0].Key
+                    this.defaultCustRelationshipCompanyCode = this.CustRelationshipCompanyObj[0].Key;
                 }
             }
         );

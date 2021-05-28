@@ -28,7 +28,7 @@ export class CreditApprovalCfnaDetailComponent implements OnInit {
   mrCustTypeCode: string;
   viewObj: string;
   type: string;
-  inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
+  inputObj: { taskId: number; instanceId: number; approvalBaseUrl: string; };
   ManualDeviationData;
   isExistedManualDeviationData;
   BizTemplateCode: string;
@@ -41,8 +41,8 @@ export class CreditApprovalCfnaDetailComponent implements OnInit {
   taskId: number;
   dmsObj: DMSObj;
   isDmsReady: boolean;
-  appNo: any;
-  custNo: any;
+  appNo: string;
+  custNo: string;
   IsUseDigitalization: string;
   IsViewReady: boolean = false;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
@@ -236,8 +236,6 @@ export class CreditApprovalCfnaDetailComponent implements OnInit {
   }
 
   async GetIsUseDigitalization() {
-    var generalSettingObj = new GeneralSettingObj();
-    generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
     await this.http.post(URLConstant.GetGeneralSettingValueByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).toPromise().then(
       (response: GeneralSettingObj) => {
         this.IsUseDigitalization = response.GsValue;

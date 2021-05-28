@@ -1,0 +1,207 @@
+{
+    "title": "Change MOU Request",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "MOU.MOU_CUST_NO",
+            "id": "MouCustNoId",
+            "value": "",
+            "label": "Mou No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "MOU.MR_MOU_TYPE_CODE",
+            "id": "MrMouTypeCodeId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "path": "/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Mou Type",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "MOU_TYPE"
+        },
+        {
+            "type": "textbox",
+            "name": "MOU.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "MOU.IS_REVOLVING",
+            "id": "IsRevolvingId",
+            "label": "Revolving",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "ddlType": "all",
+            "items": [
+                {
+                    "key": true,
+                    "value": "Yes"
+                },
+                {
+                    "key": false,
+                    "value": "No"
+                }
+            ],
+            "url": "",
+            "itemsUrl": [],
+            "criteriaPropName": "",
+            "criteriaPropValue": ""
+        },
+        {
+            "type": "datepicker",
+            "name": "MOU.MOU_CUST_DT",
+            "id": "GreaterMouDtId",
+            "value": "",
+            "label": "Mou Date From",
+            "restriction": "gte",
+            "datatype": "date"
+        },
+        {
+            "type": "datepicker",
+            "name": "MOU.MOU_CUST_DT",
+            "id": "LessMouDtId",
+            "value": "",
+            "label": "Mou Date To",
+            "restriction": "lte",
+            "datatype": "date"
+        },
+        {
+            "type": "textbox",
+            "name": "MOU.REF_NO",
+            "id": "MouRefNoId",
+            "value": "",
+            "label": "Reference No",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "name": "searchChangeMouRequest"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU NO",
+            "name": "MouCustNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU DATE",
+            "name": "MouCustDt"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "EXPIRED DATE",
+            "name": "ExpDt"
+        },
+        {
+            "type": "sort",
+            "position": "right",
+            "label": "PLAFOND AMOUNT",
+            "name": "PlafondAmt"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "REVOLVING",
+            "name": "IsRevolving"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "REFERENCE NO",
+            "name": "RefNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU TYPE",
+            "name": "MrMouTypeCode"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "ACTION"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "link",
+            "position": "center",
+            "property": "MouCustNo",
+            "path": "VIEW_MOU_CUST",
+            "target": "_blank",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
+        },
+        {
+            "type": "callback",
+            "key": "ViewCust",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "MouCustDt"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "ExpDt"
+        },
+        {
+            "type": "decimal",
+            "position": "right",
+            "property": "PlafondAmt"
+        },
+        {
+            "type": "boolean",
+            "position": "center",
+            "property": "IsRevolving"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "RefNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MrMouTypeCode"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "callback",
+                    "key": "edit"
+                }
+            ]
+        }
+    ]
+}

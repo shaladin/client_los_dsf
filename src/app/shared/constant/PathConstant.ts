@@ -16,6 +16,7 @@ export class PathConstant {
     public static LR_LTKM = "Ltkm";
     public static LR_TRIAL_CALC = "TrialCalculation";
     public static LR_TASK_REASSIGN = "TaskReassignment";
+    public static UNAUTHORIZED = "Unauthorized";
     //#endregion
 
     //#region Common-Path
@@ -353,7 +354,6 @@ export class PathConstant {
     public static MOU_CUST_OUTSTANDING_TC = PathConstant.MOU_CUST + "/OutstandingTC";
     public static MOU_CUST_OUTSTANDING_TC_PAGING = PathConstant.MOU_CUST_OUTSTANDING_TC + "/" + PathConstant.PAGING;
     public static MOU_CUST_OUTSTANDING_TC_DETAIL = PathConstant.MOU_CUST_OUTSTANDING_TC + "/" + PathConstant.DETAIL;
-    public static MOU_UNAUTHORIZED_PAGE = "UnauthorizedPage";
     public static MOU_EXECUTION = "Execution";
     public static MOU_EXECUTION_PAGING = PathConstant.MOU_EXECUTION + "/" + PathConstant.PAGING;
     public static MOU_EXECUTION_DETAIL = PathConstant.MOU_EXECUTION + "/" + PathConstant.DETAIL;
@@ -514,19 +514,18 @@ export class PathConstant {
     public static VIEW_PO = "POView";
     public static VIEW_LEAD = "Lead";
     public static VIEW_MOU_CUST = "Mou/CustView";
+    public static VIEW_CHANGE_MOU = "ChangeMouView";
     public static VIEW_SRVY = "SurveyView";
     public static VIEW_CUST_EXPSR = "CustExposureView";
     public static VIEW_PHN_VERIF = "PhoneVerifView";
     public static VIEW_PURCHASE_TRACKING = "PurchaseTracking";
     public static VIEW_APP_ASSET = "AppAsset";
     public static VIEW_APP_LIST = "AppList";
-    public static VIEW_CHANGE_MOU = "ChangeMouView";
     //#endregion
 
     //#region FOU-View-Module
     public static VIEW_FOU_CUST_PERSONAL_DETAIL = "Customer/PersonalDetail";
     public static VIEW_FOU_CUST_COY_DETAIL = "Customer/CoyDetail"
-    public static VIEW_FOU_OFFERING = "Offering";
     public static VIEW_FOU_VENDOR_BRANCH = "Vendor/VendorBranch";
     public static VIEW_FOU_SRVY_TASK = "Survey/SurveyTask";
     public static VIEW_FOU_SRVY_ORDER = "Survey/SurveyOrder";

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -17,8 +17,7 @@ export class AgrMainInfoComponent implements OnInit {
   isReady: boolean = false;
  
   constructor(
-    private router: Router,
-    private http: HttpClient ) { }
+    private router: Router, private http: HttpClient, private route: ActivatedRoute ) { }
 
   async ngOnInit() {
     this.viewGenericObj.viewEnvironment = environment.losUrl;
@@ -42,6 +41,9 @@ export class AgrMainInfoComponent implements OnInit {
             if(response['BizTemplateCode'] == CommonConstant.FL4W){
               this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrFL4WMainInfo.json";
             }
+            else if(response['BizTemplateCode'] == CommonConstant.CFNA) {
+		      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoCFNA.json";
+		    } 
             else{
               this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfo.json";
             }

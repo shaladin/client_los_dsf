@@ -234,6 +234,10 @@
                   {
                     "type": "WfTaskListId",
                     "property": "WfTaskListId"
+                  },
+                  {
+                    "type": "MrCustTypeCode",
+                    "property": "MrCustTypeCode"
                   }
                 ]
               },

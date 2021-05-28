@@ -125,8 +125,7 @@ export class LtkmApprovalDetailComponent implements OnInit {
     }
 
     async GetLtkmReqByLtkmNo() {
-        var Obj = { Id: this.LtkmCustId };
-        await this.http.post<LtkmReqObj>(URLConstant.getLtkmReqByLtkmCustId, Obj).toPromise().then(
+        await this.http.post<LtkmReqObj>(URLConstant.getLtkmReqByLtkmCustId, { Id: this.LtkmCustId }).toPromise().then(
             (response) => {
                 this.ltkmReq = response["ReturnObject"];
                 if (this.ltkmReq != undefined) {
@@ -158,53 +157,8 @@ export class LtkmApprovalDetailComponent implements OnInit {
         )
     }
 
-    //   async getApp() {
-    //     var appObj = new AppObj();
-    //     appObj.AppId = this.appId
-    //     await this.http.post<AppObj>(URLConstant.GetAppById, appObj).toPromise().then(
-    //       (response) => {
-    //         this.AppObj = response;
-    //       });
-    //   }
-    onAvailableNextTask() {
-
-    }
     onApprovalSubmited(event) {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LTKM_VERIFY_APV_PAGING], {  });
-    //   if (event[0].ApvResult.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
-    //   //   var returnHandlingHObj = new ReturnHandlingHObj();
-    //   //   var user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-  
-    //   //   returnHandlingHObj.AppId = this.appId;
-    //   //   returnHandlingHObj.AgrmntId = null;
-    //   //   returnHandlingHObj.ReturnBy = user.UserName;
-    //   //   returnHandlingHObj.ReturnDt = user.BusinessDt;
-    //   //   returnHandlingHObj.ReturnNotes = event[0].notes;
-    //   //   returnHandlingHObj.ReturnFromTrxType = this.AppObj.AppCurrStep;
-  
-    //   //   this.http.post(URLConstant.AddReturnHandlingH, returnHandlingHObj).subscribe(
-    //   //     (response) => {
-    //   //       AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": this.BizTemplateCode });
-    //   //     });
-  
-  
-    //     AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LTKM_VERIFY_APV_PAGING], {  });
-    //   } 
-    //   else if(event[0].ApvResult.toLowerCase() == CommonConstant.ApvResultRejectFinal.toLowerCase()){
-    //   //   console.log("cust neg");
-    //   //   var NegCustObj = {
-    //   //     AppId: this.appId,
-    //   //     MrNegCustSourceCode: CommonConstant.NegCustSourceCodeConfins,
-    //   //     NegCustCause: event.reason
-    //   //   };
-    //   //   this.http.post(URLConstant.AddNegativeCustByAppId, NegCustObj).subscribe(
-    //   //     (response) => {
-    //   //       AdInsHelper.RedirectUrl(this.router,["/Nap/CreditProcess/CreditApproval/Paging"], { "BizTemplateCode": this.BizTemplateCode });
-    //   //     });
-    //     AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LTKM_VERIFY_APV_PAGING], {  });
-    //   } else {
-    //     AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LTKM_VERIFY_APV_PAGING], {  });
-    //   }
     }
 
     onCancelClick() {
