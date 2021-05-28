@@ -903,11 +903,33 @@ export class LeadInputLeadDataComponent implements OnInit {
         }
         else if (this.typePage == "update") {
 
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
+          this.outputTab.emit({
+            stepMode: "next",
+            LeadInputLeadDataObj: this.leadInputLeadDataObj,
+            urlPost: URLConstant.SubmitWorkflowLeadInput,
+            paging: "/Lead/LeadUpdate/Paging",
+            typePage: this.typePage,
+            originPage: this.originPage,
+            resLeadAssetObj: this.resLeadAssetObj,
+            lobKta: this.lobKta,
+            returnLobCode: this.returnLobCode,
+            WfTaskListId: this.WfTaskListId
+          });
 
         }
         else {
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/Lead/Paging" });
+          this.outputTab.emit({
+            stepMode: "next",
+            LeadInputLeadDataObj: this.leadInputLeadDataObj,
+            urlPost: URLConstant.SubmitWorkflowLeadInput,
+            paging: "/Lead/Lead/Paging",
+            typePage: this.typePage,
+            originPage: this.originPage,
+            resLeadAssetObj: this.resLeadAssetObj,
+            lobKta: this.lobKta,
+            returnLobCode: this.returnLobCode,
+            WfTaskListId: this.WfTaskListId
+          });
         }
       }
       else {
