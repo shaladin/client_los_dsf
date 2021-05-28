@@ -42,6 +42,7 @@ export class FinancialDataComponent implements OnInit {
   listSubsidy: Array<AppSubsidyObj> = new Array<AppSubsidyObj>();
   AppData: AppObj;
   isReady: boolean = false;
+  instAmt: number;
 
   constructor(
     private fb: FormBuilder,
@@ -94,7 +95,7 @@ export class FinancialDataComponent implements OnInit {
         AppSupplEffectiveRatePrcnt: 0,
 
         DiffRateAmt: 0,
-        SubsidyAmtFromDiffRate: {value: 0, disabled: true},
+        SubsidyAmtFromDiffRate: { value: 0, disabled: true },
         CommissionAmtFromDiffRate: 0,
         IsSubsidyRateExist: false,
         ResidualValueAmt: [0, this.BizTemplateCode == CommonConstant.FL4W ? [Validators.min(0)] : []],
@@ -148,7 +149,7 @@ export class FinancialDataComponent implements OnInit {
     this.http.post<AppFinDataObj>(URLConstant.GetInitAppFinDataByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
-
+        this.instAmt = response['InstAmt'];
         if (this.appFinDataObj.MrInstSchemeCode != CommonConstant.InstSchmRegularFix) {
           this.FinDataForm.get("RateType").disable();
         }
@@ -180,7 +181,7 @@ export class FinancialDataComponent implements OnInit {
 
           MrInstSchemeCode: this.appFinDataObj.MrInstSchemeCode,
           CummulativeTenor: this.appFinDataObj.CummulativeTenor,
-
+          TdpPaidCoyAmt: this.appFinDataObj.TdpPaidCoyAmt,
           NtfAmt: this.appFinDataObj.NtfAmt,
           ApvAmt: this.appFinDataObj.ApvAmt,
 
@@ -234,20 +235,20 @@ export class FinancialDataComponent implements OnInit {
     this.outputCancel.emit();
   }
 
-  CheckSubsidyRate(event){
+  CheckSubsidyRate(event) {
     if (this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmRegularFix || this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmBalloon) {
       var listSubsidy: Array<AppSubsidyObj> = event;
 
       var subsidyRate = listSubsidy.find(x => x.MrSubsidyAllocCode == CommonConstant.SubsidyAllocSubsidyRate);
-  
-      if(subsidyRate != undefined){
+
+      if (subsidyRate != undefined) {
         this.FinDataForm.patchValue({
           CommissionAmtFromDiffRate: 0,
           IsSubsidyRateExist: true
         });
         this.FinDataForm.get("CommissionAmtFromDiffRate").disable();
         this.FinDataForm.get("AppSupplEffectiveRatePrcnt").disable();
-      }else{
+      } else {
         this.FinDataForm.patchValue({
           SubsidyAmtFromDiffRate: 0,
           IsSubsidyRateExist: false
@@ -255,44 +256,44 @@ export class FinancialDataComponent implements OnInit {
         this.FinDataForm.get("CommissionAmtFromDiffRate").enable();
         this.FinDataForm.get("AppSupplEffectiveRatePrcnt").enable();
       }
-    }  
+    }
   }
 
-  SetInputByCalcBase(calcBase){
-    if(calcBase == CommonConstant.FinDataCalcBaseOnRate){
-      if(this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmRegularFix){
+  SetInputByCalcBase(calcBase) {
+    if (calcBase == CommonConstant.FinDataCalcBaseOnRate) {
+      if (this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmRegularFix) {
         this.FinDataForm.get("RateType").enable();
-      }      
+      }
       this.FinDataForm.get("EffectiveRatePrcnt").enable();
       this.FinDataForm.get("InstAmt").disable();
-    }else if(calcBase == CommonConstant.FinDataCalcBaseOnInst){      
+    } else if (calcBase == CommonConstant.FinDataCalcBaseOnInst) {
       this.FinDataForm.get("RateType").disable();
       this.FinDataForm.get("EffectiveRatePrcnt").disable();
       this.FinDataForm.get("InstAmt").enable();
-    }else if(calcBase == CommonConstant.FinDataCalcBaseOnCommission){
+    } else if (calcBase == CommonConstant.FinDataCalcBaseOnCommission) {
       this.FinDataForm.get("RateType").disable();
       this.FinDataForm.get("EffectiveRatePrcnt").disable();
       this.FinDataForm.get("InstAmt").disable();
-    }else{
-      if(this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmRegularFix){
+    } else {
+      if (this.appFinDataObj.MrInstSchemeCode == CommonConstant.InstSchmRegularFix) {
         this.FinDataForm.get("RateType").enable();
-      }      
+      }
       this.FinDataForm.get("EffectiveRatePrcnt").enable();
       this.FinDataForm.get("InstAmt").enable();
     }
   }
 
-  RefreshSubsidy(){
+  RefreshSubsidy() {
     this.subsidyComponent.LoadSubsidyData();
   }
 
-  SetDiffRateAmt(){
-    if(this.FinDataForm.getRawValue().SubsidyAmtFromDiffRate > 0){
+  SetDiffRateAmt() {
+    if (this.FinDataForm.getRawValue().SubsidyAmtFromDiffRate > 0) {
       this.FinDataForm.patchValue({
         DiffRateAmt: this.FinDataForm.getRawValue().SubsidyAmtFromDiffRate * -1
       });
     }
-    if(this.FinDataForm.getRawValue().CommissionAmtFromDiffRate > 0){
+    if (this.FinDataForm.getRawValue().CommissionAmtFromDiffRate > 0) {
       this.FinDataForm.patchValue({
         DiffRateAmt: this.FinDataForm.getRawValue().CommissionAmtFromDiffRate
       });
@@ -340,12 +341,12 @@ export class FinancialDataComponent implements OnInit {
       this.FinDataForm.controls.BalloonValueAmt.setValidators([Validators.required]);
       this.FinDataForm.controls.BalloonValueAmt.updateValueAndValidity();
     }
-    if (mrInstSchemeCode == CommonConstant.InstSchmStepUpStepDownNormal || mrInstSchemeCode == CommonConstant.InstSchmStepUpStepDownLeasing) {
-      this.FinDataForm.controls.NumOfStep.setValidators([Validators.required, Validators.min(1)]);
-      this.FinDataForm.controls.NumOfStep.updateValueAndValidity();
-      this.FinDataForm.controls.StepUpStepDownInputType.setValidators([Validators.required]);
-      this.FinDataForm.controls.NumOfStep.updateValueAndValidity();
-    }
+    // if (mrInstSchemeCode == CommonConstant.InstSchmStepUpStepDownNormal || mrInstSchemeCode == CommonConstant.InstSchmStepUpStepDownLeasing) {
+    //   this.FinDataForm.controls.NumOfStep.setValidators([Validators.required, Validators.min(1)]);
+    //   this.FinDataForm.controls.NumOfStep.updateValueAndValidity();
+    //   this.FinDataForm.controls.StepUpStepDownInputType.setValidators([Validators.required]);
+    //   this.FinDataForm.controls.NumOfStep.updateValueAndValidity();
+    // }
   }
 
   // test() {

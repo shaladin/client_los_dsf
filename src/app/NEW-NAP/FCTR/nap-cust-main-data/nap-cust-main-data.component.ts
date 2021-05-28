@@ -23,7 +23,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
   templateUrl: './nap-cust-main-data.component.html'
 })
 export class NapCustMainDataComponent implements OnInit {
-  
+
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   private stepper: Stepper;
   AppStepIndex: number = 1;
@@ -34,11 +34,11 @@ export class NapCustMainDataComponent implements OnInit {
   MrCustTypeCode: string = "PERSONAL";
   NapObj: AppObj = new AppObj();
   IsMultiAsset: string;
-  ListAsset: any;
   isMarried: boolean = false;
   bizTemplateCode: string;
   appCustId: number = 0;
   IsViewReady: boolean = false;
+  from: string;
 
   AppStep = {
     "NEW": 1,
@@ -62,6 +62,9 @@ export class NapCustMainDataComponent implements OnInit {
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
       }
+      if (params["from"] != null) {
+        this.from = params["from"];
+      }
     });
   }
 
@@ -69,7 +72,7 @@ export class NapCustMainDataComponent implements OnInit {
     this.ClaimTask();
     this.AppStepIndex = 0;
     this.NapObj.AppId = this.appId;
-    var appObj = { Id: this.appId };
+    let appObj = { Id: this.appId };
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response: AppObj) => {
         if (response) {
@@ -108,9 +111,9 @@ export class NapCustMainDataComponent implements OnInit {
       }
     );
   }
-  
+
   Back() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
   }
 
 
@@ -169,7 +172,7 @@ export class NapCustMainDataComponent implements OnInit {
 
   ClaimTask() {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new AppObj();
+    let wfClaimObj = new AppObj();
     wfClaimObj.AppId = this.appId;
     wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
     wfClaimObj.WfTaskListId = this.wfTaskListId;
@@ -177,5 +180,19 @@ export class NapCustMainDataComponent implements OnInit {
     this.http.post(URLConstant.ClaimTaskNapCustmainData, wfClaimObj).subscribe(
       () => {
       });
+  }
+
+  GetCallback(ev) {
+    if (ev.Key == "HighligtComment") {
+      let link: string;
+      let custObj = { CustNo: ev.ViewObj.CustNo };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        }
+      );
+    } else {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+    }
   }
 }

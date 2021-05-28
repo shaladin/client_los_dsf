@@ -161,7 +161,7 @@ export class CollateralLeasingAddEditComponent implements OnInit {
 
   SetBpkbCity(event) {
     this.AddCollForm.patchValue({
-      TaxCityIssuer: event.DistrictCode,
+      TaxCityIssuer: event.provDistrictCode,
     });
   }
 

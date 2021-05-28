@@ -138,17 +138,17 @@ export class LegalDocDetailComponent implements OnInit {
   CekDtValidity() {
     let flag = false;
 
-    let bzDt = new Date(this.BusinessDt);
+    let bzDt = new Date(this.MaxBusinessDt);
     let issueDt = new Date(this.LegalDocForm.get("DocDt").value);
     let expDt = new Date(this.LegalDocForm.get("DocExpiredDt").value);
     if (bzDt > expDt && bzDt != expDt) {
-      this.toastr.warningMessage(ExceptionConstant.EXPIRED_DATE_CANNOT_LESS_THAN + this.BusinessDt);
+      this.toastr.warningMessage(ExceptionConstant.EXPIRED_DATE_CANNOT_LESS_THAN + this.MaxBusinessDt);
       flag = false;
     }
 
     bzDt.setDate(bzDt.getDate() + 1);
     if (bzDt < issueDt && bzDt != issueDt) {
-      this.toastr.warningMessage(ExceptionConstant.ISSUED_DATE_CANNOT_MORE_THAN + this.BusinessDt);
+      this.toastr.warningMessage(ExceptionConstant.ISSUED_DATE_CANNOT_MORE_THAN + this.MaxBusinessDt);
       flag = false;
     }
 

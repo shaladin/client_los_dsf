@@ -6,8 +6,8 @@ export class AppFinDataObj {
     MrInstSchemeCode: string;
     InstSchemeName: string;
     NumOfInst: number;
-    RateType : string;
-    TotalAR:number;
+    RateType: string;
+    TotalAR: number;
     TotalAssetPriceAmt: number;
     TotalInterestAmt: number;
     GrossYieldPrcnt: number;
@@ -61,6 +61,7 @@ export class AppFinDataObj {
     EstEffDt: Date;
     TotalInvcAmt: number;
     TopDays: number;
+    TopInterestRatePrcnt: number;
     RetentionPrcnt: number;
     MaturityDate: Date;
     TotalRetentionAmt: number;
@@ -87,7 +88,7 @@ export class AppFinDataObj {
     MinDownPaymentNettPrcnt: number;
     MaxDownPaymentNettPrcnt: number;
     AppSupplEffectiveRatePrcnt: number;
-    
+
     constructor() {
     }
 }

@@ -1,23 +1,25 @@
 <div *ngIf="!IsDetail">
   <!-- <div class="ucSearch-Button-Right"> -->
-  <div class="text-right">
+  <!-- <div class="text-right">
     <span class="mr-1">
       <button type="button" class="btn btn-raised btn-warning mr-1" (click)="OpenDetail()" translate>
         <i class="ft-plus-circle"></i> Add Collateral
       </button>
     </span>
-  </div>
+  </div> -->
 
-  <app-collateral-data-cfna-paging [AppId]="AppId" (select)="OpenDetail($event)" (list)="GetList($event)">
+  <app-collateral-data-cfna-paging [AppId]="AppId" [ParentAppId]="ParentAppId"
+    (emitIsFirstInit)="getIsFirstInit($event)" (select)="OpenDetail($event)" (list)="GetList($event)" *ngIf="isReady">
   </app-collateral-data-cfna-paging>
 
   <div class="col-md-12" style="padding: 0; text-align: right;">
-    <button type="button" *ngIf="showCancel"class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+    <button type="button" *ngIf="showCancel" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
       <i class="ft-x"></i> Cancel
     </button>
     <button type="submit" class="btn btn-raised btn-primary" (click)="Next()" translate>
-      <i class="fa fa-check-square"></i> Save  
+      <i class="fa fa-check-square"></i> Save
     </button>
   </div>
 </div>
-<app-collateral-data-cfna-detail *ngIf="IsDetail" [mode]="mode" [AppId]="AppId" [AppCollateralId]="AppCollateralId" [isSingleAsset]="false" (outputValue)="CloseDetail($event)"></app-collateral-data-cfna-detail>
+<app-collateral-data-cfna-detail *ngIf="IsDetail" [mode]="mode" [AppId]="AppId" [AppCollateralId]="AppCollateralId"
+  [isSingleAsset]="false" (outputValue)="CloseDetail($event)"></app-collateral-data-cfna-detail>

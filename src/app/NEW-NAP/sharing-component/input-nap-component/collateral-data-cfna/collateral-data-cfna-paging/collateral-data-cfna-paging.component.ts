@@ -13,38 +13,41 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CollateralDataCfnaPagingComponent implements OnInit {
   @Input() AppId: number;
+  @Input() ParentAppId: number;
   @Output() select: EventEmitter<number> = new EventEmitter<any>();
   @Output() list: EventEmitter<any> = new EventEmitter<any>();
   ListAppCollObj: Array<AppCollateralObj> = new Array<AppCollateralObj>();
-
+  @Output() emitIsFirstInit: EventEmitter<boolean> = new EventEmitter<any>();
+  isFirstInit: boolean = false;
   constructor(private http: HttpClient, private toastr: NGXToastrService) { }
 
-  ngOnInit() {
-    this.GetListAppCollateralByAppId()
+  async ngOnInit() {
+    await this.GetListAppCollateralByAppId()
+    console.log("aaa")
+    this.emitIsFirstInit.emit(this.isFirstInit);
   }
 
-  GetListAppCollateralByAppId() {
+  async GetListAppCollateralByAppId() {
     var AppCollObj = {
       Id: this.AppId,
     }
-    this.http.post<Array<AppCollateralObj>>(URLConstant.GetListAppCollateralByAppId, AppCollObj).subscribe(
+
+    await this.http.post<Array<AppCollateralObj>>(URLConstant.CopyAppCollateralFromAgrmntParent, AppCollObj).toPromise().then(
       (response) => {
         this.ListAppCollObj = response[CommonConstant.ReturnObj];
         this.list.emit(this.ListAppCollObj);
       });
   }
-
-  editData(AppCollateralId: number){
+  editData(AppCollateralId: number) {
     this.select.emit(AppCollateralId);
   }
-
-  deleteData(AppCollateralId: number){
+  deleteData(AppCollateralId: number) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-    this.http.post(URLConstant.DeleteAppCollateral, {AppCollateralId: AppCollateralId}).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        this.GetListAppCollateralByAppId();
-      });
+      this.http.post(URLConstant.DeleteAppCollateral, { AppCollateralId: AppCollateralId }).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          this.GetListAppCollateralByAppId();
+        });
     }
   }
 

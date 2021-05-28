@@ -12,6 +12,7 @@ import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-nap-paging',
@@ -19,8 +20,8 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class NapPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: any;
-  userAccess: any;
+  arrCrit: Array<CriteriaObj>;
+  userAccess: CurrentUserContext;
 
   constructor(
     private http: HttpClient,
@@ -55,7 +56,7 @@ export class NapPagingComponent implements OnInit {
   }
 
   makeCriteria() {
-    var critObj = new CriteriaObj();
+    let critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
     critObj.value = "NAP_" + CommonConstant.FCTR;
@@ -68,12 +69,12 @@ export class NapPagingComponent implements OnInit {
       critObj.listValue = [this.userAccess.OfficeCode];
     } else {
       critObj.propName = 'a.ORI_OFFICE_CODE';
-      this.http.post(URLConstant.GetListCenterGrpMemberByCenterGrpCode, {Code : CommonConstant.CENTER_GROUP_CODE }).subscribe(
+      this.http.post(URLConstant.GetListCenterGrpMemberByCenterGrpCode, { Code: CommonConstant.CENTER_GROUP_CODE }).subscribe(
         (response) => {
-          var CenterGrpOfficeMbrObjs: Array<CenterGrpOfficeMbrObj> = response["ListCenterGrpOfficeMbr"];
+          let CenterGrpOfficeMbrObjs: Array<CenterGrpOfficeMbrObj> = response["ListCenterGrpOfficeMbr"];
 
-          var listDataTemp = new Array();
-          for (var i = 0; i < CenterGrpOfficeMbrObjs.length; i++) {
+          let listDataTemp = new Array();
+          for (let i = 0; i < CenterGrpOfficeMbrObjs.length; i++) {
             listDataTemp.push(CenterGrpOfficeMbrObjs[i].RefOfficeCode);
           }
           critObj.listValue = listDataTemp;
@@ -83,10 +84,10 @@ export class NapPagingComponent implements OnInit {
   }
 
   AddApp() {
-    this.http.post(URLConstant.GetRefOfficeByOfficeCode, {Code : this.userAccess.OfficeCode}).subscribe(
+    this.http.post(URLConstant.GetRefOfficeByOfficeCode, { Code: this.userAccess.OfficeCode }).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FCTR_ADD], {});          
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_ADD], {});
         } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
@@ -98,7 +99,7 @@ export class NapPagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     if (ev.Key == "Edit") {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_FCTR_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
     }
   }
 }

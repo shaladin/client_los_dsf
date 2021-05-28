@@ -4,7 +4,7 @@ import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model'; 
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 
 @Component({
@@ -14,7 +14,7 @@ import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 })
 export class AppMainInfoComponent implements OnInit {
 
-  private viewGeneric : UcviewgenericComponent;
+  private viewGeneric: UcviewgenericComponent;
   whereValue = [];
   @ViewChild('viewGeneric') set content(content: UcviewgenericComponent) {
     if (content) { // initially setter gets called with undefined
@@ -22,8 +22,8 @@ export class AppMainInfoComponent implements OnInit {
     }
   }
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  @Input() AppId: number ;
-  @Input() BizTemplateCode: string ;
+  @Input() AppId: number;
+  @Input() BizTemplateCode: string;
 
   AppObj: any;
   constructor(private http: HttpClient) { }
@@ -34,6 +34,9 @@ export class AppMainInfoComponent implements OnInit {
     }
     else if (this.BizTemplateCode == CommonConstant.FL4W) {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
+    }
+    else if (this.AppObj.BizTemplateCode == CommonConstant.CFNA) {
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfoCFNA.json";
     }
     else if (this.BizTemplateCode == CommonConstant.OPL) {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-opl-main-info.json";
@@ -63,14 +66,22 @@ export class AppMainInfoComponent implements OnInit {
       },
     ];
   }
-  
-  ReloadUcViewGeneric(){
+
+  ReloadUcViewGeneric() {
     this.viewGeneric.initiateForm();
   }
 
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+    } else if (ev.Key == "HighligtComment") {
+      var link: string;
+      var custObj = { CustNo: ev.ViewObj.CustNo };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        }
+      );
     }
   }
 }
