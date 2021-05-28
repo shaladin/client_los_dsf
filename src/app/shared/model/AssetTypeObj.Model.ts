@@ -1,5 +1,5 @@
 export class AssetTypeObj {
-    AssetTypeId : any;
+    AssetTypeId: any;
     AssetTypeCode: any;
     AssetTypeName: any;
     SerialNo1Label: any;
@@ -20,6 +20,14 @@ export class AssetTypeObj {
     HierarchyLabelLevel3: any;
     HierarchyLabelLevel4: any;
     HierarchyLabelLevel5: any;
-    RowVersion : any;
-    constructor () { this.AssetTypeId = 0, this.RowVersion = ""}
+    RowVersion: any;
+    constructor() { this.AssetTypeId = 0, this.RowVersion = "" }
+}
+
+export class AssetMasterForFraudChecking {
+    AssetTypeCode: string;
+    AssetCategoryCode: string;
+
+    RowVersion: any;
+    constructor() { this.RowVersion = "" }
 }

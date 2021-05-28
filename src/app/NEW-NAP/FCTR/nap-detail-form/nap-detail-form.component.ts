@@ -19,6 +19,8 @@ import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -36,9 +38,8 @@ export class NapDetailFormComponent implements OnInit {
   ResponseReturnInfoObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
-  ListAsset: any;
   IsDataReady: boolean = false;
-  
+
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
   });
@@ -47,20 +48,19 @@ export class NapDetailFormComponent implements OnInit {
     "NAPD": 1,
     "APP": 1,
     "INVOICE": 2,
-    "COLL": 3,
-    "INS": 4,
-    "FIN": 5,
-    "TC": 6,
-    "UPL_DOC": 7
+    "FIN": 3,
+    "TC": 4,
+    "UPL_DOC": 5
   };
   isDmsReady: boolean = false;
   dmsObj: DMSObj;
   appNo: string;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
+  MouCustId: number;
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING2;
   readonly BackLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -73,12 +73,12 @@ export class NapDetailFormComponent implements OnInit {
     });
   }
 
-  async ngOnInit() : Promise<void> {
+  async ngOnInit(): Promise<void> {
     //check DMS
-    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
-    });
+      });
 
     this.ClaimTask();
     this.AppStepIndex = 0;
@@ -100,11 +100,12 @@ export class NapDetailFormComponent implements OnInit {
     ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-    var appObj = { Id: this.appId };
+    let appObj = { Id: this.appId };
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response: AppObj) => {
         if (response) {
           this.NapObj = response;
+          this.MouCustId = response.MouCustId;
           this.AppStepIndex = this.AppStep[response.AppCurrStep];
           this.stepper.to(this.AppStepIndex);
           if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
@@ -128,14 +129,14 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   async initDms() {
-    if(this.SysConfigResultObj.ConfigValue == '1'){
+    if (this.SysConfigResultObj.ConfigValue == '1') {
       this.isDmsReady = false;
       this.dmsObj = new DMSObj();
       let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
       this.dmsObj.User = currentUserContext.UserName;
       this.dmsObj.Role = currentUserContext.RoleCode;
       this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-      var appObj = { Id: this.appId };
+      let appObj = { Id: this.appId };
       this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
         response => {
           this.appNo = this.NapObj.AppNo;
@@ -149,7 +150,7 @@ export class NapDetailFormComponent implements OnInit {
           else {
             this.dmsObj.MetadataParent = null;
           }
-  
+
           let mouId = this.NapObj.MouCustId;
           if (mouId != null && mouId != 0) {
             let mouObj = { Id: mouId };
@@ -166,11 +167,11 @@ export class NapDetailFormComponent implements OnInit {
           }
         }
       );
-    }  
+    }
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: CommonConstant.FCTR });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: CommonConstant.FCTR });
   }
 
   MakeViewReturnInfoObj() {
@@ -179,7 +180,7 @@ export class NapDetailFormComponent implements OnInit {
       ReqByIdAndCodeObj.Id = this.appId;
       ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingEditApp;
       this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
-        (response : ResReturnHandlingDObj) => {
+        (response: ResReturnHandlingDObj) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
             ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
@@ -190,12 +191,12 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   CheckMultiAsset() {
-    var appObj = { Id: this.appId }
+    let appObj = { Id: this.appId }
     this.http.post(URLConstant.GetAppAssetListByAppId, appObj).subscribe(
       (response) => {
-        this.ListAsset = response['ReturnObject'];
-        if (this.ListAsset != undefined && this.ListAsset != null) {
-          if (this.ListAsset.length > 1)
+        let ListAsset = response['ReturnObject'];
+        if (ListAsset != undefined && ListAsset != null) {
+          if (ListAsset.length > 1)
             this.IsMultiAsset = true;
           else
             this.IsMultiAsset = false;
@@ -212,12 +213,6 @@ export class NapDetailFormComponent implements OnInit {
         break;
       case CommonConstant.AppStepInvoice:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepInvoice];
-        break;
-      case CommonConstant.AppStepColl:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepColl];
-        break;
-      case CommonConstant.AppStepIns:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepIns];
         break;
       case CommonConstant.AppStepFin:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepFin];
@@ -248,16 +243,30 @@ export class NapDetailFormComponent implements OnInit {
     this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
-  CheckIsUseDms(){
-    if(this.SysConfigResultObj.ConfigValue == '1'){
+  CheckIsUseDms() {
+    if (this.SysConfigResultObj.ConfigValue == '1') {
       this.NextStep(CommonConstant.AppStepUplDoc);
-    }else{
+    } else {
       this.LastStepHandler();
     }
   }
-  
-  LastStepHandler() {
+
+  async LastStepHandler() {
     let reqObj: SubmitNapObj = new SubmitNapObj();
+
+    let MouCustObj = {
+      "MouCustId": this.MouCustId
+    }
+    let IsInValid;
+    await this.http.post(URLConstant.CheckIsMouFreeze, MouCustObj).toPromise().then(
+      (response) => {
+        IsInValid = response["IsFreeze"]
+      });
+    if (IsInValid) {
+      this.toastr.warningMessage(ExceptionConstant.MOU_FREEZE_STATE);
+      return
+    }
+
     reqObj.AppId = this.NapObj.AppId;
     reqObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, reqObj).subscribe(
@@ -268,7 +277,7 @@ export class NapDetailFormComponent implements OnInit {
 
   Submit() {
     if (this.mode == CommonConstant.ModeResultHandling) {
-      var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+      let ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
       ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
       ReturnHandlingResult.ReturnHandlingHId = this.ResponseReturnInfoObj.ReturnHandlingHId;
       ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
@@ -285,7 +294,7 @@ export class NapDetailFormComponent implements OnInit {
   }
   ClaimTask() {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new AppObj();
+    let wfClaimObj = new AppObj();
     wfClaimObj.AppId = this.appId;
     wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
     wfClaimObj.WfTaskListId = this.wfTaskListId;

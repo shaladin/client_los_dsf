@@ -302,7 +302,7 @@ export class TabAppDataComponent implements OnInit {
         this.LifeInsData.IsCover = true;
         this.LifeInsData.LifeInscoBranchName = response["LifeInscoBranchName"];
         this.LifeInsData.NewCoverNotes = response["NewCoverNotes"];
-        this.LifeInsData.LifeInsFee = response["CustAdminFeeAmt"] + response["InscoAdminFeeAmt"];
+        this.LifeInsData.LifeInsFee = response["CustAdminFeeAmt"];
         this.InputGridLifeIns.resultData = {
           Data: ""
         }
