@@ -99,7 +99,7 @@
               </div>
             </div>
             <br>
-            <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady && !isReturnOn" #ApprovalComponent></lib-ucapprovalcreate>
+            <lib-ucapprovalcreate [parentForm]="FormObj" [InputObj]="InputObj" *ngIf="IsReady && !isReturnOn" #ApprovalComponent></lib-ucapprovalcreate>
             <lib-ucSubsection *ngIf="isReturnOn" [id]="'formReturnCreditReviewId'" [title]="'Return Credit Review'"
               [panel]="'formReturnCreditReview'">
             </lib-ucSubsection>
@@ -146,6 +146,9 @@
             </button>
             <button type="submit" class="btn btn-raised btn-primary" translate>
               <i class="far fa-check-square"></i> Save
+            </button>
+            <button type="button" class="btn btn-raised btn-warning mr-1" (click)="checkForm()">
+              <i class="ft-x"></i> Check
             </button>
           </div>
 

@@ -59,7 +59,7 @@ export class CreditReviewMainComponent implements OnInit {
   IsUseDigitalization: string;
   IsViewReady: boolean = false;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
-
+  RFAInfo: Object = new Object();
   // ReturnForm = this.fb.group({
   //   ReturnReason: [''],
   //   ReturnReasonDesc: [''],
@@ -323,6 +323,7 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   SaveForm() {
+    console.log("sdofijsdf");
     var temp = this.FormObj.value;
     var tempAppCrdRvwObj = new AppCrdRvwHObj();
     tempAppCrdRvwObj.AppId = this.appId;
@@ -336,7 +337,8 @@ export class CreditReviewMainComponent implements OnInit {
 
 
     if (!this.isReturnOn) {
-      this.ApprovalCreateOutput = this.createComponent.output();
+      // this.ApprovalCreateOutput = this.createComponent.output();
+      this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
     }
     var apiObj = {
       appCrdRvwHObj: tempAppCrdRvwObj,
@@ -345,7 +347,7 @@ export class CreditReviewMainComponent implements OnInit {
       RowVersion: "",
       AppId: this.appId,
       ListDeviationResultObjs: this.ManualDeviationData,
-      RequestRFAObj: this.ApprovalCreateOutput
+      RequestRFAObj: this.RFAInfo
     }
     this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationDataNew, apiObj).subscribe(
       (response) => {
@@ -475,6 +477,12 @@ export class CreditReviewMainComponent implements OnInit {
 
   cancel() {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+  }
+
+  checkForm() {
+    this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
+    console.log(this.RFAInfo);
+    console.log(this.createComponent.output().RFAInfo['RFAInfo']);
   }
 
   async GetIsUseDigitalization() {

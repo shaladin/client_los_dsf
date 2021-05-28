@@ -137,12 +137,14 @@ export class CreditApprovalCrDetailComponent implements OnInit {
     let isReject: boolean = false;
     let returnNotes: string = "";
 
-    for(let i in this.getEvent){
-      if(this.getEvent[i].ApvResult.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
+    for(let i in this.getEvent['Tasks']){
+      console.log(i);
+
+      if(this.getEvent['Tasks'][i].ApvResult.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
         isReturn = true;
-        returnNotes += event[i]['Notes'] + (parseInt(i) == 0 ? ", " : "");
+        returnNotes += event['Tasks'][i]['Notes'] + (parseInt(i) == 0 ? ", " : "");
       }
-      if(this.getEvent[i].ApvResult.toLowerCase() == CommonConstant.ApvResultRejectFinal.toLowerCase()) {
+      if(this.getEvent['Tasks'][i].ApvResult.toLowerCase() == CommonConstant.ApvResultRejectFinal.toLowerCase()) {
         isReject = true;
       }
     }
