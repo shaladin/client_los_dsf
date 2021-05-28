@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';

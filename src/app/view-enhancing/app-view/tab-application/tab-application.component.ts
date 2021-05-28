@@ -91,7 +91,6 @@ export class TabApplicationComponent implements OnInit {
     this.isReady = true;
   }
 
-  ListCrossAppData
   async GetCrossAppData() {
     var obj = { Id: this.appId };
     await this.http.post(URLConstant.GetListAppCross, obj).toPromise().then(

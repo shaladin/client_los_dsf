@@ -521,7 +521,6 @@ export class PathConstant {
     public static VIEW_PURCHASE_TRACKING = "PurchaseTracking";
     public static VIEW_APP_ASSET = "AppAsset";
     public static VIEW_APP_LIST = "AppList";
-    public static VIEW_CHANGE_MOU = "ChangeMouView";
     //#endregion
 
     //#region FOU-View-Module

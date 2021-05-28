@@ -100,7 +100,7 @@ import { TabDeviationComponent } from "./tab-deviation/tab-deviation.component";
         TabAnalysisResultComponent,
         ApprovalHistComponent,
         ViewSurveyTaskListComponent,
-        ViewAssetDataComponent
+        ViewAssetDataComponent,
         TabDeviationComponent,
         ViewAssetExpenseComponent,
         ViewSurveyComponent,
