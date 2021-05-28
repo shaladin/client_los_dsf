@@ -209,7 +209,7 @@ export class NapAddComponent implements OnInit {
     napAppObj.OriOfficeName = this.NapAppForm.controls['OriOfficeName'].value;
     napAppObj = this.CheckValue(napAppObj);
 
-    this.http.post(URLConstant.AddApp, napAppObj).subscribe(
+    this.http.post(URLConstant.AddNewApplication, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, ["Nap/DLFN/Add/Detail"], { "AppId": response["AppId"] });
