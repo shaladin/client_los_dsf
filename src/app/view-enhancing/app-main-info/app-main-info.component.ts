@@ -51,6 +51,9 @@ export class AppMainInfoComponent implements OnInit {
         else if (this.AppObj.BizTemplateCode == CommonConstant.FL4W) {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
         }
+        else if (this.AppObj.BizTemplateCode == CommonConstant.CFNA) {
+          this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfoCFNA.json";
+        }
         else if (this.AppObj.BizTemplateCode == CommonConstant.OPL) {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-opl-main-info.json";
         }
@@ -89,6 +92,14 @@ export class AppMainInfoComponent implements OnInit {
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+    } else if (ev.Key == "HighligtComment") {
+      var link: string;
+      var custObj = { CustNo: ev.ViewObj.CustNo };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        }
+      );
     }
   }
 }

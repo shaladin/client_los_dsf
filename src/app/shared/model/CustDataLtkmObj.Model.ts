@@ -1,9 +1,13 @@
-export class CustHighlightCommentObj {
-    CustHighlightCommentId: number;
+export class CustDataLtkmObj {
     AppId: number;
-    AppNo: string;
-    CustNo: string;
-    Comment: string;
-    InputBy: string;
-    InputDt: Date;
+    LtkmCustId: number;
+    IsCustomer: boolean;
+    IsFamily: boolean;
+    IsGuarantor: boolean;
+    IsShareholder: boolean;
+    RowVersion: any;
+
+    constructor() { 
+        this.RowVersion = ""; 
+    }
 }

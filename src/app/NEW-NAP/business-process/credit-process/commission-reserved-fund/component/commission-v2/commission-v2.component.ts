@@ -627,4 +627,9 @@ export class CommissionV2Component implements OnInit {
   Cancel() {
     this.outputCancel.emit();
   }
+  inputTypeChange(event: any) {
+    this.FormAdd1.UpdateInputType(event);
+    this.FormAdd2.UpdateInputType(event);
+    this.FormAdd3.UpdateInputType(event);
+  }
 }

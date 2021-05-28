@@ -14,25 +14,23 @@ import { HttpClient } from '@angular/common/http';
   providers: [DecimalPipe, NGXToastrService]
 })
 export class LeadViewHeaderComponent implements OnInit {
-  LeadId: string;
-  getLeadByLeadId: string;
-  returnLead: any;
+  LeadId: number;
+  returnLead: LeadObj;
   getLeadObj: LeadObj;
   MainInfoForm = this.fb.group({
     OfficeCode: [''],
     OfficeName: [''],
     CrtOfficeCode: [''],
     CrtOfficeName: [''],
-    OrderNo:[''],
+    OrderNo: [''],
     LobCode: [''],
-    LobName:[''],
+    LobName: [''],
     LeadSource: [''],
   });
   leadUrl: string;
-  
+
   constructor(private route: ActivatedRoute,
     private http: HttpClient, private fb: FormBuilder) {
-    this.getLeadByLeadId = URLConstant.GetLeadByLeadId;
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
@@ -43,14 +41,14 @@ export class LeadViewHeaderComponent implements OnInit {
   ngOnInit() {
     this.getLeadObj = new LeadObj();
     this.getLeadObj.LeadId = this.LeadId;
-    var getLeadObj = { Id: this.LeadId };
-    this.http.post(this.getLeadByLeadId, getLeadObj).subscribe(
-    (response) => {
-      this.returnLead = response;
-    });
+    let getLeadObj = { Id: this.LeadId };
+    this.http.post(URLConstant.GetLeadByLeadId, getLeadObj).subscribe(
+      (response: LeadObj) => {
+        this.returnLead = response;
+      });
   }
 
-  AddView(){
+  AddView() {
     AdInsHelper.OpenLeadViewByLeadId(this.LeadId);
   }
 }

@@ -79,6 +79,7 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_CRD_APPR_RES_EXT_APPRVL_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.CRD_APPR_RES_EXT_APPRVL_DETAIL;//"/Nap/AddProcess/CreditApvResultExtApproval/Detail"
   public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_PAGING;//"/Nap/AddProcess/EditAppAftApv/Paging"
   public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_DETAIL;//"/Nap/AddProcess/EditAppAftApv/Detail"
+  public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_VIEW = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_VIEW;//"/Nap/AddProcess/EditAppAftApv/View"
   public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_APPRV_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_APPRV_PAGING;//"/Nap/AddProcess/EditAppAftApv/Approval/Paging"
   public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_APPRV_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_APPRV_DETAIL;//"/Nap/AddProcess/EditAppAftApv/Approval/Detail"
   public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_INQUIRY = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_INQUIRY;//"/Nap/AddProcess/EditAppAftApv/Inquiry"
@@ -155,6 +156,7 @@ export class NavigationConstant {
   public static NAP_CRD_PRCS_PHN_VRF_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_PAGING; //"/Nap/CreditProcess/PhoneVerification/Paging"
   public static NAP_CRD_PRCS_PHN_VRF_SUBJECT = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_SUBJECT; //"/Nap/CreditProcess/PhoneVerification/Subject"
   public static NAP_CRD_PRCS_PHN_VRF_SUBJECT_VERIF = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_SUBJECT_VERIF; //"/Nap/CreditProcess/PhoneVerification/Subject/Verif"
+  public static NAP_CRD_PRCS_PHN_VRF_SUBJECT_VIEW = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_SUBJECT_VIEW; //"/Nap/CreditProcess/PhoneVerification/Subject/View"
   //#endregion
 
   //#region CF2W
@@ -256,14 +258,12 @@ export class NavigationConstant {
   //#region FOU-VIEW
   public static VIEW_FOU_CUST_PERSONAL_DETAIL = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_CUST_PERSONAL_DETAIL; //'/View/Customer/PersonalDetail'
   public static VIEW_FOU_CUST_COY_DETAIL = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_CUST_COY_DETAIL; //'/View/Customer/CoyDetail'
-  public static VIEW_FOU_OFFERING = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_OFFERING; //'/View/Offering'
   public static VIEW_FOU_SRVY_ORDER = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_SRVY_ORDER; //'/View/Survey/SurveyOrder'
   public static VIEW_FOU_SRVY_TASK = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_SRVY_TASK; //'/View/Survey/SurveyTask'
   public static VIEW_FOU_VENDOR_BRANCH = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_FOU_VENDOR_BRANCH; //'/View/Vendor/VendorBranch'
   //#endregion
 
   //#region MOU
-  public static MOU_UNAUTHORIZED_PAGE = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_UNAUTHORIZED_PAGE; //"/Mou/UnauthorizedPage"
   public static MOU_CUST_CANCEL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_CANCEL; //'/Mou/Cust/Cancel'
   public static MOU_CUST_INQUIRY = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_INQUIRY; //'/Mou/Cust/Inquiry'
   public static MOU_CUST_DOC_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_DOC_PAGING; //'/Mou/CustomerDoc/Paging'
@@ -353,6 +353,7 @@ export class NavigationConstant {
   //#region LTKM
   public static LTKM_REQ = "/" + PathConstant.LR_LTKM + "/" + PathConstant.REQ; //'/Ltkm/Request'
   public static LTKM_INQUIRY = "/" + PathConstant.LR_LTKM + "/" + PathConstant.INQUIRY; //'/Ltkm/Inquiry'
+  public static LTKM_VIEW = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VIEW; //'/Ltkm/View'
   public static LTKM_VERIFY_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_PAGING; //'/Ltkm/Verify/Paging'
   public static LTKM_VERIFY_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_DETAIL; //'/Ltkm/Verify/Detail'
   public static LTKM_VERIFY_APV_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_APV_PAGING; //'/Ltkm/VerifyApproval/Paging'
@@ -381,6 +382,10 @@ export class NavigationConstant {
   //#region REQUISITION DECISION
   public static REQUISITION_DECISION_PAGING = "/" + PathConstant.REQUISITION_DECISION + "/" + PathConstant.PAGING_LOWERCASE; //'/requisitiondecision/paging'
   public static REQUISITION_DECISION_DETAIL = "/" + PathConstant.REQUISITION_DECISION + "/" + PathConstant.DETAIL_LOWERCASE; //'/requisitiondecision/detail'
+  //#endregion
+
+  //#region UNAUTHORIZED
+  public static UNAUTHORIZE_PAGE = "/" + PathConstant.UNAUTHORIZED; //"/Unauthorized"
   //#endregion
 
   //PRODUCT

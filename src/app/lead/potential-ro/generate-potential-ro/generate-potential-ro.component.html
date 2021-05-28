@@ -1,0 +1,89 @@
+<div class="card">
+  <div class="card-body">
+    <div class="px-3">
+      <h4 class="form-section card-title" translate="">Generate Potential RO</h4>
+      <form class="form form-horizontal" [formGroup]="PotentialRoFilterForm" (ngSubmit)="PotentialRoFilterForm.valid" #enjiForm="ngForm">
+        <div class="form-body">
+          <lib-ucSubsection [id]="'PotentialRoFilterId'" [title]="'Filter Potential RO'" [panel]="'PotentialRoFilter'">
+          </lib-ucSubsection>
+          <div id="PotentialRoFilter">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-5 adInsLabel" translate>Agreement Date &gt;=</label>
+                  <div class="col-md-7">
+                    <input type="date" class="form-control adInsInput" formControlName="AgrmntDtStart"
+                    (ngModelChange)="onChangeFilterForm()"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && PotentialRoFilterForm.controls.AgrmntDtStart.invalid }">
+                    <lib-uc-show-errors [control]="PotentialRoFilterForm.controls.AgrmntDtStart" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-5 adInsLabel" translate>Maturity Date &gt;=</label>
+                  <div class="col-md-7">
+                    <input type="date" class="form-control adInsInput" formControlName="MaturityDtStart"
+                    (ngModelChange)="onChangeFilterForm()"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && PotentialRoFilterForm.controls.MaturityDtStart.invalid }">
+                    <lib-uc-show-errors [control]="PotentialRoFilterForm.controls.MaturityDtStart" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-5 adInsLabel" translate>Store Procedure</label>
+                  <div class="col-md-7">
+                    <select class="form-control adInsInput" formControlName="GenerateRoPotentialSpMappingId"
+                    (ngModelChange)="onChangeFilterForm()"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && PotentialRoFilterForm.controls.GenerateRoPotentialSpMappingId.invalid }">
+                      <option value="">Select one</option>
+                      <option *ngFor="let item of ListSpName" [value]="item.GenerateRoPotentialSpMappingId">{{item.SpName}}</option>
+                    </select>
+                    <lib-uc-show-errors [control]="PotentialRoFilterForm.controls.GenerateRoPotentialSpMappingId" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-5 adInsLabel" translate>Agreement Date &lt;=</label>
+                  <div class="col-md-7">
+                    <input type="date" class="form-control adInsInput" formControlName="AgrmntDtEnd"
+                    (ngModelChange)="onChangeFilterForm()"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && PotentialRoFilterForm.controls.AgrmntDtEnd.invalid }">
+                    <lib-uc-show-errors [control]="PotentialRoFilterForm.controls.AgrmntDtEnd" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-5 adInsLabel" translate>Maturity Date &lt;=</label>
+                  <div class="col-md-7">
+                    <input type="date" class="form-control adInsInput" formControlName="MaturityDtEnd"
+                    (ngModelChange)="onChangeFilterForm()"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && PotentialRoFilterForm.controls.MaturityDtEnd.invalid }">
+                    <lib-uc-show-errors [control]="PotentialRoFilterForm.controls.MaturityDtEnd" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-actions text-right">
+          <button type="button" class="btn btn-raised btn-primary mr-1" (click)="onClickShowData()" translate>
+            <i class="fa fa-check-square-o"></i> Show Data
+          </button>
+        </div>
+
+        <lib-ucgridview *ngIf="IsGridResultSpReady" [gridInput]="GridResultSp"></lib-ucgridview>
+
+
+
+
+        <div class="form-actions right text-right" *ngIf="IsHasData">
+          <button type="button" class="btn btn-raised btn-warning mr-1" (click)="onChangeFilterForm()" translate>
+            <i class="ft-x"></i> Clear Filter
+          </button>
+          <button type="button" class="btn btn-raised btn-primary mr-1" (click)="onClickGenerate()" translate>
+            <i class="fa fa-check-square-o"></i> Generate Potential RO
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

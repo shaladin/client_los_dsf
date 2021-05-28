@@ -30,7 +30,7 @@ export class LtkmCustDataPersonalObj {
 
     LtkmCustOtherInfoObj: LtkmCustOtherInfoObj;
 
-    LtkmCustAttrContent: Array<LtkmAttrContent>;
+    LtkmCustAttrContent: Array<any>;
 
     listFamily : Array<LtkmCustObj>;
     RowVersion: string;
@@ -51,7 +51,7 @@ export class LtkmCustDataPersonalObj {
         
         this.LtkmCustOtherInfoObj = new LtkmCustOtherInfoObj();
 
-        this.LtkmCustAttrContent = new Array<LtkmAttrContent>();
+        this.LtkmCustAttrContent = new Array();
         this.LtkmCustEmergencyContact = new LtkmCustEmrgncCntctObj();
 
         this.listFamily = new Array<LtkmCustObj>();

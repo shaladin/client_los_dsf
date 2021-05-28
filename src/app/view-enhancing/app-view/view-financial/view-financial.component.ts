@@ -8,6 +8,7 @@ import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AppDlrFncng } from 'app/shared/model/AppData/AppDlrFncng.Model';
 
 @Component({
   selector: "view-financial",
@@ -25,6 +26,14 @@ export class ViewFinancialComponent implements OnInit {
   
   appFinDataObj: AppFinDataObj = new AppFinDataObj();
   appObj: NapAppModel = new NapAppModel();
+
+  //FIN DATA
+  provisionFeeType: any = "-";
+  calcBase: any = "-";
+  calcMethod: any = "-";
+  appDlrFncng: any;
+  instTypeDescr: any = "-";
+  topCalcBased: any = "-";
 
   TotalAssetValue: number;
   TotalRentAmtPerPeriod: number;
@@ -83,6 +92,9 @@ export class ViewFinancialComponent implements OnInit {
         this.appFinDataObj = response["AppFinDataObj"];
         this.appObj = response["AppObj"];
         this.listInstallment = response["InstallmentObjs"];
+        if (this.appObj.BizTemplateCode == CommonConstant.DF) {
+          this.getDataForDF(this.appFinDataObj)
+        }
       }
     );
   }
@@ -115,5 +127,55 @@ export class ViewFinancialComponent implements OnInit {
         }
       }
     );
+  }
+  
+  getDataForDF(appFinDataObj) {
+
+    var AppOb = {
+      AppId: this.AppId
+    }
+    this.http.post(URLConstant.GetAppDlrFinByAppId, AppOb).subscribe(
+      (response) => {
+        this.appDlrFncng = response;
+
+        var obj = {
+          RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInstType,
+          MasterCode: this.appDlrFncng.MrInstTypeCode
+        }
+        this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, obj).subscribe(
+          (response) => {
+            this.instTypeDescr = response["Descr"]
+          }
+        )
+        var object  = {
+          RefMasterTypeCode: CommonConstant.RefMasterTypeCodeTopCalcBased,
+          MasterCode: this.appDlrFncng.TopBased
+        }
+        this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, object).subscribe(
+          (response) => {
+            this.topCalcBased = response["Descr"]
+          }
+        )
+      }
+    )
+
+    var obj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeProvisionSource,
+      MasterCode: appFinDataObj.MrProvisionFeeCalcMethodCode
+    }
+    this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, obj).subscribe(
+      (response) => {
+        this.calcBase = response["Descr"]
+      }
+    )
+    obj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeProvisionType,
+      MasterCode: appFinDataObj.MrProvisionFeeTypeCode
+    }
+    this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, obj).subscribe(
+      (response) => {
+        this.provisionFeeType = response["Descr"]
+      }
+    )
   }
 }

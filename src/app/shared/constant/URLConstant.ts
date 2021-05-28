@@ -25,6 +25,7 @@ export class URLConstant {
 
   // APP Application
   public static AddApp = environment.losUrl + "/Application/AddApp";
+  public static AddAppFromCopyCancledApp = environment.losUrl + "/Application/AddAppFromCopyCancledApp";
   public static AddAppMaindata = environment.losUrl + "/Application/AddAppMainData";
   public static GetAppById = environment.losUrl + "/Application/GetAppById";
   public static GetAppByAppNo = environment.losUrl + "/Application/GetAppByAppNo";
@@ -269,6 +270,7 @@ export class URLConstant {
   public static DeleteRefEmpAndEmpBankAcc = "/RefEmp/DeleteRefEmpAndEmpBankAcc";
   public static GetListEmployeebyRefEmpId = "/EmpPosition/GetListEmployeebyRefEmpId";
   public static GetEmpListByOfficeIdAndIsActive = "/RefEmp/GetEmpListByOfficeIdAndIsActive";
+  public static GetListRefEmpByGsValueandOfficeCode = "/RefEmp/GetListRefEmpByGsValueandOfficeCode";
   public static GetRefEmpByEmpNo = "/RefEmp/GetRefEmpByEmpNo";
   public static GetRefEmpSpvByEmpNo = environment.FoundationR3Url + "/RefEmp/GetRefEmpSpvByEmpNo";
   public static GetListRefEmpByGsValueandOfficeId = environment.FoundationR3Url + "/RefEmp/GetListRefEmpByGsValueandOfficeId";
@@ -379,6 +381,9 @@ export class URLConstant {
   public static GetListActiveRefMasterByRefMasterTypeCode = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterByRefMasterTypeCode";
   public static GetListActiveRefMasterByRefMasterCodeAndMappingCodes = environment.FoundationR3Url + "/RefMaster/GetListActiveRefMasterByRefMasterCodeAndMappingCodes";
 
+  //REF CUST MODEL
+  public static GetListKeyValueByMrCustTypeCode = environment.FoundationR3Url + "/RefCustModel/GetListKeyValueByMrCustTypeCode";
+  
   //REF ATTR
   public static GetListActiveRefAttrByAttrGroup = environment.FoundationR3Url + "/RefAttr/GetListActiveRefAttrByAttrGroup"
   public static GetListActiveRefAttrByListAttrGroup = environment.FoundationR3Url + "/RefAttr/GetListActiveRefAttrByListAttrGroup"
@@ -977,7 +982,6 @@ export class URLConstant {
 
   //AGRMNT
   public static GetAgrmntByAgrmntId = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntId";
-  public static GetAgrmntByCustNo = environment.losUrl + "/Agrmnt/GetAgrmntByCustNo";
   public static GetAgrmntByAppId = environment.losUrl + "/Agrmnt/GetAgrmntByAppId";
   public static GetAgrmntByAgrmntNo = environment.losUrl + "/Agrmnt/GetAgrmntByAgrmntNo";
   public static GetAgrmtSummaryByAgrmntId = environment.losUrl + "/Agrmnt/GetAgrmtSummaryByAgrmntId";
@@ -1397,6 +1401,9 @@ export class URLConstant {
   public static GetLtkmCustBankAccAndStatementForView = environment.losUrl + "/LtkmCustData/GetLtkmCustBankAccAndStatementForView";
   public static DeleteLtkmCustBankAccAndStmnt = environment.losUrl + "/LtkmCustData/DeleteLtkmCustBankAccAndStmnt";
 
+  public static GetListLtkmAppPrcsByCustNoAndIsAppInitDone = environment.losUrl + "/LtkmCustData/GetListLtkmAppPrcsByCustNoAndIsAppInitDone";
+  public static GetLtkmAppRjcByCustNoAndAppStat = environment.losUrl + "/LtkmCustData/GetLtkmAppRjcByCustNoAndAppStat";
+  public static GetLtkmExistAgrmntByCustNoAndIsAppInitDone = environment.losUrl + "/LtkmCustData/GetLtkmExistAgrmntByCustNoAndIsAppInitDone";
   //ltkm cust attr content
   public static GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup = environment.losUrl + "/LtkmCustData/GetListLtkmCustAttrContentByLtkmCustIdAndAttrGroup";
 

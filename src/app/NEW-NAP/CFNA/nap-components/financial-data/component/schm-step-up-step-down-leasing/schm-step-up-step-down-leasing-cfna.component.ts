@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
-import { CalcStepUpStepDownObj } from 'app/shared/model/AppFinData/CalcStepUpStepDownObj.Model';
 import { AppInstStepSchmObj } from 'app/shared/model/AppInstStepSchm/AppInstStepSchmObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -17,13 +16,13 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class SchmStepUpStepDownLeasingCFNAComponent implements OnInit {
-  @Input() AppId: number;
+  @Input() AppId: number = 0;
   @Input() ParentForm: FormGroup;
+  @Input() TrialCalc: boolean = false;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   StepUpStepDownInputOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
-  calcStepUpStepDownObj: CalcStepUpStepDownObj = new CalcStepUpStepDownObj();
   listInstallment: any;
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
   responseCalc: any;
@@ -38,13 +37,16 @@ export class SchmStepUpStepDownLeasingCFNAComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadDDLStepUpStepDownInputType();
-    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-      (response) => {
-        this.result = response;
-        if(this.result.BizTemplateCode == CommonConstant.CFRFN4W){
-          this.PriceLabel = "Financing Amount";
-        }
-      });
+    if (this.AppId != 0) {
+      this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
+        (response) => {
+          this.result = response;
+          if (this.result.BizTemplateCode == CommonConstant.CFRFN4W) {
+            this.PriceLabel = "Financing Amount";
+          }
+        });
+      this.TrialCalc = false;
+    }
   }
 
   LoadDDLRateType() {
@@ -175,14 +177,13 @@ export class SchmStepUpStepDownLeasingCFNAComponent implements OnInit {
       return;
     }
 
-    this.calcStepUpStepDownObj = this.ParentForm.value;
-    this.calcStepUpStepDownObj["IsRecalculate"] = false;
-    this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
-    this.calcStepUpStepDownObj["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
-    this.calcStepUpStepDownObj["InstAmt"] = 0;
+    var calcStepUpStepDownObj = this.ParentForm.value;
+    calcStepUpStepDownObj["IsRecalculate"] = false;
+    calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
+    calcStepUpStepDownObj["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
+    calcStepUpStepDownObj["InstAmt"] = 0;
 
-
-    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
+    this.http.post<ResponseCalculateObj>(this.GetUrlCalc(), calcStepUpStepDownObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.listAppInstStepSchm = response.AppInstStepSchmObjs;
@@ -211,6 +212,11 @@ export class SchmStepUpStepDownLeasingCFNAComponent implements OnInit {
         this.SetNeedReCalculate(false);
       }
     );
+  }
+
+  GetUrlCalc(): string {
+    if (!this.TrialCalc) return URLConstant.CalculateInstallmentStepUpStepDown;
+    return URLConstant.CalculateInstallmentStepUpStepDownForTrialCalc;
   }
 
   SaveAndContinue() {

@@ -11,20 +11,23 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { CalcBalloonObjForTrialCalc } from 'app/shared/model/AppFinData/CalcBalloonObjForTrialCalc.Model';
 
 @Component({
   selector: 'app-schm-balloon-cfna',
   templateUrl: './schm-balloon-cfna.component.html',
 })
 export class SchmBalloonCFNAComponent implements OnInit {
-  @Input() AppId: number;
+  @Input() AppId: number = 0;
   @Input() ParentForm: FormGroup;
   @Output() RefreshSubsidy = new EventEmitter();
-  
+  @Input() TrialCalc: boolean = false;
+
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
-  calcBalloonObj : CalcBalloonObj = new CalcBalloonObj();
+  calcBalloonObj: CalcBalloonObj = new CalcBalloonObj();
+  calcBalloonObjForTrialCalc: CalcBalloonObjForTrialCalc = new CalcBalloonObjForTrialCalc();
   listInstallment: any;
   responseCalc: any;
   result: AppObj = new AppObj();
@@ -39,13 +42,16 @@ export class SchmBalloonCFNAComponent implements OnInit {
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
 
-    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-      (response) => {
-        this.result = response;
-        if(this.result.BizTemplateCode == CommonConstant.CFRFN4W){
-          this.PriceLabel = "Financing Amount";
-        }
-      });
+    if (this.AppId != 0) {
+      this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
+        (response) => {
+          this.result = response;
+          if (this.result.BizTemplateCode == CommonConstant.CFRFN4W) {
+            this.PriceLabel = "Financing Amount";
+          }
+        });
+      this.TrialCalc = false;
+    }
   }
 
   LoadDDLRateType() {
@@ -63,7 +69,7 @@ export class SchmBalloonCFNAComponent implements OnInit {
         this.CalcBaseOptions = response[CommonConstant.ReturnObj];
         this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.MappingCode.indexOf(CommonConstant.InstSchmBalloon) !== -1);
 
-        if(this.CalcBaseOptions.length == 1){
+        if (this.CalcBaseOptions.length == 1) {
           this.ParentForm.patchValue({
             CalcBase: this.CalcBaseOptions[0].MasterCode
           });
@@ -82,38 +88,36 @@ export class SchmBalloonCFNAComponent implements OnInit {
   }
 
   Calculate() {
-    if(this.ParentForm.getRawValue().CalcBase == ''){
+    if (this.ParentForm.getRawValue().CalcBase == '') {
       this.toastr.warningMessage(ExceptionConstant.CHOOSE_CALCULATE_BASE);
       return;
     }
-    if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnInst && this.ParentForm.value.InstAmt <= 0){
+    if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnInst && this.ParentForm.value.InstAmt <= 0) {
       this.toastr.warningMessage(ExceptionConstant.INST_AMOUNT_MUST_HIGHER_THAN + " 0");
       return;
     }
-    if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
-        && this.ParentForm.controls.IsSubsidyRateExist.value == false 
-        && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().StdEffectiveRatePrcnt)
-    {
+    if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+      && this.ParentForm.controls.IsSubsidyRateExist.value == false
+      && this.ParentForm.getRawValue().EffectiveRatePrcnt < this.ParentForm.getRawValue().StdEffectiveRatePrcnt) {
       this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_LESS_THAN_STD_RATE);
-      return;  
-    }
-
-    if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
-        && this.ParentForm.controls.IsSubsidyRateExist.value == true 
-        && this.ParentForm.getRawValue().EffectiveRatePrcnt > this.ParentForm.getRawValue().StdEffectiveRatePrcnt)
-    {
-      this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_GREATER_THAN_STD_RATE);
-      return;  
-    }
-    if(this.ValidateFee() == false){
       return;
     }
-    if(this.ParentForm.get("BalloonValueAmt").value < 1){
+
+    if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+      && this.ParentForm.controls.IsSubsidyRateExist.value == true
+      && this.ParentForm.getRawValue().EffectiveRatePrcnt > this.ParentForm.getRawValue().StdEffectiveRatePrcnt) {
+      this.toastr.warningMessage(ExceptionConstant.EFF_RATE_CANNOT_GREATER_THAN_STD_RATE);
+      return;
+    }
+    if (this.ValidateFee() == false) {
+      return;
+    }
+    if (this.ParentForm.get("BalloonValueAmt").value < 1) {
       this.toastr.warningMessage(ExceptionConstant.BALLOON_AMOUNT_MUST_HIGHER_THAN + '0.');
       return;
     }
     this.calcBalloonObj = this.ParentForm.getRawValue();
-    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentBalloon, this.calcBalloonObj).subscribe(
+    this.http.post<ResponseCalculateObj>(this.GetUrlCalc(), this.calcBalloonObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
@@ -141,7 +145,7 @@ export class SchmBalloonCFNAComponent implements OnInit {
 
           SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
           CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
-          SupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt          
+          SupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt
 
         })
         this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
@@ -149,11 +153,16 @@ export class SchmBalloonCFNAComponent implements OnInit {
         this.SetInstallmentTable();
         this.SetNeedReCalculate(false);
 
-        if(this.ParentForm.controls.IsSubsidyRateExist.value == true){
+        if (this.ParentForm.controls.IsSubsidyRateExist.value == true) {
           this.RefreshSubsidy.emit();
         }
       }
     );
+  }
+
+  GetUrlCalc(): string {
+    if (!this.TrialCalc) return URLConstant.CalculateInstallmentBalloon;
+    return URLConstant.CalculateInstallmentBalloonForTrialCalc;
   }
 
   SetInstallmentTable() {
@@ -194,51 +203,51 @@ export class SchmBalloonCFNAComponent implements OnInit {
     this.SetNeedReCalculate(true);
   }
 
-  SetSubsidyAmtFromDiffRateInput(subsidyAmtFromDiffRate){
-    if(subsidyAmtFromDiffRate > 0){
+  SetSubsidyAmtFromDiffRateInput(subsidyAmtFromDiffRate) {
+    if (subsidyAmtFromDiffRate > 0) {
       this.ParentForm.patchValue({
         CommissionAmtFromDiffRate: 0
       });
       this.ParentForm.get("CommissionAmtFromDiffRate").disable();
-    }else{
-      if(this.ParentForm.controls.IsSubsidyRateExist.value == false){
-        this.ParentForm.get("CommissionAmtFromDiffRate").enable(); 
-      }    
-    }
-  }
-
-  CommissionAmtFromDiffRate_FocusOut(event){
-    this.SetCommissionAmtFromDiffRateInput(event.target.value);
-    this.SetNeedReCalculate(true);
-  }
-
-  SetCommissionAmtFromDiffRateInput(commissionAmtFromDiffRate){
-    if(commissionAmtFromDiffRate > 0){
-      this.ParentForm.patchValue({
-        SubsidyAmtFromDiffRate: 0
-      });
-      if(this.ParentForm.controls.IsSubsidyRateExist.value == false){
+    } else {
+      if (this.ParentForm.controls.IsSubsidyRateExist.value == false) {
         this.ParentForm.get("CommissionAmtFromDiffRate").enable();
       }
     }
   }
 
-  CalcBaseChanged(event){
+  CommissionAmtFromDiffRate_FocusOut(event) {
+    this.SetCommissionAmtFromDiffRateInput(event.target.value);
+    this.SetNeedReCalculate(true);
+  }
+
+  SetCommissionAmtFromDiffRateInput(commissionAmtFromDiffRate) {
+    if (commissionAmtFromDiffRate > 0) {
+      this.ParentForm.patchValue({
+        SubsidyAmtFromDiffRate: 0
+      });
+      if (this.ParentForm.controls.IsSubsidyRateExist.value == false) {
+        this.ParentForm.get("CommissionAmtFromDiffRate").enable();
+      }
+    }
+  }
+
+  CalcBaseChanged(event) {
     this.SetEnableDisableInputByCalcBase(event.target.value);
     this.SetNeedReCalculate(true);
   }
 
-  SetEnableDisableInputByCalcBase(calcBase){
-    if(calcBase == CommonConstant.FinDataCalcBaseOnRate){
+  SetEnableDisableInputByCalcBase(calcBase) {
+    if (calcBase == CommonConstant.FinDataCalcBaseOnRate) {
       this.ParentForm.get("EffectiveRatePrcnt").enable();
       this.ParentForm.get("InstAmt").disable();
-    }else if(calcBase == CommonConstant.FinDataCalcBaseOnInst){
+    } else if (calcBase == CommonConstant.FinDataCalcBaseOnInst) {
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").enable();
-    }else if(calcBase == CommonConstant.FinDataCalcBaseOnCommission){
+    } else if (calcBase == CommonConstant.FinDataCalcBaseOnCommission) {
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").disable();
-    }else{
+    } else {
       this.ParentForm.get("EffectiveRatePrcnt").enable();
       this.ParentForm.get("InstAmt").enable();
     }
@@ -250,11 +259,11 @@ export class SchmBalloonCFNAComponent implements OnInit {
     });
   }
 
-  ValidateFee(){
-    for(let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++){
-      if(this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
-          && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt){
-        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
+  ValidateFee() {
+    for (let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++) {
+      if (this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
+        && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt) {
+        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " + this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
         return false;
       }
     }
