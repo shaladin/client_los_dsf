@@ -229,7 +229,7 @@ export class CcContactInformationTabComponent implements OnInit {
     ReqAddr.Zipcode = TempZipVal.value;
     ReqAddr.SubZipcode = TempAddr.SubZipcode;
 
-    if (this.TempAppCustCompanyContactPersonObj.AppCustCompanyContactPersonId != 0) {
+    if (this.TempAppCustCompanyContactPersonObj.AppCustCompanyContactPersonId != 0 && this.TempAppCustCompanyContactPersonObj.AppCustAddrObj != null) {
       ReqAddr.AppCustAddrId = this.TempAppCustCompanyContactPersonObj.AppCustAddrObj.AppCustAddrId;
       ReqAddr.RowVersion = this.TempAppCustCompanyContactPersonObj.AppCustAddrObj.RowVersion;
     }

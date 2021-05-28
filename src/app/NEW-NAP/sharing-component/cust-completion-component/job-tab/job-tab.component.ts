@@ -148,10 +148,16 @@ export class JobTabComponent implements OnInit {
     }
 
     this.InputJobAddrObj.title = "Job Address";
+    this.InputJobAddrObj.showOwnership = true;
+    
     this.InputPrevJobAddrObj.title = "Previous Job Address";
     this.InputPrevJobAddrObj.isRequired = false;
+    this.InputPrevJobAddrObj.showOwnership = true;
+
     this.InputOthBizAddrObj.title = "Other Business Address";
     this.InputOthBizAddrObj.isRequired = false;
+    this.InputOthBizAddrObj.showOwnership = true;
+
     this.InputFieldJobAddrObj.inputLookupObj = new InputLookupObj();
     this.InputFieldPrevJobAddrObj.inputLookupObj = new InputLookupObj();
     this.InputFieldPrevJobAddrObj.inputLookupObj.isRequired = false;
@@ -373,6 +379,7 @@ export class JobTabComponent implements OnInit {
       this.JobDataAddrObj.AreaCode1 = this.JobDataForm.controls["JobAddr"]["controls"]["AreaCode1"].value;
       this.JobDataAddrObj.City = this.JobDataForm.controls["JobAddr"]["controls"]["City"].value;
       this.JobDataAddrObj.Zipcode = this.JobDataForm.controls["JobAddrZipcode"]["value"].value;
+      this.JobDataAddrObj.MrHouseOwnershipCode = this.JobDataForm.controls["JobAddr"]["controls"]["MrHouseOwnershipCode"].value;
       this.JobDataAddrObj.Notes = this.JobDataForm.controls["JobNotes"].value;
       this.JobDataAddrObj.RowVersion = this.JobAddrObj.RowVersion;
 
@@ -396,6 +403,7 @@ export class JobTabComponent implements OnInit {
       this.OthBizDataAddrObj.AreaCode1 = this.JobDataForm.controls["OthBizAddr"]["controls"]["AreaCode1"].value;
       this.OthBizDataAddrObj.City = this.JobDataForm.controls["OthBizAddr"]["controls"]["City"].value;
       this.OthBizDataAddrObj.Zipcode = this.JobDataForm.controls["OthBizAddrZipcode"]["value"].value;
+      this.OthBizDataAddrObj.MrHouseOwnershipCode = this.JobDataForm.controls["OthBizAddr"]["controls"]["MrHouseOwnershipCode"].value;
       this.OthBizDataAddrObj.FaxArea = this.JobDataForm.controls["OthBizAddr"]["controls"]["FaxArea"].value;
       this.OthBizDataAddrObj.Notes = this.JobDataForm.controls["OthBizNotes"].value;
       this.OthBizDataAddrObj.RowVersion = this.OthBizAddrObj.RowVersion;
@@ -420,6 +428,7 @@ export class JobTabComponent implements OnInit {
       this.PrevJobDataAddrObj.AreaCode1 = this.JobDataForm.controls["PrevJobAddr"]["controls"]["AreaCode1"].value;
       this.PrevJobDataAddrObj.City = this.JobDataForm.controls["PrevJobAddr"]["controls"]["City"].value;
       this.PrevJobDataAddrObj.Zipcode = this.JobDataForm.controls["PrevJobAddrZipcode"]["value"].value;
+      this.PrevJobDataAddrObj.MrHouseOwnershipCode = this.JobDataForm.controls["PrevJobAddr"]["controls"]["MrHouseOwnershipCode"].value;
       this.PrevJobDataAddrObj.Notes = this.JobDataForm.controls["PrevJobNotes"].value;
       this.PrevJobDataAddrObj.RowVersion = this.PrevJobAddrObj.RowVersion;
     }
