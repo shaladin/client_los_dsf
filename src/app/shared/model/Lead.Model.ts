@@ -1,5 +1,5 @@
 export class LeadObj{
-    LeadId : string;
+    LeadId : number;
     TaskListId : string;
     LeadNo : string;
     LeadCopyId : string;

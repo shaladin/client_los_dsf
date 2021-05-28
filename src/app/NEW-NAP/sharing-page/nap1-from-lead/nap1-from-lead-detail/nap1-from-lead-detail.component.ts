@@ -25,7 +25,7 @@ export class Nap1FromLeadDetailComponent implements OnInit {
   param;
   ProductOfferingIdentifier;
   ProductOfferingNameIdentifier;
-  leadId: string;
+  leadId: number;
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   constructor(

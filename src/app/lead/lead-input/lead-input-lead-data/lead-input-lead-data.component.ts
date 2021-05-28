@@ -37,7 +37,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
   typePage: string = "";
   CopyFrom: string;
-  LeadId: string;
+  LeadId: number;
   assetConditionObj: RefMasterObj;
   returnAssetConditionObj: [];
   downPaymentObj: RefMasterObj;
@@ -430,8 +430,7 @@ export class LeadInputLeadDataComponent implements OnInit {
     //if (this.typePage == "edit" || this.typePage == "update") {
     this.reqLeadAssetObj = new LeadAssetObj();
     this.reqLeadAssetObj.LeadId = this.LeadId;
-    var reqLeadAssetObj = { Id: this.LeadId };
-    this.http.post(this.getLeadAssetByLeadId, reqLeadAssetObj).subscribe(
+    this.http.post(this.getLeadAssetByLeadId, { Id: this.LeadId }).subscribe(
       (response) => {
         this.resLeadAssetObj = response;
         if (this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {

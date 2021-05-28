@@ -32,7 +32,7 @@ export class LeadDataComponent implements OnInit {
   
   typePage: string;
   CopyFrom: string;
-  LeadId: string;
+  LeadId: number;
   assetConditionObj: RefMasterObj;
   returnAssetConditionObj: any;
   downPaymentObj: RefMasterObj;
@@ -332,8 +332,7 @@ export class LeadDataComponent implements OnInit {
     if (this.typePage == "edit" || this.typePage == "update") {
       this.reqLeadAssetObj = new LeadAssetObj();
       this.reqLeadAssetObj.LeadId = this.LeadId;
-      var reqLeadAssetObj = { Id: this.LeadId };
-      this.http.post(URLConstant.GetLeadAssetByLeadId, reqLeadAssetObj).subscribe(
+      this.http.post(URLConstant.GetLeadAssetByLeadId, { Id: this.LeadId }).subscribe(
         (response) => {
           
           this.resLeadAssetObj = response;

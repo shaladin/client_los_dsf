@@ -26,6 +26,7 @@ export class MouCustCompanyFinDataObj {
     LongTemrLiablts: number;
     ShareholderEquity: number;
     CurrRatio: number;
+    MouCustCompanyId : number;
 
 constructor() { 
     this.MouCustCompanyFinDataId = 0;

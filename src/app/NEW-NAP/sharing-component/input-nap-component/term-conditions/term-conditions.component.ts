@@ -41,7 +41,9 @@ export class TermConditionsComponent implements OnInit {
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     var listTC = this.parentForm.get(this.identifier) as FormArray;
-    
+    while (listTC.length !== 0) {​​​​​
+      listTC.removeAt(0)
+    }​​​​​
     var appTcObj = {
       Id: this.AppId
     }
@@ -225,7 +227,7 @@ export class TermConditionsComponent implements OnInit {
             item.get("ExpiredDt").updateValueAndValidity();
           }
           else{
-            item.get("ExpiredDt").disable();
+            item.get("ExpiredDt").enable();
             item.get("ExpiredDt").clearValidators();
             item.get("ExpiredDt").updateValueAndValidity();
           }

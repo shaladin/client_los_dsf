@@ -230,8 +230,6 @@ export class LeadInputCustDataComponent implements OnInit {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
         }
         
-        this.leadObj = new LeadObj();
-        this.leadObj.LeadId = this.LeadId;
         var leadObj = { Id: this.LeadId };
         this.http.post(URLConstant.GetLeadNoByLeadId, leadObj).subscribe(
           (response: GenericObj) => {

@@ -13,6 +13,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ReqGetVerfResult3Obj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
+import { AgrmntMasterXObj } from 'app/shared/model/AgrmntMasterXObj.Model';
 
 @Component({
   selector: 'app-cust-confirmation-subj-view',
@@ -35,6 +36,8 @@ export class CustConfirmationSubjViewComponent implements OnInit {
   VerfResultHObjDetail: VerfResultHObj = new VerfResultHObj();
   CustNoObj: GenericObj = new GenericObj();
   VerfResultDListObj = new Array<VerfResultDObj>();
+  agrmntMasterXObj: AgrmntMasterXObj = new AgrmntMasterXObj();	
+  appObj: AppObj = new AppObj();
   IsVerfDetail: boolean = false;
   cust: any;
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_DETAIL;
@@ -71,6 +74,17 @@ export class CustConfirmationSubjViewComponent implements OnInit {
     };
     this.http.post<AgrmntObj>(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
       (response) => {
+        this.http.post<AppObj>(URLConstant.GetAppById, { Id: response["AppId"] }).subscribe(
+          (response) => {
+            this.appObj = response;
+            if (this.BizTemplateCode == CommonConstant.CFNA) {
+              this.http.post<AgrmntMasterXObj>(URLConstant.GetParentAgrNoByAppId, { AppId: this.appObj.AppId }).subscribe(
+                (response) => {
+                  this.agrmntMasterXObj = response;
+                });
+            }
+          });
+
         this.AgrmntObj = response;
 
         var appObj = {
@@ -92,9 +106,6 @@ export class CustConfirmationSubjViewComponent implements OnInit {
       (response) => {
         this.VerfResultHObj = response;
 
-        var verfResultObj = {
-          VerfResultId: this.VerfResultHObj.VerfResultId
-        };
         this.http.post<VerfResultObj>(URLConstant.GetVerfResultById, {Id : this.VerfResultHObj.VerfResultId}).subscribe(
           (response) => {
             this.VerfResultObj = response;

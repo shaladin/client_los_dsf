@@ -14,7 +14,7 @@ import { HttpClient } from '@angular/common/http';
   providers: [DecimalPipe, NGXToastrService]
 })
 export class LeadViewHeaderComponent implements OnInit {
-  LeadId: string;
+  LeadId: number;
   getLeadByLeadId: string;
   returnLead: any;
   getLeadObj: LeadObj;

@@ -11,6 +11,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-tc-data',
@@ -224,20 +225,44 @@ export class TcDataComponent implements OnInit {
       this.listAppTcObj.push(appTC);
     }
     this.ReqTCObj.ListAppTcObj = this.listAppTcObj;
-    if (this.mode == "edit") {
-      this.http.post(URLConstant.EditAppTc, this.ReqTCObj).subscribe(
-        (response) => {
-          // this.toastr.successMessage(response["message"]);
-          this.outputTab.emit();
-        });
-    } else {
-      this.http.post(URLConstant.AddAppTc, this.ReqTCObj).subscribe(
-        (response) => {
-          // this.toastr.successMessage(response["message"]);
-          this.outputTab.emit();
-        });
 
+    
+    var objGetMou={
+      Id:this.AppId
     }
+    this.http.post(URLConstant.GetMouCustByAppId, objGetMou).subscribe(
+      (responseMou) => {
+        if (responseMou["MouCustId"] != null && responseMou["MouCustId"] != 0) {
+          if (responseMou["EndDt"] != null) {
+            var ExpDt = new Date(responseMou["EndDt"]);
+            if (ExpDt < businessDt || responseMou["MouStat"] == CommonConstant.MouStatCancel) {
+              this.toastr.warningMessage(ExceptionConstant.MOU_EXP_DT_OR_MOU_STAT_CANCEL);
+              return;
+            }
+          } else {
+            if (responseMou["MouStat"] == CommonConstant.MouStatCancel) {
+              this.toastr.warningMessage(ExceptionConstant.MOU_EXP_DT_OR_MOU_STAT_CANCEL);
+              return;
+            }
+          }
+        }
+
+        if (this.mode == "edit") {
+          this.http.post(URLConstant.EditAppTc, this.ReqTCObj).subscribe(
+            (response) => {
+              // this.toastr.successMessage(response["message"]);
+              this.outputTab.emit();
+            });
+        } else {
+          this.http.post(URLConstant.AddAppTc, this.ReqTCObj).subscribe(
+            (response) => {
+              // this.toastr.successMessage(response["message"]);
+              this.outputTab.emit();
+            });
+        }
+      }
+    );
+    
   }
 
   Cancel() {

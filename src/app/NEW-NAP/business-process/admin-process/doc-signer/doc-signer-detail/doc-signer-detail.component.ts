@@ -113,6 +113,14 @@ export class DocSignerDetailComponent implements OnInit {
         this.SupplCode = this.ResponseAppAssetObj.SupplCode;
       });
 
+    if (this.BizTemplateCode == CommonConstant.DF)
+    {
+      await this.http.post(URLConstant.GetAppDlrFinByAppId, {Id: this.AppId}).toPromise().then(
+        (response) => {
+          this.SupplCode = response["DealerCode"];
+        });
+    }  
+
     await this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, agrmntObj).toPromise().then(
       (response) => {
         this.ResponseAgrmntSignerObj = response;
@@ -207,6 +215,17 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupBranchEmpObj.genericJson = "./assets/uclookup/lookupBranchEmp.json";
     this.inputLookupBranchEmpObj.addCritInput = new Array();
 
+    if(this.BizTemplateCode == CommonConstant.DF){
+      this.inputLookupAppCustCompanyShareHolder1Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
+      this.inputLookupAppCustCompanyShareHolder1Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
+      this.inputLookupAppCustCompanyShareHolder1Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
+    }
+    else{
+      this.inputLookupAppCustCompanyShareHolder1Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+      this.inputLookupAppCustCompanyShareHolder1Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+      this.inputLookupAppCustCompanyShareHolder1Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+    }
+
     var crit1Obj = new CriteriaObj();
     crit1Obj.propName = 'V.VENDOR_CODE';
     crit1Obj.restriction = AdInsConstant.RestrictionEq;
@@ -251,11 +270,21 @@ export class DocSignerDetailComponent implements OnInit {
     crit4Obj.restriction = AdInsConstant.RestrictionEq;
     crit4Obj.value = this.AppId.toString();
 
+    var custCompanyCrit2: CriteriaObj = new CriteriaObj();
+    custCompanyCrit2.DataType = "text";
+    custCompanyCrit2.propName = "ACCMS.MR_CUST_TYPE_CODE";
+    custCompanyCrit2.restriction = AdInsConstant.RestrictionEq;
+    custCompanyCrit2.value = CommonConstant.CustTypePersonal;
+
     this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput.push(crit4Obj);
+    this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput.push(custCompanyCrit2);
 
     if (this.ResponseAgrmntSignerObj != null) {
       this.inputLookupBranchEmpObj.jsonSelect = { VendorEmpName: this.ResponseAgrmntSignerObj.SupplBranchEmpName };
       this.inputLookupOfficeEmp1Obj.jsonSelect = { OfficeEmpName: this.ResponseAgrmntSignerObj.MfEmpName1 };
+      this.DocSignerForm.patchValue({
+        MrJobPositionMfEmpNo1Name : this.ResponseAgrmntSignerObj.MrJobPositionMfEmpNo1Name
+      });
       this.inputLookupOfficeEmp2Obj.jsonSelect = { OfficeEmpName: this.ResponseAgrmntSignerObj.MfEmpName2 };
       this.inputLookupAppCustCompanyShareHolder1Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder1Name };
     }
