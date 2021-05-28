@@ -1,0 +1,58 @@
+<div class="col-md-10">
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label>Grade</label>
+        </div>
+        <div class="col-md-6">
+          {{ScoreData.Grade}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label>Score</label>
+        </div>
+        <div class="col-md-6">
+          {{ScoreData.Score}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label>Probability Of Default</label>
+        </div>
+        <div class="col-md-6">
+          {{ScoreData.ProbabilityOfDefault}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label>Trend</label>
+        </div>
+        <div class="col-md-6">
+          {{ScoreData.Trend}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label>Date Score</label>
+        </div>
+        <div class="col-md-6">
+          {{ScoreData.Date | date: 'dd-MMM-yyyy'}}
+        </div>
+      </div>
+    </div>    
+  </div>
+</div>

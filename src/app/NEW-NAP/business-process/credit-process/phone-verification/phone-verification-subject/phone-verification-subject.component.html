@@ -6,7 +6,7 @@
       <form class="form form-horizontal" [formGroup]="ReturnHandlingForm" (ngSubmit)="ReturnHandlingForm.valid && SaveForm()"
         #enjiForm="ngForm">
         <div class="form-body">
-          <div *ngIf="returnHandlingDObj">
+          <div *ngIf="returnHandlingDObj.ReturnHandlingDId != 0">
             <lib-ucSubsection [id]="'returnInformationId'" [title]="'Return Information'" [panel]="'returnInformation'">
             </lib-ucSubsection>
             <div id="returnInformation">

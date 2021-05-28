@@ -416,6 +416,7 @@ export class PathConstant {
     public static VIEW_PURCHASE_TRACKING = "PurchaseTracking";
     public static VIEW_APP_ASSET = "AppAsset";
     public static VIEW_APP_LIST = "AppList";
+    public static VIEW_PEFINDO = "Pefindo";
     //#endregion
 
     //#region FOU-View-Module
@@ -463,4 +464,8 @@ public static REQUISITION_DECISION = "requisitiondecision";
     public static HO_REVIEW_DETAIL = PathConstant.HO_REVIEW + "/" + PathConstant.DETAIL;
     public static OFFERING_REVIEW = "OfferingReview";
     public static OFFERING_REVIEW_DETAIL = PathConstant.OFFERING_REVIEW + "/" + PathConstant.DETAIL;
+
+    //#region PEFINDO
+    public static PEFINDO_VIEW = "PefindoView";
+    //#endregion
 }

@@ -144,6 +144,9 @@
           <button type="button" *ngIf="crdRvwCustInfoObj.CaptureStat == CaptureStatScs" (click)="ReCaptureCreditReviewData()" class="btn btn-raised btn-warning mr-1" translate>
             <i class="far fa-check-square"></i> Re-Captured Data
           </button>
+          <button type="button" class="btn btn-raised btn-primary" [routerLink]="[PefindoLink]" [queryParams]="{AppId: this.appId}" translate>
+            <i class="far fa-check-square"></i> View Pefindo
+          </button>
         </div>
         <div class="form-actions right">
           <button type="button" class="btn btn-raised btn-danger mr-1" (click)="switchForm()" translate>

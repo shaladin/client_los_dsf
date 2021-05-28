@@ -11,6 +11,7 @@ export class ResGetAllAssetDataForPOByAssetObj {
 export class ResGetAllAssetDataForPOByAsset {
 
     AppAssetListObj : Array<ResAppAssetForPOObj>;
+    AppAssetAccListObj : Array<ResAppAssetAccForPoObj>
     AppCustAddrObj : ResAppCustAddrForPOObj;
     AgrmntObj : ResAgrmntForPOObj;
     AgrmntFeeListObj : Array<ResAgrmntFeeForPOObj>;
@@ -25,6 +26,7 @@ export class ResGetAllAssetDataForPOByAsset {
     TotalInsCustAmt : number;
     TotalLifeInsCustAmt : number;
     TotalPurchaseOrderAmt : number;
+    DiffRateAmt : number;
     PurchaseOrderHId : number;
     Notes : string;
     RowVersionPO : string;
@@ -58,6 +60,20 @@ export class ResAppAssetForPOObj {
         this.RowVersion = "";
     }
 
+}
+
+export class ResAppAssetAccForPoObj {
+    AssetAccessoryName : string;
+    AccessoryPriceAmt : number;
+    DownPaymentAmt : number;
+    AccessoryNotes : string;
+
+    constructor(){
+        this.AssetAccessoryName = "";
+        this.AccessoryPriceAmt = 0;
+        this.DownPaymentAmt = 0;
+        this.AccessoryNotes = "";
+    }
 }
 
 export class ResAppCustAddrForPOObj {
