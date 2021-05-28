@@ -9,16 +9,13 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder } from '@angular/forms';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { MouCustSignerObj } from 'app/shared/model/MouCustSignerObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-import { MouMainInfoComponent } from 'app/MOU/mou-main-info/mou-main-info.component';
 import { ReqMouCustSignerObj } from 'app/shared/model/Request/MOU/ReqMouCustSignerObj.model';
 
 @Component({

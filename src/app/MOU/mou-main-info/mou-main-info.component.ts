@@ -31,7 +31,6 @@ export class MouMainInfoComponent implements OnInit {
   ngOnInit() {
     this.whereValue.push(this.MouCustId);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.whereValue = this.whereValue;
     this.viewGenericObj.ddlEnvironments = [
       {

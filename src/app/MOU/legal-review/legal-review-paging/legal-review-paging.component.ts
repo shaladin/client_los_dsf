@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
@@ -34,12 +33,6 @@ export class LegalReviewPagingComponent implements OnInit {
     else {
       this.inputPagingObj._url = "./assets/ucpaging/searchLegalReview.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchLegalReview.json";
-      this.inputPagingObj.ddlEnvironments = [
-        {
-          name: "MC.MR_MOU_TYPE_CODE",
-          environment: environment.losUrl
-        }
-      ];
 
       const addCritMouStat = new CriteriaObj();
       addCritMouStat.DataType = 'text';

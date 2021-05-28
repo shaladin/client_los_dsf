@@ -77,7 +77,6 @@ export class MouExecutionDetailComponent implements OnInit {
       });
 
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouRequest.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "MouCustNo",
