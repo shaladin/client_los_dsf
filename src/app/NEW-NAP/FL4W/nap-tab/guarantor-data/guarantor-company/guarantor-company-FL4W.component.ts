@@ -22,6 +22,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 
 @Component({
   selector: 'app-guarantor-company-FL4W',
@@ -41,17 +43,17 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
   CustCompanyIdObj: GenericObj;
   resultData: any;
   inputLookupObj: InputLookupObj;
-  MrCompanyTypeCode: any;
-  MrCustRelationshipCode: any;
+  MrCompanyTypeCode: RefMasterObj;
+  MrCustRelationshipCode: Array<KeyValueObj>;
   inputLookupObj1: InputLookupObj;
-  MrJobPositionCode: any;
+  MrJobPositionCode: RefMasterObj;
   inputFieldObj: InputFieldObj;
   AddrObj: AddrObj;
   appGuarantorCompanyObj: AppGuarantorCompanyObj;
   guarantorCompanyObj: GuarantorCompanyObj;
   AppGuarantorCompanyId: number;
   companyLegalDocObj: Array<AppCustCompanyLegalDocObj>;
-  DocObjs: any;
+  DocObjs: Array<RefMasterObj>;
   tempCustNo: string;
   defLegalDocType: string;
   legalDocObj: Array<AppCustCompanyLegalDocObj>;

@@ -32,7 +32,7 @@ export class MouCancelComponent implements OnInit {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.UNAUTHORIZE_PAGE],{});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.UNAUTHORIZE_PAGE], {});
       return;
     }
     else {
@@ -74,7 +74,7 @@ export class MouCancelComponent implements OnInit {
           response => {
             this.toastr.successMessage(response["Message"]);
             this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_CANCEL],{});
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_CANCEL], {});
             });
           }
         );

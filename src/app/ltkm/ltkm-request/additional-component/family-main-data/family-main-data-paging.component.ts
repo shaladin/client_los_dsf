@@ -20,7 +20,6 @@ export class LtkmFamilyMainDataPagingComponent implements OnInit {
   resultData: Array<any> = new Array();
   closeResult: string;
   appCustId: number;
-  inputMode: string = "ADD";
   custDataObj: CustDataObj;
   custMainDataMode: string;
 
@@ -36,36 +35,32 @@ export class LtkmFamilyMainDataPagingComponent implements OnInit {
   }
 
   add() {
-    this.inputMode = "ADD";
     this.isDetail = true;
     this.appCustId = null;
   }
 
-  
+
   close() {
-    // this.loadGuarantorListData();
     this.isDetail = false;
   }
 
   event(ev) {
     if (ev.Key == "edit") {
       this.isDetail = true;
-      this.inputMode="EDIT";
       this.appCustId = ev.RowObj.AppCustId;
-    }    
+    }
     if (ev.Key == "delete") {
       if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-        this.http.post(URLConstant.DeleteAppCustMainData, {AppCustId: ev.RowObj.AppCustId}).subscribe(
+        this.http.post(URLConstant.DeleteAppCustMainData, { AppCustId: ev.RowObj.AppCustId }).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            // this.loadGuarantorListData();
           }
         );
       }
     }
   }
 
-  loadFamilyListData(){
+  loadFamilyListData() {
     this.inputGridObj.resultData = {
       Data: ""
     }
@@ -73,20 +68,4 @@ export class LtkmFamilyMainDataPagingComponent implements OnInit {
     this.inputGridObj.resultData.Data = this.listFamily;
     this.listFamily = this.inputGridObj.resultData.Data;
   }
-
-  // loadGuarantorListData() {
-  //   this.custDataObj = new CustDataObj();
-  //   this.custDataObj.AppId = this.appId;
-  //   this.custDataObj.IsFamily = true;
-  //   this.http.post(URLConstant.GetListAppCustMainDataByAppId, this.custDataObj).subscribe(
-  //     (response) => {
-  //       this.inputGridObj.resultData = {
-  //         Data: ""
-  //       }
-  //       this.inputGridObj.resultData["Data"] = new Array();
-  //       this.inputGridObj.resultData.Data = response['ListAppCustObj'];
-  //       this.listFamily = this.inputGridObj.resultData.Data;
-  //     }
-  //   );
-  // }
 }

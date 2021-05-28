@@ -16,10 +16,13 @@ export class TabApplicationComponent implements OnInit {
   @Input() BizTemplateCode: string = "";
   AppNo: string;
   viewProdMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
+  viewRestObj: UcViewGenericObj = new UcViewGenericObj();
   inputGridObj: InputGridObj;
   IsGridLoanReady: boolean = false;
   isReady: boolean = false;
   isLoanObjectNeeded: boolean = false;
+  ListCrossAppData: any;
+  isDF: any = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {      
@@ -40,12 +43,13 @@ export class TabApplicationComponent implements OnInit {
       }
     )
 
-    if(this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W || this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.OPL) {
+    if(this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W || this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.OPL || this.BizTemplateCode == CommonConstant.DF) {
       this.isLoanObjectNeeded = false;
     }
     else {
       this.isLoanObjectNeeded = true;
-    }
+      await this.GetLoanObjData();    
+      }
 
     if (this.BizTemplateCode == CommonConstant.FCTR) {
       await this.http.post(URLConstant.GetAppFctrByAppId, {Id: this.appId}).toPromise().then(
@@ -71,18 +75,22 @@ export class TabApplicationComponent implements OnInit {
     }
 
     this.viewProdMainInfoObj.viewEnvironment = environment.losUrl;
+    this.viewProdMainInfoObj.whereValue = [this.appId];
     this.viewProdMainInfoObj.ddlEnvironments = [
       {
         name: "MouCustNo",
         environment: environment.losR3Web
       },
     ];
-    this.isReady = true;
+    
     await this.GetCrossAppData();
     await this.GetLoanObjData();
+
+    if (this.BizTemplateCode == CommonConstant.DF)
+      await this.GetRestObjData();
+    this.isReady = true;
   }
 
-  ListCrossAppData
   async GetCrossAppData() {
     var obj = { Id: this.appId };
     await this.http.post(URLConstant.GetListAppCross, obj).toPromise().then(
@@ -107,5 +115,11 @@ export class TabApplicationComponent implements OnInit {
       });
 
     this.IsGridLoanReady = true;
+  }
+
+  async GetRestObjData() {
+    this.viewRestObj.viewInput = "./assets/ucviewgeneric/viewRestructureObj.json";
+    this.viewRestObj.viewEnvironment = environment.losUrl;
+    this.viewRestObj.whereValue = [this.appId];
   }
 }

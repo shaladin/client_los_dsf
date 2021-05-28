@@ -156,6 +156,7 @@ export class NavigationConstant {
   public static NAP_CRD_PRCS_PHN_VRF_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_PAGING; //"/Nap/CreditProcess/PhoneVerification/Paging"
   public static NAP_CRD_PRCS_PHN_VRF_SUBJECT = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_SUBJECT; //"/Nap/CreditProcess/PhoneVerification/Subject"
   public static NAP_CRD_PRCS_PHN_VRF_SUBJECT_VERIF = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_SUBJECT_VERIF; //"/Nap/CreditProcess/PhoneVerification/Subject/Verif"
+  public static NAP_CRD_PRCS_PHN_VRF_SUBJECT_VIEW = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_SUBJECT_VIEW; //"/Nap/CreditProcess/PhoneVerification/Subject/View"
   //#endregion
 
   //#region CF2W
@@ -237,6 +238,7 @@ export class NavigationConstant {
   public static NAP_SHARING_FROM_LEAD_PAGING = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP_FROM_LEAD_PAGING; //"/Nap/Sharing/NapFromLead/Paging"
   public static NAP_SHARING_FROM_LEAD_DETAIL = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP_FROM_LEAD_DETAIL; //"/Nap/Sharing/NapFromLead/Detail"
   public static NAP_SHARING_FROM_SIMPLE_LEAD_PAGING = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP_SIMPLE_LEAD_PAGING; //"/Nap/Sharing/NapFromSimpleLead/Paging"
+  public static NAP_SHARING_FROM_SIMPLE_LEAD_DETAIL = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP_SIMPLE_LEAD_DETAIL; //"/Nap/Sharing/NapFromSimpleLead/Detail"
   public static NAP1_SHARING_FROM_LEAD_PAGING = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP1_FROM_LEAD_PAGING; //"/Nap/Sharing/Nap1FromLead/Paging"
   public static NAP1_SHARING_FROM_LEAD_DETAIL = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP1_FROM_LEAD_DETAIL; //"/Nap/Sharing/Nap1FromLead/Detail"
   //#endregion

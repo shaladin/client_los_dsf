@@ -1,0 +1,24 @@
+<div class="col-md-12" >
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <div class="form-body">
+          <h4 class="form-section card-title" translate>Change MOU View</h4>
+          <app-change-mou-main-info [arrValue]="arrValue"></app-change-mou-main-info>
+          <mat-tab-group>
+            <mat-tab label="MoU Detail">
+              <ng-template matTabContent>
+                <app-change-mou-view-detail *ngIf="isReady" [MouCustId]="MouCustId" [MouType]="MrMouTypeCode"></app-change-mou-view-detail>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Collateral">
+              <ng-template matTabContent>
+                <app-change-mou-view-addcoll [ChangeMouTrxId]="ChangeMouTrxId"></app-change-mou-view-addcoll>
+              </ng-template>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -39,8 +39,8 @@ export class CustGrpMemberFL4WComponent implements OnInit {
 
   CustRelationshipPersonalObj: any;
   CustRelationshipCompanyObj: any;
-  defaultCustRelationshipPersonalCode: any;
-  defaultCustRelationshipCompanyCode: any;
+  defaultCustRelationshipPersonalCode: string;
+  defaultCustRelationshipCompanyCode: string;
 
   InputLookupCustomerObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   lookupCustomerIdentifiers: Array<string> = new Array<string>();

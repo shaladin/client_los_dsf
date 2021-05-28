@@ -16,6 +16,8 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
+import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
+import { RegexService } from 'app/shared/services/regex.services';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
@@ -23,7 +25,8 @@ import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMas
 @Component({
   selector: 'app-emergency-contact-tab',
   templateUrl: './emergency-contact-tab.component.html',
-  styleUrls: ['./emergency-contact-tab.component.scss']
+  styleUrls: ['./emergency-contact-tab.component.scss'],
+  providers: [RegexService]
 })
 export class EmergencyContactTabComponent implements OnInit {
 
@@ -60,6 +63,7 @@ export class EmergencyContactTabComponent implements OnInit {
   })
 
   constructor(
+    private regexService: RegexService,
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -67,6 +71,7 @@ export class EmergencyContactTabComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.customPattern = new Array<CustomPatternObj>();
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = UserAccess.BusinessDt;
 
@@ -107,6 +112,7 @@ export class EmergencyContactTabComponent implements OnInit {
           this.EmergencyContactForm.patchValue({
             MrIdTypeCode: this.IdTypeObj[idxDefault]["MasterCode"]
           });
+          this.getInitPattern();
           this.ChangeIdType(this.IdTypeObj[idxDefault]["MasterCode"]);
         }
       });
@@ -160,6 +166,12 @@ export class EmergencyContactTabComponent implements OnInit {
             MobilePhnNo2: response.MobilePhnNo2,
             Email: response.Email
           })
+
+          if (this.GenderObj.findIndex(x => x.Key == this.EmergencyContactForm.controls.MrGenderCode.value) == -1) {
+            this.EmergencyContactForm.patchValue({
+              MrGenderCode: ''
+            })
+          }
         }
         this.appCustEmrgncCntctObj.RowVersion = response["RowVersion"];
         this.InputLookupCustObj.nameSelect = response["ContactPersonName"];
@@ -202,6 +214,7 @@ export class EmergencyContactTabComponent implements OnInit {
     }
 
     this.EmergencyContactForm.controls.IdExpiredDt.updateValueAndValidity();
+    this.setValidatorPattern();
   }
 
   removeSpouse() {
@@ -338,4 +351,52 @@ export class EmergencyContactTabComponent implements OnInit {
         });
     }
   }
+
+  //START URS-LOS-041
+  controlNameIdNo: any = 'IdNo';
+  controlNameIdType: any = 'MrIdTypeCode';
+  customPattern: Array<CustomPatternObj>;
+  initIdTypeCode: any;
+  resultPattern: any;
+
+  getInitPattern() {
+    this.regexService.getListPattern().subscribe(
+      response => {
+        this.resultPattern = response[CommonConstant.ReturnObj];
+        if(this.resultPattern != undefined)
+        {
+          for (let i = 0; i < this.resultPattern.length; i++) {
+            let patternObj: CustomPatternObj = new CustomPatternObj();
+            let pattern: string = this.resultPattern[i].Value;
+    
+            patternObj.pattern = pattern;
+            patternObj.invalidMsg = this.regexService.getErrMessage(pattern);
+            this.customPattern.push(patternObj);
+          }
+          this.setValidatorPattern();
+        }
+      }
+    );
+  }
+  setValidatorPattern() {
+    let idTypeValue: string;
+    idTypeValue = this.EmergencyContactForm.controls[this.controlNameIdType].value;
+    var pattern: string = '';
+    if (idTypeValue != undefined) {
+      if (this.resultPattern != undefined) {
+        var result = this.resultPattern.find(x => x.Key == idTypeValue)
+        if (result != undefined) {
+          pattern = result.Value;
+        }
+      }
+    }
+    this.setValidator(pattern);
+  }
+  setValidator(pattern: string) {
+    if (pattern != undefined) {
+      this.EmergencyContactForm.controls[this.controlNameIdNo].setValidators(Validators.pattern(pattern));
+      this.EmergencyContactForm.controls[this.controlNameIdNo].updateValueAndValidity();
+    }
+  }
+  //END OF URS-LOS-041
 }

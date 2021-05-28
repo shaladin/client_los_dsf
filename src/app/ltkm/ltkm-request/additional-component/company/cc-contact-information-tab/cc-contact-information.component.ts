@@ -17,6 +17,10 @@ import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
 import { RegexService } from 'app/shared/services/regex.services';
 import { LtkmCustCompanyContactPersonObj } from 'app/shared/model/LTKM/LtkmCustCompanyContactPersonObj.Model';
 import { LtkmCustAddrObj } from 'app/shared/model/LTKM/LtkmCustAddrObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
     selector: 'app-ltkm-cc-contact-information',
@@ -34,8 +38,9 @@ export class LtkmCcContactInformationTabComponent implements OnInit {
     CcCustAddrObj: AppCustAddrObj;
     IsUcAddrReady: boolean = false;
     @Input() LtkmCustCompanyContactPersonObj: LtkmCustCompanyContactPersonObj = new LtkmCustCompanyContactPersonObj();
-    DictRefMaster: any = {};
+    DictRefMaster: { [id: string]: Array<KeyValueObj> } = {};
     BusinessDate: Date;
+    UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     readonly MasterIdTypeCode: string = CommonConstant.RefMasterTypeCodeIdType;
     readonly MasterGenderCode: string = CommonConstant.RefMasterTypeCodeGender;
     readonly MasterJobPosCode: string = CommonConstant.RefMasterTypeCodeJobPosition;
@@ -49,7 +54,8 @@ export class LtkmCcContactInformationTabComponent implements OnInit {
         private fb: FormBuilder,
         private http: HttpClient,
         private toastr: NGXToastrService,
-        public formValidate: FormValidateService) {
+        public formValidate: FormValidateService,
+        private cookieService: CookieService) {
 
     }
 
@@ -131,12 +137,8 @@ export class LtkmCcContactInformationTabComponent implements OnInit {
             }));
         }
 
-        console.log(this.parentForm);
-
-
         this.customPattern = new Array<CustomPatternObj>();
-        let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-        this.BusinessDate = new Date(formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US'));
+        this.BusinessDate = new Date(formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US'));
 
         this.SetAddrForm();
         await this.GetListActiveRefMaster(this.MasterGenderCode);
@@ -147,7 +149,7 @@ export class LtkmCcContactInformationTabComponent implements OnInit {
     }
 
     async GetListActiveRefMaster(RefMasterTypeCode: string) {
-        await this.http.post<any>(URLConstant.GetRefMasterListKeyValueActiveByCode, { "RefMasterTypeCode": RefMasterTypeCode }).toPromise().then(
+        await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: RefMasterTypeCode }).toPromise().then(
             (response) => {
                 this.DictRefMaster[RefMasterTypeCode] = response["ReturnObject"];
                 if (this.DictRefMaster[this.MasterIdTypeCode] != undefined) {
@@ -158,11 +160,6 @@ export class LtkmCcContactInformationTabComponent implements OnInit {
     }
 
     async GetAppCustCompanyContactPersonByAppCustId() {
-
-        // await this.http.post<AppCustCompanyContactPersonObj>(URLConstant.GetAppCustCompanyContactPersonByAppCustId, { "appCustId": this.AppCustId }).toPromise().then(
-        //   (response) => {
-        //     if (response.AppCustCompanyContactPersonId != 0) {
-        //       this.LtkmCustCompanyContactPersonObj = response;
         this.parentForm['controls'][this.identifier].patchValue({
             ContactPersonName: this.LtkmCustCompanyContactPersonObj.ContactPersonName,
             MrGenderCode: this.LtkmCustCompanyContactPersonObj.MrGenderCode,
@@ -294,9 +291,8 @@ export class LtkmCcContactInformationTabComponent implements OnInit {
     }
 
     CheckDt(inputDate: Date, type: string) {
-        let UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-        let MaxDate = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
-        let Max17YO = formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+        let MaxDate = formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
+        let Max17YO = formatDate(this.UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US');
         let max17Yodt = new Date(Max17YO);
         let d1 = new Date(inputDate);
         let d2 = new Date(MaxDate);
@@ -346,20 +342,13 @@ export class LtkmCcContactInformationTabComponent implements OnInit {
         ReqCcObj.PhnExt1 = obj[this.InputAddressObjForCc_Identifier].PhnExt1;
         ReqCcObj.PhnExt2 = obj[this.InputAddressObjForCc_Identifier].PhnExt2;
         ReqCcObj.LtkmCustAddrObj = ReqAddr;
-
-        // await this.http.post(URLConstant.AddOrEditAppCustCompanyContactPerson, ReqCcObj).toPromise().then(
-        //   (response) => {
-        //     this.toastr.successMessage(response["message"]);
-        //   }
-        // );
     }
 
     //START URS-LOS-041
-    controlNameIdNo: any = 'IdNo';
-    controlNameIdType: any = 'MrIdTypeCode';
+    controlNameIdNo: string = 'IdNo';
+    controlNameIdType: string = 'MrIdTypeCode';
     customPattern: Array<CustomPatternObj>;
-    initIdTypeCode: any;
-    resultPattern: any;
+    resultPattern: Array<KeyValueObj>;
 
     getInitPattern() {
         this.regexService.getListPattern().subscribe(

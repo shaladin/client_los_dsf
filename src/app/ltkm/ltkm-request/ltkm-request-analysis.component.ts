@@ -9,6 +9,8 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
     selector: 'app-ltkm-request-analysis',
@@ -37,11 +39,12 @@ export class LtkmRequestAnalysisComponent implements OnInit {
         private fb: FormBuilder,
         private http: HttpClient,
         private toastr: NGXToastrService,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+        private cookieService: CookieService) {
     }
 
     async ngOnInit(): Promise<void> {
-        this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+        this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         this.parentForm.removeControl(this.identifier);
         this.parentForm.addControl(this.identifier, this.fb.group({
             MrSuspiciousTrxDueToCode: ['', Validators.required],
@@ -92,10 +95,7 @@ export class LtkmRequestAnalysisComponent implements OnInit {
 
     updateSalesOfficer() {
         var OfficeCode = this.parentForm.controls[this.identifier]["controls"].OfficeCode.value;
-        var reqObj = {
-            OfficeCode: OfficeCode
-        }
-        this.http.post(URLConstant.GetListRefEmpByGsValueandOfficeCode, reqObj).subscribe(
+        this.http.post(URLConstant.GetListRefEmpByGsValueandOfficeCode, { OfficeCode: OfficeCode }).subscribe(
             (response) => {
                 this.allInSalesOffice = response[CommonConstant.ReturnObj];
             });

@@ -15,6 +15,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { CustDataCompanyLtkmObj } from 'app/shared/model/LTKM/CustDataCompanyLtkmObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-ltkm-cust-company-main-data',
@@ -30,33 +33,25 @@ export class LtkmCustCompanyMainDataComponent implements OnInit {
   @Input() appId;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() custDataCompanyObj: CustDataCompanyLtkmObj = new CustDataCompanyLtkmObj();
-  @Input() custType: any;
+  @Input() custType: string;
   @Input() bizTemplateCode : string = "";
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
   AppObj: AppObj = new AppObj();
   AppId: number;
-
-  refMasterObj = {
-    RefMasterTypeCode: "",
-  };
-  refIndustryObj = {
-    IndustryTypeCode: ""
-  };
-  selectedCustNo: any;
-  selectedIndustryTypeCode: any;
+  selectedCustNo: string;
+  selectedIndustryTypeCode: string;
   custDataObj: CustDataObj;
 
-  InputLookupCustomerObj: any;
-  InputLookupIndustryTypeObj: any;
-  IdTypeObj: any;
-  CompanyTypeObj: any;
+  InputLookupCustomerObj: InputLookupObj;
+  InputLookupIndustryTypeObj: InputLookupObj;
+  CompanyTypeObj: Array<KeyValueObj>;
   CustModelObj: Array<KeyValueObj>;
   custModelReqObj = {
     MrCustTypeCode: ""
   };
-  UserAccess: any;
+  UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   MaxDate: Date;
 
 
@@ -64,15 +59,14 @@ export class LtkmCustCompanyMainDataComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params['AppId'];
     });
   }
 
   ngOnInit() {
-
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
     if(this.isLockMode){
@@ -118,8 +112,7 @@ export class LtkmCustCompanyMainDataComponent implements OnInit {
     });
     this.InputLookupCustomerObj.isReadonly = true;
 
-    var custObj = { CustId: event.CustId };
-    this.http.post(URLConstant.GetCustCompanyLtkmForCopyByCustId, custObj).subscribe(
+    this.http.post(URLConstant.GetCustCompanyLtkmForCopyByCustId, { Id: event.CustId }).subscribe(
       (response) => {
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);
@@ -185,10 +178,10 @@ export class LtkmCustCompanyMainDataComponent implements OnInit {
     this.InputLookupCustomerObj.addCritInput = arrCrit;
   }
 
-  setIndustryTypeName(industryTypeCode) {
-    this.refIndustryObj.IndustryTypeCode = industryTypeCode;
-
-    this.http.post(URLConstant.GetRefIndustryTypeByCode, this.refIndustryObj).subscribe(
+  setIndustryTypeName(industryTypeCode: string) {
+    var reqTempObj: GenericObj = new GenericObj();
+    reqTempObj.Code = industryTypeCode;
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, reqTempObj).subscribe(
       (response) => {
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
         this.InputLookupIndustryTypeObj.jsonSelect = response;
@@ -254,8 +247,7 @@ export class LtkmCustCompanyMainDataComponent implements OnInit {
       this.InputLookupIndustryTypeObj.isRequired = false;
     }
 
-    var AppObj = { AppId: this.AppId };
-    this.http.post<AppObj>(URLConstant.GetAppById, AppObj).subscribe(
+    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.AppObj = response;
         
@@ -275,8 +267,7 @@ export class LtkmCustCompanyMainDataComponent implements OnInit {
   }
 
   bindCompanyTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCompanyType;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType }).subscribe(
       (response) => {
         this.CompanyTypeObj = response[CommonConstant.ReturnObj];
         if (this.CompanyTypeObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyTypeCode.value == "")) {

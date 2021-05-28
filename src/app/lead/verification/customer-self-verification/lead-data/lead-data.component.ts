@@ -20,6 +20,9 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqLeadInputLeadDataObj } from 'app/shared/model/Request/LEAD/ReqInputLeadDataObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { AssetMasterForLookupObj } from 'app/shared/model/AssetMasterForLookupObj.Model';
+import { AssetTypeSerialNoLabelObj } from 'app/shared/model/SerialNo/AssetTypeSerialNoLabelObj.Model';
 
 @Component({
   selector: 'app-lead-data',
@@ -27,27 +30,27 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
   providers: [NGXToastrService]
 })
 export class LeadDataComponent implements OnInit {
-  @Input() originPage :string;
+  @Input() originPage: string;
   @Output() outputPage: EventEmitter<object> = new EventEmitter();
-  
+
   typePage: string;
   CopyFrom: string;
   LeadId: number;
   assetConditionObj: RefMasterObj;
-  returnAssetConditionObj: any;
+  returnAssetConditionObj: Array<KeyValueObj>;
   downPaymentObj: RefMasterObj;
-  returnDownPaymentObj: any;
+  returnDownPaymentObj: Array<KeyValueObj>;
   firstInstObj: RefMasterObj;
-  returnFirstInstObj: any;
+  returnFirstInstObj: Array<KeyValueObj>;
   InputLookupAssetObj: InputLookupObj;
-  assetTypeId: string;
+  assetTypeId: Number;
   leadInputLeadDataObj: ReqLeadInputLeadDataObj;
   reqLeadAssetObj: LeadAssetObj;
-  resLeadAssetObj: any;
+  resLeadAssetObj: LeadAssetObj;
   reqLeadAppObj: LeadAppObj;
-  resLeadAppObj: any;
+  resLeadAppObj: LeadAppObj;
   reqAssetMasterObj: AssetMasterObj;
-  resAssetMasterObj: any;
+  resAssetMasterObj: AssetMasterForLookupObj;
   LeadDataForm = this.fb.group({
     FullAssetCode: [''],
     FullAssetName: [''],
@@ -65,18 +68,18 @@ export class LeadDataComponent implements OnInit {
     items: this.fb.array([]),
   });
   generalSettingObj: GeneralSettingObj;
-  lobKta : Array<string> = new Array();
+  lobKta: Array<string> = new Array();
   leadObj: LeadObj;
-  returnLeadObj: any;
+  returnLeadObj: LeadObj;
   returnLobCode: string;
   WfTaskListId: number;
-  editLeadObj : LeadObj;
+  editLeadObj: LeadObj;
   isUsed: boolean;
-  SerialNoList: any;
-  items: FormArray  ;
-  tempMrAssetConditionCode : any;
-  tempMrDownPaymentTypeCode : any;
-  tempMrFirstInstTypeCode : any;
+  SerialNoList: Array<AssetTypeSerialNoLabelObj>;
+  items: FormArray;
+  tempMrAssetConditionCode: string;
+  tempMrDownPaymentTypeCode: string;
+  tempMrFirstInstTypeCode: string;
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
@@ -103,16 +106,16 @@ export class LeadDataComponent implements OnInit {
       FullAssetName: event.FullAssetName
     });
     this.assetTypeId = event.AssetTypeId;
-    var AssetTypeCode = { 'AssetTypeCode': event.AssetTypeCode };
+    let AssetTypeCode = { 'AssetTypeCode': event.AssetTypeCode };
 
-    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: event.AssetTypeCode}).subscribe(
+    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: event.AssetTypeCode }).subscribe(
       (response: any) => {
         while (this.items.length) {
           this.items.removeAt(0);
         }
         this.SerialNoList = response[CommonConstant.ReturnObj];
-        for (var i = 0; i < this.SerialNoList["length"]; i++) {
-          var eachDataDetail = this.fb.group({
+        for (let i = 0; i < this.SerialNoList["length"]; i++) {
+          let eachDataDetail = this.fb.group({
             SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
             SerialNoValue: [''],
             IsMandatory: [this.SerialNoList[i].IsMandatory]
@@ -132,13 +135,13 @@ export class LeadDataComponent implements OnInit {
   //   });
   // }
 
-  radioChange(event) { 
+  radioChange(event) {
 
-    var assetType : AssetTypeObj= new AssetTypeObj();
+    let assetType: AssetTypeObj = new AssetTypeObj();
     assetType.AssetTypeId = this.assetTypeId;
-    this.http.post(URLConstant.GetAssetTypeById, {Id: this.assetTypeId}).subscribe(
-      (response: any) => { 
- 
+    this.http.post(URLConstant.GetAssetTypeById, { Id: this.assetTypeId }).subscribe(
+      (response: any) => {
+
       }
     );
   }
@@ -155,14 +158,14 @@ export class LeadDataComponent implements OnInit {
 
     this.generalSettingObj = new GeneralSettingObj();
     this.generalSettingObj.GsCode = "LOB_KTA";
-    this.http.post(URLConstant.GetGeneralSettingValueByCode, {Code: "LOB_KTA"}).subscribe(
+    this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: "LOB_KTA" }).subscribe(
       (response: GeneralSettingObj) => {
         this.lobKta = response.GsValue.split(',');
         this.leadObj = new LeadObj();
         this.leadObj.LeadId = this.LeadId;
-        var leadObj = { Id: this.LeadId };
+        let leadObj = { Id: this.LeadId };
         this.http.post(URLConstant.GetLeadByLeadId, leadObj).subscribe(
-          (response) => { 
+          (response: LeadObj) => {
             this.returnLeadObj = response;
             this.returnLobCode = response['LobCode'];
             if (this.lobKta.includes(this.returnLobCode) == true) {
@@ -203,30 +206,30 @@ export class LeadDataComponent implements OnInit {
     if (this.CopyFrom != null) {
       this.reqLeadAssetObj = new LeadAssetObj();
       this.reqLeadAssetObj.LeadId = this.CopyFrom;
-      var reqLeadAssetObj = { Id: this.CopyFrom };
+      let reqLeadAssetObj = { Id: this.CopyFrom };
       this.http.post(URLConstant.GetLeadAssetByLeadId, reqLeadAssetObj).subscribe(
-        (response) => {
+        (response: LeadAssetObj) => {
           this.resLeadAssetObj = response;
           if (this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
             this.isUsed = true;
           } else {
             this.isUsed = false;
           }
-          if (this.resLeadAssetObj.LeadAssetId != 0) { 
+          if (this.resLeadAssetObj.LeadAssetId != 0) {
             this.assetConditionObj = new RefMasterObj();
-            this.assetConditionObj.MasterCode = this.resLeadAssetObj.MrAssetConditionCode; 
-            this.http.post(URLConstant.GetRefMasterByMasterCode, {Code: this.resLeadAssetObj.MrAssetConditionCode}).subscribe(
-              (response) => {
-                this.tempMrAssetConditionCode = response["Descr"]; 
+            this.assetConditionObj.MasterCode = this.resLeadAssetObj.MrAssetConditionCode;
+            this.http.post(URLConstant.GetRefMasterByMasterCode, { Code: this.resLeadAssetObj.MrAssetConditionCode }).subscribe(
+              (response: RefMasterObj) => {
+                this.tempMrAssetConditionCode = response["Descr"];
               }
             );
             this.assetConditionObj = new RefMasterObj();
-            this.assetConditionObj.MasterCode = this.resLeadAssetObj.MrDownPaymentTypeCode; 
-            this.http.post(URLConstant.GetRefMasterByMasterCode, {Code: this.resLeadAssetObj.MrDownPaymentTypeCode}).subscribe(
-              (response) => {
-                this.tempMrDownPaymentTypeCode = response["Descr"]; 
+            this.assetConditionObj.MasterCode = this.resLeadAssetObj.MrDownPaymentTypeCode;
+            this.http.post(URLConstant.GetRefMasterByMasterCode, { Code: this.resLeadAssetObj.MrDownPaymentTypeCode }).subscribe(
+              (response: RefMasterObj) => {
+                this.tempMrDownPaymentTypeCode = response["Descr"];
               }
-            ); 
+            );
             this.LeadDataForm.patchValue({
               FullAssetName: this.reqLeadAssetObj.FullAssetName,
               MrDownPaymentTypeCode: this.resLeadAssetObj.MrDownPaymentTypeCode,
@@ -234,13 +237,13 @@ export class LeadDataComponent implements OnInit {
               ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
               AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
               DownPaymentAmount: this.resLeadAssetObj.DownPaymentAmt,
-              DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt, 
+              DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt,
             });
           }
-          var reqByCode = new GenericObj();
+          let reqByCode = new GenericObj();
           reqByCode.Code = this.resLeadAssetObj.FullAssetCode;
           this.http.post(URLConstant.GetAssetMasterForLookup, reqByCode).subscribe(
-            (response) => {
+            (response: AssetMasterForLookupObj) => {
               this.resAssetMasterObj = response;
               this.InputLookupAssetObj.nameSelect = this.resAssetMasterObj.FullAssetName;
               this.InputLookupAssetObj.jsonSelect = this.resAssetMasterObj;
@@ -249,21 +252,21 @@ export class LeadDataComponent implements OnInit {
                 FullAssetName: this.resAssetMasterObj.FullAssetName,
               });
               this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
-              var assetType = new AssetTypeObj();
+              let assetType = new AssetTypeObj();
               assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-              this.http.post(URLConstant.GetAssetTypeById, {Id: this.resAssetMasterObj.AssetTypeId}).subscribe(
-                (response: any) => { 
-                  
+              this.http.post(URLConstant.GetAssetTypeById, { Id: this.resAssetMasterObj.AssetTypeId }).subscribe(
+                (response: any) => {
 
-                  var AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
-                  this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: response.AssetTypeCode}).subscribe(
+
+                  let AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
+                  this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: response.AssetTypeCode }).subscribe(
                     (response: any) => {
                       while (this.items.length) {
                         this.items.removeAt(0);
                       }
                       this.SerialNoList = response[CommonConstant.ReturnObj];
-                      for (var i = 0; i < this.SerialNoList["length"]; i++) {
-                        var eachDataDetail = this.fb.group({
+                      for (let i = 0; i < this.SerialNoList["length"]; i++) {
+                        let eachDataDetail = this.fb.group({
                           SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
                           SerialNoValue: [''],
                           IsMandatory: [this.SerialNoList[i].IsMandatory]
@@ -301,23 +304,23 @@ export class LeadDataComponent implements OnInit {
                       }
                     });
                 });
-  
+
             });
         });
 
       this.reqLeadAppObj = new LeadAppObj();
       this.reqLeadAppObj.LeadId = this.CopyFrom;
-      var reqLeadAppObj = { Id: this.CopyFrom };
+      let reqLeadAppObj = { Id: this.CopyFrom };
       this.http.post(URLConstant.GetLeadAppByLeadId, reqLeadAppObj).subscribe(
-        (response) => {
-          this.resLeadAppObj = response; 
+        (response: LeadAppObj) => {
+          this.resLeadAppObj = response;
           this.assetConditionObj = new RefMasterObj();
-          this.assetConditionObj.MasterCode = this.resLeadAppObj.MrFirstInstTypeCode;  
-          this.http.post(URLConstant.GetRefMasterByMasterCode, {Code : this.resLeadAppObj.MrFirstInstTypeCode}).subscribe(
-            (response) => {
-              this.tempMrFirstInstTypeCode = response["Descr"]; 
+          this.assetConditionObj.MasterCode = this.resLeadAppObj.MrFirstInstTypeCode;
+          this.http.post(URLConstant.GetRefMasterByMasterCode, { Code: this.resLeadAppObj.MrFirstInstTypeCode }).subscribe(
+            (response: RefMasterObj) => {
+              this.tempMrFirstInstTypeCode = response["Descr"];
             }
-          ); 
+          );
           if (this.resLeadAppObj.LeadAppId != 0) {
             this.LeadDataForm.patchValue({
               Tenor: this.resLeadAppObj.Tenor,
@@ -333,39 +336,39 @@ export class LeadDataComponent implements OnInit {
       this.reqLeadAssetObj = new LeadAssetObj();
       this.reqLeadAssetObj.LeadId = this.LeadId;
       this.http.post(URLConstant.GetLeadAssetByLeadId, { Id: this.LeadId }).subscribe(
-        (response) => {
-          
+        (response: LeadAssetObj) => {
+
           this.resLeadAssetObj = response;
-          if (this.resLeadAssetObj.LeadAssetId != 0) { 
+          if (this.resLeadAssetObj.LeadAssetId != 0) {
             this.assetConditionObj = new RefMasterObj();
-            this.assetConditionObj.MasterCode = this.resLeadAssetObj.MrAssetConditionCode; 
-            this.http.post(URLConstant.GetRefMasterByMasterCode, {Code : this.resLeadAssetObj.MrAssetConditionCode}).subscribe(
+            this.assetConditionObj.MasterCode = this.resLeadAssetObj.MrAssetConditionCode;
+            this.http.post(URLConstant.GetRefMasterByMasterCode, { Code: this.resLeadAssetObj.MrAssetConditionCode }).subscribe(
               (response) => {
-                this.tempMrAssetConditionCode = response["Descr"]; 
+                this.tempMrAssetConditionCode = response["Descr"];
               }
             );
             this.assetConditionObj = new RefMasterObj();
-            this.assetConditionObj.MasterCode = this.resLeadAssetObj.MrDownPaymentTypeCode; 
-            this.http.post(URLConstant.GetRefMasterByMasterCode, {Code: this.resLeadAssetObj.MrDownPaymentTypeCode}).subscribe(
+            this.assetConditionObj.MasterCode = this.resLeadAssetObj.MrDownPaymentTypeCode;
+            this.http.post(URLConstant.GetRefMasterByMasterCode, { Code: this.resLeadAssetObj.MrDownPaymentTypeCode }).subscribe(
               (response) => {
-                this.tempMrDownPaymentTypeCode = response["Descr"]; 
+                this.tempMrDownPaymentTypeCode = response["Descr"];
               }
-            ); 
+            );
 
             this.LeadDataForm.patchValue({
               FullAssetName: this.reqLeadAssetObj.FullAssetName,
               MrDownPaymentTypeCode: this.resLeadAssetObj.MrDownPaymentTypeCode,
               MrAssetConditionCode: this.resLeadAssetObj.MrAssetConditionCode,
               ManufacturingYear: this.resLeadAssetObj.ManufacturingYear,
-              AssetPrice: this.resLeadAssetObj.AssetPriceAmt, 
+              AssetPrice: this.resLeadAssetObj.AssetPriceAmt,
               DownPaymentAmount: this.resLeadAssetObj.DownPaymentAmt,
               DownPaymentPercent: this.resLeadAssetObj.DownPaymentPrcnt,
-            
+
             });
-            var reqByCode = new GenericObj();
+            let reqByCode = new GenericObj();
             reqByCode.Code = this.resLeadAssetObj.FullAssetCode;
             this.http.post(URLConstant.GetAssetMasterForLookup, reqByCode).subscribe(
-              (response) => {
+              (response: AssetMasterForLookupObj) => {
                 this.resAssetMasterObj = response;
                 this.InputLookupAssetObj.nameSelect = this.resAssetMasterObj.FullAssetName;
                 this.InputLookupAssetObj.jsonSelect = this.resAssetMasterObj;
@@ -374,21 +377,21 @@ export class LeadDataComponent implements OnInit {
                   FullAssetName: this.resAssetMasterObj.FullAssetName,
                 });
                 this.assetTypeId = this.resAssetMasterObj.AssetTypeId;
-                var assetType = new AssetTypeObj();
+                let assetType = new AssetTypeObj();
                 assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
-                this.http.post(URLConstant.GetAssetTypeById, {Id: this.resAssetMasterObj.AssetTypeId}).subscribe(
-                  (response: any) => { 
-                    
+                this.http.post(URLConstant.GetAssetTypeById, { Id: this.resAssetMasterObj.AssetTypeId }).subscribe(
+                  (response: any) => {
 
-                    var AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
-                    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: response.AssetTypeCode}).subscribe(
+
+                    let AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
+                    this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: response.AssetTypeCode }).subscribe(
                       (response: any) => {
                         while (this.items.length) {
                           this.items.removeAt(0);
                         }
                         this.SerialNoList = response[CommonConstant.ReturnObj];
-                        for (var i = 0; i < this.SerialNoList["length"]; i++) {
-                          var eachDataDetail = this.fb.group({
+                        for (let i = 0; i < this.SerialNoList["length"]; i++) {
+                          let eachDataDetail = this.fb.group({
                             SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
                             SerialNoValue: [''],
                             IsMandatory: [this.SerialNoList[i].IsMandatory]
@@ -426,22 +429,22 @@ export class LeadDataComponent implements OnInit {
                         }
                       });
                   });
-              }); 
+              });
           }
 
           this.reqLeadAppObj = new LeadAppObj();
           this.reqLeadAppObj.LeadId = this.LeadId;
-          var reqLeadAppObj = { Id: this.LeadId };
+          let reqLeadAppObj = { Id: this.LeadId };
           this.http.post(URLConstant.GetLeadAppByLeadId, reqLeadAppObj).subscribe(
-            (response) => {
+            (response: LeadAppObj) => {
               this.resLeadAppObj = response;
               this.assetConditionObj = new RefMasterObj();
-              this.assetConditionObj.MasterCode = this.resLeadAppObj.MrFirstInstTypeCode; 
-              this.http.post(URLConstant.GetRefMasterByMasterCode, {Code : this.resLeadAppObj.MrFirstInstTypeCode}).subscribe(
+              this.assetConditionObj.MasterCode = this.resLeadAppObj.MrFirstInstTypeCode;
+              this.http.post(URLConstant.GetRefMasterByMasterCode, { Code: this.resLeadAppObj.MrFirstInstTypeCode }).subscribe(
                 (response) => {
-                  this.tempMrFirstInstTypeCode = response["Descr"]; 
+                  this.tempMrFirstInstTypeCode = response["Descr"];
                 }
-              ); 
+              );
               this.LeadDataForm.patchValue({
                 Tenor: this.resLeadAppObj.Tenor,
                 MrFirstInstTypeCode: this.resLeadAppObj.MrFirstInstTypeCode,
@@ -450,11 +453,11 @@ export class LeadDataComponent implements OnInit {
                 InstallmentAmt: this.resLeadAppObj.InstAmt,
               });
             });
-      });
+        });
     }
- 
-    
-  } 
+
+
+  }
 
   setLeadAsset() {
     this.leadInputLeadDataObj.LeadAssetObj.LeadId = this.LeadId;
@@ -494,7 +497,7 @@ export class LeadDataComponent implements OnInit {
 
   save() {
     if (this.typePage == "edit" || this.typePage == "update") {
-      if (this.resLeadAssetObj.LeadAssetId != 0){ 
+      if (this.resLeadAssetObj.LeadAssetId != 0) {
         this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
@@ -507,7 +510,7 @@ export class LeadDataComponent implements OnInit {
           }
         );
       }
-    } 
+    }
     else {
       this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
       this.setLeadAsset();
@@ -517,12 +520,12 @@ export class LeadDataComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CONTENT_PAGE_SELF_VERIF], { LeadId: this.LeadId, WfTaskListId: this.WfTaskListId, LobCode: this.returnLobCode });
         });
-    } 
+    }
   }
 
   SaveForm() {
-    if (this.typePage == "edit" || this.typePage == "update" ) {
-      if (this.resLeadAssetObj.LeadAssetId != 0){ 
+    if (this.typePage == "edit" || this.typePage == "update") {
+      if (this.resLeadAssetObj.LeadAssetId != 0) {
         this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
@@ -533,20 +536,20 @@ export class LeadDataComponent implements OnInit {
         this.http.post(URLConstant.SubmitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            if(this.originPage == "teleVerif"){
+            if (this.originPage == "teleVerif") {
 
-              this.outputPage.emit({ pageType: "submit"});
+              this.outputPage.emit({ pageType: "submit" });
             }
-            else if(this.typePage == "edit"){
+            else if (this.typePage == "edit") {
 
-              this.outputPage.emit({ pageType: "submit"});
+              this.outputPage.emit({ pageType: "submit" });
             }
-            else{
-              this.outputPage.emit({ pageType: "submit"});
-            }     
+            else {
+              this.outputPage.emit({ pageType: "submit" });
+            }
           }
         );
-      } else{
+      } else {
         this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
         this.setLeadApp();
@@ -555,22 +558,22 @@ export class LeadDataComponent implements OnInit {
         this.http.post(URLConstant.SubmitWorkflowLeadInputKta, this.leadInputLeadDataObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            if(this.originPage == "teleVerif"){
-              this.outputPage.emit({ pageType: "submit"});
+            if (this.originPage == "teleVerif") {
+              this.outputPage.emit({ pageType: "submit" });
             }
-            else if(this.typePage == "edit"){
+            else if (this.typePage == "edit") {
 
-              this.outputPage.emit({ pageType: "submit"});
+              this.outputPage.emit({ pageType: "submit" });
             }
-            else{
-              this.outputPage.emit({ pageType: "submit"});
-            }     
+            else {
+              this.outputPage.emit({ pageType: "submit" });
+            }
           }
         );
-        
-        
+
+
       }
-    } 
+    }
     else {
       this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
       this.setLeadAsset();
@@ -579,7 +582,7 @@ export class LeadDataComponent implements OnInit {
       this.http.post(URLConstant.SubmitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_PAGING],{});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_PAGING], {});
         });
     }
     this.editLeadObj = new LeadObj();
@@ -587,7 +590,7 @@ export class LeadDataComponent implements OnInit {
     this.editLeadObj.IsSubmit = true;
     this.http.post(URLConstant.EditLead, this.editLeadObj).subscribe(
       (response) => {
-      } 
+      }
     );
   }
 }

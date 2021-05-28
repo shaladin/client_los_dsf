@@ -9,6 +9,8 @@ export class CommonConstant {
   public static DELETE = 'Delete';
   public static UPDATE = 'Update';
   public static CANCEL = 'Cancel';
+  public static REQ = 'request';
+  public static RTN = 'return';
 
   // Behaviour
   public static DEFAULT = 'DEF';
@@ -16,6 +18,10 @@ export class CommonConstant {
   // MOU
   public static MOU_FRZ_REQ = 'REQ';
   public static MOU_FRZ_APV = 'APV';
+
+  //PHN VERF SUBJECT DATA
+  public static PHN_VERF_RES_SCS = "SCS";
+  public static PHN_VERF_RES_FAIL = "FAIL";
 
   //Application Item
   public static MENU = "Menu";

@@ -1,0 +1,112 @@
+{
+    "title": "Application Paging",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "a.APP_NO",
+            "id": "AppNoId",
+            "value": "",
+            "label": "Application No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "ac.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "a.PROD_OFFERING_NAME",
+            "id": "ProdOfferingNameId",
+            "value": "",
+            "label": "Product Offering Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Application No",
+            "name": "a.APP_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "ac.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Product Offering Name",
+            "name": "a.PROD_OFFERING_NAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "querystring": {
+        "name": "searchCancelledApp"
+    },
+    "orderby": {
+        "key": "a.APP_NO",
+        "value": "false"
+    },
+    "bodyList": [
+        {
+            "type": "link",
+            "position": "center",
+            "property": "AppNo",
+            "target": "_blank",
+            "path": "VIEW_APP",
+            "param": [
+                {
+                    "type": "AppId",
+                    "property": "AppId"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "callback",
+            "key": "prodOff",
+            "position": "left",
+            "property": "ProdOfferingName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "edit",
+                    "path": "/Nap/AddProcess/CopyCancelledApplicationCrossBl/Detail",
+                    "param": [
+                        {
+                            "type": "AppId",
+                            "property": "AppId"
+                        },
+                        {
+                            "type": "AppNo",
+                            "property": "AppNo"
+                        },
+                        {
+                            "type": "CurrCode",
+                            "property": "CurrCode"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

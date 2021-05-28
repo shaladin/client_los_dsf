@@ -33,7 +33,7 @@ export class ExceptionConstant {
     public static ISSUED_DATE_CANNOT_MORE_THAN_EXP_DT = "Issued Date can not be more than Expired Date";
     public static DOWN_PAYMENT_MUST_LESS_THAN = "Down Payment Must Be Less Than ";
     public static DOWN_PAYMENT_MUST_MORE_THAN = "Down Payment Must Be More Than ";
-    public static TOTAL_PAID_AT_COY_MUST_LESS_THAN = "TDP Paid at Coy Must Be Less Than ";
+    public static TOTAL_PAID_AT_COY_MUST_LESS_THAN = "TDP Paid at MF Must Be Less Than ";
     public static DISCOUNT_AMOUNT_CANNOT_HIGHER_THAN = "Discount Amount can't be higher than ";
     public static CAPITALIZE_AMOUNT_CANNOT_HIGHER_THAN = "Capitalize Amount can't be higher than ";
     public static END_DATE_CANNOT_LOWER_THAN = "End Date can't be lower than ";

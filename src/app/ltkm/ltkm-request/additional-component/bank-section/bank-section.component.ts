@@ -2,17 +2,20 @@ import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ControlContainer, FormArray, FormBuilder, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustBankStmntObj } from 'app/shared/model/AppCustBankStmntObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { LtkmCustBankAccObj } from 'app/shared/model/LTKM/LtkmCustBankAccObj.Model';
 import { LtkmCustBankStmntObj } from 'app/shared/model/LTKM/LtkmCustBankStmntObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { environment } from 'environments/environment';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
     selector: 'app-ltkm-bank-section',
@@ -23,15 +26,13 @@ import { environment } from 'environments/environment';
     }]
 })
 export class LtkmBankSectionComponent implements OnInit {
-
-
     @Input() enjiForm: NgForm;
     @Input() parentForm: FormGroup;
     @Input() identifier: string;
     @Input() isLockMode: boolean = false;
-
     @Input() LtkmCustBankAccList: Array<LtkmCustBankAccObj> = new Array<LtkmCustBankAccObj>();
     @Output() UpdateBankSection: EventEmitter<any> = new EventEmitter();
+
     Mode: string = CommonConstant.ADD;
     Title: string = "Add Bank Account"
     DefaultMonth: string;
@@ -64,7 +65,8 @@ export class LtkmBankSectionComponent implements OnInit {
     constructor(private fb: FormBuilder,
         private http: HttpClient,
         private toastr: NGXToastrService,
-        public formValidate: FormValidateService) { }
+        public formValidate: FormValidateService,
+        private cookieService: CookieService) { }
 
     ngOnInit() {
 
@@ -79,9 +81,7 @@ export class LtkmBankSectionComponent implements OnInit {
             BankStmntObjs: this.fb.array([])
         }));
 
-        this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {
-            RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMonth
-        }).subscribe(
+        this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMonth }).subscribe(
             (response) => {
                 this.MonthObj = response[CommonConstant.ReturnObj];
                 if (this.MonthObj.length > 0) {
@@ -105,10 +105,10 @@ export class LtkmBankSectionComponent implements OnInit {
         this.BankAccObj.BankName = event.bankName;
     }
 
-    ModeConstAdd: string = CommonConstant.ADD;
-    ModeConstEdit: string = CommonConstant.EDIT;
-    ModeConstDel: string = CommonConstant.DELETE;
-    ModeConstCan: string = CommonConstant.CANCEL;
+    readonly ModeConstAdd: string = CommonConstant.ADD;
+    readonly ModeConstEdit: string = CommonConstant.EDIT;
+    readonly ModeConstDel: string = CommonConstant.DELETE;
+    readonly ModeConstCan: string = CommonConstant.CANCEL;
 
     CustBankHandler(Mode: string, BankAccAndStmntObj: LtkmCustBankAccObj = undefined, index: number) {
         this.ClearForm();
@@ -300,7 +300,7 @@ export class LtkmBankSectionComponent implements OnInit {
             if (this.parentForm['controls'][this.identifier].value['BankStmntObjs'].length > 0)
                 dateYear = this.parentForm['controls'][this.identifier].value['BankStmntObjs'][0].Year;
             else {
-                var userAcc = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+                var userAcc: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
                 var month = new Date(userAcc.BusinessDt).getMonth();
                 dateYear = new Date(userAcc.BusinessDt).getFullYear();
                 if (month == 0) dateYear--;
@@ -365,11 +365,6 @@ export class LtkmBankSectionComponent implements OnInit {
 
     DeleteBankAcc(BankAccAndStmntObj: LtkmCustBankAccObj) {
         if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-            //   this.http.post(URLConstant.DeleteAppCustBankAccAndStmnt, {BankAccObj : BankAccAndStmntObj}).subscribe(
-            //     (response) => {
-            //       this.toastr.successMessage(response["message"]);
-            //       this.GetAppCustBankAccList();
-            //     });
             this.LtkmCustBankAccList.splice(this.currentIndex, 1);
         }
     }
@@ -379,12 +374,6 @@ export class LtkmBankSectionComponent implements OnInit {
         if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
             var bankStmnObjs = this.parentForm['controls'][this.identifier]['controls']['BankStmntObjs'] as FormArray;
             bankStmnObjs.removeAt(index);
-
-            //   this.http.post(URLConstant.DeleteAppCustBankStmnt, this.AppCustBankStmntList[index]).subscribe(
-            //     (response) => {
-            //       this.toastr.successMessage(response["message"]);
-            //     });
-
             this.LtkmCustBankAccList[this.currentIndex].LtkmCustBankStmntObjs.splice(index, 1);
 
             this.isAlreadyCalc = false;

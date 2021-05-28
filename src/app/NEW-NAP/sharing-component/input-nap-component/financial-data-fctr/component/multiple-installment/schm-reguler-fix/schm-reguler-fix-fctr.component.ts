@@ -78,8 +78,8 @@ export class SchmRegulerFixFctrComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
-          DiffRateAmt: response.DiffRateAmt
-
+          DiffRateAmt: response.DiffRateAmt,
+          TotalDisbAmt: response.TotalDisbAmt,
         })
 
         this.SetInstallmentTable();
@@ -126,9 +126,8 @@ export class SchmRegulerFixFctrComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
-          DiffRateAmt: response.DiffRateAmt
-
-
+          DiffRateAmt: response.DiffRateAmt,
+          TotalDisbAmt: response.TotalDisbAmt,
         })
 
         this.SetInstallmentTable();

@@ -19,22 +19,22 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ResListKeyValueObj } from 'app/shared/model/Response/Generic/ResListKeyValueObj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-cust-company-main-data',
   templateUrl: './cust-company-main-data.component.html',
   styleUrls: [],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
-
 })
 
 export class CustCompanyMainDataComponent implements OnInit {
+  @Input() isLockMode: boolean = false;
   @Input() appId: number;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
   @Input() custDataCompanyObj: CustDataCompanyObj = new CustDataCompanyObj();
-  @Input() custType: any;
   @Input() bizTemplateCode: string = "";
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
   AppObj: AppObj = new AppObj();
@@ -46,16 +46,15 @@ export class CustCompanyMainDataComponent implements OnInit {
   refIndustryObj = {
     IndustryTypeCode: ""
   };
-  selectedCustNo: any;
-  selectedIndustryTypeCode: any;
+  selectedCustNo: string;
+  selectedIndustryTypeCode: string;
   custDataObj: CustDataObj;
 
-  InputLookupCustomerObj: any;
-  InputLookupIndustryTypeObj: any;
-  IdTypeObj: any;
-  CompanyTypeObj: any;
+  InputLookupCustomerObj: InputLookupObj;
+  InputLookupIndustryTypeObj: InputLookupObj;
+  CompanyTypeObj: Array<KeyValueObj>;
   CustModelObj: Array<KeyValueObj> = new Array<KeyValueObj>();
-  UserAccess: any;
+  UserAccess: CurrentUserContext;
   MaxDate: Date;
   custModelReqObj: ReqRefMasterByTypeCodeAndMappingCodeObj;
 
@@ -72,19 +71,33 @@ export class CustCompanyMainDataComponent implements OnInit {
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
-    this.parentForm.addControl(this.identifier, this.fb.group({
-      CustNo: [''],
-      IndustryTypeCode: [''],
-      CustModelCode: ['', [Validators.required, Validators.maxLength(50)]],
-      CompanyBrandName: ['', Validators.maxLength(100)],
-      MrCompanyTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
-      NumOfEmp: [0],
-      IsAffiliated: [false],
-      EstablishmentDt: ['', [Validators.required]],
-      TaxIdNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
-      IsVip: [false]
-    }));
-
+    if(this.isLockMode){
+      this.parentForm.addControl(this.identifier, this.fb.group({
+        CustNo: [''],
+        IndustryTypeCode: [''],
+        CustModelCode: [''],
+        CompanyBrandName: [''],
+        MrCompanyTypeCode: [''],
+        NumOfEmp: [0],
+        IsAffiliated: [false],
+        EstablishmentDt: [''],
+        TaxIdNo: [''],
+        IsVip: [false]
+      }));
+    }else{
+      this.parentForm.addControl(this.identifier, this.fb.group({
+        CustNo: [''],
+        IndustryTypeCode: [''],
+        CustModelCode: ['', [Validators.required, Validators.maxLength(50)]],
+        CompanyBrandName: ['', Validators.maxLength(100)],
+        MrCompanyTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
+        NumOfEmp: [0],
+        IsAffiliated: [false],
+        EstablishmentDt: ['', [Validators.required]],
+        TaxIdNo: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
+        IsVip: [false]
+      }));
+    }
     this.initLookup();
     this.bindAllRefMasterObj();
     this.bindCustModelObj();
@@ -204,6 +217,11 @@ export class CustCompanyMainDataComponent implements OnInit {
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupIndustryType.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupIndustryType.json";
     this.setCriteriaLookupCustomer(CommonConstant.CustTypeCompany);
+
+    if(this.isLockMode)
+    {
+      this.InputLookupIndustryTypeObj.isDisable = true;
+    }
 
     var AppObj = { Id: this.AppId };
     this.http.post<AppObj>(URLConstant.GetAppById, AppObj).subscribe(

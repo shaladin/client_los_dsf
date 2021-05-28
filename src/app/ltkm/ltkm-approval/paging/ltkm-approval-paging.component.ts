@@ -14,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { String } from 'typescript-string-operations';
 import { CookieService } from 'ngx-cookie';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 @Component({
   selector: 'app-ltkm-approval-paging',
   templateUrl: './ltkm-approval-paging.component.html',
@@ -21,8 +22,6 @@ import { CookieService } from 'ngx-cookie';
 })
 export class LtkmApprovalPagingComponent implements OnInit {
   arrCrit: Array<CriteriaObj>;
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
-  // userContext: CurrentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   inputPagingObj: UcPagingObj = new UcPagingObj();
   constructor(
@@ -71,7 +70,7 @@ export class LtkmApprovalPagingComponent implements OnInit {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
-        AdInsHelper.RedirectUrl(this.router,["/Ltkm/VerifyApproval/Detail"],{ "LtkmCustId": ev.RowObj.LtkmCustId, "LtkmNo": ev.RowObj.LtkmNo, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode, "ApvReqId": ev.RowObj.ApvReqId, "WfTaskListId": ev.RowObj.WfTaskListId });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LTKM_VERIFY_APV_DETAIL],{ "LtkmCustId": ev.RowObj.LtkmCustId, "LtkmNo": ev.RowObj.LtkmNo, "TaskId" : ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "MrCustTypeCode": ev.RowObj.MrCustTypeCode, "ApvReqId": ev.RowObj.ApvReqId, "WfTaskListId": ev.RowObj.WfTaskListId });
       }
     }
     else if (ev.Key == "HoldTask") {

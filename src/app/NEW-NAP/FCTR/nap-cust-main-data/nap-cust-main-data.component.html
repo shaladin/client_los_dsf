@@ -13,7 +13,8 @@
       </span>
     </div>
     <div class="card-body">
-      <app-app-main-info [AppId]="appId" [BizTemplateCode]="NapObj.BizTemplateCode" *ngIf="IsViewReady" #viewAppMainInfo></app-app-main-info>
+      <app-app-main-info [AppId]="appId" [BizTemplateCode]="NapObj.BizTemplateCode" *ngIf="IsViewReady"
+        #viewAppMainInfo></app-app-main-info>
       <div class="px-3">
         <div id="stepper1" class="bs-stepper">
           <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
@@ -33,8 +34,9 @@
               </button>
             </div>
             <div class="step" data-target="#mgmnt-shrholder-tab" [hidden]="MrCustTypeCode != 'COMPANY'">
-              <button type="button" class="step-trigger" role="tab" aria-controls="mgmnt-shrholder-tab" id="mgmnt-shrholder-tab-trigger" 
-                [disabled]="!(AppStepIndex >= 3)" (click)="NextStep('SHR')" [hidden]="MrCustTypeCode != 'COMPANY'">
+              <button type="button" class="step-trigger" role="tab" aria-controls="mgmnt-shrholder-tab"
+                id="mgmnt-shrholder-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="NextStep('SHR')"
+                [hidden]="MrCustTypeCode != 'COMPANY'">
                 <span class="bs-stepper-circle">2</span>
                 <span class="bs-stepper-label">Management Shareholder Data</span>
               </button>
@@ -52,8 +54,8 @@
           <div class="bs-stepper-content">
             <div id="customer-tab" class="content" role="tabpanel" aria-labelledby="customer-tab-trigger">
               <app-cust-main-data *ngIf="AppStepIndex == 1" [appId]="appId" [custMainDataMode]="'CUST'"
-                [inputMode]="appCustId ? 'EDIT' : 'ADD'" [appCustId]='appCustId' (outputAfterSave)="getEvent($event)"
-                (outputCancel)="Cancel()">
+                [bizTemplateCode]="bizTemplateCode" [from]="this.from" [inputMode]="appCustId ? 'EDIT' : 'ADD'"
+                [appCustId]='appCustId' (outputAfterSave)="getEvent($event)" (outputCancel)="Cancel()">
               </app-cust-main-data>
             </div>
             <div id="family-tab" class="content" role="tabpanel" aria-labelledby="family-tab-trigger">

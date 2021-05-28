@@ -1,0 +1,143 @@
+{
+    "title": "MOU Inquiry",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "CHANGE_MOU_TRX_NO",
+            "id": "ChangeMouTrxNoId",
+            "value": "",
+            "label": "Change Mou No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "MOU_CUST_NO",
+            "id": "MouCustNoId",
+            "value": "",
+            "label": "Mou No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "MR_MOU_TYPE_CODE",
+            "id": "MrMouTypeCode",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "path": "/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Mou Type",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "MOU_TYPE"
+        },
+        {
+            "type": "textbox",
+            "name": "CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "STATUS",
+            "id": "Status",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+            "label": "Change Mou Status",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "StatusGrpCode",
+            "criteriaPropValue": "CMOU_STAT"
+        }
+    ],
+    "querystring": {
+        "name": "searchChangeMouInquiry"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "CHANGE MOU TRANSACTION NO",
+            "name": "ChangeMouTrxNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU NO",
+            "name": "MouCustNo"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "CustName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "STATUS",
+            "name": "STATUS"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "MOU TYPE",
+            "name": "MR_MOU_TYPE_CODE"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "link",
+            "position": "center",
+            "property": "ChangeMouTrxNo",
+            "path": "/View/ChangeMouView",
+            "target": "_blank",
+            "param": [
+                {
+                    "type": "ChangeMouTrxId",
+                    "property": "ChangeMouTrxId"
+                }
+            ]
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "MouCustNo",
+            "path": "VIEW_MOU_CUST",
+            "target": "_blank",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
+        },
+        {
+            "type": "callback",
+            "key": "customer",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "Status"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MrMouTypeCode"
+        }
+    ]
+}

@@ -14,6 +14,11 @@ import { environment } from 'environments/environment';
 import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
 import { RegexService } from 'app/shared/services/regex.services';
 import { LtkmCustDataPersonalObj } from 'app/shared/model/LTKM/LtkmCustDataPersonalObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 @Component({
   selector: 'app-ltkm-cust-personal-main-data',
   templateUrl: './cust-personal-main-data.component.html',
@@ -38,42 +43,33 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
   @Output() isMarried: EventEmitter<any> = new EventEmitter();
   @Output() spouseObj: EventEmitter<any> = new EventEmitter();
 
-  refMasterObj = {
-    RefMasterTypeCode: "",
-  };
-  countryObj = {
-    CountryCode: ""
-  };
   selectedCustNo: any;
   selectedNationalityCountryCode: any;
   custDataObj: CustDataObj;
 
   InputLookupCustomerObj: InputLookupObj;
   InputLookupCountryObj: InputLookupObj;
-  CustTypeObj: any;
-  IdTypeObj: any;
-  GenderObj: any;
-  MaritalStatObj: any;
-  NationalityObj: any;
-  EducationObj: any;
-  ReligionObj: any;
+  IdTypeObj: Array<RefMasterObj>;
+  GenderObj: Array<KeyValueObj>;
+  MaritalStatObj: Array<KeyValueObj>;
+  NationalityObj: Array<RefMasterObj>;
+  EducationObj: Array<KeyValueObj>;
+  ReligionObj: Array<KeyValueObj>;
 
-  getRefMasterUrl: any;
-  getCountryUrl: any;
-  UserAccess: any;
+  UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   MaxDate: Date;
   constructor(
     private regexService: RegexService,
     private fb: FormBuilder, 
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private cookieService: CookieService) {
 
      }
 
   async ngOnInit() : Promise<void> {
     this.customPattern = new Array<CustomPatternObj>();
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
     if(this.isLockMode){
@@ -129,21 +125,16 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
         NoOfDependents: ['0', [Validators.pattern("^[0-9]+$")]],
       }));
     }
-    
-
-    this.initUrl();
     this.initLookup();
     await this.bindAllRefMasterObj();
     this.bindCustData();
   }
 
   CopyCustomerEvent(event) {
-    console.log('CopyCustomerEvent');
     this.selectedCustNo = event.CustNo;
     this.InputLookupCustomerObj.isReadonly = true;
 
-    var custObj = {CustId: event.CustId};
-    this.http.post(URLConstant.GetCustPersonalForLtkmCopyByCustId, custObj).subscribe(
+    this.http.post(URLConstant.GetCustPersonalForLtkmCopyByCustId, { Id: event.CustId }).subscribe(
       (response) => {
         this.CopyCustomer(response);
         this.callbackCopyCust.emit(response);
@@ -216,19 +207,15 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
     this.InputLookupCustomerObj.addCritInput = arrCrit;
   }
 
-  setCountryName(countryCode){
-    this.countryObj.CountryCode = countryCode;
-
-    this.http.post(this.getCountryUrl, this.countryObj).subscribe(
+  setCountryName(countryCode: string){
+    this.http.post(URLConstant.GetRefCountryByCountryCode, { Code: countryCode }).subscribe(
       (response) => {
         this.InputLookupCountryObj.nameSelect = response["CountryName"];
         this.InputLookupCountryObj.jsonSelect = response;
       });
-
   }
 
   bindCustData(){
-    console.log("this.custDataPersonalObj.AppCustObj.AppCustId: " + this.custDataPersonalObj.LtkmCustObj.LtkmCustId);
     if(this.custDataPersonalObj.LtkmCustObj.LtkmCustId != 0){
       this.parentForm.controls[this.identifier].patchValue({
         MrIdTypeCode: this.custDataPersonalObj.LtkmCustObj.MrIdTypeCode,
@@ -272,11 +259,6 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
       this.setCountryName(this.custDataPersonalObj.LtkmCustPersonalObj.NationalityCountryCode);
       this.ChangeNationality(this.custDataPersonalObj.LtkmCustPersonalObj.MrNationalityCode);
     }
-  }
-
-  initUrl(){
-    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getCountryUrl = URLConstant.GetRefCountryByCountryCode;
   }
 
   initLookup(){
@@ -346,8 +328,7 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
   }
 
   async bindIdTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeIdType }).toPromise().then(
       (response) => {
         this.IdTypeObj = response["RefMasterObjs"];
         if(this.IdTypeObj.length > 0){
@@ -366,8 +347,7 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
   }
 
   async bindGenderObj(){
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
-    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).toPromise().then(
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if(this.GenderObj.length > 0){
@@ -380,8 +360,7 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
   }
 
   async bindMaritalStatObj(){
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMaritalStat;
-    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMaritalStat }).toPromise().then(
       (response) => {
         this.MaritalStatObj = response[CommonConstant.ReturnObj];
         if(this.MaritalStatObj.length > 0){
@@ -395,10 +374,7 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
   }
 
   async bindNationalityObj(){
-    // this.refMasterObj.RefMasterTypeCode = "NATIONALITY";
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeNationality;
-    // var obj = { RefMasterTypeCodes: [CommonConstant.RefMasterTypeCodeNationality] };
-    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeNationality }).toPromise().then(
       (response) => {
         this.NationalityObj = response["RefMasterObjs"];
         if(this.NationalityObj.length > 0){
@@ -413,8 +389,7 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
   }
 
   async bindEducationObj(){
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeEducation;
-    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeEducation }).toPromise().then(
       (response) => {
         this.EducationObj = response[CommonConstant.ReturnObj];
         if(this.EducationObj.length > 0){
@@ -427,8 +402,7 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
   }
 
   async bindReligionObj(){
-    this.refMasterObj.RefMasterTypeCode =CommonConstant.RefMasterTypeCodeReligion ;
-    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReligion }).toPromise().then(
       (response) => {
         this.ReligionObj = response[CommonConstant.ReturnObj];
         if(this.ReligionObj.length > 0){

@@ -7,6 +7,7 @@ import { AppCustCompanyMgmntShrholderObj } from "./AppCustCompanyMgmntShrholderO
 import { AppCustCompanyContactPersonObj } from "./AppCustCompanyContactPersonObj.Model";
 import { AppCustBankAccObj } from "./AppCustBankAccObj.Model";
 import { AppCustCompanyLegalDocObj } from "./AppCustCompanyLegalDocObj.Model";
+import { AppCustAssetObj } from "./AppCustAsset/AppCustAssetObj.Model";
 
 
 
@@ -21,6 +22,7 @@ export class CustDataCompanyObj {
     AppCustBankAccObjs: Array<AppCustBankAccObj>;
     AppCustCompanyLegalDocObjs: Array<AppCustCompanyLegalDocObj>;
     AppCustGrpObjs: Array<AppCustGrpObj>;
+    AppCustAssetList: Array<AppCustAssetObj>;
     RowVersion: string;
 
     constructor() { 

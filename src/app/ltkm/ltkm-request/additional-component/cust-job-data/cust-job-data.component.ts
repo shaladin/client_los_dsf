@@ -14,6 +14,10 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { LtkmCustPersonalJobDataObj } from 'app/shared/model/LTKM/LtkmCustPersonalJobDataObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { CookieService } from 'ngx-cookie';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-ltkm-cust-job-data',
@@ -26,72 +30,54 @@ export class LtkmCustJobDataComponent implements OnInit {
   @Input() isLockMode: boolean = false;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() ltkmCustPersonalJobDataObj: LtkmCustPersonalJobDataObj = new LtkmCustPersonalJobDataObj();
   @Input() custModelCode: string;
-
-  refMasterObj = {
-    RefMasterTypeCode: "",
-  };
-
-  professionObj = {
-    ProfessionCode: ""
-  };
-
-  industryTypeObj = {
-    IndustryTypeCode: ""
-  };
-
-  custModelReqObj = {
-    MrCustTypeCode: ""
-  }
 
   jobDataAddrObj: AddrObj;
   inputFieldJobDataObj: InputFieldObj;
 
-  InputLookupProfessionObj: any;
-  selectedProfessionCode: any;
-  InputLookupIndustryTypeObj: any;
-  IsInitJobData : boolean = true;
-  IsCopy : boolean = false;
-  JobPositionObj: any;
-  JobStatObj: any;
-  CompanyScaleObj: any;
-  InvestmentTypeObj: any;
-  CustModelObj: any;
+  InputLookupProfessionObj: InputLookupObj;
+  InputLookupIndustryTypeObj: InputLookupObj;
+  IsInitJobData: boolean = true;
+  IsCopy: boolean = false;
+  JobPositionObj: Array<KeyValueObj>;
+  JobStatObj: Array<KeyValueObj>;
+  CompanyScaleObj: Array<KeyValueObj>;
+  InvestmentTypeObj: Array<KeyValueObj>;
+  CustModelObj: Array<KeyValueObj>;
 
-  IsLookupIndustryTypeReady : boolean = false;
+  IsLookupIndustryTypeReady: boolean = false;
 
   testing: Date = new Date();
   inputAddressObjForJobData: InputAddressObj;
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private route: ActivatedRoute) {
-      
-     }
+    private route: ActivatedRoute,
+    private cookieService: CookieService) {
+  }
 
-   MaxDate: Date;
-   UserAccess: any;
-   ngOnInit() {
+  MaxDate: Date;
+  UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+  ngOnInit() {
     this.inputAddressObjForJobData = new InputAddressObj();
     this.inputAddressObjForJobData.showSubsection = false;
     this.inputAddressObjForJobData.showPhn3 = false;
     this.inputAddressObjForJobData.showOwnership = true;
 
-    if(this.isLockMode){
+    if (this.isLockMode) {
       this.inputAddressObjForJobData.isReadonly = true;
       this.inputAddressObjForJobData.isRequired = false;
       this.inputAddressObjForJobData.inputField.inputLookupObj.isReadonly = true;
       this.inputAddressObjForJobData.inputField.inputLookupObj.isDisable = true;
     }
 
-    this.UserAccess = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
     this.parentForm.removeControl(this.identifier);
-    if(this.isLockMode){
+    if (this.isLockMode) {
       this.parentForm.addControl(this.identifier, this.fb.group({
         CustModelCode: [''],
         ProfessionalNo: [''],
@@ -108,7 +94,7 @@ export class LtkmCustJobDataComponent implements OnInit {
         RefSectorEconomySlikCode: [''],
         MrProfessionCode: ['']
       }));
-    }else{
+    } else {
       this.parentForm.addControl(this.identifier, this.fb.group({
         CustModelCode: ['', [Validators.required, Validators.maxLength(50)]],
         ProfessionalNo: ['', Validators.maxLength(50)],
@@ -122,25 +108,24 @@ export class LtkmCustJobDataComponent implements OnInit {
         MrJobStatCode: ['', Validators.maxLength(50)],
         MrInvestmentTypeCode: ['', Validators.maxLength(50)],
         IndustryTypeCode: [Validators.required],
-        RefSectorEconomySlikCode:  ['',Validators.required],
-        MrProfessionCode:['']
+        RefSectorEconomySlikCode: ['', Validators.required],
+        MrProfessionCode: ['']
       }));
     }
 
     this.inputFieldJobDataObj = new InputFieldObj();
     this.inputFieldJobDataObj.inputLookupObj = new InputLookupObj();
-    
+
     this.initLookup();
     this.bindCustModelObj();
     this.bindAllRefMasterObj();
-    if(this.ltkmCustPersonalJobDataObj != undefined)
-    {
+    if (this.ltkmCustPersonalJobDataObj != undefined) {
       this.bindLtkmCustPersonalJobData();
     }
     this.IsLookupIndustryTypeReady = true;
   }
 
-  CriteriaAddLookUpProfessionName(){
+  CriteriaAddLookUpProfessionName() {
     var arrCopyLookupCrit = new Array();
     var addCrit = new CriteriaObj();
     addCrit.DataType = "text";
@@ -151,48 +136,44 @@ export class LtkmCustJobDataComponent implements OnInit {
     this.InputLookupProfessionObj.addCritInput = arrCopyLookupCrit;
   }
 
-  CustModelChanged(IsChanged : boolean){
-    
-    if(IsChanged == true){
+  CustModelChanged(IsChanged: boolean) {
+
+    if (IsChanged == true) {
       this.IsInitJobData = false;
     }
-    if(this.IsInitJobData == false){ 
-        this.InputLookupProfessionObj.nameSelect = "";
-        this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
-
-        // this.InputLookupIndustryTypeObj.nameSelect = "";
-        // this.InputLookupIndustryTypeObj.jsonSelect = { IndustryTypeName: "" };
+    if (this.IsInitJobData == false) {
+      this.InputLookupProfessionObj.nameSelect = "";
+      this.InputLookupProfessionObj.jsonSelect = { ProfessionName: "" };
     }
     this.custModelCode = this.parentForm.controls[this.identifier]["controls"].CustModelCode.value;
     this.CriteriaAddLookUpProfessionName();
-    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "NONPROF"){
+    if (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == CommonConstant.CustModelNonProfessional) {
       this.InputLookupIndustryTypeObj.isRequired = false;
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators(null);
       this.parentForm.removeControl("jobDataAddr");
       this.parentForm.removeControl("jobDataAddrZipcode");
       this.parentForm.removeControl("lookupIndustryType");
     }
-    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "PROF"){
+    if (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == CommonConstant.CustModelProfessional) {
       this.InputLookupIndustryTypeObj.isRequired = false;
       this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators(null);
     }
-    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "EMP"){
-      if(!this.isLockMode){
+    if (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == CommonConstant.CustModelEmployee) {
+      if (!this.isLockMode) {
         this.InputLookupIndustryTypeObj.isRequired = true;
         this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(100)]);
       }
     }
-    if(this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "SME"){
-      if(!this.isLockMode){
+    if (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == CommonConstant.CustModelSmallMediumEnterprise) {
+      if (!this.isLockMode) {
         this.InputLookupIndustryTypeObj.isRequired = true;
         this.parentForm.controls[this.identifier]["controls"].CompanyName.setValidators([Validators.required, Validators.maxLength(100)]);
-    }
+      }
     }
   }
 
-  
+
   GetProfession(event) {
-    console.log(event);
     this.parentForm.controls[this.identifier].patchValue({
       MrProfessionCode: event.ProfessionCode
     });
@@ -205,29 +186,27 @@ export class LtkmCustJobDataComponent implements OnInit {
     });
   }
 
-  setProfessionName(professionCode){
-    this.professionObj.ProfessionCode = professionCode;
-    this.http.post(URLConstant.GetRefProfessionByCode, this.professionObj).subscribe(
+  setProfessionName(professionCode: string) {
+    this.http.post(URLConstant.GetRefProfessionByCode, { Code: professionCode }).subscribe(
       (response) => {
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
-        this.InputLookupProfessionObj.jsonSelect = response;     
+        this.InputLookupProfessionObj.jsonSelect = response;
       });
   }
 
-  setIndustryTypeName(industryTypeCode){
-    this.industryTypeObj.IndustryTypeCode = industryTypeCode;
-    this.http.post(URLConstant.GetRefIndustryTypeByCode, this.industryTypeObj).subscribe(
+  setIndustryTypeName(industryTypeCode: string) {
+    this.http.post(URLConstant.GetRefIndustryTypeByCode, { Code: industryTypeCode }).subscribe(
       (response) => {
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
-        this.InputLookupIndustryTypeObj.jsonSelect = response;     
+        this.InputLookupIndustryTypeObj.jsonSelect = response;
       });
   }
 
-  setAddrJobDataObj(){
+  setAddrJobDataObj() {
     this.inputFieldJobDataObj = new InputFieldObj();
     this.inputFieldJobDataObj.inputLookupObj = new InputLookupObj();
 
-    if(this.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj != undefined){
+    if (this.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj != undefined) {
       this.jobDataAddrObj = new AddrObj();
       this.jobDataAddrObj.Addr = this.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.Addr;
       this.jobDataAddrObj.AreaCode1 = this.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.AreaCode1;
@@ -243,25 +222,24 @@ export class LtkmCustJobDataComponent implements OnInit {
       this.jobDataAddrObj.PhnArea2 = this.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.PhnArea2;
       this.jobDataAddrObj.PhnExt1 = this.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.PhnExt1;
       this.jobDataAddrObj.PhnExt2 = this.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.PhnExt2;
-      
+
       this.jobDataAddrObj.MrHouseOwnershipCode = this.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.MrHouseOwnershipCode;
 
       this.inputFieldJobDataObj.inputLookupObj.nameSelect = this.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.Zipcode;
-      this.inputFieldJobDataObj.inputLookupObj.jsonSelect = {Zipcode: this.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.Zipcode};  
+      this.inputFieldJobDataObj.inputLookupObj.jsonSelect = { Zipcode: this.ltkmCustPersonalJobDataObj.LtkmCustAddrJobObj.Zipcode };
       this.inputAddressObjForJobData.default = this.jobDataAddrObj;
       this.inputAddressObjForJobData.inputField = this.inputFieldJobDataObj;
     }
   }
 
-  initLookup(){
+  initLookup() {
     this.InputLookupProfessionObj = new InputLookupObj();
     this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.InputLookupProfessionObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.genericJson = "./assets/uclookup/lookupProfession.json";
-    if(this.isLockMode)
-    {
+    if (this.isLockMode) {
       this.InputLookupProfessionObj.isDisable = true;
     }
 
@@ -271,18 +249,17 @@ export class LtkmCustJobDataComponent implements OnInit {
     this.InputLookupIndustryTypeObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupIndustryTypeObj.pagingJson = "./assets/uclookup/lookupRefSectorEconomySlik.json";
     this.InputLookupIndustryTypeObj.genericJson = "./assets/uclookup/lookupRefSectorEconomySlik.json";
-    if(this.isLockMode)
-    {
+    if (this.isLockMode) {
       this.InputLookupIndustryTypeObj.isDisable = true;
     }
   }
 
-  bindLtkmCustPersonalJobData(){
+  bindLtkmCustPersonalJobData() {
     this.IsInitJobData = true;
-    
-    if (this.custModelCode != null && this.custModelCode != undefined && this.custModelCode != ""  )
+
+    if (this.custModelCode != null && this.custModelCode != undefined && this.custModelCode != "")
       this.CriteriaAddLookUpProfessionName();
-    if(this.ltkmCustPersonalJobDataObj.LtkmCustPersonalId != 0 || this.IsCopy == true){
+    if (this.ltkmCustPersonalJobDataObj.LtkmCustPersonalId != 0 || this.IsCopy == true) {
       this.parentForm.controls[this.identifier].patchValue({
         CustModelCode: this.custModelCode,
         ProfessionalNo: this.ltkmCustPersonalJobDataObj.ProfessionalNo,
@@ -299,7 +276,7 @@ export class LtkmCustJobDataComponent implements OnInit {
         RefSectorEconomySlikCode: this.ltkmCustPersonalJobDataObj.RefSectorEconomySlikCode,
         MrProfessionCode: this.ltkmCustPersonalJobDataObj.MrProfessionCode
       });
-     
+
       this.setProfessionName(this.ltkmCustPersonalJobDataObj.MrProfessionCode);
       this.CustModelChanged(false);
       this.setAddrJobDataObj();
@@ -308,20 +285,19 @@ export class LtkmCustJobDataComponent implements OnInit {
     }
   }
 
-  bindAllRefMasterObj(){
+  bindAllRefMasterObj() {
     this.bindJobPositionObj();
     this.bindCompanyScaleObj();
     this.bindInvestmentTypeObj();
     this.bindJobStatObj();
   }
-  
 
-  bindJobPositionObj(){
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobPosition;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+
+  bindJobPositionObj() {
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition }).subscribe(
       (response) => {
         this.JobPositionObj = response[CommonConstant.ReturnObj];
-        if(this.JobPositionObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == "")){
+        if (this.JobPositionObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == "")) {
           this.parentForm.controls[this.identifier].patchValue({
             MrJobPositionCode: this.JobPositionObj[0].Key
           });
@@ -330,12 +306,11 @@ export class LtkmCustJobDataComponent implements OnInit {
     );
   }
 
-  bindCompanyScaleObj(){
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCoyScale;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+  bindCompanyScaleObj() {
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCoyScale }).subscribe(
       (response) => {
         this.CompanyScaleObj = response[CommonConstant.ReturnObj];
-        if(this.CompanyScaleObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrCompanyScaleCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyScaleCode.value == "")){
+        if (this.CompanyScaleObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrCompanyScaleCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyScaleCode.value == "")) {
           this.parentForm.controls[this.identifier].patchValue({
             MrCompanyScaleCode: this.CompanyScaleObj[0].Key
           });
@@ -344,12 +319,11 @@ export class LtkmCustJobDataComponent implements OnInit {
     );
   }
 
-  bindJobStatObj(){
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobStat;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+  bindJobStatObj() {
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobStat }).subscribe(
       (response) => {
         this.JobStatObj = response[CommonConstant.ReturnObj];
-        if(this.JobStatObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobStatCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobStatCode.value == "")){
+        if (this.JobStatObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobStatCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobStatCode.value == "")) {
           this.parentForm.controls[this.identifier].patchValue({
             MrJobStatCode: this.JobStatObj[0].Key
           });
@@ -358,12 +332,11 @@ export class LtkmCustJobDataComponent implements OnInit {
     );
   }
 
-  bindInvestmentTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInvestmentType;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+  bindInvestmentTypeObj() {
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInvestmentType }).subscribe(
       (response) => {
         this.InvestmentTypeObj = response[CommonConstant.ReturnObj];
-        if(this.InvestmentTypeObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrInvestmentTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrInvestmentTypeCode.value == "")){
+        if (this.InvestmentTypeObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrInvestmentTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrInvestmentTypeCode.value == "")) {
           this.parentForm.controls[this.identifier].patchValue({
             MrInvestmentTypeCode: this.InvestmentTypeObj[0].Key
           });
@@ -372,12 +345,11 @@ export class LtkmCustJobDataComponent implements OnInit {
     );
   }
 
- bindCustModelObj(){
-    this.custModelReqObj.MrCustTypeCode = CommonConstant.CustTypePersonal;
-     this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, this.custModelReqObj).toPromise().then(
+  bindCustModelObj() {
+    this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, { Code: CommonConstant.CustTypePersonal }).toPromise().then(
       (response) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
-        if(this.CustModelObj.length > 0 && this.custModelCode == undefined){
+        if (this.CustModelObj.length > 0 && this.custModelCode == undefined) {
           this.custModelCode = this.CustModelObj[0].Key;
           this.parentForm.controls[this.identifier].patchValue({
             CustModelCode: this.CustModelObj[0].Key
@@ -387,5 +359,4 @@ export class LtkmCustJobDataComponent implements OnInit {
       }
     );
   }
-
 }

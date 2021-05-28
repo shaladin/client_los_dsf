@@ -514,13 +514,13 @@ export class PathConstant {
     public static VIEW_PO = "POView";
     public static VIEW_LEAD = "Lead";
     public static VIEW_MOU_CUST = "Mou/CustView";
+    public static VIEW_CHANGE_MOU = "ChangeMouView";
     public static VIEW_SRVY = "SurveyView";
     public static VIEW_CUST_EXPSR = "CustExposureView";
     public static VIEW_PHN_VERIF = "PhoneVerifView";
     public static VIEW_PURCHASE_TRACKING = "PurchaseTracking";
     public static VIEW_APP_ASSET = "AppAsset";
     public static VIEW_APP_LIST = "AppList";
-    public static VIEW_CHANGE_MOU = "ChangeMouView";
     //#endregion
 
     //#region FOU-View-Module

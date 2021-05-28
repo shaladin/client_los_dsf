@@ -22,7 +22,7 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class LtkmFinancialPersonalComponent implements OnInit, AfterViewInit {
-  
+
   @ViewChild(BankSectionComponent) bankSectionComponent;
 
   @Input() AppCustId: number;
@@ -30,14 +30,14 @@ export class LtkmFinancialPersonalComponent implements OnInit, AfterViewInit {
 
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() isLockMode: boolean = false;
-  
+
   @Input() AppCustPersonalId: number;
   @Input() IsMarried: boolean;
   @Output() UpdateSource: EventEmitter<object> = new EventEmitter();
-  @ViewChild('ModalPersonalFinData') ModalPersonalFinData : ElementRef;
-  @ViewChild('btnclosemodal') btnclosemodal : ElementRef;
+  @ViewChild('ModalPersonalFinData') ModalPersonalFinData: ElementRef;
+  @ViewChild('btnclosemodal') btnclosemodal: ElementRef;
 
 
   IsDetail: boolean = false;
@@ -47,30 +47,12 @@ export class LtkmFinancialPersonalComponent implements OnInit, AfterViewInit {
   MrSourceOfIncomeTypeObj: Array<KeyValueObj> = new Array();
   AppCustBankAccList: Array<AppCustBankAccObj> = new Array();
   LtkmCustBankAccList: Array<LtkmCustBankAccObj> = new Array();
-  CustBankAccList: Array<any> = new Array();
 
 
-  @Input() ListLtkmCustPersonalFinData : Array<LtkmCustPersonalFinDataObj> = [];
+  @Input() ListLtkmCustPersonalFinData: Array<LtkmCustPersonalFinDataObj> = [];
   IsAddFinData: boolean = true;
   currentCustFinDataIndex: number;
   currentModal: any;
-
-  // FinancialForm = this.fb.group({
-  //   LtkmCustPersonalFinDataId: [0],
-  //   LtkmCustPersonalId: [0, Validators.required],
-  //   MonthlyIncomeAmt: ['', Validators.required],
-  //   MrSourceOfIncomeTypeCode: [''],
-  //   OtherIncomeAmt: [0],
-  //   IsJoinIncome: [false],
-  //   MonthlyExpenseAmt: [0],
-  //   MonthlyInstallmentAmt: [0],
-  //   OtherMonthlyInstAmt: [0],
-  //   SpouseMonthlyIncomeAmt: [0],
-  //   TotalIncomeAmt: [0],
-  //   NettIncomeAmt: [0],
-  //   DateAsOf: [0],
-  //   RowVersion: ['']
-  // })
 
   AppCustAttrListForm = this.fb.group({
   });
@@ -81,28 +63,28 @@ export class LtkmFinancialPersonalComponent implements OnInit, AfterViewInit {
     public formValidate: FormValidateService,
     private modalService: NgbModal) { }
 
-    ngAfterViewInit(){
-      console.log(this.ModalPersonalFinData);
-      console.log(this.btnclosemodal);
-    }
+  ngAfterViewInit() {
+    console.log(this.ModalPersonalFinData);
+    console.log(this.btnclosemodal);
+  }
 
   async ngOnInit() {
-        this.parentForm.addControl(this.identifier, this.fb.group({
-          LtkmCustPersonalFinDataId: [0],
-          LtkmCustPersonalId: [0],
-          MonthlyIncomeAmt: [''],
-          MrSourceOfIncomeTypeCode: [''],
-          OtherIncomeAmt: [0],
-          IsJoinIncome: [false],
-          MonthlyExpenseAmt: [0],
-          MonthlyInstallmentAmt: [0],
-          OtherMonthlyInstAmt: [0],
-          SpouseMonthlyIncomeAmt: [0],
-          TotalIncomeAmt: [0],
-          NettIncomeAmt: [0],
-          DateAsOf: [0],
-          RowVersion: ['']
-          }));
+    this.parentForm.addControl(this.identifier, this.fb.group({
+      LtkmCustPersonalFinDataId: [0],
+      LtkmCustPersonalId: [0],
+      MonthlyIncomeAmt: [''],
+      MrSourceOfIncomeTypeCode: [''],
+      OtherIncomeAmt: [0],
+      IsJoinIncome: [false],
+      MonthlyExpenseAmt: [0],
+      MonthlyInstallmentAmt: [0],
+      OtherMonthlyInstAmt: [0],
+      SpouseMonthlyIncomeAmt: [0],
+      TotalIncomeAmt: [0],
+      NettIncomeAmt: [0],
+      DateAsOf: [0],
+      RowVersion: ['']
+    }));
     await this.GetRefMaster();
   }
 
@@ -118,29 +100,23 @@ export class LtkmFinancialPersonalComponent implements OnInit, AfterViewInit {
   }
 
   //perlu tambah get data dari foundation
-  GetListFinData()
-  {
-    this.http.post<LtkmCustPersonalFinDataObj>(URLConstant.GetListLtkmCustPersonalFinDataByLtkmCustlId, { LtkmCustlId: this.LtkmCustId }).subscribe(
+  GetListFinData() {
+    this.http.post<LtkmCustPersonalFinDataObj>(URLConstant.GetListLtkmCustPersonalFinDataByLtkmCustlId, { Id: this.LtkmCustId }).subscribe(
       (response) => {
         this.ListLtkmCustPersonalFinData = response['ListLtkmCustPersonalFinData'];
       }
     );
   }
 
-  GetFinData(currentCustFinDataIndex:number)
-  {
+  GetFinData(currentCustFinDataIndex: number) {
     this.IsAddFinData = false;
     this.currentCustFinDataIndex = currentCustFinDataIndex;
-    let custFinData:LtkmCustPersonalFinDataObj = this.ListLtkmCustPersonalFinData[this.currentCustFinDataIndex];
+    let custFinData: LtkmCustPersonalFinDataObj = this.ListLtkmCustPersonalFinData[this.currentCustFinDataIndex];
     let datePipe = new DatePipe("en-US");
-    if(!custFinData) 
-    {
+    if (!custFinData) {
       custFinData = new LtkmCustPersonalFinDataObj();
       this.IsAddFinData = true;
     }
-
-    console.log('richard check here');
-    console.log(custFinData);
 
     this.parentForm['controls'][this.identifier].patchValue({
       AppCustPersonalFinDataId: custFinData.LtkmCustPersonalFinDataId,
@@ -161,7 +137,7 @@ export class LtkmFinancialPersonalComponent implements OnInit, AfterViewInit {
     this.parentForm['controls'][this.identifier]['controls']['DateAsOf'].setValidators([Validators.required]);
     this.parentForm['controls'][this.identifier]['controls']['DateAsOf'].updateValueAndValidity();
 
-    this.currentModal = this.modalService.open(this.ModalPersonalFinData, {ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false});
+    this.currentModal = this.modalService.open(this.ModalPersonalFinData, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   GetEvent(event) {
@@ -170,12 +146,12 @@ export class LtkmFinancialPersonalComponent implements OnInit, AfterViewInit {
     }
   }
 
-  SaveModal(){
+  SaveModal() {
     this.SaveAppCustPersonalFinData();
     this.modalService.dismissAll();
   }
 
-  CloseModal(){
+  CloseModal() {
     this.parentForm['controls'][this.identifier]['controls']['DateAsOf'].clearValidators();
     this.parentForm['controls'][this.identifier]['controls']['DateAsOf'].updateValueAndValidity();
     this.modalService.dismissAll();
@@ -206,39 +182,38 @@ export class LtkmFinancialPersonalComponent implements OnInit, AfterViewInit {
     });
   }
 
-  SaveAppCustPersonalFinData()
-  {
+  SaveAppCustPersonalFinData() {
     if (!this.parentForm['controls'][this.identifier].valid) return;
 
-      var newObj = new LtkmCustPersonalFinDataObj;
-      newObj.DateAsOf = this.parentForm['controls'][this.identifier]['controls']['DateAsOf'].value;
-      newObj.LtkmCustPersonalFinDataId = this.parentForm['controls'][this.identifier]['controls']['LtkmCustPersonalFinDataId'].value;
-      newObj.LtkmCustPersonalId = this.parentForm['controls'][this.identifier]['controls']['LtkmCustPersonalId'].value;
-      newObj.MonthlyIncomeAmt = this.parentForm['controls'][this.identifier]['controls']['MonthlyIncomeAmt'].value;
-      newObj.MrSourceOfIncomeTypeCode = this.parentForm['controls'][this.identifier]['controls']['MrSourceOfIncomeTypeCode'].value;
-      newObj.OtherIncomeAmt = this.parentForm['controls'][this.identifier]['controls']['OtherIncomeAmt'].value;
-      newObj.IsJoinIncome = this.parentForm['controls'][this.identifier]['controls']['IsJoinIncome'].value;
-      newObj.MonthlyExpenseAmt = this.parentForm['controls'][this.identifier]['controls']['MonthlyExpenseAmt'].value;
-      newObj.MonthlyInstallmentAmt = this.parentForm['controls'][this.identifier]['controls']['MonthlyInstallmentAmt'].value;
-      newObj.OtherMonthlyInstAmt = this.parentForm['controls'][this.identifier]['controls']['OtherMonthlyInstAmt'].value;
-      newObj.SpouseMonthlyIncomeAmt = this.parentForm['controls'][this.identifier]['controls']['SpouseMonthlyIncomeAmt'].value;
-      newObj.TotalIncomeAmt = this.parentForm['controls'][this.identifier]['controls']['TotalIncomeAmt'].value;
-      newObj.NettIncomeAmt = this.parentForm['controls'][this.identifier]['controls']['NettIncomeAmt'].value;
-      newObj.DateAsOf = this.parentForm['controls'][this.identifier]['controls']['DateAsOf'].value;
-    
-      if(this.IsAddFinData == false){
-        this.ListLtkmCustPersonalFinData[this.currentCustFinDataIndex] = newObj;
-      }else{
-        this.ListLtkmCustPersonalFinData.push(newObj);
-      }
-      this.UpdateSource.emit({Key: 'IsDetail', Value: false, ListLtkmCustPersonalFinData: this.ListLtkmCustPersonalFinData});
-      this.IsDetail = false;
-    }
+    var newObj = new LtkmCustPersonalFinDataObj;
+    newObj.DateAsOf = this.parentForm['controls'][this.identifier]['controls']['DateAsOf'].value;
+    newObj.LtkmCustPersonalFinDataId = this.parentForm['controls'][this.identifier]['controls']['LtkmCustPersonalFinDataId'].value;
+    newObj.LtkmCustPersonalId = this.parentForm['controls'][this.identifier]['controls']['LtkmCustPersonalId'].value;
+    newObj.MonthlyIncomeAmt = this.parentForm['controls'][this.identifier]['controls']['MonthlyIncomeAmt'].value;
+    newObj.MrSourceOfIncomeTypeCode = this.parentForm['controls'][this.identifier]['controls']['MrSourceOfIncomeTypeCode'].value;
+    newObj.OtherIncomeAmt = this.parentForm['controls'][this.identifier]['controls']['OtherIncomeAmt'].value;
+    newObj.IsJoinIncome = this.parentForm['controls'][this.identifier]['controls']['IsJoinIncome'].value;
+    newObj.MonthlyExpenseAmt = this.parentForm['controls'][this.identifier]['controls']['MonthlyExpenseAmt'].value;
+    newObj.MonthlyInstallmentAmt = this.parentForm['controls'][this.identifier]['controls']['MonthlyInstallmentAmt'].value;
+    newObj.OtherMonthlyInstAmt = this.parentForm['controls'][this.identifier]['controls']['OtherMonthlyInstAmt'].value;
+    newObj.SpouseMonthlyIncomeAmt = this.parentForm['controls'][this.identifier]['controls']['SpouseMonthlyIncomeAmt'].value;
+    newObj.TotalIncomeAmt = this.parentForm['controls'][this.identifier]['controls']['TotalIncomeAmt'].value;
+    newObj.NettIncomeAmt = this.parentForm['controls'][this.identifier]['controls']['NettIncomeAmt'].value;
+    newObj.DateAsOf = this.parentForm['controls'][this.identifier]['controls']['DateAsOf'].value;
 
-    DeleteFinData(index: number){
-      if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-        this.ListLtkmCustPersonalFinData.splice(index, 1);
-        this.UpdateSource.emit({Key: 'IsDetail', Value: false, ListLtkmCustPersonalFinData: this.ListLtkmCustPersonalFinData});
-      }
+    if (this.IsAddFinData == false) {
+      this.ListLtkmCustPersonalFinData[this.currentCustFinDataIndex] = newObj;
+    } else {
+      this.ListLtkmCustPersonalFinData.push(newObj);
     }
+    this.UpdateSource.emit({ Key: 'IsDetail', Value: false, ListLtkmCustPersonalFinData: this.ListLtkmCustPersonalFinData });
+    this.IsDetail = false;
+  }
+
+  DeleteFinData(index: number) {
+    if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
+      this.ListLtkmCustPersonalFinData.splice(index, 1);
+      this.UpdateSource.emit({ Key: 'IsDetail', Value: false, ListLtkmCustPersonalFinData: this.ListLtkmCustPersonalFinData });
+    }
+  }
 }

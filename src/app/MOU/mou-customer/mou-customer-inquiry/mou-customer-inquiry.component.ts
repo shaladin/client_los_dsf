@@ -24,8 +24,8 @@ export class MouCustomerInquiryComponent implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    if (this.user.MrOfficeTypeCode !=CommonConstant.HeadOffice ) {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.UNAUTHORIZE_PAGE],{});
+    if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.UNAUTHORIZE_PAGE], {});
       return;
     }
     else {

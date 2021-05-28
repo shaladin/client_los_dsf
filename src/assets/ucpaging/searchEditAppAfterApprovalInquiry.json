@@ -1,0 +1,120 @@
+{
+  "title": "Edit App After Approval Inquiry",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "textbox",
+      "name": "EAAATH.EDIT_APP_AFT_APV_TRX_NO",
+      "id": "EditAppAftApvTrxNoId",
+      "value": "",
+      "label": "Edit App After Approval Transaction No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "A.AGRMNT_NO",
+      "id": "AgrmntNoId",
+      "value": "",
+      "label": "Agreement No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "A.CUST_NO",
+      "id": "CustNoId",
+      "value": "",
+      "label": "Customer No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "A.CUST_NAME",
+      "id": "CustNameId",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "name": "EAAATH.EDIT_APP_AFT_APV_TRX_STAT",
+      "id": "StatusId",
+      "value": "Status",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "isQueryIn": true,
+      "url": "",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+      "label": "Status",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "StatusGrpCode",
+      "criteriaPropValue": "EDIT_APP_AFT_APV_TRX_STAT"
+    }
+  ],
+  "querystring": {
+    "name": "searchEditAppAfterApprovalInquiry"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Edit App After Approval Transaction No",
+      "name": "EditAppAftApvTrxNo"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Agreement No",
+      "name": "AgrmntNo"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Customer No",
+      "name": "CustNo"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Customer Name",
+      "name": "CustName"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Status",
+      "name": "StatDescr"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "callback",
+      "position": "center",
+      "property": "EditAppAftApvTrxNo",
+      "key": "editAppAftApvTrx"
+    },
+    {
+      "type": "callback",
+      "position": "center",
+      "property": "AgrmntNo",
+      "key": "agreement"
+    },
+    {
+      "type": "callback",
+      "position": "center",
+      "property": "CustNo",
+      "key": "customer"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "StatDescr"
+    }
+  ]
+}

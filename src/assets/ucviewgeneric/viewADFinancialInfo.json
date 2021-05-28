@@ -43,7 +43,7 @@
         },
         {
           "type": "currency",
-          "label": "TDP Paid at Coy",
+          "label": "TDP Paid at MF",
           "property": "TDPPaid"
         },
         {

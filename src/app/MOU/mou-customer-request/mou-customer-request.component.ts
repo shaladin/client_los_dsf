@@ -23,7 +23,7 @@ export class MouCustomerRequestComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   CustNoObj: GenericObj = new GenericObj();
   user: any;
-  
+
   readonly AddLink: string = NavigationConstant.MOU_REQ_DETAIL;
   constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) { }
 
@@ -31,7 +31,7 @@ export class MouCustomerRequestComponent implements OnInit {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.UNAUTHORIZE_PAGE],{});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.UNAUTHORIZE_PAGE], {});
       return;
     }
     else {

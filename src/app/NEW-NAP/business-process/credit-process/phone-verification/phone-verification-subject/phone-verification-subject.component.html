@@ -50,7 +50,7 @@
                   <td class="text-left">{{item.ResultName}}</td>
                   <td class="text-left">{{item.SubjectRelationName}}</td>
                   <td class="text-left">{{item.Notes}}</td>
-                  <td class="text-left" *ngIf="item.PhoneNumber != null"><a (click)="View(item.VerfResultHId, item.SubjectName)">View</a></td>
+                  <td class="text-left" *ngIf="item.PhoneNumber != null"><a style="text-decoration: none; background-color: transparent; color: #009da0; cursor: pointer;"(click)="View(item.VerfResultHId, item.SubjectName)">View</a></td>
                   <td class="text-left" *ngIf="item.PhoneNumber == null"></td>
                   <td class="text-center">
                     <a class="success p-0" (click)="Verif(item.VerfResultHId, item.SubjectName, item.Subject, item.IdSource, item.SubjectRelation)">

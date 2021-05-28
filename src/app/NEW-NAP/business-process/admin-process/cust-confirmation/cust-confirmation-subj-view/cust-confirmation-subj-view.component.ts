@@ -5,7 +5,7 @@ import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
-import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultH.Model';
+import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultD.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';

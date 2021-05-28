@@ -32,7 +32,7 @@ export class EditMouCustomerComponent implements OnInit {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.UNAUTHORIZE_PAGE],{});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.UNAUTHORIZE_PAGE], {});
       return;
     }
     else {

@@ -40,7 +40,7 @@ export class ViewLeadDataComponent implements OnInit {
     this.leadAssetObj.LeadId = this.LeadId;
 
     this.leadObj = new LeadObj();
-    this.leadObj.LeadId = this.LeadId;
+    this.leadObj.LeadId = Number(this.LeadId);
     var leadObj = { Id: this.LeadId };
     this.http.post(this.GetLeadByLeadIdUrl, leadObj).subscribe(
       response => {

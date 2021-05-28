@@ -10,6 +10,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { CalcBalloonObjForTrialCalc } from 'app/shared/model/AppFinData/CalcBalloonObjForTrialCalc.Model';
 
 @Component({
   selector: 'app-schm-balloon-FL4W',
@@ -20,14 +21,17 @@ export class SchmBalloonFL4WComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
   @Output() RefreshSubsidy = new EventEmitter();
+  @Input() TrialCalc: boolean;
 
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcBalloonObj : CalcBalloonObj = new CalcBalloonObj();
+  calcBalloonObjForTrialCalc: CalcBalloonObjForTrialCalc = new CalcBalloonObjForTrialCalc();
   listInstallment: any;
   responseCalc: any;
+  IsTrialCalc: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -39,6 +43,13 @@ export class SchmBalloonFL4WComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
+    if (this.TrialCalc != null && this.TrialCalc) {
+      this.IsTrialCalc = true;
+    }
+    else
+    {
+      this.IsTrialCalc = false;
+    }
   }
 
   LoadDDLRateType() {
@@ -105,6 +116,8 @@ export class SchmBalloonFL4WComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.BALLOON_AMOUNT_MUST_HIGHER_THAN + '0.');
       return;
     }
+    
+    if (!this.IsTrialCalc) {
     this.calcBalloonObj = this.ParentForm.getRawValue();
     this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentBalloon, this.calcBalloonObj).subscribe(
       (response) => {
@@ -147,6 +160,50 @@ export class SchmBalloonFL4WComponent implements OnInit {
         }
       }
     );
+  } else {
+      this.calcBalloonObjForTrialCalc = this.ParentForm.getRawValue();
+      this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentBalloonForTrialCalc, this.calcBalloonObjForTrialCalc).subscribe(
+        (response) => {
+          this.listInstallment = response.InstallmentTable;
+          this.ParentForm.patchValue({
+            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+
+            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+            FlatRatePrcnt: response.FlatRatePrcnt,
+            InstAmt: response.InstAmt,
+
+            GrossYieldPrcnt: response.GrossYieldPrcnt,
+
+            TotalInterestAmt: response.TotalInterestAmt,
+            TotalAR: response.TotalARAmt,
+
+            NtfAmt: response.NtfAmt,
+            DiffRateAmt: response.DiffRateAmt,
+            ApvAmt: response.ApvAmt,
+
+            TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+            LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+
+            DownPaymentGrossAmt: response.DownPaymentGrossAmt,
+            DownPaymentNettAmt: response.DownPaymentNettAmt,
+
+            SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
+            CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
+            SupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt
+
+          })
+          this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
+          this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
+          this.SetInstallmentTable();
+          this.SetNeedReCalculate(false);
+
+          if (this.ParentForm.controls.IsSubsidyRateExist.value == true) {
+            this.RefreshSubsidy.emit();
+          }
+        }
+      );
+    }
   }
 
   SetInstallmentTable() {

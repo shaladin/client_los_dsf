@@ -6,6 +6,7 @@ import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
 import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-cust-personal-financial-data',
@@ -22,15 +23,14 @@ export class CustPersonalFinancialDataComponent implements OnInit, OnChanges {
   @Input() identifier: any;
   @Input() appCustPersonalFinDataObj: AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
   @Input() isMarried: boolean;
+  @Input() isLockMode: boolean = null;
+
   refMasterObj = {
     RefMasterTypeCode: "",
   };
   custDataObj: CustDataObj;
 
-  SourceOfIncomeObj: any;
-
-  getRefMasterUrl: any;
-
+  SourceOfIncomeObj: Array<KeyValueObj>;
 
   constructor(
     private fb: FormBuilder, 
@@ -53,19 +53,33 @@ export class CustPersonalFinancialDataComponent implements OnInit, OnChanges {
   ngOnInit() {
 
     this.parentForm.removeControl(this.identifier);
-    this.parentForm.addControl(this.identifier, this.fb.group({
-      MonthlyIncomeAmt: [0, Validators.required],
-      MonthlyExpenseAmt: [0],
-      MonthlyInstallmentAmt: [0],
-      MrSourceOfIncomeTypeCode: [''],
-      IsJoinIncome: [false],
-      SpouseMonthlyIncomeAmt: [0],
-      TotalMonthlyIncome: [0],
-      TotalMonthlyExpense: [0],
-      NettMonthlyIncome: [0]
-    }));
 
-    this.initUrl();
+    if(this.isLockMode){
+      this.parentForm.addControl(this.identifier, this.fb.group({
+        MonthlyIncomeAmt: [0],
+        MonthlyExpenseAmt: [0],
+        MonthlyInstallmentAmt: [0],
+        MrSourceOfIncomeTypeCode: [''],
+        IsJoinIncome: [false],
+        SpouseMonthlyIncomeAmt: [0],
+        TotalMonthlyIncome: [0],
+        TotalMonthlyExpense: [0],
+        NettMonthlyIncome: [0]
+      }));
+    }else{
+      this.parentForm.addControl(this.identifier, this.fb.group({
+        MonthlyIncomeAmt: [0, Validators.required],
+        MonthlyExpenseAmt: [0],
+        MonthlyInstallmentAmt: [0],
+        MrSourceOfIncomeTypeCode: [''],
+        IsJoinIncome: [false],
+        SpouseMonthlyIncomeAmt: [0],
+        TotalMonthlyIncome: [0],
+        TotalMonthlyExpense: [0],
+        NettMonthlyIncome: [0]
+      }));
+    }
+    
     this.bindSourceOfIncomeObj();
     this.bindAppCustPersonalFinData();
   }
@@ -97,14 +111,10 @@ export class CustPersonalFinancialDataComponent implements OnInit, OnChanges {
       this.ChangeTotalMonthly();
     }
   }
-  
-  initUrl(){
-    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-  }
 
   bindSourceOfIncomeObj(){
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSourceIncome;
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.SourceOfIncomeObj = response[CommonConstant.ReturnObj];
         if(this.SourceOfIncomeObj.length > 0){

@@ -15,11 +15,8 @@ export class AssetExpenseComponent implements OnInit {
   @Input() showCancel: boolean = true;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
-  listDataAsset: Array<any> = new Array();
   listAppAssetObj: any;
-  appCollateralObj: any;
-  listAppCollateralObj: Array<AppCollateralObj> = new Array();
-  gridAssetDataObj: any;
+  gridAssetDataObj: InputGridObj;
   AppAssetId: number;
   isEdit: boolean = false;
   isReady: boolean = false;
