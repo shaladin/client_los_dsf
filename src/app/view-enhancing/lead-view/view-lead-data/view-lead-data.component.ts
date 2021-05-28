@@ -21,7 +21,7 @@ export class ViewLeadDataComponent implements OnInit {
     this.GetLeadAssetByLeadIdUrl = URLConstant.GetLeadAssetByLeadId;
     this.GetLeadByLeadIdUrl = URLConstant.GetLeadByLeadId;
   }
-  LeadId: string;
+  LeadId: number;
   viewLeadAppData : UcViewGenericObj = new UcViewGenericObj();
   GetLeadAssetByLeadIdUrl : string;
   GetLeadByLeadIdUrl : string;

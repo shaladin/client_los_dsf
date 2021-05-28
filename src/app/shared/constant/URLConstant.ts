@@ -784,6 +784,7 @@ export class URLConstant {
   public static GetPurchaseOrderByPurchaseOrderHIdForNewPO = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderByPurchaseOrderHIdForNewPO";
   public static GetPurchaseOrderDPoItemCodeFromRuleByType = environment.losUrl + "/PurchaseOrderH/GetPurchaseOrderDPoItemCodeFromRuleByType";
   public static ResumeWorkflowNewPurchaseOrder = environment.losUrl + "/PurchaseOrderH/ResumeWorkflowNewPurchaseOrder";
+  public static GetBankDsfbyGeneralSettingR2 = environment.losUrl + "/PurchaseOrderH/GetBankDsfbyGeneralSettingR2";
 
   // LEAD
   public static AddLeadCust = environment.losUrl + "/LeadCust/AddLeadCust";

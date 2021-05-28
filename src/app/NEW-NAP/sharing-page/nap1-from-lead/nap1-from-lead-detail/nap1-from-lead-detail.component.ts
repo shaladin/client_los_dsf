@@ -24,7 +24,7 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 export class Nap1FromLeadDetailComponent implements OnInit {
 
   ProductOfferingNameIdentifier;
-  leadId: string;
+  leadId: number;
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   constructor(

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-invoice-verif-paging',
@@ -11,12 +12,23 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 })
 export class InvoiceVerifPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
-
-  constructor(private http: HttpClient) {}
+  bizTemplateCode: string;
+  constructor(private http: HttpClient, private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => {
+      this.bizTemplateCode = params["BizTemplateCode"];
+    });
+  }
 
   ngOnInit() {
-    this.inputPagingObj._url = "./assets/ucpaging/searchInvoiceVerif.json";
-    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchInvoiceVerif.json";
+    if (this.bizTemplateCode == "DF") {
+      this.inputPagingObj._url = "./assets/ucpaging/searchInvoiceVerifDF.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchInvoiceVerifDF.json";
+    }
+    else{
+      this.inputPagingObj._url = "./assets/ucpaging/searchInvoiceVerif.json";
+      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchInvoiceVerif.json";
+    }
+    
   }
 
   getEvent(ev) {

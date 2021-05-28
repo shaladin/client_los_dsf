@@ -128,7 +128,7 @@ export class DocumentViewComponent implements OnInit {
             }
           }
         }
-        else if (this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
+        else if (this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA || this.BizTemplateCode == CommonConstant.DF) {
           if (appCust.MrCustTypeCode == CommonConstant.CustTypePersonal) {
             if (agrmntSigner.AppCustPersonalId && agrmntSigner.AppCustPersonalId > 0 && agrmntSigner.MfEmpNo1) {
               this.isDocSignerAvailable = true;

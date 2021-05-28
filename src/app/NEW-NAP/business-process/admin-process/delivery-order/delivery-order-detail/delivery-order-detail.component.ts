@@ -190,6 +190,13 @@ export class DeliveryOrderDetailComponent implements OnInit {
                 this.listItem.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
               }
             }
+            if ( this.appAssetObj  != undefined ||  this.appAssetObj  != null) {
+              for (let i = 0; i < this.listItem.length; i++) {
+                if (this.listItem.controls[i] != null) {
+                  this.listItem.controls[i]['controls']['SerialNoValue'].value =  this.appAssetObj ["SerialNo" + (i + 1)];
+                }
+              }
+            }
           });
       }
     );
