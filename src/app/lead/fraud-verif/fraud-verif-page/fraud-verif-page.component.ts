@@ -75,7 +75,6 @@ export class FraudVerifPageComponent implements OnInit {
     }
     this.thirdPartyRsltHObj = new ThirdPartyRsltHObj();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "LeadNo",
