@@ -22,12 +22,6 @@ export class ProdHoPagingComponent implements OnInit {
 
     this.InputPagingObj._url = "./assets/ucpaging/product/searchProductHO.json";
     this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductHO.json";
-    this.InputPagingObj.ddlEnvironments = [
-      {
-        name: "A.PROD_STAT",
-        environment: environment.FoundationR3Url
-      }
-    ];
   }
 
   EditButtonClick(e) {
