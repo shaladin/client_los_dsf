@@ -18,6 +18,24 @@ import { LeadMonitoringComponent } from './lead-monitoring/lead-monitoring.compo
 import { LeadMonitoringReviewComponent } from './lead-monitoring-review/lead-monitoring-review.component';
 import { LeadMonitoringReviewDetailComponent } from './lead-monitoring-review/lead-monitoring-review-detail/lead-monitoring-review-detail.component';
 import { PathConstant } from 'app/shared/constant/PathConstant';
+import { GeneratePotentialRoComponent } from './potential-ro/generate-potential-ro/generate-potential-ro.component';
+import { RoTelemkOfferPagingComponent } from './potential-ro/ro-telemk-offer-paging/ro-telemk-offer-paging.component';
+import { RoTelemkOfferDetailComponent } from './potential-ro/ro-telemk-offer-detail/ro-telemk-offer-detail.component';
+import { RoTelemkOfferVerifComponent } from './potential-ro/ro-telemk-offer-detail/ro-telemk-offer-verif.component';
+import { RoPotentialInquiryComponent } from './potential-ro/ro-potential-inquiry/ro-potential-inquiry.component';
+import { NewLeadInputMainInfoComponent } from './new-lead-input/new-lead-input-main-info/new-lead-input-main-info.component';
+import { NewLeadInputComponent } from './new-lead-input/new-lead-input.component';
+import { NewLeadInputCustDataComponent } from './new-lead-input/new-lead-input-cust-data/new-lead-input-cust-data.component';
+import { NewFraudVerifComponent } from './new-fraud-verif/new-fraud-verif.component';
+import { NewFraudVerifDetailComponent } from './new-fraud-verif/new-fraud-verif-detail/new-fraud-verif-detail.component';
+import { NewLeadUpdateComponent } from './new-lead-update/new-lead-update.component';
+import { RoPotentialViewComponent } from './potential-ro/ro-potential-view/ro-potential-view.component';
+import { RoPotentialExecutionComponent } from './potential-ro/ro-potential-execution/ro-potential-execution.component';
+import { NewLeadInputPageComponent } from './new-lead-input/new-lead-input-page/new-lead-input-page.component';
+import { SimpleLeadMonitoringComponent } from './simple-lead-monitoring/simple-lead-monitoring.component';
+import { SimpleLeadMonitoringReviewComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review.component';
+import { SimpleLeadMonitoringReviewDetailComponent } from './simple-lead-monitoring-review/simple-lead-monitoring-review-detail/simple-lead-monitoring-review-detail.component';
+
 
 const routes: Routes = [
   {
@@ -52,6 +70,27 @@ const routes: Routes = [
         }
       },
       {
+        path: 'SimpleLead/Paging',
+        component: NewLeadInputComponent,
+        data: {
+          title: 'Lead Input Paging'
+        }
+      },
+      {
+        path: 'SimpleLead/Detail',
+        component: NewLeadInputPageComponent,
+        data: {
+          title: 'Lead Detail'
+        }
+      },
+      {
+        path: 'SimpleLead/MainInfo',
+        component: NewLeadInputMainInfoComponent,
+        data: {
+          title: 'Lead Input Main Info'
+        }
+      },
+      {
         path: PathConstant.LEAD_INPUT_CUST_DATA,
         component: LeadInputCustDataComponent,
         data: {
@@ -77,6 +116,20 @@ const routes: Routes = [
         component: FraudVerifPagingComponent,
         data: {
           title: 'Fraud verif paging'
+        },
+      },
+      {
+        path: 'SimpleLeadFraudVerif/Paging',
+        component: NewFraudVerifComponent,
+        data: {
+          title: 'Fraud verif paging'
+        },
+      },
+      {
+        path: 'SimpleLeadFraudVerif/Detail',
+        component: NewFraudVerifDetailComponent,
+        data: {
+          title: 'Fraud verif detail'
         },
       },
       {
@@ -117,6 +170,13 @@ const routes: Routes = [
       {
         path: PathConstant.LEAD_UPDATE_PAGING,
         component: LeadUpdateComponent,
+        data: {
+          title: 'Lead Update Paging'
+        }
+      },
+      {
+        path: 'SimpleLeadUpdate/Paging',
+        component: NewLeadUpdateComponent,
         data: {
           title: 'Lead Update Paging'
         }
@@ -253,7 +313,77 @@ const routes: Routes = [
         data: {
           title: 'Lead Update Paging'
         }
-      }
+      },
+      {
+        path: 'PotentialRo/Paging',
+        component: GeneratePotentialRoComponent,
+        data: {
+          title: 'Lead Review Monitoring Detail'
+        }
+      },
+      {
+        path: 'PotentialRo/RoTelemkOffer/Paging',
+        component: RoTelemkOfferPagingComponent,
+        data: {
+          title: 'RO Telemarketing Offering'
+        }
+      },
+      {
+        path: 'PotentialRo/RoTelemkOffer/Detail',
+        component: RoTelemkOfferDetailComponent,
+        data: {
+          title: 'RO Telemarketing Offering Detail'
+        }
+      },
+      {
+        path: 'PotentialRo/RoTelemkOffer/Verif',
+        component: RoTelemkOfferVerifComponent,
+        data: {
+          title: 'RO Telemarketing Offering Verification'
+        }
+      },
+      {
+        path: 'PotentialRo/Inquiry',
+        component: RoPotentialInquiryComponent,
+        data: {
+          title: 'RO Potential Inquiry'
+        }
+      },
+      {
+        path: 'PotentialRo/View',
+        component: RoPotentialViewComponent,
+        data: {
+          title: 'RO Potential View'
+        }
+      },
+      {
+        path: 'PotentialRo/Execution',
+        component: RoPotentialExecutionComponent,
+        data: {
+          title: 'RO Potential Execution'
+        }
+      },
+      {
+        path: 'SimpleLead/Monitoring',
+        component: SimpleLeadMonitoringComponent,
+        data: {
+          title: 'Simple Lead Monitoring'
+        }
+      },
+      {
+        path: 'SimpleLead/ReviewMonitoring/Paging',
+        component: SimpleLeadMonitoringReviewComponent,
+        data: {
+          title: 'Simple Lead Review Monitoring'
+        }
+      },
+      {
+        path: 'SimpleLead/ReviewMonitoring/Detail',
+        component: SimpleLeadMonitoringReviewDetailComponent,
+        data: {
+          title: 'Simple Lead Review Monitoring Detail'
+        }
+      },
     ]
   }
 ];

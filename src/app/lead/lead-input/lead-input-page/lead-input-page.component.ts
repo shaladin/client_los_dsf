@@ -14,6 +14,8 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Model';
+import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
 
 @Component({
   selector: 'app-lead-input-page',
@@ -31,12 +33,21 @@ export class LeadInputPageComponent implements OnInit {
   viewLeadHeaderMainInfo: UcViewGenericObj = new UcViewGenericObj();
   pageType: string;
   dmsObj: DMSObj;
-  SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
+  SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   @ViewChild("LeadMainInfo", { read: ViewContainerRef }) leadMainInfo: ViewContainerRef;
   AppStepIndex: number = 1;
   customObj: any;
   isDmsReady: boolean = false;
   isDmsData: boolean;
+  leadInputLeadDataObj: LeadInputLeadDataObj = new LeadInputLeadDataObj();
+  typePage: any;
+  originPage: any;
+  resLeadAssetObj: any;
+  lobKta = new Array();
+  returnLobCode: string;
+  WfTaskListId: any;
+
+
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
@@ -59,15 +70,15 @@ export class LeadInputPageComponent implements OnInit {
     });
   }
 
-  async ngOnInit() : Promise<void> {
-    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+  async ngOnInit(): Promise<void> {
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
       });
     await this.http.post(URLConstant.GetLeadByLeadId, { Id: this.LeadId }).toPromise().then(
       (response) => {
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-        if(this.SysConfigResultObj.ConfigValue == '1'){
+        if (this.SysConfigResultObj.ConfigValue == '1') {
           this.dmsObj = new DMSObj();
           this.dmsObj.User = currentUserContext.UserName;
           this.dmsObj.Role = currentUserContext.RoleCode;
@@ -126,7 +137,7 @@ export class LeadInputPageComponent implements OnInit {
   }
 
   editMainInfoHandler() {
-    var modeName: string;
+    let modeName: string;
     if (this.pageType == undefined) {
       modeName = "edit";
     }
@@ -161,12 +172,12 @@ export class LeadInputPageComponent implements OnInit {
         }
         else if (this.AppStepIndex == 3) {
           this.customObj = ev;
-          if(this.SysConfigResultObj.ConfigValue == '0'){
+          if (this.SysConfigResultObj.ConfigValue == '0') {
             this.endOfTab()
-          }else{
+          } else {
             this.EnterTab("uploadDocument")
           }
-         
+
         }
 
       }
@@ -188,7 +199,7 @@ export class LeadInputPageComponent implements OnInit {
 
   async claimTask() {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.TaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
+    let wfClaimObj = { pWFTaskListID: this.TaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       () => {
       });
@@ -206,6 +217,33 @@ export class LeadInputPageComponent implements OnInit {
               }
             );
           });
+      });
+  }
+
+  setDataForSubmit(ev) {
+    this.typePage = ev.typePage;
+    this.leadInputLeadDataObj = ev.leadInputLeadDataObj;
+    this.originPage = ev.originPage;
+    this.resLeadAssetObj = ev.resLeadAssetObj;
+    this.lobKta = ev.lobKta;
+    this.returnLobCode = ev.returnLobCode;
+    this.WfTaskListId = ev.WfTaskListId;
+    this.setRowVersion();
+  }
+
+  setRowVersion() {
+    let reqLeadObj = {
+      LeadId: this.LeadId
+    }
+    this.http.post(URLConstant.GetLeadAppByLeadId, reqLeadObj).subscribe(
+      (response) => {
+        this.leadInputLeadDataObj.LeadAppObj.RowVersion = response["RowVersion"];
+        console.log(response["RowVersion"])
+      });
+    this.http.post(URLConstant.GetLeadAssetByLeadId, reqLeadObj).subscribe(
+      (response) => {
+        this.leadInputLeadDataObj.LeadAssetObj.RowVersion = response["RowVersion"];
+        console.log(response["RowVersion"])
       });
   }
 }
