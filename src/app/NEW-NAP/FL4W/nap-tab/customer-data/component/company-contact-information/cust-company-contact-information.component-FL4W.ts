@@ -8,6 +8,7 @@ import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompanyC
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-cust-company-contact-information-FL4W',
@@ -23,17 +24,17 @@ export class CustCompanyContactInformationFL4WComponent implements OnInit {
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 
-  mode: any;
-  currentEditedIndex: any;
-  closeResult: any;
+  mode: string;
+  currentEditedIndex: number;
+  closeResult: string;
   appCustCompanyContactPersonObj: AppCustCompanyContactPersonObj;
   refMasterObj = {
     RefMasterTypeCode: ""
   };
-  JobPositionObj: any;
-  defaultJobPosition: any;
-  selectedJobPositionName: any;
-  defaultJobPositionName: any;
+  JobPositionObj: Array<KeyValueObj>;
+  defaultJobPosition: string;
+  selectedJobPositionName: string;
+  defaultJobPositionName: string;
 
 
   ContactInfoCompanyForm = this.fb.group({

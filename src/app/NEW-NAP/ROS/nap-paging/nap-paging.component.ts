@@ -11,6 +11,7 @@ import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-nap-paging',
@@ -18,8 +19,8 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class NapPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: any;
-  userAccess: any;
+  arrCrit: Array<CriteriaObj>;
+  userAccess: CurrentUserContext;
   Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   constructor(
     private http: HttpClient,

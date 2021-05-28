@@ -24,9 +24,9 @@ export class LeadObj {
     CancelNotes: string;
     DuplicateLeadId: string;
     RowVersion: string;
-    IsSubmit: boolean;
-    TaskListId: number;
+    IsSubmit : boolean;
     SrvyOrderNo: string;
-    SubmitByUsername: string;
-    SubmitDt: Date;
+    SubmitByUsername : string;
+    SubmitDt : Date;
+    TaskListId: number;
 }

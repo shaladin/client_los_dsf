@@ -39,9 +39,9 @@ export class ReferantorDataFL4WComponent implements OnInit {
 
   ReferantorOn = false;
   NpwpOn: boolean = false;
-  appReferantorObj;
-  ExistedData;
-  arrAddCrit;
+  appReferantorObj: NapAppReferantorModel;
+  ExistedData: boolean;
+  arrAddCrit: Array<CriteriaObj>;
   async ngOnInit() {
     this.appReferantorObj = new NapAppReferantorModel();
     this.ExistedData = false;
@@ -97,7 +97,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
     }
 
     this.http.post(URLConstant.GetAppReferantorByAppId, obj).subscribe(
-      (response) => {
+      (response: any) => {
         if (response["AppReferantorId"] != 0) {
           this.ReferantorOn = true;
           this.ExistedData = true;
@@ -208,9 +208,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
   }
 
   getDDLBank(VendorCode) {
-    var url = URLConstant.GetListVendorBankAccByVendorCode;
-
-    this.http.post(url, { Code: VendorCode }).subscribe(
+    this.http.post(URLConstant.GetListVendorBankAccByVendorCode, { Code: VendorCode }).subscribe(
       (response) => {
         this.bankItems = response[CommonConstant.ReturnObj];
         var bankItem = this.bankItems.find(x => x.IsDefault == true);

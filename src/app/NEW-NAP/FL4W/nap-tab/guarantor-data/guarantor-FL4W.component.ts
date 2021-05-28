@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-guarantor-FL4W',
@@ -12,11 +13,11 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   styleUrls: []
 })
 export class GuarantorFL4WComponent implements OnInit {
-  @Input() AppId : any;
-  @Input() AppGuarantorId : any;
-  @Input() MrGuarantorTypeCode : any;
+  @Input() AppId : number;
+  @Input() AppGuarantorId : number;
+  @Input() MrGuarantorTypeCode : string;
   @Input() showCancel: boolean = true;
-  @Input() mode : any;
+  @Input() mode : string;
   @Input() ListCustNoPersonal : any;
   @Input() ListCustNoCompany : any;
   @Output() closeX: EventEmitter<any> = new EventEmitter();
@@ -31,11 +32,10 @@ export class GuarantorFL4WComponent implements OnInit {
   isReady: boolean = false;
   param : string;
   criteria: CriteriaObj[] = [];
-  CustTypeObj: any;
+  CustTypeObj: Array<KeyValueObj>;
   refMasterObj = {
     RefMasterTypeCode: "",
   };
-  getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
 
   CustDataForm = this.fb.group({
     MrCustTypeCode: ['', [Validators.required, Validators.maxLength(50)]]
@@ -57,7 +57,7 @@ export class GuarantorFL4WComponent implements OnInit {
 
   bindCustTypeObj(MrCustTypeCode? : string) {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CustTypeObj = response[CommonConstant.ReturnObj];
         if (this.CustTypeObj.length > 0) {

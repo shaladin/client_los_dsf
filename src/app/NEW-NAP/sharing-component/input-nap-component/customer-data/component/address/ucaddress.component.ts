@@ -7,6 +7,7 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { environment } from 'environments/environment';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-cust-ucaddress',
@@ -31,9 +32,8 @@ export class CustUcaddressComponent implements OnInit {
   @Input() showStayLength: boolean = false;
   @Input() isRequired: boolean = true;
 
-  houseOwnershipObj: any;
-  inputLookupObj: any;
-  identifierZipcode: any;
+  houseOwnershipObj: Array<KeyValueObj>;
+  identifierZipcode: string;
   
   constructor(private fb: FormBuilder, private http: HttpClient) {
   }

@@ -10,6 +10,9 @@ import { NapFromMouPagingComponent } from './nap-from-mou/nap-from-mou-paging/na
 import { NapFromMouDetailComponent } from './nap-from-mou/nap-from-mou-detail/nap-from-mou-detail.component';
 import { Nap1FromLeadPagingComponent } from './nap1-from-lead/nap1-from-lead-paging/nap1-from-lead-paging.component';
 import { Nap1FromLeadDetailComponent } from './nap1-from-lead/nap1-from-lead-detail/nap1-from-lead-detail.component';
+import { NapFromSimpleLeadComponent } from './nap-from-simple-lead/nap-from-simple-lead.component';
+import { NapFromSimpleLeadDetailComponent } from './nap-from-simple-lead/nap-from-simple-lead-detail/nap-from-simple-lead-detail.component';
+import { UclookupgenericComponent } from "@adins/uclookupgeneric";
 
 @NgModule({
   imports: [
@@ -23,11 +26,14 @@ import { Nap1FromLeadDetailComponent } from './nap1-from-lead/nap1-from-lead-det
     NapFromLeadDetailComponent,
     NapFromMouPagingComponent,
     NapFromMouDetailComponent,
+    NapFromSimpleLeadComponent,
+    NapFromSimpleLeadDetailComponent,
     Nap1FromLeadPagingComponent,
-    Nap1FromLeadDetailComponent
+    Nap1FromLeadDetailComponent,
   ],
   providers: [
     NGXToastrService
-  ]
+  ],
+  entryComponents: [UclookupgenericComponent]
 })
 export class SharingPageModule { }

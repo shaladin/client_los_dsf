@@ -11,6 +11,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-nap-from-mou-paging',
@@ -19,8 +20,8 @@ import { CookieService } from 'ngx-cookie';
 })
 export class NapFromMouPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: Array<any> = new Array();
-  userAccess: any;
+  arrCrit: Array<CriteriaObj> = new Array();
+  userAccess: CurrentUserContext;
   BizTemplateCode: string;
 
   constructor(private http: HttpClient,

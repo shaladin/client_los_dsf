@@ -12,7 +12,7 @@ import { AppCustCompanyFinDataObj } from 'app/shared/model/AppCustCompanyFinData
 })
 
 export class CustCompanyFinancialDataComponent implements OnInit {
-
+  @Input() isLockMode: boolean = false;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
@@ -63,7 +63,8 @@ this.addControl();
       LongTemrLiablts: [0],
       ShareholderEquity: [0],
       CurrRatio: [0],
-      DateAsOf: ['']
+      DateAsOf: [''],
+      LongTermLiablts: [0]
     }));
     this.isReady = true;
   }

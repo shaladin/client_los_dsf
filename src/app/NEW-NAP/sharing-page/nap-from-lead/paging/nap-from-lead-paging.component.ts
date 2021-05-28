@@ -11,6 +11,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-nap-from-lead-paging',
@@ -18,8 +19,8 @@ import { CookieService } from 'ngx-cookie';
 })
 export class NapFromLeadPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: Array<any> = new Array();
-  userAccess: any;
+  arrCrit: Array<CriteriaObj> = new Array();
+  userAccess: CurrentUserContext;
   BizTemplateCode: string;
 
   constructor(private http: HttpClient,
@@ -59,7 +60,7 @@ export class NapFromLeadPagingComponent implements OnInit {
   makeCriteria() {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'RL.BIZ_TMPLT_CODE';
+    critObj.propName = 'RLOB.BIZ_TMPLT_CODE';
     critObj.value = this.BizTemplateCode;
     this.arrCrit.push(critObj);
 
