@@ -12,6 +12,7 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { String } from 'typescript-string-operations';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { CalcBalloonObjForTrialCalc } from 'app/shared/model/AppFinData/CalcBalloonObjForTrialCalc.Model';
+import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 
 @Component({
   selector: 'app-schm-balloon',
@@ -30,7 +31,7 @@ export class SchmBalloonComponent implements OnInit {
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
   calcBalloonObj: CalcBalloonObj = new CalcBalloonObj();
   calcBalloonObjForTrialCalc: CalcBalloonObjForTrialCalc = new CalcBalloonObjForTrialCalc();
-  listInstallment: ResponseCalculateObj;
+  listInstallment: Array<InstallmentObj>;
   PriceLabel: string = "Asset Price";
   IsTrialCalc: boolean = false;
 
