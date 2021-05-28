@@ -3,26 +3,28 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
+import { CalcEvenPrincipleObj } from 'app/shared/model/AppFinData/CalcEvenPrincipleObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
-  selector: 'app-schm-reguler-fix-fctr',
-  templateUrl: './schm-reguler-fix-fctr.component.html',
+  selector: 'app-schm-even-principal-dlfn',
+  templateUrl: './schm-even-principal-dlfn.component.html'
 })
-export class SchmRegulerFixFctrComponent implements OnInit {
+export class SchmEvenPrincipalDlfnComponent implements OnInit {
+
 
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
-  calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
+  calcEvenPrincipleObj: CalcEvenPrincipleObj = new CalcEvenPrincipleObj();
   listInstallment: any;
   responseCalc: any;
   IsAppFeePrcntValid: boolean = true;
@@ -39,7 +41,7 @@ export class SchmRegulerFixFctrComponent implements OnInit {
   }
 
   LoadDDLRateType() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "RATE_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeRateType }).subscribe(
       (response) => {
         this.RateTypeOptions = response[CommonConstant.ReturnObj];
       }
@@ -47,49 +49,16 @@ export class SchmRegulerFixFctrComponent implements OnInit {
   }
 
   LoadDDLGracePeriodType() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: "GRACE_PERIOD_TYPE" }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGracePeriodType }).subscribe(
       (response) => {
         this.GracePeriodeTypeOptions = response[CommonConstant.ReturnObj];
       }
     );
   }
 
-  CalcBaseOnRate() {
-    if (this.ParentForm.value.EstEffDt == "") {
-      this.toastr.warningMessage(ExceptionConstant.INSERT_ESTIMATION_EFFECTIVE_DATE);
-      return;
-    }
-    this.calcRegFixObj = this.ParentForm.value;
-    this.calcRegFixObj["IsRecalculate"] = false;
-    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentRegularFixFctr, this.calcRegFixObj).subscribe(
-      (response) => {
-        this.listInstallment = response.InstallmentTable;
-        this.ParentForm.patchValue({
-          TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
-          TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
-
-          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
-          FlatRatePrcnt: response.FlatRatePrcnt,
-          InstAmt: response.InstAmt,
-
-          GrossYieldPrcnt: response.GrossYieldPrcnt,
-
-          TotalInterestAmt: response.TotalInterestAmt,
-          TotalAR: response.TotalARAmt,
-
-          NtfAmt: response.NtfAmt,
-          DiffRateAmt: response.DiffRateAmt,
-          TotalDisbAmt: response.TotalDisbAmt,
-        })
-
-        this.SetInstallmentTable();
-        this.SetNeedReCalculate(false);
-      }
-    );
-  }
-
-  CalcBaseOnInst() {
+  CalculateInstallment() {
     this.IsAppFeePrcntValid = true;
+
     if (this.ParentForm.value.EstEffDt == "") {
       this.toastr.warningMessage(ExceptionConstant.INSERT_ESTIMATION_EFFECTIVE_DATE);
       return;
@@ -107,31 +76,27 @@ export class SchmRegulerFixFctrComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.EFFECTIVE_RATE_MUST_GREATER + '0.');
       return;
     }
-    this.calcRegFixObj = this.ParentForm.value;
-    this.calcRegFixObj["IsRecalculate"] = true;
-    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentRegularFixFctr, this.calcRegFixObj).subscribe(
+
+    this.calcEvenPrincipleObj = this.ParentForm.getRawValue();
+    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentEvenPrincipalDlfn, this.calcEvenPrincipleObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
           TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
           TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
-
           EffectiveRatePrcnt: response.EffectiveRatePrcnt,
           FlatRatePrcnt: response.FlatRatePrcnt,
           InstAmt: response.InstAmt,
-
           GrossYieldPrcnt: response.GrossYieldPrcnt,
-
           TotalInterestAmt: response.TotalInterestAmt,
           TotalAR: response.TotalARAmt,
-
           NtfAmt: response.NtfAmt,
-          DiffRateAmt: response.DiffRateAmt,
           TotalDisbAmt: response.TotalDisbAmt,
         })
-
         this.SetInstallmentTable();
         this.SetNeedReCalculate(false);
+        this.CalCulateTotalTopAmount(this.AppId, response.NtfAmt);
+
       }
     );
   }
@@ -160,23 +125,6 @@ export class SchmRegulerFixFctrComponent implements OnInit {
   }
 
   EffectiveRatePrcntInput_FocusOut() {
-    // var EffectiveRatePrcnt = this.ParentForm.get("EffectiveRatePrcnt").value
-    // var SupplEffectiveRatePrcnt = this.ParentForm.get("SupplEffectiveRatePrcnt").value
-    // var StdEffectiveRatePrcnt = this.ParentForm.get("StdEffectiveRatePrcnt").value
-    // var DiffRateAmtStd = +StdEffectiveRatePrcnt - +SupplEffectiveRatePrcnt
-
-    // var diffRate = +EffectiveRatePrcnt - +SupplEffectiveRatePrcnt;
-    // if (diffRate < DiffRateAmtStd) {
-    //   this.ParentForm.patchValue({
-    //     DiffRateAmt: 0
-    //   });
-    // }
-    // else {
-    //   this.ParentForm.patchValue({
-    //     DiffRateAmt: DiffRateAmtStd
-    //   });
-    // }
-
     this.ParentForm.patchValue({
       DiffRateAmt: 0
     });
@@ -198,4 +146,32 @@ export class SchmRegulerFixFctrComponent implements OnInit {
       MaturityDate: maturityDate
     });
   }
+
+
+  CalCulateTotalTopAmount(AppId: number, NtfAmount: number) {
+    var generalSettingObj = {
+      Code: "DAYS_IN_YEAR"
+    }
+    var result: any;
+    this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).subscribe(
+      (response) => {
+        result = response;
+        var DaysInYear = 365;
+        if (result.GsValue != undefined && result.GsValue != "") {
+          DaysInYear = result.GsValue;
+        }
+
+        var obj = {
+          Id: this.AppId
+        }
+
+        this.http.post(URLConstant.GetAppDlrFinByAppId, obj).toPromise().then(
+          (responseAppDlfn) => {
+            this.ParentForm.patchValue({
+              TotalTopAmount: responseAppDlfn["TopInterestRatePrcnt"] / 100 * (responseAppDlfn["TopDays"] / DaysInYear) * NtfAmount,
+            });
+          });
+      });
+  }
+
 }

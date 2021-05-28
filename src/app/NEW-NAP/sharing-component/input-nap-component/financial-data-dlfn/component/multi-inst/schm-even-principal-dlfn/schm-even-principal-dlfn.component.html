@@ -7,13 +7,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label translate>Installment Type</label>
+              <label>Installment Type</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.InstTypeName.value}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label translate>Invoice Date</label>
+              <label>Invoice Date</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.InvcDt.value | date : 'dd-MMM-yyyy'}}</label>
@@ -25,13 +25,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label translate>Installment Scheme</label>
+              <label>Installment Scheme</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.InstSchemeName.value}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label translate>Maturity Date</label>
+              <label>Maturity Date</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.MaturityDate.value | date: 'dd-MMM-yyyy'}}</label>
@@ -43,13 +43,13 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label translate>Num Of Inst</label>
+              <label>Num Of Inst</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.NumOfInst.value}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label translate>Estimation Effective Date</label>
+              <label class="adins-required-label">Estimation Effective Date</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="date" class="form-control" formControlName="EstEffDt" (focusout)="EstEffDtFocusOut($event)"
@@ -65,17 +65,18 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label translate>Total Invoice Amount</label>
+              <label>Total Invoice Amount</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalInvcAmt.value | number : '1.2-2'}}</label>
             </div>
-            <div class="col-md-3 form-inline">
-              <label translate>Retention Amount / Percent</label>
+            <!-- <div class="col-md-3 form-inline">
+              <label>Retention Amount / Percent</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
-              <label>{{(ParentForm.controls.TotalRetentionAmt.value | number : '1.2-2') + ' / ' + (ParentForm.controls.RetentionPrcnt.value | number : '1.2-2')}}</label>
-            </div>
+              <label>{{(ParentForm.controls.TotalRetentionAmt.value | number : '1.2-2') + ' / ' +
+                (ParentForm.controls.RetentionPrcnt.value | number : '1.2-2')}}</label>
+            </div> -->
           </div>
         </div>
       </div>
@@ -83,50 +84,50 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label translate>Total Fee</label>
+              <label>Total Fee</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalFeeAmt.value | number : '1.2-2'}}</label>
             </div>
-            <div class="col-md-3 form-inline">
-              <label translate>Total Fee Capitalized</label>
+            <!-- <div class="col-md-3 form-inline">
+              <label>Total Fee Capitalized</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalFeeCptlzAmt.value | number : '1.2-2'}}</label>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label translate>Total Insurance</label>
+              <label>Total Insurance</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalInsCustAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label translate>Total Insurance Capitalized</label>
+              <label>Total Insurance Capitalized</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.InsCptlzAmt.value | number : '1.2-2'}}</label>
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <br />
       <div class="row">
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label translate>NTF</label>
+              <label>NTF</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.NtfAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              <label translate>Rounding</label>
+              <label>Rounding</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="" class="form-control full-width" formControlName="RoundingAmt"
@@ -142,7 +143,7 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label translate>Rate Type</label>
+              <label>Rate Type</label>
             </div>
             <div class="col-md-3 form-inline">
               <select formControlName="RateType" class="form-control full-width" (change)="SetNeedReCalculate(true)">
@@ -153,7 +154,7 @@
               </lib-uc-show-errors>
             </div>
             <div class="col-md-3 form-inline">
-              <label translate>Total Interest</label>
+              <label>Total Interest</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalInterestAmt.value | number : '1.2-2'}}</label>
@@ -165,30 +166,30 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label translate>Effective / Flat Rate</label>
+              <label>Effective Rate</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <div class="row">
-                  <div class="col-md-6">
-                    <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
-                      [readonly]="ParentForm.controls.RateType.value != 'EFCTV' || ParentForm.controls.EffectiveRateBhv.value == 'LOCK'"
-                      (focusout)="EffectiveRatePrcntInput_FocusOut()" (keyup)="SetNeedReCalculate(true)" currencyMask>
-                    <lib-uc-show-errors [control]="ParentForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
-                  </div>
-                  <div class="col-md-6">
-                    <input type="" class="form-control full-width" formControlName="FlatRatePrcnt"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.FlatRatePrcnt.invalid}"
-                      [readonly]="ParentForm.controls.RateType.value != 'FLT'" (keyup)="SetNeedReCalculate(true)"
-                      currencyMask>
-                    <lib-uc-show-errors [control]="ParentForm.controls.FlatRatePrcnt" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
-                  </div>
+                <div class="col-md-6">
+                  <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
+                    [readonly]="ParentForm.controls.RateType.value != 'EFCTV' || ParentForm.controls.EffectiveRateBhv.value == 'LOCK'"
+                    (focusout)="EffectiveRatePrcntInput_FocusOut()" (keyup)="SetNeedReCalculate(true)" currencyMask>
+                  <lib-uc-show-errors [control]="ParentForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+                <div class="col-md-6">
+                  <input type="" class="form-control full-width" formControlName="FlatRatePrcnt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.FlatRatePrcnt.invalid}"
+                    [readonly]="ParentForm.controls.RateType.value != 'FLT'" (keyup)="SetNeedReCalculate(true)"
+                    currencyMask>
+                  <lib-uc-show-errors [control]="ParentForm.controls.FlatRatePrcnt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
               </div>
             </div>
             <div class="col-md-3 form-inline">
-              <label translate>Total AR</label>
+              <label>Total AR</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalAR.value | number : '1.2-2'}}</label>
@@ -201,10 +202,67 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <label translate>Gross Yield</label>
+              <label>Gross Yield</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '1.2-2'}}%</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label>Grace Period</label>
+            </div>
+            <div class="col-md-1 form-inline form-inline-right">
+              <input type="number" class="form-control full-width" formControlName="GracePeriod" disabled
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.GracePeriod.invalid}"
+                (keyup)="SetNeedReCalculate(true)">
+              <lib-uc-show-errors [control]="ParentForm.controls.GracePeriod" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+            <div class="col-md-2 form-inline">
+              <select formControlName="MrGracePeriodTypeCode" class="form-control full-width"
+                (change)="SetNeedReCalculate(true)" disabled>
+                <option value="">--Select--</option>
+                <option *ngFor="let m of GracePeriodeTypeOptions" value={{m.Key}}>{{m.Value}}</option>
+              </select>
+              <lib-uc-show-errors [control]="ParentForm.controls.MrGracePeriodTypeCode" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label>Top Interest Rate</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TopInterestRatePrcnt.value | number : '1.2-2'}}%</label>
+            </div>
+            <div class="col-md-3 form-inline">
+              <label>Total Top Amount</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TotalTopAmount.value | number : '1.2-2'}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label>Term of Payment (Days)</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TopDays.value}}</label>
             </div>
             <div class="col-md-3 form-inline">
               <label>Total Disburse</label>
@@ -215,59 +273,13 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-3 form-inline">
-              <label translate>Grace Period</label>
-            </div>
-            <div class="col-md-1 form-inline form-inline-right">
-              <input type="number" class="form-control full-width" formControlName="GracePeriod"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.GracePeriod.invalid}"
-                (keyup)="SetNeedReCalculate(true)">
-              <lib-uc-show-errors [control]="ParentForm.controls.GracePeriod" [submit]="enjiForm.submitted">
-              </lib-uc-show-errors>
-            </div>
-            <div class="col-md-2 form-inline">
-              <select formControlName="MrGracePeriodTypeCode" class="form-control full-width"
-                (change)="SetNeedReCalculate(true)">
-                <option value="">--Select--</option>
-                <option *ngFor="let m of GracePeriodeTypeOptions" value={{m.Key}}>{{m.Value}}</option>
-              </select>
-              <lib-uc-show-errors [control]="ParentForm.controls.MrGracePeriodTypeCode" [submit]="enjiForm.submitted">
-              </lib-uc-show-errors>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-3 form-inline">
-              <label translate>Installment Amount</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <input type="" class="form-control full-width" formControlName="InstAmt"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.InstAmt.invalid}"
-                (keyup)="SetNeedReCalculate(true)" currencyMask>
-              <lib-uc-show-errors [control]="ParentForm.controls.InstAmt" [submit]="enjiForm.submitted">
-              </lib-uc-show-errors>
-            </div>
-          </div>
-        </div>
-      </div>
       <br />
     </div>
 
     <div class="form-inline-right">
       <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0"
-        (click)="CalcBaseOnRate()">
-        Calculate based on Rate
-      </button>
-      <button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="CalcBaseOnInst()">
-        Calculate based on Inst Amt
+        (click)="CalculateInstallment()">
+        Calculate Installment
       </button>
     </div>
 

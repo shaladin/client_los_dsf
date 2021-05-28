@@ -2,18 +2,19 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { CalcSingleInstObj } from 'app/shared/model/AppFinData/CalcSingleInstObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
-  selector: 'app-single-inst-fctr',
-  templateUrl: './single-inst-fctr.component.html',
+  selector: 'app-single-inst-dlfn',
+  templateUrl: './single-inst-dlfn.component.html'
 })
-export class SingleInstFctrComponent implements OnInit {
+export class SingleInstDlfnComponent implements OnInit {
+
 
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
@@ -24,6 +25,7 @@ export class SingleInstFctrComponent implements OnInit {
   listInstallment: any;
   responseCalc: any;
   IsAppFeePrcntValid: boolean = true;
+  TempTotalDisbAmt: any = 0;
 
 
   constructor(
@@ -44,7 +46,6 @@ export class SingleInstFctrComponent implements OnInit {
           this.ParentForm.patchValue({
             InterestType: this.InterestTypeOptions[0].Key
           });
-          this.SetInterestTypeInput(this.InterestTypeOptions[0].Key);
         }
       }
     );
@@ -84,15 +85,10 @@ export class SingleInstFctrComponent implements OnInit {
             TotalDisbAmt: response.TotalDisbAmt,
             GrossYieldPrcnt: response.GrossYieldPrcnt
           });
-
-          if (this.ParentForm.value.MrSingleInstCalcMthdCode == CommonConstant.SINGLE_INST_CALC_MTHD_DISKONTO) {
-            this.ParentForm.patchValue({
-              TotalDisbAmt: response.TotalDisbAmt - response.TotalInterestAmt
-            });
-          }
-
+          this.TempTotalDisbAmt = response.TotalDisbAmt;
           this.SetInstallmentTable();
           this.SetNeedReCalculate(false);
+          this.CalCulateTotalTopAmount(this.AppId, response.NtfAmt);
         }
       );
     }
@@ -122,21 +118,6 @@ export class SingleInstFctrComponent implements OnInit {
     }
   }
 
-  InterestTypeChanged(ev) {
-    this.SetInterestTypeInput(ev.target.value);
-  }
-
-  SetInterestTypeInput(interestInputType: string) {
-    if (interestInputType == CommonConstant.InterestInputTypeAmt) {
-      this.ParentForm.controls.TotalInterestAmt.enable();
-      this.ParentForm.controls.EffectiveRatePrcnt.disable();
-    }
-    if (interestInputType == CommonConstant.InterestInputTypePrcnt) {
-      this.ParentForm.controls.TotalInterestAmt.disable();
-      this.ParentForm.controls.EffectiveRatePrcnt.enable();
-    }
-  }
-
   SetNeedReCalculate(value: boolean) {
     this.ParentForm.patchValue({
       NeedReCalculate: value
@@ -159,5 +140,43 @@ export class SingleInstFctrComponent implements OnInit {
     this.ParentForm.patchValue({
       MaturityDate: new Date(Date.UTC(maturityDate.getFullYear(), maturityDate.getMonth(), maturityDate.getDate()))
     });
+  }
+
+  CalCulateTotalTopAmount(AppId: number, NtfAmount: number) {
+    var generalSettingObj = {
+      Code: "DAYS_IN_YEAR"
+    }
+    var result: any;
+    this.http.post(URLConstant.GetGeneralSettingByCode, generalSettingObj).subscribe(
+      (response) => {
+        result = response;
+        var DaysInYear = 365;
+        if (result.GsValue != undefined && result.GsValue != "") {
+          DaysInYear = result.GsValue;
+        }
+
+        var obj = {
+          Id: this.AppId
+        }
+
+        this.http.post(URLConstant.GetAppById, obj).toPromise().then(
+          (responseApp) => {
+            var MouCustId = responseApp['MouCustId']
+
+            var MouCustObj = {
+              Id: MouCustId
+            }
+            this.http.post(URLConstant.GetMouCustDlrFin, MouCustObj).toPromise().then(
+              (responseCustDlfn) => {
+                this.ParentForm.patchValue({
+                  TotalTopAmount: (responseCustDlfn["TopInterestRatePrcnt"] / 100) * (responseCustDlfn["TopDays"] / DaysInYear) * NtfAmount,
+                  TotalDisbAmt: this.TempTotalDisbAmt - ((responseCustDlfn["TopInterestRatePrcnt"] / 100) * (responseCustDlfn["TopDays"] / DaysInYear) * NtfAmount)
+                });
+              });
+          });
+
+      });
+
+
   }
 }

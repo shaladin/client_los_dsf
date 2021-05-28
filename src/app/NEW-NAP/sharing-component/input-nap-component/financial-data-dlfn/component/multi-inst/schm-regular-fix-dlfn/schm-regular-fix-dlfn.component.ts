@@ -3,19 +3,20 @@ import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
-  selector: 'app-schm-reguler-fix-fctr',
-  templateUrl: './schm-reguler-fix-fctr.component.html',
+  selector: 'app-schm-regular-fix-dlfn',
+  templateUrl: './schm-regular-fix-dlfn.component.html'
 })
-export class SchmRegulerFixFctrComponent implements OnInit {
+export class SchmRegularFixDlfnComponent implements OnInit {
+
 
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
@@ -78,8 +79,8 @@ export class SchmRegulerFixFctrComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
-          DiffRateAmt: response.DiffRateAmt,
-          TotalDisbAmt: response.TotalDisbAmt,
+          DiffRateAmt: response.DiffRateAmt
+
         })
 
         this.SetInstallmentTable();
@@ -109,6 +110,8 @@ export class SchmRegulerFixFctrComponent implements OnInit {
     }
     this.calcRegFixObj = this.ParentForm.value;
     this.calcRegFixObj["IsRecalculate"] = true;
+    console.log("ini Yang di kirim tes tes");
+    console.log(this.calcRegFixObj);
     this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentRegularFixFctr, this.calcRegFixObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
@@ -126,8 +129,9 @@ export class SchmRegulerFixFctrComponent implements OnInit {
           TotalAR: response.TotalARAmt,
 
           NtfAmt: response.NtfAmt,
-          DiffRateAmt: response.DiffRateAmt,
-          TotalDisbAmt: response.TotalDisbAmt,
+          DiffRateAmt: response.DiffRateAmt
+
+
         })
 
         this.SetInstallmentTable();

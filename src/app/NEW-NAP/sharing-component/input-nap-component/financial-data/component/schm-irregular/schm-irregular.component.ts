@@ -9,23 +9,28 @@ import { CalcIrregularObj } from 'app/shared/model/AppFinData/CalcIrregularObj.M
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { CalcIrregularObjForTrialCalc } from 'app/shared/model/AppFinData/CalcIrregularObjForTrialCalc.Model';
 
 @Component({
   selector: 'app-schm-irregular',
   templateUrl: './schm-irregular.component.html',
 })
 export class SchmIrregularComponent implements OnInit {
+  @Input() InstAmt: number;
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
   @Input() NumOfInst: number;
   @Input() BizTemplateCode: string;
+  @Input() TrialCalc: boolean;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcIrregularObj: CalcIrregularObj = new CalcIrregularObj();
+  calcIrregularObjForTrialCalc: CalcIrregularObjForTrialCalc = new CalcIrregularObjForTrialCalc();
   listInstallment: any;
   responseCalc: any;
-  PriceLabel: string= "Asset Price";
+  PriceLabel: string = "Asset Price";
+  IsTrialCalc: boolean = false;
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -36,9 +41,30 @@ export class SchmIrregularComponent implements OnInit {
     this.LoadDDLGracePeriodType();
     this.SetEntryInstallment();
 
-    if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
-      this.PriceLabel = "Financing Amount";
+    if (this.AppId != null) {
+      if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
+        this.PriceLabel = "Financing Amount";
+      }
+      this.http.post(URLConstant.GetAppInstSchldTableByAppId, { AppId: this.AppId }).subscribe(
+        (response) => {
+          this.listInstallment = response['InstallmentTable'];
+        });
+      this.IsTrialCalc = false;
     }
+    else if (this.TrialCalc != null && this.TrialCalc) {
+      this.IsTrialCalc = true;
+    }
+    if (this.InstAmt != 0) {
+      this.ParentForm.patchValue({
+        InstAmt: this.InstAmt
+      });
+    }
+    this.http.post(URLConstant.GetAppInstSchldTableByAppId, { AppId: this.AppId }).subscribe(
+      (response) => {
+        this.listInstallment = response['InstallmentTable'];
+      });
+
+
   }
 
   LoadDDLRateType() {
@@ -97,49 +123,92 @@ export class SchmIrregularComponent implements OnInit {
   }
 
   CalculateAmortization() {
+    if (this.ParentForm.controls.DownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+      this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "Down Payment");
+      return;
+    }
+    if (this.ValidateFee() == false) {
+      return;
+    }
     this.calcIrregularObj = this.ParentForm.value;
     this.calcIrregularObj["IsRecalculate"] = false;
-    
+
     var IdxKosong = this.calcIrregularObj.ListEntryInst.findIndex(x => x.InstAmt == 0);
-    if(IdxKosong != -1){
+    if (IdxKosong != -1) {
       this.toastr.warningMessage(ExceptionConstant.INPUT_INST_AMOUNT + (IdxKosong + 1));
       return;
     }
-    if(this.ValidateFee() == false){
-      return;
+    if (!this.IsTrialCalc) {
+      this.calcIrregularObj = this.ParentForm.value;
+      this.calcIrregularObj["IsRecalculate"] = false;
+      this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateIrregular", this.calcIrregularObj).subscribe(
+        (response) => {
+          this.listInstallment = response.InstallmentTable;
+
+          this.ParentForm.patchValue({
+            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+
+            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+            FlatRatePrcnt: response.FlatRatePrcnt,
+            InstAmt: response.InstAmt,
+
+            GrossYieldPrcnt: response.GrossYieldPrcnt,
+
+            TotalInterestAmt: response.TotalInterestAmt,
+            TotalAR: response.TotalARAmt,
+
+            NtfAmt: response.NtfAmt,
+            ApvAmt: response.ApvAmt,
+
+            TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+            LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+
+            DownPaymentGrossAmt: response.DownPaymentGrossAmt,
+            DownPaymentNettAmt: response.DownPaymentNettAmt
+
+          })
+
+          this.SetInstallmentTable();
+          this.SetNeedReCalculate(false);
+        }
+      );
+    } else {
+      this.calcIrregularObjForTrialCalc = this.ParentForm.value;
+      this.calcIrregularObjForTrialCalc["IsRecalculate"] = false;
+      this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateIrregularForTrialCalc", this.calcIrregularObjForTrialCalc).subscribe(
+        (response) => {
+          this.listInstallment = response.InstallmentTable;
+
+          this.ParentForm.patchValue({
+            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+
+            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+            FlatRatePrcnt: response.FlatRatePrcnt,
+            InstAmt: response.InstAmt,
+
+            GrossYieldPrcnt: response.GrossYieldPrcnt,
+
+            TotalInterestAmt: response.TotalInterestAmt,
+            TotalAR: response.TotalARAmt,
+
+            NtfAmt: response.NtfAmt,
+            ApvAmt: response.ApvAmt,
+
+            TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+            LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+
+            DownPaymentGrossAmt: response.DownPaymentGrossAmt,
+            DownPaymentNettAmt: response.DownPaymentNettAmt
+
+          })
+
+          this.SetInstallmentTable();
+          this.SetNeedReCalculate(false);
+        }
+      );
     }
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateIrregular", this.calcIrregularObj).subscribe(
-      (response) => {
-        this.listInstallment = response.InstallmentTable;
-
-        this.ParentForm.patchValue({
-          TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
-          TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
-
-          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
-          FlatRatePrcnt: response.FlatRatePrcnt,
-          InstAmt: response.InstAmt,
-
-          GrossYieldPrcnt: response.GrossYieldPrcnt,
-
-          TotalInterestAmt: response.TotalInterestAmt,
-          TotalAR: response.TotalARAmt,
-
-          NtfAmt: response.NtfAmt,
-          ApvAmt: response.ApvAmt,
-
-          TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
-          LifeInsCptlzAmt: response.LifeInsCptlzAmt,
-
-          DownPaymentGrossAmt: response.DownPaymentGrossAmt,
-          DownPaymentNettAmt: response.DownPaymentNettAmt
-
-        })
-
-        this.SetInstallmentTable();
-        this.SetNeedReCalculate(false);
-      }
-    );
   }
 
   EffectiveRatePrcntInput_FocusOut() {
@@ -169,14 +238,15 @@ export class SchmIrregularComponent implements OnInit {
     });
   }
 
-  ValidateFee(){
-    for(let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++){
-      if(this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
-          && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt){
-        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " +  this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
+  ValidateFee() {
+    for (let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++) {
+      if (this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
+        && this.ParentForm.controls["AppFee"].value[i].AppFeeAmt < this.ParentForm.controls["AppFee"].value[i].FeeCapitalizeAmt) {
+        this.toastr.warningMessage(this.ParentForm.controls["AppFee"].value[i].FeeTypeName + " Capitalized Amount can't be higher than " + this.ParentForm.controls["AppFee"].value[i].AppFeeAmt);
         return false;
       }
     }
     return true;
   }
+
 }

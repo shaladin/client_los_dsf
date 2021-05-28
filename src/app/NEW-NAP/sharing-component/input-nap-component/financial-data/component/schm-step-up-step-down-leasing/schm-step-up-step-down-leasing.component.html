@@ -100,16 +100,17 @@
               <div class="col-md-3 form-inline form-inline-right">
                 <label>{{ParentForm.controls.DownPaymentNettAmt.value | number : '1.2-2'}}</label>
               </div>
-              <!-- <div class="col-md-3 form-inline">
-              <label translate>TDP Paid at MF</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <input type="" class="form-control full-width" formControlName="TdpPaidCoyAmt" (ngModelChange)="SetNeedReCalculate(true)"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.TdpPaidCoyAmt.invalid}"
-                currencyMask>
-              <lib-uc-show-errors [control]="ParentForm.controls.TdpPaidCoyAmt" [submit]="enjiForm.submitted">
-              </lib-uc-show-errors>
-            </div> -->
+              <div class="col-md-3 form-inline">
+                <label translate>TDP Paid at MF</label>
+              </div>
+              <div class="col-md-3 form-inline form-inline-right">
+                <input type="" class="form-control full-width" formControlName="TdpPaidCoyAmt"
+                  (ngModelChange)="SetNeedReCalculate(true)"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.TdpPaidCoyAmt.invalid}"
+                  currencyMask>
+                <lib-uc-show-errors [control]="ParentForm.controls.TdpPaidCoyAmt" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
             </div>
           </div>
         </div>
@@ -190,10 +191,12 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-3 form-inline" *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'">
+            <div class="col-md-3 form-inline"
+              *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA' && !IsTrialCalc">
               <label translate>Supplier Rate</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right" *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'">
+            <div class="col-md-3 form-inline form-inline-right"
+              *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA' && !IsTrialCalc">
               <label>{{ParentForm.controls.AppSupplEffectiveRatePrcnt.value | number : '1.2-2'}}</label>
             </div>
             <!-- <div class="col-md-3 form-inline">
@@ -270,7 +273,8 @@
                     <option value="">--Select--</option>
                     <option *ngFor="let m of GracePeriodeTypeOptions" value={{m.Key}}>{{m.Value}}</option>
                   </select>
-                  <lib-uc-show-errors [control]="ParentForm.controls.MrGracePeriodTypeCode" [submit]="enjiForm.submitted">
+                  <lib-uc-show-errors [control]="ParentForm.controls.MrGracePeriodTypeCode"
+                    [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
@@ -282,18 +286,19 @@
               <div class="row">
                 <div class="col-md-5">
                   <input type="number" class="form-control full-width" formControlName="NumOfStep"
-                  (change)="SetNeedReCalculate(true)"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.NumOfStep.invalid}">
+                    (change)="SetNeedReCalculate(true)"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.NumOfStep.invalid}">
                   <lib-uc-show-errors [control]="ParentForm.controls.NumOfStep" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
                 <div class="col-md-7">
                   <select formControlName="StepUpStepDownInputType" class="form-control full-width"
-                  (change)="InputTypeChanged()">
-                  <option value="">--Select--</option>
-                  <option *ngFor="let m of StepUpStepDownInputOptions" value={{m.Key}}>{{m.Value}}</option>
+                    (change)="InputTypeChanged()">
+                    <option value="">--Select--</option>
+                    <option *ngFor="let m of StepUpStepDownInputOptions" value={{m.Key}}>{{m.Value}}</option>
                   </select>
-                  <lib-uc-show-errors [control]="ParentForm.controls.StepUpStepDownInputType" [submit]="enjiForm.submitted">
+                  <lib-uc-show-errors [control]="ParentForm.controls.StepUpStepDownInputType"
+                    [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
@@ -304,10 +309,10 @@
       <div class="row">
         <div class="col-md-12">
           <div class="row">
-            <div class="col-md-3 form-inline" *ngIf="BizTemplateCode == 'FL4W'">
+            <div class="col-md-3 form-inline" *ngIf="BizTemplateCode == 'FL4W' && !IsTrialCalc">
               <label translate>Residual Value Amount</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right" *ngIf="BizTemplateCode == 'FL4W'">
+            <div class="col-md-3 form-inline form-inline-right" *ngIf="BizTemplateCode == 'FL4W' && !IsTrialCalc">
               <input type="" class="form-control full-width" formControlName="ResidualValueAmt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ResidualValueAmt.invalid}"
                 (keyup)="SetNeedReCalculate(true)" currencyMask>
@@ -337,10 +342,10 @@
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalInterestAmt.value | number : '1.2-2'}}</label>
             </div>
-            <div class="col-md-3 form-inline">
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline">
               <label translate>Gross Yield</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right">
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '1.2-2'}}%</label>
             </div>
           </div>

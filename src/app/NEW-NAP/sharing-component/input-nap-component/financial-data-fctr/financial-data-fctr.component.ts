@@ -201,7 +201,8 @@ export class FinancialDataFctrComponent implements OnInit {
           MaxBalloonAmt: this.appFinDataObj.MaxBalloonAmt,
           BalloonBhv: this.appFinDataObj.BalloonBhv,
           MinDownPaymentNettPrcnt: this.appFinDataObj.MinDownPaymentNettPrcnt,
-          MaxDownPaymentNettPrcnt: this.appFinDataObj.MaxDownPaymentNettPrcnt
+          MaxDownPaymentNettPrcnt: this.appFinDataObj.MaxDownPaymentNettPrcnt,
+          InstAmt: this.appFinDataObj.InstAmt
         });
 
         this.IsParentLoaded = true;
@@ -210,24 +211,28 @@ export class FinancialDataFctrComponent implements OnInit {
   }
 
   SaveAndContinue() {
-      var isValidGracePeriod = this.ValidateGracePeriode();
-  
-      var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;
-  
-      if (NeedReCalculate) {
-        this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_AGAIN);
-        return;
-      }
-      if (isValidGracePeriod) {
-  
-        this.http.post(URLConstant.SaveAppFinDataFctr, this.FinDataForm.getRawValue()).subscribe(
-          (response) => {
+    var isValidGracePeriod = this.ValidateGracePeriode();
+
+    var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;
+
+    if (NeedReCalculate) {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_AGAIN);
+      return;
+    }
+    if (isValidGracePeriod) {
+
+      this.http.post(URLConstant.SaveAppFinDataFctr, this.FinDataForm.getRawValue()).subscribe(
+        (response) => {
+          if (response["StatusCode"] == 200) {
             this.toastr.successMessage(response["Message"]);
             this.outputTab.emit();
+          } else {
+            this.toastr.warningMessage(response["message"]);
           }
-        );
-      }
-    
+        }
+      );
+    }
+
   }
 
   ValidateGracePeriode() {
@@ -259,7 +264,7 @@ export class FinancialDataFctrComponent implements OnInit {
     }
     else {
       if (GrossYieldPrcnt > StdGrossYieldPrcnt) {
-        this.toastr.warningMessage(ExceptionConstant.GROSS_YIELD_CANNOT_GREATER_THAN+ StdGrossYieldPrcnt + "%");
+        this.toastr.warningMessage(ExceptionConstant.GROSS_YIELD_CANNOT_GREATER_THAN + StdGrossYieldPrcnt + "%");
         valid = false;
       }
     }
