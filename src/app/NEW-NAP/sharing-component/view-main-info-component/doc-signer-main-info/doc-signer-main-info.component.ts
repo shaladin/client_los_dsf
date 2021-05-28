@@ -30,7 +30,6 @@ export class DocSignerMainInfoComponent implements OnInit {
         else {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocSigner.json";
         }
-        this.viewGenericObj.viewEnvironment = environment.losUrl;
         this.viewGenericObj.ddlEnvironments = [
           {
             name: "AppNo",

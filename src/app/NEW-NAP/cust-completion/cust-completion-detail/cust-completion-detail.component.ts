@@ -63,7 +63,6 @@ export class CustCompletionDetailComponent implements OnInit {
   ngOnInit() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustCompletionData.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "AppNo",

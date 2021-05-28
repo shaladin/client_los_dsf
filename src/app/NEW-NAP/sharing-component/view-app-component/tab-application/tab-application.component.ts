@@ -28,7 +28,6 @@ export class TabApplicationComponent implements OnInit {
     else {
       this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationInfo.json";
     }
-    this.viewProdMainInfoObj.viewEnvironment = environment.losUrl;
     this.viewProdMainInfoObj.ddlEnvironments = [
       {
         name: "MouCustNo",

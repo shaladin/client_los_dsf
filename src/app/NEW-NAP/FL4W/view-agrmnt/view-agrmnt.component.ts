@@ -29,7 +29,6 @@ export class ViewAgrmntComponent implements OnInit {
   MrCustTypeCode: string;
   async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfo.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "AppNo",

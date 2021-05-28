@@ -90,11 +90,9 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("TEST");
     this.ClaimTask();
     this.AppStepIndex = 1;
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapDetailMainData.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "AppNo",

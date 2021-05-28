@@ -2,7 +2,6 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model'; 
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
@@ -41,7 +40,6 @@ export class AppMainInfoComponent implements OnInit {
     else {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfo.json";
     }
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.whereValue.push(this.AppId);
     this.viewGenericObj.whereValue = this.whereValue;
     this.viewGenericObj.ddlEnvironments = [
