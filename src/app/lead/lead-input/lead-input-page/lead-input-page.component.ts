@@ -39,13 +39,6 @@ export class LeadInputPageComponent implements OnInit {
   customObj: any;
   isDmsReady: boolean = false;
   isDmsData: boolean;
-  leadInputLeadDataObj: LeadInputLeadDataObj = new LeadInputLeadDataObj();
-  typePage: any;
-  originPage: any;
-  resLeadAssetObj: any;
-  lobKta = new Array();
-  returnLobCode: string;
-  WfTaskListId: any;
 
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
@@ -211,39 +204,21 @@ export class LeadInputPageComponent implements OnInit {
         this.http.post(URLConstant.GetLeadAppByLeadId, { Id: this.customObj.LeadInputLeadDataObj.LeadAppObj.LeadId }).subscribe(
           (response) => {
             this.customObj.LeadInputLeadDataObj.LeadAppObj.RowVersion = response["RowVersion"];
-            this.http.post(this.customObj.urlPost, this.customObj.LeadInputLeadDataObj).subscribe(
+            let urlPost = this.customObj.urlPost;
+
+            //Dari DSF
+            if (this.customObj.typePage != "edit" || this.customObj.typePage != "update") {
+              if (this.customObj.lobKta.includes(this.customObj.returnLobCode) == true) {
+                urlPost = URLConstant.SubmitWorkflowLeadInputKta;
+              }
+            }
+
+            this.http.post(urlPost, this.customObj.LeadInputLeadDataObj).subscribe(
               () => {
                 AdInsHelper.RedirectUrl(this.router, [this.customObj.paging], {});
               }
             );
           });
-      });
-  }
-
-  setDataForSubmit(ev) {
-    this.typePage = ev.typePage;
-    this.leadInputLeadDataObj = ev.leadInputLeadDataObj;
-    this.originPage = ev.originPage;
-    this.resLeadAssetObj = ev.resLeadAssetObj;
-    this.lobKta = ev.lobKta;
-    this.returnLobCode = ev.returnLobCode;
-    this.WfTaskListId = ev.WfTaskListId;
-    this.setRowVersion();
-  }
-
-  setRowVersion() {
-    let reqLeadObj = {
-      LeadId: this.LeadId
-    }
-    this.http.post(URLConstant.GetLeadAppByLeadId, reqLeadObj).subscribe(
-      (response) => {
-        this.leadInputLeadDataObj.LeadAppObj.RowVersion = response["RowVersion"];
-        console.log(response["RowVersion"])
-      });
-    this.http.post(URLConstant.GetLeadAssetByLeadId, reqLeadObj).subscribe(
-      (response) => {
-        this.leadInputLeadDataObj.LeadAssetObj.RowVersion = response["RowVersion"];
-        console.log(response["RowVersion"])
       });
   }
 }
