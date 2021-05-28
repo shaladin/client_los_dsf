@@ -10,6 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CalcIrregularObjForTrialCalc } from 'app/shared/model/AppFinData/CalcIrregularObjForTrialCalc.Model';
+import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 
 @Component({
   selector: 'app-schm-irregular',
@@ -27,8 +28,7 @@ export class SchmIrregularComponent implements OnInit {
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcIrregularObj: CalcIrregularObj = new CalcIrregularObj();
   calcIrregularObjForTrialCalc: CalcIrregularObjForTrialCalc = new CalcIrregularObjForTrialCalc();
-  listInstallment: any;
-  responseCalc: any;
+  listInstallment: Array<InstallmentObj>;
   PriceLabel: string = "Asset Price";
   IsTrialCalc: boolean = false;
 

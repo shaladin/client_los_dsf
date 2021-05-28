@@ -8,6 +8,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-fee',
@@ -24,7 +25,7 @@ export class FeeComponent implements OnInit {
   appFeeObj: AppFeeObj = new AppFeeObj();
   listAppFeeObj: Array<AppFeeObj> = new Array<AppFeeObj>();
   isSubmitted: boolean;
-  TempProvisionSource: any;
+  TempProvisionSource: Array<KeyValueObj>;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

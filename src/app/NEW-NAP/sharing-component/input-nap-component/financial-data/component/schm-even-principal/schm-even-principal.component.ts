@@ -11,6 +11,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { CalcEvenPrincipleObjForTrialCalc } from 'app/shared/model/AppFinData/CalcEvenPrincipleObjForTrialCalc.Model';
+import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 
 @Component({
   selector: 'app-schm-even-principal',
@@ -27,8 +28,7 @@ export class SchmEvenPrincipalComponent implements OnInit {
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
   calcEvenPrincipleObj: CalcEvenPrincipleObj = new CalcEvenPrincipleObj();
   calcEvenPrincipleObjForTrialCalc: CalcEvenPrincipleObjForTrialCalc = new CalcEvenPrincipleObjForTrialCalc();
-  listInstallment: any;
-  responseCalc: any;
+  listInstallment: Array<InstallmentObj>;
   PriceLabel: string = "Asset Price";
   IsTrialCalc: boolean = false;
   @Input() BizTemplateCode: string;

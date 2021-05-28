@@ -30,8 +30,7 @@ export class SchmBalloonComponent implements OnInit {
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
   calcBalloonObj: CalcBalloonObj = new CalcBalloonObj();
   calcBalloonObjForTrialCalc: CalcBalloonObjForTrialCalc = new CalcBalloonObjForTrialCalc();
-  listInstallment: any;
-  responseCalc: any;
+  listInstallment: ResponseCalculateObj;
   PriceLabel: string = "Asset Price";
   IsTrialCalc: boolean = false;
 
@@ -143,7 +142,7 @@ export class SchmBalloonComponent implements OnInit {
     if (!this.IsTrialCalc) {
       this.calcBalloonObj = this.ParentForm.getRawValue();
       this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentBalloon, this.calcBalloonObj).subscribe(
-        (response) => {
+        (response: ResponseCalculateObj) => {
           this.listInstallment = response.InstallmentTable;
           this.ParentForm.patchValue({
             TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
