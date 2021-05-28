@@ -21,6 +21,12 @@ export class LeadObj{
     MrCancelReasonCode : string;
     CancelNotes : string;
     DuplicateLeadId: string;
-    RowVersion: any;
+    RowVersion: string;
     IsSubmit : boolean;
+    SrvyOrderNo: string;
+    SubmitByUsername : string;
+    SubmitDt : Date;
+    CrtOfficeName : string;
+    LobName : string;
+    AgencyName : string;
 }

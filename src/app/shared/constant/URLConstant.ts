@@ -1176,6 +1176,7 @@ export class URLConstant {
   public static GetListProdOfferingDByProdOfferingCode = environment.losUrl + "/ProductOffering/GetListProdOfferingDByProdOfferingCode";
   public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode = environment.losUrl + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode";
   public static GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL = environment.losUrl + "/ProductOffering/GetProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL";
+  public static GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL = environment.losUrl + "/ProductOffering/GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCodeForDDL";
   public static GetPayFreqByProdOfferingD = environment.losUrl + "/ProductOffering/GetPayFreqByProdOfferingD";
   public static GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion = environment.losUrl + "/ProductOffering/GetListProdOfferingDByProdOfferingCodeAndProdOfferingVersion";
   public static GetProdOfferingHByCode = environment.losUrl + "/ProductOffering/GetProdOfferingHByCode";
@@ -1475,6 +1476,7 @@ export class URLConstant {
   public static GetTaskHistory = "/Approval/GetTaskHistory";
   public static ReturnLevel = "/Approval/ReturnLevel";
   public static ContinueToLevel = "/Approval/ContinueToLevel";
+  public static GetSingleTaskInfo = "/Approval/GetSingleTaskInfo";
 
   // Digitalization
   public static DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO = environment.losUrl + "/Digitalization/DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO";
