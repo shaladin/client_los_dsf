@@ -1,11 +1,11 @@
 export class LeadObj {
     LeadId: number;
-    TaskListId: number;
     LeadNo: string;
     LeadCopyId: number;
     OriOfficeCode: string;
     OriOfficeName: string;
     CrtOfficeCode: string;
+    CrtOfficeName: string;
     LeadDt: Date;
     OrderNo: string;
     LobCode: string;
@@ -17,6 +17,7 @@ export class LeadObj {
     CmoUsername: string;
     SurveyorUsername: string;
     AgencyCode: string;
+    AgencyName: string;
     CancelDt: Date;
     CancelByUsername: string;
     MrCancelReasonCode: string;
@@ -24,4 +25,8 @@ export class LeadObj {
     DuplicateLeadId: string;
     RowVersion: string;
     IsSubmit: boolean;
+    TaskListId: number;
+    SrvyOrderNo: string;
+    SubmitByUsername: string;
+    SubmitDt: Date;
 }

@@ -1,0 +1,116 @@
+<div class="card">
+  <div class="card-body px-3 pt-2">
+    <h4 class="form-section card-title" translate>Telemarketing Offering Detail</h4>
+  </div>
+</div>
+
+<lib-ucviewgeneric [viewGenericObj]="ViewMainDataObj"></lib-ucviewgeneric>
+
+<div class="card">
+  <div class="card-body">
+    <div class="px-3">
+      <form class="form form-horizontal" [formGroup]="RoTelemkOfferingForm" (ngSubmit)="RoTelemkOfferingForm.valid && SaveForm()" #enjiForm="ngForm">
+        <div class="form-body">
+          <lib-ucSubsection [id]="'subjectListId'" [title]="'Subject List'" [panel]="'subjectList'">
+          </lib-ucSubsection>
+          <div id="subjectList">
+            <table class="table table-responsive-md text-center table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th class="text-left">No</th>
+                  <th class="text-left">Cust No</th>
+                  <th class="text-left">Cust name</th>
+                  <th class="text-left">Phone</th>
+                  <th class="text-center">Date</th>
+                  <th class="text-center">Time</th>
+                  <th class="text-left">Result</th>
+                  <th class="text-left">Notes</th>
+                  <th class="text-left">View</th>
+                  <th class="text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="TelemkOfferSubj">
+                <tr>
+                  <td class="text-left">1</td>
+                  <td class="text-left">{{TelemkOfferSubj.CustNo}}</td>
+                  <td class="text-left">{{TelemkOfferSubj.CustName}}</td>
+                  <td class="text-left">{{TelemkOfferSubj.PhoneNumber}}</td>
+                  <td class="text-center">{{TelemkOfferSubj.DatetimeVerif | date: 'dd-MMMM-yyyy'}}</td>
+                  <td class="text-center">{{TelemkOfferSubj.DatetimeVerif | date:'HH:mm'}}</td>
+                  <td class="text-left">{{TelemkOfferSubj.ResultName}}</td>
+                  <td class="text-left">{{TelemkOfferSubj.Notes}}</td>
+                  <td class="text-left" ><a *ngIf="TelemkOfferSubj.PhoneNumber != null" (click)="gotoView()">View</a></td>
+                  <td class="text-center">
+                    <a class="success p-0" (click)="gotoVerif()">
+                      <i class="ft-edit-2 font-medium-3 mr-2 px-2"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          
+          <lib-ucSubsection [id]="'ActionId'" [title]="'Action'" [panel]="'action'">
+          </lib-ucSubsection>
+          <div id="action" class="row">
+            <div class="col-md-6">
+              <div class="form-group row adins-required">
+                <label class="col-md-4  adInsLabel" translate>Customer will RO</label>
+                <div class="col-md-8">
+                  <select class="form-control" formControlName="IsCustWillRo"
+                    (change)="onChangeIsCustWillRo()"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && RoTelemkOfferingForm.controls.IsCustWillRo.invalid }">
+                    <option value="">-Select One-</option>
+                    <option value="YES">Yes</option>
+                    <option value="NO">No</option>
+                    <option value="{{PromiseOpt}}">Promise to Loan</option>
+                  </select>
+                  <lib-uc-show-errors [control]="RoTelemkOfferingForm.controls.IsCustWillRo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+              </div>
+              <div *ngIf="RoTelemkOfferingForm.controls.IsCustWillRo.value == 'NO'" class="form-group row adins-required">
+                <label class="col-md-4  adInsLabel" translate>Reason Description</label>
+                <div class="col-md-8">
+                    <select type="text" class="form-control adInsInput" formControlName="Reason"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && RoTelemkOfferingForm.controls.Reason.invalid }">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let item of listReason" [value]="item.Key">{{item.Value}}</option>
+                    </select>
+                  <lib-uc-show-errors [control]="RoTelemkOfferingForm.controls.Reason" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4  adinslabel" translate>Notes</label>
+                <div class="col-md-8">
+                  <textarea type="text" class="form-control adInsInput" formControlName="Notes"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row adins-required" *ngIf="RoTelemkOfferingForm.controls.IsCustWillRo.value==PromiseOpt">
+                <label class="col-md-4  adInsLabel" translate>Promise to Loan Date</label>
+                <div class="col-md-8">
+                  <input type="date" class="form-control" formControlName="PromiseToLoanDt"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && RoTelemkOfferingForm.controls.PromiseToLoanDt.invalid }"
+                  [min]="businessDate | date: 'yyyy-MM-dd'"
+                  >
+                  <lib-uc-show-errors [control]="RoTelemkOfferingForm.controls.PromiseToLoanDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions right">
+            <button type="button" class="btn btn-raised btn-warning mr-1 margin-r-5" (click)="onClickBack()">
+              <i class="ft-x"></i> Cancel
+            </button>
+
+            <button type="submit" class="btn btn-raised btn-primary">
+              <i class="far fa-check-square"></i> Save
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,268 @@
+<div class="card">
+  <div class="card-body">
+    <div class="px-3">
+      <div class="customerData">
+        <form class="form form-horizontal" [formGroup]="LeadDataForm" (ngSubmit)="LeadDataForm.valid"
+          #enjiForm="ngForm">
+          <div class="form-body">
+            <!-- <div id="leadData"> -->
+            <div *ngIf="lobKta.includes(returnLobCode) == false" id="leadData">
+              <lib-ucSubsection [id]="'assetDataId'" [title]="'Asset Data'" [panel]="'assetData'">
+              </lib-ucSubsection>
+              <div id="assetData">
+                <div class="form-group row">
+                  <label class="col-md-3 " translate>Full Asset Name</label>
+                  <div class="col-md-4" *ngIf="InputLookupAssetObj.isReady == true">
+                    <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupAssetObj" [identifier]="'lookupAsset'"
+                      [enjiForm]='enjiForm' [parentForm]='LeadDataForm' (lookup)="SetAsset($event)">
+                    </lib-uclookupgeneric>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 adInsLabel" translate>Asset Condition</label>
+                  <div class="col-md-4">
+                    <select class="form-control adInsInput" style="width: auto" (change)="radioChange($event)"
+                      formControlName="MrAssetConditionCode"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.MrAssetConditionCode.invalid }">
+                      <option *ngFor="let it of returnAssetConditionObj" [value]="it.Key">
+                        {{it.Value}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 adInsLabel" translate>Manufacturing Year</label>
+                  <div class="col-md-4">
+                    <input type="number" class="form-control adInsInput" id="manuYear" min="0"
+                      formControlName="ManufacturingYear"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.ManufacturingYear.invalid}">
+                    <lib-uc-show-errors [control]="LeadDataForm.controls.ManufacturingYear"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 " translate>Asset Price</label>
+                  <div class="col-md-4">
+                    <input type="" currencyMask class="form-control adInsInput" id="assetPrice" min="0"
+                      (ngModelChange)="AssetPriceChange()" formControlName="AssetPrice"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.AssetPrice.invalid}">
+                    <lib-uc-show-errors [control]="LeadDataForm.controls.AssetPrice" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="form-group row">
+                  <label class="col-md-3 " translate>Asset Price</label>
+                  <div class="col-md-4">
+                    <input type="" currencyMask class="form-control adInsInput" id="assetPrice" min="1" max="maxAssetPrice" formControlName="AssetPrice"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.AssetPrice.invalid}">
+                    <lib-uc-show-errors  [control]="LeadDataForm.controls.AssetPrice" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors >
+                  </div>
+                </div> -->
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>Down Payment Type</label>
+                <div class="col-md-4">
+                  <select class="form-control adInsInput" style="width: auto" (change)="DownPaymentChange()"
+                    formControlName="MrDownPaymentTypeCode"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.MrDownPaymentTypeCode.invalid }">
+                    <option *ngFor="let it of returnDownPaymentObj " [value]="it.Key">
+                      {{it.Value}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 " translate>Down Payment Amount</label>
+                <div class="col-md-4">
+                  <input type="" currencyMask class="form-control adInsInput" (ngModelChange)="DPAmtChange()" id="dpAmt"
+                    min="1" max="maxDpAmt" formControlName="DownPaymentAmount"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.DownPaymentAmount.invalid}">
+
+                  <lib-uc-show-errors [control]="LeadDataForm.controls.DownPaymentAmount" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 " translate>Down Payment Percentage</label>
+                <div class="col-md-4">
+                  <input type="" currencyMask [options]="{min: 0, max:100, suffix:' %'}" class="form-control adInsInput"
+                    (focusout)="DPPrcntChange()" formControlName="DownPaymentPercent" disabled
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.DownPaymentPercent.invalid}">
+                  <lib-uc-show-errors [control]="LeadDataForm.controls.DownPaymentPercent"
+                    [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div formArrayName="items">
+                <div *ngFor="let item of items.controls; let i = index;">
+                  <div class="form-group row" [formGroupName]="i">
+                    <label class="col-md-3 " [ngClass]="{'': isUsed && item.controls.IsMandatory.value == true}"
+                      translate>
+                      {{item.controls.SerialNoLabel.value}} </label>
+                    <div class="col-md-4">
+                      <input type="text" class="form-control adInsInput" formControlName="SerialNoValue"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.items['controls'][i]['controls'].SerialNoValue.invalid}">
+                      <lib-uc-show-errors
+                        [control]="LeadDataForm.controls.items['controls'][i]['controls'].SerialNoValue"
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <lib-ucSubsection *ngIf="this.isNeedCheckBySystem == '0'" [id]="'assetDataId'"
+              [title]="'Fraud Checking Asset'" [panel]="'fraudCheckingAsset'">
+            </lib-ucSubsection>
+            <div *ngIf="this.isNeedCheckBySystem == '0'" id="fraudCheckingAsset">
+              <div class="form-group row">
+                <label class="col-md-3 " translate>Rapindo</label>
+                <div class="col-md-4">
+                  <button type="button" class="btn btn-raised btn-success mr-1"
+                    [disabled]="LeadDataForm.value.items.length > 0 && LeadDataForm.value.items[0]['SerialNoValue'] == ''"
+                    (click)="checkRapindo()">
+                    <i class="fa fa-check-square-o"></i> Hit Rapindo
+                  </button>
+                  <label *ngIf="this.thirdPartyRsltHId != null && this.thirdPartyRsltHId != '' " translate>Requested At
+                    {{this.latestReqDtCheckRapindo | date: 'dd-MMMM-yyyy hh:mm:ss'}}</label>
+                </div>
+              </div>
+            </div>
+            <lib-ucSubsection [id]="'financialDataId'" [title]="'Financial Data'" [panel]="'financialData'">
+            </lib-ucSubsection>
+            <div *ngIf="lobKta.includes(returnLobCode) == false" id="financialData">
+              <div class="form-group row">
+                <label class="col-md-3 " translate>Tenor</label>
+                <div class="col-md-4">
+                  <input type="number" class="form-control adInsInput" (focusout)="TenorChange()" id="tenor" min="0"
+                    max="maxTenor" formControlName="Tenor"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.Tenor.invalid}">
+                  <lib-uc-show-errors [control]="LeadDataForm.controls.Tenor" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 " translate>First Installment Type</label>
+                <div class="col-md-4">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="MrFirstInstTypeCode"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.MrFirstInstTypeCode.invalid }">
+                    <option *ngFor="let it of returnFirstInstObj " [value]="it.Key">
+                      {{it.Value}}
+                    </option>
+                  </select>
+                  <lib-uc-show-errors [control]="LeadDataForm.controls.MrFirstInstTypeCode"
+                    [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>NTF Amount</label>
+                <div class="col-md-5">
+                  <label class="adInsLabel" style="font-size: 13px;">{{LeadDataForm.controls.NTFAmt.value |
+                    number:'.2':'en-US'}}</label>
+                  <!-- <input type="text" class="form-control adInsInput" formControlName="NTFAmt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.NTFAmt.invalid}">
+                    <lib-uc-show-errors  [control]="LeadDataForm.controls.NTFAmt" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors > -->
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 " translate>Installment Amount</label>
+                <div class="col-md-5">
+                  <!-- <label class="col-md-5 adInsLabel"
+                    style="font-size: 13px;">{{LeadDataForm.controls.InstallmentAmt.value | number:'.2':'en-US'}}</label> -->
+                  <input type="" currencyMask class="form-control col-md-5" formControlName="InstallmentAmt"
+                    (focusout)="InstAmtCheck()">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>Total Down Payment Amount</label>
+                <div class="col-md-5">
+                  <label class="adInsLabel" style="font-size: 13px;">{{LeadDataForm.controls.TotalDownPayment.value |
+                    number:'.2':'en-US'}}</label>
+                  <!-- <input type="text" class="form-control adInsInput" formControlName="TotalDownPayment"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.TotalDownPayment.invalid}">
+                    <lib-uc-show-errors  [control]="LeadDataForm.controls.TotalDownPayment" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors > -->
+                </div>
+              </div>
+              <div class="form-group row">
+                <button type="button" class="btn btn-raised btn-primary mr-1" (click)="calculateNonKta()">
+                  <i class="fa fa-check-square-o"></i> Calculate
+                </button>
+              </div>
+            </div>
+            <div *ngIf="lobKta.includes(returnLobCode) == true" id="financialData">
+              <div class="form-group row">
+                <label class="col-md-3 " translate>Tenor</label>
+                <div class="col-md-4">
+                  <input type="number" min="0" (focusout)="TenorChange()" class="form-control adInsInput"
+                    formControlName="Tenor"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.Tenor.invalid}">
+                  <lib-uc-show-errors [control]="LeadDataForm.controls.Tenor" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 " translate>First Installment Type</label>
+                <div class="col-md-4">
+                  <select class="form-control adInsInput" style="width: auto" formControlName="MrFirstInstTypeCode"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.MrFirstInstTypeCode.invalid }">
+                    <option *ngFor="let it of returnFirstInstObj " [value]="it.Key">
+                      {{it.Value}}</option>
+                  </select>
+                  <lib-uc-show-errors [control]="LeadDataForm.controls.MrFirstInstTypeCode"
+                    [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>NTF Amount</label>
+                <div class="col-md-5">
+                  <!-- <label class="col-md-5 adInsLabel"
+                      style="font-size: 13px;">{{LeadDataForm.controls.NTFAmt.value | number:'.2':'en-US'}}</label> -->
+                  <input type="" currencyMask class="form-control adInsInput" min="0" formControlName="NTFAmt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.NTFAmt.invalid}"
+                    (focusout)="InstAmtCheck()">
+                  <lib-uc-show-errors [control]="LeadDataForm.controls.NTFAmt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 " translate>Installment Amount</label>
+                <div class="col-md-5">
+                  <input type="" currencyMask class="form-control adInsInput text-right adInsLabel"
+                    formControlName="InstallmentAmt" (focusout)="InstAmtCheck()">
+                  <lib-uc-show-errors [control]="LeadDataForm.controls.InstallmentAmt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row" style="text-align: right;" *ngIf="returnLobCode != 'CFNA'">
+                <button type="button" class="btn btn-raised btn-primary mr-1" (click)="calculateKta()" translate>
+                  <i class="fa fa-check-square-o"></i> Calculate
+                </button>
+              </div>
+            </div>
+            <!-- </div> -->
+          </div>
+          <div class="form-actions right" style="text-align: right;">
+            <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()" translate>
+              <i class="fa fa-check-square-o"></i> Submit
+            </button>
+            <!-- <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="save()" translate>
+              <i class="fa fa-check-square-o"></i> Save
+            </button>
+            <button *ngIf="typePage == 'update' || originPage == 'teleVerif' " type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()" translate>
+              <i class="fa fa-check-square-o"></i> Submit
+            </button> -->
+            <!-- <button type="button" class="btn btn-raised btn-primary mr-1" (click)="this.LeadDataForm.valid && test()"
+              translate>
+              <i class="fa fa-check-square-o"></i> test
+            </button> -->
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
