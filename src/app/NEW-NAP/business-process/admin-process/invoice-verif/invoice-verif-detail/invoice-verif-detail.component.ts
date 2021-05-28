@@ -58,7 +58,6 @@ export class InvoiceVerifDetailComponent implements OnInit {
   ngOnInit() {
     this.claimTask();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewInvoiceVerif.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "ApplicationNo",

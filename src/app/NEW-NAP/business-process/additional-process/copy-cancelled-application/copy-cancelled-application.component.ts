@@ -56,8 +56,6 @@ export class CopyCancelledApplicationComponent implements OnInit {
       this.inputPagingObj._url = "./assets/ucpaging/searchCancelledApp.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCancelledApp.json";
     }
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
 
     this.inputPagingObj.addCritInput.push(critObj);
   }

@@ -14,7 +14,6 @@ export class InvoiceDetailComponent implements OnInit {
 
   ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewInvoiceAgrmntInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "AppNo",

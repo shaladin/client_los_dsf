@@ -13,7 +13,6 @@ import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { String } from 'typescript-string-operations';
 
 @Component({
@@ -39,13 +38,6 @@ export class ApplicationApprovalPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchApplicationApproval.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApplicationApproval.json";
-
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "a.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     var arrCrit = new Array();
     var critObj = new CriteriaObj();

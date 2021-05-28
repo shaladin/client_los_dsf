@@ -68,7 +68,6 @@ export class CustConfirmationDetailComponent implements OnInit {
     this.claimTask();
     this.arrValue.push(this.AgrmntId);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustConfirmInfo.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.whereValue = this.arrValue;
     this.viewGenericObj.ddlEnvironments = [
       {

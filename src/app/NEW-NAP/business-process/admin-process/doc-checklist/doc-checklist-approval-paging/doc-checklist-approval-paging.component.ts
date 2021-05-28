@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { HttpClient } from '@angular/common/http';
@@ -42,12 +41,6 @@ export class DocChecklistApprovalPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchDocChecklistApproval.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDocChecklistApproval.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "app.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
     this.inputPagingObj.addCritInput = new Array();
 
     var critInputOnlyOffering = new CriteriaObj();

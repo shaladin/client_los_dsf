@@ -75,7 +75,6 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
   ngOnInit() {
     this.ClaimTask();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewInvoiceVerif.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "ApplicationNo",

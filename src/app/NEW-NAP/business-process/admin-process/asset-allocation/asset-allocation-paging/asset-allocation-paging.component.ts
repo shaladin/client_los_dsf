@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute } from '@angular/router';
@@ -29,12 +28,6 @@ export class AssetAllocationPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchAssetAllocation.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAssetAllocation.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "A.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
     this.inputPagingObj.addCritInput = new Array();
 
     var critObj = new CriteriaObj();

@@ -1,4 +1,3 @@
-import { environment } from "environments/environment";
 import { Component, OnInit } from "@angular/core";
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
@@ -27,13 +26,6 @@ export class PhoneVerificationPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchAppPhoneVerif.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppPhoneVerif.json";
-
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "a.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     var arrCrit = new Array();
     var critObj = new CriteriaObj();

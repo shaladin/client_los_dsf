@@ -45,7 +45,6 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
 
   ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewApplicationAgreementCancellation.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "AppNo",

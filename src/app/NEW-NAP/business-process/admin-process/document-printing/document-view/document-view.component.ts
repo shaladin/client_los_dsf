@@ -70,11 +70,9 @@ export class DocumentViewComponent implements OnInit {
   ngOnInit() {
     if (this.BizTemplateCode == CommonConstant.OPL) {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformationAgrmnt.json";
-      this.viewGenericObj.viewEnvironment = environment.losUrl;
     }
     else {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocument.json";
-      this.viewGenericObj.viewEnvironment = environment.losUrl;
       this.viewGenericObj.ddlEnvironments = [
         {
           name: "ApplicationNo",

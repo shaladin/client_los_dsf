@@ -82,7 +82,6 @@ export class ApplicationReviewDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.initData();
     this.BindDDLReasonReturn();
     await this.ClaimTask();

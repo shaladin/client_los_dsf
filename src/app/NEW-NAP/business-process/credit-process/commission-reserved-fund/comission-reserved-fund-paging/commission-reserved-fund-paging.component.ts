@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
@@ -26,13 +25,6 @@ export class CommissionReservedFundPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchCommission.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCommission.json";
-
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "a.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     var arrCrit = new Array();
 

@@ -51,7 +51,6 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   async ngOnInit() {
 
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLiveApproval.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "AppNo",

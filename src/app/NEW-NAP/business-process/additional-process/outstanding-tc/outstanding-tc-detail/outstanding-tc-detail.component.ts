@@ -47,7 +47,6 @@ export class OutstandingTcDetailComponent implements OnInit {
 
   async ngOnInit() : Promise<void> {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewOutstandingTC.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "AppNo",
