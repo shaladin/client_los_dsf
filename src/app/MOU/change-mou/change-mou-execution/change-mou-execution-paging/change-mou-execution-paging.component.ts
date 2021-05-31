@@ -8,7 +8,7 @@ import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
 @Component({
   selector: "app-change-mou-execution-paging",
   templateUrl: "./change-mou-execution-paging.component.html",
-  styleUrls: ["./change-mou-execution-paging.component.scss"],
+  styleUrls: [],
 })
 export class ChangeMouExecutionPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();

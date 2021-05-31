@@ -14,7 +14,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 @Component({
   selector: 'app-change-mou-execution-detail',
   templateUrl: './change-mou-execution-detail.component.html',
-  styleUrls: ['./change-mou-execution-detail.component.scss']
+  styleUrls: []
 })
 export class ChangeMouExecutionDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();

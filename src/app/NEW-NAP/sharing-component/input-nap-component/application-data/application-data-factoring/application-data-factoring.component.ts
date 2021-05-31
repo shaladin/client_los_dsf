@@ -23,6 +23,7 @@ import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
 import { RefEmpObj } from 'app/shared/model/RefEmpObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
+import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 
 @Component({
   selector: 'app-application-data-factoring',
@@ -103,7 +104,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   responseApp: AppObj;
   responseProd: ProdOfferingDObj;
   isInit: boolean = true;
-  listCustBankAcc: any;
+  listCustBankAcc: Array<AppCustBankAccObj>;
   selectedBankAcc: any;
   GetBankInfo: any;
   appCustId: number;

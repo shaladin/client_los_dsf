@@ -12,7 +12,7 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 @Component({
   selector: 'app-change-mou-review-paging',
   templateUrl: './change-mou-review-paging.component.html',
-  styleUrls: ['./change-mou-review-paging.component.scss']
+  styleUrls: []
 })
 export class ChangeMouReviewPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj;

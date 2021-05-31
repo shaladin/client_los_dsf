@@ -11,7 +11,7 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 @Component({
   selector: 'app-change-mou-inquiry',
   templateUrl: './change-mou-inquiry.component.html',
-  styleUrls: ['./change-mou-inquiry.component.css']
+  styleUrls: []
 })
 export class ChangeMouInquiryComponent implements OnInit {
   inputPagingObj: UcPagingObj;

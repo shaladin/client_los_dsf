@@ -14,7 +14,7 @@ import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 @Component({
   selector: "app-change-mou-cancel",
   templateUrl: "./change-mou-cancel.component.html",
-  styleUrls: ["./change-mou-cancel.component.scss"],
+  styleUrls: [],
 })
 export class ChangeMouCancelComponent implements OnInit {
   inputPagingObj: UcPagingObj;
