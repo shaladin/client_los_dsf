@@ -118,6 +118,7 @@ export class AssetDataAddEditComponent implements OnInit {
   appAssetAttrObjs: Array<AppAssetAttrCustomObj>;
   ListAttrAnswer = [];
   isAssetAttrReady: boolean = false;
+  isUsed : boolean = false;
 
 
   InputLookupAccObj: any;
@@ -218,6 +219,7 @@ export class AssetDataAddEditComponent implements OnInit {
   indexChassis: number = 0;
   SerialNoRegex: string;
   ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();
+  InputLookupCityIssuerObj : any;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private modalService: NgbModal, private cookieService: CookieService) {
     this.originalAssetAccs = new Array<AppAssetAccessoryObj>();
@@ -601,6 +603,22 @@ export class AssetDataAddEditComponent implements OnInit {
   }
   readonly AssetUsed: string = CommonConstant.AssetConditionUsed;
   async ngOnInit(): Promise<void> {
+    this.InputLookupCityIssuerObj = new InputLookupObj();
+    this.InputLookupCityIssuerObj.urlJson = "./assets/uclookup/NAP/lookupDistrict.json";
+    this.InputLookupCityIssuerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.InputLookupCityIssuerObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupCityIssuerObj.pagingJson = "./assets/uclookup/NAP/lookupDistrict.json";
+    this.InputLookupCityIssuerObj.genericJson = "./assets/uclookup/NAP/lookupDistrict.json";
+    this.InputLookupCityIssuerObj.isRequired = false;
+    var disCrit = new Array();
+    var critDisObj = new CriteriaObj();
+    critDisObj.DataType = 'text';
+    critDisObj.restriction = AdInsConstant.RestrictionEq;
+    critDisObj.propName = 'TYPE';
+    critDisObj.value = 'DIS';
+    disCrit.push(critDisObj);
+    this.InputLookupCityIssuerObj.addCritInput = disCrit;
+
     this.AssetDataForm.updateValueAndValidity();
 
     this.items = this.AssetDataForm.get('items') as FormArray;
@@ -645,6 +663,9 @@ export class AssetDataAddEditComponent implements OnInit {
           this.updateValueDownPaymentPrctg();
           this.appAssetAccessoriesObjs = response["ResponseAppAssetAccessoryObjs"];
         });
+
+        this.InputLookupCityIssuerObj.nameSelect = this.returnAppAssetObj.TaxCityIssuer;
+        this.InputLookupCityIssuerObj.jsonSelect = { provDistrictCode: this.returnAppAssetObj.TaxCityIssuer };
 
       var reqByCode = new GenericObj();
       reqByCode.Code = this.returnAppAssetObj.FullAssetCode;
@@ -825,6 +846,12 @@ export class AssetDataAddEditComponent implements OnInit {
           });
           this.ChangeAssetCondition();
         }
+        
+        if(this.AssetDataForm.controls.MrAssetConditionCode.value == "USED") { 
+          this.isUsed = true;
+          this.InputLookupCityIssuerObj.isRequired = true;
+        }
+
         this.GenerataAppAssetAttr(false);
 
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
