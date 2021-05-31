@@ -45,7 +45,7 @@ import { ChangeMouMainInfoComponent } from "../change-mou-main-info/change-mou-m
         UcapprovalhistModule,
         UcShowErrorsModule,
         SharedModule,
-        UcapprovalHistoryModule
+        UcapprovalHistoryModule,
     ],
     declarations: [
         ChangeMouViewAddcollComponent,
@@ -54,6 +54,7 @@ import { ChangeMouMainInfoComponent } from "../change-mou-main-info/change-mou-m
         ChangeMouMainInfoComponent
     ],
     entryComponents: [
+        ChangeMouViewAddcollComponent,
         UclookupgenericComponent,
         UcviewgenericComponent,
         UcgridviewComponent,

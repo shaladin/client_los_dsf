@@ -346,7 +346,7 @@
                       </thead>
                       <tbody *ngFor="let item of InsuranceDataForm.controls.AppInsMainCvgs.controls;let i = index">
                         <tr [formGroupName]="i">
-                          td class="text-center" *ngIf="isYearlyCapitalized">
+                          <td class="text-center" *ngIf="isYearlyCapitalized">
                           <div class="form-group-row">
                             <input type="checkbox" class="checkboxLabel" formControlName="IsCapitalized"
                               (change)="IsMainCvgChaged($event, i)"

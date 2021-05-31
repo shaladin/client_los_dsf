@@ -11,7 +11,6 @@ import { ReqEditAppINvoiceDlrFncngHObj } from 'app/shared/model/Request/AppInvoi
 @Component({
   selector: 'app-edit-invoice-data',
   templateUrl: './edit-invoice-data.component.html',
-  styleUrls: ['./edit-invoice-data.component.css']
 })
 export class EditInvoiceDataComponent implements OnInit {
   @Output() objTempOutput: EventEmitter<any> = new EventEmitter();

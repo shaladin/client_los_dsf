@@ -40,7 +40,7 @@ export class ChangeMouCustAssetComponent implements OnInit {
     this.listExclude = new Array<string>();
     this.httpClient.post(URLConstant.GetListAssetTypeByCode, null).subscribe(
       (response: any) => {
-        this.assetTypeList = response;
+        this.assetTypeList = response.ReturnObject;
         if (this.AssetTypeCode != null) {
           this.MouCustClauseAssetForm.patchValue({
             AssetTypeCode: this.AssetTypeCode

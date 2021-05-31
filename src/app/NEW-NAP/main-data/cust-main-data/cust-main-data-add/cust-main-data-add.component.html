@@ -20,7 +20,7 @@
                   </lib-ucdropdownlist>
                 </div>
               </div>
-              <div class="form-group row" *ngIf="!isDisableCopyAppFrom && this.bizTemplateCode != this.DF && this.bizTemplateCode != this.FCTR">
+              <div class="form-group row" *ngIf="this.bizTemplateCode != this.DF && this.bizTemplateCode != this.FCTR">
                 <label class="col-md-4 adInsLabel" translate>Copy Application From </label>
                 <div class="col-md-4">
                   <lib-uclookupgeneric [lookupInput]="inputLookupObjCopyProduct" [parentForm]='NapAppForm'

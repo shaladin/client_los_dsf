@@ -87,11 +87,11 @@ export class MouDetailGeneralComponent implements OnInit {
     let getMouCustClause = this.httpClient.post(URLConstant.GetMouCustClauseByMouCustId, { Id: this.MouCustId });
     forkJoin([reqCurrency, reqIntrstType, reqInstSchm, reqPayFreq, reqFirstInst, getMouCustClause]).subscribe(
       (response: any) => {
-        this.currencyList = response[0];
-        this.intrstTypeList = response[1];
-        this.instSchmList = response[2];
-        this.payFreqList = response[3];
-        this.firstInstList = response[4];
+        this.currencyList = response[0].ReturnObject;
+        this.intrstTypeList = response[1].ReturnObject;
+        this.instSchmList = response[2].ReturnObject;
+        this.payFreqList = response[3].ReturnObject;
+        this.firstInstList = response[4].ReturnObject;
         this.tempMouCustClause = response[5];
         this.MouDetailGeneralForm.patchValue({
           MouCustId: this.MouCustId,

@@ -43,6 +43,7 @@ import { FraudDetectionResultComponent } from './fraud-detection-result/fraud-de
 import { FraudVerificationComponent } from './fraud-verification/fraud-verification.component';
 import { ViewFraudDetectionResultComponent } from './view-fraud-detection-result/view-fraud-detection-result.component';
 import { ViewSurveyVerifComponent } from './view-survey-verif/view-survey-verif.component';
+import { ChangeMouViewModule } from "app/view-enhancing/change-mou-view/change-mou-view.module";
 
 @NgModule({
   exports: [
@@ -70,17 +71,22 @@ import { ViewSurveyVerifComponent } from './view-survey-verif/view-survey-verif.
     ApprovalHistComponent,
     ApprovalhistDevComponent,
     TabAppDataComponent,
+    FraudVerificationComponent,
+    ViewFraudDetectionResultComponent,
     ViewSurveyTaskListComponent,
     ViewSummaryAppComponent,
     ViewAppScoreGradeScoringComponent,
     ViewAppScoreGradeDsrComponent,
     ViewAppScoreGradeDukcapilComponent,
+    FraudDetectionResultComponent,
     NewApplicationDataComponent,
     ViewSummaryAppCfnaComponent,
     ViewSummaryAppROSComponent,
     FraudDetectionResultComponent,
     FraudVerificationComponent,
     ViewFraudDetectionResultComponent,
+    ViewSurveyVerifComponent,
+    ChangeMouViewModule,
   ],
   imports: [
     CommonModule,
@@ -115,8 +121,11 @@ import { ViewSurveyVerifComponent } from './view-survey-verif/view-survey-verif.
     ViewCollateralDataComponent,
     ViewCollateralMultiAssetComponent,
     ApprovalhistDevComponent,
+    FraudVerificationComponent,
     TabAppDataComponent,
     NewApplicationDataComponent,
+    FraudDetectionResultComponent,
+    ViewFraudDetectionResultComponent,
     ViewSurveyTaskListComponent,
     ViewSummaryAppComponent,
     ViewAppScoreGradeScoringComponent,
@@ -126,7 +135,8 @@ import { ViewSurveyVerifComponent } from './view-survey-verif/view-survey-verif.
     ViewSummaryAppROSComponent,
     FraudDetectionResultComponent,
     FraudVerificationComponent,
-    ViewFraudDetectionResultComponent
+    ViewFraudDetectionResultComponent,
+    ViewSurveyVerifComponent,
   ],
   providers: [
     NGXToastrService

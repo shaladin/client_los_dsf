@@ -85,18 +85,44 @@ import { AppCustAssetComponent } from "./app-cust-asset/app-cust-asset.component
 import { AppCustAssetOldNapDetailComponent } from "./app-cust-asset-old-nap/app-cust-asset-old-nap-detail/app-cust-asset-old-nap-detail.component";
 import { AppCustAssetOldNapComponent } from "./app-cust-asset-old-nap/app-cust-asset-old-nap.component";
 import { ApplicationDataDlfnComponent } from "./application-data/application-data-dlfn/application-data-dlfn.component";
+import { InvoiceDataDlfnComponent } from "./invoice-data/invoice-data-dlfn/invoice-data-dlfn.component";
+import { EditInvoiceDataComponent } from "./invoice-data/edit-invoice-data/edit-invoice-data.component";
+import { FinancialDataDlfnComponent } from "./financial-data-dlfn/financial-data-dlfn.component";
+import { FeeDlfnComponent } from "./financial-data-dlfn/component/fee-dlfn/fee-dlfn.component";
+import { SchmDataDlfnComponent } from "./financial-data-dlfn/component/schm-data-dlfn/schm-data-dlfn.component";
+import { SingleInstDlfnComponent } from "./financial-data-dlfn/component/single-inst-dlfn/single-inst-dlfn.component";
+import { SchmEvenPrincipalDlfnComponent } from "./financial-data-dlfn/component/multi-inst/schm-even-principal-dlfn/schm-even-principal-dlfn.component";
+import { SchmRegularFixDlfnComponent } from "./financial-data-dlfn/component/multi-inst/schm-regular-fix-dlfn/schm-regular-fix-dlfn.component";
+import { FeeCFNAComponent } from "app/NEW-NAP/CFNA/nap-components/financial-data/component/fee/fee-cfna.component";
+import { SchmRegulerFixCFNAComponent } from "app/NEW-NAP/CFNA/nap-components/financial-data/component/schm-reguler-fix/schm-reguler-fix-cfna.component";
+import { SchmIrregularCFNAComponent } from "app/NEW-NAP/CFNA/nap-components/financial-data/component/schm-irregular/schm-irregular-cfna.component";
+import { SchmStepUpStepDownNormalCFNAComponent } from "app/NEW-NAP/CFNA/nap-components/financial-data/component/schm-step-up-step-down-normal/schm-step-up-step-down-normal-cfna.component";
+import { SchmStepUpStepDownLeasingCFNAComponent } from "app/NEW-NAP/CFNA/nap-components/financial-data/component/schm-step-up-step-down-leasing/schm-step-up-step-down-leasing-cfna.component";
+import { SchmStepUpStepDownCummulativeCFNAComponent } from "app/NEW-NAP/CFNA/nap-components/financial-data/component/schm-step-up-step-down-cummulative/schm-step-up-step-down-cummulative-cfna.component";
+import { SchmBalloonCFNAComponent } from "app/NEW-NAP/CFNA/nap-components/financial-data/component/schm-baloon/schm-balloon-cfna.component";
+import { SchmEvenPrincipalCFNAComponent } from "app/NEW-NAP/CFNA/nap-components/financial-data/component/schm-even-principal/schm-even-principal-cfna.component";
 
-export const customCurrencyMaskConfig = {     
-  align: "right",     
-  allowNegative: true,     
-  allowZero: true,     
-  decimal: ".",     
-  precision: 2,     
-  prefix: "",     
-  suffix: "",     
-  thousands: ",",     
+import { FeeFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/fee/fee-FL4W.component";
+import { SchmRegulerFixFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-reguler-fix/schm-reguler-fix-FL4W.component";
+import { SchmIrregularFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-irregular/schm-irregular-FL4W.component";
+import { SchmStepUpStepDownNormalFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-step-up-step-down-normal/schm-step-up-step-down-normal-FL4W.component";
+import { SchmStepUpStepDownLeasingFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-step-up-step-down-leasing/schm-step-up-step-down-leasing-FL4W.component";
+import { SchmStepUpStepDownCummulativeFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-step-up-step-down-cummulative/schm-step-up-step-down-cummulative-FL4W.component";
+import { SchmEvenPrincipalFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-even-principal/schm-even-principal-FL4W.component";
+import { SchmBalloonFL4WComponent } from "app/NEW-NAP/FL4W/input-nap-FL4W/financial-data-FL4W/component/schm-baloon/schm-balloon-FL4W.component";
+
+export const customCurrencyMaskConfig = {
+  align: "right",
+  allowNegative: true,
+  allowZero: true,
+  decimal: ".",
+  precision: 2,
+  prefix: "",
+  suffix: "",
+  thousands: ",",
   nullable: false,
-  inputMode: CurrencyMaskInputMode.NATURAL };
+  inputMode: CurrencyMaskInputMode.NATURAL
+};
 
 @NgModule({
   exports: [
@@ -171,7 +197,34 @@ export const customCurrencyMaskConfig = {
     AppCustAssetDetailComponent,
     AppCustAssetOldNapComponent,
     AppCustAssetOldNapDetailComponent,
-    ApplicationDataDlfnComponent
+
+    ApplicationDataDlfnComponent,
+    InvoiceDataDlfnComponent,
+    EditInvoiceDataComponent,
+    FinancialDataDlfnComponent,
+    FeeDlfnComponent,
+    SchmDataDlfnComponent,
+    SingleInstDlfnComponent,
+    SchmEvenPrincipalDlfnComponent,
+    SchmRegularFixDlfnComponent,
+
+    FeeCFNAComponent,
+    SchmRegulerFixCFNAComponent,
+    SchmIrregularCFNAComponent,
+    SchmStepUpStepDownNormalCFNAComponent,
+    SchmStepUpStepDownLeasingCFNAComponent,
+    SchmStepUpStepDownCummulativeCFNAComponent,
+    SchmBalloonCFNAComponent,
+    SchmEvenPrincipalCFNAComponent,
+
+    FeeFL4WComponent,
+    SchmRegulerFixFL4WComponent,
+    SchmIrregularFL4WComponent,
+    SchmStepUpStepDownNormalFL4WComponent,
+    SchmStepUpStepDownLeasingFL4WComponent,
+    SchmStepUpStepDownCummulativeFL4WComponent,
+    SchmEvenPrincipalFL4WComponent,
+    SchmBalloonFL4WComponent,
   ],
   imports: [
     CommonModule,
@@ -260,7 +313,34 @@ export const customCurrencyMaskConfig = {
     AppCustAssetComponent,
     AppCustAssetOldNapComponent,
     AppCustAssetOldNapDetailComponent,
-    ApplicationDataDlfnComponent
+
+    ApplicationDataDlfnComponent,
+    InvoiceDataDlfnComponent,
+    EditInvoiceDataComponent,
+    FinancialDataDlfnComponent,
+    FeeDlfnComponent,
+    SchmDataDlfnComponent,
+    SingleInstDlfnComponent,
+    SchmEvenPrincipalDlfnComponent,
+    SchmRegularFixDlfnComponent,
+
+    FeeCFNAComponent,
+    SchmRegulerFixCFNAComponent,
+    SchmIrregularCFNAComponent,
+    SchmStepUpStepDownNormalCFNAComponent,
+    SchmStepUpStepDownLeasingCFNAComponent,
+    SchmStepUpStepDownCummulativeCFNAComponent,
+    SchmBalloonCFNAComponent,
+    SchmEvenPrincipalCFNAComponent,
+
+    FeeFL4WComponent,
+    SchmRegulerFixFL4WComponent,
+    SchmIrregularFL4WComponent,
+    SchmStepUpStepDownNormalFL4WComponent,
+    SchmStepUpStepDownLeasingFL4WComponent,
+    SchmStepUpStepDownCummulativeFL4WComponent,
+    SchmEvenPrincipalFL4WComponent,
+    SchmBalloonFL4WComponent,
   ],
   entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent, AppCustAssetDetailComponent, AppCustAssetOldNapDetailComponent],
   providers: [

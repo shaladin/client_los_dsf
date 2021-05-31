@@ -18,7 +18,7 @@
         <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="CurrCode"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.CurrCode.invalid }">
-            <option *ngFor="let item of currencyList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
+            <option *ngFor="let item of currencyList" [value]="item.Key">{{item.Value}}</option>
           </select>
           <lib-uc-show-errors [control]="MouDetailFinancingForm.controls.CurrCode" [submit]="enjiForm.submitted">
           </lib-uc-show-errors>
@@ -29,7 +29,7 @@
         <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="WopCode"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.WopCode.invalid }">
-            <option *ngFor="let item of wopList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
+            <option *ngFor="let item of wopList" [value]="item.Key">{{item.Value}}</option>
           </select>
         </div>
       </div>
@@ -40,7 +40,7 @@
           <select type="text" class="form-control adInsInput" formControlName="MrInstTypeCode"
             (change)="instTypeHandler($event.target.value)"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.MrInstTypeCode.invalid }">
-            <option *ngFor="let item of instTypeList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
+            <option *ngFor="let item of instTypeList" [value]="item.Key">{{item.Value}}</option>
           </select>
         </div>
       </div>
@@ -151,7 +151,7 @@
           <select class="form-control adInsInput" formControlName="AssetCondition"
             (change)="onItemChange($event.target.value)"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.AssetCondition.invalid }">
-            <option *ngFor="let item of AsseConditionLis?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
+            <option *ngFor="let item of AsseConditionLis" [value]="item.Key">{{item.Value}}</option>
           </select>
           <lib-uc-show-errors [control]="MouDetailFinancingForm.controls.AssetCondition" [submit]="enjiForm.submitted">
           </lib-uc-show-errors>

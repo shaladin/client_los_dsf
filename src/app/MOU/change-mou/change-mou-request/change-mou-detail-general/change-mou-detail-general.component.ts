@@ -103,10 +103,10 @@ export class ChangeMouDetailGeneralComponent implements OnInit {
     forkJoin([reqCurrency, reqIntrstType, reqInstSchm, reqPayFreq, reqFirstInst, getMouCustClause, getChangeMouCustClause]).subscribe(
       (response: any) => {
         this.currencyList = response[0];
-        this.intrstTypeList = response[1];
-        this.instSchmList = response[2];
-        this.payFreqList = response[3];
-        this.firstInstList = response[4];
+        this.intrstTypeList = response[1].ReturnObject;
+        this.instSchmList = response[2].ReturnObject;
+        this.payFreqList = response[3].ReturnObject;
+        this.firstInstList = response[4].ReturnObject;
         this.tempMouCustClause = response[5];
         this.tempChangeMouCustClause = response[6]
 

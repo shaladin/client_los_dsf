@@ -9,7 +9,7 @@
         <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="MrRecourseTypeCode"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrRecourseTypeCode.invalid }">
-            <option *ngFor="let item of recourseTypeList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
+            <option *ngFor="let item of recourseTypeList" [value]="item.Key">{{item.Value}}</option>
           </select>
         </div>
       </div>
@@ -18,7 +18,7 @@
         <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="WopCode"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.WopCode.invalid }">
-            <option *ngFor="let item of wopList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
+            <option *ngFor="let item of wopList" [value]="item.Key">{{item.Value}}</option>
           </select>
         </div>
       </div>
@@ -41,7 +41,7 @@
           <select type="text" class="form-control adInsInput" formControlName="MrInstTypeCode"
             (change)="instTypeHandler()"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrInstTypeCode.invalid }">
-            <option *ngFor="let item of instTypeList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
+            <option *ngFor="let item of instTypeList" [value]="item.Key">{{item.Value}}</option>
           </select>
           <select *ngIf="IsSingleIns" style="border-left: 1px solid grey" type="text" class="form-control adInsInput"
             formControlName="SingleInstCalcMthd"
@@ -85,7 +85,7 @@
         <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="PayFreqCode"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.PayFreqCode.invalid }">
-            <option *ngFor="let item of payFreqList?.ReturnObject" [value]="item.PayFreqCode">{{item.Descr}}</option>
+            <option *ngFor="let item of payFreqList" [value]="item.PayFreqCode">{{item.Descr}}</option>
           </select>
         </div>
       </div>
@@ -94,7 +94,7 @@
         <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="MrInstSchmCode"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrInstSchmCode.invalid }">
-            <option *ngFor="let item of instSchmList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
+            <option *ngFor="let item of instSchmList" [value]="item.Key">{{item.Value}}</option>
           </select>
         </div>
       </div>

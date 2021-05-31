@@ -10,7 +10,7 @@
                 <div class="col-md-10">
                     <select class="form-control adInsInput" formControlName="MrInterestTypeCode"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.MrInterestTypeCode.invalid }">
-                        <option *ngFor="let item of intrstTypeList?.ReturnObject" [value]="item.Key">{{item.Value}}
+                        <option *ngFor="let item of intrstTypeList" [value]="item.Key">{{item.Value}}
                         </option>
                     </select>
                     <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.MrInterestTypeCode"
@@ -23,7 +23,7 @@
                 <div class="col-md-10">
                     <select class="form-control adInsInput" formControlName="MrInstSchmCode"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.MrInstSchmCode.invalid }">
-                        <option *ngFor="let item of instSchmList?.ReturnObject" [value]="item.Key">{{item.Value}}
+                        <option *ngFor="let item of instSchmList" [value]="item.Key">{{item.Value}}
                         </option>
                     </select>
                     <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.MrInstSchmCode"
@@ -36,7 +36,7 @@
                 <div class="col-md-10">
                     <select class="form-control adInsInput" formControlName="PayFreqCode"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.PayFreqCode.invalid }">
-                        <option *ngFor="let item of payFreqList?.ReturnObject" [value]="item.PayFreqCode">{{item.Descr}}
+                        <option *ngFor="let item of payFreqList" [value]="item.PayFreqCode">{{item.Descr}}
                         </option>
                     </select>
                     <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.PayFreqCode"
@@ -48,7 +48,7 @@
                 <div class="col-md-10">
                     <select type="text" class="form-control adInsInput" formControlName="MrFirstInstTypeCode"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailGeneralForm.controls.MrFirstInstTypeCode.invalid }">
-                        <option *ngFor="let item of firstInstList?.ReturnObject" [value]="item.Key">{{item.Value}}
+                        <option *ngFor="let item of firstInstList" [value]="item.Key">{{item.Value}}
                         </option>
                     </select>
                     <lib-uc-show-errors [control]="MouDetailGeneralForm.controls.MrFirstInstTypeCode"

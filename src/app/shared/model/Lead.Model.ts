@@ -29,4 +29,7 @@ export class LeadObj {
     SubmitByUsername : string;
     SubmitDt : Date;
     TaskListId: number;
+    CmoName: string;
+    SurveyorName: string;
+    TeleMarketingName: string;
 }

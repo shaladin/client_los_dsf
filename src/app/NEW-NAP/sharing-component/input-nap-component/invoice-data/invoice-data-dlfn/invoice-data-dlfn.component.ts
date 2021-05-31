@@ -22,7 +22,6 @@ import { environment } from 'environments/environment';
 @Component({
   selector: 'app-invoice-data-dlfn',
   templateUrl: './invoice-data-dlfn.component.html',
-  styleUrls: ['./invoice-data-dlfn.component.css']
 })
 export class InvoiceDataDlfnComponent implements OnInit {
   @Input() AppId: number;

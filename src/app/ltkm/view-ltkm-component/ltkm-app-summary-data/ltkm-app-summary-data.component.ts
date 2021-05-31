@@ -21,10 +21,8 @@ import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMast
 export class ViewLtkmAppSummaryDataComponent implements OnInit {
     @Input() AppId: number = 0;
 
-    appObj = {
-        AppId: 0,
-    };
     totalInsPremi: number;
+    totalRsvFund: number;
     SummaryObj: any;
     installmentScheme: string;
     firstInstType: string;
@@ -33,7 +31,6 @@ export class ViewLtkmAppSummaryDataComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.appObj.AppId = this.AppId;
         this.GetAppSummary();
     }
 

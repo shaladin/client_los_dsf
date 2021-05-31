@@ -1153,6 +1153,12 @@ export class AssetDataAddEditComponent implements OnInit {
     });
   }
 
+  SetBpkbCity(event) {
+    this.AssetDataForm.patchValue({
+      TaxCityIssuer: event.provDistrictCode,
+    });
+  }
+
   setAssetAttr(){
     this.allAssetDataObj.AppAssetAttrObj = new Array<AppAssetAttrObj>();
 

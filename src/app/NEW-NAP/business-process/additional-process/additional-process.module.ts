@@ -61,6 +61,10 @@ import { EditAppAfterApprovalApprovalPagingComponent } from "./edit-app-after-ap
 import { EditAppAfterApprovalApprovalDetailComponent } from "./edit-app-after-approval/edit-app-after-approval-approval-detail/edit-app-after-approval-approval-detail.component";
 import { EditAppAfterApprovalInquiryComponent } from "./edit-app-after-approval-inquiry/edit-app-after-approval-inquiry.component";
 import { EditAppAfterApprovalViewComponent } from "./edit-app-after-approval-view/edit-app-after-approval-view.component";
+import { UcapprovalcreateModule } from "@adins/ucapprovalcreate";
+import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
+import { UcapprovalR3Module } from "@adins/ucapproval-r3";
+import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 
 
 
@@ -88,6 +92,10 @@ export const customCurrencyMaskConfig = {
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     ViewAppComponentModule,
     SharedModule,
+    UcapprovalcreateModule,
+    UcapprovalR3Module,
+    UcapprovalHistoryModule,
+    UcapprovalgeneralinfoModule,
     MatTabsModule
   ],
   declarations: [

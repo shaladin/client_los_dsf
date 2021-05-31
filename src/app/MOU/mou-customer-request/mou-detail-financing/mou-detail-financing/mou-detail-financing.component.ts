@@ -158,13 +158,13 @@ export class MouDetailFinancingComponent implements OnInit {
     forkJoin([getRecourseType, getWop, getPaidBy, getInstType, getSingleInstCalcMethod, getPayFreq, getInstSchm, getCurrency, getMouDlrFin, getssetStatus]).subscribe(
       (response: any) => {
         this.wopList = response[1].ReturnObject;
-        this.instTypeList = response[3];
+        this.instTypeList = response[3].ReturnObject;
         this.singleInstCalcMthdList = response[4];
         this.payFreqList = response[5];
         this.instSchmList = response[6];
-        this.currencyList = response[7];
+        this.currencyList = response[7].ReturnObject;
         this.MouDlrFinData = response[8];
-        this.AsseConditionLis = response[9];
+        this.AsseConditionLis = response[9].ReturnObject;
 
         this.MouDetailFinancingForm.patchValue({
           WopCode: this.wopList[0].Key,
