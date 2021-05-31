@@ -13,9 +13,6 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
   templateUrl: "./view-reserved-fund.component.html"
 })
 export class ViewReservedFundComponent implements OnInit {
-
-  getAppUrl: any;
-  getAppRsvFundUrl: any;
   @Input() appId: any;
 
 
@@ -36,20 +33,14 @@ export class ViewReservedFundComponent implements OnInit {
     //});
   }
 
-  initUrl() {
-    this.getAppUrl = URLConstant.GetAppById;
-    this.getAppRsvFundUrl = URLConstant.GetListAppReservedFundByAppId;
-  }
-
   ngOnInit() {
-    this.initUrl();
     this.appObj.AppId = this.appId;
     this.GetRsvFundData();
 
   }
 
   GetRsvFundData() {
-    this.http.post(this.getAppRsvFundUrl, { Id: this.appId }).subscribe(
+    this.http.post(URLConstant.GetListAppReservedFundByAppId, { Id: this.appId }).subscribe(
       (response) => {
         this.RsvFundObj = response[CommonConstant.ReturnObj];
         if (this.RsvFundObj != null) {

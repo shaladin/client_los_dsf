@@ -37,7 +37,6 @@ export class DocSignerDetailComponent implements OnInit {
   @ViewChild('LookupShareHolder1') ucLookupShareHolder1: UclookupgenericComponent;
   @ViewChild('LookupShareHolder2') ucLookupShareHolder2: UclookupgenericComponent;
 
-  getMouCustSignerByMouCustId: string;
   tempShareholder1: string;
   tempShareholderPosition1: string;
   tempShareholder2: string;
@@ -60,8 +59,6 @@ export class DocSignerDetailComponent implements OnInit {
   customerLookUpObj1: InputLookupObj;
   tempCustomer1: string;
   tempCustomerPosition1: string;
-  getCustByCustNo: string;
-  getCustCompanyByCustId: string;
   custCompanyId: string;
   custCompanyCrit: CriteriaObj;
   custNo: string;
@@ -80,9 +77,6 @@ export class DocSignerDetailComponent implements OnInit {
   readonly CancelLink: string = NavigationConstant.MOU_DOC_SIGNER_PAGING;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
-    this.getMouCustSignerByMouCustId = URLConstant.GetMouCustSignerByMouCustId;
-    this.getCustByCustNo = URLConstant.GetCustByCustNo;
-    this.getCustCompanyByCustId = URLConstant.GetCustCompanyByCustId;
     this.route.queryParams.subscribe(params => {
       if (params["MouCustId"] != null) this.MouCustId = params["MouCustId"];
       if (params["WfTaskListId"] != null) this.WfTaskListId = params["WfTaskListId"];

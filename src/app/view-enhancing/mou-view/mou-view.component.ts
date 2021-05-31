@@ -36,7 +36,6 @@ export class MouViewComponent implements OnInit {
   MouCustNo: string;
   
   constructor(private http: HttpClient, private route: ActivatedRoute, private cookieService: CookieService) {
-    this.getMouCustByIdUrl = URLConstant.GetMouCustById;
     this.route.queryParams.subscribe(params => {
       if (params["MouCustId"] != null)
         this.MouCustId = params["MouCustId"];

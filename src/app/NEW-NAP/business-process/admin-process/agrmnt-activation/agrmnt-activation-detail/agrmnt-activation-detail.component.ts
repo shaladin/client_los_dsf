@@ -38,7 +38,6 @@ export class AgrmntActivationDetailComponent implements OnInit {
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
   IsViewReady: boolean = false;
 
-  getAppUrl: string = '';
   appObj = {
     AppId: 0,
   };
@@ -106,8 +105,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
 
   async GetAppData() {
     this.appObj.AppId = this.AppId;
-    this.getAppUrl = URLConstant.GetAppById;
-    await this.http.post < AppObj > (this.getAppUrl, this.appObj).toPromise().then(
+    await this.http.post < AppObj > (URLConstant.GetAppById, this.appObj).toPromise().then(
       (response) => {
         this.AppObj = response;
       }

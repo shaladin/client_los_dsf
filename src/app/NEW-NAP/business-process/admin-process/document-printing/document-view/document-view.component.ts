@@ -46,7 +46,6 @@ export class DocumentViewComponent implements OnInit {
   orderByValue: boolean;
   totalData: any;
   AgrmntId: number;
-  addUrl: any;
   editUrl: string;
   agrmntDocObj: AgrmntDocObj;
   agrmntDocPrintObj: AgrmntDocPrintObj;
@@ -188,8 +187,7 @@ export class DocumentViewComponent implements OnInit {
     this.agrmntDocPrintObj.RowVersion = "";
     this.agrmntDocPrintObj.AgrmntDocId = agrmntDocId;
 
-    this.addUrl = URLConstant.AddAgrmntDocPrint;
-    this.http.post(this.addUrl, this.agrmntDocPrintObj).subscribe(
+    this.http.post(URLConstant.AddAgrmntDocPrint, this.agrmntDocPrintObj).subscribe(
       () => {
         this.GetListAgrmntDocByAgrmntId();
       });

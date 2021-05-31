@@ -458,8 +458,8 @@ export class CollateralAddEditSingleComponent implements OnInit {
     var obj = {
       Id: this.AppId,
     }
-    var getListUrl = URLConstant.GetListAppCollateralByAppId;
-    this.http.post(getListUrl, obj).subscribe(
+    
+    this.http.post(URLConstant.GetListAppCollateralByAppId, obj).subscribe(
       (response) => {
         this.listCollExisting = response[CommonConstant.ReturnObj];
       });

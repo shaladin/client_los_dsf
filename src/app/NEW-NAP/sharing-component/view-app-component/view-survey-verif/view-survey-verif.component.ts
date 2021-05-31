@@ -16,9 +16,6 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
   providers: [NGXToastrService]
 })
 export class ViewSurveyVerifComponent implements OnInit {
-
-  getAppUrl: any;
-  getPhoneVerifSubjUrl: any;
   @Input() appId: any;
   appObj = {
     AppId: 0,
@@ -36,16 +33,8 @@ export class ViewSurveyVerifComponent implements OnInit {
     //});
   }
 
-  initUrl() {
-    this.getAppUrl = URLConstant.GetAppById;
-    // this.getPhoneVerifSubjUrl = URLConstant.GetAppPhoneVerifSubjectListByAppId;
-    this.getPhoneVerifSubjUrl = URLConstant.GetAppSurveyVerifSubjectListByAppId;
-  }
-
   async ngOnInit(): Promise<void> {
     this.phoneVerifObj = new Array();
-    console.log('testing richard')
-    this.initUrl();
     // this.appObj.AppId = this.appId;
 
     await this.GetAppData();
@@ -75,7 +64,7 @@ export class ViewSurveyVerifComponent implements OnInit {
 
   async GetAppData() {
     this.appObj.AppId = this.appId;
-    await this.http.post(this.getAppUrl, this.appObj).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, this.appObj).toPromise().then(
       (response) => {
         this.AppObj = response;
       }
@@ -84,7 +73,7 @@ export class ViewSurveyVerifComponent implements OnInit {
 
   async GetPhnVerfSubjData() {
     if (this.appObj.AppId != 0) {
-      await this.http.post(this.getPhoneVerifSubjUrl, this.appObj).toPromise().then(
+      await this.http.post(URLConstant.GetAppSurveyVerifSubjectListByAppId, this.appObj).toPromise().then(
         (response) => {
           this.phoneVerifObj = response;
         }

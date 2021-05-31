@@ -37,9 +37,6 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
   currentEditedIndex: any;
   closeResult: any;
   selectedProfessionCode: any;
-  getCustContactPersonPersonalUrl: any;
-  getRefMasterUrl: any;
-  getRefProfessionUrl: any;
   MouCustPersonalContactPersonObj: MouCustPersonalContactPersonObj;
   refMasterObj = {
     RefMasterTypeCode: ""
@@ -113,7 +110,6 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     this.MaxDate = this.UserAccess.BusinessDt;
     this.bindCopyFrom();
     this.initLookup();
-    this.initUrl();
     this.bindAllRefMasterObj();
     this.initContactPersonAddrObj();
   }
@@ -304,7 +300,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
 
   setProfessionName(professionCode) {
     this.professionObj.ProfessionCode = professionCode;
-    this.http.post(this.getRefProfessionUrl, {Code : professionCode}).subscribe(
+    this.http.post(URLConstant.GetRefProfessionByCode, {Code : professionCode}).subscribe(
       (response) => {
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
         this.InputLookupProfessionObj.jsonSelect = response;
@@ -335,12 +331,6 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     this.InputLookupProfessionObj.isRequired = false;
   }
 
-  initUrl() {
-    this.getCustContactPersonPersonalUrl = URLConstant.GetAppCustPersonalContactPersonsByAppCustPersonalId;
-    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getRefProfessionUrl = URLConstant.GetRefProfessionByCode;
-  }
-
   bindCopyFrom() {
     this.ContactInfoPersonalForm.patchValue({
       CopyFromContactPerson: this.copyToContactPersonAddrObj[0].Key
@@ -355,7 +345,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
 
   bindGenderObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
@@ -368,7 +358,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
 
   bindIdTypeObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.IdTypeObj = response[CommonConstant.ReturnObj];
         if (this.IdTypeObj.length > 0) {
@@ -380,7 +370,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
 
   bindCustRelationshipObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CustRelationshipObj = response[CommonConstant.ReturnObj];
         if (this.CustRelationshipObj.length > 0) {

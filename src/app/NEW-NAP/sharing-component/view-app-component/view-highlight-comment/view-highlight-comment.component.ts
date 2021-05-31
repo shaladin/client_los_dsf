@@ -116,10 +116,6 @@ export class ViewHighlightCommentComponent implements OnInit {
   }
 
   Save(enjiForm) {
-    var url;
-    //url = URLConstant.AddCustHighlightComment;
-    url = URLConstant.AddAppCustHighlightComment;
-
     var IdMax = this.listCustHighlightCommentObj.length;
 
     this.custHighlightCommentObj = new CustHighlightCommentObj()
@@ -141,7 +137,7 @@ export class ViewHighlightCommentComponent implements OnInit {
     });
 
 
-    // this.http.post(url,this.custHighlightCommentObj ).subscribe(
+    // this.http.post(URLConstant.AddAppCustHighlightComment,this.custHighlightCommentObj ).subscribe(
     //   (response) => {
     //     this.toastr.successMessage("Saved");
     //     this.HighlightCommenForm.patchValue({
@@ -167,11 +163,7 @@ export class ViewHighlightCommentComponent implements OnInit {
     //   this.toastr.warningMessage(ExceptionConstant.INPUT_MAX_1_COMMENT);
     //   return;
     // }
-
-    var url;
-    // url = URLConstant.AddCustHighlightComment;
-
-    url = URLConstant.AddAppCustHighlightComment;
+    
     var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
     this.custHighlightCommentObj = new CustHighlightCommentObj()
@@ -194,7 +186,7 @@ export class ViewHighlightCommentComponent implements OnInit {
       Notes: ""
     });
 
-    // this.http.post(url,this.custHighlightCommentObj ).subscribe(
+    // this.http.post(URLConstant.AddAppCustHighlightComment,this.custHighlightCommentObj ).subscribe(
     //   (response) => {
     //     this.toastr.successMessage("Saved");
     //     //this.GetListCustHighlightComment(this.CustId);

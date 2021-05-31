@@ -335,9 +335,8 @@ export class ApplicationDataComponent implements OnInit {
       Id: this.appId,
       RowVersion: ""
     };
-    var url = URLConstant.GetAppDetailForTabAddEditAppById;
 
-    this.http.post(url, obj).subscribe(
+    this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, obj).subscribe(
       (response) => {
         this.resultResponse = response;
         this.NapAppModelForm.patchValue({
@@ -450,10 +449,9 @@ export class ApplicationDataComponent implements OnInit {
 
   DictRefPayFreq: any = {};
   getPayFregData() {
-    var url = URLConstant.GetListActiveRefPayFreq;
     var obj = { RowVersion: "" };
 
-    this.http.post(url, obj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefPayFreq, obj).subscribe(
       (response) => {
         var objTemp = response[CommonConstant.ReturnObj];
 
@@ -489,13 +487,12 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   getRefMasterTypeCode(code) {
-    var url = URLConstant.GetRefMasterListKeyValueActiveByCode;
     var obj = {
       RefMasterTypeCode: code,
       RowVersion: ""
     };
 
-    this.http.post(url, obj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, obj).subscribe(
       (response) => {
         var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems[code] = objTemp;

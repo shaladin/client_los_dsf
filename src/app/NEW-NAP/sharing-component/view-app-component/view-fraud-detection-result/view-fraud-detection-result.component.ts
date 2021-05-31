@@ -37,7 +37,6 @@ export class ViewFraudDetectionResultComponent implements OnInit {
   getCustDataByAppId = URLConstant.GetCustDataByAppId;
   getAppDupCheckCustByAppId = URLConstant.GetCustomerDuplicateCheck;
   getFraudDukcapilByIdNo = URLConstant.GetFraudDukcapilByIdNo;
-  getNegativeCustomerDuplicateCheckUrl = URLConstant.GetNegativeCustomerDuplicateCheck;
   getAppAssetByAppId = URLConstant.GetAppAssetByAppId;
   getAssetNegativeDuplicateCheck = URLConstant.GetAssetNegativeDuplicateCheck;
   viewFraudVerifResultObj: UcViewGenericObj = new UcViewGenericObj();
@@ -147,7 +146,7 @@ export class ViewFraudDetectionResultComponent implements OnInit {
 
   getNegativeCustomer(reqObj) {
     //List Negative Cust Duplicate Checking
-    this.http.post(this.getNegativeCustomerDuplicateCheckUrl, reqObj).subscribe(
+    this.http.post(URLConstant.GetNegativeCustomerDuplicateCheck, reqObj).subscribe(
       (response) => {
         this.listNegativeCust = response['ReturnObject'].NegativeCustDuplicate;
         var idxSelected=this.listNegativeCust.findIndex(x=>x.CustNo==this.appCustObj.CustNo);

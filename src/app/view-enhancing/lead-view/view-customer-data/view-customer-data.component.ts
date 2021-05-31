@@ -15,8 +15,6 @@ import { environment } from 'environments/environment';
 export class ViewCustomerDataComponent implements OnInit {
   viewLeadCustomerPersonalMaindata: UcViewGenericObj = new UcViewGenericObj();;
   LeadId: string;
-  GetLeadCustByLeadIdUrl: string;
-  GetListLeadCustSocmedByLeadCustIdUrl: string;
   MrCustTypeCode: string;
   leadCustObj: LeadCustObj = new LeadCustObj();
   leadCustSocmedObj: LeadCustSocmedObj = new LeadCustSocmedObj();
@@ -31,8 +29,6 @@ export class ViewCustomerDataComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params['LeadId'];
     });
-    this.GetLeadCustByLeadIdUrl = URLConstant.GetLeadCustByLeadId;
-    this.GetListLeadCustSocmedByLeadCustIdUrl = URLConstant.GetListLeadCustSocmedByLeadCustId;
   }
 
   ngOnInit() {
@@ -54,13 +50,13 @@ export class ViewCustomerDataComponent implements OnInit {
     this.leadCustObj.LeadId = this.LeadId;
 
     var obj = { Id: this.LeadId };
-    this.http.post(this.GetLeadCustByLeadIdUrl, obj).subscribe(
+    this.http.post(URLConstant.GetLeadCustByLeadId, obj).subscribe(
       response => {
         this.tempLeadCustObj = response;
         this.MrCustTypeCode = this.tempLeadCustObj.MrCustTypeCode;
         this.leadCustSocmedObj.LeadCustId = this.tempLeadCustObj.LeadCustId;
         var objListLeadCustSocmed = { Id: this.tempLeadCustObj.LeadCustId };
-        this.http.post(this.GetListLeadCustSocmedByLeadCustIdUrl, objListLeadCustSocmed).subscribe(
+        this.http.post(URLConstant.GetListLeadCustSocmedByLeadCustId, objListLeadCustSocmed).subscribe(
           response => {
             this.listLeadCustSocmed = response[CommonConstant.ReturnObj];
           }

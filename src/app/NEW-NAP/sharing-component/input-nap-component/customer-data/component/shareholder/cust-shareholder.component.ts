@@ -337,7 +337,7 @@ export class CustShareholderComponent implements OnInit {
     if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       url = URLConstant.GetCustPersonalForCopyMgmntShrholderByCustId;
     }
-    if (event.MrCustTypeCode == CommonConstant.CustTypeCompany) {
+    else if (event.MrCustTypeCode == CommonConstant.CustTypeCompany) {
       url = URLConstant.GetCustCompanyForCopyMgmntShrholderByCustId;
     }
 
