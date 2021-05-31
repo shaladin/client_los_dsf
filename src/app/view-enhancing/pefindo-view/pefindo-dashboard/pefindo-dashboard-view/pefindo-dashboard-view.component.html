@@ -16,7 +16,7 @@
           <label>Total Facility Amount (Open Contract)</label>
         </div>
         <div class="col-md-6">
-          {{PefindoData?.ContractOverview?.TotalFacilityAmount}}
+          {{PefindoData?.ContractOverview?.TotalFacilityAmount | number:'.2':'en-US'}}
         </div>
       </div>
     </div>
@@ -38,7 +38,7 @@
           <label>Total Outstanding Amount (Open Contract)</label>
         </div>
         <div class="col-md-6">
-          {{PefindoData?.ContractOverview?.TotalOutstandingAmount}}
+          {{PefindoData?.ContractOverview?.TotalOutstandingAmount | number:'.2':'en-US'}}
         </div>
       </div>
     </div>
@@ -60,7 +60,7 @@
           <label>Total Collateral Amount</label>
         </div>
         <div class="col-md-6">
-          {{PefindoData?.Dashboard?.Collaterals?.TotalNonCashCollateralValue?.Value}}
+          {{PefindoData?.Dashboard?.Collaterals?.TotalNonCashCollateralValue?.Value | number:'.2':'en-US'}}
         </div>
       </div>
     </div>

@@ -23,15 +23,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngIf = "ContractsSummary.length == 0">
+      <tr *ngIf = "ContractsSummary?.length == 0">
         <td colspan="100%">No Data Available</td>
       </tr>
       <tr *ngFor="let item of ContractsSummary.PaymentCalendarList">
         <td>{{item.Date | date: 'dd-MMM-yyyy'}}</td>
         <td>{{item.ContractsSubmitted}}</td>
-        <td>{{item.PastDueAmount}}</td>
+        <td>{{item.PastDueAmount | number:'.2':'en-US'}}</td>
         <td>{{item.PastDueDays}}</td>
-        <td>{{item.OutstandingAmount}}</td>
+        <td>{{item.OutstandingAmount | number:'.2':'en-US'}}</td>
         <td>{{item.NegativeStatusOfContract}}</td>        
       </tr>
     </tbody>

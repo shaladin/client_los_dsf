@@ -1,17 +1,25 @@
 <div class="col-lg-12">
-    <div *ngFor="let itemHeader of OtherData.OtherData">
-        <label style="font-weight: bold;">{{itemHeader.SourceName}}</label>
-        <div *ngFor="let item of itemHeader.Items">
-            <div class="col-md-10">
-                <div class="form-group row">
-                    <div class="col-md-3">
-                        {{item.Label}}
-                    </div>
-                    <div class="col-md-6">
-                        {{item.Value}}
+    <div *ngIf="OtherData?.OtherData?.length == 0">
+        <label>No Data Available</label>
+    </div>    
+    <div *ngFor="let itemHeader of OtherData.OtherData; let i=index">
+        <lib-ucSubsection [id]="'OtherData' + i + 'id'" [title]="itemHeader.SourceName"
+          [panel]="'OtherData' + i">
+        </lib-ucSubsection>       
+        <div [id]="'OtherData' + i">
+            <div *ngFor="let item of itemHeader.Items">
+                <div class="col-md-10">
+                    <div class="form-group row">
+                        <div class="col-md-3">
+                            {{item.Label}}
+                        </div>
+                        <div class="col-md-6">
+                            {{item.Value}}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>               
+        
     </div>
 </div>
