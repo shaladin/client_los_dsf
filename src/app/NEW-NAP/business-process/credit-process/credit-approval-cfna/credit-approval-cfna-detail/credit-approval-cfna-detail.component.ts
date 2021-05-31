@@ -158,12 +158,12 @@ export class CreditApprovalCfnaDetailComponent implements OnInit {
     this.getEvent = event;
     let isReturn: boolean = false;
     let isReject: boolean = false;
-    let isReturnIndex: number = 0;
+    let returnNotes: string = "";
 
     for(let i in this.getEvent){
       if(this.getEvent[i].ApvResult.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
         isReturn = true;
-        isReturnIndex = parseInt(i);
+        returnNotes += event[i]['Notes'] + (parseInt(i) == 0 ? ", " : "");
       }
       if(this.getEvent[i].ApvResult.toLowerCase() == CommonConstant.ApvResultRejectFinal.toLowerCase()) {
         isReject = true;
@@ -189,7 +189,7 @@ export class CreditApprovalCfnaDetailComponent implements OnInit {
       returnHandlingHObj.AgrmntId = null;
       returnHandlingHObj.ReturnBy = user.UserName;
       returnHandlingHObj.ReturnDt = user.BusinessDt;
-      returnHandlingHObj.ReturnNotes = event[isReturnIndex]['notes'];
+      returnHandlingHObj.ReturnNotes = returnNotes;
       returnHandlingHObj.ReturnFromTrxType = this.AppObj.AppCurrStep;
 
       this.http.post(URLConstant.AddReturnHandlingH, returnHandlingHObj).subscribe(
