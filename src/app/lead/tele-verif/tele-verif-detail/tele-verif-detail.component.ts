@@ -34,12 +34,6 @@ export class TeleVerifDetailComponent implements OnInit {
       this.claimTask();
     }
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
 
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,

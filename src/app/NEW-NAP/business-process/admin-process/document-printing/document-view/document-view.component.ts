@@ -73,20 +73,6 @@ export class DocumentViewComponent implements OnInit {
     }
     else {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocument.json";
-      this.viewGenericObj.ddlEnvironments = [
-        {
-          name: "ApplicationNo",
-          environment: environment.losR3Web
-        },
-        {
-          name: "AggrementNo",
-          environment: environment.losR3Web
-        },
-        {
-          name: "MouCustNo",
-          environment: environment.losR3Web
-        },
-      ];
     }
 
 

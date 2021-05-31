@@ -5,7 +5,6 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-doc-signer-main-info',
@@ -30,16 +29,6 @@ export class DocSignerMainInfoComponent implements OnInit {
         else {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocSigner.json";
         }
-        this.viewGenericObj.ddlEnvironments = [
-          {
-            name: "AppNo",
-            environment: environment.losR3Web
-          },
-          {
-            name: "MouCustNo",
-            environment: environment.losR3Web
-          },
-        ];
       })
   }
 

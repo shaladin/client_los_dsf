@@ -9,7 +9,6 @@ import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletion
 import { ResponseAppCustCompletionCompanyDataObj } from 'app/shared/model/ResponseAppCustCompletionCompanyDataObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
-import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-cust-completion-detail-company',
@@ -73,12 +72,6 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
 
   ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustCompletionCompanyData.json";
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      }
-    ];
     
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
