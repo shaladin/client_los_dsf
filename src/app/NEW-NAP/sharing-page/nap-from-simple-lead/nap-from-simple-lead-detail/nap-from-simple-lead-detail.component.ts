@@ -28,7 +28,7 @@ export class NapFromSimpleLeadDetailComponent implements OnInit {
   @ViewChild("ProdOfr", { read: ViewContainerRef }) private prodOfrLookup: ViewContainerRef;
   @ViewChild("enjiForm") private parentForm: NgForm;
   ProductOfferingNameIdentifier;
-  leadId: string;
+  leadId: number;
   listRefLob: Array<RefMasterObj>;
   NapAppForm = this.fb.group({
     MouCustId: [''],

@@ -13,6 +13,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
+import { ResCalculatePlafondAgrmntXObj } from 'app/shared/model/ResCalculatePlafondAgrmntXObj.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
 
 @Component({
   selector: 'app-loan-object',
@@ -22,19 +25,20 @@ export class LoanObjectComponent implements OnInit {
   @Input() AppId: number;
   @Input() mode: string;
   @Input() isCollateral: boolean;
+  @Input() resCalculatePlafondAgrmntXObj: ResCalculatePlafondAgrmntXObj;
   @Output() ResponseProdOfrUpToDate: EventEmitter<any>;
 
   modal: any;
-  loanObjectInputLookupObj: any;
+  loanObjectInputLookupObj: InputLookupObj;
   AppLoanPurposeId: number;
-  supplierInputLookupObj: any;
+  supplierInputLookupObj: InputLookupObj;
   title: string = "Add Loan Object";
-  objEdit: any;
+  objEdit: AppLoanPurposeObj;
   AppLoanPurposeObj: AppLoanPurposeObj = new AppLoanPurposeObj();
   IsDisburseToCust: boolean;
-  AppObj: any;
+  AppObj: AppObj;
   OfficeCode: string;
-  RefProdCmptSupplSchm: any;
+  RefProdCmptSupplSchm: ProdOfferingDObj;
   isCFNA: boolean = false;
   isProdOfrUpToDate: boolean = true;
   missingProdOfrComp: string;
@@ -45,7 +49,7 @@ export class LoanObjectComponent implements OnInit {
     SelfFinancing: ['', [Validators.required, Validators.min(-1)]],
     FinancingAmount: ['']
   })
-  resultData: any;
+  resultData: Array<AppLoanPurposeObj>;
   result: any;
   closeResult: string;
 
@@ -73,6 +77,16 @@ export class LoanObjectComponent implements OnInit {
   }
 
   async editLoanObject(id, content) {
+    if (this.isCFNA && this.resCalculatePlafondAgrmntXObj == undefined) {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_INPUT_AGREEMENT_PARENT);
+      return;
+    }
+
+    if (this.isCFNA && this.resCalculatePlafondAgrmntXObj.IsAppInProgress) {
+      this.toastr.warningMessage(ExceptionConstant.THERE_IS_APP_ON_PROGRESS);
+      return false;
+    }
+
     this.mode = "edit";
     this.AppLoanPurposeId = id;
     this.title = "Edit Loan Object";
@@ -82,7 +96,7 @@ export class LoanObjectComponent implements OnInit {
       Id: this.AppLoanPurposeId
     };
 
-    await this.http.post(URLConstant.GetAppLoanPurposeByAppLoanPurposeId, obj).toPromise().then(response => {
+    await this.http.post(URLConstant.GetAppLoanPurposeByAppLoanPurposeId, obj).toPromise().then((response:any) => {
       this.objEdit = response;
       this.MainInfoForm.patchValue({
         IsDisburseToCust: response["IsDisburseToCust"],
@@ -110,6 +124,17 @@ export class LoanObjectComponent implements OnInit {
   }
 
   open(content) {
+
+    if (this.isCFNA && this.resCalculatePlafondAgrmntXObj == undefined) {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_INPUT_AGREEMENT_PARENT);
+      return;
+    }
+
+    if (this.isCFNA && this.resCalculatePlafondAgrmntXObj.IsAppInProgress) {
+      this.toastr.warningMessage(ExceptionConstant.THERE_IS_APP_ON_PROGRESS);
+      return false;
+    }
+
     this.mode = "add";
     this.objEdit = undefined;
     this.GetAppData();
@@ -158,7 +183,7 @@ export class LoanObjectComponent implements OnInit {
 
   async GetAppData() {
     await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
-      (response) => {
+      (response: any) => {
         this.AppObj = response;
         this.OfficeCode = this.AppObj.OriOfficeCode;
         if (this.AppObj.LobCode == CommonConstant.CFNA) {
@@ -185,12 +210,11 @@ export class LoanObjectComponent implements OnInit {
                   appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
 
                   this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
-                    (response) => {
+                    (response: any) => {
                       if (response && response["StatusCode"] == "200") {
                         this.RefProdCmptSupplSchm = response;
                       }
                       else {
-                        // throw new Error("Suppl Schm component not found, please use the latest product offering");
                         this.isProdOfrUpToDate = false;
                         this.missingProdOfrComp = CommonConstant.RefProdCompntSupplSchm;
                         this.ResponseProdOfrUpToDate.emit({ isProdOfrUpToDate: this.isProdOfrUpToDate, missingProdOfrComp: this.missingProdOfrComp });
@@ -203,7 +227,6 @@ export class LoanObjectComponent implements OnInit {
                 }
               }
               else {
-                // throw new Error("Disburse To Cust component not found, please use the latest product offering");
                 this.isProdOfrUpToDate = false;
                 this.missingProdOfrComp = CommonConstant.RefProdCompntCodeDisburseToCust;
                 this.ResponseProdOfrUpToDate.emit({ isProdOfrUpToDate: this.isProdOfrUpToDate, missingProdOfrComp: this.missingProdOfrComp });
@@ -294,6 +317,9 @@ export class LoanObjectComponent implements OnInit {
       this.AppLoanPurposeObj.AppLoanPurposeId = this.objEdit.AppLoanPurposeId;
       this.AppLoanPurposeObj.RowVersion = this.objEdit.RowVersion;
       if (this.isCFNA) {
+        if (!this.checkPlafondAgrmnt(this.AppLoanPurposeObj.AppLoanPurposeId)) {
+          return;
+        }
         this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
           (response) => {
             this.http.post(URLConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
@@ -319,6 +345,9 @@ export class LoanObjectComponent implements OnInit {
     }
     else {
       if (this.isCFNA) {
+        if (!this.checkPlafondAgrmnt()) {
+          return;
+        }
         this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
           (response) => {
             this.http.post(URLConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
@@ -342,6 +371,39 @@ export class LoanObjectComponent implements OnInit {
           });
       }
     }
+  }
+
+  checkPlafondAgrmnt(appLoanPurposeId: number = 0) {
+    if (this.resCalculatePlafondAgrmntXObj == undefined) {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_INPUT_AGREEMENT_PARENT);
+      return false;
+    }
+
+    if (this.resCalculatePlafondAgrmntXObj.IsAppInProgress) {
+      this.toastr.warningMessage(ExceptionConstant.THERE_IS_APP_ON_PROGRESS);
+      return false;
+    }
+    var plafondUsed = 0;
+
+    if (this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt > this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt) {
+      plafondUsed = this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt;
+    } else {
+      plafondUsed = this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt;
+    }
+
+    if (this.resultData) {
+      for (let i = 0; i < this.resultData.length; i++) {
+        if (appLoanPurposeId == 0 || (appLoanPurposeId != 0 && this.resultData[i].AppLoanPurposeId != appLoanPurposeId)) {
+          plafondUsed -= this.resultData[i].FinancingAmt;
+        }
+      }
+    }
+
+    if (plafondUsed < this.AppLoanPurposeObj.FinancingAmt) {
+      this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
+      return false;
+    }
+    return true;
   }
 
   deleteLoanObject(AppLoanPurposeId) {

@@ -11,6 +11,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-mou-customer-request',
@@ -22,7 +23,7 @@ export class MouCustomerRequestComponent implements OnInit {
   @ViewChild(UcpagingComponent) ucpaging;
   inputPagingObj: UcPagingObj = new UcPagingObj();
   CustNoObj: GenericObj = new GenericObj();
-  user: any;
+  user: CurrentUserContext;
 
   readonly AddLink: string = NavigationConstant.MOU_REQ_DETAIL;
   constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) { }
@@ -30,24 +31,19 @@ export class MouCustomerRequestComponent implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.UNAUTHORIZE_PAGE], {});
-      return;
-    }
-    else {
-      this.inputPagingObj = new UcPagingObj();
-      this.inputPagingObj._url = "./assets/ucpaging/searchMouCustomerRequest.json";
-      this.inputPagingObj.enviromentUrl = environment.losUrl;
-      this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
-      this.inputPagingObj.deleteUrl = "";
-      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchMouCustomerRequest.json";
-      this.inputPagingObj.ddlEnvironments = [
-        {
-          name: "MR_MOU_TYPE_CODE",
-          environment: environment.FoundationR3Url
-        }
-      ];
-    }
+    this.inputPagingObj = new UcPagingObj();
+    this.inputPagingObj._url = "./assets/ucpaging/searchMouCustomerRequest.json";
+    this.inputPagingObj.enviromentUrl = environment.losUrl;
+    this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.inputPagingObj.deleteUrl = "";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchMouCustomerRequest.json";
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "MR_MOU_TYPE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
+
   }
 
   customerView(ev) {

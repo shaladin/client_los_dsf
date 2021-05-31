@@ -2,7 +2,6 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-body">
-        <!-- <div class="px-3"> -->
         <form class="form form-horizontal" [formGroup]="NapAppModelForm"
           (ngSubmit)="NapAppModelForm.valid && ClickSave()" #enjiForm="ngForm">
 
@@ -13,7 +12,7 @@
             <div class="form-group row">
               <!-- Sales Officer -->
               <div class="form-group col-md-2 adins-required">
-                <label class="adInsLabel" translate>Sales Officer </label>
+                <label class="adInsLabel" translate>MO Officer </label>
               </div>
               <div class="col-md-4" *ngIf="isInputLookupObj && !isSalesOfficerCode">
                 <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='NapAppModelForm' [enjiForm]='enjiForm'
@@ -22,19 +21,70 @@
                 <lib-uc-show-errors [control]="NapAppModelForm.controls.SalesOfficerName" [submit]="enjiForm.submitted">
                 </lib-uc-show-errors>
               </div>
-              <label class="col-md-4 adInsLabel" *ngIf="isSalesOfficerCode">{{NapAppModelForm.controls.SalesOfficerName.value}}</label>
+              <label class="col-md-4 adInsLabel"
+                *ngIf="isSalesOfficerCode">{{NapAppModelForm.controls.SalesOfficerName.value}}</label>
               <!-- Sales Supervisor -->
-              <label class="col-md-2 adInsLabel" translate>Sales Supervisor </label>
-              <label class="col-md-4 adInsLabel" *ngIf="NapAppModelForm.controls.SalesHeadName.value">{{NapAppModelForm.controls.SalesHeadName.value}}</label>
+              <label class="col-md-2 adInsLabel" translate>MO Supervisor </label>
+              <label class="col-md-4 adInsLabel"
+                *ngIf="NapAppModelForm.controls.SalesHeadName.value">{{NapAppModelForm.controls.SalesHeadName.value}}</label>
               <label class="col-md-4 adInsLabel" *ngIf="!NapAppModelForm.controls.SalesHeadName.value"> - </label>
             </div>
 
             <div class="form-group row">
               <!-- Sales Notes -->
-              <label class="col-md-2 adInsLabel" translate>Sales Notes</label>
+              <label class="col-md-2 adInsLabel" translate>MO Notes</label>
               <div class="col-md-4">
                 <textarea class="form-control adInsInput width-100-per" id="basicTextarea" formControlName="SalesNotes"
                   rows="3"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <lib-ucSubsection *ngIf="BizTemplateCode == 'CFNA'" [id]="'agreementParentId'" [title]="'Agreement Parent'"
+            [panel]="'agreementParent'">
+          </lib-ucSubsection>
+          <div class="form-body" id="agreementParent" *ngIf="BizTemplateCode == 'CFNA'">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 adins-required-label" translate>Agreement Parent</label>
+                  <div class="col-md-8">
+                    <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupAgrmntParentObj"
+                      *ngIf="isInputLookupObj" [parentForm]="NapAppModelForm" [identifier]="'lookupAgreementParent'"
+                      (lookup)="copyAgrmntParentEvent($event)" #LookupAgreementParent>
+                    </lib-uclookupgeneric>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 adInsLabel" translate>Total Agreement MPF / DT</label>
+                  <label class="col-md-8 adInsLabel" translate>{{totalAgrmntMpfDt}}</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 adInsLabel" translate>Max Tenor</label>
+                  <label class="col-md-8 adInsLabel" translate>{{maxTenor}}</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 adInsLabel" translate>Plafond Amount</label>
+                  <label class="col-md-8 adInsLabel" translate>{{resCalculatePlafondAgrmntXObj?.PlafondAgrmntAmt |
+                    number:'.2':'en-US'}}</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4 adInsLabel" translate>Maximum Plafond Amount</label>
+                  <label class="col-md-8 adInsLabel" translate>{{resCalculatePlafondAgrmntXObj?.MaxPlafondAgrmntAmt |
+                    number:'.2':'en-US'}}</label>
+                </div>
               </div>
             </div>
           </div>
@@ -102,7 +152,8 @@
                   <!-- MOU Cust -->
                   <label class="col-md-2 adInsLabel" translate>MOU Customer</label>
                   <div class="col-md-4">
-                    <select class="form-control adInsInput" style="width: auto" formControlName="MouCustId">
+                    <select class="form-control adInsInput" style="width: auto"
+                      (click)="setTenorOnChange($event.target.value)" formControlName="MouCustId">
                       <option value=null>None</option>
                       <option *ngFor="let it of resMouCustObj" [value]="it.Key">
                         {{it.Value}}
@@ -171,213 +222,229 @@
                   <div class="col-md-8">
                     <lib-ucdropdownlist [dropdownListObj]="ddlMrWopObj" [parentForm]="NapAppModelForm"
                       [enjiForm]="enjiForm" [identifier]="'MrWopCode'"></lib-ucdropdownlist>
+
+                    <div class="form-group row adins-required"
+                      *ngIf="this.NapAppModelForm.controls.MrWopCode.value == 'AUTOCOLLECTION'">
+                      <!-- Customer Bank Account -->
+                      <label class="col-md-4 adInsLabel"> Customer Bank Account </label>
+                      <div class="col-md-8">
+                        <select class="form-control adInsInput" style="width: 50%" formControlName="CustBankAcc"
+                          (change)="selectedBank($event.target.value)"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.CustBankAcc.invalid }">
+                          <option value="">-Select One-</option>
+                          <option *ngFor="let item of listCustBankAcc" [value]="item.AppCustBankAccId">
+                            {{item.BankName}} - {{item.BankAccNo}} - {{item.BankAccName}}
+                          </option>
+                        </select>
+                        <lib-uc-show-errors [control]="NapAppModelForm.controls.CustBankAcc"
+                          [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      </div>
+                    </div>
+
+                    <div class="form-group row adins-required">
+                      <!-- Customer Notification By -->
+                      <label class="col-md-4 adInsLabel" translate>Customer Notification By</label>
+                      <div class="col-md-8">
+                        <lib-ucdropdownlist [dropdownListObj]="ddlMrCustNotifyOptObj" [parentForm]="NapAppModelForm"
+                          [enjiForm]="enjiForm" [identifier]="'MrCustNotifyOptCode'"></lib-ucdropdownlist>
+                      </div>
+                    </div>
+
+
+                    <div class="form-group row adins-required" *ngIf="BizTemplateCode == 'OPL'">
+                      <label class="col-md-4 adInsLabel" translate>Rental Period (In Months)</label>
+                      <div class="col-md-8">
+                        <input type="number" class="form-control adInsInput" style="width: 50%" formControlName="Tenor"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.Tenor.invalid }"
+                          (change)="ChangeNumOfInstallmentTenor()">
+                        <lib-uc-show-errors [control]="NapAppModelForm.controls.Tenor" [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
+              </div>
 
-                <div class="form-group row adins-required">
-                  <!-- Customer Notification By -->
-                  <label class="col-md-4 adInsLabel" translate>Customer Notification By</label>
-                  <div class="col-md-8">
-                    <lib-ucdropdownlist [dropdownListObj]="ddlMrCustNotifyOptObj" [parentForm]="NapAppModelForm"
-                      [enjiForm]="enjiForm" [identifier]="'MrCustNotifyOptCode'"></lib-ucdropdownlist>
+              <div *ngIf="BizTemplateCode != 'OPL'">
+                <lib-ucSubsection [id]="'crossInfomationId'" [title]="'Cross Application/Agreement Information'"
+                  [panel]="'crossInfomation'">
+                </lib-ucSubsection>
+                <div class="form-body" id="crossInfomation">
+                  <div class="form-actions right" *ngIf ="BizTemplateCode != 'CFNA'">
+                    <button type="button" (click)="AddTemp(contentCrossApp)" class="btn btn-raised btn-primary"
+                      translate>
+                      <i class="fa ft-plus"></i> Add
+                    </button>
+                  </div>
+
+                  <!-- Table Cross Application -->
+                  <table class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr class="table-header">
+                        <th style="text-align: center;">
+                          <span class="thead-header" translate>
+                            Application No
+                          </span>
+                        </th>
+                        <th style="text-align: center;">
+                          <span class="thead-header" translate>
+                            Agreement No
+                          </span>
+                        </th>
+                        <th style="text-align: left;">
+                          <span class="thead-header" translate>
+                            Customer Name
+                          </span>
+                        </th>
+                        <th *ngIf ="BizTemplateCode != 'CFNA'"><span translate class="thead-header" name='action'>Delete</span></th>
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="resultCrossApp?.length == 0">
+                      <tr>
+                        <td colspan="100%">No Data Available</td>
+                      </tr>
+                    </tbody>
+
+                    <tbody>
+                      <tr *ngFor="let item of resultCrossApp; let i = index">
+                        <td style="text-align: center;">{{item.CrossAppNo}}</td>
+                        <td style="text-align: center;">{{item.CrossAgrmntNo}}</td>
+                        <td style="text-align: left;">{{item.CustName}}</td>
+                        <td *ngIf ="agrmntParentNo != item.CrossAgrmntNo || BizTemplateCode != 'CFNA'">
+                          <a class="warning p-0" (click)="DeleteCrossApp(i)">
+                            <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+
+                  <!-- Model Card -->
+                  <ng-template #contentCrossApp let-c="close" let-d="dismiss">
+                    <div class="modal-header">
+                      <h4 class="modal-title" translate>Add Cross Application</h4>
+                      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <app-search-cross-app [ListCrossAppObjInput]="ListCrossAppObj"
+                      (objTempOutput)="GetDataTemp($event)">
+                    </app-search-cross-app>
+                  </ng-template>
+                </div>
+              </div>
+
+              <!-- Cross Info -->
+              <!-- Loan Object -->
+              <div *ngIf="BizTemplateCode != 'OPL'">
+                <app-loan-object [AppId]="appId" [mode]="mode" [isCollateral]="true"
+                  (ResponseProdOfrUpToDate)="MissingProdOfrHandler($event)" *ngIf="IsLoanObject"></app-loan-object>
+                <lib-ucSubsection [id]="'mailingAddrId'" [title]="'Mailing Address'" [panel]="'mailingAddr'">
+                </lib-ucSubsection>
+                <div id="mailingAddr">
+                  <div class="form-group row">
+                    <label class="col-md-2" translate>Copy Address From</label>
+                    <div class="col-md-4">
+                      <div class="input-group">
+                        <select class="form-control" formControlName="CopyFromMailing">
+                          <option *ngFor="let item of copyToMailingTypeObj" [value]="item.Key">{{item.Value}}</option>
+                        </select>
+                        <div class="input-group-append">
+                          <span class="input-group-btn">
+                            <button class="btn btn-raised btn-primary" type="button" (click)="copyToMailing()"
+                              translate>
+                              <i class="fa fa-check-square-o"></i>Copy
+                            </button>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <lib-ucaddress #UcAddrGrp *ngIf="IsAddrReady" [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
+                    [identifier]="'Address'" [UCAddrForm]="NapAppModelForm"></lib-ucaddress>
+                </div>
+              </div>
+
+              <div *ngIf="BizTemplateCode != 'OPL'">
+              <lib-ucSubsection [id]="'restDataId'" [title]="'Restructuring Data'" [panel]="'restData'">
+              </lib-ucSubsection>
+              <div class="form-body" id="restData">
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group row">
+                      <div class="form-group col-md-4 ">
+                        <label class="adins-required-label" translate>Characteristic of Credit </label>
+                      </div>
+                      <div class="col-md-8">
+                        <select class="form-control adInsInput" style="width: 50%" formControlName="CharaCredit"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.CharaCredit.invalid }"
+                          (change)="ChangeCharacteristicOfCredit()">
+                          <option value="">-Select One-</option>
+                          <option *ngFor="let it of applicationDDLitems['CHARACTERISTIC_OF_CREDIT']" value="{{it.Key}}">
+                            {{it.Value}}
+                          </option>
+                        </select>
+                        <lib-uc-show-errors [control]="NapAppModelForm.controls.CharaCredit"
+                          [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
+                    <div
+                      *ngIf="NapAppModelForm.controls.CharaCredit.value != 'OTHER' && NapAppModelForm.controls.CharaCredit.value != ''">
+                      <div class="form-group row">
+                        <label class="col-md-4 adInsLabel" translate>Previous Agreement No </label>
+                        <div class="col-md-8">
+                          <input type="text" class="form-control adInsInput" formControlName="PrevAgrNo"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.PrevAgrNo.invalid }">
+                          <lib-uc-show-errors [control]="NapAppModelForm.controls.PrevAgrNo"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-4 adins-required-label" translate>Way of Restructure</label>
+                        <div class="col-md-8">
+                          <select class="form-control adInsInput" style="width: 50%" formControlName="WayRestructure"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.WayRestructure.invalid }">
+                            <option value="">-Select One-</option>
+                            <option *ngFor="let it of applicationDDLitems['WAY_OF_RESTRUCTURE']" value="{{it.Key}}">
+                              {{it.Value}}
+                            </option>
+                          </select>
+                          <lib-uc-show-errors [control]="NapAppModelForm.controls.WayRestructure"
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-md-4 adins-required-label" translate>Economic Sector (Slik)</label>
+                      <div class="col-md-8">
+                        <lib-uclookupgeneric *ngIf="isInputLookupObj" [lookupInput]="inputLookupEconomicSectorObj"
+                          [parentForm]='NapAppModelForm' [enjiForm]='enjiForm' [identifier]="'economicSectorIdentifier'"
+                          (lookup)="getLookupEconomicSector($event)">
+                        </lib-uclookupgeneric>
+                        <lib-uc-show-errors [control]="NapAppModelForm.controls.MrSlikSecEcoDescr"
+                          [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-
-                <div class="form-group row adins-required" *ngIf="BizTemplateCode == 'OPL'">
-                  <label class="col-md-4 adInsLabel" translate>Rental Period (In Months)</label>
-                  <div class="col-md-8">
-                    <input type="number" class="form-control adInsInput" style="width: 50%" formControlName="Tenor"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.Tenor.invalid }"
-                      (change)="ChangeNumOfInstallmentTenor()">
-                    <lib-uc-show-errors [control]="NapAppModelForm.controls.Tenor" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
-                  </div>
-                </div>
-
               </div>
             </div>
-          </div>
 
-          <div *ngIf="BizTemplateCode != 'OPL'">
-            <lib-ucSubsection [id]="'crossInfomationId'" [title]="'Cross Application/Agreement Information'"
-              [panel]="'crossInfomation'">
-            </lib-ucSubsection>
-            <div class="form-body" id="crossInfomation">
               <div class="form-actions right">
-                <button type="button" (click)="AddTemp(contentCrossApp)" class="btn btn-raised btn-primary" translate>
-                  <i class="fa ft-plus"></i> Add
+                <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
+                  translate>
+                  <i class="ft-x"></i> Cancel
+                </button>
+                <button type="submit" class="btn btn-raised btn-primary" translate>
+                  <i class="far fa-check-square"></i> Save
                 </button>
               </div>
 
-              <!-- Table Cross Application -->
-              <table class="table table-responsive-md text-center table-hover">
-                <thead>
-                  <tr class="table-header">
-                    <th style="text-align: center;">
-                      <span class="thead-header" translate>
-                        Application No
-                      </span>
-                    </th>
-                    <th style="text-align: center;">
-                      <span class="thead-header" translate>
-                        Agreement No
-                      </span>
-                    </th>
-                    <th style="text-align: left;">
-                      <span class="thead-header" translate>
-                        Customer Name
-                      </span>
-                    </th>
-                    <th><span translate class="thead-header" name='action'>Delete</span></th>
-                  </tr>
-                </thead>
-                <tbody *ngIf="resultCrossApp?.length == 0">
-                  <tr>
-                    <td colspan="100%">No Data Available</td>
-                  </tr>
-                </tbody>
-
-                <tbody>
-                  <tr *ngFor="let item of resultCrossApp; let i = index">
-                    <td style="text-align: center;">{{item.CrossAppNo}}</td>
-                    <td style="text-align: center;">{{item.CrossAgrmntNo}}</td>
-                    <td style="text-align: left;">{{item.CustName}}</td>
-                    <td>
-                      <a class="warning p-0" (click)="DeleteCrossApp(i)">
-                        <i class="ft-trash-2 font-medium-3 mr-2"></i>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <!-- Model Card -->
-              <ng-template #contentCrossApp let-c="close" let-d="dismiss">
-                <div class="modal-header">
-                  <h4 class="modal-title" translate>Add Cross Application</h4>
-                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')" translate>
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <app-search-cross-app [ListCrossAppObjInput]="ListCrossAppObj" (objTempOutput)="GetDataTemp($event)">
-                </app-search-cross-app>
-              </ng-template>
-            </div>
-          </div>
-
-          <!-- Cross Info -->
-          <!-- Loan Object -->
-          <div *ngIf="BizTemplateCode != 'OPL'">
-            <app-loan-object [AppId]="appId" [mode]="mode" [isCollateral]="true"
-              (ResponseProdOfrUpToDate)="MissingProdOfrHandler($event)" *ngIf="IsLoanObject"></app-loan-object>
-            <lib-ucSubsection [id]="'mailingAddrId'" [title]="'Mailing Address'" [panel]="'mailingAddr'">
-            </lib-ucSubsection>
-            <div id="mailingAddr">
-              <div class="form-group row">
-                <label class="col-md-2" translate>Copy Address From</label>
-                <div class="col-md-4">
-                  <div class="input-group">
-                    <select class="form-control" formControlName="CopyFromMailing">
-                      <option *ngFor="let item of copyToMailingTypeObj" [value]="item.Key">{{item.Value}}</option>
-                    </select>
-                    <div class="input-group-append">
-                      <span class="input-group-btn">
-                        <button class="btn btn-raised btn-primary" type="button" (click)="copyToMailing()" translate>
-                          <i class="fa fa-check-square-o"></i>Copy
-                        </button>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <lib-ucaddress #UcAddrGrp *ngIf="IsAddrReady" [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
-                [identifier]="'Address'" [UCAddrForm]="NapAppModelForm"></lib-ucaddress>
-            </div>
-          </div>
-
-          <lib-ucSubsection [id]="'restDataId'" [title]="'Restructuring Data'" [panel]="'restData'">
-          </lib-ucSubsection>
-          <div class="form-body" id="restData">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group row">
-                  <div class="form-group col-md-4 ">
-                    <label class="adins-required-label" translate>Characteristic of Credit </label>
-                  </div>
-                  <div class="col-md-8">
-                    <select class="form-control adInsInput" style="width: 50%" formControlName="CharaCredit"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.CharaCredit.invalid }"
-                      (change)="ChangeCharacteristicOfCredit()">
-                      <option value="">-Select One-</option>
-                      <option *ngFor="let it of applicationDDLitems['CHARACTERISTIC_OF_CREDIT']" value="{{it.Key}}">
-                        {{it.Value}}
-                      </option>
-                    </select>
-                    <lib-uc-show-errors [control]="NapAppModelForm.controls.CharaCredit" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
-                  </div>
-                </div>
-                <div
-                  *ngIf="NapAppModelForm.controls.CharaCredit.value != 'OTHER' && NapAppModelForm.controls.CharaCredit.value != ''">
-                  <div class="form-group row">
-                    <label class="col-md-4 adInsLabel" translate>Previous Agreement No </label>
-                    <div class="col-md-8">
-                      <input type="text" class="form-control adInsInput" formControlName="PrevAgrNo"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.PrevAgrNo.invalid }">
-                      <lib-uc-show-errors [control]="NapAppModelForm.controls.PrevAgrNo" [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-md-4 adins-required-label" translate>Way of Restructure</label>
-                    <div class="col-md-8">
-                      <select class="form-control adInsInput" style="width: 50%" formControlName="WayRestructure"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.WayRestructure.invalid }">
-                        <option value="">-Select One-</option>
-                        <option *ngFor="let it of applicationDDLitems['WAY_OF_RESTRUCTURE']" value="{{it.Key}}">
-                          {{it.Value}}
-                        </option>
-                      </select>
-                      <lib-uc-show-errors [control]="NapAppModelForm.controls.WayRestructure"
-                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-4 adins-required-label" translate>Economic Sector (Slik)</label>
-                  <div class="col-md-8">
-                    <lib-uclookupgeneric *ngIf="isInputLookupObj" [lookupInput]="inputLookupEconomicSectorObj"
-                      [parentForm]='NapAppModelForm' [enjiForm]='enjiForm' [identifier]="'economicSectorIdentifier'"
-                      (lookup)="getLookupEconomicSector($event)">
-                    </lib-uclookupgeneric>
-                    <lib-uc-show-errors [control]="NapAppModelForm.controls.MrSlikSecEcoDescr"
-                      [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-actions right">
-            <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
-              translate>
-              <i class="ft-x"></i> Cancel
-            </button>
-            <button type="submit" class="btn btn-raised btn-primary" translate>
-              <i class="far fa-check-square"></i> Save
-            </button>
-            <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()" translate>
-              <i class="fa fa-check-square-o"></i> Test
-            </button> -->
-            <!-- <button type="submit" (click)="ClickSave('next')" class="btn btn-raised btn-primary" translate>
-              <i class="fa fa-check-square-o"></i> Next
-            </button> -->
-          </div>
-
         </form>
-        <!-- </div> -->
       </div>
     </div>
   </div>

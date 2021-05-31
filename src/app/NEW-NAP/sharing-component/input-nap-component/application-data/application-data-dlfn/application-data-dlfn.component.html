@@ -1,0 +1,371 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="row text-left">
+      <div class="card-body">
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="SalesAppInfoForm"
+            (ngSubmit)="SalesAppInfoForm.valid && SaveForm()" #enjiForm="ngForm">
+            <div class="form-body">
+              <div class="row text-left">
+                <div class="card-body">
+                  <div class="px-3">
+                    <lib-ucSubsection [id]="'salesInfoId'" [title]="'Sales Information'" [panel]="'salesInfo'">
+                    </lib-ucSubsection>
+                    <div class="form-body" id="salesInfo">
+
+
+                      <div class="form-group row">
+                        <!-- Sales Officer -->
+                        <div class="form-group col-md-2 adins-required">
+                          <label class="adInsLabel">MO Officer </label>
+                        </div>
+                        <div class="col-md-4" *ngIf="isInputLookupObj">
+                          <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='SalesAppInfoForm'
+                            [enjiForm]='enjiForm' [identifier]="'employeeIdentifier'"
+                            (lookup)="getLookupEmployeeResponse($event)">
+                          </lib-uclookupgeneric>
+                          <lib-uc-show-errors [control]="SalesAppInfoForm.controls.SalesOfficerName"
+                            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
+                        <!-- Sales Supervisor -->
+                        <label class="col-md-2 adInsLabel">MO Supervisor </label>
+                        <label class="col-md-4 adInsLabel">{{SalesAppInfoForm.controls.SalesHeadName.value}} </label>
+                      </div>
+
+                      <div class="form-group row">
+                        <!-- Sales Notes -->
+                        <label class="col-md-2 adInsLabel">MO Notes </label>
+                        <div class="col-md-4">
+                          <textarea class="form-control adInsInput width-75-per" id="basicTextarea"
+                            formControlName="SalesNotes" rows="3"></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                    <lib-ucSubsection [id]="'applicationInfoId'" [title]="'Application Information'"
+                      [panel]="'applicationInfo'">
+                    </lib-ucSubsection>
+                    <div id="applicationInfo">
+                      <div class="form-group row">
+                        <label class="col-md-3 adins-required-label" translate>MOU No</label>
+                        <div class="col-md-9">
+                          <select class="form-control adInsInput" style="width: auto"
+                            (change)="SetPayFreq(SalesAppInfoForm.controls.MouCustId.value)" formControlName="MouCustId"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MouCustId.invalid }">
+                            <option *ngFor="let cm of allMouCust" value="{{cm.MouCustId}}">
+                              {{cm.MouNo}}</option>
+                          </select>
+                          <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MouCustId"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row" *ngIf="IsMouSelect">
+                        <label class="col-md-3 adins-label" translate>Term Of Payment Interest Rate Percent (%)</label>
+                        <div class="col-md-9">
+                          <label class="col-md-3 adins-label" translate>{{TopIntrstRatePrcnt}}</label>
+                        </div>
+                      </div>
+                      <div class="form-group row" *ngIf="IsMouSelect">
+                        <label class="col-md-3 adins-label" translate>Interest Rate (%)</label>
+                        <div class="col-md-9">
+                          <label class="col-md-3 adins-label" translate>{{IntrstRatePrcnt}}</label>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-3 adins-required-label" translate>Installment Type</label>
+                        <div class="col-md-9">
+                          <select class="form-control adInsInput" style="width: auto" formControlName="MrInstTypeCode"
+                            (change)="CheckInstType()"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MrInstTypeCode.invalid }">
+                            <option *ngFor="let it of allInType" value="{{it.Key}}">
+                              {{it.Value}}</option>
+                          </select>
+                          <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MrInstTypeCode"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row" *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
+                        <label class="col-md-3 adins-required-label" translate>TOP Type</label>
+                        <div class="col-md-9">
+                          <select class="form-control adInsInput" style="width: auto" formControlName="TopBased"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.TopBased.invalid }">
+                            <option *ngFor="let cm of allTopBased" value="{{cm.Key}}">
+                              {{cm.Value}}</option>
+                          </select>
+                          <lib-uc-show-errors [control]="SalesAppInfoForm.controls.TopBased"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'SINGLE'">
+                        <div class="form-group row">
+                          <label class="col-md-3 adins-required-label" translate>Term Of Payment (Days)</label>
+                          <div class="col-md-9">
+                            <input type="text" class="form-control adInsInput width-30-per" formControlName="TopDays"
+                              [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.TopDays.invalid }">
+                            <lib-uc-show-errors [control]="SalesAppInfoForm.controls.TopDays"
+                              [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div *ngIf="SalesAppInfoForm.controls.MrInstTypeCode.value == 'MULTIPLE'">
+                        <div class="form-group row">
+                          <label class="col-md-3 adins-required-label" translate>Tenor</label>
+                          <div class="col-md-9">
+                            <input type="text" class="form-control adInsInput width-30-per" formControlName="Tenor"
+                              (change)="CalculateNumOfInst(false, this.SalesAppInfoForm.controls.Tenor.value)"
+                              [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.Tenor.invalid }">
+                            <lib-uc-show-errors [control]="SalesAppInfoForm.controls.Tenor"
+                              [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-md-3 adins-required-label" translate>Payment Frequency</label>
+                          <div class="col-md-9">
+                            <select class="form-control adInsInput" style="width: auto" formControlName="PayFreqCode">
+                              <option value="{{allPayFreq?.PayFreqCode}}">
+                                {{allPayFreq?.Descr}}</option>
+                            </select>
+                            <lib-uc-show-errors [control]="SalesAppInfoForm.controls.PayFreqCode"
+                              [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label class="col-md-3 adins-required-label" translate>Num Of Installment</label>
+                          <div class="col-md-9">
+                            <input type="text" class="form-control adInsInput width-30-per" formControlName="NumOfInst"
+                              [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.NumOfInst.invalid }">
+                            <lib-uc-show-errors [control]="SalesAppInfoForm.controls.NumOfInst"
+                              [submit]="enjiForm.submitted">
+                            </lib-uc-show-errors>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group row" *ngIf="!this.isSingle">
+                        <label class="col-md-3 adins-required-label" translate>Installment Scheme</label>
+                        <div class="col-md-9">
+                          <select class="form-control adInsInput" style="width: auto" formControlName="MrInstSchemeCode"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MrInstSchemeCode.invalid }">
+                            <option *ngFor="let item of allInScheme" value="{{item.Key}}">
+                              {{item.Value}}</option>
+                          </select>
+                          <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MrInstSchemeCode"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-3 adins-required-label">Is Disclosed</label>
+                        <div class="col-md-9">
+                          <input type="checkbox" class="border-primary" formControlName="IsDisclosed">
+                        </div>
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.IsDisclosed"
+                          [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-3 adins-required-label" translate>Way of Payment</label>
+                        <div class="col-md-9">
+                          <select (change)="setBankAcc($event.target.value)" class="form-control adInsInput"
+                            style="width: auto" formControlName="MrWopCode"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MrWopCode.invalid }">
+                            <option *ngFor="let wp of allWOP" value="{{wp.Key}}">
+                              {{wp.Value}}</option>
+                          </select>
+                          <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MrWopCode"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row adins-required">
+                        <!-- Customer Bank Account -->
+                        <label class="col-md-3 adInsLabel"
+                          *ngIf="this.SalesAppInfoForm.controls.MrWopCode.value == 'AUTOCOLLECTION'"> Customer Bank
+                          Account
+                        </label>
+                        <div class="col-md-9"
+                          *ngIf="this.SalesAppInfoForm.controls.MrWopCode.value == 'AUTOCOLLECTION'">
+                          <select class="form-control adInsInput" style="width: 50%" formControlName="CustBankAcc"
+                            (change)="selectedBank($event.target.value)"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.CustBankAcc.invalid }">
+                            <option value="">-Select One-</option>
+                            <option *ngFor="let item of listCustBankAcc" [value]="item.AppCustBankAccId">
+                              {{item.BankName}} - {{item.BankAccNo}} - {{item.BankAccName}}
+                            </option>
+                          </select>
+                          <lib-uc-show-errors [control]="SalesAppInfoForm.controls.CustBankAcc"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-3 adins-required-label" translate>Application Source</label>
+                        <div class="col-md-9">
+                          <select class="form-control adInsInput" style="width: auto" formControlName="MrAppSourceCode"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.MrAppSourceCode.invalid }">
+                            <option *ngFor="let app of allAppSource" value="{{app.Key}}">
+                              {{app.Value}}</option>
+                          </select>
+                          <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MrAppSourceCode"
+                            [submit]="enjiForm.submitted">
+                          </lib-uc-show-errors>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Cross Info -->
+                    <lib-ucSubsection [id]="'crossInfomationId'" [title]="'Cross Application/Agreement Information'"
+                      [panel]="'crossInfomation'">
+                    </lib-ucSubsection>
+                    <div class="form-body" id="crossInfomation">
+                      <div class="form-actions right">
+                        <button type="button" (click)="AddTemp(contentCrossApp)" class="btn btn-raised btn-primary"
+                          translate>
+                          <i class="fa fa-plus"></i> Add
+                        </button>
+                      </div>
+
+                      <!-- Table Cross Application -->
+                      <table class="table table-responsive-md text-center table-hover">
+                        <thead>
+                          <tr class="table-header">
+                            <th style="text-align: center;"><span class="thead-header" translate>Application No
+                              </span>
+                            </th>
+                            <th style="text-align: center;"><span class="thead-header" translate>Agreement No
+                              </span>
+                            </th>
+                            <th style="text-align: left;"><span class="thead-header" translate>Customer Name
+                              </span>
+                            </th>
+                            <th><span translate class="thead-header" name='action'>Delete</span></th>
+                          </tr>
+                        </thead>
+                        <tbody *ngIf="resultCrossApp?.length == 0">
+                          <tr>
+                            <td colspan="100%">No Data Available</td>
+                          </tr>
+                        </tbody>
+                        <tbody>
+                          <tr *ngFor="let item of resultCrossApp; let i = index">
+                            <td style="text-align: center;">{{item.CrossAppNo}}</td>
+                            <td style="text-align: center;">{{item.CrossAgrmntNo}}</td>
+                            <td style="text-align: left;">{{item.CustName}}</td>
+                            <td>
+                              <a class="warning p-0" (click)="DeleteCrossApp(i)">
+                                <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                              </a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <!-- Model Card -->
+                      <ng-template #contentCrossApp let-c="close" let-d="dismiss">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Add Cross Application</h4>
+                          <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <app-search-cross-app [ListCrossAppObjInput]="ListCrossAppObj"
+                          (objTempOutput)="GetDataTemp($event)">
+                        </app-search-cross-app>
+                      </ng-template>
+                    </div>
+
+                    <div>
+                      <lib-ucSubsection [id]="'restDataId'" [title]="'Restructuring Data'" [panel]="'restData'">
+                      </lib-ucSubsection>
+                      <div class="form-body" id="restData">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="form-group row">
+                              <div class="form-group col-md-4 adins-required">
+                                <label class="adins-required-label">Characteristic of Credit </label>
+                              </div>
+                              <div class="col-md-8">
+                                <select class="form-control adInsInput" style="width: 50%" formControlName="CharaCredit"
+                                  [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.CharaCredit.invalid }"
+                                  (change)="ChangeCharacteristicOfCredit()">
+                                  <option value="">-Select One-</option>
+                                  <option *ngFor="let it of allCharacteristicCredit" value="{{it.Key}}">
+                                    {{it.Value}}
+                                  </option>
+                                </select>
+
+                                <lib-uc-show-errors [control]="SalesAppInfoForm.controls.CharaCredit"
+                                  [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                              </div>
+                            </div>
+                            <div
+                              *ngIf="SalesAppInfoForm.controls.CharaCredit.value != 'OTHER' && SalesAppInfoForm.controls.CharaCredit.value != ''">
+                              <div class="form-group row">
+                                <label class="col-md-4 adInsLabel">Previous Agreement No </label>
+                                <div class="col-md-8">
+                                  <input type="text" class="form-control adInsInput" formControlName="PrevAgrNo"
+                                    [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.PrevAgrNo.invalid }">
+                                  <lib-uc-show-errors [control]="SalesAppInfoForm.controls.PrevAgrNo"
+                                    [submit]="enjiForm.submitted">
+                                  </lib-uc-show-errors>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-md-4 adins-required-label">Way of Restructure</label>
+                                <div class="col-md-8">
+                                  <select class="form-control adInsInput" style="width: 50%"
+                                    formControlName="WayRestructure"
+                                    [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.WayRestructure.invalid }">
+                                    <option value="">-Select One-</option>
+                                    <option *ngFor="let it of allWayRestructure" value="{{it.Key}}">
+                                      {{it.Value}}
+                                    </option>
+                                  </select>
+                                  <lib-uc-show-errors [control]="SalesAppInfoForm.controls.WayRestructure"
+                                    [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label class="col-md-4 adins-required-label">Economic Sector (Slik)</label>
+                              <div class="col-md-8">
+                                <lib-uclookupgeneric *ngIf="isInputLookupObj"
+                                  [lookupInput]="inputLookupEconomicSectorObj" [parentForm]='SalesAppInfoForm'
+                                  [enjiForm]='enjiForm' [identifier]="'economicSectorIdentifier'"
+                                  (lookup)="getLookupEconomicSector($event)">
+                                </lib-uclookupgeneric>
+                                <lib-uc-show-errors [control]="SalesAppInfoForm.controls.MrSlikSecEcoDescr"
+                                  [submit]="enjiForm.submitted">
+                                </lib-uc-show-errors>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="form-actions right">
+                      <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+                        <i class="ft-x"></i> Cancel
+                      </button>
+                      <button type="submit" class="btn btn-raised btn-primary" translate>
+                        <i class="fa fa-check-square-o"></i> Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

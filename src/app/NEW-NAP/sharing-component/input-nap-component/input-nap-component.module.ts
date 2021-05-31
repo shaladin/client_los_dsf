@@ -80,6 +80,11 @@ import { AssetOplMainInfoComponent } from "./asset-opl-main-info/asset-opl-main-
 import { FinancialDataOplEditComponent } from "./financial-data-opl/detail/financial-data-opl-detail.component";
 import { FinancialDataOplComponent } from "./financial-data-opl/financial-data-opl.component";
 import { AssetDataOplComponent } from "./multi-asset-data/asset-data-opl/asset-data-opl.component";
+import { AppCustAssetDetailComponent } from "./app-cust-asset/app-cust-asset-detail/app-cust-asset-detail.component";
+import { AppCustAssetComponent } from "./app-cust-asset/app-cust-asset.component";
+import { AppCustAssetOldNapDetailComponent } from "./app-cust-asset-old-nap/app-cust-asset-old-nap-detail/app-cust-asset-old-nap-detail.component";
+import { AppCustAssetOldNapComponent } from "./app-cust-asset-old-nap/app-cust-asset-old-nap.component";
+import { ApplicationDataDlfnComponent } from "./application-data/application-data-dlfn/application-data-dlfn.component";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -161,11 +166,12 @@ export const customCurrencyMaskConfig = {
     AssetOplMainInfoComponent,
     FinancialDataOplEditComponent,
     FinancialDataOplComponent,
-    AssetDataOplComponent
-    // MultiAssetLeasingComponent,
-    // AssetLeasingPagingComponent,
-    // AssetLeasingAddEditComponent,
-    // CollateralLeasingAddEditComponent
+    AssetDataOplComponent,
+    AppCustAssetComponent,
+    AppCustAssetDetailComponent,
+    AppCustAssetOldNapComponent,
+    AppCustAssetOldNapDetailComponent,
+    ApplicationDataDlfnComponent
   ],
   imports: [
     CommonModule,
@@ -177,7 +183,6 @@ export const customCurrencyMaskConfig = {
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     CustSharingComponentModule,
     UcaddtotempModule,
-
   ],
   declarations: [
     CustomerDataComponent,
@@ -250,9 +255,14 @@ export const customCurrencyMaskConfig = {
     AssetOplMainInfoComponent,
     FinancialDataOplEditComponent,
     FinancialDataOplComponent,
-    AssetDataOplComponent
+    AssetDataOplComponent,
+    AppCustAssetDetailComponent,
+    AppCustAssetComponent,
+    AppCustAssetOldNapComponent,
+    AppCustAssetOldNapDetailComponent,
+    ApplicationDataDlfnComponent
   ],
-  entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent],
+  entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent, AppCustAssetDetailComponent, AppCustAssetOldNapDetailComponent],
   providers: [
     NGXToastrService
   ]

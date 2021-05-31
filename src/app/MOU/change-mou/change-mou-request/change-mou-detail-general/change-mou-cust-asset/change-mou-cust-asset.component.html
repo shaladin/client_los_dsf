@@ -1,0 +1,50 @@
+<lib-ucSubsection [id]="'MouAssetId'" [title]="'Asset Data'" [panel]="'MouAssetSection'"></lib-ucSubsection>
+<div id="MouAssetSection"> 
+    <div class="col-md-8" style="padding: 0; display: inline-block;">
+      <form class="form form-horizontal" [formGroup]="MouCustClauseAssetForm" #enjiForm="ngForm" novalidate
+        (ngSubmit)="enjiForm.form.valid">
+        <label class="col-md-3 adInsLabel adins-required-label" for="AssetTypeCode" style="padding-left: 0;" translate>Asset Type</label>
+        <div class="col-md-9" style="display: inline-block; padding-left: 0;">
+          <select class="form-control adInsInput" formControlName="AssetTypeCode" 
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouCustClauseAssetForm.controls.AssetTypeCode.invalid }"
+            [attr.disabled]="IsAssetSelected ? '' : null">
+            <option *ngFor="let item of assetTypeList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
+          </select>
+          <lib-uc-show-errors  [control]="MouCustClauseAssetForm.controls.AssetTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+        </div>
+      </form>
+    </div>
+    <div class="col-md-4" style="padding: 0; text-align: right; display: inline-block;">
+      <button type="button" class="addButton" (click)="openModalAddMouAsset()" translate>
+        <i class="ft-plus-circle"></i> Add
+      </button>
+    </div> 
+  <div class="col-md-12" style="padding: 0; text-align: right;">
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: left;">
+            <span class="thead-header" name='no' translate>NO.</span>
+          </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='brand' translate>BRAND</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" name='delete' translate>DELETE</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of mouAssetList; let i = index">
+          <td style="text-align: left;">{{i+1}}</td>
+          <td style="text-align: left;">{{item.FullAssetName}}</td>
+          <td style="text-align: center;">
+            <a (click)="deleteMouAsset(item.MouCustAssetId, i)">
+              <i class="fas fa-trash"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

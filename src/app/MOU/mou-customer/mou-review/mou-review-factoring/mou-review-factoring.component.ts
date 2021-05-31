@@ -23,21 +23,20 @@ import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCode
   templateUrl: './mou-review-factoring.component.html',
   providers: [NGXToastrService]
 })
+
 export class MouReviewFactoringComponent implements OnInit {
   rfaInfoObj: RFAInfoObj = new RFAInfoObj();
   mouCustObj: MouCustObj = new MouCustObj();
   mouCustObject: MouCustObj = new MouCustObj();
   keyValueObj: KeyValueObj;
   MouCustId: number;
-  WfTaskListId: any;
+  WfTaskListId: number;
   MouType: string = "FACTORING";
   PlafondAmt: number;
   listApprover: any;
-  listRecommendationObj: any;
   MrCustTypeCode: string;
-  link: any;
-  resultData: any;
-  listReason: any;
+  resultData: MouCustObj;
+  listReason: Array<KeyValueObj>;
   ScoreResult: number;
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
@@ -47,7 +46,6 @@ export class MouReviewFactoringComponent implements OnInit {
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) {
-      // initially setter gets called with undefined
       this.createComponent = content;
     }
   }

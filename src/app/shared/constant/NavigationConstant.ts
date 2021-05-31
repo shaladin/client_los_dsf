@@ -299,12 +299,13 @@ export class NavigationConstant {
   public static MOU_FREEZE_INQUIRY = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_FREEZE_INQUIRY; //"/Mou/FreezeUnfreeze/Inquiry"
   public static MOU_FREEZE_VIEW = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_FREEZE_VIEW; //"/Mou/FreezeUnfreeze/View"
   public static MOU_FREEZE_APV_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_FREEZE_APV_PAGING; //"/Mou/FreezeUnfreezeApv/Paging"
-  public static MOU_FREEZE_APV_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_FREEZE_APV_DETAIL; //"/Mou/FreezeUnfreezeApv/Paging"
+  public static MOU_FREEZE_APV_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_FREEZE_APV_DETAIL; //"/Mou/FreezeUnfreezeApv/Detail"
   //#endregion
 
   //#region CHANGE MOU
   public static CHANGE_MOU_REQ_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_REQ_PAGING; //"/Mou/ChangeMouRequest/Paging"
   public static CHANGE_MOU_REQ_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_REQ_DETAIL; //"/Mou/ChangeMouRequest/Detail"
+  public static CHANGE_MOU_REQ_DETAIL_CUSTOMER = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_REQ_DETAIL_CUST; //"/Mou/ChangeMouRequest/Detail/Customer"
   public static CHANGE_MOU_RVW_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RVW_PAGING; //"/Mou/ChangeMou/ReviewPaging"
   public static CHANGE_MOU_RVW_DETAIL_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RVW_DETAIL_FCTR; //"/Mou/ChangeMou/ReviewDetailFctr"
   public static CHANGE_MOU_RVW_DETAIL_FIN = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RVW_DETAIL_FIN; //"/Mou/ChangeMou/ReviewFinancing"

@@ -1,13 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { CustDataObj } from 'app/shared/model/CustDataObj.Model';
-import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { MouCustSocmedObj } from 'app/shared/model/MouCustSocmedObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-mou-cust-socmed',
@@ -27,11 +26,9 @@ export class MouCustSocmedComponent implements OnInit {
   };
   custDataObj: CustDataObj;
 
-  SocmedObj: any;
-  defaultSocmedCode: any;
-  defaultSocmedName: any;
-
-
+  SocmedObj: Array<KeyValueObj>;
+  defaultSocmedCode: string;
+  defaultSocmedName: string;
 
   constructor(
     private fb: FormBuilder, 

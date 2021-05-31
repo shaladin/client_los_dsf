@@ -15,6 +15,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -34,6 +36,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   custUrl: string;
   RevolvingTypeList: Array<KeyValueObj> = new Array<KeyValueObj>();
   CustNoObj: GenericObj = new GenericObj();
+  plafondTypeObj: Array<RefMasterObj>;
+  datePipe = new DatePipe("en-US");
 
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
@@ -46,7 +50,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     MouStat: ['NEW', [Validators.required]],
     MrMouTypeCode: ['', [Validators.required]],
     RowVersion: [''],
-    MrRevolvingTypeCode: ['']
+    MrRevolvingTypeCode: [''],
+    PlafondType:['']
   });
 
   constructor(
@@ -73,6 +78,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.bindAllRefMasterObj();
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.MOU_REVOLVING_TYPE }).subscribe(
       (response) => {
         this.RevolvingTypeList = response[CommonConstant.ReturnObj];
@@ -133,6 +139,10 @@ export class MouCustomerRequestDetailComponent implements OnInit {
           if (response["MrRevolvingTypeCode"] == null) {
             this.MOUMainInfoForm.controls.MrRevolvingTypeCode.setValue(this.RevolvingTypeList[0].Key);
           }
+
+          if (response["PlafondType"] != null) {
+            this.MOUMainInfoForm.controls.PlafondType.setValue(response["PlafondType"]);
+          }
         });
     }
     else {
@@ -155,6 +165,14 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   }
 
   Save() {
+    if( this.MOUMainInfoForm.controls.StartDt.value > this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
+      this.toastr.warningMessage(ExceptionConstant.START_DATE_CANNOT_MORE_THAN + this.datePipe.transform(this.businessDt, 'MMMM d, y') );
+     return
+   } 
+   if(this.MOUMainInfoForm.controls.EndDt.value< this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
+     this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y')  );
+    return;
+   }
     var mouCustFormData = this.MOUMainInfoForm.value;
     if (!this.MOUMainInfoForm.controls.IsRevolving.value) {
       mouCustFormData["MrRevolvingTypeCode"] = null;
@@ -187,6 +205,33 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       AdInsHelper.OpenMOUCustViewByMouCustId(this.mouCustId);
     } else if (key == "cust") {
       AdInsHelper.OpenCustomerViewByCustId(this.custId);
+    }
+  }
+
+  bindAllRefMasterObj(){
+    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, {"RefMasterTypeCode": CommonConstant.RefMasterTypeCodePlafonType}).subscribe(
+      (response) => {
+        this.plafondTypeObj = response["RefMasterObjs"];
+
+        if(this.plafondTypeObj.length > 0){
+          var idxDefault = this.plafondTypeObj.findIndex(x => x.ReserveField2 == CommonConstant.DEFAULT);
+          this.MOUMainInfoForm.patchValue({
+            PlafondType: this.plafondTypeObj[idxDefault].MasterCode
+          });
+        }
+      }
+    );
+  }
+
+  checkStartDate(ev:any){ 
+    if( this.datePipe.transform(ev.target.value, "yyyy-MM-dd") > this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
+       this.toastr.warningMessage(ExceptionConstant.START_DATE_CANNOT_MORE_THAN + this.datePipe.transform(this.businessDt, 'MMMM d, y'));
+    } 
+  }
+
+  checkEndDate(ev:any){
+    if(ev.target.value < this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
+       this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y'));
     }
   }
 }

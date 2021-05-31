@@ -5,6 +5,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { MouCustDocPrintForViewObj } from 'app/shared/model/MouCustDocPrintForViewObj.model';
 
 @Component({
   selector: 'app-customer-doc-printing-detail',
@@ -13,12 +14,8 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 export class CustomerDocPrintingDetailComponent implements OnInit {
   
   MouCustId: number;
-  GetListMouCustDocPrintForViewByMouCustIdUrl: string = URLConstant.GetListMouCustDocPrintForViewByMouCustId;
-  responseObj: Array<any> = new Array<any>();
-  EditMouCustDocPrintSequenceNoUrl: string = URLConstant.EditMouCustDocPrintSequenceNo;
-  link: any;
-  mouCustObj: any;
-  resultData: any;
+  responseObj: Array<MouCustDocPrintForViewObj> = new Array<any>();
+  mouCustObj: MouCustObj;
   readonly CancelLink: string = NavigationConstant.MOU_CUST_DOC_PAGING;
 
   constructor(
@@ -36,7 +33,7 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
   ngOnInit(): void {
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
-    this.http.post(this.GetListMouCustDocPrintForViewByMouCustIdUrl, { Id: this.MouCustId }).subscribe(
+    this.http.post(URLConstant.GetListMouCustDocPrintForViewByMouCustId, { Id: this.MouCustId }).subscribe(
       response => {
         this.responseObj = response[CommonConstant.ReturnObj];
       },
@@ -57,10 +54,10 @@ export class CustomerDocPrintingDetailComponent implements OnInit {
 
   print(MouCustDocPrintId) {
     var mouObj = { Id: MouCustDocPrintId, RowVersion: this.searchRowVersion(MouCustDocPrintId) };
-    this.http.post(this.EditMouCustDocPrintSequenceNoUrl, mouObj).subscribe(
+    this.http.post(URLConstant.EditMouCustDocPrintSequenceNo, mouObj).subscribe(
       response => {
         var mouCustObj = { Id: this.MouCustId };
-        this.http.post(this.GetListMouCustDocPrintForViewByMouCustIdUrl, mouCustObj).subscribe(
+        this.http.post(URLConstant.GetListMouCustDocPrintForViewByMouCustId, mouCustObj).subscribe(
           response => {
             this.responseObj = response[CommonConstant.ReturnObj];
           },

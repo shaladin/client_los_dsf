@@ -1,9 +1,19 @@
 <form class="form form-horizontal" [formGroup]="MouDetailFactoringForm" #enjiForm="ngForm" novalidate
-  (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
+  (ngSubmit)="enjiForm.form.valid && Save()">
   <lib-ucSubsection [id]="'MouDetailFactoringId'" [title]="'MOU Detail'" [panel]="'MouDetailFactoringSection'">
   </lib-ucSubsection>
   <div id="MouDetailFactoringSection">
     <div class="form-body">
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel" for="VirtualAccNo" translate>Virtual Account No</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control adInsInput" formControlName="VirtualAccNo" min="0"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.VirtualAccNo.invalid }" />
+          <lib-uc-show-errors [control]="MouDetailFactoringForm.controls.VirtualAccNo" [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+
       <div class="form-group row">
         <label class="col-md-3 adInsLabel" for="CurrCode" translate>Currency</label>
         <div class="col-md-4">
@@ -19,6 +29,7 @@
         <label class="col-md-3 adInsLabel" for="MrRecourseTypeCode" translate>Recourse Type</label>
         <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="MrRecourseTypeCode"
+            (change)="OnChangeRecourseType($event.target.value)"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrRecourseTypeCode.invalid }">
             <option *ngFor="let item of recourseTypeList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
           </select>
@@ -95,7 +106,7 @@
           <div translate>{{tenorInvalidMsg}}</div>
         </div>
       </div>
-      <div class="form-group row">
+      <div *ngIf="!IsSingleIns" class="form-group row">
         <label class="col-md-3 adInsLabel" for="PayFreqCode" translate>Payment Frequency</label>
         <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="PayFreqCode"
@@ -134,6 +145,25 @@
         </div>
       </div>
       <div class="form-group row">
+        <label class="col-md-3 adinsLabel" for="LinkSupplier" translate>Link Supplier </label>
+        <div class="col-md-3">
+          <lib-uclookupgeneric *ngIf="inputLookupObj?.isReady" [lookupInput]="inputLookupObj"
+            [parentForm]='MouDetailFactoringForm' [enjiForm]='enjiForm' [identifier]="'lookupSupp'" #LookupSupplier
+            (lookup)="SetSupplier($event)">
+          </lib-uclookupgeneric>
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="!isWithoutRecourse">
+        <label class="col-md-3 adinsLabel" for="LinkCustomer" translate>Link Customer
+          Factoring</label>
+        <div class="col-md-3">
+          <lib-uclookupgeneric *ngIf="inputLookupCustObj?.isReady" [lookupInput]="inputLookupCustObj"
+            [parentForm]='MouDetailFactoringForm' [enjiForm]='enjiForm' [identifier]="'lookupCust'" #LookupCustomer
+            (lookup)="SetCustomer($event)">
+          </lib-uclookupgeneric>
+        </div>
+      </div>
+      <div class="form-group row">
         <label class="col-md-3 adInsLabel" for="Notes" translate>Notes</label>
         <div class="col-md-3">
           <textarea class="form-control adInsInput" formControlName="Notes"
@@ -143,13 +173,14 @@
       </div>
     </div>
   </div>
-  <app-mou-cust-listed-cust-fctr *ngIf="shouldComponentLoad" [MouCustId]="MouCustId" [IsListedCustFctr]="isListedFctr"
-    (OutputData)="GetDataListCustFctr($event)"></app-mou-cust-listed-cust-fctr>
+  <div *ngIf="isWithoutRecourse">
+    <app-mou-cust-listed-cust-fctr *ngIf="shouldComponentLoad" [MouCustId]="MouCustId" [IsListedCustFctr]="isListedFctr"
+    (OutputData)="GetDataListCustFctr($event)">
+    </app-mou-cust-listed-cust-fctr>
+  </div>
+  
   <div class="col-md-12" style="padding: 0; text-align: right;">
     <div class="form-actions right">
-      <!-- <button type="button" class="btn btn-raised btn-warning mr-1" (click)="back()" translate>
-      <i class="fa fa-arrow-left"></i> Back
-    </button> -->
       <button type="submit" class="btn btn-raised btn-primary" translate>
         <i class="far fa-check-square"></i> Save
       </button>

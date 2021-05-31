@@ -2,9 +2,7 @@ import { Component, OnInit, Input, EventEmitter, Output, ViewChild } from '@angu
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ValidationFormsComponent } from 'app/forms/validation/validation-forms.component';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { forkJoin } from 'rxjs';
 import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
 import { MouCustAssetComponent } from './mou-cust-asset/mou-cust-asset.component';
@@ -13,6 +11,9 @@ import { MouCustAssetListObj } from 'app/shared/model/MouCustAssetListObj.Model'
 import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-mou-detail-general',
@@ -23,20 +24,20 @@ export class MouDetailGeneralComponent implements OnInit {
   @Input() Mode: string;
   @Output() ResponseMouDetailGeneral: EventEmitter<any> = new EventEmitter();
   @ViewChild(MouCustAssetComponent) mouCustAssetComp: MouCustAssetComponent;
-  currencyList: any;
-  intrstTypeList: any;
-  instSchmList: any;
-  payFreqList: any;
-  firstInstList: any;
+  currencyList: Array<KeyValueObj>;
+  intrstTypeList: Array<KeyValueObj>;
+  instSchmList: Array<KeyValueObj>;
+  payFreqList: Array<RefPayFreqObj>;
+  firstInstList: Array<KeyValueObj>;
   mode: string = "add";
   isDPInvalid: boolean;
   dpInvalidMsg: string;
   isTenorInvalid: boolean;
   tenorInvalidMsg: string;
-  mouCustClause: any;
+  mouCustClause: MouCustClauseObj;
   url: string;
-  tempMouCustClause: any;
-  tempMouCustAsset: MouCustAssetListObj
+  tempMouCustClause: MouCustClauseObj;
+  tempMouCustAsset: MouCustAssetListObj;
   isReady: boolean = false;
   AssetForm = this.fb.group({
   });
@@ -77,17 +78,15 @@ export class MouDetailGeneralComponent implements OnInit {
     var refMasterInstSchm = new RefMasterObj();
     refMasterInstSchm.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInstSchm;
     let reqInstSchm = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterInstSchm);
-    // var refMasterPayFreq = new RefMasterObj();
-    // refMasterPayFreq.RefMasterTypeCode = "PAY_FREQ";
     let reqPayFreq = this.httpClient.post(URLConstant.GetListActiveRefPayFreq, null);
     var refMasterFirstInst = new RefMasterObj();
     refMasterFirstInst.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeFirstInstType;
     let reqFirstInst = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterFirstInst);
-    var mouCustClause = new MouCustClauseObj();
-    mouCustClause.MouCustId = this.MouCustId;
+    var mouCustClause = new GenericObj();
+    mouCustClause.Id = this.MouCustId;
     let getMouCustClause = this.httpClient.post(URLConstant.GetMouCustClauseByMouCustId, { Id: this.MouCustId });
     forkJoin([reqCurrency, reqIntrstType, reqInstSchm, reqPayFreq, reqFirstInst, getMouCustClause]).subscribe(
-      (response) => {
+      (response: any) => {
         this.currencyList = response[0];
         this.intrstTypeList = response[1];
         this.instSchmList = response[2];
@@ -96,11 +95,11 @@ export class MouDetailGeneralComponent implements OnInit {
         this.tempMouCustClause = response[5];
         this.MouDetailGeneralForm.patchValue({
           MouCustId: this.MouCustId,
-          CurrCode: this.currencyList.ReturnObject[0].Key,
-          MrInterestTypeCode: this.intrstTypeList.ReturnObject[0].Key,
-          MrInstSchmCode: this.instSchmList.ReturnObject[0].Key,
-          PayFreqCode: this.payFreqList.ReturnObject[0].PayFreqCode,
-          MrFirstInstTypeCode: this.firstInstList.ReturnObject[0].Key,
+          CurrCode: this.currencyList[0].Key,
+          MrInterestTypeCode: this.intrstTypeList[0].Key,
+          MrInstSchmCode: this.instSchmList[0].Key,
+          PayFreqCode: this.payFreqList[0].PayFreqCode,
+          MrFirstInstTypeCode: this.firstInstList[0].Key,
           AssetTypeCode: this.tempMouCustClause.AssetTypeCode
         });
 
@@ -124,7 +123,7 @@ export class MouDetailGeneralComponent implements OnInit {
       this.mouCustClause = new MouCustClauseObj();
       this.mouCustClause.MouCustId = this.MouCustId;
       this.httpClient.post(URLConstant.GetMouCustClauseByMouCustId, { Id: this.MouCustId }).subscribe(
-        (response) => {
+        (response: MouCustClauseObj) => {
           this.tempMouCustClause = response;
           this.getData();
         });
@@ -198,7 +197,4 @@ export class MouDetailGeneralComponent implements OnInit {
       });
   }
 
-  // back(){
-  //   this.ResponseMouDetailGeneral.emit({StatusCode: "-2"});
-  // }
 }

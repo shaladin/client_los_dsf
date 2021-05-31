@@ -341,6 +341,7 @@ export class PathConstant {
     public static MOU_CUST_LEGAL_RVW_PAGING = PathConstant.MOU_CUST_LEGAL_RVW + "/" + PathConstant.PAGING;
     public static MOU_CUST_LEGAL_RVW_DETAIL = PathConstant.MOU_CUST_LEGAL_RVW + "/" + PathConstant.DETAIL;
     public static MOU_CUST = "Cust";
+    public static MOU_CUSTOMER = "Customer"; 
     public static MOU_CUST_RVW_PAGING = PathConstant.MOU_CUST + "/ReviewPaging";
     public static MOU_CUST_RVW_GENERAL = PathConstant.MOU_CUST + "/ReviewGeneral";
     public static MOU_CUST_RVW_FCTR = PathConstant.MOU_CUST + "/ReviewFactoring";
@@ -377,6 +378,7 @@ export class PathConstant {
     public static CHANGE_MOU_REQ = "ChangeMouRequest";
     public static CHANGE_MOU_REQ_PAGING = PathConstant.CHANGE_MOU_REQ + "/" + PathConstant.PAGING;
     public static CHANGE_MOU_REQ_DETAIL = PathConstant.CHANGE_MOU_REQ + "/" + PathConstant.DETAIL;
+    public static CHANGE_MOU_REQ_DETAIL_CUST = PathConstant.CHANGE_MOU_REQ + "/" + PathConstant.DETAIL + "/" + PathConstant.MOU_CUSTOMER; 
     public static CHANGE_MOU_REQ_DETAIL_CUST_TYPE = PathConstant.CHANGE_MOU_REQ + "/" + PathConstant.DETAIL + "/Customer/:MOUType";
     public static CHANGE_MOU = "ChangeMou";
     public static CHANGE_MOU_INQUIRY = PathConstant.CHANGE_MOU + "/" + PathConstant.INQUIRY;

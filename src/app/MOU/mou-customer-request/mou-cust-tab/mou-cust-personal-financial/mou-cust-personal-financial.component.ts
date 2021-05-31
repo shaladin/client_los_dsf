@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { MouCustPersonalFinDataObj } from 'app/shared/model/MouCustPersonalFinDataObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-mou-cust-personal-financial',
@@ -21,7 +22,7 @@ export class MouCustPersonalFinancialComponent implements OnInit {
   refMasterObj = {
     RefMasterTypeCode: "",
   };
-  SourceOfIncomeObj: any;
+  SourceOfIncomeObj: Array<KeyValueObj>;
 
   constructor(
     private fb: FormBuilder, 
@@ -44,7 +45,6 @@ export class MouCustPersonalFinancialComponent implements OnInit {
     }));
 
     this.bindSourceOfIncomeObj();
-    //this.bindAppCustPersonalFinData();
   }
 
   setSpouseMonthlyIncome(){

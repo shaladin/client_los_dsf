@@ -15,13 +15,17 @@ import { MouCustPersonalContactPersonObj } from 'app/shared/model/MouCustPersona
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { RegexService } from 'app/shared/services/regex.services';
+import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
 
 @Component({
   selector: 'app-mou-cust-personal-contact-info',
   templateUrl: './mou-cust-personal-contact-info.component.html',
   styleUrls: ['./mou-cust-personal-contact-info.component.scss'],
-  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
+  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
+  providers: [RegexService]
 })
+
 export class MouCustPersonalContactInfoComponent implements OnInit {
   @Input() listContactPersonPersonal: Array<MouCustPersonalContactPersonObj> = new Array<MouCustPersonalContactPersonObj>();
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
@@ -95,6 +99,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
 
 
   constructor(
+    private regexService: RegexService,
     private fb: FormBuilder,
     private http: HttpClient,
     private modalService: NgbModal,
@@ -103,6 +108,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.customPattern = new Array<CustomPatternObj>();
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
     this.bindCopyFrom();
@@ -431,6 +437,59 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
       this.ContactInfoPersonalForm.controls.BirthDt.clearValidators();
       this.ContactInfoPersonalForm.controls.BirthDt.updateValueAndValidity();
       this.ContactInfoPersonalForm.controls["MrGenderCode"].enable();
+    }
+  }
+
+  onChangeIdType(){
+    this.setValidatorPattern();
+  }
+
+  controlNameIdNo: any = 'IdNo';
+  controlNameIdType: any = 'MrIdTypeCode';
+  customPattern: Array<CustomPatternObj>;
+  initIdTypeCode: any;
+  resultPattern: any;
+
+  getInitPattern() {
+    this.regexService.getListPattern().subscribe(
+      response => {
+        this.resultPattern = response[CommonConstant.ReturnObj];
+        if(this.resultPattern != undefined)
+        {
+          for (let i = 0; i < this.resultPattern.length; i++) {
+            let patternObj: CustomPatternObj = new CustomPatternObj();
+            let pattern: string = this.resultPattern[i].Value;
+    
+            patternObj.pattern = pattern;
+            patternObj.invalidMsg = this.regexService.getErrMessage(pattern);
+            this.customPattern.push(patternObj);
+          }
+          this.setValidatorPattern();
+        }
+      }
+    );
+  }
+
+  setValidatorPattern() {
+    let idTypeValue: string;
+
+    idTypeValue = this.ContactInfoPersonalForm.controls[this.controlNameIdType].value;
+    var pattern: string = '';
+    if (idTypeValue != undefined) {
+      if (this.resultPattern != undefined) {
+        var result = this.resultPattern.find(x => x.Key == idTypeValue)
+        if (result != undefined) {
+          pattern = result.Value;
+        }
+      }
+    }
+    this.setValidator(pattern);
+  }
+
+  setValidator(pattern: string) {
+    if (pattern != undefined) {
+      this.ContactInfoPersonalForm.controls[this.controlNameIdNo].setValidators(Validators.pattern(pattern));
+      this.ContactInfoPersonalForm.controls[this.controlNameIdNo].updateValueAndValidity();
     }
   }
 }

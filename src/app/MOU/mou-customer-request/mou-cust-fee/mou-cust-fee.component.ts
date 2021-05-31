@@ -3,7 +3,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustFeeObj } from 'app/shared/model/MouCustFeeObj.Model';
 import { MouCustFeeDetailComponent } from './mou-cust-fee-detail/mou-cust-fee-detail.component';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -16,7 +15,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 export class MouCustFeeComponent implements OnInit {
   @Input() MouCustId: number;
   @Output() ResponseMouCustFee: EventEmitter<any> = new EventEmitter<any>();
-  mouCustFeeList: any;
+  mouCustFeeList: Array<MouCustFeeObj>;
   refFeeIdList : any;
 
   constructor(
@@ -29,7 +28,7 @@ export class MouCustFeeComponent implements OnInit {
   ngOnInit() {
     this.refFeeIdList = new Array();
     this.httpClient.post(URLConstant.GetMouCustFeeForMouRequestByMouCustId, {Id: this.MouCustId}).subscribe(
-      (response) => {
+      (response: any) => {
         this.mouCustFeeList = response;
         for (var i = 0; i < this.mouCustFeeList.length; i++) {
           this.refFeeIdList.push(this.mouCustFeeList[i]['RefFeeId']);
@@ -42,10 +41,10 @@ export class MouCustFeeComponent implements OnInit {
     modalMouFee.componentInstance.MouCustId = this.MouCustId;
     modalMouFee.componentInstance.UsedRefFeeIdList = this.refFeeIdList;
     modalMouFee.result.then(
-      (response) => {
+      (response: any) => {
         this.spinner.show();
         this.httpClient.post(URLConstant.GetMouCustFeeForMouRequestByMouCustId, {Id: this.MouCustId}).subscribe(
-          (response) => {
+          (response: any) => {
             this.mouCustFeeList = response;
             this.refFeeIdList = new Array();
             for (var i = 0; i < this.mouCustFeeList.length; i++) {

@@ -17,6 +17,12 @@ import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { ResGetListMouByAppAndTypeObj } from 'app/shared/model/Response/MOU/MouCust/ResGetListMouByAppAndTypeObj.model';
+import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
+import { RefEmpObj } from 'app/shared/model/RefEmpObj.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
 
 @Component({
   selector: 'app-application-data-factoring',
@@ -30,13 +36,12 @@ export class ApplicationDataFactoringComponent implements OnInit {
   salesAppInfoObj: SalesInfoObj = new SalesInfoObj();
   mouCustFctrObj: MouCustFctrObj = new MouCustFctrObj();
 
-  inputPagingObj;
-  inputLookupObj;
-  arrAddCrit;
+  inputLookupObj: InputLookupObj;
+  arrAddCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   employeeIdentifier;
   salesRecommendationItems = [];
-  isInputLookupObj;
-  inputLookupEconomicSectorObj;
+  isInputLookupObj: boolean;
+  inputLookupEconomicSectorObj: InputLookupObj; 
   SalesAppInfoForm = this.fb.group({
     MouCustId: ['', Validators.required],
     TopBased: ['', Validators.required],
@@ -62,6 +67,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     PrevAgrNo: [''],
     WayRestructure: [''],
     MrSlikSecEcoCode: [''],
+    CustBankAcc: ['']
   })
   slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
@@ -78,26 +84,30 @@ export class ApplicationDataFactoringComponent implements OnInit {
   refMasterTOPType: RefMasterObj = new RefMasterObj();
   refMasterWayOfRestructure: RefMasterObj = new RefMasterObj();
   refMasterCharacteristicCredit: RefMasterObj = new RefMasterObj();
-  allInterestType: any;
-  allInScheme: any;
-  allInType: any;
-  allSlsRecom: any;
-  allWOP: any;
-  allAppSource: any;
-  allPaidby: any;
-  allRecourseType: any;
-  allCalcMethod: any;
-  allIntrstType: any;
-  allMouCust: any;
-  allTopBased: any;
+
+  allInScheme: Array<KeyValueObj>;
+  allInType: Array<KeyValueObj>;
+  allWOP: Array<KeyValueObj>;
+  allAppSource: Array<KeyValueObj>;
+  allPaidby: Array<KeyValueObj>;
+  allRecourseType: Array<KeyValueObj>;
+  allCalcMethod: Array<KeyValueObj>;
+  allIntrstType: Array<KeyValueObj>;
+  allMouCust: Array<ResGetListMouByAppAndTypeObj>;
+  allTopBased: Array<KeyValueObj>;
   resultData: any;
-  allPayFreq: any;
-  allInSalesOffice: any;
-  allWayRestructure: any;
-  allCharacteristicCredit: any;
-  responseApp: any;
-  responseProd: any;
+  allPayFreq: RefPayFreqObj;
+  allInSalesOffice: Array<RefEmpObj>;
+  allWayRestructure: Array<KeyValueObj>;
+  allCharacteristicCredit: Array<KeyValueObj>;
+  responseApp: AppObj;
+  responseProd: ProdOfferingDObj;
   isInit: boolean = true;
+  listCustBankAcc: any;
+  selectedBankAcc: any;
+  GetBankInfo: any;
+  appCustId: number;
+
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -113,6 +123,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.loadData();
     this.SalesAppInfoForm.controls.NumOfInst.disable();
     this.SalesAppInfoForm.controls.MrSingleInstCalcMthdCode.disable();
+    this.GetListAppCustBankAcc();
   }
 
   async setDropdown() {
@@ -134,7 +145,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
       MouType: CommonConstant.FACTORING
     }
     this.http.post(URLConstant.GetListMouByAppIdAndMouType, AppObj).subscribe(
-      (response) => {
+      (response: any) => {
         this.allMouCust = response;
         var MouCustId;
         if (this.mode == 'edit') {
@@ -194,12 +205,12 @@ export class ApplicationDataFactoringComponent implements OnInit {
       });
 
     this.http.post(URLConstant.GetListRefEmpByGsValueandOfficeId, null).subscribe(
-      (response) => {
+      (response: any) => {
         this.allInSalesOffice = response[CommonConstant.ReturnObj];
         if (this.mode != 'edit') {
           this.SalesAppInfoForm.patchValue({
-            SalesOfficerNo: this.allInSalesOffice[0].EmpNo,
-            SalesOfficerName: this.allInSalesOffice[0].EmpName,
+            SalesOfficerNo: this.allInSalesOffice[0].empNo,
+            SalesOfficerName: this.allInSalesOffice[0].empName,
           });
         }
       });
@@ -287,11 +298,12 @@ export class ApplicationDataFactoringComponent implements OnInit {
     await this.CheckInstType();
 
   }
-  SetPayFreq(MouCustId: number, isCriteriaMake: boolean = true) {
+  
+  async SetPayFreq(MouCustId: number, isCriteriaMake: boolean = true) {
     var MouObj = {
       Id: MouCustId
     }
-    this.http.post<MouCustFctrObj>(URLConstant.GetMouCustFctrByMouCustId, MouObj).subscribe(
+    await this.http.post<MouCustFctrObj>(URLConstant.GetMouCustFctrByMouCustId, MouObj).toPromise().then(
       (response) => {
         this.mouCustFctrObj = response;
         if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {
@@ -323,7 +335,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
 
         this.http.post(URLConstant.GetRefPayFreqByPayFreqCode, { Code: this.mouCustFctrObj.PayFreqCode }).subscribe(
-          (response) => {
+          (response: any) => {
             this.allPayFreq = response;
             var PayFreqCode = null;
 
@@ -360,6 +372,10 @@ export class ApplicationDataFactoringComponent implements OnInit {
               this.CalculateNumOfInst(false, this.SalesAppInfoForm.controls.Tenor.value);
               this.CheckInstType();
 
+              if (this.SalesAppInfoForm.controls.MrWopCode.value == 'AUTOCOLLECTION') {
+                this.GetBankAccCust();
+                this.setBankAcc(this.SalesAppInfoForm.controls.MrWopCode.value)
+              }
             }
             if (this.mode == 'edit') {
               PayFreqCode = this.resultData.PayFreqCode
@@ -464,7 +480,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.jsonSelect = this.resultData;
-    //this.inputLookupObj.nameSelect = this.NapAppModelForm.controls.SalesOfficerName.value;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
 
     this.inputLookupEconomicSectorObj = new InputLookupObj();
@@ -494,7 +509,8 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   async makeNewLookupCriteria() {
-    this.arrAddCrit = new Array();
+    if(!this.isInit) return;
+    this.arrAddCrit = new Array<CriteriaObj>();
 
     var addCrit1 = new CriteriaObj();
     addCrit1.DataType = "bit";
@@ -538,7 +554,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     var appObj = { Id: this.AppId };
 
     await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
-      (response) => {
+      (response: any) => {
         this.responseApp = response
       }); 
     var prodObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
@@ -547,7 +563,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     prodObj.ProdOfferingVersion = this.responseApp.ProdOfferingVersion;
 
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, prodObj).toPromise().then(
-      (response) => {
+      (response: any) => {
         this.responseProd = response;
       });
 
@@ -568,7 +584,19 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.outputCancel.emit();
   }
 
-  SaveForm(): void {
+  async SaveForm() {
+    let MouCustObj = {
+      "MouCustId": this.SalesAppInfoForm.controls.MouCustId.value
+    }
+    let IsInValid;
+    await this.http.post(URLConstant.CheckIsMouFreeze, MouCustObj).toPromise().then(
+      (response) => {
+        IsInValid = response["IsFreeze"]
+      });
+    if (IsInValid) {
+      this.toastr.warningMessage(ExceptionConstant.MOU_FREEZE_STATE);
+      return
+    }
     if (this.SalesAppInfoForm.value.CharaCredit != CommonConstant.CharacteristicOfCreditTypeCredit) {
       this.SalesAppInfoForm.patchValue({
         PrevAgrNo: null,
@@ -593,6 +621,9 @@ export class ApplicationDataFactoringComponent implements OnInit {
       this.salesAppInfoObj.MrInstSchemeCode = this.SalesAppInfoForm.controls.MrInstSchemeCode.value;
       this.salesAppInfoObj.NumOfInst = this.SalesAppInfoForm.controls.NumOfInst.value;
     }
+    if (this.SalesAppInfoForm.controls.MrWopCode.value == 'AUTOCOLLECTION') {
+      this.SaveAppOtherInfo();
+    }
 
     if (this.mode == "add") {
       this.http.post(URLConstant.SaveApplicationDataFctr, this.salesAppInfoObj).subscribe(
@@ -606,8 +637,12 @@ export class ApplicationDataFactoringComponent implements OnInit {
       this.salesAppInfoObj.AppFinDataRowVersion = this.resultData.AppFinDataRowVersion;
       this.http.post(URLConstant.EditApplicationDataFctr, this.salesAppInfoObj).subscribe(
         (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.outputTab.emit();
+          if (response["StatusCode"] == 200) {
+            this.toastr.successMessage(response["message"]);
+            this.outputTab.emit();
+          } else {
+            this.toastr.warningMessage(response["message"]);
+          }
         });
     }
 
@@ -621,4 +656,105 @@ export class ApplicationDataFactoringComponent implements OnInit {
     this.SalesAppInfoForm.controls.WayRestructure.updateValueAndValidity();
   }
 
+  GetListAppCustBankAcc() {
+    var objAppCust = {
+      AppId: this.AppId
+    }
+    this.http.post<any>(URLConstant.GetAppCustByAppId, objAppCust).subscribe(
+      (responseAppCust) => {
+        var obj = {
+          AppCustId: responseAppCust["AppCustId"]
+        };
+        this.appCustId = responseAppCust["AppCustId"]
+        this.http.post<any>(URLConstant.GetListAppCustBankAccByAppCustId, obj).subscribe(
+          (response) => {
+            this.listCustBankAcc = response.AppCustBankAccObjs;
+          });
+      });
+  }
+
+  GetBankAccCust() {
+    var obj = {
+      AppId: this.AppId
+    };
+    this.http.post(URLConstant.GetAppOtherInfoByAppId, obj).subscribe(
+      (responseAoi) => {
+        var objectForAppCustBankAcc = {
+          BankCode: responseAoi["BankCode"],
+          BankAccNo: responseAoi["BankAccNo"],
+          AppCustId: this.appCustId
+        }
+        this.http.post(URLConstant.GetAppCustBankAccByBankAccNoAndBankCodeAndAppCustId, objectForAppCustBankAcc).subscribe(
+          (response) => {
+            this.SalesAppInfoForm.patchValue({
+              CustBankAcc: response["AppCustBankAccId"]
+            });
+            this.GetBankInfo = {
+              "BankCode": response["BankCode"],
+              "BankBranch": response["BankBranch"],
+              "AppId": this.AppId,
+              "BankAccNo": response["BankAccNo"],
+              "BankAccName": response["BankAccName"]
+            };
+          });
+      });
+  }
+
+  selectedBank(event) {
+    if (this.SalesAppInfoForm.controls.MrWopCode.value == 'AUTOCOLLECTION') {
+      this.SalesAppInfoForm.controls['CustBankAcc'].setValidators([Validators.required]);
+      this.SalesAppInfoForm.controls["CustBankAcc"].updateValueAndValidity()
+      this.selectedBankAcc = this.listCustBankAcc.find(x => x.AppCustBankAccId == event);
+      this.GetBankInfo = {
+        "BankCode": this.selectedBankAcc.BankCode,
+        "BankBranch": this.selectedBankAcc.BankBranch,
+        "AppId": this.AppId,
+        "BankAccNo": this.selectedBankAcc.BankAccNo,
+        "BankAccName": this.selectedBankAcc.BankAccName,
+        "AdditionalInterestPaidBy": ""
+      };
+    }
+    else {
+      this.SalesAppInfoForm.controls['CustBankAcc'].clearValidators();
+      this.SalesAppInfoForm.controls["CustBankAcc"].updateValueAndValidity()
+    }
+  }
+
+  SaveAppOtherInfo() {
+    if (this.GetBankInfo != undefined && this.GetBankInfo != ""  && this.GetBankInfo.BankAccName != null && this.GetBankInfo.BankAccNo != null && this.GetBankInfo.BankBranch != null && this.GetBankInfo.BankCode != null && this.GetBankInfo.AppId != 0) {
+      this.http.post<any>(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
+        error => {
+          console.log(error);
+        }
+      )
+    }else{
+      this.GetBankInfo = {
+        "BankCode": "",
+        "BankBranch": "",
+        "AppId": this.AppId,
+        "BankAccNo": "",
+        "BankAccName": "",
+      };
+      this.http.post<any>(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
+        (response) => {
+          response;
+        },
+        error => {
+          console.log(error);
+        }
+      )
+    }
+  }
+
+  setBankAcc(event) {
+    if (event == 'AUTOCOLLECTION') {
+      this.SalesAppInfoForm.controls['CustBankAcc'].setValidators([Validators.required]);
+      this.SalesAppInfoForm.controls["CustBankAcc"].updateValueAndValidity()
+    }
+    else {
+      this.SalesAppInfoForm.controls['CustBankAcc'].clearValidators();
+      this.SalesAppInfoForm.controls["CustBankAcc"].updateValueAndValidity()
+    }
+    this.SalesAppInfoForm.controls.CustBankAcc.updateValueAndValidity();
+  }
 }

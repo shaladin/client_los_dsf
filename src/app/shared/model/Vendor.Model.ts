@@ -21,7 +21,7 @@ export class VendorObj {
     TaxpayerNo: string;
     TaxpayerName: string;
     MrVendorClass: string;
-    RowVersion: any;
+    RowVersion: string;
     VendorRatingAlias: string;
     ReservedField1: string;
     ReservedField2: string;

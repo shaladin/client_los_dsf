@@ -28,7 +28,7 @@ export class MouApprovalFactoringComponent implements OnInit {
   instanceId: number;
   inputObj: ApvViewInfo;
   MouType : string = "FACTORING";
-  resultData: any;
+  resultData: MouCustObj;
   MrCustTypeCode: string;
   ApvReqId: number;
   InputApvObj: UcInputApprovalObj;

@@ -8,8 +8,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-mou-os-tc-paging',
@@ -20,28 +20,23 @@ export class MouOsTcPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   CustNoObj: GenericObj = new GenericObj();
-  user: any;
+  user: CurrentUserContext;
 
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) { }
 
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.UNAUTHORIZE_PAGE], {});
-      return;
-    }
-    else {
-      this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouOsTc.json";
-      this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouOsTc.json";
+    this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouOsTc.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouOsTc.json";
 
-      this.inputPagingObj.ddlEnvironments = [
-        {
-          name: "MOU.MR_MOU_TYPE_CODE",
-          environment: environment.FoundationR3Url
-        }
-      ];
-    }
+    this.inputPagingObj.ddlEnvironments = [
+      {
+        name: "MOU.MR_MOU_TYPE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
+
   }
 
   getEvent(event) {

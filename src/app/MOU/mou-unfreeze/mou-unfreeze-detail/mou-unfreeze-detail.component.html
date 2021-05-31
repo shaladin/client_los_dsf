@@ -1,0 +1,101 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header header-title">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate>
+                {{ title }}
+              </h4>
+            </div>
+          </div>
+        </div>
+
+        <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)"></lib-ucviewgeneric>
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="FreezeUnfreezeForm"
+            (ngSubmit)="FreezeUnfreezeForm.valid && SaveForm()" #enjiForm="ngForm">
+            <lib-ucSubsection [id]="'subSecMouFreeze'" [title]="'Mou Freeze'" [panel]="'MouFreeze'">
+            </lib-ucSubsection>
+            <div id="MouFreeze">
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel" translate>Mou Freeze</label>
+                <div class="col-md-4">
+                  <input type="checkbox" formControlName="IsFreeze" [(ngModel)]="cbIsFreeze"
+                    (change)="IsFreezeChange()" />
+                  <lib-uc-show-errors [control]="FreezeUnfreezeForm.controls.IsFreeze" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+            </div>
+
+            <lib-ucSubsection [id]="'ApvReqId'" [title]="'Approval Request'" [panel]="'ApvReq'">
+            </lib-ucSubsection>
+            <div class="form-body" id="ApvReq">
+              <div class="form-group row">
+                <label class="col-md-2 adInsLabel adins-required-label">To Be Approved By</label>
+                <div class="col-md-2">
+                  <select type="text" class="form-control adInsInput" formControlName="ListApprover" [ngClass]="{
+                      'is-invalid':
+                        enjiForm.submitted &&
+                        FreezeUnfreezeForm.controls.ListApprover.invalid
+                    }">
+                    <option *ngFor="let item of listApprover" [value]="item.Key">
+                      {{ item.Value }}
+                    </option>
+                  </select>
+                  <lib-uc-show-errors [control]="FreezeUnfreezeForm.controls.ListApprover"
+                    [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-2 adInsLabel adins-required-label">Reason Description</label>
+                <div class="col-md-2">
+                  <select type="text" class="form-control adInsInput" formControlName="Reason" [ngClass]="{
+                      'is-invalid':
+                        enjiForm.submitted &&
+                        FreezeUnfreezeForm.controls.Reason.invalid
+                    }" [(ngModel)]="selected">
+                    <option *ngFor="let item of listReason" [value]="item.Value"
+                      (change)="selectOption($event.target.value)">
+                      {{ item.Value }}
+                    </option>
+                  </select>
+                  <lib-uc-show-errors [control]="FreezeUnfreezeForm.controls.Reason" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-2 adInsLabel adins-required-label" for="notes" translate>Notes</label>
+                <div class="col-md-4">
+                  <textarea rows="5" id="notes" class="form-control" formControlName="Notes" [ngClass]="{
+                      'is-invalid':
+                        enjiForm.submitted &&
+                        FreezeUnfreezeForm.controls.Notes.invalid
+                    }"></textarea>
+                  <lib-uc-show-errors [control]="FreezeUnfreezeForm.controls.Notes" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+            </div> -->
+
+            <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady" #ApprovalComponent></lib-ucapprovalcreate>
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1"
+                [routerLink]="['/Mou/FreezeUnfreeze/Paging']" translate>
+                <i class="ft-x"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary" translate>
+                <i class="fa fa-check"></i> Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

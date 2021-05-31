@@ -35,6 +35,7 @@ import { String } from 'typescript-string-operations';
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-mou-cust-tab',
@@ -53,9 +54,9 @@ export class MouCustTabComponent implements OnInit {
   mouObj: MouCustObj = new MouCustObj();
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
   latestCustDataObj: AppCustCompareObj;
-  thirdPartyRsltHId: any;
-  latestReqDtCheckIntegrator: any;
-  reqLatestJson: any;
+  thirdPartyRsltHId: number;
+  latestReqDtCheckIntegrator: Date;
+  reqLatestJson: string;
 
   CustDataForm = this.fb.group({
     CopyFromResidence: [''],
@@ -83,13 +84,13 @@ export class MouCustTabComponent implements OnInit {
   inputFieldLegalCompanyObj: InputFieldObj;
   residenceAddrObj: AddrObj;
   inputFieldResidenceObj: InputFieldObj;
-  copyFromResidence: any;
+  copyFromResidence: string;
   mailingAddrObj: AddrObj;
   inputFieldMailingObj: InputFieldObj;
-  copyFromMailing: any;
+  copyFromMailing: string;
   mailingAddrCompanyObj: AddrObj;
   inputFieldMailingCompanyObj: InputFieldObj;
-  copyFromMailingCompany: any;
+  copyFromMailingCompany: string;
   MouCustPersonalId: number = 0;
   MouCustAddrId: number;
   MouCustFinDataId: number = 0;
@@ -99,7 +100,7 @@ export class MouCustTabComponent implements OnInit {
   MouCustAddrMailingId: number= 0;
   MouCustCompanyId: number = 0;
   listMouCustPersonalContactInformation: Array<MouCustPersonalContactPersonObj> = new Array<MouCustPersonalContactPersonObj>();
-  returnMouObj: any;
+  returnMouObj: MouCustObj;
 
   listMouCustBankAcc: Array<MouCustBankAccObj> = new Array<MouCustBankAccObj>();
   listMouCustBankAccCompany: Array<MouCustBankAccObj> = new Array<MouCustBankAccObj>();
@@ -107,9 +108,8 @@ export class MouCustTabComponent implements OnInit {
   listContactPersonCompany: Array<MouCustPersonalContactPersonObj> = new Array<MouCustPersonalContactPersonObj>();
   listLegalDoc: Array<MouCustCompanyLegalDocObj> = new Array<MouCustCompanyLegalDocObj>();
   isBindDataDone: boolean = false;
-  getCustDataUrl: any;
 
-  CustTypeObj: any;
+  CustTypeObj: Array<KeyValueObj>;
   copyToResidenceTypeObj: any = [
     {
       Key: "LEGAL",
@@ -136,7 +136,7 @@ export class MouCustTabComponent implements OnInit {
   ];
 
   defCustModelCode: string;
-  MrCustTypeCode: any;
+  MrCustTypeCode: string;
   isMarried: boolean = true;
   spouseGender: string = "";
   isSpouseOk: boolean = true;
@@ -651,7 +651,7 @@ export class MouCustTabComponent implements OnInit {
     this.custDataCompanyObj.MouCustCompanyFinDataObj.CurrRatio = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].CurrRatio.value;
     if(this.MouCustFinDataId != 0){
       this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustCompanyFinDataId = this.MouCustFinDataId;
-      this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustCompanyId = this.MouCustCompanyId;
+      this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustId = this.MouCustCompanyId;
     }
   }
 
@@ -1226,6 +1226,15 @@ export class MouCustTabComponent implements OnInit {
   CopyCustomer(event) {
     this.copyAddrFromLookup(event);
 
+    if (event["CustPersonalObj"] != undefined) {
+      if(event["CustPersonalObj"]["MrMaritalStatCode"] == CommonConstant.MasteCodeMartialStatsMarried) {
+        this.isMarried = true;
+      }
+      else {
+        this.isMarried = false;
+      }
+    }
+
     if (event["CustPersonalContactPersonObjs"] != undefined) {
       this.listMouCustPersonalContactInformation = event["CustPersonalContactPersonObjs"];
       this.CheckSpouseExist();
@@ -1537,7 +1546,7 @@ export class MouCustTabComponent implements OnInit {
         this.mouObj = new MouCustObj();
         this.mouObj.MouCustId = this.MouCustId;
         this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
-          (response) => {
+          (response: any) => {
             this.returnMouObj = response;
 
             this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
@@ -1584,6 +1593,8 @@ export class MouCustTabComponent implements OnInit {
     );
   }
   confirmFraudCheck() {
+    if(this.isUseDigitalization == "0")return true;
+    
     let inputCustObj = new AppCustCompareObj();
 
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {

@@ -1,0 +1,163 @@
+<div class="col-md-12">
+  <div class="card">
+      <div class="card-body">
+          <div class="px-3">
+
+              <div class="row" style="border-bottom: 1px solid black; margin-bottom: 15px;">
+                  <div class="col-md-8" style="padding-left: 0px;">
+                      <h4 class="form-section card-title" translate><i class="ft-file-text"></i>{{this.pageTitle}}
+                      </h4>
+                  </div>
+                  <div class="col-md-4" style="text-align: right; padding-right: 0px;">
+                      <button type="button" class="btn btn-raised btn-success mr-1" (click)="editMainInfoHandler()"
+                          translate>
+                          Edit Main Info
+                      </button>
+                      <button type="button" class="btn btn-raised btn-warning mr-1" (click)="cancelHandler()"
+                          translate>
+                          <i class="ft-x"></i> Cancel
+                      </button>
+                      <button type="button" class="btn btn-raised btn-primary" (click)="submitHandler()" translate>
+                          <i class=" far fa-check-square"></i> Submit
+                      </button>
+                  </div>
+              </div>
+
+              <div class="row">
+                  <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)">
+                  </lib-ucviewgeneric>
+              </div>
+
+              <div class="row">
+                  <div class="col-md-12">
+                      <div id="stepperGeneral" class="bs-stepper" *ngIf="mouType == 'GENERAL'">
+                          <div class="bs-stepper-header margin-stepper" role="tablist" style="overflow-x: auto;">
+
+                              <div class="step" data-target="#mou-detail-tab">
+                                  <button type="button" class="step-trigger" role="tab" aria-controls="mou-detail-tab"
+                                      id="mou-detail-tab-trigger" (click)="designatedStepHandler('1')"
+                                      [disabled]="currentStepIndex < 1">
+                                      <span class="bs-stepper-circle">1</span>
+                                      <span class="bs-stepper-label">MoU Detail General</span>
+                                  </button>
+                              </div>
+
+                              <div class="line"></div>
+
+                              <div class="step" data-target="#collateral-data-tab">
+                                  <button type="button" class="step-trigger" role="tab"
+                                      aria-controls="collateral-data-tab" id="collateral-data-tab-trigger"
+                                      (click)="designatedStepHandler('2')" [disabled]="currentStepIndex < 2">
+                                      <span class="bs-stepper-circle">2</span>
+                                      <span class="bs-stepper-label">Collateral</span>
+                                  </button>
+                              </div>
+
+                          </div>
+
+                          <br><br>
+
+                          <div id="mou-detail-tab" class="content" role="tabpanel"
+                              aria-labelledby="mou-detail-tab-trigger">
+                              <app-change-mou-detail-general *ngIf="currentStepIndex == 1" [MouCustId]="mouCustId"
+                                  [Mode]="mode" (ResponseMouDetailGeneral)="stepHandlerGeneral($event)">
+                              </app-change-mou-detail-general>
+                          </div>
+
+                          <div id="collateral-data-tab" class="content" role="tabpanel"
+                              aria-labelledby="collateral-data-tab-trigger">
+                              <app-change-mou-request-addcoll *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId" [ChangeMouStatus]="ChangeMouStatus" [ChangeMouCustId]="ChangeMouCustId"
+                                  (ResponseMouAddColl)="stepHandlerGeneral($event)"
+                                  (modeDetail)="getModeDetail($event)">
+                              </app-change-mou-request-addcoll>
+                          </div>
+
+                      </div>
+
+
+
+                      <div id="stepperFactoring" class="bs-stepper" *ngIf="mouType == 'FACTORING'">
+                          <div class="bs-stepper-header margin-stepper" role="tablist" style="overflow-x: auto;">
+                              <div class="step" data-target="#mou-detail-tab">
+                                  <button type="button" class="step-trigger" role="tab" aria-controls="mou-detail-tab"
+                                      id="mou-detail-tab-trigger" (click)="designatedStepHandler('1')"
+                                      [disabled]="currentStepIndex < 1">
+                                      <span class="bs-stepper-circle">1</span>
+                                      <span class="bs-stepper-label">MoU Detail Factoring</span>
+                                  </button>
+                              </div>
+                              <div class="line"></div>
+                              <div class="step" data-target="#collateral-data-tab">
+                                  <button type="button" class="step-trigger" role="tab"
+                                      aria-controls="collateral-data-tab" id="collateral-data-tab-trigger"
+                                      (click)="designatedStepHandler('2')" [disabled]="currentStepIndex < 2">
+                                      <span class="bs-stepper-circle">2</span>
+                                      <span class="bs-stepper-label">Collateral</span>
+                                  </button>
+                              </div>
+                          </div>
+
+                          <br><br>
+
+                          <div id="mou-detail-tab" class="content" role="tabpanel"
+                              aria-labelledby="mou-detail-tab-trigger">
+                              <app-change-mou-detail-factoring *ngIf="currentStepIndex == 1" [MouCustId]="mouCustId"
+                                  (ResponseMouCustFactoring)="stepHandlerFactoring($event)">
+                              </app-change-mou-detail-factoring>
+                          </div>
+                          <div id="collateral-data-tab" class="content" role="tabpanel"
+                              aria-labelledby="collateral-data-tab-trigger">
+                              <app-change-mou-request-addcoll *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId"
+                                  (ResponseMouAddColl)="stepHandlerFactoring($event)" [ChangeMouCustId]="ChangeMouCustId" [ChangeMouTrxNo]="changeMouTrxNo" [ChangeMouStatus]="ChangeMouStatus" >
+                              </app-change-mou-request-addcoll>
+                          </div>
+
+                      </div>
+
+
+
+                      <div id="stepperDealerfinancing" class="bs-stepper" *ngIf="mouType == 'FINANCING'">
+                          <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
+                              <div class="step" data-target="#mou-detail-tab">
+                                  <button type="button" class="step-trigger" role="tab" aria-controls="mou-detail-tab"
+                                      id="mou-detail-tab-trigger" (click)="designatedStepHandler('1')"
+                                      [disabled]="currentStepIndex < 1">
+                                      <span class="bs-stepper-circle">1</span>
+                                      <span class="bs-stepper-label">MoU Detail DF</span>
+                                  </button>
+                              </div>
+                              <div class="line"></div>
+                              <div class="step" data-target="#collateral-data-tab">
+                                  <button type="button" class="step-trigger" role="tab"
+                                      aria-controls="collateral-data-tab" id="collateral-data-tab-trigger"
+                                      (click)="designatedStepHandler('2')" [disabled]="currentStepIndex < 2">
+                                      <span class="bs-stepper-circle">2</span>
+                                      <span class="bs-stepper-label">Collateral</span>
+                                  </button>
+                              </div>
+                          </div>
+
+                          <br><br>
+
+                          <div id="mou-detail-tab" class="content" role="tabpanel"
+                              aria-labelledby="mou-detail-tab-trigger">
+                              <app-change-mou-detail-dealerfinancing *ngIf="currentStepIndex == 1"
+                                  [MouCustId]="mouCustId" [ChangeMouTrxId]="ChangeMouTrxId" [ChangeMouCustId]="ChangeMouCustId"
+                                  (ResponseMouCustDealerfinancing)="stepHandlerDealerfinancing($event)">
+                              </app-change-mou-detail-dealerfinancing>
+                          </div>
+                          <div id="collateral-data-tab" class="content" role="tabpanel"
+                              aria-labelledby="collateral-data-tab-trigger">
+                              <app-change-mou-request-addcoll *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId" [ChangeMouCustId]="ChangeMouCustId" [ChangeMouTrxNo]="changeMouTrxNo" [ChangeMouStatus]="ChangeMouStatus" 
+                                  (ResponseMouAddColl)="stepHandlerDealerfinancing($event)">
+                              </app-change-mou-request-addcoll>
+                          </div>
+
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+  </div>
+</div>

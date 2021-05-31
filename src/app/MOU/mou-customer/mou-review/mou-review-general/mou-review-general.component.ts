@@ -23,21 +23,20 @@ import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCode
   templateUrl: './mou-review-general.component.html',
   providers: [NGXToastrService]
 })
+
 export class MouReviewGeneralComponent implements OnInit {
   rfaInfoObj: RFAInfoObj = new RFAInfoObj();
   mouCustObj: MouCustObj = new MouCustObj();
   keyValueObj: KeyValueObj;
   MouCustId: number;
-  WfTaskListId: any;
+  WfTaskListId: number;
   MouType: string = CommonConstant.GENERAL;
   PlafondAmt: number;
   listApprover: any;
-  listRecommendationObj: any;
-  MrCustTypeCode: any;
-  link: any;
-  resultData: any;
+  MrCustTypeCode: string;
+  resultData: MouCustObj;
   mouCustObject: MouCustObj = new MouCustObj();
-  listReason: any;
+  listReason: Array<KeyValueObj>;
   ScoreResult: number;
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;

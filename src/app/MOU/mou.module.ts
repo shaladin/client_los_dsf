@@ -67,10 +67,43 @@ import { UcapprovalcreateModule } from '@adins/ucapprovalcreate';
 import { UcapprovalR3Module } from '@adins/ucapproval-r3';
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
- 
 import { SharedModule } from "app/shared/shared.module";
 import { MouMainInfoComponent } from './mou-main-info/mou-main-info.component';
 import { UnauthorizedPageComponent } from "app/unauthorized/unauthorized.component";
+
+import { MouReviewDlfnComponent } from './mou-customer/mou-review/mou-review-dlfn/mou-review-dlfn.component';
+import { ChangeMouApprovalFactoringComponent } from "./change-mou/change-mou-approval/change-mou-approval-factoring/change-mou-approval-factoring.component";
+import { ChangeMouApprovalFinancingComponent } from "./change-mou/change-mou-approval/change-mou-approval-financing/change-mou-approval-financing.component";
+import { ChangeMouApprovalGeneralComponent } from "./change-mou/change-mou-approval/change-mou-approval-general/change-mou-approval-general.component";
+import { ChangeMouApprovalPagingComponent } from "./change-mou/change-mou-approval/change-mou-approval-paging/change-mou-approval-paging.component";
+import { ChangeMouCancelComponent } from "./change-mou/change-mou-cancel/change-mou-cancel/change-mou-cancel.component";
+import { ChangeMouExecutionDetailComponent } from "./change-mou/change-mou-execution/change-mou-execution-detail/change-mou-execution-detail.component";
+import { ChangeMouExecutionPagingComponent } from "./change-mou/change-mou-execution/change-mou-execution-paging/change-mou-execution-paging.component";
+import { ChangeMouInquiryComponent } from "./change-mou/change-mou-inquiry/change-mou-inquiry.component";
+import { ChangeMouDetailDealerFinancingComponent } from "./change-mou/change-mou-request/change-mou-detail-dealerfinancing/change-mou-detail-dealerfinancing.component";
+import { ChangeMouDetailFactoringComponent } from "./change-mou/change-mou-request/change-mou-detail-factoring/change-mou-detail-factoring.component";
+import { ChangeMouCustAssetDetailComponent } from "./change-mou/change-mou-request/change-mou-detail-general/change-mou-cust-asset/change-mou-cust-asset-detail/change-mou-cust-asset-detail.component";
+import { ChangeMouCustAssetComponent } from "./change-mou/change-mou-request/change-mou-detail-general/change-mou-cust-asset/change-mou-cust-asset.component";
+import { ChangeMouDetailGeneralComponent } from "./change-mou/change-mou-request/change-mou-detail-general/change-mou-detail-general.component";
+import { ChangeMouRequestAddcollComponent } from "./change-mou/change-mou-request/change-mou-request-addcoll/change-mou-request-addcoll.component";
+import { ChangeMouRequestDetailComponent } from "./change-mou/change-mou-request/change-mou-request-detail/change-mou-request-detail.component";
+import { ChangeMouRequestDetailCustomerComponent } from "./change-mou/change-mou-request/change-mou-request-detail-customer/change-mou-request-detail-customer.component";
+import { ChangeMouRequestPagingComponent } from "./change-mou/change-mou-request/change-mou-request-paging/change-mou-request-paging.component";
+import { ChangeMouReturnDetailComponent } from "./change-mou/change-mou-return/change-mou-return-detail/change-mou-return-detail.component";
+import { ChangeMouReturnPagingComponent } from "./change-mou/change-mou-return/change-mou-return-paging/change-mou-return-paging.component";
+import { ChangeMouReviewFactoringComponent } from "./change-mou/change-mou-review/change-mou-review-paging/change-mou-review-factoring/change-mou-review-factoring.component";
+import { ChangeMouReviewFinancingComponent } from "./change-mou/change-mou-review/change-mou-review-paging/change-mou-review-financing/change-mou-review-financing.component";
+import { ChangeMouReviewGeneralComponent } from "./change-mou/change-mou-review/change-mou-review-paging/change-mou-review-general/change-mou-review-general.component";
+import { ChangeMouReviewPagingComponent } from "./change-mou/change-mou-review/change-mou-review-paging/change-mou-review-paging.component";
+import { ChangeMouAddcollComponent } from "./change-mou/change-mou-view/change-mou-addcoll/change-mou-addcoll.component";
+import { ChangeMouDetailComponent } from "./change-mou/change-mou-view/change-mou-detail/change-mou-detail.component";
+import { MouDetailFinancingComponent } from "./mou-customer-request/mou-detail-financing/mou-detail-financing/mou-detail-financing.component";
+import { MouUnfreezeApvDetailComponent } from "./mou-unfreeze/mou-unfreeze-apv-detail/mou-unfreeze-apv-detail.component";
+import { MouUnfreezeApvPagingComponent } from "./mou-unfreeze/mou-unfreeze-apv-paging/mou-unfreeze-apv-paging.component";
+import { MouUnfreezePagingComponent } from "./mou-unfreeze/mou-unfreeze-paging/mou-unfreeze-paging.component";
+import { MouUnfreezeDetailComponent } from "./mou-unfreeze/mou-unfreeze-detail/mou-unfreeze-detail.component";
+import { MouUnfreezeInquiryComponent } from "./mou-unfreeze/mou-unfreeze-inquiry/mou-unfreeze-inquiry.component";
+import { MouUnfreezeViewComponent } from "./mou-unfreeze/mou-unfreeze-view/mou-unfreeze-view.component";
 
 export const customCurrencyMaskConfig = {
   align: "left",
@@ -168,7 +201,40 @@ export const customCurrencyMaskConfig = {
     MouDupCheckPagingComponent,
     ExistingMouCompanyComponent,
     ExistingMouPersonalComponent,
-    MouMainInfoComponent
+    MouMainInfoComponent,
+    MouReviewDlfnComponent,
+    ChangeMouApprovalFactoringComponent,
+    ChangeMouApprovalFinancingComponent,
+    ChangeMouApprovalGeneralComponent,
+    ChangeMouApprovalPagingComponent,
+    ChangeMouCancelComponent,
+    ChangeMouExecutionDetailComponent,
+    ChangeMouExecutionPagingComponent,
+    ChangeMouInquiryComponent,
+    ChangeMouDetailDealerFinancingComponent,
+    ChangeMouDetailFactoringComponent,
+    ChangeMouCustAssetDetailComponent,
+    ChangeMouCustAssetComponent,
+    ChangeMouDetailGeneralComponent,
+    ChangeMouRequestAddcollComponent,
+    ChangeMouRequestDetailComponent,
+    ChangeMouRequestDetailCustomerComponent,
+    ChangeMouRequestPagingComponent,
+    ChangeMouReturnDetailComponent,
+    ChangeMouReturnPagingComponent,
+    ChangeMouReviewFactoringComponent,
+    ChangeMouReviewFinancingComponent,
+    ChangeMouReviewGeneralComponent,
+    ChangeMouReviewPagingComponent,
+    ChangeMouAddcollComponent,
+    ChangeMouDetailComponent,
+    MouDetailFinancingComponent,
+    MouUnfreezeApvDetailComponent,
+    MouUnfreezeApvPagingComponent,
+    MouUnfreezePagingComponent,
+    MouUnfreezeDetailComponent,
+    MouUnfreezeInquiryComponent,
+    MouUnfreezeViewComponent
   ],
   exports: [],
   providers: [NGXToastrService],

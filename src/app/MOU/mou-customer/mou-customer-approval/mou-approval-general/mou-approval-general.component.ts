@@ -27,8 +27,7 @@ export class MouApprovalGeneralComponent implements OnInit {
   instanceId: number;
   MouType: string = CommonConstant.GENERAL;
   inputObj: ApvViewInfo;
-  link: any;
-  resultData: any;
+  resultData: MouCustObj;
   mouCustObject: MouCustObj = new MouCustObj();
   MrCustTypeCode: string;
   ApvReqId: number;

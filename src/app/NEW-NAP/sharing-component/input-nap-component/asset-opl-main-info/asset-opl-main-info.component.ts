@@ -1,10 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { environment } from 'environments/environment';
-import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AppAssetOplObj } from 'app/shared/model/AppAssetOplObj.Model';
 
 @Component({
@@ -20,7 +16,7 @@ export class AssetOplMainInfoComponent implements OnInit {
 
   ngOnInit() {
     this.http.post(URLConstant.GetAppAssetOplMainInfoByAppAssetId, { Id: this.AppAssetId }).subscribe(
-      (response:any) => {
+      (response: any) => {
         this.AppAssetObj = response;
         this.isReady = true;
       }

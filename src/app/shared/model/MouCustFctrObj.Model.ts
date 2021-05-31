@@ -18,6 +18,7 @@ export class MouCustFctrObj {
     Notes: string;
     CurrCode: string;
     VendorCode: string;
+    InstTypeDescr: string;
     RowVersion: string;
     constructor(){ this.MouCustFctrId = 0; this.RowVersion = '' }
 }

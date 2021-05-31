@@ -15,25 +15,25 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqListMouCustLglReviewObj } from 'app/shared/model/Request/MOU/ReqListMouCustLglReviewObj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { MouCustLglReviewObj } from 'app/shared/model/MouCustLglReviewObj.Model';
 
 @Component({
   selector: 'app-legal-review-detail',
   templateUrl: './legal-review-detail.component.html',
   providers: [NGXToastrService]
 })
+
 export class LegalReviewDetailComponent implements OnInit {
 
   MouCustId: number;
-  WfTaskListId: any;
-  responseObj: any;
-  responseRefMasterObj: any;
-  responseMouTcObj: any;
+  WfTaskListId: number;
+  responseRefMasterObj: Array<KeyValueObj>;
   items: FormArray;
   isItemsReady: boolean = false;
   termConditions: FormArray;
-  link: any;
-  mouCustObj: any;
-  resultData: any;
+  mouCustObj: MouCustObj;
+  resultData: MouCustObj;
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
   LegalForm = this.fb.group(
     {
@@ -42,7 +42,7 @@ export class LegalReviewDetailComponent implements OnInit {
     }
   );
   @ViewChild("MouTc") public mouTc: MouCustTcComponent;
-  responseMouObj: Array<any> = new Array<any>();
+  responseMouObj: Array<MouCustLglReviewObj> = new Array<MouCustLglReviewObj>();
   UploadViewlink: string;
   Uploadlink: string;
   Viewlink: string;

@@ -9,6 +9,7 @@ import { MouCustAssetDetailComponent } from './mou-cust-asset-detail/mou-cust-as
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-mou-cust-asset',
@@ -21,9 +22,9 @@ export class MouCustAssetComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Input() identifier: any;
   index: number = 0;
-  tempResponseMouCustAsset: any;
+  tempResponseMouCustAsset: Array<MouCustAssetObj>;
   mouAssetList: Array<object> = [];
-  assetTypeList: any;
+  assetTypeList: Array<KeyValueObj>;
   listExclude: Array<string>;
   MouCustClauseAssetForm = this.fb.group({
     AssetTypeCode: ['']

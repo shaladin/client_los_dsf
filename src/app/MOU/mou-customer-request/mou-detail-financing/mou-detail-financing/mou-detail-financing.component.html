@@ -1,0 +1,231 @@
+<form class="form form-horizontal" [formGroup]="MouDetailFinancingForm" #enjiForm="ngForm" novalidate
+  (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
+  <lib-ucSubsection [id]="'MouDetailFinancingId'" [title]="'MOU Detail'" [panel]="'MouDetailFinancingSection'">
+  </lib-ucSubsection>
+  <div id="MouDetailFinancingSection">
+    <div class="form-body">
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel" for="VirtualAccNo" translate>Virtual Account No</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control adInsInput" formControlName="VirtualAccNo" min="0"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.VirtualAccNo.invalid }" />
+          <lib-uc-show-errors [control]="MouDetailFinancingForm.controls.VirtualAccNo" [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel adins-required-label" for="CurrCode" translate>Currency</label>
+        <div class="col-md-4">
+          <select class="form-control adInsInput" formControlName="CurrCode"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.CurrCode.invalid }">
+            <option *ngFor="let item of currencyList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
+          </select>
+          <lib-uc-show-errors [control]="MouDetailFinancingForm.controls.CurrCode" [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel adins-required-label" for="WopCode" translate>WoP</label>
+        <div class="col-md-4">
+          <select class="form-control adInsInput" formControlName="WopCode"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.WopCode.invalid }">
+            <option *ngFor="let item of wopList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel adins-required-label" for="MrInstTypeCode_SingleInstCalcMthd"
+          translate>Installment Type</label>
+        <div class="col-md-5">
+          <select type="text" class="form-control adInsInput" formControlName="MrInstTypeCode"
+            (change)="instTypeHandler($event.target.value)"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.MrInstTypeCode.invalid }">
+            <option *ngFor="let item of instTypeList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel adins-required-label" for="TopDays" translate>Term of Payment (in
+          Days)</label>
+        <div class="col-md-4">
+          <input type="number" class="form-control adInsInput" formControlName="TopDays" min="0"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.TopDays.invalid }" />
+          <lib-uc-show-errors [control]="MouDetailFinancingForm.controls.TopDays" [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel adins-required-label" for="TopInterestRatePrcnt" translate>Term Of Payment
+          Interest Rate Percent (%)</label>
+        <div class="col-md-4">
+          <input type="" currencyMask class="form-control adInsInput" formControlName="TopInterestRatePrcnt"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.TopInterestRatePrcnt.invalid }"
+            [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:false, precision: 6, nullable: false }" />
+          <lib-uc-show-errors [control]="MouDetailFinancingForm.controls.TopInterestRatePrcnt"
+            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+        </div>
+      </div>
+
+      <div *ngIf="!IsSingleIns" class="form-group row">
+        <label class="col-md-3 adInsLabel adins-required-label" for="PayFreqCode" translate>Payment Frequency</label>
+        <div class="col-md-4">
+          <select class="form-control adInsInput" formControlName="PayFreqCode"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.PayFreqCode.invalid }">
+            <option *ngFor="let item of payFreqList?.ReturnObject" [value]="item.PayFreqCode">{{item.Descr}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel adins-required-label" for="InterestRatePrcnt" translate>Interest Rate
+          (%)</label>
+        <div class="col-md-4">
+          <input type="" currencyMask class="form-control adInsInput" formControlName="InterestRatePrcnt"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.InterestRatePrcnt.invalid }"
+            [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:false, precision: 6, nullable: false }" />
+          <lib-uc-show-errors [control]="MouDetailFinancingForm.controls.InterestRatePrcnt"
+            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel adins-required-label" for="ExtendRatePrcnt" translate>Extend Rate Percent
+          (%)</label>
+        <div class="col-md-4">
+          <input type="" currencyMask class="form-control adInsInput" formControlName="ExtendRatePrcnt"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.ExtendRatePrcnt.invalid }"
+            [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:false, precision: 6, nullable: false }" />
+          <lib-uc-show-errors [control]="MouDetailFinancingForm.controls.ExtendRatePrcnt" [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel adins-required-label" for="MmForExtend" translate>Maximum Months For
+          Extend</label>
+        <div class="col-md-4">
+          <input type="number" class="form-control adInsInput" formControlName="MmForExtend" min="0"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.MmForExtend.invalid }" />
+          <lib-uc-show-errors [control]="MouDetailFinancingForm.controls.MmForExtend" [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel adins-required-label" for="MaximumExtendTimes" translate>Maximum Extend
+          Times</label>
+        <div class="col-md-4">
+          <input type="number" class="form-control adInsInput" formControlName="MaximumExtendTimes" min="0"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.MaximumExtendTimes.invalid }" />
+          <lib-uc-show-errors [control]="MouDetailFinancingForm.controls.MaximumExtendTimes"
+            [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel adins-required-label" for="PpForExtendPrcnt" translate>Principal Paid For
+          Extend (%)</label>
+        <div class="col-md-4">
+          <input type="" currencyMask class="form-control adInsInput" formControlName="PpForExtendPrcnt"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.PpForExtendPrcnt.invalid }"
+            [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:false, precision: 6, nullable: false }" />
+          <lib-uc-show-errors [control]="MouDetailFinancingForm.controls.PpForExtendPrcnt"
+            [submit]="enjiForm.submitted"></lib-uc-show-errors>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel adins-required-label" for="SpareDayToPay" translate>Spare Day To Pay</label>
+        <div class="col-md-4">
+          <input type="number" class="form-control adInsInput" formControlName="SpareDayToPay" min="0"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.SpareDayToPay.invalid }" />
+          <lib-uc-show-errors [control]="MouDetailFinancingForm.controls.SpareDayToPay" [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel adins-required-label" for="AssetCondition" translate>Asset Condition</label>
+        <div class="col-md-4">
+          <select class="form-control adInsInput" formControlName="AssetCondition"
+            (change)="onItemChange($event.target.value)"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.AssetCondition.invalid }">
+            <option *ngFor="let item of AsseConditionLis?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
+          </select>
+          <lib-uc-show-errors [control]="MouDetailFinancingForm.controls.AssetCondition" [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel" *ngIf="IsaAssetNew" for="LinkManufacturer" translate>Link
+          Manufacturer</label>
+        <div class="col-md-4">
+          <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupLinkManufacturerObj"
+            [parentForm]="MouDetailFinancingForm" [identifier]="'lookupLinkManufacturer'" #LookUpManufacturer
+            (lookup)="LinkManufacturerEvent($event)">
+          </lib-uclookupgeneric>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel adins-required-label" *ngIf="IsaAssetNew" for="Manufacturer"
+          translate>Manufacturer</label>
+        <div class="col-md-4">
+          <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupManufacturerObj"
+            [parentForm]="MouDetailFinancingForm" [identifier]="'lookupManufacturer'"
+            (lookup)="ManufacturerEvent($event)">
+          </lib-uclookupgeneric>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3" for="LinkSupplGrading" translate>Link Suppl Grading</label>
+        <div class="col-md-4">
+          <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupLinkSupplGradingObj"
+            [parentForm]="MouDetailFinancingForm" [identifier]="'lookupLinkSupplGrading'" #LookUpSupplGrading
+            (lookup)="LinkSupplGradingEvent($event)">
+          </lib-uclookupgeneric>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adins-required-label" for="Customer" translate>Customer</label>
+        <div class="col-md-4">
+          <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustomerObj"
+            [parentForm]="MouDetailFinancingForm" [identifier]="'lookupCustomer'" (lookup)="CustomerEvent($event)">
+          </lib-uclookupgeneric>
+        </div>
+      </div>
+
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel adins-required-label" for="LcRatePrcnt" translate>Lc Rate (%)</label>
+        <div class="col-md-4">
+          <input type="" currencyMask class="form-control adInsInput" formControlName="LcRatePrcnt"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.LcRatePrcnt.invalid }"
+            [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:false, precision: 6, nullable:false }" />
+          <lib-uc-show-errors [control]="MouDetailFinancingForm.controls.LcRatePrcnt" [submit]="enjiForm.submitted">
+          </lib-uc-show-errors>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-3 adInsLabel" for="Notes" translate>Notes</label>
+        <div class="col-md-4">
+          <textarea class="form-control adInsInput" formControlName="Notes"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFinancingForm.controls.Notes.invalid }">
+          </textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12" style="padding: 0; text-align: right;">
+    <div class="form-actions right">
+      <button type="submit" class="btn btn-raised btn-primary">
+        <i class="far fa-check-square"></i> Save
+      </button>
+    </div>
+  </div>
+</form>
