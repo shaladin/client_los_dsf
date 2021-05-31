@@ -1,4 +1,4 @@
-<div class="col-lg-12">
+<div class="col-lg-12" style="overflow-x:auto;">
   <table class="table table-responsive-md text-center table-hover">
     <thead>
       <tr class="table-header">
@@ -62,7 +62,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngIf = "Contracts.length == 0">
+      <tr *ngIf = "Contracts?.length == 0">
         <td colspan="100%">No Data Available</td>
       </tr>
       <tr *ngFor="let item of Contracts.ContractList">
@@ -73,18 +73,18 @@
         <td>{{item.MaturityDate | date: 'dd-MMM-yyyy'}}</td>
         <td>{{item.RealEndDate | date: 'dd-MMM-yyyy'}}</td>
         <td>{{item.LastUpdate | date: 'dd-MMM-yyyy'}}</td>
-        <td>{{item.TotalFacilityAmount.Value}}</td>
-        <td>{{item.OutstandingAmount.Value}}</td>
-        <td>{{item.PastDueAmount.Value}}</td>
+        <td>{{item.TotalFacilityAmount.Value | number:'.2':'en-US'}}</td>
+        <td>{{item.OutstandingAmount.Value | number:'.2':'en-US'}}</td>
+        <td>{{item.PastDueAmount.Value | number:'.2':'en-US'}}</td>
         <td>{{item.PastDueDays}}</td>
         <td>{{item.WorstPastDueDays}}</td>
-        <td>{{item.WorstPastDueAmount.Value}}</td>
+        <td>{{item.WorstPastDueAmount.Value | number:'.2':'en-US'}}</td>
         <td>{{item.Creditor}}</td>
         <td>{{item.PurposeOfFinancing}}</td>
         <td>{{item.NegativeStatusOfContract}}</td>
         <td>{{item.CollateralAmount}}</td>
         <td>{{item.CreditClassification}}</td>        
-        <td>{{item.InstallmentEstimation}}</td>
+        <td>{{item.InstallmentEstimation | number:'.2':'en-US'}}</td>
       </tr>
     </tbody>
   </table>
