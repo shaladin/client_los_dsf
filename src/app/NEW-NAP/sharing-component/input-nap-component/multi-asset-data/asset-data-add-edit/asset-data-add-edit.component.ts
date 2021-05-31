@@ -40,6 +40,7 @@ import { AppAssetAttrObj } from 'app/shared/model/AppAssetAttrObj.Model';
 import { CustomPatternObj } from 'app/shared/model/library/CustomPatternObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj } from 'app/shared/model/Request/Vendor/ReqVendorEmp.model';
+import { String } from 'typescript-string-operations';
 
 @Component({
   selector: 'app-asset-data-add-edit',
@@ -215,6 +216,7 @@ export class AssetDataAddEditComponent implements OnInit {
   };
   generalSettingObj: GeneralSettingObj;
   IntegratorCheckBySystemGsValue: string = "1";
+  IsUseDigitalization: string;
   LastRequestedDate: any = "";
   indexChassis: number = 0;
   SerialNoRegex: string;
@@ -267,6 +269,55 @@ export class AssetDataAddEditComponent implements OnInit {
     }
   }
 
+  async GetGS(){
+    this.generalSettingObj = new GeneralSettingObj();
+    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIntegratorCheckBySystem);
+    this.generalSettingObj.ListGsCode.push(CommonConstant.GSCodeIsUseDigitalization); 
+
+    await this.http.post(URLConstant.GetListGeneralSettingByListGsCode, this.generalSettingObj).toPromise().then(
+      (response) => {
+        var returnGeneralSettingObj = response;
+
+        var gsNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        
+        if(gsNeedCheckBySystem != undefined){
+          this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
+        }
+
+        if(gsUseDigitalization != undefined){
+          this.IsUseDigitalization = gsUseDigitalization.GsValue;
+        }else{
+          this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
+        }        
+      }
+    );
+  }
+  async GetThirdPartyResultH(){
+    var ChassisNoValue = this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value;
+    await this.http.post(URLConstant.GetAppAssetFromThirdPartyResultHByTrxTypeCodeAndTrxNoAndChassisNoForFraudChecking, {TrxNo : this.appData.AppNo, TrxTypeCode : "APP", ChassisNo : ChassisNoValue}).toPromise().then(
+      (response) => {
+        console.log(response);
+        if(response["AppAssetObject"]["SerialNo1"] != null){
+          this.currentChassisNo = response["AppAssetObject"]["SerialNo1"];
+        }
+        if(response["ResponseThirdPartyRsltH"]["ThirdPartyRsltHId"] != null){
+        this.LastRequestedDate = response["ResponseThirdPartyRsltH"]["ReqDt"];
+        }
+      }
+    );
+  }
+  HitAPI() {
+    if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '') {
+      this.toastr.warningMessage("Please Input Chassis No !");
+    }
+    else {
+      this.toastr.successMessage("Submit with Integrator");
+      this.IsIntegrator = true;
+    }
+  }
   GetListAddr() {
     this.appObj.Id = this.AppId;
     this.http.post(URLConstant.GetListAppCustAddrByAppId, this.appObj).toPromise().then(
@@ -883,8 +934,12 @@ export class AssetDataAddEditComponent implements OnInit {
               for (let i = 0; i < this.items.length; i++) {
                 if (this.items.controls[i] != null) {
                   this.items.controls[i]['controls']['SerialNoValue'].value = this.returnAppAssetObj["SerialNo" + (i + 1)];
+                  if (this.items.controls[i]["controls"]["SerialNoLabel"].value == "Chassis No"){
+                    this.indexChassis = i;
+                  }
                 }
               }
+			  this.GetThirdPartyResultH();
             }
             this.UcAddressHandler();
 
@@ -992,6 +1047,7 @@ export class AssetDataAddEditComponent implements OnInit {
         });
       }
     );
+	await this.GetGS();
   }
 
   GenerataAppAssetAttr(isRefresh: boolean) {
@@ -1401,13 +1457,50 @@ export class AssetDataAddEditComponent implements OnInit {
           }
         }
       }
-      this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.AssetDataForm.reset();
-          //this.router.navigate(["/Nap/AssetData/Paging"]);
-          this.assetValue.emit({ mode: 'paging' });
-        });
+      if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
+        if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
+          if (confirm("Chassis No not filled, submit data without Integrator ?")) {
+            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                this.AssetDataForm.reset();
+                //this.router.navigate(["/Nap/AssetData/Paging"]);
+                this.assetValue.emit({ mode: 'paging' });
+              });
+          }
+        }
+        else if (!this.IsIntegrator) {
+            if (confirm("Submit data without Integrator ?")) {
+            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                this.AssetDataForm.reset();
+                //this.router.navigate(["/Nap/AssetData/Paging"]);
+                this.assetValue.emit({ mode: 'paging' });
+              });
+            }
+        }
+        else if (this.IsIntegrator) {
+          this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
+                (response) => {
+                });
+                this.AssetDataForm.reset();
+                //this.router.navigate(["/Nap/AssetData/Paging"]);
+                this.assetValue.emit({ mode: 'paging' });
+            });
+        }
+      }else{
+        this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.AssetDataForm.reset();
+            //this.router.navigate(["/Nap/AssetData/Paging"]);
+            this.assetValue.emit({ mode: 'paging' });
+          });
+      }
     }
     else {
       this.allAssetDataObj = new AllAssetDataObj();
@@ -1476,13 +1569,62 @@ export class AssetDataAddEditComponent implements OnInit {
         }
       }
 
-      this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          this.AssetDataForm.reset();
-          //this.router.navigate(["/Nap/AssetData/Paging"]);
-          this.assetValue.emit({ mode: 'paging' });
-        });
+      if (this.IsUseDigitalization == "1" && this.IntegratorCheckBySystemGsValue == "0") {
+        if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' && this.IsIntegrator) {
+          if (confirm("Chassis No not filled, submit data without Integrator ?")) {
+            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                this.AssetDataForm.reset();
+                //this.router.navigate(["/Nap/AssetData/Paging"]);
+                this.assetValue.emit({ mode: 'paging' });
+              });
+          }
+        }
+        else if (!this.IsIntegrator) {
+          
+          if (this.currentChassisNo == this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value && this.returnAppAssetObj.AppAssetId != 0) {
+            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                this.AssetDataForm.reset();
+                //this.router.navigate(["/Nap/AssetData/Paging"]);
+                this.assetValue.emit({ mode: 'paging' });
+              });
+          }
+          else{
+            if (confirm("Submit data without Integrator ?")) {
+            this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                this.AssetDataForm.reset();
+                //this.router.navigate(["/Nap/AssetData/Paging"]);
+                this.assetValue.emit({ mode: 'paging' });
+              });
+            }
+          }
+        }
+        else if (this.IsIntegrator) {
+          this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              this.http.post(URLConstant.DigitalizationAddTrxSrcDataForFraudCheckingAssetRAPINDO, this.allAssetDataObj).subscribe(
+                (response) => {
+                });
+                this.AssetDataForm.reset();
+                //this.router.navigate(["/Nap/AssetData/Paging"]);
+                this.assetValue.emit({ mode: 'paging' });
+            });
+        }
+      }else{
+        this.http.post(URLConstant.AddEditAllAssetData, this.allAssetDataObj).subscribe(
+          (response) => {
+            this.toastr.successMessage(response["message"]);
+            this.AssetDataForm.reset();
+            //this.router.navigate(["/Nap/AssetData/Paging"]);
+            this.assetValue.emit({ mode: 'paging' });
+          });
+      }
     }
 
     // this.inputAddressObjForLoc = new InputAddressObj();
