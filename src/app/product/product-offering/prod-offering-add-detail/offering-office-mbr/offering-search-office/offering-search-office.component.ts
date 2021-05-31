@@ -37,12 +37,6 @@ export class OfferingSearchOfficeComponent implements OnInit {
     this.TempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
     this.TempPagingObj.enviromentUrl = environment.FoundationR3Url;
     this.TempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
-    this.TempPagingObj.ddlEnvironments = [
-      {
-        name: "ROA.AREA_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     this.GenericByIdObj.Id = this.ProdHId;
     this.http.post<ResGetProdOfferingBranchMbrObj>(URLConstant.GetListProdBranchOfficeMbrByProdHId, this.GenericByIdObj).subscribe(

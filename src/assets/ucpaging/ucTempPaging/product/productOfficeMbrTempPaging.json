@@ -28,6 +28,7 @@
         "placeholder": "Area Name",
         "isFromURL": true,
         "url": "",
+        "environment": "FOU",
         "path": "/RefOfficeArea/GetListKvpActiveRefOfficeArea",
         "itemsUrl": [],
         "items": [],
