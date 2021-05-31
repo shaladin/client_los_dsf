@@ -9,7 +9,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-copy-cancelled-application',
@@ -45,12 +44,6 @@ export class CopyCancelledApplicationComponent implements OnInit {
     if(this.BizTemplateCode === CommonConstant.OPL) {
       this.inputPagingObj._url = "./assets/ucpaging/new-nap/business-process/additional-process/copy-cancelled-application/search-cancelled-app-opl.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/new-nap/business-process/additional-process/copy-cancelled-application/search-cancelled-app-opl.json";
-      this.inputPagingObj.ddlEnvironments = [
-        {
-          name: "A.ORI_OFFICE_CODE",
-          environment: environment.FoundationR3Url
-        }
-      ];
     }
     else {
       this.inputPagingObj._url = "./assets/ucpaging/searchCancelledApp.json";
