@@ -20,58 +20,17 @@
         },
         {
             "type" : "textbox",
-            "name" : "PROD_OFFERING_NAME",
+            "name" : "A.PROD_OFFERING_NAME",
             "id" : "ProdOfferingNameId",
             "value" : "",
             "label" : "Prod Offering Name",
             "placeholder": "Placeholder"
-        },
-        {
-            "type" : "textbox",
-            "name" : "WF.USERNAME",
-            "id" : "TaskClaimById",
-            "value" : "",
-            "label" : "Task Claim By",
-            "placeholder": "Placeholder"
-        },
-        {
-            "type": "dropdown",
-            "name": "WF.CLAIM_STAT",
-            "id": "TaskClaimStatId",
-            "label": "Task Claim Status",
-            "value": "",
-            "placeholder": "Placeholder",
-            "isFromURL": false,
-            "ddlType": "all",
-            "items": [
-              {
-                "key": "CLAIMED",
-                "value": "CLAIMED"
-              },
-              {
-                "key": "UNCLAIMED",
-                "value": "UNCLAIMED"
-              }
-            ],
-            "itemsUrl": []
         }
     ],
   "querystring": {
     "name": "searchAgrmntActivation"
   },
     "headerList": [
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "SLA",
-            "name": "SlaColor"
-        },
-        {
-            "type": "sort",
-            "position": "left",
-            "label": "Claim By",
-            "name": "WF.USERNAME"
-        },
         {
             "type": "sort",
             "position": "center",
@@ -97,16 +56,6 @@
         }
     ],
     "bodyList": [
-        {
-            "type": "sla",
-            "position": "center",
-            "property": "SlaColor"
-        },
-        {
-            "type": "text",
-            "position": "left",
-            "property": "ClaimBy"
-        },
         {
             "type": "link",
             "position": "center",

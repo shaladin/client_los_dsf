@@ -47,30 +47,33 @@ export class DocChecklistApprovalPagingComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDocChecklistApproval.json";
+    this.inputPagingObj.isJoinExAPI = true;
     this.inputPagingObj.ddlEnvironments = [
       {
         name: "A.ORI_OFFICE_CODE",
         environment: environment.FoundationR3Url
       }
     ];
-    this.inputPagingObj.isJoinExAPI = true;
-    this.apvReqObj.CategoryCode = "DOC_CHCKLIST_APV";
+
+    this.apvReqObj.CategoryCode = CommonConstant.CAT_CODE_DOC_CHCKLIST_APV;
     this.apvReqObj.Username = this.userContext.UserName;
     this.apvReqObj.RoleCode = this.userContext.RoleCode;
+    
     this.integrationObj.baseUrl = environment.ApprovalR3OplUrl;
-    this.integrationObj.apiPath = "Generic/GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode/";
+    this.integrationObj.apiPath = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
     this.integrationObj.requestObj = this.apvReqObj;
     this.integrationObj.leftColumnToJoin = "AppNo";
     this.integrationObj.rightColumnToJoin = "TransactionNo";
-    this.integrationObj.joinType = "Inner";
+    this.integrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
+
     this.inputPagingObj.integrationObj = this.integrationObj;
 
-    this.inputPagingObj.addCritInput = new Array();
-    var critBizTemplate = new CriteriaObj();
-    critBizTemplate.restriction = AdInsConstant.RestrictionEq;
-    critBizTemplate.propName = 'A.BIZ_TEMPLATE_CODE';
-    critBizTemplate.value = this.BizTemplateCode;
-    this.inputPagingObj.addCritInput.push(critBizTemplate);
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'A.BIZ_TEMPLATE_CODE';
+    critObj.value = this.BizTemplateCode;
+    
+    this.inputPagingObj.addCritInput.push(critObj);
   }
 
   GetCallBack(ev: any) {

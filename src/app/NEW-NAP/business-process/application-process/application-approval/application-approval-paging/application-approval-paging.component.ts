@@ -24,7 +24,6 @@ import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 export class ApplicationApprovalPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
-  arrCrit: Array<CriteriaObj>;
   apvReqObj: ApprovalReqObj = new ApprovalReqObj();
   integrationObj: IntegrationObj = new IntegrationObj();
   Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
@@ -48,32 +47,33 @@ export class ApplicationApprovalPagingComponent implements OnInit {
     this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApplicationApproval.json";
+    this.inputPagingObj.isJoinExAPI = true;
     this.inputPagingObj.ddlEnvironments = [
       {
         name: "A.ORI_OFFICE_CODE",
         environment: environment.FoundationR3Url
       }
     ];
-    this.inputPagingObj.isJoinExAPI = true;
-    this.apvReqObj.CategoryCode = "APP_OPL_APV";
+
+    this.apvReqObj.CategoryCode = CommonConstant.CAT_CODE_APP_OPL_APV;
     this.apvReqObj.Username = this.userContext.UserName;
     this.apvReqObj.RoleCode = this.userContext.RoleCode;
+
     this.integrationObj.baseUrl = environment.ApprovalR3OplUrl;
-    this.integrationObj.apiPath = "Generic/GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode/";
+    this.integrationObj.apiPath = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
     this.integrationObj.requestObj = this.apvReqObj;
     this.integrationObj.leftColumnToJoin = "AppNo";
     this.integrationObj.rightColumnToJoin = "TransactionNo";
-    this.integrationObj.joinType = "Inner";
+    this.integrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
+
     this.inputPagingObj.integrationObj = this.integrationObj;
 
-    var arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'A.BIZ_TEMPLATE_CODE';
     critObj.value = this.BizTemplateCode;
-    arrCrit.push(critObj);
 
-    this.inputPagingObj.addCritInput = arrCrit;
+    this.inputPagingObj.addCritInput.push(critObj);
   }
 
   GetCallBack(ev: any) {

@@ -46,32 +46,26 @@
     {
       "type": "sort",
       "position": "left",
-      "label": "Claim By",
-      "name": "CurrentUser"
-    },
-    {
-      "type": "sort",
-      "position": "left",
       "label": "Office",
-      "name": "OfficeName"
+      "name": "A.ORI_OFFICE_NAME"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "Application No",
-      "name": "AppNo"
+      "name": "A.APP_NO"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Customer Name",
-      "name": "CustName"
+      "name": "AC.CUST_NAME"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Product Offering Name",
-      "name": "ProdOfferingName"
+      "name": "A.PROD_OFFERING_NAME"
     },
     {
       "type": "label",
@@ -93,15 +87,10 @@
     "name": "searchApplicationApproval"
   },
   "orderby": {
-      "key": "a.APP_NO", 
+      "key": "A.APP_NO",
       "value": "false"
   },
   "bodyList": [
-    {
-      "type": "text",
-      "position": "left",
-      "property": "CurrentUser"
-    },
     {
       "type": "text",
       "position": "left",
