@@ -2,6 +2,7 @@ import { environment } from "environments/environment";
 import { NavigationConstant } from "../constant/NavigationConstant";
 import { URLConstant } from "../constant/URLConstant";
 import { CriteriaObj } from "./CriteriaObj.model";
+import { IntegrationObj } from "./library/IntegrationObj.model";
 
 export class UcPagingObj {
     _url: string;
@@ -19,6 +20,8 @@ export class UcPagingObj {
     isSearched: boolean;
     navigationConst: any;
     listEnvironments: Array<EnvisObj>;
+    isJoinExAPI: boolean;
+    integrationObj: IntegrationObj;
 
     constructor() {
         this._url = "";
@@ -38,6 +41,8 @@ export class UcPagingObj {
         this.delay = 0;
         this.isSearched = false;
         this.navigationConst = NavigationConstant;
+        this.isJoinExAPI = false;
+        this.integrationObj = new IntegrationObj();
     }
 }
 export class EnviObj {
@@ -64,5 +69,23 @@ export class EnvisObj {
     constructor() {
         this.environment = "";
         this.url = "";
+    }
+}
+
+export class ApprovalReqObj {
+    Username: string;
+    CategoryCode: string;
+    RoleCode: string;
+    constructor() {
+        this.Username = "";
+        this.CategoryCode = "";
+        this.RoleCode = "";
+    }
+}
+
+export class WorkflowReqObj {
+    ActCode: string;
+    constructor() {
+        this.ActCode = "";
     }
 }
