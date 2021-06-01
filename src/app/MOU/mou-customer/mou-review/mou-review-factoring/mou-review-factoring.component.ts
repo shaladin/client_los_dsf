@@ -26,8 +26,6 @@ import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCode
 
 export class MouReviewFactoringComponent implements OnInit {
   rfaInfoObj: RFAInfoObj = new RFAInfoObj();
-  mouCustObj: MouCustObj = new MouCustObj();
-  mouCustObject: MouCustObj = new MouCustObj();
   keyValueObj: KeyValueObj;
   MouCustId: number;
   WfTaskListId: number;
@@ -41,7 +39,7 @@ export class MouReviewFactoringComponent implements OnInit {
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
   dmsObj: DMSObj;
-  SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
+  SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
@@ -59,20 +57,21 @@ export class MouReviewFactoringComponent implements OnInit {
     })
   }
 
-  async ngOnInit() : Promise<void> {
-    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+  async ngOnInit(): Promise<void> {
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
       });
     if (this.WfTaskListId > 0) {
       this.claimTask();
     }
-    this.mouCustObject.MouCustId = this.MouCustId;
     await this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
+        this.PlafondAmt = response.PlafondAmt;
+        this.MrCustTypeCode = response.MrCustTypeCode;
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-        if(this.SysConfigResultObj.ConfigValue == '1'){
+        if (this.SysConfigResultObj.ConfigValue == '1') {
           this.dmsObj = new DMSObj();
           this.dmsObj.User = currentUserContext.UserName;
           this.dmsObj.Role = currentUserContext.RoleCode;
@@ -88,16 +87,6 @@ export class MouReviewFactoringComponent implements OnInit {
         }
       }
     );
-
-    var mouCustObj = { Id: this.MouCustId };
-    await this.http.post(URLConstant.GetMouCustById, mouCustObj).toPromise().then(
-      (response) => {
-        this.PlafondAmt = response['PlafondAmt'];
-      })
-    this.http.post(URLConstant.GetMouCustById, mouCustObj).subscribe(
-      (response) => {
-        this.MrCustTypeCode = response['MrCustTypeCode'];
-      });
 
     let tempReq: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.REF_REASON_MOU_FACTORING };
     await this.http.post(URLConstant.GetListActiveRefReason, tempReq).toPromise().then(
@@ -135,15 +124,9 @@ export class MouReviewFactoringComponent implements OnInit {
   Submit() {
     this.ApprovalCreateOutput = this.createComponent.output();
     if (this.ApprovalCreateOutput != undefined) {
-
-      this.mouCustObj.MouCustId = this.MouCustId;
-      this.PlafondAmt = this.PlafondAmt;
-
-
-
       var submitMouReviewObj = {
         WfTaskListId: this.WfTaskListId,
-        MouCust: this.mouCustObj,
+        MouCust: this.MouCustId,
         PlafondAmt: this.PlafondAmt,
         RequestRFAObj: this.ApprovalCreateOutput
       }

@@ -164,10 +164,7 @@ export class SingleInstDlfnComponent implements OnInit {
           (responseApp) => {
             var MouCustId = responseApp['MouCustId']
 
-            var MouCustObj = {
-              Id: MouCustId
-            }
-            this.http.post(URLConstant.GetMouCustDlrFin, MouCustObj).toPromise().then(
+              this.http.post(URLConstant.GetMouCustDlrFindById, { Id: MouCustId }).toPromise().then(
               (responseCustDlfn) => {
                 this.ParentForm.patchValue({
                   TotalTopAmount: (responseCustDlfn["TopInterestRatePrcnt"] / 100) * (responseCustDlfn["TopDays"] / DaysInYear) * NtfAmount,

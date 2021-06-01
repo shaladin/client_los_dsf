@@ -1,42 +1,40 @@
-<form class="form form-horizontal" [formGroup]="FreezeHistoryForm" (ngSubmit)="FreezeHistoryForm.valid" #enjiForm="ngForm">
-  <lib-ucSubsection [id]="'FreezeHistoryId'" [title]="'Freeze History'" [panel]="'FreezeHistory'">
-  </lib-ucSubsection>
-  <div class="form-body" id="FreezeHistory">
-    <table class="table table-responsive-md text-center table-hover">
-      <thead>        
-        <tr class="table-header">
-          <th><span class="thead-header" name='MouFreezeTrxNo' translate>Transaction No</span>
-          </th>
-          <th><span class="thead-header" name='Status' translate>Status</span>
-          </th>
-          <th><span class="thead-header" name='ReasonDescr' translate>Reason</span>
-          </th>
-          <th><span class="thead-header" name='Notes' translate>Notes</span>
-          </th>
-          <th><span class="thead-header" name='ExeDt' translate>Execution Date</span>
-          </th>
-          <th><span class="thead-header" name='ApvDt' translate>Approval Date</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody *ngIf = "listMouFreezeUnfreeze?.length == 0">
-        <tr>
-          <td colspan="100%">No Data Available</td>
-        </tr>
-      </tbody>
-      <tbody>
-        <tr *ngFor="let item of listMouFreezeUnfreeze let i = index">
-          <!-- <td>
+<lib-ucSubsection [id]="'FreezeHistoryId'" [title]="'Freeze History'" [panel]="'FreezeHistory'">
+</lib-ucSubsection>
+<div class="form-body" id="FreezeHistory">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th><span class="thead-header" name='MouFreezeTrxNo' translate>Transaction No</span>
+        </th>
+        <th><span class="thead-header" name='Status' translate>Status</span>
+        </th>
+        <th><span class="thead-header" name='ReasonDescr' translate>Reason</span>
+        </th>
+        <th><span class="thead-header" name='Notes' translate>Notes</span>
+        </th>
+        <th><span class="thead-header" name='ExeDt' translate>Execution Date</span>
+        </th>
+        <th><span class="thead-header" name='ApvDt' translate>Approval Date</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody *ngIf="listMouFreezeUnfreeze?.length == 0">
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr *ngFor="let item of listMouFreezeUnfreeze let i = index">
+        <!-- <td>
             <a [routerLink]="" (click)="openView(item.SurveyTaskNo)">{{item.ChangeMouTrxNo}}</a>
           </td> -->
-          <td>{{item.MouFreezeTrxNo}}</td>
-          <td>{{item.Status}}</td>
-          <td>{{item.Reason}}</td>
-          <td>{{item.Notes}}</td>
-          <td>{{item.ExeDt | date: 'dd-MMMM-yyyy'}}</td>
-          <td>{{item.ApvDt | date: 'dd-MMMM-yyyy'}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</form>
+        <td>{{item.MouFreezeTrxNo}}</td>
+        <td>{{item.Status}}</td>
+        <td>{{item.Reason}}</td>
+        <td>{{item.Notes}}</td>
+        <td>{{item.ExeDt | date: 'dd-MMMM-yyyy'}}</td>
+        <td>{{item.ApvDt | date: 'dd-MMMM-yyyy'}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

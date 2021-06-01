@@ -59,10 +59,7 @@ export class ChangeMouCustAssetComponent implements OnInit {
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     this.IsAssetSelected = false;
 
-    var mouAsset = new MouCustAssetObj();
-    mouAsset.MouCustId = this.MouCustId;
-
-    this.httpClient.post(URLConstant.GetChangeMouCustAssetByMouCustId, mouAsset).subscribe(
+    this.httpClient.post(URLConstant.GetChangeMouCustAssetByMouCustId, { Id: this.MouCustId }).subscribe(
       (response: any) => {
 
         if (response.ReturnObject != null && response.ReturnObject.length > 0) {
@@ -87,7 +84,7 @@ export class ChangeMouCustAssetComponent implements OnInit {
           }
         }
         else {
-          this.httpClient.post(URLConstant.GetMouCustAssetByMouCustId, mouAsset).subscribe(
+          this.httpClient.post(URLConstant.GetMouCustAssetByMouCustId, { Id: this.MouCustId }).subscribe(
             (response: any) => {
 
               this.IsAssetSelected = false;

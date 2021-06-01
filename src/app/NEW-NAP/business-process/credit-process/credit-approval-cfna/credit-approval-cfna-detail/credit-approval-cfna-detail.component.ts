@@ -116,8 +116,7 @@ export class CreditApprovalCfnaDetailComponent implements OnInit {
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
           let mouCustId = response[0]['MouCustId'];
           if (mouCustId != null && mouCustId != '') {
-            var mouObj = { Id: mouCustId };
-            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            this.http.post(URLConstant.GetMouCustById, { Id: mouCustId }).subscribe(
               (response) => {
                 let mouCustNo = response['MouCustNo'];
                 this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));

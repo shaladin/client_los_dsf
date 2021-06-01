@@ -16,6 +16,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ToastrService } from 'ngx-toastr';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
   selector: 'app-purchase-order',
@@ -122,10 +123,9 @@ export class PurchaseOrderComponent implements OnInit {
   
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
           if (mouId != null && mouId != "") {
-            let mouObj = { Id: mouId };
-            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-              result => {
-                this.mouCustNo = result['MouCustNo'];
+            this.http.post(URLConstant.GetMouCustById, { Id: mouId }).subscribe(
+              (result: MouCustObj) => {
+                this.mouCustNo = result.MouCustNo;
                 this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
                 this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
                 this.isDmsReady = true;

@@ -25,7 +25,6 @@ import { CookieService } from 'ngx-cookie';
 
 export class MouReviewDlfnComponent implements OnInit {
   rfaInfoObj: RFAInfoObj = new RFAInfoObj();
-  mouCustObj: MouCustObj = new MouCustObj();
   keyValueObj: KeyValueObj;
   MouCustId: number;
   WfTaskListId: number;
@@ -35,14 +34,13 @@ export class MouReviewDlfnComponent implements OnInit {
   MrCustTypeCode: string;
   resultData: MouCustObj;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  mouCustObject: MouCustObj = new MouCustObj();
   listReason: Array<KeyValueObj>;
   ScoreResult: number;
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
-    if (content) { 
+    if (content) {
       this.createComponent = content;
     }
   }
@@ -76,10 +74,12 @@ export class MouReviewDlfnComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
-    this.mouCustObject.MouCustId = this.MouCustId;
-    await this.http.post(URLConstant.GetMouCustById, this.mouCustObject).toPromise().then(
+
+    await this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
+        this.PlafondAmt = response.PlafondAmt;
+        this.MrCustTypeCode = response.MrCustTypeCode;
         let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
         this.dmsObj = new DMSObj();
         this.dmsObj.User = currentUserContext.UserName;
@@ -88,20 +88,9 @@ export class MouReviewDlfnComponent implements OnInit {
         this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
         this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
-  
+
       }
     );
-
-    var mouCustObj = { MouCustId: this.MouCustId };
-    await this.http.post(URLConstant.GetMouCustById, mouCustObj).toPromise().then(
-      (response) => {
-        this.PlafondAmt = response['PlafondAmt'];
-      })
-
-    this.http.post(URLConstant.GetMouCustById, mouCustObj).subscribe(
-      (response) => {
-        this.MrCustTypeCode = response['MrCustTypeCode'];
-      });
 
     await this.http.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.REF_REASON_MOU_GENERAL }).toPromise().then(
       (response) => {
@@ -112,7 +101,7 @@ export class MouReviewDlfnComponent implements OnInit {
       }
     );
 
-    await this.http.post(URLConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId}).toPromise().then(
+    await this.http.post(URLConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId }).toPromise().then(
       (response) => {
         this.ScoreResult = response["ScoreResult"];
       }
@@ -129,32 +118,28 @@ export class MouReviewDlfnComponent implements OnInit {
   }
 
   Submit() {
-    this.ApprovalCreateOutput = this.createComponent.output();  
-    if(this.ApprovalCreateOutput!=undefined){
-    this.mouCustObj.MouCustId = this.MouCustId;
-    this.PlafondAmt = this.PlafondAmt;
-
- 
-    var submitMouReviewObj = {
-      WfTaskListId: this.WfTaskListId,
-      MouCust: this.mouCustObj,
-      PlafondAmt: this.PlafondAmt,
-      RequestRFAObj:this.ApprovalCreateOutput
+    this.ApprovalCreateOutput = this.createComponent.output();
+    if (this.ApprovalCreateOutput != undefined) {
+      var submitMouReviewObj = {
+        WfTaskListId: this.WfTaskListId,
+        MouCust: this.MouCustId,
+        PlafondAmt: this.PlafondAmt,
+        RequestRFAObj: this.ApprovalCreateOutput
+      }
+      this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          AdInsHelper.RedirectUrl(this.router, ["/Mou/Cust/ReviewPaging"], {});
+        })
     }
-    this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/ReviewPaging"],{});
-      })
-    }
-}
+  }
 
   Return() {
     var mouObj = { MouCustId: this.MouCustId, WfTaskListId: this.WfTaskListId }
     this.http.post(URLConstant.ReturnMouReview, mouObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router,["/Mou/Cust/ReviewPaging"],{});
+        AdInsHelper.RedirectUrl(this.router, ["/Mou/Cust/ReviewPaging"], {});
       })
   }
 
@@ -167,20 +152,20 @@ export class MouReviewDlfnComponent implements OnInit {
         });
     }
   }
-  initInputApprovalObj(){  
+  initInputApprovalObj() {
     this.InputObj = new UcInputRFAObj(this.cookieService);
     var Attributes = []
-    var attribute1= { 
-      "AttributeName" : "Approval Amount",
+    var attribute1 = {
+      "AttributeName": "Approval Amount",
       "AttributeValue": this.PlafondAmt
-    }; 
-  
-     var attribute2= {
-      "AttributeName" : "Scoring",
+    };
+
+    var attribute2 = {
+      "AttributeName": "Scoring",
       "AttributeValue": this.ScoreResult
     };
     Attributes.push(attribute1);
-    Attributes.push(attribute2); 
+    Attributes.push(attribute2);
     var TypeCode = {
       "TypeCode": "MOUC_GEN_APV_TYPE",
       "Attributes": Attributes,
@@ -203,5 +188,5 @@ export class MouReviewDlfnComponent implements OnInit {
     this.InputObj.TrxNo = this.resultData["MouCustNo"]
     this.IsReady = true;
   }
-  
+
 }

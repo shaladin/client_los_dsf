@@ -34,7 +34,6 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   pageType: string;
   pageTitle: string;
   resultData: MouCustObj;
-  mouCustObject: MouCustObj = new MouCustObj();
   UploadViewlink: string;
   Uploadlink: string;
   Viewlink: string;
@@ -68,7 +67,6 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       (response) => {
         this.SysConfigResultObj = response
       });
-    this.mouCustObject.MouCustId = this.mouCustId;
     await this.httpClient.post(URLConstant.GetMouCustById, { Id: this.mouCustId }).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;

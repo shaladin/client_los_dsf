@@ -153,11 +153,9 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
       mouCustFctr
     );
 
-    var mouCustFctr = new MouCustFctrObj();
-    mouCustFctr.MouCustId = this.MouCustId;
     let getChangeMouFctr = this.httpClient.post(
       URLConstant.GetChangeMouCustFctrByMouCustId,
-      mouCustFctr
+      { Id: this.MouCustId }
     );
 
     var mouListedFctr = new MouCustListedCustFctrObj();

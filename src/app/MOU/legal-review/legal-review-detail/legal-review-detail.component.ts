@@ -32,7 +32,6 @@ export class LegalReviewDetailComponent implements OnInit {
   items: FormArray;
   isItemsReady: boolean = false;
   termConditions: FormArray;
-  mouCustObj: MouCustObj;
   resultData: MouCustObj;
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
   LegalForm = this.fb.group(
@@ -73,8 +72,6 @@ export class LegalReviewDetailComponent implements OnInit {
 
     this.items = this.LegalForm.get('items') as FormArray;
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
-    this.mouCustObj = new MouCustObj();
-    this.mouCustObj.MouCustId = this.MouCustId;    
     this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;

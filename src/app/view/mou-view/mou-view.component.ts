@@ -12,7 +12,6 @@ export class MouViewComponent implements OnInit {
   @Input() inputMouCustId: number;
 
   MouCustId: number;
-  mouCustObj: MouCustObj;
   resultData: MouCustObj;
   MrMouTypeCode: string;
   MrCustTypeCode: string;
@@ -32,8 +31,6 @@ export class MouViewComponent implements OnInit {
   }
   
   ngOnInit() {
-    this.mouCustObj = new MouCustObj();
-    this.mouCustObj.MouCustId = this.MouCustId;    
     this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;

@@ -24,6 +24,7 @@ import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHisto
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetRfaLogByTrxNoAndApvCategoryObj } from 'app/shared/model/Request/NAP/PreGoLive/ReqGetRfaLogByTrxNoAndApvCategoryObj.model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
   selector: 'app-sharing-pre-go-live',
@@ -206,10 +207,9 @@ export class PreGoLiveComponent implements OnInit {
   
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
           if (mouId != null && mouId != "") {
-            let mouObj = { Id: mouId };
-            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-              result => {
-                this.mouCustNo = result['MouCustNo'];
+            this.http.post(URLConstant.GetMouCustById, { Id: mouId }).subscribe(
+              (result: MouCustObj) => {
+                this.mouCustNo = result.MouCustNo;
                 this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
                 this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
                 this.isDmsReady = true;

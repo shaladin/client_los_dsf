@@ -28,7 +28,6 @@ export class MouUnfreezeDetailComponent implements OnInit {
   businessDt: Date;
   FreezeUnfreezeForm: FormGroup;
   cbIsFreeze: boolean;
-  MouCustObj: MouCustObj;
   result: MouCustObj;
   IsFreezeOld: boolean;
   listReason: Array<KeyValueObj>;
@@ -75,7 +74,6 @@ export class MouUnfreezeDetailComponent implements OnInit {
     this.viewGenericObj.viewInput =
       "./assets/ucviewgeneric/viewMouHeader.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.MouCustObj = new MouCustObj();
     await this.getApv();
     this.title = "Detail Mou Freeze Unfreeze";
 
@@ -85,9 +83,8 @@ export class MouUnfreezeDetailComponent implements OnInit {
     this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
     this.ReqByUserId = currentUserContext[CommonConstant.USER_NAME];
     this.OfficeCode = currentUserContext["OfficeCode"];
-    this.MouCustObj.MouCustId = this.MouCustId;
     this.http
-      .post(URLConstant.GetMouCustById, this.MouCustObj)
+      .post(URLConstant.GetMouCustById, { Id: this.MouCustId })
       .subscribe((response: any) => {
         this.result = response;
         this.FreezeUnfreezeForm.patchValue({

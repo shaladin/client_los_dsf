@@ -78,18 +78,12 @@ export class ChangeMouReviewFinancingComponent implements OnInit {
       },
     ];
 
-    var mouCustObj = { MouCustId: this.MouCustId };
     await this.http
-      .post(URLConstant.GetMouCustById, mouCustObj)
+      .post(URLConstant.GetMouCustById, { Id: this.MouCustId })
       .toPromise()
-      .then((response) => {
-        this.PlafondAmt = response["PlafondAmt"];
-        console.log("tes" + this.PlafondAmt);
-      });
-    this.http
-      .post(URLConstant.GetMouCustById, mouCustObj)
-      .subscribe((response) => {
-        this.MrCustTypeCode = response["MrCustTypeCode"];
+      .then((response: MouCustObj) => {
+        this.PlafondAmt = response.PlafondAmt;
+        this.MrCustTypeCode = response.MrCustTypeCode;
       });
 
     await this.http

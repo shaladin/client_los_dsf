@@ -26,6 +26,7 @@ import { ChangeMouCustCollateralRegistrationObj } from "app/shared/model/ChangeM
 import { KeyValueObj } from "app/shared/model/KeyValue/KeyValueObj.model";
 import { MouCustCollateralObj } from "app/shared/model/MouCustCollateralObj.Model";
 import { AssetTypeSerialNoLabelObj } from "app/shared/model/SerialNo/AssetTypeSerialNoLabelObj.Model";
+import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
 
 @Component({
   selector: "app-change-mou-request-addcoll",
@@ -165,19 +166,13 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
   }
 
   bindMouData() {
-    this.mouCustObj = new MouCustObj();
-    this.mouCustObj.MouCustId = this.MouCustId;
-    this.http.post(URLConstant.GetMouCustById, this.mouCustObj).subscribe(
+    this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.returnMouCust = response;
         this.custNo = this.returnMouCust.CustNo;
       });
 
-    var refMasterObj = {
-      RefMasterTypeCode:
-        CommonConstant.RefMasterTypeCodeCustPersonalRelationship,
-    };
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship, }).subscribe(
       (response) => {
         this.OwnerRelationshipObj = response[CommonConstant.ReturnObj];
         if (this.OwnerRelationshipObj.length > 0) {
@@ -191,11 +186,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAssetCondition,
     };
 
-    var mouCustObj = { MouCustId: this.MouCustId };
-
-
-    var changeObj = { ChangeMouCustId: this.ChangeMouCustId }
-    this.http.post(URLConstant.GetChangeMouCustCollateralByChangeMouCustId, changeObj).subscribe(
+    this.http.post(URLConstant.GetChangeMouCustCollateralByChangeMouCustId, { Id: this.ChangeMouCustId }).subscribe(
       (response: any) => {
         if (response["ReturnObject"] != null || response["ReturnObject"].length > 0) {
           this.listCollateralData = response["ReturnObject"];
@@ -214,10 +205,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
         this.updateUcLookup(this.CollTypeList[0].Value, true, this.type);
       });
 
-    var refMasterObj = {
-      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType,
-    };
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType, }).subscribe(
       (response) => {
         this.IdTypeList = response["ReturnObject"];
         this.AddCollForm.patchValue({
@@ -699,7 +687,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
     this.changeMouCustCollateralObj.ChangeMouCustCollateralId = ChangeMouCustCollId;
     this.isAdd = false;
     this.type = "AddEdit";
-    var collObj = { ChangeMouCustCollateralId: ChangeMouCustCollId };
+    var collObj = { Id: ChangeMouCustCollId };
     this.http.post(URLConstant.GetChangeMouCustCollateralDataForUpdateByChangeMouCustCollateralId, collObj).subscribe(
       (response) => {
         this.collateralObj = response["ChangeMouCustCollateral"];
@@ -924,10 +912,9 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
     this.tempPagingObj.addCritInput.push(addCritCustNo);
   }
 
-  delete(ChangeMouCustCollId) {
+  delete(ChangeMouCustCollId: number) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      var custCollObj = { ChangeMouCustCollateralId: ChangeMouCustCollId };
-      this.http.post(URLConstant.DeleteChangeMouCustCollateral, custCollObj).subscribe(
+      this.http.post(URLConstant.DeleteChangeMouCustCollateral, { Id: ChangeMouCustCollId }).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.bindMouData();
@@ -989,10 +976,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
   }
 
   setMouCustCollateralDoc(ChangeMouCustCollateralId: number = 0) {
-    var Obj = {
-      ChangeMouCustCollateralId: ChangeMouCustCollateralId
-    }
-    this.http.post(URLConstant.GetChangeMouCustCollateralDocByChangeMouCustCollateralId, Obj).subscribe(
+    this.http.post(URLConstant.GetChangeMouCustCollateralDocByChangeMouCustCollateralId, { Id: ChangeMouCustCollateralId }).subscribe(
       (response) => {
         var ChangeMouCustCollateralDocs = new Array();
         ChangeMouCustCollateralDocs = response["ReturnObject"];

@@ -12,6 +12,7 @@ import { KeyValueObj } from "app/shared/model/KeyValue/KeyValueObj.Model";
 import { ExceptionConstant } from "app/shared/constant/ExceptionConstant";
 import { ClaimWorkflowObj } from "app/shared/model/Workflow/ClaimWorkflowObj.Model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
+import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
 
 @Component({
   selector: "app-change-mou-request-detail",
@@ -131,8 +132,8 @@ export class ChangeMouRequestDetailComponent implements OnInit {
       });
 
     if (this.pageType == "edit" || this.pageType == "return") {
-      var mouCust = new MouCustObj();
-      mouCust.MouCustId = this.mouCustId;
+      var mouCust = new GenericObj();
+      mouCust.Id = this.mouCustId;
       this.http
         .post(URLConstant.GetLatestChangeMouCustVersionById, mouCust)
         .subscribe((response: any) => {

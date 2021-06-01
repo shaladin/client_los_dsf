@@ -22,12 +22,11 @@ import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigRes
   templateUrl: './mou-approval-factoring.component.html'
 })
 export class MouApprovalFactoringComponent implements OnInit {
-  mouCustObj: MouCustObj;
   MouCustId: number;
   taskId: number;
   instanceId: number;
   inputObj: ApvViewInfo;
-  MouType : string = "FACTORING";
+  MouType: string = "FACTORING";
   resultData: MouCustObj;
   MrCustTypeCode: string;
   ApvReqId: number;
@@ -36,7 +35,7 @@ export class MouApprovalFactoringComponent implements OnInit {
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
   dmsObj: DMSObj;
-  SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
+  SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -50,27 +49,26 @@ export class MouApprovalFactoringComponent implements OnInit {
   }
 
 
-  async ngOnInit() : Promise<void> {
-    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+  async ngOnInit(): Promise<void> {
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
       });
-    this.mouCustObj = new MouCustObj();
-    this.mouCustObj.MouCustId = this.MouCustId;
+
     await this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
         this.MrCustTypeCode = response.MrCustTypeCode;
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-        if(this.SysConfigResultObj.ConfigValue == '1'){
+        if (this.SysConfigResultObj.ConfigValue == '1') {
           this.dmsObj = new DMSObj();
           this.dmsObj.User = currentUserContext.UserName;
           this.dmsObj.Role = currentUserContext.RoleCode;
           this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
-          if(response['CustNo'] != null && response['CustNo'] != ""){
+          if (response['CustNo'] != null && response['CustNo'] != "") {
             this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['CustNo']));
           }
-          else{
+          else {
             this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['ApplicantNo']));
           }
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, response['MouCustNo']));
@@ -85,18 +83,16 @@ export class MouApprovalFactoringComponent implements OnInit {
   MouApprovalDataForm = this.fb.group({
   })
 
-  onAvailableNextTask(event) {}
+  onAvailableNextTask(event) { }
 
-  onApprovalSubmited(event)
-  { 
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV],{});
+  onApprovalSubmited(event) {
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_APPRV], {});
   }
 
-  onCancelClick()
-  {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV],{});
+  onCancelClick() {
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_APPRV], {});
   }
-  
+
   initInputApprovalObj() {
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;

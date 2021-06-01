@@ -18,6 +18,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetDOMultiAssetInformationObj } from 'app/shared/model/Request/DeliveryOrder/ReqGetDOMultiAssetInformationObj.model';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail',
@@ -171,10 +172,9 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
           if (mouId != null && mouId != "") {
-            let mouObj = { Id: mouId };
-            this.httpClient.post(URLConstant.GetMouCustById, mouObj).subscribe(
-              result => {
-                this.mouCustNo = result['MouCustNo'];
+            this.httpClient.post(URLConstant.GetMouCustById, { Id: mouId }).subscribe(
+              (result: MouCustObj) => {
+                this.mouCustNo = result.MouCustNo;
                 this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
                 this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
                 this.isDmsReady = true;

@@ -316,10 +316,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
 
 
   async SetPayFreq(MouCustId: number) {
-    var MouObj = {
-      MouCustId: MouCustId
-    }
-    await this.http.post<MouCustDlrFinObj>(URLConstant.GetMouCustDlrFin, MouObj).subscribe(
+    await this.http.post<MouCustDlrFinObj>(URLConstant.GetMouCustDlrFindById, { Id: MouCustId }).subscribe(
       (response) => {
         this.mouCustDlrFinObj = response;
         if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {
@@ -597,10 +594,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
     this.salesAppInfoObj.AppDlrFncngObj = new AppDlrFncng();
     this.salesAppInfoObj.AppDlrFncngObj.TopBased = this.SalesAppInfoForm.controls.TopBased.value;
 
-    var Obj = {
-      MouCustId: this.salesAppInfoObj.MouCustId
-    }
-    this.http.post(URLConstant.GetMouCustDlrFin, Obj).subscribe(
+    this.http.post(URLConstant.GetMouCustDlrFindById, { Id: this.salesAppInfoObj.MouCustId }).subscribe(
       (responseMouCustDlrFncng) => {
         this.salesAppInfoObj.AppDlrFncngObj.MouCustDlrFncngId = responseMouCustDlrFncng["MouCustDlrFncngId"];
 

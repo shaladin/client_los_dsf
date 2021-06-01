@@ -24,7 +24,6 @@ import { ReqGetByTypeCodeObj } from "app/shared/model/RefReason/ReqGetByTypeCode
 export class ChangeMouReviewFactoringComponent implements OnInit {
   rfaInfoObj: RFAInfoObj = new RFAInfoObj();
   mouCustObj: MouCustObj = new MouCustObj();
-  mouCustObject: MouCustObj = new MouCustObj();
   changeMouTrxObj: ChangeMouTrxObj = new ChangeMouTrxObj();
   keyValueObj: KeyValueObj;
   ChangeMouTrxId: number;
@@ -78,19 +77,13 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
         environment: environment.losR3Web,
       },
     ];
-    this.mouCustObject.MouCustId = this.MouCustId;
 
-    var mouCustObj = { MouCustId: this.MouCustId };
     await this.http
-      .post(URLConstant.GetMouCustById, mouCustObj)
+      .post(URLConstant.GetMouCustById, { Id: this.MouCustId })
       .toPromise()
-      .then((response) => {
-        this.PlafondAmt = response["PlafondAmt"];
-      });
-    this.http
-      .post(URLConstant.GetMouCustById, mouCustObj)
-      .subscribe((response) => {
-        this.MrCustTypeCode = response["MrCustTypeCode"];
+      .then((response: MouCustObj) => {
+        this.PlafondAmt = response.PlafondAmt;
+        this.MrCustTypeCode = response.MrCustTypeCode;
       });
 
     await this.http

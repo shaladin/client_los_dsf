@@ -41,8 +41,6 @@ export class MouCustTcComponent implements OnInit {
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDate = new Date(context[CommonConstant.BUSINESS_DT]);
     var datePipe = new DatePipe("en-US");
-    var mouObj = new MouCustObj();
-    mouObj.MouCustId = this.MouCustId;
     var mouCustObjData;
     this.httpClient.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).pipe(
       map((response: MouCustObj) => {

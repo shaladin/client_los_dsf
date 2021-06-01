@@ -24,7 +24,6 @@ import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 export class ChangeMouReviewGeneralComponent implements OnInit {
   rfaInfoObj: RFAInfoObj = new RFAInfoObj();
   mouCustObj: MouCustObj = new MouCustObj();
-  mouCustObject: MouCustObj = new MouCustObj();
   keyValueObj: KeyValueObj;
   ChangeMouTrxId: number;
   MouCustId: number;
@@ -79,22 +78,12 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
       },
     ];
 
-    var mouCustObj = { MouCustId: this.MouCustId };
-    console.log("Sheila Review Financing");
-    console.log(mouCustObj);
-
-    var mouCustObj = { MouCustId: this.MouCustId };
     await this.http
-      .post(URLConstant.GetMouCustById, mouCustObj)
+      .post(URLConstant.GetMouCustById, { Id: this.MouCustId })
       .toPromise()
-      .then((response) => {
-        this.PlafondAmt = response["PlafondAmt"];
-        console.log("tes" + this.PlafondAmt);
-      });
-    this.http
-      .post(URLConstant.GetMouCustById, mouCustObj)
-      .subscribe((response) => {
-        this.MrCustTypeCode = response["MrCustTypeCode"];
+      .then((response: MouCustObj) => {
+        this.PlafondAmt = response.PlafondAmt;
+        this.MrCustTypeCode = response.MrCustTypeCode;
       });
 
     await this.http

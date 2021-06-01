@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { ThirdPartyRsltHObj } from 'app/shared/model/ThirdPartyRsltHObj.Model';
 
 @Component({
@@ -18,14 +19,12 @@ export class MouViewThirdPartyComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.GetMouByMouId = URLConstant.GetMouCustById;
-    this.GetFraudResult = URLConstant.GetFraudResult;
     this.thirdPartyRsltHObj = new ThirdPartyRsltHObj();
 
-    this.http.post(this.GetMouByMouId,  {"Id": this.MouCustId}).subscribe(
-      (response) => {
-    this.thirdPartyRsltHObj.TrxNo = response['MouCustNo'];
-    this.http.post(this.GetFraudResult, this.thirdPartyRsltHObj).subscribe(
+    this.http.post(URLConstant.GetMouCustById,  {"Id": this.MouCustId}).subscribe(
+      (response: MouCustObj) => {
+    this.thirdPartyRsltHObj.TrxNo = response.MouCustNo;
+    this.http.post(URLConstant.GetFraudResult, this.thirdPartyRsltHObj).subscribe(
       (response) => {
         this.ResultThirdPartyObj = response;
       });

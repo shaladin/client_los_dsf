@@ -91,11 +91,9 @@ export class MouDetailFinancingComponent implements OnInit {
 
   ngOnInit() {
     this.initLookup();
-    var mouCust = new MouCustObj();
-    mouCust.MouCustId = this.MouCustId;
-    this.httpClient.post(URLConstant.GetMouCustById, mouCust).subscribe(
-      (response: any) => {
-        this.mrMouCustTypeCode = response["MrCustTypeCode"];
+    this.httpClient.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
+      (response: MouCustObj) => {
+        this.mrMouCustTypeCode = response.MrCustTypeCode;
         var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
         var suppCrit = new Array();
         var critSuppObj = new CriteriaObj();
@@ -149,7 +147,7 @@ export class MouDetailFinancingComponent implements OnInit {
     let getCurrency = this.httpClient.post(URLConstant.GetListKvpActiveRefCurr, refCurr);
     var mouCustFctr = new GenericObj();
     mouCustFctr.Id = this.MouCustId;
-    let getMouDlrFin = this.httpClient.post(URLConstant.GetMouCustDlrFin, mouCustFctr);
+    let getMouDlrFin = this.httpClient.post(URLConstant.GetMouCustDlrFindById, mouCustFctr);
 
     var rmAssetStatus = new RefMasterObj();
     rmAssetStatus.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeAssetCondition;

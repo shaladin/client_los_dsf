@@ -14,6 +14,7 @@ import { CriteriaObj } from "app/shared/model/CriteriaObj.model";
 import { VendorObj } from "app/shared/model/Vendor.Model";
 import { RefPayFreqObj } from "app/shared/model/RefPayFreqObj.model";
 import { KeyValueObj } from "app/shared/model/KeyValue/KeyValueObj.model";
+import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
 
 @Component({
   selector: "app-change-mou-detail-dealerfinancing",
@@ -116,10 +117,10 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
       refCurr
     );
 
-    var mouCustFctr = new MouCustDlrFinObj();
-    mouCustFctr.MouCustId = this.MouCustId;
+    var mouCustFctr = new GenericObj();
+    mouCustFctr.Id = this.MouCustId;
     let getMouDlrFin = this.httpClient.post(
-      URLConstant.GetMouCustDlrFin,
+      URLConstant.GetMouCustDlrFindById,
       mouCustFctr
     );
 
@@ -131,8 +132,8 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
       rmAssetStatus
     );
 
-    var mouCustFctr = new MouCustDlrFinObj();
-    mouCustFctr.MouCustId = this.MouCustId;
+    var mouCustFctr = new GenericObj();
+    mouCustFctr.Id = this.MouCustId;
     let getChangeMouCustDlrFncg = this.httpClient.post(URLConstant.GetChangeMouCustDlrFncgByMouCustId, mouCustFctr);
 
     forkJoin([

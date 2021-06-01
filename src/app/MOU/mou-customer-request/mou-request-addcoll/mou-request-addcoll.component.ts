@@ -1136,10 +1136,7 @@ export class MouRequestAddcollComponent implements OnInit {
     else {
       this.ResponseMouAddColl.emit({ StatusCode: "200" });
     }
-
-    this.mouCustObj = new MouCustObj();
-    this.mouCustObj.MouCustId = this.MouCustId;
-    this.http.post(URLConstant.GetMouCustById, this.mouCustObj).subscribe(
+    this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         var mouCustObjForSave = response;
         mouCustObjForSave.PlafondCollateralAmt = sumCollateralValue;

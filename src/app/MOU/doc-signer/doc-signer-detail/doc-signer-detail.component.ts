@@ -29,7 +29,6 @@ export class DocSignerDetailComponent implements OnInit {
   WfTaskListId: number;
   MouCustId: number;
   MouType: string;
-  mouCustObj: MouCustObj;
   mouCustSignerObj: ReqMouCustSignerObj;
   returnMouCust: MouCustObj;
   @ViewChild('LookupEmp1') ucLookupEmp1: UclookupgenericComponent;
@@ -192,8 +191,6 @@ export class DocSignerDetailComponent implements OnInit {
     this.customerLookUpObj1.pagingJson = "./assets/uclookup/lookupCustPersonal.json";
     this.customerLookUpObj1.genericJson = "./assets/uclookup/lookupCustPersonal.json";
 
-    this.mouCustObj = new MouCustObj();
-    this.mouCustObj.MouCustId = this.MouCustId;
     this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.returnMouCust = response;

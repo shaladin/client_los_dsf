@@ -40,7 +40,7 @@ export class ChangeMouRequestPagingComponent implements OnInit {
 
   GetCallBack(ev: any) {
     if (ev.Key == "edit") {
-      var obj = { MouCustId: ev.RowObj["MouCustId"] };
+      var obj = { Id: ev.RowObj["MouCustId"] };
       this.http
         .post(URLConstant.CheckMouCustInChangeMouProcess, obj)
         .subscribe((response) => {

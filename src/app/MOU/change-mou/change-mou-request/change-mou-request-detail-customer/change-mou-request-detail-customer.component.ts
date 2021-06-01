@@ -35,7 +35,6 @@ export class ChangeMouRequestDetailCustomerComponent
   pageTitle: string;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   resultData: MouCustObj;
-  mouCustObject: MouCustObj = new MouCustObj();
   ChangeMouTrxId: number;
   WfTaskListId: number;
 
@@ -76,8 +75,8 @@ export class ChangeMouRequestDetailCustomerComponent
         this.ChangeMouTrxId = params["ChangeMouTrxId"];
       }
       if (params["WfTaskListId"] != null)
-      this.WfTaskListId = params["WfTaskListId"];
-      
+        this.WfTaskListId = params["WfTaskListId"];
+
     });
     this.currentStepIndex = 1;
   }
@@ -93,14 +92,10 @@ export class ChangeMouRequestDetailCustomerComponent
       },
     ];
 
-    this.mouCustObject.MouCustId = this.mouCustId;
-    
-
     this.httpClient
-      .post(URLConstant.GetMouCustById, this.mouCustObject)
+      .post(URLConstant.GetMouCustById, { Id: this.mouCustId })
       .subscribe((response: MouCustObj) => {
         this.resultData = response;
-        console.log("Response Sheila");
         if (this.resultData.MrMouTypeCode == CommonConstant.GENERAL) {
           this.pageTitle = "MOU General";
         } else if (this.resultData.MrMouTypeCode == CommonConstant.FACTORING) {

@@ -35,7 +35,6 @@ export class MouReviewGeneralComponent implements OnInit {
   listApprover: any;
   MrCustTypeCode: string;
   resultData: MouCustObj;
-  mouCustObject: MouCustObj = new MouCustObj();
   listReason: Array<KeyValueObj>;
   ScoreResult: number;
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
@@ -77,10 +76,12 @@ export class MouReviewGeneralComponent implements OnInit {
       (response) => {
         this.SysConfigResultObj = response
       });
-    this.mouCustObject.MouCustId = this.MouCustId;
+
     await this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
+        this.PlafondAmt = response.PlafondAmt;
+        this.MrCustTypeCode = response.MrCustTypeCode;
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         if(this.SysConfigResultObj.ConfigValue == '1'){
           this.dmsObj = new DMSObj();
@@ -99,17 +100,6 @@ export class MouReviewGeneralComponent implements OnInit {
         }
       }
     );
-
-    var mouCustObj = { Id: this.MouCustId };
-    await this.http.post(URLConstant.GetMouCustById, mouCustObj).toPromise().then(
-      (response) => {
-        this.PlafondAmt = response['PlafondAmt'];
-      })
-
-    this.http.post(URLConstant.GetMouCustById, mouCustObj).subscribe(
-      (response) => {
-        this.MrCustTypeCode = response['MrCustTypeCode'];
-      });
 
     let tempReq: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.REF_REASON_MOU_GENERAL };
     await this.http.post(URLConstant.GetListActiveRefReason, tempReq).toPromise().then(
