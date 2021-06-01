@@ -4,7 +4,7 @@
   "component": [
     {
       "type": "textbox",
-      "name": "A.APP_NO",
+      "name": "app.APP_NO",
       "id": "AppNoId",
       "value": "",
       "label": "Application No",
@@ -12,7 +12,7 @@
     },
     {
       "type": "textbox",
-      "name": "AC.CUST_NAME",
+      "name": "appCust.CUST_NAME",
       "id": "CustNameId",
       "value": "",
       "label": "Customer Name",
@@ -20,7 +20,7 @@
     },
     {
       "type": "textbox",
-      "name": "A.PROD_OFFERING_NAME",
+      "name": "app.PROD_OFFERING_NAME",
       "id": "ProdOfferingNameId",
       "value": "",
       "label": "Product Offering Name",
@@ -28,7 +28,7 @@
     },
     {
       "type": "dropdown",
-      "name": "A.ORI_OFFICE_CODE",
+      "name": "app.ORI_OFFICE_CODE",
       "id": "OfficeNameId",
       "value": "Office",
       "placeholder": "Placeholder",
@@ -40,32 +40,46 @@
       "label": "Office",
       "items": [],
       "itemsUrl": []
+    },
+    {
+      "type": "textbox",
+      "name": "vApv.CURRENT_USER_ID",
+      "id": "CurrentUserId",
+      "value": "",
+      "label": "Claim By",
+      "placeholder": "Placeholder"
     }
   ],
   "headerList": [
     {
       "type": "sort",
       "position": "left",
+      "label": "Claim By",
+      "name": "vApv.CURRENT_USER_ID"
+    },
+    {
+      "type": "sort",
+      "position": "left",
       "label": "Office",
-      "name": "A.ORI_OFFICE_NAME"
+      "name": "app.ORI_OFFICE_NAME"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "Application No",
-      "name": "A.APP_NO"
+      "name": "vApv.APP_NO"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Customer Name",
-      "name": "AC.CUST_NAME"
+      "name": "appCust.CUST_NAME"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Product Offering Name",
-      "name": "A.PROD_OFFERING_NAME"
+      "name": "vApv.PROD_OFFERING_NAME"
     },
     {
       "type": "label",
@@ -83,14 +97,19 @@
       "label": "Take Back"
     }
   ],
-  "querystring": {
-    "name": "searchDocChecklistApproval"
-  },
+"querystring": {
+  "name": "searchDocChecklistApproval"
+},
   "orderby": {
-    "key": "A.APP_NO",
-    "value": "false"
+      "key": "app.APP_NO", 
+      "value": "false"
   },
   "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CurrentUserId"
+    },
     {
       "type": "text",
       "position": "left",

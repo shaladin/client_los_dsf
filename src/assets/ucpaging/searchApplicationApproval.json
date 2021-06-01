@@ -28,7 +28,7 @@
     },
     {
       "type": "dropdown",
-      "name": "A.ORI_OFFICE_CODE",
+      "name": "a.ORI_OFFICE_CODE",
       "id": "OfficeNameId",
       "value": "Office",
       "placeholder": "Placeholder",
@@ -40,32 +40,46 @@
       "label": "Office",
       "items": [],
       "itemsUrl": []
+    },
+    {
+      "type": "textbox",
+      "name": "ATL.CURRENT_USER_ID",
+      "id": "CurrentUserId",
+      "value": "",
+      "label": "Claim By",
+      "placeholder": "Placeholder"
     }
   ],
   "headerList": [
     {
       "type": "sort",
       "position": "left",
+      "label": "Claim By",
+      "name": "CurrentUser"
+    },
+    {
+      "type": "sort",
+      "position": "left",
       "label": "Office",
-      "name": "A.ORI_OFFICE_NAME"
+      "name": "a.ORI_OFFICE_NAME"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "Application No",
-      "name": "A.APP_NO"
+      "name": "a.APP_NO"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Customer Name",
-      "name": "AC.CUST_NAME"
+      "name": "ac.CUST_NAME"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Product Offering Name",
-      "name": "A.PROD_OFFERING_NAME"
+      "name": "a.PROD_OFFERING_NAME"
     },
     {
       "type": "label",
@@ -83,14 +97,19 @@
       "label": "Take Back"
     }
   ],
-  "querystring": {
-    "name": "searchApplicationApproval"
-  },
+"querystring": {
+  "name": "searchApplicationApproval"
+},
   "orderby": {
-      "key": "A.APP_NO",
+      "key": "a.APP_NO", 
       "value": "false"
   },
   "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CurrentUser"
+    },
     {
       "type": "text",
       "position": "left",
