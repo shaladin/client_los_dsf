@@ -14,13 +14,14 @@ export const environment = {
   AMSUrl : "http://r3app-server.ad-ins.com/AMS", //OPL dah ada
   LMSUrl : "http://r3app-server.ad-ins.com/LMS", //OPL dah ada
   ApprovalR3Url: 'http://r3app-server.ad-ins.com/APPROVAL_SIT',
+  ApprovalR3OplUrl: 'http://r3impl-appsvr.ad-ins.com/APPROVAL_OPL_BE_R3/',
   FoundationR3Web: 'http://r3web-server.ad-ins.com/FOUNDATION_SIT_CY4',
   losR3Web: 'http://r3web-server.ad-ins.com/LOS_SIT_CY4',
   WorkflowR3Url: 'http://R3App-Server.ad-ins.com/WORKFLOW_SIT_CY4',
   WebSocketURL: 'http://r3app-server.ad-ins.com/FOUNDATION_SIT_CY4',
   DashboardURL: 'http://r3app-server.ad-ins.com/Dashboard',
   dmsURL: 'http://kfx-svr/LITEDMS_OPL/LiteDMS/pageconfins.aspx',
-  WFThingsToDoUrl: 'http://r3impl-appsvr.ad-ins.com/WORKFLOW_OPL/',
+  WfR3Url: 'http://r3impl-appsvr.ad-ins.com/WORKFLOW_OPL/',
   ChipperKeyLocalStorage: "AdInsFOU2020OKOK", // 256 bit atau 16 karakter
   ChipperKeyCookie: "AdInsFOU12345678", // 256 bit atau 16 karakter & harus sama dengan BE
   Module: "LOS"

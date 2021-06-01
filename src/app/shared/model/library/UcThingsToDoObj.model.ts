@@ -28,7 +28,7 @@ export class ThingsToDoIntegrationObj {
     RequestObj: IntegrationReqObj;
 
     constructor() {
-        this.BaseUrl = environment.WFThingsToDoUrl;
+        this.BaseUrl = environment.WfR3Url;
         this.ApiPath = URLConstant.GetListWfTaskListByUsernameAndRoleCodeAndOfficeCodeForThingsToDo;
         this.RequestObj = new IntegrationReqObj();
     }
