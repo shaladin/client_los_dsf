@@ -18,7 +18,7 @@ export class CustUcaddressComponent implements OnInit {
 
   @Input() UCAddrForm: FormGroup;
   @Input() enjiForm: NgForm;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() default: any;
   @Input() title = "Address Information";
   @Input() inputField: any = new InputFieldObj();

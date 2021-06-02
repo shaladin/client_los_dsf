@@ -7,6 +7,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
 import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
+import { AppAssetSupplEmpObj } from 'app/shared/model/AppAssetSupplEmpObj.Model';
 
 @Component({
   selector: 'app-app-asset-data-detail-fl4w',
@@ -16,7 +17,7 @@ export class AppAssetDataDetailFl4wComponent implements OnInit {
   @Input() AppAssetId: number;
   @Input() AgrmntId: number;
   appAsset: AppAssetObj;
-  appAssetSupplEmp: any;
+  appAssetSupplEmp: Array<AppAssetSupplEmpObj>;
   appCollateralRegistration: AppCollateralRegistrationObj;
   AssetTypeObj: AssetTypeObj;
   salesName: string;
@@ -32,10 +33,10 @@ export class AppAssetDataDetailFl4wComponent implements OnInit {
     forkJoin([getAppAsset, getAppAssetSupplEmp, getAppCollReg]).subscribe(
       (response: any) => {
         this.appAsset = response[0];
-        this.appAssetSupplEmp = response[1];
+        this.appAssetSupplEmp = response[1].ReturnObject;
         this.appCollateralRegistration = response[2];
 
-        for (const item of this.appAssetSupplEmp.ReturnObject) {
+        for (const item of this.appAssetSupplEmp) {
           if(item.MrSupplEmpPositionCode == CommonConstant.SALES_JOB_CODE){
             this.salesName = item.SupplEmpName;
           }

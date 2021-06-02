@@ -33,7 +33,7 @@ export class CustCompanyMainDataComponent implements OnInit {
   @Input() appId: number;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() custDataCompanyObj: CustDataCompanyObj = new CustDataCompanyObj();
   @Input() bizTemplateCode: string = "";
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();

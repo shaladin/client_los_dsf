@@ -7,6 +7,7 @@ import { AppInsuranceDetailComponent } from 'app/NEW-NAP/sharing-component/view-
 import { AppAssetDataDetailFl4wComponent } from '../app-asset-data-fl4w/app-asset-data-detail-fl4w/app-asset-data-detail-fl4w.component';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppInsObjObj } from 'app/shared/model/AppInsObjObj.Model';
+import { AppAssetCollateralForInsuranceObj } from 'app/shared/model/AppAssetCollateralForInsurance.Model';
 
 @Component({
   selector: 'app-app-insurance-fl4w',
@@ -14,7 +15,7 @@ import { AppInsObjObj } from 'app/shared/model/AppInsObjObj.Model';
 })
 export class AppInsuranceFl4wComponent implements OnInit {
   @Input() AgrmntId: number;
-  appInsObjs: any;
+  appInsObjs: Array<AppAssetCollateralForInsuranceObj>;
   appCollObjs: AppInsObjObj;
   custTotalPremi: number;
   totalCapitalizedAmt: number;
