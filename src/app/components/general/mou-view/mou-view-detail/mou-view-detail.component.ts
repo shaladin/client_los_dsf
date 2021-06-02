@@ -48,7 +48,7 @@ export class MouViewDetailComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    var mouCustObj = { Id: this.MouCustId}
+    var mouCustObj = { Id: this.MouCustId };
     this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
       (response) => {
 
@@ -105,7 +105,7 @@ export class MouViewDetailComponent implements OnInit {
         }
         else if (this.MouType == CommonConstant.FINANCING)
         {
-        this.http.post(URLConstant.GetMouCustDlrFin, mouCustObj).subscribe(
+        this.http.post(URLConstant.GetMouCustDlrFindById, mouCustObj).subscribe(
           (responses) => {
             console.log(responses)
             this.MouCustDlrFindData.WopCode = responses["WopCode"];

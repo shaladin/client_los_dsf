@@ -8,6 +8,7 @@ import { CalcSingleInstObj } from 'app/shared/model/AppFinData/CalcSingleInstObj
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 
 @Component({
   selector: 'app-single-inst-fctr',
@@ -21,9 +22,8 @@ export class SingleInstFctrComponent implements OnInit {
   InterestTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcSingleInstObj: CalcSingleInstObj = new CalcSingleInstObj();
-  listInstallment: any;
-  responseCalc: any;
-  IsAppFeePrcntValid : boolean = true;
+  listInstallment: Array<InstallmentObj>;
+  IsAppFeePrcntValid: boolean = true;
 
 
   constructor(
@@ -35,7 +35,7 @@ export class SingleInstFctrComponent implements OnInit {
   ngOnInit() {
     this.LoadDDLInterestType();
   }
-  
+
   LoadDDLInterestType() {
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInterestInputType }).subscribe(
       (response) => {
@@ -84,6 +84,13 @@ export class SingleInstFctrComponent implements OnInit {
             TotalDisbAmt: response.TotalDisbAmt,
             GrossYieldPrcnt: response.GrossYieldPrcnt
           });
+
+          if (this.ParentForm.value.MrSingleInstCalcMthdCode == CommonConstant.SINGLE_INST_CALC_MTHD_DISKONTO) {
+            this.ParentForm.patchValue({
+              TotalDisbAmt: response.TotalDisbAmt - response.TotalInterestAmt
+            });
+          }
+
           this.SetInstallmentTable();
           this.SetNeedReCalculate(false);
         }
@@ -115,16 +122,16 @@ export class SingleInstFctrComponent implements OnInit {
     }
   }
 
-  InterestTypeChanged(ev){
+  InterestTypeChanged(ev) {
     this.SetInterestTypeInput(ev.target.value);
   }
 
-  SetInterestTypeInput(interestInputType: string){
-    if(interestInputType == CommonConstant.InterestInputTypeAmt){
+  SetInterestTypeInput(interestInputType: string) {
+    if (interestInputType == CommonConstant.InterestInputTypeAmt) {
       this.ParentForm.controls.TotalInterestAmt.enable();
       this.ParentForm.controls.EffectiveRatePrcnt.disable();
     }
-    if(interestInputType == CommonConstant.InterestInputTypePrcnt){
+    if (interestInputType == CommonConstant.InterestInputTypePrcnt) {
       this.ParentForm.controls.TotalInterestAmt.disable();
       this.ParentForm.controls.EffectiveRatePrcnt.enable();
     }
@@ -150,7 +157,7 @@ export class SingleInstFctrComponent implements OnInit {
     }
 
     this.ParentForm.patchValue({
-      MaturityDate: maturityDate
+      MaturityDate: new Date(Date.UTC(maturityDate.getFullYear(), maturityDate.getMonth(), maturityDate.getDate()))
     });
   }
 }

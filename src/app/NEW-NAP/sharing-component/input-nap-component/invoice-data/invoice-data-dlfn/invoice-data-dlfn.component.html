@@ -1,0 +1,286 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-header header-title">
+          <div class="row">
+            <div class="col-md-8">
+              <h4 class="card-title" id="horz-layout-colored-controls" translate> INVOICE DATA </h4>
+            </div>
+          </div>
+        </div>
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="InvoiceForm"
+            (ngSubmit)="InvoiceForm.valid && SaveForm(enjiForm)" #enjiForm="ngForm">
+            <div *ngIf="ToInvoiceDetail==false">
+              <lib-ucSubsection [id]="'InvoiceDataId'" [title]="'Invoice Data'" [panel]="'InvoiceData'">
+              </lib-ucSubsection>
+              <div class="form-body" id="InvoiceData">
+                <div class="form-group row">
+                  <label class="col-md-3 adins-required-label" translate>Invoice No</label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control" formControlName="InvoiceNo"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.InvoiceNo.invalid }">
+                    <lib-uc-show-errors [control]="InvoiceForm.controls.InvoiceNo" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 adins-required-label" translate>Invoice Amount</label>
+                  <div class="col-md-9">
+                    <input type="text" currencyMask class="form-control" formControlName="InvoiceAmt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.InvoiceAmt.invalid }">
+                    <lib-uc-show-errors [control]="InvoiceForm.controls.InvoiceAmt" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 adins-required-label" translate>Due Date</label>
+                  <div class="col-md-9">
+                    <input type="date" class="form-control" formControlName="InvoiceDueDt"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.InvoiceDueDt.invalid }">
+                    <lib-uc-show-errors [control]="InvoiceForm.controls.InvoiceDueDt" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+              <div class="form-actions right">
+                <button type="button" (click)="AddHeader()" class="btn btn-raised btn-primary" translate>
+                  <i class="fa fa-check-square-o"></i> Add
+                </button>
+              </div>
+
+              <div>
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th><span translate class="thead-header" name='SeqNo'>No</span></th>
+                      <th class="text-left"><span translate class="thead-header" name='InvoiceNo'>Invoice No</span></th>
+                      <th class="text-left"><span translate class="thead-header" name='InvoiceAmt'>Invoice Amount</span>
+                      </th>
+                      <th class="text-left"><span translate class="thead-header" name='InvoiceDueDt'>Due Date</span>
+                      </th>
+                      <th class="text-center"><span translate class="thead-header" name='Print'>Action</span></th>
+                      <th class="text-center"><span translate class="thead-header" name='Print'>Asset Detail</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of dataobj?.AppInvoiceList; let i = index;">
+                      <td>{{i+1}}</td>
+                      <td class="text-left">{{item?.InvoiceNo}}</td>
+                      <td class="text-left">{{item?.InvoiceAmt | number:'':'en-US'}}</td>
+                      <td class="text-left">{{item?.InvoiceDueDt | date:'dd/MM/yyyy'}}</td>
+                      <td class="text-center">
+                        <a class="success p-0" (click)="EditInvoice(item.AppInvoiceDlrFncngHId,contentEditInvoice)">
+                          <i class="ft-edit-2 font-medium-3 mr-2"></i>
+                        </a>
+                        <a class="danger p-0" (click)="DeleteInvoice(item.AppInvoiceDlrFncngHId)">
+                          <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                        </a>
+                      </td>
+                      <td class="text-center">
+                        <a class="warning p-0" (click)="AddAssetDetail(item.AppInvoiceDlrFncngHId)">
+                          <i class="ft-plus-circle font-medium-3 mr-2"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3" translate>Total Amount</label>
+                <label class="col-md-3" translate>{{dataobj?.TotalInvoiceAmt | number:'':'en-US'}}</label>
+              </div>
+
+              <ng-template #contentEditInvoice let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                  <h4 class="modal-title">Edit Invoice</h4>
+                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <app-edit-invoice-data [EditAppInvoiceDlrFncngHIdInput]="EditAppInvoiceDlrFncngHId"
+                  (objTempOutput)="GetDataTemp($event)">
+                </app-edit-invoice-data>
+              </ng-template>
+            </div>
+
+            <div *ngIf="ToInvoiceDetail">
+              <div class="form-actions right">
+                <button type="button" class="btn btn-raised btn-warning mr-1" (click)="BackToHeader()" translate>
+                  <i class="ft-x"></i> Back
+                </button>
+              </div>
+
+              <!-- bagian detail -->
+              <div class="form-group row">
+                <label class="col-md-3 adins-required-label" translate>Invoice Name </label>
+                <div class="col-md-9">
+                  <lib-uclookupgeneric [lookupInput]="CollateralNameLookupObj" [parentForm]="InvoiceForm"
+                    [enjiForm]="enjiForm" [identifier]="'LookupCollateralName '" (lookup)=GetCollateralName($event)>
+                  </lib-uclookupgeneric>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adins-required-label" translate>Invoice Price</label>
+                <div class="col-md-9">
+                  <input type="text" currencyMask class="form-control" formControlName="CollateralPrice"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.CollateralPrice.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.CollateralPrice" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adins-required-label" translate>Chassis No</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="ChassisNo"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.ChassisNo.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.ChassisNo" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adins-required-label" translate>Engine No</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="EngineNo"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.EngineNo.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.EngineNo" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-actions right">
+                <button type="button" (click)="SaveDetail()" class="btn btn-raised btn-primary" translate>
+                  <i class="fa fa-check-square-o"></i> Add
+                </button>
+              </div>
+
+              <div>
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th><span translate class="thead-header" name='SeqNo'>No</span></th>
+                      <th class="text-center"><span translate class="thead-header" name='InvoiceNo'>Invoice
+                          Name</span></th>
+                      <th class="text-center"><span translate class="thead-header" name='InvoiceAmt'>Invoice
+                          Amount</span></th>
+                      <th class="text-center"><span translate class="thead-header" name='InvoiceDueDt'>Serial No
+                          1</span></th>
+                      <th class="text-center"><span translate class="thead-header" name='InvoiceDueDt'>Serial No
+                          2</span></th>
+                      <th class="text-center"><span translate class="thead-header" name='InvoiceDueDt'>Serial No
+                          3</span></th>
+                      <th class="text-center"><span translate class="thead-header" name='InvoiceDueDt'>Serial No
+                          4</span></th>
+                      <th class="text-center"><span translate class="thead-header" name='InvoiceDueDt'>Serial No
+                          5</span></th>
+                      <th class="text-center"><span translate class="thead-header" name='Print'>Action</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of dataDobj?.AppInvoiceDlrFncngD; let i = index;">
+                      <td>{{i+1}}</td>
+                      <td class="text-left">{{item?.FullAssetName}}</td>
+                      <td class="text-left">{{item?.CollateralPriceAmt | number:'':'en-US'}}</td>
+                      <td class="text-center">{{item?.SerialNo1}}</td>
+                      <td class="text-center">{{item?.SerialNo2}}</td>
+                      <td class="text-center">{{item?.SerialNo3}}</td>
+                      <td class="text-center">{{item?.SerialNo4}}</td>
+                      <td class="text-center">{{item?.SerialNo5}}</td>
+                      <td class="text-center">
+                        <a class="danger p-0" (click)="DeleteDetailInvoice(item.AppInvoiceDlrFncngDId)">
+                          <i class="ft-trash-2 font-medium-3 mr-2"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div *ngIf="ToInvoiceDetail==false">
+              <lib-ucSubsection [id]="'DisburseDataId'" [title]="'Disburse'" [panel]="'DisburseData'">
+              </lib-ucSubsection>
+              <div class="form-body" id="DisburseData">
+                <!-- bagian Disburse -->
+                <div class="form-group row">
+                  <label class="col-md-3 adins-label">Disburse To</label>
+                  <div class="col-md-9">
+                    <select class="form-control full-width adInsInput" formControlName="DisburseTo"
+                      (change)="ChangeDisburseTo($event)">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let item of disburseTos" value="{{item.MasterCode}}">
+                        {{item.Descr}}  </option>
+                    </select>
+                    <lib-uc-show-errors [control]="InvoiceForm.controls.DisburseTo" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row" *ngIf="isDdlBankAccountVisible">
+                  <label class="col-md-3 adins-required-label">Bank Account</label>
+                  <div class="col-md-9">
+                    <select class="form-control full-width adInsInput" formControlName="BankAccountNo"
+                      (change)="ChangeBankAcc($event)">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let item of BankAccs" value="{{item.BankAccNo}}">
+                        {{item.BankAccName}} - {{item.BankAccNo}} ({{item.BankName}}) </option>
+                    </select>
+                    <lib-uc-show-errors [control]="InvoiceForm.controls.BankAccountNo" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-3 adins-required-label" translate>Bank Name</label>
+                  <div class="col-md-9">
+                    <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupBankObj"
+                      [parentForm]="InvoiceForm" [identifier]="'lookupBank'" (lookup)="GetBank($event)">
+                    </lib-uclookupgeneric>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 adins-required-label" translate>Bank Branch</label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control" formControlName="BankBranch"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.BankBranch.invalid }">
+                    <lib-uc-show-errors [control]="InvoiceForm.controls.BankBranch" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 adins-required-label" translate>Account No</label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control" formControlName="AccNo"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.AccNo.invalid }">
+                    <lib-uc-show-errors [control]="InvoiceForm.controls.AccNo" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+
+                <div class="form-group row">
+                  <label class="col-md-3 adins-required-label" translate>Account Name</label>
+                  <div class="col-md-9">
+                    <input type="text" class="form-control" formControlName="AccName"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.AccName.invalid }">
+                    <lib-uc-show-errors [control]="InvoiceForm.controls.AccName" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-actions right" *ngIf="ToInvoiceDetail==false">
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+                <i class="ft-x"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary" translate>
+                <i class="fa fa-check-square-o"></i> Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

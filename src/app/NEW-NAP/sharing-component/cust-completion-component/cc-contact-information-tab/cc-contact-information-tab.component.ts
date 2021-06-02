@@ -16,11 +16,14 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
+import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
+import { RegexService } from 'app/shared/services/regex.services';
 
 @Component({
   selector: 'app-cc-contact-information-tab',
   templateUrl: './cc-contact-information-tab.component.html',
-  styleUrls: ['./cc-contact-information-tab.component.scss']
+  styleUrls: ['./cc-contact-information-tab.component.scss'],
+  providers: [RegexService]
 })
 export class CcContactInformationTabComponent implements OnInit {
 
@@ -46,6 +49,7 @@ export class CcContactInformationTabComponent implements OnInit {
   readonly IdTypeSim: string = CommonConstant.MrIdTypeCodeSIM;
   readonly InputAddressObjForCc_Identifier: string = "CcDataAddr";
   constructor(
+    private regexService: RegexService,
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -78,6 +82,7 @@ export class CcContactInformationTabComponent implements OnInit {
   });
 
   async ngOnInit() {
+    this.customPattern = new Array<CustomPatternObj>();
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDate = new Date(formatDate(UserAccess.BusinessDt, 'yyyy-MM-dd', 'en-US'));
 
@@ -86,6 +91,7 @@ export class CcContactInformationTabComponent implements OnInit {
     this.initddlMrGender();
     this.initddlMrJobPosition();
     this.initddlMrCustRelationship();
+    this.getInitPattern();
     await this.GetAppCustCompanyContactPersonByAppCustId();
   }
 
@@ -194,6 +200,7 @@ export class CcContactInformationTabComponent implements OnInit {
     }
     if(!FirstInit) this.CcForm.controls.IdExpiredDt.patchValue("");
     this.CcForm.get("IdExpiredDt").updateValueAndValidity();
+    this.setValidatorPattern();
   }
 
   async SaveForm() {
@@ -229,7 +236,7 @@ export class CcContactInformationTabComponent implements OnInit {
     ReqAddr.Zipcode = TempZipVal.value;
     ReqAddr.SubZipcode = TempAddr.SubZipcode;
 
-    if (this.TempAppCustCompanyContactPersonObj.AppCustCompanyContactPersonId != 0) {
+    if (this.TempAppCustCompanyContactPersonObj.AppCustCompanyContactPersonId != 0 && this.TempAppCustCompanyContactPersonObj.AppCustAddrObj != null) {
       ReqAddr.AppCustAddrId = this.TempAppCustCompanyContactPersonObj.AppCustAddrObj.AppCustAddrId;
       ReqAddr.RowVersion = this.TempAppCustCompanyContactPersonObj.AppCustAddrObj.RowVersion;
     }
@@ -305,4 +312,52 @@ export class CcContactInformationTabComponent implements OnInit {
       );
     }
   }
+
+  //START URS-LOS-041
+  controlNameIdNo: any = 'IdNo';
+  controlNameIdType: any = 'MrIdTypeCode';
+  customPattern: Array<CustomPatternObj>;
+  initIdTypeCode: any;
+  resultPattern: any;
+
+  getInitPattern() {
+    this.regexService.getListPattern().subscribe(
+      response => {
+        this.resultPattern = response[CommonConstant.ReturnObj];
+        if(this.resultPattern != undefined)
+        {
+          for (let i = 0; i < this.resultPattern.length; i++) {
+            let patternObj: CustomPatternObj = new CustomPatternObj();
+            let pattern: string = this.resultPattern[i].Value;
+    
+            patternObj.pattern = pattern;
+            patternObj.invalidMsg = this.regexService.getErrMessage(pattern);
+            this.customPattern.push(patternObj);
+          }
+          this.setValidatorPattern();
+        }
+      }
+    );
+  }
+  setValidatorPattern() {
+    let idTypeValue: string;
+    idTypeValue = this.CcForm.controls[this.controlNameIdType].value;
+    var pattern: string = '';
+    if (idTypeValue != undefined) {
+      if (this.resultPattern != undefined) {
+        var result = this.resultPattern.find(x => x.Key == idTypeValue)
+        if (result != undefined) {
+          pattern = result.Value;
+        }
+      }
+    }
+    this.setValidator(pattern);
+  }
+  setValidator(pattern: string) {
+    if (pattern != undefined) {
+      this.CcForm.controls[this.controlNameIdNo].setValidators(Validators.pattern(pattern));
+      this.CcForm.controls[this.controlNameIdNo].updateValueAndValidity();
+    }
+  }
+  //END OF URS-LOS-041
 }

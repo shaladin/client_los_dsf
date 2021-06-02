@@ -14,9 +14,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   providers: [NGXToastrService]
 })
 export class ViewPhoneVerifComponent implements OnInit {
-
-  getAppUrl: any;
-  getPhoneVerifSubjUrl: any;
   @Input() appId: any;
   appObj = {
     AppId: 0,
@@ -35,13 +32,7 @@ export class ViewPhoneVerifComponent implements OnInit {
     //});
   }
 
-  initUrl() {
-    this.getAppUrl = URLConstant.GetAppById;
-    this.getPhoneVerifSubjUrl = URLConstant.GetAppPhoneVerifSubjectListByAppId;
-  }
-
   async ngOnInit(): Promise<void> {
-    this.initUrl();
     this.appObj.AppId = this.appId;
     this.appObj.Id = this.appId;
     this.GetPhnVerfSubjData();
@@ -49,7 +40,7 @@ export class ViewPhoneVerifComponent implements OnInit {
   }
 
   GetPhnVerfSubjData() {
-    this.http.post(this.getPhoneVerifSubjUrl, this.appObj).subscribe(
+    this.http.post(URLConstant.GetAppPhoneVerifSubjectListByAppId, this.appObj).subscribe(
       (response) => {
         this.phoneVerifObj = response;
       }

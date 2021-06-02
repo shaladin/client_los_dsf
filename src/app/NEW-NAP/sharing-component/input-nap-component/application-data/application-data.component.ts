@@ -19,7 +19,6 @@ import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
@@ -27,6 +26,12 @@ import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResRefEmpObj } from 'app/shared/model/Response/RefEmp/ResRefEmpObj.model';
+import { ResCalculatePlafondAgrmntXObj } from 'app/shared/model/ResCalculatePlafondAgrmntXObj.Model';
+import { MouCustDlrFinObj } from 'app/shared/model/moucustdlrfin.model';
+import { ReqCalculatePlafondAgrmntXObj } from 'app/shared/model/ReqCalculatePlafondAgrmntXObj.Model';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
+import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
 
 @Component({
   selector: 'app-application-data',
@@ -41,10 +46,23 @@ export class ApplicationDataComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
+  isTenorValid = true;
+  isFromMouCust: boolean = false;
+  PayFreqCode: string;
+  DownPaymentFromPrcnt: number;
+  DownPaymentToPrcnt: number;
+  TenorFrom: number;
+  TenorTo: number;
+  MrFirstInstTypeCode: string;
+  MrInterestTypeCode: string;
+  MrInstTypeCode: string;
+  MrInstSchmCode: string;
+  mouCust: MouCustObj;
   ListCrossAppObj: any = {};
-  inputLookupObj;
-  inputLookupEconomicSectorObj;
-  arrAddCrit;
+  inputLookupObj: InputLookupObj;
+  inputLookupEconomicSectorObj: InputLookupObj;
+  InputLookupAgrmntParentObj: InputLookupObj = new InputLookupObj();
+  arrAddCrit: Array<CriteriaObj>;
   isInputLookupObj: boolean = false;
   isFixedRate: boolean = false;
   PayFreqVal: number;
@@ -54,6 +72,13 @@ export class ApplicationDataComponent implements OnInit {
   CustNo: string;
   isProdOfrUpToDate: boolean = true;
   missingProdOfrComp: string = "";
+  listCustBankAcc: any;
+  selectedBankAcc: any;
+  GetBankInfo: any;
+  resCalculatePlafondAgrmntXObj: ResCalculatePlafondAgrmntXObj;
+  totalAgrmntMpfDt: number = 0;
+  maxTenor: number = 0;
+  agrmntParentNo: string;
   isDdlMrAppSourceReady: boolean = false;
   ddlMrAppSourceObj: UcDropdownListObj = new UcDropdownListObj();
   ddlMrFirstInstTypeObj: UcDropdownListObj = new UcDropdownListObj();
@@ -125,9 +150,13 @@ export class ApplicationDataComponent implements OnInit {
     EconomicSector: [''],
     ApplicationNotes: [''],
     CopyFromMailing: [''],
+    CustBankAcc: ['']
   });
   slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
+  MouCustDlrFindData: MouCustDlrFinObj = new MouCustDlrFinObj();
+  mouCustClause: any;
+  mouCustFctr: any;
 
   salesOfficerCode : Array<string> = new Array();
   isSalesOfficerCode: boolean = false;
@@ -160,17 +189,10 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeSlsRecom);
     this.initDdlMrWop();
     this.initDdlMrCustNotifyOpt();
-    // this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWOP);
-    // this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustNotifyOpt);
-    // this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeFirstInstType);
-    // this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestType);
-    // this.getPayFregData();
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestTypeGeneral);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCharacteristicCredit);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWayOfRestructure);
     this.getAppSrcData();
-
-    // this.initMailingAddress(); pindah ke dalem getAppModelInfo() karena pas dicheck biz template disini masih undefined
 
     var AppObj = {
       Id: this.appId
@@ -184,11 +206,6 @@ export class ApplicationDataComponent implements OnInit {
         this.http.post(URLConstant.GetListMouCustByCustNo, {CustNo: this.CustNo, StartDt: user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL}).subscribe(
           (response) => {
             this.resMouCustObj = response[CommonConstant.ReturnObj];
-
-            // if(this.resMouCustObj.length > 0)
-            // {
-            //   this.NapAppModelForm.patchValue({ MouCustId: this.resMouCustObj[0].Key });
-            // }
           }
         );
       }
@@ -311,14 +328,15 @@ export class ApplicationDataComponent implements OnInit {
 
   applicationDDLitems;
   resultResponse;
+  responseBankAccCust; 
+
   getAppModelInfo() {
     var obj = {
       Id: this.appId,
       RowVersion: ""
     };
-    var url = URLConstant.GetAppDetailForTabAddEditAppById;
 
-    this.http.post(url, obj).subscribe(
+    this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, obj).subscribe(
       (response) => {
         this.resultResponse = response;
         this.NapAppModelForm.patchValue({
@@ -379,7 +397,19 @@ export class ApplicationDataComponent implements OnInit {
           WayRestructure: this.resultResponse.MrWayOfRestructureCode,
           MrSlikSecEcoCode: this.resultResponse.MrSlikSecEcoCode
         });
+        
+        if (this.NapAppModelForm.controls.MrWopCode.value == 'AUTOCOLLECTION') {
+          this.GetBankAccCust();
+          this.setBankAcc(this.NapAppModelForm.controls.MrWopCode.value)
+        }
+        if (this.resultResponse.MouCustId != undefined  && this.resultResponse.MouCustId != null && this.resultResponse.MouCustId != 0) {
+          this.isFromMouCust = true;
+          this.setTenor(this.resultResponse.MouCustId);
+        }
+        this.getAgrmntParent();
         this.makeNewLookupCriteria();
+        this.getInterestTypeCode();
+       
         if (this.BizTemplateCode != CommonConstant.OPL) {
           this.getInterestTypeCode();
           this.initMailingAddress();
@@ -401,6 +431,16 @@ export class ApplicationDataComponent implements OnInit {
     );
   }
 
+  getAgrmntParent() {
+    if (this.resultResponse.AgrmntParentNo != null) {
+      this.resCalculatePlafondAgrmntXObj = new ResCalculatePlafondAgrmntXObj();
+      this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt = this.resultResponse.PlafondAgrmntAmt;
+      this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt = this.resultResponse.MaxPlafondAgrmntAmt;
+      this.totalAgrmntMpfDt = this.resultResponse.TotalAgrmntMpfDt;
+      this.maxTenor = this.resultResponse.MaxTenor;
+    }
+  }
+
   getAppSrcData() {
     this.ddlMrAppSourceObj.apiUrl = URLConstant.GetListKvpActiveRefAppSrc;
     this.ddlMrAppSourceObj.requestObj = { RowVersion: "" }
@@ -409,10 +449,9 @@ export class ApplicationDataComponent implements OnInit {
 
   DictRefPayFreq: any = {};
   getPayFregData() {
-    var url = URLConstant.GetListActiveRefPayFreq;
     var obj = { RowVersion: "" };
 
-    this.http.post(url, obj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefPayFreq, obj).subscribe(
       (response) => {
         var objTemp = response[CommonConstant.ReturnObj];
 
@@ -448,13 +487,12 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   getRefMasterTypeCode(code) {
-    var url = URLConstant.GetRefMasterListKeyValueActiveByCode;
     var obj = {
       RefMasterTypeCode: code,
       RowVersion: ""
     };
 
-    this.http.post(url, obj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, obj).subscribe(
       (response) => {
         var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems[code] = objTemp;
@@ -529,7 +567,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   async makeNewLookupCriteria() {
-    this.arrAddCrit = new Array();
+    this.arrAddCrit = new Array<CriteriaObj>();
 
     var addCrit1 = new CriteriaObj();
     addCrit1.DataType = "bit";
@@ -557,6 +595,50 @@ export class ApplicationDataComponent implements OnInit {
     this.makeLookUpObj();
   }
 
+  async copyAgrmntParentEvent(event) {
+    this.totalAgrmntMpfDt = event.TotalAgrmntMpfDt;
+    this.maxTenor = event.MaxTenor;
+    var reqCalculatePlafondAgrmntXObj = new ReqCalculatePlafondAgrmntXObj();
+    reqCalculatePlafondAgrmntXObj.AppId = this.appId;
+    reqCalculatePlafondAgrmntXObj.AgrmntParentNo = event.AgrmntNo;
+    reqCalculatePlafondAgrmntXObj.TotalAssetPrice = event.TotalAssetPrice;
+    reqCalculatePlafondAgrmntXObj.OsArAgrmntMasterAmt = event.OsArAgrmntMasterAmt;
+    reqCalculatePlafondAgrmntXObj.OsArMpfDtAmt = event.OsArMpfDtAmt;
+    reqCalculatePlafondAgrmntXObj.LobCode = this.resultResponse.LobCode;
+    reqCalculatePlafondAgrmntXObj.AssetTypeCode = event.AssetTypeCode;
+    reqCalculatePlafondAgrmntXObj.EffectiveDt = event.EffectiveDt;
+
+    this.http.post<ResCalculatePlafondAgrmntXObj>(URLConstant.CalculatePlafondAgrmnt, reqCalculatePlafondAgrmntXObj).subscribe(
+      (response) => {
+        this.resCalculatePlafondAgrmntXObj = new ResCalculatePlafondAgrmntXObj();
+        this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt = response.PlafondAgrmntAmt;
+        this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt = response.MaxPlafondAgrmntAmt;
+        this.resCalculatePlafondAgrmntXObj.IsAppInProgress = response.IsAppInProgress;
+
+        if (this.resCalculatePlafondAgrmntXObj.IsAppInProgress) {
+          this.toastr.warningMessage(ExceptionConstant.THERE_IS_APP_ON_PROGRESS);
+        }
+      });
+
+    var tempCrossApp = new NapAppCrossObj();
+    tempCrossApp.CrossAgrmntNo = event.AgrmntNo;
+    tempCrossApp.CrossAppNo = event.AppNo;
+    tempCrossApp.CustName = event.CustName;
+    tempCrossApp.ContractStat = event.ContractStat;
+    tempCrossApp.MaturityDt = event.MaturityDt;
+    let appCross = this.resultCrossApp.find(x => x.CrossAgrmntNo == this.agrmntParentNo);
+    if (appCross != undefined) {
+
+      let index = this.resultCrossApp.indexOf(appCross);
+      this.resultCrossApp[index] = tempCrossApp;
+      this.agrmntParentNo = event.AgrmntNo;
+
+    } else {
+      this.resultCrossApp.push(tempCrossApp);
+      this.agrmntParentNo = event.AgrmntNo;
+    }
+  }
+  
   async GetGSValueSalesOfficer() {
     await this.http.post<GeneralSettingObj>(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GSCodeAppDataOfficer }).toPromise().then(
       (response) => {
@@ -629,6 +711,7 @@ export class ApplicationDataComponent implements OnInit {
     temp.CharaCredit = this.NapAppModelForm.getRawValue().CharaCredit;
     temp.PrevAgrNo = this.NapAppModelForm.controls.PrevAgrNo.value;
     temp.WayRestructure = this.NapAppModelForm.controls.WayRestructure.value;
+    temp.BizTemplateCode = this.BizTemplateCode;
     temp.MrSlikSecEcoCode = this.NapAppModelForm.getRawValue().MrSlikSecEcoCode;
     temp.RowVersion = this.resultResponse.RowVersion;
     if (this.NapAppModelForm.controls.MouCustId.value == "null") {
@@ -695,19 +778,31 @@ export class ApplicationDataComponent implements OnInit {
       this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.appId }).subscribe(
         (response) => {
           if (response["listResponseAppLoanPurpose"] && response["listResponseAppLoanPurpose"].length > 0) {
+            if (!this.checkPlafondAndTenorAgrmnt(response["listResponseAppLoanPurpose"])) {
+              return;
+            }
             var tempAppObj = this.GetAppObjValue();
             var tempListAppCrossObj = this.GetListAppCrossValue();
             var tempAppFindDataObj = this.GetAppFinDataValue();
             var obj = {
-              AppObj: tempAppObj,
-              ListAppCrossObj: tempListAppCrossObj,
-              AppFinData: tempAppFindDataObj,
-              RowVersion: "",
+              AppModelObj: {
+                appObj: tempAppObj,
+                listAppCrossObj: tempListAppCrossObj,
+                appFinData: tempAppFindDataObj,
+                RowVersion: "",
+              },
+              AgrmntParentNo: this.NapAppModelForm.value.lookupAgreementParent.value,
+              TotalAgrmntMpfDt: this.totalAgrmntMpfDt,
+              PlafondAgrmntAmt: this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt,
+              MaxPlafondAgrmntAmt: this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt,
+              MaxTenor: this.maxTenor,
+              RowVersionAgrmntMasterX: this.resultResponse.RowVersionAgrmntMasterX
             };
             obj['AppCustMailingAddr'] = this.getMailingAddrForSave();
             this.http.post(URLConstant.EditAppAddAppCross, obj).subscribe(
               (response) => {
                 this.toastr.successMessage('Save Application Data');
+                this.SaveAppOtherInfo();
                 this.outputTab.emit();
               });
           }
@@ -727,16 +822,64 @@ export class ApplicationDataComponent implements OnInit {
         AppFinData: tempAppFindDataObj,
         RowVersion: ""
       };
-      if (this.BizTemplateCode != CommonConstant.OPL) {
-        obj['AppCustMailingAddr'] = this.getMailingAddrForSave();
-      }
-      this.http.post(URLConstant.EditAppAddAppCross, obj).subscribe(
-        (response) => {
-          this.toastr.successMessage('Save Application Data Success!');
-          this.outputTab.emit();
+      // DSF
+      if (this.isFromMouCust == true) {
+        if (this.NapAppModelForm.controls.Tenor.value > this.TenorTo || this.NapAppModelForm.controls.Tenor.value < this.TenorFrom) {
+          this.isTenorValid = false;
         }
-      );
+        else { this.isTenorValid = true; }
+      }
+      if (this.isTenorValid == true) {
+        if (this.BizTemplateCode != CommonConstant.OPL) {
+        obj['AppCustMailingAddr'] = this.getMailingAddrForSave();
+        }
+        this.http.post(URLConstant.EditAppAddAppCross, obj).subscribe(
+          (response) => {
+            this.toastr.successMessage('Save Application Data Success!');
+            this.SaveAppOtherInfo();
+            this.outputTab.emit();
+          });
+      }
+      if (this.isTenorValid == false) {
+        this.toastr.errorMessage('Tenor must be between ' + this.TenorFrom + ' and ' + this.TenorTo)
+      }
     }
+  }
+
+  checkPlafondAndTenorAgrmnt(listAppLoanPurpose) {
+    if (this.resCalculatePlafondAgrmntXObj == undefined) {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_INPUT_AGREEMENT_PARENT);
+      return false;
+    }
+
+    if (this.resCalculatePlafondAgrmntXObj.IsAppInProgress) {
+      this.toastr.warningMessage(ExceptionConstant.THERE_IS_APP_ON_PROGRESS);
+      return false;
+    }
+    var plafondUsed = 0;
+
+    if (this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt > this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt) {
+      plafondUsed = this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt;
+    } else {
+      plafondUsed = this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt;
+    }
+    var financingAmt = 0;
+    if (listAppLoanPurpose) {
+      for (let i = 0; i < listAppLoanPurpose.length; i++) {
+        financingAmt += listAppLoanPurpose[i].FinancingAmt;
+      }
+    }
+
+    if (plafondUsed < financingAmt) {
+      this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
+      return false;
+    }
+
+    if (this.NapAppModelForm.controls.Tenor.value >= this.maxTenor) {
+      this.toastr.warningMessage(ExceptionConstant.TENOR_EXCEEDED);
+      return false;
+    }
+    return true;
   }
 
   Cancel() {
@@ -788,10 +931,9 @@ export class ApplicationDataComponent implements OnInit {
   DeleteCrossApp(idx) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       if (this.resultCrossApp[idx].AppCrossId != null) {
-        var url = URLConstant.DeleteAppCross;
         var obj = new NapAppCrossObj();
         obj = this.resultCrossApp[idx];
-        this.http.post(url, obj).subscribe(
+        this.http.post(URLConstant.DeleteAppCross, obj).subscribe(
           (response) => {
           }
         )
@@ -891,5 +1033,182 @@ export class ApplicationDataComponent implements OnInit {
     mailingAddr.Fax = this.NapAppModelForm.controls["Address"]["controls"].Fax.value;
     mailingAddr.SubZipcode = this.NapAppModelForm.controls["Address"]["controls"].SubZipcode.value;
     return mailingAddr;
+  }
+
+  GetBankAccCust() {
+    var obj = {
+      AppId: this.appId
+    };
+
+    this.http.post<any>(URLConstant.GetBankAccCustByAppId, obj).subscribe(
+      (response) => {
+        this.responseBankAccCust = response
+        this.NapAppModelForm.patchValue({
+          CustBankAcc: this.responseBankAccCust[0].AppCustBankAccId
+        });
+        this.GetBankInfo = {
+          "BankCode": this.responseBankAccCust[0].BankCode,
+          "BankBranch": this.responseBankAccCust[0].BankBranch,
+          "AppId": this.appId,
+          "BankAccNo": this.responseBankAccCust[0].BankAccNo,
+          "BankAccName": this.responseBankAccCust[0].BankAccName,
+        };
+        this.http.post<any>(URLConstant.GetAppOtherInfoByAppId, obj).subscribe(
+          (response) => {
+            this.GetBankInfo = response
+            if (this.GetBankInfo.AppId !== 0) {
+              this.selectedBankAcc = this.listCustBankAcc.find(x => x.BankAccNo === this.GetBankInfo.BankAccNo);
+              this.NapAppModelForm.patchValue({
+                CustBankAcc: this.selectedBankAcc.AppCustBankAccId
+              });
+
+              this.GetBankInfo = {
+                "BankCode": this.selectedBankAcc.BankCode,
+                "BankBranch": this.selectedBankAcc.BankBranch,
+                "AppId": this.appId,
+                "BankAccNo": this.selectedBankAcc.BankAccNo,
+                "BankAccName": this.selectedBankAcc.BankAccName,
+              };
+            }
+          })
+      });
+
+  }
+
+  GetListAppCustBankAcc(appCustId: number) {
+    var obj = {
+      AppCustId: appCustId
+    };
+    this.http.post<any>(URLConstant.GetListAppCustBankAccByAppCustId, obj).subscribe(
+      (response) => {
+        this.listCustBankAcc = response.AppCustBankAccObjs;
+      });
+  }
+
+  setBankAcc(event) {
+    if (event == 'AUTOCOLLECTION') {
+      this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
+      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
+    }
+    else {
+      this.NapAppModelForm.controls['CustBankAcc'].clearValidators();
+      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
+    }
+    this.NapAppModelForm.controls.CustBankAcc.updateValueAndValidity();
+  }
+
+  setTenorOnChange(event) {
+    if (event != 'null') {
+      this.isFromMouCust = true;
+      var mouCustObj = { MouCustId: event }
+      this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
+        (response) => {
+          this.mouCust = response["MouCustObj"];
+          if (this.mouCust.MrMouTypeCode == CommonConstant.GENERAL) {
+            this.mouCustClause = response["MouCustClauseObj"];
+            this.MrInterestTypeCode = this.mouCustClause.InterestTypeDescr;
+            this.MrFirstInstTypeCode = this.mouCustClause.MrFirstInstTypeCode;
+            this.MrInstSchmCode = this.mouCustClause.MrInstSchmCode;
+            this.PayFreqCode = this.mouCustClause.PayFreqCode;
+            this.DownPaymentFromPrcnt = this.mouCustClause.DownPaymentFromPrcnt;
+            this.DownPaymentToPrcnt = this.mouCustClause.DownPaymentToPrcnt;
+            this.TenorFrom = this.mouCustClause.TenorFrom;
+            this.TenorTo = this.mouCustClause.TenorTo;
+            if (this.NapAppModelForm.controls.Tenor.value > this.TenorTo) {
+              this.isTenorValid = false
+            }
+            else {
+              this.isTenorValid = true;
+            }
+          }
+          else if (this.mouCust.MrMouTypeCode == CommonConstant.FACTORING) {
+            this.mouCustFctr = response["MouCustFctrObj"];
+            this.MrFirstInstTypeCode = this.mouCustFctr.MrFirstInstTypeCode;
+            this.MrInstTypeCode = this.mouCustFctr.InstTypeDescr;
+            this.MrInstSchmCode = this.mouCustFctr.MrInstSchmCode;
+            this.PayFreqCode = this.mouCustFctr.PayFreqCode;
+            this.DownPaymentFromPrcnt = this.mouCustFctr.DownPaymentFromPrcnt;
+            this.DownPaymentToPrcnt = this.mouCustFctr.DownPaymentToPrcnt;
+            this.TenorFrom = this.mouCustFctr.TenorFrom;
+            this.TenorTo = this.mouCustFctr.TenorTo;
+            if (this.NapAppModelForm.controls.Tenor.value > this.TenorTo || this.NapAppModelForm.controls.Tenor.value < this.TenorFrom) {
+              this.isTenorValid = false
+            }
+            else {
+              this.isTenorValid = true;
+            }
+          }
+        })
+    }
+    else {
+      this.isFromMouCust = false;
+    }
+  }
+
+  setTenor(event) {
+    var mouCustObj = { MouCustId: event }
+    this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
+      (response) => {
+        this.mouCust = response["MouCustObj"];
+        if (this.mouCust.MrMouTypeCode == CommonConstant.GENERAL) {
+          this.mouCustClause = response["MouCustClauseObj"];
+          this.MrInterestTypeCode = this.mouCustClause.InterestTypeDescr;
+          this.MrFirstInstTypeCode = this.mouCustClause.MrFirstInstTypeCode;
+          this.MrInstSchmCode = this.mouCustClause.MrInstSchmCode;
+          this.PayFreqCode = this.mouCustClause.PayFreqCode;
+          this.DownPaymentFromPrcnt = this.mouCustClause.DownPaymentFromPrcnt;
+          this.DownPaymentToPrcnt = this.mouCustClause.DownPaymentToPrcnt;
+          this.TenorFrom = this.mouCustClause.TenorFrom;
+          this.TenorTo = this.mouCustClause.TenorTo;
+        }
+        else if (this.mouCust.MrMouTypeCode == CommonConstant.FACTORING) {
+          this.mouCustFctr = response["MouCustFctrObj"];
+          this.MrFirstInstTypeCode = this.mouCustFctr.MrFirstInstTypeCode;
+          this.MrInstTypeCode = this.mouCustFctr.InstTypeDescr;
+          this.MrInstSchmCode = this.mouCustFctr.MrInstSchmCode;
+          this.PayFreqCode = this.mouCustFctr.PayFreqCode;
+          this.DownPaymentFromPrcnt = this.mouCustFctr.DownPaymentFromPrcnt;
+          this.DownPaymentToPrcnt = this.mouCustFctr.DownPaymentToPrcnt;
+          this.TenorFrom = this.mouCustFctr.TenorFrom;
+          this.TenorTo = this.mouCustFctr.TenorTo;
+        }
+      })
+
+  }
+
+  selectedBank(event) {
+    if (this.NapAppModelForm.controls.MrWopCode.value == 'AUTOCOLLECTION') {
+      this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
+      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity();
+    }
+    else {
+      this.NapAppModelForm.controls['CustBankAcc'].clearValidators();
+      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity();
+    }
+    this.selectedBankAcc = this.listCustBankAcc.find(x => x.AppCustBankAccId == event);
+    this.GetBankInfo = {
+      "BankCode": this.selectedBankAcc.BankCode,
+      "BankBranch": this.selectedBankAcc.BankBranch,
+      "AppId": this.appId,
+      "BankAccNo": this.selectedBankAcc.BankAccNo,
+      "BankAccName": this.selectedBankAcc.BankAccName
+    };
+  }
+
+  SaveAppOtherInfo() {
+    if (this.GetBankInfo != undefined && this.GetBankInfo != null && this.GetBankInfo.BankAccName != null && this.GetBankInfo.BankAccNo != null && this.GetBankInfo.BankBranch != null && this.GetBankInfo.BankCode != null) {
+      if (this.GetBankInfo.AppId == 0) {
+        this.GetBankInfo.AppId = this.appId;
+      }
+      this.http.post<any>(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
+        (response) => {
+          response;
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
+
   }
 }

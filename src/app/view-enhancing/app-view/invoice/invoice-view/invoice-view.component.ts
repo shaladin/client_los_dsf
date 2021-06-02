@@ -72,4 +72,4 @@ export class InvoiceViewComponent implements OnInit {
     this.IsShowDetail = false;
   }
 }
-}
+

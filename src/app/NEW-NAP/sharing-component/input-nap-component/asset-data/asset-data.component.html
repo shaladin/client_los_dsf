@@ -45,20 +45,6 @@
                   <lib-uc-show-errors [control]="AssetDataForm.controls.AdminHeadId" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
-                <!-- <label class="col-md-2 adInsLabel" translate>Branch Manager</label>
-                <div class="col-md-4">
-                  <select *ngIf="BranchManagerObj" class="form-control" id="branchManager"
-                    formControlName="BranchManagerId" (change)="BranchManagerChanged($event)"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.BranchManagerId.invalid }"
-                    style="width:50%">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let item of BranchManagerObj" [value]="item.VendorEmpId">
-                      {{item.VendorEmpName}}
-                    </option>
-                  </select>
-                  <lib-uc-show-errors [control]="AssetDataForm.controls.BranchManagerId" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
-                </div> -->
               </div>
             </div>
 
@@ -93,16 +79,6 @@
                   <div class="form-group row">
                     <label class="col-md-4 adInsLabel" translate>Asset Condition</label>
                     <label class="col-md-8 adInsLabel" translate>{{AssetConditionName}}</label>
-                    <!--<div class="col-md-4">
-                      <select class="form-control" id="MrAssetConditionCodeId" formControlName="MrAssetConditionCode" (change)="AssetConditionChanged()"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.MrAssetConditionCode.invalid }" style="width:50%">
-                        <option value="">-Select One-</option>
-                        <option *ngFor="let item of AssetConditionObj" [value]="item.Key">
-                          {{item.Value}}
-                        </option>
-                      </select>
-                      <lib-uc-show-errors [control]="AssetDataForm.controls.MrAssetConditionCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                    </div>-->
                   </div>
                 </div>
 
@@ -409,7 +385,6 @@
                   <label class="col-md-2" for="selfUsage" translate>Self Usage</label>
                   <div class="col-md-4">
                     <mat-checkbox formControlName="SelfUsage" (change)="SelfUsageChange($event)"></mat-checkbox>
-                    <!--<input class="border-primary" type="checkbox" data-md-icheck id="selfUsage" formControlName="SelfUsage">-->
                   </div>
                 </div>
                 <div class="form-group row">
@@ -514,9 +489,6 @@
                 <div class="col-md-12">
                   <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForOwner" [enjiForm]="enjiForm"
                     [identifier]="'ownerData'" [UCAddrForm]="AssetDataForm"></lib-ucaddress>
-                  <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AssetDataForm" [enjiForm]="enjiForm"
-                    [identifier]="'ownerData'" [default]="ownerAddrObj" [inputField]="inputFieldOwnerAddrObj"
-                    [showAllPhn]="false"></lib-ucaddress> -->
                 </div>
               </div>
 
@@ -550,9 +522,6 @@
                   <div class="col-md-12">
                     <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForLoc" [enjiForm]="enjiForm"
                       [identifier]="'locationData'" [UCAddrForm]="AssetDataForm"></lib-ucaddress>
-                    <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="AssetDataForm" [enjiForm]="enjiForm"
-                      [identifier]="'locationData'" [default]="locationAddrObj" [inputField]="inputFieldLocationAddrObj"
-                      [showAllPhn]="false"></lib-ucaddress> -->
                   </div>
                 </div>
               </div>

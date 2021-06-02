@@ -28,43 +28,68 @@
               </div>
 
               <div class="form-group row">
-                <label class="col-md-2 adins-required-label" for="Note" translate>Notes</label>
+                <label class="col-md-2 adins-required-label" *ngIf="IsCheckedAll && BizTemplateCode != 'DLFN'" for="Note" translate>Notes</label>
+                <label class="col-md-2 adinsLabel" *ngIf="!IsCheckedAll && BizTemplateCode != 'DLFN'" for="Note" translate>Notes</label>
+                <label class="col-md-2 adins-required-label" *ngIf="BizTemplateCode == 'DLFN'" for="Note" translate>Notes</label>
                 <div class="col-md-4">
                   <input type="text" id="Note" class="form-control adInsInput name" formControlName="Notes">
                   <lib-uc-show-errors [control]="MainInfoForm.controls.Notes" [submit]="MainInfoReqForm.submitted">
                   </lib-uc-show-errors>
                 </div>
+
+                <label *ngIf="IsGSAddInerestExists && (BizTemplateCode == 'DLFN')"
+                  class="col-md-2 adins-required-label" translate>Additional Interest
+                  Paid By</label>
+                <label *ngIf="IsGSAddInerestExists && IsCheckedAll && BizTemplateCode != 'DLFN'"
+                  class="col-md-2 adins-required-label" translate>Additional Interest
+                  Paid By</label>
+                <label *ngIf="IsGSAddInerestExists && !IsCheckedAll && BizTemplateCode != 'DLFN'"
+                  class="col-md-2 adinsLabel" translate>Additional Interest
+                  Paid By</label>
+                <div *ngIf="IsGSAddInerestExists" class="col-md-4">
+                  <select class="form-control adInsInput name" formControlName="AdditionalInterestPaidBy"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MainInfoForm.controls.AdditionalInterestPaidBy.invalid }">
+                    <option value="">--Select One--</option>
+                    <option *ngFor="let item of ListRmAddInterestPaidByCode" [value]="item.Key">{{item.Value}}</option>
+                  </select>
+                  <lib-uc-show-errors [control]="MainInfoForm.controls.AdditionalInterestPaidBy"
+                    [submit]="MainInfoReqForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
               </div>
             </div>
 
-            <lib-ucSubsection [id]="'PreGoLiveApprovalHistoryId'" [title]="'PreGoLive Approval History'"
+            <div *ngIf="BizTemplateCode != 'DLFN'">
+              <lib-ucSubsection [id]="'PreGoLiveApprovalHistoryId'" [title]="'PreGoLive Approval History'"
               [panel]="'PreGoLiveApprovalHistory'">
-            </lib-ucSubsection>
-            <div id="PreGoLiveApprovalHistory">
-              <lib-ucapprovalHistory *ngIf="IsApvReady" [InputObj]="InputApprovalHistoryObj">
-              </lib-ucapprovalHistory>
+              </lib-ucSubsection>
+              <div id="PreGoLiveApprovalHistory">
+                <lib-ucapprovalHistory *ngIf="IsApvReady" [InputObj]="InputApprovalHistoryObj">
+                </lib-ucapprovalHistory>
+              </div>
+              <mat-tab-group>
+                <mat-tab label="Term & Conditions">
+                  <ng-template matTabContent>
+                    <app-term-conditions [AppId]="AppId" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm"
+                    (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
+                  </app-term-conditions>
+                  </ng-template>
+                </mat-tab>
+                <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="App Document">
+                  <ng-template matTabContent>
+                    <app-dms-iframe *ngIf="isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsAppObj"></app-dms-iframe>
+                  </ng-template>
+                </mat-tab>
+                <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Agreement Document">
+                  <ng-template matTabContent>
+                    <app-dms-iframe *ngIf="isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj"></app-dms-iframe>
+                  </ng-template>
+                </mat-tab>
+              </mat-tab-group>
             </div>
-            <mat-tab-group>
-              <mat-tab label="Term & Conditions">
-                <ng-template matTabContent>
-                  <app-term-conditions [AppId]="AppId" [parentForm]="MainInfoForm" [enjiForm]="MainInfoReqForm"
-                  (OutputValueIsCheckAll)="ReceiveIsChecked($event)">
-                </app-term-conditions>
-                </ng-template>
-              </mat-tab>
-              <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="App Document">
-                <ng-template matTabContent>
-                  <app-dms-iframe *ngIf="isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsAppObj"></app-dms-iframe>
-                </ng-template>
-              </mat-tab>
-              <mat-tab *ngIf="SysConfigResultObj?.ConfigValue == 1" label="Agreement Document">
-                <ng-template matTabContent>
-                  <app-dms-iframe *ngIf="isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj"></app-dms-iframe>
-                </ng-template>
-              </mat-tab>
-            </mat-tab-group>
+            
             <div class="form-actions right">
-              <button *ngIf="!IsCheckedAll" type="button" class="btn btn-raised btn-primary mr-1" (click)="RFA()"
+              <button *ngIf="!IsCheckedAll && BizTemplateCode != 'DLFN'" type="button" class="btn btn-raised btn-primary mr-1" (click)="RFA()"
                 translate>
                 <i class="fa fa-check-square-o"></i> Request For Approval
               </button>

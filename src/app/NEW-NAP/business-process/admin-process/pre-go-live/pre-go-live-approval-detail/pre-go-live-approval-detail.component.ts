@@ -19,6 +19,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ReqGetRfaLogByTrxNoAndApvCategoryObj } from 'app/shared/model/Request/NAP/PreGoLive/ReqGetRfaLogByTrxNoAndApvCategoryObj.model';
+import { AgrmntMasterXObj } from 'app/shared/model/AgrmntMasterXObj.Model';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
@@ -49,10 +50,11 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   OfficeName: any;
   PurposeOfFinancing: any;
   ProdOfferingCode: string;
-  ProdOfferingVersion: string;
+  ProdOfferingVersion: number;
   LeadNo: string;
   MouNo: string;
   identifier: string = "TCList";
+  AgrmntParentNo: string = "-"
   IsApvReady: boolean = false;
   outstandingTcObj: any;
   listAppTCObj: ListAppTCObj;
@@ -65,7 +67,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   AppId: any;
   AgrmntId: any;
   token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
-  LeadId: string;
+  LeadId: number;
   bizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   MouCustId: any;
   ApvReqId: number;
@@ -120,6 +122,12 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       RowVersion: ""
     }
 
+    this.http.post<AgrmntMasterXObj>(URLConstant.GetParentAgrNoByAppId, { AppId: this.AppId }).subscribe(
+      (response) => {
+        if (response != null) {
+          this.AgrmntParentNo = response.AgrmntParentNo != null ? response.AgrmntParentNo : '-';
+        }
+    })
 
     this.http.post(URLConstant.GetAgrmntByAgrmntNo, Obj).subscribe(
       (response) => {
@@ -183,7 +191,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
               }
             );
 
-
           }
 
         );
@@ -211,6 +218,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           }
         );
 
+        this.IsReady = true;
       }
     );
     this.initInputApprovalObj();

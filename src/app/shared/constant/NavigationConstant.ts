@@ -238,6 +238,7 @@ export class NavigationConstant {
   public static NAP_SHARING_FROM_LEAD_PAGING = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP_FROM_LEAD_PAGING; //"/Nap/Sharing/NapFromLead/Paging"
   public static NAP_SHARING_FROM_LEAD_DETAIL = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP_FROM_LEAD_DETAIL; //"/Nap/Sharing/NapFromLead/Detail"
   public static NAP_SHARING_FROM_SIMPLE_LEAD_PAGING = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP_SIMPLE_LEAD_PAGING; //"/Nap/Sharing/NapFromSimpleLead/Paging"
+  public static NAP_SHARING_FROM_SIMPLE_LEAD_DETAIL = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP_SIMPLE_LEAD_DETAIL; //"/Nap/Sharing/NapFromSimpleLead/Detail"
   public static NAP1_SHARING_FROM_LEAD_PAGING = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP1_FROM_LEAD_PAGING; //"/Nap/Sharing/Nap1FromLead/Paging"
   public static NAP1_SHARING_FROM_LEAD_DETAIL = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP1_FROM_LEAD_DETAIL; //"/Nap/Sharing/Nap1FromLead/Detail"
   //#endregion
@@ -298,12 +299,13 @@ export class NavigationConstant {
   public static MOU_FREEZE_INQUIRY = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_FREEZE_INQUIRY; //"/Mou/FreezeUnfreeze/Inquiry"
   public static MOU_FREEZE_VIEW = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_FREEZE_VIEW; //"/Mou/FreezeUnfreeze/View"
   public static MOU_FREEZE_APV_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_FREEZE_APV_PAGING; //"/Mou/FreezeUnfreezeApv/Paging"
-  public static MOU_FREEZE_APV_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_FREEZE_APV_DETAIL; //"/Mou/FreezeUnfreezeApv/Paging"
+  public static MOU_FREEZE_APV_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_FREEZE_APV_DETAIL; //"/Mou/FreezeUnfreezeApv/Detail"
   //#endregion
 
   //#region CHANGE MOU
   public static CHANGE_MOU_REQ_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_REQ_PAGING; //"/Mou/ChangeMouRequest/Paging"
   public static CHANGE_MOU_REQ_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_REQ_DETAIL; //"/Mou/ChangeMouRequest/Detail"
+  public static CHANGE_MOU_REQ_DETAIL_CUSTOMER = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_REQ_DETAIL_CUST; //"/Mou/ChangeMouRequest/Detail/Customer"
   public static CHANGE_MOU_RVW_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RVW_PAGING; //"/Mou/ChangeMou/ReviewPaging"
   public static CHANGE_MOU_RVW_DETAIL_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RVW_DETAIL_FCTR; //"/Mou/ChangeMou/ReviewDetailFctr"
   public static CHANGE_MOU_RVW_DETAIL_FIN = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RVW_DETAIL_FIN; //"/Mou/ChangeMou/ReviewFinancing"

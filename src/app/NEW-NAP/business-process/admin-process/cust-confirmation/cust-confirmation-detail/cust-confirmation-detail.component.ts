@@ -67,7 +67,11 @@ export class CustConfirmationDetailComponent implements OnInit {
   async ngOnInit() {
     this.claimTask();
     this.arrValue.push(this.AgrmntId);
+    if (this.BizTemplateCode == CommonConstant.CFNA) {
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustConfirmInfoCFNA.json";
+    } else {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustConfirmInfo.json";
+    }
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.whereValue = this.arrValue;
     this.viewGenericObj.ddlEnvironments = [

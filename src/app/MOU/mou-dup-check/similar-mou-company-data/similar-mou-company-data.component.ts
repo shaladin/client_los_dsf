@@ -22,7 +22,7 @@ export class SimilarMouCompanyDataComponent implements OnInit {
   MouCustObj: MouCustObj; 
   MouCustCompanyObj: MouCustCompanyObj;
   MouCustAddrObj: MouCustAddrObj;
-  RowVersion: any;
+  RowVersion: string;
   ListCustomerDuplicate: Array<any> = new Array();
   ListNegativeCust: Array<any> = new Array();
   ListAppCustDuplicate: Array<any> = new Array();
@@ -49,7 +49,11 @@ export class SimilarMouCompanyDataComponent implements OnInit {
     this.MouCustCompanyObj = new MouCustCompanyObj();
     this.MouCustAddrObj = new MouCustAddrObj();
 
-    this.http.post(URLConstant.GetMouCustByMouCustId, { "Id": this.MouCustId }).subscribe(
+    var mouCustObj = {
+      Id: this.MouCustId
+    }
+    
+    this.http.post(URLConstant.GetMouCustByMouCustId, { mouCustObj }).subscribe(
       response => {
         this.MouCustObj = response['MouCustObj'];
         this.RowVersion = response['MouCustObj'].RowVersion;

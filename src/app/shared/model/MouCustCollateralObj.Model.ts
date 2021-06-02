@@ -28,4 +28,6 @@ export class MouCustCollateralObj{
     RsvField5: string;
     ListCollateralId: number[];
     RowVersion: string;
+    CustNo: string;
+    CustName: string;
 }

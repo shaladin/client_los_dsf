@@ -127,7 +127,7 @@ export class MouViewDetailComponent implements OnInit {
 
         }
         else if (this.MouType == CommonConstant.FINANCING) {
-          this.http.post(URLConstant.GetMouCustDlrFin, mouCustObj).subscribe(
+          this.http.post(URLConstant.GetMouCustDlrFindById, mouCustObj).subscribe(
             (responses) => {
               console.log(responses)
               this.MouCustDlrFindData.WopCode = responses["WopCode"];

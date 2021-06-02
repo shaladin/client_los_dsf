@@ -35,6 +35,8 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
   };
 
   verifResultHDetailObj: any;
+  verifResultObj: VerfResultObj;
+  verifResultHObj: VerfResultHObj;
   listVerifResultHObj: Array<VerfResultHObj> = new Array();
   listVerifResultDObj: Array<any>;
   subjectName: string;
@@ -71,6 +73,7 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
   async GetVerfResultData() {
     await this.http.post<VerfResultObj>(URLConstant.GetVerfResultByTrxRefNoAndVerfTrxTypeCode, this.verfResObj).toPromise().then(
       (response) => {
+        this.verifResultObj = response;
         this.verfResHObj.VerfResultId = response.VerfResultId;
       }
     );
@@ -79,6 +82,7 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
   async GetVerfResultHData() {
     await this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, {Id : this.verfResHObj.VerfResultId}).toPromise().then(
       (response) => {
+        this.verifResultHObj = response;
         this.verfResHObj.MrVerfObjectCode = response.MrVerfObjectCode;
       }
     );

@@ -16,7 +16,6 @@ import { InputNapComponentModule } from "app/NEW-NAP/sharing-component/input-nap
 import { InputNapFL4WModule } from "app/NEW-NAP/FL4W/input-nap.module";
 import { InputNapCFNAModule } from "app/NEW-NAP/CFNA/input-nap.module";
 import { InputNapFCTRModule } from "app/NEW-NAP/FCTR/input-nap.module";
-import { FeeCFNAComponent } from "app/NEW-NAP/CFNA/nap-components/financial-data/component/fee/fee-cfna.component";
 
 export const customCurrencyMaskConfig = {
   align: "right",
@@ -46,7 +45,7 @@ export const customCurrencyMaskConfig = {
     MatCheckboxModule,
     MatRadioModule,
     MatSelectModule,
-    InputNapComponentModule
+    InputNapComponentModule,
     // InputNapFL4WModule,
     // InputNapCFNAModule,
     // InputNapFCTRModule
@@ -57,7 +56,6 @@ export const customCurrencyMaskConfig = {
   exports: [],
   providers: [NGXToastrService],
   entryComponents: [
-    
   ]
 })
 

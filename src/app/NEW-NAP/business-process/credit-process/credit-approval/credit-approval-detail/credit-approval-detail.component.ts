@@ -20,6 +20,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { ViewHighlightCommentComponent } from 'app/NEW-NAP/sharing-component/view-app-component/view-highlight-comment/view-highlight-comment.component';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
   selector: 'app-credit-approval-detail',
@@ -129,10 +130,9 @@ export class CreditApprovalDetailComponent implements OnInit {
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
           let mouCustId = response[0]['MouCustId'];
           if (mouCustId != null && mouCustId != '') {
-            var mouObj = { Id: mouCustId };
-            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-              (response) => {
-                let mouCustNo = response['MouCustNo'];
+            this.http.post(URLConstant.GetMouCustById, { Id: mouCustId }).subscribe(
+              (response: MouCustObj) => {
+                let mouCustNo = response.MouCustNo;
                 this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
                 this.isDmsReady = true;
               });

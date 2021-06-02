@@ -10,20 +10,23 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { CustObj } from 'app/shared/model/CustObj.Model';
 
 @Component({
   selector: 'app-cust-grp-member',
   templateUrl: './cust-grp-member.component.html',
-  styleUrls: [],
+  styles:[
+    '.disabledLink { color: #ccc; pointer-events:none;}'
+  ],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
 export class CustGrpMemberComponent implements OnInit {
-
+  @Input() isLockMode: boolean = false;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() appCustGrpObjs: Array<AppCustGrpObj>;
 
   refMasterObj = {
@@ -39,16 +42,13 @@ export class CustGrpMemberComponent implements OnInit {
 
   CustRelationshipPersonalObj: any;
   CustRelationshipCompanyObj: any;
-  defaultCustRelationshipPersonalCode: any;
-  defaultCustRelationshipCompanyCode: any;
+  defaultCustRelationshipPersonalCode: string;
+  defaultCustRelationshipCompanyCode: string;
 
   InputLookupCustomerObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   lookupCustomerIdentifiers: Array<string> = new Array<string>();
 
   CustNoObj: GenericObj = new GenericObj();
-
-  custMasterObj: any;
-
 
   constructor(
     private fb: FormBuilder, 
@@ -170,32 +170,53 @@ export class CustGrpMemberComponent implements OnInit {
   }
 
   addGroup(appCustGrpObj : AppCustGrpObj, i){
-    if(appCustGrpObj == undefined){
-      return this.fb.group({
-        No: [i],
-        CustNo: ['', [Validators.required, Validators.maxLength(50)]],
-        CustName: [''],
-        MrCustRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
-        CustGrpNotes: ['', [Validators.maxLength(4000)]],
-        //IsReversible: [false]
-      })
+    if(this.isLockMode){
+      if(appCustGrpObj == undefined){
+        return this.fb.group({
+          No: [i],
+          CustNo: [''],
+          CustName: [''],
+          MrCustRelationshipCode: [''],
+          CustGrpNotes: [''],
+          //IsReversible: [false]
+        })
+      }else{
+        return this.fb.group({
+          No: [i],
+          CustNo: [appCustGrpObj.CustNo],
+          CustName: [''],
+          MrCustRelationshipCode: [appCustGrpObj.MrCustRelationshipCode],
+          CustGrpNotes: [appCustGrpObj.CustGrpNotes],
+          //IsReversible: [appCustGrpObj.IsReversible == null ? false : appCustGrpObj.IsReversible],
+        })
+      }
     }else{
-      return this.fb.group({
-        No: [i],
-        CustNo: [appCustGrpObj.CustNo, [Validators.required, Validators.maxLength(50)]],
-        CustName: [''],
-        MrCustRelationshipCode: [appCustGrpObj.MrCustRelationshipCode, [Validators.required, Validators.maxLength(50)]],
-        CustGrpNotes: [appCustGrpObj.CustGrpNotes, [Validators.maxLength(4000)]],
-        //IsReversible: [appCustGrpObj.IsReversible == null ? false : appCustGrpObj.IsReversible],
-      })
-    } 
+      if(appCustGrpObj == undefined){
+        return this.fb.group({
+          No: [i],
+          CustNo: ['', [Validators.required, Validators.maxLength(50)]],
+          CustName: [''],
+          MrCustRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
+          CustGrpNotes: ['', [Validators.maxLength(4000)]],
+          //IsReversible: [false]
+        })
+      }else{
+        return this.fb.group({
+          No: [i],
+          CustNo: [appCustGrpObj.CustNo, [Validators.required, Validators.maxLength(50)]],
+          CustName: [''],
+          MrCustRelationshipCode: [appCustGrpObj.MrCustRelationshipCode, [Validators.required, Validators.maxLength(50)]],
+          CustGrpNotes: [appCustGrpObj.CustGrpNotes, [Validators.maxLength(4000)]],
+          //IsReversible: [appCustGrpObj.IsReversible == null ? false : appCustGrpObj.IsReversible],
+        })
+      } 
+    }
   }
 
   async setCustNameAndCustRelationship(i, custNo){
     this.CustNoObj.CustNo = custNo;
     await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
-      (response) => {
-        this.custMasterObj = response;
+      (response: any) => {
         this.dictLookup[i].nameSelect = response["CustName"];
         this.dictLookup[i].jsonSelect = response;
         this.InputLookupCustomerObjs[i].jsonSelect = response;

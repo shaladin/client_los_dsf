@@ -11,17 +11,14 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class MouViewFreezeUnfreezeHistoryComponent implements OnInit {
   @Input() MouCustId: number;
   listMouFreezeUnfreeze: Array<any>;
-  trxType: any;
 
   constructor(private fb: FormBuilder, private http: HttpClient) { }
 
   ngOnInit() {
-    var Obj = { MouCustId: this.MouCustId }
-    this.http.post<any>(URLConstant.GetListMouFreezeUnfreezeByMouCustId, Obj).subscribe(
+    this.http.post<any>(URLConstant.GetListMouFreezeUnfreezeByMouCustId, { Id: this.MouCustId }).subscribe(
       (response) => {
         this.listMouFreezeUnfreeze = response["ResponseMouFreezeUnfreezeObjs"];
       })
   }
   
-  FreezeHistoryForm = this.fb.group({})  
 }

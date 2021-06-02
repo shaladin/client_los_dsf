@@ -11,4 +11,6 @@ export class ResponseTaskReassignmentDetailPageObj {
     TaskReassignmentStat: string;
     WfTaskListId: number;
     OfficeName: string;
+    RoleCode: string;
+    OfficeCode: string;
 }

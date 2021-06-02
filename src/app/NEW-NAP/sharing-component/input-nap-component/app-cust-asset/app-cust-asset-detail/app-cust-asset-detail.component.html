@@ -1,0 +1,64 @@
+<form class="form form-horizontal" [formGroup]="CustAssetForm" #enjiForm="ngForm"
+  (ngSubmit)="enjiForm.form.valid && SaveForm()">
+  <div class="modal-header">
+    <h4 class="modal-title">{{Mode}} CUSTOMER ASSET</h4>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('0')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="px-3">
+      <div class="form-body">
+        <div id="MouCustFeeSection">
+          <div class="form-group row adins-required">
+            <label class="col-md-4 adInsLabel" for="MrCustAssetTypeId" translate>Customer Asset Type</label>
+            <div class="col-md-8">
+              <select class="form-control adInsInput" style="width: 100%;" formControlName="MrCustAssetTypeId"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && CustAssetForm.controls.MrCustAssetTypeId.invalid }">
+                <option *ngFor="let item of CustAssetTypeList" [value]="item.Key">{{item.Value}}</option>
+              </select>
+              <lib-uc-show-errors [control]="CustAssetForm.controls.MrCustAssetTypeId" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4 adInsLabel" for="AssetDescr" translate>Asset Description</label>
+            <div class="col-md-8">
+              <input type="text" class="form-control adInsInput" formControlName="AssetDescr"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && CustAssetForm.controls.AssetDescr.invalid }" />
+              <lib-uc-show-errors [control]="CustAssetForm.controls.AssetDescr" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4 adInsLabel adins-required-label" for="AssetValue" translate>Asset Value</label>
+            <div class="col-md-8">
+              <input type="" currencyMask class="form-control adInsInput" formControlName="AssetValue"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && CustAssetForm.controls.AssetValue.invalid }"
+                [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 2, nullable: false }" />
+              <lib-uc-show-errors [control]="CustAssetForm.controls.AssetValue" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4 adInsLabel adins-required-label" for="AssetQty" translate>Asset Quantity</label>
+            <div class="col-md-8">
+              <input type="" currencyMask class="form-control adInsInput" formControlName="AssetQty"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && CustAssetForm.controls.AssetQty.invalid }"
+                [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 0, nullable: false }" />
+              <lib-uc-show-errors [control]="CustAssetForm.controls.AssetQty" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-warning btn-raised" (click)="activeModal.dismiss('0')"> <i class="ft-x"></i>
+      Cancel</button>
+    <button type="submit" class="btn btn-raised btn-primary">
+      <i class=" far fa-check-square"></i> Save
+    </button>
+  </div>
+</form>

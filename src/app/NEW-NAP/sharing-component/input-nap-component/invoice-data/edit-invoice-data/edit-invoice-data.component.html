@@ -1,0 +1,42 @@
+<div class="card-body" >
+<form class="form form-horizontal" [formGroup]="InvoiceForm"
+            (ngSubmit)="InvoiceForm.valid && SaveForm(enjiForm)" #enjiForm="ngForm">
+
+            <div class="form-body" id="InvoiceData">
+              <div class="form-group row">
+                <label class="col-md-3 adins-required-label" translate>Invoice No</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" formControlName="InvoiceNo"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.InvoiceNo.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.InvoiceNo" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adins-required-label" translate>Invoice Amount</label>
+                <div class="col-md-9">
+                  <input type="text" currencyMask class="form-control" formControlName="InvoiceAmt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.InvoiceAmt.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.InvoiceAmt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 adins-required-label" translate>Due Date</label>
+                <div class="col-md-9">
+                  <input type="date" class="form-control" formControlName="InvoiceDueDt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && InvoiceForm.controls.InvoiceDueDt.invalid }">
+                  <lib-uc-show-errors [control]="InvoiceForm.controls.InvoiceDueDt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+            </div>
+
+          <div class="form-actions right" >
+              <button type="submit" class="btn btn-raised btn-primary" translate>
+                <i class="fa fa-check-square-o"></i> Save
+              </button>
+          </div>           
+
+</form>
+</div>

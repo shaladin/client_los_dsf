@@ -21,14 +21,12 @@ import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigRes
   templateUrl: './mou-approval-general.component.html'
 })
 export class MouApprovalGeneralComponent implements OnInit {
-  mouCustObj: MouCustObj;
   MouCustId: number;
   taskId: number;
   instanceId: number;
   MouType: string = CommonConstant.GENERAL;
   inputObj: ApvViewInfo;
-  link: any;
-  resultData: any;
+  resultData: MouCustObj;
   mouCustObject: MouCustObj = new MouCustObj();
   MrCustTypeCode: string;
   ApvReqId: number;
@@ -56,8 +54,6 @@ export class MouApprovalGeneralComponent implements OnInit {
       (response) => {
         this.SysConfigResultObj = response
       });
-    this.mouCustObj = new MouCustObj();
-    this.mouCustObj.MouCustId = this.MouCustId;
     await this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;

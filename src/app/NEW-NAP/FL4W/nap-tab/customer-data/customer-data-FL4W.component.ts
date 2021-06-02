@@ -94,9 +94,6 @@ export class CustomerDataFL4WComponent implements OnInit {
   listContactPersonCompany: Array<AppCustCompanyContactPersonObj> = new Array<AppCustCompanyContactPersonObj>();
   listLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
   isBindDataDone: boolean = false;
-  getRefMasterUrl: any;
-  addEditCustDataPersonalUrl: any;
-  getCustDataUrl: any;
 
   CustTypeObj: any;
   copyToResidenceTypeObj: any = [
@@ -167,7 +164,6 @@ export class CustomerDataFL4WComponent implements OnInit {
     this.inputAddressObjForCoyMailing.showPhn3 = false;
 
     this.cancel = this.showCancel;
-    this.initUrl();
     this.bindCustTypeObj();
     this.initAddrObj();
     await this.getCustData();
@@ -204,7 +200,7 @@ export class CustomerDataFL4WComponent implements OnInit {
         return;
       }
 
-      this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
+      this.http.post(URLConstant.AddEditCustDataPersonal, this.custDataPersonalObj).subscribe(
         (response) => {
           if (response["StatusCode"] == 200) {
             this.toastr.successMessage(response["message"]);
@@ -822,7 +818,7 @@ export class CustomerDataFL4WComponent implements OnInit {
     // this.custDataObj = new CustDataObj();
     // this.custDataObj.AppId = this.appId;
     var custDataObj = { Id: this.appId };
-    await this.http.post(this.getCustDataUrl, custDataObj).toPromise().then(
+    await this.http.post(URLConstant.GetCustDataByAppId, custDataObj).toPromise().then(
       (response) => {
         if (response["AppCustObj"]["AppCustId"] > 0) {
           if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
@@ -1271,15 +1267,9 @@ export class CustomerDataFL4WComponent implements OnInit {
     }
   }
 
-  initUrl() {
-    this.addEditCustDataPersonalUrl = URLConstant.AddEditCustDataPersonal;
-    this.getCustDataUrl = URLConstant.GetCustDataByAppId;
-    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-  }
-
   bindCustTypeObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CustTypeObj = response[CommonConstant.ReturnObj];
         if (this.CustTypeObj.length > 0) {

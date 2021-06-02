@@ -10,9 +10,9 @@ import { RequestSubmitMouCustDupCheckObj } from 'app/shared/model/MouCustDupChec
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ReqGetMouCustDuplicateObj } from 'app/shared/model/Request/MOU/ReqGetMouCustDuplicateObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { StringifyOptions } from 'querystring';
 
 @Component({
   selector: 'app-existing-mou-personal',
@@ -44,7 +44,7 @@ export class ExistingMouPersonalComponent implements OnInit {
   checkboxAllMouSpouse: false;
   checkboxAllShareholder: false;
   checkboxAllMouShareholder: false;
-  RowVersion: any;
+  RowVersion: string;
   cust: any;
   custUrl: string;
   CustNoObj: GenericObj = new GenericObj();

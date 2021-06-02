@@ -71,8 +71,8 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
       }
     ];
 
-    var arrCrit = new Array<CriteriaObj>();
-    var critObj = new CriteriaObj();
+    let arrCrit = new Array<CriteriaObj>();
+    let critObj = new CriteriaObj();
     critObj.DataType = 'test';
     critObj.propName = 'UL.UPLOAD_MONITORING_NO';
     critObj.restriction = AdInsConstant.RestrictionEq;
@@ -82,7 +82,7 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
   }
 
   uploadReview(status) {
-    var uploadObj = {
+    let uploadObj = {
       MrUploadStatusCode: status,
       TaskListId: this.taskListId,
       UploadMonitoringNo: this.UploadNo
@@ -97,7 +97,7 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
 
   claimTask() {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.taskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
+    let wfClaimObj = { pWFTaskListID: this.taskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => { }
     );

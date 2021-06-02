@@ -49,6 +49,7 @@ import { AppCustDataPersonalOplComponent } from './app-cust-data/app-cust-data-p
 import { AppCustDataCompanyOplComponent } from './app-cust-data/app-cust-data-company-opl/app-cust-data-company-opl.component';
 import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-sharing-component.module";
 import { TabDeviationComponent } from "./tab-deviation/tab-deviation.component";
+import { AppViewInsuranceDetailComponent } from "./app-insurance/app-insurance-detail/app-insurance-detail.component";
 
 @NgModule({
     imports: [
@@ -100,12 +101,13 @@ import { TabDeviationComponent } from "./tab-deviation/tab-deviation.component";
         TabAnalysisResultComponent,
         ApprovalHistComponent,
         ViewSurveyTaskListComponent,
-        ViewAssetDataComponent
+        ViewAssetDataComponent,
         TabDeviationComponent,
         ViewAssetExpenseComponent,
         ViewSurveyComponent,
         AppCustDataPersonalOplComponent,
         AppCustDataCompanyOplComponent,
+        AppViewInsuranceDetailComponent,
     ],
     entryComponents: [
         UclookupgenericComponent,

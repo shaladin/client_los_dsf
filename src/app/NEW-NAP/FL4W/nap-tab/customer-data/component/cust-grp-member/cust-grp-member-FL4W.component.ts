@@ -10,6 +10,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-cust-grp-member-FL4W',
@@ -34,13 +35,13 @@ export class CustGrpMemberFL4WComponent implements OnInit {
   dictLookup: {[key: string]: any;} = {};
 
   CustRelationshipObjs: [{
-    list: []  
+    list: Array<KeyValueObj>
   }] = [{list: []}];
 
-  CustRelationshipPersonalObj: any;
-  CustRelationshipCompanyObj: any;
-  defaultCustRelationshipPersonalCode: any;
-  defaultCustRelationshipCompanyCode: any;
+  CustRelationshipPersonalObj: Array<KeyValueObj>;
+  CustRelationshipCompanyObj: Array<KeyValueObj>;
+  defaultCustRelationshipPersonalCode: string;
+  defaultCustRelationshipCompanyCode: string;
 
   InputLookupCustomerObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   lookupCustomerIdentifiers: Array<string> = new Array<string>();

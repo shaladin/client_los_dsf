@@ -11,6 +11,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { RdlcReportObjv2, ReportParamObjv2 } from 'app/shared/model/Report/RdlcReportObjv2.model';
 
 
 @Component({

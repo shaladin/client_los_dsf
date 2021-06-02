@@ -2,7 +2,7 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-body">
-        <div class="px-3">
+        <div class="px-3"  *ngIf="IsReady">
           <!-- diubah ke yang dulu karena view nya beda, ini mesti diperbaikin jadi pake view generic -->
           <!-- <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info> -->
 
@@ -18,6 +18,10 @@
               <label class="col-md-2 adInsLabel" *ngIf="result4?.BizTemplateCode != 'CFNA'" [hidden]="result4?.BizTemplateCode == 'FCTR'" translate>Num Of Asset</label>
               <div class="col-md-4" *ngIf="result4?.BizTemplateCode != 'CFNA'">
                 <label [hidden]="result4?.BizTemplateCode == 'FCTR'" id="NumOfAsset" translate>{{NumOfAsset}}</label>
+              </div>
+              <label class="col-md-2 adInsLabel" *ngIf="result4?.BizTemplateCode == 'CFNA'" translate>Agreement Parent</label>
+              <div class="col-md-4" *ngIf="result4?.BizTemplateCode == 'CFNA'">
+                <label id="AgrmntParentNo" translate>{{AgrmntParentNo}}</label>
               </div>
             </div>
 

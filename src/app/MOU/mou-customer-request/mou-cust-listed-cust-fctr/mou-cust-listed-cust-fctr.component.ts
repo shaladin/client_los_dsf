@@ -5,7 +5,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { MouCustListedCustFctrObj } from 'app/shared/model/MouCustListedCustFctrObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustListedCustFctrDetailComponent } from './mou-cust-listed-cust-fctr-detail/mou-cust-listed-cust-fctr-detail.component';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -18,10 +17,12 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
   selector: 'app-mou-cust-listed-cust-fctr',
   templateUrl: './mou-cust-listed-cust-fctr.component.html'
 })
+
 export class MouCustListedCustFctrComponent implements OnInit {
   @Input() MouCustId: number;
   @Input() IsListedCustFctr: boolean;
   @Output() OutputData: EventEmitter<any> = new EventEmitter();
+  @Output() OutputIsListedCust: EventEmitter<any> = new EventEmitter();
   listedCusts: Array<MouCustListedCustFctrObj>;
   inputLookupObj: InputLookupObj;
   CustNoObj: GenericObj = new GenericObj();
@@ -194,8 +195,13 @@ export class MouCustListedCustFctrComponent implements OnInit {
       CustNo: event.CustNo,
       CustName: event.CustName,
       MrCustTypeCode: event.MrCustTypeCode,
+      MrCustTypeDescr: event.CustTypeView
     });    
     var MouCustListedCustFctrObjs = this.MouCustIsListedForm.get("ListCust") as FormArray;
     this.OutputData.emit(MouCustListedCustFctrObjs.getRawValue());
+  }
+
+  changeIsListedCust(){
+    this.OutputIsListedCust.emit(this.MouCustIsListedForm.get("IsListedCust"));
   }
 }

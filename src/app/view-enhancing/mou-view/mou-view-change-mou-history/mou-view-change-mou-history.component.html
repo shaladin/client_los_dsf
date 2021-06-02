@@ -1,42 +1,40 @@
-<form class="form form-horizontal" [formGroup]="ChangeMouCustomerForm" (ngSubmit)="ChangeMouCustomerForm.valid" #enjiForm="ngForm">
-  <lib-ucSubsection [id]="'ChangeMouCustomerId'" [title]="'Change MOU Customer'" [panel]="'ChangeMouCustomer'">
-  </lib-ucSubsection>
-  <div class="form-body" id="ChangeMouCustomer">
-    <table class="table table-responsive-md text-center table-hover">
-      <thead>        
-        <tr class="table-header">
-          <th><span class="thead-header" name='ChangeMouTrxNo' translate>Transaction No</span>
-          </th>
-          <th><span class="thead-header" name='Version' translate>Version</span>
-          </th>
-          <th><span class="thead-header" name='TrxType' translate>Transaction Type</span>
-          </th>
-          <th><span class="thead-header" name='TrxType' translate>Status</span>
-          </th>
-          <th><span class="thead-header" name='RequestDate' translate>Request Date</span>
-          </th>
-          <th><span class="thead-header" name='ExecutionDate' translate>Execution Date</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody *ngIf = "listChangeMouTrx?.length == 0">
-        <tr>
-          <td colspan="100%">No Data Available</td>
-        </tr>
-      </tbody>
-      <tbody>
-        <tr *ngFor="let item of listChangeMouTrx let i = index">
-          <!-- <td>
+<lib-ucSubsection [id]="'ChangeMouCustomerId'" [title]="'Change MOU Customer'" [panel]="'ChangeMouCustomer'">
+</lib-ucSubsection>
+<div class="form-body" id="ChangeMouCustomer">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th><span class="thead-header" name='ChangeMouTrxNo' translate>Transaction No</span>
+        </th>
+        <th><span class="thead-header" name='Version' translate>Version</span>
+        </th>
+        <th><span class="thead-header" name='TrxType' translate>Transaction Type</span>
+        </th>
+        <th><span class="thead-header" name='TrxType' translate>Status</span>
+        </th>
+        <th><span class="thead-header" name='RequestDate' translate>Request Date</span>
+        </th>
+        <th><span class="thead-header" name='ExecutionDate' translate>Execution Date</span>
+        </th>
+      </tr>
+    </thead>
+    <tbody *ngIf="listChangeMouTrx?.length == 0">
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr *ngFor="let item of listChangeMouTrx let i = index">
+        <!-- <td>
             <a [routerLink]="" (click)="openView(item.SurveyTaskNo)">{{item.ChangeMouTrxNo}}</a>
           </td> -->
-          <td>{{item.ChangeMouTrxNo}}</td>
-          <td>{{item.Version}}</td>
-          <td>{{item.TrxType}}</td>
-          <td>{{item.Status}}</td>
-          <td>{{item.RequestDate | date: 'dd-MMMM-yyyy'}}</td>
-          <td>{{item.ExecutionDate | date: 'dd-MMMM-yyyy'}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</form>
+        <td>{{item.ChangeMouTrxNo}}</td>
+        <td>{{item.Version}}</td>
+        <td>{{item.TrxType}}</td>
+        <td>{{item.Status}}</td>
+        <td>{{item.RequestDate | date: 'dd-MMMM-yyyy'}}</td>
+        <td>{{item.ExecutionDate | date: 'dd-MMMM-yyyy'}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

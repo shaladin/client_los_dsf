@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { RequestSubmitMouCustDupCheckObj } from 'app/shared/model/MouCustDupCheck/RequestSubmitMouCustDupCheckObj.Model';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
@@ -34,7 +33,7 @@ export class ExistingMouCompanyComponent implements OnInit {
   ListSelectedIdMouShareholder: any;
   checkboxAllGuarantor = false;
   checkboxAllShareholder = false;
-  RowVersion: any;
+  RowVersion: string;
   cust: any;
   custUrl: string;
   CustNoObj: GenericObj = new GenericObj();

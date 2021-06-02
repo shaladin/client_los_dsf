@@ -14,13 +14,16 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
+import { RegexService } from 'app/shared/services/regex.services';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-cust-personal-contact-information-FL4W',
   templateUrl: './cust-personal-contact-information-FL4W.component.html',
   styleUrls: [],
-  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
-
+  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
+  providers: [RegexService]
 })
 
 export class CustPersonalContactInformationFL4WComponent implements OnInit {
@@ -31,13 +34,10 @@ export class CustPersonalContactInformationFL4WComponent implements OnInit {
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
   @Output() callbackCopyAddr: EventEmitter<any> = new EventEmitter();
 
-  mode: any;
-  currentEditedIndex: any;
-  closeResult: any;
-  selectedProfessionCode: any;
-  getCustContactPersonPersonalUrl: any;
-  getRefMasterUrl: any;
-  getRefProfessionUrl: any;
+  mode: string;
+  currentEditedIndex: number;
+  closeResult: string;
+  selectedProfessionCode: string;
   appCustPersonalContactPersonObj: AppCustPersonalContactPersonObj;
   refMasterObj = {
     RefMasterTypeCode: ""
@@ -45,7 +45,7 @@ export class CustPersonalContactInformationFL4WComponent implements OnInit {
   professionObj = {
     ProfessionCode: ""
   };
-  copyToContactPersonAddrObj: any = [
+  copyToContactPersonAddrObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
@@ -59,20 +59,20 @@ export class CustPersonalContactInformationFL4WComponent implements OnInit {
       Value: "Mailing"
     }
   ];
-  copyFromContactPerson: any;
+  copyFromContactPerson: string;
   contactPersonAddrObj: AddrObj;
   inputFieldContactPersonObj: InputFieldObj;
-  GenderObj: any;
-  IdTypeObj: any;
-  CustRelationshipObj: any;
-  InputLookupProfessionObj: any;
-  defaultGender: any;
-  defaultIdType: any;
-  defaultCustRelationship: any;
-  selectedGenderName: any;
-  selectedRelationshipName: any;
-  defaultGenderName: any;
-  defaultRelationshipName: any;
+  GenderObj: Array<KeyValueObj>;
+  IdTypeObj: Array<KeyValueObj>;
+  CustRelationshipObj: Array<KeyValueObj>;
+  InputLookupProfessionObj: InputLookupObj;
+  defaultGender: string;
+  defaultIdType: string;
+  defaultCustRelationship: string;
+  selectedGenderName: string;
+  selectedRelationshipName: string;
+  defaultGenderName: string;
+  defaultRelationshipName: string;
 
 
   ContactInfoPersonalForm = this.fb.group({
@@ -94,8 +94,8 @@ export class CustPersonalContactInformationFL4WComponent implements OnInit {
   businessDt: Date = new Date();
   inputAddressObjForCP: any;
 
-
   constructor(
+    private regexService: RegexService,
     private fb: FormBuilder,
     private http: HttpClient,
     private modalService: NgbModal, private cookieService: CookieService) {
@@ -103,6 +103,7 @@ export class CustPersonalContactInformationFL4WComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.customPattern = new Array<CustomPatternObj>();
     this.inputAddressObjForCP = new InputAddressObj();
     this.inputAddressObjForCP.showSubsection = false;
     this.inputAddressObjForCP.isRequired = false;
@@ -113,7 +114,6 @@ export class CustPersonalContactInformationFL4WComponent implements OnInit {
     this.businessDt.setDate(this.businessDt.getDate() - 1);
     this.bindCopyFrom();
     this.initLookup();
-    this.initUrl();
     this.bindAllRefMasterObj();
     this.initContactPersonAddrObj();
   }
@@ -138,6 +138,7 @@ export class CustPersonalContactInformationFL4WComponent implements OnInit {
   add(content) {
     this.mode = "Add";
     this.clearForm();
+    this.setValidatorPattern(true);
     this.open(content);
   }
 
@@ -165,6 +166,7 @@ export class CustPersonalContactInformationFL4WComponent implements OnInit {
     this.selectedProfessionCode = this.listContactPersonPersonal[i].MrJobProfessionCode;
     this.setProfessionName(this.listContactPersonPersonal[i].MrJobProfessionCode);
     this.CheckSpouse();
+    this.setValidatorPattern();
     this.open(content);
   }
 
@@ -273,7 +275,7 @@ export class CustPersonalContactInformationFL4WComponent implements OnInit {
 
   setProfessionName(professionCode) {
     this.professionObj.ProfessionCode = professionCode;
-    this.http.post(this.getRefProfessionUrl, {Code : professionCode}).subscribe(
+    this.http.post(URLConstant.GetRefProfessionByCode, {Code : professionCode}).subscribe(
       (response) => {
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
         this.InputLookupProfessionObj.jsonSelect = response;
@@ -300,12 +302,6 @@ export class CustPersonalContactInformationFL4WComponent implements OnInit {
     this.InputLookupProfessionObj.isRequired = false;
   }
 
-  initUrl() {
-    this.getCustContactPersonPersonalUrl = URLConstant.GetAppCustPersonalContactPersonsByAppCustPersonalId;
-    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getRefProfessionUrl = URLConstant.GetRefProfessionByCode;
-  }
-
   bindCopyFrom() {
     this.ContactInfoPersonalForm.patchValue({
       CopyFromContactPerson: this.copyToContactPersonAddrObj[0].Key
@@ -320,7 +316,7 @@ export class CustPersonalContactInformationFL4WComponent implements OnInit {
 
   bindGenderObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
@@ -333,11 +329,15 @@ export class CustPersonalContactInformationFL4WComponent implements OnInit {
 
   bindIdTypeObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.IdTypeObj = response[CommonConstant.ReturnObj];
         if (this.IdTypeObj.length > 0) {
           this.defaultIdType = this.IdTypeObj[0].Key;
+        }
+        if(this.IdTypeObj != undefined)
+        {
+          this.getInitPattern();
         }
       }
     );
@@ -345,7 +345,7 @@ export class CustPersonalContactInformationFL4WComponent implements OnInit {
 
   bindCustRelationshipObj() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustRelationship;
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
       (response) => {
         this.CustRelationshipObj = response[CommonConstant.ReturnObj];
         if (this.CustRelationshipObj.length > 0) {
@@ -403,5 +403,64 @@ export class CustPersonalContactInformationFL4WComponent implements OnInit {
     }
   }
 
+  //START URS-LOS-041
+
+onOptionsSelected(event){  
+  this.setValidatorPattern();
+}
+
+controlNameIdNo: any = 'IdNo';
+controlNameIdType: any = 'MrIdTypeCode';
+customPattern: Array<CustomPatternObj>;
+initIdTypeCode: any;
+resultPattern: any;
+
+getInitPattern() {
+  this.regexService.getListPattern().subscribe(
+    response => {
+      this.resultPattern = response[CommonConstant.ReturnObj];
+      if(this.resultPattern != undefined)
+      {
+        for (let i = 0; i < this.resultPattern.length; i++) {
+          let patternObj: CustomPatternObj = new CustomPatternObj();
+          let pattern: string = this.resultPattern[i].Value;
+  
+          patternObj.pattern = pattern;
+          patternObj.invalidMsg = this.regexService.getErrMessage(pattern);
+          this.customPattern.push(patternObj);
+        }
+        this.setValidatorPattern(true);
+      }
+    }
+  );
+}
+setValidatorPattern(onInit: boolean = false){
+  console.log("hi");
+  let idTypeValue: string;
+
+  if(onInit){
+    idTypeValue = this.defaultIdType;
+  }else{
+    idTypeValue = this.ContactInfoPersonalForm.controls[this.controlNameIdType].value;
+  }
+
+  if (this.resultPattern != undefined) {
+    var result = this.resultPattern.find(x => x.Key == idTypeValue)
+
+    if (result != undefined) {
+      var pattern = result.Value;
+      if (pattern != undefined) {
+        this.setValidator(pattern);
+      }
+    }
+  }
+}
+setValidator(pattern: string) {
+  if (pattern != undefined) {
+    this.ContactInfoPersonalForm.controls[this.controlNameIdNo].setValidators(Validators.pattern(pattern));
+    this.ContactInfoPersonalForm.controls[this.controlNameIdNo].updateValueAndValidity();
+  }
+}
+//END OF URS-LOS-041
 
 }

@@ -23,6 +23,8 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetRfaLogByTrxNoAndApvCategoryObj } from 'app/shared/model/Request/NAP/PreGoLive/ReqGetRfaLogByTrxNoAndApvCategoryObj.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
   selector: 'app-sharing-pre-go-live',
@@ -49,7 +51,8 @@ export class PreGoLiveComponent implements OnInit {
     AgrmntCreatedDt: ['', Validators.required],
     EffectiveDt: ['', Validators.required],
     Notes: ['', Validators.required],
-    ApprovalStatus: ['']
+    ApprovalStatus: [''],
+    AdditionalInterestPaidBy: ['',Validators.required]
   })
   listAppTCObj: ListAppTCObj;
   ListAppTCObj: ListAppTCObj;
@@ -71,6 +74,9 @@ export class PreGoLiveComponent implements OnInit {
   mouCustNo: any;
   InputApprovalHistoryObj: UcInputApprovalHistoryObj;
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
+  IsGSAddInerestExists: boolean = false;
+  ListRmAddInterestPaidByCode: Array<KeyValueObj>;
+  BizTemplateCode: string = "";
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PGL_PAGING;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
@@ -83,6 +89,7 @@ export class PreGoLiveComponent implements OnInit {
       this.route.queryParams.subscribe(params => {
         if (params["BizTemplateCode"] != null) {
           localStorage.setItem("BizTemplateCode", params["BizTemplateCode"]);
+          this.BizTemplateCode = params["BizTemplateCode"];
         }
 
       });
@@ -112,7 +119,13 @@ export class PreGoLiveComponent implements OnInit {
         this.IsApvReady = true;
       });
     this.claimTask();
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
+    if (this.BizTemplateCode == CommonConstant.CFNA) {
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLiveCFNA.json";
+
+    } else {
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
+    }
+    
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -149,6 +162,7 @@ export class PreGoLiveComponent implements OnInit {
         (response) => {
           this.SysConfigResultObj = response
         });
+    await this.getAddInterestPaidBy();
     await this.InitDms();
   }
 
@@ -193,10 +207,9 @@ export class PreGoLiveComponent implements OnInit {
   
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
           if (mouId != null && mouId != "") {
-            let mouObj = { Id: mouId };
-            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-              result => {
-                this.mouCustNo = result['MouCustNo'];
+            this.http.post(URLConstant.GetMouCustById, { Id: mouId }).subscribe(
+              (result: MouCustObj) => {
+                this.mouCustNo = result.MouCustNo;
                 this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
                 this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
                 this.isDmsReady = true;
@@ -280,35 +293,39 @@ export class PreGoLiveComponent implements OnInit {
     this.listAppTCObj = new ListAppTCObj();
     this.listAppTCObj.AppTCObj = new Array();
 
-    for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
-      this.appTC = new AppTCObj();
-      this.appTC.AppId = this.MainInfoForm.value.TCList[i].AppId;
-      this.appTC.AppTcId = this.MainInfoForm.value.TCList[i].AppTcId;
-      this.appTC.TcCode = this.MainInfoForm.value.TCList[i].TcCode;
-      this.appTC.TcName = this.MainInfoForm.value.TCList[i].TcName;
-      this.appTC.PriorTo = this.MainInfoForm.value.TCList[i].PriorTo;
-      this.appTC.IsChecked = this.MainInfoForm.getRawValue().TCList[i].IsChecked;
-      this.appTC.ExpiredDt = this.MainInfoForm.getRawValue().TCList[i].ExpiredDt;
-      this.appTC.IsMandatory = this.MainInfoForm.value.TCList[i].IsMandatory;
-      this.appTC.PromisedDt = this.MainInfoForm.getRawValue().TCList[i].PromisedDt;
-      this.appTC.CheckedDt = this.MainInfoForm.value.TCList[i].CheckedDt;
-      this.appTC.Notes = this.MainInfoForm.value.TCList[i].Notes;
-      this.appTC.RowVersion = this.MainInfoForm.value.TCList[i].RowVersion;
-
-      var prmsDt = new Date(this.appTC.PromisedDt);
-      var prmsDtForm = this.MainInfoForm.value.TCList[i].PromisedDt;
-
-      if (this.appTC.IsChecked == false) {
-        if (prmsDtForm != null) {
-          if (prmsDt < businessDt) {
-            this.toastr.warningMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
-            return;
+    if (this.BizTemplateCode != CommonConstant.DF) {
+      for (var i = 0; i < this.MainInfoForm.value.TCList["length"]; i++) {
+        this.appTC = new AppTCObj();
+        this.appTC.AppId = this.MainInfoForm.value.TCList[i].AppId;
+        this.appTC.AppTcId = this.MainInfoForm.value.TCList[i].AppTcId;
+        this.appTC.TcCode = this.MainInfoForm.value.TCList[i].TcCode;
+        this.appTC.TcName = this.MainInfoForm.value.TCList[i].TcName;
+        this.appTC.PriorTo = this.MainInfoForm.value.TCList[i].PriorTo;
+        this.appTC.IsChecked = this.MainInfoForm.getRawValue().TCList[i].IsChecked;
+        this.appTC.ExpiredDt = this.MainInfoForm.getRawValue().TCList[i].ExpiredDt;
+        this.appTC.IsMandatory = this.MainInfoForm.value.TCList[i].IsMandatory;
+        this.appTC.PromisedDt = this.MainInfoForm.getRawValue().TCList[i].PromisedDt;
+        this.appTC.CheckedDt = this.MainInfoForm.value.TCList[i].CheckedDt;
+        this.appTC.Notes = this.MainInfoForm.value.TCList[i].Notes;
+        this.appTC.RowVersion = this.MainInfoForm.value.TCList[i].RowVersion;
+  
+        var prmsDt = new Date(this.appTC.PromisedDt);
+        var prmsDtForm = this.MainInfoForm.value.TCList[i].PromisedDt;
+  
+        if (this.appTC.IsChecked == false) {
+          if (prmsDtForm != null) {
+            if (prmsDt < businessDt) {
+              this.toastr.warningMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
+              return;
+            }
           }
         }
+        this.listAppTCObj.AppTCObj.push(this.appTC);
+  
       }
-      this.listAppTCObj.AppTCObj.push(this.appTC);
 
     }
+
     this.AgrmntObj = new AgrmntObj();
     this.AgrmntObj.AgrmntId = this.AgrmntId;
     this.AgrmntObj.AppId = this.AppId;
@@ -323,6 +340,7 @@ export class PreGoLiveComponent implements OnInit {
     this.PreGoLiveObj.rAgrmntTC = this.AgrmntObj;
     this.PreGoLiveObj.rAppTcObj = this.listAppTCObj.AppTCObj;
     this.PreGoLiveObj.preGoLiveObj = this.PreGoLiveMainObj;
+    this.PreGoLiveObj.AdditionalInterestPaidBy = this.MainInfoForm.controls.AdditionalInterestPaidBy.value;
     this.PreGoLiveObj.TaskListId = this.TaskListId;
     this.PreGoLiveObj.FlagResume = flag;
 
@@ -333,6 +351,24 @@ export class PreGoLiveComponent implements OnInit {
 
       });
 
+  }
+
+  async getAddInterestPaidBy() {
+    await this.http.post(URLConstant.GetGeneralSettingByCode, { Code: CommonConstant.GsDiffdaysglveff }).toPromise().then(
+      (response) => {
+        if (response["GsValue"]) this.IsGSAddInerestExists = true;
+      }
+    );
+    if (!this.IsGSAddInerestExists) return;
+
+
+    this.MainInfoForm.controls['AdditionalInterestPaidBy'].setValidators([Validators.required]);
+    this.MainInfoForm.controls['AdditionalInterestPaidBy'].updateValueAndValidity();
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeAdditionalInterestPaidBy }).toPromise().then(
+      (response) => {
+        this.ListRmAddInterestPaidByCode = response[CommonConstant.ReturnObj];
+      }
+    );
   }
 
   async claimTask() {

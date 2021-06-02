@@ -38,8 +38,9 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
     "Shrholder": 3,
     "Contact": 4,
     "Financial": 5,
-    "Legal": 6,
-    "Other": 7,
+    "CustAsset": 6,
+    "Legal": 7,
+    "Other": 8,
   }
   ValidationMessages = {
     "Detail": "Please complete required data in tab \"Customer Detail\"",
@@ -103,10 +104,10 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
 
   Back() {
     if (this.ReturnHandlingHId != 0) {
-      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "ReturnHandlingHId": this.ReturnHandlingHId} });
+      this.router.navigate([NavigationConstant.NAP_CUST_COMPL_DETAIL], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "ReturnHandlingHId": this.ReturnHandlingHId} });
     }
     else {
-      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId} });
+      this.router.navigate([NavigationConstant.NAP_CUST_COMPL_DETAIL], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId} });
     }
   }
   
@@ -126,6 +127,9 @@ export class CustCompletionDetailCompanyComponent implements OnInit {
         break;
       case "Financial":
         this.stepIndex = this.CustStep["Financial"];
+        break;
+      case "CustAsset":
+        this.stepIndex = this.CustStep["CustAsset"];
         break;
       case "Legal":
         this.stepIndex = this.CustStep["Legal"];

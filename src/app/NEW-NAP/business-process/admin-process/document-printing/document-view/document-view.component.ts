@@ -46,7 +46,6 @@ export class DocumentViewComponent implements OnInit {
   orderByValue: boolean;
   totalData: any;
   AgrmntId: number;
-  addUrl: any;
   editUrl: string;
   agrmntDocObj: AgrmntDocObj;
   agrmntDocPrintObj: AgrmntDocPrintObj;
@@ -128,7 +127,7 @@ export class DocumentViewComponent implements OnInit {
             }
           }
         }
-        else if (this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
+        else if (this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA || this.BizTemplateCode == CommonConstant.DF) {
           if (appCust.MrCustTypeCode == CommonConstant.CustTypePersonal) {
             if (agrmntSigner.AppCustPersonalId && agrmntSigner.AppCustPersonalId > 0 && agrmntSigner.MfEmpNo1) {
               this.isDocSignerAvailable = true;
@@ -188,8 +187,7 @@ export class DocumentViewComponent implements OnInit {
     this.agrmntDocPrintObj.RowVersion = "";
     this.agrmntDocPrintObj.AgrmntDocId = agrmntDocId;
 
-    this.addUrl = URLConstant.AddAgrmntDocPrint;
-    this.http.post(this.addUrl, this.agrmntDocPrintObj).subscribe(
+    this.http.post(URLConstant.AddAgrmntDocPrint, this.agrmntDocPrintObj).subscribe(
       () => {
         this.GetListAgrmntDocByAgrmntId();
       });

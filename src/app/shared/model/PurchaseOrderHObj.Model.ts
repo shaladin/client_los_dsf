@@ -20,6 +20,9 @@ export class PurchaseOrderHObj {
     SupplName: string;
     VendorBankAccObjs: Array<VendorBankAccObj>;
     RowVersion: string;
+    SupplAddr: string;
+    BankName: string;
+
 
     constructor() {
         this.PurchaseOrderHId = 0;

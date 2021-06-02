@@ -13,6 +13,7 @@ import { MainDataComponentModule } from "../sharing-component/main-data-componen
 import { CustCompletionOplDetailComponent } from './cust-completion-opl-detail/cust-completion-opl-detail.component';
 import { CustCompletionOplDetailCompanyComponent } from './cust-completion-opl-detail/cust-completion-opl-detail-company/cust-completion-opl-detail-company.component';
 import { CustCompletionOplDetailPersonalComponent } from './cust-completion-opl-detail/cust-completion-opl-detail-personal/cust-completion-opl-detail-personal.component';
+import { InputNapComponentModule } from "../sharing-component/input-nap-component/input-nap-component.module";
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { CustCompletionOplDetailPersonalComponent } from './cust-completion-opl-
         UcSubsectionModule,
         CustCompletionRoutingModule,
         CustCompletionComponentModule,
-        MainDataComponentModule
+        MainDataComponentModule,
+        InputNapComponentModule
     ],
     exports: [],
     providers: [

@@ -13,7 +13,7 @@ import { LtkmApprovalHistComponent } from './ltkm-approval-history-data/ltkm-app
 
 @Component({
   selector: 'app-ltkm-view',
-  templateUrl: './ltkm-view.component.html',
+  templateUrl: './ltkm-view-component.html',
 })
 export class LtkmViewComponent implements OnInit {
 

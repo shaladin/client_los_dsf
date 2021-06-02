@@ -34,6 +34,14 @@
         "itemsUrl": [],
         "criteriaPropName": "RefMasterTypeCode",
         "criteriaPropValue": "CUST_TYPE"
+      },
+      {
+        "type": "textbox",
+        "name": "CGC.CUST_NAME",
+        "id": "CustNameGrp",
+        "value": "",
+        "label": "Customer Group",
+        "placeholder": "Placeholder"
       }
     ],
     "querystring": {
@@ -59,6 +67,12 @@
             "name": "CA.ADDR"
         },
         {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Group Name",
+            "name": " CGC.CUST_NAME"
+        },
+        {
             "type": "label",
             "position": "center",
             "label": "Select"
@@ -79,6 +93,11 @@
             "type": "text",
             "position": "left",
             "property": "FullAddr"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustGroupName"
         },
         {
             "type": "action",

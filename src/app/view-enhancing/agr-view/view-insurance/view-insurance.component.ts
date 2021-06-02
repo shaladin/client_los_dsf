@@ -43,7 +43,6 @@ export class ViewAgrmntInsuranceComponent implements OnInit {
   ngOnInit() {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridInsDataView.json";
-    this.inputGridObj.deleteUrl = URLConstant.DeleteAppGuarantor;
     
     this.http.post(URLConstant.GetAppAssetListForInsuranceByAgrmntId, { Id: this.agrmntId }).subscribe(
       (response) => {

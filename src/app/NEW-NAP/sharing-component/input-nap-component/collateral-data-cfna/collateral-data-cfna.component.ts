@@ -16,6 +16,7 @@ import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product
 export class CollateralDataCfnaComponent implements OnInit {
   @Input() AppId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter<any>();
+  ParentAppId: number;
   AppCollateralId: number = 0;
   mode: string = "add";
   IsDetail: boolean = false;
@@ -23,7 +24,12 @@ export class CollateralDataCfnaComponent implements OnInit {
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   IsCollateral: boolean = false;
   @Input() showCancel: boolean = true;
-  constructor(private toastr : NGXToastrService, private http: HttpClient) { }
+  appNo: string;
+  isAgreementParent: boolean = false;
+  isReady: boolean = false;
+  isInit;
+
+  constructor(private toastr: NGXToastrService, private http: HttpClient) { }
 
   ngOnInit() {
     this.http.post(URLConstant.GetAppById, { Id: this.AppId }).pipe(
@@ -31,25 +37,33 @@ export class CollateralDataCfnaComponent implements OnInit {
         return response;
       }),
       mergeMap((response: AppObj) => {
+        this.appNo = response.AppNo
         var obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
         obj.ProdOfferingCode = response.ProdOfferingCode;
         obj.RefProdCompntCode = CommonConstant.CollateralNeeded;
         obj.ProdOfferingVersion = response.ProdOfferingVersion;
 
         return this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj);
-      })
-    ).subscribe(
-      (response) => {
+      }),
+      mergeMap((response) => {
         var isCollateralNeeded = response["CompntValue"];
-        if(isCollateralNeeded == 'Y'){
+        if (isCollateralNeeded == 'Y') {
           this.IsCollateral = true;
         }
-        else{
+        else {
           this.IsCollateral = false;
         }
-      },
-      (error) => {
-        console.log(error);
+        var obj = {
+          AppNo: this.appNo
+        }
+        return this.http.post(URLConstant.GetParentAppIdByAppNo, obj);
+      }
+      )
+    ).subscribe(
+      (response) => {
+        if (response["AppId"] != 0)
+          this.ParentAppId = response["AppId"];
+        this.isReady = true;
       }
     );
   }
@@ -58,7 +72,7 @@ export class CollateralDataCfnaComponent implements OnInit {
     this.AppCollateral = ev;
   }
 
-  Cancel(){
+  Cancel() {
     this.outputCancel.emit();
   }
 
@@ -76,18 +90,39 @@ export class CollateralDataCfnaComponent implements OnInit {
     this.IsDetail = false;
   }
 
+  getIsFirstInit(ev) {
+    this.isInit = ev;
+  }
   Next() {
-    if(this.IsCollateral){
-      if (this.AppCollateral.length == 0) {
-        this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_COLLATERAL_DATA);
+    console.log(this.isInit)
+    if (this.isInit == true) {
+      var obj = {
+        AppId: this.AppId,
+        ParentAppId: this.ParentAppId
       }
-      else {
-        this.outputTab.emit();
-      }
+
+      this.http.post(URLConstant.CopyAppCollateralFromAgrmntParent, obj).subscribe(
+        (response) => {
+          this.outputTab.emit();
+        })
     }
-    else{
+    else {
       this.outputTab.emit();
     }
+
+    // if (this.IsCollateral) {
+    //   if (this.AppCollateral.length == 0) {
+    //     this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_COLLATERAL_DATA);
+    //   }
+    //   else {
+    //     this.outputTab.emit();
+    //   }
+    // }
+    // else {
+    //   this.outputTab.emit();
+    // } 
+
+
   }
 
 }

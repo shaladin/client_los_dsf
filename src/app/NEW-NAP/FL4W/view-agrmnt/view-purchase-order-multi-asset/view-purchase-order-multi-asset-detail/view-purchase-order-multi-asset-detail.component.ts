@@ -6,6 +6,9 @@ import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ReqGetPurchaseOrderHDetailObj } from 'app/shared/model/Request/PurchaseOrder/ReqPOObj.model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { PurchaseOrderHObj } from 'app/shared/model/PurchaseOrderHObj.Model';
+import { AgrmntFinDataObj } from 'app/shared/model/AgrmntFinData.Model';
 
 @Component({
   selector: 'app-view-purchase-order-multi-asset-detail',
@@ -30,9 +33,9 @@ export class ViewPurchaseOrderMultiAssetDetailComponent implements OnInit {
     await this.BindPOData();
   }
 
-  ResponseAgrmntFinDataData;
-  ResponseAppAssetData;
-  ResponsePurchaseOrderHData;
+  ResponseAgrmntFinDataData: AgrmntFinDataObj;
+  ResponseAppAssetData: Array<AppAssetObj>;
+  ResponsePurchaseOrderHData: PurchaseOrderHObj;
  
   async BindPOData(){
      let GetPOObj = new ReqGetPurchaseOrderHDetailObj();

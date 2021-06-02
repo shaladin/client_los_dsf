@@ -9,6 +9,9 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { MouCustCollateralObj } from 'app/shared/model/MouCustCollateralObj.Model';
 import { MouCustCollateralRegistrationObj } from 'app/shared/model/MouCustCollateralRegistrationObj.Model';
+import { ListMouCustCollateralDocObj } from 'app/shared/model/ListMouCustCollateralDocObj.Model';
+import { MouCustCollateralDocObj } from 'app/shared/model/MouCustCollateralDocObj.Model';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-mou-view-addcoll',
@@ -58,7 +61,7 @@ export class MouViewAddcollComponent implements OnInit {
             this.mouCustCollateralDoc = new MouCustCollateralDocObj();
             this.mouCustCollateralDoc.DocCode = MouCustCollateralDocs[i].DocCode;
             this.mouCustCollateralDoc.DocNo = MouCustCollateralDocs[i].DocNo;
-            this.mouCustCollateralDoc.ExpiredDt = formatDate(MouCustCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US');
+            this.mouCustCollateralDoc.ExpiredDt = new Date(formatDate(MouCustCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'));
             this.mouCustCollateralDoc.DocNotes = MouCustCollateralDocs[i].DocNotes;
             this.mouCustCollateralDoc.IsReceived =  MouCustCollateralDocs[i].IsReceived;
             this.listMouCustCollateralDocObj.MouCustCollateralDocObj.push(this.mouCustCollateralDoc);

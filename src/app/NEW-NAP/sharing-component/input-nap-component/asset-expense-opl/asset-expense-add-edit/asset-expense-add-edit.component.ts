@@ -39,7 +39,8 @@ import { AdInsHelper } from '../../../../../shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { UcDropdownListCallbackObj, UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { InsAddCvgObj } from 'app/shared/model/InsuranceOpl/InsAddCvgObj.Model';
-import { values } from 'core-js/core/array';
+import { MaintenancePackageDetailObj } from 'app/shared/model/MaintenancePackageDetailObj.Model';
+import { MaintenancePackageObj } from 'app/shared/model/AppAssetOpl/MaintenancePackageObj.model';
 
 @Component({
   selector: 'app-asset-expense-add-edit',
@@ -55,11 +56,11 @@ export class AssetExpenseAddEditComponent implements OnInit {
   defaultInsAssetRegion: string;
   IsMultiAsset: string = "false";
   isCanBeAddedMaintenance: boolean = true;
-  InputLookupServiceObj: any;
+  InputLookupServiceObj: InputLookupObj;
   InputLookupServiceObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   dictServiceLookup: { [key: string]: any; } = {};
   items: FormArray;
-  InputLookupSparePartObj: any;
+  InputLookupSparePartObj: InputLookupObj;
   InputLookupSparePartObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   dictSparePartLookup: { [key: string]: any; } = {};
 
@@ -85,8 +86,8 @@ export class AssetExpenseAddEditComponent implements OnInit {
   isCanSave: boolean = true;
   insuredByObj: Array<KeyValueObj>;
   paidByObj: Array<KeyValueObj>;
-  packageTypeRuleObj: any;
-  packageDetailObj: any;
+  packageTypeRuleObj: Array<MaintenancePackageObj>;
+  packageDetailObj: Array<MaintenancePackageDetailObj>;
   insMainCvgTypeObj: Array<KeyValueObj>;
   otherExpenseObj: Array<KeyValueObj>;
   feeObj: Array<KeyValueObj>;
@@ -186,8 +187,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
     })
   }
   async ngOnInit(): Promise<void> {
-    //this.InsuranceDataForm.removeControl("ServiceObjs");
-    //this.InsuranceDataForm.addControl("ServiceObjs", this.fb.array([]));
     this.ddlInsMainCvgTypeRuleObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
     this.ddlInsMainCvgTypeRuleObj.isSelectOutput = true;
     this.ddlTplSumInsuredAmtObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
@@ -708,12 +707,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
       }
     });
     this.insAddCvgTypeRuleObj.splice(0, 1);
-    //if (appInsMainCvgObj == undefined) {
-
-    //}
-    //else {
-    //  this.addCheckbox(appInsMainCvgObj[0].AppAssetInsAddCvgOplObjs);
-    //}
     this.bindAddCheckbox(mainCvg);
   }
 
@@ -1495,7 +1488,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
               this.InsuranceDataForm["controls"]["ServiceObjs"]["controls"][i]["controls"]["ServiceAmt"].disable();
               this.InputLookupServiceObjs[i].isDisable = true;
             }
-            //this.isLookupDisable = true;
           }
           else {
             for (let i = 0; i < this.InsuranceDataForm.controls["SparePartObjs"]["controls"].length; i++) {
@@ -1730,12 +1722,6 @@ export class AssetExpenseAddEditComponent implements OnInit {
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).toPromise().then(
       (response) => {
         this.insMainCvgTypeObj = response[CommonConstant.ReturnObj];
-        // if(this.insMainCvgTypeObj.length > 0){
-        //   this.InsuranceDataForm.patchValue({
-        //     InsMainCvgType: this.insMainCvgTypeObj[0].Key
-        //   });
-        //   this.defaultInsMainCvgType = this.insMainCvgTypeObj[0].Key;
-        // }
       }
     );
   }
@@ -1882,18 +1868,10 @@ export class AssetExpenseAddEditComponent implements OnInit {
   }
 
   async changeMainPackage() {
-    //for (let i = 0; i < this.InsuranceDataForm.controls["SparePartObjs"]["controls"].length; i++) {
-    //  this.deleteSparePartWithoutConfirm(i);
-    //}
     this.InsuranceDataForm.controls["SparePartObjs"] = this.fb.array([]);
     this.InputLookupSparePartObjs = new Array<InputLookupObj>();
-    //for (let j = 0; j < this.InsuranceDataForm.controls["ServiceObjs"]["controls"].length; j++) {
-    //  this.deleteServiceWithoutConfirm(j);
-    //}
     this.InsuranceDataForm.controls["ServiceObjs"] = this.fb.array([]);
     this.InputLookupServiceObjs = new Array<InputLookupObj>();
-    //this.dictServiceLookup = { [key: string]: any; } = { };
-    //var packageObj = { AppAssetId: this.AppAssetId, MaintenancePackageCode: this.InsuranceDataForm["controls"]["PackageType"].value };
     var x = this.packageTypeRuleObj.find(x => x.MaintenancePackageCode == this.InsuranceDataForm["controls"]["PackageType"].value);
     this.maintBehaCode = x.Behaviour;
     var isLock = false;

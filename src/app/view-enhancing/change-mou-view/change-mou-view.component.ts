@@ -37,10 +37,10 @@ export class ChangeMouViewComponent implements OnInit {
   
   ngOnInit() {
     this.arrValue.push(this.ChangeMouTrxId);
-    this.http.post(URLConstant.GetChangeMouTrxbyTrxId, {ChangeMouTrxId : this.ChangeMouTrxId}).subscribe(
+    this.http.post(URLConstant.GetChangeMouTrxbyTrxId, { Id: this.ChangeMouTrxId }).subscribe(
       (responseCMT) => {
         this.MouCustId = responseCMT["MouCustId"];  
-        this.http.post(URLConstant.GetMouCustById, {MouCustId : this.MouCustId}).subscribe(
+        this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
           (responseMC : MouCustObj) => {
             this.resultData = responseMC;
             this.MrMouTypeCode = this.resultData.MrMouTypeCode;

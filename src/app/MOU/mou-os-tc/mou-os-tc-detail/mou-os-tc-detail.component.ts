@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -21,14 +20,13 @@ export class MouOsTcDetailComponent implements OnInit {
   @ViewChild("MouTcFactoring") public mouTcFactoring: MouCustTcComponent;
   MouCustId: number = 0;
   mouType: string;
-  link: any;
-  resultData: any;
-  mouCustObject: MouCustObj = new MouCustObj();
+  resultData: MouCustObj;
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient) {
-    this.route.queryParams.subscribe(params => {
-      this.MouCustId = params["MouCustId"];
-
+    this.route.queryParams.subscribe(params => {      
+      if (params["MouCustId"] != null) {
+        this.MouCustId = params["MouCustId"];
+      }
       if (params["MrMouTypeCode"] != null) {
         this.mouType = params["MrMouTypeCode"];
       }
@@ -36,7 +34,6 @@ export class MouOsTcDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.mouCustObject.MouCustId = this.MouCustId;
     this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;

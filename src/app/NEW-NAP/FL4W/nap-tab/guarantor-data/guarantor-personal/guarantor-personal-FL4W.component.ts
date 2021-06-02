@@ -20,6 +20,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 
 @Component({
   selector: 'app-guarantor-personal-FL4W',
@@ -36,12 +38,12 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
   param: string;
   resultData: any;
   inputLookupObj: InputLookupObj;
-  MrCustRelationshipCode: any;
-  MrIdTypeCode: any;
-  MrGenderCode: any;
-  MrMaritalStatCode: any;
-  MrNationalityCode: any;
-  MrReligionCode: any;
+  MrCustRelationshipCode: Array<KeyValueObj>;
+  MrIdTypeCode: Array<RefMasterObj>;
+  MrGenderCode: Array<RefMasterObj>;
+  MrMaritalStatCode: Array<RefMasterObj>;
+  MrNationalityCode: Array<RefMasterObj>;
+  MrReligionCode: Array<RefMasterObj>;
   AddrObj: AddrObj;
   inputFieldObj: InputFieldObj;
   inputLookupObj1: InputLookupObj;

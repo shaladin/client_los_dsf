@@ -15,10 +15,9 @@ export class ChangeMouViewAddcollComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    var mouCustObj = { ChangeMouTrxId: this.ChangeMouTrxId }
-    this.http.post(URLConstant.GetChangeMouTrxbyTrxId, mouCustObj).subscribe(
+    this.http.post(URLConstant.GetChangeMouTrxbyTrxId, { Id: this.ChangeMouTrxId }).subscribe(
       (responseCMC) => {
-        this.http.post(URLConstant.GetChangeMouCustCollateralForChangeMouViewByMouCustId, {ChangeMouCustId : responseCMC["ChangeMouCustId"]}).subscribe(
+        this.http.post(URLConstant.GetChangeMouCustCollateralForChangeMouViewByMouCustId, { Id: responseCMC["ChangeMouCustId"] }).subscribe(
           (responseCMCC) => {
             this.listCollateralData = responseCMCC['ReturnObject'];
           })

@@ -12,6 +12,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { MouCustBankAccObj } from 'app/shared/model/MouCustBankAccObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-mou-cust-bank-acc',
@@ -24,9 +25,9 @@ export class MouCustBankAccComponent implements OnInit {
   @Input() listBankAcc: Array<MouCustBankAccObj> = new Array<MouCustBankAccObj>();
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 
-  mode: any;
-  currentEditedIndex: any;
-  selectedBankCode: any;
+  mode: string;
+  currentEditedIndex: number;
+  selectedBankCode: string;
 
   closeResult: any;
   MouCustBankAccObj: MouCustBankAccObj;
@@ -37,13 +38,10 @@ export class MouCustBankAccComponent implements OnInit {
     RefBankId: 0,
     BankCode: ""
   };
-  RefBankObj: any;
-  MonthObj: any;
-  defaultMonth: any;
+  MonthObj: Array<KeyValueObj>;
+  defaultMonth: any; 
   InputLookupBankObj: any;
   selectedBankName: any;
-
-
 
   CustBankAccountForm = this.fb.group({
     BankBranch: ['', [Validators.required, Validators.maxLength(50)]],

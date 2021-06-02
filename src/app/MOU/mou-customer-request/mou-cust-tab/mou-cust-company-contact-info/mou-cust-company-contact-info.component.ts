@@ -8,6 +8,7 @@ import { MouCustCompanyContactPersonObj } from 'app/shared/model/MouCustCompanyC
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-mou-cust-company-contact-info',
@@ -19,17 +20,17 @@ export class MouCustCompanyContactInfoComponent implements OnInit {
   @Input() listContactPersonCompany: Array<MouCustCompanyContactPersonObj> = new Array<MouCustCompanyContactPersonObj>();
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 
-  mode: any;
-  currentEditedIndex: any;
+  mode: string;
+  currentEditedIndex: number;
   closeResult: any;
   MouCustCompanyContactPersonObj: MouCustCompanyContactPersonObj;
   refMasterObj = {
     RefMasterTypeCode: ""
   };
-  JobPositionObj: any;
-  defaultJobPosition: any;
-  selectedJobPositionName: any;
-  defaultJobPositionName: any;
+  JobPositionObj: Array<KeyValueObj>;
+  defaultJobPosition: string;
+  selectedJobPositionName: string;
+  defaultJobPositionName: string;
 
 
   ContactInfoCompanyForm = this.fb.group({
