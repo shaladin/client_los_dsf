@@ -26,7 +26,7 @@ export class CustGrpMemberComponent implements OnInit {
   @Input() isLockMode: boolean = false;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() appCustGrpObjs: Array<AppCustGrpObj>;
 
   refMasterObj = {
