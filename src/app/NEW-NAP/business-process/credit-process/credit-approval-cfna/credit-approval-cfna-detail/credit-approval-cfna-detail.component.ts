@@ -18,6 +18,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-credit-approval-cfna-detail',
@@ -48,7 +49,7 @@ export class CreditApprovalCfnaDetailComponent implements OnInit {
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   getEvent: Array<any> = new Array<any>();
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private cookieService: CookieService) {
+  constructor(private toastr: NGXToastrService, private route: ActivatedRoute, private router: Router, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -76,7 +77,6 @@ export class CreditApprovalCfnaDetailComponent implements OnInit {
     });
   }
   async ngOnInit(): Promise<void> {
-    console.log("MAsuk sdfpoiskej");
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
     this.viewObj = "./assets/ucviewgeneric/viewCreditApprovalInfo.json";
@@ -155,47 +155,17 @@ export class CreditApprovalCfnaDetailComponent implements OnInit {
 
   }
   onApprovalSubmited(event) {
-    this.http.post(environment.FoundationR3Url + URLConstant.SubmitApproval, event).subscribe(
+
+    let ReqCreditApvCustomObj = {
+      AppId: this.appId,
+      Tasks: event.Tasks
+    }
+
+    this.http.post(URLConstant.CreditApproval, ReqCreditApvCustomObj).subscribe(
       (response)=>{
-        // console.log(response);
-      });
-    this.getEvent = event;
-    let isReturn: boolean = false;
-    let isReject: boolean = false;
-    let returnNotes: string = "";
-
-    for(let i in this.getEvent['Tasks']){
-      if(this.getEvent['Tasks'][i].ApvResult.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
-        isReturn = true;
-        returnNotes += event['Tasks'][i]['Notes'] + (parseInt(i) == 0 ? ", " : "");
-      }
-      if(this.getEvent['Tasks'][i].ApvResult.toLowerCase() == CommonConstant.ApvResultRejectFinal.toLowerCase()) {
-        isReject = true;
-      }
-    }
-
-    if(isReject){
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
-    }
-    else if(isReturn){
-      var returnHandlingHObj = new ReturnHandlingHObj();
-      var user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-
-      returnHandlingHObj.AppId = this.appId;
-      returnHandlingHObj.AgrmntId = null;
-      returnHandlingHObj.ReturnBy = user.UserName;
-      returnHandlingHObj.ReturnDt = user.BusinessDt;
-      returnHandlingHObj.ReturnNotes = returnNotes;
-      returnHandlingHObj.ReturnFromTrxType = this.AppObj.AppCurrStep;
-
-      this.http.post(URLConstant.AddReturnHandlingH, returnHandlingHObj).subscribe(
-        (response) => {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
-        });
-    }
-    else{
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
-    }
+        this.toastr.successMessage(response["Message"]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+      });   
   }
 
   onCancelClick() {

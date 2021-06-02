@@ -477,12 +477,6 @@ export class CreditReviewMainComponent implements OnInit {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
   }
 
-  checkForm() {
-    this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
-    console.log(this.RFAInfo);
-    console.log(this.FormObj);
-  }
-
   async GetIsUseDigitalization() {
     var generalSettingObj = new GeneralSettingObj();
     generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;

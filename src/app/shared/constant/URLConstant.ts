@@ -1293,6 +1293,9 @@ export class URLConstant {
   public static GetLatestListScoringResultHAndResultDByTrxSourceNo = environment.FoundationR3Url + "/CreditScoring/GetLatestListScoringResultHAndResultDByTrxSourceNo";
   public static GetListNegativeCustByCustNo = environment.FoundationR3Url + "/NegativeCust/GetListNegativeCustByCustNo";
 
+  // Credit Approval
+  public static CreditApproval = environment.losUrl + "/Approval/Approval";
+
   // New Approval R3
   public static CreateNewRFA = "/Approval/CreateNewRFA";
   public static CreateJumpRFA = "/Approval/CreateJumpRFA";
