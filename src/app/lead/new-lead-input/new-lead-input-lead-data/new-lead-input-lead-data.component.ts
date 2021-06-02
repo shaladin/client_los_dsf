@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
@@ -866,71 +867,29 @@ export class NewLeadInputLeadDataComponent implements OnInit {
       this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
       if (this.resLeadAssetObj.LeadAssetId != 0) {
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
-        this.setLeadAsset();
-
-        if (this.confirmFraudCheck()) {
-          // this.leadInputLeadDataObj.IsEdit = true;
-          this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
-            (response) => {
-              this.toastr.successMessage(response["message"]);
-              if (this.originPage == "teleVerif") {
-                AdInsHelper.RedirectUrl(this.router, ["/Lead/TeleVerif/Paging"], {});
-              }
-              else if (this.typePage == "update") {
-                AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLeadUpdate/Paging"], {});
-              }
-              else {
-                AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLead/Paging"], {});
-              }
-            }
-          );
-        }
       }
-      else {
-        if (this.LeadDataForm.controls["ManufacturingYear"].value > this.year) {
-          this.toastr.warningMessage("Manufacturing Year must be lower or equal than current year.");
-          return;
-        }
-        this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
-        this.setLeadAsset();
-        if (this.confirmFraudCheck()) {
-          this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
-            (response) => {
-              this.toastr.successMessage(response["message"]);
-              if (this.originPage == "teleVerif") {
-                AdInsHelper.RedirectUrl(this.router, ["/Lead/TeleVerif/Paging"], {});
-              }
-              else if (this.typePage == "update") {
-                AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLeadUpdate/Paging"], {});
-              }
-              else {
-                AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLead/Paging"], {});
-              }
-            }
-          );
-        }
-        // }
+      if (this.LeadDataForm.controls["ManufacturingYear"].value > this.year) {
+        this.toastr.warningMessage("Manufacturing Year must be lower or equal than current year.");
+        return;
       }
     }
-    else {
-      this.setLeadAsset();
-      if (this.confirmFraudCheck()) {
-        this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            if (this.originPage == "teleVerif") {
-              AdInsHelper.RedirectUrl(this.router, ["/Lead/TeleVerif/Paging"], {});
-            }
-            else if (this.typePage == "update") {
-              AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLeadUpdate/Paging"], {});
-            }
-            else {
-              AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLead/Paging"], {});
-            }
+    this.setLeadAsset();
+    if (this.confirmFraudCheck()) {
+      // this.leadInputLeadDataObj.IsEdit = true;
+      this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          if (this.originPage == "teleVerif") {
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
           }
-        );
-      }
-      // }
+          else if (this.typePage == "update") {
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING], {});
+          }
+          else {
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
+          }
+        }
+      );
     }
   }
 
