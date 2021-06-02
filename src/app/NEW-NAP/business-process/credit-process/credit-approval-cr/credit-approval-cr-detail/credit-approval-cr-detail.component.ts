@@ -132,14 +132,17 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
+    this.http.post(environment.FoundationR3Url + URLConstant.SubmitApproval, event).subscribe(
+      (response)=>{
+        // console.log(response);
+      });
+    console.log(event);
     this.getEvent = event;
     let isReturn: boolean = false;
     let isReject: boolean = false;
     let returnNotes: string = "";
 
     for(let i in this.getEvent['Tasks']){
-      console.log(i);
-
       if(this.getEvent['Tasks'][i].ApvResult.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
         isReturn = true;
         returnNotes += event['Tasks'][i]['Notes'] + (parseInt(i) == 0 ? ", " : "");

@@ -155,31 +155,27 @@ export class CreditApprovalCfnaDetailComponent implements OnInit {
 
   }
   onApprovalSubmited(event) {
+    this.http.post(environment.FoundationR3Url + URLConstant.SubmitApproval, event).subscribe(
+      (response)=>{
+        // console.log(response);
+      });
     this.getEvent = event;
     let isReturn: boolean = false;
     let isReject: boolean = false;
     let returnNotes: string = "";
 
-    for(let i in this.getEvent){
-      if(this.getEvent[i].ApvResult.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
+    for(let i in this.getEvent['Tasks']){
+      if(this.getEvent['Tasks'][i].ApvResult.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
         isReturn = true;
-        returnNotes += event[i]['Notes'] + (parseInt(i) == 0 ? ", " : "");
+        returnNotes += event['Tasks'][i]['Notes'] + (parseInt(i) == 0 ? ", " : "");
       }
-      if(this.getEvent[i].ApvResult.toLowerCase() == CommonConstant.ApvResultRejectFinal.toLowerCase()) {
+      if(this.getEvent['Tasks'][i].ApvResult.toLowerCase() == CommonConstant.ApvResultRejectFinal.toLowerCase()) {
         isReject = true;
       }
     }
 
     if(isReject){
-      var NegCustObj = {
-        AppId: this.appId,
-        MrNegCustSourceCode: CommonConstant.NegCustSourceCodeConfins,
-        NegCustCause: event['reason']
-      };
-      this.http.post(URLConstant.AddNegativeCustByAppId, NegCustObj).subscribe(
-        (response) => {
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
-        });
     }
     else if(isReturn){
       var returnHandlingHObj = new ReturnHandlingHObj();

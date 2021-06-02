@@ -323,7 +323,6 @@ export class CreditReviewMainComponent implements OnInit {
   }
 
   SaveForm() {
-    console.log("sdofijsdf");
     var temp = this.FormObj.value;
     var tempAppCrdRvwObj = new AppCrdRvwHObj();
     tempAppCrdRvwObj.AppId = this.appId;
@@ -337,7 +336,6 @@ export class CreditReviewMainComponent implements OnInit {
 
 
     if (!this.isReturnOn) {
-      // this.ApprovalCreateOutput = this.createComponent.output();
       this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
     }
     var apiObj = {
@@ -482,7 +480,7 @@ export class CreditReviewMainComponent implements OnInit {
   checkForm() {
     this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
     console.log(this.RFAInfo);
-    console.log(this.createComponent.output().RFAInfo['RFAInfo']);
+    console.log(this.FormObj);
   }
 
   async GetIsUseDigitalization() {
