@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
@@ -769,13 +770,13 @@ export class NewLeadInputLeadDataComponent implements OnInit {
             (response) => {
               this.toastr.successMessage(response["message"]);
               if (this.originPage == "teleVerif") {
-                AdInsHelper.RedirectUrl(this.router, ["Lead/TeleVerif/Paging"], {});
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
               }
               else if (this.typePage == "update") {
-                AdInsHelper.RedirectUrl(this.router, ["Lead/SimpleLeadUpdate/Paging"], {});
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING], {});
               }
               else {
-                AdInsHelper.RedirectUrl(this.router, ["Lead/SimpleLead/Paging"], {});
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
               }
             });
         }
@@ -795,13 +796,13 @@ export class NewLeadInputLeadDataComponent implements OnInit {
             (response) => {
               this.toastr.successMessage(response["message"]);
               if (this.originPage == "teleVerif") {
-                AdInsHelper.RedirectUrl(this.router, ["/Lead/TeleVerif/Paging"], {});
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
               }
               else if (this.typePage == "update") {
-                AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLeadUpdate/Paging"], {});
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING], {});
               }
               else {
-                AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLead/Paging"], {});
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
               }
             }
           );
@@ -818,13 +819,13 @@ export class NewLeadInputLeadDataComponent implements OnInit {
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.originPage == "teleVerif") {
-              AdInsHelper.RedirectUrl(this.router, ["/Lead/TeleVerif/Paging"], {});
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
             }
             else if (this.typePage == "update") {
-              AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLeadUpdate/Paging"], {});
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING], {});
             }
             else {
-              AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLead/Paging"], {});
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
             }
           }
         );
@@ -874,13 +875,13 @@ export class NewLeadInputLeadDataComponent implements OnInit {
             (response) => {
               this.toastr.successMessage(response["message"]);
               if (this.originPage == "teleVerif") {
-                AdInsHelper.RedirectUrl(this.router, ["/Lead/TeleVerif/Paging"], {});
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
               }
               else if (this.typePage == "update") {
-                AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLeadUpdate/Paging"], {});
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING], {});
               }
               else {
-                AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLead/Paging"], {});
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
               }
             }
           );
@@ -898,13 +899,13 @@ export class NewLeadInputLeadDataComponent implements OnInit {
             (response) => {
               this.toastr.successMessage(response["message"]);
               if (this.originPage == "teleVerif") {
-                AdInsHelper.RedirectUrl(this.router, ["/Lead/TeleVerif/Paging"], {});
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
               }
               else if (this.typePage == "update") {
-                AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLeadUpdate/Paging"], {});
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING], {});
               }
               else {
-                AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLead/Paging"], {});
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
               }
             }
           );
@@ -919,13 +920,13 @@ export class NewLeadInputLeadDataComponent implements OnInit {
           (response) => {
             this.toastr.successMessage(response["message"]);
             if (this.originPage == "teleVerif") {
-              AdInsHelper.RedirectUrl(this.router, ["/Lead/TeleVerif/Paging"], {});
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
             }
             else if (this.typePage == "update") {
-              AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLeadUpdate/Paging"], {});
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING], {});
             }
             else {
-              AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLead/Paging"], {});
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
             }
           }
         );

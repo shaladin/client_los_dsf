@@ -15,6 +15,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-nap-add',
@@ -212,7 +213,7 @@ export class NapAddComponent implements OnInit {
     this.http.post(URLConstant.AddNewApplication, napAppObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, ["Nap/DLFN/Add/Detail"], { "AppId": response["AppId"] });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_ADD_DETAIL], { "AppId": response["AppId"] });
       });
   }
 

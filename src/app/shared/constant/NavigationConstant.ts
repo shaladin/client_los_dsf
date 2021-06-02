@@ -340,15 +340,20 @@ export class NavigationConstant {
   public static LEAD_VERIF = "/" + PathConstant.LR_LEAD + "/" + PathConstant.VERIF; //'/Lead/Verif'
   public static SIMPLE_LEAD_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_PAGING; //'/Lead/SimpleLead/Paging'
   public static SIMPLE_LEAD_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_DETAIL; //'/Lead/SimpleLead/Detail'
+  public static SIMPLE_LEAD_MAIN_INFO = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_MAIN_INFO; //'/Lead/SimpleLead/MainInfo'
   public static SIMPLE_LEAD_FRAUD_VERIF_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_FRAUD_VERIF_PAGING; //'/Lead/SimpleLeadFraudVerif/Paging'
   public static SIMPLE_LEAD_FRAUD_VERIF_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_FRAUD_VERIF_DETAIL; //'/Lead/SimpleLeadFraudVerif/Detail'
+  public static SIMPLE_LEAD_RVW_MONITORING_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_RVW_MONITORING_PAGING; //'/Lead/SimpleLead/ReviewMonitoring/Paging'
   public static SIMPLE_LEAD_UPD_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_UPD_PAGING; //'/Lead/SimpleLeadUpdate/Paging'
   public static LEAD_POTENTIAL_RO_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_PAGING; //'/Lead/PotentialRo/Paging'
   public static LEAD_POTENTIAL_RO_EXEC = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_EXEC; //'/Lead/PotentialRo/Execution'
   public static LEAD_POTENTIAL_RO_INQUIRY = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_INQUIRY; //'/Lead/PotentialRo/Inquiry'
+  public static LEAD_POTENTIAL_RO_VIEW = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_VIEW; //'/Lead/PotentialRo/View'
   public static LEAD_POTENTIAL_RO_TEL_OFFER_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_TEL_OFFER_PAGING; //'/Lead/PotentialRo/RoTelemkOffer/Paging'
   public static LEAD_POTENTIAL_RO_TEL_OFFER_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_TEL_OFFER_DETAIL; //'/Lead/PotentialRo/RoTelemkOffer/Detail'
   public static LEAD_POTENTIAL_RO_TEL_OFFER_VERIF = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_TEL_OFFER_VERIF; //'/Lead/PotentialRo/RoTelemkOffer/Verif'
+
+
   //#endregion
 
   //#region LTKM

@@ -12,6 +12,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CookieService } from 'ngx-cookie';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-nap-paging',
@@ -93,7 +94,7 @@ export class NapPagingComponent implements OnInit {
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
-          AdInsHelper.RedirectUrl(this.router, ["Nap/DLFN/Add"], {});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_ADD], {});
         } else {
           this.toastr.typeErrorCustom('Office Is Not Allowed to Create App');
         }
@@ -105,7 +106,7 @@ export class NapPagingComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }
     if (ev.Key == "Edit") {
-      AdInsHelper.RedirectUrl(this.router, ["Nap/DLFN/Add/Detail"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_ADD_DETAIL], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
     }
   }
 }
