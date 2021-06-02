@@ -867,71 +867,29 @@ export class NewLeadInputLeadDataComponent implements OnInit {
       this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
       if (this.resLeadAssetObj.LeadAssetId != 0) {
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
-        this.setLeadAsset();
-
-        if (this.confirmFraudCheck()) {
-          // this.leadInputLeadDataObj.IsEdit = true;
-          this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
-            (response) => {
-              this.toastr.successMessage(response["message"]);
-              if (this.originPage == "teleVerif") {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
-              }
-              else if (this.typePage == "update") {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING], {});
-              }
-              else {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
-              }
-            }
-          );
-        }
       }
-      else {
-        if (this.LeadDataForm.controls["ManufacturingYear"].value > this.year) {
-          this.toastr.warningMessage("Manufacturing Year must be lower or equal than current year.");
-          return;
-        }
-        this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
-        this.setLeadAsset();
-        if (this.confirmFraudCheck()) {
-          this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
-            (response) => {
-              this.toastr.successMessage(response["message"]);
-              if (this.originPage == "teleVerif") {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
-              }
-              else if (this.typePage == "update") {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING], {});
-              }
-              else {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
-              }
-            }
-          );
-        }
-        // }
+      if (this.LeadDataForm.controls["ManufacturingYear"].value > this.year) {
+        this.toastr.warningMessage("Manufacturing Year must be lower or equal than current year.");
+        return;
       }
     }
-    else {
-      this.setLeadAsset();
-      if (this.confirmFraudCheck()) {
-        this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            if (this.originPage == "teleVerif") {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
-            }
-            else if (this.typePage == "update") {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING], {});
-            }
-            else {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
-            }
+    this.setLeadAsset();
+    if (this.confirmFraudCheck()) {
+      // this.leadInputLeadDataObj.IsEdit = true;
+      this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
+        (response) => {
+          this.toastr.successMessage(response["message"]);
+          if (this.originPage == "teleVerif") {
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
           }
-        );
-      }
-      // }
+          else if (this.typePage == "update") {
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING], {});
+          }
+          else {
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
+          }
+        }
+      );
     }
   }
 

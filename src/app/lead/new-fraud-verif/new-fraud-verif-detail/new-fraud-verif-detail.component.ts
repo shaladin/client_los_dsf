@@ -112,7 +112,7 @@ export class NewFraudVerifDetailComponent implements OnInit {
               });
           });
       });
-    this.http.post(URLConstant.GetListLeadForLeadVerfObj, { LeadId: this.LeadId }).toPromise().then(
+    this.http.post(URLConstant.GetListLeadForLeadVerfObj, { Id: this.LeadId }).toPromise().then(
       (response) => {
         this.DuplicateLeadList = response["LeadList"];
       }
