@@ -1,9 +1,9 @@
 export class OrgJobTitleObj {
-    orgJobTitleId: any;
-    orgMdlStrucId: any;
-    refJobTitleId: any;
-    parentOrgJobTitleId: any;
-    isActive: any;
+    orgJobTitleId: number;
+    orgMdlStrucId: number;
+    refJobTitleId: number;
+    parentOrgJobTitleId: number;
+    isActive: boolean;
 
     constructor() { this.orgJobTitleId = 0; }
 }

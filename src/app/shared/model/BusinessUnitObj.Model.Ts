@@ -1,8 +1,8 @@
 export class BusinessUnitObj {
-    RefBizUnitId: any;
-    BizUnitCode: any;
-    BizUnitName: any;
-    Descr: any;
-    IsActive: any;
+    RefBizUnitId: number;
+    BizUnitCode: string;
+    BizUnitName: string;
+    Descr: string;
+    IsActive: boolean;
     constructor() { this.RefBizUnitId = 0; }
 }  

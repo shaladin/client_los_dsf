@@ -18,6 +18,8 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-mou-detail-financing',
@@ -45,7 +47,7 @@ export class MouDetailFinancingComponent implements OnInit {
   DealerCustNo: string;
   DealerCode: string = "-";
   ManufacturerCustNo: string;
-  ManufacturerCode: string;
+  ManufacturerCode: string = "-";
   AsseConditionLis: Array<RefPayFreqObj>;
   MouDlrFinData: MouCustDlrFinObj;
   returnVendorObj: VendorObj;
@@ -83,7 +85,8 @@ export class MouDetailFinancingComponent implements OnInit {
   constructor(
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cookieService: CookieService
   ) {
     this.isListedFctr = false;
     this.shouldComponentLoad = false;
@@ -94,7 +97,7 @@ export class MouDetailFinancingComponent implements OnInit {
     this.httpClient.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.mrMouCustTypeCode = response.MrCustTypeCode;
-        var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+        var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         var suppCrit = new Array();
         var critSuppObj = new CriteriaObj();
         critSuppObj.DataType = 'text';
@@ -166,7 +169,7 @@ export class MouDetailFinancingComponent implements OnInit {
 
         this.MouDetailFinancingForm.patchValue({
           WopCode: this.wopList[0].Key,
-          PayFreqCode: this.payFreqList[0].PayFreqCode,
+          PayFreqCode: this.payFreqList["ReturnObject"][0]["PayFreqCode"],
           CurrCode: this.currencyList[0].Key,
           AssetCondition: this.AsseConditionLis[0],
           MrInstTypeCode: this.instTypeList[0].Key,
@@ -224,6 +227,7 @@ export class MouDetailFinancingComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.EXTENDS_TIME_INVLID);
       return;
     }
+    console.log(this.MouCustDlrFindData);
     this.httpClient.post(URLConstant.AddEditMouCustDlrFin, this.MouCustDlrFindData).subscribe(
       (response) => {
         this.ResponseMouCustFactoring.emit(response);
@@ -270,18 +274,22 @@ export class MouDetailFinancingComponent implements OnInit {
   }
 
   LinkManufacturerEvent(event) {
+    console.log(event);
     this.ManufacturerCode = event.VendorCode;
   }
 
   ManufacturerEvent(event) {
+    console.log(event);
     this.ManufacturerCustNo = event.CustNo;
   }
 
   LinkSupplGradingEvent(event) {
+    console.log(event);
     this.DealerCode = event.VendorCode;
   }
 
   CustomerEvent(event) {
+    console.log(event);
     this.DealerCustNo = event.CustNo;;
   }
 
@@ -350,7 +358,6 @@ export class MouDetailFinancingComponent implements OnInit {
     this.MouCustDlrFindData.Notes = this.MouDetailFinancingForm.controls.Notes.value;
     this.MouCustDlrFindData.MaximumExtendTimes = this.MouDetailFinancingForm.controls.MaximumExtendTimes.value;
     this.MouCustDlrFindData.MrInstTypeCode = this.MouDetailFinancingForm.controls.MrInstTypeCode.value;
-    this.MouCustDlrFindData.MrInstTypeCode = this.MouDetailFinancingForm.controls.MrInstTypeCode.value;
     this.MouCustDlrFindData.VirtualAccNo = this.MouDetailFinancingForm.controls["VirtualAccNo"].value;
     this.MouCustDlrFindData.CurrCode = this.MouDetailFinancingForm.controls.CurrCode.value;
 
@@ -375,12 +382,12 @@ export class MouDetailFinancingComponent implements OnInit {
         PayFreqCode: CommonConstant.PAY_FREQ_MONTHLY,
       });
       this.MouDetailFinancingForm.controls["PayFreqCode"].disable();
-      this.MouDetailFinancingForm.controls["SingleInstCalcMthd"].enable();
+      // this.MouDetailFinancingForm.controls["SingleInstCalcMthd"].enable();
     }
     else if (insType == CommonConstant.MULTIPLE_INST_TYPE) {
       this.IsSingleIns = false;
       this.MouDetailFinancingForm.controls["PayFreqCode"].enable();
-      this.MouDetailFinancingForm.controls["SingleInstCalcMthd"].disable();
+      // this.MouDetailFinancingForm.controls["SingleInstCalcMthd"].disable();
     }
   }
 

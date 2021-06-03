@@ -8,7 +8,7 @@ export class RFAInfoObj {
     Notes: string;
     RequestBy: string;
     TrxNo: string;
-    RequestDate: any;
+    RequestDate: Date;
     SchemeName: string;
     SchemeCode: string;
     CategoryName: string;

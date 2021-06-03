@@ -1,8 +1,8 @@
 export class EmpPositionObj {
-  empPositionId: any;
-  refEmpId: any;
-  refOfficeId: any;
-  orgJobTitleId: any;
+  empPositionId: number;
+  refEmpId: number;
+  refOfficeId: number;
+  orgJobTitleId: number;
 
   constructor() { this.empPositionId = 0; }
 }

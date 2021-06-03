@@ -5,7 +5,7 @@ export class CustDataLtkmObj {
     IsFamily: boolean;
     IsGuarantor: boolean;
     IsShareholder: boolean;
-    RowVersion: any;
+    RowVersion: string;
 
     constructor() { 
         this.RowVersion = ""; 

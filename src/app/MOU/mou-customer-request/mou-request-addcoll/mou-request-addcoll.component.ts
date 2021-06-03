@@ -138,7 +138,8 @@ export class MouRequestAddcollComponent implements OnInit {
     MrCollateralConditionCode: [''],
     ManufacturingYear: ['', Validators.required, [Validators.pattern("^[0-9]+$")]],
     CollateralPortionAmt: [0, Validators.required],
-    CollateralPortionType: ['']
+    CollateralPortionType: [''],
+    ListDoc: this.fb.array([])
   })
   inputAddressObjForLegalAddr: InputAddressObj;
   inputAddressObjForLocAddr: InputAddressObj;
@@ -236,7 +237,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
     var assetObj = {};
     this.http.post(URLConstant.GetListAssetTypeByCode, assetObj).subscribe(
-      (response) => {
+      (response) => {      
         this.CollTypeList = response['ReturnObject'];
         this.AddCollForm.patchValue({
           AssetTypeCode: this.CollTypeList[0].Key
@@ -1021,7 +1022,8 @@ export class MouRequestAddcollComponent implements OnInit {
       MrCollateralConditionCode: [''],
       ManufacturingYear: ['', [Validators.pattern("^[0-9]+$")]],
       CollateralPortionAmt: [''],
-      CollateralPortionType: ['']
+      CollateralPortionType: [''],
+      ListDoc: this.fb.array([])
     })
     this.AddCollForm.updateValueAndValidity();
 
@@ -1143,7 +1145,6 @@ export class MouRequestAddcollComponent implements OnInit {
           });
       });
 
-    this.ResponseMouAddColl.emit({ StatusCode: "200" });
   }
 
   back() {

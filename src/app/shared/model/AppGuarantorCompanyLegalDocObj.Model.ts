@@ -10,7 +10,7 @@ export class AppGuarantorCompanyLegalDocObj {
     ReleaseBy: string; 
     ReleaseLocation: string; 
     IsExpDtMandatory: boolean;
-    RowVersion: any;
+    RowVersion: string;
     
 constructor() { this.AppGurarantorCompanyLegalDocId = 0; this.RowVersion="" }
 }

@@ -1,15 +1,15 @@
 export class RefUserObj {
-  RefUserId: any;
-  Username: any;
-  password: any;
-  isLockedOut: any;
-  isActive: any;
-  refEmpId: any;
-  newPass: any;
-  oldPass: any;
+  RefUserId: number;
+  Username: string;
+  password: string;
+  isLockedOut: boolean;
+  isActive: boolean;
+  refEmpId: number;
+  newPass: string;
+  oldPass: string;
   newPassVerif: any;
   isReset: boolean;
-  loggedInMethod: any;
+  loggedInMethod: string;
 
   constructor() { this.RefUserId = 0 }
 }

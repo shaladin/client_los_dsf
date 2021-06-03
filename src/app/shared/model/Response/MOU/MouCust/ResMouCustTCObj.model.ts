@@ -13,7 +13,7 @@ export class ResMouCustTCObj {
     IsExpiredDt: boolean;
     IsWaivable: boolean;
     IsWaived: boolean;
-    RowVersion: any;
+    RowVersion: string;
 
     constructor(){ this.MouCustTcId = 0; this.RowVersion = "" }
 }

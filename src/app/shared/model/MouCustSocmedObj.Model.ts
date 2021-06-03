@@ -4,7 +4,7 @@ export class MouCustSocmedObj {
     MrSocmedCode: number;
     MrSocmedName: string;
     SocmedId: number;
-    RowVersion: any;
+    RowVersion: string;
 
 constructor() { 
         this.MouCustSocmedId = 0;

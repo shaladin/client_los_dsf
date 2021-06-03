@@ -23,7 +23,7 @@ export class CustDataPersonalObj {
     AppCustSocmedObjs: Array<AppCustSocmedObj>;
     AppCustGrpObjs: Array<AppCustGrpObj>;
     AppCustAssetList: Array<AppCustAssetObj>;
-    RowVersion: any;
+    RowVersion: string;
 
     constructor() { 
         this.AppCustObj = new AppCustObj(); 

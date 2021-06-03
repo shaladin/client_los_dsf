@@ -24,7 +24,7 @@ export class AppCustObj {
     VipNotes: string;
     Age: number;
     MobilePhnNo1: string;
-    RowVersion: any;
+    RowVersion: string;
 
     constructor() {
         this.AppCustId = 0;

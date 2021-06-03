@@ -1,10 +1,10 @@
 export class AgrmntDocPrintObj {
-    AgrmntDocPrintId: any;
-    AgrmntId: any;
-    AgrmntDocId: any;
-    DocPrintDt: any;
-    DocPrintByEmpNo: any;
-    PrintSeqNo: any;
-    RowVersion: any;
+    AgrmntDocPrintId: number;
+    AgrmntId: number;
+    AgrmntDocId: number;
+    DocPrintDt: Date;
+    DocPrintByEmpNo: string;
+    PrintSeqNo: number;
+    RowVersion: string;
     constructor() { this.AgrmntDocPrintId = 0; this.RowVersion = "" }
 }

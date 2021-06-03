@@ -1,8 +1,8 @@
 export class AgrmntMasterXObj {
-    AgrmntParentNo : any;
-    AgrmntNo : any;
-    AppNo : any;
-    RowVersion: any;
+    AgrmntParentNo : string;
+    AgrmntNo : string;
+    AppNo : string;
+    RowVersion: string;
     constructor()
     {}
 }  

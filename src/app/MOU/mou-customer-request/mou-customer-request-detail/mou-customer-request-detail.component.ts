@@ -208,7 +208,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   }
 
   bindAllRefMasterObj(){
-    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, {"RefMasterTypeCode": CommonConstant.RefMasterTypeCodePlafonType}).subscribe(
+    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodePlafonType}).subscribe(
       (response) => {
         this.plafondTypeObj = response["RefMasterObjs"];
 
