@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
@@ -14,7 +14,8 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
-
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-doc-checklist-approval-paging',
@@ -23,14 +24,16 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 export class DocChecklistApprovalPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
-  userContext: CurrentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-
+  apvReqObj: ApprovalReqObj = new ApprovalReqObj();
+  integrationObj: IntegrationObj = new IntegrationObj();
+  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
   constructor(private route: ActivatedRoute,
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
-    private router: Router) {
+    private router: Router,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params['BizTemplateCode'] != null) {
         this.BizTemplateCode = params['BizTemplateCode'];
@@ -41,54 +44,49 @@ export class DocChecklistApprovalPagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchDocChecklistApproval.json";
+    this.inputPagingObj.enviromentUrl = environment.losUrl;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchDocChecklistApproval.json";
+    this.inputPagingObj.isJoinExAPI = true;
     this.inputPagingObj.ddlEnvironments = [
       {
-        name: "app.ORI_OFFICE_CODE",
+        name: "A.ORI_OFFICE_CODE",
         environment: environment.FoundationR3Url
       }
     ];
-    this.inputPagingObj.addCritInput = new Array();
 
-    var critInputOnlyOffering = new CriteriaObj();
-    critInputOnlyOffering.propName = "vApv.CATEGORY_CODE";
-    critInputOnlyOffering.restriction = AdInsConstant.RestrictionEq;
-    critInputOnlyOffering.value = "DOC_CHCKLIST_APV";
-    this.inputPagingObj.addCritInput.push(critInputOnlyOffering);
+    this.apvReqObj.CategoryCode = CommonConstant.CAT_CODE_DOC_CHCKLIST_APV;
+    this.apvReqObj.Username = this.userContext.UserName;
+    this.apvReqObj.RoleCode = this.userContext.RoleCode;
+    
+    this.integrationObj.baseUrl = environment.ApprovalR3OplUrl;
+    this.integrationObj.apiPath = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
+    this.integrationObj.requestObj = this.apvReqObj;
+    this.integrationObj.leftColumnToJoin = "AppNo";
+    this.integrationObj.rightColumnToJoin = "TransactionNo";
+    this.integrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
 
-    var critBizTemplate = new CriteriaObj();
-    critBizTemplate.restriction = AdInsConstant.RestrictionEq;
-    critBizTemplate.propName = 'app.BIZ_TEMPLATE_CODE';
-    critBizTemplate.value = this.BizTemplateCode;
-    this.inputPagingObj.addCritInput.push(critBizTemplate);
+    this.inputPagingObj.integrationObj = this.integrationObj;
 
-    var critCurrentUser = new CriteriaObj();
-    critCurrentUser.DataType = 'text';
-    critCurrentUser.restriction = AdInsConstant.RestrictionEq;
-    critCurrentUser.propName = 'vApv.CURRENT_USER_ID';
-    critCurrentUser.value = this.userContext.UserName;
-    this.inputPagingObj.addCritInput.push(critCurrentUser);
-
-    var critMainUser = new CriteriaObj();
-    critMainUser.DataType = 'text';
-    critMainUser.restriction = AdInsConstant.RestrictionOr;
-    critMainUser.propName = 'vApv.MAIN_USER_ID';
-    critMainUser.value = this.userContext.UserName;
-    this.inputPagingObj.addCritInput.push(critMainUser);
-
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'A.BIZ_TEMPLATE_CODE';
+    critObj.value = this.BizTemplateCode;
+    
+    this.inputPagingObj.addCritInput.push(critObj);
   }
 
   GetCallBack(ev: any) {
     var ApvReqObj = new ApprovalObj();
     if (ev.Key == "Process") {
-      if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {
+      if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DOC_CHECK_LIST_APPRV_DETAIL], { "AppId": ev.RowObj.AppId, "TrxNo": ev.RowObj.TrxNo, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.ApvReqId });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_DOC_CHECK_LIST_APPRV_DETAIL], { "AppId": ev.RowObj.AppId, "TrxNo": ev.RowObj.TransactionNo, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "ApvReqId": ev.RowObj.RequestId });
       }
     }
     else if (ev.Key == "HoldTask") {
-      if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.userContext.UserName)) {
+      if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_HOLD);
       } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId
@@ -100,7 +98,7 @@ export class DocChecklistApprovalPagingComponent implements OnInit {
       }
     }
     else if (ev.Key == "TakeBack") {
-      if (String.Format("{0:L}", ev.RowObj.MainUserId) != String.Format("{0:L}", this.userContext.UserName)) {
+      if (String.Format("{0:L}", ev.RowObj.MainUser) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId
@@ -118,5 +116,4 @@ export class DocChecklistApprovalPagingComponent implements OnInit {
       this.toastr.warningMessage(String.Format(ExceptionConstant.ERROR_NO_CALLBACK_SETTING, ev.Key));
     }
   }
-
 }

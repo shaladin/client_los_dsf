@@ -4,7 +4,7 @@
   "component": [
     {
       "type": "textbox",
-      "name": "app.APP_NO",
+      "name": "A.APP_NO",
       "id": "AppNoId",
       "value": "",
       "label": "Application No",
@@ -12,7 +12,7 @@
     },
     {
       "type": "textbox",
-      "name": "appCust.CUST_NAME",
+      "name": "AC.CUST_NAME",
       "id": "CustNameId",
       "value": "",
       "label": "Customer Name",
@@ -20,7 +20,7 @@
     },
     {
       "type": "textbox",
-      "name": "app.PROD_OFFERING_NAME",
+      "name": "A.PROD_OFFERING_NAME",
       "id": "ProdOfferingNameId",
       "value": "",
       "label": "Product Offering Name",
@@ -28,7 +28,7 @@
     },
     {
       "type": "dropdown",
-      "name": "app.ORI_OFFICE_CODE",
+      "name": "A.ORI_OFFICE_CODE",
       "id": "OfficeNameId",
       "value": "Office",
       "placeholder": "Placeholder",
@@ -40,46 +40,57 @@
       "label": "Office",
       "items": [],
       "itemsUrl": []
-    },
-    {
-      "type": "textbox",
-      "name": "vApv.CURRENT_USER_ID",
-      "id": "CurrentUserId",
-      "value": "",
-      "label": "Claim By",
-      "placeholder": "Placeholder"
     }
   ],
   "headerList": [
     {
       "type": "sort",
       "position": "left",
-      "label": "Claim By",
-      "name": "vApv.CURRENT_USER_ID"
-    },
-    {
-      "type": "sort",
-      "position": "left",
       "label": "Office",
-      "name": "app.ORI_OFFICE_NAME"
+      "name": "A.ORI_OFFICE_NAME"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "Application No",
-      "name": "vApv.APP_NO"
+      "name": "A.APP_NO"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Customer Name",
-      "name": "appCust.CUST_NAME"
+      "name": "AC.CUST_NAME"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Product Offering Name",
-      "name": "vApv.PROD_OFFERING_NAME"
+      "name": "A.PROD_OFFERING_NAME"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Request By"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Request Date"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Task Owner"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Current User"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Is Hold"
     },
     {
       "type": "label",
@@ -97,19 +108,14 @@
       "label": "Take Back"
     }
   ],
-"querystring": {
-  "name": "searchDocChecklistApproval"
-},
+  "querystring": {
+    "name": "searchDocChecklistApproval"
+  },
   "orderby": {
-      "key": "app.APP_NO", 
-      "value": "false"
+    "key": "A.APP_NO",
+    "value": "false"
   },
   "bodyList": [
-    {
-      "type": "text",
-      "position": "left",
-      "property": "CurrentUserId"
-    },
     {
       "type": "text",
       "position": "left",
@@ -138,6 +144,31 @@
       "key": "ViewProdOffering",
       "position": "left",
       "property": "ProdOfferingName"
+    },
+    {
+        "type": "text",
+        "position": "left",
+        "property": "RequestBy"
+    },
+    {
+        "type": "date",
+        "position": "center",
+        "property": "RequestDate"
+    },
+    {
+        "type": "text",
+        "position": "center",
+        "property": "MainUser"
+    },
+    {
+        "type": "text",
+        "position": "center",
+        "property": "CurrentUser"
+    },
+    {
+        "type": "text",
+        "position": "center",
+        "property": "IsHold"
     },
     {
       "type": "action",
