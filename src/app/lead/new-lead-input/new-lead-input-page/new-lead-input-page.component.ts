@@ -4,6 +4,7 @@ import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRe
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
@@ -115,15 +116,15 @@ export class NewLeadInputPageComponent implements OnInit {
     else {
       modeName = this.pageType;
     }
-    AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLead/MainInfo"], { LeadId: this.LeadId, mode: modeName });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_MAIN_INFO], { LeadId: this.LeadId, mode: modeName });
   }
 
   cancelHandler() {
     if (this.pageType == "update") {
-      AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLeadUpdate/Paging"], {});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING], {});
     }
     else {
-      AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLead/Paging"], {});
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
     }
   }
 
@@ -172,7 +173,7 @@ export class NewLeadInputPageComponent implements OnInit {
       });
   }
   endOfTab() {
-    AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLead/Paging"], {});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
   }
 
 }

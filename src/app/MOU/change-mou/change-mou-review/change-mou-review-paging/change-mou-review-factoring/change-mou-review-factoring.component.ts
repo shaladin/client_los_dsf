@@ -16,6 +16,7 @@ import { UcapprovalcreateComponent } from "@adins/ucapprovalcreate";
 import { CookieService } from "ngx-cookie";
 import { ChangeMouTrxObj } from "app/shared/model/ChangeMouTrxObj.Model";
 import { ReqGetByTypeCodeObj } from "app/shared/model/RefReason/ReqGetByTypeCodeObj.Model";
+import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 
 @Component({
   selector: "app-change-mou-review-factoring",
@@ -32,7 +33,6 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
   WfTaskListId: number;
   MouType: string = "FACTORING";
   PlafondAmt: number;
-  listApprover: any;
   MrCustTypeCode: string;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   listReason: Array<ReqGetByTypeCodeObj>;
@@ -47,7 +47,7 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
       this.createComponent = content;
     }
   }
-  ApprovalCreateOutput: any;
+  ApprovalCreateOutput: any; 
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -141,7 +141,7 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(
             this.router,
-            ["/Mou/ChangeMou/ReviewPaging"],
+            [NavigationConstant.CHANGE_MOU_RVW_PAGING],
             {}
           );
         });
@@ -159,7 +159,7 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(
           this.router,
-          ["/Mou/ChangeMou/ReviewPaging"],
+          [NavigationConstant.CHANGE_MOU_RVW_PAGING],
           {}
         );
       });
@@ -169,7 +169,7 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
     this.toastr.successMessage("Process Cancel");
     AdInsHelper.RedirectUrl(
       this.router,
-      ["/Mou/ChangeMou/ReviewPaging"],
+      [NavigationConstant.CHANGE_MOU_RVW_PAGING],
       {}
     );
   }

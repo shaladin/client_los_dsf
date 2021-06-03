@@ -32,7 +32,6 @@ export class MouReviewGeneralComponent implements OnInit {
   WfTaskListId: number;
   MouType: string = CommonConstant.GENERAL;
   PlafondAmt: number;
-  listApprover: any;
   MrCustTypeCode: string;
   resultData: MouCustObj;
   listReason: Array<KeyValueObj>;

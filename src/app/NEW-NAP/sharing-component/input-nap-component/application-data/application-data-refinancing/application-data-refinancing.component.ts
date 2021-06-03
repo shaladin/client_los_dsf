@@ -20,6 +20,8 @@ import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { AppOtherInfoObj } from 'app/shared/model/AppOtherInfo.Model';
+import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-application-data-refinancing',
@@ -33,7 +35,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   ListCrossAppObj: any = {};
   isProdOfrUpToDate: boolean = true;
   missingProdOfrComp: string = "";
-  listCustBankAcc: any;
+  listCustBankAcc: Array<AppCustBankAccObj>;
   selectedBankAcc: any;
   GetBankInfo: any;
   responseBankAccCust: any;
@@ -223,15 +225,10 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   }
 
   applicationDDLitems;
-  resultResponse;
+  resultResponse: AppObj; 
   getAppModelInfo() {
-    var obj = {
-      Id: this.AppId,
-      RowVersion: ""
-    };
-
-    this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, obj).subscribe(
-      (response) => {
+    this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, {Id: this.AppId}).subscribe(
+      (response: any) => {
         this.resultResponse = response;
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
@@ -369,7 +366,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.jsonSelect = this.resultResponse;
-    //this.inputLookupObj.nameSelect = this.NapAppModelForm.controls.SalesOfficerName.value;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
     this.inputLookupEconomicSectorObj = new InputLookupObj();
     this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
@@ -420,8 +416,6 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     addCrit4.restriction = AdInsConstant.RestrictionIn;
     addCrit4.listValue = [this.resultResponse.OriOfficeCode];
     this.arrAddCrit.push(addCrit4);
-
-    // this.inputLookupObj.addCritInput = this.arrAddCrit;
     await this.GetGSValueSalesOfficer();
     this.makeLookUpObj();
   }
@@ -662,7 +656,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
     var obj = {
       AppId: this.AppId
     };
-    this.http.post<any>(URLConstant.GetBankAccCustByAppId, obj).subscribe(
+    this.http.post<any>(URLConstant.GetBankAccCustByAppId, obj).subscribe( 
       (response) => {
         this.responseBankAccCust = response
         this.NapAppModelForm.patchValue({

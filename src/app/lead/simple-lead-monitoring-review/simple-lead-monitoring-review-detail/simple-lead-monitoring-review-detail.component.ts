@@ -12,6 +12,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-simple-lead-monitoring-review-detail',
@@ -92,7 +93,7 @@ export class SimpleLeadMonitoringReviewDetailComponent implements OnInit {
     this.http.post(URLConstant.UploadReview, uploadObj).subscribe(
       response => {
         this.toastr.successMessage(response["Message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLead/ReviewMonitoring/Paging"], {});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_RVW_MONITORING_PAGING], {});
       }
     );
   }

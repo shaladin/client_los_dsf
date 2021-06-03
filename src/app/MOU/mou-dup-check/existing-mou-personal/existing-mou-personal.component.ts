@@ -12,7 +12,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ReqGetMouCustDuplicateObj } from 'app/shared/model/Request/MOU/ReqGetMouCustDuplicateObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
-import { StringifyOptions } from 'querystring';
+import { CustObj } from 'app/shared/model/CustObj.Model';
 
 @Component({
   selector: 'app-existing-mou-personal',
@@ -26,18 +26,18 @@ export class ExistingMouPersonalComponent implements OnInit {
   FondationUrl = environment.FoundationR3Url;
   MouCustObj: MouCustObj;
   MouCustPersonalObj: MouCustPersonalObj;
-  ListDuplicateAppGuarantor: any;
+  ListDuplicateAppGuarantor: any; 
   ListDuplicateMouGuarantor: any;
   ListDuplicateAppSpouse: any;
-  ListDuplicateMouSpouse: any;
-  ListDuplicateAppShareholder: any;
-  ListDuplicateMouShareholder: any;
-  ListSelectedIdAppGuarantor: any;
-  ListSelectedIdMouGuarantor: any;
-  ListSelectedIdAppSpouse: any;
-  ListSelectedIdMouSpouse: any;
-  ListSelectedIdAppShareholder: any;
-  ListSelectedIdMouShareholder: any;
+  ListDuplicateMouSpouse: any; 
+  ListDuplicateAppShareholder: any; 
+  ListDuplicateMouShareholder: any; 
+  ListSelectedIdAppGuarantor: Array<number>;
+  ListSelectedIdMouGuarantor: Array<number>;
+  ListSelectedIdAppSpouse: Array<number>;
+  ListSelectedIdMouSpouse: Array<number>;
+  ListSelectedIdAppShareholder: Array<number>;
+  ListSelectedIdMouShareholder: Array<number>;
   checkboxAllGuarantor: false;
   checkboxAllMouGuarantor: false;
   checkboxAllSpouse: false;
@@ -45,7 +45,7 @@ export class ExistingMouPersonalComponent implements OnInit {
   checkboxAllShareholder: false;
   checkboxAllMouShareholder: false;
   RowVersion: string;
-  cust: any;
+  cust: CustObj;
   custUrl: string;
   CustNoObj: GenericObj = new GenericObj();
   constructor(
@@ -81,7 +81,7 @@ export class ExistingMouPersonalComponent implements OnInit {
 
         this.CustNoObj.CustNo = this.MouCustObj['CustNo'];
         this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
-          response => {
+          (response: any) => {
             this.cust = response;
           }
         );

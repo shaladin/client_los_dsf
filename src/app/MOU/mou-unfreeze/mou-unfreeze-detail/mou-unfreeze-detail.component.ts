@@ -16,6 +16,7 @@ import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { CookieService } from "ngx-cookie";
 import { KeyValueObj } from "app/shared/model/KeyValue/KeyValueObj.model";
+import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 
 @Component({
   selector: "app-mou-unfreeze-detail",
@@ -136,7 +137,7 @@ export class MouUnfreezeDetailComponent implements OnInit {
       .post(URLConstant.SubmitMouFreezeUnfreeze, sendObj)
       .subscribe((response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate(["/Mou/FreezeUnfreeze/Paging"]);
+        this.router.navigate([NavigationConstant.MOU_FREEZE_PAGING]);
       });
     }
   }
@@ -170,8 +171,7 @@ export class MouUnfreezeDetailComponent implements OnInit {
   
   GetCallback(ev) {
     if(ev.Key == "customer"){
-      var custObj = { CustNo: ev.ViewObj.CustNo };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+      this.http.post(URLConstant.GetCustByCustNo, { CustNo: ev.ViewObj.CustNo }).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }

@@ -4,7 +4,6 @@ import { HttpClient } from "@angular/common/http";
 import { FormBuilder, Validators } from "@angular/forms";
 import { Location, DatePipe, formatDate } from "@angular/common";
 import { InputLookupObj } from "app/shared/model/InputLookupObj.Model";
-import { MouCustObj } from "app/shared/model/MouCustObj.Model";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { CommonConstant } from "app/shared/constant/CommonConstant";

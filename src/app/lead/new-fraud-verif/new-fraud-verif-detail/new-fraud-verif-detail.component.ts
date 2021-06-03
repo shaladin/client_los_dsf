@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
 import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCustomerObj.Model';
@@ -111,7 +112,7 @@ export class NewFraudVerifDetailComponent implements OnInit {
               });
           });
       });
-    this.http.post(URLConstant.GetListLeadForLeadVerfObj, { LeadId: this.LeadId }).toPromise().then(
+    this.http.post(URLConstant.GetListLeadForLeadVerfObj, { Id: this.LeadId }).toPromise().then(
       (response) => {
         this.DuplicateLeadList = response["LeadList"];
       }
@@ -141,7 +142,7 @@ export class NewFraudVerifDetailComponent implements OnInit {
     this.http.post(URLConstant.AddNewLeadFraudVerf, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Lead/FraudVerif/Paging"], {});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_FRAUD_VERIF_PAGING], {});
       });
   }
 
@@ -165,7 +166,7 @@ export class NewFraudVerifDetailComponent implements OnInit {
     this.http.post(URLConstant.AddNewLeadFraudVerf, this.leadFraudVerfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLeadFraudVerif/Paging"], {});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_FRAUD_VERIF_PAGING], {});
       });
   }
 
@@ -179,7 +180,7 @@ export class NewFraudVerifDetailComponent implements OnInit {
       });
   }
   backHandler() {
-    AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLeadFraudVerif/Paging"], {});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_FRAUD_VERIF_PAGING], {});
   }
 
 }

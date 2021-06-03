@@ -25,7 +25,6 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
   TrxNo: string;
   instanceId: number;
   ApvReqId: number;
-  inputObj: any;
   InputApvObj: UcInputApprovalObj;
   InputApprovalHistoryObj: UcInputApprovalHistoryObj;
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
@@ -59,16 +58,8 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
       },
     ];
 
-    var obj = {
-      taskId: this.taskId,
-      instanceId: this.instanceId,
-      approvalBaseUrl: environment.ApprovalR3Url,
-    };
-
-    this.inputObj = obj;
-
     var ApvHoldObj = new ApprovalObj();
-    ApvHoldObj.TaskId = obj.taskId;
+    ApvHoldObj.TaskId = this.taskId; 
 
     this.HoldTask(ApvHoldObj);
     this.initInputApprovalObj();

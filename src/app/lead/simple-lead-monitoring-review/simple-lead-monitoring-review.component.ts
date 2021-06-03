@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-simple-lead-monitoring-review',
@@ -41,7 +42,7 @@ export class SimpleLeadMonitoringReviewComponent implements OnInit {
       response => {
         this.toastr.successMessage(response["Message"]);
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          AdInsHelper.RedirectUrl(this.router, ["/Lead/SimpleLead/ReviewMonitoring/Paging"], {});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_RVW_MONITORING_PAGING], {});
         });
       }
     );

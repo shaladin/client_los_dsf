@@ -34,7 +34,7 @@ export class LeadDataComponent implements OnInit {
   @Output() outputPage: EventEmitter<object> = new EventEmitter();
 
   typePage: string;
-  CopyFrom: string;
+  CopyFrom: number = 0;
   LeadId: number;
   assetConditionObj: RefMasterObj;
   returnAssetConditionObj: Array<KeyValueObj>;
@@ -47,7 +47,6 @@ export class LeadDataComponent implements OnInit {
   leadInputLeadDataObj: ReqLeadInputLeadDataObj;
   reqLeadAssetObj: LeadAssetObj;
   resLeadAssetObj: LeadAssetObj;
-  reqLeadAppObj: LeadAppObj;
   resLeadAppObj: LeadAppObj;
   reqAssetMasterObj: AssetMasterObj;
   resAssetMasterObj: AssetMasterForLookupObj;
@@ -203,7 +202,7 @@ export class LeadDataComponent implements OnInit {
       }
     );
 
-    if (this.CopyFrom != null) {
+    if (this.CopyFrom != 0) {
       this.reqLeadAssetObj = new LeadAssetObj();
       this.reqLeadAssetObj.LeadId = this.CopyFrom;
       let reqLeadAssetObj = { Id: this.CopyFrom };
@@ -308,8 +307,6 @@ export class LeadDataComponent implements OnInit {
             });
         });
 
-      this.reqLeadAppObj = new LeadAppObj();
-      this.reqLeadAppObj.LeadId = this.CopyFrom;
       let reqLeadAppObj = { Id: this.CopyFrom };
       this.http.post(URLConstant.GetLeadAppByLeadId, reqLeadAppObj).subscribe(
         (response: LeadAppObj) => {
@@ -432,8 +429,6 @@ export class LeadDataComponent implements OnInit {
               });
           }
 
-          this.reqLeadAppObj = new LeadAppObj();
-          this.reqLeadAppObj.LeadId = this.LeadId;
           let reqLeadAppObj = { Id: this.LeadId };
           this.http.post(URLConstant.GetLeadAppByLeadId, reqLeadAppObj).subscribe(
             (response: LeadAppObj) => {
