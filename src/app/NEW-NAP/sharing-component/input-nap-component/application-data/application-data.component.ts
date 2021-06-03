@@ -193,6 +193,34 @@ export class ApplicationDataComponent implements OnInit {
         );
       }
     );
+
+    this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).subscribe(
+      (response: GeneralSettingObj) => {
+        this.salesOfficerCode = response.GsValue.split(',');
+        if(this.salesOfficerCode.some(x => x === this.user.JobTitleCode)) {
+          this.isSalesOfficerCode = true;
+          this.NapAppModelForm.patchValue({
+            SalesOfficerNo: this.user.EmpNo,
+            SalesOfficerName: this.user.EmpName
+          });
+
+          let ReqGetRefEmpSpvByEmpNo: GenericObj = new GenericObj();
+          ReqGetRefEmpSpvByEmpNo.EmpNo = this.user.EmpNo;
+
+          this.http.post<ResRefEmpObj>(URLConstant.GetRefEmpSpvByEmpNo, ReqGetRefEmpSpvByEmpNo).subscribe(
+            (response) => {
+              this.refEmpSpvObj = response;
+              if(this.refEmpSpvObj !== null) {
+                this.NapAppModelForm.patchValue({
+                  SalesHeadNo: this.refEmpSpvObj.EmpNo,
+                  SalesHeadName: this.refEmpSpvObj.EmpName
+                });
+              }
+            }
+          );
+        }
+      }
+    );
   }
 
   initDdlMrFirstInstType() {
