@@ -162,11 +162,7 @@ export class SchmEvenPrincipalDlfnComponent implements OnInit {
           DaysInYear = result.GsValue;
         }
 
-        var obj = {
-          Id: this.AppId
-        }
-
-        this.http.post(URLConstant.GetAppDlrFinByAppId, obj).toPromise().then(
+        this.http.post(URLConstant.GetAppDlrFinByAppId, { Id: this.AppId }).toPromise().then(
           (responseAppDlfn) => {
             this.ParentForm.patchValue({
               TotalTopAmount: responseAppDlfn["TopInterestRatePrcnt"] / 100 * (responseAppDlfn["TopDays"] / DaysInYear) * NtfAmount,

@@ -196,7 +196,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
             TopBased: this.allTopBased[0].Key
           });
         } else {
-          this.http.post(URLConstant.GetAppDlrFinByAppId, AppObj).subscribe(
+          this.http.post(URLConstant.GetAppDlrFinByAppId, { Id: this.AppId }).subscribe(
             (responseEdit) => {
               this.SalesAppInfoForm.patchValue({
                 TopBased: responseEdit["TopBased"]
