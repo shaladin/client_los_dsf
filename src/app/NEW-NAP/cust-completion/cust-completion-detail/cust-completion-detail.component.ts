@@ -29,7 +29,7 @@ export class CustCompletionDetailComponent implements OnInit {
   AppId: number;
   wfTaskListId: number;
   BizTemplateCode: string;
-  addObj: any = {};
+  addObj: object = {};
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
   });
