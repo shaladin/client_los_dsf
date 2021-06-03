@@ -132,43 +132,16 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    this.getEvent = event;
-    let isReturn: boolean = false;
-    let isReject: boolean = false;
-    let returnNotes: string = "";
-
-    for(let i in this.getEvent){
-      if(this.getEvent[i].ApvResult.toLowerCase() == CommonConstant.ApvResultReturn.toLowerCase()) {
-        isReturn = true;
-        returnNotes += event[i]['Notes'] + (parseInt(i) == 0 ? ", " : "");
-      }
-      if(this.getEvent[i].ApvResult.toLowerCase() == CommonConstant.ApvResultRejectFinal.toLowerCase()) {
-        isReject = true;
-      }
+    let ReqApvCustomObj = {
+      AppId: this.appId,
+      Tasks: event.Tasks
     }
 
-    if(isReject){
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
-    }
-    else if(isReturn){
-      var returnHandlingHObj = new ReturnHandlingHObj();
-      var user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-
-      returnHandlingHObj.AppId = this.appId;
-      returnHandlingHObj.AgrmntId = null;
-      returnHandlingHObj.ReturnBy = user.UserName;
-      returnHandlingHObj.ReturnDt = user.BusinessDt;
-      returnHandlingHObj.ReturnNotes = returnNotes;
-      returnHandlingHObj.ReturnFromTrxType = this.AppObj.AppCurrStep;
-
-      this.http.post(URLConstant.AddReturnHandlingH, returnHandlingHObj).subscribe(
-        (response) => {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
-        });
-    }
-    else{
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
-    }
+    this.http.post(URLConstant.Approval, ReqApvCustomObj).subscribe(
+      (response)=>{
+        this.toastr.successMessage(response["Message"]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+      });
   }
 
   onAvailableNextTask() {

@@ -46,6 +46,7 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
   IsUseDigitalization: string;
   IsViewReady: boolean = false;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
+  RFAInfo: Object = new Object();
 
   // ReturnForm = this.fb.group({
   //   ReturnReason: [''],
@@ -339,7 +340,7 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
 
 
     if (!this.isReturnOn) {
-      this.ApprovalCreateOutput = this.createComponent.output();
+      this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
     }
 
     var apiObj = {
@@ -349,7 +350,7 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
       RowVersion: "",
       AppId: this.appId,
       ListDeviationResultObjs: this.ManualDeviationData,
-      RequestRFAObj: this.ApprovalCreateOutput
+      RequestRFAObj: this.RFAInfo
     }
     this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationDataNew, apiObj).subscribe(
       (response) => {
