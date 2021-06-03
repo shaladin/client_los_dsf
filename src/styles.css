@@ -408,3 +408,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.was-validated input[type=date].form-control:invalid, input[type=date].form-control.is-invalid {
+    background-position: right calc(0.02rem) center;
+  }
