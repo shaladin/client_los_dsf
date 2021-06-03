@@ -13,9 +13,9 @@ import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { ApprovalReqObj, UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { String } from 'typescript-string-operations';
 import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-application-approval-paging',
@@ -44,16 +44,9 @@ export class ApplicationApprovalPagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchApplicationApproval.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
     this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApplicationApproval.json";
     this.inputPagingObj.isJoinExAPI = true;
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "A.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     this.apvReqObj.CategoryCode = CommonConstant.CAT_CODE_APP_OPL_APV;
     this.apvReqObj.Username = this.userContext.UserName;

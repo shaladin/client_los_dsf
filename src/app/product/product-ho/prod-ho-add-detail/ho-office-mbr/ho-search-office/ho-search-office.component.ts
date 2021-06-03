@@ -32,12 +32,6 @@ export class HoSearchOfficeComponent implements OnInit {
     this.TempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/product/productHOfficeMbrTempPaging.json";
     this.TempPagingObj.enviromentUrl = environment.FoundationR3Url;
     this.TempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/product/productHOfficeMbrTempPaging.json";
-    this.TempPagingObj.ddlEnvironments = [
-      {
-        name: "ROA.AREA_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     if (this.ListOfficeMemberObjInput.length != 0) {
       let addCrit = new CriteriaObj();

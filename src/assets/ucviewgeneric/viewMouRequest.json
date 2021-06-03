@@ -10,6 +10,7 @@
             "label": "Mou No",
             "property": "MouCustNo",
             "name": "MouCustNo",
+            "environment": "LOSR3WEB",
             "path": "VIEW_MOU_CUST",
             "target": "_blank",
             "param": [

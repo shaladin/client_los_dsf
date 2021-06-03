@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj, WhereValueObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -39,12 +38,6 @@ export class DocSignerPagingComponent implements OnInit {
     this.inputPagingObj.pagingJson = pagingJsonPath;
 
     if (this.BizTemplateCode == CommonConstant.OPL) {
-      this.inputPagingObj.ddlEnvironments = [
-        {
-          name: "a.ORI_OFFICE_CODE",
-          environment: environment.FoundationR3Url
-        }
-      ];
 
       let arrCrit = new Array();
       let critObj = new CriteriaObj();

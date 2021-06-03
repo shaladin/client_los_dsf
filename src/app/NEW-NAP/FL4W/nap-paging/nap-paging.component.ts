@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { HttpClient } from '@angular/common/http';
@@ -38,14 +37,6 @@ export class NapPagingComponent implements OnInit {
 
     this.inputPagingObj._url = "./assets/ucpaging/searchApp.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApp.json";
-
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "a.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
-
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
 

@@ -41,7 +41,6 @@ export class ProdHoDeactApvDetailComponent implements OnInit {
 
   ngOnInit() {
     this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformationForDeactApv.json";
-    this.ViewGenericObj.viewEnvironment = environment.losUrl;
   
     let ApvHoldObj = new ApprovalObj()
     ApvHoldObj.TaskId = this.TaskId

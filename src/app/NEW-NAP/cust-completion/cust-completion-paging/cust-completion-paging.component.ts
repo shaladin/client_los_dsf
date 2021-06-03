@@ -5,7 +5,6 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-cust-completion-paging',
@@ -27,12 +26,6 @@ export class CustCompletionPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchCustCompletion.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCustCompletion.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "A.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
     this.inputPagingObj.addCritInput = new Array();
 
     var critLobObj = new CriteriaObj();

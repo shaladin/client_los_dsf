@@ -60,7 +60,6 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
     else if (this.mrCustTypeCode == CommonConstant.CustTypeCompany)
       this.viewMainInfoObj.viewInput = "./assets/ucviewgeneric/viewDupCheckSubjectMatchCompany.json";
 
-    this.viewMainInfoObj.viewEnvironment = environment.losUrl;
     this.viewMainInfoObj.ddlEnvironments = [{ name: "AppNo", environment: environment.losR3Web }];
   }
 

@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-asset-inquiry',
@@ -14,7 +11,6 @@ export class AssetInquiryComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchAssetInquiry.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAssetInquiry.json";
   }

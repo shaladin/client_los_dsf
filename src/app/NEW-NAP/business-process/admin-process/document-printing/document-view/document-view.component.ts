@@ -70,25 +70,9 @@ export class DocumentViewComponent implements OnInit {
   ngOnInit() {
     if (this.BizTemplateCode == CommonConstant.OPL) {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformationAgrmnt.json";
-      this.viewGenericObj.viewEnvironment = environment.losUrl;
     }
     else {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocument.json";
-      this.viewGenericObj.viewEnvironment = environment.losUrl;
-      this.viewGenericObj.ddlEnvironments = [
-        {
-          name: "ApplicationNo",
-          environment: environment.losR3Web
-        },
-        {
-          name: "AggrementNo",
-          environment: environment.losR3Web
-        },
-        {
-          name: "MouCustNo",
-          environment: environment.losR3Web
-        },
-      ];
     }
 
 

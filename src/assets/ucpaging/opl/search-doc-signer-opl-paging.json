@@ -35,6 +35,7 @@
           "ddlType": "all",
           "isQueryIn" : true,
           "url": "",
+          "environment": "FOU",
           "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
           "label": "Office",
           "items": [],

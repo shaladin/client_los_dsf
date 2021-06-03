@@ -11,6 +11,7 @@
             "label": "Application No",
             "property": "AppNo",
             "name": "AppNo",
+            "environment": "LOSR3WEB",
             "path": "/View/AppView",
             "target" : "_blank",
             "param": [
@@ -30,6 +31,7 @@
             "label": "Agreement No",
             "property": "AgrmntNo",
             "name": "AgrmntNo",
+            "environment": "LOSR3WEB",
             "path": "/View/AgrmntView",
             "target" : "_blank",
             "param": [

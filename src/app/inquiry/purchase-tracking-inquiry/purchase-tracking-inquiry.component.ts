@@ -32,12 +32,6 @@ export class PurchaseTrackingInquiryComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchPurchaseTrackingInquiry.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchPurchaseTrackingInquiry.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "A.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     this.inputPagingObj.addCritInput = new Array();
     let critLobObj = new CriteriaObj();
