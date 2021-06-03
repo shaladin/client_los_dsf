@@ -47,12 +47,11 @@
     <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady"></lib-ucapprovalgeneralinfo>
 
     <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"
-      (onCancel)="onCancelClick()"></lib-ucapprovalR3>    
-      <div class="form-actions right">
-        <button type="button" class="btn btn-raised btn-primary float-right" [routerLink]="[PefindoLink]"
-          [queryParams]="{AppId: this.appId}" translate>
-          <i class="far fa-check-square"></i> View Pefindo
-        </button>
-      </div>    
+      (onCancel)="onCancelClick()"></lib-ucapprovalR3>
+    <div class="form-actions right">
+      <button type="button" class="btn btn-raised btn-primary float-right" (click)="OpenPefindoView()" translate>
+        <i class="far fa-check-square"></i> View Pefindo
+      </button>
+    </div>
   </div>
 </div>

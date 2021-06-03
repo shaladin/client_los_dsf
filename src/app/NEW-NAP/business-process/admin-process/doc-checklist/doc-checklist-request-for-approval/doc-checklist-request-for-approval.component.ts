@@ -123,7 +123,7 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
       "Attributes": Attributes,
     };
     this.InputObj.ApvTypecodes = [TypeCode];
-    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_DOC_CHCLIST_APV;
+    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_DOC_CHCKLIST_APV;
     this.InputObj.SchemeCode = schemeCode;
     this.InputObj.Reason = this.itemReason;
     this.InputObj.TrxNo = this.AppNo;

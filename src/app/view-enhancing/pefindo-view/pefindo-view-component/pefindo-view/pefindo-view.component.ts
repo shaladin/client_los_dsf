@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { PefindoObj } from 'app/shared/model/PefindoObj.model';
 
 
@@ -27,7 +28,7 @@ export class PefindoViewComponent implements OnInit {
   isCompany: boolean = false;
   noData: boolean = false;
 
-
+  inputGridObj: InputGridObj;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {
@@ -39,7 +40,8 @@ export class PefindoViewComponent implements OnInit {
   }
 
   async ngOnInit() : Promise<void> {
-    await this.GetPefindoData();
+    await this.GetPefindoData(); 
+    
   }
 
   async GetPefindoData() {
@@ -52,6 +54,7 @@ export class PefindoViewComponent implements OnInit {
         this.PefindoObj.MrIdTypeCode = response['MrIdTypeCode'];
         this.PefindoObj.TaxIdNo = response['TaxIdNo'];        
 
+        this.PefindoObj.MrCustTypeCode = "COMPANY";
         if(this.PefindoObj.MrCustTypeCode == "PERSONAL"){
           this.isPersonal = true;
         }else{
@@ -67,11 +70,14 @@ export class PefindoViewComponent implements OnInit {
         this.ScoreData = response['CIP']['RecordList'][0];
         this.ContractsData = response['Contracts'];
         this.ContractsSummary = response['ContractSummary'];
-        this.OtherData = response['GetOtherDataReport'];
-        
+        this.OtherData = response['GetOtherDataReport'];        
         
       }
     );
+
+    
+
+    
 
     
   }

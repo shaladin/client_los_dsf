@@ -90,7 +90,7 @@
                 <div class="form-group row">
                   <label class="col-md-3 adins-required-label" translate>Effective Date</label>
                   <div class="col-md-3">
-                    <input type="date" [min]="ApvDt" class="form-control" formControlName="EffDt"
+                    <input type="date"class="form-control" formControlName="EffDt"
                       [ngClass]="{ 'border-danger': enjiForm.submitted && PreGoLiveForm.controls.EffDt.invalid }">
                     <lib-uc-show-errors [control]="PreGoLiveForm.controls.EffDt"
                       [submit]="enjiForm.submitted">

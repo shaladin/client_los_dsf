@@ -367,5 +367,9 @@ export class ApplicationReviewDetailComponent implements OnInit {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
   }
+
+  OpenPefindoView(){
+    window.open(NavigationConstant.PEFINDO_VIEW + "?AppId=" + this.appId, "_blank");
+  }
   //#endregion
 }
