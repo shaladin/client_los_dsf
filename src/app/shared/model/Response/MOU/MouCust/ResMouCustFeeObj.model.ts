@@ -1,17 +1,17 @@
 export class ResMouCustFeeObj {
-    MouCustFeeId: any;
-    MouCustId: any;
-    RefFeeId: any;
-    FeePrcnt: any;
-    FeeAmt: any;
-    MrFeeTypeCode: any;
+    MouCustFeeId: number;
+    MouCustId: number;
+    RefFeeId: number;
+    FeePrcnt: number;
+    FeeAmt: number;
+    MrFeeTypeCode: string;
     FeeName: string;
     FeeType: string;
     FeeCode: string;
     MouCustFeePaymentType: string;
     MrAgreementAffected: string;
     FeeTypeView: string;
-    RowVersion: any;
+    RowVersion: string;
     constructor(){ this.MouCustFeeId = 0; this.RowVersion = "" }
 }
   

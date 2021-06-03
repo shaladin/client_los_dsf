@@ -8,7 +8,7 @@ export class ReturnHandlingHObj {
   ReturnNotes: string;
   ReturnFromTrxType: string;
   WfTaskListId: number;
-  RowVersion: any;
+  RowVersion: string;
   IsReturn: boolean;
   IsReturnToSpesific: boolean;
 

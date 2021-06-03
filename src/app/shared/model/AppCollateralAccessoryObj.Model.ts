@@ -6,7 +6,7 @@ export class AppCollateralAccessoryObj {
   AccessoryPriceAmt: number;
   DownPaymentAmt: number;
   AccessoryNotes: string;
-  RowVersion: any;
+  RowVersion: string;
 
   constructor() {
     this.AppCollateralAccessoryId = 0;

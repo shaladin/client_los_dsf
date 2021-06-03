@@ -24,7 +24,7 @@ export class LtkmCustAddrObj {
     Fax: string;
     FullAddr: string;
     StayLength: number;
-    RowVersion: any;
+    RowVersion: string;
 
     constructor() { this.LtkmCustAddrId = 0; this.RowVersion = "" }
 }

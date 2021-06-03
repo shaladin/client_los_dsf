@@ -23,7 +23,7 @@ export class AppCustObj {
     MrCustRelationshipDescr: string;
     VipNotes: string;
     Age: number;
-    RowVersion: any;
+    RowVersion: string;
 
     constructor() {
         this.AppCustId = 0;

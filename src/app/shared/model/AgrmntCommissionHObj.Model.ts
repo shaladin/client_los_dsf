@@ -25,10 +25,10 @@ export class AgrmntCommissionHObj {
     TaxpayerNo: string;
     SupplierName: string;
     RowVersion: string;
-    ReservedField1: any;
-    ReservedField2: any;
-    ReservedField3: any;
-    ReservedField4: any;
-    ReservedField5: any;
+    ReservedField1: string;
+    ReservedField2: string;
+    ReservedField3: string;
+    ReservedField4: string;
+    ReservedField5: string;
     VendorBankAccObjs: Array<VendorBankAccObj>;
 }

@@ -1,8 +1,8 @@
 export class RefLobObj {
     RefLobId: any;
-    LobCode: any;
-    LobName: any;
-    RegRptCode: any;
-    BlCode: any;
+    LobCode: string;
+    LobName: string;
+    RegRptCode: string;
+    BlCode: string;
     constructor() { this.RefLobId = 0 }
 }

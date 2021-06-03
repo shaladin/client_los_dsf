@@ -15,7 +15,7 @@ export class LtkmCustCompanyFinDataObj {
     GrowthPrcnt: number;
     WorkingCapitalAmt: number;
     OthMonthlyInstAmt: number;
-    DateAsOf: any;
+    DateAsOf: Date;
     Revenue: number;
     OprCost: number;
     ProfitBeforeTax: number;

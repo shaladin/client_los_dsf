@@ -17,7 +17,7 @@ export class InputLookupObj {
     isReady: boolean
     isDisable: boolean
     ddlEnvironments: any
-    title: any;
+    title: string;
 
     constructor() {
         this.urlJson = "./assets/uclookup/zipcode/lookupZipcode.json";

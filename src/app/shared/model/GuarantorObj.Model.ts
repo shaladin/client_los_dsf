@@ -3,7 +3,7 @@ import { AppGuarantorObj } from "./AppGuarantorObj.Model";
 export class GuarantorObj {
     AppId: number;
     AppGuarantorObj: AppGuarantorObj;
-    RowVersion: any;
+    RowVersion: string;
 
     constructor() { 
         this.AppGuarantorObj = new AppGuarantorObj(); 

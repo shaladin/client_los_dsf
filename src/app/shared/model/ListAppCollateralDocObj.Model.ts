@@ -1,5 +1,5 @@
 export class ListAppCollateralDocObj {
     AppCollateralDocObj: any[];
-    RowVersion: any;
+    RowVersion: string;
     constructor() { this.RowVersion = "" }
 }

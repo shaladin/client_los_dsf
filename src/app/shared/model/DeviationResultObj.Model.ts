@@ -1,18 +1,18 @@
 export class DeviationResultObj {
     
-    DeviationResultId: any;
-    SeqNo: any;
-    DeviationCategory: any;
-    MrDeviationType: any;
-    RefNo: any;
-    TrxTypeCode: any;
-    ApvAt: any;
-    OriginalValue: any;
-    CurrentValue: any;
-    BehaviourValue: any;
-    IsFatal: any;
-    Notes: any;
-    RowVersion: any;
+    DeviationResultId: number;
+    SeqNo: number;
+    DeviationCategory: string;
+    MrDeviationType: string;
+    RefNo: string;
+    TrxTypeCode: string;
+    ApvAt: string;
+    OriginalValue: string;
+    CurrentValue: string;
+    BehaviourValue: string;
+    IsFatal: boolean;
+    Notes: string;
+    RowVersion: string;
     
     constructor() { 
         this.RowVersion = "";
