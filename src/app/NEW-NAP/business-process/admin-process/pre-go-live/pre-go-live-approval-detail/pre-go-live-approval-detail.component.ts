@@ -256,7 +256,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     this.outstandingTcObj = new OutstandingTcObj(); 
     this.listAppTCObj = new ListAppTCObj();
     this.listAppTCObj.AppTCObj = new Array();
-
+ 
     for (var i = 0; i < this.TCList["length"]; i++) {
       this.appTC = new AppTCObj();
       this.appTC.AppId = this.TCList[i].AppId;
@@ -275,10 +275,19 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
     this.outstandingTcObj.ListAppTCObj = this.listAppTCObj.AppTCObj;
 
+    let ReqApvCustomObj = {
+      AppId: this.TCList[0].AppId,
+      Tasks: event.Tasks
+    }
+
     this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
       () => {
+        this.http.post(URLConstant.Approval, ReqApvCustomObj).subscribe(
+          () => {
+            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
+          }
+        );
         // this.toastr.successMessage("Success");
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
       }
     );
   }

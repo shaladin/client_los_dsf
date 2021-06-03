@@ -1294,7 +1294,7 @@ export class URLConstant {
   public static GetListNegativeCustByCustNo = environment.FoundationR3Url + "/NegativeCust/GetListNegativeCustByCustNo";
 
   // Credit Approval
-  public static CreditApproval = environment.losUrl + "/Approval/Approval";
+  public static Approval = environment.losUrl + "/Approval/Approval";
 
   // New Approval R3
   public static CreateNewRFA = "/Approval/CreateNewRFA";

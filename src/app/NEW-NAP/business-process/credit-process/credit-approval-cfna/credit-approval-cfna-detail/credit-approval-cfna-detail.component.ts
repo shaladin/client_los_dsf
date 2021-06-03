@@ -156,12 +156,12 @@ export class CreditApprovalCfnaDetailComponent implements OnInit {
   }
   onApprovalSubmited(event) {
 
-    let ReqCreditApvCustomObj = {
+    let ReqApvCustomObj = {
       AppId: this.appId,
       Tasks: event.Tasks
     }
 
-    this.http.post(URLConstant.CreditApproval, ReqCreditApvCustomObj).subscribe(
+    this.http.post(URLConstant.Approval, ReqApvCustomObj).subscribe(
       (response)=>{
         this.toastr.successMessage(response["Message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
