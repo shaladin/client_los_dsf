@@ -1,0 +1,49 @@
+{
+    "subsection": [
+        {
+            "subSectionId": "Product Offering Information",
+            "subSectionTitle": "Main Information",
+            "mainInfoPath": "/Generic/GetDataViewBySQL",
+            "mainInfo": [
+                {
+                    "type": "text",
+                    "label": "Product Offering Code",
+                    "property": "prodCode"
+                },
+                {
+                    "type": "date",
+                    "label": "Start Active Date",
+                    "property": "startDt"
+                },
+                {
+                    "type": "text",
+                    "label": "Product Offering Name",
+                    "property": "prodName"
+                },
+                {
+                    "type": "date",
+                    "label": "End Date",
+                    "property": "endDt"
+                },
+                {
+                    "type": "text",
+                    "label": "Status",
+                    "property": "descr"
+                },
+                {
+                    "type": "text",
+                    "label": "Offering Description",
+                    "property": "prodDescr"
+                },
+                {
+                    "type": "text",
+                    "label": "Product Offering Version",
+                    "property": "versionName"
+                }
+            ],
+            "querystring": {
+                "name": "viewProductOfferingMainInformationByCode"
+            }
+        }
+    ]
+}
