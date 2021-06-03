@@ -129,7 +129,7 @@ export class RoTelemkOfferDetailComponent implements OnInit {
   }
 
   gotoView() {
-    AdInsHelper.RedirectUrl(this.router, ["/Lead/PotentialRo/View"], { "RoPotentialNo": this.roPotentialNo, "IsFromTelemkOffer": true });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_POTENTIAL_RO_VIEW], { "RoPotentialNo": this.roPotentialNo, "IsFromTelemkOffer": true });
   }
 
   gotoVerif() {

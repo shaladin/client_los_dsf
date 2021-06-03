@@ -40,7 +40,7 @@ export class LeadInputLeadDataComponent implements OnInit {
   @Input() isEndOfTab: string = "";
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
   typePage: string = "";
-  CopyFrom: string;
+  CopyFrom: number = 0;
   LeadId: number;
   assetConditionObj: RefMasterObj;
   returnAssetConditionObj: [];
@@ -307,7 +307,7 @@ export class LeadInputLeadDataComponent implements OnInit {
 
 
 
-    if (this.CopyFrom != null) {
+    if (this.CopyFrom != 0) {
       this.reqLeadAssetObj = new LeadAssetObj();
       this.reqLeadAssetObj.LeadId = this.CopyFrom;
       let reqLeadAssetObj = { Id: this.CopyFrom };

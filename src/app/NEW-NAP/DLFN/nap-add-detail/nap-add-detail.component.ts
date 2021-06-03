@@ -13,6 +13,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -107,7 +108,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/DLFN/Paging"], {});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_PAGING], {});
   }
 
   MakeViewReturnInfoObj() {
@@ -187,7 +188,7 @@ export class NapAddDetailComponent implements OnInit {
     this.NapObj.WfTaskListId = this.wfTaskListId;
     this.http.post(URLConstant.SubmitNAP, this.NapObj).subscribe(
       (response) => {
-        AdInsHelper.RedirectUrl(this.router, ["/Nap/DLFN/Paging"], {});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_PAGING], {});
       })
   }
 

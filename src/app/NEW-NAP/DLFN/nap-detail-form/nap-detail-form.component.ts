@@ -17,6 +17,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
 import { CookieService } from 'ngx-cookie';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -215,7 +216,7 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router, ["/Nap/DLFN/Paging"], {});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_PAGING], {});
   }
 
   ClaimTask() {
