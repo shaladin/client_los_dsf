@@ -38,7 +38,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   result: AgrmntObj;
   result4: NapAppModel;
   arrValue = [];
-  TCList: any;
+  TCList: Array<AppTCObj> = new Array();
   AppNo: string;
   NumOfAsset: number;
   Tenor: number;

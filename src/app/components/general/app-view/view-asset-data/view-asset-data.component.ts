@@ -21,7 +21,7 @@ export class ViewAssetDataComponent implements OnInit {
   };
 
   AppObj: any;
-  AppAssetObj: AllAssetDataObj;
+  AppAssetObj: any;
   totalRsvFund: number = 0;
   totalHalfResponseAppAssetAttrObjs: number = 0;
 

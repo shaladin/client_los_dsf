@@ -30,7 +30,7 @@ export class DocChecklistApprovalDetailComponent implements OnInit {
   viewObj: string;
   TrxNo: string;
   arrValue = [];
-  TCList: any;
+  TCList: Array<AppTCObj> = new Array();
   AppNo: string;
   IsApvReady: boolean = false;
   listAppTCObj: ListAppTCObj;
