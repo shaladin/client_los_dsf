@@ -4,7 +4,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MouCustAssetObj } from 'app/shared/model/MouCustAssetObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustAssetDetailComponent } from './mou-cust-asset-detail/mou-cust-asset-detail.component';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -20,7 +19,7 @@ export class MouCustAssetComponent implements OnInit {
   @Input() IsAssetSelected: boolean;
   @Input() AssetTypeCode: string;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   index: number = 0;
   tempResponseMouCustAsset: Array<MouCustAssetObj>;
   mouAssetList: Array<object> = [];

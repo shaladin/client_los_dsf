@@ -23,10 +23,10 @@ export class SimilarMouCompanyDataComponent implements OnInit {
   MouCustCompanyObj: MouCustCompanyObj;
   MouCustAddrObj: MouCustAddrObj;
   RowVersion: string;
-  ListCustomerDuplicate: Array<any> = new Array();
-  ListNegativeCust: Array<any> = new Array();
-  ListAppCustDuplicate: Array<any> = new Array();
-  ListMouCustDuplicate: Array<any> = new Array();
+  ListCustomerDuplicate: Array<any> = new Array(); 
+  ListNegativeCust: Array<any> = new Array(); 
+  ListAppCustDuplicate: Array<any> = new Array(); 
+  ListMouCustDuplicate: Array<any> = new Array(); 
 
   constructor(
     private http: HttpClient,
@@ -49,11 +49,7 @@ export class SimilarMouCompanyDataComponent implements OnInit {
     this.MouCustCompanyObj = new MouCustCompanyObj();
     this.MouCustAddrObj = new MouCustAddrObj();
 
-    var mouCustObj = {
-      Id: this.MouCustId
-    }
-    
-    this.http.post(URLConstant.GetMouCustByMouCustId, { mouCustObj }).subscribe(
+    this.http.post(URLConstant.GetMouCustByMouCustId, { Id: this.MouCustId }).subscribe(
       response => {
         this.MouCustObj = response['MouCustObj'];
         this.RowVersion = response['MouCustObj'].RowVersion;

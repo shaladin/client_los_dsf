@@ -11,6 +11,7 @@ import { environment } from 'environments/environment';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetMouCustDuplicateObj } from 'app/shared/model/Request/MOU/ReqGetMouCustDuplicateObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { CustObj } from 'app/shared/model/CustObj.Model';
 
 @Component({
   selector: 'app-existing-mou-company',
@@ -23,18 +24,18 @@ export class ExistingMouCompanyComponent implements OnInit {
   FondationUrl = environment.FoundationR3Url;
   MouCustObj: MouCustObj;
   MouCustCompanyObj: MouCustCompanyObj;
-  ListDuplicateAppGuarantor: any;
-  ListDuplicateMouGuarantor: any;
-  ListDuplicateAppShareholder: any;
-  ListDuplicateMouShareholder: any;
-  ListSelectedIdAppGuarantor: any;
-  ListSelectedIdAppShareholder: any;
-  ListSelectedIdMouGuarantor: any;
-  ListSelectedIdMouShareholder: any;
+  ListDuplicateAppGuarantor: any; 
+  ListDuplicateMouGuarantor: any; 
+  ListDuplicateAppShareholder: any; 
+  ListDuplicateMouShareholder: any; 
+  ListSelectedIdAppGuarantor: Array<number>;
+  ListSelectedIdAppShareholder: Array<number>;
+  ListSelectedIdMouGuarantor: Array<number>;
+  ListSelectedIdMouShareholder: Array<number>;
   checkboxAllGuarantor = false;
   checkboxAllShareholder = false;
   RowVersion: string;
-  cust: any;
+  cust: CustObj;
   custUrl: string;
   CustNoObj: GenericObj = new GenericObj();
   constructor(
@@ -68,7 +69,7 @@ export class ExistingMouCompanyComponent implements OnInit {
 
         this.CustNoObj.CustNo = this.MouCustObj['CustNo'];
         this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
-          response => {
+          (response: any) => {
             this.cust = response;
           }
         );

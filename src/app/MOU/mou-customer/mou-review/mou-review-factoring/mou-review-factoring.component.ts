@@ -31,7 +31,6 @@ export class MouReviewFactoringComponent implements OnInit {
   WfTaskListId: number;
   MouType: string = "FACTORING";
   PlafondAmt: number;
-  listApprover: any;
   MrCustTypeCode: string;
   resultData: MouCustObj;
   listReason: Array<KeyValueObj>;

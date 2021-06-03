@@ -92,11 +92,7 @@ export class LoanObjectComponent implements OnInit {
     this.title = "Edit Loan Object";
     this.MainInfoForm.controls.FinancingAmount.disable();
 
-    var obj = {
-      Id: this.AppLoanPurposeId
-    };
-
-    await this.http.post(URLConstant.GetAppLoanPurposeByAppLoanPurposeId, obj).toPromise().then((response:any) => {
+    await this.http.post(URLConstant.GetAppLoanPurposeByAppLoanPurposeId, {Id: this.AppLoanPurposeId}).toPromise().then((response:any) => {
       this.objEdit = response;
       this.MainInfoForm.patchValue({
         IsDisburseToCust: response["IsDisburseToCust"],
@@ -420,10 +416,7 @@ export class LoanObjectComponent implements OnInit {
   }
 
   loadDataTable() {
-    var obj = {
-      Id: this.AppId
-    }
-    this.http.post(URLConstant.GetListAppLoanPurposeByAppId, obj).subscribe(
+    this.http.post(URLConstant.GetListAppLoanPurposeByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.resultData = response["listResponseAppLoanPurpose"];
       });
