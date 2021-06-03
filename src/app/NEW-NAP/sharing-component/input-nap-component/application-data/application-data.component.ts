@@ -41,7 +41,6 @@ export class ApplicationDataComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
-  user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   ListCrossAppObj: any = {};
   inputLookupObj;
   inputLookupEconomicSectorObj;
@@ -177,11 +176,12 @@ export class ApplicationDataComponent implements OnInit {
       Id: this.appId
     }
 
+    var user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.http.post(URLConstant.GetAppCustByAppId, AppObj).subscribe(
       (response) => {
         this.CustNo = response["CustNo"];
 
-        this.http.post(URLConstant.GetListMouCustByCustNo, {CustNo: this.CustNo, StartDt: this.user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL}).subscribe(
+        this.http.post(URLConstant.GetListMouCustByCustNo, {CustNo: this.CustNo, StartDt: user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL}).subscribe(
           (response) => {
             this.resMouCustObj = response[CommonConstant.ReturnObj];
 
@@ -191,34 +191,6 @@ export class ApplicationDataComponent implements OnInit {
             // }
           }
         );
-      }
-    );
-
-    this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).subscribe(
-      (response: GeneralSettingObj) => {
-        this.salesOfficerCode = response.GsValue.split(',');
-        if(this.salesOfficerCode.some(x => x === this.user.JobTitleCode)) {
-          this.isSalesOfficerCode = true;
-          this.NapAppModelForm.patchValue({
-            SalesOfficerNo: this.user.EmpNo,
-            SalesOfficerName: this.user.EmpName
-          });
-
-          let ReqGetRefEmpSpvByEmpNo: GenericObj = new GenericObj();
-          ReqGetRefEmpSpvByEmpNo.EmpNo = this.user.EmpNo;
-
-          this.http.post<ResRefEmpObj>(URLConstant.GetRefEmpSpvByEmpNo, ReqGetRefEmpSpvByEmpNo).subscribe(
-            (response) => {
-              this.refEmpSpvObj = response;
-              if(this.refEmpSpvObj !== null) {
-                this.NapAppModelForm.patchValue({
-                  SalesHeadNo: this.refEmpSpvObj.EmpNo,
-                  SalesHeadName: this.refEmpSpvObj.EmpName
-                });
-              }
-            }
-          );
-        }
       }
     );
   }
@@ -493,7 +465,7 @@ export class ApplicationDataComponent implements OnInit {
     });
   }
 
-  async makeLookUpObj() {
+  makeLookUpObj() {
     // Lookup obj
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
@@ -525,34 +497,6 @@ export class ApplicationDataComponent implements OnInit {
           this.inputLookupEconomicSectorObj.jsonSelect = { Descr: response.Value };
         });
     }
-
-    await this.http.post(URLConstant.GetGeneralSettingValueByCode, { Code: CommonConstant.GS_CODE_SALES_OFFICER_CODE }).toPromise().then(
-      (response: GeneralSettingObj) => {
-        this.salesOfficerCode = response.GsValue.split(',');
-        if(this.salesOfficerCode.some(x => x === this.user.JobTitleCode)) {
-          this.isSalesOfficerCode = true;
-          this.NapAppModelForm.patchValue({
-            SalesOfficerNo: this.user.EmpNo,
-            SalesOfficerName: this.user.EmpName
-          });
-
-          let ReqGetRefEmpSpvByEmpNo: GenericObj = new GenericObj();
-          ReqGetRefEmpSpvByEmpNo.EmpNo = this.user.EmpNo;
-
-          this.http.post<ResRefEmpObj>(URLConstant.GetRefEmpSpvByEmpNo, ReqGetRefEmpSpvByEmpNo).subscribe(
-            (response) => {
-              this.refEmpSpvObj = response;
-              if(this.refEmpSpvObj !== null) {
-                this.NapAppModelForm.patchValue({
-                  SalesHeadNo: this.refEmpSpvObj.EmpNo,
-                  SalesHeadName: this.refEmpSpvObj.EmpName
-                });
-              }
-            }
-          );
-        }
-      }
-    );
     this.isInputLookupObj = true;
   }
 
@@ -582,7 +526,7 @@ export class ApplicationDataComponent implements OnInit {
 
     await this.GetGSValueSalesOfficer();
 
-    await this.makeLookUpObj();
+    this.makeLookUpObj();
   }
 
   async GetGSValueSalesOfficer() {
