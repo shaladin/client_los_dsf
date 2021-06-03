@@ -335,12 +335,7 @@ export class HoGeneralDataComponent implements OnInit {
     this.http.post(URLConstant.AddOrEditProductDetail, this.ReqListProductDObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        if (this.StateSave == "save") {
-          this.BackToPaging();
-        }
-        else {
-          this.wizard.goToNextStep();
-        }
+        this.wizard.goToNextStep();
       }
     );
   }
@@ -364,8 +359,8 @@ export class HoGeneralDataComponent implements OnInit {
         this.ReqCopyProdObj.FromProdId = this.InputLookUpObj.jsonSelect["ProdId"]
         this.http.post(URLConstant.CopyProduct, this.ReqCopyProdObj).subscribe(
           (response) => {
+            this.LoadProdComponent(this.ProdHId, "GEN", true, "");
             this.toastr.successMessage("Product Copied Successfully");
-            window.location.reload();
           }
         );
       }
