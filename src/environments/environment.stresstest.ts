@@ -8,7 +8,7 @@ export const environment = {
     navbarColor: 'lime',
     losUrl: 'https://R3STWEBBE.ad-ins.com/LOS_BE',
     FoundationR3Url: 'https://R3STWEBBE.ad-ins.com/FOUNDATION_BE',
-    DMSUrl : "http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx",
+    DMSUrl : "http://sky.ad-ins.com/LiteDMS_POC/Integration/ViewDoc.aspx",
     AMSUrl : "https://R3STWEBBE.ad-ins.com/AMS", //OPL dah ada
     LMSUrl : "https://R3STWEBBE.ad-ins.com/LMS", //OPL dah ada
     DashboardURL: 'https://R3STWEBBE.ad-ins.com/Dashboard',
