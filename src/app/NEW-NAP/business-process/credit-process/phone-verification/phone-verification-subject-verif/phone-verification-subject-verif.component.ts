@@ -28,7 +28,6 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
   isReturnHandling: boolean = false;
-
   PhoneDataForm = this.fb.group({
 
     //VerfResultId: ['', Validators.required],
@@ -104,7 +103,9 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       this.appId = params["AppId"];
+      if(params["VerfResultHId"] != 0){
       this.verfResultHId = params["VerfResultHId"];
+      }
       this.subjectName = params["Name"];
       this.subjectType = params["Type"];
       this.subjectRelation = params["Relation"];
@@ -154,10 +155,13 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     else {
       this.setPhoneVerifData();
       this.http.post(URLConstant.AddVerfResultHeaderAndVerfResultDetail, this.PhoneDataObj).subscribe(
-        (response) => {
+        async (response) => {
           this.toastr.successMessage(response["message"]);
-            this.GetVerfResultHData();
-            this.GetListVerfResulHtData(this.verfResHObj);
+          if(this.verfResultHId == 0 || this.verfResultHId == undefined){
+            this.verfResultHId = response["Id"];
+          }
+            await this.GetVerfResultHData();
+            await this.GetListVerfResulHtData(this.verfResHObj);
             formDirective.resetForm();
             this.clearform();
         });
@@ -370,7 +374,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     );
   }
 
-  async GetListVerfResulHtData(verfResHObj: ReqGetVerfResult4Obj) {
+ async GetListVerfResulHtData(verfResHObj: ReqGetVerfResult4Obj) {
     await this.http.post(URLConstant.GetVerfResultHsByVerfResultIdAndObjectCode, verfResHObj).toPromise().then(
       (response) => {
         this.listVerifResultHObj = response["responseVerfResultHCustomObjs"];
