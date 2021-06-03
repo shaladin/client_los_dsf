@@ -21,7 +21,7 @@ export class NapPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: any;
   userAccess: any;
-  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,

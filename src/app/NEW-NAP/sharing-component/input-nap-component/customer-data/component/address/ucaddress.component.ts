@@ -21,7 +21,7 @@ export class CustUcaddressComponent implements OnInit {
   @Input() identifier: string;
   @Input() default: any;
   @Input() title = "Address Information";
-  @Input() inputField: any = new InputFieldObj();
+  @Input() inputField: InputFieldObj = new InputFieldObj();
   @Input() showAllPhn: boolean = true;
   @Input() showPhn1: boolean = true;
   @Input() showPhn2: boolean = true;

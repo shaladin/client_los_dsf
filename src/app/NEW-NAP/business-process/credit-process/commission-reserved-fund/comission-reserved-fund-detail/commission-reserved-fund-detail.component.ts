@@ -92,7 +92,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
 
   ListResultRefundIncomeInfo: Array<ResultRefundObj>;
   TotalHalfListResultRefundIncomeInfo: number = 0;
-  DictMaxIncomeForm: any = {};
+  DictMaxIncomeForm: object = {};
   isView: boolean = false;
   GetIncomeInfoObj() {
     var obj = {
@@ -267,7 +267,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   }
 
   isShow: boolean = false;
-  DictRemainingIncomeForm: any = {};
+  DictRemainingIncomeForm: object = {};
   GetDictRemaining(ev) {
     this.DictRemainingIncomeForm = ev;
     this.isShow = true;

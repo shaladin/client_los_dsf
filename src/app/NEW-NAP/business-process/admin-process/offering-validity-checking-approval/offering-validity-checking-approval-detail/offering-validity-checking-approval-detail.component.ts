@@ -20,7 +20,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   BizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   ApvReqId: number;
   taskId: number;
   InputApvObj: UcInputApprovalObj;

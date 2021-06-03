@@ -78,7 +78,7 @@ export class GuarantorCompanyFL4WComponent implements OnInit {
     LegalDocForm: this.fb.array([])
   });
   businessDt: Date = new Date();
-  selectedListLegalDocType: any = new Array();
+  selectedListLegalDocType: Array<KeyValueObj> = new Array();
   inputAddressObj: InputAddressObj;
   constructor(private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private modalService: NgbModal, private cookieService: CookieService) {
   }

@@ -33,7 +33,7 @@ export class LifeInsuranceDataComponent implements OnInit {
   IsChecked: any;
   mode: string = "add";
   ListObj: Array<LifeInsDObj> = new Array<LifeInsDObj>();
-  AppLifeInsD: any = new Array();
+  AppLifeInsD: Array<any> = new Array();
   result: LifeInsObj = new LifeInsObj();
 
   minInsLength: number = 1;

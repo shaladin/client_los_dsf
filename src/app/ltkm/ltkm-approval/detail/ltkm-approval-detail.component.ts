@@ -34,7 +34,7 @@ export class LtkmApprovalDetailComponent implements OnInit {
     viewObj: string;
     arrValue = [];
     type: string;
-    inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
+    inputObj: { taskId: number; instanceId: number; approvalBaseUrl: string; };
     ManualDeviationData;
     isExistedManualDeviationData;
     BizTemplateCode: string;

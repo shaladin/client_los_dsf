@@ -34,17 +34,17 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
   @Input() appId;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() custDataPersonalObj: LtkmCustDataPersonalObj = new LtkmCustDataPersonalObj();
-  @Input() custType: any;
+  @Input() custType: string;
   @Input() IsSpouseExist: boolean = false;
   @Input() bizTemplateCode : string = "";
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
   @Output() isMarried: EventEmitter<any> = new EventEmitter();
   @Output() spouseObj: EventEmitter<any> = new EventEmitter();
 
-  selectedCustNo: any;
-  selectedNationalityCountryCode: any;
+  selectedCustNo: string;
+  selectedNationalityCountryCode: string;
   custDataObj: CustDataObj;
 
   InputLookupCustomerObj: InputLookupObj;
@@ -505,11 +505,11 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
   }
 
   //START URS-LOS-041
-  controlNameIdNo: any = 'IdNo';
-  controlNameIdType: any = 'MrIdTypeCode';
+  controlNameIdNo: string = 'IdNo';
+  controlNameIdType: string = 'MrIdTypeCode';
   customPattern: Array<CustomPatternObj>;
-  initIdTypeCode: any;
-  resultPattern: any;
+  initIdTypeCode: string;
+  resultPattern: Array<KeyValueObj> = new Array();
 
   getInitPattern() {
     this.regexService.getListPattern().subscribe(

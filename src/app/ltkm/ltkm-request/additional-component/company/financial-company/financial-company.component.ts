@@ -69,7 +69,7 @@ export class LtkmFinancialCompanyComponent implements OnInit {
 
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() isLockMode: boolean = false;
 
   constructor(private fb: FormBuilder,

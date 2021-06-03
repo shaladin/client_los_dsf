@@ -41,7 +41,7 @@ export class NapAddDetailComponent implements OnInit {
   custType: string = CommonConstant.CustTypeCompany;
   stepperMode: string = CommonConstant.CustTypeCompany;
   showCancel: boolean = true;
-  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   isMainCustMarried: boolean = false;

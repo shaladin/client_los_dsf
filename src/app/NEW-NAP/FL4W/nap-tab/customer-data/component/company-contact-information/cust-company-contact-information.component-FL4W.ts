@@ -20,7 +20,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 export class CustCompanyContactInformationFL4WComponent implements OnInit {
 
-  @Input() listContactPersonCompany: any = new Array<AppCustCompanyContactPersonObj>();
+  @Input() listContactPersonCompany: Array<AppCustCompanyContactPersonObj> = new Array<AppCustCompanyContactPersonObj>();
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 

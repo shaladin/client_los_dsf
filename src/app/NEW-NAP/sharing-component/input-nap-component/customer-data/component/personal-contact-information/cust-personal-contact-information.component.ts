@@ -51,7 +51,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
   professionObj = {
     ProfessionCode: ""
   };
-  copyToContactPersonAddrObj: any = [
+  copyToContactPersonAddrObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"

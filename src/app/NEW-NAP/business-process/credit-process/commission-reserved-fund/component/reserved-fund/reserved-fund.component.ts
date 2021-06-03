@@ -30,7 +30,7 @@ export class ReservedFundComponent implements OnInit {
   @Input() maxAllocAmt: number = 0;
   @Input() totalExpenseAmt: number = 0;
   @Input() totalRsvFundAmt: number = 0;
-  @Input() DictMaxIncomeForm: any = {};
+  @Input() DictMaxIncomeForm: object = {};
   @Input() ListResultRefundIncomeInfo: Array<ResultRefundObj>;
   @Output() outputTab: EventEmitter<AllAppReservedFundObj> = new EventEmitter();
   @Output() outputDictRemaining: EventEmitter<any> = new EventEmitter();
@@ -153,7 +153,7 @@ export class ReservedFundComponent implements OnInit {
     this.outputUpdateRemainingAlloc.emit(this.totalRsvFundAmt);
   }
 
-  DictRemainingIncomeForm: any = {};
+  DictRemainingIncomeForm: object = {};
   async GetAppCommissionData(appObj) {
     for (let index = 0; index < this.ListResultRefundIncomeInfo.length; index++) {
       const element = this.ListResultRefundIncomeInfo[index];

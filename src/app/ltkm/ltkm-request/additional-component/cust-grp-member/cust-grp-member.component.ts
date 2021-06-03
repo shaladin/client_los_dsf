@@ -9,6 +9,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { LtkmCustGrpObj } from 'app/shared/model/LTKM/LtkmCustGrpObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { CustObj } from 'app/shared/model/CustObj.Model';
 
 @Component({
     selector: 'app-ltkm-cust-grp-member',
@@ -38,7 +39,7 @@ export class LtkmCustGrpMemberComponent implements OnInit {
 
     InputLookupCustomerObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
     lookupCustomerIdentifiers: Array<string> = new Array<string>();
-    custMasterObj: any;
+    custMasterObj: CustObj;
 
     constructor(
         private fb: FormBuilder,
@@ -198,7 +199,7 @@ export class LtkmCustGrpMemberComponent implements OnInit {
 
     async setCustNameAndCustRelationship(i: number, custNo: string) {
         await this.http.post(URLConstant.GetCustByCustNo, { CustNo: custNo }).toPromise().then(
-            (response) => {
+            (response: CustObj) => {
                 this.custMasterObj = response;
                 this.dictLookup[i].nameSelect = response["CustName"];
                 this.dictLookup[i].jsonSelect = response;

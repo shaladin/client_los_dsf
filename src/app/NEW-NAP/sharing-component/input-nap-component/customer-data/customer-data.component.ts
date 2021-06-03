@@ -44,6 +44,7 @@ import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCode
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 import { AppCustAssetObj } from 'app/shared/model/AppCustAsset/AppCustAssetObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-customer-data',
@@ -115,14 +116,14 @@ export class CustomerDataComponent implements OnInit {
   ListAppCustAsset: Array<AppCustAssetObj>;
 
   CustTypeObj: any;
-  copyToResidenceTypeObj: any = [
+  copyToResidenceTypeObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
     },
   ];
 
-  copyToMailingTypeObj: any = [
+  copyToMailingTypeObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
@@ -133,7 +134,7 @@ export class CustomerDataComponent implements OnInit {
     }
   ];
 
-  copyToMailingCompanyTypeObj: any = [
+  copyToMailingCompanyTypeObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"

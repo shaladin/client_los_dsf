@@ -7,6 +7,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 
 @Component({
   selector: 'app-term-conditions',
@@ -15,8 +16,8 @@ import { CookieService } from 'ngx-cookie';
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class TermConditionsComponent implements OnInit {
-  AppTcList: any = [];
-  listTempTCList: any = [];
+  AppTcList: Array<AppTCObj> = [];
+  listTempTCList: Array<any> = [];
 
   totalCheckAll: number = 0;
   totalMandatory: number = 0;

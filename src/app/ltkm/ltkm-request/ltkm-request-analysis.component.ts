@@ -11,6 +11,7 @@ import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { ResRefEmpObj } from 'app/shared/model/Response/RefEmp/ResRefEmpObj.model';
 
 @Component({
     selector: 'app-ltkm-request-analysis',
@@ -27,13 +28,13 @@ export class LtkmRequestAnalysisComponent implements OnInit {
     readonly MasterSuspciousTrxDueTo = CommonConstant.RefMasterTypeCodeSuspciousTrxDueTo;
     DictRefMaster: Array<KeyValueObj> = new Array<KeyValueObj>();
     refOfficeObj: RefOfficeObj;
-    listRefOffice: Array<any>;
+    listRefOffice: Array<KeyValueObj>;
     user: any;
-    allInSalesOffice: any;
+    allInSalesOffice: Array<ResRefEmpObj> = new Array<ResRefEmpObj>();
 
     @Input() enjiForm: NgForm;
     @Input() parentForm: FormGroup;
-    @Input() identifier: any;
+    @Input() identifier: string;
 
     constructor(
         private fb: FormBuilder,
