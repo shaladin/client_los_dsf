@@ -125,7 +125,7 @@ export class MouDetailFactoringComponent implements OnInit {
         this.payFreqList = response[5].ReturnObject;
         this.instSchmList = response[6].ReturnObject;
         this.currencyList = response[7].ReturnObject;
-        var mouFctrData = response[8].ReturnObject;
+        var mouFctrData = response[8];
         this.MouDetailFactoringForm.patchValue({
           MrRecourseTypeCode: this.recourseTypeList[0].Key,
           WopCode: this.wopList[0].Key,
@@ -148,6 +148,7 @@ export class MouDetailFactoringComponent implements OnInit {
             MouCustId: this.MouCustId
           });
         }
+        this.OnChangeRecourseType(this.recourseTypeList[0].Key);
         this.CheckPaidBy(this.MouDetailFactoringForm.controls.MrPaidByCode.value);
         this.instTypeHandler();
         this.shouldComponentLoad = true;
@@ -296,7 +297,7 @@ export class MouDetailFactoringComponent implements OnInit {
             });
 
             this.inputLookupCustObj.nameSelect = this.listedCusts[0].CustNo
-            this.inputLookupCustObj.jsonSelect = { CustNo: this.listedCusts[0].CustNo };
+            this.inputLookupCustObj.jsonSelect = { CustNo: this.listedCusts[0].CustName };
             this.setCustName(this.listedCusts[0].CustNo, this.listedCusts[0].MouListedCustFctrId)
           }
         })
@@ -307,7 +308,7 @@ export class MouDetailFactoringComponent implements OnInit {
   }
 
   bindUcLookup() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var suppCrit = new Array();
     var critSuppObj = new CriteriaObj();
     critSuppObj.DataType = 'text';

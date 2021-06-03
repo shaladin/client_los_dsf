@@ -79,7 +79,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         else if (this.resultData.MrMouTypeCode == CommonConstant.FINANCING) {
           this.pageTitle = "MOU Financing";
         }
-        let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         this.dmsObj = new DMSObj();
         this.dmsObj.User = currentUserContext.UserName;
         this.dmsObj.Role = currentUserContext.RoleCode;

@@ -28,12 +28,12 @@ export class ViewFinancialComponent implements OnInit {
   appObj: NapAppModel = new NapAppModel();
 
   //FIN DATA
-  provisionFeeType: any = "-";
-  calcBase: any = "-";
-  calcMethod: any = "-";
-  appDlrFncng: any;
-  instTypeDescr: any = "-";
-  topCalcBased: any = "-";
+  provisionFeeType: string = "-";
+  calcBase: string = "-";
+  calcMethod: string = "-";
+  appDlrFncng: AppDlrFncng;
+  instTypeDescr: string = "-";
+  topCalcBased: string = "-";
 
   TotalAssetValue: number;
   TotalRentAmtPerPeriod: number;
@@ -63,7 +63,7 @@ export class ViewFinancialComponent implements OnInit {
       await this.GetListAllAssetFinancialData();
     }
     else {
-      this.getFinancialData();
+      await this.getFinancialData();
     }
   }
 
@@ -83,17 +83,17 @@ export class ViewFinancialComponent implements OnInit {
     this.TotalCofInterestAmt = 0;
   }
 
-  getFinancialData() {
+  async getFinancialData() {
     var reqObj = { Id: this.AppId };
-    this.http.post(URLConstant.GetFinancialDataByAppIdForView, reqObj).subscribe(
-      (response) => {
+    await this.http.post(URLConstant.GetFinancialDataByAppIdForView, reqObj).toPromise().then(
+      async (response) => {
         this.listSubsidy = response["AppSubsidyObjs"];
         this.listAppFeeObj = response["AppFeeObjs"];
         this.appFinDataObj = response["AppFinDataObj"];
         this.appObj = response["AppObj"];
         this.listInstallment = response["InstallmentObjs"];
         if (this.appObj.BizTemplateCode == CommonConstant.DF) {
-          this.getDataForDF(this.appFinDataObj)
+          await this.getDataForDF(this.appFinDataObj)
         }
       }
     );
@@ -129,20 +129,16 @@ export class ViewFinancialComponent implements OnInit {
     );
   }
   
-  getDataForDF(appFinDataObj) {
-
-    var AppOb = {
-      AppId: this.AppId
-    }
-    this.http.post(URLConstant.GetAppDlrFinByAppId, AppOb).subscribe(
-      (response) => {
+  async getDataForDF(appFinDataObj: AppFinDataObj) {
+      await this.http.post(URLConstant.GetAppDlrFinByAppId, { Id: this.AppId }).toPromise().then(
+      async (response: AppDlrFncng) => {
         this.appDlrFncng = response;
 
         var obj = {
           RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInstType,
           MasterCode: this.appDlrFncng.MrInstTypeCode
         }
-        this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, obj).subscribe(
+        await this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, obj).toPromise().then(
           (response) => {
             this.instTypeDescr = response["Descr"]
           }
@@ -151,7 +147,7 @@ export class ViewFinancialComponent implements OnInit {
           RefMasterTypeCode: CommonConstant.RefMasterTypeCodeTopCalcBased,
           MasterCode: this.appDlrFncng.TopBased
         }
-        this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, object).subscribe(
+        await this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, object).toPromise().then(
           (response) => {
             this.topCalcBased = response["Descr"]
           }
@@ -163,7 +159,7 @@ export class ViewFinancialComponent implements OnInit {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeProvisionSource,
       MasterCode: appFinDataObj.MrProvisionFeeCalcMethodCode
     }
-    this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, obj).subscribe(
+    await this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, obj).toPromise().then(
       (response) => {
         this.calcBase = response["Descr"]
       }
@@ -172,7 +168,7 @@ export class ViewFinancialComponent implements OnInit {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeProvisionType,
       MasterCode: appFinDataObj.MrProvisionFeeTypeCode
     }
-    this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, obj).subscribe(
+    await this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, obj).toPromise().then(
       (response) => {
         this.provisionFeeType = response["Descr"]
       }
