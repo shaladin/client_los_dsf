@@ -26,7 +26,7 @@ export class TaskReassignmentApprovalDetailComponent implements OnInit {
   IsReady: boolean;
   ApvReqId: number;
   taskId: number;
-  inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
+  inputObj: { taskId: number; instanceId: number; approvalBaseUrl: string; };
   trxNo: string;
   TaskReassignmentTrxId: number;
   TaskReassignmentObj: ResponseTaskReassignmentDetailPageObj;

@@ -19,7 +19,7 @@ export class RequisitionDecisionPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   isReady: boolean = false;
   arrCrit: any;
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
+  token: string = localStorage.getItem(CommonConstant.TOKEN);
 
   constructor(private router: Router,
     private toastr: NGXToastrService,

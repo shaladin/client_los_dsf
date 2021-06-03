@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { MouCustDlrFinObj } from 'app/shared/model/moucustdlrfin.Model';
+import { ResMouCustObj } from 'app/shared/model/Response/MOU/MouCust/ResMouCustObj.model';
+import { ResMouCustClauseObj } from 'app/shared/model/Response/MOU/MouCust/ResMouCustClauseObj.model';
 
 @Component({
   selector: 'app-mou-view-detail',
@@ -36,8 +38,8 @@ export class MouViewDetailComponent implements OnInit {
   MrRecourseTypeCode: string;
   Notes: string;
 
-  mouCust: any;
-  mouCustClause: any;
+  mouCust: ResMouCustObj;
+  mouCustClause: ResMouCustClauseObj;
   mouCustFctr: any;
   listAssetData: Array<any>;
   MrPaidByCode: string;

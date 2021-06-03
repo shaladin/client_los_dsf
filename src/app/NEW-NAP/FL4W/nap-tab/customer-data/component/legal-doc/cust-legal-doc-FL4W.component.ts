@@ -23,7 +23,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 export class CustLegalDocFL4WComponent implements OnInit {
 
-  @Input() listLegalDoc: any = new Array<AppCustCompanyLegalDocObj>();
+  @Input() listLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 

@@ -14,6 +14,8 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { CookieService } from 'ngx-cookie';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
 
 @Component({
   selector: 'app-trial-calculation',
@@ -35,7 +37,7 @@ export class TrialCalculationComponent implements OnInit {
   PayFreqVal: number;
   PayFreqTimeOfYear: number;
   FirstInstType: string;
-  DictRefPayFreq: any = {};
+  DictRefPayFreq: { [id: string]: RefPayFreqObj } = {};
   TrialForm = this.fb.group({
     OfficeCode: [''],
     CustName: ['', [Validators.maxLength(50)]],
@@ -130,7 +132,7 @@ export class TrialCalculationComponent implements OnInit {
   });
   appFinDataObj: AppFinDataObj = new AppFinDataObj();
   applicationDDLitems = new Array();
-  dpTypeValue: any = [
+  dpTypeValue: Array<KeyValueObj> = [
     {
       Key: "AMT",
       Value: "Amount"

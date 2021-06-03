@@ -295,7 +295,7 @@ export class LtkmRequestComponent implements OnInit {
             //comment urs-los-057, tidak perlu cek per komponent, karna hanya perlu liat cust no saja.
             var custDataPersonalObj = new LtkmCustDataPersonalObj();
             custDataPersonalObj = this.setCustPersonalObjForSave();
-            var personalAnalysisObj: any;
+            var personalAnalysisObj: object;
 
             if (this.mode == this.modeReqConst) {
                 personalAnalysisObj = {
@@ -355,7 +355,7 @@ export class LtkmRequestComponent implements OnInit {
             var custDataCompanyObj = new CustDataCompanyLtkmObj();
             custDataCompanyObj = this.setCustCompanyObjForSave();//perlu review
 
-            var coyAnalysisObj: any;
+            var coyAnalysisObj: object;
             if (this.mode == this.modeReqConst) {
                 coyAnalysisObj = {
                     Notes: this.CustDataCompanyForm.controls["ltkmAnalysis"]["controls"].Notes.value,

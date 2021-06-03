@@ -33,7 +33,7 @@ export class DocChecklistDetailComponent implements OnInit {
   appTC: any;
   TaskListId: any;
   DocChecklistObj: DocChecklist = new DocChecklist();
-  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
 
   IsCheckedAll: boolean = false;
 

@@ -27,8 +27,8 @@ export class FormCommissionGenerateComponent implements OnInit {
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   @Input() identifier: string;
-  @Input() FormInputObj: any = {};
-  @Input() DictMaxIncomeForm: any = {};
+  @Input() FormInputObj: object = {};
+  @Input() DictMaxIncomeForm: object = {};
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

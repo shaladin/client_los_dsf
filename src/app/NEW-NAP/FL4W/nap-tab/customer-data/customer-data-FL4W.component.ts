@@ -29,6 +29,7 @@ import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompany
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompanyContactPersonObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-customer-data-FL4W',
@@ -96,14 +97,14 @@ export class CustomerDataFL4WComponent implements OnInit {
   isBindDataDone: boolean = false;
 
   CustTypeObj: any;
-  copyToResidenceTypeObj: any = [
+  copyToResidenceTypeObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
     },
   ];
 
-  copyToMailingTypeObj: any = [
+  copyToMailingTypeObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
@@ -114,7 +115,7 @@ export class CustomerDataFL4WComponent implements OnInit {
     }
   ];
 
-  copyToMailingCompanyTypeObj: any = [
+  copyToMailingCompanyTypeObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"

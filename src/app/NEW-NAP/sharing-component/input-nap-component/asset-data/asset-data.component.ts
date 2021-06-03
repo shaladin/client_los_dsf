@@ -70,7 +70,7 @@ export class AssetDataComponent implements OnInit {
   salesSupervisor: string;
   priceAfterDiscount: number = 0;
   isListAsset: boolean = false;
-  listAsset: Array<any> = new Array<any>();
+  listAsset: Array<AllAssetDataObj> = new Array<AllAssetDataObj>();
   index: number = 0;
   units: number = 0;
   mode: string = "Add";
@@ -2520,10 +2520,7 @@ export class AssetDataComponent implements OnInit {
   }
 
   async GetAppCustCoy() {
-    var appObj = {
-      Id: this.AppCustObj.AppCustId,
-    };
-    await this.http.post(URLConstant.GetAppCustCompanyByAppCustId, appObj).toPromise().then(
+    await this.http.post(URLConstant.GetAppCustCompanyByAppCustId, {Id: this.AppCustObj.AppCustId}).toPromise().then(
       (response: any) => {
         this.AppCustCoyObj = response;
       }

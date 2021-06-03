@@ -45,7 +45,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
   DisbInfoId: any;
   AgrmntId: number;
   disburseTos: any;
-  isDdlBankAccountVisible: any = false;
+  isDdlBankAccountVisible: boolean = false;
   BankAccs: any;
   AppCustId: number;
   CustNo:any;
@@ -100,9 +100,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
     this.InputLookupBankObj.genericJson = "./assets/uclookup/lookupBank.json";
 
 
-    var obj = {
-      Id: this.AppId,
-    }
+    var obj = { Id: this.AppId, };
     await this.httpClient.post(URLConstant.GetAppDlrFinByAppId, obj).subscribe(
       (response) => {
         this.AppDlrFncngId = response["AppDlrFncngId"];

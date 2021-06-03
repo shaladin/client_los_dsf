@@ -23,6 +23,7 @@ import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
 import { RefEmpObj } from 'app/shared/model/RefEmpObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
+import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 
 @Component({
   selector: 'app-application-data-dlfn',
@@ -44,8 +45,8 @@ export class ApplicationDataDlfnComponent implements OnInit {
   arrAddCrit: Array<CriteriaObj>;
   employeeIdentifier;
   salesRecommendationItems = [];
-  isInputLookupObj;
-  inputLookupEconomicSectorObj;
+  isInputLookupObj: boolean; 
+  inputLookupEconomicSectorObj: InputLookupObj;
   SalesAppInfoForm = this.fb.group({
     MouCustId: [''],
     TopBased: [''],
@@ -84,7 +85,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
   refMasterWayOfRestructure: RefMasterObj = new RefMasterObj();
   refMasterCharacteristicCredit: RefMasterObj = new RefMasterObj();
 
-  allInScheme: any;
+  allInScheme: Array<KeyValueObj>;;
   allInType: Array<KeyValueObj>;
   allWOP: Array<KeyValueObj>;
   allAppSource: Array<KeyValueObj>;
@@ -103,9 +104,9 @@ export class ApplicationDataDlfnComponent implements OnInit {
   responseProd: ProdOfferingDObj;
   isInit: boolean = true;
 
-  listCustBankAcc: any;
+  listCustBankAcc: Array<AppCustBankAccObj>;
   selectedBankAcc: any;
-  GetBankInfo: any;
+  GetBankInfo: any; 
   appCustId: number;
   TopIntrstRatePrcnt: number;
   IntrstRatePrcnt: number;
@@ -124,7 +125,6 @@ export class ApplicationDataDlfnComponent implements OnInit {
     this.ListCrossAppObj["appId"] = this.AppId;
     this.ListCrossAppObj["result"] = [];
 
-    console.log("APP DATA DF")
     this.isInputLookupObj = false;
     this.loadData();
     this.GetCrossInfoData();
@@ -146,11 +146,8 @@ export class ApplicationDataDlfnComponent implements OnInit {
     this.refMasterTOPType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeTopCalcBased;
     this.refMasterCharacteristicCredit.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCharacteristicCredit
     this.refMasterWayOfRestructure.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeWayOfRestructure;
-    var AppObj = {
-      AppId: this.resultData.AppId,
-      MouType: CommonConstant.FINANCING
-    }
-    await this.http.post(URLConstant.GetListMouByAppIdAndMouTypeDF, AppObj).subscribe(
+    
+    await this.http.post(URLConstant.GetListMouByAppIdAndMouTypeDF, { AppId: this.resultData.AppId, MouType: CommonConstant.FINANCING }).subscribe(
       (response: any) => {
         this.allMouCust = response;
         var MouCustId;
@@ -196,7 +193,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
             TopBased: this.allTopBased[0].Key
           });
         } else {
-          this.http.post(URLConstant.GetAppDlrFinByAppId, AppObj).subscribe(
+          this.http.post(URLConstant.GetAppDlrFinByAppId, { Id: this.AppId }).subscribe(
             (responseEdit) => {
               this.SalesAppInfoForm.patchValue({
                 TopBased: responseEdit["TopBased"]
@@ -693,10 +690,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
 
   //#region  BANK ACC
   GetListAppCustBankAcc() {
-    var objAppCust = {
-      AppId: this.AppId
-    }
-    this.http.post<any>(URLConstant.GetAppCustByAppId, objAppCust).subscribe(
+    this.http.post<any>(URLConstant.GetAppCustByAppId, { Id: this.AppId }).subscribe(
       (responseAppCust) => {
         var obj = {
           AppCustId: responseAppCust["AppCustId"]
@@ -710,10 +704,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
   }
 
   GetBankAccCust() {
-    var obj = {
-      AppId: this.AppId
-    };
-    this.http.post(URLConstant.GetAppOtherInfoByAppId, obj).subscribe(
+    this.http.post(URLConstant.GetAppOtherInfoByAppId, { AppId: this.AppId }).subscribe( 
       (responseAoi) => {
         var objectForAppCustBankAcc = {
           BankCode: responseAoi["BankCode"],
@@ -721,7 +712,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
           AppCustId: this.appCustId
         }
         this.http.post(URLConstant.GetAppCustBankAccByBankAccNoAndBankCodeAndAppCustId, objectForAppCustBankAcc).subscribe(
-          (response) => {
+          (response: any) => {
             this.SalesAppInfoForm.patchValue({
               CustBankAcc: response["AppCustBankAccId"]
             });
@@ -796,11 +787,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
   //#endregion
 
   GetCrossInfoData() {
-    var obj = {
-      AppId: this.AppId,
-      RowVersion: ""
-    }
-    this.http.post(URLConstant.GetListAppCross, obj).subscribe(
+    this.http.post(URLConstant.GetListAppCross, { Id: this.AppId }).subscribe(
       (response) => {
         this.resultCrossApp = response[CommonConstant.ReturnObj];
         for (var i = 0; i < this.resultCrossApp.length; i++) {

@@ -27,7 +27,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   RFAPreGoLive: any;
   TaskListId: any;
   AgrmntId: any;
-  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
   private createComponent: UcapprovalcreateComponent;

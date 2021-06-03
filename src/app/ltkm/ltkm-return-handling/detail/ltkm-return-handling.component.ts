@@ -73,6 +73,7 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 @Component({
     selector: 'app-ltkm-return-handling',
     templateUrl: './ltkm-return-handling.component.html',
@@ -149,15 +150,15 @@ export class LtkmReturnHandlingComponent implements OnInit {
     isBindDataDone: boolean = false;
     isExisting: boolean = false;
 
-    CustTypeObj: any;
-    copyToResidenceTypeObj: any = [
+    CustTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
+    copyToResidenceTypeObj: Array<KeyValueObj> = [
         {
             Key: "LEGAL",
             Value: "Legal"
         },
     ];
 
-    copyToMailingTypeObj: any = [
+    copyToMailingTypeObj: Array<KeyValueObj> = [
         {
             Key: "LEGAL",
             Value: "Legal"
@@ -168,7 +169,7 @@ export class LtkmReturnHandlingComponent implements OnInit {
         }
     ];
 
-    copyToMailingCompanyTypeObj: any = [
+    copyToMailingCompanyTypeObj: Array<KeyValueObj> = [
         {
             Key: "LEGAL",
             Value: "Legal"
@@ -176,7 +177,7 @@ export class LtkmReturnHandlingComponent implements OnInit {
     ];
 
     defCustModelCode: string;
-    MrCustTypeCode: any;
+    MrCustTypeCode: string;
     isMarried: boolean = true;
     spouseGender: string = CommonConstant.MasterCodeGenderFemale;
     isSpouseOk: boolean = true;
@@ -311,7 +312,7 @@ export class LtkmReturnHandlingComponent implements OnInit {
         if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
             var custDataPersonalObj = new LtkmCustDataPersonalObj();
             custDataPersonalObj = this.setCustPersonalObjForSave();
-            var personalAnalysisObj: any;
+            var personalAnalysisObj: object;
 
             if (this.mode == this.modeReqConst) {
                 personalAnalysisObj = {
@@ -371,7 +372,7 @@ export class LtkmReturnHandlingComponent implements OnInit {
             var custDataCompanyObj = new CustDataCompanyLtkmObj();
             custDataCompanyObj = this.setCustCompanyObjForSave();//perlu review
 
-            var coyAnalysisObj: any;
+            var coyAnalysisObj: object;
 
             if (this.mode == this.modeReqConst) {
                 coyAnalysisObj = {

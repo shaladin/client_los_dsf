@@ -94,7 +94,7 @@ export class MouRequestAddcollComponent implements OnInit {
   listMouCustCollateralDocObj: ListMouCustCollateralDocObj = new ListMouCustCollateralDocObj();
   mouCustCollateralDoc: MouCustCollateralDocObj = new MouCustCollateralDocObj();
 
-  copyToLocationObj: any = [
+  copyToLocationObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
@@ -207,9 +207,8 @@ export class MouRequestAddcollComponent implements OnInit {
             });
         }
       });
-
-    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship };
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+      
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship}).subscribe(
       (response) => {
         this.OwnerRelationshipObj = response[CommonConstant.ReturnObj];
         if (this.OwnerRelationshipObj.length > 0) {
@@ -230,8 +229,7 @@ export class MouRequestAddcollComponent implements OnInit {
         this.CollateralPortionTypeChange();
       })
 
-    var mouCustObj = { Id: this.MouCustId }
-    this.http.post(URLConstant.GetMouCustCollateralByMouCustId, mouCustObj).subscribe(
+    this.http.post(URLConstant.GetMouCustCollateralByMouCustId, { Id: this.MouCustId }).subscribe(
       (response) => {
         this.listCollateralData = response['ReturnObject'];
       })
@@ -246,8 +244,7 @@ export class MouRequestAddcollComponent implements OnInit {
         this.onItemChange(this.CollTypeList[0].Key);
       })
 
-    var refMasterObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType };
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode,  { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
       (response) => {
         this.IdTypeList = response['ReturnObject'];
         this.AddCollForm.patchValue({
@@ -526,8 +523,7 @@ export class MouRequestAddcollComponent implements OnInit {
         AssetCategoryCode: e.AssetCategoryCode
       });
     } else {
-      var collObj = { TrxNo: e.CollateralNo };
-      this.http.post(URLConstant.GetMouCustCollateralDataExistingByCollateralNo, collObj).subscribe(
+      this.http.post(URLConstant.GetMouCustCollateralDataExistingByCollateralNo, { TrxNo: e.CollateralNo }).subscribe(
         (response) => {
 
           this.collateralObj = response['MouCustCollateral'];
@@ -856,8 +852,7 @@ export class MouRequestAddcollComponent implements OnInit {
       this.inputAddressObjForLegalAddr.isReadonly = true;
       this.inputAddressObjForLocAddr.isReadonly = true;
     }
-    var collObj = { Id: MouCustCollId };
-    this.http.post(URLConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, collObj).subscribe(
+    this.http.post(URLConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, { Id: MouCustCollId }).subscribe(
       (response) => {
 
         this.collateralObj = response['MouCustCollateral'];
@@ -1196,10 +1191,8 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   getRefAssetDocList(AssetTypeCode) {
-    var assetDocListobj = {
-      AssetTypeCode: AssetTypeCode
-    }
-    this.http.post(URLConstant.GetRefAssetDocList, assetDocListobj).subscribe(
+    
+    this.http.post(URLConstant.GetRefAssetDocList, {Code: AssetTypeCode}).subscribe(
       (response) => {
         console.log("getRefAssetDocList: " + JSON.stringify(response));
         if (response[CommonConstant.ReturnObj].length > 0) {
@@ -1235,7 +1228,7 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   setMouCustCollateralDoc(MouCustCollateralId: number = 0) {
-    this.http.post(URLConstant.GetListMouCustCollateralDocsByMouCustCollateralId, { MouCustCollateralId: MouCustCollateralId }).subscribe(
+    this.http.post(URLConstant.GetListMouCustCollateralDocsByMouCustCollateralId, { Id: MouCustCollateralId }).subscribe(
       (response) => {
         var MouCustCollateralDocs = new Array();
         MouCustCollateralDocs = response["MouCustCollateralDocs"];

@@ -5,6 +5,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AssetExpenseObj } from 'app/shared/model/AppAssetOpl/AssetExpenseObj.model';
 
 @Component({
   selector: 'app-asset-expense',
@@ -15,7 +16,7 @@ export class AssetExpenseComponent implements OnInit {
   @Input() showCancel: boolean = true;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
-  listAppAssetObj: any;
+  listAppAssetObj: Array<AssetExpenseObj>;
   listAppCollateralObj: Array<AppCollateralObj> = new Array();
   gridAssetDataObj: InputGridObj;
   AppAssetId: number;
@@ -53,10 +54,10 @@ export class AssetExpenseComponent implements OnInit {
     this.isReady = false;
     var appAssetObj = { Id: this.AppId };
     this.http.post(URLConstant.GetListAppAssetExpenseByAppId, appAssetObj).subscribe(
-      (response) => {
-        this.listAppAssetObj = response;
+      (response: {AssetExpenseObjs: Array<AssetExpenseObj>}) => {
+        this.listAppAssetObj = response.AssetExpenseObjs;
         var DetailForGridAsset = {
-          Data: this.listAppAssetObj.AssetExpenseObjs
+          Data: this.listAppAssetObj
         }
 
         this.gridAssetDataObj.resultData = DetailForGridAsset;
@@ -66,7 +67,7 @@ export class AssetExpenseComponent implements OnInit {
   }
 
   next() {
-    var x = this.listAppAssetObj.AssetExpenseObjs.filter(w => w.TotalAssetExpense == 0)
+    var x = this.listAppAssetObj.filter(w => w.TotalAssetExpense == 0)
     if (x.length > 0) {
       this.toastr.warningMessage("Please Input Asset Expense For All Asset");
       return;
@@ -82,7 +83,7 @@ export class AssetExpenseComponent implements OnInit {
   }
 
   test() {
-    this.AppAssetId = this.listAppAssetObj.AssetExpenseObjs[0].AppAssetId;
+    this.AppAssetId = this.listAppAssetObj[0].AppAssetId;
     this.isEdit = true;
   }
 }

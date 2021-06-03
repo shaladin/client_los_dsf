@@ -31,7 +31,7 @@ export class LtkmEmergencyContactComponent implements OnInit {
 
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() isLockMode: boolean = false;
 
   @Input() LtkmCustEmergencyContact = new LtkmCustEmrgncCntctObj();

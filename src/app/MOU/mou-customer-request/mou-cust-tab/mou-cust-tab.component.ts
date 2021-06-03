@@ -109,14 +109,14 @@ export class MouCustTabComponent implements OnInit {
   isBindDataDone: boolean = false;
 
   CustTypeObj: Array<KeyValueObj>;
-  copyToResidenceTypeObj: any = [
+  copyToResidenceTypeObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
     },
   ];
 
-  copyToMailingTypeObj: any = [
+  copyToMailingTypeObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
@@ -127,7 +127,7 @@ export class MouCustTabComponent implements OnInit {
     }
   ];
 
-  copyToMailingCompanyTypeObj: any = [
+  copyToMailingCompanyTypeObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
@@ -932,7 +932,7 @@ export class MouCustTabComponent implements OnInit {
   }
 
   async getCustData() {
-    await this.http.post(URLConstant.GetMouCustByMouCustId, { "Id": this.MouCustId }).toPromise().then(
+    await this.http.post(URLConstant.GetMouCustByMouCustId, { Id: this.MouCustId }).toPromise().then(
       (response) => {
         if (response["MouCustObj"]["MouCustId"] > 0) {
           if (response["MouCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
@@ -1421,7 +1421,7 @@ export class MouCustTabComponent implements OnInit {
   }
 
   async bindCustTypeObj() {
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { 'RefMasterTypeCode': CommonConstant.RefMasterTypeCodeCustType }).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).toPromise().then(
       (response) => {
         this.CustTypeObj = response[CommonConstant.ReturnObj];
       }

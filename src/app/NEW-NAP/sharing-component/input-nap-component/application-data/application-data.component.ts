@@ -58,7 +58,7 @@ export class ApplicationDataComponent implements OnInit {
   MrInstTypeCode: string;
   MrInstSchmCode: string;
   mouCust: MouCustObj;
-  ListCrossAppObj: any = {};
+  ListCrossAppObj: object = {};
   inputLookupObj: InputLookupObj;
   inputLookupEconomicSectorObj: InputLookupObj;
   InputLookupAgrmntParentObj: InputLookupObj = new InputLookupObj();
@@ -447,7 +447,7 @@ export class ApplicationDataComponent implements OnInit {
     this.ddlMrAppSourceObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
   }
 
-  DictRefPayFreq: any = {};
+  DictRefPayFreq: object = {};
   getPayFregData() {
     var obj = { RowVersion: "" };
 

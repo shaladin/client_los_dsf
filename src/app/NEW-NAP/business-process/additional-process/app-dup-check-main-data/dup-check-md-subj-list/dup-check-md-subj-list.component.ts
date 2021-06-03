@@ -23,7 +23,7 @@ export class DupCheckMdSubjListComponent implements OnInit {
   wfTaskListId: number;
   viewMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   gridSubjectObj: InputGridObj = new InputGridObj();
-  addObj: any = {};
+  addObj: object = {};
 
   constructor(
     private http: HttpClient,

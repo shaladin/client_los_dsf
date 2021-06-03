@@ -24,6 +24,7 @@ import { RefEmpObj } from 'app/shared/model/RefEmpObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
+import { AppDataObj } from 'app/shared/model/AppDataObj.model';
 
 @Component({
   selector: 'app-application-data-factoring',
@@ -40,7 +41,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
   inputLookupObj: InputLookupObj;
   arrAddCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   employeeIdentifier;
-  salesRecommendationItems = [];
   isInputLookupObj: boolean;
   inputLookupEconomicSectorObj: InputLookupObj; 
   SalesAppInfoForm = this.fb.group({
@@ -96,7 +96,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   allIntrstType: Array<KeyValueObj>;
   allMouCust: Array<ResGetListMouByAppAndTypeObj>;
   allTopBased: Array<KeyValueObj>;
-  resultData: any;
+  resultData: AppDataObj;
   allPayFreq: RefPayFreqObj;
   allInSalesOffice: Array<RefEmpObj>;
   allWayRestructure: Array<KeyValueObj>;
@@ -119,7 +119,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
   async ngOnInit() {
     this.defaultSlikSecEcoCode = CommonConstant.DefaultSlikSecEcoCode;
-    console.log("APP DATA FCTRING")
     this.isInputLookupObj = false;
     this.loadData();
     this.SalesAppInfoForm.controls.NumOfInst.disable();
@@ -301,10 +300,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
   
   async SetPayFreq(MouCustId: number, isCriteriaMake: boolean = true) {
-    var MouObj = {
-      Id: MouCustId
-    }
-    await this.http.post<MouCustFctrObj>(URLConstant.GetMouCustFctrByMouCustId, MouObj).toPromise().then(
+    await this.http.post<MouCustFctrObj>(URLConstant.GetMouCustFctrByMouCustId, { Id: MouCustId }).toPromise().then(
       (response) => {
         this.mouCustFctrObj = response;
         if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {
@@ -551,10 +547,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   async loadData() {
-    var obj = { Id: this.AppId };
-    var appObj = { Id: this.AppId };
-
-    await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, {Id: this.AppId}).toPromise().then(
       (response: any) => {
         this.responseApp = response
       }); 
@@ -569,8 +562,8 @@ export class ApplicationDataFactoringComponent implements OnInit {
       });
 
 
-    await this.http.post(URLConstant.GetApplicationDataByAppId, obj).toPromise().then(
-      (response) => {
+    await this.http.post(URLConstant.GetApplicationDataByAppId, { Id: this.AppId }).toPromise().then(
+      (response: any) => {
         this.resultData = response;
         this.salesAppInfoObj.AppRowVersion = this.resultData.AppRowVersion;
         this.salesAppInfoObj.AppFinDataRowVersion = this.resultData.AppFinDataRowVersion;
@@ -658,10 +651,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   GetListAppCustBankAcc() {
-    var objAppCust = {
-      AppId: this.AppId
-    }
-    this.http.post<any>(URLConstant.GetAppCustByAppId, objAppCust).subscribe(
+    this.http.post<any>(URLConstant.GetAppCustByAppId, {AppId: this.AppId}).subscribe(
       (responseAppCust) => {
         var obj = {
           AppCustId: responseAppCust["AppCustId"]
@@ -675,10 +665,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   GetBankAccCust() {
-    var obj = {
-      AppId: this.AppId
-    };
-    this.http.post(URLConstant.GetAppOtherInfoByAppId, obj).subscribe(
+    this.http.post(URLConstant.GetAppOtherInfoByAppId, { AppId: this.AppId }).subscribe(
       (responseAoi) => {
         var objectForAppCustBankAcc = {
           BankCode: responseAoi["BankCode"],

@@ -19,10 +19,10 @@ export class ChangeMouCustAssetComponent implements OnInit {
   @Input() IsAssetSelected: boolean;
   @Input() AssetTypeCode: string;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   index: number = 0;
-  tempResponseMouCustAsset: any;
-  tempResponseChangeMouAsset: any;
+  tempResponseMouCustAsset: Array<MouCustAssetObj>;
+  tempResponseChangeMouAsset: Array<MouCustAssetObj>;
   mouAssetList: Array<object> = [];
   assetTypeList: Array<KeyValueObj>;
   listExclude: Array<string>;

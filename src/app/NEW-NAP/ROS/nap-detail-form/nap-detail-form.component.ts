@@ -43,7 +43,7 @@ export class NapDetailFormComponent implements OnInit {
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
   custType: string = CommonConstant.CustTypeCompany;
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
+  token: string = localStorage.getItem(CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   bizTemplateCode: string;

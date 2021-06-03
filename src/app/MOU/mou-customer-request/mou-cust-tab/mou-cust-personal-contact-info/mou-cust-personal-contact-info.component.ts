@@ -17,6 +17,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { RegexService } from 'app/shared/services/regex.services';
 import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-mou-cust-personal-contact-info',
@@ -44,7 +45,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
   professionObj = {
     ProfessionCode: ""
   };
-  copyToContactPersonAddrObj: any = [
+  copyToContactPersonAddrObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
@@ -434,8 +435,8 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     this.setValidatorPattern();
   }
 
-  controlNameIdNo: any = 'IdNo';
-  controlNameIdType: any = 'MrIdTypeCode';
+  controlNameIdNo: string = 'IdNo';
+  controlNameIdType: string = 'MrIdTypeCode';
   customPattern: Array<CustomPatternObj>;
   initIdTypeCode: any;
   resultPattern: any;

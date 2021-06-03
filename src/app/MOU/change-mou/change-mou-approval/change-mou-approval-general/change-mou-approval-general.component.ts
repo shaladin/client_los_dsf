@@ -3,14 +3,12 @@ import { FormBuilder } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
-import { MouCustObj } from "app/shared/model/MouCustObj.Model";
 import { environment } from "environments/environment";
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
-import { ApvViewInfo } from "app/shared/model/ApvViewInfo.Model";
 import { ApprovalObj } from "app/shared/model/Approval/ApprovalObj.Model";
 import { UcInputApprovalObj } from "app/shared/model/UcInputApprovalObj.Model";
 import { UcInputApprovalHistoryObj } from "app/shared/model/UcInputApprovalHistoryObj.Model";
@@ -24,15 +22,11 @@ import { NavigationConstant } from "app/shared/constant/NavigationConstant";
   styleUrls: []
 })
 export class ChangeMouApprovalGeneralComponent implements OnInit {
-  mouCustObj: MouCustObj;
   MouCustId: number;
   taskId: number;
   instanceId: number;
   MouType: string = CommonConstant.GENERAL;
-  inputObj: ApvViewInfo;
-  resultData: any;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  mouCustObject: MouCustObj = new MouCustObj();
   MrCustTypeCode: string;
   TrxNo: number;
   changeMouTrxId: number;
@@ -72,16 +66,8 @@ export class ChangeMouApprovalGeneralComponent implements OnInit {
       },
     ];
 
-    var obj = {
-      taskId: this.taskId,
-      instanceId: this.instanceId,
-      approvalBaseUrl: environment.ApprovalR3Url
-    }
-
-    this.inputObj = obj;
-
     var ApvHoldObj = new ApprovalObj()
-    ApvHoldObj.TaskId = obj.taskId
+    ApvHoldObj.TaskId = this.taskId
 
     this.HoldTask(ApvHoldObj);
     this.initInputApprovalObj();
@@ -132,13 +118,14 @@ export class ChangeMouApprovalGeneralComponent implements OnInit {
   }
 
   GetCallBack(event) {
-    if (event.Key == "customer") {
-      var custObj = { CustNo: this.resultData['CustNo'] };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        });
-    }
+    console.log(event); // cek dapat apa
+    // if (event.Key == "customer") {
+    //   var custObj = { CustNo: this.custno }; // nanti cek CustNo ada /gak
+    //   this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+    //     response => {
+    //       AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+    //     });
+    // }
 
   }
 

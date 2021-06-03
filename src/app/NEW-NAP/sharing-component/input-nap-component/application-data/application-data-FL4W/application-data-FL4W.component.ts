@@ -26,9 +26,7 @@ import { MouCustDlrFinObj } from 'app/shared/model/moucustdlrfin.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AppOtherInfoObj } from 'app/shared/model/AppOtherInfo.Model';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
-import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
-import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
-
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-application-data-FL4W',
@@ -170,10 +168,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.initMailingAddress();
 
     var user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var AppObj = {
-      Id: this.AppId
-    }
-    this.http.post(URLConstant.GetAppCustByAppId, AppObj).subscribe(
+    this.http.post(URLConstant.GetAppCustByAppId, {Id: this.AppId}).subscribe(
       (response) => {
         this.CustNo = response["CustNo"];
 
@@ -244,11 +239,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   GetCrossInfoData() {
-    var obj = {
-      Id: this.AppId,
-      RowVersion: ""
-    }
-    this.http.post(URLConstant.GetListAppCross, obj).subscribe(
+    this.http.post(URLConstant.GetListAppCross, {Id: this.AppId, RowVersion: ""}).subscribe(
       (response) => {
         this.resultCrossApp = response[CommonConstant.ReturnObj];
         for (var i = 0; i < this.resultCrossApp.length; i++) {
@@ -267,16 +258,12 @@ export class ApplicationDataFL4WComponent implements OnInit {
     )
   }
 
-  applicationDDLitems;
-  resultResponse;
+  applicationDDLitems; 
+  resultResponse: AppObj;
   getAppModelInfo() {
-    var obj = {
-      Id: this.AppId,
-      RowVersion: ""
-    };
-
-    this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, obj).subscribe(
-      (response) => {
+    
+    this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, {Id: this.AppId}).subscribe(
+      (response: any) => {
         this.resultResponse = response;
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
@@ -370,11 +357,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   getPayFregData() {
-    var obj = {
-      RowVersion: ""
-    };
-
-    this.http.post(URLConstant.GetListActiveRefPayFreq, obj).subscribe(
+    this.http.post(URLConstant.GetListActiveRefPayFreq, {RowVersion: ""}).subscribe(
       (response) => {
         var objTemp = response[CommonConstant.ReturnObj];
         this.applicationDDLitems["Pay_Freq"] = objTemp;
@@ -726,7 +709,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
     this.inputAddressObj.showSubsection = false;
 
-    await this.http.post(URLConstant.GetListAppCustAddrByAppId, { 'Id': this.AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetListAppCustAddrByAppId, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.copyToMailing(CommonConstant.AddrTypeMailing);
@@ -806,7 +789,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
     var obj = {
       AppId: this.AppId
     };
-    this.http.post<any>(URLConstant.GetBankAccCustByAppId, obj).subscribe(
+    this.http.post<any>(URLConstant.GetBankAccCustByAppId, obj).subscribe( // controller tidak ada method ini
       (response) => {
         this.responseBankAccCust = response
         if (response.length > 0) {
@@ -844,10 +827,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   GetListAppCustBankAcc(appCustId: number) {
-    var obj = {
-      AppCustId: appCustId
-    };
-    this.http.post<any>(URLConstant.GetListAppCustBankAccByAppCustId, obj).subscribe(
+    this.http.post<any>(URLConstant.GetListAppCustBankAccByAppCustId, {Id: appCustId}).subscribe(
       (response) => {
         this.listCustBankAcc = response.AppCustBankAccObjs;
       });

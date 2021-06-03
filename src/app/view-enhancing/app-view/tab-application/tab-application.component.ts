@@ -22,7 +22,7 @@ export class TabApplicationComponent implements OnInit {
   isReady: boolean = false;
   isLoanObjectNeeded: boolean = false;
   ListCrossAppData: any;
-  isDF: any = false;
+  isDF: boolean = false;
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {      
