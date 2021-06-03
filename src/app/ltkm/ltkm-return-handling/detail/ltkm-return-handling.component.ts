@@ -116,7 +116,7 @@ export class LtkmReturnHandlingComponent implements OnInit {
     @Input() appId: number = 0;
     @Input() bizTemplateCode: string = "";
     @Input() showCancel: boolean = true;
-    @Output() outputTab: EventEmitter<any> = new EventEmitter();
+    @Output() outputTab: EventEmitter<string> = new EventEmitter();
     @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
     readonly modeReqConst: string = CommonConstant.REQ;

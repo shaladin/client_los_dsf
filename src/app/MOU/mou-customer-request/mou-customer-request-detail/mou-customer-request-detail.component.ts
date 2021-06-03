@@ -17,6 +17,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { CustObj } from 'app/shared/model/CustObj.Model';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -116,13 +117,13 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     var refOffice = new RefOfficeObj();
     refOffice.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.httpClient.post(URLConstant.GetRefOfficeByOfficeCode, {Code : refOffice.OfficeCode}).subscribe(
-      (response: any) => {
+      (response: RefOfficeObj) => {
         this.refOfficeId = response.RefOfficeId;
       });
 
     if (this.pageType == "edit" || this.pageType == "return") {
       this.httpClient.post(URLConstant.GetMouCustById, { Id: this.mouCustId }).subscribe(
-        (response: any) => {
+        (response) => {
           response["StartDt"] = datePipe.transform(response["StartDt"], "yyyy-MM-dd");
           response["EndDt"] = datePipe.transform(response["EndDt"], "yyyy-MM-dd");
           this.MOUMainInfoForm.patchValue({
@@ -130,8 +131,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
           });
           this.CustNoObj.CustNo = response['CustNo'];
           this.httpClient.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
-            (response: any) => {
-              this.custId = response['CustId'];
+            (response: CustObj) => {
+              this.custId = response.CustId;
             });
 
           if (response["MrRevolvingTypeCode"] == null) {
@@ -178,15 +179,15 @@ export class MouCustomerRequestDetailComponent implements OnInit {
 
     if (this.pageType == "add") {
       this.httpClient.post(URLConstant.AddMouCust, mouCustFormData).subscribe(
-        (response: any) => {
+        (response: GenericObj) => {
           this.toastr.successMessage(response["Message"]);
-          var mouCustId = response["Id"];
+          var mouCustId = response.Id;
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustId, MOUType: this.mouType });
         });
     }
     else if (this.pageType == "edit" || this.pageType == "return") {
       this.httpClient.post(URLConstant.EditMouCust, mouCustFormData).subscribe(
-        (response: any) => {
+        (response) => {
           this.toastr.successMessage(response["Message"]);
           if(this.pageType == "return"){
             AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustFormData.MouCustId, MOUType: this.mouType, mode : "return" });    
@@ -221,13 +222,13 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     );
   }
 
-  checkStartDate(ev:any){ 
+  checkStartDate(ev){ 
     if( this.datePipe.transform(ev.target.value, "yyyy-MM-dd") > this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
        this.toastr.warningMessage(ExceptionConstant.START_DATE_CANNOT_MORE_THAN + this.datePipe.transform(this.businessDt, 'MMMM d, y'));
     } 
   }
 
-  checkEndDate(ev:any){
+  checkEndDate(ev){
     if(ev.target.value < this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
        this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y'));
     }

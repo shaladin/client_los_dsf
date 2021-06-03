@@ -69,7 +69,7 @@ export class ChangeMouExecutionDetailComponent implements OnInit {
       }
 
       this.httpClient.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
-        (response: any) => {
+        (response) => {
           if (response["MouCustDt"] != null) {
             response["MouCustDt"] = datePipe.transform(response["MouCustDt"], "yyyy-MM-dd");
           }
@@ -106,7 +106,7 @@ export class ChangeMouExecutionDetailComponent implements OnInit {
   SaveForm() {
     var request = this.ChangeMouExecutionForm.value;
     this.httpClient.post(URLConstant.ChangeMouExecutionHumanActivity, request).subscribe(
-      (response: any) => {
+      (response) => {
         this.toastr.successMessage(response["Message"]);
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.CHANGE_MOU_EXEC_PAGING],{});
       });

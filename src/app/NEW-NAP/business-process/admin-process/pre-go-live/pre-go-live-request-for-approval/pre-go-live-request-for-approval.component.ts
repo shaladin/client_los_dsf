@@ -12,6 +12,7 @@ import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-sharing-pre-go-live-request-for-approval',
@@ -19,14 +20,13 @@ import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCode
 })
 export class PreGoLiveRequestForApprovalComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  AppId: any;
-  itemApprovedBy: any;
-  AgrmntNo: any;
-  itemReason: any;
+  AppId: number;
+  AgrmntNo: string;
+  itemReason: Array<KeyValueObj>;
 
-  RFAPreGoLive: any;
-  TaskListId: any;
-  AgrmntId: any;
+  RFAPreGoLive: RFAPreGoLiveObj;
+  TaskListId: number;
+  AgrmntId: number;
   Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;

@@ -220,7 +220,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
     );
   }
 
-  GetCallBack(event: any) {
+  GetCallBack(event) {
     if(event.Key === "Application") {
       AdInsHelper.OpenAppViewByAppId(event.ViewObj.AppId);
     }

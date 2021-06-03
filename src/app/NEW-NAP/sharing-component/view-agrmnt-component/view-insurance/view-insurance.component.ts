@@ -17,22 +17,17 @@ export class ViewAgrmntInsuranceComponent implements OnInit {
   @Input() agrmntId: number = 0;
   AppId: number = 0;
   AppAssetId: number = 0;
-  appInsObjs: any;
-  appCollObjs: any;
   custTotalPremi: number;
   totalCapitalizedAmt: number;
   totalCustPaidAmt: number;
-  ResponseAppDetailData: any;
   PaidAmtByCust: number = 0;
   InsCpltzAmt: number  = 0;
   InsDiscAmt: number  = 0;
   TotalPremiumToCust: number  = 0;
   link: string = 'false';
 
-  inputGridObj: any;
+  inputGridObj: InputGridObj;
   result : Array<AppAssetCollateralForInsuranceObj> = new Array();
-  resultData : any;
-  closeResult: any; 
   appAssetObj: AppAssetObj = new AppAssetObj();
   gridAssetDataObj: InputGridObj = new InputGridObj();
   listAppAssetObj: any;

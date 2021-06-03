@@ -33,6 +33,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CustomPatternObj } from 'app/shared/model/library/CustomPatternObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
 
 @Component({
   selector: 'app-collateral-add-edit',
@@ -126,11 +127,8 @@ export class CollateralAddEditComponent implements OnInit {
   @ViewChild("CityIssuerModal", { read: ViewContainerRef }) cityIssuerModal: ViewContainerRef;
   @ViewChild("enjiForm") enjiForm: NgForm;
   items: FormArray;
-  SerialNoList: any;
+  SerialNoList: Array<AssetTypeSerialNoLabelCustomObj>;
 
-  appObj = {
-    Id: 0,
-  };
   isDiffWithRefAttr: any;
   AddCollForm = this.fb.group({
     Collateral: ['New'],
@@ -345,8 +343,7 @@ export class CollateralAddEditComponent implements OnInit {
   }
 
   GetListAddr() {
-    this.appObj.Id = this.AppId;
-    this.http.post(URLConstant.GetListAppCustAddrByAppId, this.appObj).toPromise().then(
+    this.http.post(URLConstant.GetListAppCustAddrByAppId, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({

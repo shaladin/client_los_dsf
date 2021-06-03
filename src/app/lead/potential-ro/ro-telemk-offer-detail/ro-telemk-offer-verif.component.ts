@@ -24,7 +24,7 @@ export class RoTelemkOfferVerifComponent implements OnInit {
   TelemkOfferSubj: ResRoTelemkOfferSubjectObj;
   RmVerfResultStat: Array<KeyValueObj>;
   QuestionObj: object;
-  ListVerfAnswer: Array<any> = [];
+  ListVerfAnswer: Array<Array<string>> = [];
   ListVerifResultHObj: Array<VerfResultHObj> = [];
   PhoneDataForm = this.fb.group({
     RoPotentialNo: [''],

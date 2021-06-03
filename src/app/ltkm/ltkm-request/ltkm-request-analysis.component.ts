@@ -12,6 +12,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { ResRefEmpObj } from 'app/shared/model/Response/RefEmp/ResRefEmpObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
     selector: 'app-ltkm-request-analysis',
@@ -29,7 +30,7 @@ export class LtkmRequestAnalysisComponent implements OnInit {
     DictRefMaster: Array<KeyValueObj> = new Array<KeyValueObj>();
     refOfficeObj: RefOfficeObj;
     listRefOffice: Array<KeyValueObj>;
-    user: any;
+    user: CurrentUserContext;
     allInSalesOffice: Array<ResRefEmpObj> = new Array<ResRefEmpObj>();
 
     @Input() enjiForm: NgForm;

@@ -30,7 +30,6 @@ export class SchmStepUpStepDownCummulativeFL4WComponent implements OnInit {
   calcStepUpStepDownObjForTrialCalc: CalcStepUpStepDownObjForTrialCalc = new CalcStepUpStepDownObjForTrialCalc();
   listInstallment: any;
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
-  responseCalc: any;
   result: AppObj = new AppObj();
   PriceLabel: string = "Asset Price";
   IsTrialCalc: boolean = false;

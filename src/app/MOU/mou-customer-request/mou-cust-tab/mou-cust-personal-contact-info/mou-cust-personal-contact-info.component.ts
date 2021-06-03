@@ -18,6 +18,7 @@ import { CookieService } from 'ngx-cookie';
 import { RegexService } from 'app/shared/services/regex.services';
 import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-mou-cust-personal-contact-info',
@@ -29,22 +30,16 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 export class MouCustPersonalContactInfoComponent implements OnInit {
   @Input() listContactPersonPersonal: Array<MouCustPersonalContactPersonObj> = new Array<MouCustPersonalContactPersonObj>();
-  @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
-  @Output() callbackCopyAddr: EventEmitter<any> = new EventEmitter();
+  @Output() callbackSubmit: EventEmitter<Array<MouCustPersonalContactPersonObj>> = new EventEmitter();
+  @Output() callbackCopyAddr: EventEmitter<string> = new EventEmitter();
   @Input() isMarried: boolean = true;
   @Input() spouseGender: string = "";
 
-  mode: any;
-  currentEditedIndex: any;
+  mode: string;
+  currentEditedIndex: number;
   closeResult: any;
-  selectedProfessionCode: any;
+  selectedProfessionCode: string;
   MouCustPersonalContactPersonObj: MouCustPersonalContactPersonObj;
-  refMasterObj = {
-    RefMasterTypeCode: ""
-  };
-  professionObj = {
-    ProfessionCode: ""
-  };
   copyToContactPersonAddrObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
@@ -59,22 +54,22 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
       Value: "Mailing"
     }
   ];
-  copyFromContactPerson: any;
+  copyFromContactPerson: string;
   contactPersonAddrObj: AddrObj;
   inputFieldContactPersonObj: InputFieldObj;
 
-  GenderObj: any;
-  IdTypeObj: any;
-  CustRelationshipObj: any;
+  GenderObj: Array<KeyValueObj>;
+  IdTypeObj: Array<KeyValueObj>;
+  CustRelationshipObj: Array<KeyValueObj>;
   InputLookupProfessionObj: InputLookupObj = new InputLookupObj();
-  defaultGender: any;
-  defaultIdType: any;
-  defaultCustRelationship: any;
-  selectedGenderName: any;
-  selectedRelationshipName: any;
-  defaultGenderName: any;
-  defaultRelationshipName: any;
-  UserAccess: any;
+  defaultGender: string;
+  defaultIdType: string;
+  defaultCustRelationship: string;
+  selectedGenderName: string;
+  selectedRelationshipName: string;
+  defaultGenderName: string;
+  defaultRelationshipName: string;
+  UserAccess: CurrentUserContext;
   MaxDate: Date;
   inputAddressObjForCP: InputAddressObj;
 
@@ -299,8 +294,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     this.inputAddressObjForCP.inputField = this.inputFieldContactPersonObj;
   }
 
-  setProfessionName(professionCode) {
-    this.professionObj.ProfessionCode = professionCode;
+  setProfessionName(professionCode: string) {
     this.http.post(URLConstant.GetRefProfessionByCode, {Code : professionCode}).subscribe(
       (response) => {
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
@@ -345,8 +339,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
   }
 
   bindGenderObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).subscribe(
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
@@ -358,8 +351,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
   }
 
   bindIdTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
       (response) => {
         this.IdTypeObj = response[CommonConstant.ReturnObj];
         if (this.IdTypeObj.length > 0) {
@@ -370,8 +362,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
   }
 
   bindCustRelationshipObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship }).subscribe(
       (response) => {
         this.CustRelationshipObj = response[CommonConstant.ReturnObj];
         if (this.CustRelationshipObj.length > 0) {
@@ -390,7 +381,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     });
   }
 
-  private getDismissReason(reason: any): string {
+  private getDismissReason(reason): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
@@ -438,8 +429,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
   controlNameIdNo: string = 'IdNo';
   controlNameIdType: string = 'MrIdTypeCode';
   customPattern: Array<CustomPatternObj>;
-  initIdTypeCode: any;
-  resultPattern: any;
+  resultPattern: Array<KeyValueObj>;
 
   getInitPattern() {
     this.regexService.getListPattern().subscribe(

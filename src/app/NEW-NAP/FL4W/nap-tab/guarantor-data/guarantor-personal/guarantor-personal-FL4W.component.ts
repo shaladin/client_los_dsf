@@ -22,6 +22,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-guarantor-personal-FL4W',
@@ -269,7 +270,7 @@ export class GuarantorPersonalFL4WComponent implements OnInit {
     }
   }
 
-  UserAccess: any;
+  UserAccess: CurrentUserContext;
   MaxDate: Date;
   Max17YO: Date;
   getDate() {

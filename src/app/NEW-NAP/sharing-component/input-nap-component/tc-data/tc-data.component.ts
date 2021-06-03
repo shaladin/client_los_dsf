@@ -20,7 +20,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 })
 export class TcDataComponent implements OnInit {
 
-  @Input() AppId: any;
+  @Input() AppId: number;
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();

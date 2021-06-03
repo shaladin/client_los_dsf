@@ -57,6 +57,7 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { CookieService } from 'ngx-cookie';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CustPersonalFamilyLtkmObj } from 'app/shared/model/LTKM/CustPersonalFamilyLtkmObj.Model';
 @Component({
     selector: 'app-ltkm-request',
     templateUrl: './ltkm-request.component.html',
@@ -99,7 +100,7 @@ export class LtkmRequestComponent implements OnInit {
     @Input() appId: number = 0;
     @Input() bizTemplateCode: string = "";
     @Input() showCancel: boolean = true;
-    @Output() outputTab: EventEmitter<any> = new EventEmitter();
+    @Output() outputTab: EventEmitter<string> = new EventEmitter();
     @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
     custDataPersonalObj: LtkmCustDataPersonalObj = new LtkmCustDataPersonalObj();
@@ -193,7 +194,7 @@ export class LtkmRequestComponent implements OnInit {
     BankFormIsDetail: boolean = false;
     LtkmCustId: number;
     isLockLookupCust: boolean = false;
-    listFamily: Array<any> = new Array();
+    listFamily: Array<CustPersonalFamilyLtkmObj> = new Array();
 
     readonly modeReqConst: string = CommonConstant.REQ;
     readonly modeRtnConst: string = CommonConstant.RTN;

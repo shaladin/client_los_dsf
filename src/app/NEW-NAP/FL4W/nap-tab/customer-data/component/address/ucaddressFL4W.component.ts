@@ -32,7 +32,7 @@ export class CustUcaddressFL4WComponent implements OnInit {
   @Input() isRequired: boolean = true;
 
   houseOwnershipObj: Array<KeyValueObj>;
-  inputLookupObj: any;
+  inputLookupObj: InputLookupObj;
   identifierZipcode: string;
 
   constructor(private fb: FormBuilder, private http: HttpClient) {

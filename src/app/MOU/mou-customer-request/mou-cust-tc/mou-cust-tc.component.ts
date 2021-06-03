@@ -19,7 +19,7 @@ import { CookieService } from 'ngx-cookie';
 })
 export class MouCustTcComponent implements OnInit {
   @Input() MouCustId: number;
-  @Output() ResponseMouCustTc: EventEmitter<any> = new EventEmitter<any>();
+  @Output() ResponseMouCustTc: EventEmitter<any> = new EventEmitter();
   formSubmitted: boolean;
   businessDate: Date;
 
@@ -64,7 +64,7 @@ export class MouCustTcComponent implements OnInit {
         return this.httpClient.post(URLConstant.GetMouCustTcFromRule, mouTcObj);
       })
     ).subscribe(
-      (response: any) => {
+      (response) => {
         var formArray = this.MouCustTcForm.get('MouCustTcList') as FormArray;
         for (const item of response["MouCustTcObjs"]) {
           var promiseDtValidation;

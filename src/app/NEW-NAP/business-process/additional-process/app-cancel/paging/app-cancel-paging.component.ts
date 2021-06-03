@@ -57,7 +57,7 @@ export class AppCancelPagingComponent implements OnInit {
     this.inputPagingObj.addCritInput.push(critBizTemplate);
   }
 
-  GetCallBack(ev: any) {
+  GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }

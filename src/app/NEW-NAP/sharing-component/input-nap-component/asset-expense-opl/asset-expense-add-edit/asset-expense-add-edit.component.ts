@@ -58,14 +58,14 @@ export class AssetExpenseAddEditComponent implements OnInit {
   isCanBeAddedMaintenance: boolean = true;
   InputLookupServiceObj: InputLookupObj;
   InputLookupServiceObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
-  dictServiceLookup: { [key: string]: any; } = {};
+  dictServiceLookup: { [key: string]: InputLookupObj; } = {};
   items: FormArray;
   InputLookupSparePartObj: InputLookupObj;
   InputLookupSparePartObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
-  dictSparePartLookup: { [key: string]: any; } = {};
+  dictSparePartLookup: { [key: string]: InputLookupObj; } = {};
 
-  dictOtherExpense: { [key: string]: any; } = {};
-  dictFee: { [key: string]: any; } = {};
+  dictOtherExpense: { [key: string]: Array<KeyValueObj>; } = {};
+  dictFee: { [key: string]: Array<KeyValueObj>; } = {};
 
   appObj: NapAppModel;
   appAssetObj: AppAssetObj;

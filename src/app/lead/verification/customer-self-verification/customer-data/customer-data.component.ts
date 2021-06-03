@@ -37,7 +37,6 @@ export class CustomerDataComponent implements OnInit {
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
   businessDt: Date = new Date();
   CopyFrom: string;
-  rowVersion: any;
   typePage: string;
   inputLegalAddressObj: InputFieldObj;
   inputResidenceAddressObj: InputFieldObj;

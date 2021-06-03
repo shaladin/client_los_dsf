@@ -21,6 +21,8 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { LtkmCustAddrObj } from 'app/shared/model/LTKM/LtkmCustAddrObj.Model';
 @Component({
   selector: 'app-ltkm-emergency-contact',
   templateUrl: './emergency-contact.component.html',
@@ -51,7 +53,7 @@ export class LtkmEmergencyContactComponent implements OnInit {
   GenderObj: Array<KeyValueObj> = new Array();
   MrCustRelationshipObj: Array<KeyValueObj> = new Array();
   ArrAddCrit: Array<CriteriaObj> = new Array();
-  copyAddressFromObj: any;
+  copyAddressFromObj: Array<LtkmCustAddrObj>;
   appCustEmrgncCntctObj: LtkmCustEmrgncCntctObj = new LtkmCustEmrgncCntctObj();
   BusinessDt: Date;
 
@@ -208,8 +210,8 @@ export class LtkmEmergencyContactComponent implements OnInit {
 
     if (this.LtkmCustId != undefined) {
       this.http.post(URLConstant.GetListLtkmCustAddrByLtkmCustId, { Id: this.LtkmCustId }).subscribe(
-        (response) => {
-          this.copyAddressFromObj = response;
+        (response: GenericListObj) => {
+          this.copyAddressFromObj = response.ReturnObject;
           this.parentForm.controls[this.identifier].patchValue({ CopyAddrFrom: response[0]['LtkmCustAddrId'] });
         });
     }

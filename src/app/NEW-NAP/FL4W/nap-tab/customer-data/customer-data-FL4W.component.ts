@@ -55,17 +55,11 @@ export class CustomerDataFL4WComponent implements OnInit {
     CopyFromMailing: ['']
   });
 
-  @Input() appId: any;
+  @Input() appId: number;
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   cancel: boolean = true;
-  refMasterObj = {
-    RefMasterTypeCode: "",
-  };
-  countryObj = {
-    CountryCode: ""
-  };
   custDataObj: CustDataObj;
   custDataPersonalObj: CustDataPersonalObj = new CustDataPersonalObj();
   custDataCompanyObj: CustDataCompanyObj = new CustDataCompanyObj();
@@ -75,19 +69,19 @@ export class CustomerDataFL4WComponent implements OnInit {
   inputFieldLegalCompanyObj: InputFieldObj;
   residenceAddrObj: AddrObj;
   inputFieldResidenceObj: InputFieldObj;
-  copyFromResidence: any;
+  copyFromResidence: string;
   mailingAddrObj: AddrObj;
   inputFieldMailingObj: InputFieldObj;
-  copyFromMailing: any;
+  copyFromMailing: string;
   mailingAddrCompanyObj: AddrObj;
   inputFieldMailingCompanyObj: InputFieldObj;
-  copyFromMailingCompany: any;
-  appCustPersonalId: any;
+  copyFromMailingCompany: string;
+  appCustPersonalId: number;
   listAppCustPersonalContactInformation: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();inputAddressObjForLegal: InputAddressObj;
   inputAddressObjForResidence: InputAddressObj;
-  inputAddressObjForMailing: any;
+  inputAddressObjForMailing: InputAddressObj;
   inputAddressObjForCoyLegal: InputAddressObj;
-  inputAddressObjForCoyMailing: any;
+  inputAddressObjForCoyMailing: InputAddressObj;
 ;
   listAppCustBankAcc: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
   listAppCustBankAccCompany: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
@@ -96,7 +90,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   listLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
   isBindDataDone: boolean = false;
 
-  CustTypeObj: any;
+  CustTypeObj: Array<KeyValueObj>;
   copyToResidenceTypeObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
@@ -122,8 +116,8 @@ export class CustomerDataFL4WComponent implements OnInit {
     }
   ];
 
-  defCustModelCode: any;
-  MrCustTypeCode: any;
+  defCustModelCode: string;
+  MrCustTypeCode: string;
   isSocmedValid: boolean = true;
   isMarried: boolean = false;
   IsSpouseExist: boolean = false;
@@ -1269,8 +1263,7 @@ export class CustomerDataFL4WComponent implements OnInit {
   }
 
   bindCustTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).subscribe(
       (response) => {
         this.CustTypeObj = response[CommonConstant.ReturnObj];
         if (this.CustTypeObj.length > 0) {

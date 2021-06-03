@@ -6,6 +6,12 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AddrObj } from 'app/shared/model/AddrObj.Model';
 import { AppAssetAttrCustomObj } from 'app/shared/model/AppAsset/AppAssetAttrCustom.Model';
+import { AppAssetAttrObj } from 'app/shared/model/AppAssetAttrObj.Model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
+import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppInsObjObj } from 'app/shared/model/AppInsObjObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
@@ -13,9 +19,11 @@ import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 import { ReqGetVendorByCategoryCodeAndOfficeCodeObj } from 'app/shared/model/Request/Vendor/ReqVendor.model';
+import { ResProdOfferingDObj } from 'app/shared/model/Response/Product/ResGetProdOfferingObj.model';
 
 @Component({
   selector: 'app-edit-app-after-approval-asset-data',
@@ -23,10 +31,10 @@ import { ReqGetVendorByCategoryCodeAndOfficeCodeObj } from 'app/shared/model/Req
   styleUrls: ['./edit-app-after-approval-asset-data.component.css']
 })
 export class EditAppAfterApprovalAssetDataComponent implements OnInit {
-  @Input() AppAssetObj: any;
-  @Input() ListAppAssetAttrObjs: Array<any>;
-  @Input() AppCollateralObj: any;
-  @Input() AppCollateralRegistrationObj: any;
+  @Input() AppAssetObj: AppAssetObj;
+  @Input() ListAppAssetAttrObjs: Array<AppAssetAttrObj>;
+  @Input() AppCollateralObj: AppCollateralObj;
+  @Input() AppCollateralRegistrationObj: AppCollateralRegistrationObj;
   @Input() EditedAssetData: any
   //@Input() AppCollateralAttrObjs = new Array();
   @Output() outputPage: EventEmitter<object> = new EventEmitter();
@@ -51,38 +59,31 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     InscoBranchName: [''],
   });
 
-  AppObj: any;
-  AppId: any;
-  AppCustObj: any;
-  appObj = {
-    AppId: 0,
-  };
+  AppObj: NapAppModel;
+  AppId: number;
+  AppCustObj: AppCustObj;
 
   CustType: string = "";
-  IdTypeObj: any;
+  IdTypeObj: Array<KeyValueObj>;
   refMasterObj : RefMasterObj;
-  OwnerRelationObj: any;
-  AppCustAddrObj: any;
-  AddrObj: any;
-  AddrLegalObj: any;
+  OwnerRelationObj: Array<KeyValueObj>;
+  AppCustAddrObj: Array<AppCustAddrObj>;
+  AddrObj: Array<AppCustAddrObj>;
+  AddrLegalObj: Array<AppCustAddrObj>;
   inputFieldOwnerAddrObj: InputFieldObj;
   ownerAddrObj: AddrObj;
   inputAddressObjForOwner: InputAddressObj;
-  copyFromAppCustAddrForOwner: any;
+  copyFromAppCustAddrForOwner: string;
   ListAttrAnswer = [];
-  AppAssetAttrObj: any;
+  AppAssetAttrObj: Array<AppAssetAttrObj>;
   appAssetAttrObjs: Array<AppAssetAttrCustomObj>;
-  isDiffWithRefAttr: any;
   isAssetAttrReady: boolean = false;
-  RefProdCmptAssetType: any;
+  RefProdCmptAssetType: ProdOfferingDObj;
   inscoBranchObj: Array<KeyValueObj>;
   InsAssetCoveredBy: string = "";
   appInsObjObj: AppInsObjObj;
 
   AppAssetRelatedOutput: any;
-  AppCollateralRegistrationOutput: any;
-  AppAssetAttrOutput: any;
-  AppInsObjOutput: any;
 
   constructor(
     private fb: FormBuilder,
@@ -248,7 +249,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     }
   }
 
-  SetOwnerAddrType(event) {
+  SetOwnerAddrType(event: string) {
     this.copyFromAppCustAddrForOwner = event;
   }
 
@@ -257,7 +258,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
       Id: this.AppId,
     };
     await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
-      (response) => {
+      (response: AppCustObj) => {
         this.AppCustObj = response;
         this.CustType = this.AppCustObj.MrCustTypeCode;
         if (this.CustType == CommonConstant.CustTypePersonal) {
@@ -396,7 +397,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
     appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion,
     
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
-      (response) => {
+      (response: ProdOfferingDObj) => {
         this.RefProdCmptAssetType = response;
       }
     );

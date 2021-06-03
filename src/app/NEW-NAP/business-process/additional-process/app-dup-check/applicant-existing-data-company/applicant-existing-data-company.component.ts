@@ -14,6 +14,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetCustDupCheckObj } from 'app/shared/model/Request/NAP/DupCheck/ReqGetCustDupCheckObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { CustObj } from 'app/shared/model/CustObj.Model';
 
 @Component({
   selector: 'app-applicant-existing-data-company',
@@ -28,15 +29,12 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
   AppCustObj: AppCustObj;
   AppCustCompanyObj: AppCustCompanyObj;
   ListAppGuarantorDuplicate: any;
-  ListSpouseDuplicate: any;
   ListAppShareholderDuplicate: any;
-  listSelectedIdGuarantor: any;
+  listSelectedIdGuarantor: Array<number>;
   checkboxAllGuarantor = false;
-  listSelectedIdShareholder: any;
+  listSelectedIdShareholder: Array<number>;
   checkboxAllShareholder = false;
-  RowVersion: any;
-  cust: any;
-  custUrl: string;
+  cust: CustObj;
   CustNoObj: GenericObj = new GenericObj();
   constructor(
     private http: HttpClient,
@@ -79,12 +77,11 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
 
         this.CustNoObj.CustNo = this.AppCustObj['CustNo'];
         this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
-          response => {
+          (response: CustObj) => {
             this.cust = response;
           }
         );
 
-        this.RowVersion = response['AppCustObj'].RowVersion;
         this.AppCustCompanyObj = response['AppCustCompanyObj'];
         
         let requestDupCheck = new ReqGetCustDupCheckObj();
@@ -96,7 +93,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
         requestDupCheck.TaxIdNo = this.AppCustObj.TaxIdNo;
         requestDupCheck.BirthDt = this.AppCustCompanyObj.EstablishmentDt;
         requestDupCheck.MobilePhnNo1 = "-";
-        requestDupCheck.RowVersion = this.RowVersion;
+        requestDupCheck.RowVersion = response['AppCustObj'].RowVersion;
         
         //List App guarantor Checking
         this.http.post(URLConstant.GetAppGuarantorDuplicateCheck, requestDupCheck).subscribe(
@@ -113,7 +110,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
       });
   }
 
-  SelectAllGuarantor(condition) {
+  SelectAllGuarantor(condition: boolean) {
     this.checkboxAllGuarantor = condition;
     if (condition) {
       for (let i = 0; i < this.ListAppGuarantorDuplicate.length; i++) {
@@ -132,7 +129,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     }
   }
 
-  CheckedGuarantor(AppGuarantorId: any, isChecked: any): void {
+  CheckedGuarantor(AppGuarantorId: number, isChecked: boolean): void {
     if (isChecked) {
       this.listSelectedIdGuarantor.push(AppGuarantorId);
     } else {
@@ -141,7 +138,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     }
   }
 
-  SelectAllShareholder(condition) {
+  SelectAllShareholder(condition: boolean) {
     this.checkboxAllShareholder = condition;
     if (condition) {
       for (let i = 0; i < this.ListAppShareholderDuplicate.length; i++) {
@@ -160,7 +157,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     }
   }
 
-  CheckedShareholder(AppCustCompanyMgmntShrholderId: any, isChecked: any): void {
+  CheckedShareholder(AppCustCompanyMgmntShrholderId: number, isChecked: boolean): void {
     if (isChecked) {
       this.listSelectedIdShareholder.push(AppCustCompanyMgmntShrholderId);
     } else {

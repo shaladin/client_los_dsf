@@ -26,7 +26,6 @@ export class SchmIrregularFL4WComponent implements OnInit {
   calcIrregularObj: CalcIrregularObj = new CalcIrregularObj();
   calcIrregularObjForTrialCalc: CalcIrregularObjForTrialCalc = new CalcIrregularObjForTrialCalc();
   listInstallment: any;
-  responseCalc: any;
   result: AppObj = new AppObj();
   PriceLabel: string= "Asset Price";
   IsTrialCalc: boolean = false;

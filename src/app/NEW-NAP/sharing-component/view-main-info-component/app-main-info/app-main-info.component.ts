@@ -25,7 +25,6 @@ export class AppMainInfoComponent implements OnInit {
   @Input() AppId: number;
   @Input() BizTemplateCode: string;
 
-  AppObj: any;
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
@@ -35,7 +34,7 @@ export class AppMainInfoComponent implements OnInit {
     else if (this.BizTemplateCode == CommonConstant.FL4W) {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFL4WMainInformation.json";
     }
-    else if (this.AppObj.BizTemplateCode == CommonConstant.CFNA) {
+    else if (this.BizTemplateCode == CommonConstant.CFNA) {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfoCFNA.json";
     }
     else if (this.BizTemplateCode == CommonConstant.OPL) {

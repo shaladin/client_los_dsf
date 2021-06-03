@@ -22,7 +22,7 @@ export class ViewDeliveryOrderAssetDetailComponent implements OnInit {
       this.assetData = response;
 
       this.http.post(URLConstant.GetAssetTypeByCode, {Code: this.assetData.ResponseAppCollateralObj.AssetTypeCode }).subscribe(
-        (response: any) => {
+        (response: AssetTypeObj) => {
           this.AssetTypeObj = response;
         }
       );

@@ -14,6 +14,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
+import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
 
 @Component({
   selector: "reserved-fund",
@@ -35,22 +37,22 @@ export class ReservedFundComponent implements OnInit {
   @Output() outputTab: EventEmitter<AllAppReservedFundObj> = new EventEmitter();
   @Output() outputDictRemaining: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
-  @Output() outputUpdateRemainingAlloc: EventEmitter<any> = new EventEmitter();
+  @Output() outputUpdateRemainingAlloc: EventEmitter<number> = new EventEmitter();
 
   appReservedFundObjs: Array<AppReservedFundObj>;
   allAppReservedFundObj: AllAppReservedFundObj = new AllAppReservedFundObj();
   isCalculated: boolean = false;
-  uppingRate: any;
-  insuranceIncome: any;
-  lifeInsuranceIncome: any;
-  appFeeObj: any;
+  // uppingRate: number;
+  // insuranceIncome: number;
+  // lifeInsuranceIncome: any;
+  appFeeObj: Array<AppFeeObj>;
   ruleObj: any;
   calcGrossYieldObj: any;
   // maxAllocatedAmt: any;
-  remainingAllocatedAmt: any;
+  remainingAllocatedAmt: number;
   // totalRsvFundAmt: number = 0;
-  totalRsvFundAmtWhenSave: any;
-  grossYield: any;
+  totalRsvFundAmtWhenSave: number;
+  grossYield: number;
   show: boolean = false;
   maxAllocatedRefundAmt: number = 0;
   // totalExpenseAmt: number = 0;
@@ -133,19 +135,19 @@ export class ReservedFundComponent implements OnInit {
     }
   }
 
-  GetAppFinData(appObj) {
-    this.http.post(URLConstant.GetIncomeInfoRsvFund, appObj).subscribe(
-      (response) => {
-        this.uppingRate = response["DiffRateAmt"];
-        this.insuranceIncome = response["TotalInsCustAmt"] - response["TotalInsInscoAmt"];
-        this.lifeInsuranceIncome = response["TotalLifeInsCustAmt"] - response["TotalLifeInsInscoAmt"];
-        this.maxAllocatedRefundAmt = response["MaxAllocatedRefundAmt"];
-        this.totalExpenseAmt = response["TotalExpenseAmt"];
-        this.totalRsvFundAmt = response["ReservedFundAllocatedAmt"];
-        this.calculatedRemainingAmt();
-      }
-    );
-  }
+  // GetAppFinData(appObj) {
+  //   this.http.post(URLConstant.GetIncomeInfoRsvFund, appObj).subscribe(
+  //     (response) => {
+  //       this.uppingRate = response["DiffRateAmt"];
+  //       this.insuranceIncome = response["TotalInsCustAmt"] - response["TotalInsInscoAmt"];
+  //       this.lifeInsuranceIncome = response["TotalLifeInsCustAmt"] - response["TotalLifeInsInscoAmt"];
+  //       this.maxAllocatedRefundAmt = response["MaxAllocatedRefundAmt"];
+  //       this.totalExpenseAmt = response["TotalExpenseAmt"];
+  //       this.totalRsvFundAmt = response["ReservedFundAllocatedAmt"];
+  //       this.calculatedRemainingAmt();
+  //     }
+  //   );
+  // }
 
   calculatedRemainingAmt() {
     this.remainingAllocatedAmt = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt;
@@ -165,7 +167,7 @@ export class ReservedFundComponent implements OnInit {
     }
     await this.http.post(URLConstant.GetAppCommissionDataForEditByAppId, appObj).toPromise().then(
       (response) => {
-        let tempObj: Array<any> = response[CommonConstant.ReturnObj];
+        let tempObj: Array<AppCommissionHObj> = response[CommonConstant.ReturnObj];
         // console.log(tempObj);
         for (let index = 0; index < tempObj.length; index++) {
           const element = tempObj[index];

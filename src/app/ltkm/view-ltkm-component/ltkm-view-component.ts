@@ -20,7 +20,6 @@ export class LtkmViewComponent implements OnInit {
   LtkmCustId: number;
   arrValue = [];
   CustTypeCode: string = "";
-  AppCustObj: any;
   @ViewChild("mainInfoContainerA", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
   @ViewChild(LtkmApprovalHistComponent) ltkmApprovalHistComponent;
   IsFromApp : boolean = false;

@@ -25,7 +25,7 @@ export class CustLegalDocFL4WComponent implements OnInit {
 
   @Input() listLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
 
-  @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() callbackSubmit: EventEmitter<Array<AppCustCompanyLegalDocObj>> = new EventEmitter();
 
   mode: string;
   currentEditedIndex: number;

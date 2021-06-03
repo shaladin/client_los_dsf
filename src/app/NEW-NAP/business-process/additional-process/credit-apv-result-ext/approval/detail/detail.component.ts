@@ -26,11 +26,10 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
   CrdApvResultExtId: number;
   taskId: number;
   instanceId: number;
-  inputObj: any;
   viewVendorBranchObj: UcViewGenericObj = new UcViewGenericObj();
   AppId: number;
   AgrmntId: number;
-  CrdApvMainDataObj: any;
+  CrdApvMainDataObj: ResCreditApvResultExtObj;
 
   ApvReqId: number; 
   InputApvObj : UcInputApprovalObj;
@@ -83,18 +82,18 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
     );
   }
 
-  HoldTask(obj : any){
+  HoldTask(obj){
     this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
       (response)=>{
       }
     )
   }
 
-  onAvailableNextTask(event : any)
+  onAvailableNextTask(event)
   {
   }
 
-  onApprovalSubmited(event : any)
+  onApprovalSubmited(event)
   {
     this.toastr.successMessage("Success");
     this.router.navigate([NavigationConstant.NAP_ADD_PRCS_CRD_APPR_RES_EXT_APPRVL_PAGING]);
@@ -105,7 +104,7 @@ export class CreditApprovalResultExtensionApprovalDetailComponent implements OnI
     this.router.navigate([NavigationConstant.NAP_ADD_PRCS_CRD_APPR_RES_EXT_APPRVL_PAGING]);
   }
 
-  GetCallBack(e : any){
+  GetCallBack(e){
     // AdInsHelper.OpenProdOfferingViewByCodeAndVersion(e.ViewObj.ProdOfferingCode, e.ViewObj.ProdOfferingVersion);
   }
 

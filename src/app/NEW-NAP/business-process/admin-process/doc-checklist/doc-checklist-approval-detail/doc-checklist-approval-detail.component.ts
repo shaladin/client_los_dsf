@@ -19,6 +19,7 @@ import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalG
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { NapAppModel } from 'app/shared/model/NapApp.Model';
 
 @Component({
   selector: 'app-doc-checklist-approval-detail',
@@ -26,28 +27,22 @@ import { CookieService } from 'ngx-cookie';
 })
 export class DocChecklistApprovalDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
   viewObj: string;
-  TrxNo: any;
+  TrxNo: string;
   arrValue = [];
   TCList: any;
-  AppNo: any;
-  AppObj: any;
+  AppNo: string;
   IsApvReady: boolean = false;
-  outstandingTcObj: any;
   listAppTCObj: ListAppTCObj;
   appTC: AppTCObj;
-  RfaLogObj: {
-    RfaNo: any
-  }
   MainInfoForm = this.fb.group({
 
   });
-  AppId: any;
+  AppId: number;
   token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   LeadId: string;
   bizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-  MouCustId: any;
+  MouCustId: number;
   ApvReqId: number;
   taskId: number;
   InputApvObj: UcInputApprovalObj;
@@ -86,9 +81,8 @@ export class DocChecklistApprovalDetailComponent implements OnInit {
       Id: this.AppId,
     };
     await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
-      (response) => {
-        this.AppObj = response;
-        this.AppNo = this.AppObj.AppNo;
+      (response: NapAppModel) => {
+        this.AppNo = response.AppNo;
       }
     );
   }

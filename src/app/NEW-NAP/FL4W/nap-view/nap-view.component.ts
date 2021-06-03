@@ -51,7 +51,7 @@ export class NapViewComponent implements OnInit {
       Id: this.AppId,
     };
     this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
-      (response: any) => {
+      (response: AppCustObj) => {
         this.AppCustObj = response;
         this.CustType = this.AppCustObj.MrCustTypeCode;
       }

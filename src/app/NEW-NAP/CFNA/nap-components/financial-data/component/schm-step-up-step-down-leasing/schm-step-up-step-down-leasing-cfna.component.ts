@@ -25,7 +25,6 @@ export class SchmStepUpStepDownLeasingCFNAComponent implements OnInit {
   StepUpStepDownInputOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   listInstallment: any;
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
-  responseCalc: any;
   result: AppObj = new AppObj();
   PriceLabel: string = "Financing Amount";
 

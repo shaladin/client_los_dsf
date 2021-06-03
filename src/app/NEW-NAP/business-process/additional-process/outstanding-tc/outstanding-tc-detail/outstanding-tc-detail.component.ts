@@ -27,10 +27,10 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 export class OutstandingTcDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   AppId: number;
-  listAppTCObj: any;
-  appTC: any;
+  listAppTCObj: ListAppTCObj;
+  appTC: AppTCObj;
   outstandingTcObj: any;
-  BizTemplateCode: any;
+  BizTemplateCode: string;
   dmsObj: DMSObj = new DMSObj();
   custNo: string = "";
   appNo: string = "";

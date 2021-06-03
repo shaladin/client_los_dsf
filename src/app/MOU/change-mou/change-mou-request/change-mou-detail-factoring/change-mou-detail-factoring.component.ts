@@ -23,7 +23,7 @@ import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
 
 export class ChangeMouDetailFactoringComponent implements OnInit {
   @Input() MouCustId: number;
-  @Output() ResponseMouCustFactoring: EventEmitter<any> = new EventEmitter();
+  @Output() ResponseMouCustFactoring: EventEmitter<MouCustFctrObj> = new EventEmitter();
   @ViewChild(MouCustListedCustFctrComponent)
   MouListedFctrComp: MouCustListedCustFctrComponent;
   @ViewChild("LookupSupplier") ucLookupSupplier: UclookupgenericComponent;
@@ -334,7 +334,7 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
       }
     }
 
-    this.httpClient.post(URLConstant.AddEditChangeMouCustFctr, formData).subscribe((response) => {
+    this.httpClient.post(URLConstant.AddEditChangeMouCustFctr, formData).subscribe((response: MouCustFctrObj) => {
       this.ResponseMouCustFactoring.emit(response);
     });
 

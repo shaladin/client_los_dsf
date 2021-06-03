@@ -45,6 +45,7 @@ import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 import { AppCustAssetObj } from 'app/shared/model/AppCustAsset/AppCustAssetObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { NapAppModel } from 'app/shared/model/NapApp.Model';
 
 @Component({
   selector: 'app-customer-data',
@@ -93,14 +94,14 @@ export class CustomerDataComponent implements OnInit {
   inputFieldLegalCompanyObj: InputFieldObj;
   residenceAddrObj: AddrObj;
   inputFieldResidenceObj: InputFieldObj;
-  copyFromResidence: any;
+  copyFromResidence: string;
   mailingAddrObj: AddrObj;
   inputFieldMailingObj: InputFieldObj;
-  copyFromMailing: any;
+  copyFromMailing: string;
   mailingAddrCompanyObj: AddrObj;
   inputFieldMailingCompanyObj: InputFieldObj;
-  copyFromMailingCompany: any;
-  appCustPersonalId: any;
+  copyFromMailingCompany: string;
+  appCustPersonalId: number;
   listAppCustPersonalContactInformation: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>(); inputAddressObjForLegal: InputAddressObj;
   inputAddressObjForResidence: InputAddressObj;
   inputAddressObjForMailing: InputAddressObj;
@@ -115,7 +116,7 @@ export class CustomerDataComponent implements OnInit {
   isExisting: boolean = false;
   ListAppCustAsset: Array<AppCustAssetObj>;
 
-  CustTypeObj: any;
+  CustTypeObj: Array<KeyValueObj>;
   copyToResidenceTypeObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
@@ -143,7 +144,7 @@ export class CustomerDataComponent implements OnInit {
 
   LeadId: number;
   defCustModelCode: string;
-  MrCustTypeCode: any;
+  MrCustTypeCode: string;
   isMarried: boolean = true;
   spouseGender: string = CommonConstant.MasterCodeGenderFemale;
   isSpouseOk: boolean = true;
@@ -151,13 +152,11 @@ export class CustomerDataComponent implements OnInit {
   appData: AppObj;
   AppCustId: number;
   generalSettingObj: GenericListByCodeObj;
-  returnGeneralSettingObj: any;
-  appObj: any;
-  returnAppObj: any;
+  returnAppObj: NapAppModel;
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
   latestCustDataObj: AppCustCompareObj;
-  thirdPartyRsltHId: any;
-  latestReqDtCheckIntegrator: any;
+  thirdPartyRsltHId: number;
+  latestReqDtCheckIntegrator: Date;
   reqLatestJson: any;
 
   constructor(
@@ -311,7 +310,7 @@ export class CustomerDataComponent implements OnInit {
         var appObj = { Id: this.appId };
         if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
           this.http.post(URLConstant.GetAppById, appObj).subscribe(
-            (response) => {
+            (response: NapAppModel) => {
               this.returnAppObj = response;
 
               this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();

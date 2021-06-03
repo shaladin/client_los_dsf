@@ -39,7 +39,6 @@ export class CustConfirmationSubjViewComponent implements OnInit {
   agrmntMasterXObj: AgrmntMasterXObj = new AgrmntMasterXObj();	
   appObj: AppObj = new AppObj();
   IsVerfDetail: boolean = false;
-  cust: any;
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_DETAIL;
   constructor(private route: ActivatedRoute, private http: HttpClient) {
     this.route.queryParams.subscribe(params => {

@@ -97,7 +97,7 @@ export class ReferantorDataFL4WComponent implements OnInit {
     }
 
     this.http.post(URLConstant.GetAppReferantorByAppId, obj).subscribe(
-      (response: any) => {
+      (response: NapAppReferantorModel) => {
         if (response["AppReferantorId"] != 0) {
           this.ReferantorOn = true;
           this.ExistedData = true;

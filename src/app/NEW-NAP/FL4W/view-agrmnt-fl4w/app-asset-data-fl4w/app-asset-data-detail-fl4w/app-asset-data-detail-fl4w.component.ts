@@ -51,7 +51,7 @@ export class AppAssetDataDetailFl4wComponent implements OnInit {
     );
 
     this.httpClient.post(URLConstant.GetAssetTypeByCode, {Code: this.appAsset.AssetTypeCode }).subscribe(
-      (response: any) => {
+      (response: AssetTypeObj) => {
         this.AssetTypeObj = response;
       }
     );

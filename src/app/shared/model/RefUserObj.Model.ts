@@ -1,6 +1,6 @@
 export class RefUserObj {
-  refUserId: any;
-  username: any;
+  RefUserId: any;
+  Username: any;
   password: any;
   isLockedOut: any;
   isActive: any;
@@ -11,5 +11,5 @@ export class RefUserObj {
   isReset: boolean;
   loggedInMethod: any;
 
-  constructor() { this.refUserId = 0 }
+  constructor() { this.RefUserId = 0 }
 }

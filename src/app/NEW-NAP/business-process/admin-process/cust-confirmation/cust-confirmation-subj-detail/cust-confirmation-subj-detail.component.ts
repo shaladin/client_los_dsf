@@ -53,7 +53,6 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   TaskListId: number;
   BizTemplateCode: string;
   SubjectResponse: KeyValueObj = new KeyValueObj();
-  cust: any;
   isFailed: boolean = false;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_DETAIL;

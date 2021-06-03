@@ -15,7 +15,6 @@ import { CookieService } from 'ngx-cookie';
 export class LtkmVerifyPagingComponent implements OnInit {
     BizTemplateCode: string;
     inputPagingObj: UcPagingObj = new UcPagingObj();
-    arrCrit: Array<any> = new Array();
     constructor(private route: ActivatedRoute, private cookieService: CookieService) {
         this.route.queryParams.subscribe(params => {
             if (params["BizTemplateCode"] != null) {

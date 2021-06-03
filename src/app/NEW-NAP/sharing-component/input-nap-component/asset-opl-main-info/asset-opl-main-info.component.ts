@@ -16,7 +16,7 @@ export class AssetOplMainInfoComponent implements OnInit {
 
   ngOnInit() {
     this.http.post(URLConstant.GetAppAssetOplMainInfoByAppAssetId, { Id: this.AppAssetId }).subscribe(
-      (response: any) => {
+      (response: AppAssetOplObj) => {
         this.AppAssetObj = response;
         this.isReady = true;
       }

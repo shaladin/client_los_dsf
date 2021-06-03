@@ -7,7 +7,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppInvoiceFctrObj } from 'app/shared/model/AppInvoiceFctrObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ResDisbInfo, ResGetAllNtfAppAmt } from 'app/shared/model/Response/AppInvoice/ResAppInvoiceObj.model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
@@ -25,22 +27,23 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  listInvoice: any;
-  listVerificationStatus: any;
+  listInvoice: Array<AppInvoiceFctrObj>;
+  listVerificationStatus: Array<KeyValueObj>;
   verifStatCode: RefMasterObj;
-  BusinessDate: any;
-  Username: any;
+  BusinessDate: Date;
+  Username: string;
   WfTaskListId: string;
   TrxNo: string;
-  PlafondAmt: any;
-  OsPlafondAmt: any;
-  MrMouTypeCode: any;
+  PlafondAmt: number;
+  OsPlafondAmt: number;
+  MrMouTypeCode: string;
   token = localStorage.getItem(CommonConstant.TOKEN);
   LobCode: string;
   IsReady: boolean = false;
-  AccName: any;
-  BankName: any;
-  AccNo: any;
+  AccName: string;
+  BankName: string;
+  AccNo: string;
+  
 
   InvoiceForm = this.fb.group({
       Invoices: this.fb.array([])
@@ -183,7 +186,7 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
       }
   }
 
-  GetCallBack(ev: any) {
+  GetCallBack(ev) {
       if (ev.Key == "ViewProdOffering") {
           AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
       }

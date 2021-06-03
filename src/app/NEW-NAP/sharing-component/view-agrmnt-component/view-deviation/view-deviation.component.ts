@@ -10,8 +10,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   templateUrl: './view-deviation.component.html'
 })
 export class ViewDeviationComponent implements OnInit {
-
-  inputPagingObj: any;
   deviationResultList: Array<DeviationResultObj> = new Array<DeviationResultObj>();
   @Input() AppId: number;
 

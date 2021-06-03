@@ -37,7 +37,7 @@ export class NapDetailFormComponent implements OnInit {
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
   IsMultiAsset: string;
-  ListAsset: any;
+  // ListAsset: any;
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
   custType: string = CommonConstant.CustTypeCompany;

@@ -25,6 +25,10 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppDataObj } from 'app/shared/model/AppDataObj.model';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { NapModule } from 'app/NEW-NAP/nap.module';
+import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 
 @Component({
   selector: 'app-application-data-factoring',
@@ -145,7 +149,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
       MouType: CommonConstant.FACTORING
     }
     this.http.post(URLConstant.GetListMouByAppIdAndMouType, AppObj).subscribe(
-      (response: any) => {
+      (response: Array<ResGetListMouByAppAndTypeObj>) => {
         this.allMouCust = response;
         var MouCustId;
         if (this.mode == 'edit') {
@@ -205,8 +209,8 @@ export class ApplicationDataFactoringComponent implements OnInit {
       });
 
     this.http.post(URLConstant.GetListRefEmpByGsValueandOfficeId, null).subscribe(
-      (response: any) => {
-        this.allInSalesOffice = response[CommonConstant.ReturnObj];
+      (response: GenericListObj) => {
+        this.allInSalesOffice = response.ReturnObject;
         if (this.mode != 'edit') {
           this.SalesAppInfoForm.patchValue({
             SalesOfficerNo: this.allInSalesOffice[0].empNo,
@@ -332,7 +336,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
 
         this.http.post(URLConstant.GetRefPayFreqByPayFreqCode, { Code: this.mouCustFctrObj.PayFreqCode }).subscribe(
-          (response: any) => {
+          (response: RefPayFreqObj) => {
             this.allPayFreq = response;
             var PayFreqCode = null;
 
@@ -548,7 +552,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
   async loadData() {
     await this.http.post(URLConstant.GetAppById, {Id: this.AppId}).toPromise().then(
-      (response: any) => {
+      (response: AppObj) => {
         this.responseApp = response
       }); 
     var prodObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
@@ -557,7 +561,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     prodObj.ProdOfferingVersion = this.responseApp.ProdOfferingVersion;
 
     await this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, prodObj).toPromise().then(
-      (response: any) => {
+      (response: ProdOfferingDObj) => {
         this.responseProd = response;
       });
 
@@ -651,13 +655,10 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   GetListAppCustBankAcc() {
-    this.http.post<any>(URLConstant.GetAppCustByAppId, {AppId: this.AppId}).subscribe(
+    this.http.post<AppCustObj>(URLConstant.GetAppCustByAppId, {AppId: this.AppId}).subscribe(
       (responseAppCust) => {
-        var obj = {
-          AppCustId: responseAppCust["AppCustId"]
-        };
         this.appCustId = responseAppCust["AppCustId"]
-        this.http.post<any>(URLConstant.GetListAppCustBankAccByAppCustId, obj).subscribe(
+        this.http.post<any>(URLConstant.GetListAppCustBankAccByAppCustId, { Id: this.appCustId }).subscribe(
           (response) => {
             this.listCustBankAcc = response.AppCustBankAccObjs;
           });
@@ -710,7 +711,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
   SaveAppOtherInfo() {
     if (this.GetBankInfo != undefined && this.GetBankInfo != ""  && this.GetBankInfo.BankAccName != null && this.GetBankInfo.BankAccNo != null && this.GetBankInfo.BankBranch != null && this.GetBankInfo.BankCode != null && this.GetBankInfo.AppId != 0) {
-      this.http.post<any>(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
+      this.http.post(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
         error => {
           console.log(error);
         }
@@ -723,7 +724,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         "BankAccNo": "",
         "BankAccName": "",
       };
-      this.http.post<any>(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
+      this.http.post(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
         (response) => {
           response;
         },

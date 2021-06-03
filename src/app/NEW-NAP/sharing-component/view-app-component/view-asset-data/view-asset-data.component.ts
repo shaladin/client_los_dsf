@@ -10,18 +10,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   providers: [NGXToastrService]
 })
 export class ViewAssetDataComponent implements OnInit {
-  getAppUrl: any;
-  getAllAssetDataUrl: any;
   @Input() appId: number = 0;
   appAssetId: number = 0;
-  appObj = {
-    Id: 0
-  };
-  appAssetObj = {
-    Id: 0
-  };
-
-  AppObj: any;
   AppAssetObj: any;
   totalRsvFund: number = 0;
   totalHalfResponseAppAssetAttrObjs: number = 0;
@@ -37,31 +27,22 @@ export class ViewAssetDataComponent implements OnInit {
     });
   }
 
-  initUrl() {
-    this.getAppUrl = URLConstant.GetAppById;
-    this.getAllAssetDataUrl = URLConstant.GetAllAssetDataByAppId;
-  }
-
-  initSingleAssetUrl(){
-    this.getAppUrl = URLConstant.GetAppById;
-    this.getAllAssetDataUrl = URLConstant.GetAllAssetDataByAppAssetId;
-  }
-
   async ngOnInit(): Promise<void> {
     if (this.appAssetId != 0) {
-      this.initSingleAssetUrl();
-      this.appAssetObj.Id = this.appAssetId;
-      await this.GetAllAssetData(this.appAssetObj);
+      await this.GetAllAssetData({ Id: this.appAssetId });
     }
-    else {
-      this.initUrl();
-      this.appObj.Id = this.appId;
-      await this.GetAllAssetData(this.appObj);
-    }
+    await this.GetAllAssetData({ Id: this.appId });    
   }
 
-  async GetAllAssetData(obj: any) {
-    await this.http.post(this.getAllAssetDataUrl, obj).toPromise().then(
+  getAssetUrl(): string {
+    if(this.appAssetId != 0){
+      return URLConstant.GetAllAssetDataByAppAssetId;
+    }
+    return URLConstant.GetAllAssetDataByAppId;
+  }
+
+  async GetAllAssetData(obj: { Id: number }) {
+    await this.http.post(this.getAssetUrl(), obj).toPromise().then(
       (response) => {
         this.AppAssetObj = response;
         if(this.AppAssetObj.ResponseAppAssetAttrObjs != null) {

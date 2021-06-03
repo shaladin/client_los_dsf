@@ -41,6 +41,7 @@ import { CustomPatternObj } from 'app/shared/model/library/CustomPatternObj.mode
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ReqGetListActiveVendorEmpByVendorIdAndPositionCodeObj } from 'app/shared/model/Request/Vendor/ReqVendorEmp.model';
 import { String } from 'typescript-string-operations';
+import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
 
 @Component({
   selector: 'app-asset-data-add-edit',
@@ -48,20 +49,19 @@ import { String } from 'typescript-string-operations';
 })
 export class AssetDataAddEditComponent implements OnInit {
   //@Input() type: string = "addAsset";
-  @Input() mode: any;
+  @Input() mode: string;
   @Input() AppAssetId: number;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
   @Output() assetValue: EventEmitter<object> = new EventEmitter();
   //AppAssetId: number = 0;
   //type: string = "addAsset";
   currentChassisNo: string = "";
-  @Input() AppId: any;
+  @Input() AppId: number;
   LobCode: string;
   pageType: string = "add";
   custType: string;
-  branchObj: any;
   listBranchObj: any;
-  salesObj: any;
+  salesObj: VendorEmpObj;
   listSalesObj: any;
   adminHeadObj: any;
   listAdminHeadObj: any;
@@ -111,7 +111,7 @@ export class AssetDataAddEditComponent implements OnInit {
   appData: AppObj;
   grossDPPrcnt: number = 0;
   items: FormArray;
-  SerialNoList: any;
+  SerialNoList: Array<AssetTypeSerialNoLabelCustomObj>;
   originalAssetAccs: Array<AppAssetAccessoryObj>;
   assetTypeCompntValue: string;
   AppAssetAttrObj: any;

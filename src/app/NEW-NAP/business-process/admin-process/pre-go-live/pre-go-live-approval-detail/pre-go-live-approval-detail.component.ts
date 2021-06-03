@@ -20,37 +20,38 @@ import { ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj } from 'app/shared/mode
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ReqGetRfaLogByTrxNoAndApvCategoryObj } from 'app/shared/model/Request/NAP/PreGoLive/ReqGetRfaLogByTrxNoAndApvCategoryObj.model';
 import { AgrmntMasterXObj } from 'app/shared/model/AgrmntMasterXObj.Model';
+import { RfaObj } from 'app/shared/model/Approval/RfaObj.Model';
+import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
+import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
+import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
+import { AgrmntFinDataObj } from 'app/shared/model/AgrmntFinData.Model';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
   templateUrl: './pre-go-live-approval-detail.component.html'
 })
 export class PreGoLiveApprovalDetailComponent implements OnInit {
-  inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
   viewObj: string;
-  TrxNo: any;
-  AgrmntNo: any;
-  result: any;
-  result2: any;
-  result3: any;
-  result4: any;
-  result5: any;
-  result6: any;
+  TrxNo: string;
+  AgrmntNo: string;
+  result: AgrmntObj;
+  result4: NapAppModel;
   arrValue = [];
   TCList: any;
-  AppNo: any;
-  NumOfAsset: any;
-  Tenor: any;
-  InstAmt: any;
-  DeliveryDt: any;
-  ProdOfferingName: any;
-  WayOfFinancing: any;
-  CustNo: any;
-  CustName: any;
-  OfficeName: any;
-  PurposeOfFinancing: any;
+  AppNo: string;
+  NumOfAsset: number;
+  Tenor: number;
+  InstAmt: number;
+  DeliveryDt: string;
+  ProdOfferingName: string;
+  WayOfFinancing: string;
+  CustNo: string;
+  CustName: string;
+  OfficeName: string;
+  PurposeOfFinancing: string;
   ProdOfferingCode: string;
-  ProdOfferingVersion: number;
+  ProdOfferingVersion: string;
   LeadNo: string;
   MouNo: string;
   identifier: string = "TCList";
@@ -60,16 +61,16 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   listAppTCObj: ListAppTCObj;
   appTC: AppTCObj;
   count1: number = 0;
-  ListRfaLogObj: any;
-  listPreGoLiveAppvrObj: Array<any> = new Array<any>();
+  ListRfaLogObj: Array<RfaObj>;
+  listPreGoLiveAppvrObj: Array<any> = new Array();
   CustNoObj: GenericObj = new GenericObj();
 
-  AppId: any;
-  AgrmntId: any;
+  AppId: number;
+  AgrmntId: number;
   token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   LeadId: number;
   bizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-  MouCustId: any;
+  MouCustId: number;
   ApvReqId: number;
   taskId: number;
   InputApvObj: UcInputApprovalObj;
@@ -99,7 +100,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     reqGetRfaLogByTrxNoAndApvCategoryObj.ApvCategory = CommonConstant.ApvCategoryPreGoLive;
     this.http.post(URLConstant.GetRfaLogByTrxNoAndApvCategory, reqGetRfaLogByTrxNoAndApvCategoryObj).subscribe(
       (response) => {
-        this.result = response;
         this.ListRfaLogObj = response["ListRfaLogObj"];
         for (let i = 0; i < this.ListRfaLogObj.length; i++) {
           this.listPreGoLiveAppvrObj[i] = {
@@ -130,7 +130,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     })
 
     this.http.post(URLConstant.GetAgrmntByAgrmntNo, Obj).subscribe(
-      (response) => {
+      (response: AgrmntObj) => {
         this.result = response;
         this.AgrmntNo = this.result.AgrmntNo;
         this.CustNo = this.result.CustNo;
@@ -147,9 +147,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           RefProdCompntCode: CommonConstant.RefProdCompntCodeWayOfFinancing
         }
         this.http.post(URLConstant.GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode, Obj2).subscribe(
-          (response) => {
-            this.result2 = response;
-            this.WayOfFinancing = this.result2.CompntValueDesc;
+          (response: ProdOfferingDObj) => {
+            this.WayOfFinancing = response.CompntValueDesc;
           }
         );
 
@@ -159,9 +158,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           RefProdCompntCode: CommonConstant.RefProdCompntCodePurposeOfFinancing
         }
         this.http.post(URLConstant.GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode, Obj3).subscribe(
-          (response) => {
-            this.result3 = response;
-            this.PurposeOfFinancing = this.result3.CompntValueDesc;
+          (response: ProdOfferingDObj) => {
+            this.PurposeOfFinancing = response.CompntValueDesc;
           }
         );
 
@@ -171,7 +169,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           RowVersion: ""
         }
         this.http.post(URLConstant.GetAppById, Obj4).subscribe(
-          (response) => {
+          (response: NapAppModel) => {
             this.result4 = response;
             this.AppNo = this.result4.AppNo;
 
@@ -201,9 +199,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           RowVersion: ""
         }
         this.http.post(URLConstant.GetDeliveryOrderHByAgrmntId, Obj5).subscribe(
-          (response) => {
-            this.result5 = response;
-            this.DeliveryDt = formatDate(this.result5.DeliveryDt, 'yyyy-MM-dd', 'en-US');
+          (response: DeliveryOrderHObj) => {
+            this.DeliveryDt = formatDate(response.DeliveryDt, 'yyyy-MM-dd', 'en-US');
 
           }
         );
@@ -212,9 +209,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
           Id: this.result.AgrmntId
         }
         this.http.post(URLConstant.GetAgrmntFinDataByAgrmntId, agrmntObj).subscribe(
-          (response) => {
-            this.result6 = response;
-            this.InstAmt = this.result6.InstAmt;
+          (response: AgrmntFinDataObj) => {
+            this.InstAmt = response.InstAmt;
           }
         );
 

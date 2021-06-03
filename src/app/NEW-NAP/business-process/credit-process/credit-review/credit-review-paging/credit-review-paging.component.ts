@@ -15,7 +15,6 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 export class CreditReviewPagingComponent implements OnInit {
   BizTemplateCode: string;
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: Array<any> = new Array();
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {

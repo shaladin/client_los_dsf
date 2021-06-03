@@ -23,7 +23,6 @@ export class SchmIrregularCFNAComponent implements OnInit {
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   listInstallment: any;
-  responseCalc: any;
   result: AppObj = new AppObj();
   PriceLabel: string = "Financing Amount";
 

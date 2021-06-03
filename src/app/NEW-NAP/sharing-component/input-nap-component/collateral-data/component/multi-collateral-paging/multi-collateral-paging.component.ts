@@ -13,7 +13,7 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 export class MultiCollateralPagingComponent implements OnInit {
   @Input() AppId: number;
   @Input() BLCode: string = "";
-  @Output() select: EventEmitter<number> = new EventEmitter<any>();
+  @Output() select: EventEmitter<number> = new EventEmitter<number>();
   @Output() list: EventEmitter<Array<AppCollateralObj>> = new EventEmitter<Array<AppCollateralObj>>();
   ListAppCollObj: Array<AppCollateralObj> = new Array<AppCollateralObj>();
 

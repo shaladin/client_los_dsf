@@ -21,7 +21,7 @@ export class CustSocmedFL4WComponent implements OnInit {
 
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() appCustSocmedObjs: Array<AppCustSocmedObj>;
 
   refMasterObj = {

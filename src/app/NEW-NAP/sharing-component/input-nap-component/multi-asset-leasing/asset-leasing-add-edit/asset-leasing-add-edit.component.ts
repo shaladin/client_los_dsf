@@ -17,6 +17,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
 
 @Component({
   selector: 'app-asset-leasing-add-edit',
@@ -77,7 +78,7 @@ export class AssetLeasingAddEditComponent implements OnInit {
   appAssetSupplEmpBranchObj: any;
   branchAppAssetSupplEmpObj: any;
   items: FormArray;
-  SerialNoList: any;
+  SerialNoList: Array<AssetTypeSerialNoLabelCustomObj>;
 
   AssetDataForm = this.fb.group({
     SupplName: [''],

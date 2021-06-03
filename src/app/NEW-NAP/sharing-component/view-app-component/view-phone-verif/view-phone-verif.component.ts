@@ -9,12 +9,11 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   providers: [NGXToastrService]
 })
 export class ViewPhoneVerifComponent implements OnInit {
-  @Input() appId: any;
+  @Input() appId: number;
   appObj = {
     AppId: 0,
     Id:0
   };
-  AppObj: any;
   phoneVerifObj: any;
 
   constructor(private http: HttpClient) {

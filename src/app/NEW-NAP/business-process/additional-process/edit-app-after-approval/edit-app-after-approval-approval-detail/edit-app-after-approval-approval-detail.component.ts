@@ -26,7 +26,6 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
   taskId: number;
   instanceId: number;
   ApvReqId: number;
-  inputObj: any;
   InputApvObj : UcInputApprovalObj;
   InputApprovalHistoryObj : UcInputApprovalHistoryObj;
   UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
@@ -49,15 +48,8 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    var obj = {
-      taskId: this.taskId,
-      instanceId: this.instanceId,
-      approvalBaseUrl: environment.ApprovalR3Url//Ini bener ga ya URL nya
-    }
-    this.inputObj = obj;
-
     var ApvHoldObj = new ApprovalObj()
-    ApvHoldObj.TaskId = obj.taskId
+    ApvHoldObj.TaskId = this.taskId;
 
     this.HoldTask(ApvHoldObj);
 

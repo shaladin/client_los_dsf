@@ -8,6 +8,7 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
@@ -23,7 +24,7 @@ export class CopyCanAppMultiBlComponent implements OnInit {
   link: string;
   BizTemplateCode: string;
   IsNapVersionMainData: boolean = false;
-  userAccess: any;
+  userAccess: CurrentUserContext;
 
   constructor(private http: HttpClient, private toastr: NGXToastrService, private router: Router,
     private route: ActivatedRoute, private cookieService: CookieService) { 

@@ -31,7 +31,6 @@ export class CreditApprovalDetailComponent implements OnInit {
   mrCustTypeCode: string;
   viewObj: string;
   type: string;
-  inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
   ManualDeviationData;
   isExistedManualDeviationData;
   BizTemplateCode: string;
@@ -51,7 +50,7 @@ export class CreditApprovalDetailComponent implements OnInit {
   IsUseDigitalization: string;
   IsViewReady: boolean = false;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
-  getEvent: Array<any> = new Array<any>();
+  getEvent: Array<any> = new Array();
 
   private viewHighlightCommentComponent: ViewHighlightCommentComponent;
   @ViewChild(ViewHighlightCommentComponent) set content(
@@ -77,15 +76,9 @@ export class CreditApprovalDetailComponent implements OnInit {
       if (params["TaskId"] != null) {
         this.taskId = params["TaskId"];
       }
-      var obj = {
-        taskId: params["TaskId"],
-        instanceId: params["InstanceId"],
-        approvalBaseUrl: environment.ApprovalR3Url
-      }
-      this.inputObj = obj;
 
       var ApvHoldObj = new ApprovalObj()
-      ApvHoldObj.TaskId = obj.taskId
+      ApvHoldObj.TaskId = params["TaskId"];
 
       this.HoldTask(ApvHoldObj);
     });

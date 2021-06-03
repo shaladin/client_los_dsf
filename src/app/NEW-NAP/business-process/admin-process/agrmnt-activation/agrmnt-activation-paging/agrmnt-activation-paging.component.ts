@@ -49,7 +49,7 @@ export class AgrmntActivationPagingComponent implements OnInit {
     this.inputPagingObj.addCritInput = arrCrit;
   }
 
-  GetCallBack(ev: any) {
+  GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }

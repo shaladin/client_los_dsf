@@ -14,10 +14,10 @@ import { HttpClient } from '@angular/common/http';
 export class CollateralDataCfnaPagingComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentAppId: number;
-  @Output() select: EventEmitter<number> = new EventEmitter<any>();
+  @Output() select: EventEmitter<number> = new EventEmitter<number>();
   @Output() list: EventEmitter<any> = new EventEmitter<any>();
   ListAppCollObj: Array<AppCollateralObj> = new Array<AppCollateralObj>();
-  @Output() emitIsFirstInit: EventEmitter<boolean> = new EventEmitter<any>();
+  @Output() emitIsFirstInit: EventEmitter<boolean> = new EventEmitter<boolean>();
   isFirstInit: boolean = false;
   constructor(private http: HttpClient, private toastr: NGXToastrService) { }
 

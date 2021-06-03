@@ -34,7 +34,6 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
   IsDetail: boolean = false;
   WfTaskListId: number;
   inputGridObj: InputGridObj;
-  listInvoice: any;
   BizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
   IsDisableCustFctr: boolean = true;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
@@ -131,7 +130,7 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
     }
   }
 
-  CallbackHandler(event: any) {
+  CallbackHandler(event) {
     if (event.Key == "Edit") {
       this.IsDetail = true;
       this.GetAppInvoiceFctrData(event.RowObj.AppInvoiceFctrId);
@@ -151,7 +150,6 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
       }
       this.inputGridObj.resultData["Data"] = new Array();
       this.inputGridObj.resultData.Data = response["AppInvoiceFctrObjs"];
-      this.listInvoice = this.inputGridObj.resultData.Data;
     });
   }
 
@@ -224,7 +222,7 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
       });
   }
 
-  GetLookupMouCust(event: any){
+  GetLookupMouCust(event){
     this.RHInvoiceForm.patchValue({
       CustomerFactoringName: event.CustName
     });

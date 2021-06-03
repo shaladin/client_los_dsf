@@ -24,17 +24,17 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
   
   @ViewChildren('dyna') UclookupgenericComponents: QueryList<UclookupgenericComponent>;
-  appAssetObj: any;
-  TaskListId: any;
+  // appAssetObj: Array<any>;
+  TaskListId: string;
   AppAssetId: number;
   AppId: number;
-  InputLookupAssetNumberObj: any;
+  InputLookupAssetNumberObj: InputLookupObj;
   InputLookupAssetNumberObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
-  ListUsedAssetNumber: any;
+  ListUsedAssetNumber: Array<string>;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   requisitionList: any;
-  dictAssetNumber: { [key: string]: any; } = {};
-  agrmntNo: any;
+  dictAssetNumber: { [key: string]: InputLookupObj; } = {};
+  agrmntNo: string;
   constructor(
     private fb: FormBuilder, 
     private http: HttpClient,
@@ -128,9 +128,9 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
     await this.http.post(URLConstant.GetAssetAllocationDataByAppId, reqObj).toPromise().then(
       (response) => {
         this.ListUsedAssetNumber = response["ListAssetNumber"];
-        this.appAssetObj = response["AppAssetObjs"];
+        // this.appAssetObj = response["AppAssetObjs"];
         this.agrmntNo = response["AgrmntNo"];
-        console.log(this.appAssetObj);
+        // console.log(this.appAssetObj);
         if (response["AppAssetObjs"].length > 0) {
           this.AssetAllocationForm.controls["ListAsset"] = this.fb.array([]);
           for (let i = 0; i < response["AppAssetObjs"].length; i++) {
@@ -205,7 +205,7 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  addGroupAsset(appAssetObj, i) {
+  addGroupAsset(appAssetObj, i: number) {
     if (appAssetObj.DecisionCode == "USE_EXISTING") {
       return this.fb.group({
         No: [i],

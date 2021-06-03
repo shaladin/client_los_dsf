@@ -17,7 +17,6 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 export class DupCheckMdPagingComponent implements OnInit {
 
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: any;
   BizTemplateCode: string;
 
   constructor(

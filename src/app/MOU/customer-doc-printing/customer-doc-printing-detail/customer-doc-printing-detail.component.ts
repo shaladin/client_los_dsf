@@ -14,7 +14,7 @@ import { MouCustDocPrintForViewObj } from 'app/shared/model/MouCustDocPrintForVi
 export class CustomerDocPrintingDetailComponent implements OnInit {
   
   MouCustId: number;
-  responseObj: Array<MouCustDocPrintForViewObj> = new Array<any>();
+  responseObj: Array<MouCustDocPrintForViewObj> = new Array<MouCustDocPrintForViewObj>();
   mouCustObj: MouCustObj;
   readonly CancelLink: string = NavigationConstant.MOU_CUST_DOC_PAGING;
 

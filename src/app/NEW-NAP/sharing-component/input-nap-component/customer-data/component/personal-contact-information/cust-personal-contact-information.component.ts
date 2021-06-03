@@ -69,7 +69,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
   contactPersonAddrObj: AddrObj;
   inputFieldContactPersonObj: InputFieldObj;
   GenderObj: Array<KeyValueObj>;
-  IdTypeObj: any;
+  IdTypeObj: Array<KeyValueObj>;
   CustRelationshipObj: Array<KeyValueObj>;
   CustContactRelationshipObj: Array<KeyValueObj>;
   CustGuarantorRelationshipObj: Array<KeyValueObj>;
@@ -508,7 +508,7 @@ export class CustPersonalContactInformationComponent implements OnInit {
   controlNameIdNo: string = 'IdNo';
   controlNameIdType: string = 'MrIdTypeCode';
   customPattern: Array<CustomPatternObj>;
-  resultPattern: any;
+  resultPattern: Array<KeyValueObj>;
 
   getInitPattern() {
     this.regexService.getListPattern().subscribe(

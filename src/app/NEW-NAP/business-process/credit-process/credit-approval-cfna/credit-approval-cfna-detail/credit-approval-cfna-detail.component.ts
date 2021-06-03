@@ -46,7 +46,7 @@ export class CreditApprovalCfnaDetailComponent implements OnInit {
   IsUseDigitalization: string;
   IsViewReady: boolean = false;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
-  getEvent: Array<any> = new Array<any>();
+  getEvent: Array<any> = new Array();
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {

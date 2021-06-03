@@ -14,7 +14,6 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 export class CreditReviewCfnaPagingComponent implements OnInit {
   BizTemplateCode: string;
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: Array<any> = new Array();
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {

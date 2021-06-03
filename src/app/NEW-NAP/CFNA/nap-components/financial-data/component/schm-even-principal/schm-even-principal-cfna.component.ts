@@ -25,7 +25,6 @@ export class SchmEvenPrincipalCFNAComponent implements OnInit {
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
   listInstallment: any;
-  responseCalc: any;
   result: AppObj = new AppObj();
   PriceLabel: string = "Financing Amount";
 

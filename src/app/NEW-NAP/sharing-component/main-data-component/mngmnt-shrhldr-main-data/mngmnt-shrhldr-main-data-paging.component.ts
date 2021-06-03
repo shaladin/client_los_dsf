@@ -23,7 +23,6 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
   isDetail: boolean = false;
   inputGridObj: InputGridObj;
   listMgmntShrholder: Array<any> = new Array();
-  resultData: Array<any> = new Array();
   closeResult: string;
   appCustId: number;
   inputMode: string = "ADD";

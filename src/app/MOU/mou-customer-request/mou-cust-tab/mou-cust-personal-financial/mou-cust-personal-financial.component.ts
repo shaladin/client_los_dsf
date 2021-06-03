@@ -16,7 +16,7 @@ export class MouCustPersonalFinancialComponent implements OnInit {
 
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() MouCustPersonalFinDataObj: MouCustPersonalFinDataObj = new MouCustPersonalFinDataObj();
   @Input() isMarried: boolean = true;
   refMasterObj = {

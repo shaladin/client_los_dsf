@@ -34,6 +34,10 @@ import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMas
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResListKeyValueObj } from 'app/shared/model/Response/Generic/ResListKeyValueObj.model';
 import { ResGetAppCustAddrByAppIdAndAddrTypeCodeObj } from 'app/shared/model/Response/NAP/CustMainData/ResGetAppCustAddrByAppIdAndAddrTypeCodeObj.model';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { LeadObj } from 'app/shared/model/Lead.Model';
+import { LeadCustObj } from 'app/shared/model/Request/LEAD/LeadCustObj.model';
+import { CustObj } from 'app/shared/model/CustObj.Model';
 
 @Component({
   selector: 'app-cust-main-data',
@@ -191,7 +195,7 @@ export class CustMainDataComponent implements OnInit {
     );
     await this.getRefMaster();
 
-    let resp = await this.http.post<any>(URLConstant.GetAppById, { AppId: this.appId }).toPromise()
+    let resp = await this.http.post<AppObj>(URLConstant.GetAppById, { AppId: this.appId }).toPromise()
 
     let isUseLead = false;
     if (resp.LeadId) {
@@ -1092,8 +1096,7 @@ export class CustMainDataComponent implements OnInit {
 
   //START URS-LOS-041
   customPattern: Array<CustomPatternObj>;
-  initIdTypeCode: any;
-  resultPattern: any;
+  resultPattern: Array<KeyValueObj>;
 
   getInitPattern() {
     this.regexService.getListPattern().subscribe(
@@ -1152,7 +1155,7 @@ export class CustMainDataComponent implements OnInit {
     console.log('richard check');
     //get lead
 
-    let resp4 = await this.http.post<any>(URLConstant.GetLeadByLeadId, { LeadId: this.LeadId }).toPromise();
+    let resp4 = await this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { LeadId: this.LeadId }).toPromise();
     if (resp4 == undefined) return false;
 
     if (resp4.LeadStep == CommonConstant.LeadStepAppCust) {
@@ -1164,13 +1167,13 @@ export class CustMainDataComponent implements OnInit {
 
 
     //get lead cust
-    let resp3 = await this.http.post<any>(URLConstant.GetLeadCustByLeadId, { LeadId: this.LeadId }).toPromise();
+    let resp3 = await this.http.post<LeadCustObj>(URLConstant.GetLeadCustByLeadId, { LeadId: this.LeadId }).toPromise();
     if (resp3 == undefined) return false;
 
     if (resp3.CustNo == undefined) return false;
 
     //get cust id
-    let resp2 = await this.http.post<any>(URLConstant.GetCustByCustNo, { CustNo: resp3.CustNo }).toPromise()
+    let resp2 = await this.http.post<CustObj>(URLConstant.GetCustByCustNo, { CustNo: resp3.CustNo }).toPromise()
     if (resp2 == undefined) return false;
 
     //get cust data

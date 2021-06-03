@@ -228,7 +228,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
   resultResponse: AppObj; 
   getAppModelInfo() {
     this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, {Id: this.AppId}).subscribe(
-      (response: any) => {
+      (response: AppObj) => {
         this.resultResponse = response;
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
@@ -726,7 +726,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
 
   SaveAppOtherInfo() {
     if (this.GetBankInfo != undefined && this.GetBankInfo != "" && this.GetBankInfo.BankAccName != null && this.GetBankInfo.BankAccNo != null && this.GetBankInfo.BankBranch != null && this.GetBankInfo.BankCode != null && this.GetBankInfo.AppId != 0) {
-      this.http.post<any>(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
+      this.http.post(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
         (response) => {
           response;
         },
@@ -742,7 +742,7 @@ export class ApplicationDataRefinancingComponent implements OnInit {
         "BankAccNo": "",
         "BankAccName": "",
       };
-      this.http.post<any>(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
+      this.http.post(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
         (response) => {
           response;
         },

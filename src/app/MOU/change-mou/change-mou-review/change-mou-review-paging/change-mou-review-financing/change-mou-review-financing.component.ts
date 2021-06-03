@@ -32,7 +32,6 @@ export class ChangeMouReviewFinancingComponent implements OnInit {
   WfTaskListId: number;
   MouType: string = "FINANCING";
   PlafondAmt: number;
-  listApprover: any;
   MrCustTypeCode: string;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   listReason: Array<ReqGetByTypeCodeObj>; 

@@ -58,15 +58,15 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
     this.initInputApprovalObj();
   }
 
-  HoldTask(obj: any) {
+  HoldTask(obj: ApprovalObj) {
     this.http
       .post(AdInsConstant.ApvHoldTaskUrl, obj)
       .subscribe((response) => {});
   }
 
-  onAvailableNextTask(event: any) {}
+  onAvailableNextTask(event) {}
 
-  onApprovalSubmited(event: any) {
+  onApprovalSubmited(event) {
     this.toastr.successMessage("Success");
     this.router.navigate([NavigationConstant.MOU_FREEZE_APV_PAGING]);
   }
@@ -75,7 +75,7 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
     this.router.navigate([NavigationConstant.MOU_FREEZE_APV_PAGING]);
   }
 
-  GetCallBack(e: any) {
+  GetCallBack(e) {
   }
 
   initInputApprovalObj(){

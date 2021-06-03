@@ -16,6 +16,7 @@ import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ResDisbInfo } from 'app/shared/model/Response/AppInvoice/ResAppInvoiceObj.model';
+import { AppInvoiceFctrObj } from 'app/shared/model/AppInvoiceFctrObj.Model';
 
 @Component({
   selector: 'app-invoice-verif-detail',
@@ -25,15 +26,15 @@ export class InvoiceVerifDetailComponent implements OnInit {
 
   @Input() IsFromReturnHandling: boolean = false;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  listInvoice: any;
+  listInvoice: Array<AppInvoiceFctrObj>;
   verifStatCode: RefMasterObj;
-  BusinessDate: any;
-  Username: any;
+  BusinessDate: Date;
+  Username: string;
   AppId: number;
   WfTaskListId: number;
   TrxNo: string;
-  PlafondAmt: any;
-  OsPlafondAmt: any;
+  PlafondAmt: number;
+  OsPlafondAmt: number;
   token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   IsReturnOn: boolean = false;
   listRefReason: Array<KeyValueObj> = new Array();
@@ -219,7 +220,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
       });
   }
 
-  GetCallBack(ev: any) {
+  GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }

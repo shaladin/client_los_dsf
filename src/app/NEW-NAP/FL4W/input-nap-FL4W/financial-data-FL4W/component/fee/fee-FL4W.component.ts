@@ -6,6 +6,7 @@ import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 import { CalcProvisionFee } from 'app/shared/model/AppFee/CalcProvisionFee.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-fee-FL4W',
@@ -22,7 +23,7 @@ export class FeeFL4WComponent implements OnInit {
   appFeeObj : AppFeeObj = new AppFeeObj();
   listAppFeeObj : Array<AppFeeObj> = new Array<AppFeeObj>();
   isSubmitted : boolean;
-  TempProvisionSource : any;
+  TempProvisionSource : Array<KeyValueObj>;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,

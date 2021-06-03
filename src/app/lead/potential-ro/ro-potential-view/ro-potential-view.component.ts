@@ -10,6 +10,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 
 
 @Component({
@@ -107,8 +108,8 @@ export class RoPotentialViewComponent implements OnInit {
       Id: this.reqVerfResDObj.VerfResultHId
     }
     this.http.post(URLConstant.GetListVerfResultDInQuestionGrp, obj).subscribe(
-      (response) => {
-        this.ListVerifResultDObj = response[CommonConstant.ReturnObj];
+      (response: GenericListObj) => {
+        this.ListVerifResultDObj = response.ReturnObject;
       }
     );
   }

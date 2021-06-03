@@ -26,7 +26,7 @@ export class AppCustAssetOldNapComponent implements OnInit {
     private spinner: NgxSpinnerService
   ) { 
     this.ListAppCustAsset = new Array<AppCustAssetObj>();
-    this.ResponseAppCustAsset = new EventEmitter<any>();
+    this.ResponseAppCustAsset = new EventEmitter();
   }
 
   ngOnInit() {

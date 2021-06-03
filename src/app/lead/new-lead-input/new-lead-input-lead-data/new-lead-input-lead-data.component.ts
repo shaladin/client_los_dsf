@@ -10,6 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { AssetTypeObj } from 'app/shared/model/AssetTypeObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
@@ -272,11 +273,11 @@ export class NewLeadInputLeadDataComponent implements OnInit {
                 Id: this.resAssetMasterObj.AssetTypeId
               }
               this.http.post(URLConstant.GetAssetTypeById, obj).subscribe(
-                (response: any) => {
+                (response: AssetTypeObj) => {
 
                   let AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
                   this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
-                    (response: any) => {
+                    (response: GenericListObj) => {
                       while (this.items.length) {
                         this.items.removeAt(0);
                       }
@@ -396,11 +397,11 @@ export class NewLeadInputLeadDataComponent implements OnInit {
                 let assetType = new AssetTypeObj();
                 assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
                 this.http.post(URLConstant.GetAssetTypeById, assetType).subscribe(
-                  (response: any) => {
+                  (response: AssetTypeObj) => {
 
                     let AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
                     this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, AssetTypeCode).subscribe(
-                      (response: any) => {
+                      (response: GenericListObj) => {
                         while (this.items.length) {
                           this.items.removeAt(0);
                         }
@@ -492,7 +493,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
 
     let obj = { Code: event.AssetTypeCode };
     this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, obj).subscribe(
-      (response: any) => {
+      (response: GenericListObj) => {
         while (this.items.length) {
           this.items.removeAt(0);
         }

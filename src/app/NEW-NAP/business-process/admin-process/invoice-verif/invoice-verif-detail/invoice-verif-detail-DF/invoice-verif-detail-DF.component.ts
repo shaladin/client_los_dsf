@@ -8,8 +8,10 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppInvoiceFctrObj } from 'app/shared/model/AppInvoiceFctrObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
@@ -25,23 +27,21 @@ export class InvoiceVerifDetailDFComponent implements OnInit {
   private stepper: Stepper;
 
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  listInvoice: any;
-  listVerificationStatus: any;
+  listInvoice: Array<AppInvoiceFctrObj>;
+  listVerificationStatus: Array<KeyValueObj>;
   verifStatCode: RefMasterObj;
-  BusinessDate: any;
-  Username: any;
   AppId: number;
-  WfTaskListId: any;
+  WfTaskListId: number;
   TrxNo: string;
-  PlafondAmt: any;
-  OsPlafondAmt: any;
-  MrMouTypeCode: any;
+  PlafondAmt: number;
+  OsPlafondAmt: number;
+  MrMouTypeCode: string;
   token = localStorage.getItem(CommonConstant.TOKEN);
   LobCode: string;
   IsReady: boolean = false;
 
-  appTC: any;
-  RlistAppTCObj: any;
+  appTC: AppTCObj;
+  RlistAppTCObj: { ListAppTcObj: Array<AppTCObj> };
 
   InvoiceForm = this.fb.group({
       Invoices: this.fb.array([])
@@ -54,9 +54,6 @@ export class InvoiceVerifDetailDFComponent implements OnInit {
           this.WfTaskListId = params["TaskListId"];
           this.TrxNo = params["TrxNo"];
       });
-      this.BusinessDate = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
-      var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-      this.Username = currentUserContext[CommonConstant.USER_NAME];
   }
 
   NextStep(Step) {
@@ -252,7 +249,7 @@ export class InvoiceVerifDetailDFComponent implements OnInit {
   async claimTask() {
       var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
       var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-      wfClaimObj.pWFTaskListID = this.WfTaskListId;
+      wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
       wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
       this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
           () => {
@@ -269,7 +266,7 @@ export class InvoiceVerifDetailDFComponent implements OnInit {
       }
   }
 
-  GetCallBack(ev: any) {
+  GetCallBack(ev) {
       if (ev.Key == "ViewProdOffering") {
           AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
       }

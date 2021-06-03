@@ -26,7 +26,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
   listedCusts: Array<MouCustListedCustFctrObj>;
   inputLookupObj: InputLookupObj;
   CustNoObj: GenericObj = new GenericObj();
-  dictLookup: {[key: string]: any;} = {};
+  dictLookup: {[key: string]: InputLookupObj;} = {};
   InputLookupCustomerObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
 
   MouCustIsListedForm = this.fb.group({
@@ -118,7 +118,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
           var mouListedFctr = new MouCustListedCustFctrObj();
           mouListedFctr.MouListedCustFctrId = custFctrId;
           this.httpClient.post(URLConstant.DeleteMouCustListedCustFctr, { Id: custFctrId}).subscribe(
-            (response: any) => {
+            (response) => {
               this.toastr.successMessage(response["Message"]);
             }
           );

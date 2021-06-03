@@ -20,6 +20,7 @@ import { ReqCopyProductObj, ReqListProductDetailObj } from 'app/shared/model/Req
 import { ResGetProdCmpntGroupedObj } from 'app/shared/model/Response/Product/ResGetProdCompntObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 
 @Component({
@@ -35,9 +36,9 @@ export class HoGeneralDataComponent implements OnInit {
   LOBSelected: string = "";
   LOBDescrSelected: string = "";
   Source: string = "";
-  DictOptions: { [key: string]: any; } = {};
-  DictMultiOptions: { [key: string]: any; } = {};
-  SelectedMultiDDLItems: { [key: string]: any; } = {};
+  DictOptions: { [key: string]: Array<KeyValueObj>; } = {};
+  DictMultiOptions: { [key: string]: Array<any>; } = {};
+  SelectedMultiDDLItems: { [key: string]: Array<any>; } = {};
   GenericByCodeObj: GenericObj = new GenericObj();
   InputLookUpObj: InputLookupObj = new InputLookupObj();
   ArrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();

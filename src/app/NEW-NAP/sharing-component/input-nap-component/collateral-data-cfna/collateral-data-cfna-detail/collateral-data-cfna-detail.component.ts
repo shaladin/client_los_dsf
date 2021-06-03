@@ -29,6 +29,9 @@ import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { String } from 'typescript-string-operations';
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
+import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
 
 @Component({
   selector: 'app-collateral-data-cfna-detail',
@@ -41,7 +44,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   @Input() isSingleAsset = true;
   @Input() AppId: number = 0;
   @Input() AppCollateralId: number = 0;
-  @Output() outputValue: EventEmitter<number> = new EventEmitter<any>();
+  @Output() outputValue: EventEmitter<number> = new EventEmitter<number>();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   inputLookupExistColl: InputLookupObj = new InputLookupObj();
@@ -54,7 +57,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
 
   isAssetAttrReady: boolean = false;
   AppCollateralAttrObjs: Array<AppCollateralAttrCustomObj>;
-  AppCollateralAttrObj:any;
+  AppCollateralAttrObj: Array<AppCollateralAttrCustomObj>;
   AppCustObj: AppCustObj = new AppCustObj();
   AppCustAddrObj: AppCustAddrObj = new AppCustAddrObj();
   AppCustCompanyObj: AppCustCompanyObj = new AppCustCompanyObj();
@@ -64,12 +67,12 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
   appCollateralObj: AppCollateralObj = new AppCollateralObj();
   editAppCollateralObj: AppCollateralObj = new AppCollateralObj();
-  collateralRegistrationObj: any;
-  editCollateralRegistrationObj: any;
+  collateralRegistrationObj: AppCollateralRegistrationObj;
+  editCollateralRegistrationObj: AppCollateralRegistrationObj;
   criteriaList: Array<CriteriaObj>;
   criteriaObj: CriteriaObj;
   items: FormArray;
-  SerialNoList: any;
+  SerialNoList: Array<AssetTypeSerialNoLabelCustomObj>;
   isUsed: boolean = true;
   isCopy: boolean = true;
   isExisting : boolean = false;
@@ -735,7 +738,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     }
 
     this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: AssetTypeCode }).subscribe(
-      (response: any) => {
+      (response: GenericListObj) => {
         while (this.items.length) {
           this.items.removeAt(0);
         }

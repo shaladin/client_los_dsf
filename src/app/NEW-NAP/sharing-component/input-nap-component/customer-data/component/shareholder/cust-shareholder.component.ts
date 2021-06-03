@@ -640,8 +640,7 @@ export class CustShareholderComponent implements OnInit {
   controlNameIdNo: string = 'IdNo';
   controlNameIdType: string = 'MrIdTypeCode';
   customPattern: Array<CustomPatternObj>;
-  initIdTypeCode: any;
-  resultPattern: any;
+  resultPattern: Array<KeyValueObj>;
 
   getInitPattern() {
     this.regexService.getListPattern().subscribe(

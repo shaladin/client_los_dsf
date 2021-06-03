@@ -38,7 +38,7 @@ export class ViewDeliveryOrderDetailComponent implements OnInit {
       });
 
     this.http.post(URLConstant.GetDeliveryOrderHByDeliveryOrderHId, { Id: this.DOHId }).subscribe(
-      (response:any) => { 
+      (response: DeliveryOrderHObj) => { 
         this.doData = response;
       });
   }

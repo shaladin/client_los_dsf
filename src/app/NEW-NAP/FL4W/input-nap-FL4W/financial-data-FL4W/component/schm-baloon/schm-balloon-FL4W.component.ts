@@ -30,7 +30,6 @@ export class SchmBalloonFL4WComponent implements OnInit {
   calcBalloonObj : CalcBalloonObj = new CalcBalloonObj();
   calcBalloonObjForTrialCalc: CalcBalloonObjForTrialCalc = new CalcBalloonObjForTrialCalc();
   listInstallment: any;
-  responseCalc: any;
   IsTrialCalc: boolean = false;
 
   constructor(

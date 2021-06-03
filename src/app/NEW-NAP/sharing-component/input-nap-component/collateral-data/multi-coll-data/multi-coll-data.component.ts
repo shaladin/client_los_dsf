@@ -12,7 +12,7 @@ export class MultiCollDataComponent implements OnInit {
 
   @Input() AppId: number;
   @Input() BLCode: string = "";
-  @Output() outputTab: EventEmitter<any> = new EventEmitter<any>();
+  @Output() outputTab: EventEmitter<any> = new EventEmitter();
   AppCollateralId: number = 0;
   mode: string = "add";
   IsDetail: boolean = false;

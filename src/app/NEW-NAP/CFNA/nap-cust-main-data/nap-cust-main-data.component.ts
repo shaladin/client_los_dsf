@@ -34,7 +34,6 @@ export class NapCustMainDataComponent implements OnInit {
   MrCustTypeCode: string = "PERSONAL";
   NapObj: AppObj = new AppObj();
   IsMultiAsset: string;
-  ListAsset: any;
   isMarried: boolean = false;
   bizTemplateCode: string;
   appCustId: number = 0;

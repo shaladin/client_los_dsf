@@ -31,6 +31,7 @@ import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCode
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 import { ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj } from 'app/shared/model/Request/NAP/ThirdParty/ReqGetThirdPartyResultHByTrxTypeCodeAndTrxNoObj.model';
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-job-tab',
@@ -80,7 +81,7 @@ export class JobTabComponent implements OnInit {
   IsCustomer: boolean = false;
   IsWellknownCoy: boolean = false;
   BusinessDt: Date;
-  UserAccess: any;
+  UserAccess: CurrentUserContext;
   bizTemplateCode: string = "";
   RowVersion: string[];
   JobDataForm = this.fb.group({

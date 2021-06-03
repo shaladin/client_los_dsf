@@ -20,6 +20,10 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
 
 @Component({
   selector: 'app-delivery-order-detail',
@@ -27,12 +31,12 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 })
 
 export class DeliveryOrderDetailComponent implements OnInit {
-  appAssetObj: any;
-  items: any;
+  appAssetObj: AppAssetObj;
+  items: FormArray;
   deliveryOrderObj: any = new DeliveryOrderObj();
-  appCollateralDoc: any;
+  appCollateralDoc: AppCollateralDocObj;
   listAppCollateralDocObj: ListAppCollateralDocObj;
-  appTC: any;
+  appTC: AppTCObj;
   listAppTCObj: ListAppTCObj;
   itemType: Array<KeyValueObj>;
 
@@ -46,14 +50,14 @@ export class DeliveryOrderDetailComponent implements OnInit {
   FullAssetName: string;
   MrAssetUsageCode: string;
   AssetCategoryCode: string;
-  TaskListId: any;
+  TaskListId: number;
   arrValue = [];
-  UserAccess: any;
+  UserAccess: CurrentUserContext;
   MaxDate: Date;
   businessDt: Date = new Date();
   PurchaseOrderDt: Date = new Date();
   listItem: FormArray;
-  SerialNoList: any;
+  SerialNoList: Array<AssetTypeSerialNoLabelCustomObj>;
   isDmsReady: boolean;
   dmsObj: DMSObj;
   agrNo: string;
@@ -110,7 +114,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
     this.listItem = this.DeliveryOrderForm.get('listItem') as FormArray;
 
     this.http.post(URLConstant.GetAppAssetByAgrmntId, appAssetobj).subscribe(
-      (response) => {
+      (response: AppAssetObj) => {
         this.appAssetObj = response;
         this.AppAssetId = this.appAssetObj.AppAssetId;
         this.MrAssetConditionCode = this.appAssetObj.MrAssetConditionCode;
@@ -170,12 +174,12 @@ export class DeliveryOrderDetailComponent implements OnInit {
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
           Code: this.appAssetObj.AssetTypeCode
         }).subscribe(
-          (response: any) => {
+          (response: GenericListObj) => {
             while (this.listItem.length) {
               this.listItem.removeAt(0);
             }
 
-            this.SerialNoList = response[CommonConstant.ReturnObj];
+            this.SerialNoList = response.ReturnObject;
             for (let i = 0; i < this.SerialNoList.length; i++) {
               let eachDataDetail = this.fb.group({
                 SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
@@ -374,7 +378,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
   async claimTask() {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.TaskListId;
+    wfClaimObj.pWFTaskListID = this.TaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {

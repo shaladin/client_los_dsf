@@ -24,7 +24,7 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
   @Input() MouCustId: number;
   @Input() ChangeMouTrxId: number;
   @Input() ChangeMouCustId: number;
-  @Output() ResponseMouCustDealerfinancing: EventEmitter<any> = new EventEmitter();
+  @Output() ResponseMouCustDealerfinancing: EventEmitter<MouCustDlrFinObj> = new EventEmitter();
   payFreqList: Array<RefPayFreqObj>;
   currencyList: Array<KeyValueObj>;
   isListedFctr: boolean;
@@ -44,7 +44,7 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
   ChangeMouDlrFinData: any;
   MouNo: string;
 
-  ChangeMouCustDlrFindData: any;
+  ChangeMouCustDlrFindData: MouCustDlrFinObj;
 
   InputLookupLinkManufacturerObj: InputLookupObj = new InputLookupObj();
   InputLookupLinkSupplGradingObj: InputLookupObj = new InputLookupObj();
@@ -219,9 +219,9 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
 
   Save(enjiForm) {
     this.BindData();
-    this.ChangeMouCustDlrFindData.ChangeMouTrxId = this.ChangeMouTrxId
+    // this.ChangeMouCustDlrFindData.ChangeMouTrxId = this.ChangeMouTrxId
     this.httpClient.post(URLConstant.AddEditChangeMouCustDlrFin, this.ChangeMouCustDlrFindData).subscribe(
-      (response) => {
+      (response: MouCustDlrFinObj) => {
         this.ResponseMouCustDealerfinancing.emit(response);
       });
   }
@@ -331,7 +331,13 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
       Notes: this.MouDetailFinancingForm.controls.Notes.value,
       MaximumExtendTimes: this.MouDetailFinancingForm.controls.MaximumExtendTimes.value,
       ManufacturerCode: this.ManufacturerCode,
-      ManufacturerCustNo: this.ManufacturerCustNo
+      ManufacturerCustNo: this.ManufacturerCustNo,
+      PayFreqCode: this.MouDetailFinancingForm.controls.PayFreqCode.value,
+      WopCode: this.MouDetailFinancingForm.controls.WopCode.value,
+      CurrCode: null,
+      MouCustDlrFncngId: 0,
+      MrInstTypeCode: null,
+      VirtualAccNo: null,
     }
   }
 }

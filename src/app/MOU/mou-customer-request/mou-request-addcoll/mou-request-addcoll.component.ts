@@ -33,6 +33,7 @@ import { MouCustCollateralDocObj } from 'app/shared/model/MouCustCollateralDocOb
 import { formatDate } from '@angular/common';
 import { RegexService } from 'app/shared/services/regex.services';
 import { AssetTypeSerialNoLabelObj } from 'app/shared/model/SerialNo/AssetTypeSerialNoLabelObj.Model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 
 @Component({
   selector: 'app-mou-request-addcoll',
@@ -43,8 +44,8 @@ import { AssetTypeSerialNoLabelObj } from 'app/shared/model/SerialNo/AssetTypeSe
 export class MouRequestAddcollComponent implements OnInit {
   @Input() MouCustId: number;
   @Input() MouType: string;
-  @Output() ResponseMouAddColl: EventEmitter<any> = new EventEmitter<any>();
-  @Output() modeDetail: EventEmitter<any> = new EventEmitter<any>();
+  @Output() ResponseMouAddColl: EventEmitter<any> = new EventEmitter();
+  @Output() modeDetail: EventEmitter<any> = new EventEmitter();
   @ViewChild(UcgridfooterComponent) UCGridFooter;
   @ViewChild(UCSearchComponent) UCSearchComponent;
   private ucLookupCollateral: UclookupgenericComponent;
@@ -88,7 +89,7 @@ export class MouRequestAddcollComponent implements OnInit {
   CountExisting: number = 0;
 
   collateralObj: MouCustCollateralObj;
-  collateralRegistrationObj: any;
+  collateralRegistrationObj: MouCustCollateralRegistrationObj;
   listCollExisting: Array<string> = new Array<string>();
 
   listMouCustCollateralDocObj: ListMouCustCollateralDocObj = new ListMouCustCollateralDocObj();
@@ -535,11 +536,11 @@ export class MouRequestAddcollComponent implements OnInit {
           this.inputLookupObj.nameSelect = this.collateralObj.FullAssetName;
           this.inputLookupObj.jsonSelect = this.collateralObj;
           this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: this.collateralObj.AssetTypeCode }).subscribe(
-            (response: any) => {
+            (response: GenericListObj) => {
               while (this.items.length) {
                 this.items.removeAt(0);
               }
-              this.SerialNoList = response['ReturnObject'];
+              this.SerialNoList = response.ReturnObject;
               for (var i = 0; i < this.SerialNoList["length"]; i++) {
                 var eachDataDetail = this.fb.group({
                   SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
@@ -608,8 +609,8 @@ export class MouRequestAddcollComponent implements OnInit {
           this.legalAddrObj.AreaCode4 = this.collateralRegistrationObj.OwnerAreaCode4;
           if (this.collateralRegistrationObj.Phn1 != null) this.legalAddrObj.Phn1 = this.collateralRegistrationObj.Phn1;
           if (this.collateralRegistrationObj.Phn2 != null) this.legalAddrObj.Phn1 = this.collateralRegistrationObj.Phn1;
-          if (this.collateralRegistrationObj.PhnArea1 != null) this.legalAddrObj.Phn1 = this.collateralRegistrationObj.PhnArea1;
-          if (this.collateralRegistrationObj.PhnArea1 != null) this.legalAddrObj.Phn1 = this.collateralRegistrationObj.PhnArea1;
+          if (this.collateralRegistrationObj.PhnArea1 != null) this.legalAddrObj.PhnArea1 = this.collateralRegistrationObj.PhnArea1;
+          if (this.collateralRegistrationObj.PhnArea2 != null) this.legalAddrObj.PhnArea2 = this.collateralRegistrationObj.PhnArea2;
 
           this.inputFieldLegalObj.inputLookupObj.nameSelect = this.collateralRegistrationObj.OwnerZipcode;
           this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.OwnerZipcode };
@@ -678,11 +679,11 @@ export class MouRequestAddcollComponent implements OnInit {
 
   onItemChange(value, UserChange: boolean = false) {
     this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: value }).subscribe(
-      (response: any) => {
+      (response: GenericListObj) => {
         while (this.items.length) {
           this.items.removeAt(0);
         }
-        this.SerialNoList = response['ReturnObject'];
+        this.SerialNoList = response.ReturnObject;
         for (var i = 0; i < this.SerialNoList["length"]; i++) {
           var eachDataDetail = this.fb.group({
             SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
@@ -860,11 +861,11 @@ export class MouRequestAddcollComponent implements OnInit {
         this.inputLookupObj.nameSelect = this.collateralObj.FullAssetName;
         this.inputLookupObj.jsonSelect = this.collateralObj;
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: this.collateralObj.AssetTypeCode }).subscribe(
-          (response: any) => {
+          (response: GenericListObj) => {
             while (this.items.length) {
               this.items.removeAt(0);
             }
-            this.SerialNoList = response['ReturnObject'];
+            this.SerialNoList = response.ReturnObject;
             for (var i = 0; i < this.SerialNoList["length"]; i++) {
               var eachDataDetail = this.fb.group({
                 SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],

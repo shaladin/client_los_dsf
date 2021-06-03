@@ -9,6 +9,7 @@ import { DatePipe } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: "view-survey-verif",
@@ -16,12 +17,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
   providers: [NGXToastrService]
 })
 export class ViewSurveyVerifComponent implements OnInit {
-  @Input() appId: any;
-  appObj = {
-    AppId: 0,
-  };
+  @Input() appId: number;
 
-  AppObj: any;
+  AppObj: AppObj;
   phoneVerifObj: any;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
@@ -45,11 +43,10 @@ export class ViewSurveyVerifComponent implements OnInit {
           AppNo : this.AppObj['AppNo']
         }  
         await this.http.post(URLConstant.GetParentAppIdByAppNo, obj).toPromise().then(
-          (response) => {
+          (response: AppObj) => {
             this.AppObj = response;
             if(this.AppObj != undefined){
               this.appId = this.AppObj['AppId'];
-              this.appObj.AppId = this.appId;
             }else{
               return;
             }
@@ -63,17 +60,16 @@ export class ViewSurveyVerifComponent implements OnInit {
   }
 
   async GetAppData() {
-    this.appObj.AppId = this.appId;
-    await this.http.post(URLConstant.GetAppById, this.appObj).toPromise().then(
-      (response) => {
+    await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
+      (response: AppObj) => {
         this.AppObj = response;
       }
     );
   }
 
   async GetPhnVerfSubjData() {
-    if (this.appObj.AppId != 0) {
-      await this.http.post(URLConstant.GetAppSurveyVerifSubjectListByAppId, this.appObj).toPromise().then(
+    if (this.appId != 0) {
+      await this.http.post(URLConstant.GetAppSurveyVerifSubjectListByAppId, { Id: this.appId }).toPromise().then(
         (response) => {
           this.phoneVerifObj = response;
         }

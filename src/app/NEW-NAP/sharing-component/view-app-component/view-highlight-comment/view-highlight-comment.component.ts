@@ -40,9 +40,9 @@ export class ViewHighlightCommentComponent implements OnInit {
   custHighlightCommentObj: CustHighlightCommentObj;
 
   isView: boolean = false;
-  InputDt: any;
-  Comment: any;
-  InputBy: any;
+  InputDt: Date;
+  Comment: string;
+  InputBy: string;
   AppNo: string = "-";
 
   IsInput: boolean = true;

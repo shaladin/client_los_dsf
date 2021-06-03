@@ -18,7 +18,7 @@ export class NotificationComponent implements OnInit {
 
   type: string = 'success';
   notificationObj: NotificationObj;
-  apiUrl: any;
+  apiUrl: string;
   foundationUrl: string = environment.FoundationR3Url;
   payload: any;
 

@@ -16,7 +16,7 @@ import { environment } from 'environments/environment';
 })
 export class EditAppAfterApprovalInquiryComponent implements OnInit {
   inputPagingObj: UcPagingObj;
-  BizTemplateCode: any;
+  BizTemplateCode: string;
 
   constructor(    private http: HttpClient, 
     private route: ActivatedRoute,

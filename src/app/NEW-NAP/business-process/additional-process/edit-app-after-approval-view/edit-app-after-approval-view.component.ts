@@ -23,7 +23,6 @@ export class EditAppAfterApprovalViewComponent implements OnInit {
   taskId: number;
   instanceId: number;
   ApvReqId: number;
-  inputObj: any;
   InputApvObj : UcInputApprovalObj;
   InputApprovalHistoryObj : UcInputApprovalHistoryObj;
   UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
@@ -80,7 +79,7 @@ export class EditAppAfterApprovalViewComponent implements OnInit {
       });
   }
 
-  GetCallBack(ev: any){
+  GetCallBack(ev){
     if(ev.Key == "ViewProdOffering"){ 
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
     }

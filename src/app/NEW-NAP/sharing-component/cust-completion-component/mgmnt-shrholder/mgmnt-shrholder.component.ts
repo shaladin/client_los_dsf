@@ -16,7 +16,6 @@ export class MgmntShrholderComponent implements OnInit {
 
   inputGridObj: InputGridObj = new InputGridObj();
   ListShareholder: Array<any> = new Array();
-  resultData: Array<any> = new Array();
 
   constructor(private http: HttpClient) {
   }

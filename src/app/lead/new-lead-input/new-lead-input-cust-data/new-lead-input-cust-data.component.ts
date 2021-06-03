@@ -47,7 +47,6 @@ export class NewLeadInputCustDataComponent implements OnInit {
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
   businessDt: Date = new Date();
   CopyFrom: number;
-  rowVersion: any;
   typePage: string;
   WfTaskListId: number;
   inputLegalAddressObj: InputFieldObj;

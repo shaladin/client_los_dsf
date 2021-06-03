@@ -21,6 +21,7 @@ export class AppCommissionHObj{
     PenaltyAmt: number;
     TaxpayerNo: string;
     ListappCommissionDObj: Array<AppCommissionDObj>;
+    AppCommissionDs: Array<AppCommissionDObj>;
     RowVersion: string;
     ReservedField1: any;
     ReservedField2: any;

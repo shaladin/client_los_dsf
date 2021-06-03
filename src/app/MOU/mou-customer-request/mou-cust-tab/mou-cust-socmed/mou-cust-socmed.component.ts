@@ -18,12 +18,9 @@ export class MouCustSocmedComponent implements OnInit {
   
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() MouCustSocmedObjs: Array<MouCustSocmedObj>;
 
-  refMasterObj = {
-    RefMasterTypeCode: "",
-  };
   custDataObj: CustDataObj;
 
   SocmedObj: Array<KeyValueObj>;
@@ -89,8 +86,7 @@ export class MouCustSocmedComponent implements OnInit {
   }
 
   bindSocmedTypeObj(){
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSocmedType;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeSocmedType }).subscribe(
       (response) => {
         this.SocmedObj = response[CommonConstant.ReturnObj];
         if(this.SocmedObj.length > 0){

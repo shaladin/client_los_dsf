@@ -23,6 +23,7 @@ export class AppCustObj {
     MrCustRelationshipDescr: string;
     VipNotes: string;
     Age: number;
+    MobilePhnNo1: string;
     RowVersion: any;
 
     constructor() {
@@ -46,5 +47,6 @@ export class AppCustObj {
         this.IsAffiliateWithMF = false;
         this.MrCustRelationshipCode = "";
         this.VipNotes = "";
+        this.MobilePhnNo1 = "";
     }
 }

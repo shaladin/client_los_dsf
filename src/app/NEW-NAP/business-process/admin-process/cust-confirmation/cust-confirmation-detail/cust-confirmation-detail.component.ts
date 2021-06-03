@@ -29,7 +29,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   arrValue = [];
   AgrmntId: number;
   AppId: number;
-  TaskListId: any;
+  TaskListId: string;
   AgrmntNo: string;
   VerfResultList = new Array<VerfResultHObj>();
   CustNoObj: GenericObj = new GenericObj();
@@ -38,7 +38,6 @@ export class CustConfirmationDetailComponent implements OnInit {
   verfResultObj: VerfResultObj = new VerfResultObj();
   CustCnfrmObj: CustCnfrmObj = new CustCnfrmObj();
   BizTemplateCode: string;
-  link: any;
 
   readonly ViewLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_VIEW;
   readonly DetailLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_DETAIL;

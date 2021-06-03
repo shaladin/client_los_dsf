@@ -20,6 +20,8 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { RdlcReportObj, ReportParamObj } from 'app/shared/model/library/RdlcReportObj.model';
 import { CookieService } from 'ngx-cookie';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { AgrmntDocForPrintingObj } from 'app/shared/model/AgrmntDocForPrintingObj.Model';
 
 @Component({
   selector: 'app-document-view',
@@ -30,21 +32,15 @@ export class DocumentViewComponent implements OnInit {
   @ViewChild(UcgridfooterComponent) UCGridFooter;
   @ViewChild(UCSearchComponent) UCSearchComponent;
 
-  AggrementId: any;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  inputObj: any;
-  AgrmntDocObj: Object;
-  listSelectedId: any[];
-  tempListId: any[];
-  tempData: any[];
-  arrCrit: any[];
+  AgrmntDocObj: Array<AgrmntDocForPrintingObj>;
   pageNow: number;
   pageSize: number;
   apiUrl: string;
   resultData: any;
   orderByKey: any;
   orderByValue: boolean;
-  totalData: any;
+  totalData: number;
   AgrmntId: number;
   editUrl: string;
   agrmntDocObj: AgrmntDocObj;
@@ -93,10 +89,6 @@ export class DocumentViewComponent implements OnInit {
 
     this.GetListAgrmntDocByAgrmntId();
 
-    this.listSelectedId = new Array();
-    this.tempListId = new Array();
-    this.tempData = new Array();
-    this.arrCrit = new Array();
 
     this.pageNow = 1;
     this.pageSize = 10;
@@ -176,8 +168,8 @@ export class DocumentViewComponent implements OnInit {
       Id: this.AgrmntId,
     }
     this.http.post(URLConstant.GetListAgrmntDocByAgrmntId, obj).subscribe(
-      (response) => {
-        this.AgrmntDocObj = response;
+      (response: GenericListObj) => {
+        this.AgrmntDocObj = response.ReturnObject;
       });
   }
 
@@ -242,7 +234,7 @@ export class DocumentViewComponent implements OnInit {
     }
   }
 
-  GetCallBack(ev: any) {
+  GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }

@@ -10,6 +10,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
@@ -22,9 +23,9 @@ import { String } from 'typescript-string-operations';
 })
 export class EditAppAfterApprovalApprovalPagingComponent implements OnInit {
 
-  inputPagingObj: any;
-  arrCrit: any;
-  UserAccess : any;
+  inputPagingObj: UcPagingObj;
+  arrCrit: Array<CriteriaObj>;
+  UserAccess: CurrentUserContext;
   BizTemplateCode: string;
 
   constructor(private toastr: NGXToastrService,

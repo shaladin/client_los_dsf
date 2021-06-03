@@ -32,7 +32,7 @@ export class AppCustAssetComponent implements OnInit {
       Data: []
     }
     this.inputGridObj.resultData["Data"] = new Array();
-    this.ResponseAppCustAsset = new EventEmitter<any>();
+    this.ResponseAppCustAsset = new EventEmitter();
   }
 
   ngOnInit() {

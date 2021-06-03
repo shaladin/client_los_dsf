@@ -34,21 +34,9 @@ export class CustJobDataComponent implements OnInit {
   @Input() isLockMode: boolean = null;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() appCustPersonalJobDataObj: AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
   @Input() custModelCode: string;
-
-  refMasterObj = {
-    RefMasterTypeCode: "",
-  };
-
-  professionObj = {
-    ProfessionCode: ""
-  };
-
-  industryTypeObj = {
-    IndustryTypeCode: ""
-  };
 
   jobDataAddrObj: AddrObj;
   inputFieldJobDataObj: InputFieldObj;
@@ -180,8 +168,7 @@ export class CustJobDataComponent implements OnInit {
     this.selectedIndustryTypeCode = event.IndustryTypeCode;
   }
 
-  setProfessionName(professionCode) {
-    this.professionObj.ProfessionCode = professionCode;
+  setProfessionName(professionCode: string) {
     this.http.post(URLConstant.GetRefProfessionByCode, {Code : professionCode}).subscribe(
       (response) => {
         this.InputLookupProfessionObj.nameSelect = response["ProfessionName"];
@@ -189,8 +176,7 @@ export class CustJobDataComponent implements OnInit {
       });
   }
 
-  setIndustryTypeName(industryTypeCode) {
-    this.industryTypeObj.IndustryTypeCode = industryTypeCode;
+  setIndustryTypeName(industryTypeCode: string) {
     this.http.post(URLConstant.GetRefIndustryTypeByCode, {Code: industryTypeCode}).subscribe(
       (response) => {
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
@@ -292,8 +278,7 @@ export class CustJobDataComponent implements OnInit {
 
 
   bindJobPositionObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobPosition;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition }).subscribe(
       (response) => {
         this.JobPositionObj = response[CommonConstant.ReturnObj];
         if (this.JobPositionObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobPositionCode.value == "")) {
@@ -306,8 +291,7 @@ export class CustJobDataComponent implements OnInit {
   }
 
   bindCompanyScaleObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCoyScale;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCoyScale }).subscribe(
       (response) => {
         this.CompanyScaleObj = response[CommonConstant.ReturnObj];
         if (this.CompanyScaleObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrCompanyScaleCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrCompanyScaleCode.value == "")) {
@@ -320,8 +304,7 @@ export class CustJobDataComponent implements OnInit {
   }
 
   bindJobStatObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobStat;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobStat }).subscribe(
       (response) => {
         this.JobStatObj = response[CommonConstant.ReturnObj];
         if (this.JobStatObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrJobStatCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrJobStatCode.value == "")) {
@@ -334,8 +317,7 @@ export class CustJobDataComponent implements OnInit {
   }
 
   bindInvestmentTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInvestmentType;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInvestmentType }).subscribe(
       (response) => {
         this.InvestmentTypeObj = response[CommonConstant.ReturnObj];
         if (this.InvestmentTypeObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].MrInvestmentTypeCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].MrInvestmentTypeCode.value == "")) {

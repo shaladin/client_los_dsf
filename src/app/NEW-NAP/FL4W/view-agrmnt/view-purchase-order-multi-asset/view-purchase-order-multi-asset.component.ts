@@ -23,14 +23,8 @@ export class ViewPurchaseOrderMultiAssetComponent implements OnInit {
 
   ngOnInit() {
     this.isView = false;
-
-
-    var PurchaseOrderObj = {
-      Id: this.agrmntId
-    }
-
-    this.http.post(URLConstant.GetListPurchaseOrderHByAgrmntId, PurchaseOrderObj).subscribe(
-      (response: any) => {
+    this.http.post(URLConstant.GetListPurchaseOrderHByAgrmntId, { Id: this.agrmntId }).subscribe(
+      (response: PurchaseOrderHObj) => {
         this.listPurchaseOrder = response;
       });
   }

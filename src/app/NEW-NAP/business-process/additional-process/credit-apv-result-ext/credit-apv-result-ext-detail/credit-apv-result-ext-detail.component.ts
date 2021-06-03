@@ -13,6 +13,10 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { environment } from 'environments/environment';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { CreditApvResultExtObj } from 'app/shared/model/CreditApvResultExtObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 
 @Component({
   selector: 'app-credit-apv-result-ext-detail',
@@ -23,13 +27,13 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   AgrmntId: number;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   BizTemplateCode: string;
-  CrdApvMainDataObj: any;
+  CrdApvMainDataObj: CreditApvResultExtObj;
   MinDate: Date;
-  UserAccess: any;
+  UserAccess: CurrentUserContext;
   InputObj: UcInputRFAObj;
   AppNo: string;
   IsReady: boolean;
-  listReason: any;
+  listReason: Array<KeyValueObj>;
   selected: String;
   RequestRFAObj: any;
   private createComponent: UcapprovalcreateComponent;
@@ -86,7 +90,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
 
   async GetMainData() {
     this.http.post(URLConstant.GetCreditApvResultExtMainData, {AppId: this.AppId, AgrmntId: this.AgrmntId}).toPromise().then(
-      response => {
+      (response: CreditApvResultExtObj) => {
         this.CrdApvMainDataObj = response;
         this.CrdApvRestExtForm.patchValue({
           NewCrdApvResultExpDt: formatDate(this.CrdApvMainDataObj.CrdApvResultExpDt, 'yyyy-MM-dd', 'en-US')
@@ -107,8 +111,8 @@ export class CreditApvResultExtDetailComponent implements OnInit {
     await this.http.post(URLConstant.GetListActiveRefReason, {
       RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview
     }).toPromise().then(
-      (response) => {
-        this.listReason = response[CommonConstant.ReturnObj];
+      (response: GenericListObj) => {
+        this.listReason = response.ReturnObject;
         this.CrdApvRestExtForm.patchValue({
           Reason: this.listReason[0].Key
         });

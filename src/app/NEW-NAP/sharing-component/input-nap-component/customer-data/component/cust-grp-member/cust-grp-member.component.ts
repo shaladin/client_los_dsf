@@ -11,6 +11,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { CustObj } from 'app/shared/model/CustObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-cust-grp-member',
@@ -34,14 +35,14 @@ export class CustGrpMemberComponent implements OnInit {
   };
   custDataObj: CustDataObj;
 
-  dictLookup: {[key: string]: any;} = {};
+  dictLookup: {[key: string]: InputLookupObj;} = {};
 
   CustRelationshipObjs: [{
-    list: []  
+    list: Array<KeyValueObj>  
   }] = [{list: []}];
 
-  CustRelationshipPersonalObj: any;
-  CustRelationshipCompanyObj: any;
+  CustRelationshipPersonalObj: Array<KeyValueObj>;
+  CustRelationshipCompanyObj: Array<KeyValueObj>;
   defaultCustRelationshipPersonalCode: string;
   defaultCustRelationshipCompanyCode: string;
 
@@ -216,22 +217,22 @@ export class CustGrpMemberComponent implements OnInit {
   async setCustNameAndCustRelationship(i, custNo){
     this.CustNoObj.CustNo = custNo;
     await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
-      (response: any) => {
-        this.dictLookup[i].nameSelect = response["CustName"];
+      (response: CustObj) => {
+        this.dictLookup[i].nameSelect = response.CustName;
         this.dictLookup[i].jsonSelect = response;
         this.InputLookupCustomerObjs[i].jsonSelect = response;
         
-        if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+        if(response.MrCustTypeCode == CommonConstant.CustTypePersonal){
           this.CustRelationshipObjs.push({list : this.CustRelationshipPersonalObj});
         }
 
-        if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+        if(response.MrCustTypeCode == CommonConstant.CustTypeCompany){
           this.CustRelationshipObjs.push({list : this.CustRelationshipCompanyObj});
         }
 
         this.parentForm.controls[this.identifier]["controls"][i].patchValue({
           CustNo: custNo,
-          CustName: response["CustName"]
+          CustName: response.CustName,
         });
       });
   }

@@ -25,6 +25,7 @@ import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigRes
 import { ReqGetRfaLogByTrxNoAndApvCategoryObj } from 'app/shared/model/Request/NAP/PreGoLive/ReqGetRfaLogByTrxNoAndApvCategoryObj.model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { RfaObj } from 'app/shared/model/Approval/RfaObj.Model';
 
 @Component({
   selector: 'app-sharing-pre-go-live',
@@ -32,13 +33,13 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 })
 export class PreGoLiveComponent implements OnInit {
 
-  AppId: any;
-  AgrmntId: any;
-  AgrmntNo: any;
-  result: any;
+  AppId: number;
+  AgrmntId: number;
+  AgrmntNo: string;
+  result: AgrmntObj;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  appTC: any;
-  TaskListId: any;
+  appTC: AppTCObj;
+  TaskListId: number;
   PreGoLiveMainObj: PreGoLiveMainObj = new PreGoLiveMainObj();
   PreGoLiveObj: PreGoLiveObj = new PreGoLiveObj();
   AgrmntObj: AgrmntObj = new AgrmntObj();
@@ -58,20 +59,18 @@ export class PreGoLiveComponent implements OnInit {
   ListAppTCObj: ListAppTCObj;
 
   count1: number = 0;
-  ListRfaLogObj: any;
-  listPreGoLiveAppvrObj: Array<any> = new Array<any>();
-  TrxNo: any;
+  ListRfaLogObj: Array<RfaObj>;
   hasApproveFinal: boolean = false;
   hasRejectFinal: boolean = false;
   lengthListRfaLogObj: number;
   IsApvReady: boolean = false;
   isDmsReady: boolean;
   dmsObj: DMSObj;
-  agrNo: any;
-  custNo: any;
-  appNo: any;
+  agrNo: string;
+  custNo: string;
+  appNo: string;
   dmsAppObj: DMSObj;
-  mouCustNo: any;
+  mouCustNo: string;
   InputApprovalHistoryObj: UcInputApprovalHistoryObj;
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
   IsGSAddInerestExists: boolean = false;
@@ -149,7 +148,7 @@ export class PreGoLiveComponent implements OnInit {
       Id: this.AgrmntId
     }
     this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).subscribe(
-      (response) => {
+      (response: AgrmntObj) => {
         this.result = response;
         this.MainInfoForm.patchValue({
           AgrmntCreatedDt: formatDate(this.result.AgrmntCreatedDt, 'yyyy-MM-dd', 'en-US'),
@@ -374,7 +373,7 @@ export class PreGoLiveComponent implements OnInit {
   async claimTask() {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.TaskListId;
+    wfClaimObj.pWFTaskListID = this.TaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {

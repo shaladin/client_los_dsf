@@ -17,7 +17,6 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 export class LtkmReturnHandlingPagingComponent implements OnInit {
   BizTemplateCode: string;
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: Array<any> = new Array();
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   constructor(
     private route: ActivatedRoute,

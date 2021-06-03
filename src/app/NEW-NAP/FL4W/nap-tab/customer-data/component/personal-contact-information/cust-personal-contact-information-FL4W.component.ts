@@ -31,8 +31,8 @@ export class CustPersonalContactInformationFL4WComponent implements OnInit {
   @Input() isMarried: boolean = true;
   @Input() spouseGender: string = "";
 
-  @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
-  @Output() callbackCopyAddr: EventEmitter<any> = new EventEmitter();
+  @Output() callbackSubmit: EventEmitter<Array<AppCustPersonalContactPersonObj>> = new EventEmitter();
+  @Output() callbackCopyAddr: EventEmitter<string> = new EventEmitter();
 
   mode: string;
   currentEditedIndex: number;
@@ -92,7 +92,7 @@ export class CustPersonalContactInformationFL4WComponent implements OnInit {
     IsGuarantor: [false]
   });
   businessDt: Date = new Date();
-  inputAddressObjForCP: any;
+  inputAddressObjForCP: InputAddressObj;
 
   constructor(
     private regexService: RegexService,
@@ -412,8 +412,7 @@ onOptionsSelected(event){
 controlNameIdNo: string = 'IdNo';
 controlNameIdType: string = 'MrIdTypeCode';
 customPattern: Array<CustomPatternObj>;
-initIdTypeCode: any;
-resultPattern: any;
+resultPattern: Array<KeyValueObj>;
 
 getInitPattern() {
   this.regexService.getListPattern().subscribe(

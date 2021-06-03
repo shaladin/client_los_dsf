@@ -17,7 +17,6 @@ export class LtkmFamilyMainDataPagingComponent implements OnInit {
   isDetail: boolean = false;
   inputGridObj: InputGridObj;
   @Input() listFamily: Array<any> = new Array();
-  resultData: Array<any> = new Array();
   closeResult: string;
   appCustId: number;
   custDataObj: CustDataObj;
@@ -66,6 +65,6 @@ export class LtkmFamilyMainDataPagingComponent implements OnInit {
     }
     this.inputGridObj.resultData["Data"] = new Array();
     this.inputGridObj.resultData.Data = this.listFamily;
-    this.listFamily = this.inputGridObj.resultData.Data;
+    // this.listFamily = this.inputGridObj.resultData.Data;
   }
 }

@@ -15,6 +15,7 @@ import { ReqGetAppFinDataAndFeeObj } from 'app/shared/model/Request/NAP/AgrAct/R
 import { ResAgrmntActivationFinDataAndFeeObj, ResAppFeeObj, ResponseAppFinDataObj } from 'app/shared/model/Response/NAP/AgrAct/ResAgrmntActivationFinDataAndFeeObj.model';
 import { ToastrService } from 'ngx-toastr';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 
 @Component({
   selector: 'app-agrmnt-activation-detail',
@@ -22,7 +23,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
   providers: [AdminProcessService]
 })
 export class AgrmntActivationDetailComponent implements OnInit {
-  AssetObj: any;
+  AssetObj: Array<AppAssetObj>;
   AppFees: Array<ResAppFeeObj> = new Array<ResAppFeeObj>();
   AppFinData: ResponseAppFinDataObj = new ResponseAppFinDataObj();
   listSelectedId: Array<number> = new Array<number>();
@@ -38,9 +39,6 @@ export class AgrmntActivationDetailComponent implements OnInit {
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
   IsViewReady: boolean = false;
 
-  appObj = {
-    AppId: 0,
-  };
   AppObj: AppObj = new AppObj();
   businessDt: Date;
   toastRef: any;
@@ -104,8 +102,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
   }
 
   async GetAppData() {
-    this.appObj.AppId = this.AppId;
-    await this.http.post < AppObj > (URLConstant.GetAppById, this.appObj).toPromise().then(
+    await this.http.post < AppObj > (URLConstant.GetAppById, {Id: this.AppId}).toPromise().then(
       (response) => {
         this.AppObj = response;
       }

@@ -17,8 +17,6 @@ export class LtkmMgmntShrholderComponent implements OnInit {
 
   @Input() listLtkmCustCompanyManagementShareholderObj: Array<LtkmCustCompanyMgmntShrholderObj> = new Array<LtkmCustCompanyMgmntShrholderObj>();
   inputGridObj: InputGridObj = new InputGridObj();
-  ListShareholder: Array<any> = new Array();
-  resultData: Array<any> = new Array();
 
   constructor(private http: HttpClient) {
   }

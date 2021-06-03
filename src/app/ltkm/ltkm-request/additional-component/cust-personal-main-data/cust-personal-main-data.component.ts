@@ -40,7 +40,7 @@ export class LtkmCustPersonalMainDataComponent implements OnInit {
   @Input() IsSpouseExist: boolean = false;
   @Input() bizTemplateCode : string = "";
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
-  @Output() isMarried: EventEmitter<any> = new EventEmitter();
+  @Output() isMarried: EventEmitter<boolean> = new EventEmitter();
   @Output() spouseObj: EventEmitter<any> = new EventEmitter();
 
   selectedCustNo: string;

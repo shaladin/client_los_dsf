@@ -11,9 +11,11 @@ import { AppFctrObj } from 'app/shared/model/AppFctr/AppFctr.model';
 import { AppInvoiceDlrFncngHObj } from 'app/shared/model/AppInvoiceDlrFncngHObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ResDuplicateDoubleFinancingObj } from 'app/shared/model/Lead/ResDuplicateDoubleFinancingObj.Model';
 import { NegativeAssetCheckObj } from 'app/shared/model/NegativeAssetCheckObj.Model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ReqAddAppInvoiceDlrFncngHObj } from 'app/shared/model/Request/AppInvoice/ReqAppInvoiceObj.model';
 import { ResDisbInfo } from 'app/shared/model/Response/AppInvoice/ResAppInvoiceObj.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
@@ -40,15 +42,15 @@ export class InvoiceDataDlfnComponent implements OnInit {
   AppInvoiceDlrFncngHId: number;
   dataDobj: any;
 
-  EditAppInvoiceDlrFncngHId: any;
-  selectedBankCode: any;
-  DisbInfoId: any;
+  EditAppInvoiceDlrFncngHId: number;
+  selectedBankCode: string;
+  DisbInfoId: number;
   AgrmntId: number;
-  disburseTos: any;
+  disburseTos: Array<RefMasterObj>;
   isDdlBankAccountVisible: boolean = false;
   BankAccs: any;
   AppCustId: number;
-  CustNo:any;
+  CustNo: string;
 
   invoiceDuedtMax: Date;
   ToInvoiceDetail: boolean = false;
@@ -137,7 +139,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
       (response) => {
         this.disburseTos = response[CommonConstant.ReturnObj];
         this.InvoiceForm.patchValue({
-          DisburseTo: this.disburseTos[0].key
+          DisburseTo: this.disburseTos[0].MasterCode
         })
       })
   }

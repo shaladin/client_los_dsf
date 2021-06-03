@@ -29,7 +29,6 @@ export class SchmEvenPrincipalFL4WComponent implements OnInit {
   calcEvenPrincipleObj: CalcEvenPrincipleObj = new CalcEvenPrincipleObj();
   calcEvenPrincipleObjForTrialCalc: CalcEvenPrincipleObjForTrialCalc = new CalcEvenPrincipleObjForTrialCalc();
   listInstallment: any;
-  responseCalc: any;
   result: AppObj = new AppObj();
   PriceLabel: string = "Asset Price";
   IsTrialCalc: boolean = false;

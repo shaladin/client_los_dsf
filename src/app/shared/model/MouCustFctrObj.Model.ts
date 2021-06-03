@@ -20,5 +20,8 @@ export class MouCustFctrObj {
     VendorCode: string;
     InstTypeDescr: string;
     RowVersion: string;
+    MrFirstInstTypeCode: string;
+    DownPaymentFromPrcnt: number;
+    DownPaymentToPrcnt: number;
     constructor(){ this.MouCustFctrId = 0; this.RowVersion = '' }
 }

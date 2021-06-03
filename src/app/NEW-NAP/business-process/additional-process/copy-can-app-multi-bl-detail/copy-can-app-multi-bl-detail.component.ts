@@ -10,6 +10,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { RefLobObj } from 'app/shared/model/RefLobObj.Model';
@@ -28,13 +29,13 @@ export class CopyCanAppMultiBlDetailComponent implements OnInit {
   //inputLookupObjCopyProduct: InputLookupObj = new InputLookupObj();
   inputLookupObjName: InputLookupObj = new InputLookupObj();
   officeItems: Array<KeyValueObj> = new Array<KeyValueObj>();
-  userAccess: any;
+  userAccess: CurrentUserContext;
 
   refLobObj: RefLobObj;
-  listRefLob: Array<any>;
+  listRefLob: Array<KeyValueObj>;
   CurrCode: string;
   AppNo: string;
-  AppId: any;
+  AppId: number;
   LobCode: string;
   BizTemplateCode : string;
 
@@ -273,7 +274,7 @@ export class CopyCanAppMultiBlDetailComponent implements OnInit {
       });
   }
 
-  getLookupAppResponseCopy(ev: any) {
+  getLookupAppResponseCopy(ev) {
     this.NapAppForm.patchValue({
       ProdOfferingCode: ev.ProdOfferingCode,
       ProdOfferingName: ev.ProdOfferingName,
@@ -302,7 +303,7 @@ export class CopyCanAppMultiBlDetailComponent implements OnInit {
     this.isCopyData = true;
   }
 
-  getLookupAppResponseName(ev: any) {
+  getLookupAppResponseName(ev) {
     var tempLobCode;
     var tempCurrCode;
     var tempPayFreqCode;
@@ -344,7 +345,7 @@ export class CopyCanAppMultiBlDetailComponent implements OnInit {
       });
   }
 
-  ChangeValueOffice(ev: any) {
+  ChangeValueOffice(ev) {
     this.NapAppForm.patchValue({
       OriOfficeCode: ev.target.selectedOptions[0].value,
       OriOfficeName: ev.target.selectedOptions[0].text

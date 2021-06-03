@@ -29,7 +29,6 @@ export class SchmBalloonCFNAComponent implements OnInit {
   calcBalloonObj: CalcBalloonObj = new CalcBalloonObj();
   calcBalloonObjForTrialCalc: CalcBalloonObjForTrialCalc = new CalcBalloonObjForTrialCalc();
   listInstallment: any;
-  responseCalc: any;
   result: AppObj = new AppObj();
   PriceLabel: string = "Financing Amount";
 

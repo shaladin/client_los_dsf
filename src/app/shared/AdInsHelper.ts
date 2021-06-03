@@ -113,7 +113,7 @@ export class AdInsHelper {
     window.open(environment.losR3Web + NavigationConstant.VIEW_PHN_VERIF + "?AppId=" + AppId + "&VerfResultHId=" + VerfResultHId + "&Name=" + Name + "&Token=" + token, "_blank");
   }
 
-  public static OpenProdOfferingViewByCodeAndVersion(Code: string, Version: number) {
+  public static OpenProdOfferingViewByCodeAndVersion(Code: string, Version: string) {
     var token = localStorage.getItem("Token");
     window.open(environment.losR3Web + NavigationConstant.VIEW_OFFERING + "?prodOfferingHId=0&prodOfferingCode=" + Code + "&prodOfferingVersion=" + Version + "&Token=" + token, "_blank");
   }

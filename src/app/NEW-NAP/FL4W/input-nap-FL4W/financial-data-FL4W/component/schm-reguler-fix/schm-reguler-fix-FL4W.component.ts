@@ -29,7 +29,6 @@ export class SchmRegulerFixFL4WComponent implements OnInit {
   calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
   calcRegFixObjForTrialCalc: CalcRegularFixObjForTrialCalc = new CalcRegularFixObjForTrialCalc();
   listInstallment: any;
-  responseCalc: any;
   result: AppObj = new AppObj();
   PriceLabel: string = "Asset Price";
   IsTrialCalc: boolean = false;

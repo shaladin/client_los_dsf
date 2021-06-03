@@ -25,7 +25,6 @@ export class ListCompanyComponent implements OnInit {
   AppCustObj: AppCustObj;
   AppCustCompanyObj: AppCustCompanyObj;
   AppCustAddrObj: AppCustAddrObj;
-  RowVersion: any;
   ListCustomerDuplicate: any;
   ListNegativeCust: any;
   ListAppCustDuplicate: any;
@@ -57,7 +56,6 @@ export class ListCompanyComponent implements OnInit {
     this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
       response => {
         this.AppCustObj = response['AppCustObj'];
-        this.RowVersion = response['AppCustObj'].RowVersion;
         this.AppCustCompanyObj = response['AppCustCompanyObj'];
         this.AppCustAddrObj = response['AppCustAddrLegalObj'];
 
@@ -69,7 +67,7 @@ export class ListCompanyComponent implements OnInit {
         requestDupCheck.IdNo = this.AppCustObj.IdNo;
         requestDupCheck.TaxIdNo = this.AppCustObj.TaxIdNo;
         requestDupCheck.BirthDt = this.AppCustCompanyObj.EstablishmentDt;
-        requestDupCheck.RowVersion = this.RowVersion;
+        requestDupCheck.RowVersion = response['AppCustObj'].RowVersion;
 
         //List Cust And Negative Cust Dup Check
         this.http.post(URLConstant.GetCustomerAndNegativeCustDuplicateCheck, requestDupCheck).subscribe(

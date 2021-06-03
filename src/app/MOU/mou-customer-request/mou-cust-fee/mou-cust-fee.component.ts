@@ -7,6 +7,7 @@ import { MouCustFeeObj } from 'app/shared/model/MouCustFeeObj.Model';
 import { MouCustFeeDetailComponent } from './mou-cust-fee-detail/mou-cust-fee-detail.component';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 
 @Component({
   selector: 'app-mou-cust-fee',
@@ -14,9 +15,9 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 })
 export class MouCustFeeComponent implements OnInit {
   @Input() MouCustId: number;
-  @Output() ResponseMouCustFee: EventEmitter<any> = new EventEmitter<any>();
+  @Output() ResponseMouCustFee: EventEmitter<any> = new EventEmitter();
   mouCustFeeList: Array<MouCustFeeObj>;
-  refFeeIdList : any;
+  refFeeIdList: Array<number>;
 
   constructor(
     private httpClient: HttpClient,
@@ -28,10 +29,10 @@ export class MouCustFeeComponent implements OnInit {
   ngOnInit() {
     this.refFeeIdList = new Array();
     this.httpClient.post(URLConstant.GetMouCustFeeForMouRequestByMouCustId, {Id: this.MouCustId}).subscribe(
-      (response: any) => {
-        this.mouCustFeeList = response;
+      (response: GenericListObj) => {
+        this.mouCustFeeList = response.ReturnObject;
         for (var i = 0; i < this.mouCustFeeList.length; i++) {
-          this.refFeeIdList.push(this.mouCustFeeList[i]['RefFeeId']);
+          this.refFeeIdList.push(this.mouCustFeeList[i].RefFeeId);
         }
       });
   }
@@ -41,14 +42,14 @@ export class MouCustFeeComponent implements OnInit {
     modalMouFee.componentInstance.MouCustId = this.MouCustId;
     modalMouFee.componentInstance.UsedRefFeeIdList = this.refFeeIdList;
     modalMouFee.result.then(
-      (response: any) => {
+      (response) => {
         this.spinner.show();
         this.httpClient.post(URLConstant.GetMouCustFeeForMouRequestByMouCustId, {Id: this.MouCustId}).subscribe(
-          (response: any) => {
-            this.mouCustFeeList = response;
+          (response: GenericListObj) => {
+            this.mouCustFeeList = response.ReturnObject;
             this.refFeeIdList = new Array();
             for (var i = 0; i < this.mouCustFeeList.length; i++) {
-              this.refFeeIdList.push(this.mouCustFeeList[i]['RefFeeId']);
+              this.refFeeIdList.push(this.mouCustFeeList[i].RefFeeId);
             }
             modalMouFee.componentInstance.UsedRefFeeIdList = this.refFeeIdList;
           }
@@ -62,10 +63,8 @@ export class MouCustFeeComponent implements OnInit {
 
   deleteMouCustFee(mouCustFeeId, idx) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      var mouCustFee = new MouCustFeeObj();
-      mouCustFee.MouCustFeeId = mouCustFeeId;
       this.httpClient.post(URLConstant.DeleteMouCustFee, { Id: mouCustFeeId }).subscribe(
-        (response: any) => {
+        (response) => {
           this.mouCustFeeList.splice(idx, 1);
           this.refFeeIdList.splice(idx, 1);
           this.toastr.successMessage(response["message"]);

@@ -20,7 +20,7 @@ export class CustPersonalFinancialDataComponent implements OnInit, OnChanges {
 
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() appCustPersonalFinDataObj: AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
   @Input() isMarried: boolean;
   @Input() isLockMode: boolean = null;

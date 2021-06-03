@@ -86,7 +86,7 @@ export class MouUnfreezeDetailComponent implements OnInit {
     this.OfficeCode = currentUserContext["OfficeCode"];
     this.http
       .post(URLConstant.GetMouCustById, { Id: this.MouCustId })
-      .subscribe((response: any) => {
+      .subscribe((response: MouCustObj) => {
         this.result = response;
         this.FreezeUnfreezeForm.patchValue({
           IsFreeze: this.result.IsFreeze,

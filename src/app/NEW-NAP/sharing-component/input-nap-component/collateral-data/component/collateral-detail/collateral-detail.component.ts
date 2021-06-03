@@ -30,6 +30,7 @@ import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCode
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
 import { AssetTypeSerialNoLabelObj } from 'app/shared/model/SerialNo/AssetTypeSerialNoLabelObj.Model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 
 @Component({
   selector: 'app-collateral-detail',
@@ -54,7 +55,7 @@ export class CollateralDetailComponent implements OnInit {
   @Input() isSingleAsset = true;
   @Input() AppId: number = 0;
   @Input() AppCollateralId: number = 0;
-  @Output() outputValue: EventEmitter<number> = new EventEmitter<any>();
+  @Output() outputValue: EventEmitter<number> = new EventEmitter<number>();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   bizTemplateCode: string = "";
 
@@ -489,7 +490,7 @@ export class CollateralDetailComponent implements OnInit {
       });
   }
 
-  async getAppCollData(AppId: number = 0, AppCollateralId: number = 0, IsExisting: boolean = false, IsFromLookup: boolean = false, fouExistObj: any = null) {
+  async getAppCollData(AppId: number = 0, AppCollateralId: number = 0, IsExisting: boolean = false, IsFromLookup: boolean = false, fouExistObj: object = null) {
     if (IsExisting) {
       this.AddCollForm.patchValue({
         AppCollateralId: this.AppCollateralId,
@@ -758,7 +759,7 @@ export class CollateralDetailComponent implements OnInit {
     //#endregion
   }
 
-  async onItemChange(AssetTypeCode: string, IsChange: boolean = true, isFou: boolean = false, fouExistingObj: any = null) {
+  async onItemChange(AssetTypeCode: string, IsChange: boolean = true, isFou: boolean = false, fouExistingObj: object = null) {
     let arrAddCrit = new Array();
     let addCrit = new CriteriaObj();
     addCrit.DataType = "text";
@@ -776,12 +777,12 @@ export class CollateralDetailComponent implements OnInit {
     }
 
     await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: AssetTypeCode }).toPromise().then(
-      async (response: any) => {
+      async (response: GenericListObj) => {
         while (this.items.length) {
           this.items.removeAt(0);
         }
 
-        this.SerialNoList = response[CommonConstant.ReturnObj];
+        this.SerialNoList = response.ReturnObject;
         for (var i = 0; i < this.SerialNoList.length; i++) {
           var eachDataDetail = this.fb.group({
             SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],

@@ -406,8 +406,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   //}
 
   PhoneChange() {
-    var temp: any;
-    temp = this.PhoneNumberObj.filter(
+    var temp = this.PhoneNumberObj.filter(
       x => x.PhoneNumber == this.PhoneDataForm.controls["Phn"].value);
     this.PhoneDataForm.patchValue({
       Phn: temp[0].PhoneNumber,

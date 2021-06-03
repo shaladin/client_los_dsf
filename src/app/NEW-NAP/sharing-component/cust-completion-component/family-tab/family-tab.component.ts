@@ -19,7 +19,6 @@ export class FamilyTabComponent implements OnInit {
 
   inputGridObj: InputGridObj = new InputGridObj();
   listFamily: Array<any> = new Array();
-  resultData: Array<any> = new Array();
   closeResult: string;
   appCustId: number;
   inputMode: string = "ADD";

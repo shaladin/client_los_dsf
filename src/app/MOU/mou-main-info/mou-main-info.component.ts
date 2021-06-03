@@ -50,7 +50,7 @@ export class MouMainInfoComponent implements OnInit {
     this.viewGeneric.initiateForm();
   }
 
-  GetCallBack(ev: any) {
+  GetCallBack(ev) {
     if (ev.Key == "customer") {
       if (!this.MouCustObj.IsExistingCust) {
         AdInsHelper.OpenMOUCustViewByMouCustId(this.MouCustId);

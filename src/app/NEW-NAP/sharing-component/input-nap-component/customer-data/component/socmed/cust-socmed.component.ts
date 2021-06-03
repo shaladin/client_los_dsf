@@ -23,7 +23,7 @@ export class CustSocmedComponent implements OnInit {
   @Input() isLockMode: boolean = false;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() appCustSocmedObjs: Array<AppCustSocmedObj>;
 
   refMasterObj = {

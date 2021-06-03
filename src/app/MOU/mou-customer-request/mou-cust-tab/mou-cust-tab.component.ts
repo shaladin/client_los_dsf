@@ -68,7 +68,7 @@ export class MouCustTabComponent implements OnInit {
 
   @Input() MouCustId: number;
   @Input() showCancel: boolean = true;
-  @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputTab: EventEmitter<string> = new EventEmitter();
   @Output() ResponseMouCust: EventEmitter<any> = new EventEmitter(); t
 
   countryObj = {
@@ -1541,7 +1541,7 @@ export class MouCustTabComponent implements OnInit {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
         }
         this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
-          (response: any) => {
+          (response: MouCustObj) => {
             this.returnMouObj = response;
 
             this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();

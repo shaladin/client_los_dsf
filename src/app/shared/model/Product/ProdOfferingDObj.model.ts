@@ -1,3 +1,5 @@
+import { KeyValueObj } from "../KeyValue/KeyValueObj.model";
+
 export class ProdOfferingDObj {
     ProdOfferingDId : number;
     ProdOfferingHId : number;
@@ -6,6 +8,7 @@ export class ProdOfferingDObj {
     CompntValue : string;
     CompntValueDesc : string;
     MrProdBehaviourCode : string;
+    DDLRefProdComptCode: Array<KeyValueObj>;
     RowVersion : string;
 
     constructor(){
@@ -16,6 +19,7 @@ export class ProdOfferingDObj {
         this.CompntValue = "";
         this.CompntValueDesc = "";
         this.MrProdBehaviourCode = "";
+        this.DDLRefProdComptCode = new Array();
         this.RowVersion = "";
     }
 }

@@ -12,7 +12,6 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './invoice-view.component.html'
 })
 export class InvoiceViewComponent implements OnInit {
-  inputPagingObj: any;
   invoiceDataList: Object;
   @Input() AppId: number;
 

@@ -13,6 +13,9 @@ import { CookieService } from 'ngx-cookie';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 
 
 
@@ -24,11 +27,11 @@ import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/
 export class ReturnHandlingCollateralEditComponent implements OnInit {
 
   isReturnHandling: boolean = false;
-  appId: any;
-  returnHandlingHId: any;
-  wfTaskListId: any;
-  appCollateralObj: any;
-  AppObj: any;
+  appId: number;
+  returnHandlingHId: number;
+  wfTaskListId: number;
+  appCollateralObj: Array<AppCollateralObj>;
+  AppObj: NapAppModel;
   returnHandlingDObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   ReturnHandlingDData: ReturnHandlingDObj;
   BizTemplateCode: string;
@@ -121,7 +124,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   async GetAppData() {
     var appObj1 = { Id: this.appId };
     await this.http.post(URLConstant.GetAppById, appObj1).toPromise().then(
-      (response) => {
+      (response: NapAppModel) => {
 
         this.AppObj = response;
       }

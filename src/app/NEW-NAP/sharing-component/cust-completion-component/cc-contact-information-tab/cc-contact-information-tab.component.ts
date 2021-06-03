@@ -18,6 +18,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
 import { RegexService } from 'app/shared/services/regex.services';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-cc-contact-information-tab',
@@ -211,7 +212,7 @@ export class CcContactInformationTabComponent implements OnInit {
     this.OutputTab.emit({IsComplete: true});
   }
 
-  async SetReqAddrObj(obj: any) {
+  async SetReqAddrObj(obj) {
     let TempAddr = obj[this.InputAddressObjForCc_Identifier];
     let TempZipVal = obj[this.InputAddressObjForCc_Identifier + "Zipcode"];
 
@@ -268,7 +269,7 @@ export class CcContactInformationTabComponent implements OnInit {
     }
   }
 
-  async SetReqCcObj(obj: any, ReqAddr: AppCustAddrObj) {
+  async SetReqCcObj(obj, ReqAddr: AppCustAddrObj) {
     let ReqCcObj: AppCustCompanyContactPersonObj = new AppCustCompanyContactPersonObj();
     ReqCcObj.AppCustId = this.AppCustId;
     ReqCcObj.AppCustCompanyId = this.TempAppCustCompanyContactPersonObj.AppCustCompanyId;
@@ -317,8 +318,7 @@ export class CcContactInformationTabComponent implements OnInit {
   controlNameIdNo: string = 'IdNo';
   controlNameIdType: string = 'MrIdTypeCode';
   customPattern: Array<CustomPatternObj>;
-  initIdTypeCode: any;
-  resultPattern: any;
+  resultPattern: Array<KeyValueObj>;
 
   getInitPattern() {
     this.regexService.getListPattern().subscribe(

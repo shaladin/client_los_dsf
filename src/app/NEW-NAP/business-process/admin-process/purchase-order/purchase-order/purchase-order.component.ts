@@ -27,7 +27,7 @@ export class PurchaseOrderComponent implements OnInit {
   lobCode: string;
   AppId: number;
   AgrmntId: number;
-  TaskListId: any;
+  TaskListId: number;
   arrValue: Array<number> = [];
   AppAssetList = [];
   tcForm: FormGroup = this.fb.group({
@@ -211,7 +211,7 @@ export class PurchaseOrderComponent implements OnInit {
   async claimTask() {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.TaskListId;
+    wfClaimObj.pWFTaskListID = this.TaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {

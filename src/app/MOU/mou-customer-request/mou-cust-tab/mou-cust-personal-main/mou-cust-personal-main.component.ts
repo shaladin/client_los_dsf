@@ -34,12 +34,9 @@ export class MouCustPersonalMainComponent implements OnInit {
   @Input() custDataPersonalObj: MouCustPersonalDataObj = new MouCustPersonalDataObj();
   @Input() IsSpouseExist: boolean = false;
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
-  @Output() isMarried: EventEmitter<any> = new EventEmitter();
+  @Output() isMarried: EventEmitter<boolean> = new EventEmitter();
   @Output() spouseObj: EventEmitter<any> = new EventEmitter();
 
-  countryObj = {
-    CountryCode: ""
-  };
   selectedCustNo: string = "";
   selectedNationalityCountryCode: string = "";
   custDataObj: CustDataObj;
@@ -180,9 +177,7 @@ export class MouCustPersonalMainComponent implements OnInit {
     this.InputLookupCustomerObj.addCritInput = arrCrit;
   }
 
-  setCountryName(countryCode) {
-    this.countryObj.CountryCode = countryCode;
-
+  setCountryName(countryCode: string) {
     this.http.post(URLConstant.GetRefCountryByCountryCode, { Code: countryCode }).subscribe(
       (response) => {
         this.InputLookupCountryObj.jsonSelect = { CountryName: response["CountryName"] };
@@ -451,8 +446,7 @@ export class MouCustPersonalMainComponent implements OnInit {
   controlNameIdNo: string = 'IdNo';
   controlNameIdType: string = 'MrIdTypeCode';
   customPattern: Array<CustomPatternObj>;
-  initIdTypeCode: any;
-  resultPattern: any;
+  resultPattern: Array<KeyValueObj>;
 
   getInitPattern() {
     this.regexService.getListPattern().subscribe(

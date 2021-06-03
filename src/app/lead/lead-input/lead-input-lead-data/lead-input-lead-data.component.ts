@@ -27,6 +27,7 @@ import { KeyValue } from '@angular/common';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { SerialNoObj } from 'app/shared/model/SerialNo/SerialNoObj.Model';
 import { AssetTypeSerialNoLabelObj } from 'app/shared/model/SerialNo/AssetTypeSerialNoLabelObj.Model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 
 
 @Component({
@@ -147,9 +148,8 @@ export class LeadInputLeadDataComponent implements OnInit {
     });
     this.assetTypeId = event.AssetTypeId;
 
-    let AssetTypeCode = { 'AssetTypeCode': event.AssetTypeCode };
     this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: event.AssetTypeCode }).subscribe(
-      (response: any) => {
+      (response: GenericListObj) => {
         while (this.items.length) {
           this.items.removeAt(0);
         }
@@ -346,11 +346,10 @@ export class LeadInputLeadDataComponent implements OnInit {
               let assetType = new AssetTypeObj();
               assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
               this.http.post(URLConstant.GetAssetTypeById, { Id: this.resAssetMasterObj.AssetTypeId }).subscribe(
-                (response: any) => {
+                (response: AssetTypeObj) => {
 
-                  let AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
                   this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: response.AssetTypeCode }).subscribe(
-                    (response: any) => {
+                    (response: GenericListObj) => {
                       while (this.items.length) {
                         this.items.removeAt(0);
                       }
@@ -457,11 +456,10 @@ export class LeadInputLeadDataComponent implements OnInit {
               let assetType = new AssetTypeObj();
               assetType.AssetTypeId = this.resAssetMasterObj.AssetTypeId;
               this.http.post(URLConstant.GetAssetTypeById, { Id: this.resAssetMasterObj.AssetTypeId }).subscribe(
-                (response: any) => {
+                (response: AssetTypeObj) => {
 
-                  let AssetTypeCode = { 'AssetTypeCode': response.AssetTypeCode };
                   this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: response.AssetTypeCode }).subscribe(
-                    (response: any) => {
+                    (response: GenericListObj) => {
                       while (this.items.length) {
                         this.items.removeAt(0);
                       }

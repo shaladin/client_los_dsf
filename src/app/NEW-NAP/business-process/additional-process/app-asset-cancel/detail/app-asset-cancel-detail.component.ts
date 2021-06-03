@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AppAgrmntCancelObj } from 'app/shared/model/AppAgrmntCancelObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -20,21 +19,20 @@ import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCode
 export class AppAssetCancelDetailComponent implements OnInit {
   IsPoDone: boolean = false;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  AppAssetId: any;
-  AppAgrmntCancelObj: any;
+  AppAssetId: number = 0;
   MainInfoForm = this.fb.group({
     ReasonCode: ['', Validators.required],
     CancelNotes: ['', Validators.required],
     PoReasonCode: [''],
     PoCancelNotes: ['']
   });
-  itemReasonCode: any;
-  ReasonCode: any;
   BizTemplateCode: string = "";
   ddlReason: UcDropdownListObj = new UcDropdownListObj();
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
-      this.AppAssetId = params["AppAssetId"];
+      if (params["AppAssetId"] != null) {
+        this.AppAssetId = params["AppAssetId"];
+      }
     });
   }
 
@@ -70,7 +68,7 @@ export class AppAssetCancelDetailComponent implements OnInit {
     });
   }
 
-  GetCallBack(ev: any) {
+  GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }

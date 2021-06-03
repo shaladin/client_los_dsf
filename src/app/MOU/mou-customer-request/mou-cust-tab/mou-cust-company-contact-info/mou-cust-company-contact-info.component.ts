@@ -18,7 +18,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 })
 export class MouCustCompanyContactInfoComponent implements OnInit {
   @Input() listContactPersonCompany: Array<MouCustCompanyContactPersonObj> = new Array<MouCustCompanyContactPersonObj>();
-  @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() callbackSubmit: EventEmitter<Array<MouCustCompanyContactPersonObj>> = new EventEmitter();
 
   mode: string;
   currentEditedIndex: number;
@@ -147,7 +147,7 @@ export class MouCustCompanyContactInfoComponent implements OnInit {
     });
   }
 
-  private getDismissReason(reason: any): string {
+  private getDismissReason(reason): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {

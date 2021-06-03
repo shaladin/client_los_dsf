@@ -32,6 +32,7 @@ import { ReqCalculatePlafondAgrmntXObj } from 'app/shared/model/ReqCalculatePlaf
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
 import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
+import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 
 @Component({
   selector: 'app-application-data',
@@ -155,8 +156,8 @@ export class ApplicationDataComponent implements OnInit {
   slikSecDescr: string = "";
   defaultSlikSecEcoCode: string;
   MouCustDlrFindData: MouCustDlrFinObj = new MouCustDlrFinObj();
-  mouCustClause: any;
-  mouCustFctr: any;
+  mouCustClause: MouCustClauseObj;
+  mouCustFctr: MouCustFctrObj;
 
   salesOfficerCode : Array<string> = new Array();
   isSalesOfficerCode: boolean = false;
@@ -328,7 +329,7 @@ export class ApplicationDataComponent implements OnInit {
 
   applicationDDLitems;
   resultResponse;
-  responseBankAccCust; 
+  responseBankAccCust: Array<AppCustBankAccObj>; 
 
   getAppModelInfo() {
     var obj = {
@@ -958,7 +959,7 @@ export class ApplicationDataComponent implements OnInit {
   inputAddressObj: InputAddressObj = new InputAddressObj();
   inputFieldAddressObj: InputFieldObj = new InputFieldObj();
   mailingAddrObj: AddrObj = new AddrObj();
-  AppCustAddrObj: any;
+  AppCustAddrObj: Array<AppCustAddrObj> = new Array();
   copyToMailingTypeObj: Array<KeyValueObj> = [
     { Key: "LEGAL", Value: "Legal" },
     { Key: "RESIDENCE", Value: "Residence" }
@@ -982,9 +983,8 @@ export class ApplicationDataComponent implements OnInit {
     if (!addrType) addrType = this.NapAppModelForm.controls.CopyFromMailing.value;
     if (!addrType) return;
 
-    let address = this.AppCustAddrObj.filter(emp => emp.MrCustAddrTypeCode === addrType);
-    if (address.length && address[0] != undefined) {
-      address = address[0];
+    let address = this.AppCustAddrObj.find(emp => emp.MrCustAddrTypeCode === addrType);
+    if (address != null && address != undefined) {
       this.mailingAddrObj.Addr = address.Addr;
       this.mailingAddrObj.AreaCode1 = address.AreaCode1;
       this.mailingAddrObj.AreaCode2 = address.AreaCode2;
@@ -1040,7 +1040,7 @@ export class ApplicationDataComponent implements OnInit {
       AppId: this.appId
     };
 
-    this.http.post<any>(URLConstant.GetBankAccCustByAppId, obj).subscribe(
+    this.http.post<Array<AppCustBankAccObj>>(URLConstant.GetBankAccCustByAppId, obj).subscribe(
       (response) => {
         this.responseBankAccCust = response
         this.NapAppModelForm.patchValue({
@@ -1200,7 +1200,7 @@ export class ApplicationDataComponent implements OnInit {
       if (this.GetBankInfo.AppId == 0) {
         this.GetBankInfo.AppId = this.appId;
       }
-      this.http.post<any>(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
+      this.http.post(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
         (response) => {
           response;
         },

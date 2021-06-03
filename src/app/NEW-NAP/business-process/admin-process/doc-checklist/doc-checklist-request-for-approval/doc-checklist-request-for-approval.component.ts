@@ -14,6 +14,8 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { RFADocChecklist } from 'app/shared/model/DocChecklist/RFADocChecklist.Model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-doc-checklist-request-for-approval',
@@ -21,13 +23,11 @@ import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCode
 })
 export class DocChecklistRequestForApprovalComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  AppId: any;
-  itemApprovedBy: any;
-  itemReason: any;
-  AppObj: any;
-  AppNo: any;
-  RFADocChecklist: any;
-  TaskListId: any;
+  AppId: number;
+  itemReason: Array<KeyValueObj>;
+  AppNo: string;
+  RFADocChecklist: RFADocChecklist;
+  TaskListId: number;
   Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
@@ -94,11 +94,9 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
       Id: this.AppId,
     };
     await this.http.post(URLConstant.GetAppById, appObj).toPromise().then(
-      (response) => {
-        this.AppObj = response;
-        console.log(this.AppObj);
-        this.AppNo = this.AppObj.AppNo;
-        this.GetProdOfferingDCompt(this.AppObj.ProdOfferingCode);
+      (response: NapAppModel) => {
+        this.AppNo = response.AppNo;
+        this.GetProdOfferingDCompt(response.ProdOfferingCode);
       }
     );
   }

@@ -23,7 +23,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 export class MouCustBankAccComponent implements OnInit {
 
   @Input() listBankAcc: Array<MouCustBankAccObj> = new Array<MouCustBankAccObj>();
-  @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() callbackSubmit: EventEmitter<Array<MouCustBankAccObj>> = new EventEmitter();
 
   mode: string;
   currentEditedIndex: number;
@@ -267,7 +267,7 @@ export class MouCustBankAccComponent implements OnInit {
     });
   }
 
-  private getDismissReason(reason: any): string {
+  private getDismissReason(reason): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {

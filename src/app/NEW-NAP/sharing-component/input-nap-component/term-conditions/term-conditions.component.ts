@@ -17,8 +17,6 @@ import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 })
 export class TermConditionsComponent implements OnInit {
   AppTcList: Array<AppTCObj> = [];
-  listTempTCList: Array<any> = [];
-
   totalCheckAll: number = 0;
   totalMandatory: number = 0;
   @Output() OutputValueIsCheckAll: EventEmitter<any> = new EventEmitter();

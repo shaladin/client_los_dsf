@@ -17,6 +17,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-app-add-fixed',
@@ -100,7 +101,7 @@ export class AppAddFixedComponent implements OnInit {
   inputLookupSupplierObj;
   officeItems;
   user;
-  listRefOfficeId: Array<any> = [];
+  listRefOfficeId: Array<string> = [];
   allAppDataObj: SaveAppDataCF2WObj;
 
   ngOnInit() {
@@ -138,7 +139,7 @@ export class AppAddFixedComponent implements OnInit {
   }
 
   refOfficeObj;
-  returnRefOfficeObj;
+  returnRefOfficeObj: Array<KeyValueObj>;
   arrAddCrit;
   critSupplier;
   MakeLookUpObj() {
@@ -329,7 +330,7 @@ export class AppAddFixedComponent implements OnInit {
   downPayment;
   assetPrice;
   firstInstallmentType;
-  editItem(item: any) {
+  editItem(item) {
     this.downPayment = parseInt(item.DP, 10),
       this.assetPrice = parseInt(item.OTR, 10),
 

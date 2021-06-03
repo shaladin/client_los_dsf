@@ -24,6 +24,7 @@ import { AppCommissionDObj } from 'app/shared/model/AppCommissionDObj.Model';
 import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
 import { ReqGetAppCommissionRuleObj } from 'app/shared/model/AppCommissionRsvFund/ReqGetAppCommissionRuleObj.Model';
 import { ReqTaxObj } from 'app/shared/model/AppCommissionRsvFund/ReqTaxObj.Model';
+import { AppReservedFundObj } from 'app/shared/model/AppReservedFundObj.model';
 
 @Component({
   selector: 'app-commission-v2',
@@ -142,7 +143,7 @@ export class CommissionV2Component implements OnInit {
     await this.http.post(URLConstant.GetListAppReservedFundByAppId, {Id: this.AppId}).toPromise().then(
       (response)=>{
         // console.log(response);
-        let tempObj: Array<any> = response[CommonConstant.ReturnObj];
+        let tempObj: Array<AppReservedFundObj> = response[CommonConstant.ReturnObj];
         // console.log(tempObj);
         for (let index = 0; index < tempObj.length; index++) {
           const element = tempObj[index];

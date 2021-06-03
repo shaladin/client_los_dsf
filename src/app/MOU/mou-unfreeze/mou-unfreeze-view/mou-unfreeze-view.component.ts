@@ -59,6 +59,6 @@ export class MouUnfreezeViewComponent implements OnInit {
 
   }
 
-    GetCallBack(e: any) {
+  GetCallBack(e) {
   }
 }

@@ -33,7 +33,7 @@ export class MouExecutionDetailComponent implements OnInit {
     EndDt: ['', [Validators.required]]
   });
   datePipe = new DatePipe("en-US");
-  resultData : MouCustObj;
+  resultData: MouCustObj;
 
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -110,25 +110,25 @@ export class MouExecutionDetailComponent implements OnInit {
     }
     var request = this.MouExecutionForm.value;
     this.httpClient.post(URLConstant.MouCustExecutionHumanActivity, request).subscribe(
-      (response: any) => {
+      (response) => {
         this.toastr.successMessage(response["Message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});
       });
   }
 
-  checkStartDate(ev: any) {
+  checkStartDate(ev) {
     if (this.datePipe.transform(ev.target.value, "yyyy-MM-dd") < this.datePipe.transform(this.MouExecutionForm.controls.MouCustDt.value, "yyyy-MM-dd")) {
       this.toastr.warningMessage(ExceptionConstant.START_DATE_CANNOT_LESS_THAN + this.datePipe.transform(this.MouExecutionForm.controls.MouCustDt.value, 'MMMM d, y'));
     }
   }
 
-  checkEndDate(ev: any) {
+  checkEndDate(ev) {
     if (ev.target.value < this.datePipe.transform(this.MouExecutionForm.controls.StartDt.value, "yyyy-MM-dd")) {
       this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN + this.datePipe.transform(this.MouExecutionForm.controls.StartDt.value, 'MMMM d, y'));
     }
   }
 
-  checkMouDate(ev: any) {
+  checkMouDate(ev) {
     if(ev.target.value < this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
       this.toastr.warningMessage(ExceptionConstant.MOU_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y'));
    } 

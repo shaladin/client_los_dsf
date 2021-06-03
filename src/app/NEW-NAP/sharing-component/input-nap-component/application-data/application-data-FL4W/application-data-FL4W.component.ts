@@ -27,6 +27,9 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AppOtherInfoObj } from 'app/shared/model/AppOtherInfo.Model';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
+import { LeadObj } from 'app/shared/model/Lead.Model';
+import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
+import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
 
 @Component({
   selector: 'app-application-data-FL4W',
@@ -135,8 +138,8 @@ export class ApplicationDataFL4WComponent implements OnInit {
   defaultSlikSecEcoCode: string;
 
   MouCustDlrFindData: MouCustDlrFinObj = new MouCustDlrFinObj();
-  mouCustClause: any;
-  mouCustFctr: any;
+  mouCustClause: MouCustClauseObj;
+  mouCustFctr: MouCustFctrObj;
   
   inputLookupObj: InputLookupObj;
   arrAddCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
@@ -249,7 +252,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   getLeadSrcCodeByLeadId(leadId: number) {
-    this.http.post<any>(URLConstant.GetLeadByLeadId, { LeadId: leadId }).subscribe(
+    this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { LeadId: leadId }).subscribe(
       resp => {
         this.NapAppModelForm.patchValue({
           MrAppSourceCode: resp.MrLeadSourceCode
@@ -263,7 +266,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   getAppModelInfo() {
     
     this.http.post(URLConstant.GetAppDetailForTabAddEditAppById, {Id: this.AppId}).subscribe(
-      (response: any) => {
+      (response: AppObj) => {
         this.resultResponse = response;
         this.NapAppModelForm.patchValue({
           MouCustId: this.resultResponse.MouCustId,
@@ -697,7 +700,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   inputAddressObj: InputAddressObj = new InputAddressObj();
   inputFieldAddressObj: InputFieldObj = new InputFieldObj();
   mailingAddrObj: AddrObj = new AddrObj();
-  AppCustAddrObj: any;
+  AppCustAddrObj: Array<AppCustAddrObj>;
   copyToMailingTypeObj: Array<KeyValueObj> = [
     { Key: "LEGAL", Value: "Legal" },
     { Key: "RESIDENCE", Value: "Residence" }
@@ -721,9 +724,8 @@ export class ApplicationDataFL4WComponent implements OnInit {
     if (!addrType) addrType = this.NapAppModelForm.controls.CopyFromMailing.value;
     if (!addrType) return;
 
-    let address = this.AppCustAddrObj.filter(emp => emp.MrCustAddrTypeCode === addrType);
-    if (address.length && address[0] != undefined) {
-      address = address[0];
+    let address = this.AppCustAddrObj.find(emp => emp.MrCustAddrTypeCode === addrType);
+    if (address != null && address != undefined) {
       this.mailingAddrObj.Addr = address.Addr;
       this.mailingAddrObj.AreaCode1 = address.AreaCode1;
       this.mailingAddrObj.AreaCode2 = address.AreaCode2;
@@ -938,7 +940,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
 
   SaveAppOtherInfo() {
     if (this.GetBankInfo != undefined && this.GetBankInfo != null && this.GetBankInfo.BankAccName != null && this.GetBankInfo.BankAccNo != null && this.GetBankInfo.BankBranch != null && this.GetBankInfo.BankCode != null && this.GetBankInfo.AppId != 0) {
-      this.http.post<any>(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
+      this.http.post(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
         (response) => {
           response;
         },
@@ -954,7 +956,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
         "BankAccNo": "",
         "BankAccName": "",
       };
-      this.http.post<any>(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
+      this.http.post(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
         (response) => {
           response;
         },

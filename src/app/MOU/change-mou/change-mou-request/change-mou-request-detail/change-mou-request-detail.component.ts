@@ -135,11 +135,11 @@ export class ChangeMouRequestDetailComponent implements OnInit {
       mouCust.Id = this.mouCustId;
       this.http
         .post(URLConstant.GetLatestChangeMouCustVersionById, mouCust)
-        .subscribe((response: any) => {
+        .subscribe((response) => {
           if (response["Status"] == "Failed") {
             this.httpClient
               .post(URLConstant.GetMouCustById, mouCust)
-              .subscribe((response: any) => {
+              .subscribe((response) => {
                 response["StartDt"] = datePipe.transform(
                   response["StartDt"],
                   "yyyy-MM-dd"
@@ -169,7 +169,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
 
                 this.httpClient
                   .post(URLConstant.GetCustByCustNo, custObj)
-                  .subscribe((response: any) => {
+                  .subscribe((response) => {
                     this.custId = response["CustId"];
                   });
 
@@ -283,7 +283,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
 
       this.httpClient
         .post(URLConstant.AddChangeMou, mouCustFormData)
-        .subscribe((response: any) => {
+        .subscribe((response) => {
           this.toastr.successMessage(response["Message"]);
           this.changeMouTrxNo = response["ChangeMouTrxNo"];
           this.ChangeMouCustId = response["ChangeMouCustId"];

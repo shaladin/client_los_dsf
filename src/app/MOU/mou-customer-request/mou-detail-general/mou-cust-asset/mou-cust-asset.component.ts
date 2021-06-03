@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 
 @Component({
   selector: 'app-mou-cust-asset',
@@ -38,7 +39,7 @@ export class MouCustAssetComponent implements OnInit {
   ) {
     this.listExclude = new Array<string>();
     this.httpClient.post(URLConstant.GetListAssetTypeByCode, null).subscribe(
-      (response: any) => {
+      (response: GenericListObj) => {
         this.assetTypeList = response.ReturnObject;
         if (this.AssetTypeCode != null) {
           this.MouCustClauseAssetForm.patchValue({
@@ -60,7 +61,7 @@ export class MouCustAssetComponent implements OnInit {
     mouAsset.MouCustId = this.MouCustId;
 
     this.httpClient.post(URLConstant.GetMouCustAssetByMouCustId, { Id: this.MouCustId }).subscribe(
-      (response: any) => {
+      (response: GenericListObj) => {
 
         this.IsAssetSelected = false;
         if (response.ReturnObject != null && response.ReturnObject.length > 0) {

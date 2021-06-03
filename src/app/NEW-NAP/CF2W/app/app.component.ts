@@ -10,6 +10,9 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
+import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 
 @Component({
   selector: 'app-app',
@@ -25,39 +28,37 @@ export class AppComponent implements OnInit {
     })
   }
   titleFinancialData: string = "Financial Data" + "  Regular Fixed";
-  appCustAddrObj: any;
   AppId: number;
   getCustAddr: string;
-  ownerAddrObj: any;
-  locationAddrObj: any;
-  copyCustomerAddr: any;
-  inputFieldOwnerAddrObj: any;
-  inputFieldLocationAddrObj: any;
-  inputLookupObj: any;
-  InputLookupCityIssuerObj: any;
-  tempMrSalesRecommendCode: any;
-  tempMrAppSourceCode: any;
-  tempPayFreqCode: any;
-  tempMrFirstInstTypeCode: any;
-  tempMrCustNotifyOptCode: any;
-  tempMrWopCode: any;
-  tempInterestType: any;
-  tempMrAssetConditionCode: any;
-  tempMrAssetUsageCode: any;
-  tempMrUserRelationshipCode: any;
-  tempMrOwnerRelationshipCode: any;
-  tempMrIdTypeCode: any;
-  tempRateType: any;
-  tempCopyAddrOwnerFrom: any;
-  tempCopyAddrLocationFrom: any;
-  tempMrGracePeriodTypeCode: any;
-  AddrLegalObj: any;
-  AddrResidenceObj: any;
-  AddrMailingObj: any;
-  AppCustAddrObj: any;
-  CopyAddrOwnerFromType: any;
-  EffectiveRateType: any;
-  CopyAddrLocationFromType: any;
+  ownerAddrObj: AddrObj;
+  locationAddrObj: AddrObj;
+  inputFieldOwnerAddrObj: InputFieldObj;
+  inputFieldLocationAddrObj: InputFieldObj;
+  inputLookupObj: InputLookupObj;
+  InputLookupCityIssuerObj: InputLookupObj;
+  tempMrSalesRecommendCode: Array<KeyValueObj>;
+  tempMrAppSourceCode: Array<KeyValueObj>;
+  tempPayFreqCode: Array<RefPayFreqObj>;
+  tempMrFirstInstTypeCode: Array<KeyValueObj>;
+  tempMrCustNotifyOptCode: Array<KeyValueObj>;
+  tempMrWopCode: Array<KeyValueObj>;
+  tempInterestType: Array<KeyValueObj>;
+  tempMrAssetConditionCode: Array<KeyValueObj>;
+  tempMrAssetUsageCode: Array<KeyValueObj>;
+  tempMrUserRelationshipCode: Array<KeyValueObj>;
+  tempMrOwnerRelationshipCode: Array<KeyValueObj>;
+  tempMrIdTypeCode: Array<KeyValueObj>;
+  tempRateType: Array<KeyValueObj>;
+  tempCopyAddrOwnerFrom: Array<KeyValueObj>;
+  tempCopyAddrLocationFrom: Array<KeyValueObj>;
+  tempMrGracePeriodTypeCode: Array<KeyValueObj>;
+  AddrLegalObj: Array<AppCustAddrObj>;
+  AddrResidenceObj: Array<AppCustAddrObj>;
+  AddrMailingObj: Array<AppCustAddrObj>;
+  AppCustAddrObj: Array<AppCustAddrObj>;
+  CopyAddrOwnerFromType: string;
+  EffectiveRateType: string;
+  CopyAddrLocationFromType: string;
   appForm = this.fb.group({
     SalesOfficerNo: [''],
     SalesOfficerName: [''],
@@ -564,10 +565,10 @@ export class AppComponent implements OnInit {
       this.inputAddressObjForLoc.inputField = this.inputFieldLocationAddrObj;
     }
   }
-  SetLocationAddrType(event) {
+  SetLocationAddrType(event: string) {
     this.CopyAddrLocationFromType = event;
   }
-  SetEffectiveRateType(event) {
+  SetEffectiveRateType(event: string) {
     this.EffectiveRateType = event;
 
     if (this.EffectiveRateType == CommonConstant.RateTypeFlat) {
@@ -580,7 +581,7 @@ export class AppComponent implements OnInit {
 
 
   }
-  SetOwnerAddrType(event) {
+  SetOwnerAddrType(event: string) {
     this.CopyAddrOwnerFromType = event;
   }
 }

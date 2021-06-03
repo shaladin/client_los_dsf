@@ -27,13 +27,13 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   mrCustTypeCode: string;
   viewObj: string;
   type: string;
-  inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
+  inputObj: { taskId: number; instanceId: number; approvalBaseUrl: string; };
   ManualDeviationData;
   isExistedManualDeviationData;
   BizTemplateCode: string;
   AppObj: AppObj;
   IsViewReady: boolean = false;
-  getEvent: Array<any> = new Array<any>();
+  getEvent: Array<any> = new Array();
 
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
   readonly CustTypeCompany: string = CommonConstant.CustTypeCompany;

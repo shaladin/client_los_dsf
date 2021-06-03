@@ -50,7 +50,6 @@ export class LoanObjectComponent implements OnInit {
     FinancingAmount: ['']
   })
   resultData: Array<AppLoanPurposeObj>;
-  result: any;
   closeResult: string;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private modalService: NgbModal) {
@@ -63,7 +62,7 @@ export class LoanObjectComponent implements OnInit {
         this.AppLoanPurposeId = params["AppLoanPurposeid"];
       });
     }
-    this.ResponseProdOfrUpToDate = new EventEmitter<any>();
+    this.ResponseProdOfrUpToDate = new EventEmitter();
   }
 
   private getDismissReason(reason: any): string {
@@ -92,7 +91,7 @@ export class LoanObjectComponent implements OnInit {
     this.title = "Edit Loan Object";
     this.MainInfoForm.controls.FinancingAmount.disable();
 
-    await this.http.post(URLConstant.GetAppLoanPurposeByAppLoanPurposeId, {Id: this.AppLoanPurposeId}).toPromise().then((response:any) => {
+    await this.http.post(URLConstant.GetAppLoanPurposeByAppLoanPurposeId, { Id: this.AppLoanPurposeId }).toPromise().then((response: AppLoanPurposeObj) => {
       this.objEdit = response;
       this.MainInfoForm.patchValue({
         IsDisburseToCust: response["IsDisburseToCust"],
@@ -179,7 +178,7 @@ export class LoanObjectComponent implements OnInit {
 
   async GetAppData() {
     await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
-      (response: any) => {
+      (response: AppObj) => {
         this.AppObj = response;
         this.OfficeCode = this.AppObj.OriOfficeCode;
         if (this.AppObj.LobCode == CommonConstant.CFNA) {
@@ -206,7 +205,7 @@ export class LoanObjectComponent implements OnInit {
                   appObj.ProdOfferingVersion = this.AppObj.ProdOfferingVersion;
 
                   this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, appObj).toPromise().then(
-                    (response: any) => {
+                    (response: ProdOfferingDObj) => {
                       if (response && response["StatusCode"] == "200") {
                         this.RefProdCmptSupplSchm = response;
                       }

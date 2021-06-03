@@ -9,11 +9,11 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 })
 export class MultiAssetLeasingComponent implements OnInit {
  
-  mode: any;
-  AppId:any;
-  AppAssetId:any;
-  AppCollateralId: any;
-  type:any;
+  mode: string;
+  AppId: number;
+  AppAssetId: number;
+  AppCollateralId: number;
+  type: string;
   constructor( ) {  
   }
 

@@ -18,7 +18,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 export class RequisitionDecisionPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   isReady: boolean = false;
-  arrCrit: any;
+  arrCrit: Array<CriteriaObj>;
   token: string = localStorage.getItem(CommonConstant.TOKEN);
 
   constructor(private router: Router,

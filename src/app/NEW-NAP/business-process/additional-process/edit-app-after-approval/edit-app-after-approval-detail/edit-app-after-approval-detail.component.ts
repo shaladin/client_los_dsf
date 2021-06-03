@@ -11,11 +11,17 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppAssetDetailObj } from 'app/shared/model/AppAsset/AppAssetDetailObj.Model';
+import { AppAssetAttrObj } from 'app/shared/model/AppAssetAttrObj.Model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
+import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AgrmntDataForEditAppAftApv } from 'app/shared/model/EditAppAftApv/AgrmntDataForEditAppAftApv.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { PurchaseOrderHObj } from 'app/shared/model/PurchaseOrderHObj.Model';
 import { ReqGetVendorEmpByVendorEmpNoAndVendorCodeObj } from 'app/shared/model/Request/Vendor/ReqVendorEmp.model';
+import { ResGetVendorEmpByVendorEmpNoAndVendorCodeObj } from 'app/shared/model/ResGetVendorEmpByVendorEmpNoAndVendorCodeObj.Model';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
@@ -41,12 +47,11 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
   agrmntDataForEditAppAftApv: AgrmntDataForEditAppAftApv = new AgrmntDataForEditAppAftApv();
   ContentObjSupplierEmp = new Array();
   InputLookupSupplEmpObjs = [];
-  selectedAppAssetObj: any;
-  selectedListAppAssetAttrObjs: any;
-  selectedAppCollateralObj: any;
-  selectedAppCollateralRegistrationObj: any;
-  //selectedAppCollateralAttrObj: any;
-  selectedPurchaseOrderHObj: any;
+  selectedAppAssetObj: AppAssetObj;
+  selectedListAppAssetAttrObjs: Array<AppAssetAttrObj>;
+  selectedAppCollateralObj: AppCollateralObj;
+  selectedAppCollateralRegistrationObj: AppCollateralRegistrationObj;
+  selectedPurchaseOrderHObj;
   isDetail: boolean = true;
   isEditAssetData:boolean = false;
   isEditPoData: Boolean = false;
@@ -273,7 +278,7 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
     }
   }
 
-  editAssetData(e)
+  editAssetData(e: AppAssetObj)
   {
     this.isEditAssetData = true;
     this.isDetail = false;
@@ -418,7 +423,7 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
       
       
       this.http.post(URLConstant.GetVendorEmpByVendorEmpNoAndVendorCode, empObj).subscribe(
-        (response: any) => {
+        (response: ResGetVendorEmpByVendorEmpNoAndVendorCodeObj) => {
           var formGroupComm = this.fb.group({
             AgrmntCommissionHId: [AgrmntCommissionHId],
             CommissionRecipientRefNoDesc: [response.VendorEmpName],
@@ -463,8 +468,7 @@ export class EditAppAfterApprovalDetailComponent implements OnInit {
         
 
         this.http.post(URLConstant.GetVendorEmpByVendorEmpNoAndVendorCode, empObj).subscribe(
-          (response: any) => {
-
+          (response: ResGetVendorEmpByVendorEmpNoAndVendorCodeObj) => {
             var formGroupComm = this.fb.group({
               AgrmntCommissionHId: [AgrmntCommissionHId],
               CommissionRecipientRefNoDesc: [response.VendorEmpName],

@@ -15,6 +15,7 @@ import { ReqGetProdCompntObj } from 'app/shared/model/Request/Product/ReqGetProd
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
 import { ResGetProdCmpntGroupedObj } from 'app/shared/model/Response/Product/ResGetProdCompntObj.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 @Component({
   selector: 'app-ho-prod-compnt',
   templateUrl: './ho-prod-compnt.component.html'
@@ -25,8 +26,8 @@ export class HoProdCompntComponent implements OnInit {
   source: string = "";
   FormProdComp: any;
   StateSave: string;
-  dictOptions: { [key: string]: any; } = {};
-  dictBehaviour: { [key: string]: any; } = {};
+  dictOptions: { [key: string]: Array<KeyValueObj>; } = {};
+  dictBehaviour: { [key: string]: Array<KeyValueObj>; } = {};
   GenericByCodeObj : GenericObj = new GenericObj();
   DlRuleObj: ReqDownloadRuleObj = new ReqDownloadRuleObj();
   ReqListProductDetailObj: ReqListProductDetailObj = new ReqListProductDetailObj();

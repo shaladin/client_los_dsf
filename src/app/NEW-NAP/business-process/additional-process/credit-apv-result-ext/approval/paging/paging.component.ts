@@ -14,6 +14,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { String } from 'typescript-string-operations';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-credit-approval-result-extension-approval-paging',
@@ -21,9 +22,9 @@ import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
   styleUrls: ['./paging.component.css']
 })
 export class CreditApprovalResultExtensionApprovalPagingComponent implements OnInit {
-  inputPagingObj: any;
-  arrCrit: any;
-  UserAccess: any;
+  inputPagingObj: UcPagingObj;
+  arrCrit: Array<CriteriaObj>;
+  UserAccess: CurrentUserContext;
 
   constructor(private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) { }
 

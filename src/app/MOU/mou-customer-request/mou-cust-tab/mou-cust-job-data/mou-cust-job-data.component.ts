@@ -18,6 +18,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ResListKeyValueObj } from 'app/shared/model/Response/Generic/ResListKeyValueObj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-mou-cust-job-data',
@@ -28,7 +29,7 @@ import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMas
 export class MouCustJobDataComponent implements OnInit {
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() MouCustPersonalJobDataObj: MouCustPersonalJobDataObj = new MouCustPersonalJobDataObj();
   @Input() custModelCode: string;
 
@@ -47,15 +48,15 @@ export class MouCustJobDataComponent implements OnInit {
   jobDataAddrObj: AddrObj;
   inputFieldJobDataObj: InputFieldObj;
 
-  InputLookupProfessionObj: any;
-  selectedProfessionCode: any;
-  InputLookupIndustryTypeObj: any;
-  selectedIndustryTypeCode: any;
+  InputLookupProfessionObj: InputLookupObj;
+  selectedProfessionCode: string;
+  InputLookupIndustryTypeObj: InputLookupObj;
+  selectedIndustryTypeCode: string;
 
-  JobPositionObj: any;
-  JobStatObj: any;
-  CompanyScaleObj: any;
-  InvestmentTypeObj: any;
+  JobPositionObj: Array<KeyValueObj>;
+  JobStatObj: Array<KeyValueObj>;
+  CompanyScaleObj: Array<KeyValueObj>;
+  InvestmentTypeObj: Array<KeyValueObj>;
   CustModelObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   custModelReqObj: ReqRefMasterByTypeCodeAndMappingCodeObj;
 
@@ -68,7 +69,7 @@ export class MouCustJobDataComponent implements OnInit {
   }
 
   MaxDate: Date;
-  UserAccess: any;
+  UserAccess: CurrentUserContext;
 
   inputAddressObjForJobData: InputAddressObj;
 

@@ -24,7 +24,6 @@ import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/
 export class CustCompletionOplDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   inputGridObj: InputGridObj = new InputGridObj();
-  listCustCompletion: Array<any> = new Array();
   AppId: number;
   wfTaskListId: number;
   BizTemplateCode: string = "OPL";
@@ -106,7 +105,6 @@ export class CustCompletionOplDetailComponent implements OnInit {
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response;
-        this.listCustCompletion = this.inputGridObj.resultData.Data;
       }
     );
   }

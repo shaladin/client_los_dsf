@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AppReservedFundObj } from 'app/shared/model/AppReservedFundObj.model';
 
 @Component({
   selector: "view-reserved-fund",
@@ -10,12 +11,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
   providers: [NGXToastrService]
 })
 export class ViewReservedFundComponent implements OnInit {
-  @Input() appId: any;
-  appObj = {
-    AppId: 0,
-  };
-  AppObj: any;
-  RsvFundObj: any;
+  @Input() appId: number;
+  RsvFundObj: Array<AppReservedFundObj>;
   totalRsvFund: number = 0;
 
   constructor(private http: HttpClient) {
@@ -27,7 +24,6 @@ export class ViewReservedFundComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.appObj.AppId = this.appId;
     this.GetRsvFundData();
   }
 

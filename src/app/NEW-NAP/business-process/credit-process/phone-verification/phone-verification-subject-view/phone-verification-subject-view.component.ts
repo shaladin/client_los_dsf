@@ -34,7 +34,7 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
     MrVerfObjectCode: "",
   };
 
-  verifResultHDetailObj: any;
+  verifResultHDetailObj: Array<VerfResultHObj>;
   verifResultObj: VerfResultObj;
   verifResultHObj: VerfResultHObj;
   listVerifResultHObj: Array<VerfResultHObj> = new Array();

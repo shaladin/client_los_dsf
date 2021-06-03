@@ -26,6 +26,7 @@ import { ChangeMouCustCollateralRegistrationObj } from "app/shared/model/ChangeM
 import { KeyValueObj } from "app/shared/model/KeyValue/KeyValueObj.model";
 import { MouCustCollateralObj } from "app/shared/model/MouCustCollateralObj.Model";
 import { AssetTypeSerialNoLabelObj } from "app/shared/model/SerialNo/AssetTypeSerialNoLabelObj.Model";
+import { GenericListObj } from "app/shared/model/Generic/GenericListObj.Model";
 
 @Component({
   selector: "app-change-mou-request-addcoll",
@@ -184,7 +185,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
       });
       
     this.http.post(URLConstant.GetChangeMouCustCollateralByChangeMouCustId, { Id: this.ChangeMouCustId }).subscribe(
-      (response: any) => {
+      (response: GenericListObj) => {
         if (response["ReturnObject"] != null || response["ReturnObject"].length > 0) {
           this.listCollateralData = response["ReturnObject"];
           this.isChangeMou = true;
@@ -365,8 +366,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
         AssetCategoryCode: e.AssetCategoryCode,
       });
     } else {
-      var collObj = { CollateralNo: e.CollateralNo };
-      this.http.post(URLConstant.GetMouCustCollateralDataExistingByCollateralNo, collObj).subscribe(
+      this.http.post(URLConstant.GetMouCustCollateralDataExistingByCollateralNo, { TrxNo: e.CollateralNo }).subscribe(
         (response) => {
           this.collateralObj = response["MouCustCollateral"];
           this.collateralRegistrationObj =
@@ -386,11 +386,11 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
           this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
             Code: this.collateralObj.AssetTypeCode
           }).subscribe(
-            (response: any) => {
+            (response: GenericListObj) => {
               while (this.items.length) {
                 this.items.removeAt(0);
               }
-              this.SerialNoList = response["ReturnObject"];
+              this.SerialNoList = response.ReturnObject;
               for (var i = 0; i < this.SerialNoList["length"]; i++) {
                 var eachDataDetail = this.fb.group({
                   SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
@@ -509,12 +509,12 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
     isFromLookupEventCallback: boolean = false
   ) {
     this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: value }).subscribe(
-      (response: any) => {
+      (response: GenericListObj) => {
         if (!isFromLookupEventCallback) {
           while (this.items.length) {
             this.items.removeAt(0);
           }
-          this.SerialNoList = response["ReturnObject"];
+          this.SerialNoList = response.ReturnObject;
           for (var i = 0; i < this.SerialNoList["length"]; i++) {
             var eachDataDetail = this.fb.group({
               SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],
@@ -694,11 +694,11 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
         this.inputLookupObj.jsonSelect = this.collateralObj;
 
         this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: this.collateralObj.AssetTypeCode }).subscribe(
-          (response: any) => {
+          (response: GenericListObj) => {
             while (this.items.length) {
               this.items.removeAt(0);
             }
-            this.SerialNoList = response["ReturnObject"];
+            this.SerialNoList = response.ReturnObject;
             for (var i = 0; i < this.SerialNoList["length"]; i++) {
               var eachDataDetail = this.fb.group({
                 SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],

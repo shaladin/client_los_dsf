@@ -11,6 +11,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { RefUserObj } from 'app/shared/model/RefUserObj.Model';
 
 
 
@@ -31,7 +32,7 @@ export class ResetPasswordComponent implements OnInit {
   isValidated: boolean = false;
   isLoaded: boolean = false;
   code: string = "";
-  RefUserObj: any;
+  RefUserObj: RefUserObj;
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
     this.version = localStorage.getItem(CommonConstant.VERSION);
     this.code = this.route.snapshot.paramMap.get('code');
@@ -68,7 +69,7 @@ export class ResetPasswordComponent implements OnInit {
       ResetCode: this.code
     };
     this.http.post(URLConstant.GetRefUserByResetCode, requestObj).subscribe(
-      (response) => {
+      (response: RefUserObj) => {
         this.RefUserObj = response;
         if (this.RefUserObj.RefUserId != 0) {
           this.isValidated = true;

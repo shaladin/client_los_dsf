@@ -137,7 +137,7 @@ export class LegalReviewDetailComponent implements OnInit {
     return '';
   }
 
-  SaveData(formObj: any, isSubmit: boolean) {
+  SaveData(formObj: FormGroup, isSubmit: boolean) {
     if (this.LegalForm.valid) {
       var mouObj = new ReqListMouCustLglReviewObj();
       for (let index = 0; index < this.responseRefMasterObj.length; index++) {

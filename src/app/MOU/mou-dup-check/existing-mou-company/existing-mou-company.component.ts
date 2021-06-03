@@ -69,7 +69,7 @@ export class ExistingMouCompanyComponent implements OnInit {
 
         this.CustNoObj.CustNo = this.MouCustObj['CustNo'];
         this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
-          (response: any) => {
+          (response: CustObj) => {
             this.cust = response;
           }
         );
@@ -190,7 +190,7 @@ export class ExistingMouCompanyComponent implements OnInit {
     }
   }
 
-  Checked(type: string, Id: any, isChecked: any): void {
+  Checked(type: string, Id: number, isChecked: boolean): void {
     if (isChecked) {
       this["ListSelectedId" + type].push(Id);
     } else {

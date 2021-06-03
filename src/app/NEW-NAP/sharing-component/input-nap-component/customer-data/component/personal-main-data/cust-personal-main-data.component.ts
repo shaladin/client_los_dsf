@@ -35,21 +35,15 @@ export class CustPersonalMainDataComponent implements OnInit {
   @Input() appId;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() custDataPersonalObj: CustDataPersonalObj = new CustDataPersonalObj();
-  @Input() custType: any;
+  @Input() custType: string;
   @Input() IsSpouseExist: boolean = false;
   @Input() bizTemplateCode: string = "";
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
-  @Output() isMarried: EventEmitter<any> = new EventEmitter();
+  @Output() isMarried: EventEmitter<boolean> = new EventEmitter();
   @Output() spouseObj: EventEmitter<any> = new EventEmitter();
 
-  refMasterObj = {
-    RefMasterTypeCode: "",
-  };
-  countryObj = {
-    CountryCode: ""
-  };
   selectedCustNo: string;
   selectedNationalityCountryCode: string;
   custDataObj: CustDataObj;
@@ -214,9 +208,7 @@ export class CustPersonalMainDataComponent implements OnInit {
     this.InputLookupCustomerObj.addCritInput = arrCrit;
   }
 
-  setCountryName(countryCode) {
-    this.countryObj.CountryCode = countryCode;
-
+  setCountryName(countryCode: string) {
     this.http.post(URLConstant.GetRefCountryByCountryCode, {Code: countryCode}).subscribe(
       (response) => {
         this.InputLookupCountryObj.nameSelect = response["CountryName"];
@@ -354,8 +346,7 @@ export class CustPersonalMainDataComponent implements OnInit {
   }
 
   async bindGenderObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).toPromise().then(
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
@@ -368,8 +359,7 @@ export class CustPersonalMainDataComponent implements OnInit {
   }
 
   async bindMaritalStatObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMaritalStat;
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMaritalStat }).toPromise().then(
       (response) => {
         this.MaritalStatObj = response[CommonConstant.ReturnObj];
         if (this.MaritalStatObj.length > 0) {
@@ -401,8 +391,7 @@ export class CustPersonalMainDataComponent implements OnInit {
   }
 
   async bindEducationObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeEducation;
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeEducation }).toPromise().then(
       (response) => {
         this.EducationObj = response[CommonConstant.ReturnObj];
         if (this.EducationObj.length > 0) {
@@ -415,8 +404,7 @@ export class CustPersonalMainDataComponent implements OnInit {
   }
 
   async bindReligionObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeReligion;
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReligion }).toPromise().then(
       (response) => {
         this.ReligionObj = response[CommonConstant.ReturnObj];
         if (this.ReligionObj.length > 0) {
@@ -521,8 +509,7 @@ export class CustPersonalMainDataComponent implements OnInit {
   controlNameIdNo: string = 'IdNo';
   controlNameIdType: string = 'MrIdTypeCode';
   customPattern: Array<CustomPatternObj>;
-  initIdTypeCode: any;
-  resultPattern: any;
+  resultPattern: Array<KeyValueObj>;
 
   getInitPattern() {
     this.regexService.getListPattern().subscribe(

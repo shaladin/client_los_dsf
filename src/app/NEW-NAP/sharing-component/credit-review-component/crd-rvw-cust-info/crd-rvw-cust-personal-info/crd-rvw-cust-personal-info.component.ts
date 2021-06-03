@@ -21,8 +21,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CrdRvwCustPersonalInfoComponent implements OnInit {
   @Input() crdRvwCustInfoObj: CrdRvwCustInfoObj;
-  @Output() ngModelForBankAcc: EventEmitter<any> = new EventEmitter<any>();
-  @Output() ngModelForNegCheckList: EventEmitter<any> = new EventEmitter<any>();
+  @Output() ngModelForBankAcc: EventEmitter<any> = new EventEmitter();
+  @Output() ngModelForNegCheckList: EventEmitter<any> = new EventEmitter();
 
   readonly whiteIndicator: string = CommonConstant.WhiteIndicator;
   readonly MaritalStatusMarried: string = CommonConstant.MasteCodeMartialStatsMarried;

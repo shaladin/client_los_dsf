@@ -34,7 +34,7 @@ export class CustJobDataFL4WComponent implements OnInit {
 
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() appCustPersonalJobDataObj: AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
   @Input() custModelCode: string;
   @ViewChild('LookupProfession') ucLookupProfession: UclookupgenericComponent;
