@@ -51,7 +51,7 @@ export class MouViewDetailComponent implements OnInit {
   MrPaidByCode: string;
   SingleInstCalcMthd: string = "-";
   MouCustDlrFindData: MouCustDlrFinObj = new MouCustDlrFinObj();
-  LinkSupplier: any = "-";
+  LinkSupplier: string = "-";
 
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }

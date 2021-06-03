@@ -16,6 +16,7 @@ import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { CookieService } from 'ngx-cookie';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-mou-review-dlfn',
@@ -30,7 +31,6 @@ export class MouReviewDlfnComponent implements OnInit {
   WfTaskListId: number;
   MouType: string = CommonConstant.FINANCING;
   PlafondAmt: number;
-  listApprover: any;
   MrCustTypeCode: string;
   resultData: MouCustObj;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
@@ -101,7 +101,7 @@ export class MouReviewDlfnComponent implements OnInit {
       }
     );
 
-    await this.http.post(URLConstant.GetMouCustScoreByMouCustId, { MouCustId: this.MouCustId }).toPromise().then(
+    await this.http.post(URLConstant.GetMouCustScoreByMouCustId, { Id: this.MouCustId }).toPromise().then(
       (response) => {
         this.ScoreResult = response["ScoreResult"];
       }
@@ -129,7 +129,7 @@ export class MouReviewDlfnComponent implements OnInit {
       this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, ["/Mou/Cust/ReviewPaging"], {});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
         })
     }
   }
@@ -139,7 +139,7 @@ export class MouReviewDlfnComponent implements OnInit {
     this.http.post(URLConstant.ReturnMouReview, mouObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        AdInsHelper.RedirectUrl(this.router, ["/Mou/Cust/ReviewPaging"], {});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
       })
   }
 

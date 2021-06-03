@@ -27,6 +27,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { AssetMasterForFraudChecking } from 'app/shared/model/AssetTypeObj.Model';
+import { ResDigiFraudCheckObj } from 'app/shared/model/Response/ThirdPartyResult/ResDigiFraudCheckObj.model';
 
 @Component({
   selector: 'app-fraud-verif-page',
@@ -36,7 +37,7 @@ import { AssetMasterForFraudChecking } from 'app/shared/model/AssetTypeObj.Model
 export class FraudVerifPageComponent implements OnInit {
 
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  ResultThirdPartyObj: any;
+  ResultThirdPartyObj: ResDigiFraudCheckObj;
   thirdPartyRsltHObj: ThirdPartyRsltHObj;
   dmsObj: DMSObj;
   isDmsReady: boolean = false;
@@ -159,7 +160,7 @@ export class FraudVerifPageComponent implements OnInit {
         }
         this.thirdPartyRsltHObj.TrxNo = response['LeadNo'];
         this.http.post(URLConstant.GetFraudResult, this.thirdPartyRsltHObj).subscribe(
-          (response) => {
+          (response: ResDigiFraudCheckObj) => {
             this.ResultThirdPartyObj = response;
           });
       },

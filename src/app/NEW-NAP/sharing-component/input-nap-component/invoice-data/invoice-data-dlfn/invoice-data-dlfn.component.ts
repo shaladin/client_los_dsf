@@ -45,7 +45,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
   DisbInfoId: any;
   AgrmntId: number;
   disburseTos: any;
-  isDdlBankAccountVisible: any = false;
+  isDdlBankAccountVisible: boolean = false;
   BankAccs: any;
   AppCustId: number;
   CustNo:any;

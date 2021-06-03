@@ -217,7 +217,7 @@ export class AssetDataAddEditComponent implements OnInit {
   generalSettingObj: GeneralSettingObj;
   IntegratorCheckBySystemGsValue: string = "1";
   IsUseDigitalization: string;
-  LastRequestedDate: any = "";
+  LastRequestedDate: Date;
   indexChassis: number = 0;
   SerialNoRegex: string;
   ListPattern: Array<CustomPatternObj> = new Array<CustomPatternObj>();

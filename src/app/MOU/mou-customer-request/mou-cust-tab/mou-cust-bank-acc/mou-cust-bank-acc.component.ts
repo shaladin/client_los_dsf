@@ -29,7 +29,7 @@ export class MouCustBankAccComponent implements OnInit {
   currentEditedIndex: number;
   selectedBankCode: string;
 
-  closeResult: any;
+  closeResult: string;
   MouCustBankAccObj: MouCustBankAccObj;
   refMasterObj = {
     RefMasterTypeCode: ""
@@ -39,9 +39,9 @@ export class MouCustBankAccComponent implements OnInit {
     BankCode: ""
   };
   MonthObj: Array<KeyValueObj>;
-  defaultMonth: any; 
-  InputLookupBankObj: any;
-  selectedBankName: any;
+  defaultMonth: string; 
+  InputLookupBankObj: InputLookupObj;
+  selectedBankName: string;
 
   CustBankAccountForm = this.fb.group({
     BankBranch: ['', [Validators.required, Validators.maxLength(50)]],

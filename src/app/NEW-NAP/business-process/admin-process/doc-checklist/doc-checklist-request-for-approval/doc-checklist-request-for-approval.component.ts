@@ -28,7 +28,7 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
   AppNo: any;
   RFADocChecklist: any;
   TaskListId: any;
-  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
   private createComponent: UcapprovalcreateComponent;

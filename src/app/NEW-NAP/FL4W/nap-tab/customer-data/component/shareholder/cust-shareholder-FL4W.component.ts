@@ -26,7 +26,7 @@ import { CookieService } from 'ngx-cookie';
 
 export class CustShareholderFL4WComponent implements OnInit {
 
-  @Input() listShareholder: any = new Array<AppCustCompanyMgmntShrholderObj>();
+  @Input() listShareholder: Array<AppCustCompanyMgmntShrholderObj> = new Array<AppCustCompanyMgmntShrholderObj>();
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 

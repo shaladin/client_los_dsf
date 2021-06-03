@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { ResMouCustTCObj } from 'app/shared/model/Response/MOU/MouCust/ResMouCustTCObj.model';
 
 @Component({
   selector: 'app-mou-view-tc',
@@ -9,7 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class MouViewTcComponent implements OnInit {
   @Input() MouCustId: number;
 
-  listTCData: any;
+  listTCData: Array<ResMouCustTCObj> = new Array<ResMouCustTCObj>();
   constructor(private http: HttpClient) { }
 
   ngOnInit() {

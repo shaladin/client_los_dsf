@@ -22,7 +22,7 @@ export class MouCustCompanyContactInfoComponent implements OnInit {
 
   mode: string;
   currentEditedIndex: number;
-  closeResult: any;
+  closeResult: string;
   MouCustCompanyContactPersonObj: MouCustCompanyContactPersonObj;
   refMasterObj = {
     RefMasterTypeCode: ""

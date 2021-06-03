@@ -41,7 +41,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
   isNeedCheckBySystem: string;
   latestReqDtCheckRapindo: string;
   leadNo: string;
-  latestCheckChassisNo: any;
+  latestCheckChassisNo: string;
   isAssetReady: boolean = false;
   InputLookupAssetObj: InputLookupObj;
   assetTypeId: string;

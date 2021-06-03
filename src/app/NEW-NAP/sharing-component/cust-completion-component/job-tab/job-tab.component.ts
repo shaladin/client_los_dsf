@@ -38,7 +38,7 @@ import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResul
   styleUrls: ['./job-tab.component.scss']
 })
 export class JobTabComponent implements OnInit {
-  requestedDate: any = "";
+  requestedDate: Date;
   private ucLookupProfession: UclookupgenericComponent;
   mouCustId: number = 0;
   @ViewChild('LookupProfession') set content(content: UclookupgenericComponent) {

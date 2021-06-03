@@ -35,9 +35,8 @@ export class ChangeMouDetailGeneralComponent implements OnInit {
   isTenorInvalid: boolean;
   tenorInvalidMsg: string;
   mouCustClause: MouCustClauseObj;
-  url: string;
   tempMouCustClause: MouCustClauseObj;
-  tempChangeMouCustClause: any;
+  tempChangeMouCustClause: any; // ini di BE tipe data ny object
   tempMouCustAsset: MouCustAssetListObj;
   isReady: boolean = false;
   AssetForm = this.fb.group({
@@ -102,7 +101,7 @@ export class ChangeMouDetailGeneralComponent implements OnInit {
 
     forkJoin([reqCurrency, reqIntrstType, reqInstSchm, reqPayFreq, reqFirstInst, getMouCustClause, getChangeMouCustClause]).subscribe(
       (response: any) => {
-        this.currencyList = response[0];
+        this.currencyList = response[0].ReturnObject;
         this.intrstTypeList = response[1].ReturnObject;
         this.instSchmList = response[2].ReturnObject;
         this.payFreqList = response[3].ReturnObject;

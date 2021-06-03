@@ -23,7 +23,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 export class DocChecklistApprovalPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
+  token: string = localStorage.getItem(CommonConstant.TOKEN);
   userContext: CurrentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
 

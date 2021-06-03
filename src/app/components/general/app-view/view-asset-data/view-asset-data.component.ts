@@ -2,14 +2,15 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AllAssetDataObj } from 'app/shared/model/AllAssetDataObj.Model';
 
 @Component({
   selector: "view-asset-data",
   templateUrl: "./view-asset-data.component.html"
 })
 export class ViewAssetDataComponent implements OnInit {
-  getAppUrl: any;
-  getAllAssetDataUrl: any;
+  getAppUrl: string;
+  getAllAssetDataUrl: string;
   @Input() appId: number = 0;
   appAssetId: number = 0;
   appObj = {
@@ -20,7 +21,7 @@ export class ViewAssetDataComponent implements OnInit {
   };
 
   AppObj: any;
-  AppAssetObj: any;
+  AppAssetObj: AllAssetDataObj;
   totalRsvFund: number = 0;
   totalHalfResponseAppAssetAttrObjs: number = 0;
 
@@ -60,10 +61,10 @@ export class ViewAssetDataComponent implements OnInit {
 
   async GetAllAssetData(obj: any) {
     await this.http.post(this.getAllAssetDataUrl, obj).toPromise().then(
-      (response) => {
+      (response: AllAssetDataObj) => {
         this.AppAssetObj = response;
-        if(this.AppAssetObj.ResponseAppAssetAttrObjs != null) {
-          this.totalHalfResponseAppAssetAttrObjs = Math.ceil(this.AppAssetObj.ResponseAppAssetAttrObjs.length/2);
+        if(this.AppAssetObj.AppAssetAttrObj != null) {
+          this.totalHalfResponseAppAssetAttrObjs = Math.ceil(this.AppAssetObj.AppAssetAttrObj.length/2);
         }
       }
     );

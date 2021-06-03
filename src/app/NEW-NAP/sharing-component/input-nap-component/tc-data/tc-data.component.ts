@@ -37,14 +37,14 @@ export class TcDataComponent implements OnInit {
   });
 
 
-  AppIdObj: any = new AppIdObj();
+  AppIdObj: AppIdObj = new AppIdObj();
   AppTcCodeObj = {
     TcCode: new Array(),
     RowVersion: ""
   }
   DocName = new Array();
   listAppTcObj: Array<AppTCObj> = new Array<AppTCObj>();
-  mode: any = "add";
+  mode: string = "add";
   ReqTCObj = new ReqTCObj();
 
   ngOnInit() {

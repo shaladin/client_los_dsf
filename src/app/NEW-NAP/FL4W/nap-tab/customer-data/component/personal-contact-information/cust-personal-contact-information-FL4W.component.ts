@@ -409,8 +409,8 @@ onOptionsSelected(event){
   this.setValidatorPattern();
 }
 
-controlNameIdNo: any = 'IdNo';
-controlNameIdType: any = 'MrIdTypeCode';
+controlNameIdNo: string = 'IdNo';
+controlNameIdType: string = 'MrIdTypeCode';
 customPattern: Array<CustomPatternObj>;
 initIdTypeCode: any;
 resultPattern: any;
