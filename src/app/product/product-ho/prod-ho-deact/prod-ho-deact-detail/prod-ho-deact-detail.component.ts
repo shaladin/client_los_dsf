@@ -62,7 +62,6 @@ export class ProdHoDeactDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformation.json";
-    this.ViewGenericObj.viewEnvironment = environment.losUrl;
 
     let tempReq: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeProdDeactivate };
     await this.http.post(URLConstant.GetListActiveRefReason, tempReq).toPromise().then(

@@ -30,15 +30,8 @@ export class ReturnHandlingSurveyComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingSurvey.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingSurvey.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "a.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
     this.inputPagingObj.addCritInput = this.ActAndOfficeCriteria();
   }
 

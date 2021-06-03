@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -24,12 +23,6 @@ export class CustomerDocPrintingPagingComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/searchCustomerDocPrinting.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCustomerDocPrinting.json";
 
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "MC.MR_MOU_TYPE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     if (this.user.MrOfficeTypeCode != "HO") {

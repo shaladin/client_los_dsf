@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'environments/environment';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { Router } from '@angular/router';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
@@ -27,24 +26,6 @@ export class LeadCancelComponent implements OnInit {
   ngOnInit() {
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/LeadCancelTempPaging.json";
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/LeadCancelTempPaging.json";
-    this.tempPagingObj.ddlEnvironments = [
-      {
-        name: "L.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      },
-      {
-        name: "L.MR_LEAD_SOURCE_CODE",
-        environment: environment.FoundationR3Url
-      },
-      {
-        name: "L.LEAD_STEP",
-        environment: environment.FoundationR3Url
-      },
-      {
-        name: "L.LEAD_STAT",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     let addCrit: CriteriaObj = new CriteriaObj();
     addCrit.DataType = "text";

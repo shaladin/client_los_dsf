@@ -41,12 +41,6 @@ export class PreGoLiveOplPagingComponent implements OnInit {
   ngOnInit() {
     this.ucTempPagingObj.urlJson = "./assets/ucpaging/opl/search-pre-go-live-opl-paging.json";
     this.ucTempPagingObj.pagingJson = "./assets/ucpaging/opl/search-pre-go-live-opl-paging.json";
-    this.ucTempPagingObj.ddlEnvironments = [
-      {
-        name: "A.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
     var critInput = new CriteriaObj();
     critInput.propName = "WTL.ACT_CODE";
     critInput.restriction = AdInsConstant.RestrictionEq;

@@ -8,7 +8,7 @@ export const environment = {
     navbarColor: 'transparent',
     losUrl: 'http://r3app-server.ad-ins.com/LOS_INTEGRATION',
     FoundationR3Url: 'http://r3app-server.ad-ins.com/FOUNDATION_INTEGRATION',
-    DMSUrl : "http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx",
+    DMSUrl : "http://sky.ad-ins.com/LiteDMS_POC/Integration/ViewDoc.aspx",
     AMSUrl : "http://r3app-server.ad-ins.com/AMS_INTEGRATION", //OPL dah ada
     LMSUrl : "http://r3app-server.ad-ins.com/LMS_INTEGRATION", //OPL dah ada
     ApprovalR3Url: 'http://r3app-server.ad-ins.com/APPROVAL_INTEGRATION',

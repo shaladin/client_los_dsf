@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DecimalPipe } from '@angular/common';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -35,13 +34,6 @@ export class DocSignerComponent implements OnInit {
     else {
       this.inputPagingObj._url = "./assets/ucpaging/searchMouCustDocSigner.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchMouCustDocSigner.json";
-      this.inputPagingObj.ddlEnvironments = [
-        {
-          name: "MOU.MR_MOU_TYPE_CODE",
-          environment: environment.FoundationR3Url
-        }
-      ];
-
       this.arrCrit = new Array<CriteriaObj>();
 
       const addCritMouStat = new CriteriaObj();

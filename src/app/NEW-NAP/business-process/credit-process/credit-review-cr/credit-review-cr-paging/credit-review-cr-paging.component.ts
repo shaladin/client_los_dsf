@@ -4,7 +4,6 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-credit-review-cr-paging',
@@ -27,13 +26,6 @@ export class CreditReviewCrPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchCreditReviewCr.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditReviewCr.json";
-
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "a.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     let arrCrit = new Array();
     let critObj = new CriteriaObj();

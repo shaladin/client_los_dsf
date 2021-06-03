@@ -74,7 +74,6 @@ export class ProdOfferingViewComponent implements OnInit {
     else {
       this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformationByCode.json";
     }
-    this.ViewGenericObj.viewEnvironment = environment.losUrl;
 
     if (this.ProdOfferingHId == 0) {
       await this.LoadMainInfo();

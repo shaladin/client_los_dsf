@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute } from '@angular/router';
@@ -31,12 +30,6 @@ export class CustConfirmationPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchCustConfirmation.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCustConfirmation.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "A.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
     this.arrCrit = new Array();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;

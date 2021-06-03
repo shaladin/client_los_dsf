@@ -42,6 +42,7 @@
         "isFromURL": true,
         "ddlType": "all",
         "url": "",
+        "environment": "FOU",
         "path": "/RefMaster/GetListKeyValueActiveByCode",
         "label": "Product Offering Status",
         "items": [],

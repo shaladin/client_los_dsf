@@ -64,7 +64,6 @@ export class AdditionalTcDetailComponent implements OnInit {
 
   async SetMainInfo() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/new-nap/business-process/additional-process/view-additional-tc-main-info.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
   }
 
   async SetListTc() {

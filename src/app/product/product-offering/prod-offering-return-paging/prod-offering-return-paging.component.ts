@@ -16,12 +16,6 @@ export class ProdOfferingReturnPagingComponent implements OnInit {
   ngOnInit() {
     this.InputPagingObj._url = "./assets/ucpaging/product/searchProductOfferingReturn.json";
     this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOfferingReturn.json";
-    this.InputPagingObj.ddlEnvironments = [
-      {
-        name: "A.Prod_Offering_Stat",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     let WVProdOfferingStatObj = new WhereValueObj();
     WVProdOfferingStatObj.property = "ProdOfferingStat";

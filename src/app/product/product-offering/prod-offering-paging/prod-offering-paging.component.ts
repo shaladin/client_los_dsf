@@ -18,12 +18,6 @@ export class ProdOfferingPagingComponent implements OnInit {
     this.InputPagingObj._url = "./assets/ucpaging/product/searchProductOffering.json";
     this.InputPagingObj.deleteUrl = "/RefBank/DeleteRefBank";
     this.InputPagingObj.pagingJson = "./assets/ucpaging/product/searchProductOffering.json";
-    this.InputPagingObj.ddlEnvironments = [
-      {
-        name: "A.Prod_Offering_Stat",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     let WVTrxTypeCodeObj = new WhereValueObj();
     WVTrxTypeCodeObj.property = "TrxTypeCode";

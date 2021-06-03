@@ -62,7 +62,6 @@ export class CustCompletionOplDetailComponent implements OnInit {
   ngOnInit() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-opl-main-info.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
 
     this.inputGridObj = new InputGridObj();
     if (this.ReturnHandlingHId != 0) {
