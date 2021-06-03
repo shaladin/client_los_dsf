@@ -18,6 +18,7 @@ import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigRes
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -69,7 +70,7 @@ export class NapDetailFormComponent implements OnInit {
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
   readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, public toastr: NGXToastrService, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private spinner: NgxSpinnerService, private http: HttpClient, private fb: FormBuilder, private router: Router, public toastr: NGXToastrService, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -255,6 +256,8 @@ export class NapDetailFormComponent implements OnInit {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       () => {
+        this.spinner.show();
+        setTimeout(() => { this.spinner.hide(); }, 1500);
         this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
         this.ChooseStep(this.AppStepIndex);
       }
