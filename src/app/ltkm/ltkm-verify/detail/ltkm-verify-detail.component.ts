@@ -46,7 +46,7 @@ export class LtkmVerifyDetailComponent implements OnInit {
             this.createComponent = content;
         }
     }
-    ApprovalCreateOutput: RFAObj;
+    ApprovalCreateOutput: any;
     IsReady: boolean;
     AppNo: string;
     dmsObj: DMSObj;
