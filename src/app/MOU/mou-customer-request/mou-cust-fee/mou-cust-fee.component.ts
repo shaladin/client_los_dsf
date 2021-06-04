@@ -3,11 +3,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustFeeObj } from 'app/shared/model/MouCustFeeObj.Model';
 import { MouCustFeeDetailComponent } from './mou-cust-fee-detail/mou-cust-fee-detail.component';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-cust-fee',
@@ -23,18 +23,18 @@ export class MouCustFeeComponent implements OnInit {
     private httpClient: HttpClient,
     private modalService: NgbModal,
     private toastr: NGXToastrService,
-    private spinner: NgxSpinnerService
-  ) { }
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     this.refFeeIdList = new Array();
     this.httpClient.post(URLConstant.GetMouCustFeeForMouRequestByMouCustId, {Id: this.MouCustId}).subscribe(
       (response) => {
-        this.mouCustFeeList = response;
+        this.mouCustFeeList = response[CommonConstant.ReturnObj];
         for (var i = 0; i < this.mouCustFeeList.length; i++) {
           this.refFeeIdList.push(this.mouCustFeeList[i]['RefFeeId']);
         }
-      });
+      }
+    );
   }
 
   openModalAddFee() {
@@ -46,7 +46,7 @@ export class MouCustFeeComponent implements OnInit {
         this.spinner.show();
         this.httpClient.post(URLConstant.GetMouCustFeeForMouRequestByMouCustId, {Id: this.MouCustId}).subscribe(
           (response) => {
-            this.mouCustFeeList = response;
+            this.mouCustFeeList = response[CommonConstant.ReturnObj];
             this.refFeeIdList = new Array();
             for (var i = 0; i < this.mouCustFeeList.length; i++) {
               this.refFeeIdList.push(this.mouCustFeeList[i]['RefFeeId']);
@@ -57,8 +57,7 @@ export class MouCustFeeComponent implements OnInit {
         this.spinner.hide();
         this.toastr.successMessage(response["message"]);
       }
-    ).catch((error) => {
-    });
+    ).catch((error) => {});
   }
 
   deleteMouCustFee(mouCustFeeId, idx) {
@@ -70,7 +69,8 @@ export class MouCustFeeComponent implements OnInit {
           this.mouCustFeeList.splice(idx, 1);
           this.refFeeIdList.splice(idx, 1);
           this.toastr.successMessage(response["message"]);
-        });
+        }
+      );
     }
   }
 
@@ -81,5 +81,4 @@ export class MouCustFeeComponent implements OnInit {
   back() {
     this.ResponseMouCustFee.emit({ StatusCode: "-1" });
   }
-
 }

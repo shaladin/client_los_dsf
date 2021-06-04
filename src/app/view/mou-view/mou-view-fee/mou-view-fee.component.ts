@@ -1,10 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-view-fee',
@@ -16,17 +15,17 @@ export class MouViewFeeComponent implements OnInit {
 
   listFeeData: any;
 
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
+  constructor(private fb: FormBuilder, private http: HttpClient) { }
 
   ngOnInit() {
     var mouCustObj = { Id: this.MouCustId }
     this.http.post(URLConstant.GetMouCustFeeByMouCustId, mouCustObj).subscribe(
       (response) => {
-        this.listFeeData = response;
-      })
+        this.listFeeData = response[CommonConstant.ReturnObj];
+      }
+    );
   }
 
   FeeDataForm = this.fb.group({
   })
-
 }
