@@ -358,6 +358,7 @@ export class CommonConstant {
   public static RefReasonTypeDocChecklist = "DCK_LIST";
   public static RefReasonTypeCodeInvoiceDataVerif = "INVOICE_DATA_VERIF";
   public static RefReasonTypeCodeProdDeactivate = "PROD_DEACT";
+  public static RefReasonTypeCodeNewProduct = "NEW_PRODUCT";
 
   // INST TYPE
   public static SINGLE_INST_TYPE = "SINGLE";
