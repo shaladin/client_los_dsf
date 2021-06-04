@@ -275,19 +275,14 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
     this.outstandingTcObj.ListAppTCObj = this.listAppTCObj.AppTCObj;
 
-    let ReqApvCustomObj = {
-      AppId: this.TCList[0].AppId,
-      Tasks: event.Tasks
+    let ReqPreGoLiveApvCustomObj = {
+      Tasks: event.Tasks,
+      requestListOutstandingTcObj: this.outstandingTcObj
     }
 
-    this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
+    this.http.post(URLConstant.PreGoLiveApproval, ReqPreGoLiveApvCustomObj).subscribe(
       () => {
-        this.http.post(URLConstant.Approval, ReqApvCustomObj).subscribe(
-          () => {
-            AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
-          }
-        );
-        // this.toastr.successMessage("Success");
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
       }
     );
   }

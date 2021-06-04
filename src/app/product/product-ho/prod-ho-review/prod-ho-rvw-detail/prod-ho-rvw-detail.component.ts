@@ -12,6 +12,8 @@ import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqReviewProductObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-prod-ho-rvw-detail',
@@ -34,10 +36,11 @@ export class ProdHoRvwDetailComponent implements OnInit {
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   GenericByIdObj : GenericObj = new GenericObj();
   ReqReviewProductObj : ReqReviewProductObj = new ReqReviewProductObj();
+  RFAInfo: Object = new Object();
   readonly CancelLink: string = NavigationConstant.PRODUCT_HO_REVIEW;
   
   FormObj = this.fb.group({
-    Notes: ['', Validators.required]
+    
   });
   
   constructor(private toastr: NGXToastrService, 
@@ -74,7 +77,11 @@ export class ProdHoRvwDetailComponent implements OnInit {
     ];
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_PRD_HO_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_HO_ACT_SCHM;
-
+    this.InputObj.Reason = new Array<KeyValueObj>();
+    this.InputObj.Reason = [ // hack sementara, biar review bisa lewat
+      {Key: "a", Value: "A"},
+      {Key: "b", Value: "B"}
+    ];
     this.GenericByIdObj.Id = this.ProdId;
     this.http.post(URLConstant.GetProductById, this.GenericByIdObj).subscribe(
       (response: GenericObj) => {
@@ -84,20 +91,18 @@ export class ProdHoRvwDetailComponent implements OnInit {
   }
 
   SaveForm() {
-    this.ApprovalCreateOutput = this.CreateComponent.output();
-    if (this.ApprovalCreateOutput != undefined) {
-      this.ReqReviewProductObj.ProdHId = this.ProdHId,
-      this.ReqReviewProductObj.ProdId = this.ProdId,
-      this.ReqReviewProductObj.WfTaskListId = this.WfTaskListId,
-      this.ReqReviewProductObj.RequestRFAObj = this.ApprovalCreateOutput
+    this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
+    this.ReqReviewProductObj.ProdHId = this.ProdHId;
+    this.ReqReviewProductObj.ProdId = this.ProdId;
+    this.ReqReviewProductObj.WfTaskListId = this.WfTaskListId;
+    this.ReqReviewProductObj.RequestRFAObj = this.RFAInfo;
 
-      this.http.post(URLConstant.ReviewProduct, this.ReqReviewProductObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["Message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_REVIEW], {});
-          this.IsReady = true;
-        });
-    }
+    this.http.post(URLConstant.ReviewProduct, this.ReqReviewProductObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["Message"]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_REVIEW], {});
+        this.IsReady = true;
+      });
   }
   async ClaimTask(WfTaskListId: number) {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));

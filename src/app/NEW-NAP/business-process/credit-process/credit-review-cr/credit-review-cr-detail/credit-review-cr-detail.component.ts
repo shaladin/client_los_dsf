@@ -46,6 +46,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean = false;
   IsViewReady: boolean = false;
+  RFAInfo: Object = new Object();
   readonly apvBaseUrl = environment.ApprovalR3Url;
 
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
@@ -334,7 +335,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   //#region Submit
   SaveForm() {
-    let RFAPreGoLive = null;
     let temp = this.FormObj.value;
     let tempAppCrdRvwObj = new AppCrdRvwHObj();
     tempAppCrdRvwObj.AppId = this.appId;
@@ -347,12 +347,8 @@ export class CreditReviewCrDetailComponent implements OnInit {
     tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
 
     if (!this.isReturnOn) {
-      let ApprovalCreateOutput = this.createComponent.output();
-      if (ApprovalCreateOutput != undefined) {
-        RFAPreGoLive = ApprovalCreateOutput;
-      } else {
-        return this.toastr.warning('Input RFA Data First!');
-      }
+      this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
+      
     }
 
     let apiObj = {
@@ -364,9 +360,8 @@ export class CreditReviewCrDetailComponent implements OnInit {
       RowVersion: "",
       AppId: this.appId,
       ListDeviationResultObjs: this.ManualDeviationData,
-      RequestRFAObj: RFAPreGoLive
+      RequestRFAObj: this.RFAInfo
     };
-    // console.log(apiObj);
     this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });

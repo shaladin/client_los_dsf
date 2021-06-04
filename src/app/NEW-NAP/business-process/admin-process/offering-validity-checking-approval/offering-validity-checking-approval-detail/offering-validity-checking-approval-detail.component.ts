@@ -61,9 +61,17 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   onAvailableNextTask() {
 
   }
-  onApprovalSubmited() {
-    this.toastr.successMessage("Success");
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_PAGING],{ "BizTemplateCode": this.BizTemplateCode});
+  onApprovalSubmited(event) {
+    let reqApvCustomObj = {
+      AppId: 0,
+      Tasks: event.Tasks
+    }
+
+    this.http.post(URLConstant.Approval, reqApvCustomObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["Message"]);
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_PAGING],{ "BizTemplateCode": this.BizTemplateCode});
+      });
   }
 
   onCancelClick()
