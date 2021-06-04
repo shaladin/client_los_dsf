@@ -135,7 +135,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
     }
     this.http.post(URLConstant.GetListMouByAppIdAndMouType, AppObj).subscribe(
       (response) => {
-        this.allMouCust = response;
+        this.allMouCust = response[CommonConstant.ReturnObj];
         var MouCustId;
         if (this.mode == 'edit') {
           MouCustId = this.resultData.MouCustId
