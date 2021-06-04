@@ -75,7 +75,15 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_DEACTIVATE_APPRV], {});
+    let reqApvCustomObj = {
+      AppId: 0,
+      Tasks: event.Tasks
+    }
+    this.http.post(URLConstant.Approval, reqApvCustomObj).subscribe(
+      () => {
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_DEACTIVATE_APPRV], {});
+      }
+    );
   }
 
   onCancelClick() {

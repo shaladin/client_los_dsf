@@ -81,23 +81,13 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   }
   SaveForm() {
     this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
-    //this.ApprovalCreateOutput = this.createComponent.output();
-    //if (this.ApprovalCreateOutput != undefined) {
-      this.RFAPreGoLive = new RFAPreGoLiveObj();
-      this.RFAPreGoLive.TaskListId = this.TaskListId;
-      this.RFAPreGoLive.RowVersion = "";
-      this.RFAPreGoLive.RequestRFAObj = this.RFAInfo;
-      console.log(this.RFAPreGoLive);
-      console.log("asodifj");
-      this.http.post(URLConstant.CreateRFAPreGoLiveNew, this.RFAPreGoLive).subscribe((response) => {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_PAGING], { BizTemplateCode: localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
-      });
-    //}
-  }
-
-  checkForm() {
-    console.log(this.FormObj);
-    console.log(this.FormObj.valid);
+    this.RFAPreGoLive = new RFAPreGoLiveObj();
+    this.RFAPreGoLive.TaskListId = this.TaskListId;
+    this.RFAPreGoLive.RowVersion = "";
+    this.RFAPreGoLive.RequestRFAObj = this.RFAInfo;
+    this.http.post(URLConstant.CreateRFAPreGoLiveNew, this.RFAPreGoLive).subscribe((response) => {
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_PAGING], { BizTemplateCode: localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
+    });
   }
 
   Cancel() {

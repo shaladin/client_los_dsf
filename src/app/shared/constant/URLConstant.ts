@@ -1295,6 +1295,10 @@ export class URLConstant {
 
   // Credit Approval
   public static Approval = environment.losUrl + "/Approval/Approval";
+  public static MouApproval = environment.losUrl + "/Approval/MouApproval";
+  public static ProdHOApproval = environment.losUrl + "/Approval/ProdHOApproval";
+  public static ProdOfferingApproval = environment.losUrl + "/Approval/ProdOfferingApproval";
+  public static PreGoLiveApproval = environment.losUrl + "/Approval/PreGoLiveApproval";
 
   // New Approval R3
   public static CreateNewRFA = "/Approval/CreateNewRFA";

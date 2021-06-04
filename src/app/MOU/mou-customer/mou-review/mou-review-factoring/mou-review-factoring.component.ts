@@ -43,6 +43,7 @@ export class MouReviewFactoringComponent implements OnInit {
   IsReady: boolean;
   dmsObj: DMSObj;
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
+  RFAInfo: Object = new Object();
 
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
@@ -135,26 +136,21 @@ export class MouReviewFactoringComponent implements OnInit {
   }
 
   Submit() {
-    this.ApprovalCreateOutput = this.createComponent.output();
-    if (this.ApprovalCreateOutput != undefined) {
+    this.RFAInfo = {RFAInfo: this.MouReviewDataForm.controls.RFAInfo.value};
+    this.mouCustObj.MouCustId = this.MouCustId;
+    this.PlafondAmt = this.PlafondAmt;
 
-      this.mouCustObj.MouCustId = this.MouCustId;
-      this.PlafondAmt = this.PlafondAmt;
-
-
-
-      var submitMouReviewObj = {
-        WfTaskListId: this.WfTaskListId,
-        MouCust: this.mouCustObj,
-        PlafondAmt: this.PlafondAmt,
-        RequestRFAObj: this.ApprovalCreateOutput
-      }
-      this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
-        })
+    let submitMouReviewObj = {
+      WfTaskListId: this.WfTaskListId,
+      MouCust: this.mouCustObj,
+      PlafondAmt: this.PlafondAmt,
+      RequestRFAObj: this.RFAInfo
     }
+    this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
+      });
   }
 
   Return() {

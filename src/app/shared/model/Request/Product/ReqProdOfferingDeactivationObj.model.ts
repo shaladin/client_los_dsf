@@ -6,13 +6,12 @@ export class ReqProdOfferingDeactivationObj {
     Reason: string;
     Notes: string;
     RowVersion: string;
-    RequestRFAObj : ReqRFAObj;
+    RequestRFAObj : any;
     constructor() { 
       this.ProdOfferingHId = 0;
       this.EffectiveDate= new Date();
       this.Reason = "";
       this.Notes = "";
       this.RowVersion = "";
-      this.RequestRFAObj = new ReqRFAObj();
     }
   }
