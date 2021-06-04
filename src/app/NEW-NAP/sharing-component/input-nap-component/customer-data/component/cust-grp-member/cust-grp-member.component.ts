@@ -1,6 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -107,17 +105,8 @@ export class CustGrpMemberComponent implements OnInit {
   initLookup(){
     var InputLookupCustomerObj = new InputLookupObj();
     InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustGrp.json";
-    InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
     InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustGrp.json";
     InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustGrp.json";
-
-    InputLookupCustomerObj.ddlEnvironments = [
-      {
-        name: "C.MR_CUST_TYPE_CODE",
-        environment: environment.FoundationR3Url
-      },
-    ];
 
     return InputLookupCustomerObj;
   }

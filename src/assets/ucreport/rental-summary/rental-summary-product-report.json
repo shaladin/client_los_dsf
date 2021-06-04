@@ -11,6 +11,7 @@
         "isFromURL": true,
         "isSelectOne": true,
         "url": "",
+        "environment": "FOU",
         "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
         "items": [],
         "itemsUrl": [],

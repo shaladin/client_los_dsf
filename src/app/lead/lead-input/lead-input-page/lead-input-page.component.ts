@@ -83,12 +83,6 @@ export class LeadInputPageComponent implements OnInit {
       this.claimTask();
     }
     this.viewLeadHeaderMainInfo.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
-    this.viewLeadHeaderMainInfo.ddlEnvironments = [
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
       animation: true

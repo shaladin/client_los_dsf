@@ -3,7 +3,6 @@ import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { environment } from 'environments/environment';
 import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -59,8 +58,6 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
       this.viewMainInfoObj.viewInput = "./assets/ucviewgeneric/viewDupCheckSubjectMatchPersonal.json";
     else if (this.mrCustTypeCode == CommonConstant.CustTypeCompany)
       this.viewMainInfoObj.viewInput = "./assets/ucviewgeneric/viewDupCheckSubjectMatchCompany.json";
-
-    this.viewMainInfoObj.ddlEnvironments = [{ name: "AppNo", environment: environment.losR3Web }];
   }
 
   async getDupCheckData() {

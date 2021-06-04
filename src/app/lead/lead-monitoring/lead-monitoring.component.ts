@@ -27,16 +27,6 @@ export class LeadMonitoringComponent implements OnInit {
       environmentUrl: environment.losUrl,
       apiQryPaging: URLConstant.GetPagingObjectBySQL,
       pagingJson: "./assets/ucpaging/searchLeadMonitoring.json",
-      ddlEnvironments: [
-        {
-          name: "UL.UPLOAD_STATUS",
-          environment: environment.FoundationR3Url
-        },
-        {
-          name: "UL.ORI_OFFICE_CODE",
-          environment: environment.FoundationR3Url
-        }
-      ],
       url: URLConstant.UploadFile
     }
   }

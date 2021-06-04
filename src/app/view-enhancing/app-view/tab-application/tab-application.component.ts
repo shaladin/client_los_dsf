@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'environments/environment';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -70,13 +69,6 @@ export class TabApplicationComponent implements OnInit {
       this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationInfo.json";
     }
 
-    this.viewProdMainInfoObj.viewEnvironment = environment.losUrl;
-    this.viewProdMainInfoObj.ddlEnvironments = [
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.isReady = true;
     await this.GetCrossAppData();
     await this.GetLoanObjData();

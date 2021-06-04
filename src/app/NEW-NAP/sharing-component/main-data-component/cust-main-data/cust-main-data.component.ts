@@ -6,7 +6,6 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { environment } from 'environments/environment';
 import { formatDate, KeyValue } from '@angular/common';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
@@ -222,7 +221,6 @@ export class CustMainDataComponent implements OnInit {
 
   setLookup(custType: string = CommonConstant.CustTypePersonal, isChange: boolean = false) {
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCustObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.isReadonly = false;
@@ -230,18 +228,10 @@ export class CustMainDataComponent implements OnInit {
     this.InputLookupCustObj.nameSelect = "";
 
     this.InputLookupCustGrpObj.urlJson = "./assets/uclookup/lookupCustGrp.json";
-    this.InputLookupCustGrpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCustGrpObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCustGrpObj.pagingJson = "./assets/uclookup/lookupCustGrp.json";
     this.InputLookupCustGrpObj.genericJson = "./assets/uclookup/lookupCustGrp.json";
     this.InputLookupCustGrpObj.isRequired = false;
     this.InputLookupCustGrpObj.nameSelect = "";
-    this.InputLookupCustGrpObj.ddlEnvironments = [
-      {
-        name: "C.MR_CUST_TYPE_CODE",
-        environment: environment.FoundationR3Url
-      },
-    ];
 
     this.ArrAddCrit = new Array<CriteriaObj>();
     let critObj = new CriteriaObj();

@@ -149,16 +149,8 @@ export class MouCustListedCustFctrComponent implements OnInit {
   initLookup(){
     var InputLookupCustomerObj = new InputLookupObj();
     InputLookupCustomerObj.urlJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
-    InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
     InputLookupCustomerObj.pagingJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
     InputLookupCustomerObj.genericJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
-    InputLookupCustomerObj.ddlEnvironments = [
-      {
-        name: "A.MR_CUST_TYPE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     return InputLookupCustomerObj;
   }
