@@ -1,7 +1,7 @@
 {
-    "title": "REPORT RENTAL DETAIL BRAND TYPE MODEL",
-    "reportName": "RENTAL DETAIL BRAND TYPE MODEL REPORT",
-    "reportTemplateName": "RentalDetailBrandTypeModel.rdlc",
+    "title": "Report Rental Detail Brand Type Model",
+    "reportName": "Rental Detail Brand Type Model Report",
+    "reportTemplateCode": "RENTAL_DETAIL_BRAND_TYPE_MODEL",
     "component": [
       {
         "type": "dropdown",
@@ -16,8 +16,7 @@
         "itemsUrl": [],
         "criteriaPropName": "",
         "criteriaPropValue": "",
-        "isReportParam": false,
-        "isProviderParam": true
+        "paramAssignment": 1
       },
       {
         "type": "datepicker",
@@ -26,8 +25,7 @@
         "datatype": "date",
         "value": "BD-10",
         "restriction": "gte",
-        "isReportParam": true,
-        "isProviderParam": true
+        "paramAssignment": 0
       },
       {
         "type": "datepicker",
@@ -36,8 +34,7 @@
         "datatype": "date",
         "value": "BD+10",
         "restriction": "lte",
-        "isReportParam": true,
-        "isProviderParam": true
+        "paramAssignment": 0
       }
     ],
     "exportTypeList": [
