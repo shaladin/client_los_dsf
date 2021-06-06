@@ -12,6 +12,7 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { ReqDupCheckAppCustObj } from 'app/shared/model/AppDupCheckCust/ReqDupCheckAppCustObj';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResAppDupCheckCustMainDataObj, ResListAppDupCheckCustMainDataObj } from 'app/shared/model/Response/NAP/DupCheck/ResAppDupCheckCustMainDataObj.model';
 import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
 
