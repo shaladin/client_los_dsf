@@ -1,7 +1,7 @@
 {
     "title": "Application Pending Report",
     "reportName": "Application Pending",
-    "reportTemplateName": "APPLICATION_PENDING",
+    "reportTemplateCode": "APPLICATION_PENDING",
     "component": [
         {
             "type": "dropdown",
