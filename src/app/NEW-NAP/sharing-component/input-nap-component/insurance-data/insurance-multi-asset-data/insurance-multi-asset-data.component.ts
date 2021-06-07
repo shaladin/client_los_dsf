@@ -214,6 +214,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       (response) => {
         this.BizTemplateCode = response["BizTemplateCode"];
         this.textTitle = "Collateral";
+        this.appObj.ProdOfferingCode = response["ProdOfferingCode"];
+        this.appObj.ProdOfferingVersion = response["ProdOfferingVersion"];
       });
 
     this.appAssetObj.Id = this.appId;
