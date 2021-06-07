@@ -103,7 +103,6 @@ export class AppViewComponent implements OnInit {
     await this.CheckBizTemplate();
     this.GetIsUseDigitalization();
     await this.InitDms();
-    console.log(this.isDmsReady);
   }
 
   async InitDms() {
@@ -146,10 +145,8 @@ export class AppViewComponent implements OnInit {
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsTimestamp, formatDate(new Date(), 'MM/dd/yyyy HH:mm:ss', 'en-US').toString()));
 
           this.isDmsReady = true;
-          console.log(this.isDmsReady);
         }
       );
-      console.log(this.isDmsReady);
     }
     else if (this.usingDmsAdins == '2') {
       this.isDmsReady = false;
