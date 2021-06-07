@@ -102,7 +102,7 @@ export class CustCompletionDetailComponent implements OnInit {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response;
+        this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
         this.listCustCompletion = this.inputGridObj.resultData.Data;
       }
     );

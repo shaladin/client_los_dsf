@@ -246,8 +246,7 @@ export class CommissionCfnaComponent implements OnInit {
     let obj: ReqGetAppCommissionRuleObj = { AppId: this.AppId, BizTemplateCode: this.BizTemplateCode };
     await this.http.post(URLConstant.GetAppCommissionRule, obj).toPromise().then(
       (response) => {
-        console.log("Cek Rule");
-        console.log(response);
+        var ResponseObj = response[CommonConstant.ReturnObj];
         // if (response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier != null || response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp){ // For CFNA
         //   for (var i = 0; i < response["length"]; i++) {
         //     var temp: RuleCommissionObj = response[i][CommonConstant.ReturnObj].RuleDataObjects;
@@ -256,13 +255,8 @@ export class CommissionCfnaComponent implements OnInit {
         //     this.BindRuleData(temp.ResultSupplierEmp, CommonConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
         //   }
         // }
-        if (response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor != null)
-          this.BindRuleData(response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor, CommonConstant.ContentReferantor, this.ContentObjReferantor[0].Key);
-
-        // console.log(this.RuleSupplierData);
-        // console.log(this.RuleSupplierEmpData);
-        // console.log(this.RuleReferantorData);
-
+        if (ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor != null)
+          this.BindRuleData(ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor, CommonConstant.ContentReferantor, this.ContentObjReferantor[0].Key);
       },
       (error) => {
         console.log(error);
