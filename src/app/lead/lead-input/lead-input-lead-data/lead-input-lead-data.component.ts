@@ -913,13 +913,8 @@ export class LeadInputLeadDataComponent implements OnInit {
             );
           }
         }
-        else if (this.typePage == "update") {
-
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
-
-        }
         else {
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/Lead/Paging" });
+          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput});
         }
       }
       else {
@@ -936,12 +931,8 @@ export class LeadInputLeadDataComponent implements OnInit {
               }
             );
           }
-          else if (this.typePage == "update") {
-            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInputKta, paging: "/Lead/LeadUpdate/Paging" });
-
-          }
           else {
-            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInputKta, paging: "/Lead/Lead/Paging" });
+            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput});
           }
         }
         else {
@@ -964,12 +955,8 @@ export class LeadInputLeadDataComponent implements OnInit {
               );
             }
           }
-          else if (this.typePage == "update") {
-            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
-
-          }
           else {
-            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/Lead/Paging" });
+            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput});
           }
         }
       }
@@ -988,11 +975,8 @@ export class LeadInputLeadDataComponent implements OnInit {
             }
           );
         }
-        else if (this.typePage == "update") {
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInputKta, paging: "/Lead/LeadUpdate/Paging" });
-        }
         else {
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInputKta, paging: "/Lead/Lead/Paging" });
+          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput});
         }
       }
       else {
@@ -1010,11 +994,8 @@ export class LeadInputLeadDataComponent implements OnInit {
             );
           }
         }
-        else if (this.typePage == "update") {
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/LeadUpdate/Paging" });
-        }
         else {
-          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput, paging: "/Lead/Lead/Paging" });
+          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowLeadInput});
         }
       }
     }
