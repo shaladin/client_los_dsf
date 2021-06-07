@@ -192,6 +192,7 @@ export class LeadInputPageComponent implements OnInit {
       () => {
       });
   }
+  
   endOfTab() {
     this.http.post(URLConstant.GetLeadAssetByLeadId, { Id: this.customObj.LeadInputLeadDataObj.LeadAppObj.LeadId }).subscribe(
       (response) => {
@@ -201,7 +202,7 @@ export class LeadInputPageComponent implements OnInit {
             this.customObj.LeadInputLeadDataObj.LeadAppObj.RowVersion = response["RowVersion"];
             this.http.post(this.customObj.urlPost, this.customObj.LeadInputLeadDataObj).subscribe(
               () => {
-                AdInsHelper.RedirectUrl(this.router, [this.customObj.paging], {});
+                this.cancelHandler();
               }
             );
           });
