@@ -1579,7 +1579,6 @@ export class AssetDataAddEditComponent implements OnInit {
       return this.toastr.warningMessage("Please Choose Asset First");
     }
     var appAccessoryObj = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
-    // appAccessoryObj.controls[0]["AccessoryDownPaymentAmt"].value = 0;
     var length = this.AssetDataForm.value["AssetAccessoriesObjs"].length;
     var max = 0;
     if (length > 0) {
@@ -1587,12 +1586,6 @@ export class AssetDataAddEditComponent implements OnInit {
     }
 
     appAccessoryObj.push(this.addGroup(undefined, max + 1));
-    if (max != 0) {
-      appAccessoryObj.controls[max + 1]["controls"]["AccessoryDownPaymentAmt"].value = 0;
-    }
-    else {
-      appAccessoryObj.controls[max]["controls"]["AccessoryDownPaymentAmt"].value = 0;
-    }
 
     var InputLookupAccObj = this.initLookupAcc();
     var InputLookupAccSupObj = this.initLookupSuppAcc();
