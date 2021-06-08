@@ -115,7 +115,7 @@ export class CcContactInformationTabComponent implements OnInit {
     await this.http.post<AppCustCompanyContactPersonObj>(URLConstant.GetAppCustCompanyContactPersonByAppCustId, { "Id": this.AppCustId }).toPromise().then(
       (response) => {
         if (response.AppCustCompanyContactPersonId != 0) {
-          this.isDataExist = true;
+          console.log(response);
           this.TempAppCustCompanyContactPersonObj = response;
           this.CcForm.patchValue({
             ContactPersonName: response.ContactPersonName,
@@ -141,6 +141,7 @@ export class CcContactInformationTabComponent implements OnInit {
           });
 
           if (response.AppCustAddrObj != null) {
+            this.isDataExist = true;
             this.inputFieldCcObj = new InputFieldObj();
             this.inputFieldCcObj.inputLookupObj = new InputLookupObj();
 
@@ -229,7 +230,7 @@ export class CcContactInformationTabComponent implements OnInit {
     ReqAddr.Zipcode = TempZipVal.value;
     ReqAddr.SubZipcode = TempAddr.SubZipcode;
 
-    if (this.TempAppCustCompanyContactPersonObj.AppCustCompanyContactPersonId != 0) {
+    if (this.TempAppCustCompanyContactPersonObj.AppCustAddrObj != null) {
       ReqAddr.AppCustAddrId = this.TempAppCustCompanyContactPersonObj.AppCustAddrObj.AppCustAddrId;
       ReqAddr.RowVersion = this.TempAppCustCompanyContactPersonObj.AppCustAddrObj.RowVersion;
     }
