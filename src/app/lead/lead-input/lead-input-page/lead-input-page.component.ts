@@ -208,8 +208,10 @@ export class LeadInputPageComponent implements OnInit {
 
             //Dari DSF
             if (this.customObj.typePage != "edit" || this.customObj.typePage != "update") {
-              if (this.customObj.lobKta.includes(this.customObj.returnLobCode) == true) {
-                urlPost = URLConstant.SubmitWorkflowLeadInputKta;
+              if (this.customObj["lobKta"] != undefined) {
+                if (this.customObj.lobKta.includes(this.customObj.returnLobCode) == true) {
+                  urlPost = URLConstant.SubmitWorkflowLeadInputKta;
+                }
               }
             }
 
