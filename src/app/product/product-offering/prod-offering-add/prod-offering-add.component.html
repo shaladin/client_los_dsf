@@ -32,31 +32,45 @@
                   <label class="col-md-3 adInsLabel">Product Offering Code </label>
                   <div class="col-md-9">
                     <input type="text" class="form-control adInsInput width-75-per" formControlName="ProdOfferingCode"
-                      size="50">
+                      size="50" [ngClass]="{ 'is-invalid': enjiForm.submitted && ProdOfferingForm.controls.ProdOfferingCode.invalid }">
+                      <lib-uc-show-errors [control]="ProdOfferingForm.controls.ProdOfferingCode" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row adins-required">
                   <label class="col-md-3 adInsLabel">Product Offering Name </label>
                   <div class="col-md-9">
-                    <input type="text" class="form-control adInsInput width-75-per" formControlName="ProdOfferingName">
+                    <input type="text" class="form-control adInsInput width-75-per" formControlName="ProdOfferingName"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ProdOfferingForm.controls.ProdOfferingName.invalid }">
+                    <lib-uc-show-errors [control]="ProdOfferingForm.controls.ProdOfferingName" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
                   </div>
                 </div>
                 <div class="form-group row adins-required">
                   <label class="col-md-3 adInsLabel">Offering Description </label>
                   <div class="col-md-9">
-                    <input type="text" class="form-control adInsInput width-75-per" formControlName="ProdOfferingDescr">
+                    <input type="text" class="form-control adInsInput width-75-per" formControlName="ProdOfferingDescr"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ProdOfferingForm.controls.ProdOfferingDescr.invalid }">
+                    <lib-uc-show-errors [control]="ProdOfferingForm.controls.ProdOfferingDescr" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row adins-required">
                   <label class="col-md-3 adInsLabel">Start Active Date </label>
                   <div class="col-md-9">
-                    <input type="date" [min]="BusinessDt | date: 'yyyy-MM-dd'" (change)="updateMinDtForEndDt()" class="form-control adInsInput width-25-per" formControlName="StartDt">
+                    <input type="date" [min]="BusinessDt | date: 'yyyy-MM-dd'" (change)="updateMinDtForEndDt()" class="form-control adInsInput width-25-per" formControlName="StartDt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ProdOfferingForm.controls.StartDt.invalid }">
+                    <lib-uc-show-errors [control]="ProdOfferingForm.controls.StartDt" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row adins-required">
                   <label class="col-md-3 adInsLabel">End Date </label>
                   <div class="col-md-9">
-                    <input type="date" class="form-control adInsInput width-25-per" [min]="StartActiveDt | date: 'yyyy-MM-dd'"  formControlName="EndDt">
+                    <input type="date" class="form-control adInsInput width-25-per" [min]="StartActiveDt | date: 'yyyy-MM-dd'"  formControlName="EndDt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ProdOfferingForm.controls.EndDt.invalid }">
+                    <lib-uc-show-errors [control]="ProdOfferingForm.controls.EndDt" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
                   </div>
                 </div>
               </div>

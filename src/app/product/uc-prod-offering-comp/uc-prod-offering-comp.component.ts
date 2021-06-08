@@ -49,7 +49,10 @@ export class UcProdOfferingCompComponent implements OnInit {
   };
 
   ngOnInit() {
-    console.log("aosdifjosidfj");
+    this.initiateForm(); 
+  }
+
+  initiateForm() {
     this.FormProdOfferingComp = this.fb.group(
       {
         groups: this.fb.array([])
@@ -57,7 +60,7 @@ export class UcProdOfferingCompComponent implements OnInit {
     );
     
     this.LoadProdComponent(this.ProdOfferingHId,this.CompGroups, this.IsFilterBizTmpltCode);
-    
+
   }
 
   addGroup(groupCode, groupName) {
