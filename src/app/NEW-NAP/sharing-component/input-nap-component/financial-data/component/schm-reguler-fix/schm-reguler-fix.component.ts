@@ -119,7 +119,6 @@ export class SchmRegulerFixComponent implements OnInit {
     this.calcRegFixObj = this.ParentForm.getRawValue();
     this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentRegularFix, this.calcRegFixObj).subscribe(
       (response) => {
-        console.log(response);
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
           TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
