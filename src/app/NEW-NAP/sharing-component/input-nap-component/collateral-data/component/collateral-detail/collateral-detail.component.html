@@ -289,7 +289,7 @@
                   <div class="form-group row">
                     <label class="col-md-4" for="SelfUsage" translate>Self Usage</label>
                     <div class="col-md-8">
-                      <mat-checkbox formControlName="SelfUsage" [disabled]="true" (change)="CopyUserForSelfUsage()">
+                      <mat-checkbox formControlName="SelfUsage" [disabled]="false" (change)="CopyUserForSelfUsage()">
                       </mat-checkbox>
                     </div>
                   </div>
@@ -329,7 +329,7 @@
                   <div class="form-group row">
                     <label class="col-md-4" for="SelfOwner" translate>Self Owner</label>
                     <div class="col-md-8">
-                      <mat-checkbox formControlName="SelfOwner" [disabled]="true" (change)="CopyUserForSelfOwner()">
+                      <mat-checkbox formControlName="SelfOwner" [disabled]="false" (change)="CopyUserForSelfOwner()">
                       </mat-checkbox>
                     </div>
                   </div>
@@ -412,7 +412,7 @@
                     </select>
                     <div class="input-group-append">
                       <span class="input-group-btn">
-                        <button class="btn btn-raised btn-primary" type="button" disabled translate>
+                        <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocation()" translate>
                           <i class="fa fa-check-square-o"></i>Copy
                         </button>
                       </span>
