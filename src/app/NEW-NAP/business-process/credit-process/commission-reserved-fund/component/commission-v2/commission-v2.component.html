@@ -26,12 +26,11 @@
                 <div class="col-md-2 form-inline">
                   <label translate>Total Commision Amount</label>
                 </div>
-                <div class="col-md-4 form-inline form-inline-right">
-                  <label *ngIf="Summary.TotalCommisionAmount <= maxAllocAmt"
-                    style="text-align: right;">
+                <div class="col-md-4" style="text-align: right;">
+                  <label class ="adInsLabel" *ngIf="Summary.TotalCommisionAmount <= maxAllocAmt">
                     {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
                   <label *ngIf="Summary.TotalCommisionAmount > maxAllocAmt"
-                    style="color: red; text-align: right;">
+                    style="color: red;">
                     {{Summary.TotalCommisionAmount | number:'.2':'en-US'}} </label>
                 </div>
               </div>
@@ -39,7 +38,7 @@
                 <div class="col-md-2 form-inline">
                   <label translate>Total TAX</label>
                 </div>
-                <div class="col-md-4 form-inline form-inline-right">
+                <div class="col-md-4" style="text-align: right;">
                   <label>{{Summary.TotalTaxAmmount | number:'.2':'en-US'}}</label>
                 </div>
               </div>
@@ -47,7 +46,7 @@
                 <div class="col-md-2 form-inline">
                   <label translate>Total VAT</label>
                 </div>
-                <div class="col-md-4 form-inline form-inline-right">
+                <div class="col-md-4" style="text-align: right;">
                   <label>{{Summary.TotalVATAmount | number:'.2':'en-US'}}</label>
                 </div>
               </div>
@@ -55,7 +54,7 @@
                 <div class="col-md-2 form-inline">
                   <label translate>Gross Yield</label>
                 </div>
-                <div class="col-md-4 form-inline form-inline-right">
+                <div class="col-md-4" style="text-align:right;">
                   <label *ngIf="Summary.GrossYield >= 0"> {{Summary.GrossYield | number:'.6':'en-US'}}%</label>
                   <label *ngIf="Summary.GrossYield < 0" style="color: red;"> ( {{-Summary.GrossYield | number:'.6':'en-US'}} ) %</label>
                 </div>

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-view-deviation',
@@ -32,10 +33,11 @@ export class ViewDeviationComponent implements OnInit {
         var getListDeviationUrl = URLConstant.GetListDeviationResultByAppNo;
         this.http.post<Array<DeviationResultObj>>(getListDeviationUrl, { TrxNo: response.AppNo }).subscribe(
           (response) => {
-            this.deviationResultList = response;
+            this.deviationResultList = response[CommonConstant.ReturnObj];
 
           }
         );
-      });
+      }
+    );
   }
 }

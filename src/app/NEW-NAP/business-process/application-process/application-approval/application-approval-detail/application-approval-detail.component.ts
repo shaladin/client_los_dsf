@@ -155,6 +155,7 @@ export class ApplicationApprovalDetailComponent implements OnInit {
   }
   
   onCancelClick() {
+    this.toastr.successMessage("Success Submit Approval");
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
   }
 

@@ -82,6 +82,8 @@
             <label class="col-md-2  adInsLabel" translate>BPKB Issue Date</label>
             <label class="col-md-4  adinslabel" translate
               *ngIf="AppAssetObj?.ResponseAppAssetObj?.TaxIssueDt">{{AppAssetObj.ResponseAppAssetObj.TaxIssueDt}}</label>
+              <label class="col-md-4  adinslabel" translate
+              *ngIf="AppAssetObj?.ResponseAppAssetObj?.TaxIssueDt == null"> </label>
             <label class="col-md-2  adInsLabel" translate>BPKB City Issuer</label>
             <label class="col-md-4  adinslabel" translate
               *ngIf="AppAssetObj?.ResponseAppAssetObj?.TaxCityIssuer">{{AppAssetObj.ResponseAppAssetObj.TaxCityIssuer}}</label>
