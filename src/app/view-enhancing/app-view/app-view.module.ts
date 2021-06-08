@@ -48,6 +48,13 @@ import { ViewAssetExpenseComponent } from './view-asset-expense/view-asset-expen
 import { ViewSurveyComponent } from './view-survey/view-survey.component';
 import { AppCustDataPersonalOplComponent } from './app-cust-data/app-cust-data-personal-opl/app-cust-data-personal-opl.component';
 import { AppCustDataCompanyOplComponent } from './app-cust-data/app-cust-data-company-opl/app-cust-data-company-opl.component';
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+
+export function createTranslateLoader(http: HttpClient) {
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  }
 
 @NgModule({
     imports: [
@@ -71,7 +78,14 @@ import { AppCustDataCompanyOplComponent } from './app-cust-data/app-cust-data-co
         UcapprovalHistoryModule,
         UcShowErrorsModule,
         AppCustViewComponentsModule,
-        SharedModule
+        SharedModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [HttpClient]
+            }
+        }),
     ],
     declarations: [
         AppMainInfoComponent,

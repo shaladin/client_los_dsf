@@ -1140,6 +1140,7 @@ export class URLConstant {
   public static GetListSrvyTaskBySrvyOrderId = environment.FoundationR3Url + "/SrvyTask/GetListSrvyTaskBySrvyOrderId";
   public static GetSrvyTaskBySrvyTaskNo = environment.FoundationR3Url + "/SrvyTask/GetSrvyTaskBySrvyTaskNo";
   public static GetListSrvyTaskByRefNoForView = environment.FoundationR3Url + "/SrvyTask/GetListSrvyTaskByRefNoForView";
+  public static GetSrvyOrderByTrxRefNo = environment.FoundationR3Url + "/SrvyOrder/GetSrvyOrderByTrxRefNo";
 
   // Workflow Engine
   public static ClaimTask = environment.FoundationR3Url + "/Workflow/ClaimTask";
