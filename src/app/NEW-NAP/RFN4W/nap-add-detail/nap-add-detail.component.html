@@ -1,5 +1,13 @@
 <div class="col-md-12 text-left">
   <div class="card">
+    <div class="px-3">
+      <div class="form-action pull-right">
+        <button *ngIf="ReturnHandlingHId > 0" type="button" class="btn btn-raised btn-warning margin-r-5"
+          [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:'CFRFN4W'}" translate>
+          <i class="ft-x"></i> Cancel
+        </button>
+      </div>
+    </div>
     <app-app-main-info [AppId]="appId" [BizTemplateCode]="NapObj.BizTemplateCode" *ngIf="IsDataReady" #viewAppMainInfo></app-app-main-info>
     <div class="card-body">
       <div class="px-3">
