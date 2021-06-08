@@ -27,7 +27,7 @@ export class TrialCalculationComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient,
     private toastr: NGXToastrService, private cookieService: CookieService) {
   }
-  user : CurrentUserContext;
+  user: CurrentUserContext;
   InputLookupProductOfferingObj: InputLookupObj = new InputLookupObj();
   ProdOfferingCode: string;
   TrialCalc: boolean = true;
@@ -54,7 +54,7 @@ export class TrialCalculationComponent implements OnInit {
     NumOfInst: [''],
     AppFee: this.fb.array([]),
     LobCode: [''],
-    BizTmpltCode: [''],
+    BizTemplateCode: [''],
 
     TotalAssetPriceAmt: 0,
     TotalFeeAmt: 0,
@@ -159,12 +159,12 @@ export class TrialCalculationComponent implements OnInit {
     critSuppObj.DataType = 'text';
     critSuppObj.restriction = AdInsConstant.RestrictionIn;
     critSuppObj.propName = 'RL.BIZ_TMPLT_CODE';
-    critSuppObj.listValue = ['CF4W','CFNA','FL4W','CFRFN4W'];
+    critSuppObj.listValue = ['CF4W', 'CFNA', 'FL4W', 'CFRFN4W'];
     bizTmpltCrit.push(critSuppObj);
 
     this.InputLookupProductOfferingObj.urlJson = "./assets/uclookup/lookupProductOffering.json";
     this.InputLookupProductOfferingObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.InputLookupProductOfferingObj.urlEnviPaging = environment.FoundationR3Url;
+    this.InputLookupProductOfferingObj.urlEnviPaging = environment.losUrl;
     this.InputLookupProductOfferingObj.pagingJson = "./assets/uclookup/lookupProductOffering.json";
     this.InputLookupProductOfferingObj.genericJson = "./assets/uclookup/lookupProductOffering.json";
     this.InputLookupProductOfferingObj.isReadonly = false;
@@ -189,7 +189,7 @@ export class TrialCalculationComponent implements OnInit {
 
   resetDDL() {
     this.TrialForm.patchValue({
-      PayFreqCode : '',
+      PayFreqCode: '',
       MrInstSchemeCode: '',
       MrFirstInstTypeCode: ''
     });
@@ -333,7 +333,7 @@ export class TrialCalculationComponent implements OnInit {
   Generate() {
     if (this.TrialForm.getRawValue().AssetPriceAmt == '' || this.TrialForm.getRawValue().Tenor == '' || this.TrialForm.getRawValue().MrFirstInstTypeCode == ''
       || this.TrialForm.getRawValue().selectedDpType == '' || this.TrialForm.getRawValue().DownPaymentAmt == '' || this.TrialForm.getRawValue().DownPaymentPrctg == ''
-      || this.TrialForm.getRawValue().MrInstSchemeCode == '' || this.TrialForm.getRawValue().PayFreqCode == '' || this.TrialForm.getRawValue().MrFirstInstTypeCode == '' 
+      || this.TrialForm.getRawValue().MrInstSchemeCode == '' || this.TrialForm.getRawValue().PayFreqCode == '' || this.TrialForm.getRawValue().MrFirstInstTypeCode == ''
       || this.ProdOfferingCode == '') {
       this.toastr.warningMessage(ExceptionConstant.PLEASE_COMPLETE_MANDATORY_INPUT);
       return;
@@ -352,7 +352,7 @@ export class TrialCalculationComponent implements OnInit {
         PayFreqCode: this.TrialForm.controls.PayFreqCode.value,
         MrInstSchemeCode: this.TrialForm.controls.MrInstSchemeCode.value,
         MrFirstInstTypeCode: this.TrialForm.controls.MrFirstInstTypeCode.value,
-        BizTmpltCode: this.BizTmpltCode,
+        BizTemplateCode: this.BizTmpltCode,
         TotalAssetPriceAmt: this.TrialForm.controls.AssetPriceAmt.value,
         DownPaymentGrossAmt: this.TrialForm.controls.DownPaymentAmt.value,
         DownPaymentNettAmt: this.TrialForm.controls.DownPaymentAmt.value,
@@ -363,15 +363,15 @@ export class TrialCalculationComponent implements OnInit {
       });
     }
   }
-  
+
   LoadFinData() {
-    var reqObj = { 
-      ProdOfferingCode: this.ProdOfferingCode, 
-      LobCode : this.TrialForm.controls["LobCode"].value,
-      OfficeCode : this.TrialForm.controls["OfficeCode"].value,
-      Tenor : this.TrialForm.controls["Tenor"].value,
-      TotalAssetPrice : this.TrialForm.controls["AssetPriceAmt"].value,
-      MrFirstInstTypeCode : this.TrialForm.controls["MrFirstInstTypeCode"].value
+    var reqObj = {
+      ProdOfferingCode: this.ProdOfferingCode,
+      LobCode: this.TrialForm.controls["LobCode"].value,
+      OfficeCode: this.TrialForm.controls["OfficeCode"].value,
+      Tenor: this.TrialForm.controls["Tenor"].value,
+      TotalAssetPrice: this.TrialForm.controls["AssetPriceAmt"].value,
+      MrFirstInstTypeCode: this.TrialForm.controls["MrFirstInstTypeCode"].value
     }
     this.http.post<AppFinDataObj>(URLConstant.GetInitFinDataForTrialCalc, reqObj).subscribe(
       (response) => {
@@ -421,7 +421,7 @@ export class TrialCalculationComponent implements OnInit {
       }
     );
   }
-  
+
   setValidator(mrInstSchemeCode) {
     if (mrInstSchemeCode == CommonConstant.InstSchmBalloon) {
       this.TrialForm.controls.BalloonValueAmt.setValidators([Validators.required]);

@@ -421,4 +421,8 @@ export class NavigationConstant {
   public static PROD_OFFERING_ADD = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.PROD_OFFERING_ADD; //'/Product/ProdOffering/add'
   public static PROD_OFFERING_ADD_DETAIL = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.PROD_OFFERING_ADD_DETAIL; //'/Product/ProdOffering/AddDetail'
   public static PROD_OFFERING_RTN_PAGING = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.PROD_OFFERING_RTN_PAGING; //'/Product/ProdOffering/ReturnPaging'
+
+  //#region TRIAL
+  public static TRIAL_CALC = "/" + PathConstant.LR_TRIAL_CALC + "/" + PathConstant.TRIAL_CALC; //'/TrialCalculation/Trial-Calculation'
+  //#endregion
 }
