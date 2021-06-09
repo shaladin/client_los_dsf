@@ -87,7 +87,7 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
   }
 
   async GetVerfResultHData() {
-    await this.http.post(URLConstant.GetVerfResultHById, {Id : this.verifResultObj.VerfResultId}).toPromise().then(
+    await this.http.post(URLConstant.GetVerfResultHById, {Id : this.verfResultHId}).toPromise().then(
       (response) => {
         this.verifResultHObj = response;
         this.verfResHObj.MrVerfObjectCode = this.verifResultHObj.MrVerfObjectCode;
