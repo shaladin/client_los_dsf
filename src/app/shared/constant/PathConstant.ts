@@ -20,6 +20,7 @@ export class PathConstant {
     public static PAGES = "Pages";
     public static NAP1 = "NAP1";
     public static NAP2 = "NAP2";
+    public static NAP4 = "NAP4";
     public static PAGING = "Paging";
     public static MAIN = "Main";
     public static ADD = "Add";
@@ -177,7 +178,7 @@ export class PathConstant {
     public static DOC_PICKUP_REQUEST = "DocumentPickupRequest";
     public static DOC_PICKUP_REQUEST_PAGING = PathConstant.DOC_PICKUP_REQUEST + "/" + PathConstant.PAGING;
     public static DOC_PICKUP_REQUEST_DETAIL= PathConstant.DOC_PICKUP_REQUEST + "/" + PathConstant.DETAIL;
-
+    public static RETURN_HANDLING_NAP4_PAGING = PathConstant.RETURN_HANDLING + "/" + PathConstant.NAP4;
     //#endregion
 
     //#region Nap-Admin-Prcs

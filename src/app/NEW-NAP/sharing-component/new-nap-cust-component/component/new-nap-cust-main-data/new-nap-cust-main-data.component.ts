@@ -569,7 +569,12 @@ export class NewNapCustMainDataComponent implements OnInit {
       this.ResponseCustModel.emit(CustObj.MrCustModelCode);
       this.InputLookupCustObj.nameSelect = CustObj.CustName;
       this.InputLookupCustObj.jsonSelect = { CustName: CustObj.CustName };
-      if (!IsCopyCust) this.rowVersionAppCust = CustObj.RowVersion;
+      if (!IsCopyCust) {
+        this.rowVersionAppCust = CustObj.RowVersion;
+        this.ParentForm.patchValue({
+          RowVersionAppCust : this.rowVersionAppCust
+        })
+      }
     }
 
     if (CustPersonalObj != undefined) {
@@ -583,10 +588,11 @@ export class NewNapCustMainDataComponent implements OnInit {
       });
       this.MaritalStatLookup = CustPersonalObj.MrMaritalStatCode;
       if (!IsCopyCust) {
-        this.ParentForm.patchValue({
-          MrMaritalStatCode: CustPersonalObj.MrMaritalStatCode
-        })
         this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
+        this.ParentForm.patchValue({
+          MrMaritalStatCode: CustPersonalObj.MrMaritalStatCode,
+          RowVersionAppCustPersonal : this.rowVersionAppCustPersonal
+        })
       }
       this.RelationshipChange(CustObj.MrCustRelationshipCode);
       this.MaritalStatChange(CustPersonalObj.MrMaritalStatCode);
@@ -613,14 +619,24 @@ export class NewNapCustMainDataComponent implements OnInit {
       });
       this.InputLookupCustObj.nameSelect = CustObj.CustName;
       this.InputLookupCustObj.jsonSelect = { CustName: CustObj.CustName };
-      if (!IsCopyCust) this.rowVersionAppCust = CustObj.RowVersion;
+      if (!IsCopyCust){
+        this.rowVersionAppCust = CustObj.RowVersion;
+        this.ParentForm.patchValue({
+          RowVersionAppCust: this.rowVersionAppCust
+        });
+      } 
     }
 
     if (CustCompanyObj != undefined) {
       this.ParentForm.patchValue({
         MrCompanyTypeCode: CustCompanyObj.MrCompanyTypeCode,
       });
-      if (!IsCopyCust) this.rowVersionAppCustCompany = CustCompanyObj.RowVersion;
+      if (!IsCopyCust) {
+        this.rowVersionAppCustCompany = CustCompanyObj.RowVersion;
+        this.ParentForm.patchValue({
+          RowVersionAppCustCompany: this.rowVersionAppCustCompany
+        });
+      }
 
       if (this.inputMode == 'EDIT') {
         this.ParentForm.patchValue({

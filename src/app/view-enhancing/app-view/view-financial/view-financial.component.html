@@ -161,13 +161,14 @@
       <div class="row">
         <div class="col-md-6">
           <label class="adInsLabel" *ngIf="BizTemplateCode != 'FL4W'" translate> DP Asset </label>
-          <label class="adInsLabel" *ngIf="BizTemplateCode == 'FL4W'" translate> Security Deposit </label>
+          <label class="adInsLabel" *ngIf="BizTemplateCode == 'FL4W'" translate> Security Deposit Asset </label>
         </div>
         <div class="col-md-6">
           <label class="adInsLabel"> {{appFinDataObj?.DownPaymentGrossAmt | number:'.2':'en-US'}} </label>
         </div>
         <div class="col-md-6">
-          <label class="adInsLabel" translate> TDP </label>
+          <label class="adInsLabel" *ngIf="BizTemplateCode != 'FL4W'" translate> TDP </label>
+          <label class="adInsLabel" *ngIf="BizTemplateCode == 'FL4W'" translate> Total Security Deposit</label>
         </div>
         <div class="col-md-6">
           <label class="adInsLabel"> {{appFinDataObj?.TotalDownPaymentNettAmt | number:'.2':'en-US'}} </label>
@@ -178,13 +179,14 @@
       <div class="row">
         <div class="col-md-6">
           <label class="adInsLabel" *ngIf="BizTemplateCode != 'FL4W'" translate> DP Asset - Subsidy DP </label>
-          <label class="adInsLabel" *ngIf="BizTemplateCode == 'FL4W'" translate> Security Deposit  - Subsidy DP </label>
+          <label class="adInsLabel" *ngIf="BizTemplateCode == 'FL4W'" translate> Security Deposit Asset  - Security Deposit Subsidy </label>
         </div>
         <div class="col-md-6">
           <label class="adInsLabel"> {{appFinDataObj?.DownPaymentNettAmt | number:'.2':'en-US'}} </label>
         </div>
         <div class="col-md-6">
-          <label class="adInsLabel" translate> TDP Paid at MF </label>
+          <label class="adInsLabel" *ngIf="BizTemplateCode != 'FL4W'" translate> TDP Paid at MF </label>
+          <label class="adInsLabel" *ngIf="BizTemplateCode == 'FL4W'" translate> Total Security Deposit Paid at MF </label>
         </div>
         <div class="col-md-6">
           <label class="adInsLabel"> {{appFinDataObj?.TdpPaidCoyAmt | number:'.2':'en-US'}} </label>

@@ -407,7 +407,11 @@ export class NapAddDetailComponent implements OnInit {
       });
   }
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.BACK_TO_PAGING], { BizTemplateCode: CommonConstant.CFRFN4W });
+    let url: string = NavigationConstant.BACK_TO_PAGING;
+    if(this.ReturnHandlingHId > 0){
+      url = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
+    }
+    AdInsHelper.RedirectUrl(this.router, [url], { BizTemplateCode: CommonConstant.CFRFN4W });
   }
 
   CheckCustType(ev) {

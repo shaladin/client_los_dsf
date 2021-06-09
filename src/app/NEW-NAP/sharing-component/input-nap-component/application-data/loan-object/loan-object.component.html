@@ -10,7 +10,7 @@
     <thead>
       <tr class="table-header">
         <th class="text-left"><span translate class="thead-header" name='LoanObjectName'>Loan Object Name</span></th>
-        <th class="text-left"><span translate class="thead-header" name='SupplierName'>Supplier Name</span></th>
+        <th class="text-left" *ngIf="!IsDisburseToCust"><span translate class="thead-header" name='SupplierName'>Supplier Name</span></th>
         <th class="text-right"><span translate class="thead-header" name='BudgetPlanAmount'>Budget Plan Amount</span>
         </th>
         <th class="text-right"><span translate class="thead-header" name='SelfFinancing'>Self Financing</span></th>
@@ -23,7 +23,7 @@
     <tbody>
       <tr *ngFor="let item of resultData">
         <td class="text-left">{{item.MrLoanPurposeDescr}}</td>
-        <td class="text-left">{{item.SupplName}}</td>
+        <td class="text-left" *ngIf="!IsDisburseToCust">{{item.SupplName}}</td>
         <td currencyMask>{{item.BudgetPlanAmt | number:'.2':'en-US'}}</td>
         <td currencyMask>{{item.SelfFinancingAmt | number:'.2':'en-US'}}</td>
         <td currencyMask>{{item.FinancingAmt | number:'.2':'en-US'}}</td>

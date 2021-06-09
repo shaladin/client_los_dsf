@@ -45,7 +45,7 @@
         },
         {
             "type": "dropdown",
-            "name": "AG.OFFICE_NAME", 
+            "name": "AG.OFFICE_CODE", 
             "id": "OfficeNameId",
             "value": "",
             "placeholder": "Placeholder",
