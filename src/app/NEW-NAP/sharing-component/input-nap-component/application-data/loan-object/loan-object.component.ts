@@ -175,6 +175,7 @@ export class LoanObjectComponent implements OnInit {
                 this.MainInfoForm.patchValue({
                   IsDisburseToCust: response["CompntValue"] == 'Y' ? true : false
                 });
+                this.IsDisburseToCust = this.MainInfoForm.controls.IsDisburseToCust.value;
 
                 this.CheckIsDisburseToCust();
 
