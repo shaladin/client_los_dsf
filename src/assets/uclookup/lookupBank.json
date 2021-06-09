@@ -44,12 +44,12 @@
         {
             "type": "text",
             "position": "center",
-            "property": "bankCode"
+            "property": "BankCode"
         },
         {
             "type": "text",
             "position": "left",
-            "property": "bankName"
+            "property": "BankName"
         },
         {
             "type": "action",
@@ -57,11 +57,11 @@
             "action": [
                 {
                     "type": "select",
-                    "property": "bankCode"
+                    "property": "BankCode"
                 }
             ]
         }
     ],
-    "propertyId": "bankCode",
-    "propertyName": "bankName"
+    "propertyId": "BankCode",
+    "propertyName": "BankName"
 }
