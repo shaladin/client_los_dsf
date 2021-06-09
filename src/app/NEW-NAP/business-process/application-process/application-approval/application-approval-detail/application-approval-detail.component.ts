@@ -128,6 +128,7 @@ export class ApplicationApprovalDetailComponent implements OnInit {
     this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
 
     this.InputApvObj = new UcInputApprovalObj();
+    console.log(this.AppObj.AppNo);
     this.InputApvObj.TaskId = this.taskId;
     this.InputApvObj.TrxNo =  this.AppObj.AppNo;
     this.InputApvObj.RequestId = this.ApvReqId;
@@ -147,15 +148,25 @@ export class ApplicationApprovalDetailComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    this.onCancelClick();
+
+    let ReqApvCustomObj = {
+      AppId: this.appId,
+      Tasks: event.Tasks
+    }
+
+    this.http.post(URLConstant.Approval, ReqApvCustomObj).subscribe(
+      (response)=>{
+        this.toastr.successMessage(response["Message"]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+      });    
+    
   }
 
   onAvailableNextTask() {
 
   }
   
-  onCancelClick() {
-    this.toastr.successMessage("Success Submit Approval");
+  onCancelClick() {    
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
   }
 
