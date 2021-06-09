@@ -10,6 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-mou-execution-detail',
@@ -21,6 +22,10 @@ export class MouExecutionDetailComponent implements OnInit {
   businessDt: Date;
   MouCustId: number;
   WfTaskListId: number;
+  startMouDt: Date; 
+  StartDt: Date;
+  EndDt: Date;
+  MouCustDt: Date;
 
   MouExecutionForm = this.fb.group({
     MouCustId: [''],
@@ -55,10 +60,10 @@ export class MouExecutionDetailComponent implements OnInit {
       });
 
     var datePipe = new DatePipe("en-US");
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     if (currentUserContext != null && currentUserContext != undefined) {
       this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
-      this.businessDt.setDate(this.businessDt.getDate() - 1);
+      this.startMouDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
+      this.startMouDt = new Date(this.startMouDt.setDate(this.businessDt.getDate() - 1));
     }
 
     this.httpClient.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
@@ -84,11 +89,40 @@ export class MouExecutionDetailComponent implements OnInit {
 
   SaveForm() {
     var request = this.MouExecutionForm.value;
-    this.httpClient.post(URLConstant.MouCustExecutionHumanActivity, request).subscribe(
-      (response: any) => {
-        this.toastr.successMessage(response["Message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});
-      });
 
+    if (this.ValidateDate()) {
+      this.httpClient.post(URLConstant.MouCustExecutionHumanActivity, request).subscribe(
+        (response: any) => {
+          this.toastr.successMessage(response["Message"]);
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});
+        });
+    }
+  }
+
+  ValidateDate() {
+    this.MouCustDt = new Date(this.MouExecutionForm.get("MouCustDt").value);
+    this.StartDt = new Date(this.MouExecutionForm.get("StartDt").value);
+    this.EndDt = new Date(this.MouExecutionForm.get("EndDt").value);
+
+    if(this.MouCustDt < this.startMouDt){
+      this.toastr.warningMessage(ExceptionConstant.MOU_DT_MUST_GREATER_THAN_BUSINESS_DT);
+      return false;
+    }
+
+    if (this.StartDt > this.EndDt) {
+      this.toastr.warningMessage(ExceptionConstant.START_DT_MUST_LESS_THAN_END_DT);
+      return false;
+    }
+
+    if (this.EndDt <= this.businessDt) {
+      this.toastr.warningMessage(ExceptionConstant.END_DT_MUST_GREATER_THAN_BUSINESS_DT);
+      return false;
+    }
+    
+    if (this.StartDt <= this.businessDt) {
+      this.toastr.warningMessage(ExceptionConstant.START_DT_MUST_GREATER_THAN_BUSINESS_DT);
+      return false;
+    }
+    return true;
   }
 }
