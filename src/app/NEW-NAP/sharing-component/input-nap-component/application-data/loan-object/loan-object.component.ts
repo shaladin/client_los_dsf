@@ -252,7 +252,7 @@ export class LoanObjectComponent implements OnInit {
       critSuppSupplSchmObj.DataType = 'text';
       critSuppSupplSchmObj.restriction = AdInsConstant.RestrictionEq;
       critSuppSupplSchmObj.propName = 'VS.VENDOR_SCHM_CODE';
-      critSuppSupplSchmObj.value = this.RefProdCmptSupplSchm.CompntValue;
+      critSuppSupplSchmObj.value = this.setCritSuppSupplSchmValue();
       this.supplierInputLookupObj.addCritInput.push(critSuppSupplSchmObj);
     }
 
@@ -270,6 +270,11 @@ export class LoanObjectComponent implements OnInit {
       this.loanObjectInputLookupObj.jsonSelect = { Descr: "" };
       this.supplierInputLookupObj.jsonSelect = { VendorName: "" };
     }
+  }
+
+  setCritSuppSupplSchmValue(): string {
+    if (this.AppObj.BizTemplateCode == CommonConstant.CFNA) return "ALL";
+    return this.RefProdCmptSupplSchm.CompntValue;
   }
 
   getSupplierInputLookupValue(event) {
