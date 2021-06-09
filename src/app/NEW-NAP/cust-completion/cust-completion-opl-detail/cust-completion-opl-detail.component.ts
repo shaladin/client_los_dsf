@@ -10,7 +10,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { environment } from 'environments/environment';
 import { FormBuilder } from '@angular/forms';
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
@@ -87,7 +86,6 @@ export class CustCompletionOplDetailComponent implements OnInit {
       this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
         (response : ResReturnHandlingDObj) => {
           this.ResponseReturnInfoObj = response;
-          console.log("Isi dari ResponseReturnInfoObj: ", this.ResponseReturnInfoObj);
           this.FormReturnObj.patchValue({
             ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
           });
@@ -104,7 +102,7 @@ export class CustCompletionOplDetailComponent implements OnInit {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response;
+        this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
         this.listCustCompletion = this.inputGridObj.resultData.Data;
       }
     );

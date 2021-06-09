@@ -102,7 +102,7 @@ export class CustCompletionDetailComponent implements OnInit {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response;
+        this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
         this.listCustCompletion = this.inputGridObj.resultData.Data;
       }
     );
@@ -115,7 +115,11 @@ export class CustCompletionDetailComponent implements OnInit {
   }
 
   buttonBackOnClick() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CUST_COMPL_PAGING], { BizTemplateCode: this.BizTemplateCode });
+    let url: string = NavigationConstant.NAP_CUST_COMPL_PAGING
+    if(this.ReturnHandlingHId > 0){
+      url = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING;
+    }
+    AdInsHelper.RedirectUrl(this.router, [url], { BizTemplateCode: this.BizTemplateCode });
   }
 
   buttonSubmitOnClick() {

@@ -25,7 +25,7 @@
     "headerList": [
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Profession Code",
             "name": "PROFESSION_CODE"
         },
@@ -44,7 +44,7 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "ProfessionCode"
         },
         {

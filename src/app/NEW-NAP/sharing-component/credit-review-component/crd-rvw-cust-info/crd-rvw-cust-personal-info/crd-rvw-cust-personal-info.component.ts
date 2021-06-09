@@ -59,7 +59,7 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
     let reqObj: ReqCrdRvwDiffAppToInPrcAppCustObj = { CrdRvwCustInfoId: this.crdRvwCustInfoObj.CrdRvwCustInfoId, IsGenerateDict: true };
     await this.http.post<ResponseCrdRvwDiffAppToInPrcAppCustObj>(URLConstant.GetListCrdRvwDiffAppToInPrcAppCustByCrdRvwCustInfoId, reqObj).toPromise().then(
       (response) => {
-        this.responseCrdRvwDiffAppToInPrcAppCustObj = response;
+        this.responseCrdRvwDiffAppToInPrcAppCustObj = response;        
       }
     );
   }
@@ -68,7 +68,7 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
   async GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId() {
     await this.http.post<{ ListCrdRvwDiffAppToMasterCustObj: Array<CrdRvwDiffAppToMasterCustObj> }>(URLConstant.GetListCrdRvwDiffAppToMasterCustByCrdRvwCustInfoId, { Id: this.crdRvwCustInfoObj.CrdRvwCustInfoId }).toPromise().then(
       (response) => {
-        this.ListCrdRvwDiffAppToMasterCustObj = response.ListCrdRvwDiffAppToMasterCustObj;
+        this.ListCrdRvwDiffAppToMasterCustObj = response.ListCrdRvwDiffAppToMasterCustObj;        
       }
     );
   }
@@ -126,8 +126,8 @@ export class CrdRvwCustPersonalInfoComponent implements OnInit {
 
   async ClickLinkSurvey() {
     console.log("click Survey");
-    await this.http.post<{ SrvyOrderId: number }>(URLConstant.GetSrvyOrderByTrxRefNoAndSrvySourceCode, { TrxRefNo: this.crdRvwCustInfoObj.AppNo, MrSrvySourceCode: "APP" }).toPromise().then(
-      (response) => {
+    await this.http.post<{ SrvyOrderId: number }>(URLConstant.GetSrvyOrderByTrxRefNo, { TrxNo: this.crdRvwCustInfoObj.AppNo}).toPromise().then(
+      (response) => {        
         if (response != null || response != undefined) {
           AdInsHelper.OpenSrvyOrderViewBySrvyOrderId(response.SrvyOrderId);
         } else {

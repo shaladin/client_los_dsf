@@ -115,8 +115,8 @@ export class CcAddressDetailComponent implements OnInit {
   LoadAddrForCopy() {
     this.http.post<Array<AppCustAddrObj>>(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { Id: this.InputObj.AppCustId }).subscribe(
       (response) => {
-        this.copyAddressFromObj = response;
-        this.AddressForm.patchValue({ CopyAddrFrom: response[0]['AppCustAddrId'] });
+        this.copyAddressFromObj = response[CommonConstant.ReturnObj];
+        this.AddressForm.patchValue({ CopyAddrFrom: this.copyAddressFromObj[0]['AppCustAddrId'] });
         this.isDllCopyAddressFromReady = true;
       }
     );

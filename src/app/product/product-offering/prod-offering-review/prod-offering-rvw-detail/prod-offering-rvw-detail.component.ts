@@ -12,7 +12,7 @@ import { CookieService } from 'ngx-cookie';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqReviewProdOfferingObj } from 'app/shared/model/Request/Product/ReqAddEditProdOfferingObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 
 @Component({
   selector: 'app-prod-offering-rvw-detail',
@@ -35,6 +35,7 @@ export class ProdOfferingRvwDetailComponent implements OnInit {
   GenericByIdObj: GenericObj = new GenericObj();
   ReqReviewProdOfferingObj: ReqReviewProdOfferingObj = new ReqReviewProdOfferingObj();
   RFAInfo: Object = new Object();
+  itemReason: any;
   readonly CancelLink: string = NavigationConstant.PRODUCT_OFFERING_REVIEW;
 
   FormObj = this.fb.group({
@@ -60,9 +61,21 @@ export class ProdOfferingRvwDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.LoadRefReason();
     this.initInputApprovalObj();
     this.ClaimTask(this.WfTaskListId);
+  }
+
+  async LoadRefReason() {
+    let refReasonObj: ReqGetByTypeCodeObj = {
+      RefReasonTypeCode: CommonConstant.RefReasonTypeCodeNewProduct
+    }
+    await this.http.post(URLConstant.GetListActiveRefReason, refReasonObj).toPromise().then(
+      (response) => {
+        this.itemReason = response[CommonConstant.ReturnObj];
+      }
+    );
   }
 
   initInputApprovalObj() {
@@ -74,11 +87,7 @@ export class ProdOfferingRvwDetailComponent implements OnInit {
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_PRD_OFR_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_OFR_ACT_SCHM;
-    this.InputObj.Reason = new Array<KeyValueObj>();
-    this.InputObj.Reason = [ // hack sementara, biar review bisa lewat
-      {Key: "a", Value: "A"},
-      {Key: "b", Value: "B"}
-    ];
+    this.InputObj.Reason = this.itemReason;
 
     this.GenericByIdObj.Id = this.ProdOfferingId;
     this.http.post(URLConstant.GetProdOfferingByProdOfferingId, this.GenericByIdObj).subscribe(
