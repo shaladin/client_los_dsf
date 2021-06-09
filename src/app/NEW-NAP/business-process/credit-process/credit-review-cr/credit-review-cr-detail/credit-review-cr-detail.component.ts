@@ -60,12 +60,12 @@ export class CreditReviewCrDetailComponent implements OnInit {
   FormObj = this.fb.group({
     arr: this.fb.array([]),
     AppvAmt: [''],
-    CreditScoring: [''],
-    // Reason: ['', Validators.required],
-    // ReasonDesc: [""],
-    // Approver: ['', Validators.required],
-    // ApproverDesc: [""],
-    // Notes: ['', Validators.required]
+    CreditScoring: ['']
+  });
+
+  FormReturnObj  =this.fb.group({
+    Reason: [''],
+    Notes: ['']
   });
 
   constructor(
@@ -287,20 +287,23 @@ export class CreditReviewCrDetailComponent implements OnInit {
   //#endregion
 
   switchForm() {
-    this.FormObj.patchValue({
+    this.FormReturnObj.patchValue({
       Reason: "",
       ReasonDesc: "",
       Notes: ""
     });
 
-    // if (!this.isReturnOn) {
-    //   this.isReturnOn = true;
-    //   this.FormObj.controls.Approver.clearValidators();
-    // } else {
-    //   this.isReturnOn = false;
-    //   this.FormObj.controls.Approver.setValidators([Validators.required]);
-    // }
-    // this.FormObj.controls.Approver.updateValueAndValidity();
+    if (!this.isReturnOn) {
+      this.isReturnOn = true;
+      this.FormReturnObj.controls.Reason.setValidators([Validators.required]);
+      this.FormReturnObj.controls.Notes.setValidators([Validators.required]);
+    } else {
+      this.isReturnOn = false;
+      this.FormReturnObj.controls.Reason.clearValidators();
+      this.FormReturnObj.controls.Notes.clearValidators();
+    }
+    this.FormReturnObj.controls.Reason.updateValueAndValidity();
+    this.FormReturnObj.controls.Notes.updateValueAndValidity();
 
   }
 
@@ -365,6 +368,22 @@ export class CreditReviewCrDetailComponent implements OnInit {
     this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+      });
+  }
+
+  SaveReturnForm() {
+    let temp = this.FormReturnObj.value;
+
+    let apiObj = {
+      WfTaskListId: this.wfTaskListId,
+      Notes: temp.Notes,
+      RowVersion: "",
+      AppId: this.appId
+    }
+    console.log(apiObj);
+    this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
+      (response) => {
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode, });
       });
   }
 
