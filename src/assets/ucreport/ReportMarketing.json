@@ -54,7 +54,7 @@
     ],
     "exportTypeList": [
         {
-            "key": "XLS",
+            "key": 2,
             "value": "Excel"
         }
     ]
