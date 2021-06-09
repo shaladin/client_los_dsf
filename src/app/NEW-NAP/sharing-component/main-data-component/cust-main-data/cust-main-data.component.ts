@@ -504,11 +504,19 @@ export class CustMainDataComponent implements OnInit {
 
   ChangeIdType(IdType: string) {
     this.CustMainDataForm.controls.IdExpiredDt.patchValue("");
+    this.CustMainDataForm.controls.IdNo.patchValue("");
 
     if (IdType == "KITAS" || IdType == "SIM") {
       this.CustMainDataForm.controls.IdExpiredDt.setValidators([Validators.required]);
     } else {
       this.CustMainDataForm.controls.IdExpiredDt.clearValidators();
+    }
+
+    if (IdType == "NPWP"){
+      this.CustMainDataForm.controls.IdNo.setValidators([Validators.minLength(15), Validators.maxLength(15), Validators.required, Validators.pattern("^[0-9]+$")]);
+    } else {
+      this.CustMainDataForm.controls.IdNo.clearValidators();
+      this.CustMainDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
     }
 
     this.CustMainDataForm.controls.IdExpiredDt.updateValueAndValidity();
