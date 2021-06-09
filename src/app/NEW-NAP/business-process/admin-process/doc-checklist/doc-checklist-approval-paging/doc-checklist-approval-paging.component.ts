@@ -52,21 +52,18 @@ export class DocChecklistApprovalPagingComponent implements OnInit {
     this.apvReqObj.CategoryCode = CommonConstant.CAT_CODE_DOC_CHCKLIST_APV;
     this.apvReqObj.Username = this.userContext.UserName;
     this.apvReqObj.RoleCode = this.userContext.RoleCode;
-    
     this.integrationObj.baseUrl = environment.ApprovalR3OplUrl;
     this.integrationObj.apiPath = URLConstant.GetListOSApvTaskByCategoryCodeAndCurrentUserIdOrMainUserIdAndRoleCode;
     this.integrationObj.requestObj = this.apvReqObj;
     this.integrationObj.leftColumnToJoin = "AppNo";
     this.integrationObj.rightColumnToJoin = "TransactionNo";
     this.integrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
-
     this.inputPagingObj.integrationObj = this.integrationObj;
 
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'A.BIZ_TEMPLATE_CODE';
     critObj.value = this.BizTemplateCode;
-    
     this.inputPagingObj.addCritInput.push(critObj);
   }
 
