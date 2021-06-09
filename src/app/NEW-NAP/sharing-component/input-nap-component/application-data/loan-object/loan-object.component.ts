@@ -13,6 +13,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-loan-object',
@@ -32,7 +33,7 @@ export class LoanObjectComponent implements OnInit {
   objEdit: any;
   AppLoanPurposeObj: AppLoanPurposeObj = new AppLoanPurposeObj();
   IsDisburseToCust: boolean;
-  AppObj: any;
+  AppObj: AppObj;
   OfficeCode: string;
   RefProdCmptSupplSchm: any;
   isCFNA: boolean = false;
@@ -134,9 +135,9 @@ export class LoanObjectComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.loadDataTable();
-    this.GetAppData();
+    await this.GetAppData();
     this.setLookup();
     this.MainInfoForm.controls.FinancingAmount.disable();
   }
@@ -158,7 +159,7 @@ export class LoanObjectComponent implements OnInit {
 
   async GetAppData() {
     await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
-      (response) => {
+      (response: AppObj) => {
         this.AppObj = response;
         this.OfficeCode = this.AppObj.OriOfficeCode;
         if (this.AppObj.LobCode == CommonConstant.CFNA) {
@@ -179,7 +180,7 @@ export class LoanObjectComponent implements OnInit {
 
                 this.CheckIsDisburseToCust();
 
-                if (response["CompntValue"] != 'Y') {
+                if (response["CompntValue"] != 'Y' && this.AppObj.BizTemplateCode != CommonConstant.CFNA) {
                   var appObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
                   appObj.ProdOfferingCode = this.AppObj.ProdOfferingCode;
                   appObj.RefProdCompntCode = CommonConstant.RefProdCompntSupplSchm;
