@@ -121,7 +121,8 @@
                                     </label>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-6" translate>Total Security Deposit At Coy </label>
+                                    <label class="col-md-6" *ngIf="lobCode != lobCodeFl4w" translate>TDP At Coy </label>
+                                    <label class="col-md-6" *ngIf="lobCode == lobCodeFl4w" translate>Total Security Deposit At Coy </label>
                                     <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj?.TdpPaidCoyAmt | number:'.2':'en-US'}}
                                     </label>
                                 </div>
