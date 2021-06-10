@@ -289,7 +289,7 @@
                   <div class="form-group row">
                     <label class="col-md-4" for="SelfUsage" translate>Self Usage</label>
                     <div class="col-md-8">
-                      <mat-checkbox formControlName="SelfUsage" [disabled]="false" (change)="CopyUserForSelfUsage()">
+                      <mat-checkbox formControlName="SelfUsage" [disabled]="bizTemplateCode == 'CFRFN4W' ? false : true" (change)="CopyUserForSelfUsage()">
                       </mat-checkbox>
                     </div>
                   </div>
@@ -329,7 +329,7 @@
                   <div class="form-group row">
                     <label class="col-md-4" for="SelfOwner" translate>Self Owner</label>
                     <div class="col-md-8">
-                      <mat-checkbox formControlName="SelfOwner" [disabled]="false" (change)="CopyUserForSelfOwner()">
+                      <mat-checkbox formControlName="SelfOwner" [disabled]="bizTemplateCode == 'CFRFN4W' ? false : true" (change)="CopyUserForSelfOwner()">
                       </mat-checkbox>
                     </div>
                   </div>
