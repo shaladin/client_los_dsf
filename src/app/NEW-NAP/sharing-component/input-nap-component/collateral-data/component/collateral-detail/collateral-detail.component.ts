@@ -329,7 +329,7 @@ export class CollateralDetailComponent implements OnInit {
   }
 
   async initDropdownList() {
-    await this.http.post(URLConstant.GetListKeyValueByCode, {}).toPromise().then(
+    await this.http.post(URLConstant.GetAssetTypeListKeyValueActiveByCode, {}).toPromise().then(
       async (response) => {
         this.CollTypeList = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
