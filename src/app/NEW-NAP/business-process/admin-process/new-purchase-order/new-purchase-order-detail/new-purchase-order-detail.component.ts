@@ -16,6 +16,11 @@ import { OutstandingTcObj } from 'app/shared/model/OutstandingTcObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-new-purchase-order-detail',
@@ -33,7 +38,17 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
   outstandingTcObj: any;
   listAppTCObj: ListAppTCObj;
   appTC: AppTCObj;
+  AppAssetList = [];
+  SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
+  isDmsReady: boolean = false;
+  dmsObj: DMSObj;
+  dmsAppObj: DMSObj;
+  agrNo: string;
+  custNo: string;
+  appNo: string;
+  mouCustNo: string;
   TcForm = this.fb.group({});
+  
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -64,8 +79,15 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.claimTask();
+    let appAssetObj : GenericObj = new GenericObj();
+    appAssetObj.Id = this.AgrmntId;
+    this.http.post(URLConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(
+      (response) => {
+        console.log(response);
+        this.AppAssetList = response[CommonConstant.ReturnObj];
+    });
     this.arrValue.push(this.AgrmntId);
 
     this.http.post(URLConstant.GetPurchaseOrderListForNewPOByAppId, { Id: this.AppId }).subscribe(
@@ -77,6 +99,12 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
         console.log(error);
       }
     );
+    
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+      (response) => {
+        this.SysConfigResultObj = response
+    });
+    await this.InitDms();
   }
 
   async claimTask() {
@@ -117,7 +145,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PO_PAGING], { "BizTemplateCode": CommonConstant.CFNA });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_NEW_PO_PAGING], { "BizTemplateCode": CommonConstant.CFNA });
   }
 
   async Save() {
@@ -162,7 +190,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
           (error) => {
             console.log(error);
           }
-        );
+      );
 
       this.http.post(URLConstant.ResumeWorkflowNewPurchaseOrder, workflowModel).toPromise().then(
         (response) => {
@@ -175,6 +203,65 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
         }
       );
 
+    }
+  }
+
+  async InitDms() {
+    if(this.SysConfigResultObj.ConfigValue == '1'){
+      this.isDmsReady = false;
+      this.dmsObj = new DMSObj();
+      this.dmsAppObj = new DMSObj();
+      let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+      this.dmsObj.User = currentUserContext.UserName;
+      this.dmsObj.Role = currentUserContext.RoleCode;
+      this.dmsObj.ViewCode = CommonConstant.DmsViewCodeAgr;
+  
+      this.dmsAppObj.User = currentUserContext.UserName;
+      this.dmsAppObj.Role = currentUserContext.RoleCode;
+      this.dmsAppObj.ViewCode = CommonConstant.DmsViewCodeApp;
+  
+      var agrObj = { Id: this.AgrmntId };
+      var appObj = { Id: this.AppId };
+  
+      let getAgr = await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrObj)
+      let getAppCust = await this.http.post(URLConstant.GetAppCustByAppId, appObj)
+      let getApp = await this.http.post(URLConstant.GetAppById, appObj)
+      forkJoin([getAgr, getAppCust, getApp]).subscribe(
+        (response) => {
+          this.agrNo = response[0]['AgrmntNo'];
+          this.custNo = response[1]['CustNo'];
+          this.appNo = response[2]['AppNo'];
+          let mouId = response[2]['MouCustId'];
+  
+          if (this.custNo != null && this.custNo != '') {
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+            this.dmsAppObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
+          }
+          else {
+            this.dmsAppObj.MetadataParent = null;
+          }
+          this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
+  
+          this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
+  
+          this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+          if (mouId != null && mouId != "") {
+            let mouObj = { Id: mouId };
+            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+              result => {
+                this.mouCustNo = result['MouCustNo'];
+                this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
+                this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
+                this.isDmsReady = true;
+              }
+            )
+          }
+          else {
+            this.isDmsReady = true;
+          }
+        }
+      );
     }
   }
 }
