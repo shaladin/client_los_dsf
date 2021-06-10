@@ -29,8 +29,13 @@ import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCode
   styleUrls: ['./application-review-detail.component.scss']
 })
 export class ApplicationReviewDetailComponent implements OnInit {
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  @ViewChild(UcapprovalcreateComponent) createComponent;
+  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();  
+  private createComponent: UcapprovalcreateComponent;
+  @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
+    if (content) {
+      this.createComponent = content;
+    }
+  }
   appId: number = 0;
   wfTaskListId: number = 0;
   isReturnOn: boolean = false;
@@ -39,6 +44,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
   BizTemplateCode: string = "";
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean = false;
+  ApprovalCreateOutput: any;  
   readonly apvBaseUrl = environment.ApprovalR3Url;
 
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
@@ -276,6 +282,9 @@ export class ApplicationReviewDetailComponent implements OnInit {
       "TypeCode": "APV_LIMIT",
       "Attributes": Attributes,
     };
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
+    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_APP_OPL_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_RENT_APP;
@@ -285,8 +294,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
   }
 
   //#region Submit
-  SaveForm() {
-    let ApprovalCreateOutput
+  SaveForm() {  
     
     let temp = this.FormObj.value;
     let tempAppCrdRvwObj = new AppCrdRvwHObj();
@@ -300,14 +308,19 @@ export class ApplicationReviewDetailComponent implements OnInit {
     tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
     var flagId = 0;
     if (!this.isReturnOn) {
-      ApprovalCreateOutput = this.createComponent.output();
-      if (ApprovalCreateOutput == undefined) {
+      this.ApprovalCreateOutput = this.createComponent.output();
+      if (this.ApprovalCreateOutput == undefined) {
         return this.toastr.warningMessage('Failed to Get RFA Object');
       }
       else {
         flagId = 1;
       }
     }
+
+    this.ApprovalCreateOutput = this.createComponent.output();
+    if (this.ApprovalCreateOutput == undefined) return;
+
+    console.log(this.ApprovalCreateOutput['RFAInfo']['RFAInfo']);
 
     let apiObj = {
       appCrdRvwHObj: tempAppCrdRvwObj,
@@ -318,10 +331,12 @@ export class ApplicationReviewDetailComponent implements OnInit {
       RowVersion: "",
       AppId: this.appId,
       ListDeviationResultObjs: this.ManualDeviationData,
-      RequestRFAObj: ApprovalCreateOutput
+      RequestRFAObj: this.ApprovalCreateOutput['RFAInfo'],
+      TrxNo: this.appNo
     };
     this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
       (response) => {
+        this.toastr.successMessage("Success Submit Application Review")
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_RVW_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       }
     );
