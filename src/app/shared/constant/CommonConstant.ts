@@ -737,4 +737,8 @@ export class CommonConstant {
 
   // WORKFLOW
   public static ACT_CODE_AGR = "AGR_";
+  public static ACT_CODE_RVW = "RVW_";
+  public static ACT_CODE_REQU_DEC = "REQU_DEC_";
+  public static ACT_CODE_DCK_DEC = "DCK_DEC_";
+  public static ACT_CODE_AST_ALO = "AST_ALO_";
 }

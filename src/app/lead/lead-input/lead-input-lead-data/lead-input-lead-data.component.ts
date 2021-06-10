@@ -868,7 +868,9 @@ export class LeadInputLeadDataComponent implements OnInit {
       else if (this.isAlreadySubmittedByIntegrator) {
         return true;
       }
-      else {
+      else if (confirm("Submit without integrator?")){
+        return true;
+      }else{
         return false;
       }
     }
