@@ -68,7 +68,7 @@ export class NapDetailFormComponent implements OnInit {
   isDmsReady: boolean = false;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
-  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -92,7 +92,6 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   async ngOnInit() : Promise<void> {
-    console.log("TEST");
     // check DMS
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
@@ -105,30 +104,27 @@ export class NapDetailFormComponent implements OnInit {
 
     // this.ChangeStepper();
 
-    if (this.ReturnHandlingHId > 0) {
-      this.ChangeStepper();
-      this.ChooseStep(this.AppStepIndex);
-      this.IsDataReady = true;
-    }
-    else {
-      var appObj = { Id: this.appId };
-      this.http.post(URLConstant.GetAppById, appObj).subscribe(
-        (response: AppObj) => {
-          if (response) {
-            this.NapObj = response;
-            if (this.NapObj.MrCustTypeCode != null)
-              this.custType = this.NapObj.MrCustTypeCode;
+    let appObj = { Id: this.appId };
+    this.http.post(URLConstant.GetAppById, appObj).subscribe(
+      (response: AppObj) => {
+        if (response) {
+          this.NapObj = response;
+          if (this.NapObj.MrCustTypeCode != null)
+            this.custType = this.NapObj.MrCustTypeCode;
+          
+          if(this.ReturnHandlingHId == 0 || this.ReturnHandlingHId == null){
             if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
               this.initDms();
             }
-            this.ChangeStepper();
             this.bizTemplateCode = this.NapObj.BizTemplateCode;
             this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
-            this.ChooseStep(this.AppStepIndex);
-            this.IsDataReady = true;
           }
-        });
-    }
+          
+          this.ChangeStepper();
+          this.ChooseStep(this.AppStepIndex);
+          this.IsDataReady = true;
+        }
+      });
     this.MakeViewReturnInfoObj();
     
 

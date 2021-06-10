@@ -69,7 +69,7 @@ export class NapDetailFormComponent implements OnInit {
   isDmsReady: boolean = false;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
-  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING;
   constructor(private route: ActivatedRoute, private spinner: NgxSpinnerService, private http: HttpClient, private fb: FormBuilder, private router: Router, public toastr: NGXToastrService, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -100,29 +100,26 @@ export class NapDetailFormComponent implements OnInit {
     this.ClaimTask();
     this.NapObj.AppId = this.appId;
 
-    if (this.ReturnHandlingHId > 0) {
-      this.ChangeStepper();
-      this.ChooseStep(this.AppStepIndex);
-      this.IsDataReady = true;
-    }
-    else {
-      var appObj = { Id: this.appId };
-      this.http.post(URLConstant.GetAppById, appObj).subscribe(
-        (response: AppObj) => {
-          if (response) {
-            this.NapObj = response;
-            if (this.NapObj.MrCustTypeCode != null)
-              this.custType = this.NapObj.MrCustTypeCode;
+    let appObj = { Id: this.appId };
+    this.http.post(URLConstant.GetAppById, appObj).subscribe(
+      (response: AppObj) => {
+        if (response) {
+          this.NapObj = response;
+          if (this.NapObj.MrCustTypeCode != null)
+            this.custType = this.NapObj.MrCustTypeCode;
+          
+          if(this.ReturnHandlingHId == 0 || this.ReturnHandlingHId == null){
             if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
               this.initDms();
             }
-            this.ChangeStepper();
             this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
-            this.ChooseStep(this.AppStepIndex);
-            this.IsDataReady = true;
           }
-        });
-    }
+          
+          this.ChangeStepper();
+          this.ChooseStep(this.AppStepIndex);
+          this.IsDataReady = true;
+        }
+      });
     this.MakeViewReturnInfoObj();
   }
 

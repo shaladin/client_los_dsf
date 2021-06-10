@@ -65,7 +65,7 @@ export class NapDetailFormComponent implements OnInit {
   isDmsReady: boolean = false;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
-  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING;
   constructor(private route: ActivatedRoute, private spinner: NgxSpinnerService, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -99,31 +99,27 @@ export class NapDetailFormComponent implements OnInit {
       animation: true
     })
 
-    if (this.ReturnHandlingHId > 0) {
-      this.stepper.to(this.AppStepIndex);
-      this.IsDataReady = true;
-    }
-    else {
-      var appObj = { Id: this.appId };
+    var appObj = { Id: this.appId };
       this.http.post(URLConstant.GetAppById, appObj).subscribe(
         (response: AppObj) => {
           if (response) {
             this.NapObj = response;
             if (response["MrCustTypeCode"] != null)
               this.custType = response["MrCustTypeCode"];
-            if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
-              this.initDms();
+
+            if(this.ReturnHandlingHId == 0 || this.ReturnHandlingHId == null){
+              if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
+                this.initDms();
+              }
+              this.AppStepIndex = this.AppStep[response.AppCurrStep];
             }
-            this.AppStepIndex = this.AppStep[response.AppCurrStep];
-            this.stepper.to(this.AppStepIndex);
           } else {
             this.AppStepIndex = 0;
-            this.stepper.to(this.AppStepIndex);
           }
+          this.stepper.to(this.AppStepIndex);
           this.IsDataReady = true;
         }
       );
-    };
 
     this.MakeViewReturnInfoObj();
   }
