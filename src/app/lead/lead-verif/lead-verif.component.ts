@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { LeadVerfObj } from 'app/shared/model/Request/LEAD/LeadVerfObj.model';
@@ -28,16 +27,6 @@ export class LeadVerifComponent implements OnInit {
   ngOnInit() {
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/LeadVerifTempPaging.json";
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/LeadVerifTempPaging.json";
-    this.tempPagingObj.ddlEnvironments = [
-      {
-        name: "L.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      },
-      {
-        name: "L.MR_LEAD_SOURCE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
     this.tempPagingObj.isReady = true;
   }
 

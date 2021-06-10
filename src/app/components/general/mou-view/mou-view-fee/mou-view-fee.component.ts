@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-view-fee',
@@ -8,7 +9,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class MouViewFeeComponent implements OnInit {
   @Input() MouCustId: number;
-
   listFeeData: any;
 
   constructor(private http: HttpClient) { }
@@ -17,7 +17,8 @@ export class MouViewFeeComponent implements OnInit {
     var mouCustObj = { Id: this.MouCustId }
     this.http.post(URLConstant.GetMouCustFeeByMouCustId, mouCustObj).subscribe(
       (response) => {
-        this.listFeeData = response;
-      })
+        this.listFeeData = response[CommonConstant.ReturnObj];
+      }
+    );
   }
 }

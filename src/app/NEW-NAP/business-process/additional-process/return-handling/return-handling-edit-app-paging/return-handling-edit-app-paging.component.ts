@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -30,12 +29,6 @@ export class ReturnHandlingEditAppPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingApp.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingApp.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "a.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
     this.inputPagingObj.addCritInput = this.ActAndOfficeCriteria();
   }
 

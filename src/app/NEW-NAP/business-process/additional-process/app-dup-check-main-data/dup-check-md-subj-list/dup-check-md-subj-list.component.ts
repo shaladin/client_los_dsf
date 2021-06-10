@@ -55,7 +55,6 @@ export class DupCheckMdSubjListComponent implements OnInit {
     this.addObj["AppId"] = this.appId;
     this.addObj["WfTaskListId"] = this.wfTaskListId;
     this.viewMainInfoObj.viewInput = "./assets/ucviewgeneric/viewDupCheckSubject.json";
-    this.viewMainInfoObj.viewEnvironment = environment.losUrl;
     this.viewMainInfoObj.ddlEnvironments = [
       { name: "AppNo", environment: environment.losR3Web },
       { name: "MouCustNo", environment: environment.losR3Web },

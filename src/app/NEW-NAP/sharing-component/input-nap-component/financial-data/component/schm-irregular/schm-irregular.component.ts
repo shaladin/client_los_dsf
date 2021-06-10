@@ -108,7 +108,7 @@ export class SchmIrregularComponent implements OnInit {
     if(this.ValidateFee() == false){
       return;
     }
-    this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateIrregular", this.calcIrregularObj).subscribe(
+    this.http.post<ResponseCalculateObj>(URLConstant.CalculateIrregular, this.calcIrregularObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
 

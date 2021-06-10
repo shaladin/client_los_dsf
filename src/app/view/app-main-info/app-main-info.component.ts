@@ -28,30 +28,11 @@ export class AppMainInfoComponent implements OnInit {
         } else {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfo.json";
         }
-        this.viewGenericObj.viewEnvironment = environment.losUrl;
         this.viewGenericObj.whereValue = [
           {
             property: "AppId",
             value: this.AppId
           }
-        ];
-        this.viewGenericObj.ddlEnvironments = [
-          {
-            name: "AppNo",
-            environment: environment.losR3Web
-          },
-          {
-            name: "MouCustNo",
-            environment: environment.losR3Web
-          },
-          {
-            name: "LeadNo",
-            environment: environment.losR3Web
-          },
-          {
-            name: "MouCustNo",
-            environment: environment.losR3Web
-          },
         ];
       }
     );

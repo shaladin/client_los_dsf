@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -22,18 +21,7 @@ export class AgrMainInfoComponent implements OnInit {
 
   async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfo.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.whereValue = this.arrValue;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "AgrmntNo",
-        environment: environment.losR3Web
-      },
-    ];
 
     await this.http.post(URLConstant.GetAgrmntByAgrmntId, { Id: this.arrValue[0] }).subscribe(
       async response => {

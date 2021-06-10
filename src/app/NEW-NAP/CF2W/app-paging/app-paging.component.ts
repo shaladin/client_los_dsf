@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'environments/environment';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
@@ -16,11 +15,5 @@ export class AppPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchApp.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchApp.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "a.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
   }
 }

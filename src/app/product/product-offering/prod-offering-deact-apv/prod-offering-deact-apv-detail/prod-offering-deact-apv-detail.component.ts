@@ -42,7 +42,6 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
 
   ngOnInit() {
     this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformationForDeactApv.json";
-    this.ViewGenericObj.viewEnvironment = environment.losUrl;
 
     let ApvHoldObj = new ApprovalObj()
     ApvHoldObj.TaskId = this.TaskId
@@ -76,7 +75,15 @@ export class ProdOfferingDeactApvDetailComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_DEACTIVATE_APPRV], {});
+    let reqApvCustomObj = {
+      AppId: 0,
+      Tasks: event.Tasks
+    }
+    this.http.post(URLConstant.Approval, reqApvCustomObj).subscribe(
+      () => {
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_DEACTIVATE_APPRV], {});
+      }
+    );
   }
 
   onCancelClick() {

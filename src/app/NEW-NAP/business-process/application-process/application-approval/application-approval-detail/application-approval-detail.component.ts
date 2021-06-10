@@ -35,6 +35,7 @@ export class ApplicationApprovalDetailComponent implements OnInit {
   CrdApvObj: UcInputApprovalHistoryObj;
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
   readonly CustTypeCompany: string = CommonConstant.CustTypeCompany;
+  readonly PefindoLink: string = NavigationConstant.PEFINDO_VIEW;
   IsCrdApvReady: boolean = false;
   constructor(private toastr: NGXToastrService,
     private route: ActivatedRoute,
@@ -127,6 +128,7 @@ export class ApplicationApprovalDetailComponent implements OnInit {
     this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
 
     this.InputApvObj = new UcInputApprovalObj();
+    console.log(this.AppObj.AppNo);
     this.InputApvObj.TaskId = this.taskId;
     this.InputApvObj.TrxNo =  this.AppObj.AppNo;
     this.InputApvObj.RequestId = this.ApvReqId;
@@ -146,14 +148,25 @@ export class ApplicationApprovalDetailComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    this.onCancelClick();
+
+    let ReqApvCustomObj = {
+      AppId: this.appId,
+      Tasks: event.Tasks
+    }
+
+    this.http.post(URLConstant.Approval, ReqApvCustomObj).subscribe(
+      (response)=>{
+        this.toastr.successMessage(response["Message"]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+      });    
+    
   }
 
   onAvailableNextTask() {
 
   }
   
-  onCancelClick() {
+  onCancelClick() {    
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
   }
 
@@ -161,6 +174,10 @@ export class ApplicationApprovalDetailComponent implements OnInit {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
+  }
+  
+  OpenPefindoView(){
+    window.open(NavigationConstant.PEFINDO_VIEW + "?AppId=" + this.appId, "_blank");
   }
   //#endregion
 }

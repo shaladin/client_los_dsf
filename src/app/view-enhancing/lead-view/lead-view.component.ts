@@ -15,12 +15,5 @@ export class LeadViewComponent implements OnInit {
 
   ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
   }
 }

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from 'environments/environment';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -26,16 +24,7 @@ export class CreditReviewCfnaPagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchCreditReview.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditReview.json";
-
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "a.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     var arrCrit = new Array();
     var critObj = new CriteriaObj();

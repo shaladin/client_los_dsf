@@ -75,6 +75,7 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_APP_ASSET_CAN_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.APP_ASSET_CAN_DETAIL; 
   public static NAP_ADD_PRCS_DOC_PICKUP_REQUEST_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.DOC_PICKUP_REQUEST_PAGING; //"/Nap/AddProcess/DocumentPickupRequest/Paging"
   public static NAP_ADD_PRCS_DOC_PICKUP_REQUEST_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.DOC_PICKUP_REQUEST_DETAIL;//"/Nap/AddProcess/DocumentPickupRequest/Detail"
+  public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP4_PAGING; //"/Nap/AddProcess/"
   //#endregion
 
   //#region AdminProcess
@@ -330,4 +331,7 @@ export class NavigationConstant {
   public static PROD_OFFERING_ADD_DETAIL = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.PROD_OFFERING_ADD_DETAIL; //'/Product/ProdOffering/AddDetail'
   public static PROD_OFFERING_RTN_PAGING = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.PROD_OFFERING_RTN_PAGING; //'/Product/ProdOffering/ReturnPaging'
   
+  //#region Pefindo View
+  public static PEFINDO_VIEW = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_PEFINDO + "/" + PathConstant.PEFINDO_VIEW;
+  //#endregion
 }

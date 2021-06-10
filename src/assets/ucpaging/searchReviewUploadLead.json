@@ -12,6 +12,7 @@
       "isFromURL": true,
       "ddlType": "all",
       "url": "",
+      "environment": "FOU",
       "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office Name",
       "isQueryIn": true,

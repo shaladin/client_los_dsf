@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { UcgridfooterComponent } from '@adins/ucgridfooter';
 import { UCSearchComponent } from '@adins/ucsearch';
 import { HttpClient } from '@angular/common/http';
@@ -56,7 +56,10 @@ export class DocumentViewComponent implements OnInit {
   isDocSignerAvailable: boolean;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_NAP_DOC_PRINT_PAGING;
-  constructor(private http: HttpClient, private route: ActivatedRoute, private toastr: NGXToastrService, private cookieService: CookieService) {
+  constructor(private http: HttpClient,
+    private route: ActivatedRoute,
+    private toastr: NGXToastrService,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params['AgrmntId'] != null) {
         this.AgrmntId = params['AgrmntId'];
@@ -67,30 +70,14 @@ export class DocumentViewComponent implements OnInit {
     });
     this.isDocSignerAvailable = false;
   }
+
   ngOnInit() {
     if (this.BizTemplateCode == CommonConstant.OPL) {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformationAgrmnt.json";
-      this.viewGenericObj.viewEnvironment = environment.losUrl;
     }
     else {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocument.json";
-      this.viewGenericObj.viewEnvironment = environment.losUrl;
-      this.viewGenericObj.ddlEnvironments = [
-        {
-          name: "ApplicationNo",
-          environment: environment.losR3Web
-        },
-        {
-          name: "AggrementNo",
-          environment: environment.losR3Web
-        },
-        {
-          name: "MouCustNo",
-          environment: environment.losR3Web
-        },
-      ];
     }
-
 
     this.GetListAgrmntDocByAgrmntId();
 
@@ -147,6 +134,7 @@ export class DocumentViewComponent implements OnInit {
       }
     );
   }
+
   searchPagination(event: number) {
     this.pageNow = event;
     let order = null;
@@ -158,6 +146,7 @@ export class DocumentViewComponent implements OnInit {
     }
     this.UCSearchComponent.search(this.apiUrl, this.pageNow, this.pageSize, order)
   }
+
   getResult(event) {
     this.resultData = event.response;
     this.totalData = event.response.Count;
@@ -165,6 +154,7 @@ export class DocumentViewComponent implements OnInit {
     this.UCGridFooter.totalData = this.totalData;
     this.UCGridFooter.resultData = this.resultData;
   }
+
   onSelect(event) {
     this.pageNow = event.pageNow;
     this.pageSize = event.pageSize;
@@ -173,13 +163,12 @@ export class DocumentViewComponent implements OnInit {
   }
 
   GetListAgrmntDocByAgrmntId() {
-    var obj = {
-      Id: this.AgrmntId,
-    }
+    var obj = { Id: this.AgrmntId }
     this.http.post(URLConstant.GetListAgrmntDocByAgrmntId, obj).subscribe(
       (response) => {
-        this.AgrmntDocObj = response;
-      });
+        this.AgrmntDocObj = response[CommonConstant.ReturnObj];
+      }
+    );
   }
 
   SaveAgrmntDocPrint(agrmntDocId) {
@@ -189,10 +178,9 @@ export class DocumentViewComponent implements OnInit {
     this.agrmntDocPrintObj.AgrmntDocId = agrmntDocId;
 
     this.addUrl = URLConstant.AddAgrmntDocPrint;
-    this.http.post(this.addUrl, this.agrmntDocPrintObj).subscribe(
-      () => {
-        this.GetListAgrmntDocByAgrmntId();
-      });
+    this.http.post(this.addUrl, this.agrmntDocPrintObj).subscribe(() => {
+      this.GetListAgrmntDocByAgrmntId();
+    });
   }
 
   Print(item) {
@@ -231,15 +219,18 @@ export class DocumentViewComponent implements OnInit {
               // x.document.open();
               // x.document.write(iframe);
               // x.document.close();
-            } else {
+            }
+            else {
               this.toastr.warningMessage(response['message']);
             }
-          });
+          }
+        );
       }
       else {
         this.toastr.warningMessage(ExceptionConstant.NO_SIGNER_AVAILABLE);
       }
-    } catch (error) {
+    }
+    catch (error) {
       this.toastr.warningMessage(error);
     }
   }

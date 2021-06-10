@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'environments/environment';
 import Stepper from 'bs-stepper';
 import { FormBuilder } from '@angular/forms';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -19,6 +18,7 @@ import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -60,7 +60,7 @@ export class NapDetailFormComponent implements OnInit {
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING2;
   readonly BackLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private spinner: NgxSpinnerService, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -83,21 +83,6 @@ export class NapDetailFormComponent implements OnInit {
     this.ClaimTask();
     this.AppStepIndex = 0;
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFctrMainInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
     var appObj = { Id: this.appId };
@@ -241,6 +226,8 @@ export class NapDetailFormComponent implements OnInit {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       () => {
+        this.spinner.show();
+        setTimeout(() => { this.spinner.hide(); }, 1500);
         this.ChangeTab(Step);
         this.stepper.next();
       }

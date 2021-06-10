@@ -1,0 +1,234 @@
+<div class="col-md-10">
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Full Name</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.General?.FullName}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>KTP</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.Identification.KTP}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Alias</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.General?.Alias}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>NPWP</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.Identification?.NPWP}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Mother Maiden Name</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.General?.MotherMaidenName}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Mobile Phone</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.Contact?.MobilePhone}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Birth Place</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.General?.PlaceOfBirth}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Classification Of Individual</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.General?.ClassificationOfIndividual}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Birth Date</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.General?.DateOfBirth | date: 'dd-MMM-yyyy'}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Social Status</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.General?.SocialStatus}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Gender</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.General?.Gender}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Employer Name</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.General?.EmployerName}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Address</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.MainAddress?.AddressLine}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Employment</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.General?.EmploymentField}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Citizenship</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.General?.Citizenship}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Employment Sector</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.General?.EmployerSector}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Residency</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.General?.Citizenship}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Number of Closed Dispute Contract</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Dashboard?.Disputes?.ActiveContractDisputes}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Marital Status</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.General?.MaritalStatus}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Number of False Disputes</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Dashboard?.Disputes?.FalseDisputes}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Education</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Individual?.General?.Education}}
+        </div>
+      </div>
+    </div>    
+  </div>  
+</div>

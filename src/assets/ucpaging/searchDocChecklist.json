@@ -4,7 +4,7 @@
   "component": [
     {
       "type": "textbox",
-      "name": "app.APP_NO",
+      "name": "A.APP_NO",
       "id": "AppNoId",
       "value": "",
       "label": "Application No",
@@ -13,7 +13,7 @@
     {
       "type": "dropdown",
       "datatype": "text",
-      "name": "app.ORI_OFFICE_CODE",
+      "name": "A.ORI_OFFICE_CODE",
       "id": "OfficeNameId",
       "value": "",
       "placeholder": "Placeholder",
@@ -21,6 +21,7 @@
       "ddlType": "all",
       "isQueryIn": true,
       "url": "",
+      "environment": "FOU",
       "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office Name",
       "items": [],
@@ -28,7 +29,7 @@
     },
     {
       "type": "textbox",
-      "name": "agr.CUST_NAME",
+      "name": "AC.CUST_NAME",
       "id": "CustNameId",
       "value": "",
       "label": "Customer Name",
@@ -36,85 +37,54 @@
     },
     {
       "type": "textbox",
-      "name": "app.PROD_OFFERING_NAME",
+      "name": "A.PROD_OFFERING_NAME",
       "id": "ProdOfferingNameId",
       "value": "",
       "label": "Product Offering Name",
       "placeholder": "Placeholder"
-    },
-    {
-      "type": "textbox",
-      "name": "wFht.USERNAME",
-      "id": "TaskClaimById",
-      "value": "",
-      "label": "Task Claim By",
-      "placeholder": "Placeholder"
-    },
-    {
-      "type": "dropdown",
-      "name": "wFht.CLAIM_STAT",
-      "id": "ActiveStatusId",
-      "label": "Task Claim Status",
-      "value": "",
-      "placeholder": "Placeholder",
-      "isFromURL": false,
-      "ddlType": "all",
-      "items": [
-        {
-          "key": "CLAIMED",
-          "value": "CLAIMED"
-        },
-        {
-          "key": "UNCLAIMED",
-          "value": "UNCLAIMED"
-        }
-      ],
-      "itemsUrl": []
     }
   ],
   "querystring": {
     "name": "searchDocChecklist"
   },
   "orderby": {
-    "key": "app.APP_NO",
+    "key": "A.APP_NO",
     "value": "false"
   },
   "headerList": [
     {
-      "type": "sort",
+      "type": "label",
       "position": "center",
-      "label": "SLA",
-      "name": "SlaColor"
+      "label": "SLA"
     },
     {
-      "type": "sort",
+      "type": "label",
       "position": "left",
-      "label": "Claim By",
-      "name": "wFht.USERNAME"
+      "label": "Claim By"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "OFFICE",
-      "name": "app.ORI_OFFICE_NAME"
+      "name": "A.ORI_OFFICE_NAME"
     },
     {
       "type": "sort",
       "position": "center",
       "label": "Application No",
-      "name": "app.APP_NO"
+      "name": "A.APP_NO"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Customer Name",
-      "name": "agr.CUST_NAME"
+      "name": "AC.CUST_NAME"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "Product Offering Name",
-      "name": "agr.PROD_OFFERING_NAME"
+      "name": "A.PROD_OFFERING_NAME"
     },
     {
       "type": "label",
@@ -176,7 +146,7 @@
             },
             {
               "type": "TaskListId",
-              "property": "TaskListId"
+              "property": "WfTaskListId"
             }
           ]
         }

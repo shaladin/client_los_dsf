@@ -29,7 +29,6 @@ export class ViewAppCollateralSingleComponent implements OnInit {
 
   ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCollateralData.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "MouCustNo",
@@ -38,7 +37,6 @@ export class ViewAppCollateralSingleComponent implements OnInit {
     ];
 
     this.viewUOLObj.viewInput = "./assets/ucviewgeneric/viewCollateralDataUserOwnerLocation.json";
-    this.viewUOLObj.viewEnvironment = environment.losUrl;
     this.viewUOLObj.ddlEnvironments = [
       {
         name: "MouCustNo",

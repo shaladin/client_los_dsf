@@ -1,9 +1,9 @@
 {
-  "title": "",
+  "title": "Request Pre Go Live Approval",
   "subsection": [
     {
       "subSectionId": "AgrMainInformationId",
-      "subSectionTitle": "Request Pre Go Live Main Information",
+      "subSectionTitle": "Main Information",
       "mainInfoPath": "/Generic/GetDataViewBySQL",
       "mainInfo": [
         {
@@ -11,6 +11,7 @@
           "label": "Application No",
           "property": "AppNo",
           "name": "AppNo",
+          "environment": "LOSR3WEB",
           "path": "VIEW_APP",
           "target": "_blank",
           "param": [
@@ -25,6 +26,7 @@
           "label": "Lead No",
           "property": "LeadNo",
           "name": "LeadNo",
+          "environment": "LOSR3WEB",
           "path": "VIEW_LEAD",
           "target": "_blank",
           "param": [
@@ -39,6 +41,7 @@
           "label": "Agreement No",
           "property": "AgrmntNo",
           "name": "AgrmntNo",
+          "environment": "LOSR3WEB",
           "path": "VIEW_AGRMNT",
           "target": "_blank",
           "param": [
@@ -53,6 +56,7 @@
           "label": "Mou No",
           "property": "MouCustNo",
           "name": "MouCustNo",
+          "environment": "LOSR3WEB",
           "path": "VIEW_MOU_CUST",
           "target": "_blank",
           "param": [

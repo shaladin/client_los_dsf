@@ -20,6 +20,7 @@ import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainDa
 import { ReqVerfQuestionAnswerObj } from 'app/shared/model/Request/Verification/ReqVerfQuestionAnswerObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ReqGetVerfResult3Obj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-cust-confirmation-subj-detail',
@@ -55,8 +56,10 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   isFailed: boolean = false;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_DETAIL;
-  constructor(private route: ActivatedRoute, private fb: FormBuilder, private http: HttpClient,
-    private router: Router, private toastr: NGXToastrService, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute,
+    private fb: FormBuilder, private http: HttpClient,
+    private router: Router, private toastr: NGXToastrService,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["VerfResultHId"] != null) {
         this.VerfResultHId = params["VerfResultHId"];
@@ -83,7 +86,6 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-
     await this.GetData();
 
     let refMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
@@ -93,7 +95,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     await this.http.post<KeyValueObj>(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
       (response) => {
         this.SubjectResponse = response;
-      });
+      }
+    );
 
     await this.http.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { Code: CommonConstant.StatusGrpVerfResultStat }).toPromise().then(
       (response) => {
@@ -101,15 +104,17 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         this.CustConfirm.patchValue({
           MrVerfResultHStatCode: this.RefStatusList[0].Key
         })
-      });
+      }
+    );
 
     await this.http.post<Array<KeyValueObj>>(URLConstant.GetListKeyValueMobilePhnByAppId, { Id: this.AppId }).toPromise().then(
       (response) => {
-        this.PhnList = response;
+        this.PhnList = response[CommonConstant.ReturnObj];
         this.CustConfirm.patchValue({
           Phn: this.PhnList[0].Key
         })
-      });
+      }
+    );
 
     let GetVerfQuestionAnswerObj = new ReqVerfQuestionAnswerObj();
     GetVerfQuestionAnswerObj.AppId = this.AppId;
@@ -120,7 +125,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         if (this.verfQuestionAnswerObj != null && this.verfQuestionAnswerObj.VerfQuestionAnswerListObj.length != 0) {
           this.GenerateFormVerfQuestion(CommonConstant.VerfResultStatSuccess);
         }
-      });
+      }
+    );
   }
 
   async GetData() {
@@ -130,15 +136,18 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         await this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.agrmntObj.AppId }).toPromise().then(
           (response) => {
             this.appObj = response;
-          });
+          }
+        );
 
         if (this.agrmntObj.LeadId != null) {
           await this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { Id: this.agrmntObj.LeadId }).toPromise().then(
             (response) => {
               this.leadObj = response;
-            });
+            }
+          );
         }
-      });
+      }
+    );
 
     await this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, { Id: this.VerfResultHId }).toPromise().then(
       async (response) => {
@@ -149,7 +158,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         this.newVerfResultHObj.PhnType = "-";
         this.newVerfResultHObj.MrVerfObjectCode = "-";
         await this.GetListVerfResultH(this.newVerfResultHObj.VerfResultId, this.newVerfResultHObj.MrVerfSubjectRelationCode);
-      });
+      }
+    );
 
     await this.GetListCustData();
   }
@@ -180,7 +190,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
             }
           }
         }
-      });
+      }
+    );
   }
 
   async GetListVerfResultH(id, code) {
@@ -191,12 +202,13 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     await this.http.post(URLConstant.GetVerfResultHsByVerfResultIdAndSubjRelationCode, verfResultHObj).toPromise().then(
       (response) => {
         this.VerfResultHList = response["responseVerfResultHCustomObjs"];
-      });
+      }
+    );
   }
+
   GenerateFormVerfQuestion(result) {
     this.verfQuestionAnswerObj.VerfQuestionAnswerListObj[0].VerfQuestionGrpName
     var grpListObj = this.verfQuestionAnswerObj.VerfQuestionAnswerListObj;
-
 
     for (let i = 0; i < grpListObj.length; i++) {
       var QuestionGrp = this.fb.group({
@@ -246,15 +258,18 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
               QuestionResultGrp.controls.ResultGrp.patchValue({
                 Answer: this.ListVerfAnswer[i][j][0]
               })
-            } else {
+            }
+            else {
               this.ListVerfAnswer[i].push("");
             }
-          } else if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeUcInputNumber) {
+          }
+          else if (QuestionList[j].VerfAnswerTypeCode == CommonConstant.VerfAnswerTypeCodeUcInputNumber) {
             if (result == CommonConstant.VerfResultStatSuccess) {
               QuestionResultGrp.controls.ResultGrp["controls"].Answer.setValidators([Validators.required, Validators.min(1.00)]);
             }
             this.ListVerfAnswer[i].push("");
-          } else {
+          }
+          else {
             this.ListVerfAnswer[i].push("");
           }
           ResultGrp.push(QuestionResultGrp);
@@ -263,26 +278,32 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     }
   }
 
-  SaveForm(formDirective: FormGroupDirective) {
-    var activeButton = document.activeElement.id;
+  AddDetail(formDirective: FormGroupDirective) {
     var FormValue = this.CustConfirm.value.VerfResultDForm;
     var VerfResultDList = new Array<VerfResultDObj>();
-    for (let i = 0; i < FormValue.length; i++) {
-      var currGrp = FormValue[i].VerfQuestionAnswerList;
-      for (let j = 0; j < currGrp.length; j++) {
-        var currAnswer = currGrp[j].ResultGrp;
-        var VerfResultD = new VerfResultDObj();
-        VerfResultD.VerfQuestionAnswerId = currAnswer.VerfQuestionAnswerId;
-        VerfResultD.VerfQuestionText = currAnswer.VerfQuestionText;
-        VerfResultD.Answer = currAnswer.Answer;
-        VerfResultD.Notes = currAnswer.Notes;
-        VerfResultD.SeqNo = currAnswer.SeqNo;
-        VerfResultD.Score = currAnswer.Score;
-        VerfResultD.VerfQuestionGroupCode = currAnswer.VerfQuestionGroupCode;
 
-        VerfResultDList.push(VerfResultD);
+    if(this.CustConfirm.controls.MrVerfResultHStatCode.value == CommonConstant.VerfResultStatSuccess) {
+      for (let i = 0; i < FormValue.length; i++) {
+        var currGrp = FormValue[i].VerfQuestionAnswerList;
+        for (let j = 0; j < currGrp.length; j++) {
+          var currAnswer = currGrp[j].ResultGrp;
+          var VerfResultD = new VerfResultDObj();
+          VerfResultD.VerfQuestionAnswerId = currAnswer.VerfQuestionAnswerId;
+          VerfResultD.VerfQuestionText = currAnswer.VerfQuestionText;
+          VerfResultD.Answer = currAnswer.Answer;
+          VerfResultD.Notes = currAnswer.Notes;
+          VerfResultD.SeqNo = currAnswer.SeqNo;
+          VerfResultD.Score = currAnswer.Score;
+          VerfResultD.VerfQuestionGroupCode = currAnswer.VerfQuestionGroupCode;
+  
+          VerfResultDList.push(VerfResultD);
+        }
       }
     }
+    else {
+      VerfResultDList = null;
+    }
+    
     var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     var todaydate = new Date();
     businessDt.setHours(todaydate.getHours(), todaydate.getMinutes(), todaydate.getSeconds());
@@ -305,15 +326,19 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.http.post(URLConstant.AddVerfResultHeaderAndVerfResultDetail, VerfResultHeaderDetail).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        if (activeButton == "save") {
-          AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode });
-        }
-        else {
           this.GetListVerfResultH(this.newVerfResultHObj.VerfResultId, this.newVerfResultHObj.MrVerfSubjectRelationCode);
           formDirective.resetForm();
           this.clearform(CommonConstant.VerfResultStatSuccess, false);
-        }
-      });
+      }
+    );
+  }
+
+  Save() {
+    if(this.VerfResultHList.length < 1){
+      this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_HISTORY);
+    }else{
+      AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode });
+    }
   }
 
   ResultHandler() {
@@ -335,7 +360,6 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
     this.CustConfirm.controls.Notes.markAsPristine();
     this.CustConfirm.markAsUntouched();
 
-
     this.GenerateFormVerfQuestion(resultStat);
     if (this.PhnList.length > 0) {
       this.CustConfirm.patchValue({
@@ -355,15 +379,16 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         MrVerfResultHStatCode: resultStat
       });
     }
-
   }
 
   OpenView(key: string) {
     if (key == "app") {
       AdInsHelper.OpenAppViewByAppId(this.AppId);
-    } else if (key == "agrmnt") {
+    }
+    else if (key == "agrmnt") {
       AdInsHelper.OpenAgrmntViewByAgrmntId(this.AgrmntId);
-    } else if (key == "lead") {
+    }
+    else if (key == "lead") {
       AdInsHelper.OpenLeadViewByLeadId(this.leadObj.LeadId);
     }
     else if (key == "cust") {
@@ -371,7 +396,8 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        });
+        }
+      );
     }
   }
 }

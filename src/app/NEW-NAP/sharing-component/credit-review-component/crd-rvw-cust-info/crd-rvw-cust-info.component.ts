@@ -81,7 +81,6 @@ export class CrdRvwCustInfoComponent implements OnInit {
     this.ReqCustNo.CustNo = this.crdRvwCustInfoObj.CustNo;
     await this.http.post<{ ListNegativeCustObj: Array<NegCustObj> }>(URLConstant.GetListNegativeCustByCustNo, this.ReqCustNo).toPromise().then(
       (response) => {
-        // console.log(response);
         this.ListNegCust = response.ListNegativeCustObj;
       });
 

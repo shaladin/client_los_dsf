@@ -146,6 +146,7 @@ export class NapCustMainDataComponent implements OnInit {
         this.stepper.to(this.AppStepIndex);
       }
     )
+    this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
   LastStep() {

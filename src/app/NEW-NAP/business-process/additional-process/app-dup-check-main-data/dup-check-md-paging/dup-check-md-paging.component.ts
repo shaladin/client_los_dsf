@@ -35,13 +35,6 @@ export class DupCheckMdPagingComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/searchAppDupCheckMainData.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppDupCheckMainData.json";
 
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "a.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
-
     var critLobObj = new CriteriaObj();
     critLobObj.restriction = AdInsConstant.RestrictionLike;
     critLobObj.DataType = 'text';

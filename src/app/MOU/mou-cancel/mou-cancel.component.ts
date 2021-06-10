@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -36,22 +35,8 @@ export class MouCancelComponent implements OnInit {
       return;
     }
     else {
-      this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouCancel.json";
-      this.inputPagingObj.enviromentUrl = environment.losUrl;
-      this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
-      this.inputPagingObj.deleteUrl = "";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouCancel.json";
-      this.inputPagingObj.ddlEnvironments = [
-        {
-          name: "MC.MR_MOU_TYPE_CODE",
-          environment: environment.FoundationR3Url
-        },
-        {
-          name: "MC.MOU_STAT",
-          environment: environment.FoundationR3Url
-        }
-      ];
     }
   }
 

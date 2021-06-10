@@ -11,6 +11,7 @@
             "label": "Application No",
             "property": "AppNo",
             "name": "AppNo",
+            "environment": "LOSR3WEB",
             "path": "VIEW_APP",
             "target" : "_blank",
             "param": [
@@ -94,6 +95,7 @@
             "property": "LeadNo",
             "name": "LeadNo",
             "isHide": true,
+            "environment": "LOSR3WEB",
             "position": "left",
             "path": "VIEW_LEAD",
             "target": "_blank",

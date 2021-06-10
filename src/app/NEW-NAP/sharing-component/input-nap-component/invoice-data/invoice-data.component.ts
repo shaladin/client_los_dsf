@@ -12,6 +12,7 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-invoice-data',
@@ -29,9 +30,9 @@ export class InvoiceDataComponent implements OnInit {
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   arrAddCrit;
 
-  constructor(private httpClient: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
-
-  }
+  constructor(private httpClient: HttpClient,
+    private toastr: NGXToastrService,
+    private fb: FormBuilder) { }
 
   InvoiceForm = this.fb.group({
     AppFctrId: [''],
@@ -55,13 +56,16 @@ export class InvoiceDataComponent implements OnInit {
       (response) => {
         this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { Id: response["MouCustId"] }).subscribe(
           (response2) => {
-            if (response2["length"] > 0) {
+            if (response2[CommonConstant.ReturnObj]["length"] > 0) {
               this.IsDisableCustFctr = false;
-            } else {
+            }
+            else {
               this.IsDisableCustFctr = true;
             }
-          });
-      });
+          }
+        );
+      }
+    );
 
     var obj = {
       Id: this.AppId,
@@ -83,7 +87,8 @@ export class InvoiceDataComponent implements OnInit {
         this.arrAddCrit.push(addCrit);
         this.MouCustLookupObj.addCritInput = this.arrAddCrit;
         // this.MouCustLookupObj.isReady = true;
-      });
+      }
+    );
   }
 
   Cancel() {
@@ -97,7 +102,8 @@ export class InvoiceDataComponent implements OnInit {
     this.httpClient.post(URLConstant.GetListAppInvoiceFctrByAppFctrId, obj).subscribe(
       (response) => {
         this.dataobj = response['ReturnObject'];
-      });
+      }
+    );
   }
 
   GetLookupMouCust(ev) {
@@ -131,7 +137,8 @@ export class InvoiceDataComponent implements OnInit {
           this.InvoiceForm.reset();
           enjiForm.resetForm();
           this.InvoiceForm.controls.InvoiceAmt.patchValue(0);
-        });
+        }
+      );
     }
   }
 
@@ -144,7 +151,8 @@ export class InvoiceDataComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.GetListAppInvoiceFctr();
-        });
+        }
+      );
     }
   }
 

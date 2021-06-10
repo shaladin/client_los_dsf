@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 import { AppCollateralDocObj } from 'app/shared/model/AppCollateralDocObj.Model';
 import { ActivatedRoute } from '@angular/router';
@@ -33,7 +32,6 @@ export class ViewCollateralDataComponent implements OnInit {
 
   ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCollateralData.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "MouCustNo",
@@ -42,7 +40,6 @@ export class ViewCollateralDataComponent implements OnInit {
     ];
 
     this.viewUOLObj.viewInput = "./assets/ucviewgeneric/viewCollateralDataUserOwnerLocation.json";
-    this.viewUOLObj.viewEnvironment = environment.losUrl;
     this.viewUOLObj.ddlEnvironments = [
       {
         name: "MouCustNo",

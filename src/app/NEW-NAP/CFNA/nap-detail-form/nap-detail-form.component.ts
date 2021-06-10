@@ -5,7 +5,6 @@ import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { AppObj } from 'app/shared/model/App/App.Model';
-import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -20,6 +19,7 @@ import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigRes
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -77,6 +77,7 @@ export class NapDetailFormComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private toastr: NGXToastrService,
+    private spinner: NgxSpinnerService,
     private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -102,21 +103,6 @@ export class NapDetailFormComponent implements OnInit {
 
     this.ClaimTask();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformationCFNA.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
 
@@ -331,6 +317,8 @@ export class NapDetailFormComponent implements OnInit {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       () => {
+        this.spinner.show();
+        setTimeout(() => { this.spinner.hide(); }, 1500);
       }
     )
   }
