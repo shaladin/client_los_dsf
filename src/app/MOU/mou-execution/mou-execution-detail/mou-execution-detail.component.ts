@@ -22,7 +22,7 @@ export class MouExecutionDetailComponent implements OnInit {
   businessDt: Date;
   MouCustId: number;
   WfTaskListId: number;
-  startMouDt: Date; 
+  businessDtYesterday: Date; 
   StartDt: Date;
   EndDt: Date;
   MouCustDt: Date;
@@ -62,8 +62,8 @@ export class MouExecutionDetailComponent implements OnInit {
     var datePipe = new DatePipe("en-US");
     if (currentUserContext != null && currentUserContext != undefined) {
       this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
-      this.startMouDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
-      this.startMouDt = new Date(this.startMouDt.setDate(this.businessDt.getDate() - 1));
+      this.businessDtYesterday = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
+      this.businessDtYesterday = new Date(this.businessDtYesterday.setDate(this.businessDt.getDate() - 1));
     }
 
     this.httpClient.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
@@ -104,7 +104,7 @@ export class MouExecutionDetailComponent implements OnInit {
     this.StartDt = new Date(this.MouExecutionForm.get("StartDt").value);
     this.EndDt = new Date(this.MouExecutionForm.get("EndDt").value);
 
-    if(this.MouCustDt < this.startMouDt){
+    if(this.MouCustDt < this.businessDtYesterday){
       this.toastr.warningMessage(ExceptionConstant.MOU_DT_MUST_GREATER_THAN_BUSINESS_DT);
       return false;
     }
@@ -113,13 +113,8 @@ export class MouExecutionDetailComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.START_DT_MUST_LESS_THAN_END_DT);
       return false;
     }
-
-    if (this.EndDt <= this.businessDt) {
-      this.toastr.warningMessage(ExceptionConstant.END_DT_MUST_GREATER_THAN_BUSINESS_DT);
-      return false;
-    }
     
-    if (this.StartDt <= this.businessDt) {
+    if (this.StartDt < this.businessDt) {
       this.toastr.warningMessage(ExceptionConstant.START_DT_MUST_GREATER_THAN_BUSINESS_DT);
       return false;
     }
