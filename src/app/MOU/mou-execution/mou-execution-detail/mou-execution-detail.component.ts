@@ -115,7 +115,7 @@ export class MouExecutionDetailComponent implements OnInit {
     }
     
     if (this.StartDt < this.businessDt) {
-      this.toastr.warningMessage(ExceptionConstant.START_DT_MUST_GREATER_THAN_BUSINESS_DT);
+      this.toastr.warningMessage(ExceptionConstant.START_DT_MUST_GREATER_THAN_EQUAL_BUSINESS_DT);
       return false;
     }
     return true;

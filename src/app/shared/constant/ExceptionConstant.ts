@@ -118,7 +118,8 @@ export class ExceptionConstant {
     public static CONFIRM_PROD_OFF_TO_COPY = "This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?";
     public static SELECT_PROD_TO_COPY = "Please select Product to copied";
     public static CONFIRM_PROD_TO_COPY = "This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?";
-    public static MOU_DT_MUST_GREATER_THAN_BUSINESS_DT = "MOU Date Must be Greater than D - 1 Business Date";
+    public static MOU_DT_MUST_GREATER_THAN_BUSINESS_DT = "MOU Date Must be Greater than Equal D - 1 Business Date";
+    public static START_DT_MUST_GREATER_THAN_EQUAL_BUSINESS_DT = "Start Date Must be Greater than Equal Business Date";
     
 }
 
