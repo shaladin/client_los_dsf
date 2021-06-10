@@ -142,6 +142,7 @@ export class MouDetailFactoringComponent implements OnInit {
       this.MouDetailFactoringForm.controls["PayFreqCode"].disable();
       this.MouDetailFactoringForm.controls["MrInstSchmCode"].disable();
       this.MouDetailFactoringForm.controls["SingleInstCalcMthd"].enable();
+      this.MouDetailFactoringForm.controls["TopDays"].setValidators([Validators.required, Validators.min(1)]);
       this.MouDetailFactoringForm.patchValue({
         SingleInstCalcMthd: this.singleInstCalcMthdList.ReturnObject[0].Key
       });
@@ -151,8 +152,10 @@ export class MouDetailFactoringComponent implements OnInit {
       this.MouDetailFactoringForm.controls["PayFreqCode"].enable();
       this.MouDetailFactoringForm.controls["MrInstSchmCode"].enable();
       this.MouDetailFactoringForm.controls["SingleInstCalcMthd"].disable();
+      this.MouDetailFactoringForm.controls["TopDays"].clearValidators();
       this.MouDetailFactoringForm.patchValue({
-        SingleInstCalcMthd : ''
+        SingleInstCalcMthd : '',
+        TopDays: ''
       });
     }
   }
