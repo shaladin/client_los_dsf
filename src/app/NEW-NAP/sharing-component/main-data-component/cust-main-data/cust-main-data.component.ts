@@ -599,51 +599,51 @@ export class CustMainDataComponent implements OnInit {
       this.http.post<ResponseCustPersonalForCopyObj>(URLConstant.GetCustPersonalMainDataForCopyByCustId, { Id: event.CustId }).subscribe(
         (response) => {
           this.setDataCustomerPersonal(response.CustObj, response.CustPersonalObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
-          this.http.post(URLConstant.GetCustThirdPartyCheckForAppCust, { CustNo: response.CustObj.CustNo, MrCustTypeCode: CommonConstant.CustTypePersonal }).toPromise().then(
-            (response) => {
-              var currentDate = new Date();
-              var lastHitDukcapil = new Date(response["Dukcapil"]["StartDt"]);
-              var lastHitPefindo = new Date(response["Pefindo"]["StartDt"]);
-              var lastHitSlik = new Date(response["Slik"]["StartDt"]);
-              var lastHitAsliri = new Date(response["Asliri"]["StartDt"]);
-              var lastHitTrstsocial = new Date(response["Trstsocial"]["StartDt"]);
-              var dateDiffDukcapil = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(lastHitDukcapil.getFullYear(), lastHitDukcapil.getMonth(), lastHitDukcapil.getDate())) / (1000 * 60 * 60 * 24));
-              var dateDiffPefindo = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(lastHitPefindo.getFullYear(), lastHitPefindo.getMonth(), lastHitPefindo.getDate())) / (1000 * 60 * 60 * 24));
-              var dateDiffSlik = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(lastHitSlik.getFullYear(), lastHitSlik.getMonth(), lastHitSlik.getDate())) / (1000 * 60 * 60 * 24));
-              var dateDiffAsliri = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(lastHitAsliri.getFullYear(), lastHitAsliri.getMonth(), lastHitAsliri.getDate())) / (1000 * 60 * 60 * 24));
-              var dateDiffSocial = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(lastHitTrstsocial.getFullYear(), lastHitTrstsocial.getMonth(), lastHitTrstsocial.getDate())) / (1000 * 60 * 60 * 24));
-              if (dateDiffDukcapil > this.MaxDaysThirdPartyChecking || dateDiffPefindo > this.MaxDaysThirdPartyChecking ||
-                dateDiffSlik > this.MaxDaysThirdPartyChecking || dateDiffAsliri > this.MaxDaysThirdPartyChecking ||
-                dateDiffSocial > this.MaxDaysThirdPartyChecking) {
-                this.toastr.errorMessage("One or more third party checking are outdated or not exists");
-              }
-            }
-          ).catch(
-            (error) => {
-              console.log(error);
-            }
-          );
+          // this.http.post(URLConstant.GetCustThirdPartyCheckForAppCust, { CustNo: response.CustObj.CustNo, MrCustTypeCode: CommonConstant.CustTypePersonal }).toPromise().then(
+          //   (response) => {
+          //     var currentDate = new Date();
+          //     var lastHitDukcapil = new Date(response["Dukcapil"]["StartDt"]);
+          //     var lastHitPefindo = new Date(response["Pefindo"]["StartDt"]);
+          //     var lastHitSlik = new Date(response["Slik"]["StartDt"]);
+          //     var lastHitAsliri = new Date(response["Asliri"]["StartDt"]);
+          //     var lastHitTrstsocial = new Date(response["Trstsocial"]["StartDt"]);
+          //     var dateDiffDukcapil = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(lastHitDukcapil.getFullYear(), lastHitDukcapil.getMonth(), lastHitDukcapil.getDate())) / (1000 * 60 * 60 * 24));
+          //     var dateDiffPefindo = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(lastHitPefindo.getFullYear(), lastHitPefindo.getMonth(), lastHitPefindo.getDate())) / (1000 * 60 * 60 * 24));
+          //     var dateDiffSlik = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(lastHitSlik.getFullYear(), lastHitSlik.getMonth(), lastHitSlik.getDate())) / (1000 * 60 * 60 * 24));
+          //     var dateDiffAsliri = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(lastHitAsliri.getFullYear(), lastHitAsliri.getMonth(), lastHitAsliri.getDate())) / (1000 * 60 * 60 * 24));
+          //     var dateDiffSocial = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(lastHitTrstsocial.getFullYear(), lastHitTrstsocial.getMonth(), lastHitTrstsocial.getDate())) / (1000 * 60 * 60 * 24));
+          //     if (dateDiffDukcapil > this.MaxDaysThirdPartyChecking || dateDiffPefindo > this.MaxDaysThirdPartyChecking ||
+          //       dateDiffSlik > this.MaxDaysThirdPartyChecking || dateDiffAsliri > this.MaxDaysThirdPartyChecking ||
+          //       dateDiffSocial > this.MaxDaysThirdPartyChecking) {
+          //       this.toastr.errorMessage("One or more third party checking are outdated or not exists");
+          //     }
+          //   }
+          // ).catch(
+          //   (error) => {
+          //     console.log(error);
+          //   }
+          // );
         });
     } else {
       this.http.post<ResponseCustCompanyForCopyObj>(URLConstant.GetCustCompanyMainDataForCopyByCustId, { Id: event.CustId }).subscribe(
         (response) => {
           this.setDataCustomerCompany(response.CustObj, response.CustCompanyObj, response.CustAddrLegalObj, response.CustCompanyMgmntShrholderObj, true);
-          this.http.post(URLConstant.GetCustThirdPartyCheckForAppCust, { CustNo: response.CustObj.CustNo, MrCustTypeCode: CommonConstant.CustTypePersonal }).toPromise().then(
-            (response) => {
-              var currentDate = new Date();
-              var lastHitPefindo = new Date(response["Pefindo"]["StartDt"]);
-              var lastHitSlik = new Date(response["Slik"]["StartDt"]);
-              var dateDiffPefindo = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(lastHitPefindo.getFullYear(), lastHitPefindo.getMonth(), lastHitPefindo.getDate())) / (1000 * 60 * 60 * 24));
-              var dateDiffSlik = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(lastHitSlik.getFullYear(), lastHitSlik.getMonth(), lastHitSlik.getDate())) / (1000 * 60 * 60 * 24));
-              if (dateDiffPefindo > this.MaxDaysThirdPartyChecking || dateDiffSlik > this.MaxDaysThirdPartyChecking) {
-                this.toastr.errorMessage("One or more third party checking are outdated or not exists");
-              }
-            }
-          ).catch(
-            (error) => {
-              console.log(error);
-            }
-          );
+          // this.http.post(URLConstant.GetCustThirdPartyCheckForAppCust, { CustNo: response.CustObj.CustNo, MrCustTypeCode: CommonConstant.CustTypePersonal }).toPromise().then(
+            // (response) => {
+            //   var currentDate = new Date();
+            //   var lastHitPefindo = new Date(response["Pefindo"]["StartDt"]);
+            //   var lastHitSlik = new Date(response["Slik"]["StartDt"]);
+            //   var dateDiffPefindo = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(lastHitPefindo.getFullYear(), lastHitPefindo.getMonth(), lastHitPefindo.getDate())) / (1000 * 60 * 60 * 24));
+            //   var dateDiffSlik = Math.floor((Date.UTC(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate()) - Date.UTC(lastHitSlik.getFullYear(), lastHitSlik.getMonth(), lastHitSlik.getDate())) / (1000 * 60 * 60 * 24));
+            //   if (dateDiffPefindo > this.MaxDaysThirdPartyChecking || dateDiffSlik > this.MaxDaysThirdPartyChecking) {
+            //     this.toastr.errorMessage("One or more third party checking are outdated or not exists");
+            //   }
+            // }
+          // ).catch(
+          //   (error) => {
+          //     console.log(error);
+          //   }
+          // );
         });
     }
     await this.disableInput();

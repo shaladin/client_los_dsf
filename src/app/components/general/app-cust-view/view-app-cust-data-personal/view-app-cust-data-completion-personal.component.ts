@@ -46,7 +46,7 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
 
   TitleCustFinDataSuffix:string = '';
   IsShowCustFinDataDetail:boolean = false;
-  ListCustPersonalFinData : Array<object> = [];
+  ListCustPersonalFinData : Array<object> = new Array<object>();
   CustPersonalFinData : object;
   currentCustFinDataIndex: number;
 
