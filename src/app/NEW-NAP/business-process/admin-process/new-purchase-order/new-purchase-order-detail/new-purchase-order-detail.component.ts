@@ -81,13 +81,12 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.claimTask();
-    let appAssetObj : GenericObj = new GenericObj();
-    appAssetObj.Id = this.AgrmntId;
-    this.http.post(URLConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(
-      (response) => {
-        console.log(response);
-        this.AppAssetList = response[CommonConstant.ReturnObj];
-    });
+    // let appAssetObj : GenericObj = new GenericObj();
+    // appAssetObj.Id = this.AgrmntId;
+    // this.http.post(URLConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(
+    //   (response) => {
+    //     this.AppAssetList = response[CommonConstant.ReturnObj];
+    // });
     this.arrValue.push(this.AgrmntId);
 
     this.http.post(URLConstant.GetPurchaseOrderListForNewPOByAppId, { Id: this.AppId }).subscribe(

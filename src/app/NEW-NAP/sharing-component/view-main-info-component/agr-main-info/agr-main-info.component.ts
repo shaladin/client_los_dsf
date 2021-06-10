@@ -20,7 +20,6 @@ export class AgrMainInfoComponent implements OnInit {
     private router: Router, private http: HttpClient ) { }
 
   async ngOnInit() {
-    console.log('AA');
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfo.json";
     this.viewGenericObj.whereValue = this.arrValue;
 
