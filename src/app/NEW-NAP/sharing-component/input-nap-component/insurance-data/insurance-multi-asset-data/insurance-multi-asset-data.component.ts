@@ -55,7 +55,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   IsMultiAsset: string = "false";
   BizTemplateCode: string = "";
 
-  appObj: NapAppModel;
+  appObj: NapAppModel = new NapAppModel();
   appAssetObj: AppAssetObj = new AppAssetObj();
   appAssetAccessoryObjs: Array<AppAssetAccessoryObj>;
   appFinDataObj: AppFinDataObj;
