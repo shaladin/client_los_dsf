@@ -10,6 +10,7 @@ export class URLConstant {
 
   // ASSET
   public static GetListKeyValueByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueByCode";
+  public static GetAssetTypeListKeyValueActiveByCode = environment.FoundationR3Url + "/AssetType/GetListKeyValueActiveByCode";
   public static GetAssetTypeByCode = environment.FoundationR3Url + "/AssetType/GetAssetTypeByCode";
 
   // APPROVAL

@@ -104,27 +104,29 @@ export class NapDetailFormComponent implements OnInit {
 
     // this.ChangeStepper();
 
-    let appObj = { Id: this.appId };
-    this.http.post(URLConstant.GetAppById, appObj).subscribe(
-      (response: AppObj) => {
+    await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
+      async (response: AppObj) => {
         if (response) {
           this.NapObj = response;
           if (this.NapObj.MrCustTypeCode != null)
             this.custType = this.NapObj.MrCustTypeCode;
-          
-          if(this.ReturnHandlingHId == 0 || this.ReturnHandlingHId == null){
-            if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
-              this.initDms();
-            }
-            this.bizTemplateCode = this.NapObj.BizTemplateCode;
-            this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
-          }
-          
-          this.ChangeStepper();
-          this.ChooseStep(this.AppStepIndex);
-          this.IsDataReady = true;
+          this.bizTemplateCode = this.NapObj.BizTemplateCode;
         }
       });
+
+    if (this.ReturnHandlingHId > 0) {
+      this.ChangeStepper();
+      this.ChooseStep(this.AppStepIndex);
+    }
+    else {
+      if (this.NapObj.AppCurrStep == CommonConstant.AppStepUplDoc) {
+        await this.initDms();
+      }
+      this.ChangeStepper();
+      this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
+      this.ChooseStep(this.AppStepIndex);
+    }
+    this.IsDataReady = true;
     this.MakeViewReturnInfoObj();
     
 
@@ -139,8 +141,8 @@ export class NapDetailFormComponent implements OnInit {
       this.dmsObj.Role = currentUserContext.RoleCode;
       this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
       var appObj = { Id: this.appId };
-      this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
-        response => {
+      await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
+        async (response) => {
           this.appNo = this.NapObj.AppNo;
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
@@ -156,7 +158,7 @@ export class NapDetailFormComponent implements OnInit {
           let mouId = this.NapObj.MouCustId;
           if (mouId != null && mouId != 0) {
             let mouObj = { Id: mouId };
-            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            await this.http.post(URLConstant.GetMouCustById, mouObj).toPromise().then(
               result => {
                 let mouCustNo = result['MouCustNo'];
                 this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
@@ -293,7 +295,7 @@ export class NapDetailFormComponent implements OnInit {
     this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
-  NextStep(Step) {
+  async NextStep(Step) {
     if (this.ReturnHandlingHId > 0) {
 
     } else {
@@ -301,7 +303,7 @@ export class NapDetailFormComponent implements OnInit {
     }
 
     if (Step == CommonConstant.AppStepUplDoc) {
-      this.initDms();
+      await this.initDms();
     }
     this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {

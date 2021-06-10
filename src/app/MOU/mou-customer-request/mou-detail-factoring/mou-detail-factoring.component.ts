@@ -43,7 +43,7 @@ export class MouDetailFactoringComponent implements OnInit {
     MrPaidByCode: [''],
     MrInstTypeCode: [''],
     SingleInstCalcMthd: [''],
-    TopDays: ['', [Validators.min(0)]],
+    TopDays: ['', [Validators.min(1)]],
     TenorFrom: ['', [Validators.min(0)]],
     TenorTo: ['', [Validators.min(0)]],
     PayFreqCode: [''],

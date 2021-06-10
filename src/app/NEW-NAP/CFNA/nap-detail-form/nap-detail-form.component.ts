@@ -108,26 +108,28 @@ export class NapDetailFormComponent implements OnInit {
 
     // this.ChangeStepper();
 
-    let appObj = { Id: this.appId };
-    this.http.post(URLConstant.GetAppById, appObj).subscribe(
-      (response: AppObj) => {
+    await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
+      async (response: AppObj) => {
         if (response) {
           this.NapObj = response;
           if (this.NapObj.MrCustTypeCode != null)
             this.custType = this.NapObj.MrCustTypeCode;
-          
-          if(this.ReturnHandlingHId == 0 || this.ReturnHandlingHId == null){
-            if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
-              this.initDms();
-            }
-            this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
-          }
-          
-          this.ChangeStepper();
-          this.ChooseStep(this.AppStepIndex);
-          this.IsDataReady = true;
         }
       });
+
+    if (this.ReturnHandlingHId > 0) {
+      this.ChangeStepper();
+      this.ChooseStep(this.AppStepIndex);
+    }
+    else {
+      if (this.NapObj.AppCurrStep == CommonConstant.AppStepUplDoc) {
+        await this.initDms();
+      }
+      this.ChangeStepper();
+      this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
+      this.ChooseStep(this.AppStepIndex);
+    }
+    this.IsDataReady = true;
     this.MakeViewReturnInfoObj();
   }
 
