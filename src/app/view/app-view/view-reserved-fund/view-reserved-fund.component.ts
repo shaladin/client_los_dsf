@@ -8,6 +8,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { DatePipe } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AppReservedFundObj } from 'app/shared/model/AppReservedFundObj.model';
 @Component({
   selector: "view-reserved-fund",
   templateUrl: "./view-reserved-fund.component.html",
@@ -22,7 +23,7 @@ export class ViewReservedFundComponent implements OnInit {
   };
 
   AppObj: any;
-  RsvFundObj: any;
+  RsvFundObj: Array<AppReservedFundObj> = new Array<AppReservedFundObj>();
   totalRsvFund: number = 0;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {

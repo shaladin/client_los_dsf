@@ -1530,7 +1530,7 @@ export class URLConstant {
   //Bank Acc Cust
   public static GetBankAccCustByAppId = environment.losUrl + "/AppOtherInfo/GetBankAccCustByAppId";
 
-  public static GetCustThirdPartyCheckForAppCust = environment.FoundationR3Url + "/CustThirdPartyChecking/GetCustThirdPartyCheckForAppCust";
+  //public static GetCustThirdPartyCheckForAppCust = environment.FoundationR3Url + "/CustThirdPartyChecking/GetCustThirdPartyCheckForAppCust";
 
   //Get OsPlatfondAmt From R2
   public static GetOsPlatfondAmtMouR2ByMouCustId = environment.losUrl + "/AppInvoiceX/GetOsPlatfondAmtMouR2ByMouCustId"
