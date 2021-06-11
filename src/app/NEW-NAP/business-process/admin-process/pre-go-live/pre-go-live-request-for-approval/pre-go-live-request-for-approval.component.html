@@ -4,18 +4,20 @@
     <div class="card">
       <div class="card-body">
         <div class="px-3">
-          <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady" #ApprovalComponent ></lib-ucapprovalcreate>
           <div class="card">
             <div class="card-body">
               <div class="px-3">
-                <form class="form form-horizontal" (ngSubmit)="SaveForm()"> 
-                  <div class="form-actions right">
-                    <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" translate>
-                      <i class="ft-x"></i> Cancel
-                    </button>
-                    <button type="submit" class="btn btn-raised btn-primary" translate>
-                      <i class="far fa-check-square"></i> Save
-                    </button>
+                <form class="form form-horizontal" [formGroup]="FormObj" (ngSubmit)="FormObj.valid && SaveForm()" #enjiForm="ngForm"> 
+                  <div class="form-body">
+                    <lib-ucapprovalcreate [parentForm]="FormObj" [InputObj]="InputObj" *ngIf="IsReady" #ApprovalComponent ></lib-ucapprovalcreate>
+                    <div class="form-actions right">
+                      <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" translate>
+                        <i class="ft-x"></i> Cancel
+                      </button>
+                      <button type="submit" class="btn btn-raised btn-primary" translate>
+                        <i class="far fa-check-square"></i> Save
+                      </button>
+                    </div>
                   </div>
                 </form>
               </div>

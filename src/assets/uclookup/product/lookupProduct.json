@@ -22,13 +22,13 @@
     "headerList": [
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Product Code",
             "name": "PROD_CODE"
         },
         {
             "type": "sort",
-            "position": "center",
+            "position": "left",
             "label": "Product Name",
             "name": "PROD_NAME"
         },
@@ -41,12 +41,12 @@
     "bodyList": [
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "ProdCode"
         },
         {
             "type": "text",
-            "position": "center",
+            "position": "left",
             "property": "ProdName"
         },
         {

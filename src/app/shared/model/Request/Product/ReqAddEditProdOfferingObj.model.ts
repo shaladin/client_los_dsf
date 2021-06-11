@@ -82,12 +82,11 @@ export class ReqReviewProdOfferingObj {
   ProdOfferingHId: number;
   ProdOfferingId: number;
   WfTaskListId: number;
-  RequestRFAObj: ReqRFAObj;
+  RequestRFAObj: any;
 
   constructor() {
     this.ProdOfferingHId = 0;
     this.ProdOfferingId = 0;
     this.WfTaskListId = 0;
-    this.RequestRFAObj = new ReqRFAObj();
   }
 }

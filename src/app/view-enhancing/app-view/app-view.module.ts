@@ -14,7 +14,6 @@ import { UclookupgenericComponent, UclookupgenericModule } from "@adins/uclookup
 import { UcviewgenericComponent, UcviewgenericModule } from "@adins/ucviewgeneric";
 import { UcgridviewModule, UcgridviewComponent } from "@adins/ucgridview";
 import { UcapprovalhistModule, UcapprovalhistComponent } from "@adins/ucapprovalhist";
-
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { AppMainInfoComponent } from "../app-main-info/app-main-info.component";
 import { AppViewComponent } from "./app-view.component";
@@ -47,6 +46,15 @@ import { TabDeviationComponent } from './tab-deviation/tab-deviation.component';
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { ViewAssetExpenseComponent } from './view-asset-expense/view-asset-expense.component';
 import { ViewSurveyComponent } from './view-survey/view-survey.component';
+import { AppCustDataPersonalOplComponent } from './app-cust-data/app-cust-data-personal-opl/app-cust-data-personal-opl.component';
+import { AppCustDataCompanyOplComponent } from './app-cust-data/app-cust-data-company-opl/app-cust-data-company-opl.component';
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+
+export function createTranslateLoader(http: HttpClient) {
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+  }
 
 @NgModule({
     imports: [
@@ -70,7 +78,14 @@ import { ViewSurveyComponent } from './view-survey/view-survey.component';
         UcapprovalHistoryModule,
         UcShowErrorsModule,
         AppCustViewComponentsModule,
-        SharedModule
+        SharedModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [HttpClient]
+            }
+        }),
     ],
     declarations: [
         AppMainInfoComponent,
@@ -100,6 +115,8 @@ import { ViewSurveyComponent } from './view-survey/view-survey.component';
         TabDeviationComponent,
         ViewAssetExpenseComponent,
         ViewSurveyComponent,
+        AppCustDataPersonalOplComponent,
+        AppCustDataCompanyOplComponent,
     ],
     entryComponents: [
         UclookupgenericComponent,
@@ -109,6 +126,5 @@ import { ViewSurveyComponent } from './view-survey/view-survey.component';
         AppMainInfoComponent,
         AppAssetDataDetailComponent,
     ]
-
 })
 export class AppViewModule { }

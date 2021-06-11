@@ -55,7 +55,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   IsMultiAsset: string = "false";
   BizTemplateCode: string = "";
 
-  appObj: NapAppModel;
+  appObj: NapAppModel = new NapAppModel();
   appAssetObj: AppAssetObj = new AppAssetObj();
   appAssetAccessoryObjs: Array<AppAssetAccessoryObj>;
   appFinDataObj: AppFinDataObj;
@@ -214,6 +214,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       (response) => {
         this.BizTemplateCode = response["BizTemplateCode"];
         this.textTitle = "Collateral";
+        this.appObj.ProdOfferingCode = response["ProdOfferingCode"];
+        this.appObj.ProdOfferingVersion = response["ProdOfferingVersion"];
       });
 
     this.appAssetObj.Id = this.appId;

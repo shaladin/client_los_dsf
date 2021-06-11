@@ -964,7 +964,7 @@ export class MouCustTabComponent implements OnInit {
             this.setAddrMailingObj(CommonConstant.CustTypePersonal);
 
             this.MouCustPersonalId = this.custDataPersonalObj.MouCustPersonalObj.MouCustPersonalId;
-            this.MouCustAddrId = this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustAddrJobObj.MouCustAddrId;
+            this.MouCustAddrId = this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustAddrJobObj != null ? this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustAddrJobObj.MouCustAddrId : 0 ;
             this.MouCustPersonalJobDataId = this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustPersonalJobDataId;
             this.MouCustFinDataId = this.custDataPersonalObj.MouCustPersonalFinDataObj.MouCustPersonalFinDataId;
             this.MouCustAddrLegalId = this.custDataPersonalObj.MouCustAddrLegalObj.MouCustAddrId;

@@ -3,7 +3,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { UcpagingComponent } from '@adins/ucpaging';
 import { HttpClient } from '@angular/common/http';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
@@ -12,6 +11,7 @@ import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 
 @Component({
   selector: 'app-edit-mou-customer',
@@ -21,6 +21,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 export class EditMouCustomerComponent implements OnInit {
   @ViewChild(UcpagingComponent) ucpaging;
   inputPagingObj: UcPagingObj = new UcPagingObj();
+  CustNoObj: GenericObj = new GenericObj();
   arrCrit: Array<CriteriaObj>;
   user: any;
 
@@ -34,18 +35,8 @@ export class EditMouCustomerComponent implements OnInit {
       return;
     }
     else {
-      this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/searchEditMouCustomer.json";
-      this.inputPagingObj.enviromentUrl = environment.losUrl;
-      this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
-      this.inputPagingObj.deleteUrl = "";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchEditMouCustomer.json";
-      this.inputPagingObj.ddlEnvironments = [
-        {
-          name: "MOU.MR_MOU_TYPE_CODE",
-          environment: environment.FoundationR3Url
-        }
-      ];
       this.arrCrit = new Array<CriteriaObj>();
       var critObj = new CriteriaObj();
       critObj.restriction = AdInsConstant.RestrictionEq;
@@ -58,8 +49,8 @@ export class EditMouCustomerComponent implements OnInit {
 
   getEvent(event) {
     if (event.Key == "customer") {
-      var link: string;
-      this.http.post(URLConstant.GetCustByCustNo, {TrxNo : event.RowObj.CustNo}).subscribe(
+      this.CustNoObj.CustNo = event.RowObj.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }

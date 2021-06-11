@@ -137,8 +137,8 @@ export class EmergencyContactTabComponent implements OnInit {
 
     this.http.post(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { Id: this.AppCustId }).subscribe(
       (response) => {
-        this.copyAddressFromObj = response;
-        this.EmergencyContactForm.patchValue({ CopyAddrFrom: response[0]['AppCustAddrId'] });
+        this.copyAddressFromObj = response[CommonConstant.ReturnObj];
+        this.EmergencyContactForm.patchValue({ CopyAddrFrom: this.copyAddressFromObj[0]['AppCustAddrId'] });
       });
   }
 

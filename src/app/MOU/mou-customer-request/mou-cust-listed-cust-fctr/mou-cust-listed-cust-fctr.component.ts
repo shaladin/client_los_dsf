@@ -5,13 +5,14 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
 import { MouCustListedCustFctrObj } from 'app/shared/model/MouCustListedCustFctrObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { MouCustListedCustFctrDetailComponent } from './mou-cust-listed-cust-fctr-detail/mou-cust-listed-cust-fctr-detail.component';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-cust-listed-cust-fctr',
@@ -23,6 +24,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
   @Output() OutputData: EventEmitter<any> = new EventEmitter();
   listedCusts: Array<MouCustListedCustFctrObj>;
   inputLookupObj: InputLookupObj;
+  CustNoObj: GenericObj = new GenericObj();
   dictLookup: {[key: string]: any;} = {};
   InputLookupCustomerObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
 
@@ -31,14 +33,12 @@ export class MouCustListedCustFctrComponent implements OnInit {
     ListCust: this.fb.array([]),
   });
 
-  constructor(
-    private httpClient: HttpClient,
+  constructor(private httpClient: HttpClient,
     private modalService: NgbModal,
     private toastr: NGXToastrService,
     private spinner: NgxSpinnerService,
     private fb: FormBuilder,
-    private http: HttpClient
-  ) { }
+    private http: HttpClient) { }
 
   ngOnInit() {
     this.MouCustIsListedForm.patchValue({
@@ -48,7 +48,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
     mouListedFctr.MouCustId = this.MouCustId;
     this.httpClient.post<Array<MouCustListedCustFctrObj>>(URLConstant.GetListMouCustListedCustFctrByMouCustId, { Id: this.MouCustId }).subscribe(
       (response) => {
-        this.listedCusts = response;
+        this.listedCusts = response[CommonConstant.ReturnObj];
         var MouCustListedCustFctrObjs = this.MouCustIsListedForm.get("ListCust") as FormArray;
         for (let i = 0; i < this.listedCusts.length; i++) {
           MouCustListedCustFctrObjs.push(this.addGroup(this.listedCusts[i], i));
@@ -59,11 +59,13 @@ export class MouCustListedCustFctrComponent implements OnInit {
           this.setCustName(i, this.listedCusts[i].CustNo);
         }
         this.OutputData.emit(MouCustListedCustFctrObjs.getRawValue());
-      });   
+      }
+    );   
   }
 
   async setCustName(i, custNo){
-    await this.http.post(URLConstant.GetCustByCustNo, {TrxNo: custNo}).toPromise().then(
+    this.CustNoObj.CustNo = custNo;
+    await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
       (response) => {
         console.log(response);
         
@@ -76,7 +78,8 @@ export class MouCustListedCustFctrComponent implements OnInit {
           CustName: response["CustName"],
           MrCustTypeCode: response["MrCustTypeCode"]
         });
-      });
+      }
+    );
   }
 
   openModalAddCustFctr() {
@@ -89,22 +92,22 @@ export class MouCustListedCustFctrComponent implements OnInit {
         mouListedFctr.MouCustId = this.MouCustId;
         this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { Id: this.MouCustId }).subscribe(
           (response) => {
-            this.listedCusts = response["mouCustListedCustFctrObjs"];
+            this.listedCusts = response[CommonConstant.ReturnObj];
           }
         );
         this.spinner.hide();
         this.toastr.successMessage(response["message"]);
       }
-    ).catch((error) => {
-    });
+    ).catch((error) => {});
   }
 
   openView(custNo) {
-    var link: string;
-    this.httpClient.post(URLConstant.GetCustByCustNo, {TrxNo : custNo}).subscribe(
+    this.CustNoObj.CustNo = custNo;
+    this.httpClient.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
       response => {
         AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-      });
+      }
+    );
   }
 
   deleteCustFctr(custFctrId, idx) {
@@ -161,7 +164,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
   }
 
   addGroup(mouCustListedCustFctrObj : MouCustListedCustFctrObj, i){
-    if(mouCustListedCustFctrObj == undefined){
+    if(mouCustListedCustFctrObj == undefined) {
       return this.fb.group({
         No: [i],
         MouListedCustFctrId: [0],
@@ -172,7 +175,8 @@ export class MouCustListedCustFctrComponent implements OnInit {
         MrCustTypeDescr: [''],
         RowVersion: ['']
       })
-    }else{
+    }
+    else {
       return this.fb.group({
         No: [i],
         MouListedCustFctrId: [mouCustListedCustFctrObj.MouListedCustFctrId],

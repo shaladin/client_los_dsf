@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +9,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqMouForEditConfirmCancelObj } from 'app/shared/model/Request/MOU/ReqMouForEditConfirmCancelObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-mou-cancel',
@@ -17,6 +17,7 @@ import { ReqMouForEditConfirmCancelObj } from 'app/shared/model/Request/MOU/ReqM
 })
 export class MouCancelComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
+  CustNoObj: GenericObj = new GenericObj();
   user: any;
 
   constructor(
@@ -34,29 +35,15 @@ export class MouCancelComponent implements OnInit {
       return;
     }
     else {
-      this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouCancel.json";
-      this.inputPagingObj.enviromentUrl = environment.losUrl;
-      this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
-      this.inputPagingObj.deleteUrl = "";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouCancel.json";
-      this.inputPagingObj.ddlEnvironments = [
-        {
-          name: "MC.MR_MOU_TYPE_CODE",
-          environment: environment.FoundationR3Url
-        },
-        {
-          name: "MC.MOU_STAT",
-          environment: environment.FoundationR3Url
-        }
-      ];
     }
   }
 
   getEvent(event) {
     if (event.Key == "customer") {
-      var link: string;
-      this.http.post(URLConstant.GetCustByCustNo, {TrxNo : event.RowObj.CustNo}).subscribe(
+      this.CustNoObj.CustNo = event.RowObj.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         });

@@ -57,6 +57,10 @@ const routes: Routes = [
             {
                 path: PathConstant.VIEW_APP_LIST,
                 loadChildren: './app-list-view/app-list-view.module#AppListViewModule'
+            },
+            {
+                path: PathConstant.VIEW_PEFINDO,
+                loadChildren: './pefindo-view/pefindo-view.module#PefindoViewModule'
             }
         ]
     }

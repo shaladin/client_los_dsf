@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-body">
       <div class="px-3">
-        <form class="form form-horizontal" [formGroup]="PhoneDataForm" #formDirective="ngForm" (ngSubmit)="PhoneDataForm.valid  && SaveForm(formDirective)"
+        <form class="form form-horizontal" [formGroup]="PhoneDataForm" #formDirective="ngForm" (ngSubmit)="PhoneDataForm.valid  && AddDetail(formDirective)"
           #enjiForm="ngForm">
           <div class="form-body">  
             <lib-ucSubsection [id]="'custInfoId'" [title]="'Customer Information'" [panel]="'custInfo'">
@@ -135,8 +135,8 @@
             </div>
             <div>
               <div class="form-actions right">
-                <button type="submit" class="btn btn-raised btn-primary" id="saveHistory" translate> 
-                  <i class="far fa-check-square"></i> Save History
+                <button type="submit" class="btn btn-raised btn-primary" translate> 
+                  <i class="far fa-check-square"></i> Add Detail
                 </button>
               </div>
               <lib-ucSubsection [id]="'historylistId'" [title]="'History List'" [panel]="'historylist'">
@@ -172,7 +172,7 @@
                 <i class="ft-x"></i> Cancel
               </button>
 
-              <button type="submit" class="btn btn-raised btn-primary" id="save" translate>
+              <button type="button" class="btn btn-raised btn-primary" (click)="Save()" translate>
                 <i class="far fa-check-square"></i> Save
               </button>
               <!-- <button type="button" class="btn btn-raised btn-primary" (click)="test()" translate>

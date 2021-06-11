@@ -2,6 +2,7 @@ import { environment } from "environments/environment";
 import { NavigationConstant } from "../constant/NavigationConstant";
 import { URLConstant } from "../constant/URLConstant";
 import { CriteriaObj } from "./CriteriaObj.model";
+import { IntegrationObj } from "./library/IntegrationObj.model";
 
 export class UcPagingObj {
     _url: string;
@@ -18,6 +19,9 @@ export class UcPagingObj {
     delay: number;
     isSearched: boolean;
     navigationConst: any;
+    listEnvironments: Array<EnvisObj>;
+    isJoinExAPI: boolean;
+    integrationObj: IntegrationObj;
 
     constructor() {
         this._url = "";
@@ -29,11 +33,16 @@ export class UcPagingObj {
         this.arrCritObj = null;
         this.addCritInput = new Array<CriteriaObj>();
         this.ddlEnvironments = new Array<EnviObj>();
+        this.listEnvironments = new Array<EnvisObj>();
+        this.listEnvironments.push({ environment: "FOU", url: environment.FoundationR3Url });
+        this.listEnvironments.push({ environment: "LOS", url: environment.losUrl });
         this.whereValue = new Array<WhereValueObj>();
         this.isHideSearch = false;
         this.delay = 0;
         this.isSearched = false;
-        this.navigationConst = NavigationConstant
+        this.navigationConst = NavigationConstant;
+        this.isJoinExAPI = false;
+        this.integrationObj = new IntegrationObj();
     }
 }
 export class EnviObj {
@@ -51,5 +60,32 @@ export class WhereValueObj {
 
     constructor() {
         this.property = "";
+    }
+}
+export class EnvisObj {
+    environment: string;
+    url: string;
+
+    constructor() {
+        this.environment = "";
+        this.url = "";
+    }
+}
+
+export class ApprovalReqObj {
+    Username: string;
+    CategoryCode: string;
+    RoleCode: string;
+    constructor() {
+        this.Username = "";
+        this.CategoryCode = "";
+        this.RoleCode = "";
+    }
+}
+
+export class WorkflowReqObj {
+    ActCode: string;
+    constructor() {
+        this.ActCode = "";
     }
 }

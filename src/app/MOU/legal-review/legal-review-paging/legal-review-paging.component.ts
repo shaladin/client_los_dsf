@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
@@ -10,6 +9,7 @@ import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-legal-review-paging',
@@ -17,6 +17,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class LegalReviewPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
+  CustNoObj: GenericObj = new GenericObj();
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   user: any;
 
@@ -32,12 +33,6 @@ export class LegalReviewPagingComponent implements OnInit {
     else {
       this.inputPagingObj._url = "./assets/ucpaging/searchLegalReview.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchLegalReview.json";
-      this.inputPagingObj.ddlEnvironments = [
-        {
-          name: "MC.MR_MOU_TYPE_CODE",
-          environment: environment.losUrl
-        }
-      ];
 
       const addCritMouStat = new CriteriaObj();
       addCritMouStat.DataType = 'text';
@@ -56,7 +51,8 @@ export class LegalReviewPagingComponent implements OnInit {
   }
   getEvent(event) {
     if (event.Key == "customer") {
-      this.http.post(URLConstant.GetCustByCustNo, { TrxNo: event.RowObj.CustNo }).subscribe(
+      this.CustNoObj.CustNo = event.RowObj.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }

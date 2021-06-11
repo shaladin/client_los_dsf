@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -9,6 +8,7 @@ import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 
 @Component({
   selector: 'app-mou-os-tc-paging',
@@ -18,6 +18,7 @@ export class MouOsTcPagingComponent implements OnInit {
 
   inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
+  CustNoObj: GenericObj = new GenericObj();
   user: any;
 
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) { }
@@ -32,19 +33,13 @@ export class MouOsTcPagingComponent implements OnInit {
     else {
       this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouOsTc.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouOsTc.json";
-
-      this.inputPagingObj.ddlEnvironments = [
-        {
-          name: "MOU.MR_MOU_TYPE_CODE",
-          environment: environment.FoundationR3Url
-        }
-      ];
     }
   }
 
   getEvent(event) {
     if (event.Key == "customer") {
-      this.http.post(URLConstant.GetCustByCustNo, { TrxNo: event.RowObj.CustNo }).subscribe(
+      this.CustNoObj.CustNo = event.RowObj.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }

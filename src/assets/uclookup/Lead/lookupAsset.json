@@ -24,7 +24,7 @@
     "headerList": [
       {
         "type": "sort",
-        "position": "center",
+        "position": "left",
         "label": "Full Asset Code",
         "name": "FullAssetCode"
       },
@@ -43,7 +43,7 @@
     "bodyList": [
       {
         "type": "text",
-        "position": "center",
+        "position": "left",
         "property": "FullAssetCode"
       },
       {

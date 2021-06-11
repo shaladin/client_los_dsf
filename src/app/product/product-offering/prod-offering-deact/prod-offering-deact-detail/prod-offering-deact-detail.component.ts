@@ -42,6 +42,7 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
   AllRefReasonMethod: Array<KeyValueObj> = new Array<KeyValueObj>();
   OfficeList: Array<ResProdOfferingBranchOfficeMbrObj> = new Array<ResProdOfferingBranchOfficeMbrObj>();
   ProdOfferingHDeactObj: ReqProdOfferingDeactivationObj = new ReqProdOfferingDeactivationObj();
+  RFAInfo: Object = new Object();
   readonly CancelLink: string = NavigationConstant.PRODUCT_OFFERING_DEACTIVATE;
   
   ProdOfferingHDeactForm = this.fb.group({
@@ -67,7 +68,6 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductOfferingMainInformation.json";
-    this.ViewGenericObj.viewEnvironment = environment.losUrl;
 
     let obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeProdDeactivate };
     await this.http.post(URLConstant.GetListActiveRefReason, obj).toPromise().then(
@@ -109,13 +109,13 @@ export class ProdOfferingDeactDetailComponent implements OnInit {
   }
 
   SaveForm() {
-    this.ApprovalCreateOutput = this.CreateComponent.output();
+    this.RFAInfo = {RFAInfo: this.ProdOfferingHDeactForm.controls.RFAInfo.value};
     this.ProdOfferingHDeactObj = this.ProdOfferingHDeactForm.value;
     this.ProdOfferingHDeactObj.EffectiveDate = this.ProdOfferingHDeactForm.controls.EffectiveDate.value;
-    this.ProdOfferingHDeactObj.Reason = this.ApprovalCreateOutput.ReasonCode;
-    this.ProdOfferingHDeactObj.Notes = this.ApprovalCreateOutput.Notes;
+    this.ProdOfferingHDeactObj.Reason = this.RFAInfo["RFAInfo"].Reason;
+    this.ProdOfferingHDeactObj.Notes = this.RFAInfo["RFAInfo"].Notes;
     this.ProdOfferingHDeactObj.ProdOfferingHId = this.ProdOfferingHId;
-    this.ProdOfferingHDeactObj.RequestRFAObj = this.ApprovalCreateOutput;
+    this.ProdOfferingHDeactObj.RequestRFAObj = this.RFAInfo;
     this.http.post(URLConstant.RequestOfferingDeactivation, this.ProdOfferingHDeactObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);

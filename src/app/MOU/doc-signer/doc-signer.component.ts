@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DecimalPipe } from '@angular/common';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -10,6 +9,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-doc-signer',
@@ -18,6 +18,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class DocSignerComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
+  CustNoObj: GenericObj = new GenericObj();
   arrCrit: Array<CriteriaObj>;
   user: any;
 
@@ -33,13 +34,6 @@ export class DocSignerComponent implements OnInit {
     else {
       this.inputPagingObj._url = "./assets/ucpaging/searchMouCustDocSigner.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchMouCustDocSigner.json";
-      this.inputPagingObj.ddlEnvironments = [
-        {
-          name: "MOU.MR_MOU_TYPE_CODE",
-          environment: environment.FoundationR3Url
-        }
-      ];
-
       this.arrCrit = new Array<CriteriaObj>();
 
       const addCritMouStat = new CriteriaObj();
@@ -62,7 +56,8 @@ export class DocSignerComponent implements OnInit {
 
   getEvent(event) {
     if (event.Key == "customer") {
-      this.http.post(URLConstant.GetCustByCustNo, { TrxNo: event.RowObj.CustNo }).subscribe(
+      this.CustNoObj.CustNo = event.RowObj.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }

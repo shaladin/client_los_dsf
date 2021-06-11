@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'environments/environment';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
+import { UcPagingObj, WorkflowReqObj } from 'app/shared/model/UcPagingObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { Router } from '@angular/router';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { environment } from 'environments/environment';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 
 @Component({
   selector: 'app-requisition-decision-paging',
@@ -17,35 +18,38 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 })
 export class RequisitionDecisionPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
+  BizTemplateCode: string;
   isReady: boolean = false;
-  arrCrit: any;
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
+  wfReqObj: WorkflowReqObj = new WorkflowReqObj();
+  integrationObj: IntegrationObj = new IntegrationObj();
 
   constructor(private router: Router,
     private toastr: NGXToastrService,
-    private http: HttpClient) { }
-
-  makeCriteria() {
-    var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "REQU_DEC_" + CommonConstant.OPL;
-    this.arrCrit.push(critObj);
+    private http: HttpClient,
+    private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => {
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+        localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
+      }
+    });
   }
 
   async ngOnInit() {
-    this.arrCrit = new Array();
-    this.makeCriteria();
-
     this.inputPagingObj._url = "./assets/ucpaging/requisition-decision/search-requisition-decision-paging.json";
+    this.inputPagingObj.enviromentUrl = environment.losUrl;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/requisition-decision/search-requisition-decision-paging.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "A.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
-    this.inputPagingObj.addCritInput = this.arrCrit;
+    this.inputPagingObj.isJoinExAPI = true;
+
+    this.wfReqObj.ActCode = CommonConstant.ACT_CODE_REQU_DEC + this.BizTemplateCode;
+    this.integrationObj.baseUrl = environment.WfR3Url;
+    this.integrationObj.apiPath = URLConstant.GetListOSWfTaskListByActCode;
+    this.integrationObj.requestObj = this.wfReqObj;
+    this.integrationObj.leftColumnToJoin = "AppNo";
+    this.integrationObj.rightColumnToJoin = "TransactionCode";
+    this.integrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
+    this.inputPagingObj.integrationObj = this.integrationObj;
 
     this.isReady = true;
   }
@@ -77,18 +81,14 @@ export class RequisitionDecisionPagingComponent implements OnInit {
           }
         }
       );
-
     }
   }
 
-  GetAllAssetFinancialData(AppId: number) {
-    this.http.post(URLConstant.GetListAppAssetFinDataGridByAppId, { Id: AppId }).subscribe(
-      (response) => {
-        if (response["AppAssetFinDataGridObjs"].length > 0) {
-
-        }
-      }
-    );
-  }
-
+  // GetAllAssetFinancialData(AppId: number) {
+  //   this.http.post(URLConstant.GetListAppAssetFinDataGridByAppId, { Id: AppId }).subscribe(
+  //     (response) => {
+  //       if (response["AppAssetFinDataGridObjs"].length > 0) { }
+  //     }
+  //   );
+  // }
 }

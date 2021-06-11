@@ -45,33 +45,61 @@
                     </div>
 
                     <!-- Asset List -->
-                    <lib-ucSubsection [id]="'AssetInfoId'" [title]="'Asset List'" [panel]="'AssetInfo'">
-                    </lib-ucSubsection>
-                    <div class="form-body" id="AssetInfo">
-                        <table class="table table-responsive-md text-center table-hover">
-                            <thead>
-                                <tr class="table-header">
-                                    <th><span translate class="thead-header text-left">ASSET NAME</span></th>
-                                    <th><span translate class="thead-header text-right">ASSET PRICE</span></th>
-                                    <th><span translate class="thead-header text-right">DOWN PAYMENT</span></th>
-                                    <th><span translate class="thead-header">SERIAL NO. 1</span></th>
-                                    <th><span translate class="thead-header">SERIAL NO. 2</span></th>
-                                    <th><span translate class="thead-header">SERIAL NO. 3</span></th>
-                                    <th><span translate class="thead-header">NOTES</span></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let item of AssetObj?.AppAssetListObj">
-                                    <td class="text-left">{{item.FullAssetName}}</td>
-                                    <td class="text-right">{{item.AssetPriceAmt | number:'.2':'en-US'}}</td>
-                                    <td class="text-right">{{item.DownPaymentAmt | number:'.2':'en-US'}}</td>
-                                    <td>{{item.SerialNo1}}</td>
-                                    <td>{{item.SerialNo2}}</td>
-                                    <td>{{item.SerialNo3}}</td>
-                                    <td>{{item.AssetNotes}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div *ngIf="AssetObj?.AppAssetListObj">
+                        <lib-ucSubsection [id]="'AssetInfoId'" [title]="'Asset List'" [panel]="'AssetInfo'">
+                        </lib-ucSubsection>
+                        <div class="form-body" id="AssetInfo">
+                            <table class="table table-responsive-md text-center table-hover">
+                                <thead>
+                                    <tr class="table-header">
+                                        <th><span translate class="thead-header text-left">ASSET NAME</span></th>
+                                        <th><span translate class="thead-header text-right">ASSET PRICE</span></th>
+                                        <th><span translate class="thead-header text-right">DOWN PAYMENT</span></th>
+                                        <th><span translate class="thead-header">SERIAL NO. 1</span></th>
+                                        <th><span translate class="thead-header">SERIAL NO. 2</span></th>
+                                        <th><span translate class="thead-header">SERIAL NO. 3</span></th>
+                                        <th><span translate class="thead-header">NOTES</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of AssetObj?.AppAssetListObj">
+                                        <td class="text-left">{{item.FullAssetName}}</td>
+                                        <td class="text-right">{{item.AssetPriceAmt | number:'.2':'en-US'}}</td>
+                                        <td class="text-right">{{item.DownPaymentAmt | number:'.2':'en-US'}}</td>
+                                        <td>{{item.SerialNo1}}</td>
+                                        <td>{{item.SerialNo2}}</td>
+                                        <td>{{item.SerialNo3}}</td>
+                                        <td>{{item.AssetNotes}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Asset Accessory List -->
+                    <div *ngIf="AssetObj?.AppAssetAccListObj">
+                        <lib-ucSubsection [id]="'AssetAccInfoId'" [title]="'Asset Accessory List'" [panel]="'AssetAccInfo'">
+                        </lib-ucSubsection>
+                        <div class="form-body" id="AssetAccInfo">
+                            <table class="table table-responsive-md text-center table-hover">
+                                <thead>
+                                    <tr class="table-header">
+                                        <th><span translate class="thead-header text-left">ASSET ACCESSORY NAME</span></th>
+                                        <th><span translate class="thead-header text-right">ASSET ACCESSORY PRICE</span></th>
+                                        <th><span translate class="thead-header text-right">DOWN PAYMENT</span></th>
+                                        <th><span translate class="thead-header">ACCESSORY NOTES</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of AssetObj?.AppAssetAccListObj">
+                                        <td class="text-left">{{item.AssetAccessoryName}}</td>
+                                        <td class="text-center">{{item.AccessoryPriceAmt | number:'.2':'en-US'}}</td>
+                                        <td class="text-center">{{item.DownPaymentAmt | number:'.2':'en-US'}}</td>
+                                        <td>{{item.AccessoryNotes}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <!-- Summary -->
@@ -93,7 +121,8 @@
                                     </label>
                                 </div>
                                 <div class="row">
-                                    <label class="col-md-6" translate>TDP At Coy </label>
+                                    <label class="col-md-6" *ngIf="lobCode != lobCodeFl4w" translate>TDP At Coy </label>
+                                    <label class="col-md-6" *ngIf="lobCode == lobCodeFl4w" translate>Total Security Deposit At Coy </label>
                                     <label class="col-md-6 text-right">{{AssetObj?.AgrmntFinDataObj?.TdpPaidCoyAmt | number:'.2':'en-US'}}
                                     </label>
                                 </div>
@@ -118,6 +147,12 @@
                                 <div class="row">
                                     <label class="col-md-6" translate>{{item.FeeName}} </label>
                                     <label class="col-md-6 text-right">{{item.AppFeeAmt | number:'.2':'en-US'}} </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <label class="col-md-6" translate>Diff Rate Amount</label>
+                                    <label class="col-md-6 text-right">{{DiffRateAmt | number:'.2':'en-US'}}</label>
                                 </div>
                             </div>
                             <div class="col-md-12">

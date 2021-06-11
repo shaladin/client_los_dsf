@@ -20,6 +20,8 @@ import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-credit-review-cr-detail',
@@ -44,6 +46,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean = false;
   IsViewReady: boolean = false;
+  RFAInfo: Object = new Object();
   readonly apvBaseUrl = environment.ApprovalR3Url;
 
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
@@ -57,12 +60,12 @@ export class CreditReviewCrDetailComponent implements OnInit {
   FormObj = this.fb.group({
     arr: this.fb.array([]),
     AppvAmt: [''],
-    CreditScoring: [''],
-    // Reason: ['', Validators.required],
-    // ReasonDesc: [""],
-    // Approver: ['', Validators.required],
-    // ApproverDesc: [""],
-    // Notes: ['', Validators.required]
+    CreditScoring: ['']
+  });
+
+  FormReturnObj  =this.fb.group({
+    Reason: [''],
+    Notes: ['']
   });
 
   constructor(
@@ -262,6 +265,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   isShow: boolean = false;
+  captureStat: string = "";
   async GetCrdRvwCustInfoByAppId() {
     await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
@@ -269,24 +273,37 @@ export class CreditReviewCrDetailComponent implements OnInit {
         this.isShow = true;
       }
     );
+
+    let refMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCaptureStat,
+      MasterCode: this.crdRvwCustInfoObj.CaptureStat
+    };
+    await this.http.post<KeyValueObj>(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
+      (response) => {
+        this.captureStat = response.Value;
+      }
+    );
   }
   //#endregion
 
   switchForm() {
-    this.FormObj.patchValue({
+    this.FormReturnObj.patchValue({
       Reason: "",
       ReasonDesc: "",
       Notes: ""
     });
 
-    // if (!this.isReturnOn) {
-    //   this.isReturnOn = true;
-    //   this.FormObj.controls.Approver.clearValidators();
-    // } else {
-    //   this.isReturnOn = false;
-    //   this.FormObj.controls.Approver.setValidators([Validators.required]);
-    // }
-    // this.FormObj.controls.Approver.updateValueAndValidity();
+    if (!this.isReturnOn) {
+      this.isReturnOn = true;
+      this.FormReturnObj.controls.Reason.setValidators([Validators.required]);
+      this.FormReturnObj.controls.Notes.setValidators([Validators.required]);
+    } else {
+      this.isReturnOn = false;
+      this.FormReturnObj.controls.Reason.clearValidators();
+      this.FormReturnObj.controls.Notes.clearValidators();
+    }
+    this.FormReturnObj.controls.Reason.updateValueAndValidity();
+    this.FormReturnObj.controls.Notes.updateValueAndValidity();
 
   }
 
@@ -321,7 +338,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   //#region Submit
   SaveForm() {
-    let RFAPreGoLive = null;
     let temp = this.FormObj.value;
     let tempAppCrdRvwObj = new AppCrdRvwHObj();
     tempAppCrdRvwObj.AppId = this.appId;
@@ -334,12 +350,8 @@ export class CreditReviewCrDetailComponent implements OnInit {
     tempAppCrdRvwObj.appCrdRvwDObjs = this.BindAppCrdRvwDObj(temp.arr);
 
     if (!this.isReturnOn) {
-      let ApprovalCreateOutput = this.createComponent.output();
-      if (ApprovalCreateOutput != undefined) {
-        RFAPreGoLive = ApprovalCreateOutput;
-      } else {
-        return this.toastr.warning('Input RFA Data First!');
-      }
+      this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
+      
     }
 
     let apiObj = {
@@ -351,12 +363,27 @@ export class CreditReviewCrDetailComponent implements OnInit {
       RowVersion: "",
       AppId: this.appId,
       ListDeviationResultObjs: this.ManualDeviationData,
-      RequestRFAObj: RFAPreGoLive
+      RequestRFAObj: this.RFAInfo
     };
-    // console.log(apiObj);
     this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+      });
+  }
+
+  SaveReturnForm() {
+    let temp = this.FormReturnObj.value;
+
+    let apiObj = {
+      WfTaskListId: this.wfTaskListId,
+      Notes: temp.Notes,
+      RowVersion: "",
+      AppId: this.appId
+    }
+    console.log(apiObj);
+    this.http.post(URLConstant.CrdRvwMakeNewApproval, apiObj).subscribe(
+      (response) => {
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode, });
       });
   }
 

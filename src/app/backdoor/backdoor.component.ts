@@ -60,8 +60,8 @@ export class BackdoorComponent implements OnInit {
   //     let prm = AdInsHelper.Encrypt128CBC(ObjFinalForm, this.k, this.iv);
   //     prm = encodeURIComponent(prm);
   //     console.log("Final Form : " + ObjFinalForm);
-  //     console.log("http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx?app=CONFINS&prm=" + prm);
-  //     return "http://sky.ad-ins.com/LiteDMS/Integration/ViewDoc.aspx?app=CONFINS&prm=" + prm;
+  //     console.log("http://sky.ad-ins.com/LiteDMS_POC/Integration/ViewDoc.aspx?app=CONFINS&prm=" + prm);
+  //     return "http://sky.ad-ins.com/LiteDMS_POC/Integration/ViewDoc.aspx?app=CONFINS&prm=" + prm;
   //   }
   // }
 }

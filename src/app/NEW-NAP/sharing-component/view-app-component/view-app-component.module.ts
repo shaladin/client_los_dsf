@@ -39,6 +39,9 @@ import { ViewAppScoreGradeDukcapilComponent } from "./view-app-score-grade-dukca
 import { ViewSummaryAppCfnaComponent } from './view-summary-app-cfna/view-summary-app-cfna.component';
 import { ViewSummaryAppROSComponent } from "./view-summary-app-ros/view-summary-app-ros.component";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { createTranslateLoader } from "app/app.module";
+import { HttpClient } from "@angular/common/http";
 
 @NgModule({
   exports: [
@@ -82,7 +85,14 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
     UcviewgenericModule,
     UcSubsectionModule,
     UcapprovalhistModule,
-    UcapprovalHistoryModule
+    UcapprovalHistoryModule,
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: (createTranslateLoader),
+          deps: [HttpClient]
+      }
+  }),
   ],
   declarations: [
     InvoiceDataFctrComponent,

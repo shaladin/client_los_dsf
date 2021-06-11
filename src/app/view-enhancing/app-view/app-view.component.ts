@@ -6,13 +6,14 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { MatTabChangeEvent } from '@angular/material';
 import { AppMainInfoComponent } from '../app-main-info/app-main-info.component';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { forkJoin } from 'rxjs';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { formatDate } from '@angular/common';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 @Component({
   selector: 'app-app-view',
@@ -21,6 +22,7 @@ import { formatDate } from '@angular/common';
 })
 export class AppViewComponent implements OnInit {
   AppId: number;
+  MouCustId: number = 0;
   AppNo: string;
   arrValue = [];
   CustType: string = "";
@@ -48,6 +50,7 @@ export class AppViewComponent implements OnInit {
   IsAssetExpense: boolean = true;
   IsPefindoResult: boolean = true;
   IsSurveyResult: boolean = true;
+  IsCustomerOpl: boolean = true;
   bizTemplateCode: string = "";
   isDmsReady: boolean;
   dmsObj: DMSObj;
@@ -60,34 +63,37 @@ export class AppViewComponent implements OnInit {
 
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute,
+    private http: HttpClient,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] == 'undefined') {
         this.AppNo = params["AppNo"]
-
-      } else {
+      }
+      else {
         this.AppId = params["AppId"];
       }
-
     })
-
   }
 
   async ngOnInit(): Promise<void> {
     if (this.AppId == 0) {
       await this.http.post(URLConstant.GetAppByAppNo, { TrxNo: this.AppNo }).toPromise().then(
-        (response) => {
-          this.AppId = response['AppId'];
+        (response: AppObj) => {
+          this.AppId = response.AppId;
+          this.MouCustId = response.MouCustId;
         }
       )
-    } else if (this.AppNo == null) {
+    }
+    else if (this.AppNo == null) {
       await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
-        (response) => {
-          this.AppNo = response['AppNo'];
-          this.bizTemplateCode = response["BizTemplateCode"];
-          this.CustType = response["MrCustTypeCode"];
-          this.AppId = response["AppId"];
-          this.OriOfficeCode = response["OriOfficeCode"];
+        (response: AppObj) => {
+          this.AppNo = response.AppNo;
+          this.bizTemplateCode = response.BizTemplateCode;
+          this.CustType = response.MrCustTypeCode;
+          this.AppId = response.AppId;
+          this.MouCustId = response.MouCustId;
+          this.OriOfficeCode = response.OriOfficeCode;
           this.IsApprovalHist = true;
         }
       )
@@ -126,7 +132,6 @@ export class AppViewComponent implements OnInit {
       this.dmsObj.UsingDmsAdIns = this.usingDmsAdins;
       this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
 
-
       let reqAppId = { Id: this.AppId };
       this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsOfficeCode, this.OriOfficeCode));
       this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.AppNo));
@@ -135,8 +140,8 @@ export class AppViewComponent implements OnInit {
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response['CustNo']));
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoAgr, this.agrNo));
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsCustName, response['CustName']));
-          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsDealerName, "TEST DEALER"));
-          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsExpiredDate, formatDate(new Date(), 'MM/dd/yyyy', 'en-US').toString()));
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsDealerName, "DEALER"));
+          this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsExpiredDate, formatDate(new Date(), 'dd/MM/yyyy', 'en-US').toString()));
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsTimestamp, formatDate(new Date(), 'MM/dd/yyyy HH:mm:ss', 'en-US').toString()));
 
           this.isDmsReady = true;
@@ -153,8 +158,8 @@ export class AppViewComponent implements OnInit {
       var appObj = { Id: this.AppId };
 
       await this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
-        (response) => {
-          this.custNo = response['CustNo'];
+        (response: AppCustObj) => {
+          this.custNo = response.CustNo;
 
           if (this.custNo != null && this.custNo != '') {
             this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.custNo));
@@ -164,9 +169,8 @@ export class AppViewComponent implements OnInit {
           }
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.AppNo));
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
-          let mouCustId = response[0]['MouCustId'];
-          if (mouCustId != null && mouCustId != '') {
-            var mouObj = { Id: mouCustId };
+          if (this.MouCustId != null && this.MouCustId != 0) {
+            var mouObj = { Id: this.MouCustId };
             this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
               (response) => {
                 let mouCustNo = response['MouCustNo'];
@@ -201,6 +205,7 @@ export class AppViewComponent implements OnInit {
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
       this.IsAnalysisResult = false;
+      this.IsCustomerOpl = false;
     }
     else if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
       this.IsAsset = false;
@@ -212,6 +217,7 @@ export class AppViewComponent implements OnInit {
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
+      this.IsCustomerOpl = false;
     }
     else if (this.bizTemplateCode == CommonConstant.CF4W) {
       this.IsCollateral = false;
@@ -223,6 +229,7 @@ export class AppViewComponent implements OnInit {
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
+      this.IsCustomerOpl = false;
     }
     else if (this.bizTemplateCode == CommonConstant.FL4W) {
       this.IsAsset = false;
@@ -234,6 +241,7 @@ export class AppViewComponent implements OnInit {
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
+      this.IsCustomerOpl = false;
     }
     else if (this.bizTemplateCode == CommonConstant.CFNA) {
       this.IsAsset = false;
@@ -245,8 +253,10 @@ export class AppViewComponent implements OnInit {
       this.IsAssetExpense = false;
       this.IsPefindoResult = false;
       this.IsSurveyResult = false;
+      this.IsCustomerOpl = false;
     }
     else if (this.bizTemplateCode == CommonConstant.OPL) {
+      this.IsCustomer = false;
       this.IsCollateral = false;
       this.IsReferantor = false;
       this.IsInvoice = false;

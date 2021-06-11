@@ -34,6 +34,7 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
   appCustPersonalObj: AppCustPersonalObj;
   appCustCompanyObj: AppCustCompanyObj;
   reqDupCheckAppCustObj: ReqDupCheckAppCustObj = new ReqDupCheckAppCustObj();
+  CustNoObj: GenericObj = new GenericObj();
   mrCustTypeCode: string;
   isLock: boolean = true;
   isMasterLock: boolean = false;
@@ -59,7 +60,6 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
     else if (this.mrCustTypeCode == CommonConstant.CustTypeCompany)
       this.viewMainInfoObj.viewInput = "./assets/ucviewgeneric/viewDupCheckSubjectMatchCompany.json";
 
-    this.viewMainInfoObj.viewEnvironment = environment.losUrl;
     this.viewMainInfoObj.ddlEnvironments = [{ name: "AppNo", environment: environment.losR3Web }];
   }
 
@@ -192,8 +192,8 @@ export class DupCheckMdSubjMatchComponent implements OnInit {
 
   viewMainInfoCallback(event) {
     if (event.Key == "customer") {
-      var custObj = { CustNo: event.ViewObj.CustNo };
-      this.http.post(URLConstant.GetCustByCustNo, { TrxNo: event.ViewObj.CustNo }).subscribe(
+      this.CustNoObj.CustNo = event.ViewObj.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
         }

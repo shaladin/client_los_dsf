@@ -11,6 +11,7 @@
             "label": "Application No",
             "property": "AppNo",
             "name": "AppNo",
+            "environment": "LOSR3WEB",
             "position": "left",
             "path": "VIEW_APP",
             "target": "_blank",
@@ -53,6 +54,7 @@
             "property": "LeadNo",
             "name": "LeadNo",
             "isHide": true,
+            "environment": "LOSR3WEB",
             "position": "left",
             "path": "VIEW_LEAD",
             "target": "_blank",
@@ -74,6 +76,7 @@
             "property": "MouCustNo",
             "name": "MouCustNo",
             "isHide": true,
+            "environment": "LOSR3WEB",
             "path": "VIEW_MOU_CUST",
             "target": "_blank",
             "param": [

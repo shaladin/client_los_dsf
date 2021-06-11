@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { PurchaseOrderHObj } from 'app/shared/model/PurchaseOrderHObj.Model';
 import { PurchaseOrderDObj } from 'app/shared/model/PurchaseOrderDObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqAssetDataObj } from 'app/shared/model/Request/AppAsset/ReqAppAssetObj.model';
 import { ResGetAllAssetDataForPOByAsset, ResGetAllAssetDataForPOByAssetObj } from 'app/shared/model/Response/PurchaseOrder/ResGetAllAssetDataForPO.model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-purchase-order-detail',
@@ -32,6 +31,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
   TotalInsCustAmt: number;
   TotalLifeInsCustAmt: number;
   TotalPurchaseOrderAmt: number;
+  DiffRateAmt : number;
   PurchaseOrderExpiredDt: Date;
   purchaseOrderHObj: PurchaseOrderHObj;
   // purchaseOrderDObj: PurchaseOrderDObj;
@@ -63,18 +63,16 @@ export class PurchaseOrderDetailComponent implements OnInit {
   }
 
   isDataExist: boolean = false;
+  readonly lobCodeFl4w: string = CommonConstant.FL4W;
   async ngOnInit() {
     this.arrValue.push(this.AgrmntId);
     this.purchaseOrderHObj = new PurchaseOrderHObj();
 
     let poUrl = "";
-    if (this.lobCode == CommonConstant.CF4W) {
+    if (this.lobCode == CommonConstant.CF4W || this.lobCode == CommonConstant.FL4W) {
       poUrl = URLConstant.GetAllAssetDataForPOByAsset;
-    } else if (this.lobCode == CommonConstant.FL4W) {
-      poUrl = URLConstant.GetAllAssetDataForPOMultiAsset;
     }
 
-    
     let appAssetObj : ReqAssetDataObj = new ReqAssetDataObj();
     appAssetObj.AppId = this.AppId;
     appAssetObj.AgrmntId = this.AgrmntId;
@@ -82,7 +80,6 @@ export class PurchaseOrderDetailComponent implements OnInit {
 
     await this.http.post<ResGetAllAssetDataForPOByAssetObj>(poUrl, appAssetObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.AssetObj = response.ReturnObject;
         if(this.AssetObj.PurchaseOrderHId != 0){
           this.isDataExist = true;
@@ -93,6 +90,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
         this.TotalInsCustAmt = this.AssetObj.TotalInsCustAmt;
         this.TotalLifeInsCustAmt = this.AssetObj.TotalLifeInsCustAmt;
         this.TotalPurchaseOrderAmt = this.AssetObj.TotalPurchaseOrderAmt;
+        this.DiffRateAmt = this.AssetObj.DiffRateAmt;
         var tempAddr = this.AssetObj.AppCustAddrObj.Addr == null ? '-' : this.AssetObj.AppCustAddrObj.Addr;
         var areaCode4 = this.AssetObj.AppCustAddrObj.AreaCode4 == null ? '-' : this.AssetObj.AppCustAddrObj.AreaCode4;
         var areaCode3 = this.AssetObj.AppCustAddrObj.AreaCode3 == null ? '-' : this.AssetObj.AppCustAddrObj.AreaCode3;
@@ -159,6 +157,20 @@ export class PurchaseOrderDetailComponent implements OnInit {
       requestPurchaseOrderHObj: this.purchaseOrderHObj,
       requestPurchaseOrderDObjs: listPurchaseOrderD
     }
+
+    if(this.purchaseOrderHObj.BankCode ||
+      this.purchaseOrderHObj.BankBranch ||
+      this.purchaseOrderHObj.BankAccNo ||
+      this.purchaseOrderHObj.BankAccName) {
+      this.AddEditPO(POObj);
+    }
+    else{
+      this.toastr.warningMessage(ExceptionConstant.SUPPLIER_BANK_ACC_NOT_SET);
+    }
+  }
+
+  async AddEditPO(POObj: any)
+  {
     if(!this.isDataExist){      
       this.http.post(URLConstant.AddPurchaseOrder, POObj).subscribe(
         (response) => {
@@ -171,7 +183,6 @@ export class PurchaseOrderDetailComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT],{ "AgrmntId": this.AgrmntId, "LobCode": this.lobCode, "AppId": this.AppId, "TaskListId": this.TaskListId });
-          
         });
     }
   }

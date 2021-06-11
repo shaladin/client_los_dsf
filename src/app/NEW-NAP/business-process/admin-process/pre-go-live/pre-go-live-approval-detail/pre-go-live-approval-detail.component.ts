@@ -17,6 +17,7 @@ import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHisto
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ReqGetRfaLogByTrxNoAndApvCategoryObj } from 'app/shared/model/Request/NAP/PreGoLive/ReqGetRfaLogByTrxNoAndApvCategoryObj.model';
 
 @Component({
@@ -59,6 +60,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   count1: number = 0;
   ListRfaLogObj: any;
   listPreGoLiveAppvrObj: Array<any> = new Array<any>();
+  CustNoObj: GenericObj = new GenericObj();
 
   AppId: any;
   AgrmntId: any;
@@ -236,8 +238,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     } else if (key == 'mou') {
       AdInsHelper.OpenMOUCustViewByMouCustId(this.MouCustId);
     } else if (key == 'cust') {
-      var custObj = { CustNo: this.CustNo };
-      this.http.post(URLConstant.GetCustByCustNo, {TrxNo : this.CustNo}).subscribe(
+      this.CustNoObj.CustNo = this.CustNo;
+      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {
           AdInsHelper.OpenCustomerViewByCustId(response["CustId"])
         });
@@ -254,7 +256,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     this.outstandingTcObj = new OutstandingTcObj(); 
     this.listAppTCObj = new ListAppTCObj();
     this.listAppTCObj.AppTCObj = new Array();
-
+ 
     for (var i = 0; i < this.TCList["length"]; i++) {
       this.appTC = new AppTCObj();
       this.appTC.AppId = this.TCList[i].AppId;
@@ -273,9 +275,13 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
     this.outstandingTcObj.ListAppTCObj = this.listAppTCObj.AppTCObj;
 
-    this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
+    let ReqPreGoLiveApvCustomObj = {
+      Tasks: event.Tasks,
+      requestListOutstandingTcObj: this.outstandingTcObj
+    }
+
+    this.http.post(URLConstant.PreGoLiveApproval, ReqPreGoLiveApvCustomObj).subscribe(
       () => {
-        // this.toastr.successMessage("Success");
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
       }
     );
@@ -286,8 +292,8 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   openView(custNo) {
-    var custObj = { CustNo: custNo };
-    this.http.post(URLConstant.GetCustByCustNo, {TrxNo : custNo}).subscribe(
+    this.CustNoObj.CustNo = custNo;
+    this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
       response => {
         AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
       });

@@ -18,6 +18,7 @@ import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-in
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -67,13 +68,14 @@ export class NapDetailFormComponent implements OnInit {
   isDmsReady: boolean = false;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
-  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    private toastr: NGXToastrService, private cookieService: CookieService) {
+    private toastr: NGXToastrService, private cookieService: CookieService,
+    private spinner: NgxSpinnerService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -90,7 +92,6 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   async ngOnInit() : Promise<void> {
-    console.log("TEST");
     // check DMS
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
@@ -103,30 +104,29 @@ export class NapDetailFormComponent implements OnInit {
 
     // this.ChangeStepper();
 
+    await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
+      async (response: AppObj) => {
+        if (response) {
+          this.NapObj = response;
+          if (this.NapObj.MrCustTypeCode != null)
+            this.custType = this.NapObj.MrCustTypeCode;
+          this.bizTemplateCode = this.NapObj.BizTemplateCode;
+        }
+      });
+
     if (this.ReturnHandlingHId > 0) {
       this.ChangeStepper();
       this.ChooseStep(this.AppStepIndex);
-      this.IsDataReady = true;
     }
     else {
-      var appObj = { Id: this.appId };
-      this.http.post(URLConstant.GetAppById, appObj).subscribe(
-        (response: AppObj) => {
-          if (response) {
-            this.NapObj = response;
-            if (this.NapObj.MrCustTypeCode != null)
-              this.custType = this.NapObj.MrCustTypeCode;
-            if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
-              this.initDms();
-            }
-            this.ChangeStepper();
-            this.bizTemplateCode = this.NapObj.BizTemplateCode;
-            this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
-            this.ChooseStep(this.AppStepIndex);
-            this.IsDataReady = true;
-          }
-        });
+      if (this.NapObj.AppCurrStep == CommonConstant.AppStepUplDoc) {
+        await this.initDms();
+      }
+      this.ChangeStepper();
+      this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
+      this.ChooseStep(this.AppStepIndex);
     }
+    this.IsDataReady = true;
     this.MakeViewReturnInfoObj();
     
 
@@ -141,8 +141,8 @@ export class NapDetailFormComponent implements OnInit {
       this.dmsObj.Role = currentUserContext.RoleCode;
       this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
       var appObj = { Id: this.appId };
-      this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
-        response => {
+      await this.http.post(URLConstant.GetAppCustByAppId, appObj).toPromise().then(
+        async (response) => {
           this.appNo = this.NapObj.AppNo;
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.appNo));
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
@@ -158,7 +158,7 @@ export class NapDetailFormComponent implements OnInit {
           let mouId = this.NapObj.MouCustId;
           if (mouId != null && mouId != 0) {
             let mouObj = { Id: mouId };
-            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+            await this.http.post(URLConstant.GetMouCustById, mouObj).toPromise().then(
               result => {
                 let mouCustNo = result['MouCustNo'];
                 this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
@@ -295,7 +295,7 @@ export class NapDetailFormComponent implements OnInit {
     this.viewAppMainInfo.ReloadUcViewGeneric();
   }
 
-  NextStep(Step) {
+  async NextStep(Step) {
     if (this.ReturnHandlingHId > 0) {
 
     } else {
@@ -303,7 +303,7 @@ export class NapDetailFormComponent implements OnInit {
     }
 
     if (Step == CommonConstant.AppStepUplDoc) {
-      this.initDms();
+      await this.initDms();
     }
     this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {
@@ -318,6 +318,8 @@ export class NapDetailFormComponent implements OnInit {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) => {
+        this.spinner.show();
+        setTimeout(() => { this.spinner.hide(); }, 1500);
       }
     )
   }
@@ -366,7 +368,7 @@ export class NapDetailFormComponent implements OnInit {
       this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING], { BizTemplateCode: CommonConstant.CF4W });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING], { BizTemplateCode: CommonConstant.CF4W });
         }
       )
     }

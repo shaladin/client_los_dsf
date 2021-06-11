@@ -5,7 +5,7 @@ import { environment } from 'environments/environment';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { CookieService } from 'ngx-cookie';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { UcThingsToDoObj } from 'app/shared/model/library/UcThingsToDoObj.model';
+import { ThingsToDoIntegrationObj, UcThingsToDoObj } from 'app/shared/model/library/UcThingsToDoObj.model';
 
 export interface Chart {
   type: ChartType;
@@ -38,8 +38,11 @@ export class DashBoardComponent implements OnInit {
     this.roleCode = context[CommonConstant.ROLE_CODE];
     this.Item.Url = environment.FoundationR3Url + "/ThingsToDo/GetThingsToDoByRole";
     this.Item.RequestObj.ModuleCode = CommonConstant.LOAN_ORIGINATION;
-    this.Item.RequestObj.IntegrationObj[0].RequestObj.Office = this.officeCode;
-    this.Item.RequestObj.IntegrationObj[0].RequestObj.Role =this.roleCode;
-    this.Item.RequestObj.IntegrationObj[0].RequestObj.UserName = this.username;
+
+    let integrationObj = new ThingsToDoIntegrationObj();
+    integrationObj.RequestObj.Office = this.officeCode;
+    integrationObj.RequestObj.Role = this.roleCode;
+    integrationObj.RequestObj.UserName = this.username;
+    this.Item.RequestObj.IntegrationObj.push(integrationObj);
   }
 }

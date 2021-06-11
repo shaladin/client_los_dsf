@@ -1,7 +1,7 @@
 {
-    "title": "REPORT RENTAL SUmMARY SUPPLIER",
-    "reportName": "RENTAL SUMMARY SUPPLIER REPORT",
-    "reportTemplateName": "RentalSummarySupplier.rdlc",
+    "title": "Report Rental Summary Supplier",
+    "reportName": "Rental Summary Supplier Report",
+    "reportTemplateCode": "RENTAL_SUMMARY_SUPPLIER",
     "component": [
       {
         "type": "dropdown",
@@ -9,15 +9,14 @@
         "name": "OfficeCode",
         "datatype": "text",
         "isFromURL": true,
-        "isSelectOne": true,
+        "ddlType": "one",
         "url": "",
         "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
         "items": [],
         "itemsUrl": [],
         "criteriaPropName": "",
         "criteriaPropValue": "",
-        "isReportParam": false,
-        "isProviderParam": true
+        "paramAssignment": 1
       },
       {
         "type": "datepicker",
@@ -26,8 +25,7 @@
         "datatype": "date",
         "value": "BD-10",
         "restriction": "gte",
-        "isReportParam": true,
-        "isProviderParam": true
+        "paramAssignment": 0
       },
       {
         "type": "datepicker",
@@ -36,8 +34,7 @@
         "datatype": "date",
         "value": "BD+10",
         "restriction": "lte",
-        "isReportParam": true,
-        "isProviderParam": true
+        "paramAssignment": 0
       }
     ],
     "exportTypeList": [

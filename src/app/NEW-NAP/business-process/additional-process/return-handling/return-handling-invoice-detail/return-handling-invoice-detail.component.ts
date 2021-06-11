@@ -26,7 +26,7 @@ import { CookieService } from 'ngx-cookie';
   templateUrl: './return-handling-invoice-detail.component.html'
 })
 export class ReturnHandlingInvoiceDetailComponent implements OnInit {
-
+  ReqByIdObj: GenericObj = new GenericObj();
   ReturnHandlingHId: number;
   ReturnHandlingDObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   AppId: number;
@@ -75,17 +75,6 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
   ngOnInit() {
     this.ClaimTask();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewInvoiceVerif.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "ApplicationNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
 
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridInvoiceData.json";
@@ -127,7 +116,8 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
       this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
         (response : ResReturnHandlingDObj) => {
           this.ReturnHandlingDObj = response;
-        });
+        }
+      );
     }
   }
 
@@ -144,7 +134,8 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
   }
 
   GetListInvoice() {
-    this.http.post(URLConstant.GetListAppInvoiceFctrByAppId, { AppId: this.AppId }).subscribe((response) => {
+    this.ReqByIdObj.Id = this.AppId;
+    this.http.post(URLConstant.GetListAppInvoiceFctrByAppId, this.ReqByIdObj).subscribe((response) => {
       this.inputGridObj.resultData = {
         Data: ""
       }
@@ -155,7 +146,8 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
   }
 
   GetAppInvoiceFctrData(AppInvoiceFctrId: number) {
-    this.http.post(URLConstant.GetAppInvoiceFctrByAppInvoiceFctrId, { AppInvoiceFctrId: AppInvoiceFctrId }).subscribe(
+    this.ReqByIdObj.Id = AppInvoiceFctrId;
+    this.http.post(URLConstant.GetAppInvoiceFctrByAppInvoiceFctrId, this.ReqByIdObj).subscribe(
       (response: AppInvoiceFctrObj) => {
         this.RHInvoiceForm.patchValue({
           AppInvoiceFctrId: response.AppInvoiceFctrId,
@@ -165,24 +157,26 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
           InvoiceDueDt: formatDate(response.InvoiceDueDt, 'yyyy-MM-dd', 'en-US'),
           RowVersion: response.RowVersion
         })
-      });
+      }
+    );
 
-    
-      this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-        (response) => {
-          this.http.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { Id: response["MouCustId"] }).subscribe(
-            (response2) => {
-              if (response2["length"] > 0) {
-                this.IsDisableCustFctr = false;
-                this.RHInvoiceForm.controls.CustomerFactoringName.clearValidators();
-                this.RHInvoiceForm.controls.CustomerFactoringName.updateValueAndValidity();
-                this.MouCustLookupObj.nameSelect = this.RHInvoiceForm.controls.CustomerFactoringName.value;
-                this.MouCustLookupObj.jsonSelect = { CustName: this.RHInvoiceForm.controls.CustomerFactoringName.value };
-              } else {
-                this.IsDisableCustFctr = true;
-              }
-            });
-        });
+    this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
+      (response) => {
+        this.http.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { Id: response["MouCustId"] }).subscribe(
+          (response2) => {
+            if (response2[CommonConstant.ReturnObj]["length"] > 0) {
+              this.IsDisableCustFctr = false;
+              this.RHInvoiceForm.controls.CustomerFactoringName.clearValidators();
+              this.RHInvoiceForm.controls.CustomerFactoringName.updateValueAndValidity();
+              this.MouCustLookupObj.nameSelect = this.RHInvoiceForm.controls.CustomerFactoringName.value;
+              this.MouCustLookupObj.jsonSelect = { CustName: this.RHInvoiceForm.controls.CustomerFactoringName.value };
+            } else {
+              this.IsDisableCustFctr = true;
+            }
+          }
+        );
+      }
+    );
   }
 
   SaveForm() {
@@ -194,7 +188,8 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
         this.GetListInvoice();
         this.toastr.successMessage(response["message"]);
         this.CancelEdit();
-      })
+      }
+    )
   }
 
   CancelEdit() {
@@ -219,7 +214,8 @@ export class ReturnHandlingInvoiceDetailComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_INVOICE_PAGING], { "BizTemplateCode": this.BizTemplateCode });
-      });
+      }
+    );
   }
 
   GetLookupMouCust(event: any){

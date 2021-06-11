@@ -25,7 +25,21 @@ import { UcdropdownlistModule } from '@adins/ucdropdownlist';
 import { UcreportModule } from "@adins/ucreport";
 import { UcTestingComponent } from './uc-testing/uc-testing.component';
 import { UcTestComponent } from './uc-test/uc-test.component';
-    
+import { CurrencyMaskInputMode, NgxCurrencyModule } from 'ngx-currency';
+
+export const customCurrencyMaskConfig = {
+    align: "right",
+    allowNegative: false,
+    allowZero: true,
+    decimal: ".",
+    precision: 2,
+    prefix: "",
+    suffix: "",
+    thousands: ",",
+    nullable: false,
+    inputMode: CurrencyMaskInputMode.NATURAL
+};
+
 @NgModule({
     declarations: [
         UcTestingComponent,
@@ -82,6 +96,7 @@ import { UcTestComponent } from './uc-test/uc-test.component';
         UcthingstodoModule,
         UcreportModule,
         UcdropdownlistModule,
+        NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     ]
 })
 
