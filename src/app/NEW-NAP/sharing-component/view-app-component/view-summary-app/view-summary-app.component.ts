@@ -74,7 +74,7 @@ export class ViewSummaryAppComponent implements OnInit {
   }
 
   getSummaryPreviousApp() {
-    var reqObj = { AppId: this.PreviousAppId };
+    var reqObj = { Id: this.PreviousAppId };
     this.http.post<SummaryAppObj>(URLConstant.GetSummaryAppByAppId, reqObj).subscribe(
       (response) => {
         this.SummaryPreviousAppObj = response;

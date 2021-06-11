@@ -688,9 +688,12 @@ export class CollateralAddEditComponent implements OnInit {
         this.collateralPortionHandler();
         this.AddCollForm.removeControl("AssetAccessoriesObjs");
         this.AddCollForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
-        this.AddCollForm.patchValue({
-          AssetCategoryCode: this.returnAppCollateralObj.AssetCategoryCode
-        });
+        if(this.returnAppCollateralObj != undefined)
+        {
+            this.AddCollForm.patchValue({
+            AssetCategoryCode: this.returnAppCollateralObj.AssetCategoryCode
+          });
+        }
         this.inputLookupObj = new InputLookupObj();
         this.inputLookupObj.isReady = false;
         this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
@@ -865,7 +868,14 @@ export class CollateralAddEditComponent implements OnInit {
     const fullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
     const assetType = this.AddCollForm.controls["AssetTypeCode"].value;
     var serialNoForm = this.items.controls[0] as FormGroup;
-    const serialNo1 = serialNoForm.controls["SerialNoValue"].value;
+    
+    let serialNo1: [];
+
+    if(serialNoForm != undefined)
+    {
+      serialNo1 = serialNoForm.controls["SerialNoValue"].value;
+    }
+
     const currCollPrcnt = this.AddCollForm.controls["CollPercentage"].value;
     const collValueAmt = this.AddCollForm.controls["CollateralValueAmt"].value;
 
