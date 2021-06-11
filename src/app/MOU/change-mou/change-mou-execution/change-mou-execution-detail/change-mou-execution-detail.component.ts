@@ -10,6 +10,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CookieService } from "ngx-cookie";
 
 @Component({
   selector: 'app-change-mou-execution-detail',
@@ -38,7 +39,8 @@ export class ChangeMouExecutionDetailComponent implements OnInit {
     private location: Location,
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
-    private router: Router) {
+    private router: Router,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params['MouCustId'] != null) {
         this.MouCustId = params['MouCustId'];
@@ -55,14 +57,14 @@ export class ChangeMouExecutionDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
 
       var datePipe = new DatePipe("en-US");
-      var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+      var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
       if (currentUserContext != null && currentUserContext != undefined) {
         this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
         this.businessDt.setDate(this.businessDt.getDate() - 1);

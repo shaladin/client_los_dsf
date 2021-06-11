@@ -205,7 +205,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
       }
     );
-    if (this.verifResultObj.VerfResultId == 0) {
+    if (this.verifResultObj == undefined || this.verifResultObj.VerfResultId == 0) {
       var Business_Date = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE));
       var datePipe = new DatePipe("en-US");
       var value = datePipe.transform(Business_Date, "yyyy-MM-dd");

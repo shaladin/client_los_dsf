@@ -9,6 +9,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-mou-unfreeze-inquiry',
@@ -18,9 +20,13 @@ export class MouUnfreezeInquiryComponent implements OnInit {
 
   inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj>;
-  userContext: CurrentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+  userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-  constructor(private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router) { }
+  constructor(
+    private toastr: NGXToastrService, 
+    private httpClient: HttpClient, 
+    private router: Router,
+    private cookieService: CookieService) { }
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchMouFeezeUnfreezeInqry.json";

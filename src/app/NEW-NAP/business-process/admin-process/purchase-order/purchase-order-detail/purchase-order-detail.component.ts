@@ -12,7 +12,6 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqAssetDataObj } from 'app/shared/model/Request/AppAsset/ReqAppAssetObj.model';
 import { ResGetAllAssetDataForPOByAsset, ResGetAllAssetDataForPOByAssetObj } from 'app/shared/model/Response/PurchaseOrder/ResGetAllAssetDataForPO.model';
-import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-purchase-order-detail',
@@ -38,13 +37,9 @@ export class PurchaseOrderDetailComponent implements OnInit {
   // purchaseOrderDObj: PurchaseOrderDObj;
   lobCode: string;
   TaskListId: string;
-  bankVisible: boolean = false;
-  responseRefBank: any;
-  responseGeneralSetting: any;
-  businessDt: Date;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private toastr: NGXToastrService, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params["AgrmntId"] != null) {
         this.AgrmntId = params["AgrmntId"];
@@ -71,7 +66,6 @@ export class PurchaseOrderDetailComponent implements OnInit {
   async ngOnInit() {
     this.arrValue.push(this.AgrmntId);
     this.purchaseOrderHObj = new PurchaseOrderHObj();
-    this.getBankAcc();
 
     let poUrl = "";
     if (this.lobCode == CommonConstant.CF4W) {
@@ -88,6 +82,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
 
     await this.http.post<ResGetAllAssetDataForPOByAssetObj>(poUrl, appAssetObj).toPromise().then(
       (response) => {
+        console.log(response);
         this.AssetObj = response.ReturnObject;
         if(this.AssetObj.PurchaseOrderHId != 0){
           this.isDataExist = true;
@@ -124,6 +119,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
     var tempRefMasterObj = new Array();
     await this.http.post(URLConstant.GetPurchaseOrderDPoItemCodeFromRuleByType, {}).toPromise().then(
       (response) => {
+        console.log(response);
         tempRefMasterObj = response["ListPoItems"];
 
       });
@@ -151,18 +147,9 @@ export class PurchaseOrderDetailComponent implements OnInit {
   }
   
   async SaveForm() {
-
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
     this.purchaseOrderHObj.MouNo = this.MouNo;
     this.purchaseOrderHObj.Notes = this.Notes;
-    this.purchaseOrderHObj.PurchaseOrderDt = this.businessDt;
-    if(this.bankVisible == true){
-      this.purchaseOrderHObj.BankCode = this.responseGeneralSetting.BankCode;
-      this.purchaseOrderHObj.BankBranch = this.responseGeneralSetting.OfficeBankAccBranch;
-      this.purchaseOrderHObj.BankAccNo = this.responseGeneralSetting.OfficeBankAccNo;
-      this.purchaseOrderHObj.BankAccName = this.responseGeneralSetting.OfficeBankAccName;
-    }
+
     // this.listPurchaseOrderD = new Array();
     // this.purchaseOrderDObj = new PurchaseOrderDObj();
 
@@ -187,37 +174,5 @@ export class PurchaseOrderDetailComponent implements OnInit {
           
         });
     }
-  }
-
-  selectedOption(event)
-  {    
-    if(event == 'Yes'){
-      this.bankVisible = true;
-    } 
-    else{
-      this.bankVisible = false;
-    }      
-  }
-
-  getBankAcc(){
-    this.http.post(URLConstant.GetBankDsfbyGeneralSettingR2, {}).subscribe(
-    (response) => {
-      this.responseGeneralSetting = response;
-      this.getBankName(this.responseGeneralSetting.BankCode);
-    });
-  }
-
-  getBankName(BankCode: string){
-    var bankObj = {
-      Code: BankCode
-    };
-    this.http.post(URLConstant.GetRefBankByBankCodeAsync, bankObj).subscribe(
-      (response) => {
-        this.responseRefBank = response
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
   }
 }

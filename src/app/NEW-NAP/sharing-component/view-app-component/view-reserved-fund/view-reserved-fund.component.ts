@@ -12,7 +12,7 @@ import { AppReservedFundObj } from 'app/shared/model/AppReservedFundObj.model';
 })
 export class ViewReservedFundComponent implements OnInit {
   @Input() appId: number;
-  RsvFundObj: Array<AppReservedFundObj>;
+  RsvFundObj: Array<AppReservedFundObj> = new Array<AppReservedFundObj>();
   totalRsvFund: number = 0;
 
   constructor(private http: HttpClient) {

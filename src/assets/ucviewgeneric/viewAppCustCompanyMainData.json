@@ -16,11 +16,6 @@
           "label": "Customer Model",
           "property": "CustModelName"
         },
-		{
-          "type": "text",
-          "label": "Company Brand Name",
-          "property": "CompanyBrandName"
-        },
         {
           "type": "text",
           "label": "Industry Type",

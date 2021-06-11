@@ -12,6 +12,8 @@ import { ExceptionConstant } from "app/shared/constant/ExceptionConstant";
 import { ClaimWorkflowObj } from "app/shared/model/Workflow/ClaimWorkflowObj.Model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
+import { AdInsHelper } from "app/shared/AdInsHelper";
+import { CookieService } from "ngx-cookie";
 
 @Component({
   selector: "app-change-mou-request-detail",
@@ -67,7 +69,8 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     private httpClient: HttpClient,
     private fb: FormBuilder,
     private toastr: NGXToastrService,
-    private http: HttpClient
+    private http: HttpClient,
+    private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe((params) => {
       console.log("68");
@@ -108,9 +111,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     console.log(this.mouType)
     var datePipe = new DatePipe("en-US");
 
-    var userContext = JSON.parse(
-      localStorage.getItem(CommonConstant.USER_ACCESS)
-    );
+    var userContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.refOfficeId = userContext.OfficeId;
     this.businessDt = userContext.BusinessDt;
     if (this.pageType == "return") {
@@ -220,7 +221,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
 
   
    ClaimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
@@ -261,9 +262,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
   Save(enjiForm) {
     var mouCustFormData = this.MOUMainInfoForm.getRawValue();
 
-    var userContext = JSON.parse(
-      localStorage.getItem(CommonConstant.USER_ACCESS)
-    );
+    var userContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.refOfficeId = userContext.OfficeId;
     this.businessDt = userContext.BusinessDt;
 

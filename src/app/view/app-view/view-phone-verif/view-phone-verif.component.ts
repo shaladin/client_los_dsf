@@ -7,6 +7,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 import { DatePipe } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: "view-phone-verif",
@@ -16,12 +17,11 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 export class ViewPhoneVerifComponent implements OnInit {
   @Input() appId: any;
   appObj = {
-    AppId: 0,
-    Id:0
+    Id: 0
   };
 
   AppObj: any;
-  phoneVerifObj: any;
+  phoneVerifObj: Array<any> = new Array<any>();
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router) {
 
@@ -33,7 +33,6 @@ export class ViewPhoneVerifComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.appObj.AppId = this.appId;
     this.appObj.Id = this.appId;
     this.GetPhnVerfSubjData();
 
@@ -42,7 +41,7 @@ export class ViewPhoneVerifComponent implements OnInit {
   GetPhnVerfSubjData() {
     this.http.post(URLConstant.GetAppPhoneVerifSubjectListByAppId, this.appObj).subscribe(
       (response) => {
-        this.phoneVerifObj = response;
+        this.phoneVerifObj = response[CommonConstant.ReturnObj];
       }
     );
   }

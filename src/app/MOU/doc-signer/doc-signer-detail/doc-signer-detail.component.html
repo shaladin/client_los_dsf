@@ -43,10 +43,10 @@
                             </div>
                         </div>
                     </div>
-                    <lib-ucSubsection *ngIf="MrCustTypeCode == 'COMPANY'" [id]="'custSignerId'" [title]="'Customer Signer'" [panel]="'custSigner'">
+                    <lib-ucSubsection [id]="'custSignerId'" [title]="'Customer Signer'" [panel]="'custSigner'">
                     </lib-ucSubsection>
                     <div id="custSigner">
-                        <div *ngIf="MrCustTypeCode == 'COMPANY'" class="form-group row">
+                        <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required-label" translate>Customer Signer 1 </label>
                             <div class="col-md-4">
                                 <lib-uclookupgeneric *ngIf="MrCustTypeCode == 'PERSONAL'" [lookupInput]="customerLookUpObj1" [parentForm]="MouCustSignerForm"
@@ -57,7 +57,7 @@
                                 </lib-uclookupgeneric>
                             </div>
                         </div>
-                        <div *ngIf="MrCustTypeCode == 'COMPANY'" class="form-group row">
+                        <div class="form-group row">
                             <label class="col-md-3 adInsLabel adins-required" translate>Customer Signer Position 1 </label>
                             <div class="col-md-4">
                             <input type="text" class="form-control adInsInput" formControlName="CustSignerPosition1"

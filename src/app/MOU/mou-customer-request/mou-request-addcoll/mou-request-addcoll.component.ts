@@ -136,7 +136,7 @@ export class MouRequestAddcollComponent implements OnInit {
     RowVersionCollateralRegistration: [''],
     items: this.fb.array([]),
     MrCollateralConditionCode: [''],
-    ManufacturingYear: ['', Validators.required, [Validators.pattern("^[0-9]+$")]],
+    ManufacturingYear: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     CollateralPortionAmt: [0, Validators.required],
     CollateralPortionType: [''],
     ListDoc: this.fb.array([])

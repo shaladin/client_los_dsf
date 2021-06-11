@@ -106,7 +106,7 @@
                     <td class="text-center">{{item.DateAsOf | date: 'dd-MMM-yyyy'}}</td>
                     <td class="text-center"><a href="javascript:;" (click)="showDetailCustFinData(i)"><i class="ft-edit-2 font-medium-3 mr-2"></i></a></td>
                     </tr>
-                    <tr *ngIf="ListCustPersonalFinData.length <= 0">
+                    <tr *ngIf="ListCustPersonalFinData?.length <= 0">
                     <td class="text-center" colspan="2" translate>No Data Available</td>
                     </tr>
                 </tbody>
