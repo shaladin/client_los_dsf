@@ -17,6 +17,8 @@ import { CookieService } from 'ngx-cookie';
 import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { ReqAddNapFromCopyObj, ReqAddNapObj } from 'app/shared/model/Request/NAP/NewApplication/ReqAddNapObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ReqByProdOffCodeAndVersionObj } from 'app/shared/model/Request/Product/ReqByProdOffCodeAndVersionObj.model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'cust-main-data-add',
@@ -180,6 +182,19 @@ export class CustMainDataAddComponent implements OnInit {
   }
 
   getLookupAppResponseCopy(ev: any) {
+    var reqByProdOffCodeAndVersionObj = new ReqByProdOffCodeAndVersionObj();
+    reqByProdOffCodeAndVersionObj.ProdOfferingCode = ev.ProdOfferingCode;
+    reqByProdOffCodeAndVersionObj.ProdOfferingVersion = ev.ProdOfferingVersion;
+    reqByProdOffCodeAndVersionObj.ProdOfferingName = ev.ProdOfferingName;
+    this.http.post(URLConstant.GetProdStatByProdOffCodeAndVersion, reqByProdOffCodeAndVersionObj).subscribe(
+      (response) => {
+        let ProdStat = response["ProdStat"];
+        let ProdStatDescr = response["ProdStatDescr"];
+        if(ProdStat != "ACT"){
+          this.toastr.warningMessage(ExceptionConstant.PRODUCT_HAS + ProdStatDescr);
+        }
+      }
+    );
     this.NapAppForm.patchValue({
       AppNo: ev.AppNo,
       ProdOfferingName: ev.ProdOfferingName,

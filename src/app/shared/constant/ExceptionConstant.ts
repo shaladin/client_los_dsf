@@ -118,6 +118,7 @@ export class ExceptionConstant {
     public static CONFIRM_PROD_OFF_TO_COPY = "This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?";
     public static SELECT_PROD_TO_COPY = "Please select Product to copied";
     public static CONFIRM_PROD_TO_COPY = "This action will overwrite your Product Component and Product Branch Member, Are you sure to copy this Product ?";
+    public static PRODUCT_HAS = "This Product has ";
     
 }
 
