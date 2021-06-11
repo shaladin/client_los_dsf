@@ -165,19 +165,20 @@ export class AppViewComponent implements OnInit {
           }
           this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsNoApp, this.AppNo));
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideView));
-          let mouCustId = response[0]['MouCustId'];
-          if (mouCustId != null && mouCustId != '') {
-            var mouObj = { Id: mouCustId };
-            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-              (response) => {
-                let mouCustNo = response['MouCustNo'];
-                this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
-                this.isDmsReady = true;
-              });
-          }
-          else {
-            this.isDmsReady = true;
-          }
+          this.isDmsReady = true;
+          // let mouCustId = response[0]['MouCustId'];
+          // if (mouCustId != null && mouCustId != '') {
+          //   var mouObj = { Id: mouCustId };
+          //   this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
+          //     (response) => {
+          //       let mouCustNo = response['MouCustNo'];
+          //       this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, mouCustNo));
+          //       this.isDmsReady = true;
+          //     });
+          // }
+          // else {
+          //   this.isDmsReady = true;
+          // }
         }
       );
     }
