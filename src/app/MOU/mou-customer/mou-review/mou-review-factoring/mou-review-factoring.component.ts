@@ -123,13 +123,11 @@ export class MouReviewFactoringComponent implements OnInit {
   Submit() {
     this.ApprovalCreateOutput = this.createComponent.output();
     if (this.ApprovalCreateOutput != undefined) {
-      var submitMouReviewObj = {
+      var submitObj = {
         WfTaskListId: this.WfTaskListId,
-        MouCust: this.MouCustId,
-        PlafondAmt: this.PlafondAmt,
         RequestRFAObj: this.ApprovalCreateOutput
       }
-      this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
+      this.http.post(URLConstant.SubmitMouReviewNew, submitObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});

@@ -14,6 +14,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-mou-unfreeze-apv-paging',
@@ -23,9 +25,13 @@ export class MouUnfreezeApvPagingComponent implements OnInit {
 
   inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj>;
-  userContext: CurrentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+  userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-  constructor(private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router) { }
+  constructor(
+    private toastr: NGXToastrService, 
+    private httpClient: HttpClient, 
+    private router: Router,
+    private cookieService: CookieService) { }
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchMouFeezeUnfreezeApvPaging.json";

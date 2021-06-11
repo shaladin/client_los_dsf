@@ -15,6 +15,8 @@ import { VendorObj } from "app/shared/model/Vendor.Model";
 import { RefPayFreqObj } from "app/shared/model/RefPayFreqObj.model";
 import { KeyValueObj } from "app/shared/model/KeyValue/KeyValueObj.model";
 import { GenericObj } from "app/shared/model/Generic/GenericObj.Model";
+import { AdInsHelper } from "app/shared/AdInsHelper";
+import { CookieService } from "ngx-cookie";
 
 @Component({
   selector: "app-change-mou-detail-dealerfinancing",
@@ -74,7 +76,8 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
   constructor(
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cookieService: CookieService
   ) {
     this.isListedFctr = false;
     this.shouldComponentLoad = false;
@@ -227,7 +230,7 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
   }
 
   initLookup() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var suppCrit = new Array();
     var critSuppObj = new CriteriaObj();
     critSuppObj.DataType = 'text';

@@ -10,6 +10,7 @@ import { URLConstant } from "app/shared/constant/URLConstant";
 import { ChangeMouCustConfirmCancelObj } from "app/shared/model/ChangeMouCustConfirmCancelObj.Model";
 import { CurrentUserContext } from "app/shared/model/CurrentUserContext.model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
+import { CookieService } from "ngx-cookie";
 
 @Component({
   selector: "app-change-mou-cancel",
@@ -24,11 +25,12 @@ export class ChangeMouCancelComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) {}
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
       this.inputPagingObj = new UcPagingObj();
       this.inputPagingObj._url =

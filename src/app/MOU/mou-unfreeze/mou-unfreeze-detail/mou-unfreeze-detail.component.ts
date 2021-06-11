@@ -78,9 +78,7 @@ export class MouUnfreezeDetailComponent implements OnInit {
     await this.getApv();
     this.title = "Detail Mou Freeze Unfreeze";
 
-    var currentUserContext = JSON.parse(
-      localStorage.getItem(CommonConstant.USER_ACCESS)
-    );
+    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
     this.ReqByUserId = currentUserContext[CommonConstant.USER_NAME];
     this.OfficeCode = currentUserContext["OfficeCode"];
@@ -148,7 +146,7 @@ export class MouUnfreezeDetailComponent implements OnInit {
       "TypeCode" : CommonConstant.APV_TYPE_MOU_FRZ_UNFRZ_APV_TYPE,
       "Attributes" : Attributes,
     }
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
