@@ -329,7 +329,7 @@ export class CollateralDetailComponent implements OnInit {
   }
 
   async initDropdownList() {
-    await this.http.post(URLConstant.GetListKeyValueByCode, {}).toPromise().then(
+    await this.http.post(URLConstant.GetAssetTypeListKeyValueActiveByCode, {}).toPromise().then(
       async (response) => {
         this.CollTypeList = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
@@ -992,31 +992,31 @@ export class CollateralDetailComponent implements OnInit {
     }
   }
 
-  // copyToLocation() {
-  //   if(this.isCopy == true){
-  //     this.LocationAddrObj.Addr = this.AppCustAddrObj.Addr;
-  //     this.LocationAddrObj.AreaCode1 = this.AppCustAddrObj.AreaCode1;
-  //     this.LocationAddrObj.AreaCode2 = this.AppCustAddrObj.AreaCode2;
-  //     this.LocationAddrObj.AreaCode3 = this.AppCustAddrObj.AreaCode3;
-  //     this.LocationAddrObj.AreaCode4 = this.AppCustAddrObj.AreaCode4;
-  //     this.LocationAddrObj.City = this.AppCustAddrObj.City;
-  //     this.LocationAddrObj.Fax = this.AppCustAddrObj.Fax;
-  //     this.LocationAddrObj.FaxArea = this.AppCustAddrObj.FaxArea;
-  //     this.LocationAddrObj.Phn1 = this.AppCustAddrObj.Phn1;
-  //     this.LocationAddrObj.Phn2 = this.AppCustAddrObj.Phn2;
-  //     this.LocationAddrObj.PhnArea1 = this.AppCustAddrObj.PhnArea1;
-  //     this.LocationAddrObj.PhnArea2 = this.AppCustAddrObj.PhnArea2;
-  //     this.LocationAddrObj.PhnExt1 = this.AppCustAddrObj.PhnExt1;
-  //     this.LocationAddrObj.PhnExt2 = this.AppCustAddrObj.PhnExt2;
-  //     this.LocationAddrObj.SubZipcode = this.AppCustAddrObj.SubZipcode;
+  copyToLocation() {
+    if(this.isCopy == true){
+      this.LocationAddrObj.Addr = this.AppCustAddrObj.Addr;
+      this.LocationAddrObj.AreaCode1 = this.AppCustAddrObj.AreaCode1;
+      this.LocationAddrObj.AreaCode2 = this.AppCustAddrObj.AreaCode2;
+      this.LocationAddrObj.AreaCode3 = this.AppCustAddrObj.AreaCode3;
+      this.LocationAddrObj.AreaCode4 = this.AppCustAddrObj.AreaCode4;
+      this.LocationAddrObj.City = this.AppCustAddrObj.City;
+      this.LocationAddrObj.Fax = this.AppCustAddrObj.Fax;
+      this.LocationAddrObj.FaxArea = this.AppCustAddrObj.FaxArea;
+      this.LocationAddrObj.Phn1 = this.AppCustAddrObj.Phn1;
+      this.LocationAddrObj.Phn2 = this.AppCustAddrObj.Phn2;
+      this.LocationAddrObj.PhnArea1 = this.AppCustAddrObj.PhnArea1;
+      this.LocationAddrObj.PhnArea2 = this.AppCustAddrObj.PhnArea2;
+      this.LocationAddrObj.PhnExt1 = this.AppCustAddrObj.PhnExt1;
+      this.LocationAddrObj.PhnExt2 = this.AppCustAddrObj.PhnExt2;
+      this.LocationAddrObj.SubZipcode = this.AppCustAddrObj.SubZipcode;
 
-  //     this.inputFieldLocationObj.inputLookupObj.nameSelect = this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value;
-  //     this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.AddCollForm.controls["OwnerAddrObjZipcode"]["controls"].value.value };
-  //     this.inputAddressObjForLoc.default = this.LocationAddrObj;
-  //     this.inputAddressObjForLoc.inputField = this.inputFieldLocationObj;
-  //   }
+      this.inputFieldLocationObj.inputLookupObj.nameSelect = this.AppCustAddrObj.Zipcode;
+      this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.AppCustAddrObj };
+      this.inputAddressObjForLoc.default = this.LocationAddrObj;
+      this.inputAddressObjForLoc.inputField = this.inputFieldLocationObj;
+    }
 
-  // }
+  }
 
   SaveForm() {
     const fullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;

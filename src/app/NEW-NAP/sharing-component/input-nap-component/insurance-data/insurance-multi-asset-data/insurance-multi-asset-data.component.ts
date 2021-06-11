@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
-import { FormBuilder, Validators, FormArray, FormGroupDirective } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormGroupDirective, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
@@ -55,7 +55,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   IsMultiAsset: string = "false";
   BizTemplateCode: string = "";
 
-  appObj: NapAppModel;
+  appObj: NapAppModel = new NapAppModel();
   appAssetObj: AppAssetObj = new AppAssetObj();
   appAssetAccessoryObjs: Array<AppAssetAccessoryObj>;
   appFinDataObj: AppFinDataObj;
@@ -866,6 +866,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     this.BindCapitalize();
   }
 
+  DictInsCustRate: { [id: string]: number } = {};
   GenerateMainAndAddCvgTable() {
     var ManufYearDiff = this.businessDt.getFullYear() - parseInt(this.appCollateralObj.ManufacturingYear);
     var yearCount = this.InsuranceDataForm.controls.InsLength.value;
@@ -987,6 +988,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
             var assetAgeMin = this.ruleObj["AssetAgeFrom"][i] ? parseInt(this.ruleObj["AssetAgeFrom"][i], 10) : 0;
             var assetAgeMax = this.ruleObj["AssetAgeTo"][i] ? parseInt(this.ruleObj["AssetAgeTo"][i], 10) : 0;
             if (ManufYearDiff >= assetAgeMin && ManufYearDiff <= assetAgeMax) {
+              this.AddDictInsCustRate(o.Key, custAddPremiRate);
               checkboxValue = true;
               const control = this.fb.group({
                 MrAddCvgTypeCode: o.Key,
@@ -1008,6 +1010,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         }
       }
       else {
+        this.AddDictInsCustRate(o.Key, custAddPremiRate);
         const control = this.fb.group({
           MrAddCvgTypeCode: o.Key,
           AddCvgTypeName: o.Value,
@@ -1030,6 +1033,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       //     checkboxValue = true;
     });
     return group;
+  }
+
+  AddDictInsCustRate(MrAddCvgTypeCode: string, rate: number) {
+    if (this.DictInsCustRate[MrAddCvgTypeCode] == null || this.DictInsCustRate[MrAddCvgTypeCode] == undefined) this.DictInsCustRate[MrAddCvgTypeCode] = rate;
   }
 
   addGroupFromDB(insMainCvg: AppInsMainCvgObj, ManufYearDiff) {
@@ -1083,6 +1090,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
             var assetAgeMin = this.ruleObj["AssetAgeFrom"][i] ? parseInt(this.ruleObj["AssetAgeFrom"][i], 10) : 0;
             var assetAgeMax = this.ruleObj["AssetAgeTo"][i] ? parseInt(this.ruleObj["AssetAgeTo"][i], 10) : 0;
             if (ManufYearDiff >= assetAgeMin && ManufYearDiff <= assetAgeMax) {
+              this.AddDictInsCustRate(o.Key, custAddPremiRate);
               const control = this.fb.group({
                 MrAddCvgTypeCode: o.Key,
                 AddCvgTypeName: o.Value,
@@ -1102,6 +1110,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         }
       }
       else {
+        this.AddDictInsCustRate(o.Key, custAddPremiRate);
         const control = this.fb.group({
           MrAddCvgTypeCode: o.Key,
           AddCvgTypeName: o.Value,
@@ -1121,9 +1130,22 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     return group;
   }
 
-  MainCvgTypeDetailChanged(event, i) {
+  MainCvgTypeDetailChanged(event, i: number) {
     this.setRate(event.target.value, i);
     this.isCalculate = false;
+    this.ResetAddCvgAtIdx(i);
+  }
+
+  ResetAddCvgAtIdx(idx: number) {
+    let listAppInsMainCvgs = this.InsuranceDataForm.get("AppInsMainCvgs") as FormArray;
+    let listAppInsAddCvgs =  listAppInsMainCvgs.at(idx).get("AppInsAddCvgs") as FormArray;
+    for (let index = 0; index < listAppInsAddCvgs.value.length; index++) {
+      let tempFb = listAppInsAddCvgs.get(index.toString()) as FormGroup;
+      const tempMrAddCvgTypeCode: string = tempFb.get("MrAddCvgTypeCode").value;
+      tempFb.patchValue({
+        CustAddPremiRate: this.DictInsCustRate[tempMrAddCvgTypeCode]
+      })
+    }
   }
 
   IsAddCvgChanged() {
@@ -1159,6 +1181,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         MrMainCvgTypeCode: this.InsuranceDataForm.controls.InsMainCvgType.value
       });
       this.setRate(this.InsuranceDataForm.controls.InsMainCvgType.value, i);
+      this.ResetAddCvgAtIdx(i);
       const formAddCvgChecked = this.InsuranceDataForm.controls.InsAddCvgTypes["controls"].filter(x => x.value.Value == true);
 
       for (let j = 0; j < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["AppInsAddCvgs"]["controls"].length; j++) {
@@ -1511,8 +1534,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
         if (this.appFinDataObj != undefined) {
           this.InsuranceDataForm.patchValue({
-            CvgAmt: this.appCollateralObj.CollateralValueAmt,
-            CustCvgAmt: this.appCollateralObj.CollateralValueAmt
+            CvgAmt: this.totalAssetPriceAmt,
+            CustCvgAmt: this.totalAssetPriceAmt
           });
         }
         if (this.appAssetObj != undefined) {

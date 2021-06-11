@@ -12,7 +12,7 @@
             <div class="col-md-2">
               <input type="date" class="form-control adInsInput" formControlName="MouCustDt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && MouExecutionForm.controls.MouCustDt.invalid }"
-                [min]="businessDt | date: 'yyyy-MM-dd'" onkeypress="return false;" />
+                [min]="businessDtYesterday | date: 'yyyy-MM-dd'" onkeypress="return false;" />
               <lib-uc-show-errors [control]="MouExecutionForm.controls.MouCustDt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
@@ -22,7 +22,7 @@
               Date</label>
             <div class="col-md-2">
               <input type="date" class="form-control adInsInput" formControlName="StartDt"
-                [min]="this.MouExecutionForm.controls.MouCustDt.value | date: 'yyyy-MM-dd'" onkeypress="return false;" />
+                [min]="businessDt | date: 'yyyy-MM-dd'" onkeypress="return false;" />
               <lib-uc-show-errors [control]="MouExecutionForm.controls.StartDt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>

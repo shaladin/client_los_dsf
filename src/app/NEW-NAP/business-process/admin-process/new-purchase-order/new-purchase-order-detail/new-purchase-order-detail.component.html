@@ -10,10 +10,35 @@
             </div>
           </div>
         </div>
-
         <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info>
-
         <div class="px-3">
+          <!-- <lib-ucSubsection [id]="'SupplierListId'" [title]="'Supplier List'" [panel]="'SupplierList'">
+          </lib-ucSubsection>
+          <div class="form-body" id="SupplierList">
+            <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                    <tr class="table-header">
+                        <th style="text-align: left;"><span translate class="thead-header">SUPPLIER CODE</span></th>
+                        <th style="text-align: left;"><span translate class="thead-header">SUPPLIER NAME</span></th>
+                        <th><span translate class="thead-header">PURCHASE ORDER NO</span></th>
+                        <th translate>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of AppAssetList">
+                        <td>{{item.SupplCode}}</td>
+                        <td>{{item.SupplName}}</td>
+                        <td>{{item.PurchaseOrderNo}}</td>
+                        <td>
+                            <a class="success p-0" [routerLink]="[urlDetail]"
+                                [queryParams]="{AgrmntId:item.AgrmntId, AppId:item.AppId, AppAssetId:item.AppAssetId, SupplCode:item.SupplCode, LobCode : lobCode, TaskListId : TaskListId}">
+                                <i class="ft-edit-2 font-medium-3 mr-2"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+          </div> -->
 
           <lib-ucSubsection [id]="'DisburseId'" [title]="'Disburse to Listing'" [panel]="'DisburseSection'">
           </lib-ucSubsection>
@@ -54,15 +79,25 @@
             </table>
           </div>
 
-          <form class="form form-horizontal" [formGroup]="TcForm" (ngSubmit)="TcForm.valid && Save()"
-            #enjiForm="ngForm">
-
-            <lib-ucSubsection [id]="'TCListId'" [title]="'Term & Conditions'" [panel]="'TCList'">
-            </lib-ucSubsection>
-            <div id="TCList">
-              <app-term-conditions [AppId]="AppId" [parentForm]="TcForm" [enjiForm]="enjiForm">
-              </app-term-conditions>
-            </div>
+          <form class="form form-horizontal" [formGroup]="TcForm" (ngSubmit)="TcForm.valid && Save()" #enjiForm="ngForm">
+            <mat-tab-group>
+              <mat-tab label="Term & Conditions">
+                <ng-template matTabContent>           
+                  <app-term-conditions [AppId]="AppId" [parentForm]="TcForm" [enjiForm]="enjiForm">
+                  </app-term-conditions>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="App Document">
+                <ng-template matTabContent>
+                  <app-dms-iframe *ngIf="isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsAppObj"></app-dms-iframe>
+                </ng-template>
+              </mat-tab>
+              <mat-tab label="Agreement Document">
+                <ng-template matTabContent>
+                  <app-dms-iframe *ngIf="isDmsReady && SysConfigResultObj?.ConfigValue == 1" [dmsObj]="dmsObj"></app-dms-iframe>
+                </ng-template>
+              </mat-tab>
+            </mat-tab-group>
 
             <div class="form-body">
               <div class="form-actions right" style="text-align: right;">

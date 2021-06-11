@@ -178,6 +178,7 @@ export class PathConstant {
     public static DOC_PICKUP_REQUEST = "DocumentPickupRequest";
     public static DOC_PICKUP_REQUEST_PAGING = PathConstant.DOC_PICKUP_REQUEST + "/" + PathConstant.PAGING;
     public static DOC_PICKUP_REQUEST_DETAIL= PathConstant.DOC_PICKUP_REQUEST + "/" + PathConstant.DETAIL;
+    public static RETURN_HANDLING_NAP2_PAGING = PathConstant.RETURN_HANDLING + "/" + PathConstant.NAP2;
     public static RETURN_HANDLING_NAP4_PAGING = PathConstant.RETURN_HANDLING + "/" + PathConstant.NAP4;
     //#endregion
 

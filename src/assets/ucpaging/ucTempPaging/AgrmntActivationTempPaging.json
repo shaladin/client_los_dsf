@@ -1,7 +1,7 @@
 {
     "title": "Asset List",
     "keyProperty": "AppAssetId",
-    "keyPropCriteria": "APP_ASSET_ID",
+    "keyPropCriteria": "AA.APP_ASSET_ID",
     "component": [],
   "querystring": {
     "name": "AgrmntActivationTempPaging"
@@ -11,31 +11,37 @@
             "type": "sort",
             "position": "left",
             "label": "Full Asset Name",
-            "name": "FULL_ASSET_NAME"
+            "name": "AA.FULL_ASSET_NAME"
         },
         {
             "type": "sort",
             "position": "right",
             "label": "Asset Price Amount",
-            "name": "ASSET_PRICE_AMT"
+            "name": "AA.ASSET_PRICE_AMT"
+        },
+        {
+            "type": "sort",
+            "position": "right",
+            "label": "Total Accessory Price Amount",
+            "name": "ISNULL(SUM(ACC.ACCESSORY_PRICE_AMT),0)"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Serial No 1",
-            "name": "SERIAL_NO_1"
+            "name": "AA.SERIAL_NO_1"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Serial No 2",
-            "name": "SERIAL_NO_2"
+            "name": "AA.SERIAL_NO_2"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Serial No 3",
-            "name": "SERIAL_NO_3"
+            "name": "AA.SERIAL_NO_3"
         }
     ],
     "bodyList": [
@@ -48,6 +54,11 @@
             "type": "decimal",
             "position": "right",
             "property": "AssetPriceAmt"
+        },
+        {
+            "type": "decimal",
+            "position": "right",
+            "property": "TotalAccessoryPriceAmt"
         },
         {
             "type": "text",
