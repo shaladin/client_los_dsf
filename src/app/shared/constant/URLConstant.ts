@@ -1166,7 +1166,6 @@ export class URLConstant {
 
   //App Duplicate Checking
   public static GetAppCustDuplicateCheck = environment.losUrl + "/AppDupCheck/GetAppCustDuplicateCheck";
-  public static GetAppGuarantorDuplicateCheck = environment.losUrl + "/AppDupCheck/GetAppGuarantorDuplicateCheck";
   public static GetSpouseDuplicateCheck = environment.losUrl + "/AppDupCheck/GetSpouseDuplicateCheck";
   public static GetAppShareholderDuplicateCheck = environment.losUrl + "/AppDupCheck/GetAppShareholderDuplicateCheck";
   public static AddAppDupCheckCust = "/AppDupCheck/AddAppDupCheckCust";
@@ -1530,7 +1529,7 @@ export class URLConstant {
   //Bank Acc Cust
   public static GetBankAccCustByAppId = environment.losUrl + "/AppOtherInfo/GetBankAccCustByAppId";
 
-  public static GetCustThirdPartyCheckForAppCust = environment.FoundationR3Url + "/CustThirdPartyChecking/GetCustThirdPartyCheckForAppCust";
+  //public static GetCustThirdPartyCheckForAppCust = environment.FoundationR3Url + "/CustThirdPartyChecking/GetCustThirdPartyCheckForAppCust";
 
   //Get OsPlatfondAmt From R2
   public static GetOsPlatfondAmtMouR2ByMouCustId = environment.losUrl + "/AppInvoiceX/GetOsPlatfondAmtMouR2ByMouCustId"
