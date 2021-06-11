@@ -9,6 +9,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { ReqByProdOffCodeAndVersionObj } from 'app/shared/model/Request/Product/ReqByProdOffCodeAndVersionObj.model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-copy-cancelled-application',
@@ -73,6 +75,18 @@ export class CopyCancelledApplicationComponent implements OnInit {
           );
         }
         else {
+          var reqByProdOffCodeAndVersionObj = new ReqByProdOffCodeAndVersionObj();
+          reqByProdOffCodeAndVersionObj.ProdOfferingCode = ev.ProdOfferingCode;
+          reqByProdOffCodeAndVersionObj.ProdOfferingVersion = ev.ProdOfferingVersion;
+          this.http.post(URLConstant.GetProdStatByProdOffCodeAndVersion, reqByProdOffCodeAndVersionObj).subscribe(
+            (response) => {
+              let ProdStat = response["ProdStat"];
+              let ProdStatDescr = response["ProdStatDescr"];
+              if(ProdStat != "ACT"){
+              this.toastr.warningMessage(ExceptionConstant.PRODUCT_HAS + ProdStatDescr);
+              }
+            }
+          );
           var url = this.IsNapVersionMainData ? URLConstant.CopyCancelledAppForMainData : URLConstant.CopyCancelledApp;
           this.http.post(url, { AppId: ev.RowObj.AppId }).subscribe(
             response => {
