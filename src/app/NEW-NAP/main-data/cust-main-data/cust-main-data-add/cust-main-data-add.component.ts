@@ -185,7 +185,6 @@ export class CustMainDataAddComponent implements OnInit {
     var reqByProdOffCodeAndVersionObj = new ReqByProdOffCodeAndVersionObj();
     reqByProdOffCodeAndVersionObj.ProdOfferingCode = ev.ProdOfferingCode;
     reqByProdOffCodeAndVersionObj.ProdOfferingVersion = ev.ProdOfferingVersion;
-    reqByProdOffCodeAndVersionObj.ProdOfferingName = ev.ProdOfferingName;
     this.http.post(URLConstant.GetProdStatByProdOffCodeAndVersion, reqByProdOffCodeAndVersionObj).subscribe(
       (response) => {
         let ProdStat = response["ProdStat"];
