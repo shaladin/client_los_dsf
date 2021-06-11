@@ -28,10 +28,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
   FondationUrl = environment.FoundationR3Url;
   AppCustObj: AppCustObj;
   AppCustCompanyObj: AppCustCompanyObj;
-  ListAppGuarantorDuplicate: any;
   ListAppShareholderDuplicate: any;
-  listSelectedIdGuarantor: Array<number>;
-  checkboxAllGuarantor = false;
   listSelectedIdShareholder: Array<number>;
   checkboxAllShareholder = false;
   cust: CustObj;
@@ -62,7 +59,6 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
 
     this.AppCustObj = new AppCustObj();
     this.AppCustCompanyObj = new AppCustCompanyObj();
-    this.listSelectedIdGuarantor = new Array();
     this.listSelectedIdShareholder = new Array();
   }
 
@@ -83,7 +79,7 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
         );
 
         this.AppCustCompanyObj = response['AppCustCompanyObj'];
-        
+
         let requestDupCheck = new ReqGetCustDupCheckObj();
         requestDupCheck.CustName = this.AppCustObj.CustName;
         requestDupCheck.MrCustTypeCode = this.AppCustObj.MrCustTypeCode;
@@ -94,13 +90,6 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
         requestDupCheck.BirthDt = this.AppCustCompanyObj.EstablishmentDt;
         requestDupCheck.MobilePhnNo1 = "-";
         requestDupCheck.RowVersion = response['AppCustObj'].RowVersion;
-        
-        //List App guarantor Checking
-        this.http.post(URLConstant.GetAppGuarantorDuplicateCheck, requestDupCheck).subscribe(
-          response => {
-            this.ListAppGuarantorDuplicate = response['ReturnObject'];
-          }
-        );
 
         //List App Shareholder Duplicate Checking
         this.http.post(URLConstant.GetAppShareholderDuplicateCheck, requestDupCheck).subscribe(
@@ -108,34 +97,6 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
             this.ListAppShareholderDuplicate = response['ReturnObject'];
           });
       });
-  }
-
-  SelectAllGuarantor(condition: boolean) {
-    this.checkboxAllGuarantor = condition;
-    if (condition) {
-      for (let i = 0; i < this.ListAppGuarantorDuplicate.length; i++) {
-        if (this.listSelectedIdGuarantor.indexOf(this.ListAppGuarantorDuplicate[i].AppGuarantorId) < 0) {
-          this.listSelectedIdGuarantor.push(this.ListAppGuarantorDuplicate[i].AppGuarantorId);
-        }
-      }
-
-    } else {
-      for (let i = 0; i < this.ListAppGuarantorDuplicate.length; i++) {
-        let index = this.listSelectedIdGuarantor.indexOf(this.ListAppGuarantorDuplicate[i].AppGuarantorId);
-        if (index > -1) {
-          this.listSelectedIdGuarantor.splice(index, 1);
-        }
-      }
-    }
-  }
-
-  CheckedGuarantor(AppGuarantorId: number, isChecked: boolean): void {
-    if (isChecked) {
-      this.listSelectedIdGuarantor.push(AppGuarantorId);
-    } else {
-      const index = this.listSelectedIdGuarantor.indexOf(AppGuarantorId)
-      if (index > -1) { this.listSelectedIdGuarantor.splice(index, 1); }
-    }
   }
 
   SelectAllShareholder(condition: boolean) {
@@ -168,7 +129,6 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
 
   Submit() {
     var appDupCheckObj = new RequestSubmitAppDupCheckCustObj();
-    appDupCheckObj.AppGuarantorIds = this.listSelectedIdGuarantor;
     appDupCheckObj.AppCustCompanyMgmntShrholderIds = this.listSelectedIdShareholder;
     appDupCheckObj.CustNo = this.AppCustObj.CustNo;
     appDupCheckObj.AppId = this.AppId;

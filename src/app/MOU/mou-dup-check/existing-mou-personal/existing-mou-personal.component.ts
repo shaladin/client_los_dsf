@@ -26,19 +26,16 @@ export class ExistingMouPersonalComponent implements OnInit {
   FondationUrl = environment.FoundationR3Url;
   MouCustObj: MouCustObj;
   MouCustPersonalObj: MouCustPersonalObj;
-  ListDuplicateAppGuarantor: any; 
   ListDuplicateMouGuarantor: any;
   ListDuplicateAppSpouse: any;
-  ListDuplicateMouSpouse: any; 
-  ListDuplicateAppShareholder: any; 
-  ListDuplicateMouShareholder: any; 
-  ListSelectedIdAppGuarantor: Array<number>;
+  ListDuplicateMouSpouse: any;
+  ListDuplicateAppShareholder: any;
+  ListDuplicateMouShareholder: any;
   ListSelectedIdMouGuarantor: Array<number>;
   ListSelectedIdAppSpouse: Array<number>;
   ListSelectedIdMouSpouse: Array<number>;
   ListSelectedIdAppShareholder: Array<number>;
   ListSelectedIdMouShareholder: Array<number>;
-  checkboxAllGuarantor: false;
   checkboxAllMouGuarantor: false;
   checkboxAllSpouse: false;
   checkboxAllMouSpouse: false;
@@ -67,7 +64,6 @@ export class ExistingMouPersonalComponent implements OnInit {
   ngOnInit() {
     this.MouCustObj = new MouCustObj();
     this.MouCustPersonalObj = new MouCustPersonalObj();
-    this.ListSelectedIdAppGuarantor = new Array();
     this.ListSelectedIdAppSpouse = new Array();
     this.ListSelectedIdAppShareholder = new Array();
     this.ListSelectedIdMouGuarantor = new Array();
@@ -88,23 +84,17 @@ export class ExistingMouPersonalComponent implements OnInit {
 
         this.RowVersion = response['MouCustObj'].RowVersion;
         this.MouCustPersonalObj = response['MouCustPersonalObj'];
-        
+
         var ReqDupCheckObj = new ReqGetMouCustDuplicateObj();
-        ReqDupCheckObj.CustName =  this.MouCustObj.CustName;
+        ReqDupCheckObj.CustName = this.MouCustObj.CustName;
         ReqDupCheckObj.MrCustTypeCode = this.MouCustObj.MrCustTypeCode;
         ReqDupCheckObj.MrCustModelCode = this.MouCustObj.CustModelCode;
         ReqDupCheckObj.MrIdTypeCode = this.MouCustObj.MrIdTypeCode;
         ReqDupCheckObj.IdNo = this.MouCustObj.IdNo;
-        ReqDupCheckObj.TaxIdNo =  this.MouCustObj.TaxIdNo;
-        ReqDupCheckObj.BirthDt =  this.MouCustPersonalObj.BirthDt;
+        ReqDupCheckObj.TaxIdNo = this.MouCustObj.TaxIdNo;
+        ReqDupCheckObj.BirthDt = this.MouCustPersonalObj.BirthDt;
         ReqDupCheckObj.MobilePhnNo1 = this.MouCustPersonalObj.MobilePhnNo1;
         ReqDupCheckObj.RowVersion = this.RowVersion;
-
-        //List App guarantor Checking
-        this.http.post(URLConstant.GetAppGuarantorDuplicateCheck, ReqDupCheckObj).subscribe(
-          response => {
-            this.ListDuplicateAppGuarantor = response['ReturnObject'];
-          });
 
         //List Spouse Duplicate Checking
         this.http.post(URLConstant.GetSpouseDuplicateCheck, ReqDupCheckObj).subscribe(
@@ -145,25 +135,6 @@ export class ExistingMouPersonalComponent implements OnInit {
     } else {
       const index = this["ListSelectedId" + type].indexOf(Id)
       if (index > -1) { this["ListSelectedId" + type].splice(index, 1); }
-    }
-  }
-
-  SelectAllGuarantor(condition) {
-    this.checkboxAllGuarantor = condition;
-    if (condition) {
-      for (let i = 0; i < this.ListDuplicateAppGuarantor.length; i++) {
-        if (this.ListSelectedIdAppGuarantor.indexOf(this.ListDuplicateAppGuarantor[i].AppGuarantorId) < 0) {
-          this.ListSelectedIdAppGuarantor.push(this.ListDuplicateAppGuarantor[i].AppGuarantorId);
-        }
-      }
-
-    } else {
-      for (let i = 0; i < this.ListDuplicateAppGuarantor.length; i++) {
-        let index = this.ListSelectedIdAppGuarantor.indexOf(this.ListDuplicateAppGuarantor[i].AppGuarantorId);
-        if (index > -1) {
-          this.ListSelectedIdAppGuarantor.splice(index, 1);
-        }
-      }
     }
   }
 
@@ -264,7 +235,6 @@ export class ExistingMouPersonalComponent implements OnInit {
 
   Submit() {
     var appDupCheckObj = new RequestSubmitMouCustDupCheckObj();
-    appDupCheckObj.AppGuarantorIds = this.ListSelectedIdAppGuarantor;
     appDupCheckObj.AppCustCompanyMgmntShrholderIds = this.ListSelectedIdAppShareholder;
     appDupCheckObj.AppCustPersonalContactPersonIds = this.ListSelectedIdAppSpouse;
     appDupCheckObj.MouGuarantorIds = this.ListSelectedIdMouGuarantor;
@@ -277,13 +247,13 @@ export class ExistingMouPersonalComponent implements OnInit {
     this.http.post(URLConstant.SubmitMouDupCheck, appDupCheckObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["Message"]);
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DUP_CHECK_PAGING],{});
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DUP_CHECK_PAGING], {});
       });
   }
 
   Back() {
     // this.router.navigateByUrl("/Nap/AddProcess/AppDupCheck/Personal?MouCustId=" + this.MouCustId + "&WfTaskListId=" + this.WfTaskListId);
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DUP_CHECK_PAGING],{});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_DUP_CHECK_PAGING], {});
   }
 
   OpenView(key: string, value: number) {

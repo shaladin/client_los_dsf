@@ -10,11 +10,13 @@
             </lib-ucSubsection>
             <div id="custMain">
               <div class="form-group row">
-                <label class="col-md-3 adInsLabel" translate>Customer No</label>  
-                <a href="javascript:void(0);" (click)="OpenView('cust', MouCustObj.CustNo)" class="label-control col-md-3" *ngIf="MouCustObj?.CustNo != ''">{{MouCustObj.CustNo}}</a>
+                <label class="col-md-3 adInsLabel" translate>Customer No</label>
+                <a href="javascript:void(0);" (click)="OpenView('cust', MouCustObj.CustNo)"
+                  class="label-control col-md-3" *ngIf="MouCustObj?.CustNo != ''">{{MouCustObj.CustNo}}</a>
                 <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.CustNo == ''">- </label>
                 <label class="col-md-3 adInsLabel" translate>Applicant No</label>
-                <label class="col-md-3 adInsLabel" *ngIf="MouCustObj?.ApplicantNo != ''">{{MouCustObj.ApplicantNo}}</label>
+                <label class="col-md-3 adInsLabel"
+                  *ngIf="MouCustObj?.ApplicantNo != ''">{{MouCustObj.ApplicantNo}}</label>
               </div>
 
               <div class="form-group row">
@@ -29,65 +31,6 @@
           </div>
 
           <div class="form-body">
-            <lib-ucSubsection [id]="'appGuaId'" [title]="'Applicant As Guarantor'" [panel]="'appGua'">
-            </lib-ucSubsection>
-            <div id="appGua">
-              <table class="table table-responsive-md text-center table-hover">
-                <thead>
-                  <tr class="table-header">
-                    <th>
-                      <input type="checkbox" [checked]="checkboxAllGuarantor"
-                             (change)="SelectAllGuarantor($event.target.checked)" id="checkAll" name="CheckAll">
-                    </th>
-                    <th>
-                      <span class="thead-header" name='appNo' translate>Application No</span>
-                    </th>
-                    <th>
-                      <span class="thead-header" name='custNo' translate>Customer No</span>
-                    </th>
-                    <th>
-                      <span class="thead-header" name='custName' translate>
-                        Customer
-                        Name
-                      </span>
-                    <th><span class="thead-header" name='IdType' translate>Id Type</span></th>
-                    <th><span class="thead-header" name='npwp' translate>NPWP</span></th>
-                    <th>
-                      <span class="thead-header" name='duplicateItem' translate>
-                        Duplicate
-                        Item
-                      </span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngIf="ListDuplicateAppGuarantor?.length == 0">
-                    <td align="center" colspan="5">No data found</td>
-                  </tr>
-                  <tr *ngFor="let item of ListDuplicateAppGuarantor; let i = index">
-                    <td>
-                      <div *ngIf="ListDuplicateAppGuarantor?.indexOf(item.AppGuarantorId) >- 1">
-                        <input type="checkbox" id="checkSameGuarantor" name="itemSameGuarantor"
-                               (change)="Checked('AppGuarantor',item.AppGuarantorId,  $event.target.checked)" [checked]="true">
-                      </div>
-                      <div *ngIf="ListDuplicateAppGuarantor?.indexOf(item.AppGuarantorId) < 0">
-                        <input type="checkbox" id="checkDiffGuarantor" name="itemDiffGuarantor"
-                               (change)="Checked('AppGuarantor',item.AppGuarantorId,  $event.target.checked)" [checked]=false>
-                      </div>
-                    </td>
-                    <td><a href="javascript:void(0);" (click)="OpenView('app', item.AppId)">{{item.AppNo}}</a></td>
-                    <td><a href="javascript:void(0);" (click)="OpenView('cust', item.CustNo)">{{item.CustNo}}</a></td>
-                    <td>{{item.CustName}}</td>
-                    <td>{{item.MrIdTypeCodeDesc}}</td>
-                    <td>{{item.TaxIdNo}}</td>
-                    <td>{{item.DuplicateItem}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="form-body">
             <lib-ucSubsection [id]="'appShareId'" [title]="'Applicant As Shareholder'" [panel]="'appShare'">
             </lib-ucSubsection>
             <div id="appShare">
@@ -96,7 +39,7 @@
                   <tr class="table-header">
                     <th>
                       <input type="checkbox" [checked]="checkboxAllShareholder"
-                             (change)="SelectAllShareholder($event.target.checked)" id="checkAll" name="CheckAll">
+                        (change)="SelectAllShareholder($event.target.checked)" id="checkAll" name="CheckAll">
                     </th>
                     <th>
                       <span class="thead-header" name='appNo' translate>Application No</span>
@@ -126,12 +69,13 @@
                     <td>
                       <div *ngIf="ListSelectedIdAppShareholder?.indexOf(item.AppCustCompanyMgmntShrholderId) >- 1">
                         <input type="checkbox" id="checkSameShareholder" name="itemSameShareholder"
-                               (change)="Checked('AppSharholder', item.AppCustCompanyMgmntShrholderId,  $event.target.checked)"
-                               [checked]="true">
+                          (change)="Checked('AppSharholder', item.AppCustCompanyMgmntShrholderId,  $event.target.checked)"
+                          [checked]="true">
                       </div>
                       <div *ngIf="ListSelectedIdAppShareholder?.indexOf(item.AppCustCompanyMgmntShrholderId) < 0">
                         <input type="checkbox" id="checkDiffShareholder" name="itemDiffShareholder"
-                               (change)="Checked('AppSharholder', item.AppCustCompanyMgmntShrholderId,  $event.target.checked)" [checked]=false>
+                          (change)="Checked('AppSharholder', item.AppCustCompanyMgmntShrholderId,  $event.target.checked)"
+                          [checked]=false>
                       </div>
                     </td>
                     <td><a href="javascript:void(0);" (click)="OpenView('app', item.AppId)">{{item.AppNo}}</a></td>
@@ -154,7 +98,7 @@
                   <tr class="table-header">
                     <th>
                       <input type="checkbox" (change)="SelectAllMouGuarantor($event.target.checked)" id="checkAll"
-                             name="CheckAll">
+                        name="CheckAll">
                     </th>
                     <th>
                       <span class="thead-header" name='custNo' translate>Customer No</span>
@@ -198,11 +142,13 @@
                     <td>
                       <div *ngIf="ListSelectedIdMouGuarantor?.indexOf(item.MouGuarantorId) >- 1">
                         <input type="checkbox" id="checkSameGuarantor" name="itemSameGuarantor"
-                               (change)="Checked('MouGuarantor',item.MouGuarantorId,  $event.target.checked)" [checked]="true">
+                          (change)="Checked('MouGuarantor',item.MouGuarantorId,  $event.target.checked)"
+                          [checked]="true">
                       </div>
                       <div *ngIf="ListSelectedIdMouGuarantor?.indexOf(item.MouGuarantorId) < 0">
                         <input type="checkbox" id="checkDiffGuarantor" name="itemDiffGuarantor"
-                               (change)="Checked('MouGuarantor',item.MouGuarantorId,  $event.target.checked)" [checked]=false>
+                          (change)="Checked('MouGuarantor',item.MouGuarantorId,  $event.target.checked)"
+                          [checked]=false>
                       </div>
                     </td>
                     <td><a href="javascript:void(0);" (click)="OpenView('cust', item.CustNo)">{{item.CustNo}}</a></td>
@@ -220,7 +166,8 @@
           </div>
 
           <div class="form-body">
-            <lib-ucSubsection [id]="'MouShareId'" [title]="'Applicant As Mou Management / Shareholder'" [panel]="'MouShare'">
+            <lib-ucSubsection [id]="'MouShareId'" [title]="'Applicant As Mou Management / Shareholder'"
+              [panel]="'MouShare'">
             </lib-ucSubsection>
             <div id="MouShare">
               <table class="table table-responsive-md text-center table-hover">
@@ -228,7 +175,7 @@
                   <tr class="table-header">
                     <th>
                       <input type="checkbox" (change)="SelectAllMouShareholder($event.target.checked)" id="checkAll"
-                             name="CheckAll">
+                        name="CheckAll">
                     </th>
                     <th>
                       <span class="thead-header" name='custNo' translate>Customer No</span>
@@ -272,11 +219,13 @@
                     <td>
                       <div *ngIf="ListSelectedIdMouShareholder?.indexOf(item.MouCustCompanyMgmntShrholderId) >- 1">
                         <input type="checkbox" id="checkSameShareholder" name="itemSameShareholder"
-                               (change)="Checked('MouShareholder', item.MouCustCompanyMgmntShrholderId,  $event.target.checked)" [checked]="true">
+                          (change)="Checked('MouShareholder', item.MouCustCompanyMgmntShrholderId,  $event.target.checked)"
+                          [checked]="true">
                       </div>
                       <div *ngIf="ListSelectedIdMouShareholder?.indexOf(item.MouCustCompanyMgmntShrholderId) < 0">
                         <input type="checkbox" id="checkDiffSpouse" name="itemDiffSpouse"
-                               (change)="Checked('MouShareholder', item.MouCustCompanyMgmntShrholderId,  $event.target.checked)" [checked]=false>
+                          (change)="Checked('MouShareholder', item.MouCustCompanyMgmntShrholderId,  $event.target.checked)"
+                          [checked]=false>
                       </div>
                     </td>
                     <td><a href="javascript:void(0);" (click)="OpenView('cust', item.CustNo)">{{item.CustNo}}</a></td>

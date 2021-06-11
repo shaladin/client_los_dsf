@@ -1166,7 +1166,6 @@ export class URLConstant {
 
   //App Duplicate Checking
   public static GetAppCustDuplicateCheck = environment.losUrl + "/AppDupCheck/GetAppCustDuplicateCheck";
-  public static GetAppGuarantorDuplicateCheck = environment.losUrl + "/AppDupCheck/GetAppGuarantorDuplicateCheck";
   public static GetSpouseDuplicateCheck = environment.losUrl + "/AppDupCheck/GetSpouseDuplicateCheck";
   public static GetAppShareholderDuplicateCheck = environment.losUrl + "/AppDupCheck/GetAppShareholderDuplicateCheck";
   public static AddAppDupCheckCust = "/AppDupCheck/AddAppDupCheckCust";

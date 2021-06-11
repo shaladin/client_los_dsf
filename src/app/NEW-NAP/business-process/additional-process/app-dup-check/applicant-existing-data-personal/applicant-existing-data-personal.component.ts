@@ -28,11 +28,8 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
   FondationUrl = environment.FoundationR3Url;
   AppCustObj: AppCustObj;
   AppCustPersonalObj: AppCustPersonalObj;
-  ListAppGuarantorDuplicate: any;
   ListSpouseDuplicate: any;
   ListAppShareholderDuplicate: any;
-  listSelectedIdGuarantor: Array<number>;
-  checkboxAllGuarantor: boolean;
   listSelectedIdSpouse: Array<number>;
   checkboxAllSpouse: boolean;
   listSelectedIdShareholder: Array<number>;
@@ -61,7 +58,6 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
 
     this.AppCustObj = new AppCustObj();
     this.AppCustPersonalObj = new AppCustPersonalObj();
-    this.listSelectedIdGuarantor = new Array();
     this.listSelectedIdSpouse = new Array();
     this.listSelectedIdShareholder = new Array();
 
@@ -91,11 +87,6 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
         requestDupCheck.MobilePhnNo1 = this.AppCustPersonalObj.MobilePhnNo1;
         requestDupCheck.RowVersion = response['AppCustObj'].RowVersion;
 
-        //List App guarantor Checking
-        this.http.post(URLConstant.GetAppGuarantorDuplicateCheck, requestDupCheck).subscribe(
-          response => {
-            this.ListAppGuarantorDuplicate = response['ReturnObject'];
-          });
         //List Spouse Duplicate Checking
         this.http.post(URLConstant.GetSpouseDuplicateCheck, requestDupCheck).subscribe(
           response => {
@@ -109,34 +100,6 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
           });
       });
 
-  }
-
-  SelectAllGuarantor(condition: boolean) {
-    this.checkboxAllGuarantor = condition;
-    if (condition) {
-      for (let i = 0; i < this.ListAppGuarantorDuplicate.length; i++) {
-        if (this.listSelectedIdGuarantor.indexOf(this.ListAppGuarantorDuplicate[i].AppGuarantorId) < 0) {
-          this.listSelectedIdGuarantor.push(this.ListAppGuarantorDuplicate[i].AppGuarantorId);
-        }
-      }
-
-    } else {
-      for (let i = 0; i < this.ListAppGuarantorDuplicate.length; i++) {
-        let index = this.listSelectedIdGuarantor.indexOf(this.ListAppGuarantorDuplicate[i].AppGuarantorId);
-        if (index > -1) {
-          this.listSelectedIdGuarantor.splice(index, 1);
-        }
-      }
-    }
-  }
-
-  CheckedGuarantor(AppGuarantorId: number, isChecked: boolean): void {
-    if (isChecked) {
-      this.listSelectedIdGuarantor.push(AppGuarantorId);
-    } else {
-      const index = this.listSelectedIdGuarantor.indexOf(AppGuarantorId)
-      if (index > -1) { this.listSelectedIdGuarantor.splice(index, 1); }
-    }
   }
 
   SelectAllSpouse(condition: boolean) {
@@ -197,7 +160,6 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
 
   Submit() {
     var appDupCheckObj = new RequestSubmitAppDupCheckCustObj();
-    appDupCheckObj.AppGuarantorIds = this.listSelectedIdGuarantor;
     appDupCheckObj.AppCustCompanyMgmntShrholderIds = this.listSelectedIdShareholder;
     appDupCheckObj.AppCustPersonalContactPersonIds = this.listSelectedIdSpouse;
     appDupCheckObj.CustNo = this.AppCustObj.CustNo;
