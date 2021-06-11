@@ -206,6 +206,7 @@ export class AppViewComponent implements OnInit {
       this.IsSurveyResult = false;
       this.IsAnalysisResult = false;
       this.IsCustomerOpl = false;
+      this.IsLifeInsurance = false;
     }
     else if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
       this.IsAsset = false;
