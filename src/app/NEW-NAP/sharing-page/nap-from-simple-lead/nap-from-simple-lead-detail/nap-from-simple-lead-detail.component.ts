@@ -109,9 +109,7 @@ export class NapFromSimpleLeadDetailComponent implements OnInit {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
 
-    this.refMasterObj = new RefMasterObj();
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeLob
-    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, {Code: CommonConstant.RefMasterTypeCodeLob}).toPromise().then(
       (response) => {
         this.listRefLob = response[CommonConstant.RefMasterObjs];
         this.NapAppForm.patchValue({
@@ -140,7 +138,7 @@ export class NapFromSimpleLeadDetailComponent implements OnInit {
 
     var addCrit = new CriteriaObj();
     addCrit.DataType = "text";
-    addCrit.propName = "ro.OFFICE_CODE ";
+    addCrit.propName = "ro.OFFICE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
     addCrit.listValue = [this.user.OfficeCode];
     this.arrAddCrit.push(addCrit);
@@ -172,27 +170,19 @@ export class NapFromSimpleLeadDetailComponent implements OnInit {
   MakeLookUpObj() {
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputLookupObjName.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL; 
+    this.inputLookupObjName.urlEnviPaging = environment.losUrl;
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
 
     this.arrAddCrit = new Array();
-
     var addCrit = new CriteriaObj();
     addCrit.DataType = "text";
-    addCrit.propName = "ro.OFFICE_CODE ";
+    addCrit.propName = "ro.OFFICE_CODE";
     addCrit.restriction = AdInsConstant.RestrictionIn;
     addCrit.listValue = [this.user.OfficeCode];
     this.arrAddCrit.push(addCrit);
-
-    // var addCritBizTemplate = new CriteriaObj();
-    // addCritBizTemplate.DataType = "text";
-    // addCritBizTemplate.propName = "rlob.BIZ_TMPLT_CODE";
-    // addCritBizTemplate.restriction = AdInsConstant.RestrictionEq;
-    // addCritBizTemplate.value = this.bizTemplateCode;
-    // this.arrAddCrit.push(addCritBizTemplate);
 
     this.inputLookupObjName.addCritInput = this.arrAddCrit;
   }
@@ -312,7 +302,6 @@ export class NapFromSimpleLeadDetailComponent implements OnInit {
           ProdOfferingName: ev.ProdOfferingName,
           ProdOfferingVersion: ev.ProdOfferingVersion,
           CurrCode: tempCurrCode,
-          // LobCode: tempLobCode,
           PayFreqCode: tempPayFreqCode,
           RefProdTypeCode: tempRefProdTypeCode
         });

@@ -32,12 +32,6 @@ export class NapFromSimpleLeadComponent implements OnInit {
     private route: ActivatedRoute,
     private cookieService: CookieService
   ) { 
-    // this.route.queryParams.subscribe(params => {
-    //   if (params["BizTemplateCode"] != null) {
-    //     this.BizTemplateCode = params["BizTemplateCode"];
-    //     localStorage.setItem("BizTemplateCode", this.BizTemplateCode);
-    //   }
-    // });
   }
 
   ngOnInit() {
@@ -68,12 +62,6 @@ export class NapFromSimpleLeadComponent implements OnInit {
 
   makeCriteria(){
     var critObj = new CriteriaObj();
-    // critObj.restriction = AdInsConstant.RestrictionLike;
-    // critObj.propName = 'RL.BIZ_TMPLT_CODE';
-    // critObj.value = this.BizTemplateCode;
-    // this.arrCrit.push(critObj);
-
-    // critObj = new CriteriaObj();
     critObj.DataType = 'text';
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'LEAD_STAT';
@@ -82,8 +70,7 @@ export class NapFromSimpleLeadComponent implements OnInit {
   }
 
   AddApp(ev){
-    var obj = { OfficeCode: this.userAccess.OfficeCode };
-    this.http.post(URLConstant.GetRefOfficeByOfficeCode, obj).subscribe(
+    this.http.post(URLConstant.GetRefOfficeByOfficeCode, {Code: this.userAccess.OfficeCode}).subscribe(
       (response) => {
         if(response["IsAllowAppCreated"] == true){
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_SHARING_FROM_SIMPLE_LEAD_DETAIL], { "LeadId": ev.RowObj.LeadId});

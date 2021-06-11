@@ -69,9 +69,6 @@ export class RoTelemkOfferDetailComponent implements OnInit {
     await this.http.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.REF_REASON_RO_POTENTIAL }).pipe(first()).subscribe(
       (response) => {
         this.listReason = response[CommonConstant.ReturnObj];
-        // this.RoTelemkOfferingForm.patchValue({
-        //   Reason: this.listReason[0].Key
-        // });
       }
     );
   }
@@ -92,7 +89,7 @@ export class RoTelemkOfferDetailComponent implements OnInit {
       }
     );
     if (!this.VerifResult || this.VerifResult['VerfResultId'] == 0) {
-      let Business_Date = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE));
+      let Business_Date = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE));;
       let datePipe = new DatePipe("en-US");
       let value = datePipe.transform(Business_Date, "yyyy-MM-dd");
       let businessDt = new Date(value);

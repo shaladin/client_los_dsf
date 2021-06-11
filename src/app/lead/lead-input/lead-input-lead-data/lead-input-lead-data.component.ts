@@ -23,12 +23,9 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
-import { KeyValue } from '@angular/common';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { SerialNoObj } from 'app/shared/model/SerialNo/SerialNoObj.Model';
 import { AssetTypeSerialNoLabelObj } from 'app/shared/model/SerialNo/AssetTypeSerialNoLabelObj.Model';
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
-
 
 @Component({
   selector: 'app-lead-input-lead-data',
@@ -888,7 +885,6 @@ export class LeadInputLeadDataComponent implements OnInit {
         this.setLeadAsset();
         if (this.originPage == "teleVerif") {
           if (this.confirmFraudCheck()) {
-            // this.leadInputLeadDataObj.IsEdit = true;
             this.http.post(URLConstant.SubmitWorkflowLeadInput, this.leadInputLeadDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);

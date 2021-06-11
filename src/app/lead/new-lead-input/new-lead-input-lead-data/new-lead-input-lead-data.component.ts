@@ -123,8 +123,6 @@ export class NewLeadInputLeadDataComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    console.log("DEBUGGER");
     this.items = this.LeadDataForm.get('items') as FormArray;
 
     this.InputLookupAssetObj = new InputLookupObj();
@@ -146,8 +144,8 @@ export class NewLeadInputLeadDataComponent implements OnInit {
     this.http.post(URLConstant.GetListGeneralSettingByListGsCode, obj).subscribe(
       (response) => {
         let returnGeneralSettingObj = response;
-        this.lobKta = returnGeneralSettingObj["ResponseGeneralSettingObj"][0].GsValue.split(',');
-        this.isNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"][1].GsValue;
+        this.lobKta = returnGeneralSettingObj["ResGetListGeneralSettingObj"][0].GsValue.split(',');
+        this.isNeedCheckBySystem = returnGeneralSettingObj["ResGetListGeneralSettingObj"][1].GsValue;
         this.leadObj = new LeadObj();
         this.leadObj.LeadId = this.LeadId;
         let obj = {
@@ -172,8 +170,6 @@ export class NewLeadInputLeadDataComponent implements OnInit {
               }
             );
             if (this.lobKta.includes(this.returnLobCode) == true) {
-              // this.LeadDataForm.controls['NTFAmt'].setValidators([Validators.required]);
-
               this.LeadDataForm.controls['DownPaymentPercent'].clearValidators();
               this.LeadDataForm.controls['DownPaymentPercent'].updateValueAndValidity();
 
@@ -514,12 +510,6 @@ export class NewLeadInputLeadDataComponent implements OnInit {
 
   }
 
-  // downPaymentChange(event) {
-  //   this.LeadDataForm.patchValue({
-  //     MrDownPaymentTypeCode: event.value,
-  //   });
-  // }
-
   radioChange(event) {
     if (event.target.value == CommonConstant.AssetConditionUsed) {
       this.isUsed = true;
@@ -528,7 +518,6 @@ export class NewLeadInputLeadDataComponent implements OnInit {
     }
     for (let i = 0; i < this.items["length"]; i++) {
       if (this.isUsed == true && this.items.controls[i]['controls']['IsMandatory'].value == true) {
-        // this.items.controls[i]['controls']['SerialNoValue'].setValidators([Validators.required]);
         this.items.controls[i]['controls']['SerialNoValue'].updateValueAndValidity();
       } else {
         this.items.controls[i]['controls']['SerialNoValue'].clearValidators();
@@ -808,7 +797,6 @@ export class NewLeadInputLeadDataComponent implements OnInit {
             }
           );
         }
-        // }
       }
     }
     else {
@@ -831,7 +819,6 @@ export class NewLeadInputLeadDataComponent implements OnInit {
           }
         );
       }
-      // }
     }
   }
 
@@ -851,8 +838,6 @@ export class NewLeadInputLeadDataComponent implements OnInit {
 
   SaveForm() {
     if (this.Calculate == false && this.returnLobCode != CommonConstant.CFNA) {
-      // this.toastr.warningMessage("Calculate First");
-      // return;
     } else {
       this.CheckSubmitForCFNA();
       if (!this.isAbleToSubmit) return;
@@ -876,7 +861,6 @@ export class NewLeadInputLeadDataComponent implements OnInit {
     }
     this.setLeadAsset();
     if (this.confirmFraudCheck()) {
-      // this.leadInputLeadDataObj.IsEdit = true;
       this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);

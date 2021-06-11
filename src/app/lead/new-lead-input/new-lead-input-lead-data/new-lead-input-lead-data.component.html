@@ -5,7 +5,6 @@
         <form class="form form-horizontal" [formGroup]="LeadDataForm" (ngSubmit)="LeadDataForm.valid"
           #enjiForm="ngForm">
           <div class="form-body">
-            <!-- <div id="leadData"> -->
             <div *ngIf="lobKta.includes(returnLobCode) == false" id="leadData">
               <lib-ucSubsection [id]="'assetDataId'" [title]="'Asset Data'" [panel]="'assetData'">
               </lib-ucSubsection>
@@ -52,15 +51,6 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="form-group row">
-                  <label class="col-md-3 " translate>Asset Price</label>
-                  <div class="col-md-4">
-                    <input type="" currencyMask class="form-control adInsInput" id="assetPrice" min="1" max="maxAssetPrice" formControlName="AssetPrice"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.AssetPrice.invalid}">
-                    <lib-uc-show-errors  [control]="LeadDataForm.controls.AssetPrice" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors >
-                  </div>
-                </div> -->
               <div class="form-group row">
                 <label class="col-md-3 adInsLabel" translate>Down Payment Type</label>
                 <div class="col-md-4">
@@ -161,17 +151,11 @@
                 <div class="col-md-5">
                   <label class="adInsLabel" style="font-size: 13px;">{{LeadDataForm.controls.NTFAmt.value |
                     number:'.2':'en-US'}}</label>
-                  <!-- <input type="text" class="form-control adInsInput" formControlName="NTFAmt"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.NTFAmt.invalid}">
-                    <lib-uc-show-errors  [control]="LeadDataForm.controls.NTFAmt" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors > -->
                 </div>
               </div>
               <div class="form-group row">
                 <label class="col-md-3 " translate>Installment Amount</label>
                 <div class="col-md-5">
-                  <!-- <label class="col-md-5 adInsLabel"
-                    style="font-size: 13px;">{{LeadDataForm.controls.InstallmentAmt.value | number:'.2':'en-US'}}</label> -->
                   <input type="" currencyMask class="form-control col-md-5" formControlName="InstallmentAmt"
                     (focusout)="InstAmtCheck()">
                 </div>
@@ -181,10 +165,6 @@
                 <div class="col-md-5">
                   <label class="adInsLabel" style="font-size: 13px;">{{LeadDataForm.controls.TotalDownPayment.value |
                     number:'.2':'en-US'}}</label>
-                  <!-- <input type="text" class="form-control adInsInput" formControlName="TotalDownPayment"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.TotalDownPayment.invalid}">
-                    <lib-uc-show-errors  [control]="LeadDataForm.controls.TotalDownPayment" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors > -->
                 </div>
               </div>
               <div class="form-group row">
@@ -220,8 +200,6 @@
               <div class="form-group row">
                 <label class="col-md-3 adInsLabel" translate>NTF Amount</label>
                 <div class="col-md-5">
-                  <!-- <label class="col-md-5 adInsLabel"
-                      style="font-size: 13px;">{{LeadDataForm.controls.NTFAmt.value | number:'.2':'en-US'}}</label> -->
                   <input type="" currencyMask class="form-control adInsInput" min="0" formControlName="NTFAmt"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && LeadDataForm.controls.NTFAmt.invalid}"
                     (focusout)="InstAmtCheck()">
@@ -244,22 +222,11 @@
                 </button>
               </div>
             </div>
-            <!-- </div> -->
           </div>
           <div class="form-actions right" style="text-align: right;">
             <button type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()" translate>
               <i class="fa fa-check-square-o"></i> Submit
             </button>
-            <!-- <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="save()" translate>
-              <i class="fa fa-check-square-o"></i> Save
-            </button>
-            <button *ngIf="typePage == 'update' || originPage == 'teleVerif' " type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()" translate>
-              <i class="fa fa-check-square-o"></i> Submit
-            </button> -->
-            <!-- <button type="button" class="btn btn-raised btn-primary mr-1" (click)="this.LeadDataForm.valid && test()"
-              translate>
-              <i class="fa fa-check-square-o"></i> test
-            </button> -->
           </div>
         </form>
       </div>
