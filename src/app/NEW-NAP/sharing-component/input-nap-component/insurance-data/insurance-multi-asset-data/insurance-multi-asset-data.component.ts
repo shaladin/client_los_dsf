@@ -1534,8 +1534,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
         if (this.appFinDataObj != undefined) {
           this.InsuranceDataForm.patchValue({
-            CvgAmt: this.appCollateralObj.CollateralValueAmt,
-            CustCvgAmt: this.appCollateralObj.CollateralValueAmt
+            CvgAmt: this.totalAssetPriceAmt,
+            CustCvgAmt: this.totalAssetPriceAmt
           });
         }
         if (this.appAssetObj != undefined) {
