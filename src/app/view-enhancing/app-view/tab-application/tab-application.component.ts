@@ -33,12 +33,13 @@ export class TabApplicationComponent implements OnInit {
    }
 
   async ngOnInit() {
-
+    if(this.appId == null){
     await this.http.post(URLConstant.GetAppByAppNo, {TrxNo: this.AppNo}).toPromise().then(
       (response) => {
         this.appId = response["AppId"];        
       }
     )
+    }
 
     if(this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W || this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.OPL) {
       this.isLoanObjectNeeded = false;
