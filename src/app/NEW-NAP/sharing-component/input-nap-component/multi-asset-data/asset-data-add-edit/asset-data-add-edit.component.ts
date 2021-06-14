@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators, FormArray, FormGroup, ValidatorFn } from '@angular/forms';
@@ -12,12 +12,8 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { AllAssetDataObj } from 'app/shared/model/AllAssetDataObj.Model';
-import { RefCoyObj } from 'app/shared/model/RefCoyObj.Model';
-import { AssetMasterObj } from 'app/shared/model/AssetMasterObj.Model';
 import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
 import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
-import { AppAssetSupplEmpObj } from 'app/shared/model/AppAssetSupplEmpObj.Model';
-import { VendorObj } from 'app/shared/model/Vendor.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
 import { LookupTaxCityIssuerComponent } from '../collateral-add-edit/lookup-tax-city-issuer/lookup-tax-city-issuer.component';
@@ -32,7 +28,6 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AppAssetAccessoryObj } from 'app/shared/model/AppAssetAccessoryObj.model';
 import { AppCollateralAccessoryObj } from 'app/shared/model/AppCollateralAccessoryObj.Model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { AppAssetAttrCustomObj } from 'app/shared/model/AppAsset/AppAssetAttrCustom.Model';
@@ -49,13 +44,10 @@ import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCode
   templateUrl: './asset-data-add-edit.component.html'
 })
 export class AssetDataAddEditComponent implements OnInit {
-  //@Input() type: string = "addAsset";
   @Input() mode: string;
   @Input() AppAssetId: number;
   @Output() outputValue: EventEmitter<object> = new EventEmitter();
   @Output() assetValue: EventEmitter<object> = new EventEmitter();
-  //AppAssetId: number = 0;
-  //type: string = "addAsset";
   currentChassisNo: string = "";
   @Input() AppId: number;
   LobCode: string;
@@ -279,8 +271,8 @@ export class AssetDataAddEditComponent implements OnInit {
       (response) => {
         var returnGeneralSettingObj = response;
 
-        var gsNeedCheckBySystem = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
-        var gsUseDigitalization = returnGeneralSettingObj["ResponseGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
+        var gsNeedCheckBySystem = returnGeneralSettingObj["ResGetListGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
+        var gsUseDigitalization = returnGeneralSettingObj["ResGetListGeneralSettingObj"].find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
         
         if(gsNeedCheckBySystem != undefined){
           this.IntegratorCheckBySystemGsValue = gsNeedCheckBySystem.GsValue;
@@ -462,9 +454,6 @@ export class AssetDataAddEditComponent implements OnInit {
 
   SalesPersonChanged(event) {
     if (event.target.value != "") {
-      //this.vendorEmpObj.VendorEmpId = event.target.value;
-      //this.GetVendorEmpSupervisi();
-
       var temp: any;
       temp = this.listSalesObj.filter(
         emp => emp.VendorEmpId == event.target.value);
@@ -1199,7 +1188,6 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppAssetSupplEmpSalesObj.MrSupplEmpPositionCode = CommonConstant.SALES_JOB_CODE;
     this.allAssetDataObj["VendorEmpId"] = this.AssetDataForm.controls.SalesPersonId.value;
 
-    // if(this.AssetDataForm.controls["BranchManagerName"].value == "undefined" || this.AssetDataForm.controls["BranchManagerName"].value == "")
     if (!this.AssetDataForm.controls["BranchManagerName"].value) {
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpName = "-";
       this.allAssetDataObj.AppAssetSupplEmpManagerObj.SupplEmpNo = "-";
@@ -1230,12 +1218,10 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppAssetObj.AssetPriceAmt = this.AssetDataForm.controls["AssetPrice"].value;
 
     if (this.AssetDataForm.controls["MrDownPaymentTypeCode"].value == CommonConstant.DownPaymentTypeAmt) {
-      // this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["DownPayment"].value;
       this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm["DownPayment"];
       this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = (assetForm["DownPayment"] / assetForm["AssetPrice"]) * 100;
     }
     else {
-      // this.allAssetDataObj.AppAssetObj.DownPaymentAmt = this.AssetDataForm.controls["AssetPrice"].value * this.AssetDataForm.controls["DownPaymentPrctg"].value / 100;
       this.allAssetDataObj.AppAssetObj.DownPaymentAmt = assetForm["AssetPrice"] * (assetForm["DownPaymentPrctg"] / 100);
       this.allAssetDataObj.AppAssetObj.DownPaymentPrcnt = assetForm["DownPaymentPrctg"];
     }
@@ -1495,7 +1481,6 @@ export class AssetDataAddEditComponent implements OnInit {
                 (response) => {
                 });
                 this.AssetDataForm.reset();
-                //this.router.navigate(["/Nap/AssetData/Paging"]);
                 this.assetValue.emit({ mode: 'paging' });
             });
         }
@@ -1504,7 +1489,6 @@ export class AssetDataAddEditComponent implements OnInit {
           (response) => {
             this.toastr.successMessage(response["message"]);
             this.AssetDataForm.reset();
-            //this.router.navigate(["/Nap/AssetData/Paging"]);
             this.assetValue.emit({ mode: 'paging' });
           });
       }
@@ -1595,7 +1579,6 @@ export class AssetDataAddEditComponent implements OnInit {
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 this.AssetDataForm.reset();
-                //this.router.navigate(["/Nap/AssetData/Paging"]);
                 this.assetValue.emit({ mode: 'paging' });
               });
           }
@@ -1605,7 +1588,6 @@ export class AssetDataAddEditComponent implements OnInit {
               (response) => {
                 this.toastr.successMessage(response["message"]);
                 this.AssetDataForm.reset();
-                //this.router.navigate(["/Nap/AssetData/Paging"]);
                 this.assetValue.emit({ mode: 'paging' });
               });
             }
@@ -1619,7 +1601,6 @@ export class AssetDataAddEditComponent implements OnInit {
                 (response) => {
                 });
                 this.AssetDataForm.reset();
-                //this.router.navigate(["/Nap/AssetData/Paging"]);
                 this.assetValue.emit({ mode: 'paging' });
             });
         }
@@ -1628,23 +1609,10 @@ export class AssetDataAddEditComponent implements OnInit {
           (response) => {
             this.toastr.successMessage(response["message"]);
             this.AssetDataForm.reset();
-            //this.router.navigate(["/Nap/AssetData/Paging"]);
             this.assetValue.emit({ mode: 'paging' });
           });
       }
     }
-
-    // this.inputAddressObjForLoc = new InputAddressObj();
-    // this.inputAddressObjForLoc.title = "Asset Location";
-    // this.inputAddressObjForLoc.showSubsection = false; 
-    // this.inputAddressObjForLoc.showAllPhn = false;
-    // this.inputAddressObjForLoc.showOwnership = false;
-
-    // var datePipe = new DatePipe("en-US");
-    // this.inputFieldLocationAddrObj = new InputFieldObj();
-    // this.inputFieldLocationAddrObj.inputLookupObj = new InputLookupObj();
-    // this.inputFieldLocationAddrObj.inputLookupObj.isRequired = false;
-
   }
   addGroup(appAssetAccessoriesObj, i) {
     if (appAssetAccessoriesObj == undefined) {
