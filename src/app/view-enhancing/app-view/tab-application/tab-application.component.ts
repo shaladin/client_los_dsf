@@ -33,7 +33,7 @@ export class TabApplicationComponent implements OnInit {
    }
 
   async ngOnInit() {
-    if(this.AppNo !== undefined) {
+    if(this.appId == null) {
       await this.http.post(URLConstant.GetAppByAppNo, {TrxNo: this.AppNo}).toPromise().then(
         (response) => {
           this.appId = response["AppId"];        
