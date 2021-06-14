@@ -41,7 +41,7 @@
                 (ngSubmit)="ProdHDeactForm.valid && SaveForm()" #enjiForm="ngForm">
                 <div class="form-body">
                   <div class="form-group row">
-                    <label class="col-md-3  adInsLabel" translate>Effective Date </label>
+                    <label class="col-md-3  adins-required-label" translate>Effective Date </label>
                     <div class="col-md-3">
                       <input type="date" class="form-control adInsInput" formControlName="EffectiveDate"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && ProdHDeactForm.controls.EffectiveDate.invalid }">
