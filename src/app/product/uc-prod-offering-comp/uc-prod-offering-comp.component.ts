@@ -216,7 +216,6 @@ export class UcProdOfferingCompComponent implements OnInit {
 
     this.http.post(URLConstant.GetProductOfferingComponentGrouped, ProdOfferingComponent).toPromise().then(
       async (response) => {
-        console.log(response);
         for (var i = 0; i < response[CommonConstant.ReturnObj]["ProdOffComponents"].length; i++) {
           var group = response[CommonConstant.ReturnObj]["ProdOffComponents"][i];
           var fa_group = this.FormProdOfferingComp.controls['groups'] as FormArray;
@@ -285,6 +284,11 @@ export class UcProdOfferingCompComponent implements OnInit {
           this.FormProdOfferingComp.controls["groups"].controls[i].controls["components"].controls[j].patchValue({
             OfferingCompntValue: selectedId.join(";"),
             OfferingCompntValueDesc: selectedText.join(", ")
+          });
+        }
+        if(this.FormProdOfferingComp.controls["groups"].controls[i].controls["components"].controls[j].controls.ProdCompntType.value == "DT"){
+          this.FormProdOfferingComp.controls["groups"].controls[i].controls["components"].controls[j].patchValue({
+            OfferingCompntValueDesc : this.FormProdOfferingComp.controls["groups"].controls[i].controls["components"].controls[j].controls.OfferingCompntValue.value
           });
         }
         this.list.push(Object.assign({}, ...formProdOfferingComp.controls.groups.controls[i].controls["components"].controls[j].getRawValue()));
