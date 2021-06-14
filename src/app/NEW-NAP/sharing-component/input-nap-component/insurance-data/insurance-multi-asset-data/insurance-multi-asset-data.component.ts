@@ -981,6 +981,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         inscoAddPremiRate = this.insRateAddCvgRuleTplObjs[0].PremiToInsco;
       }
 
+      this.AddDictInsCustRate(o.Key, custAddPremiRate);
       var checkboxValue = false;
       if (o.Key.toString() == CommonConstant.MrAddCvgTypeCodeLoading) {
         for (let i = 0; i < this.ruleObj["AdditionalCoverageType"].length; i++) {
@@ -988,7 +989,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
             var assetAgeMin = this.ruleObj["AssetAgeFrom"][i] ? parseInt(this.ruleObj["AssetAgeFrom"][i], 10) : 0;
             var assetAgeMax = this.ruleObj["AssetAgeTo"][i] ? parseInt(this.ruleObj["AssetAgeTo"][i], 10) : 0;
             if (ManufYearDiff >= assetAgeMin && ManufYearDiff <= assetAgeMax) {
-              this.AddDictInsCustRate(o.Key, custAddPremiRate);
               checkboxValue = true;
               const control = this.fb.group({
                 MrAddCvgTypeCode: o.Key,
@@ -1010,7 +1010,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         }
       }
       else {
-        this.AddDictInsCustRate(o.Key, custAddPremiRate);
         const control = this.fb.group({
           MrAddCvgTypeCode: o.Key,
           AddCvgTypeName: o.Value,
@@ -1069,17 +1068,20 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       var inscoAddPremiRate = 0;
 
       if (premiumType == CommonConstant.PremiumTypeAmt) {
+        this.AddDictInsCustRate(o.Key, this.ruleObj.PremiToCust[index]);
         custAddPremiRate = check == undefined ? this.ruleObj.PremiToCust[index] : check.CustAddPremiAmt;
         inscoAddPremiRate = check == undefined ? this.ruleObj.PremiToInsco[index] : check.InscoAddPremiAmt;
       }
 
       if (premiumType == CommonConstant.PremiumTypePrcnt) {
+        this.AddDictInsCustRate(o.Key, this.ruleObj.RateToCust[index]);
         custAddPremiRate = check == undefined ? this.ruleObj.RateToCust[index] : check.CustAddPremiRate;
         inscoAddPremiRate = check == undefined ? this.ruleObj.RateToInsco[index] : check.InscoAddPremiRate;
       }
 
       if (o.Key == CommonConstant.MrAddCvgTypeCodeTpl) {
         defaultSumInsuredAmt = this.insRateAddCvgRuleTplObjs[0].SumInsuredAmt;
+        this.AddDictInsCustRate(o.Key, this.insRateAddCvgRuleTplObjs[0].PremiToCust);
         custAddPremiRate = check == undefined ? this.insRateAddCvgRuleTplObjs[0].PremiToCust : check.CustAddPremiAmt;
         inscoAddPremiRate = check == undefined ? this.insRateAddCvgRuleTplObjs[0].PremiToInsco : check.InscoAddPremiAmt;
       }
@@ -1090,7 +1092,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
             var assetAgeMin = this.ruleObj["AssetAgeFrom"][i] ? parseInt(this.ruleObj["AssetAgeFrom"][i], 10) : 0;
             var assetAgeMax = this.ruleObj["AssetAgeTo"][i] ? parseInt(this.ruleObj["AssetAgeTo"][i], 10) : 0;
             if (ManufYearDiff >= assetAgeMin && ManufYearDiff <= assetAgeMax) {
-              this.AddDictInsCustRate(o.Key, custAddPremiRate);
               const control = this.fb.group({
                 MrAddCvgTypeCode: o.Key,
                 AddCvgTypeName: o.Value,
@@ -1110,7 +1111,6 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         }
       }
       else {
-        this.AddDictInsCustRate(o.Key, custAddPremiRate);
         const control = this.fb.group({
           MrAddCvgTypeCode: o.Key,
           AddCvgTypeName: o.Value,
