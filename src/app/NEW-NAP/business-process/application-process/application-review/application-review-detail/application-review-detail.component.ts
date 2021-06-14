@@ -22,6 +22,8 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { CookieService } from 'ngx-cookie';
 import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-application-review-detail',
@@ -230,11 +232,22 @@ export class ApplicationReviewDetailComponent implements OnInit {
 
   crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   isShow: boolean = false;
+  captureStat: string = "";
   async GetCrdRvwCustInfoByAppId() {
     await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.crdRvwCustInfoObj = response;
         this.isShow = true;
+      }
+    );
+
+    let refMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCaptureStat,
+      MasterCode: this.crdRvwCustInfoObj.CaptureStat
+    };
+    await this.http.post<KeyValueObj>(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
+      (response) => {
+        this.captureStat = response.Value;
       }
     );
   }
@@ -319,8 +332,6 @@ export class ApplicationReviewDetailComponent implements OnInit {
 
     this.ApprovalCreateOutput = this.createComponent.output();
     if (this.ApprovalCreateOutput == undefined) return;
-
-    console.log(this.ApprovalCreateOutput['RFAInfo']['RFAInfo']);
 
     let apiObj = {
       appCrdRvwHObj: tempAppCrdRvwObj,
