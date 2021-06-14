@@ -154,7 +154,6 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   }
 
   async ChangeDetail(index: number, appAssetId: number) {
-    console.log("AAA");
     this.AssetInfoObj = this.ListOfAsset[index];
     this.AppAssetId = appAssetId;
     this.Index = index;
@@ -200,12 +199,39 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   }
   
   SetAsset(event: any) {
+    this.SetAssetData(event.AssetNo);
+  }
+
+  ChangeDecision(decisionCode: string) {
+    if(decisionCode === "EXISTING") {
+      this.ReqDecForm.controls.AssetNo.setValidators(Validators.required);
+      
+      if(this.AssetInfoObj.AssetNo !== "" && this.AssetInfoObj.AssetNo !== null) {
+        this.InputLookupAssetObj.jsonSelect = { AssetNo: this.AssetInfoObj.AssetNo };
+        this.InputLookupAssetObj.idSelect = this.AssetInfoObj.AssetNo;
+
+        this.SetAssetData(this.AssetInfoObj.AssetNo);
+      }
+
+      this.IsExisting = true;
+    }
+    else {
+      this.ReqDecForm.controls.AssetNo.clearValidators();
+      this.IsExisting = false;
+      this.ReqDecForm.patchValue({
+        AssetNo: ""
+      });
+      this.ReqDecForm.controls.AssetNo.updateValueAndValidity();
+    }
+  }
+
+  SetAssetData(assetNo: string) {
     this.ReqDecForm.patchValue({
-      AssetNo: event.AssetNo
+      AssetNo: assetNo
     });
     
     var requestAssetNo = {
-      AssetNo: event.AssetNo
+      TrxNo: assetNo
     };
 
     this.http.post(URLConstant.GetAssetByAssetNo, requestAssetNo).subscribe(
@@ -225,53 +251,6 @@ export class RequisitionDecisionDetailComponent implements OnInit {
         this.AssetTypeObj = response;
       }
     );
-  }
-
-  ChangeDecision(decisionCode: string) {
-    if(decisionCode === "EXISTING") {
-      this.ReqDecForm.controls.AssetNo.setValidators(Validators.required);
-      
-      if(this.AssetInfoObj.AssetNo !== "") {
-        this.ReqDecForm.patchValue({
-          AssetNo: this.AssetInfoObj.AssetNo
-        });
-  
-        this.InputLookupAssetObj.jsonSelect = { AssetNo: this.AssetInfoObj.AssetNo };
-        this.InputLookupAssetObj.idSelect = this.AssetInfoObj.AssetNo;
-
-        var requestAssetNo = {
-          AssetNo: this.AssetInfoObj.AssetNo
-        };
-
-        this.http.post(URLConstant.GetAssetByAssetNo, requestAssetNo).subscribe(
-          (response: any) => {
-            this.AssetObj = response;
-            this.AssetTypeCode = this.AssetObj.AssetTypeCode;
-            this.SerialNo1 = this.AssetObj.SerialNo1;
-            this.SerialNo2 = this.AssetObj.SerialNo2;
-            this.SerialNo3 = this.AssetObj.SerialNo3;
-            this.SerialNo4 = this.AssetObj.SerialNo4;
-            this.SerialNo5 = this.AssetObj.SerialNo5;
-          }
-        );
-
-        this.http.post(URLConstant.GetAssetTypeByCode, { Code: this.AssetTypeCode }).subscribe(
-          (response: any) => {
-            this.AssetTypeObj = response;
-          }
-        );
-      }
-
-      this.IsExisting = true;
-    }
-    else {
-      this.ReqDecForm.controls.AssetNo.clearValidators();
-      this.IsExisting = false;
-      this.ReqDecForm.patchValue({
-        AssetNo: ""
-      });
-      this.ReqDecForm.controls.AssetNo.updateValueAndValidity();
-    }
   }
 
   Cancel() {
