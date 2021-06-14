@@ -21,16 +21,14 @@ import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
-import { async } from '@angular/core/testing';
-import { AppAssetAttrCustomObj } from 'app/shared/model/AppAsset/AppAssetAttrCustom.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
 import { AppCollateralAttrCustomObj } from 'app/shared/model/AppCollateralAttrCustom.Model';
-import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { String } from 'typescript-string-operations';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
+import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 
 @Component({
   selector: 'app-collateral-detail',
@@ -72,6 +70,7 @@ export class CollateralDetailComponent implements OnInit {
   AppCustObj: AppCustObj = new AppCustObj();
   AppCustAddrObj: AppCustAddrObj = new AppCustAddrObj();
   AppCustCompanyObj: AppCustCompanyObj = new AppCustCompanyObj();
+  AppCustPersonalObj: AppCustPersonalObj = new AppCustPersonalObj();
   OwnerAddrObj: AddrObj = new AddrObj();
   appCollateralDataObj: AppCollateralDataObj = new AppCollateralDataObj();
   listAppCollateralDocObj: ListAppCollateralDocObj = new ListAppCollateralDocObj();
@@ -163,6 +162,17 @@ export class CollateralDetailComponent implements OnInit {
     }
     if (this.isSingleAsset) {
       await this.getAppCollData(this.AppId, 0);
+    }
+    if(this.bizTemplateCode == CommonConstant.CFRFN4W){
+      this.AddCollForm.patchValue({
+        SelfUsage: true,
+        SelfOwner: true
+      });
+      await this.CopyUserForSelfUsage();
+      await this.CopyUserForSelfOwner();
+      if(this.AppCustData.MrCustTypeCode == CommonConstant.CustTypePersonal){
+        await this.setOwnerRelationListDdl();
+      }
     }
     this.GenerateAppCollateralAttr(false);
     this.GetGS();
@@ -376,7 +386,11 @@ export class CollateralDetailComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship }).subscribe(
+    let refMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
+    if(this.AppCustData.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+      refMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship
+    }
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: refMasterTypeCode }).subscribe(
       (response) => {
         this.OwnerRelationList = response[CommonConstant.ReturnObj];
         if (this.mode != "edit") {
@@ -904,20 +918,21 @@ export class CollateralDetailComponent implements OnInit {
     );
   }
 
-  CopyUserForSelfUsage() {
+  async CopyUserForSelfUsage() {
     if (this.AddCollForm.controls.SelfUsage.value == true) {
       this.AddCollForm.controls.UserName.disable();
       this.AddCollForm.controls.MrUserRelationshipCode.disable();
 
       this.AppCustObj = new AppCustObj();
       this.AppCustCompanyObj = new AppCustCompanyObj();
+      this.AppCustPersonalObj = new AppCustPersonalObj();
 
       var appObj = { "Id": this.AppId };
-      this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
+      await this.http.post(URLConstant.GetCustDataByAppId, appObj).toPromise().then(
         response => {
           this.AppCustObj = response['AppCustObj'];
           this.AppCustCompanyObj = response['AppCustCompanyObj'];
-
+          this.AppCustPersonalObj = response['AppCustPersonalObj'];
 
           this.AddCollForm.patchValue({
             UserName: this.AppCustObj.CustName,
@@ -940,7 +955,7 @@ export class CollateralDetailComponent implements OnInit {
     }
   }
 
-  CopyUserForSelfOwner() {
+  async CopyUserForSelfOwner() {
     if (this.AddCollForm.controls.SelfOwner.value == true) {
 
       this.AddCollForm.controls.OwnerName.disable();
@@ -955,7 +970,7 @@ export class CollateralDetailComponent implements OnInit {
       this.AppCustAddrObj = new AppCustAddrObj();
 
       var appObj = { "Id": this.AppId };
-      this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
+      await this.http.post(URLConstant.GetCustDataByAppId, appObj).toPromise().then(
         response => {
           this.AppCustObj = response['AppCustObj'];
           this.AppCustCompanyObj = response['AppCustCompanyObj'];
@@ -966,7 +981,7 @@ export class CollateralDetailComponent implements OnInit {
             MrOwnerRelationshipCode: "SELF",
             MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
             OwnerIdNo: this.AppCustObj.IdNo,
-            OwnerMobilePhnNo: typeof (response['AppCustPersonalObj']) != 'undefined' ? response['AppCustPersonalObj']['MobilePhnNo1'] : ''
+            OwnerMobilePhnNo: typeof (response['AppCustPersonalObj']) != 'undefined' ? response['AppCustPersonalObj']['MobilePhnNo1'] : response['AppCustCompanyContactPersonObjs'][0]['MobilePhnNo1']
           })
           this.OwnerAddrObj.Addr = this.AppCustAddrObj.Addr
           this.OwnerAddrObj.AreaCode1 = this.AppCustAddrObj.AreaCode1
@@ -1016,6 +1031,15 @@ export class CollateralDetailComponent implements OnInit {
       this.inputAddressObjForLoc.inputField = this.inputFieldLocationObj;
     }
 
+  }
+
+  async setOwnerRelationListDdl(){
+    let res: Array<KeyValueObj> = new Array();
+    if(this.AppCustPersonalObj.MrMaritalStatCode == 'MARRIED'){
+      res.push(this.OwnerRelationList.find(x => x.Key == 'SPOUSE'));
+    }
+    res.push(this.OwnerRelationList.find(x => x.Key == 'SELF'));
+    this.OwnerRelationList = res;
   }
 
   SaveForm() {
