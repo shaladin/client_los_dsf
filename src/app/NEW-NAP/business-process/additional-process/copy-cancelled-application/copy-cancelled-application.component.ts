@@ -78,7 +78,7 @@ export class CopyCancelledApplicationComponent implements OnInit {
           var reqByProdOffCodeAndVersionObj = new ReqByProdOffCodeAndVersionObj();
           reqByProdOffCodeAndVersionObj.ProdOfferingCode = ev.RowObj.ProdOfferingCode;
           reqByProdOffCodeAndVersionObj.ProdOfferingVersion = ev.RowObj.ProdOfferingVersion;
-          this.http.post(URLConstant.GetProdStatByProdOffCodeAndVersion, reqByProdOffCodeAndVersionObj).subscribe(
+          this.http.post(URLConstant.GetProdStatByProdOffCodeAndVersion, reqByProdOffCodeAndVersionObj).toPromise().then(
             (response) => {
               let ProdStat = response["ProdStat"];
               let ProdStatDescr = response["ProdStatDescr"];
