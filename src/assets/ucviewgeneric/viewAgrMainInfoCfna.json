@@ -23,7 +23,7 @@
           {
             "type": "text",
             "label": "Number of Collateral",
-            "property": "NumOfAsset"
+            "property": "NumOfColl"
           },
           {
             "type": "link",
