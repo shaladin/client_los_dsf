@@ -43,152 +43,152 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
   AccName: string;
   BankName: string;
   AccNo: string;
-  
+
 
   InvoiceForm = this.fb.group({
-      Invoices: this.fb.array([])
+    Invoices: this.fb.array([])
   });
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router) {
-      this.route.queryParams.subscribe(params => {
-          this.AppId = params["AppId"];
-          this.WfTaskListId = params["TaskListId"];
-          this.TrxNo = params["TrxNo"];
-      });
-      this.BusinessDate = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
-      var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-      this.Username = currentUserContext[CommonConstant.USER_NAME];
+    this.route.queryParams.subscribe(params => {
+      this.AppId = params["AppId"];
+      this.WfTaskListId = params["TaskListId"];
+      this.TrxNo = params["TrxNo"];
+    });
+    this.BusinessDate = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    this.Username = currentUserContext[CommonConstant.USER_NAME];
   }
 
   async ngOnInit() {
-      this.claimTask();
+    this.claimTask();
 
-      let appIdObj : GenericObj = new GenericObj();
-      appIdObj.Id = this.AppId;
+    let appIdObj: GenericObj = new GenericObj();
+    appIdObj.Id = this.AppId;
 
-      await this.httpClient.post<AppObj>(URLConstant.GetAppById, appIdObj).toPromise().then(
-          (response) => {
-              this.LobCode = response.LobCode
+    await this.httpClient.post<AppObj>(URLConstant.GetAppById, appIdObj).toPromise().then(
+      (response) => {
+        this.LobCode = response.LobCode
+      }
+
+    );
+
+    this.GetListVerifStatus();
+    let request: GenericObj = new GenericObj();
+    request.Id = this.AppId;
+    this.httpClient.post<ResDisbInfo>(URLConstant.GetDisbInfoByAppId, request).subscribe(
+      (response) => {
+        if (response.DisbInfoId != 0) {
+          this.AccName = response.AccName;
+          this.AccNo = response.AccNo;
+          this.httpClient.post(URLConstant.GetRefBankByBankCodeAsync, { Code: response.BankCode }).subscribe(
+            (responseBank) => {
+              this.BankName = responseBank["BankName"];
+            });
+        }
+      });
+
+    this.httpClient.post(URLConstant.GetMouCustByAppId, request).subscribe((responseMou) => {
+      this.PlafondAmt = responseMou["PlafondAmt"];
+      this.MrMouTypeCode = responseMou["MrMouTypeCode"];
+
+      if (this.MrMouTypeCode == CommonConstant.FACTORING) {
+        this.httpClient.post(URLConstant.GetListAppInvoiceFctrByAppId, request).subscribe((response) => {
+          this.listInvoice = response["AppInvoiceFctrObjs"];
+          var totalInvoice = 0;
+          for (let i = 0; i < this.listInvoice.length; i++) {
+            var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
+            fa_listInvoice.push(this.AddInvoiceControl(this.listInvoice[i]))
+            totalInvoice += this.listInvoice[i].InvoiceAmt;
           }
+          this.OsPlafondAmt = this.PlafondAmt - totalInvoice;
+        });
+      } else {
+        let GetByMouCustId: GenericObj = new GenericObj();
+        GetByMouCustId.Id = responseMou["MouCustId"];
 
-      );
-
-      this.GetListVerifStatus();
-      let request : GenericObj = new GenericObj();
-      request.Id = this.AppId;
-      this.httpClient.post<ResDisbInfo>(URLConstant.GetDisbInfoByAppId, request).subscribe(
+        var DisbAmt = 0;
+        this.httpClient.post(URLConstant.GetListAppInvoiceXAppInvoiceDlrFncngHByAppId, { Id: this.AppId }).subscribe(
           (response) => {
-              if (response != null) {
-                  this.AccName = response.AccName;
-                  this.AccNo = response.AccNo;
-                  this.httpClient.post(URLConstant.GetRefBankByBankCodeAsync, {Code: response.BankCode}).subscribe(
-                      (responseBank) => {
-                          this.BankName = responseBank["BankName"];
-                      });
+            this.listInvoice = response["AppInvoiceDlrFncngHObj"];
+            for (let i = 0; i < this.listInvoice.length; i++) {
+              var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
+              fa_listInvoice.push(this.AddInvoiceControl(this.listInvoice[i]))
+            }
+            DisbAmt = this.listInvoice[0].DisbAmt;
+            this.httpClient.post<ResGetAllNtfAppAmt>(URLConstant.GetAllNtfAppAmtByMouCustId, GetByMouCustId).subscribe(
+              (responseNtfAmt) => {
+                if (DisbAmt != 0) {
+                  this.OsPlafondAmt = DisbAmt - responseNtfAmt.NtfAmt;
+                } else {
+                  this.OsPlafondAmt = this.PlafondAmt - responseNtfAmt.NtfAmt;
+                }
               }
+            )
           });
-
-      this.httpClient.post(URLConstant.GetMouCustByAppId, request).subscribe((responseMou) => {
-          this.PlafondAmt = responseMou["PlafondAmt"];
-          this.MrMouTypeCode = responseMou["MrMouTypeCode"];
-
-          if (this.MrMouTypeCode == CommonConstant.FACTORING) {
-              this.httpClient.post(URLConstant.GetListAppInvoiceFctrByAppId, request).subscribe((response) => {
-                  this.listInvoice = response["AppInvoiceFctrObjs"];
-                  var totalInvoice = 0;
-                  for (let i = 0; i < this.listInvoice.length; i++) {
-                      var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
-                      fa_listInvoice.push(this.AddInvoiceControl(this.listInvoice[i]))
-                      totalInvoice += this.listInvoice[i].InvoiceAmt;
-                  }
-                  this.OsPlafondAmt = this.PlafondAmt - totalInvoice;
-              });
-          } else {
-              let GetByMouCustId : GenericObj = new GenericObj();
-              GetByMouCustId.Id = responseMou["MouCustId"];
-             
-              var DisbAmt = 0;
-              this.httpClient.post(URLConstant.GetListAppInvoiceXAppInvoiceDlrFncngHByAppId, {Id : this.AppId}).subscribe(
-                  (response) => {
-                      this.listInvoice = response["AppInvoiceDlrFncngHObj"];
-                      for (let i = 0; i < this.listInvoice.length; i++) {
-                          var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
-                          fa_listInvoice.push(this.AddInvoiceControl(this.listInvoice[i]))
-                      }
-                      DisbAmt = this.listInvoice[0].DisbAmt;
-                      this.httpClient.post<ResGetAllNtfAppAmt>(URLConstant.GetAllNtfAppAmtByMouCustId, GetByMouCustId).subscribe(
-                          (responseNtfAmt) => {
-                              if(DisbAmt != 0){
-                                  this.OsPlafondAmt = DisbAmt - responseNtfAmt.NtfAmt;
-                              }else{
-                                  this.OsPlafondAmt = this.PlafondAmt - responseNtfAmt.NtfAmt;
-                              }
-                          }
-                      )
-                  });
-          }
-      })
+      }
+    })
   }
 
   AddInvoiceControl(obj) {
-      return this.fb.group({
-          InvoiceNo: obj.InvoiceNo,
-          CustName: obj.CustomerFactoringName,
-          InvoiceAmt: obj.InvoiceAmt,
-          Verification: this.listVerificationStatus[0].Key,
-          InvoiceNotes: obj.Notes,
-          InvoiceDt: obj.InvoiceDueDt,
-          RowVersion: obj.RowVersion,
-      })
+    return this.fb.group({
+      InvoiceNo: obj.InvoiceNo,
+      CustName: obj.CustomerFactoringName,
+      InvoiceAmt: obj.InvoiceAmt,
+      Verification: this.listVerificationStatus[0].Key,
+      InvoiceNotes: obj.Notes,
+      InvoiceDt: obj.InvoiceDueDt,
+      RowVersion: obj.RowVersion,
+    })
   }
 
   GetListVerifStatus() {
-      this.httpClient.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { Code: CommonConstant.INV_VERF_RESULT_STAT }).subscribe((response) => {
-          this.listVerificationStatus = response[CommonConstant.ReturnObj];
-      })
+    this.httpClient.post(URLConstant.GetListActiveRefStatusByStatusGrpCode, { Code: CommonConstant.INV_VERF_RESULT_STAT }).subscribe((response) => {
+      this.listVerificationStatus = response[CommonConstant.ReturnObj];
+    })
   }
 
   Cancel() {
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
   }
   SaveData() {
-      var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray
-      for (let i = 0; i < fa_listInvoice.length; i++) {
-          var item = fa_listInvoice.at(i);
-          this.listInvoice[i].IsApproved = item.get("Verification").value == "APV" ? true : false;
-          this.listInvoice[i].InvoiceStat = item.get("Verification").value;
-          this.listInvoice[i].Notes = item.get("InvoiceNotes").value;
-          this.listInvoice[i].RowVersion = item.get("RowVersion").value;
-      }
-      var request = { Invoices: this.listInvoice, TaskListId: this.WfTaskListId, IsDF: true };
-      this.httpClient.post(URLConstant.UpdateAppInvoiceDlfn, request).subscribe(() => {
-          this.outputTab.emit();
-      });
+    var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray
+    for (let i = 0; i < fa_listInvoice.length; i++) {
+      var item = fa_listInvoice.at(i);
+      this.listInvoice[i].IsApproved = item.get("Verification").value == "APV" ? true : false;
+      this.listInvoice[i].InvoiceStat = item.get("Verification").value;
+      this.listInvoice[i].Notes = item.get("InvoiceNotes").value;
+      this.listInvoice[i].RowVersion = item.get("RowVersion").value;
+    }
+    var request = { Invoices: this.listInvoice, TaskListId: this.WfTaskListId, IsDF: true };
+    this.httpClient.post(URLConstant.UpdateAppInvoiceDlfn, request).subscribe(() => {
+      this.outputTab.emit();
+    });
   }
 
   async claimTask() {
-      var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
-      var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-      wfClaimObj.pWFTaskListID = this.WfTaskListId;
-      wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-      this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-          () => {
-          });
+    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
+    wfClaimObj.pWFTaskListID = this.WfTaskListId;
+    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
+    this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
+      () => {
+      });
   }
   Calculate(i) {
-      var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
-      var item = fa_listInvoice.at(i);
-      if (item.get("Verification").value == "APV") {
-          this.OsPlafondAmt -= item.get("InvoiceAmt").value;
-      }
-      else {
-          this.OsPlafondAmt += item.get("InvoiceAmt").value;
-      }
+    var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
+    var item = fa_listInvoice.at(i);
+    if (item.get("Verification").value == "APV") {
+      this.OsPlafondAmt -= item.get("InvoiceAmt").value;
+    }
+    else {
+      this.OsPlafondAmt += item.get("InvoiceAmt").value;
+    }
   }
 
   GetCallBack(ev) {
-      if (ev.Key == "ViewProdOffering") {
-          AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
-      }
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+    }
   }
 }

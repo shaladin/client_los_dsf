@@ -111,7 +111,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
 
     this.httpClient.post<ResDisbInfo>(URLConstant.GetDisbInfoByAppId, request).subscribe(
       (response) => {
-        if (response != null) {
+        if (response.DisbInfoId != 0) {
           this.AccName = response.AccName;
           this.AccNo = response.AccNo;
           var objectBank = {

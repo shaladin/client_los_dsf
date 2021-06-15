@@ -390,7 +390,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
                 PayFreqCode: PayFreqCode
               });
             }
-            this.isInit = false;
+            //this.isInit = false;
             if (isCriteriaMake) this.makeNewLookupCriteria();
 
           });

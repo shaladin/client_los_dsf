@@ -110,7 +110,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
       });
     await this.httpClient.post<ResDisbInfo>(URLConstant.GetDisbInfoByAppId, obj).subscribe(
       (response) => {
-        if (response != null) {
+        if (response.DisbInfoId != 0) {
           this.DisbInfoId = response.DisbInfoId;
 
           var objectBank = {
