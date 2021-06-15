@@ -157,6 +157,11 @@ export class CollateralDetailComponent implements OnInit {
     await this.initDropdownList();
     await this.getAppData();
 
+    if(this.AppCustData.MrCustTypeCode == CommonConstant.CustTypeCompany){
+      this.AddCollForm.controls.OwnerMobilePhnNo.clearValidators();
+      this.AddCollForm.controls.OwnerMobilePhnNo.updateValueAndValidity();
+    }
+
     if (this.mode == "edit") {
       await this.getAppCollData(0, this.AppCollateralId);
     }
@@ -981,7 +986,7 @@ export class CollateralDetailComponent implements OnInit {
             MrOwnerRelationshipCode: "SELF",
             MrIdTypeCode: this.AppCustObj.MrIdTypeCode,
             OwnerIdNo: this.AppCustObj.IdNo,
-            OwnerMobilePhnNo: typeof (response['AppCustPersonalObj']) != 'undefined' ? response['AppCustPersonalObj']['MobilePhnNo1'] : response['AppCustCompanyContactPersonObjs'][0]['MobilePhnNo1']
+            OwnerMobilePhnNo: typeof (response['AppCustPersonalObj']) != 'undefined' ? response['AppCustPersonalObj']['MobilePhnNo1'] : ''
           })
           this.OwnerAddrObj.Addr = this.AppCustAddrObj.Addr
           this.OwnerAddrObj.AreaCode1 = this.AppCustAddrObj.AreaCode1
