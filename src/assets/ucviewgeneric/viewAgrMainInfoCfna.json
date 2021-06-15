@@ -47,11 +47,6 @@
         },
         {
           "type": "text",
-          "label": "Agreement Parent",
-          "property": "AgrmntParentNo"
-        },
-        {
-          "type": "text",
           "label": "Customer Name",
           "property": "CustName"
         },

@@ -15,9 +15,9 @@ export class AgrMainInfoComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   @Input() arrValue = [];
   isReady: boolean = false;
- 
+
   constructor(
-    private router: Router, private http: HttpClient, private route: ActivatedRoute ) { }
+    private router: Router, private http: HttpClient, private route: ActivatedRoute) { }
 
   async ngOnInit() {
     this.viewGenericObj.viewEnvironment = environment.losUrl;
@@ -38,13 +38,13 @@ export class AgrMainInfoComponent implements OnInit {
         let appId = response['AppId'];
         await this.http.post(URLConstant.GetAppById, { Id: appId }).subscribe(
           (response) => {
-            if(response['BizTemplateCode'] == CommonConstant.FL4W){
+            if (response['BizTemplateCode'] == CommonConstant.FL4W) {
               this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrFL4WMainInfo.json";
             }
-            else if(response['BizTemplateCode'] == CommonConstant.CFNA) {
-		      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoCFNA.json";
-		    } 
-            else{
+            else if (response['BizTemplateCode'] == CommonConstant.CFNA) {
+              this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoCfna.json";
+            }
+            else {
               this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfo.json";
             }
             this.isReady = true;
@@ -52,10 +52,10 @@ export class AgrMainInfoComponent implements OnInit {
       }
     );
   }
-  
-  GetCallBack(ev: any){
-    if(ev.Key == "ViewProdOffering"){ 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
+
+  GetCallBack(ev: any) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
   }
 }
