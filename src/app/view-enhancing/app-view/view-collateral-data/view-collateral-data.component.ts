@@ -6,6 +6,9 @@ import { ActivatedRoute } from '@angular/router';
 import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { AppCollateralAccessoryObj } from 'app/shared/model/AppCollateralAccessoryObj.Model';
+import { AppCollateralAttrObj } from 'app/shared/model/AppCollateralAttrObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-view-collateral-data',
@@ -24,6 +27,8 @@ export class ViewCollateralDataComponent implements OnInit {
   @Output() outputTab: EventEmitter<boolean> = new EventEmitter();
   @Input() isMulti: boolean = false;
   IsReady: boolean = false;
+  AppCollateralAttrObjs : Array<AppCollateralAttrObj> = new Array<AppCollateralAttrObj>();
+  AppCollateralAccessoryObjs : Array<AppCollateralAccessoryObj> = new Array<AppCollateralAccessoryObj>();
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
@@ -68,10 +73,21 @@ export class ViewCollateralDataComponent implements OnInit {
           this.http.post<Array<AppCollateralDocObj>>(URLConstant.GetListAppCollateralDocsByAppCollateralId, { Id: this.AppCollateralObj.AppCollateralId }).subscribe(
             (response) => {
               this.AppCollateralDocs = response["AppCollateralDocs"];
-    
             }
           );
-        });
+
+          this.http.post<Array<AppCollateralAttrObj>>(URLConstant.GetAppCollateralAttrByAppCollateralId, {Id: this.AppCollateralObj.AppCollateralId }).subscribe(
+            (response) => {
+              this.AppCollateralAttrObjs = response["AppCollateralAttrObjs"];
+            }
+          );
+
+          this.http.post<Array<AppCollateralAccessoryObj>>(URLConstant.GetAppCollateralAccessoriesListByAppCollateralId, {Id: this.AppCollateralObj.AppCollateralId }).subscribe(
+            (response) => {
+              this.AppCollateralAccessoryObjs = response[CommonConstant.ReturnObj];
+            }
+          );
+      });
     }
   }
 
