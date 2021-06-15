@@ -56,6 +56,9 @@ export class ReturnHandlingNewEditAppPagingComponent implements OnInit {
       if (this.BizTemplateCode == CommonConstant.CFNA) {
         AdInsHelper.RedirectUrl(this.router, ["Nap/CFNA/NAP2"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
       }
+      if (this.BizTemplateCode == CommonConstant.FCTR) {
+        AdInsHelper.RedirectUrl(this.router, ["Nap/Factoring/NAP2"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
+      }
     }
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
