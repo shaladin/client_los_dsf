@@ -21,18 +21,16 @@ export class CollateralDataCfnaPagingComponent implements OnInit {
   isFirstInit: boolean = false;
   constructor(private http: HttpClient, private toastr: NGXToastrService) { }
 
-  async ngOnInit() {
-    await this.GetListAppCollateralByAppId()
-    console.log("aaa")
+  ngOnInit() {
+    this.GetListAppCollateralByAppId();
     this.emitIsFirstInit.emit(this.isFirstInit);
   }
 
-  async GetListAppCollateralByAppId() {
+  GetListAppCollateralByAppId() {
     var AppCollObj = {
       Id: this.AppId,
     }
-
-    await this.http.post<Array<AppCollateralObj>>(URLConstant.CopyAppCollateralFromAgrmntParent, AppCollObj).toPromise().then(
+    this.http.post<Array<AppCollateralObj>>(URLConstant.GetListAppCollateralByAppId, AppCollObj).subscribe(
       (response) => {
         this.ListAppCollObj = response[CommonConstant.ReturnObj];
         this.list.emit(this.ListAppCollObj);

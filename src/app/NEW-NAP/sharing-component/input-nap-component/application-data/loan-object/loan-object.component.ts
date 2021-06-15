@@ -13,7 +13,6 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
-import { ResCalculatePlafondAgrmntXObj } from 'app/shared/model/ResCalculatePlafondAgrmntXObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
 
@@ -25,7 +24,6 @@ export class LoanObjectComponent implements OnInit {
   @Input() AppId: number;
   @Input() mode: string;
   @Input() isCollateral: boolean;
-  @Input() resCalculatePlafondAgrmntXObj: ResCalculatePlafondAgrmntXObj;
   @Output() ResponseProdOfrUpToDate: EventEmitter<any>;
 
   modal: any;
@@ -76,15 +74,6 @@ export class LoanObjectComponent implements OnInit {
   }
 
   async editLoanObject(id, content) {
-    if (this.isCFNA && this.resCalculatePlafondAgrmntXObj == undefined) {
-      this.toastr.warningMessage(ExceptionConstant.PLEASE_INPUT_AGREEMENT_PARENT);
-      return;
-    }
-
-    if (this.isCFNA && this.resCalculatePlafondAgrmntXObj.IsAppInProgress) {
-      this.toastr.warningMessage(ExceptionConstant.THERE_IS_APP_ON_PROGRESS);
-      return false;
-    }
 
     this.mode = "edit";
     this.AppLoanPurposeId = id;
@@ -119,16 +108,6 @@ export class LoanObjectComponent implements OnInit {
   }
 
   open(content) {
-
-    if (this.isCFNA && this.resCalculatePlafondAgrmntXObj == undefined) {
-      this.toastr.warningMessage(ExceptionConstant.PLEASE_INPUT_AGREEMENT_PARENT);
-      return;
-    }
-
-    if (this.isCFNA && this.resCalculatePlafondAgrmntXObj.IsAppInProgress) {
-      this.toastr.warningMessage(ExceptionConstant.THERE_IS_APP_ON_PROGRESS);
-      return false;
-    }
 
     this.mode = "add";
     this.objEdit = undefined;
@@ -312,9 +291,6 @@ export class LoanObjectComponent implements OnInit {
       this.AppLoanPurposeObj.AppLoanPurposeId = this.objEdit.AppLoanPurposeId;
       this.AppLoanPurposeObj.RowVersion = this.objEdit.RowVersion;
       if (this.isCFNA) {
-        if (!this.checkPlafondAgrmnt(this.AppLoanPurposeObj.AppLoanPurposeId)) {
-          return;
-        }
         this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
           (response) => {
             this.http.post(URLConstant.EditAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
@@ -340,9 +316,6 @@ export class LoanObjectComponent implements OnInit {
     }
     else {
       if (this.isCFNA) {
-        if (!this.checkPlafondAgrmnt()) {
-          return;
-        }
         this.http.post(URLConstant.CheckFinAmtAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
           (response) => {
             this.http.post(URLConstant.AddAppLoanPurpose, this.AppLoanPurposeObj).subscribe(
@@ -366,39 +339,6 @@ export class LoanObjectComponent implements OnInit {
           });
       }
     }
-  }
-
-  checkPlafondAgrmnt(appLoanPurposeId: number = 0) {
-    if (this.resCalculatePlafondAgrmntXObj == undefined) {
-      this.toastr.warningMessage(ExceptionConstant.PLEASE_INPUT_AGREEMENT_PARENT);
-      return false;
-    }
-
-    if (this.resCalculatePlafondAgrmntXObj.IsAppInProgress) {
-      this.toastr.warningMessage(ExceptionConstant.THERE_IS_APP_ON_PROGRESS);
-      return false;
-    }
-    var plafondUsed = 0;
-
-    if (this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt > this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt) {
-      plafondUsed = this.resCalculatePlafondAgrmntXObj.MaxPlafondAgrmntAmt;
-    } else {
-      plafondUsed = this.resCalculatePlafondAgrmntXObj.PlafondAgrmntAmt;
-    }
-
-    if (this.resultData) {
-      for (let i = 0; i < this.resultData.length; i++) {
-        if (appLoanPurposeId == 0 || (appLoanPurposeId != 0 && this.resultData[i].AppLoanPurposeId != appLoanPurposeId)) {
-          plafondUsed -= this.resultData[i].FinancingAmt;
-        }
-      }
-    }
-
-    if (plafondUsed < this.AppLoanPurposeObj.FinancingAmt) {
-      this.toastr.warningMessage(ExceptionConstant.FINANCING_AMOUNT_EXCEEDED);
-      return false;
-    }
-    return true;
   }
 
   deleteLoanObject(AppLoanPurposeId) {

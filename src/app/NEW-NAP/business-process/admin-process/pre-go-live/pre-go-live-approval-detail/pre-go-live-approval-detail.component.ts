@@ -55,7 +55,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   LeadNo: string;
   MouNo: string;
   identifier: string = "TCList";
-  AgrmntParentNo: string = "-"
   IsApvReady: boolean = false;
   outstandingTcObj: any;
   listAppTCObj: ListAppTCObj;
@@ -121,13 +120,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       TrxNo: this.TrxNo, // AgrmntNo
       RowVersion: ""
     }
-
-    this.http.post<AgrmntMasterXObj>(URLConstant.GetParentAgrNoByAppId, { AppId: this.AppId }).subscribe(
-      (response) => {
-        if (response != null) {
-          this.AgrmntParentNo = response.AgrmntParentNo != null ? response.AgrmntParentNo : '-';
-        }
-    })
 
     this.http.post(URLConstant.GetAgrmntByAgrmntNo, Obj).subscribe(
       (response: AgrmntObj) => {
@@ -225,7 +217,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       () => {
       },
       (error) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING], { "BizTemplateCode": this.bizTemplateCode });
       }
     )
   }
@@ -257,7 +249,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    this.outstandingTcObj = new OutstandingTcObj(); 
+    this.outstandingTcObj = new OutstandingTcObj();
     this.listAppTCObj = new ListAppTCObj();
     this.listAppTCObj.AppTCObj = new Array();
 
@@ -282,13 +274,13 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
       () => {
         // this.toastr.successMessage("Success");
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING], { "BizTemplateCode": this.bizTemplateCode });
       }
     );
   }
 
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING], { "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
   }
 
   openView(custNo) {

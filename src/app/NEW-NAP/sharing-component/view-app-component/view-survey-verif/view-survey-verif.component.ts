@@ -37,21 +37,11 @@ export class ViewSurveyVerifComponent implements OnInit {
 
     await this.GetAppData();
 
-    if(this.AppObj != undefined){
-      if(this.AppObj['LobCode'] == CommonConstant.CFNA){
-        var obj ={
-          AppNo : this.AppObj['AppNo']
-        }  
-        await this.http.post(URLConstant.GetParentAppIdByAppNo, obj).toPromise().then(
-          (response: AppObj) => {
-            this.AppObj = response;
-            if(this.AppObj != undefined){
-              this.appId = this.AppObj['AppId'];
-            }else{
-              return;
-            }
-          }
-        );
+    if (this.AppObj != undefined) {
+      if (this.AppObj['LobCode'] == CommonConstant.CFNA) {
+        var obj = {
+          AppNo: this.AppObj['AppNo']
+        }
       }
     }
 

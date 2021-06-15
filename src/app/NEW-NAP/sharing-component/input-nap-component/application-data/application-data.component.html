@@ -40,55 +40,6 @@
             </div>
           </div>
 
-          <lib-ucSubsection *ngIf="BizTemplateCode == 'CFNA'" [id]="'agreementParentId'" [title]="'Agreement Parent'"
-            [panel]="'agreementParent'">
-          </lib-ucSubsection>
-          <div class="form-body" id="agreementParent" *ngIf="BizTemplateCode == 'CFNA'">
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-group row">
-                  <label class="col-md-4 adins-required-label" translate>Agreement Parent</label>
-                  <div class="col-md-8">
-                    <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupAgrmntParentObj"
-                      *ngIf="isInputLookupObj" [parentForm]="NapAppModelForm" [identifier]="'lookupAgreementParent'"
-                      (lookup)="copyAgrmntParentEvent($event)" #LookupAgreementParent>
-                    </lib-uclookupgeneric>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group row">
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group row">
-                  <label class="col-md-4 adInsLabel" translate>Total Agreement MPF / DT</label>
-                  <label class="col-md-8 adInsLabel" translate>{{totalAgrmntMpfDt}}</label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group row">
-                  <label class="col-md-4 adInsLabel" translate>Max Tenor</label>
-                  <label class="col-md-8 adInsLabel" translate>{{maxTenor}}</label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group row">
-                  <label class="col-md-4 adInsLabel" translate>Plafond Amount</label>
-                  <label class="col-md-8 adInsLabel" translate>{{resCalculatePlafondAgrmntXObj?.PlafondAgrmntAmt |
-                    number:'.2':'en-US'}}</label>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group row">
-                  <label class="col-md-4 adInsLabel" translate>Maximum Plafond Amount</label>
-                  <label class="col-md-8 adInsLabel" translate>{{resCalculatePlafondAgrmntXObj?.MaxPlafondAgrmntAmt |
-                    number:'.2':'en-US'}}</label>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <!-- Application Info -->
           <lib-ucSubsection [id]="'applicationInfomationId'" [title]="'Application Information'"
             [panel]="'applicationInfomation'">
@@ -364,7 +315,7 @@
             <lib-ucaddress #UcAddrGrp *ngIf="IsAddrReady" [addressObj]="inputAddressObj" [enjiForm]="enjiForm"
               [identifier]="'Address'" [UCAddrForm]="NapAppModelForm"></lib-ucaddress>
           </div>
-          
+
           <div *ngIf="BizTemplateCode != 'OPL'">
             <lib-ucSubsection [id]="'restDataId'" [title]="'Restructuring Data'" [panel]="'restData'">
             </lib-ucSubsection>

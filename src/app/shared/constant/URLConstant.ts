@@ -1518,13 +1518,13 @@ export class URLConstant {
   public static GetAppOtherInfoByAppId = environment.losUrl + "/AppOtherInfo/GetAppOtherInfoByAppId";
 
   //AGRMNT MASTER X
-  public static AddEditAgrmntMasterX = environment.losUrl + "/AgrmntMasterX/AddEditAgrmntMasterX"
+  // public static AddEditAgrmntMasterX = environment.losUrl + "/AgrmntMasterX/AddEditAgrmntMasterX"
   //AGRMNT PARENT X
-  public static GetParentAppIdByAppNo = environment.losUrl + "/AgrmntMasterX/GetParentAppIdByAppNo"
-  public static GetParentAgrNoByAppId = environment.losUrl + "/AgrmntMasterX/GetParentAgrNoByAppId"
+  // public static GetParentAppIdByAppNo = environment.losUrl + "/AgrmntMasterX/GetParentAppIdByAppNo"
+  // public static GetParentAgrNoByAppId = environment.losUrl + "/AgrmntMasterX/GetParentAgrNoByAppId"
   //App Collateral X
-  public static GetListAppCollateralXByAppId = environment.losUrl + "/AppCollateralX/GetListAppCollateralByAppId";
-  public static CopyAppCollateralFromAgrmntParent = environment.losUrl + "/AppCollateralX/CopyAppCollateralFromAgrmntParent";
+  // public static GetListAppCollateralXByAppId = environment.losUrl + "/AppCollateralX/GetListAppCollateralByAppId";
+  // public static CopyAppCollateralFromAgrmntParent = environment.losUrl + "/AppCollateralX/CopyAppCollateralFromAgrmntParent";
 
   //Bank Acc Cust
   public static GetBankAccCustByAppId = environment.losUrl + "/AppOtherInfo/GetBankAccCustByAppId";

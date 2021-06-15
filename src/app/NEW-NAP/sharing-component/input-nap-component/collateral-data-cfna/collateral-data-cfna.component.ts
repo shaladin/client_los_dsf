@@ -16,19 +16,13 @@ import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product
 export class CollateralDataCfnaComponent implements OnInit {
   @Input() AppId: number;
   @Output() outputTab: EventEmitter<any> = new EventEmitter<any>();
-  ParentAppId: number;
   AppCollateralId: number = 0;
   mode: string = "add";
   IsDetail: boolean = false;
-  AppCollateral: any;
+  AppCollateral: Array<any> = new Array<any>();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   IsCollateral: boolean = false;
   @Input() showCancel: boolean = true;
-  appNo: string;
-  isAgreementParent: boolean = false;
-  isReady: boolean = false;
-  isInit;
-
   constructor(private toastr: NGXToastrService, private http: HttpClient) { }
 
   ngOnInit() {
@@ -37,15 +31,15 @@ export class CollateralDataCfnaComponent implements OnInit {
         return response;
       }),
       mergeMap((response: AppObj) => {
-        this.appNo = response.AppNo
         var obj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
         obj.ProdOfferingCode = response.ProdOfferingCode;
         obj.RefProdCompntCode = CommonConstant.CollateralNeeded;
         obj.ProdOfferingVersion = response.ProdOfferingVersion;
 
         return this.http.post(URLConstant.GetProdOfferingDByProdOfferingCodeAndRefProdCompntCode, obj);
-      }),
-      mergeMap((response) => {
+      })
+    ).subscribe(
+      (response) => {
         var isCollateralNeeded = response["CompntValue"];
         if (isCollateralNeeded == 'Y') {
           this.IsCollateral = true;
@@ -53,17 +47,9 @@ export class CollateralDataCfnaComponent implements OnInit {
         else {
           this.IsCollateral = false;
         }
-        var obj = {
-          AppNo: this.appNo
-        }
-        return this.http.post(URLConstant.GetParentAppIdByAppNo, obj);
-      }
-      )
-    ).subscribe(
-      (response) => {
-        if (response["AppId"] != 0)
-          this.ParentAppId = response["AppId"];
-        this.isReady = true;
+      },
+      (error) => {
+        console.log(error);
       }
     );
   }
@@ -90,39 +76,18 @@ export class CollateralDataCfnaComponent implements OnInit {
     this.IsDetail = false;
   }
 
-  getIsFirstInit(ev) {
-    this.isInit = ev;
-  }
   Next() {
-    console.log(this.isInit)
-    if (this.isInit == true) {
-      var obj = {
-        AppId: this.AppId,
-        ParentAppId: this.ParentAppId
+    if (this.IsCollateral) {
+      if (this.AppCollateral.length == 0) {
+        this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_COLLATERAL_DATA);
       }
-
-      this.http.post(URLConstant.CopyAppCollateralFromAgrmntParent, obj).subscribe(
-        (response) => {
-          this.outputTab.emit();
-        })
+      else {
+        this.outputTab.emit();
+      }
     }
     else {
       this.outputTab.emit();
     }
-
-    // if (this.IsCollateral) {
-    //   if (this.AppCollateral.length == 0) {
-    //     this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_COLLATERAL_DATA);
-    //   }
-    //   else {
-    //     this.outputTab.emit();
-    //   }
-    // }
-    // else {
-    //   this.outputTab.emit();
-    // } 
-
-
   }
 
 }

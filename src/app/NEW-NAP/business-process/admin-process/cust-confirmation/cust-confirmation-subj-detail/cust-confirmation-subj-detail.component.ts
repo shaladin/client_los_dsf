@@ -20,7 +20,6 @@ import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainDa
 import { ReqVerfQuestionAnswerObj } from 'app/shared/model/Request/Verification/ReqVerfQuestionAnswerObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ReqGetVerfResult3Obj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
-import { AgrmntMasterXObj } from 'app/shared/model/AgrmntMasterXObj.Model';
 
 @Component({
   selector: 'app-cust-confirmation-subj-detail',
@@ -35,7 +34,6 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   agrmntObj: AgrmntObj = new AgrmntObj();
   leadObj: LeadObj = new LeadObj();
   appObj: AppObj = new AppObj();
-  agrmntMasterXObj: AgrmntMasterXObj = new AgrmntMasterXObj();
   RefStatusList: Array<KeyValueObj> = new Array<KeyValueObj>();
   CustNoObj: GenericObj = new GenericObj();
   PhnList: Array<KeyValueObj> = new Array<KeyValueObj>();
@@ -131,12 +129,6 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
         await this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.agrmntObj.AppId }).toPromise().then(
           (response) => {
             this.appObj = response;
-            if(this.BizTemplateCode == CommonConstant.CFNA){
-              this.http.post<AgrmntMasterXObj>(URLConstant.GetParentAgrNoByAppId, { AppId: this.appObj.AppId }).subscribe(
-                (response) => {
-                  this.agrmntMasterXObj = response;
-                });
-            }
           });
 
         if (this.agrmntObj.LeadId != null) {
@@ -166,7 +158,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
   AppCustId: number = 0;
   async GetListCustData() {
     await this.http.post(URLConstant.GetListAppCustMainDataByAppId, { AppId: this.AppId }).toPromise().then(
-      (response : ResListCustMainDataObj) => {
+      (response: ResListCustMainDataObj) => {
         if (response.ListAppCustObj.length > 0) {
           for (let index = 0; index < response.ListAppCustObj.length; index++) {
             const element = response.ListAppCustObj[index];
@@ -313,7 +305,7 @@ export class CustConfirmationSubjDetailComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["message"]);
         if (activeButton == "save") {
-          AdInsHelper.RedirectUrl(this.router,[this.CancelLink], { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, [this.CancelLink], { "AgrmntId": this.AgrmntId, "AgrmntNo": this.AgrmntNo, "TaskListId": this.TaskListId, "AppId": this.AppId, "BizTemplateCode": this.BizTemplateCode });
         }
         else {
           this.GetListVerfResultH(this.newVerfResultHObj.VerfResultId, this.newVerfResultHObj.MrVerfSubjectRelationCode);
