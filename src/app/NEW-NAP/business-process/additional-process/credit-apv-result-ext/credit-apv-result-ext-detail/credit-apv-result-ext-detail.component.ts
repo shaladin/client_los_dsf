@@ -38,9 +38,9 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   RequestRFAObj: any;
   private createComponent: UcapprovalcreateComponent;
   ApprovalCreateOutput: any;
-  
+
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
-    if (content) { 
+    if (content) {
       // initially setter gets called with undefined
       this.createComponent = content;
     }
@@ -65,16 +65,16 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   }
 
   SaveForm() {
-    this.ApprovalCreateOutput = this.createComponent.output(); 
-    if(this.ApprovalCreateOutput!=undefined){
+    this.ApprovalCreateOutput = this.createComponent.output();
+    if (this.ApprovalCreateOutput != undefined) {
       this.RequestRFAObj = this.ApprovalCreateOutput;
 
-      var obj = {
+      let obj = {
         AppId: this.AppId,
         NewCrdApvResultExpDt: this.CrdApvRestExtForm.controls.NewCrdApvResultExpDt.value
       }
 
-      var sendObj = {
+      let sendObj = {
         RequestPurchaseOrderExtensionObj: obj,
         RequestRFAObj: this.RequestRFAObj
       }
@@ -89,13 +89,13 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   }
 
   async GetMainData() {
-    this.http.post(URLConstant.GetCreditApvResultExtMainData, {AppId: this.AppId, AgrmntId: this.AgrmntId}).toPromise().then(
+    this.http.post(URLConstant.GetCreditApvResultExtMainData, { AppId: this.AppId, AgrmntId: this.AgrmntId }).toPromise().then(
       (response: CreditApvResultExtObj) => {
         this.CrdApvMainDataObj = response;
         this.CrdApvRestExtForm.patchValue({
           NewCrdApvResultExpDt: formatDate(this.CrdApvMainDataObj.CrdApvResultExpDt, 'yyyy-MM-dd', 'en-US')
         });
-        var ExpDt = new Date(this.CrdApvMainDataObj.CrdApvResultExpDt);
+        let ExpDt = new Date(this.CrdApvMainDataObj.CrdApvResultExpDt);
         if (this.MinDate < ExpDt) {
           this.MinDate = ExpDt;
         }
@@ -103,7 +103,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
       }
     );
 
-    await this.http.post(URLConstant.GetAppById, {AppId: this.AppId}).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).toPromise().then(
       response => {
         this.AppNo = response["AppNo"]
       }
@@ -129,21 +129,21 @@ export class CreditApvResultExtDetailComponent implements OnInit {
     if (key == 'app') {
       AdInsHelper.OpenAppViewByAppId(this.AppId);
     } else if (key == 'agr') {
-      if(this.AgrmntId != 0){
+      if (this.AgrmntId != 0) {
         AdInsHelper.OpenAgrmntViewByAgrmntId(this.AgrmntId);
       }
     }
   }
 
-  initInputApprovalObj(){  
-  
+  initInputApprovalObj() {
+
     this.InputObj = new UcInputRFAObj(this.cookieService);
-    var Attributes = [{}] 
-    var TypeCode = {
-      "TypeCode" : "CR_APV_RES_EXP_TYPE",
-      "Attributes" : Attributes,
+    let Attributes = [{}]
+    let TypeCode = {
+      "TypeCode": "CR_APV_RES_EXP_TYPE",
+      "Attributes": Attributes,
     };
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
     this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
