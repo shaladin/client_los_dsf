@@ -153,7 +153,7 @@ export class LtkmVerifyDetailComponent implements OnInit {
 
     //start develop urs los 057
     async GetLtkmReqByLtkmNo() {
-        var Obj = { LtkmCustId: this.LtkmCustId };
+        var Obj = { Id: this.LtkmCustId };
         await this.http.post<LtkmReqObj>(URLConstant.getLtkmReqByLtkmCustId, Obj).toPromise().then(
             (response) => {
                 this.ltkmReq = response["ReturnObject"];
