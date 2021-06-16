@@ -15,6 +15,8 @@ export class AppAssetDataComponent implements OnInit {
   @Input() AppId: number;
   appAssetList: Array<any>;
   appCollateralList: Array<any>;
+  IsHidden: boolean = true;
+  AppCollateralId: number;
 
   constructor(private httpClient: HttpClient, private modalService: NgbModal) { }
 
@@ -36,5 +38,14 @@ export class AppAssetDataComponent implements OnInit {
     modalAssetDetail.componentInstance.AppId = this.AppId;
     modalAssetDetail.result.then().catch((error) => {
     });
+  }
+
+  viewDetailCollateralHandler(AppCollateralId){
+    this.IsHidden = false;
+    this.AppCollateralId = AppCollateralId;
+  }
+
+  getValue(event){
+    this.IsHidden = event;
   }
 }
