@@ -269,7 +269,7 @@ export class URLConstant {
   public static DeleteRefEmpAndEmpBankAcc = "/RefEmp/DeleteRefEmpAndEmpBankAcc";
   public static GetListEmployeebyRefEmpId = "/EmpPosition/GetListEmployeebyRefEmpId";
   public static GetEmpListByOfficeIdAndIsActive = "/RefEmp/GetEmpListByOfficeIdAndIsActive";
-  public static GetListRefEmpByGsValueandOfficeCode = "/RefEmp/GetListRefEmpByGsValueandOfficeCode";
+  public static GetListRefEmpByGsValueandOfficeCode = environment.FoundationR3Url + "/RefEmp/GetListRefEmpByGsValueandOfficeCode";
   public static GetRefEmpByEmpNo = "/RefEmp/GetRefEmpByEmpNo";
   public static GetRefEmpSpvByEmpNo = environment.FoundationR3Url + "/RefEmp/GetRefEmpSpvByEmpNo";
   public static GetListRefEmpByGsValueandOfficeId = environment.FoundationR3Url + "/RefEmp/GetListRefEmpByGsValueandOfficeId";
