@@ -71,6 +71,8 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
     ManufacturerCustNo: [""],
     DealerCode: [""],
     DealerCustNo: [""],
+    PayFreqCode: [""],
+    WopCode: [""]
   });
 
   constructor(
@@ -146,10 +148,10 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
       getssetStatus,
       getChangeMouCustDlrFncg,
     ]).subscribe((response: any) => {
-      this.payFreqList = response[0];
-      this.currencyList = response[1];
+      this.payFreqList = response[0].ReturnObject;
+      this.currencyList = response[1].ReturnObject;
       this.MouDlrFinData = response[2];
-      this.AsseConditionLis = response[3];
+      this.AsseConditionLis = response[3].ReturnObject;
       this.ChangeMouDlrFinData = response[4];
 
       this.MouDetailFinancingForm.patchValue({
@@ -222,7 +224,6 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
 
   Save(enjiForm) {
     this.BindData();
-    // this.ChangeMouCustDlrFindData.ChangeMouTrxId = this.ChangeMouTrxId
     this.httpClient.post(URLConstant.AddEditChangeMouCustDlrFin, this.ChangeMouCustDlrFindData).subscribe(
       (response: MouCustDlrFinObj) => {
         this.ResponseMouCustDealerfinancing.emit(response);
@@ -318,6 +319,7 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
 
   BindData() {
     this.ChangeMouCustDlrFindData = {
+      ChangeMouTrxId: this.ChangeMouTrxId,
       MouCustId: this.MouCustId,
       TopDays: this.MouDetailFinancingForm.controls.TopDays.value,
       TopInterestRatePrcnt: this.MouDetailFinancingForm.controls.TopInterestRatePrcnt.value,

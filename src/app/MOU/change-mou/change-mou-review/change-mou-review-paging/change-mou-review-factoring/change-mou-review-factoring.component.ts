@@ -128,6 +128,7 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
       this.changeMouTrxObj.ChangeMouTrxNo = this.TrxNo;
 
       var submitChangeMouReviewObj = {
+        MouCust: this.mouCustObj,
         WfTaskListId: this.WfTaskListId,
         ChangeMouTrx: this.changeMouTrxObj,
         PlafondAmt: this.PlafondAmt,
