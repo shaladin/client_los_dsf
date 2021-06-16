@@ -1,34 +1,43 @@
 <div class="col-md-12 text-left">
   <div class="card">
+    <div class="px-3">
+      <div class="form-action pull-right">
+        <button *ngIf="ReturnHandlingHId > 0" type="button" class="btn btn-raised btn-warning margin-r-5"
+          [routerLink]="[CancelLink]" [queryParams]="{BizTemplateCode:'FCTR'}" translate>
+          <i class="ft-x"></i> Cancel
+        </button>
+      </div>
+    </div>
     <app-app-main-info [AppId]="appId" [BizTemplateCode]="NapObj.BizTemplateCode" *ngIf="IsDataReady" #viewAppMainInfo></app-app-main-info>
     <div class="card-body">
       <div class="px-3">
-        <lib-ucSubsection *ngIf="mode == 'ReturnHandling'" [id]="'formReturnInfoId'" [title]="'Return Handling'"
-          [panel]="'formReturnInfo'">
-        </lib-ucSubsection>
-        <div class="form-body" *ngIf="mode == 'ReturnHandling' && OnFormReturnInfo" [id]="'formReturnInfo'">
-          <form class="form form-horizontal" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid"
-            #enjiForm="ngForm">
-            <div class="form-body">
-              <div class="form-group row">
-                <div class="form-group col-md-2">
-                  <label class="adInsLabel" translate>Return Notes</label>
-                </div>
-                <div class="col-md-4">
-                  <label class="adInsLabel">{{ ResponseReturnInfoObj.ReturnHandlingNotes }}</label>
-                </div>
-                <div class="form-group col-md-2">
-                  <label class="adInsLabel" translate>Return Execution Notes</label>
-                </div>
-                <div class="col-md-4">
-                  <textarea type="textarea" row="5" class="form-control" formControlName="ReturnExecNotes"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.ReturnExecNotes.invalid}"></textarea>
-                  <lib-uc-show-errors [control]="ReturnExecNotes" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+        <div class="card" *ngIf="ReturnHandlingHId > 0">
+          <lib-ucSubsection [id]="'formReturnInfoId'" [title]="'Return Handling'" [panel]="'formReturnInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" *ngIf="ReturnHandlingHId > 0 && OnFormReturnInfo" [id]="'formReturnInfo'">
+            <form class="form form-horizontal" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid"
+              #enjiForm="ngForm">
+              <div class="form-body">
+                <div class="form-group row">
+                  <div class="form-group col-md-2">
+                    <label class="adInsLabel" translate>Return Notes</label>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="adInsLabel">{{ ResponseReturnInfoObj.ReturnHandlingNotes }}</label>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="adInsLabel" translate>Return Execution Notes</label>
+                  </div>
+                  <div class="col-md-4">
+                    <textarea type="textarea" row="5" class="form-control" formControlName="ReturnExecNotes"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.ReturnExecNotes.invalid}"></textarea>
+                    <lib-uc-show-errors [control]="ReturnExecNotes" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
                 </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -131,18 +140,19 @@
     </div>
   </div>
 </div>
-
-<div class="form-actions pull-right">
-  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning"
-    [routerLink]="[CancelLink]" translate>
-    <i class="fa fa-check-square-o"></i> Cancel
-  </button>
-  <button *ngIf="mode == 'ReturnHandling'" type="button" class="btn btn-raised btn-warning"
-    [routerLink]="[BackLink]" translate>
-    <i class="fa fa-check-square-o"></i> Back
-  </button>
-  <button *ngIf="mode == 'ReturnHandling'" type="button" (click)="Submit()"
-    class="btn btn-raised btn-primary" translate>
-    <i class="fa fa-check-square-o"></i> Submit Return Handling
-  </button>
+<div class="col-md-12"*ngIf="ReturnHandlingHId > 0 && IsLastStep">
+  <div class="form-action pull-right">
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <div class="form-action pull-right">
+          <button *ngIf="ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="Submit()"
+            class="btn btn-raised btn-primary" translate>
+            <i class="far fa-check-square"></i> Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

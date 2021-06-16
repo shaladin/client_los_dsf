@@ -63,7 +63,7 @@
         {
             "type": "label",
             "position": "center",
-            "label": "Action"
+            "label": "Copy Application"
         }
     ],
   "querystring": {

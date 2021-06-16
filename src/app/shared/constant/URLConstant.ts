@@ -932,6 +932,7 @@ export class URLConstant {
   public static GetInsuranceDataByAppAssetIdForView = environment.losUrl + "/AppIns/GetInsDataByAppAssetIdForView";
   public static GetInsDataByAppIdAndAssetId = environment.losUrl + "/AppIns/GetInsDataByAppIdAndAssetId";
   public static GetInsDataByAppAssetId = environment.losUrl + "/AppIns/GetInsDataByAppAssetId";
+  public static AddEditInsuranceData = environment.losUrl + "/AppIns/AddEditInsuranceData";
   public static AddInsuranceData = environment.losUrl + "/AppIns/AddInsuranceData";
   public static EditInsuranceData = environment.losUrl + "/AppIns/EditInsuranceData";
   public static AddInsuranceDataMultiAsset = environment.losUrl + "/AppIns/AddInsuranceDataMultiAsset";
