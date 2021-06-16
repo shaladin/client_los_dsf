@@ -22,7 +22,7 @@ export class MouCustDlrFinObj {
     MrInstTypeCode: string;
     VirtualAccNo: string;
     CurrCode: string;
-    
+    ChangeMouTrxId: number;
     constructor() {
         this.MouCustDlrFncngId = 0;
         this.MouCustId = 0;
@@ -47,5 +47,6 @@ export class MouCustDlrFinObj {
         this.MrInstTypeCode = "";
         this.VirtualAccNo = "";
         this.CurrCode = "";
+        this.ChangeMouTrxId = 0;
     }
 }
