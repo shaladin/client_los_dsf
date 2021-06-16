@@ -26,6 +26,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 export class MouReviewDlfnComponent implements OnInit {
   rfaInfoObj: RFAInfoObj = new RFAInfoObj();
+  mouCustObj: MouCustObj = new MouCustObj();
   keyValueObj: KeyValueObj;
   MouCustId: number;
   WfTaskListId: number;
@@ -79,11 +80,11 @@ export class MouReviewDlfnComponent implements OnInit {
       (response: MouCustObj) => {
         this.resultData = response;
         this.PlafondAmt = response.PlafondAmt;
-        this.MrCustTypeCode = response.MrCustTypeCode;
-        let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        this.MrCustTypeCode = response.MrCustTypeCode;        
+        let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         this.dmsObj = new DMSObj();
-        this.dmsObj.User = currentUserContext.UserName;
-        this.dmsObj.Role = currentUserContext.RoleCode;
+        this.dmsObj.User = currentUserContext[CommonConstant.USER_NAME];
+        this.dmsObj.Role = currentUserContext[CommonConstant.ROLE_CODE];
         this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
         this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
         this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
@@ -120,13 +121,14 @@ export class MouReviewDlfnComponent implements OnInit {
   Submit() {
     this.ApprovalCreateOutput = this.createComponent.output();
     if (this.ApprovalCreateOutput != undefined) {
-      var submitMouReviewObj = {
+      this.mouCustObj.MouCustId = this.MouCustId;
+      var SubmitMouRvwObj = {
         WfTaskListId: this.WfTaskListId,
-        MouCust: this.MouCustId,
+        MouCust: this.mouCustObj,
         PlafondAmt: this.PlafondAmt,
         RequestRFAObj: this.ApprovalCreateOutput
       }
-      this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
+      this.http.post(URLConstant.SubmitMouReviewNew, SubmitMouRvwObj).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
