@@ -146,10 +146,10 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
       getssetStatus,
       getChangeMouCustDlrFncg,
     ]).subscribe((response: any) => {
-      this.payFreqList = response[0];
-      this.currencyList = response[1];
+      this.payFreqList = response[0].ReturnObject;
+      this.currencyList = response[1].ReturnObject;
       this.MouDlrFinData = response[2];
-      this.AsseConditionLis = response[3];
+      this.AsseConditionLis = response[3].ReturnObject;
       this.ChangeMouDlrFinData = response[4];
 
       this.MouDetailFinancingForm.patchValue({

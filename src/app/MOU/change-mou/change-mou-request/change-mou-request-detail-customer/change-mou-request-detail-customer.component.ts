@@ -218,8 +218,8 @@ export class ChangeMouRequestDetailCustomerComponent
           this.router.navigate([NavigationConstant.CHANGE_MOU_RTN_PAGING]);
         });
       } else {
-        var mouObj = { ChangeMouTrxNo: this.changeMouTrxNo };
-        this.httpClient.post(URLConstant.SubmitWorkflowChangeMouRequest, mouObj).subscribe(() => {
+        var reqByIdObj = { Id: this.mouCustId };
+        this.httpClient.post(URLConstant.SubmitWorkflowChangeMouRequest, reqByIdObj).subscribe(() => {
           this.toastr.successMessage("Success");
           this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_PAGING]);
         });
