@@ -59,49 +59,18 @@
       "label": "Expected Delivery Date <=",
       "restriction": "lte",
       "datatype": "date"
-    },
-    {
-      "type": "dropdown",
-      "name": "WTL.CLAIM_STAT",
-      "id": "ActiveStatusId",
-      "label": "Task Claim Status",
-      "value": "",
-      "placeholder": "Placeholder",
-      "isFromURL": false,
-      "ddlType": "all",
-      "items": [
-        {
-          "key": "CLAIMED",
-          "value": "CLAIMED"
-        },
-        {
-          "key": "UNCLAIMED",
-          "value": "UNCLAIMED"
-        }
-      ],
-      "itemsUrl": []
-    },
-    {
-      "type": "textbox",
-      "name": "WTL.USERNAME",
-      "id": "claimById",
-      "value": "",
-      "label": "Claim By",
-      "placeholder": "Placeholder"
     }
   ],
   "headerList": [
     {
-      "type": "sort",
+      "type": "label",
       "position": "center",
-      "label": "SLA",
-      "name": "SlaColor"
+      "label": "SLA"
     },
     {
-      "type": "sort",
+      "type": "label",
       "position": "left",
-      "label": "Claim By",
-      "name": "ClaimBy"
+      "label": "Claim By"
     },
     {
       "type": "sort",
@@ -119,7 +88,7 @@
       "type": "sort",
       "position": "left",
       "label": "Customer Name",
-      "name": "ac.CUST_NAME"
+      "name": "AC.CUST_NAME"
     },
     {
       "type": "sort",
@@ -155,7 +124,7 @@
     {
       "type": "text",
       "position": "left",
-      "property": "ClaimBy"
+      "property": "Username"
     },
     {
       "type": "text",
@@ -167,7 +136,7 @@
       "position": "center",
       "property": "AppNo",
       "target": "_blank",
-      "path": "/View/AppView",
+      "path": "VIEW_APP",
       "param": [
         {
           "type": "AppId",
@@ -202,14 +171,14 @@
               "conditions": [
                 {
                   "isUser": true,
-                  "property": "ClaimBy",
+                  "property": "Username",
                   "value": "",
                   "restriction": "EQ"
                 }
               ],
               "result": {
                 "type": "url",
-                "path": "../Detail",
+                "path": "BACK_TO_DETAIL",
                 "icon": "ft-edit-2",
                 "param": [
                   {
@@ -228,14 +197,14 @@
               "conditions": [
                 {
                   "isUser": false,
-                  "property": "ClaimBy",
+                  "property": "Username",
                   "value": "",
                   "restriction": "EQ"
                 }
               ],
               "result": {
                 "type": "url",
-                "path": "../Detail",
+                "path": "BACK_TO_DETAIL",
                 "icon": "ft-edit-2",
                 "param": [
                   {

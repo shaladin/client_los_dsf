@@ -90,6 +90,11 @@
                   <lib-uc-show-errors [control]="type.controls['components'].controls[l].controls.OfferingCompntValue" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
+                <div class="col-md-2" *ngIf="type.controls['components'].value[l].ProdCompntType == 'DT' && type.controls['components'].value[l].IsProdOffering">
+                  <input type="date" class="form-control width-100-per" formControlName="OfferingCompntValue">
+                  <lib-uc-show-errors [control]="type.controls['components'].controls[l].controls.OfferingCompntValue" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
                 <span class="material-icons col-md-1 pointer" style="cursor: pointer;" *ngIf="(FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE' || FormProdOfferingComp.controls['groups'].value[j].groupCode == 'SCORE') && type.controls['components'].value[l].IsProdOffering" (click)="DownloadRule(type.controls['components'].getRawValue()[l].OfferingCompntValue,type.controls['components'].value[l].OfferingCompntValueDesc)">
                   get_app
                 </span>

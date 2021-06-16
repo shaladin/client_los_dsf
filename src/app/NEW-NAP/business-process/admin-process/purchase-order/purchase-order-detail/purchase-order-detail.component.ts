@@ -63,6 +63,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
   }
 
   isDataExist: boolean = false;
+  readonly lobCodeFl4w: string = CommonConstant.FL4W;
   async ngOnInit() {
     this.arrValue.push(this.AgrmntId);
     this.purchaseOrderHObj = new PurchaseOrderHObj();
@@ -79,7 +80,6 @@ export class PurchaseOrderDetailComponent implements OnInit {
 
     await this.http.post<ResGetAllAssetDataForPOByAssetObj>(poUrl, appAssetObj).toPromise().then(
       (response) => {
-        console.log(response);
         this.AssetObj = response.ReturnObject;
         if(this.AssetObj.PurchaseOrderHId != 0){
           this.isDataExist = true;

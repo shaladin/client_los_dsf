@@ -3,7 +3,7 @@
     <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"> </lib-ucviewgeneric>
     <div class="card-body">
       <div class="px-3">
-        <app-crd-rvw-cust-info *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
+        <app-crd-rvw-cust-info *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [captureStat]="captureStat">
         </app-crd-rvw-cust-info>
         <app-crd-rvw-fam-guar *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
         </app-crd-rvw-fam-guar>
@@ -134,7 +134,7 @@
             </div>
           </div>
           <br>
-          <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="!isReturnOn && IsReady"></lib-ucapprovalcreate>
+          <lib-ucapprovalcreate [parentForm]="FormObj" [InputObj]="InputObj" *ngIf="!isReturnOn && IsReady" #ApprovalComponent></lib-ucapprovalcreate>
         </div>
 
         <div class="form-actions right">

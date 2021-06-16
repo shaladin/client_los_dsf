@@ -50,15 +50,19 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 adInsLabel" for="MrInstTypeCode_SingleInstCalcMthd" translate>Installment Type /
-          Calculate Method</label>
+        <label class="col-md-3 adInsLabel" for="MrInstTypeCode" translate>Installment Type</label>
         <div class="col-md-5">
           <select type="text" class="form-control adInsInput" formControlName="MrInstTypeCode"
             (change)="instTypeHandler()"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrInstTypeCode.invalid }">
             <option *ngFor="let item of instTypeList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
           </select>
-          <select *ngIf="IsSingleIns" style="border-left: 1px solid grey" type="text" class="form-control adInsInput"
+        </div>
+      </div>
+      <div class="form-group row" *ngIf="IsSingleIns">
+        <label class="col-md-3 adInsLabel" for="SingleInstCalcMthd" translate>Calculate Method</label>
+        <div class="col-md-5">
+          <select style="border-left: 1px solid grey" type="text" class="form-control adInsInput"
             formControlName="SingleInstCalcMthd"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.SingleInstCalcMthd.invalid }">
             <option *ngFor="let item of singleInstCalcMthdList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
@@ -66,9 +70,9 @@
         </div>
       </div>
       <div *ngIf="IsSingleIns" class="form-group row">
-        <label class="col-md-3 adInsLabel" for="TopDays" translate>Term of Payment (in Days)</label>
+        <label class="col-md-3 adInsLabel adins-required-label" for="TopDays" translate>Term of Payment (in Days)</label>
         <div class="col-md-3">
-          <input type="number" class="form-control adInsInput" formControlName="TopDays" min="0"
+          <input type="number" class="form-control adInsInput" formControlName="TopDays" min="1"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.TopDays.invalid }" />
           <lib-uc-show-errors [control]="MouDetailFactoringForm.controls.TopDays" [submit]="enjiForm.submitted">
           </lib-uc-show-errors>

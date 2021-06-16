@@ -176,7 +176,6 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsAsset = false;
           this.IsLoanData = false;
           this.IsInsuranceFL4W = false;
-          this.IsLifeInsurance = false;
           this.IsFinancial = false;
           this.IsTC = false;
           this.IsReservedFund = false;
@@ -189,7 +188,6 @@ export class AgreementViewContainerComponent implements OnInit {
         else if (this.BizTemplateCode == CommonConstant.CF4W) {
           this.IsCollateral = false;
           this.IsInsuranceFL4W = false;
-          this.IsLifeInsurance = false;
           this.IsFinancial = false;
           this.IsTC = false;
           this.IsReservedFund = false;
@@ -212,7 +210,6 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsAsset = false;
           this.IsLoanData = false;
           this.IsInsuranceFL4W = false;
-          this.IsLifeInsurance = false;
           this.IsTC = false;
           this.IsReservedFund = false;
           this.IsDeliveryOrder = false;

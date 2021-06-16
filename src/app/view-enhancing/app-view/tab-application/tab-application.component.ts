@@ -22,22 +22,23 @@ export class TabApplicationComponent implements OnInit {
 
   constructor(private http: HttpClient, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {      
-      if(params["AppId"] == "undefined"){
+      if(params["AppId"] == "undefined") {
         this.AppNo = params["AppNo"];
-        
-      }else{
+      }
+      else {
         this.appId = params["AppId"];
       }
     })
    }
 
   async ngOnInit() {
-
-    await this.http.post(URLConstant.GetAppByAppNo, {TrxNo: this.AppNo}).toPromise().then(
-      (response) => {
-        this.appId = response["AppId"];        
-      }
-    )
+    if(this.appId == null) {
+      await this.http.post(URLConstant.GetAppByAppNo, {TrxNo: this.AppNo}).toPromise().then(
+        (response) => {
+          this.appId = response["AppId"];        
+        }
+      )
+    }
 
     if(this.BizTemplateCode == CommonConstant.CF4W || this.BizTemplateCode == CommonConstant.FL4W || this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.OPL) {
       this.isLoanObjectNeeded = false;
@@ -58,12 +59,12 @@ export class TabApplicationComponent implements OnInit {
       });
     }
     else if (this.BizTemplateCode == CommonConstant.OPL) {
-      if(this.AppNo != "undefined"){
+      if(this.AppNo !== undefined) {
         this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationOPLInfoByAppNo.json";
-      }else{
+      }
+      else {
         this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationOPLInfo.json";
       }
-      
     }
     else {
       this.viewProdMainInfoObj.viewInput = "./assets/ucviewgeneric/viewTabApplicationInfo.json";
@@ -80,7 +81,6 @@ export class TabApplicationComponent implements OnInit {
     await this.http.post(URLConstant.GetListAppCross, obj).toPromise().then(
       (response) => {
         this.ListCrossAppData = response[CommonConstant.ReturnObj];
-
       }
     );
   }
@@ -96,7 +96,8 @@ export class TabApplicationComponent implements OnInit {
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response["listResponseAppLoanPurpose"]
-      });
+      }
+    );
 
     this.IsGridLoanReady = true;
   }

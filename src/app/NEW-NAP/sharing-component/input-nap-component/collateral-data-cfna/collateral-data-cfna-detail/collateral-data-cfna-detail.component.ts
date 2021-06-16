@@ -201,7 +201,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   }
 
   async initDropdownList() {
-    this.http.post(URLConstant.GetListKeyValueByCode, {}).subscribe(
+    this.http.post(URLConstant.GetAssetTypeListKeyValueActiveByCode, {}).subscribe(
       async (response) => {
         this.CollTypeList = response[CommonConstant.ReturnObj];
         this.CollTypeList.sort((a,b) => a.Key.localeCompare(b.Key));

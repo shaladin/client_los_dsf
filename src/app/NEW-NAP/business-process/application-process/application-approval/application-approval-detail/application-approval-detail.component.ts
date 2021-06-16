@@ -15,6 +15,8 @@ import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHisto
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { environment } from 'environments/environment';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-application-approval-detail',
@@ -92,11 +94,22 @@ export class ApplicationApprovalDetailComponent implements OnInit {
 
   crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   isShow: boolean = false;
+  captureStat: string = "";
   async GetCrdRvwCustInfoByAppId() {
     await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.crdRvwCustInfoObj = response;
         this.isShow = true;
+      }
+    );
+
+    let refMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCaptureStat,
+      MasterCode: this.crdRvwCustInfoObj.CaptureStat
+    };
+    await this.http.post<KeyValueObj>(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
+      (response) => {
+        this.captureStat = response.Value;
       }
     );
   }
@@ -147,14 +160,25 @@ export class ApplicationApprovalDetailComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    this.onCancelClick();
+
+    let ReqApvCustomObj = {
+      AppId: this.appId,
+      Tasks: event.Tasks
+    }
+
+    this.http.post(URLConstant.Approval, ReqApvCustomObj).subscribe(
+      (response)=>{
+        this.toastr.successMessage(response["Message"]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+      });    
+    
   }
 
   onAvailableNextTask() {
 
   }
   
-  onCancelClick() {
+  onCancelClick() {    
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
   }
 

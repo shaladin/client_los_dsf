@@ -10,7 +10,7 @@ export class ReportMarketingComponent implements OnInit {
   constructor() { 
     this.inputReportObj.JsonPath = "./assets/ucreport/ReportMarketing.json";
     this.inputReportObj.EnvironmentUrl = environment.FoundationR3Url;
-    this.inputReportObj.ApiReportPath = "/Report/GenerateReportSync";
+    this.inputReportObj.ApiReportPath = "/Report/GenerateReportR3";
   }
   ngOnInit() {
   }

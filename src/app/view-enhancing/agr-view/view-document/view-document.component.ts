@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: "agrmnt-view-document",
@@ -43,7 +44,7 @@ export class ViewAgrmntDocumentComponent implements OnInit {
   GetAgrmntDoc() {
     this.http.post(URLConstant.GetListAgrmntDocPrintByAgrmntId, this.agrmntObj).subscribe(
       (response) => {
-        this.AgrmntDocObj = response;
+        this.AgrmntDocObj = response[CommonConstant.ReturnObj];
       }
     );
   }

@@ -246,8 +246,7 @@ export class CommissionCfnaComponent implements OnInit {
     let obj: ReqGetAppCommissionRuleObj = { AppId: this.AppId, BizTemplateCode: this.BizTemplateCode };
     await this.http.post(URLConstant.GetAppCommissionRule, obj).toPromise().then(
       (response) => {
-        console.log("Cek Rule");
-        console.log(response);
+        var ResponseObj = response[CommonConstant.ReturnObj];
         // if (response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier != null || response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp){ // For CFNA
         //   for (var i = 0; i < response["length"]; i++) {
         //     var temp: RuleCommissionObj = response[i][CommonConstant.ReturnObj].RuleDataObjects;
@@ -256,13 +255,8 @@ export class CommissionCfnaComponent implements OnInit {
         //     this.BindRuleData(temp.ResultSupplierEmp, CommonConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
         //   }
         // }
-        if (response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor != null)
-          this.BindRuleData(response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor, CommonConstant.ContentReferantor, this.ContentObjReferantor[0].Key);
-
-        // console.log(this.RuleSupplierData);
-        // console.log(this.RuleSupplierEmpData);
-        // console.log(this.RuleReferantorData);
-
+        if (ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor != null)
+          this.BindRuleData(ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor, CommonConstant.ContentReferantor, this.ContentObjReferantor[0].Key);
       },
       (error) => {
         console.log(error);
@@ -570,14 +564,16 @@ export class CommissionCfnaComponent implements OnInit {
     if (0 > this.RemainingAllocAmt) return this.toastr.warningMessage(ExceptionConstant.TOTAL_COMMISION_AMOUNT_CANNOT_MORE_THAN + "Remaining Allocated Amount");
     if (this.CekMaxValueIncomeInfo()) return;
 
-    let listAppCommissionHObj: Array<AppCommissionHObj> = new Array<AppCommissionHObj>();
+    let listAppCommissionHAddObj: Array<AppCommissionHObj> = new Array<AppCommissionHObj>();
+    let listAppCommissionHEditObj: Array<AppCommissionHObj> = new Array<AppCommissionHObj>();
     // this.GetListAppCommObj(this.identifierSupplier, listAppCommissionHObj);
     // this.GetListAppCommObj(this.identifierSupplierEmp, listAppCommissionHObj);
-    this.GetListAppCommObj(this.identifierReferantor, listAppCommissionHObj);
+    this.GetListAppCommObj(this.identifierReferantor, listAppCommissionHAddObj, listAppCommissionHEditObj);
     var obj = {
       AppId: this.AppId,
       GrossYield: this.Summary.GrossYield,
-      ListAppCommissionHObj: listAppCommissionHObj
+      ListAppCommissionHAddObj: listAppCommissionHAddObj,
+      ListAppCommissionHEditObj: listAppCommissionHEditObj
     };
     // console.log(obj);
     // console.log(JSON.stringify(obj));
@@ -605,7 +601,7 @@ export class CommissionCfnaComponent implements OnInit {
     return flag;
   }
 
-  GetListAppCommObj(identifier: string, listAppCommissionHObj: Array<AppCommissionHObj>) {
+  GetListAppCommObj(identifier: string, listAppCommissionHAddObj: Array<AppCommissionHObj>, listAppCommissionHEditObj: Array<AppCommissionHObj>) {
     let listData = this.CommissionForm.get(identifier) as FormArray;
     // console.log(listData);
     for (var i = 0; i < listData.value.length; i++) {
@@ -615,7 +611,11 @@ export class CommissionCfnaComponent implements OnInit {
       if (identifier == this.identifierSupplier) tempData = this.PatchAppCommHData(temp, CommonConstant.CommissionReceipientTypeCodeSupplier);
       if (identifier == this.identifierSupplierEmp) tempData = this.PatchAppCommHData(temp, CommonConstant.CommissionReceipientTypeCodeSupplierEmp);
       if (identifier == this.identifierReferantor) tempData = this.PatchAppCommHData(temp, CommonConstant.CommissionReceipientTypeCodeReferantor);
-      listAppCommissionHObj.push(tempData);
+      if (tempData.AppCommissionHId == 0) {
+        listAppCommissionHAddObj.push(tempData);
+        continue;
+      }
+      listAppCommissionHEditObj.push(tempData);
     }
   }
 

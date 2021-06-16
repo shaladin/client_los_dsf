@@ -1,93 +1,14 @@
 <div class="row text-left">
   <div class="col-md-12">
     <div class="card">
+      <div class="px-3">
+        <div class="col-md-8" style="padding-left: 0px;">
+          <h4 class="form-section card-title" translate>Pre Go Live Approval</h4>
+        </div>
+      </div>
+      <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info>
       <div class="card-body">
         <div class="px-3">
-          <!-- diubah ke yang dulu karena view nya beda, ini mesti diperbaikin jadi pake view generic -->
-          <!-- <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info> -->
-
-          <lib-ucSubsection [id]="'MainInfoFormId'" [title]="'Pre Go Live Approval Main Info'" [panel]="'MainInfoForm'">
-          </lib-ucSubsection>
-          <div class="form-body" id="MainInfoForm">
-
-            <div class="form-group row">
-              <label class="col-md-2 adInsLabel" translate>Application No</label>
-              <div class="col-md-4 blue">
-                <label id="AppNo" translate><a href="javascript:void(0);" (click)="OpenView('app')">{{AppNo}}</a></label>
-              </div>
-              <label class="col-md-2 adInsLabel" *ngIf="result4?.BizTemplateCode != 'CFNA'" [hidden]="result4?.BizTemplateCode == 'FCTR'" translate>Num Of Asset</label>
-              <div class="col-md-4" *ngIf="result4?.BizTemplateCode != 'CFNA'">
-                <label [hidden]="result4?.BizTemplateCode == 'FCTR'" id="NumOfAsset" translate>{{NumOfAsset}}</label>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-md-2 adInsLabel" translate>Agreement No</label>
-              <div class="col-md-4 blue">
-                <label id="AgrmntDt" translate><a href="javascript:void(0);" (click)="OpenView('agrmnt')">{{AgrmntNo}}</a></label>
-              </div>
-              <label class="col-md-2 adInsLabel" translate>Tenor</label>
-              <div class="col-md-4">
-                <label id="Tenor" translate>{{Tenor}}</label>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-md-2 adInsLabel" translate>Customer No</label>
-              <div class="col-md-4 blue">
-                <label id="CustNo" translate><a href="javascript:void(0);" (click)="openView(CustNo)">{{CustNo}}</a></label>
-              </div>
-              <label class="col-md-2 adInsLabel" translate>Installment Amount</label>
-              <div class="col-md-4">
-                <label id="InstAmt" translate>{{InstAmt  | number:'.2':'en-US'}}</label>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label *ngIf="LeadNo != null && LeadNo != ''" class="col-md-2 adInsLabel" translate>Lead No</label>
-              <div   *ngIf="LeadNo != null && LeadNo != ''" class="col-md-4 blue">
-                <label id="LeadNo" translate><a href="javascript:void(0);" (click)="OpenView('lead')">{{LeadNo}}</a></label>
-              </div>
-              <label *ngIf="MouNo != null && MouNo != ''" class="col-md-2 adInsLabel" translate>Mou No</label>
-              <div   *ngIf="MouNo != null && MouNo != ''" class="col-md-4 blue">
-                <label id="MouNo" translate><a href="javascript:void(0);" (click)="OpenView('mou')">{{MouNo}}</a></label>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-md-2 adInsLabel" translate>Customer Name</label>
-              <div class="col-md-4">
-                <label id="CustName" translate>{{CustName}}</label>
-              </div>
-              <label *ngIf="result4?.BizTemplateCode != 'CFRFN4W' && result4?.BizTemplateCode != 'CFNA'" [hidden]="result4?.BizTemplateCode == 'FCTR'" class="col-md-2 adInsLabel" translate>Delivery Date</label>
-              <div class="col-md-4" *ngIf="result4?.BizTemplateCode != 'CFRFN4W' && result4?.BizTemplateCode != 'CFNA'">
-                <label id="DeliveryDt" [hidden]="result4?.BizTemplateCode == 'FCTR'" translate>{{DeliveryDt}}</label>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-md-2 adInsLabel" translate>Office Name</label>
-              <div class="col-md-4">
-                <label id="OfficeName" translate>{{OfficeName}}</label>
-              </div>
-              <label class="col-md-2 adInsLabel" translate>Product Offering Name</label>
-              <div class="col-md-4 blue">
-                <label id="ProdOfferingName" translate><a href="javascript:void(0);" (click)="OpenView('prod')">{{ProdOfferingName}}</a></label>
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label class="col-md-2 adInsLabel" translate>Purpose Of Financing</label>
-              <div class="col-md-4">
-                <label id="PurposeOfFinancing" translate>{{PurposeOfFinancing}}</label>
-              </div>
-              <label class="col-md-2 adInsLabel" translate>Way Of Financing</label>
-              <div class="col-md-4">
-                <label id="WayOfFinancing" translate>{{WayOfFinancing}}</label>
-              </div>
-            </div>
-          </div>
-
           <div *ngIf="result">
             <div *ngIf="count1>0">
               <lib-ucSubsection [id]="'PreGoLiveApprovalHistoryId'" [title]="'PreGoLive Approval History'"

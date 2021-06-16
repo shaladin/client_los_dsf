@@ -47,6 +47,8 @@ export class AppInsObjObj {
     CustNotes: string;
     PayPeriodToInsco: string;
     RowVersion: string;
+    CustTotalFee: number;
+    InscoTotalFee: number;
 
 constructor() { 
     this.AppInsObjId = 0;
@@ -96,5 +98,7 @@ constructor() {
     this.CustInscoBranchName = "";
     this.CustNotes = "";
     this.RowVersion = "";
+    this.CustTotalFee = 0;
+    this.InscoTotalFee = 0;
     }
 }

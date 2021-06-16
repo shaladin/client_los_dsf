@@ -10,7 +10,7 @@ export class ReportAppPendingComponent implements OnInit {
 
   constructor() { 
     this.inputReportObj.JsonPath = "./assets/ucreport/report-app-pending.json";
-    this.inputReportObj.ApiReportPath = "/Report/GenerateReportSync";    
+    this.inputReportObj.ApiReportPath = "/Report/GenerateReportR3";    
   }
 
   ngOnInit() {

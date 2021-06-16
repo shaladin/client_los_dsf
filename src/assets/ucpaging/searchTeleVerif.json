@@ -144,7 +144,7 @@
       "type": "sort",
       "position": "left",
       "label": "LEAD SOURCE",
-      "name": "RM.DESCR"
+      "name": "L.MR_LEAD_SOURCE_CODE"
     },
     {
       "type": "sort",
@@ -203,7 +203,7 @@
     {
       "type": "text",
       "position": "left",
-      "property": "LeadSource"
+      "property": "MrLeadSourceCode"
     },
     {
       "type": "text",

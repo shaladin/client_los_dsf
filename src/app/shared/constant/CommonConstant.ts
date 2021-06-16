@@ -358,6 +358,7 @@ export class CommonConstant {
   public static RefReasonTypeDocChecklist = "DCK_LIST";
   public static RefReasonTypeCodeInvoiceDataVerif = "INVOICE_DATA_VERIF";
   public static RefReasonTypeCodeProdDeactivate = "PROD_DEACT";
+  public static RefReasonTypeCodeNewProduct = "NEW_PRODUCT";
 
   // INST TYPE
   public static SINGLE_INST_TYPE = "SINGLE";
@@ -417,7 +418,6 @@ export class CommonConstant {
   public static ReturnHandlingEditComRsvFnd = "RTN_EDIT_COM_RSV_FND";
   public static ReturnHandlingAddColtr = "RTN_ADD_COLTR";
   public static ReturnHandlingAddTc = "RTN_ADD_TC";
-  public static ReturnHandlingInvoice = "RTN_INVOICE_VERF";
   public static ReturnStatNew = "NEW";
   public static ReturnStatRequest = "REQ";
   public static ReturnStatus = "Status";
@@ -736,4 +736,8 @@ export class CommonConstant {
 
   // WORKFLOW
   public static ACT_CODE_AGR = "AGR_";
+  public static ACT_CODE_RVW = "RVW_";
+  public static ACT_CODE_REQU_DEC = "REQU_DEC_";
+  public static ACT_CODE_DCK_DEC = "DCK_DEC_";
+  public static ACT_CODE_AST_ALO = "AST_ALO_";
 }

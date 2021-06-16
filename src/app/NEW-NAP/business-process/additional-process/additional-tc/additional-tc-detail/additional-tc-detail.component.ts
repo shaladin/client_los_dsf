@@ -26,6 +26,8 @@ export class AdditionalTcDetailComponent implements OnInit {
   TcObj: any;
 
   IsSecondDetail: boolean = false;
+
+  TcName: string;
   
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
 
@@ -112,6 +114,8 @@ export class AdditionalTcDetailComponent implements OnInit {
     this.InputLookupTcObj.idSelect = this.TcObj.TcCode;
     this.InputLookupTcObj.nameSelect = this.TcObj.TcName;
 
+    this.TcName = this.TcObj.TcName;
+
     this.TcForm.patchValue({
       TcCode: this.TcObj.TcCode,
       PriorTo: this.TcObj.PriorTo,
@@ -127,6 +131,7 @@ export class AdditionalTcDetailComponent implements OnInit {
   }
 
   SetTc(event: any) {
+    this.TcName = event.TcName;
     this.TcForm.patchValue({
       TcCode: event.TcCode
     });
@@ -154,7 +159,7 @@ export class AdditionalTcDetailComponent implements OnInit {
       AppId: this.AppId,
       AppTcId: this.AppTcId,
       TcCode: this.TcForm.value.TcCode,
-      TcName: this.TcObj.TcName,
+      TcName: this.TcName,
       PriorTo: this.TcForm.value.PriorTo,
       IsMandatory: this.TcForm.value.IsMandatory
     };

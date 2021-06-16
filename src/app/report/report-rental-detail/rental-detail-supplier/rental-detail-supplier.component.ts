@@ -11,7 +11,7 @@ export class RentalDetailSupplierReportComponent implements OnInit {
 
   constructor() { 
     this.inputReportObj.JsonPath = "./assets/ucreport/rental-detail/rental-detail-supplier-report.json";
-    this.inputReportObj.ApiReportPath = "/Report/GenerateReportSync";  
+    this.inputReportObj.ApiReportPath = "/Report/GenerateReportR3"; 
   }
 
   ngOnInit() {

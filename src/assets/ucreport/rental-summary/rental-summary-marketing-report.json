@@ -1,7 +1,7 @@
 {
-    "title": "REPORT RENTAL SUMmARY MARKETING",
-    "reportName": "RENTAL SUMMARY MARKETING REPORT",
-    "reportTemplateName": "RentalSumaryMarketing.rdlc",
+    "title": "Report Rental Summary Marketing",
+    "reportName": "Rental Summary Marketing Report",
+    "reportTemplateCode": "RENTAL_SUMMARY_MARKETING",
     "component": [
       {
         "type": "dropdown",
@@ -9,7 +9,7 @@
         "name": "OfficeCode",
         "datatype": "text",
         "isFromURL": true,
-        "isSelectOne": true,
+        "ddlType": "one",
         "url": "",
         "environment": "FOU",
         "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
@@ -17,8 +17,7 @@
         "itemsUrl": [],
         "criteriaPropName": "",
         "criteriaPropValue": "",
-        "isReportParam": false,
-        "isProviderParam": true
+        "paramAssignment": 1
       },
       {
         "type": "datepicker",
@@ -27,8 +26,7 @@
         "datatype": "date",
         "value": "BD-10",
         "restriction": "gte",
-        "isReportParam": true,
-        "isProviderParam": true
+        "paramAssignment": 0
       },
       {
         "type": "datepicker",
@@ -37,8 +35,7 @@
         "datatype": "date",
         "value": "BD+10",
         "restriction": "lte",
-        "isReportParam": true,
-        "isProviderParam": true
+        "paramAssignment": 0
       }
     ],
     "exportTypeList": [

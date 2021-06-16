@@ -1186,7 +1186,7 @@ export class AssetDataAddEditComponent implements OnInit {
     this.allAssetDataObj.AppCollateralObj.CollateralSeqNo = 1;
     this.allAssetDataObj.AppCollateralObj.FullAssetCode = this.AssetDataForm.controls["FullAssetCode"].value;
     this.allAssetDataObj.AppCollateralObj.FullAssetName = this.AssetDataForm.controls["FullAssetName"].value;
-    this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = CommonConstant.AssetConditionUsed;
+    this.allAssetDataObj.AppCollateralObj.MrCollateralConditionCode = this.AssetDataForm.controls["MrAssetConditionCode"].value;
     this.allAssetDataObj.AppCollateralObj.MrCollateralUsageCode = this.AssetDataForm.controls["AssetUsage"].value;
     this.allAssetDataObj.AppCollateralObj.CollateralValueAmt = this.AssetDataForm.controls["AssetPrice"].value;
     this.allAssetDataObj.AppCollateralObj.AssetTypeCode = this.AssetDataForm.controls["AssetTypeCode"].value;
@@ -1579,7 +1579,6 @@ export class AssetDataAddEditComponent implements OnInit {
       return this.toastr.warningMessage("Please Choose Asset First");
     }
     var appAccessoryObj = this.AssetDataForm.controls["AssetAccessoriesObjs"] as FormArray;
-    // appAccessoryObj.controls[0]["AccessoryDownPaymentAmt"].value = 0;
     var length = this.AssetDataForm.value["AssetAccessoriesObjs"].length;
     var max = 0;
     if (length > 0) {
@@ -1587,12 +1586,6 @@ export class AssetDataAddEditComponent implements OnInit {
     }
 
     appAccessoryObj.push(this.addGroup(undefined, max + 1));
-    if (max != 0) {
-      appAccessoryObj.controls[max + 1]["controls"]["AccessoryDownPaymentAmt"].value = 0;
-    }
-    else {
-      appAccessoryObj.controls[max]["controls"]["AccessoryDownPaymentAmt"].value = 0;
-    }
 
     var InputLookupAccObj = this.initLookupAcc();
     var InputLookupAccSupObj = this.initLookupSuppAcc();

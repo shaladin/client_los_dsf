@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
@@ -15,6 +15,8 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqAddEditProdOfferingDObj, ReqCopyProductOfferingObj } from 'app/shared/model/Request/Product/ReqAddEditProdOfferingObj.model';
 import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { environment } from 'environments/environment';
+import { UcProdOfferingCompComponent } from 'app/product/uc-prod-offering-comp/uc-prod-offering-comp.component';
 @Component({
   selector: 'app-offering-general-data',
   templateUrl: './offering-general-data.component.html'
@@ -23,6 +25,7 @@ export class OfferingGeneralDataComponent implements OnInit {
 
   @Input() ProdOfferingHId: number;
   @Input() ProdOfferingId: number;
+  @ViewChild(UcProdOfferingCompComponent) ucProdOfferingComp: UcProdOfferingCompComponent;
   Source: string = "";
   InputLookUpObj: InputLookupObj = new InputLookupObj();
   ArrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
@@ -57,6 +60,7 @@ export class OfferingGeneralDataComponent implements OnInit {
     let user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
     this.InputLookUpObj.urlJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
+    this.InputLookUpObj.urlEnviPaging = environment.losUrl;
     this.InputLookUpObj.pagingJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
     this.InputLookUpObj.genericJson = "./assets/uclookup/product/lookupCopyProductOfferingHO.json";
     this.InputLookUpObj.isRequired = false;
@@ -68,9 +72,9 @@ export class OfferingGeneralDataComponent implements OnInit {
     this.ArrCrit.push(critObj);
 
     critObj = new CriteriaObj();
-    critObj.propName = 'PO.REF_OFFICE_ID';
+    critObj.propName = 'PO.OFFICE_CODE';
     critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.value = user.OfficeId;
+    critObj.value = user.OfficeCode;
     this.ArrCrit.push(critObj);
 
     this.InputLookUpObj.addCritInput = this.ArrCrit;
@@ -97,7 +101,7 @@ export class OfferingGeneralDataComponent implements OnInit {
         this.http.post(URLConstant.CopyProductOffering, this.ReqCopyProductOffObj).subscribe(
           (response) => {
             this.toastr.successMessage("Product Offering Copied Successfully");
-            window.location.reload();
+            this.ucProdOfferingComp.initiateForm();
           }
         );
       }
