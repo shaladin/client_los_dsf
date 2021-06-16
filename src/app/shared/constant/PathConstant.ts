@@ -390,6 +390,7 @@ export class PathConstant {
     public static CONTENT_PAGE_SELF_VERIF = "SelfVerification";
     public static CONTENT_PAGE_REQ_PASSWORD = "RequestPassword";
     public static CONTENT_PAGE_RESET_PASSWORD = "ResetPassword/:code";
+    public static CONTENT_PAGE_CHANGE_PASSWORD = "ChangePassword";
     //#endregion
 
     //#region Dashboard-Module
