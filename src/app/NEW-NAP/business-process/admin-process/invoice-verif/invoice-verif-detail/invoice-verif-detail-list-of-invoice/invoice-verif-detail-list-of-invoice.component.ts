@@ -14,6 +14,7 @@ import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ResDisbInfo, ResGetAllNtfAppAmt } from 'app/shared/model/Response/AppInvoice/ResAppInvoiceObj.model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'invoice-verif-detail-list-of-invoice',
@@ -21,11 +22,11 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 })
 export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
   @Input() AppId: number;
-  @Input() bizTemplateCode: string = "";
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
+  bizTemplateCode: string = "";
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   listInvoice: Array<AppInvoiceFctrObj>;
   listVerificationStatus: Array<KeyValueObj>;
@@ -49,14 +50,14 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
     Invoices: this.fb.array([])
   });
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.WfTaskListId = params["TaskListId"];
       this.TrxNo = params["TrxNo"];
     });
     this.BusinessDate = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.Username = currentUserContext[CommonConstant.USER_NAME];
   }
 
@@ -69,6 +70,7 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
     await this.httpClient.post<AppObj>(URLConstant.GetAppById, appIdObj).toPromise().then(
       (response) => {
         this.LobCode = response.LobCode
+        this.bizTemplateCode = response.BizTemplateCode
       }
 
     );
@@ -107,22 +109,16 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
         let GetByMouCustId: GenericObj = new GenericObj();
         GetByMouCustId.Id = responseMou["MouCustId"];
 
-        var DisbAmt = 0;
-        this.httpClient.post(URLConstant.GetListAppInvoiceXAppInvoiceDlrFncngHByAppId, { Id: this.AppId }).subscribe(
+        this.httpClient.post(URLConstant.GetListAppInvoiceAppInvoiceDlrFncngHByAppId, { Id: this.AppId }).subscribe(
           (response) => {
             this.listInvoice = response["AppInvoiceDlrFncngHObj"];
             for (let i = 0; i < this.listInvoice.length; i++) {
               var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
               fa_listInvoice.push(this.AddInvoiceControl(this.listInvoice[i]))
             }
-            DisbAmt = this.listInvoice[0].DisbAmt;
-            this.httpClient.post<ResGetAllNtfAppAmt>(URLConstant.GetAllNtfAppAmtByMouCustId, GetByMouCustId).subscribe(
+            this.httpClient.post<ResGetAllNtfAppAmt>(URLConstant.GetAllNtfAppAmtByMouCustId, { Id : GetByMouCustId.Id }).subscribe(
               (responseNtfAmt) => {
-                if (DisbAmt != 0) {
-                  this.OsPlafondAmt = DisbAmt - responseNtfAmt.NtfAmt;
-                } else {
-                  this.OsPlafondAmt = this.PlafondAmt - responseNtfAmt.NtfAmt;
-                }
+                this.OsPlafondAmt = this.PlafondAmt - responseNtfAmt.NtfAmt;
               }
             )
           });
@@ -149,7 +145,7 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {"BizTemplateCode":this.bizTemplateCode});
   }
   SaveData() {
     var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray
@@ -167,7 +163,7 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
   }
 
   async claimTask() {
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId;
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];

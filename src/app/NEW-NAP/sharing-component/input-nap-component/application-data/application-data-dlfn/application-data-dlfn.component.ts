@@ -46,7 +46,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
   employeeIdentifier;
   salesRecommendationItems = [];
   isInputLookupObj: boolean; 
-  inputLookupEconomicSectorObj: InputLookupObj;
+  // inputLookupEconomicSectorObj: InputLookupObj;
   SalesAppInfoForm = this.fb.group({
     MouCustId: [''],
     TopBased: [''],
@@ -67,7 +67,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
     CharaCredit: [''],
     PrevAgrNo: [''],
     WayRestructure: [''],
-    MrSlikSecEcoCode: [''],
+    // MrSlikSecEcoCode: [''],
     CustBankAcc: ['']
   })
 
@@ -223,7 +223,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
             this.allInScheme = response[CommonConstant.ReturnObj];
             if (this.mode != 'edit') {
               this.SalesAppInfoForm.patchValue({
-                MrInstSchemeCode: this.allInScheme[0].Key
+                MrInstSchemeCode: CommonConstant.InstSchmEvenPrincipal
               });
             }
           });
@@ -234,10 +234,15 @@ export class ApplicationDataDlfnComponent implements OnInit {
           if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle) {
             this.isSingle = true;
             this.SalesAppInfoForm.patchValue({
-              MrInstSchemeCode: CommonConstant.InstSchmRegularFix
+              MrInstSchemeCode: CommonConstant.InstSchmEvenPrincipal
             });
           }
-          else { this.isSingle = false; }
+          else { 
+            this.isSingle = false; 
+            this.SalesAppInfoForm.patchValue({
+              MrInstSchemeCode: CommonConstant.InstSchmEvenPrincipal
+            });
+          }
         }
       });
 
@@ -337,7 +342,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
         this.TopIntrstRatePrcnt = this.mouCustDlrFinObj.TopInterestRatePrcnt;
         this.IntrstRatePrcnt = this.mouCustDlrFinObj.InterestRatePrcnt;
 
-        this.http.post(URLConstant.GetRefPayFreqByPayFreqCode, this.mouCustDlrFinObj).subscribe(
+        this.http.post(URLConstant.GetRefPayFreqByPayFreqCode, { Code : this.mouCustDlrFinObj.PayFreqCode }).subscribe(
           (response: any) => {
             this.allPayFreq = response;
             var PayFreqCode = null;
@@ -371,7 +376,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
                 CharaCredit: this.resultData.CharaCredit,
                 PrevAgrNo: this.resultData.PrevAgrNo,
                 WayRestructure: this.resultData.WayRestructure,
-                MrSlikSecEcoCode: this.resultData.MrSlikSecEcoCode
+                // MrSlikSecEcoCode: this.resultData.MrSlikSecEcoCode
               });
               this.CalculateNumOfInst(false, this.SalesAppInfoForm.controls.Tenor.value);
               this.CheckInstType();
@@ -464,12 +469,13 @@ export class ApplicationDataDlfnComponent implements OnInit {
 
     });
   }
-  getLookupEconomicSector(ev) {
-    this.SalesAppInfoForm.patchValue({
-      MrSlikSecEcoCode: ev.MasterCode
-    });
-  }
+  // getLookupEconomicSector(ev) {
+  //   this.SalesAppInfoForm.patchValue({
+  //     MrSlikSecEcoCode: ev.MasterCode
+  //   });
+  // }
   makeLookUpObj() {
+    this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupEmp.json";
     this.inputLookupObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
@@ -479,14 +485,14 @@ export class ApplicationDataDlfnComponent implements OnInit {
     this.inputLookupObj.nameSelect = this.resultData.SalesOfficerName;
     this.inputLookupObj.addCritInput = this.arrAddCrit;
 
-    this.inputLookupEconomicSectorObj = new InputLookupObj();
-    this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    this.inputLookupEconomicSectorObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
-    this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
-    this.inputLookupEconomicSectorObj.nameSelect = this.resultData["MrSlikSecEcoDescr"];
-    this.inputLookupEconomicSectorObj.jsonSelect = { Descr: this.resultData["MrSlikSecEcoDescr"] };
+    // this.inputLookupEconomicSectorObj = new InputLookupObj();
+    // this.inputLookupEconomicSectorObj.urlJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
+    // this.inputLookupEconomicSectorObj.urlQryPaging = URLConstant.GetPagingObjectBySQL;
+    // this.inputLookupEconomicSectorObj.urlEnviPaging = environment.FoundationR3Url;
+    // this.inputLookupEconomicSectorObj.pagingJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
+    // this.inputLookupEconomicSectorObj.genericJson = "./assets/uclookup/NAP/lookupEconomicSectorSlik.json";
+    // this.inputLookupEconomicSectorObj.nameSelect = this.resultData["MrSlikSecEcoDescr"];
+    // this.inputLookupEconomicSectorObj.jsonSelect = { Descr: this.resultData["MrSlikSecEcoDescr"] };
     this.isInputLookupObj = true;
   }
 
@@ -526,7 +532,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
 
   async loadData() {
     var obj = {
-      AppId: this.AppId
+      Id: this.AppId
     }
 
     await this.http.post(URLConstant.GetAppById, obj).toPromise().then(

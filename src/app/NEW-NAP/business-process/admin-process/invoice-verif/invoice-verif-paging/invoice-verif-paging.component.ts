@@ -20,7 +20,7 @@ export class InvoiceVerifPagingComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.bizTemplateCode == "DF") {
+    if (this.bizTemplateCode == "DLFN") {
       this.inputPagingObj._url = "./assets/ucpaging/searchInvoiceVerifDF.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchInvoiceVerifDF.json";
     }
