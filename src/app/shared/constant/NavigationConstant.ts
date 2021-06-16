@@ -276,6 +276,7 @@ export class NavigationConstant {
   public static MOU_CUST_RVW_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_RVW_FCTR; //'/Mou/Cust/ReviewFactoring'
   public static MOU_CUST_RVW_GENERAL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_RVW_GENERAL; //'/Mou/Cust/ReviewGeneral'
   public static MOU_CUST_APPRV_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_APPRV_FCTR; //'/Mou/Cust/ApprovalFactoring'
+  public static MOU_CUST_RVW_DFLN = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_RVW_DFLN; //'/Mou/Cust/ReviewDLFN'
   public static MOU_CUST_APPRV_GENERAL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_APPRV_GENERAL; //'/Mou/Cust/ApprovalGeneral'
   public static MOU_REQ_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_REQ_PAGING; //"/Mou/Request/Paging"
   public static MOU_REQ_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_REQ_DETAIL; //'/Mou/Request/Detail'

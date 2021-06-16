@@ -302,6 +302,9 @@ export class CustMainDataAddComponent implements OnInit {
           case CommonConstant.OPL:
             AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ROS_NAP1], { "AppId": response.Id });
             break;
+          case CommonConstant.DF :
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_NAP1], { "AppId": response.Id});
+          break;
         }
       }
     );

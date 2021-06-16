@@ -28,6 +28,7 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   TrxNo: string;
   IsReady: boolean = false;
+  arrValue = [];
   constructor(private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
 
@@ -43,8 +44,10 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.arrValue.push(this.TrxNo);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewOfferingValidityCheckingApproval.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
+    this.viewGenericObj.whereValue = this.arrValue;
     this.viewGenericObj.ddlEnvironments = [
       {
         name: "AppNo",
