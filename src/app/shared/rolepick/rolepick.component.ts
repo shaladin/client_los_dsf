@@ -56,11 +56,8 @@ export class RolepickComponent implements OnInit, AfterViewInit {
 
           AdInsHelper.SetLocalStorage(CommonConstant.MENU, JSON.stringify(response[CommonConstant.MENU]));
           AdInsHelper.SetLocalStorage(CommonConstant.ENVIRONMENT_MODULE, environment.Module);
-          let currPath = this.router.routerState.snapshot.url;
-          this.router.navigateByUrl(NavigationConstant.PAGES_CONTENT, { skipLocationChange: true }).then(() => {
-            this.router.navigateByUrl(currPath);
-            this.dialog.closeAll();
-          });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
+          this.dialog.closeAll();
         });
     }
     else {
