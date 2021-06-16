@@ -55,7 +55,7 @@ export class CopyCancelledApplicationComponent implements OnInit {
     this.inputPagingObj.addCritInput.push(critObj);
   }
 
-  getEvent(ev) {
+  async getEvent(ev) {
     if(ev.Key == "prodOff") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
@@ -78,7 +78,7 @@ export class CopyCancelledApplicationComponent implements OnInit {
           var reqByProdOffCodeAndVersionObj = new ReqByProdOffCodeAndVersionObj();
           reqByProdOffCodeAndVersionObj.ProdOfferingCode = ev.RowObj.ProdOfferingCode;
           reqByProdOffCodeAndVersionObj.ProdOfferingVersion = ev.RowObj.ProdOfferingVersion;
-          this.http.post(URLConstant.GetProdStatByProdOffCodeAndVersion, reqByProdOffCodeAndVersionObj).toPromise().then(
+          await this.http.post(URLConstant.GetProdStatByProdOffCodeAndVersion, reqByProdOffCodeAndVersionObj).toPromise().then(
             (response) => {
               let ProdStat = response["ProdStat"];
               let ProdStatDescr = response["ProdStatDescr"];
@@ -87,13 +87,13 @@ export class CopyCancelledApplicationComponent implements OnInit {
               }
             }
           );
-          var url = this.IsNapVersionMainData ? URLConstant.CopyCancelledAppForMainData : URLConstant.CopyCancelledApp;
-          this.http.post(url, { AppId: ev.RowObj.AppId }).subscribe(
-            response => {
-              this.toastr.successMessage(response["message"]);
-              this.paging.searchPagination(1);
-            }
-          );
+          // var url = this.IsNapVersionMainData ? URLConstant.CopyCancelledAppForMainData : URLConstant.CopyCancelledApp;
+          // this.http.post(url, { AppId: ev.RowObj.AppId }).subscribe(
+          //   response => {
+          //     this.toastr.successMessage(response["message"]);
+          //     this.paging.searchPagination(1);
+          //   }
+          // );
         }
       }
     }
