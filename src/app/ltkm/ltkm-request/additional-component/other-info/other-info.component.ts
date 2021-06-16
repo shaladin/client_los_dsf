@@ -135,10 +135,10 @@ export class LtkmOtherInfoComponent implements OnInit {
           LbppmsBizSustainLbppCode: [this.CustOtherInfo["LbppmsBizSustainLbppCode"], [Validators.required]],
           LbppmsCntrprtLbppCode: [this.CustOtherInfo["LbppmsCntrprtLbppCode"], [Validators.required]],
           LbppmsDebtGrpLbppCode: [this.CustOtherInfo["LbppmsDebtGrpLbppCode"], [Validators.required]],
-          LbppmsCntrprtLbppDescr: [this.CustOtherInfo["LbppmsCntrprtDescr"], [Validators.required]],
-          LbppmsDebtGrpLbppDescr: [this.CustOtherInfo["LbppmsDebtGrpDescr"], [Validators.required]],
-          LbppmsBizSustainLbppDescr: [this.CustOtherInfo["LbppmsBizSustainDescr"], [Validators.required]],
-          LbppmsBizSclLbppDescr: [this.CustOtherInfo["LbppmsBizSclDescr"], [Validators.required]]
+          LbppmsCntrprtLbppDescr: [this.CustOtherInfo["LbppmsCntrprtLbppDescr"], [Validators.required]],
+          LbppmsDebtGrpLbppDescr: [this.CustOtherInfo["LbppmsDebtGrpLbppDescr"], [Validators.required]],
+          LbppmsBizSustainLbppDescr: [this.CustOtherInfo["LbppmsBizSustainLbppDescr"], [Validators.required]],
+          LbppmsBizSclLbppDescr: [this.CustOtherInfo["LbppmsBizSclLbppDescr"], [Validators.required]]
         }));
       } else {
         this.parentForm.addControl(this.identifier, this.fb.group({
@@ -146,28 +146,28 @@ export class LtkmOtherInfoComponent implements OnInit {
           LbppmsBizSustainLbppCode: [this.CustOtherInfo["LbppmsBizSustainLbppCode"]],
           LbppmsCntrprtLbppCode: [this.CustOtherInfo["LbppmsCntrprtLbppCode"]],
           LbppmsDebtGrpLbppCode: [this.CustOtherInfo["LbppmsDebtGrpLbppCode"]],
-          LbppmsCntrprtLbppDescr: [this.CustOtherInfo["LbppmsCntrprtDescr"]],
-          LbppmsDebtGrpLbppDescr: [this.CustOtherInfo["LbppmsDebtGrpDescr"]],
-          LbppmsBizSustainLbppDescr: [this.CustOtherInfo["LbppmsBizSustainDescr"]],
-          LbppmsBizSclLbppDescr: [this.CustOtherInfo["LbppmsBizSclDescr"]]
+          LbppmsCntrprtLbppDescr: [this.CustOtherInfo["LbppmsCntrprtLbppDescr"]],
+          LbppmsDebtGrpLbppDescr: [this.CustOtherInfo["LbppmsDebtGrpLbppDescr"]],
+          LbppmsBizSustainLbppDescr: [this.CustOtherInfo["LbppmsBizSustainLbppDescr"]],
+          LbppmsBizSclLbppDescr: [this.CustOtherInfo["LbppmsBizSclLbppDescr"]]
         }));
       }
 
-      this.InputDebitorGroupLookupObj.nameSelect = this.CustOtherInfo["LbppmsDebtGrpDescr"];
+      this.InputDebitorGroupLookupObj.nameSelect = this.CustOtherInfo["LbppmsDebtGrpLbppDescr"];
       this.InputDebitorGroupLookupObj.jsonSelect = {
-        Descr: this.CustOtherInfo["LbppmsDebtGrpDescr"]
+        Descr: this.CustOtherInfo["LbppmsDebtGrpLbppDescr"]
       };
-      this.InputDebitorBusinessScaleLookupObj.nameSelect = this.CustOtherInfo["LbppmsBizSclDescr"];
+      this.InputDebitorBusinessScaleLookupObj.nameSelect = this.CustOtherInfo["LbppmsBizSclLbppDescr"];
       this.InputDebitorBusinessScaleLookupObj.jsonSelect = {
-        Descr: this.CustOtherInfo["LbppmsBizSclDescr"]
+        Descr: this.CustOtherInfo["LbppmsBizSclLbppDescr"]
       };
-      this.InputSustaianableFinancialBusinessLookupObj.nameSelect = this.CustOtherInfo["LbppmsBizSustainDescr"];
+      this.InputSustaianableFinancialBusinessLookupObj.nameSelect = this.CustOtherInfo["LbppmsBizSustainLbppDescr"];
       this.InputSustaianableFinancialBusinessLookupObj.jsonSelect = {
-        Descr: this.CustOtherInfo["LbppmsBizSustainDescr"]
+        Descr: this.CustOtherInfo["LbppmsBizSustainLbppDescr"]
       };
-      this.InputCounterpartCategoryLookupObj.nameSelect = this.CustOtherInfo["LbppmsCntrprtDescr"];
+      this.InputCounterpartCategoryLookupObj.nameSelect = this.CustOtherInfo["LbppmsCntrprtLbppDescr"];
       this.InputCounterpartCategoryLookupObj.jsonSelect = {
-        Descr: this.CustOtherInfo["LbppmsCntrprtDescr"]
+        Descr: this.CustOtherInfo["LbppmsCntrprtLbppDescr"]
       };
       this.parentForm.updateValueAndValidity();
       this.IsLookupReady = true;

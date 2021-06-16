@@ -117,7 +117,7 @@ export class LtkmCustJobDataComponent implements OnInit {
     this.inputFieldJobDataObj.inputLookupObj = new InputLookupObj();
 
     this.initLookup();
-    this.bindCustModelObj();
+    // this.bindCustModelObj();
     this.bindAllRefMasterObj();
     if (this.ltkmCustPersonalJobDataObj != undefined) {
       this.bindLtkmCustPersonalJobData();
@@ -286,6 +286,7 @@ export class LtkmCustJobDataComponent implements OnInit {
   }
 
   bindAllRefMasterObj() {
+    this.bindCustModelObj();
     this.bindJobPositionObj();
     this.bindCompanyScaleObj();
     this.bindInvestmentTypeObj();
@@ -346,11 +347,22 @@ export class LtkmCustJobDataComponent implements OnInit {
   }
 
   bindCustModelObj() {
-    this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, { Code: CommonConstant.CustTypePersonal }).toPromise().then(
+    // this.http.post(URLConstant.GetListKeyValueByMrCustTypeCode, { Code: CommonConstant.CustTypePersonal }).toPromise().then(
+    //   (response) => {
+    //     this.CustModelObj = response[CommonConstant.ReturnObj];
+    //     if (this.CustModelObj.length > 0 && this.custModelCode == undefined) {
+    //       this.custModelCode = this.CustModelObj[0].Key;
+    //       this.parentForm.controls[this.identifier].patchValue({
+    //         CustModelCode: this.CustModelObj[0].Key
+    //       });
+    //       this.CriteriaAddLookUpProfessionName();
+    //     }
+    //   }
+    // );
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustModel }).subscribe(
       (response) => {
         this.CustModelObj = response[CommonConstant.ReturnObj];
-        if (this.CustModelObj.length > 0 && this.custModelCode == undefined) {
-          this.custModelCode = this.CustModelObj[0].Key;
+        if (this.CustModelObj.length > 0 && (this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == undefined || this.parentForm.controls[this.identifier]["controls"].CustModelCode.value == "")) {
           this.parentForm.controls[this.identifier].patchValue({
             CustModelCode: this.CustModelObj[0].Key
           });
