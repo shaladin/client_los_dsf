@@ -55,7 +55,7 @@ export class CopyCancelledApplicationComponent implements OnInit {
     this.inputPagingObj.addCritInput.push(critObj);
   }
 
-  getEvent(ev) {
+  async getEvent(ev) {
     if(ev.Key == "prodOff") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
@@ -76,9 +76,9 @@ export class CopyCancelledApplicationComponent implements OnInit {
         }
         else {
           var reqByProdOffCodeAndVersionObj = new ReqByProdOffCodeAndVersionObj();
-          reqByProdOffCodeAndVersionObj.ProdOfferingCode = ev.ProdOfferingCode;
-          reqByProdOffCodeAndVersionObj.ProdOfferingVersion = ev.ProdOfferingVersion;
-          this.http.post(URLConstant.GetProdStatByProdOffCodeAndVersion, reqByProdOffCodeAndVersionObj).subscribe(
+          reqByProdOffCodeAndVersionObj.ProdOfferingCode = ev.RowObj.ProdOfferingCode;
+          reqByProdOffCodeAndVersionObj.ProdOfferingVersion = ev.RowObj.ProdOfferingVersion;
+          await this.http.post(URLConstant.GetProdStatByProdOffCodeAndVersion, reqByProdOffCodeAndVersionObj).toPromise().then(
             (response) => {
               let ProdStat = response["ProdStat"];
               let ProdStatDescr = response["ProdStatDescr"];
