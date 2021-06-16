@@ -80,7 +80,7 @@ export class MouReviewDlfnComponent implements OnInit {
         this.resultData = response;
         this.PlafondAmt = response.PlafondAmt;
         this.MrCustTypeCode = response.MrCustTypeCode;
-        let currentUserContext = JSON.parse(localStorage.getItem("UserAccess"));
+        let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         this.dmsObj = new DMSObj();
         this.dmsObj.User = currentUserContext.UserName;
         this.dmsObj.Role = currentUserContext.RoleCode;
@@ -122,8 +122,6 @@ export class MouReviewDlfnComponent implements OnInit {
     if (this.ApprovalCreateOutput != undefined) {
       var submitMouReviewObj = {
         WfTaskListId: this.WfTaskListId,
-        MouCust: this.MouCustId,
-        PlafondAmt: this.PlafondAmt,
         RequestRFAObj: this.ApprovalCreateOutput
       }
       this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(

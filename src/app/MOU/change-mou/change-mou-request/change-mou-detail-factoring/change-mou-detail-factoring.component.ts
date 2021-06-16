@@ -182,12 +182,12 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
     ]).subscribe((response: any) => {
       this.recourseTypeList = response[0].ReturnObject;
       this.wopList = response[1].ReturnObject;
-      this.paidByList = response[2];
+      this.paidByList = response[2].ReturnObject;
       this.instTypeList = response[3].ReturnObject;
-      this.singleInstCalcMthdList = response[4];
+      this.singleInstCalcMthdList = response[4].ReturnObject;
       this.payFreqList = response[5].ReturnObject;
       this.instSchmList = response[6].ReturnObject;
-      this.currencyList = response[7];
+      this.currencyList = response[7].ReturnObject;
       var mouFctrData = response[8];
       this.tempChangeMouCustFctr = response[9];
       this.listedCusts = response[10];

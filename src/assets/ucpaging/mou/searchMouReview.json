@@ -343,6 +343,68 @@
                                 ]
                             },
                             "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property" : "ClaimBy",
+                                    "value" : "",
+                                    "restriction" : "EQ"
+                                },
+                                {
+                                    "property": "MrMouTypeCode",
+                                    "value": "FINANCING",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/Mou/Cust/ReviewDLFN",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property" : "ClaimBy",
+                                    "value" : "",
+                                    "restriction" : "EQ"
+                                },
+                                {
+                                    "property": "MrMouTypeCode",
+                                    "value": "FINANCING",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "/Mou/Cust/ReviewDLFN",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
                         }
                     ]
                 }
