@@ -128,7 +128,7 @@ export class NapFromSimpleLeadDetailComponent implements OnInit {
   }
 
   LobChanged() {
-    let refLob = this.NapAppForm.controls["LobCode"].value;
+    let refLob = this.NapAppForm.controls["LobCode"].value; 
     if (refLob == undefined) {
       this.bizTemplateCode = null;
     } else {
@@ -147,7 +147,7 @@ export class NapFromSimpleLeadDetailComponent implements OnInit {
     addCritBizTemplate.DataType = "text";
     addCritBizTemplate.propName = "rlob.BIZ_TMPLT_CODE";
     addCritBizTemplate.restriction = AdInsConstant.RestrictionEq;
-    addCritBizTemplate.value = this.NapAppForm.controls["LobCode"].value;
+    addCritBizTemplate.value = this.bizTemplateCode;
     this.arrAddCrit.push(addCritBizTemplate);
 
     this.inputLookupObjName.addCritInput = this.arrAddCrit;

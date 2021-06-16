@@ -470,6 +470,8 @@ export const ROUTES: RouteInfo[] = [
           { Path: NavigationConstant.SIMPLE_LEAD_FRAUD_VERIF_PAGING, Title: 'Simple Lead Fraud Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
           { Path: NavigationConstant.SIMPLE_LEAD_UPD_PAGING, Title: 'Simple Lead Update', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
           { Path: NavigationConstant.NAP_SHARING_FROM_SIMPLE_LEAD_PAGING, Title: 'New Application from Simple Lead', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+          { Path: '/Lead/SimpleLead/Monitoring', Title: 'Simple Lead Upload', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+          { Path: '/Lead/SimpleLead/ReviewMonitoring/Paging', Title: 'Simple Lead Upload Review', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []}
         ], Params: []
       },
       { Path: NavigationConstant.LEAD_PAGING, Title: 'Lead Input', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },

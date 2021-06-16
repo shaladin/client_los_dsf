@@ -362,28 +362,7 @@ const routes: Routes = [
         data: {
           title: 'RO Potential Execution'
         }
-      },
-      {
-        path: 'SimpleLead/Monitoring',
-        component: SimpleLeadMonitoringComponent,
-        data: {
-          title: 'Simple Lead Monitoring'
-        }
-      },
-      {
-        path: 'SimpleLead/ReviewMonitoring/Paging',
-        component: SimpleLeadMonitoringReviewComponent,
-        data: {
-          title: 'Simple Lead Review Monitoring'
-        }
-      },
-      {
-        path: 'SimpleLead/ReviewMonitoring/Detail',
-        component: SimpleLeadMonitoringReviewDetailComponent,
-        data: {
-          title: 'Simple Lead Review Monitoring Detail'
-        }
-      },
+      }
     ]
   }
 ];
