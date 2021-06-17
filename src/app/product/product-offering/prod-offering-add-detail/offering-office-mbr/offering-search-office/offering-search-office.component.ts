@@ -44,7 +44,8 @@ export class OfferingSearchOfficeComponent implements OnInit {
     this.TempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
     
     this.TempPagingObj.addCritInput = new Array();
-
+    
+    if(currentUserContext.OfficeCode != "HO"){
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;
     critObj.propName = 'RO.PARENT_ID';
@@ -56,6 +57,7 @@ export class OfferingSearchOfficeComponent implements OnInit {
     critObj.propName = 'RO.REF_OFFICE_ID';
     critObj.value = currentUserContext.OfficeId;
     this.TempPagingObj.addCritInput.push(critObj);
+    }
 
     this.GenericByIdObj.Id = this.ProdHId;
     this.http.post<ResGetProdOfferingBranchMbrObj>(URLConstant.GetListProdBranchOfficeMbrByProdHId, this.GenericByIdObj).subscribe(
