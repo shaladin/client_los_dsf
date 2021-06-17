@@ -22,6 +22,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-credit-review-cfna-detail',
@@ -72,6 +73,7 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router, private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService,
     private ref: ApplicationRef) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -124,7 +126,8 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   async ngOnInit() : Promise<void> {
-    this.ClaimTask();
+    // this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.InitData();
     await this.GetAppNo();
     var appObj = new AppObj();

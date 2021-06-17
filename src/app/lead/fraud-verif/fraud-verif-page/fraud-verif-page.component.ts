@@ -25,6 +25,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-fraud-verif-page',
@@ -40,7 +41,7 @@ export class FraudVerifPageComponent implements OnInit {
   isDmsReady: boolean = false;
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params['LeadId'];
     });
@@ -70,7 +71,9 @@ export class FraudVerifPageComponent implements OnInit {
   });
   async ngOnInit() : Promise<void> {
     if (this.WfTaskListId > 0) {
-      this.claimTask();
+      // this.claimTask();
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
+
     }
     this.thirdPartyRsltHObj = new ThirdPartyRsltHObj();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";

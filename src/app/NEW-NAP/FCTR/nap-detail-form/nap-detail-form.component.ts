@@ -20,6 +20,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -63,7 +64,7 @@ export class NapDetailFormComponent implements OnInit {
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING2;
   readonly BackLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
-  constructor(private route: ActivatedRoute, private spinner: NgxSpinnerService, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private toastr: NGXToastrService) {
+  constructor(private route: ActivatedRoute, private spinner: NgxSpinnerService, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private toastr: NGXToastrService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -86,7 +87,8 @@ export class NapDetailFormComponent implements OnInit {
         this.SysConfigResultObj = response;
     });
 
-    this.ClaimTask();
+    // this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFctrMainInformation.json";
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;

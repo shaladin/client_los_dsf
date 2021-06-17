@@ -20,6 +20,7 @@ import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -78,7 +79,9 @@ export class NapDetailFormComponent implements OnInit {
     private router: Router,
     private toastr: NGXToastrService,
     private spinner: NgxSpinnerService,
-    private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
+    private componentFactoryResolver: ComponentFactoryResolver, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -101,7 +104,8 @@ export class NapDetailFormComponent implements OnInit {
         this.SysConfigResultObj = response;
     });
 
-    this.ClaimTask();
+    // this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformationCFNA.json";
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;

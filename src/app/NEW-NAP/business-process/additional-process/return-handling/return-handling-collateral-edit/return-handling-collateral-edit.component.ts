@@ -13,6 +13,7 @@ import { CookieService } from 'ngx-cookie';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 
 
@@ -55,7 +56,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   arrValue = [];
 
   readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_COLL_PAGING;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
 
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -74,7 +75,8 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
-    this.ClaimTask();
+    // this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.appObj.AppId = this.appId;
     this.appObj.Id = this.appId;
     await this.GetAppData();

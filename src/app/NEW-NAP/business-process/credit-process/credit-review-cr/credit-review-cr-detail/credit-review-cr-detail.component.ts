@@ -22,6 +22,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-credit-review-cr-detail',
@@ -74,7 +75,9 @@ export class CreditReviewCrDetailComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    public toastr: ToastrService, private cookieService: CookieService
+    public toastr: ToastrService, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -96,7 +99,8 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.initData();
-    await this.ClaimTask();
+    // await this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     await this.GetAppNo();
     await this.GetListDeviation();
     await this.BindDDLRecommendation();

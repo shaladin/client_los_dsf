@@ -22,6 +22,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-credit-review-main',
@@ -71,7 +72,9 @@ export class CreditReviewMainComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private ref: ApplicationRef,
-    private router: Router, private cookieService: CookieService) {
+    private router: Router, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -120,7 +123,8 @@ export class CreditReviewMainComponent implements OnInit {
   DDLRecommendation;
   DDLReasonReturn;
   async ngOnInit() : Promise<void> {
-    this.ClaimTask();
+    // this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.InitData();
 
     await this.GetAppNo();

@@ -17,6 +17,7 @@ import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-nap-cust-main-data',
@@ -53,7 +54,9 @@ export class NapCustMainDataComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    private toastr: NGXToastrService, private cookieService: CookieService) {
+    private toastr: NGXToastrService, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -66,7 +69,8 @@ export class NapCustMainDataComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.ClaimTask();
+    // this.ClaimTask();
+    this.claimTaskService.ClaimTaskNapCustMainData(this.appId, this.wfTaskListId);
     this.AppStepIndex = 0;
     this.NapObj.AppId = this.appId;
     var appObj = { Id: this.appId };

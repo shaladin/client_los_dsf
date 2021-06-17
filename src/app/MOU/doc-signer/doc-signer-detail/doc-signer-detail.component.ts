@@ -17,6 +17,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqMouCustSignerObj } from 'app/shared/model/Request/MOU/ReqMouCustSignerObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -83,7 +84,7 @@ export class DocSignerDetailComponent implements OnInit {
   });
 
   readonly CancelLink: string = NavigationConstant.MOU_DOC_SIGNER_PAGING;
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.getMouCustById = URLConstant.GetMouCustById;
     this.addMouCustSigner = URLConstant.AddMouCustSigner;
     this.getMouCustSignerByMouCustId = URLConstant.GetMouCustSignerByMouCustId;
@@ -160,7 +161,8 @@ export class DocSignerDetailComponent implements OnInit {
   }
   ngOnInit() {
     if (this.WfTaskListId > 0) {
-      this.claimTask();
+      // this.claimTask();
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
     this.custShareholderLookUpObj1 = new InputLookupObj();
     this.custShareholderLookUpObj1.urlJson = "./assets/uclookup/lookupCustCompanyShareholder.json";

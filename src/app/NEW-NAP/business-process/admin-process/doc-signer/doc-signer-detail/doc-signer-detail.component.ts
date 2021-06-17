@@ -17,6 +17,7 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -50,7 +51,7 @@ export class DocSignerDetailComponent implements OnInit {
   readonly CanceLink: string = NavigationConstant.NAP_ADM_PRCS_NAP_DOC_SIGNER_PAGING;
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService,
-    private cookieService: CookieService) {
+    private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params['AppId'];
       this.AgrmntId = params['AgrmntId'];
@@ -71,7 +72,8 @@ export class DocSignerDetailComponent implements OnInit {
 
   async ngOnInit() : Promise<void> {
     if (this.WfTaskListId != 0) {
-      this.ClaimTask();
+      // this.ClaimTask();
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
     await this.getAllData();
     this.setLookupObj();

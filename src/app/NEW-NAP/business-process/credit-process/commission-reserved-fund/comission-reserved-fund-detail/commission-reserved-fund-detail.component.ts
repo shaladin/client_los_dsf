@@ -17,6 +17,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-commission-reserved-fund-detail',
@@ -47,7 +48,7 @@ export class CommissionReservedFundDetailComponent implements OnInit {
   });
 
   constructor(
-    private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
+    private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.ReturnHandlingHObj = new ReturnHandlingHObj();
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -79,7 +80,8 @@ export class CommissionReservedFundDetailComponent implements OnInit {
 
   ngOnInit() {
     this.isShow = false;
-    this.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
+    // this.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
+    this.claimTaskService.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
 
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,

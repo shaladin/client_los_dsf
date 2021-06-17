@@ -14,6 +14,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -55,7 +56,9 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     private httpClient: HttpClient,
     private fb: FormBuilder,
     private toastr: NGXToastrService,
-    private http: HttpClient, private cookieService: CookieService
+    private http: HttpClient, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['mode'] != null) {
@@ -82,8 +85,10 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         }
       });
 
-    if (this.WfTaskListId > 0)
-      this.claimTask();
+    if (this.WfTaskListId > 0){
+      // this.claimTask();
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
 
     var datePipe = new DatePipe("en-US");
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));

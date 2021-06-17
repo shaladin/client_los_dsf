@@ -19,6 +19,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-return-handling-additional-tc-detail',
@@ -69,7 +70,7 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
 
   readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING;
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router,
-    private modalService: NgbModal, private cookieService: CookieService) {
+    private modalService: NgbModal, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
 
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -107,7 +108,8 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
-    this.ClaimTask();
+    // this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.appObj.Id = this.appId;
     this.initExistingTc();
     await this.GetAppData();

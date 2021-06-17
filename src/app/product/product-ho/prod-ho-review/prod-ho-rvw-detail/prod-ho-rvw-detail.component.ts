@@ -13,6 +13,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqReviewProductObj } from 'app/shared/model/Request/Product/ReqAddEditProductObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-prod-ho-rvw-detail',
@@ -48,7 +49,8 @@ export class ProdHoRvwDetailComponent implements OnInit {
               private fb: FormBuilder, 
               private router: Router, 
               private route: ActivatedRoute, 
-              private cookieService: CookieService) {
+              private cookieService: CookieService,
+              private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["ProdId"] != null) {
         this.ProdId = params["ProdId"];
@@ -64,7 +66,8 @@ export class ProdHoRvwDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.ClaimTask(this.WfTaskListId);
+    // this.ClaimTask(this.WfTaskListId);
+    this.claimTaskService.ClaimTask(this.WfTaskListId);
     await this.LoadRefReason();
     this.initInputApprovalObj();
   }

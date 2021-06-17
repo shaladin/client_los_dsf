@@ -15,6 +15,7 @@ import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-asset-allocation-detail',
@@ -41,7 +42,8 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute, 
     private router: Router, 
     private toastr: NGXToastrService, 
-    private cookieService: CookieService) {
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params['AppId'];
       this.TaskListId = params['WfTaskListId'];
@@ -59,7 +61,8 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
   async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
 
-    this.claimTask();
+    // this.claimTask();
+    this.claimTaskService.ClaimTask(this.TaskListId);
     this.getAssetAllocationData();
   }
 

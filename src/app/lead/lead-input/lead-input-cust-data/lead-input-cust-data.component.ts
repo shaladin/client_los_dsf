@@ -36,6 +36,7 @@ import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMas
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-lead-input-cust-data',
@@ -131,6 +132,7 @@ export class LeadInputCustDataComponent implements OnInit {
     private toastr: NGXToastrService,
     private fb: FormBuilder,
     private componentFactoryResolver: ComponentFactoryResolver,
+    private claimTaskService: ClaimTaskService,
     private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
@@ -189,7 +191,8 @@ export class LeadInputCustDataComponent implements OnInit {
     this.inputAddressObjForResidenceAddr.showOwnership = false;
     this.InitDms();
     if (this.WfTaskListId > 0) {
-      this.claimTask();
+      // this.claimTask();
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);

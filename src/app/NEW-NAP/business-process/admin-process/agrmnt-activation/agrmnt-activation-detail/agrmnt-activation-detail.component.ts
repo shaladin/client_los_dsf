@@ -13,6 +13,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ReqGetAppFinDataAndFeeObj } from 'app/shared/model/Request/NAP/AgrAct/ReqAppFinDataAndFee.model';
 import { ResAgrmntActivationFinDataAndFeeObj, ResAppFeeObj, ResponseAppFinDataObj } from 'app/shared/model/Response/NAP/AgrAct/ResAgrmntActivationFinDataAndFeeObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-agrmnt-activation-detail',
@@ -37,7 +38,7 @@ export class AgrmntActivationDetailComponent implements OnInit {
   IsViewReady: boolean = false;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_AGRMNT_ACT_PAGING;
-  constructor(private fb: FormBuilder, private toastr: NGXToastrService, private route: ActivatedRoute, private adminProcessSvc: AdminProcessService, private router: Router, private http: HttpClient, private cookieService: CookieService) {
+  constructor(private fb: FormBuilder, private toastr: NGXToastrService, private route: ActivatedRoute, private adminProcessSvc: AdminProcessService, private router: Router, private http: HttpClient, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.WfTaskListId = params["WFTaskListId"];
@@ -72,7 +73,8 @@ export class AgrmntActivationDetailComponent implements OnInit {
   ngOnInit() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
-    this.ClaimTask(this.WfTaskListId);
+    // this.ClaimTask(this.WfTaskListId);
+    this.claimTaskService.ClaimTask(this.WfTaskListId);
 
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/AgrmntActivationTempPaging.json";
     this.tempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/AgrmntActivationTempPaging.json";

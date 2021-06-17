@@ -18,6 +18,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetDOMultiAssetInformationObj } from 'app/shared/model/Request/DeliveryOrder/ReqGetDOMultiAssetInformationObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail',
@@ -59,7 +60,9 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
-    private spinner: NgxSpinnerService, private cookieService: CookieService
+    private spinner: NgxSpinnerService, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
     this.doList = new Array();
     this.doAssetList = new Array();
@@ -81,7 +84,8 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     this.arrValue.push(this.agrmntId);
     this.arrValue.push(this.appId);
     if (this.wfTaskListId != null || this.wfTaskListId != undefined) {
-      this.claimTask();
+      // this.claimTask();
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
     }
     let GetDoObj = new ReqGetDOMultiAssetInformationObj();
     GetDoObj.AppId = this.appId;

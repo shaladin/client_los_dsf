@@ -16,6 +16,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-return-handling-detail',
@@ -46,7 +47,9 @@ export class ReturnHandlingDetailComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,
     private route: ActivatedRoute,
-    private router: Router, private cookieService: CookieService) {
+    private router: Router, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -69,7 +72,8 @@ export class ReturnHandlingDetailComponent implements OnInit {
       await this.SetMainInfo();
     }
     this.IsViewReady = true;
-    this.ClaimTask();
+    // this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     await this.bindTaskObj();
     await this.getReturnHandling();
   }

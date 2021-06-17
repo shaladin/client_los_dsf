@@ -19,6 +19,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-delivery-order-detail',
@@ -64,7 +65,7 @@ export class DeliveryOrderDetailComponent implements OnInit {
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_DO_PAGING;
   constructor(private fb: FormBuilder, private http: HttpClient,
-    private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService, private cookieService: CookieService) {
+    private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params['AppId'];
       this.AgrmntId = params['AgrmntId'];
@@ -90,7 +91,8 @@ export class DeliveryOrderDetailComponent implements OnInit {
   })
 
   async ngOnInit() : Promise<void> {
-    this.claimTask();
+    // this.claimTask();
+    this.claimTaskService.ClaimTask(this.TaskListId);
     this.arrValue.push(this.AgrmntId);
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;

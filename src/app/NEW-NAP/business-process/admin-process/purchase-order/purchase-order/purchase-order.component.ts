@@ -14,6 +14,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-purchase-order',
@@ -39,7 +40,7 @@ export class PurchaseOrderComponent implements OnInit {
   isDmsAppReady: boolean;
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private router: Router, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.AppId = params["AppId"];
@@ -61,7 +62,8 @@ export class PurchaseOrderComponent implements OnInit {
     var appAssetObj = {
       Id: this.AgrmntId
     }
-    this.claimTask();
+    // this.claimTask();
+    this.claimTaskService.ClaimTask(this.TaskListId);
     this.http.post(URLConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(
       (response) => {
         this.AppAssetList = response[CommonConstant.ReturnObj];

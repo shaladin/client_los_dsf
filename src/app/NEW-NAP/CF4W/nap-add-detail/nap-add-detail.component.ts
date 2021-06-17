@@ -19,6 +19,7 @@ import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigRes
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -77,7 +78,9 @@ export class NapAddDetailComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    private toastr: NGXToastrService, private cookieService: CookieService) {
+    private toastr: NGXToastrService, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -99,7 +102,8 @@ export class NapAddDetailComponent implements OnInit {
       (response) => {
         this.SysConfigResultObj = response;
     });
-    this.ClaimTask();
+    // this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.AppStepIndex = 1;
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;

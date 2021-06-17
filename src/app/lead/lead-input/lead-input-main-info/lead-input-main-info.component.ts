@@ -20,6 +20,7 @@ import { ReqAddLeadObj, ReqEditLeadObj } from 'app/shared/model/Request/LEAD/Req
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ResGetListRefEmpForLookupObj } from 'app/shared/model/Response/RefEmp/ResRefEmpObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-lead-input-main-info',
@@ -85,7 +86,7 @@ export class LeadInputMainInfoComponent implements OnInit {
   WfTaskListId: number;
   isCopyButtonDisabled: boolean = true;
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["mode"] != null) {
         this.pageType = params["mode"];
@@ -197,7 +198,8 @@ export class LeadInputMainInfoComponent implements OnInit {
 
   ngOnInit() {
     if (this.WfTaskListId > 0) {
-      this.claimTask();
+      // this.claimTask();
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MakeLookUpObj();

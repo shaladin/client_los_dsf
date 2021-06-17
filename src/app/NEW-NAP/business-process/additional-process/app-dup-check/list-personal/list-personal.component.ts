@@ -11,6 +11,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { DuplicateCustObj } from 'app/shared/model/DuplicateCustObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-list-personal',
@@ -33,7 +34,9 @@ export class ListPersonalComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
-    private router: Router, private cookieService: CookieService
+    private router: Router, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -47,7 +50,8 @@ export class ListPersonalComponent implements OnInit {
 
   ngOnInit() {
 
-    this.ClaimTask();
+    // this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.WfTaskListId);
     this.AppCustObj = new AppCustObj();
     this.AppCustPersonalObj = new AppCustPersonalObj();
     this.AppCustAddrObj = new AppCustAddrObj();

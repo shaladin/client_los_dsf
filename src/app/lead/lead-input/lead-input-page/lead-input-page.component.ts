@@ -14,6 +14,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-lead-input-page',
@@ -37,7 +38,7 @@ export class LeadInputPageComponent implements OnInit {
   customObj: any;
   isDmsReady: boolean = false;
   isDmsData: boolean;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
         this.LeadId = params["LeadId"];
@@ -80,7 +81,8 @@ export class LeadInputPageComponent implements OnInit {
         console.log('dmsobj = ', JSON.stringify(this.dmsObj));
       });
     if (this.TaskListId > 0) {
-      this.claimTask();
+      // this.claimTask();
+      this.claimTaskService.ClaimTask(this.TaskListId);
     }
     this.viewLeadHeaderMainInfo.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
     this.stepper = new Stepper(document.querySelector('#stepper1'), {

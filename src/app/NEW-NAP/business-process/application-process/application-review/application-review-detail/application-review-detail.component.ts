@@ -24,6 +24,7 @@ import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/l
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-application-review-detail',
@@ -71,7 +72,9 @@ export class ApplicationReviewDetailComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    public toastr: NGXToastrService, private cookieService: CookieService) {
+    public toastr: NGXToastrService, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -92,7 +95,8 @@ export class ApplicationReviewDetailComponent implements OnInit {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
     this.initData();
     this.BindDDLReasonReturn();
-    await this.ClaimTask();
+    // await this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     await this.GetAppNo();
     await this.BindDDLRecommendation();
     await this.BindCreditAnalysisItemFormObj();

@@ -23,6 +23,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetRfaLogByTrxNoAndApvCategoryObj } from 'app/shared/model/Request/NAP/PreGoLive/ReqGetRfaLogByTrxNoAndApvCategoryObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-sharing-pre-go-live',
@@ -73,7 +74,7 @@ export class PreGoLiveComponent implements OnInit {
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PGL_PAGING;
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.AgrmntId = params["AgrmntId"];
       this.AppId = params["AppId"];
@@ -111,7 +112,8 @@ export class PreGoLiveComponent implements OnInit {
         }
         this.IsApvReady = true;
       });
-    this.claimTask();
+    // this.claimTask();
+    this.claimTaskService.ClaimTask(this.TaskListId);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
     var agrmntObj = {
       Id: this.AgrmntId

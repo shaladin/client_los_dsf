@@ -21,6 +21,7 @@ import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigRes
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-new-purchase-order-detail',
@@ -56,7 +57,9 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
     private router: Router,
     private modalService: NgbModal,
     private spinner: NgxSpinnerService,
-    private fb: FormBuilder, private cookieService: CookieService
+    private fb: FormBuilder, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
     this.POList = new Array<Object>();
     this.arrValue = new Array<number>();
@@ -80,7 +83,8 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.claimTask();
+    // this.claimTask();
+    this.claimTaskService.ClaimTask(this.TaskListId);
     // let appAssetObj : GenericObj = new GenericObj();
     // appAssetObj.Id = this.AgrmntId;
     // this.http.post(URLConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(

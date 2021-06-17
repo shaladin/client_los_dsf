@@ -14,6 +14,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-invoice-verif-detail',
@@ -44,7 +45,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
     ReasonDesc: ['']
   });
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.WfTaskListId = params["TaskListId"];
@@ -56,7 +57,8 @@ export class InvoiceVerifDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.claimTask();
+    // this.claimTask();
+    this.claimTaskService.ClaimTask(this.WfTaskListId);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewInvoiceVerif.json";
 
     this.GetListVerifStatus();

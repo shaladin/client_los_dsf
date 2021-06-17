@@ -11,6 +11,7 @@ import { environment } from 'environments/environment';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-dup-check-md-subj-list',
@@ -29,7 +30,9 @@ export class DupCheckMdSubjListComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr: NGXToastrService, private cookieService: CookieService) {
+    private toastr: NGXToastrService, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) this.appId = params['AppId'];
       if (params['WfTaskListId'] != null) this.wfTaskListId = params['WfTaskListId'];
@@ -37,7 +40,8 @@ export class DupCheckMdSubjListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.claimTask();
+    // this.claimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.initViewMainInfo();
     this.getSubjectList();
   }

@@ -18,6 +18,7 @@ import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { ReqGetVerfResultObj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: "phone-verification-subject",
@@ -70,7 +71,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   BizTemplateCode: string;
   IsViewReady: boolean = false;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
 
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -89,8 +90,10 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
 
-    if (this.wfTaskListId != null || this.wfTaskListId != undefined)
-      this.claimTask();
+    if (this.wfTaskListId != null || this.wfTaskListId != undefined){
+      // this.claimTask();
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
 
     this.appObj.AppId = this.appId;
     this.appObj.Id = this.appId;

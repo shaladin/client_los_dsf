@@ -14,6 +14,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetCustDupCheckObj } from 'app/shared/model/Request/NAP/DupCheck/ReqGetCustDupCheckObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-applicant-existing-data-company',
@@ -42,7 +43,9 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr: NGXToastrService, private cookieService: CookieService
+    private toastr: NGXToastrService, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -55,7 +58,8 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.ClaimTask();
+    // this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.WfTaskListId);
     await this.bindData();
     await this.processData();
   }
