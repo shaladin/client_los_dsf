@@ -38,13 +38,13 @@
                   <label class="col-md-2">{{item.ProdCompntName}}</label>
                   <label class="col-md-2">{{item.ProdDCompntValueDesc}}</label>
                   <span class="material-icons col-md-1 pointer" (click)="DownloadRule(item.ProdDCompntValue,item.ProdDCompntValueDesc)" *ngIf="x.GroupCode == 'RULE' || x.GroupCode == 'SCORE'">
-                    get_app
+                    <img src="assets/img/download.png" style="width: 25px;"/>
                   </span>
                   <label class="col-md-1" *ngIf="x.GroupCode != 'RULE' && x.GroupCode != 'SCORE'"> </label>
                   <label class="col-md-2">{{item.ProdDMrProdBehaviourCode}}</label>
                   <label class="col-md-2">{{item.CompntValueDesc}}</label>
                   <span class="material-icons col-md-1 pointer" (click)="DownloadRule(item.CompntValue,item.CompntValueDesc)" *ngIf="x.GroupCode == 'RULE' || x.GroupCode == 'SCORE'">
-                    get_app
+                    <img src="assets/img/download.png" style="width: 25px;"/>
                   </span>
                   <label class="col-md-1" *ngIf="x.GroupCode != 'RULE' && x.GroupCode != 'SCORE'"> </label>
                   <label class="col-md-2">{{item.MrProdBehaviourCode}}</label>

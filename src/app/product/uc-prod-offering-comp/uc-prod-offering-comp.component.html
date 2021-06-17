@@ -16,7 +16,7 @@
                   <label class="" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode != 'RULE'">{{type.controls['components'].value[l].ProdCompntName}}</label>
                 </div>
                 <span class="material-icons col-md-1 pointer" style="cursor: pointer;" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE'" (click)="DownloadRule(type.controls['components'].value[l].OfferingCompntValue,type.controls['components'].value[l].OfferingCompntValueDesc)">
-                  get_app
+                  <img src="assets/img/download.png" style="width: 25px;"/>
                 </span>
                 <label class="col-md-4" *ngIf="!type.controls['components'].value[l].IsProdOffering">{{type.controls['components'].value[l].HOCompntValueDesc}}</label>
                 <div class="col-md-4" *ngIf="type.controls['components'].value[l].ProdCompntType == 'DDL' && type.controls['components'].value[l].IsProdOffering">
@@ -74,7 +74,7 @@
                 </div>
                 <label class="col-md-2">{{type.controls['components'].value[l].HOCompntValueDesc}}</label>
                 <span class="material-icons col-md-1 pointer" style="cursor: pointer;" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE' || FormProdOfferingComp.controls['groups'].value[j].groupCode == 'SCORE'" (click)="DownloadRule(type.controls['components'].value[l].HOCompntValue,type.controls['components'].value[l].HOCompntValueDesc)">
-                  get_app
+                  <img src="assets/img/download.png" style="width: 25px;"/>
                 </span>
                 <label class="col-md-1" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode != 'RULE' && FormProdOfferingComp.controls['groups'].value[j].groupCode != 'SCORE'"> </label>
                 <label class="col-md-2" *ngIf="ShowBehaviour == true">{{GetBehaviourValue(type.controls['components'].value[l].RefProdCompntCode, type.controls['components'].value[l].HOMrProdBehaviour )}}</label>
@@ -96,7 +96,7 @@
                   </lib-uc-show-errors>
                 </div>
                 <span class="material-icons col-md-1 pointer" style="cursor: pointer;" *ngIf="(FormProdOfferingComp.controls['groups'].value[j].groupCode == 'RULE' || FormProdOfferingComp.controls['groups'].value[j].groupCode == 'SCORE') && type.controls['components'].value[l].IsProdOffering" (click)="DownloadRule(type.controls['components'].getRawValue()[l].OfferingCompntValue,type.controls['components'].value[l].OfferingCompntValueDesc)">
-                  get_app
+                  <img src="assets/img/download.png" style="width: 25px;"/>
                 </span>
                 <label class="col-md-1" *ngIf="FormProdOfferingComp.controls['groups'].value[j].groupCode != 'RULE' && FormProdOfferingComp.controls['groups'].value[j].groupCode != 'SCORE'"> </label>
                 <div class="col-md-2" *ngIf="ShowBehaviour == true && type.controls['components'].value[l].IsProdOffering">

@@ -29,7 +29,7 @@
                   <label class="col-md-3">{{item.ProdCompntName}}</label>
                   <label class="col-md-4">{{item.CompntValueDesc}}</label>
                   <span class="material-icons col-md-1 pointer" (click)="DownloadRule(item.CompntValue,item.CompntValueDesc)" *ngIf="x.GroupCode == 'RULE' || x.GroupCode == 'SCORE'">
-                    get_app
+                    <img src="assets/img/download.png" style="width: 25px;"/>
                   </span>
                   <label class="col-md-1" *ngIf="x.GroupCode != 'RULE' && x.GroupCode != 'SCORE'"> </label>
                   <label class="col-md-4">{{item.MrProdBehaviourCode}}</label>
