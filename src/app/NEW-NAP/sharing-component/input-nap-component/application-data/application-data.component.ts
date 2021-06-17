@@ -319,7 +319,7 @@ export class ApplicationDataComponent implements OnInit {
           MrLcCalcMethodCode: this.resultResponse.MrLcCalcMethodCode,
           LcInstRatePrml: this.resultResponse.LcInstRatePrml,
           LcInsRatePrml: this.resultResponse.LcInsRatePrml,
-          MrAppSourceCode: this.resultResponse.MrAppSourceCode,
+          MrAppSourceCode: this.resultResponse.MrAppSourceCode != null ? this.resultResponse.MrAppSourceCode : "",
           MrWopCode: this.resultResponse.MrWopCode,
           SrvyOrderNo: this.resultResponse.SrvyOrderNo,
           ApvDt: this.resultResponse.ApvDt,
@@ -375,8 +375,7 @@ export class ApplicationDataComponent implements OnInit {
 
   getAppSrcData() {
     this.ddlMrAppSourceObj.apiUrl = URLConstant.GetListKvpActiveRefAppSrc;
-    this.ddlMrAppSourceObj.requestObj = { RowVersion: "" }
-    this.ddlMrAppSourceObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.ddlMrAppSourceObj.requestObj = { RowVersion: "" };
   }
 
   DictRefPayFreq: any = {};
