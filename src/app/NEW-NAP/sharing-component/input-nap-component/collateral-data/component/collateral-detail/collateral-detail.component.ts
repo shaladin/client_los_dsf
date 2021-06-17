@@ -39,7 +39,7 @@ export class CollateralDetailComponent implements OnInit {
   @ViewChild('LookupCollateral') ucLookupCollateral: UclookupgenericComponent;
   private ucLookupCollateralExisting: UclookupgenericComponent;
   generalSettingObj: GenericListByCodeObj;
-  indexChassis: number;
+  indexChassis: number = -1;
   currentChassisNo: any;
   LastRequestedDate: any;
   IsIntegrator: boolean = false;
@@ -864,6 +864,7 @@ export class CollateralDetailComponent implements OnInit {
         await this.collateralPortionHandler();
       });
 
+    this.findChassisIdx();
     await this.getRefAssetDocList(AssetTypeCode);
 
     //#region Criteria For inputLookupExistColl
@@ -904,6 +905,12 @@ export class CollateralDetailComponent implements OnInit {
     if (IsChange) this.ucLookupCollateralExisting.setAddCritInput();
     //#endregion
     this.GenerateAppCollateralAttr(false);
+  }
+
+  findChassisIdx() {
+    let tempItem = this.items.getRawValue();
+    this.indexChassis = tempItem.findIndex(x => x.SerialNoLabel == "Chassis No");
+    if (this.indexChassis == -1) this.IsIntegrator = false;
   }
 
   changeSerialNoValidators(MrCollateralConditionCode: string) {
