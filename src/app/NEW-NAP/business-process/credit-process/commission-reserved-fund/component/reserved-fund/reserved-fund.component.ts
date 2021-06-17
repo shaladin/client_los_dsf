@@ -21,12 +21,6 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   providers: [NGXToastrService]
 })
 export class ReservedFundComponent implements OnInit {
-
-  getAppFeeUrl: any;
-  getAppRsvFundUrl: any;
-  getAppRsvFundRuleUrl: any;
-  // getMaxAllocAmtRsvFundUrl: any;
-
   RsvForm = this.fb.group({
     ReservedFundObjs: this.fb.array([])
   });
@@ -69,16 +63,8 @@ export class ReservedFundComponent implements OnInit {
     });
   }
 
-  initUrl() {
-    this.getAppFeeUrl = URLConstant.GetListAppFeeByAppId;
-    this.getAppRsvFundUrl = URLConstant.GetListAppReservedFundByAppId;
-    this.getAppRsvFundRuleUrl = URLConstant.CreateRsvFundRule;
-    // this.getMaxAllocAmtRsvFundUrl = URLConstant.CreateMaxAllocAmtRsvFund;
-  }
-
   async ngOnInit() {
     this.allAppReservedFundObj = new AllAppReservedFundObj();
-    this.initUrl();
     var appObj = {
       Id: this.ReturnHandlingHObj.AppId
     };
@@ -199,7 +185,7 @@ export class ReservedFundComponent implements OnInit {
   }
 
   GetAppFee(appObj) {
-    this.http.post(this.getAppFeeUrl, appObj).subscribe(
+    this.http.post(URLConstant.GetListAppFeeByAppId, appObj).subscribe(
       (response) => {
         this.appFeeObj = response[CommonConstant.ReturnObj];
 
@@ -227,7 +213,7 @@ export class ReservedFundComponent implements OnInit {
   // }
 
   GetAppRsvFundRule(appObj) {
-    this.http.post(this.getAppRsvFundRuleUrl, appObj).subscribe(
+    this.http.post(URLConstant.CreateRsvFundRule, appObj).subscribe(
       (response) => {
         this.ruleObj = response[CommonConstant.ReturnObj];
         this.appReservedFundObjs = new Array<AppReservedFundObj>();
