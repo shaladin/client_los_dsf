@@ -4,7 +4,7 @@
     "component": [
         {
             "type": "dropdown",
-            "name": "a.ORI_OFFICE_CODE",
+            "name": "A.ORI_OFFICE_CODE",
             "id": "OfficeNameId",
             "value": "Office Name",
             "placeholder": "Placeholder",
@@ -12,6 +12,7 @@
             "ddlType": "all",
             "isQueryIn": true,
             "url": "",
+            "environment": "FOU",
             "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
             "label": "Office",
             "items": [],
@@ -19,7 +20,7 @@
         },
         {
             "type": "textbox",
-            "name": "ac.CUST_NAME",
+            "name": "AC.CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "Customer Name",
@@ -27,7 +28,7 @@
         },
         {
             "type": "textbox",
-            "name": "a.APP_NO",
+            "name": "A.APP_NO",
             "id": "AppNoId",
             "value": "",
             "label": "Application No",
@@ -35,7 +36,7 @@
         },
         {
             "type": "textbox",
-            "name": "a.PROD_OFFERING_NAME",
+            "name": "A.PROD_OFFERING_NAME",
             "id": "ProdOfferingNameId",
             "value": "",
             "label": "Product Offering Name",
@@ -47,25 +48,25 @@
             "type": "sort",
             "position": "left",
             "label": "Office",
-            "name": "a.ORI_OFFICE_NAME"
+            "name": "A.ORI_OFFICE_NAME"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Application No",
-            "name": "a.APP_NO"
+            "name": "A.APP_NO"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Customer Name",
-            "name": "ac.CUST_NAME"
+            "name": "AC.CUST_NAME"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "Product Offering Name",
-            "name": "a.PROD_OFFERING_NAME"
+            "name": "A.PROD_OFFERING_NAME"
         },
         {
             "type": "label",
@@ -74,10 +75,10 @@
         }
     ],
     "querystring": {
-        "name": "searchCreditReview"
+        "name": "searchAppReview"
     },
     "orderby": {
-        "key": "a.APP_NO",
+        "key": "A.APP_NO",
         "value": "false"
     },
     "bodyList": [
@@ -121,7 +122,7 @@
                             "conditions": [
                                 {
                                     "isUser": true,
-                                    "property": "ClaimBy",
+                                    "property": "Username",
                                     "value": "",
                                     "restriction": "EQ"
                                 }
@@ -147,7 +148,7 @@
                             "conditions": [
                                 {
                                     "isUser": false,
-                                    "property": "ClaimBy",
+                                    "property": "Username",
                                     "value": "",
                                     "restriction": "EQ"
                                 }

@@ -76,6 +76,8 @@ export class AgrmntActivationDetailComponent implements OnInit {
     }
   }
 
+  readonly bizCodeFl4w: string = CommonConstant.FL4W;
+
   async ngOnInit() {
     await this.CheckApvResultExp();
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);

@@ -3,7 +3,6 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { TranslateService } from '@ngx-translate/core';
@@ -39,8 +38,6 @@ export class AppMainInfoComponent implements OnInit {
    }
 
   ngOnInit() {
-    console.log("rey");
-    console.log(localStorage.getItem('lang'));
     this.translateService.use(localStorage.getItem('lang') || 'en');
     this.http.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
@@ -62,25 +59,6 @@ export class AppMainInfoComponent implements OnInit {
         }else{
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAppMainInfo.json";
         }
-        this.viewGenericObj.viewEnvironment = environment.losUrl;
-        this.viewGenericObj.ddlEnvironments = [
-          {
-            name: "AppNo",
-            environment: environment.losR3Web
-          },
-          {
-            name: "MouCustNo",
-            environment: environment.losR3Web
-          },
-          {
-            name: "LeadNo",
-            environment: environment.losR3Web
-          },
-          {
-            name: "MouCustNo",
-            environment: environment.losR3Web
-          },
-        ];
       }
     );
   }

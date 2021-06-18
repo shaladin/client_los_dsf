@@ -11,6 +11,7 @@
           "label": "Application No",
           "property": "AppNo",
           "name": "AppNo",
+          "environment": "LOSR3WEB",
           "position": "left",
           "path": "VIEW_APP",
           "target": "_blank",
@@ -25,11 +26,6 @@
           "type": "text",
           "label": "Original Office",
           "property": "OriOfficeName"
-        },
-        {
-          "type": "text",
-          "label": "Customer Name",
-          "property": "CustName"
         },
         {
           "type" : "switch", 

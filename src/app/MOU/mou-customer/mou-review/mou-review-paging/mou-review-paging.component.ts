@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -27,15 +26,8 @@ export class MouReviewPagingComponent implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouReview.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouReview.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "MR_MOU_TYPE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
   }
 
   GetCallBack(event) {

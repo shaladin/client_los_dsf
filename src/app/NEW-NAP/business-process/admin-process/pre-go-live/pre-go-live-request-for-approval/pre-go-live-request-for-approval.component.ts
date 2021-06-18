@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
 import { RFAPreGoLiveObj } from 'app/shared/model/RFAPreGoLiveObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -24,10 +24,11 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   AgrmntNo: string;
   itemReason: Array<KeyValueObj>;
 
-  RFAPreGoLive: RFAPreGoLiveObj;
-  TaskListId: number;
-  AgrmntId: number;
-  Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  RFAPreGoLive: any;
+  RFAInfo: Object = new Object();
+  TaskListId: any;
+  AgrmntId: any;
+  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
   private createComponent: UcapprovalcreateComponent;
@@ -39,7 +40,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   }
   ApprovalCreateOutput: any;
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PGL_PAGING;
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
+  constructor(private router: Router, private fb: FormBuilder, private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.AgrmntId = params["AgrmntId"];
@@ -48,28 +49,13 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     });
   }
 
+  FormObj = this.fb.group({
+
+  });
+
   async ngOnInit() {
 
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLiveApproval.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "AgrmntNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
     await this.LoadRefReason();
     this.initInputApprovalObj();
   }
@@ -94,16 +80,14 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     );
   }
   SaveForm() {
-    this.ApprovalCreateOutput = this.createComponent.output();
-    if (this.ApprovalCreateOutput != undefined) {
-      this.RFAPreGoLive = new RFAPreGoLiveObj();
-      this.RFAPreGoLive.TaskListId = this.TaskListId;
-      this.RFAPreGoLive.RowVersion = "";
-      this.RFAPreGoLive.RequestRFAObj = this.ApprovalCreateOutput
-      this.http.post(URLConstant.CreateRFAPreGoLiveNew, this.RFAPreGoLive).subscribe((response) => {
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_PAGING], { BizTemplateCode: localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
-      });
-    }
+    this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
+    this.RFAPreGoLive = new RFAPreGoLiveObj();
+    this.RFAPreGoLive.TaskListId = this.TaskListId;
+    this.RFAPreGoLive.RowVersion = "";
+    this.RFAPreGoLive.RequestRFAObj = this.RFAInfo;
+    this.http.post(URLConstant.CreateRFAPreGoLiveNew, this.RFAPreGoLive).subscribe((response) => {
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_PAGING], { BizTemplateCode: localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
+    });
   }
 
   Cancel() {
@@ -115,6 +99,9 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
       "TypeCode": "PRE_GLV_APV_TYPE",
       "Attributes": Attributes,
     };
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
+    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_PRE_GO_LIVE_APV;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_APV_PRE_GO_LIVE;

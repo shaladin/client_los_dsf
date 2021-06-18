@@ -65,15 +65,9 @@ export class CcAddressDetailComponent implements OnInit {
     let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeCustAddrType, MappingCode: this.InputObj.MrCustTypeCode == CommonConstant.CustTypePersonal ? CommonConstant.CustTypePersonal : CommonConstant.CustTypeCompany };
     this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).subscribe(
       async (response) => {
-        this.AddressTypeObj = response[CommonConstant.ReturnObj];
-        if (this.InputObj.MrCustTypeCode == CommonConstant.CustTypeCompany) {
-          let idxCompany = this.AddressTypeObj.findIndex(x => x.Key == CommonConstant.AddrTypeCompany);
-          if (idxCompany != -1) this.AddressTypeObj.splice(idxCompany, 1)
-        }
-        else {
-          let idxEmergency = this.AddressTypeObj.findIndex(x => x.Key == CommonConstant.AddrTypeEmergency);
-          if (idxEmergency != -1) this.AddressTypeObj.splice(idxEmergency, 1)
-        }
+        let  tempAddressType = response[CommonConstant.ReturnObj];
+        let filterTempAddr = tempAddressType.filter(x => x.Key != CommonConstant.AddrTypeCompany && x.Key != CommonConstant.AddrTypeEmergency);
+        this.AddressTypeObj = filterTempAddr;
         this.AddressForm.patchValue({
           MrCustAddrTypeCode: this.AddressTypeObj[0].Key
         })
@@ -115,8 +109,8 @@ export class CcAddressDetailComponent implements OnInit {
   LoadAddrForCopy() {
     this.http.post<Array<AppCustAddrObj>>(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { Id: this.InputObj.AppCustId }).subscribe(
       (response) => {
-        this.copyAddressFromObj = response;
-        this.AddressForm.patchValue({ CopyAddrFrom: response[0]['AppCustAddrId'] });
+        this.copyAddressFromObj = response[CommonConstant.ReturnObj];
+        this.AddressForm.patchValue({ CopyAddrFrom: this.copyAddressFromObj[0]['AppCustAddrId'] });
         this.isDllCopyAddressFromReady = true;
       }
     );

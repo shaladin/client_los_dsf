@@ -320,8 +320,8 @@ export class AppAddFixedComponent implements OnInit {
     dtFixedNAPObj.TypeCode = this.TypeCode;
     this.http.post(URLConstant.DataTableNAP, dtFixedNAPObj).subscribe(
       (response) => {
-        this.returnDtFixedNAPObj = response;
-        this.toastr.successMessage(response["message"]);
+        this.returnDtFixedNAPObj = response[CommonConstant.ReturnObj];
+        this.toastr.successMessage(response["Message"]);
       });
   }
 

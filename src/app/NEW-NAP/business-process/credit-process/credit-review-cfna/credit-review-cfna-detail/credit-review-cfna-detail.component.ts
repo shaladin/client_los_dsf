@@ -50,6 +50,7 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
   IsUseDigitalization: string;
   IsViewReady: boolean = false;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
+  RFAInfo: Object = new Object();
 
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   private createComponent: UcapprovalcreateComponent;
@@ -82,13 +83,11 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
   }
 
   FormObj = this.fb.group({
-    arr: this.fb.array([]),
-    // AppvAmt: [''],
-    // CreditScoring: [''],
+    arr: this.fb.array([])
+  });
+
+  FormReturnObj  =this.fb.group({
     Reason: [''],
-    // ReasonDesc: [""],
-    // Approver: ['', Validators.required],
-    // ApproverDesc: [""],
     Notes: ['']
   });
 
@@ -324,7 +323,7 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
 
 
     if (!this.isReturnOn) {
-      this.ApprovalCreateOutput = this.createComponent.output();
+      this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
     }
 
     var apiObj = {
@@ -334,8 +333,24 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
       RowVersion: "",
       AppId: this.appId,
       ListDeviationResultObjs: this.ManualDeviationData,
-      RequestRFAObj: this.ApprovalCreateOutput
+      RequestRFAObj: this.RFAInfo
     }
+    this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationDataNew, apiObj).subscribe(
+      (response) => {
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode, });
+      });
+  }
+
+  SaveReturnForm() {
+    let temp = this.FormReturnObj.value;
+
+    let apiObj = {
+      WfTaskListId: this.wfTaskListId,
+      Notes: temp.Notes,
+      RowVersion: "",
+      AppId: this.appId
+    }
+    console.log(apiObj);
     this.http.post(URLConstant.AddOrEditAppCrdRvwDataAndListManualDeviationDataNew, apiObj).subscribe(
       (response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_REVIEW_PAGING], { "BizTemplateCode": this.BizTemplateCode, });
@@ -390,23 +405,23 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
 
   isReturnOn;
   switchForm() {
-    this.FormObj.patchValue({
+    this.FormReturnObj.patchValue({
       Reason: "",
       ReasonDesc: "",
       Notes: ""
     });
 
     if (!this.isReturnOn) {
-      this.isReturnOn = true;;
-      this.FormObj.controls.Reason.setValidators([Validators.required]);
-      this.FormObj.controls.Notes.setValidators([Validators.required]);
+      this.isReturnOn = true;
+      this.FormReturnObj.controls.Reason.setValidators([Validators.required]);
+      this.FormReturnObj.controls.Notes.setValidators([Validators.required]);
     } else {
       this.isReturnOn = false;
-      this.FormObj.controls.Reason.clearValidators();
-      this.FormObj.controls.Notes.clearValidators();
+      this.FormReturnObj.controls.Reason.clearValidators();
+      this.FormReturnObj.controls.Notes.clearValidators();
     }
-    this.FormObj.controls.Reason.updateValueAndValidity();
-    this.FormObj.controls.Notes.updateValueAndValidity();
+    this.FormReturnObj.controls.Reason.updateValueAndValidity();
+    this.FormReturnObj.controls.Notes.updateValueAndValidity();
 
   }
 

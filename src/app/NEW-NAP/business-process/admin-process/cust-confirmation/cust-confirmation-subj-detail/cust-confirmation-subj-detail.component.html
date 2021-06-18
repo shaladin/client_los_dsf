@@ -5,7 +5,7 @@
   <div class="card-body">
     <div class="px-3">
       <form class="form form-horizontal" [formGroup]="CustConfirm" #formDirective="ngForm"
-        (ngSubmit)="CustConfirm.valid && SaveForm(formDirective)" #enjiForm="ngForm">
+        (ngSubmit)="CustConfirm.valid && AddDetail(formDirective)" #enjiForm="ngForm">
         <lib-ucSubsection [id]="'CustConfirmationId'" [title]="'Customer Confirmation'" [panel]="'CustConfirmation'">
         </lib-ucSubsection>
         <div class="form-group row" id="CustConfirmation">
@@ -135,45 +135,45 @@
               </span>
             </div>
           </div>
-        </div>
-        <div class="form-actions right">
-          <button type="submit" class="btn btn-raised btn-primary" id="saveHistory" translate>
-            <i class="far fa-check-square"></i> Save History
-          </button>
-        </div>
-        <!-- History List -->
-        <lib-ucSubsection [id]="'HistoryListId'" [title]="'History List'" [panel]="'HistoryList'">
-        </lib-ucSubsection>
-        <div class="form-body" id="HistoryList">
-          <table class="table table-responsive-md table-hover">
-            <thead>
-              <tr class="table-header">
-                <th><span translate class="thead-header text-left">Phone No</span></th>
-                <th><span translate class="thead-header text-left">Status</span></th>
-                <th><span translate class="thead-header text-left">Notes</span></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngIf="VerfResultHList?.length == 0">
-                <td align="center" colspan="5">No Data Available</td>
-              </tr>
-              <tr *ngFor="let item of VerfResultHList; let i = index">
-                <td class="text-left">{{item.Phn}}</td>
-                <td class="text-left">{{item.MrVerfResultHStatName}}</td>
-                <td class="text-left">{{item.Notes}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="form-actions right">
-          <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
-            [queryParams]="{AgrmntId:AgrmntId, AppId:AppId, AgrmntNo:agrmntObj.AgrmntNo, TaskListId: TaskListId, BizTemplateCode: BizTemplateCode}"
-            translate>
-            <i class="ft-x"></i> Cancel
-          </button>
-          <button type="submit" class="btn btn-raised btn-primary" translate id="save" translate>
-            <i class="far fa-check-square"></i> Save
-          </button>
+          <div class="form-actions right">
+            <button type="submit" class="btn btn-raised btn-primary" translate>
+              <i class="far fa-check-square"></i> Add Detail
+            </button>
+          </div>
+          <!-- History List -->
+          <lib-ucSubsection [id]="'HistoryListId'" [title]="'History List'" [panel]="'HistoryList'">
+          </lib-ucSubsection>
+          <div class="form-body" id="HistoryList">
+            <table class="table table-responsive-md table-hover">
+              <thead>
+                <tr class="table-header">
+                  <th><span translate class="thead-header text-left">Phone No</span></th>
+                  <th><span translate class="thead-header text-left">Status</span></th>
+                  <th><span translate class="thead-header text-left">Notes</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngIf="VerfResultHList?.length == 0">
+                  <td align="center" colspan="5">No Data Available</td>
+                </tr>
+                <tr *ngFor="let item of VerfResultHList; let i = index">
+                  <td class="text-left">{{item.Phn}}</td>
+                  <td class="text-left">{{item.MrVerfResultHStatName}}</td>
+                  <td class="text-left">{{item.Notes}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="form-actions right">
+            <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
+              [queryParams]="{AgrmntId:AgrmntId, AppId:AppId, AgrmntNo:agrmntObj.AgrmntNo, TaskListId: TaskListId, BizTemplateCode: BizTemplateCode}"
+              translate>
+              <i class="ft-x"></i> Cancel
+            </button>
+            <button type="button" class="btn btn-raised btn-primary" (click)="Save()" translate>
+              <i class="far fa-check-square"></i> Save
+            </button>
+          </div>
         </div>
       </form>
     </div>

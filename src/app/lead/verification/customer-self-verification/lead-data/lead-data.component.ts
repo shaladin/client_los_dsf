@@ -146,7 +146,6 @@ export class LeadDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("aa")
     this.items = this.LeadDataForm.get('items') as FormArray;
     this.InputLookupAssetObj = new InputLookupObj();
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAsset.json";

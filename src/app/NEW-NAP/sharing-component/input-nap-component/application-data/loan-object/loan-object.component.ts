@@ -133,9 +133,9 @@ export class LoanObjectComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.loadDataTable();
-    this.GetAppData();
+    await this.GetAppData();
     this.setLookup();
     this.MainInfoForm.controls.FinancingAmount.disable();
   }
@@ -174,10 +174,11 @@ export class LoanObjectComponent implements OnInit {
                 this.MainInfoForm.patchValue({
                   IsDisburseToCust: response["CompntValue"] == 'Y' ? true : false
                 });
+                this.IsDisburseToCust = this.MainInfoForm.controls.IsDisburseToCust.value;
 
                 this.CheckIsDisburseToCust();
 
-                if (response["CompntValue"] != 'Y') {
+                if (response["CompntValue"] != 'Y' && this.AppObj.BizTemplateCode != CommonConstant.CFNA) {
                   var appObj: ReqGetProdOffDByProdOffVersion = new ReqGetProdOffDByProdOffVersion();
                   appObj.ProdOfferingCode = this.AppObj.ProdOfferingCode;
                   appObj.RefProdCompntCode = CommonConstant.RefProdCompntSupplSchm;
@@ -248,7 +249,7 @@ export class LoanObjectComponent implements OnInit {
       critSuppSupplSchmObj.DataType = 'text';
       critSuppSupplSchmObj.restriction = AdInsConstant.RestrictionEq;
       critSuppSupplSchmObj.propName = 'VS.VENDOR_SCHM_CODE';
-      critSuppSupplSchmObj.value = this.RefProdCmptSupplSchm.CompntValue;
+      critSuppSupplSchmObj.value = this.setCritSuppSupplSchmValue();
       this.supplierInputLookupObj.addCritInput.push(critSuppSupplSchmObj);
     }
 
@@ -266,6 +267,11 @@ export class LoanObjectComponent implements OnInit {
       this.loanObjectInputLookupObj.jsonSelect = { Descr: "" };
       this.supplierInputLookupObj.jsonSelect = { VendorName: "" };
     }
+  }
+
+  setCritSuppSupplSchmValue(): string {
+    if (this.AppObj.BizTemplateCode == CommonConstant.CFNA) return "ALL";
+    return this.RefProdCmptSupplSchm.CompntValue;
   }
 
   getSupplierInputLookupValue(event) {

@@ -61,7 +61,7 @@ const routes: Routes = [
             {
                 path: PathConstant.VIEW_CHANGE_MOU,
                 loadChildren: './change-mou-view/change-mou-view.module#ChangeMouViewModule'
-            },
+            }
         ]
     }
 ];

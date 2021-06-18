@@ -46,6 +46,49 @@
           </table>
         </div>
       </div>
+      <lib-ucSubsection *ngIf="AppCollateralAttrObjs?.length" [id]="'collAttrId'"
+        [title]="'Collateral Attribute'" [panel]="'collAttr'">
+      </lib-ucSubsection>
+      <div class="col-md-12" id="collAttr">
+        <div  class="row" *ngIf="AppCollateralAttrObjs?.length">
+          <div class="col-md-12">
+            <div class="col-md-12" *ngFor="let item of this.AppCollateralAttrObjs;">
+              <div class="form-group row">
+                <label class="col-md-3 adInsLabel"> {{item.CollateralAttrName}} </label>
+                <label class="col-md-9 adInsLabel"> {{item.AttrValue}} </label>
+              </div>
+            </div>
+          </div> 
+        </div>
+      </div>
+      <lib-ucSubsection *ngIf="AppCollateralAccessoryObjs?.length" [id]="'collateralAccessoriesId'" [title]="'Collateral Accessories'" [panel]="'collateralAccessories'">
+      </lib-ucSubsection>
+      <div id="collateralAccessories">
+        <div class="form-group row" *ngIf="AppCollateralAccessoryObjs?.length">
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th style="text-align: center;"><span class="thead-header" translate>No
+                  </span>
+                </th>
+                <th style="text-align: left;"><span class="thead-header" translate>Accessory
+                  </span>
+                </th>
+                <th style="text-align: right;"><span class="thead-header" translate>Accessory Price
+                  </span>
+                </th>
+              </tr>
+            </thead>
+            <tbody *ngIf="AppCollateralAccessoryObjs?.length > 0">
+              <tr *ngFor="let item of this.AppCollateralAccessoryObjs; let i = index">
+                <td style="text-align: center;">{{i + 1}}</td>
+                <td style="text-align: left;">{{item.CollateralAccessoryName}}</td>
+                <td style="text-align: right;">{{item.AccessoryPriceAmt | number:'.2':'en-US'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
     <lib-ucviewgeneric *ngIf="IsReady" [viewGenericObj]="viewUOLObj"></lib-ucviewgeneric>
   </div>

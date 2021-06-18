@@ -116,7 +116,56 @@
       </div>
     </div>
   </div>
-
+  <lib-ucSubsection *ngIf="appAsset?.ResponseAppAssetAttrObjs?.length > 0" [id]="'assetAttrId'"
+    [title]="'Asset Attribute'" [panel]="'assetAttr'">
+  </lib-ucSubsection>
+  <div class="col-md-12" id="assetAttr">
+    <div  class="row" *ngIf="appAsset?.ResponseAppAssetAttrObjs?.length > 0">
+      <div class="col-md-12">
+        <div class="col-md-12" *ngFor="let item of appAsset?.ResponseAppAssetAttrObjs; let i = index">
+          <div class="form-group row">
+            <label class="col-md-3 adInsLabel"> {{item.AssetAttrName}} </label>
+            <label class="col-md-9 adInsLabel"> {{item.AttrValue}} </label>
+          </div>
+        </div>
+      </div> 
+    </div>
+  </div>
+  
+  <lib-ucSubsection *ngIf="appAsset?.ResponseAppAssetAccessoryObjs?.length > 0" [id]="'assetAccId'"
+    [title]="'Asset Accessory'" [panel]="'assetAcc'">
+  </lib-ucSubsection>
+  <div id="assetAcc" *ngIf="appAsset?.ResponseAppAssetAccessoryObjs?.length > 0">
+    <table class="table table-responsive-md table-hover" matSort>
+      <thead>
+        <tr class="table-header">
+          <th class="text-center"><span translate class="thead-header">No. </span>
+          </th>
+          <th class="text-left"><span translate class="thead-header" mat-sort-header="Accessory">Accessory</span>
+          </th>
+          <th class="text-left"><span translate class="thead-header" mat-sort-header="Supplier">Supplier</span>
+          </th>
+          <th class="text-center"><span translate class="thead-header" mat-sort-header="Price">Price</span>
+          </th>
+          <th class="text-center"><span translate class="thead-header" mat-sort-header="DownPayment">Down
+              Payment</span>
+          </th>
+          <th class="text-center"><span translate class="thead-header" mat-sort-header="Notes">Notes</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of appAsset?.ResponseAppAssetAccessoryObjs; let i = index">
+          <td class="text-center">{{ i + 1 }}</td>
+          <td class="text-left">{{ item.AssetAccessoryName }}</td>
+          <td class="text-left">{{ item.SupplName }}</td>
+          <td class="text-center">{{ item.AccessoryPriceAmt }}</td>
+          <td class="text-center">{{ item.DownPaymentAmt }}</td>
+          <td class="text-center">{{ item.AccessoryNotes }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <lib-ucSubsection [id]="'AssetUserId'" [title]="'ASSET USER'" [panel]="'AssetUserSection'"></lib-ucSubsection>
   <div id="AssetUserSection">
     <div class="col-md-12">

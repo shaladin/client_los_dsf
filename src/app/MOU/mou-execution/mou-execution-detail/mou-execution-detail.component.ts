@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'environments/environment';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { Validators, FormBuilder } from '@angular/forms';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -24,7 +23,11 @@ export class MouExecutionDetailComponent implements OnInit {
   businessDt: Date;
   MouCustId: number;
   WfTaskListId: number;
-  MinEndDt: Date;
+  businessDtYesterday: Date; 
+  StartDt: Date;
+  EndDt: Date;
+  MouCustDt: Date;
+
   MouExecutionForm = this.fb.group({
     MouCustId: [''],
     WfTaskListId: [''],
@@ -60,10 +63,10 @@ export class MouExecutionDetailComponent implements OnInit {
       });
 
     var datePipe = new DatePipe("en-US");
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     if (currentUserContext != null && currentUserContext != undefined) {
       this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
-      this.businessDt.setDate(this.businessDt.getDate());
+      this.businessDtYesterday = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
+      this.businessDtYesterday = new Date(this.businessDtYesterday.setDate(this.businessDt.getDate() - 1));
     }
 
     this.httpClient.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
@@ -82,13 +85,6 @@ export class MouExecutionDetailComponent implements OnInit {
       });
 
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouRequest.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-    ];
   }
 
   Back() {
@@ -109,11 +105,36 @@ export class MouExecutionDetailComponent implements OnInit {
       return;
     }
     var request = this.MouExecutionForm.value;
-    this.httpClient.post(URLConstant.MouCustExecutionHumanActivity, request).subscribe(
-      (response) => {
-        this.toastr.successMessage(response["Message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});
-      });
+
+    if (this.ValidateDate()) {
+      this.httpClient.post(URLConstant.MouCustExecutionHumanActivity, request).subscribe(
+        (response: any) => {
+          this.toastr.successMessage(response["Message"]);
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_EXECUTION_PAGING], {});
+        });
+    }
+  }
+
+  ValidateDate() {
+    this.MouCustDt = new Date(this.MouExecutionForm.get("MouCustDt").value);
+    this.StartDt = new Date(this.MouExecutionForm.get("StartDt").value);
+    this.EndDt = new Date(this.MouExecutionForm.get("EndDt").value);
+
+    if(this.MouCustDt < this.businessDtYesterday){
+      this.toastr.warningMessage(ExceptionConstant.MOU_DT_MUST_GREATER_THAN_BUSINESS_DT);
+      return false;
+    }
+
+    if (this.StartDt > this.EndDt) {
+      this.toastr.warningMessage(ExceptionConstant.START_DT_MUST_LESS_THAN_END_DT);
+      return false;
+    }
+    
+    if (this.StartDt < this.businessDt) {
+      this.toastr.warningMessage(ExceptionConstant.START_DT_MUST_GREATER_THAN_EQUAL_BUSINESS_DT);
+      return false;
+    }
+    return true;
   }
 
   checkStartDate(ev) {

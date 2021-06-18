@@ -86,7 +86,15 @@ export class MouApprovalGeneralComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV],{});
+    let ReqMouApvCustomObj = {
+      Tasks: event.Tasks
+    }
+
+    this.http.post(URLConstant.MouApproval, ReqMouApvCustomObj).subscribe(
+      () => {
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV],{});
+      }
+    );
   }
 
   onCancelClick() {

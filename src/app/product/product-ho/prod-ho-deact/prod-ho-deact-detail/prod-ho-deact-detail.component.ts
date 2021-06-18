@@ -42,6 +42,7 @@ export class ProdHoDeactDetailComponent implements OnInit {
   ReqProdOffVersionObj: ReqProdOfferingVersionObj = new ReqProdOfferingVersionObj();
   AllRefReasonMethod: Array<KeyValueObj> = new Array<KeyValueObj>();
   ViewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  RFAInfo: Object = new Object();
 
   ProdHDeactForm = this.fb.group({
     EffectiveDate: ['', Validators.required]
@@ -63,7 +64,6 @@ export class ProdHoDeactDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.ViewGenericObj.viewInput = "./assets/ucviewgeneric/product/viewProductMainInformation.json";
-    this.ViewGenericObj.viewEnvironment = environment.losUrl;
 
     let tempReq: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeProdDeactivate };
     await this.http.post(URLConstant.GetListActiveRefReason, tempReq).toPromise().then(
@@ -103,12 +103,12 @@ export class ProdHoDeactDetailComponent implements OnInit {
   }
 
   SaveForm() {
-    this.ApprovalCreateOutput = this.createComponent.output(); 
+    this.RFAInfo = {RFAInfo: this.ProdHDeactForm.controls.RFAInfo.value};
     this.ReqProdDeactObj.EffectiveDate = this.ProdHDeactForm.controls.EffectiveDate.value;
-    this.ReqProdDeactObj.Reason = this.ApprovalCreateOutput.ReasonCode;
-    this.ReqProdDeactObj.Notes = this.ApprovalCreateOutput.Notes;
+    this.ReqProdDeactObj.Reason = this.RFAInfo["RFAInfo"].Reason;
+    this.ReqProdDeactObj.Notes = this.RFAInfo["RFAInfo"].Notes;
     this.ReqProdDeactObj.ProdHId = this.ProdHId;
-    this.ReqProdDeactObj.RequestRFAObj = this.ApprovalCreateOutput;
+    this.ReqProdDeactObj.RequestRFAObj = this.RFAInfo;
     this.http.post(URLConstant.RequestDeactivation, this.ReqProdDeactObj).subscribe(
       response => {
         this.toastr.successMessage(response["message"]);

@@ -565,8 +565,8 @@ export class NewNapCustDetailComponent implements OnInit {
       this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.RowVersion = this.CustMainDataForm.controls.RowVersionShareholder.value;
     }
 
-    this.custDataPersonalObj.AppCustObj.RowVersion = this.CustDetailForm.controls.RowVersionAppCust.value;
-    this.custDataPersonalObj.AppCustPersonalObj.RowVersion = this.CustDetailForm.controls.RowVersionAppCustPersonal.value;
+    this.custDataPersonalObj.AppCustObj.RowVersion = this.CustMainDataForm.controls.RowVersionAppCust.value;
+    this.custDataPersonalObj.AppCustPersonalObj.RowVersion = this.CustMainDataForm.controls.RowVersionAppCustPersonal.value;
   }
 
   setMainDataCustomerCompanyForSave() {
@@ -601,8 +601,8 @@ export class NewNapCustDetailComponent implements OnInit {
       this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.RowVersion = this.CustMainDataForm.controls.RowVersionShareholder.value;
     }
 
-    this.custDataCompanyObj.AppCustObj.RowVersion = this.CustDetailFormCompany.controls.RowVersionAppCust.value;
-    this.custDataCompanyObj.AppCustCompanyObj.RowVersion = this.CustDetailFormCompany.controls.RowVersionAppCustCompany.value;
+    this.custDataCompanyObj.AppCustObj.RowVersion = this.CustMainDataForm.controls.RowVersionAppCust.value;
+    this.custDataCompanyObj.AppCustCompanyObj.RowVersion = this.CustMainDataForm.controls.RowVersionAppCustCompany.value;
   }
 
   CekIsCustomer() {

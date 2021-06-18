@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
@@ -28,12 +27,6 @@ export class OutstandingTcPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchOutstandingTC.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchOutstandingTC.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "AG.OFFICE_NAME",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     this.inputPagingObj.addCritInput = new Array();
 

@@ -38,31 +38,15 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   result: AgrmntObj;
   result4: NapAppModel;
   arrValue = [];
-  TCList: Array<AppTCObj> = new Array();
-  AppNo: string;
-  NumOfAsset: number;
-  Tenor: number;
-  InstAmt: number;
-  DeliveryDt: string;
-  ProdOfferingName: string;
-  WayOfFinancing: string;
-  CustNo: string;
-  CustName: string;
-  OfficeName: string;
-  PurposeOfFinancing: string;
-  ProdOfferingCode: string;
-  ProdOfferingVersion: string;
-  LeadNo: string;
-  MouNo: string;
+  TCList: any;
   identifier: string = "TCList";
   IsApvReady: boolean = false;
   outstandingTcObj: any;
   listAppTCObj: ListAppTCObj;
   appTC: AppTCObj;
   count1: number = 0;
-  ListRfaLogObj: Array<RfaObj>;
-  listPreGoLiveAppvrObj: Array<any> = new Array();
-  CustNoObj: GenericObj = new GenericObj();
+  ListRfaLogObj: any;
+  listPreGoLiveAppvrObj: Array<any> = new Array<any>();
 
   AppId: number;
   AgrmntId: number;
@@ -81,7 +65,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.AgrmntId = params["AgrmntId"];
       this.AppId = params["AppId"];
-      this.TrxNo = params["TrxNo"];
+      this.TrxNo = params["TrxNo"]; //AgrmntNo
       this.taskId = params["TaskId"];
       this.ApvReqId = params["ApvReqId"];
 
@@ -116,99 +100,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         this.TCList = response["AppTcs"];
       });
 
-    var Obj = {
-      TrxNo: this.TrxNo, // AgrmntNo
-      RowVersion: ""
-    }
-
-    this.http.post(URLConstant.GetAgrmntByAgrmntNo, Obj).subscribe(
-      (response: AgrmntObj) => {
-        this.result = response;
-        this.AgrmntNo = this.result.AgrmntNo;
-        this.CustNo = this.result.CustNo;
-        this.CustName = this.result.CustName;
-        this.OfficeName = this.result.OfficeName;
-        this.NumOfAsset = this.result.NumOfAsset;
-        this.Tenor = this.result.Tenor;
-        this.ProdOfferingName = this.result.ProdOfferingName;
-        this.ProdOfferingCode = this.result.ProdOfferingCode;
-        this.ProdOfferingVersion = this.result.ProdOfferingVersion;
-        var Obj2: ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj = new ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj();
-        Obj2 = {
-          ProdOfferingCode: this.result.ProdOfferingCode,
-          RefProdCompntCode: CommonConstant.RefProdCompntCodeWayOfFinancing
-        }
-        this.http.post(URLConstant.GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode, Obj2).subscribe(
-          (response: ProdOfferingDObj) => {
-            this.WayOfFinancing = response.CompntValueDesc;
-          }
-        );
-
-        var Obj3: ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj = new ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj();
-        Obj3 = {
-          ProdOfferingCode: this.result.ProdOfferingCode,
-          RefProdCompntCode: CommonConstant.RefProdCompntCodePurposeOfFinancing
-        }
-        this.http.post(URLConstant.GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode, Obj3).subscribe(
-          (response: ProdOfferingDObj) => {
-            this.PurposeOfFinancing = response.CompntValueDesc;
-          }
-        );
-
-
-        var Obj4 = {
-          Id: this.result.AppId,
-          RowVersion: ""
-        }
-        this.http.post(URLConstant.GetAppById, Obj4).subscribe(
-          (response: NapAppModel) => {
-            this.result4 = response;
-            this.AppNo = this.result4.AppNo;
-
-            if (this.result4.LeadId != null || this.result4.LeadId != undefined) {
-              this.http.post(URLConstant.GetLeadByLeadId, { Id: this.result4.LeadId }).subscribe(
-                (response) => {
-                  this.LeadNo = response["LeadNo"];
-                  this.LeadId = response["LeadId"];
-                }
-              );
-            }
-
-            this.http.post(URLConstant.GetMouCustByAppId, Obj4).subscribe(
-              (response) => {
-                this.MouNo = response["MouCustNo"];
-                this.MouCustId = response["MouCustId"];
-              }
-            );
-
-          }
-
-        );
-
-
-        var Obj5 = {
-          Id: this.result.AgrmntId,
-          RowVersion: ""
-        }
-        this.http.post(URLConstant.GetDeliveryOrderHByAgrmntId, Obj5).subscribe(
-          (response: DeliveryOrderHObj) => {
-            this.DeliveryDt = formatDate(response.DeliveryDt, 'yyyy-MM-dd', 'en-US');
-
-          }
-        );
-
-        var agrmntObj = {
-          Id: this.result.AgrmntId
-        }
-        this.http.post(URLConstant.GetAgrmntFinDataByAgrmntId, agrmntObj).subscribe(
-          (response: AgrmntFinDataObj) => {
-            this.InstAmt = response.InstAmt;
-          }
-        );
-
-        this.IsReady = true;
-      }
-    );
     this.initInputApprovalObj();
   }
 
@@ -222,28 +113,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     )
   }
 
-  //nanti bakalan ke View, sementara kek gini dlu
-
-  OpenView(key: string) {
-    if (key == 'app') {
-      AdInsHelper.OpenAppViewByAppId(this.AppId);
-    } else if (key == 'agrmnt') {
-      AdInsHelper.OpenAgrmntViewByAgrmntId(this.AgrmntId);
-    } else if (key == 'lead') {
-      AdInsHelper.OpenLeadViewByLeadId(this.LeadId);
-    } else if (key == 'mou') {
-      AdInsHelper.OpenMOUCustViewByMouCustId(this.MouCustId);
-    } else if (key == 'cust') {
-      this.CustNoObj.CustNo = this.CustNo;
-      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"])
-        });
-    } else if (key == 'prod') {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(this.ProdOfferingCode, this.ProdOfferingVersion);
-    }
-  }
-
   onAvailableNextTask() {
 
   }
@@ -252,7 +121,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     this.outstandingTcObj = new OutstandingTcObj();
     this.listAppTCObj = new ListAppTCObj();
     this.listAppTCObj.AppTCObj = new Array();
-
+ 
     for (var i = 0; i < this.TCList["length"]; i++) {
       this.appTC = new AppTCObj();
       this.appTC.AppId = this.TCList[i].AppId;
@@ -271,24 +140,20 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
     this.outstandingTcObj.ListAppTCObj = this.listAppTCObj.AppTCObj;
 
-    this.http.post(URLConstant.SubmitOutstandingTc, this.outstandingTcObj).subscribe(
+    let ReqPreGoLiveApvCustomObj = {
+      Tasks: event.Tasks,
+      requestListOutstandingTcObj: this.outstandingTcObj
+    }
+
+    this.http.post(URLConstant.PreGoLiveApproval, ReqPreGoLiveApvCustomObj).subscribe(
       () => {
-        // this.toastr.successMessage("Success");
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING], { "BizTemplateCode": this.bizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
       }
     );
   }
 
   onCancelClick() {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING], { "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
-  }
-
-  openView(custNo) {
-    this.CustNoObj.CustNo = custNo;
-    this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
-      response => {
-        AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-      });
   }
 
   initInputApprovalObj() {
@@ -304,7 +169,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
     this.InputApvObj = new UcInputApprovalObj();
     this.InputApvObj.TaskId = this.taskId;
-    this.InputApvObj.TrxNo = this.AgrmntNo;
+    this.InputApvObj.TrxNo = this.TrxNo;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.IsReady = true;
   }

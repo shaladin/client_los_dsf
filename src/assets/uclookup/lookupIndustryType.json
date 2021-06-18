@@ -20,7 +20,7 @@
     },
     {
       "type": "textbox",
-      "name": "SIT.INDUSTRY_TYPE_CODE",
+      "name": "RIT.INDUSTRY_TYPE_CODE",
       "id": "industryTypeCodeId",
       "value": "",
       "label": "Industry Type Code",
@@ -28,7 +28,7 @@
     },
     {
       "type": "textbox",
-      "name": "SIT.INDUSTRY_TYPE_NAME",
+      "name": "RIT.INDUSTRY_TYPE_NAME",
       "id": "industryTypeNameId",
       "value": "",
       "label": "Industry Type Name",

@@ -7,7 +7,6 @@ import { LeadObj } from 'app/shared/model/Lead.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';  
 import { CookieService } from 'ngx-cookie';
 
@@ -43,13 +42,6 @@ export class CustomerSelfVerificationComponent implements OnInit {
 
   ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
     
     this.leadObj = new LeadObj;
     this.leadObj.LeadId = this.LeadId;

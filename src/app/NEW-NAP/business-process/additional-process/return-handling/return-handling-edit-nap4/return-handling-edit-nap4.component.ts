@@ -6,7 +6,6 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-return-handling-edit-nap4',
@@ -30,12 +29,6 @@ export class ReturnHandlingEditNap4Component implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingEditNAP4.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingEditNAP4.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "a.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
     this.inputPagingObj.addCritInput = this.ActAndOfficeCriteria();
   }
 

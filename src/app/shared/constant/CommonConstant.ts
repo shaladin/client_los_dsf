@@ -1,4 +1,3 @@
-
 export class CommonConstant {
   //FORM
   public static INVALID_FORM = "INVALID";
@@ -41,6 +40,7 @@ export class CommonConstant {
   public static VERSION = "Version";
   public static LAST_ACCESS_TIME = "LastAccessTime";
   public static EMP_NO = "EmpNo";
+
   // Module
   public static LOAN_ORIGINATION = "LOS";
   public static FOUNDATION = "FOUNDATION";
@@ -71,7 +71,6 @@ export class CommonConstant {
   public static CustMainDataModeGuarantor = "GUARANTOR";
   public static CustMainDataModeFamily = "FAMILY";
   public static CustMainDataModeMgmntShrholder = "SHAREHOLDER";
-
 
   //CUST PERSONAL RELATIONSHIP
   public static SelfCustomer = "SELF";
@@ -155,6 +154,7 @@ export class CommonConstant {
   public static CENTER_GROUP_CODE = "CG";
   public static ROS = "ROS";
   public static OPL = "OPL";
+
   //OFFICE TYPE
   public static HeadOffice = "HO";
   public static HeadOfficeName = "Head Office";
@@ -182,11 +182,9 @@ export class CommonConstant {
   public static VerfAnswerTypeCodeDdl = "DDL";
   public static VerfAnswerTypeCodeUcInputNumber = "UC_INPUT_NUMBER";
 
-
   //PO ITEM CODE
   public static PoItemCodeTotalAssetPrice = "TOTAL_ASSET_PRICE";
   public static PoItemCodeDpNett = "DP_NETT";
-
 
   public static PoItemCodeTdpAtCoy = "TDP_AT_COY";
   public static PoItemCodeInstAmt = "INST_AMT";
@@ -232,9 +230,11 @@ export class CommonConstant {
   //VERIFICATION
   public static VerificationNew = "NEW";
   public static VerificationFail = "FAIL";
+
   //Asset Usage 
   public static AssetUsageNonComm = "NON_COMM"
   public static AssetUsageComm = "COMM"
+
   //Nationality
   public static NationalityLocal = "LOCAL";
 
@@ -380,7 +380,6 @@ export class CommonConstant {
   public static InstSchmRegularFix = "RF";
   public static InstSchmEvenPrincipal = "EP";
 
-
   //REF PROD COMPNT
   public static RefProdCompntAssetType = "ASSETTYPE";
   public static RefProdCompntSupplSchm = "SUPPLSCHM";
@@ -400,6 +399,7 @@ export class CommonConstant {
   public static RefReasonTypeDocChecklist = "DCK_LIST";
   public static RefReasonTypeCodeInvoiceDataVerif = "INVOICE_DATA_VERIF";
   public static RefReasonTypeCodeProdDeactivate = "PROD_DEACT";
+  public static RefReasonTypeCodeNewProduct = "NEW_PRODUCT";
 
   // INST TYPE
   public static SINGLE_INST_TYPE = "SINGLE";
@@ -460,7 +460,6 @@ export class CommonConstant {
   public static ReturnHandlingEditComRsvFnd = "RTN_EDIT_COM_RSV_FND";
   public static ReturnHandlingAddColtr = "RTN_ADD_COLTR";
   public static ReturnHandlingAddTc = "RTN_ADD_TC";
-  public static ReturnHandlingInvoice = "RTN_INVOICE_VERF";
   public static ReturnStatNew = "NEW";
   public static ReturnStatRequest = "REQ";
   public static ReturnStatus = "Status";
@@ -580,6 +579,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeOperatingMargin = "OPERATING_MARGIN_TYPE";
   public static RefMasterTypeCodeCashflowItem = "CASHFLOW_ITEM";
   public static RefMasterTypeCodeCaptureStat = "CAPTURE_STAT";
+
   //RATE TYPE
   public static RateTypeFlat = "FLT";
   public static RateTypeEffective = "EFCTV";
@@ -679,6 +679,7 @@ export class CommonConstant {
 
   //Serial Item
   public static Chassis_No = "Chassis No";
+
   // Cust Type  
   public static WhiteIndicator = "WHITE";
   public static NoData = "No Data";
@@ -692,6 +693,7 @@ export class CommonConstant {
   public static RoleFamilyData = "SPOUSE";
   public static RoleGuarantorData = "GUARANTOR";
   public static RoleShareholder = "SHAREHOLDER";
+
   //Approval
   public static SCHM_CODE_MOU_APV_GENERAL = "MOUC_GEN_APV";
   public static SCHM_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV";
@@ -707,7 +709,7 @@ export class CommonConstant {
   public static CAT_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV";
   public static CAT_CODE_PRE_GO_LIVE_APV = "PRE_GPV_APV";
   public static CAT_CODE_CRD_APV = "CRD_APV";
-  public static CAT_CODE_DOC_CHCLIST_APV = "DOC_CHCKLIST_APV";
+  public static CAT_CODE_DOC_CHCKLIST_APV = "DOC_CHCKLIST_APV";
   public static CAT_CODE_APP_OPL_APV = "APP_OPL_APV";
   public static CAT_CODE_AML_APV = "AML_APV";
   public static CAT_CODE_EDIT_APP_AFT_APV_APV = "EDIT_APP_AFT_APV_APV";
@@ -728,7 +730,6 @@ export class CommonConstant {
   //FRAUD CHECK TYPE
   public static FRAUD_CHCK_ASSET = "ASSET";
   public static FRAUD_CHCK_CUST = "CUST";
-
 
   //DMS
   public static DmsKeyR2 = "1234567891234567";
@@ -846,4 +847,14 @@ export class CommonConstant {
   
   // GENERAL SETTING CODE
   public static GS_CODE_SALES_OFFICER_CODE = "SALES_OFFICER_CODE";
+
+  // JOIN TYPE
+  public static JOIN_TYPE_INNER = "Inner";
+
+  // WORKFLOW
+  public static ACT_CODE_AGR = "AGR_";
+  public static ACT_CODE_RVW = "RVW_";
+  public static ACT_CODE_REQU_DEC = "REQU_DEC_";
+  public static ACT_CODE_DCK_DEC = "DCK_DEC_";
+  public static ACT_CODE_AST_ALO = "AST_ALO_";
 }

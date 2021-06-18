@@ -44,6 +44,9 @@ import { FraudVerificationComponent } from './fraud-verification/fraud-verificat
 import { ViewFraudDetectionResultComponent } from './view-fraud-detection-result/view-fraud-detection-result.component';
 import { ViewSurveyVerifComponent } from './view-survey-verif/view-survey-verif.component';
 import { ChangeMouViewModule } from "app/view-enhancing/change-mou-view/change-mou-view.module";
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { createTranslateLoader } from "app/app.module";
+import { HttpClient } from "@angular/common/http";
 
 @NgModule({
   exports: [
@@ -95,7 +98,14 @@ import { ChangeMouViewModule } from "app/view-enhancing/change-mou-view/change-m
     UcviewgenericModule,
     UcSubsectionModule,
     UcapprovalhistModule,
-    UcapprovalHistoryModule
+    UcapprovalHistoryModule,
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: (createTranslateLoader),
+          deps: [HttpClient]
+      }
+  }),
   ],
   declarations: [
     InvoiceDataFctrComponent,

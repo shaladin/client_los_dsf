@@ -4,6 +4,7 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AgrmntSignerObj } from 'app/shared/model/AgrmntSignerObj.Model';
 import { AgrmntDocObj } from 'app/shared/model/AgrmntDocObj.Model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: "agrmnt-view-document",
@@ -12,6 +13,9 @@ import { AgrmntDocObj } from 'app/shared/model/AgrmntDocObj.Model';
 })
 export class ViewAgrmntDocumentComponent implements OnInit {
   @Input() agrmntId: number;
+  agrmntObj = {
+    Id: 0,
+  };
   AgrmntSignerObj: any;
   AgrmntDocObj: AgrmntDocObj;
 
@@ -24,6 +28,7 @@ export class ViewAgrmntDocumentComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.agrmntObj.Id = this.agrmntId;
     this.GetAgrmntSigner();
     this.GetAgrmntDoc();
   }
@@ -37,9 +42,9 @@ export class ViewAgrmntDocumentComponent implements OnInit {
   }
 
   GetAgrmntDoc() {
-    this.http.post(URLConstant.GetListAgrmntDocPrintByAgrmntId, { Id: this.agrmntId }).subscribe(
-      (response: AgrmntDocObj) => {
-        this.AgrmntDocObj = response;
+    this.http.post(URLConstant.GetListAgrmntDocPrintByAgrmntId, this.agrmntObj).subscribe(
+      (response) => {
+        this.AgrmntDocObj = response[CommonConstant.ReturnObj];
       }
     );
   }

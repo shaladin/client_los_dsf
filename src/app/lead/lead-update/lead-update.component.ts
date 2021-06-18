@@ -3,9 +3,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { UcpagingComponent } from '@adins/ucpaging';
 import { HttpClient } from '@angular/common/http';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
 import { LeadForRejectObj } from 'app/shared/model/Request/LEAD/LeadForRejectObj.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -28,22 +25,8 @@ export class LeadUpdateComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchLeadUpdate.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputPagingObj.deleteUrl = "";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchLeadUpdate.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "L.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      },
-      {
-        name: "L.MR_LEAD_SOURCE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
   }
 
   rejectLead(event) {

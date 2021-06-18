@@ -30,12 +30,6 @@ export class AppAssetCancelPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchAppAssetCancel.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppAssetCancel.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "A.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
     this.inputPagingObj.addCritInput = new Array();
 
     var critObj = new CriteriaObj();

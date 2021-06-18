@@ -27,6 +27,8 @@ export class AdditionalTcDetailComponent implements OnInit {
   TcObj: AppTCObj;
 
   IsSecondDetail: boolean = false;
+
+  TcName: string;
   
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
 
@@ -65,7 +67,6 @@ export class AdditionalTcDetailComponent implements OnInit {
 
   async SetMainInfo() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/new-nap/business-process/additional-process/view-additional-tc-main-info.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
   }
 
   async SetListTc() {
@@ -114,6 +115,8 @@ export class AdditionalTcDetailComponent implements OnInit {
     this.InputLookupTcObj.idSelect = this.TcObj.TcCode;
     this.InputLookupTcObj.nameSelect = this.TcObj.TcName;
 
+    this.TcName = this.TcObj.TcName;
+
     this.TcForm.patchValue({
       TcCode: this.TcObj.TcCode,
       PriorTo: this.TcObj.PriorTo,
@@ -128,7 +131,8 @@ export class AdditionalTcDetailComponent implements OnInit {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_ADD_TC_PAGING], { BizTemplateCode: CommonConstant.OPL });
   }
 
-  SetTc(event) {
+  SetTc(event: any) {
+    this.TcName = event.TcName;
     this.TcForm.patchValue({
       TcCode: event.TcCode
     });
@@ -156,7 +160,7 @@ export class AdditionalTcDetailComponent implements OnInit {
       AppId: this.AppId,
       AppTcId: this.AppTcId,
       TcCode: this.TcForm.value.TcCode,
-      TcName: this.TcObj.TcName,
+      TcName: this.TcName,
       PriorTo: this.TcForm.value.PriorTo,
       IsMandatory: this.TcForm.value.IsMandatory
     };

@@ -25,6 +25,7 @@ import { CustSharingComponentModule } from "app/NEW-NAP/sharing-component/input-
 import { PagesComponent } from './pages/pages.component'; 
 import { RequestNewPasswordComponent } from "./request-new-password/request-new-password.component";
 import { ResetPasswordComponent } from "./reset-password/reset-password.component";
+import { ChangePasswordComponent } from "./change-password/change-password.component";
 
 export const customCurrencyMaskConfig = {     
     align: "right",
@@ -66,7 +67,8 @@ export const customCurrencyMaskConfig = {
         CustomerSelfVerificationComponent,
         PagesComponent,
         RequestNewPasswordComponent,
-        ResetPasswordComponent
+        ResetPasswordComponent,
+        ChangePasswordComponent
     ],
       entryComponents: [
         UclookupgenericComponent,

@@ -141,7 +141,7 @@ export class SchmIrregularComponent implements OnInit {
     if (!this.IsTrialCalc) {
       this.calcIrregularObj = this.ParentForm.value;
       this.calcIrregularObj["IsRecalculate"] = false;
-      this.http.post<ResponseCalculateObj>(environment.losUrl + "/AppFinData/CalculateIrregular", this.calcIrregularObj).subscribe(
+      this.http.post<ResponseCalculateObj>(URLConstant.CalculateIrregular, this.calcIrregularObj).subscribe(
         (response) => {
           this.listInstallment = response.InstallmentTable;
 

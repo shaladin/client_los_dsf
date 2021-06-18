@@ -27,7 +27,6 @@ import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMain
 import { ResponseCustCompanyForCopyObj } from 'app/shared/model/ResponseCustCompanyForCopyObj.Model';
 import { ResponseCustPersonalForCopyObj } from 'app/shared/model/ResponseCustPersonalForCopyObj.Model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
-import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 
 @Component({
@@ -201,7 +200,6 @@ export class NewNapCustMainDataComponent implements OnInit {
 
   setLookup(custType: string = CommonConstant.CustTypePersonal, isChange: boolean = false) {
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookupCustomer.json";
-    this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCustObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.isReadonly = false;
@@ -209,18 +207,10 @@ export class NewNapCustMainDataComponent implements OnInit {
     this.InputLookupCustObj.nameSelect = "";
 
     this.InputLookupCustGrpObj.urlJson = "./assets/uclookup/lookupCustGrp.json";
-    this.InputLookupCustGrpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCustGrpObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCustGrpObj.pagingJson = "./assets/uclookup/lookupCustGrp.json";
     this.InputLookupCustGrpObj.genericJson = "./assets/uclookup/lookupCustGrp.json";
     this.InputLookupCustGrpObj.isRequired = false;
     this.InputLookupCustGrpObj.nameSelect = "";
-    this.InputLookupCustGrpObj.ddlEnvironments = [
-      {
-        name: "C.MR_CUST_TYPE_CODE",
-        environment: environment.FoundationR3Url
-      },
-    ];
 
     this.ArrAddCrit = new Array<CriteriaObj>();
     let critObj = new CriteriaObj();
@@ -569,7 +559,12 @@ export class NewNapCustMainDataComponent implements OnInit {
       this.ResponseCustModel.emit(CustObj.MrCustModelCode);
       this.InputLookupCustObj.nameSelect = CustObj.CustName;
       this.InputLookupCustObj.jsonSelect = { CustName: CustObj.CustName };
-      if (!IsCopyCust) this.rowVersionAppCust = CustObj.RowVersion;
+      if (!IsCopyCust) {
+        this.rowVersionAppCust = CustObj.RowVersion;
+        this.ParentForm.patchValue({
+          RowVersionAppCust : this.rowVersionAppCust
+        })
+      }
     }
 
     if (CustPersonalObj != undefined) {
@@ -583,10 +578,11 @@ export class NewNapCustMainDataComponent implements OnInit {
       });
       this.MaritalStatLookup = CustPersonalObj.MrMaritalStatCode;
       if (!IsCopyCust) {
-        this.ParentForm.patchValue({
-          MrMaritalStatCode: CustPersonalObj.MrMaritalStatCode
-        })
         this.rowVersionAppCustPersonal = CustPersonalObj.RowVersion;
+        this.ParentForm.patchValue({
+          MrMaritalStatCode: CustPersonalObj.MrMaritalStatCode,
+          RowVersionAppCustPersonal : this.rowVersionAppCustPersonal
+        })
       }
       this.RelationshipChange(CustObj.MrCustRelationshipCode);
       this.MaritalStatChange(CustPersonalObj.MrMaritalStatCode);
@@ -613,14 +609,24 @@ export class NewNapCustMainDataComponent implements OnInit {
       });
       this.InputLookupCustObj.nameSelect = CustObj.CustName;
       this.InputLookupCustObj.jsonSelect = { CustName: CustObj.CustName };
-      if (!IsCopyCust) this.rowVersionAppCust = CustObj.RowVersion;
+      if (!IsCopyCust){
+        this.rowVersionAppCust = CustObj.RowVersion;
+        this.ParentForm.patchValue({
+          RowVersionAppCust: this.rowVersionAppCust
+        });
+      } 
     }
 
     if (CustCompanyObj != undefined) {
       this.ParentForm.patchValue({
         MrCompanyTypeCode: CustCompanyObj.MrCompanyTypeCode,
       });
-      if (!IsCopyCust) this.rowVersionAppCustCompany = CustCompanyObj.RowVersion;
+      if (!IsCopyCust) {
+        this.rowVersionAppCustCompany = CustCompanyObj.RowVersion;
+        this.ParentForm.patchValue({
+          RowVersionAppCustCompany: this.rowVersionAppCustCompany
+        });
+      }
 
       if (this.inputMode == 'EDIT') {
         this.ParentForm.patchValue({

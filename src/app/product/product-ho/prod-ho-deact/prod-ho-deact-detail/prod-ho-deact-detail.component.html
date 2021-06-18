@@ -4,7 +4,7 @@
       <div class="card-header header-title">
         <div class="row">
           <div class="col-md-8">
-            <h4 class="form-section card-title" translate>Product Deactivate</h4>
+            <h4 class="form-section card-title" translate>Deactivate Product HO</h4>
           </div>
         </div>
       </div>
@@ -41,7 +41,7 @@
                 (ngSubmit)="ProdHDeactForm.valid && SaveForm()" #enjiForm="ngForm">
                 <div class="form-body">
                   <div class="form-group row">
-                    <label class="col-md-3  adInsLabel" translate>Effective Date </label>
+                    <label class="col-md-3  adins-required-label" translate>Effective Date </label>
                     <div class="col-md-3">
                       <input type="date" class="form-control adInsInput" formControlName="EffectiveDate"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && ProdHDeactForm.controls.EffectiveDate.invalid }">
@@ -52,7 +52,7 @@
          
                 </div>
                 <br>
-                <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady" #ApprovalComponent></lib-ucapprovalcreate>
+                <lib-ucapprovalcreate [parentForm]="ProdHDeactForm" [InputObj]="InputObj" *ngIf="IsReady" #ApprovalComponent></lib-ucapprovalcreate>
                 <div class="card">
                   <div class="card-body">
                     <div class="px-3"> 

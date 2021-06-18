@@ -20,16 +20,9 @@ export class LeadMonitoringReviewComponent implements OnInit {
   constructor(private httpClient: HttpClient, private toastr: NGXToastrService, private router: Router) { }
 
   ngOnInit() {
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchReviewUploadLead.json";
     this.inputPagingObj.enviromentUrl = environment.FoundationR3Url;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReviewUploadLead.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "UMH.OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
   }
 
   cancel(ev) {

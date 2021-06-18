@@ -58,7 +58,6 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
 
   async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
 
     this.claimTask();
     this.getAssetAllocationData();

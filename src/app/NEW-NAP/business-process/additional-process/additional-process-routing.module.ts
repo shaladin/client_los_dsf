@@ -31,8 +31,6 @@ import { ReturnHandlingNewEditAppPagingComponent } from './return-handling/retur
 import { AdditionalTcPagingComponent } from './additional-tc/additional-tc-paging/additional-tc-paging.component';
 import { AdditionalTcDetailComponent } from './additional-tc/additional-tc-detail/additional-tc-detail.component';
 import { ReturnHandlingEditCustPagingComponent } from './return-handling/return-handling-edit-cust-paging/return-handling-edit-cust-paging.component';
-import { ReturnHandlingInvoicePagingComponent } from './return-handling/return-handling-invoice-paging/return-handling-invoice-paging.component';
-import { ReturnHandlingInvoiceDetailComponent } from './return-handling/return-handling-invoice-detail/return-handling-invoice-detail.component';
 import { AppCancelPagingComponent } from './app-cancel/paging/app-cancel-paging.component';
 import { AppCancelDetailComponent } from './app-cancel/detail/app-cancel-detail.component';
 import { AppAssetCancelPagingComponent } from './app-asset-cancel/paging/app-asset-cancel-paging.component';
@@ -278,20 +276,6 @@ const routes: Routes = [
         component: ReturnHandlingEditCustPagingComponent,
         data: {
           title: 'Return Handling Edit Customer'
-        }
-      },
-      {
-        path: PathConstant.RETURN_HANDLING_INVOICE_PAGING,
-        component: ReturnHandlingInvoicePagingComponent,
-        data: {
-          title: 'Return Handling Invoice Paging'
-        }
-      },
-      {
-        path: PathConstant.RETURN_HANDLING_INVOICE_DETAIL,
-        component: ReturnHandlingInvoiceDetailComponent,
-        data: {
-          title: 'Return Handling Invoice Detail'
         }
       },
       {

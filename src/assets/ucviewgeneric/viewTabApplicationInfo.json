@@ -1,12 +1,10 @@
 {
   "title": "",
-  "subsection": [
-    {
+  "subsection": [{
       "subSectionId": "SalesInfoId",
       "subSectionTitle": "Sales Information",
       "mainInfoPath": "/Generic/GetDataViewBySQL",
-      "mainInfo": [
-        {
+      "mainInfo": [{
           "type": "text",
           "label": "Sales Officer",
           "property": "SalesOfficer"
@@ -26,24 +24,16 @@
           "label": "Sales Notes",
           "property": "SalesNotes"
         }
-      ],
-      "querystring": {
-        "name": "viewTabApplicationInfo_SalesInfoId"
-      }
+      ]
     },
     {
       "subSectionId": "AppsInfoId",
       "subSectionTitle": "Application Information",
       "mainInfoPath": "/Generic/GetDataViewBySQL",
-      "mainInfo": [
-        {
+      "mainInfo": [{
           "type": "text",
           "label": "Application Source",
           "property": "AppSource"
-        },{
-          "type": "text",
-          "label": "Interest Type",
-          "property": "InterestType"
         },
         {
           "type": "text",
@@ -52,30 +42,18 @@
         },
         {
           "type": "text",
-          "label": "Installment Scheme",
-          "property": "InstScheme"
+          "label": "Tenor",
+          "property": "Tenor"
+        },
+        {
+          "type": "text",
+          "label": "Interest Type",
+          "property": "InterestType"
         },
         {
           "type": "text",
           "label": "Payment Frequency",
           "property": "PayFreq"
-        },{
-          "type": "text",
-          "label": "Way of Payment",
-          "property": "Wop"
-        },{
-          "type": "text",
-          "label": "Num of Installment",
-          "property": "NumOfInst"
-        },{
-          "type": "text",
-          "label": "Customer Notification By",
-          "property": "CustNotifyOpt"
-        },
-        {
-          "type": "text",
-          "label": "Tenor",
-          "property": "Tenor"
         },
         {
           "type": "text",
@@ -83,23 +61,37 @@
           "property": "FloatingPeriod"
         },
         {
+          "type": "text",
+          "label": "Num of Installment",
+          "property": "NumOfInst"
+        },
+        {
+          "type": "text",
+          "label": "Installment Scheme",
+          "property": "InstScheme"
+        },
+        {
+          "type": "text",
+          "label": "Customer Notification By",
+          "property": "CustNotifyOpt"
+        },
+        {
+          "type": "text",
+          "label": "Way of Payment",
+          "property": "Wop"
+        },
+        {
           "type": "link",
           "label": "Mou No",
           "property": "MouCustNo",
           "name": "MouCustNo",
+          "environment": "LOSR3WEB",
           "path": "VIEW_MOU_CUST",
           "target": "_blank",
-          "param": [
-            {
-              "type": "MouCustId",
-              "property": "MouCustId"
-            }
-          ]
-        },
-        {
-          "type": "text",
-          "label": "Customer Bank Account",
-          "property": "CustBankAccount"
+          "param": [{
+            "type": "MouCustId",
+            "property": "MouCustId"
+          }]
         }
       ],
       "querystring": {

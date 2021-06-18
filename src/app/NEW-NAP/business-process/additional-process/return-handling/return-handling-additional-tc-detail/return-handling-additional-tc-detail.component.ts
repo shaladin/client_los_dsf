@@ -386,9 +386,10 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
             appTcObj.IsExpDtMandatory = response["IsExpDtMandatory"];
           }
           this.http.post(URLConstant.AddAppTc, this.ReqTCObj).subscribe(
-            (response: Array<GenericObj>) => {
-              appTcObj.AppTcId = response[0].Id;
-              appTcObj.RowVersion = response[0].RowVersion;
+            (response: any) => {
+              var ResponseObj = response[CommonConstant.ReturnObj];
+              appTcObj.AppTcId = ResponseObj[0].Id;
+              appTcObj.RowVersion = ResponseObj[0].RowVersion;
               fa_apptc.push(this.AddTcControl(appTcObj));
             });
         }

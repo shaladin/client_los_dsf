@@ -386,7 +386,11 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_PAGING], { BizTemplateCode: CommonConstant.CF4W });
+    let url: string = NavigationConstant.NAP_CF4W_PAGING;
+    if(this.ReturnHandlingHId > 0){
+      url = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
+    }
+    AdInsHelper.RedirectUrl(this.router, [url], { BizTemplateCode: CommonConstant.CF4W });
   }
 
   Submit() {

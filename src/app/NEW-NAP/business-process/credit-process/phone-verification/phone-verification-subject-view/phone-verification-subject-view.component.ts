@@ -6,9 +6,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ReqGetVerfResult4Obj, ReqGetVerfResultObj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
-import { AppObj } from 'app/shared/model/App/App.Model';
 import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
+import { AppObj } from 'app/shared/model/App/App.Model';
 
 
 
@@ -22,7 +22,12 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
 
   isViewSubDetail: boolean = false;
   appId: number = 0;
+  verfResultHId: any;
   IsViewReady: boolean = false;
+
+  appObj = {
+    AppId: 0,
+  };
   
   verfResObj: ReqGetVerfResultObj = {
     TrxRefNo: "",
@@ -80,7 +85,7 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
   }
 
   async GetVerfResultHData() {
-    await this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, {Id : this.verfResHObj.VerfResultId}).toPromise().then(
+    await this.http.post<VerfResultHObj>(URLConstant.GetVerfResultHById, {Id : this.verfResultHId}).toPromise().then(
       (response) => {
         this.verifResultHObj = response;
         this.verfResHObj.MrVerfObjectCode = response.MrVerfObjectCode;

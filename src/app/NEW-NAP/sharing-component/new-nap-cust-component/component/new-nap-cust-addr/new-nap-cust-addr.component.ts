@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
@@ -24,11 +23,7 @@ export class NewNapCustAddrComponent implements OnInit {
   IsDetail: boolean = false;
   IsReady: boolean = false;
 
-  constructor(
-    private http: HttpClient,
-    private toastr: NGXToastrService,
-    public formValidate: FormValidateService
-  ) { }
+  constructor(private http: HttpClient, public formValidate: FormValidateService) { }
 
   ngOnInit() {
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppCustAddrNewNap.json";
@@ -36,10 +31,10 @@ export class NewNapCustAddrComponent implements OnInit {
   }
 
   LoadListCustAddress(appCustAddrList: Array<AppCustAddrObj>, isOnInit: boolean){
-    if(this.AppCustId && this.AppCustId > 0 && isOnInit){
+    if(this.AppCustId && this.AppCustId > 0 && isOnInit) {
       this.http.post<Array<AppCustAddrObj>>(URLConstant.GetListAppCustAddrByAppCustId, { Id: this.AppCustId }).subscribe(
         (response) => {
-          this.ListAddress = response;     
+          this.ListAddress = response[CommonConstant.ReturnObj];
           let idxEmergency = this.ListAddress.findIndex(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeEmergency);
           if(idxEmergency != -1) this.ListAddress.splice(idxEmergency, 1)
   
@@ -53,7 +48,7 @@ export class NewNapCustAddrComponent implements OnInit {
         }
       );
     }
-    else{
+    else {
       this.ListAddress = appCustAddrList;     
       let idxEmergency = this.ListAddress.findIndex(x => x.MrCustAddrTypeCode == CommonConstant.AddrTypeEmergency);
       if(idxEmergency != -1) this.ListAddress.splice(idxEmergency, 1)
@@ -91,5 +86,4 @@ export class NewNapCustAddrComponent implements OnInit {
     this.IsReady = false;
     this.LoadListCustAddress(event.ListAddress, false);
   }
-
 }

@@ -22,6 +22,7 @@ import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 import { PhoneNumberObj } from 'app/shared/model/Request/PhoneVerification/PhoneNumberObj.Model';
 import { VerfQuestionAnswerCustomObj } from 'app/shared/model/VerfQuestionAnswer/VerfQuestionAnswerCustom.Model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 
 
@@ -33,7 +34,6 @@ import { VerfQuestionAnswerCustomObj } from 'app/shared/model/VerfQuestionAnswer
 export class PhoneVerificationSubjectVerifComponent implements OnInit {
 
   isReturnHandling: boolean = false;
-
   PhoneDataForm = this.fb.group({
 
     //VerfResultId: ['', Validators.required],
@@ -85,24 +85,14 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
   constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
 
     this.route.queryParams.subscribe(params => {
-      if (params["AppId"] != null) {
-        this.appId = params["AppId"];
+      this.appId = params["AppId"];
+      if(params["VerfResultHId"] != 0){
+      this.verfResultHId = params["VerfResultHId"];
       }
-      if (params["VerfResultHId"] != null) {
-        this.verfResultHId = params["VerfResultHId"];
-      }
-      if (params["Name"] != null) {        
-        this.subjectName = params["Name"];
-      }
-      if (params["Type"] != null) {        
-        this.subjectType = params["Type"];
-      }
-      if (params["Relation"] != null) {        
-        this.subjectRelation = params["Relation"];
-      }
-      if (params["Source"] != null) {        
-        this.idSource = params["Source"];
-      }
+      this.subjectName = params["Name"];
+      this.subjectType = params["Type"];
+      this.subjectRelation = params["Relation"];
+      this.idSource = params["Source"];
       if (params['ReturnHandlingHId'] != null) {
         this.returnHandlingHId = params['ReturnHandlingHId'];
         this.isReturnHandling = true;
@@ -140,31 +130,36 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     }
   }
 
-  SaveForm(formDirective: FormGroupDirective) {
-    var activeButton = document.activeElement.id;
+  AddDetail(formDirective: FormGroupDirective) {
     if (this.isQuestionLoaded == false) {
       this.toastr.warningMessage("Can't process further because questions are not loaded");
     }
     else {
       this.setPhoneVerifData();
       this.http.post(URLConstant.AddVerfResultHeaderAndVerfResultDetail, this.PhoneDataObj).subscribe(
-        (response) => {
+        async (response) => {
           this.toastr.successMessage(response["message"]);
-          if (activeButton == "save") {
-            if (this.isReturnHandling == false) {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT], { AppId: this.appId, WfTaskListId: this.wfTaskListId });
-            }
-            if (this.isReturnHandling == true) {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT], { AppId: this.appId, ReturnHandlingHId: this.returnHandlingHId, WfTaskListId: this.wfTaskListId });
-            }
+          if(this.verfResultHId == 0 || this.verfResultHId == undefined){
+            this.verfResultHId = response["Id"];
           }
-          else {
-            this.GetVerfResultHData();
-            this.GetListVerfResulHtData(this.verfResHObj);
+            await this.GetVerfResultHData();
+            await this.GetListVerfResulHtData(this.verfResHObj);
             formDirective.resetForm();
             this.clearform();
-          }
         });
+    }
+  }
+
+  Save(){
+    if(this.listVerifResultHObj.length < 1){
+      this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_HISTORY);
+    }else{
+      if (this.isReturnHandling == false) {
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT], { AppId: this.appId, WfTaskListId: this.wfTaskListId });
+      }
+      if (this.isReturnHandling == true) {
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT], { AppId: this.appId, ReturnHandlingHId: this.returnHandlingHId, WfTaskListId: this.wfTaskListId });
+      }
     }
   }
 
@@ -359,7 +354,7 @@ export class PhoneVerificationSubjectVerifComponent implements OnInit {
     );
   }
 
-  async GetListVerfResulHtData(verfResHObj: ReqGetVerfResult4Obj) {
+ async GetListVerfResulHtData(verfResHObj: ReqGetVerfResult4Obj) {
     await this.http.post(URLConstant.GetVerfResultHsByVerfResultIdAndObjectCode, verfResHObj).toPromise().then(
       (response) => {
         this.listVerifResultHObj = response["responseVerfResultHCustomObjs"];

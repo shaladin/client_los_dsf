@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { environment } from 'environments/environment';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { HttpClient } from '@angular/common/http';
@@ -42,14 +41,6 @@ export class NapFromMouPagingComponent implements OnInit {
     this.arrCrit = new Array();
     this.inputPagingObj._url = "./assets/ucpaging/searchAppFromMou.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppFromMou.json";
-
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "MC.MR_MOU_TYPE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
-
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
 

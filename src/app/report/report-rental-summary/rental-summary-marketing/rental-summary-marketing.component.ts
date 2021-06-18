@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { InputReportObj } from 'app/shared/model/library/InputReportObj.model';
-import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-rental-summary-marketing',
@@ -12,15 +11,7 @@ export class RentalSummaryMarketingReportComponent implements OnInit {
 
   constructor() { 
     this.inputReportObj.JsonPath = "./assets/ucreport/rental-summary/rental-summary-marketing-report.json";
-    this.inputReportObj.EnvironmentUrl = environment.FoundationR3Url;
-    this.inputReportObj.ApiReportPath = "/Report/GenerateReportSync";    
-    this.inputReportObj.ddlEnvironments = [
-      {
-        name: 'OfficeCode',
-        environment: environment.FoundationR3Url
-      }      
-      
-    ]   
+    this.inputReportObj.ApiReportPath = "/Report/GenerateReportR3";
   }
 
   ngOnInit() {

@@ -20,7 +20,6 @@ import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
   styleUrls: ['./doc-pickup-request-detail.component.scss']
 })
 export class DocPickupRequestDetailComponent implements OnInit {
-
   readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_DOC_PICKUP_REQUEST_PAGING;
 
   AppId: number;
@@ -58,16 +57,17 @@ export class DocPickupRequestDetailComponent implements OnInit {
     Description: ['', Validators.required]
   })
 
-
-
-  constructor(private route: ActivatedRoute, private httpClient: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute,
+    private httpClient: HttpClient,
+    private toastr: NGXToastrService,
+    private fb: FormBuilder,
+    private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.AppId = params["AppId"];
       }
       if (params["AppCustId"] != null) {
         this.AppCustId = params['AppCustId'];
-
       }
     });
   }
@@ -75,10 +75,8 @@ export class DocPickupRequestDetailComponent implements OnInit {
   changeAddress(address) {
     this.DocPickupReqForm.patchValue({
       AddressValue: address['Value']
-    })
+    });
   }
-
-
 
   ngOnInit() {
     this.ddlAddressObj.isSelectOutput = true;
@@ -104,7 +102,6 @@ export class DocPickupRequestDetailComponent implements OnInit {
           MrCustModelCode: response['MrCustModelCode'],
           MrSurveyTypeCode: response['MrSurveyTypeCode']
         });
-
       }
     )
 
@@ -121,7 +118,7 @@ export class DocPickupRequestDetailComponent implements OnInit {
 
     this.httpClient.post(URLConstant.GetListAppCustAddrByAppCustIdForDocPickupRequest, { Id: this.AppCustId }).subscribe(
       (response) => {
-        this.AddressObj = response['ReturnObject'];
+        this.AddressObj = response[CommonConstant.ReturnObj];
         this.isDdlAddressReady = true;
 
         if (this.AddressObj.length == 1) {
@@ -129,19 +126,17 @@ export class DocPickupRequestDetailComponent implements OnInit {
           this.DocPickupReqForm.patchValue({
             Address: this.AddressObj['Value']
           })
-        } else if (this.AddressObj.length == 0) {
+        }
+        else if (this.AddressObj.length == 0) {
           this.isntCustomer = true;
           this.isDdlAddressReady = false;
-
         }
-
-
       }
     )
 
     this.httpClient.post(URLConstant.GetListAppCustAddrByAppCustId, { Id: this.AppCustId }).subscribe(
-      (response: Array<AppCustAddrObj>) => {
-        this.listCustAddr = response;
+      (response) => {
+        this.listCustAddr = response[CommonConstant.ReturnObj];
 
         for (let i = 0; i < this.listCustAddr.length; i++) {
           this.custAddr = new AppCustAddrObj();
@@ -177,7 +172,6 @@ export class DocPickupRequestDetailComponent implements OnInit {
           this.custAddr.StayLength = this.listCustAddr[i].StayLength;
 
           this.appCustAddrListObj.push(this.custAddr);
-
         }
       }
     )
@@ -209,7 +203,6 @@ export class DocPickupRequestDetailComponent implements OnInit {
         this.docPickUpRequestObj.Notes = this.DocPickupReqForm.value.Description;
         this.docPickUpRequestObj.RefNo = this.DocPickupReqForm.value.AppNo;
 
-
         this.docPickUpRequestObj.AppNo = this.DocPickupReqForm.value.AppNo;
         this.docPickUpRequestObj.RequestDate = this.DocPickupReqForm.value.RequestDate;
         this.docPickUpRequestObj.RequestBy = this.DocPickupReqForm.value.RequestById;
@@ -222,9 +215,7 @@ export class DocPickupRequestDetailComponent implements OnInit {
             this.toastr.successMessage(response['message']);
           }
         )
-
       }
     )
   }
-
 }

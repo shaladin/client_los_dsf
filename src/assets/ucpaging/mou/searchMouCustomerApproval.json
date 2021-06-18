@@ -53,7 +53,7 @@
         {
             "type": "datepicker",
             "name": "TL.REQUEST_DATE",
-            "id": "ReqDtFromId",
+            "id": "requestDtGte",
             "value": "",
             "label": "Request Date From",
             "restriction": "gte",
@@ -62,7 +62,7 @@
         {
             "type": "datepicker",
             "name": "TL.REQUEST_DATE",
-            "id": "ReqDtFromId",
+            "id": "requestDtLte",
             "value": "",
             "label": "Request Date To",
             "restriction": "lte",

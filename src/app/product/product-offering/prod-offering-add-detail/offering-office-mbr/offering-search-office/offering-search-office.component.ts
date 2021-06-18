@@ -11,6 +11,9 @@ import { ResGetProdOfferingBranchMbrObj } from 'app/shared/model/Response/Produc
 import { ReqListProdOfferingBranchMbrObj, ReqProdOfferingBranchMbrDomainObj } from 'app/shared/model/Request/Product/ReqAddProdOfferingBranchMbrObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ProdOfficePassingObj } from 'app/product/product-ho/prod-ho-add-detail/ProdOfficePassingObj.model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 @Component({
   selector: 'app-offering-search-office',
   templateUrl: './offering-search-office.component.html'
@@ -29,20 +32,32 @@ export class OfferingSearchOfficeComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService,
+    private cookieService: CookieService
   ) {
   }
 
   ngOnInit() {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.TempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
     this.TempPagingObj.enviromentUrl = environment.FoundationR3Url;
     this.TempPagingObj.pagingJson = "./assets/ucpaging/ucTempPaging/product/productOfficeMbrTempPaging.json";
-    this.TempPagingObj.ddlEnvironments = [
-      {
-        name: "ROA.AREA_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
+    
+    this.TempPagingObj.addCritInput = new Array();
+    
+    if(currentUserContext.OfficeCode != "HO"){
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'RO.PARENT_ID';
+    critObj.value = currentUserContext.OfficeId;
+    this.TempPagingObj.addCritInput.push(critObj);
+
+    critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionOr;
+    critObj.propName = 'RO.REF_OFFICE_ID';
+    critObj.value = currentUserContext.OfficeId;
+    this.TempPagingObj.addCritInput.push(critObj);
+    }
 
     this.GenericByIdObj.Id = this.ProdHId;
     this.http.post<ResGetProdOfferingBranchMbrObj>(URLConstant.GetListProdBranchOfficeMbrByProdHId, this.GenericByIdObj).subscribe(

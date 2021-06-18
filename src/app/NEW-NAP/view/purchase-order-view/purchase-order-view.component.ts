@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
-import { environment } from 'environments/environment';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { ReqGetPurchaseOrderHDetailObj } from 'app/shared/model/Request/PurchaseOrder/ReqPOObj.model';
@@ -36,13 +35,10 @@ export class PurchaseOrderViewComponent implements OnInit {
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridAssetPOView.json";
 
     this.POInfo.viewInput = "./assets/ucviewgeneric/viewPOInfo.json";
-    this.POInfo.viewEnvironment = environment.losUrl;
 
     this.ADFinancialInfo.viewInput = "./assets/ucviewgeneric/viewADFinancialInfo.json";
-    this.ADFinancialInfo.viewEnvironment = environment.losUrl;
 
     this.ARFinancialInfo.viewInput = "./assets/ucviewgeneric/viewARFinancialInfo.json";
-    this.ARFinancialInfo.viewEnvironment = environment.losUrl;
 
     let GetPOObj = new ReqGetPurchaseOrderHDetailObj();
      GetPOObj.AgrmntId = this.AgrmntId;

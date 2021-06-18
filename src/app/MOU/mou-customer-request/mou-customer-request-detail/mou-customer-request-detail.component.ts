@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Location, DatePipe } from '@angular/common';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { environment } from 'environments/environment';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -102,17 +101,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
 
     this.inputLookupCust = new InputLookupObj();
     this.inputLookupCust.urlJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
-    this.inputLookupCust.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupCust.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupCust.pagingJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
     this.inputLookupCust.genericJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
-
-    this.inputLookupCust.ddlEnvironments = [
-      {
-        name: "A.MR_CUST_TYPE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     var refOffice = new RefOfficeObj();
     refOffice.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];

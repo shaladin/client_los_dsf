@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -19,20 +18,6 @@ export class CreditInquiryComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchCreditProcessInquiry.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditProcessInquiry.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "ISNULL(AGR.AGRMNT_LAST_STEP,A.APP_LAST_STEP)",
-        environment: environment.FoundationR3Url
-      },
-      {
-        name: "ISNULL(AGR.AGRMNT_CURR_STEP,A.APP_CURR_STEP)",
-        environment: environment.FoundationR3Url
-      },
-      {
-        name: "A.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
   }
   openView(ev) {
     if (ev.Key == "application") {

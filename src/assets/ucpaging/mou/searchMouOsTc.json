@@ -19,6 +19,7 @@
             "placeholder": "Placeholder",
             "isFromURL": true,
             "ddlType": "all",
+            "environment": "FOU",
             "path": "/RefMaster/GetListKeyValueActiveByCode",
             "label": "Mou Type",
             "items": [],

@@ -9,7 +9,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { environment } from 'environments/environment';
+import { ReqByProdOffCodeAndVersionObj } from 'app/shared/model/Request/Product/ReqByProdOffCodeAndVersionObj.model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-copy-cancelled-application',
@@ -45,24 +46,16 @@ export class CopyCancelledApplicationComponent implements OnInit {
     if(this.BizTemplateCode === CommonConstant.OPL) {
       this.inputPagingObj._url = "./assets/ucpaging/new-nap/business-process/additional-process/copy-cancelled-application/search-cancelled-app-opl.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/new-nap/business-process/additional-process/copy-cancelled-application/search-cancelled-app-opl.json";
-      this.inputPagingObj.ddlEnvironments = [
-        {
-          name: "A.ORI_OFFICE_CODE",
-          environment: environment.FoundationR3Url
-        }
-      ];
     }
     else {
       this.inputPagingObj._url = "./assets/ucpaging/searchCancelledApp.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCancelledApp.json";
     }
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
 
     this.inputPagingObj.addCritInput.push(critObj);
   }
 
-  getEvent(ev) {
+  async getEvent(ev) {
     if(ev.Key == "prodOff") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
@@ -82,6 +75,18 @@ export class CopyCancelledApplicationComponent implements OnInit {
           );
         }
         else {
+          var reqByProdOffCodeAndVersionObj = new ReqByProdOffCodeAndVersionObj();
+          reqByProdOffCodeAndVersionObj.ProdOfferingCode = ev.RowObj.ProdOfferingCode;
+          reqByProdOffCodeAndVersionObj.ProdOfferingVersion = ev.RowObj.ProdOfferingVersion;
+          await this.http.post(URLConstant.GetProdStatByProdOffCodeAndVersion, reqByProdOffCodeAndVersionObj).toPromise().then(
+            (response) => {
+              let ProdStat = response["ProdStat"];
+              let ProdStatDescr = response["ProdStatDescr"];
+              if(ProdStat != "ACT"){
+              this.toastr.warningMessage(ExceptionConstant.PRODUCT_HAS + ProdStatDescr);
+              }
+            }
+          );
           var url = this.IsNapVersionMainData ? URLConstant.CopyCancelledAppForMainData : URLConstant.CopyCancelledApp;
           this.http.post(url, { AppId: ev.RowObj.AppId }).subscribe(
             response => {

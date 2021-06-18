@@ -217,7 +217,7 @@ export class ReservedFundComponent implements OnInit {
   GetAppRsvFundRule(appObj) {
     this.http.post(URLConstant.CreateRsvFundRule, appObj).subscribe(
       (response) => {
-        this.ruleObj = response;
+        this.ruleObj = response[CommonConstant.ReturnObj];
         this.appReservedFundObjs = new Array<AppReservedFundObj>();
         for (let i = 0; i < this.ruleObj.length; i++) {
           var appReservedFundObj = new AppReservedFundObj();

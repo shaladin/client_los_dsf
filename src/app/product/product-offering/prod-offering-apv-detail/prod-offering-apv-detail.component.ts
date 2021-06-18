@@ -71,13 +71,12 @@ export class ProdOfferingApvDetailComponent implements OnInit {
  
   onApprovalSubmited(event)
   {
-    this.ReqUpdateProdOffPostApvObj.ProdOfferingHId = this.ProdOfferingHId;
-    this.ReqUpdateProdOffPostApvObj.TaskId = event[0].TaskId;
-    this.ReqUpdateProdOffPostApvObj.Notes = event[0].Notes;
-    this.ReqUpdateProdOffPostApvObj.Reason = event[0].Reason;
-    this.ReqUpdateProdOffPostApvObj.Result = event[0].ApvResult;
+    let reqProdHoApvCustomObj = {
+      Id: this.ProdOfferingHId,
+      Tasks: event.Tasks
+    }
 
-    this.http.post(URLConstant.UpdateProdOfferingPostApv, this.ReqUpdateProdOffPostApvObj).subscribe(
+    this.http.post(URLConstant.ProdOfferingApproval, reqProdHoApvCustomObj).subscribe(
       () => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.PRODUCT_OFFERING_APPRV],{ });
       }

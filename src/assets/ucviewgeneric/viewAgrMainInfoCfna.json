@@ -11,6 +11,7 @@
           "label": "Application No",
           "property": "AppNo",
           "name": "AppNo",
+          "environment": "LOSR3WEB",
           "path": "/View/AppView",
           "target": "_blank",
           "param": [
@@ -23,7 +24,7 @@
         {
           "type": "text",
           "label": "Number of Collateral",
-          "property": "NumOfAsset"
+          "property": "NumOfColl"
         },
         {
           "type": "callback",
@@ -72,8 +73,9 @@
         }
       ],
       "querystring": {
-        "name": "viewAgrMainInfoCFNA"
+        "name": "viewAgrMainInfo"
       }
     }
   ]
 }
+

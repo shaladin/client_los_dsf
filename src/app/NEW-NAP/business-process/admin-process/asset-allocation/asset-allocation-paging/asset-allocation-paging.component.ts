@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
+import { UcPagingObj, WorkflowReqObj } from 'app/shared/model/UcPagingObj.Model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { environment } from 'environments/environment';
+import { URLConstant } from 'app/shared/constant/URLConstant';
+import { IntegrationObj } from 'app/shared/model/library/IntegrationObj.model';
 
 @Component({
   selector: 'app-asset-allocation-paging',
@@ -14,6 +16,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 export class AssetAllocationPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   bizTemplateCode: string;
+  wfReqObj: WorkflowReqObj = new WorkflowReqObj();
+  integrationObj: IntegrationObj = new IntegrationObj();
+
   constructor(private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
       if (params["BizTemplateCode"] != null) {
@@ -28,32 +33,22 @@ export class AssetAllocationPagingComponent implements OnInit {
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchAssetAllocation.json";
+    this.inputPagingObj.enviromentUrl = environment.losUrl;
+    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAssetAllocation.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "A.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
-    this.inputPagingObj.addCritInput = new Array();
+    this.inputPagingObj.isJoinExAPI = true;
 
-    var critObj = new CriteriaObj();
-    critObj.restriction = AdInsConstant.RestrictionEq;
-    critObj.propName = 'WTL.ACT_CODE';
-    critObj.value = "AST_ALO_" + this.bizTemplateCode;
-
-    this.inputPagingObj.addCritInput.push(critObj);
-
-    var critBizTemplate = new CriteriaObj();
-    critBizTemplate.restriction = AdInsConstant.RestrictionEq;
-    critBizTemplate.propName = 'A.BIZ_TEMPLATE_CODE';
-    critBizTemplate.value = this.bizTemplateCode;
-
-    this.inputPagingObj.addCritInput.push(critBizTemplate);
+    this.wfReqObj.ActCode = CommonConstant.ACT_CODE_AST_ALO + this.bizTemplateCode;
+    this.integrationObj.baseUrl = environment.WfR3Url;
+    this.integrationObj.apiPath = URLConstant.GetListOSWfTaskListByActCode;
+    this.integrationObj.requestObj = this.wfReqObj;
+    this.integrationObj.leftColumnToJoin = "AppNo";
+    this.integrationObj.rightColumnToJoin = "TransactionCode";
+    this.integrationObj.joinType = CommonConstant.JOIN_TYPE_INNER;
+    this.inputPagingObj.integrationObj = this.integrationObj;
   }
 
-
-  GetCallBack(ev) {
+  GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }

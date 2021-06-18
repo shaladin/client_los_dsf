@@ -41,9 +41,9 @@ export class InvoiceDataComponent implements OnInit {
   DisburseTo: any;
   CustNo: any;
 
-  constructor(private httpClient: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
-
-  }
+  constructor(private httpClient: HttpClient,
+    private toastr: NGXToastrService,
+    private fb: FormBuilder) { }
 
   InvoiceForm = this.fb.group({
     AppFctrId: [''],
@@ -90,13 +90,16 @@ export class InvoiceDataComponent implements OnInit {
       (response) => {
         this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { Id: response["MouCustId"] }).subscribe(
           (response2) => {
-            if (response2["length"] > 0) {
+            if (response2[CommonConstant.ReturnObj]["length"] > 0) {
               this.IsDisableCustFctr = false;
-            } else {
+            }
+            else {
               this.IsDisableCustFctr = true;
             }
-          });
-      });
+          }
+        );
+      }
+    );
 
     var obj = {
       Id: this.AppId,
@@ -164,7 +167,8 @@ export class InvoiceDataComponent implements OnInit {
     this.httpClient.post(URLConstant.GetListAppInvoiceFctrByAppFctrId, obj).subscribe(
       (response) => {
         this.dataobj = response['ReturnObject'];
-      });
+      }
+    );
   }
   ChangeDisburseTo(event) {
     console.log("event" + event.target.value);
@@ -403,7 +407,8 @@ export class InvoiceDataComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.GetListAppInvoiceFctr();
-        });
+        }
+      );
     }
   }
 

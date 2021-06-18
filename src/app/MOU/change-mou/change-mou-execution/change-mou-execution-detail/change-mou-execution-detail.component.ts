@@ -99,7 +99,7 @@ export class ChangeMouExecutionDetailComponent implements OnInit {
     this.router.navigate([NavigationConstant.CHANGE_MOU_EXEC_PAGING]);
   }
   GetCallBack(ev: any) {
-   if (ev.Key == "ViewCust") {
+   if (ev.Key == "customer") {
       
         AdInsHelper.OpenMOUCustViewByMouCustId(ev.ViewObj.MouCustId);
     }

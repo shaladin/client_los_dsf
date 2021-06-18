@@ -39,7 +39,6 @@ export class AppAssetCancelDetailComponent implements OnInit {
   ngOnInit() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/opl/view-asset-opl-main-info.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     var refReasonObj: ReqGetByTypeCodeObj = {
       RefReasonTypeCode: CommonConstant.RefReasonTypeCodeAppAgrCncl
     }

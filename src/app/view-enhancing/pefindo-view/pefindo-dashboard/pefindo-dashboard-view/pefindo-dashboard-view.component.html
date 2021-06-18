@@ -1,0 +1,156 @@
+<div class="col-md-10">
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Inquiry Last 12 Month</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Dashboard?.Inquiries?.InquiriesForLast12Months}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Total Facility Amount (Open Contract)</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.ContractOverview?.TotalFacilityAmount | number:'.2':'en-US'}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Number of Collateral</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Dashboard?.Collaterals.NumberOfCollaterals}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Total Outstanding Amount (Open Contract)</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.ContractOverview?.TotalOutstandingAmount | number:'.2':'en-US'}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Fraud Alerts</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Dashboard?.CIQ?.FraudAlerts}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Total Collateral Amount</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Dashboard?.Collaterals?.TotalNonCashCollateralValue?.Value | number:'.2':'en-US'}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Fraud Alerts Third Party</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Dashboard?.CIQ?.FraudAlertsThirdParty}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Total Past Due Sum Amount</label>
+        </div>
+        <div class="col-md-6">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Active Contract Disputes</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Dashboard?.Disputes?.ActiveContractDisputes}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Max No. of Due Days (Current)</label>
+        </div>
+        <div class="col-md-6">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Subscriber Last 12 Month</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Dashboard?.Inquiries?.SubscribersInLast12Months}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Worst Past Due Amount</label>
+        </div>
+        <div class="col-md-6">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Number of Different Subscriber</label>
+        </div>
+        <div class="col-md-6">
+          {{PefindoData?.Dashboard?.PaymentsProfile?.NumberOfDifferentSubscribers}}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="form-group row">
+        <div class="col-md-6">
+          <label translate>Worst No. of Due Days</label>
+        </div>
+        <div class="col-md-6">
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

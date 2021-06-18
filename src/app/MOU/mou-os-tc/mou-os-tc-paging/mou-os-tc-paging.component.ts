@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
-import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
@@ -29,14 +28,6 @@ export class MouOsTcPagingComponent implements OnInit {
 
     this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouOsTc.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouOsTc.json";
-
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "MOU.MR_MOU_TYPE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
-
   }
 
   getEvent(event) {

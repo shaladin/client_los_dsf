@@ -18,6 +18,8 @@ import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/l
 import { ReqAddNapFromCopyObj, ReqAddNapObj } from 'app/shared/model/Request/NAP/NewApplication/ReqAddNapObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { ReqByProdOffCodeAndVersionObj } from 'app/shared/model/Request/Product/ReqByProdOffCodeAndVersionObj.model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'cust-main-data-add',
@@ -183,6 +185,18 @@ export class CustMainDataAddComponent implements OnInit {
   }
 
   getLookupAppResponseCopy(ev: any) {
+    var reqByProdOffCodeAndVersionObj = new ReqByProdOffCodeAndVersionObj();
+    reqByProdOffCodeAndVersionObj.ProdOfferingCode = ev.ProdOfferingCode;
+    reqByProdOffCodeAndVersionObj.ProdOfferingVersion = ev.ProdOfferingVersion;
+    this.http.post(URLConstant.GetProdStatByProdOffCodeAndVersion, reqByProdOffCodeAndVersionObj).subscribe(
+      (response) => {
+        let ProdStat = response["ProdStat"];
+        let ProdStatDescr = response["ProdStatDescr"];
+        if(ProdStat != "ACT"){
+          this.toastr.warningMessage(ExceptionConstant.PRODUCT_HAS + ProdStatDescr);
+        }
+      }
+    );
     this.NapAppForm.patchValue({
       AppNo: ev.AppNo,
       ProdOfferingName: ev.ProdOfferingName,

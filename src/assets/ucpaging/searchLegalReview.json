@@ -21,6 +21,7 @@
       "isFromURL": true,
       "ddlType": "all",
       "url": "",
+      "environment": "LOS",
       "path":"/MouCust/GetListKeyValueMouType",
       "label": "Mou Type",
       "items": [],

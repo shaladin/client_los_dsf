@@ -6,7 +6,6 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ActivatedRoute } from '@angular/router';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { environment } from 'environments/environment';
 import { formatDate, KeyValue } from '@angular/common';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { InputFieldObj } from 'app/shared/model/InputFieldObj.Model';
@@ -38,6 +37,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { LeadCustObj } from 'app/shared/model/Request/LEAD/LeadCustObj.model';
 import { CustObj } from 'app/shared/model/CustObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-cust-main-data',
@@ -290,18 +290,10 @@ export class CustMainDataComponent implements OnInit {
     this.InputLookupCustCoyObj.nameSelect = "";
 
     this.InputLookupCustGrpObj.urlJson = "./assets/uclookup/lookupCustGrp.json";
-    this.InputLookupCustGrpObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.InputLookupCustGrpObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCustGrpObj.pagingJson = "./assets/uclookup/lookupCustGrp.json";
     this.InputLookupCustGrpObj.genericJson = "./assets/uclookup/lookupCustGrp.json";
     this.InputLookupCustGrpObj.isRequired = false;
     this.InputLookupCustGrpObj.nameSelect = "";
-    this.InputLookupCustGrpObj.ddlEnvironments = [
-      {
-        name: "C.MR_CUST_TYPE_CODE",
-        environment: environment.FoundationR3Url
-      },
-    ];
 
     this.ArrAddCrit = new Array<CriteriaObj>();
     let critObj = new CriteriaObj();
@@ -611,11 +603,19 @@ export class CustMainDataComponent implements OnInit {
 
   ChangeIdType(IdType: string) {
     this.CustMainDataForm.controls.IdExpiredDt.patchValue("");
+    this.CustMainDataForm.controls.IdNo.patchValue("");
 
     if (IdType == "KITAS" || IdType == "SIM") {
       this.CustMainDataForm.controls.IdExpiredDt.setValidators([Validators.required]);
     } else {
       this.CustMainDataForm.controls.IdExpiredDt.clearValidators();
+    }
+
+    if (IdType == "NPWP"){
+      this.CustMainDataForm.controls.IdNo.setValidators([Validators.minLength(15), Validators.maxLength(15), Validators.required, Validators.pattern("^[0-9]+$")]);
+    } else {
+      this.CustMainDataForm.controls.IdNo.clearValidators();
+      this.CustMainDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
     }
 
     this.CustMainDataForm.controls.IdExpiredDt.updateValueAndValidity();

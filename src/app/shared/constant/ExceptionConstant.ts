@@ -92,9 +92,10 @@ export class ExceptionConstant {
     public static MAX_DATA = "Maximum {50} Data";
     public static INPUT_SPOUSE_CONTACT_INFO = "Please Input Spouse in Contact Information";
     public static INCORRECT_PASSWORD = "Password Mismatch";
-    public static PLEASE_COMPLETE_MANDATORY_INPUT = "Please Complete Mandatory Input"; 
     public static ASSET_DATA_NOT_COMPLETE = "Asset data not completed, Please complete asset data first";
     public static UNIT_CANT_BE_ZERO = "Unit cannot be 0.";
+    public static PLEASE_COMPLETE_MANDATORY_INPUT = "Please Complete Mandatory Input";
+    public static INPUT_MIN_1_HISTORY = "Please Input At Least 1 History"; 
 
     public static CANT_HAVE_THE_SAME_CUST_MEMBER = " cannot have the same customer group member as No ";
     public static CANT_HAVE_THE_SAME_RELATIONSHIP_AS_OTHER_CUST_MEMBER = " cannot have the same relationship as customer group member No ";
@@ -106,6 +107,7 @@ export class ExceptionConstant {
     public static MUST_INPUT_ACTIVE_SIGNER = "At Least 1 Active Signer is Required";
     public static TOTAL_SHARE_MUST_100 = "Total Share % must be 100%";
     public static CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP = "This Customer already self customer for this NAP";
+    public static SUPPLIER_BANK_ACC_NOT_SET = "Please input a valid Bank Account Data for this supplier";
 
     public static GS_CODE_NOT_FOUND = "General Setting {0} not found.";
     
@@ -159,5 +161,9 @@ export class ExceptionConstant {
     public static START_DATE_CANNOT_LESS_THAN = "Start Date can not be lses than ";
     public static END_DATE_CANNOT_LESS_THAN = "End Date can not be less than ";
     public static MOU_DATE_CANNOT_LESS_THAN = "MOU Date can not be less than ";
+    public static PRODUCT_HAS = "This Product has ";
+    public static MOU_DT_MUST_GREATER_THAN_BUSINESS_DT = "MOU Date Must be Greater than Equal D - 1 Business Date";
+    public static START_DT_MUST_GREATER_THAN_EQUAL_BUSINESS_DT = "Start Date Must be Greater than Equal Business Date";
+    
 }
 

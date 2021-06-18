@@ -235,26 +235,26 @@ export class CommissionV2Component implements OnInit {
     let obj: ReqGetAppCommissionRuleObj = { AppId: this.AppId, BizTemplateCode: this.BizTemplateCode };
     await this.http.post(URLConstant.GetAppCommissionRule, obj).toPromise().then(
       (response) => {
+        var ResponseObj = response[CommonConstant.ReturnObj];
         // override hide suppl & suppl emp jika CFRFN4W ignore rule
         if(this.BizTemplateCode == CommonConstant.CFRFN4W)
         {
-          response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier = null;
-          response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp = null;
+          ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier = null;
+          ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp = null;
           this.HideForm1 = true;
           this.HideForm2 = true;
         }
-        if (response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier != null || response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp) { // For CFNA
-          for (var i = 0; i < response["length"]; i++) {
-            var temp: RuleCommissionObj = response[i][CommonConstant.ReturnObj].RuleDataObjects;
+        if (ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplier != null || ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultSupplierEmp) { // For CFNA
+          for (var i = 0; i < ResponseObj["length"]; i++) {
+            var temp: RuleCommissionObj = ResponseObj[i][CommonConstant.ReturnObj].RuleDataObjects;
             this.BindRuleData(temp.ResultSupplier, CommonConstant.ContentSupplier, this.ContentObjSupplier[i].Key);
             this.BindRuleData(temp.ResultSupplierEmp, CommonConstant.ContentSupplierEmp, this.ContentObjSupplier[i].Key);
           }
         }
-        if (response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor != null)
-          this.BindRuleData(response[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor, CommonConstant.ContentReferantor, this.ContentObjReferantor[0].Key);
-
-
-      });
+        if (ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor != null)
+          this.BindRuleData(ResponseObj[0][CommonConstant.ReturnObj].RuleDataObjects.ResultReferantor, CommonConstant.ContentReferantor, this.ContentObjReferantor[0].Key);
+      }
+    );
   }
 
   BindRuleData(tempObj: any, contentType: string, supplCode: string) {

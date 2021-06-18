@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
@@ -42,18 +41,6 @@ export class Nap1FromLeadPagingComponent implements OnInit {
     this.makeCriteria();
     this.inputPagingObj._url = "./assets/ucpaging/searchAppFromLead.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppFromLead.json";
-
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "RO.OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      },
-      {
-        name: "L.MR_LEAD_SOURCE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
-
     this.inputPagingObj.addCritInput = this.arrCrit;
   }
 

@@ -29,12 +29,6 @@ export class AppCancelPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchAppCancel.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAppCancel.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "A.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
     this.inputPagingObj.addCritInput = new Array();
     var actCrit = new Array();
     actCrit.push("NAPD_MD_" + this.bizTemplateCode);

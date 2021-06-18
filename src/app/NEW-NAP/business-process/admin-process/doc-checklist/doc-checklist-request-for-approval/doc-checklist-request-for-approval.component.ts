@@ -3,7 +3,6 @@ import { FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -48,7 +47,6 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
 
   async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
     await this.LoadRefReason();
     await this.GetAppData();
   }
@@ -123,7 +121,7 @@ export class DocChecklistRequestForApprovalComponent implements OnInit {
       "Attributes": Attributes,
     };
     this.InputObj.ApvTypecodes = [TypeCode];
-    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_DOC_CHCLIST_APV;
+    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_DOC_CHCKLIST_APV;
     this.InputObj.SchemeCode = schemeCode;
     this.InputObj.Reason = this.itemReason;
     this.InputObj.TrxNo = this.AppNo;

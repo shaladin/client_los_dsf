@@ -289,7 +289,7 @@
                   <div class="form-group row">
                     <label class="col-md-4" for="SelfUsage" translate>Self Usage</label>
                     <div class="col-md-8">
-                      <mat-checkbox formControlName="SelfUsage" [disabled]="true" (change)="CopyUserForSelfUsage()">
+                      <mat-checkbox formControlName="SelfUsage" [disabled]="bizTemplateCode == 'CFRFN4W' ? false : true" (change)="CopyUserForSelfUsage()">
                       </mat-checkbox>
                     </div>
                   </div>
@@ -329,7 +329,7 @@
                   <div class="form-group row">
                     <label class="col-md-4" for="SelfOwner" translate>Self Owner</label>
                     <div class="col-md-8">
-                      <mat-checkbox formControlName="SelfOwner" [disabled]="true" (change)="CopyUserForSelfOwner()">
+                      <mat-checkbox formControlName="SelfOwner" [disabled]="bizTemplateCode == 'CFRFN4W' ? false : true" (change)="CopyUserForSelfOwner()">
                       </mat-checkbox>
                     </div>
                   </div>
@@ -359,7 +359,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4 adins-required-label" translate>Owner Mobile Phone No</label>
+                    <label class="col-md-4" [ngClass]="{'adins-required-label' : AppCustData.MrCustTypeCode == 'PERSONAL' }"translate>Owner Mobile Phone No</label>
                     <div class="col-md-8">
                       <input type="text" class="form-control" formControlName="OwnerMobilePhnNo"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerMobilePhnNo.invalid }">
@@ -412,7 +412,7 @@
                     </select>
                     <div class="input-group-append">
                       <span class="input-group-btn">
-                        <button class="btn btn-raised btn-primary" type="button" disabled translate>
+                        <button class="btn btn-raised btn-primary" type="button" (click)="copyToLocation()" translate>
                           <i class="fa fa-check-square-o"></i>Copy
                         </button>
                       </span>

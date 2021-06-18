@@ -11,6 +11,7 @@
           "label": "Lead No.",
           "property": "LeadNo",
           "name": "LeadNo",
+          "environment": "LOSR3WEB",
           "path": "VIEW_LEAD",
           "target" : "_blank",
           "param": [

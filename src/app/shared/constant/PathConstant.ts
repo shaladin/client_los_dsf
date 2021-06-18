@@ -180,9 +180,6 @@ export class PathConstant {
     public static ADD_TC = "addtc";
     public static ADD_TC_PAGING = PathConstant.ADD_TC + "/" + PathConstant.PAGING_LOWERCASE;
     public static ADD_TC_DETAIL = PathConstant.ADD_TC + "/" + PathConstant.DETAIL_LOWERCASE;
-    public static RETURN_HANDLING_INVOICE = "Invoice";
-    public static RETURN_HANDLING_INVOICE_PAGING = PathConstant.RETURN_HANDLING + "/" + PathConstant.RETURN_HANDLING_INVOICE + "/" + PathConstant.PAGING;
-    public static RETURN_HANDLING_INVOICE_DETAIL = PathConstant.RETURN_HANDLING + "/" + PathConstant.RETURN_HANDLING_INVOICE + "/" + PathConstant.DETAIL;
     public static APP_CAN = "AppCancel";
     public static APP_CAN_PAGING = PathConstant.APP_CAN + "/" + PathConstant.PAGING;
     public static APP_CAN_DETAIL = PathConstant.APP_CAN + "/" + PathConstant.DETAIL;
@@ -203,6 +200,8 @@ export class PathConstant {
     public static COPY_CANCEL_APP_CROSS_BL = "CopyCancelledApplicationCrossBl";
     public static COPY_CANCEL_APP_CROSS_BL_DETAIL = PathConstant.COPY_CANCEL_APP_CROSS_BL + "/" + PathConstant.DETAIL;
 
+    public static RETURN_HANDLING_NAP2_PAGING = PathConstant.RETURN_HANDLING + "/" + PathConstant.NAP2;
+    public static RETURN_HANDLING_NAP4_PAGING = PathConstant.RETURN_HANDLING + "/" + PathConstant.NAP4;
     //#endregion
 
     //#region Nap-Admin-Prcs
@@ -497,6 +496,7 @@ export class PathConstant {
     public static CONTENT_PAGE_SELF_VERIF = "SelfVerification";
     public static CONTENT_PAGE_REQ_PASSWORD = "RequestPassword";
     public static CONTENT_PAGE_RESET_PASSWORD = "ResetPassword/:code";
+    public static CONTENT_PAGE_CHANGE_PASSWORD = "ChangePassword";
     //#endregion
 
     //#region Dashboard-Module
@@ -523,6 +523,7 @@ export class PathConstant {
     public static VIEW_PURCHASE_TRACKING = "PurchaseTracking";
     public static VIEW_APP_ASSET = "AppAsset";
     public static VIEW_APP_LIST = "AppList";
+    public static VIEW_PEFINDO = "Pefindo";
     //#endregion
 
     //#region FOU-View-Module
@@ -570,4 +571,8 @@ public static REQUISITION_DECISION = "requisitiondecision";
     public static HO_REVIEW_DETAIL = PathConstant.HO_REVIEW + "/" + PathConstant.DETAIL;
     public static OFFERING_REVIEW = "OfferingReview";
     public static OFFERING_REVIEW_DETAIL = PathConstant.OFFERING_REVIEW + "/" + PathConstant.DETAIL;
+
+    //#region PEFINDO
+    public static PEFINDO_VIEW = "PefindoView";
+    //#endregion
 }

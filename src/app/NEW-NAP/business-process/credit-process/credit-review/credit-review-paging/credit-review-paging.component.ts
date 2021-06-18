@@ -32,17 +32,7 @@ export class CreditReviewPagingComponent implements OnInit {
     else {
       this.inputPagingObj._url = "./assets/ucpaging/searchCreditReview.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCreditReview.json";
-    }   
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = URLConstant.GetPagingObjectBySQL;
-    
-
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "a.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
+    }
 
     var arrCrit = new Array();
     var critObj = new CriteriaObj();

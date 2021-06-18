@@ -12,6 +12,7 @@
       "isFromURL": true,
       "ddlType": "all",
       "url": "",
+      "environment": "FOU",
       "path":"/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office Name",
       "isQueryIn": true,
@@ -28,6 +29,7 @@
       "isFromURL": true,
       "ddlType": "all",
       "url": "",
+      "environment": "FOU",
       "path":"/RefMaster/GetListKeyValueActiveByCode",
       "label": "Lead Source",
       "criteriaPropName": "RefMasterTypeCode",
@@ -142,7 +144,7 @@
       "type": "sort",
       "position": "left",
       "label": "LEAD SOURCE",
-      "name": "RM.DESCR"
+      "name": "L.MR_LEAD_SOURCE_CODE"
     },
     {
       "type": "sort",
@@ -201,7 +203,7 @@
     {
       "type": "text",
       "position": "left",
-      "property": "LeadSource"
+      "property": "MrLeadSourceCode"
     },
     {
       "type": "text",

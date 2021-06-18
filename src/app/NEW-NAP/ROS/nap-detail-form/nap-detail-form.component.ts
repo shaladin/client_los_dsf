@@ -7,7 +7,6 @@ import { FormBuilder } from '@angular/forms';
 import Stepper from 'bs-stepper';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
-import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -21,6 +20,7 @@ import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -74,6 +74,7 @@ export class NapDetailFormComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
+    private spinner: NgxSpinnerService,
     private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -90,54 +91,38 @@ export class NapDetailFormComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    console.log("TEST");
+  async ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 1;
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapDetailMainData.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "MouCustNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
 
     // this.ChangeStepper();
+
+    await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
+      async (response: AppObj) => {
+        if (response) {
+          this.NapObj = response;
+          if (this.NapObj.MrCustTypeCode != null)
+            this.custType = this.NapObj.MrCustTypeCode;
+          this.bizTemplateCode = this.NapObj.BizTemplateCode;
+        }
+      });
 
     if (this.ReturnHandlingHId > 0) {
       this.ChangeStepper();
       this.ChooseStep(this.AppStepIndex);
     }
     else {
-      var appObj = { Id: this.appId };
-      this.http.post(URLConstant.GetAppById, appObj).subscribe(
-        (response: AppObj) => {
-          if (response) {
-            this.NapObj = response;
-            if (this.NapObj.MrCustTypeCode != null)
-              this.custType = this.NapObj.MrCustTypeCode;
-            if(response.AppCurrStep == CommonConstant.AppStepUplDoc){
-              this.initDms();
-            }
-            this.ChangeStepper();
-            this.bizTemplateCode = this.NapObj.BizTemplateCode;
-            this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
-            this.ChooseStep(this.AppStepIndex);
-            this.isReady = true;
-          }
-        });
+      if (this.NapObj.AppCurrStep == CommonConstant.AppStepUplDoc) {
+        await this.initDms();
+      }
+      this.ChangeStepper();
+      this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
+      this.ChooseStep(this.AppStepIndex);
     }
+    this.isReady = true;
     this.MakeViewReturnInfoObj();
   }
 
@@ -328,6 +313,8 @@ export class NapDetailFormComponent implements OnInit {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) => {
+        this.spinner.show();
+        setTimeout(() => { this.spinner.hide(); }, 1500);
       }
     )
   }

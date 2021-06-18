@@ -44,7 +44,6 @@ export class AppCancelDetailComponent implements OnInit {
   ngOnInit() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
 
     var refReasonObj: ReqGetByTypeCodeObj = {
       RefReasonTypeCode: CommonConstant.RefReasonTypeCodeAppAgrCncl

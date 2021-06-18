@@ -1,59 +1,55 @@
 {
-  "subsection": [
-    {
-      "subSectionId": "MouRequestId",
-      "subSectionTitle": "Mou Main Info",
-      "mainInfoPath": "/Generic/GetDataViewBySQL",
-      "mainInfo": [
-        {
-          "type": "link",
-          "label": "Mou No",
-          "property": "MouCustNo",
-          "name": "MouCustNo",
-          "path": "VIEW_MOU_CUST",
-          "target": "_blank",
-          "param": [
-            {
-              "type": "MouCustId",
-              "property": "MouCustId"
-            }
-          ]
-        },
-        {
-          "type": "callback",
-          "key": "ViewCust",
-          "label": "Customer Name",
-          "property": "CustName"
-        },
-        {
-          "type": "date",
-          "label": "Start Date",
-          "property": "StartDt"
-        },
-        {
-          "type": "date",
-          "label": "Expired Date",
-          "property": "EndDt"
-        },
-        {
-          "type": "text",
-          "label": "Status",
-          "property": "MouStat"
-        },
-        {
-          "type": "text",
-          "label": "Ref No",
-          "property": "RefNo"
-        },
-        {
-          "type": "currency",
-          "label": "Plafond Amount",
-          "property": "PlafondAmt"
-        }
-      ],
-      "querystring": {
-        "name": "viewMouRequest"
+  "subsection": [{
+    "subSectionId": "MouRequestId",
+    "subSectionTitle": "Mou Main Info",
+    "mainInfoPath": "/Generic/GetDataViewBySQL",
+    "mainInfo": [{
+        "type": "link",
+        "label": "Mou No",
+        "property": "MouCustNo",
+        "name": "MouCustNo",
+        "environment": "LOSR3WEB",
+        "path": "VIEW_MOU_CUST",
+        "target": "_blank",
+        "param": [{
+          "type": "MouCustId",
+          "property": "MouCustId"
+        }]
+      },
+      {
+        "type": "callback",
+        "key": "customer",
+        "label": "Customer Name",
+        "property": "CustName"
+      },
+      {
+        "type": "date",
+        "label": "Start Date",
+        "property": "StartDt"
+      },
+      {
+        "type": "date",
+        "label": "Expired Date",
+        "property": "EndDt"
+      },
+      {
+        "type": "text",
+        "label": "Status",
+        "property": "MouStat"
+      },
+      {
+        "type": "text",
+        "label": "Ref No",
+        "property": "RefNo"
+      },
+      {
+        "type": "currency",
+        "label": "Plafond Amount",
+        "property": "PlafondAmt"
       }
+    ],
+    "querystring": {
+      "name": "viewMouRequest"
     }
-  ]
+  }]
 }

@@ -10,7 +10,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandlingDObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { environment } from 'environments/environment';
 import { FormBuilder } from '@angular/forms';
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
@@ -64,13 +63,6 @@ export class CustCompletionDetailComponent implements OnInit {
   ngOnInit() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustCompletionData.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      }
-    ];
 
     this.inputGridObj = new InputGridObj();
     if (this.ReturnHandlingHId != 0) {
@@ -111,7 +103,7 @@ export class CustCompletionDetailComponent implements OnInit {
           Data: ""
         }
         this.inputGridObj.resultData["Data"] = new Array();
-        this.inputGridObj.resultData.Data = response;
+        this.inputGridObj.resultData.Data = response[CommonConstant.ReturnObj];
         this.listCustCompletion = this.inputGridObj.resultData.Data;
       }
     );
@@ -124,7 +116,11 @@ export class CustCompletionDetailComponent implements OnInit {
   }
 
   buttonBackOnClick() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CUST_COMPL_PAGING], { BizTemplateCode: this.BizTemplateCode });
+    let url: string = NavigationConstant.NAP_CUST_COMPL_PAGING
+    if(this.ReturnHandlingHId > 0){
+      url = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING;
+    }
+    AdInsHelper.RedirectUrl(this.router, [url], { BizTemplateCode: this.BizTemplateCode });
   }
 
   buttonSubmitOnClick() {

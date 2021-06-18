@@ -3,7 +3,6 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { UcpagingComponent } from '@adins/ucpaging';
 import { HttpClient } from '@angular/common/http';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { Router } from '@angular/router';
@@ -31,18 +30,8 @@ export class EditMouCustomerComponent implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchEditMouCustomer.json";
-    this.inputPagingObj.enviromentUrl = environment.losUrl;
-    this.inputPagingObj.apiQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputPagingObj.deleteUrl = "";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchEditMouCustomer.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "MOU.MR_MOU_TYPE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
     this.arrCrit = new Array<CriteriaObj>();
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionEq;

@@ -6,7 +6,6 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
-import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-return-handling-new-edit-app-paging',
@@ -29,12 +28,6 @@ export class ReturnHandlingNewEditAppPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchReturnHandlingNAP2.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReturnHandlingNAP2.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "a.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
     this.inputPagingObj.addCritInput = this.ActAndOfficeCriteria();
   }
 
@@ -63,6 +56,9 @@ export class ReturnHandlingNewEditAppPagingComponent implements OnInit {
       }
       if (this.BizTemplateCode == CommonConstant.CFNA) {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP2], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
+      }
+      if (this.BizTemplateCode == CommonConstant.FCTR) {
+        AdInsHelper.RedirectUrl(this.router, ["Nap/Factoring/NAP2"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "ReturnHandlingHId": ev.RowObj.ReturnHandlingHId });
       }
     }
     if (ev.Key == "ViewProdOffering") {

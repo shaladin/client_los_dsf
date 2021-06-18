@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'environments/environment';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ActivatedRoute } from '@angular/router';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
@@ -26,17 +25,6 @@ export class AgrmntActivationPagingComponent implements OnInit {
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchAgrmntActivation.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchAgrmntActivation.json";
-
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "DISTRIBUTION_STAT",
-        environment: environment.FoundationR3Url
-      },
-      {
-        name: "TASK_CLAIM_STAT",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     var arrCrit = new Array();
 

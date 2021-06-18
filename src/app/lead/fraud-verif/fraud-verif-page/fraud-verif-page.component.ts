@@ -18,7 +18,6 @@ import { ResDuplicateDoubleFinancingObj } from 'app/shared/model/Lead/ResDuplica
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ThirdPartyRsltHObj } from 'app/shared/model/ThirdPartyRsltHObj.Model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
@@ -77,14 +76,7 @@ export class FraudVerifPageComponent implements OnInit {
     }
     this.thirdPartyRsltHObj = new ThirdPartyRsltHObj();
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
-    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
       });

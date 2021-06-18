@@ -46,18 +46,6 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   ngOnInit() {
     this.arrValue.push(this.TrxNo);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewOfferingValidityCheckingApproval.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.whereValue = this.arrValue;
-    this.viewGenericObj.ddlEnvironments = [
-      {
-        name: "AppNo",
-        environment: environment.losR3Web
-      },
-      {
-        name: "AgrmntNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.initInputApprovalObj();
   }
 
@@ -74,9 +62,17 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   onAvailableNextTask() {
 
   }
-  onApprovalSubmited() {
-    this.toastr.successMessage("Success");
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_PAGING],{ "BizTemplateCode": this.BizTemplateCode});
+  onApprovalSubmited(event) {
+    let reqApvCustomObj = {
+      AppId: 0,
+      Tasks: event.Tasks
+    }
+
+    this.http.post(URLConstant.Approval, reqApvCustomObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["Message"]);
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_PAGING],{ "BizTemplateCode": this.BizTemplateCode});
+      });
   }
 
   onCancelClick()

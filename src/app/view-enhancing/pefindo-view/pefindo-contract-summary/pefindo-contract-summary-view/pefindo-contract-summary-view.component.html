@@ -1,0 +1,39 @@
+<div class="col-lg-12">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th>
+          <span class="thead-header" translate>Pay Date</span>
+        </th>
+        <th>
+          <span class="thead-header" translate>Contract Submitted</span>
+        </th>
+        <th>
+          <span class="thead-header" translate>Past Due Amount</span>
+        </th>
+        <th>
+          <span class="thead-header" translate>Past Due Days</span>
+        </th>
+        <th>
+          <span class="thead-header" translate>Outstanding Amount</span>
+        </th>
+        <th>
+          <span class="thead-header" translate>Collectability</span>
+        </th>        
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf = "ContractsSummary?.length == 0">
+        <td colspan="100%">No Data Available</td>
+      </tr>
+      <tr *ngFor="let item of ContractsSummary.PaymentCalendarList">
+        <td>{{item.Date | date: 'dd-MMM-yyyy'}}</td>
+        <td>{{item.ContractsSubmitted}}</td>
+        <td>{{item.PastDueAmount | number:'.2':'en-US'}}</td>
+        <td>{{item.PastDueDays}}</td>
+        <td>{{item.OutstandingAmount | number:'.2':'en-US'}}</td>
+        <td>{{item.NegativeStatusOfContract}}</td>        
+      </tr>
+    </tbody>
+  </table>
+</div>

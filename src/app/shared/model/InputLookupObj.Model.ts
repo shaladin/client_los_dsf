@@ -17,7 +17,8 @@ export class InputLookupObj {
     isReady: boolean
     isDisable: boolean
     ddlEnvironments: any
-    title: string;
+    title: any;
+    listEnvironments: Array<EnvisObj>;
 
     constructor() {
         this.urlJson = "./assets/uclookup/zipcode/lookupZipcode.json";
@@ -32,5 +33,18 @@ export class InputLookupObj {
         this.isReady = false;
         this.title = "";
         this.isDisable = false;
+        this.listEnvironments = new Array<EnvisObj>();
+        this.listEnvironments.push({ environment: "FOU", url: environment.FoundationR3Url });
+        this.listEnvironments.push({ environment: "LOS", url: environment.losUrl });
+    }
+}
+
+export class EnvisObj {
+    environment: string;
+    url: string;
+
+    constructor() {
+        this.environment = "";
+        this.url = "";
     }
 }
