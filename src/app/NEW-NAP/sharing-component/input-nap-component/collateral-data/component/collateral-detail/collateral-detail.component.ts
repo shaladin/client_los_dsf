@@ -251,7 +251,7 @@ export class CollateralDetailComponent implements OnInit {
     );
   }
   HitAPI() {
-    if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '') {
+    if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' || this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == null) {
       this.toastr.warningMessage("Please Input Chassis No !");
     }
     else {
