@@ -100,16 +100,16 @@ export class LegalReviewDetailComponent implements OnInit {
         this.responseMouObj = response['ReturnObject'];
 
         var refLglReviewObj: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeLegalReview, MappingCode: null };
-        this.http.post(URLConstant.GetListActiveRefMaster, refLglReviewObj).subscribe(
+        this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refLglReviewObj).subscribe(
           (response) => {
             var lengthDataReturnObj = response[CommonConstant.ReturnObj].length;
             this.responseRefMasterObj = response[CommonConstant.ReturnObj];
             for (var i = 0; i < lengthDataReturnObj; i++) {
               var eachDataDetail = this.fb.group({
-                ReviewComponentName: [response[CommonConstant.ReturnObj][i].Descr],
-                ReviewComponentValue: [response[CommonConstant.ReturnObj][i].MasterCode],
-                RowVersion: [this.SearchLegalReview(response[CommonConstant.ReturnObj][i].MasterCode, true)],
-                values: [this.SearchLegalReview(response[CommonConstant.ReturnObj][i].MasterCode, false), [Validators.required]]
+                ReviewComponentName: [response[CommonConstant.ReturnObj][i].Value],
+                ReviewComponentValue: [response[CommonConstant.ReturnObj][i].Key],
+                RowVersion: [this.SearchLegalReview(response[CommonConstant.ReturnObj][i].Key, true)],
+                values: [this.SearchLegalReview(response[CommonConstant.ReturnObj][i].Key, false), [Validators.required]]
               }) as FormGroup;
               this.items.push(eachDataDetail);
             }

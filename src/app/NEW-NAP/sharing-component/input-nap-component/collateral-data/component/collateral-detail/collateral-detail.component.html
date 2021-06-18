@@ -171,7 +171,7 @@
                 </div>
               </div>
             </div>
-            <div *ngIf="IsUseDigitalization == '1' && IntegratorCheckBySystemGsValue == '0'">
+            <div *ngIf="indexChassis != -1 && IsUseDigitalization == '1' && IntegratorCheckBySystemGsValue == '0'">
               <lib-ucSubsection [id]="'FraudCheckingId'" [title]="'Fraud Checking'" [panel]="'fraudChecking'">
               </lib-ucSubsection>
               <div [id]="fraudChecking">
