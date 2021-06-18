@@ -74,7 +74,6 @@ export class MouReviewGeneralComponent implements OnInit {
 
   async ngOnInit() : Promise<void>{
     if (this.WfTaskListId > 0) {
-      // this.claimTask();
       this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
@@ -131,14 +130,6 @@ export class MouReviewGeneralComponent implements OnInit {
       }
     );
     this.initInputApprovalObj();
-  }
-
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   Submit() {

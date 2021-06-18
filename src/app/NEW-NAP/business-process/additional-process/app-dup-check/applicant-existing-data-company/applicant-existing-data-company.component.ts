@@ -6,7 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppCustCompanyObj } from 'app/shared/model/AppCustCompanyObj.Model';
 import { RequestSubmitAppDupCheckCustObj } from 'app/shared/model/AppDupCheckCust/RequestSubmitAppDupCheckCustObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -58,7 +57,6 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // this.ClaimTask();
     this.claimTaskService.ClaimTask(this.WfTaskListId);
     await this.bindData();
     await this.processData();
@@ -185,18 +183,6 @@ export class ApplicantExistingDataCompanyComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["Message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_APP_DUP_CHECK_PAGING], {});
-      });
-  }
-
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-
       });
   }
 

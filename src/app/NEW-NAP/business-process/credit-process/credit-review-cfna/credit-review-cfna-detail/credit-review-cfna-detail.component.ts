@@ -9,7 +9,6 @@ import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
 import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
@@ -126,7 +125,6 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   async ngOnInit() : Promise<void> {
-    // this.ClaimTask();
     this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.InitData();
     await this.GetAppNo();
@@ -443,17 +441,6 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
 
   }
 
-
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
-  }
   initInputApprovalObj(manualDevList = null){  
     var Attributes = []
     var attribute1 = {

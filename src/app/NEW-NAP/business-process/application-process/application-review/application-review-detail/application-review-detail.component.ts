@@ -14,7 +14,6 @@ import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -95,7 +94,6 @@ export class ApplicationReviewDetailComponent implements OnInit {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
     this.initData();
     this.BindDDLReasonReturn();
-    // await this.ClaimTask();
     this.claimTaskService.ClaimTask(this.wfTaskListId);
     await this.GetAppNo();
     await this.BindDDLRecommendation();
@@ -137,15 +135,6 @@ export class ApplicationReviewDetailComponent implements OnInit {
         }
       }
     );
-  }
-
-  async ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-
-    await this.http.post(URLConstant.ClaimTask, wfClaimObj).toPromise().then((response) => {});
   }
 
   async GetCreditScoring(appNo: string) {

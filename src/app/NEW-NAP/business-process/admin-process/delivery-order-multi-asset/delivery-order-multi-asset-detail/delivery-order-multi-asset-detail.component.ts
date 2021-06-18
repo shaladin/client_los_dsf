@@ -84,7 +84,6 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     this.arrValue.push(this.agrmntId);
     this.arrValue.push(this.appId);
     if (this.wfTaskListId != null || this.wfTaskListId != undefined) {
-      // this.claimTask();
       this.claimTaskService.ClaimTask(this.wfTaskListId);
     }
     let GetDoObj = new ReqGetDOMultiAssetInformationObj();
@@ -191,15 +190,6 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         }
       );
     }
-  }
-
-
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.wfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
   }
 
   showModalDO(formArray: FormArray, mode: string, deliveryOrderHId: number) {

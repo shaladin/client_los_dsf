@@ -80,7 +80,6 @@ export class CommissionReservedFundDetailComponent implements OnInit {
 
   ngOnInit() {
     this.isShow = false;
-    // this.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
     this.claimTaskService.ClaimTask(this.ReturnHandlingHObj.WfTaskListId);
 
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
@@ -215,12 +214,6 @@ export class CommissionReservedFundDetailComponent implements OnInit {
       AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_COMM_RSV_FUND_PAGING],{ BizTemplateCode: lobCode });
 
     }
-  }
-
-  async ClaimTask(WfTaskListId) {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME], isLoading: false };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
 
   SubmitReturnHandling() {

@@ -12,7 +12,6 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
 
@@ -77,7 +76,6 @@ export class RequisitionDecisionDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // this.ClaimTask();
     this.claimTaskService.ClaimTask(this.WfTaskListId);
     this.InputLookupAssetObj.urlJson = "./assets/uclookup/NAP/lookupAssetNumber.json";
     this.InputLookupAssetObj.urlQryPaging = URLConstant.GetAssetStockPagingFromAms;
@@ -89,18 +87,6 @@ export class RequisitionDecisionDetailComponent implements OnInit {
 
     await this.SetMainInfo();
     await this.SetListOfAsset();
-  }
-
-  
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   async SetMainInfo() {

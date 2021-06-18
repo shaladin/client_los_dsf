@@ -4,7 +4,6 @@ import { AdminProcessService, ReqAppAssetAgreementActivationObj } from 'app/NEW-
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcTempPagingObj } from 'app/shared/model/TempPaging/UcTempPagingObj.model';
 import { WhereValueObj } from 'app/shared/model/UcPagingObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -73,7 +72,6 @@ export class AgrmntActivationDetailComponent implements OnInit {
   ngOnInit() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
-    // this.ClaimTask(this.WfTaskListId);
     this.claimTaskService.ClaimTask(this.WfTaskListId);
 
     this.tempPagingObj.urlJson = "./assets/ucpaging/ucTempPaging/AgrmntActivationTempPaging.json";
@@ -87,12 +85,6 @@ export class AgrmntActivationDetailComponent implements OnInit {
     whereValueObj.property = "AppId";
     whereValueObj.value = this.AppId;
     this.tempPagingObj.whereValue.push(whereValueObj);
-  }
-
-  async ClaimTask(WfTaskListId) {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext["UserName"], isLoading: false };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
 
   getListTemp(ev) {

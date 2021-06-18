@@ -91,7 +91,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
 
     if (this.wfTaskListId != null || this.wfTaskListId != undefined){
-      // this.claimTask();
       this.claimTaskService.ClaimTask(this.wfTaskListId);
     }
 
@@ -258,18 +257,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     if (this.isReturnHandling == true) {
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT_VERIF], { "AppId": this.appId, "VerfResultHId": VerifResultHid, "Name": SubjectName, "Type": SubjectType, "Relation": SubjectRelation, "Source": IdSource, "ReturnHandlingHId": this.returnHandlingHId, "WfTaskListId": this.wfTaskListId });
     }
-  }
-
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = {
-      pWFTaskListID: this.wfTaskListId,
-      pUserID: currentUserContext[CommonConstant.USER_NAME],
-      isLoading: false
-    };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   back() {

@@ -6,11 +6,9 @@ import { RequestSubmitAppDupCheckCustObj } from 'app/shared/model/AppDupCheckCus
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetCustDupCheckObj } from 'app/shared/model/Request/NAP/DupCheck/ReqGetCustDupCheckObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
@@ -60,8 +58,6 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    // this.ClaimTask();
     this.claimTaskService.ClaimTask(this.WfTaskListId);
 
     this.AppCustObj = new AppCustObj();
@@ -219,17 +215,6 @@ export class ApplicantExistingDataPersonalComponent implements OnInit {
 
   }
 
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-
-      });
-  }
   Back() {
     // this.router.navigateByUrl("/Nap/AddProcess/AppDupCheck/Personal?AppId=" + this.AppId + "&WfTaskListId=" + this.WfTaskListId);
     var BizTemplateCode = localStorage.getItem("BizTemplateCode")

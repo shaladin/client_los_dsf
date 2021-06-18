@@ -9,7 +9,6 @@ import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { PreGoLiveMainObj } from 'app/shared/model/PreGoLiveMainObj.Model';
 import { PreGoLiveObj } from 'app/shared/model/PreGoLiveObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
@@ -112,7 +111,6 @@ export class PreGoLiveComponent implements OnInit {
         }
         this.IsApvReady = true;
       });
-    // this.claimTask();
     this.claimTaskService.ClaimTask(this.TaskListId);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
     var agrmntObj = {
@@ -318,13 +316,4 @@ export class PreGoLiveComponent implements OnInit {
 
   }
 
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.TaskListId;
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
-  }
 }

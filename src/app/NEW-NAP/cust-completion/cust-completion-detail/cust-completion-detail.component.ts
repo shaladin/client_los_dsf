@@ -78,7 +78,6 @@ export class CustCompletionDetailComponent implements OnInit {
     this.addObj["BizTemplateCode"] = this.BizTemplateCode;
 
     this.loadCustCompletionListData();
-    // this.claimTask();
     this.claimTaskService.ClaimTask(this.wfTaskListId);
   }
 
@@ -109,12 +108,6 @@ export class CustCompletionDetailComponent implements OnInit {
         this.listCustCompletion = this.inputGridObj.resultData.Data;
       }
     );
-  }
-
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.wfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME], isLoading: false };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
 
   buttonBackOnClick() {

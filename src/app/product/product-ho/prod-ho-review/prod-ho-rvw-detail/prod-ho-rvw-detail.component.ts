@@ -66,7 +66,6 @@ export class ProdHoRvwDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // this.ClaimTask(this.WfTaskListId);
     this.claimTaskService.ClaimTask(this.WfTaskListId);
     await this.LoadRefReason();
     this.initInputApprovalObj();
@@ -115,10 +114,5 @@ export class ProdHoRvwDetailComponent implements OnInit {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_HO_REVIEW], {});
         this.IsReady = true;
       });
-  }
-  async ClaimTask(WfTaskListId: number) {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME], isLoading: false };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
 }

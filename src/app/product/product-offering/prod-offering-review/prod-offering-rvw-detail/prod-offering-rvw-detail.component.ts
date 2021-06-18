@@ -66,7 +66,6 @@ export class ProdOfferingRvwDetailComponent implements OnInit {
   async ngOnInit() {
     await this.LoadRefReason();
     this.initInputApprovalObj();
-    // this.ClaimTask(this.WfTaskListId);
     this.claimTaskService.ClaimTask(this.WfTaskListId);
   }
 
@@ -112,11 +111,5 @@ export class ProdOfferingRvwDetailComponent implements OnInit {
         this.toastr.successMessage(response["Message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.PRODUCT_OFFERING_REVIEW], {});
       });
-  }
-
-  async ClaimTask(WfTaskListId: number) {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let wfClaimObj = { pWFTaskListID: WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME], isLoading: false };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
 }

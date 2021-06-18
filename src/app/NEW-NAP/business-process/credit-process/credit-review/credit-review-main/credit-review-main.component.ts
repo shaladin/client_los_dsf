@@ -5,7 +5,6 @@ import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'environments/environment';
 import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
 import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -123,7 +122,6 @@ export class CreditReviewMainComponent implements OnInit {
   DDLRecommendation;
   DDLReasonReturn;
   async ngOnInit() : Promise<void> {
-    // this.ClaimTask();
     this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.InitData();
 
@@ -441,18 +439,6 @@ export class CreditReviewMainComponent implements OnInit {
     this.FormReturnObj.controls.Reason.updateValueAndValidity();
     this.FormReturnObj.controls.Notes.updateValueAndValidity();
 
-  }
-
-
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   initInputApprovalObj(manualDevList = null) {

@@ -96,7 +96,6 @@ export class NapAddDetailComponent implements OnInit {
         this.SysConfigResultObj = response;
     });
 
-    // this.ClaimTask();
     this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.AppStepIndex = 1;
     this.NapObj = new AppObj();
@@ -393,17 +392,7 @@ export class NapAddDetailComponent implements OnInit {
         })
     }
   }
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new AppObj();
-    wfClaimObj.AppId = this.appId;
-    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
-    wfClaimObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
-      (response) => {
 
-      });
-  }
   Cancel() {
     let url: string = NavigationConstant.BACK_TO_PAGING;
     if(this.ReturnHandlingHId > 0){

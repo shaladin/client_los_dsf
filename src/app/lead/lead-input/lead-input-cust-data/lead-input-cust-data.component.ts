@@ -191,7 +191,6 @@ export class LeadInputCustDataComponent implements OnInit {
     this.inputAddressObjForResidenceAddr.showOwnership = false;
     this.InitDms();
     if (this.WfTaskListId > 0) {
-      // this.claimTask();
       this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -869,14 +868,6 @@ export class LeadInputCustDataComponent implements OnInit {
           });
       }
     }
-  }
-
-  async claimTask() { 
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   async getLeadData() {

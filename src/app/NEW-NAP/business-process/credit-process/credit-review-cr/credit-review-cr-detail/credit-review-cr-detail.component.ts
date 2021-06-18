@@ -15,7 +15,6 @@ import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
@@ -99,7 +98,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.initData();
-    // await this.ClaimTask();
     this.claimTaskService.ClaimTask(this.wfTaskListId);
     await this.GetAppNo();
     await this.GetListDeviation();
@@ -171,17 +169,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
           this.appNo = response.AppNo;
           await this.GetCreditScoring(response.AppNo);
         }
-      });
-  }
-
-  async ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-
-    await this.http.post(URLConstant.ClaimTask, wfClaimObj).toPromise().then(
-      () => {
       });
   }
 

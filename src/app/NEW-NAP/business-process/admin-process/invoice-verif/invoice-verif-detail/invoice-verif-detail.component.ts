@@ -3,8 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -57,7 +55,6 @@ export class InvoiceVerifDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.claimTask();
     this.claimTaskService.ClaimTask(this.WfTaskListId);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewInvoiceVerif.json";
 
@@ -134,16 +131,6 @@ export class InvoiceVerifDetailComponent implements OnInit {
       AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
     });
 
-  }
-
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   GetCallBack(ev: any) {

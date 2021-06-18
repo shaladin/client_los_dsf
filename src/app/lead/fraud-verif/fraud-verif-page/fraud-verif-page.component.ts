@@ -10,7 +10,6 @@ import { LeadFraudVerfObj } from 'app/shared/model/Request/LEAD/LeadFraudVerfObj
 import { _ } from 'core-js';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { ResDuplicateCustomerObj } from 'app/shared/model/Lead/ResDuplicateCustomerObj.Model';
 import { ResDuplicateNegativeCustomerObj } from 'app/shared/model/Lead/ResDuplicateNegativeCustomerObj.Model';
 import { ResDuplicateNegativeAssetObj } from 'app/shared/model/Lead/ResDuplicateNegativeAssetObj.Model';
@@ -71,7 +70,6 @@ export class FraudVerifPageComponent implements OnInit {
   });
   async ngOnInit() : Promise<void> {
     if (this.WfTaskListId > 0) {
-      // this.claimTask();
       this.claimTaskService.ClaimTask(this.WfTaskListId);
 
     }
@@ -188,15 +186,6 @@ export class FraudVerifPageComponent implements OnInit {
       });
   }
 
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
-  }
   backHandler() {
     AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_FRAUD_VERIF_PAGING],{});
   }

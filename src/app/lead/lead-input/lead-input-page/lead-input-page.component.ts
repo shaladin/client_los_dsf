@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import Stepper from 'bs-stepper';
@@ -81,7 +80,6 @@ export class LeadInputPageComponent implements OnInit {
         console.log('dmsobj = ', JSON.stringify(this.dmsObj));
       });
     if (this.TaskListId > 0) {
-      // this.claimTask();
       this.claimTaskService.ClaimTask(this.TaskListId);
     }
     this.viewLeadHeaderMainInfo.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
@@ -181,13 +179,6 @@ export class LeadInputPageComponent implements OnInit {
     component.instance.viewGenericObj = this.viewLeadHeaderMainInfo;
   }
 
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.TaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
-  }
   
   endOfTab() {
     this.http.post(URLConstant.GetLeadAssetByLeadId, { Id: this.customObj.LeadInputLeadDataObj.LeadAppObj.LeadId }).subscribe(

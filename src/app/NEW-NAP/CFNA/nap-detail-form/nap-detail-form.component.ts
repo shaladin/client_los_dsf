@@ -104,7 +104,6 @@ export class NapDetailFormComponent implements OnInit {
         this.SysConfigResultObj = response;
     });
 
-    // this.ClaimTask();
     this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformationCFNA.json";
     this.NapObj = new AppObj();
@@ -372,18 +371,6 @@ export class NapDetailFormComponent implements OnInit {
         }
       )
     }
-  }
-
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new AppObj();
-    wfClaimObj.AppId = this.appId;
-    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
-    wfClaimObj.WfTaskListId = this.wfTaskListId;
-
-    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   CheckCustType(ev: string) {

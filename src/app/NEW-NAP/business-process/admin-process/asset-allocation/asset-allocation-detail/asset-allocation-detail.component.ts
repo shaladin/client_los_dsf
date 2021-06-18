@@ -4,8 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -61,7 +59,6 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
   async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
 
-    // this.claimTask();
     this.claimTaskService.ClaimTask(this.TaskListId);
     this.getAssetAllocationData();
   }
@@ -115,15 +112,6 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.TaskListId;
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
-  }
   isReady: boolean = false;
   async getAssetAllocationData() {
     var reqObj = { Id: this.AppId }

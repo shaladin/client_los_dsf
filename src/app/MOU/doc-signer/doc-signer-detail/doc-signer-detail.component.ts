@@ -14,7 +14,6 @@ import { UclookupgenericComponent } from '@adins/uclookupgeneric';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqMouCustSignerObj } from 'app/shared/model/Request/MOU/ReqMouCustSignerObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
@@ -152,16 +151,8 @@ export class DocSignerDetailComponent implements OnInit {
     });
   }
 
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
-  }
   ngOnInit() {
     if (this.WfTaskListId > 0) {
-      // this.claimTask();
       this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
     this.custShareholderLookUpObj1 = new InputLookupObj();

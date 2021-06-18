@@ -6,7 +6,6 @@ import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CustCnfrmObj } from 'app/shared/model/CustCnfrm/CustCnfrm.Model';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
@@ -64,7 +63,6 @@ export class CustConfirmationDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // this.claimTask();
     this.claimTaskService.ClaimTask(this.TaskListId);
     this.arrValue.push(this.AgrmntId);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustConfirmInfo.json";
@@ -173,16 +171,6 @@ export class CustConfirmationDetailComponent implements OnInit {
       // this.toastr.successMessage("Success !");
       // this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
     }
-  }
-
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.TaskListId;
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   GetCallBack(event) {

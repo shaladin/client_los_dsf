@@ -86,7 +86,6 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       });
 
     if (this.WfTaskListId > 0){
-      // this.claimTask();
       this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
 
@@ -135,14 +134,6 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         MrMouTypeCode: this.mouType
       });
     }
-  }
-
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   Back(): void {

@@ -6,7 +6,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
@@ -108,7 +107,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
-    // this.ClaimTask();
     this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.appObj.Id = this.appId;
     this.initExistingTc();
@@ -601,17 +599,6 @@ export class ReturnHandlingAdditionalTcDetailComponent implements OnInit {
       TcName: ['', [Validators.required, Validators.maxLength(50)]],
       Notes: ['', [Validators.maxLength(50)]],
     });
-  }
-
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
   }
 
   cancel() {

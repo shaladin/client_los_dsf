@@ -94,7 +94,6 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // this.ClaimTask();
     this.claimTaskService.ClaimTaskNapCustMainData(this.appId, this.wfTaskListId);
     this.AppStepIndex = 1;
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapDetailMainData.json";
@@ -360,18 +359,6 @@ export class NapDetailFormComponent implements OnInit {
           }
         )
       }
-  }
-
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new AppObj();
-    wfClaimObj.AppId = this.appId;
-    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
-    wfClaimObj.WfTaskListId = this.wfTaskListId;
-
-    this.http.post(URLConstant.ClaimTaskNapCustmainData, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   CheckCustType(ev: string) {

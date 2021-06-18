@@ -69,7 +69,6 @@ export class MouReviewFactoringComponent implements OnInit {
         this.SysConfigResultObj = response
       });
     if (this.WfTaskListId > 0) {
-      // this.claimTask();
       this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
     this.mouCustObject.MouCustId = this.MouCustId;
@@ -128,14 +127,6 @@ export class MouReviewFactoringComponent implements OnInit {
     Notes: [''],
     ApvRecommendation: this.fb.array([])
   })
-
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
-  }
 
   Submit() {
     this.RFAInfo = {RFAInfo: this.MouReviewDataForm.controls.RFAInfo.value};

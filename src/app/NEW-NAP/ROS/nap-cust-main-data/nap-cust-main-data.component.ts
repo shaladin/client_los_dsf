@@ -65,7 +65,6 @@ export class NapCustMainDataComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // this.ClaimTask();
     this.claimTaskService.ClaimTaskNapCustMainData(this.appId, this.wfTaskListId);
     this.AppStepIndex = 0;
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
@@ -164,18 +163,6 @@ export class NapCustMainDataComponent implements OnInit {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
       }
     );
-  }
-
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new AppObj();
-    wfClaimObj.AppId = this.appId;
-    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
-    wfClaimObj.WfTaskListId = this.wfTaskListId;
-
-    this.http.post(URLConstant.ClaimTaskNapCustmainData, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   GetCallback(ev) {
