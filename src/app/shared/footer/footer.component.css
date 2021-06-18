@@ -1,3 +1,26 @@
 .footer-padding {
     padding-bottom: 10px;
 }
+
+/* ini buat slalu di tengah */
+.footer-container-mid{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;  
+    background-color: #f5f7fa;
+}
+
+/* ini ngikut sidebar */
+.footer-container{
+    position: fixed;
+    bottom: 0;
+    width: 100%;  
+    background-color: #f5f7fa;
+}
+
+
+.copyright{
+    margin-top: 20px;
+}
