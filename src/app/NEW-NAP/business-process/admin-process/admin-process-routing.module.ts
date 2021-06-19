@@ -43,6 +43,8 @@ import { PreGoLiveOplPagingComponent } from './pre-go-live-opl/pre-go-live-opl-p
 import { PreGoLiveOplDetailComponent } from './pre-go-live-opl/pre-go-live-opl-detail/pre-go-live-opl-detail.component';
 import { AssetAllocationPagingComponent } from './asset-allocation/asset-allocation-paging/asset-allocation-paging.component';
 import { AssetAllocationDetailComponent } from './asset-allocation/asset-allocation-detail/asset-allocation-detail.component';
+import { InvoiceVerifDetailListOfInvoiceComponent } from './invoice-verif/invoice-verif-detail/invoice-verif-detail-list-of-invoice/invoice-verif-detail-list-of-invoice.component';
+import { InvoiceVerifDetailDFComponent } from './invoice-verif/invoice-verif-detail/invoice-verif-detail-DF/invoice-verif-detail-DF.component';
 
 const routes: Routes = [
   {
@@ -329,17 +331,31 @@ const routes: Routes = [
         }
       },
       {
-        path: 'AssetAllocation/Paging',
+        path: PathConstant.ASSET_ALLOC_PAGING,
         component: AssetAllocationPagingComponent,
         data: {
           title: 'Asset Allocation Paging'
         }
       },
       {
-        path: 'AssetAllocation/Detail',
+        path: PathConstant.ASSET_ALLOC_DETAIL,
         component: AssetAllocationDetailComponent,
         data: {
           title: 'Asset Allocation Detail'
+        }
+      },
+      {
+        path: PathConstant.INVOICE_VERIF_DETAIL_LIST_INV,
+        component: InvoiceVerifDetailListOfInvoiceComponent,
+        data: {
+          title: 'Invoice Detail List Of Invoice'
+        }
+      },
+      {
+        path: PathConstant.INVOICE_VERIF_INV_DSF,
+        component:InvoiceVerifDetailDFComponent,
+        data:{
+          title: 'Invoice Detail DF'
         }
       }
     ]

@@ -9,7 +9,6 @@ import { DatePipe } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
-import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 
@@ -20,7 +19,7 @@ import { CookieService } from 'ngx-cookie';
 })
 export class MouCustTcComponent implements OnInit {
   @Input() MouCustId: number;
-  @Output() ResponseMouCustTc: EventEmitter<any> = new EventEmitter<any>();
+  @Output() ResponseMouCustTc: EventEmitter<any> = new EventEmitter();
   formSubmitted: boolean;
   businessDate: Date;
 
@@ -42,8 +41,6 @@ export class MouCustTcComponent implements OnInit {
     var context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDate = new Date(context[CommonConstant.BUSINESS_DT]);
     var datePipe = new DatePipe("en-US");
-    var mouObj = new MouCustObj();
-    mouObj.MouCustId = this.MouCustId;
     var mouCustObjData;
     this.httpClient.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).pipe(
       map((response: MouCustObj) => {
@@ -67,7 +64,7 @@ export class MouCustTcComponent implements OnInit {
         return this.httpClient.post(URLConstant.GetMouCustTcFromRule, mouTcObj);
       })
     ).subscribe(
-      (response: any) => {
+      (response) => {
         var formArray = this.MouCustTcForm.get('MouCustTcList') as FormArray;
         for (const item of response["MouCustTcObjs"]) {
           var promiseDtValidation;

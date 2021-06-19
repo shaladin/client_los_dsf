@@ -1,0 +1,20 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "viewRoPotentialMainInfoId",
+        "subSectionTitle": "Main Information",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {"type": "text", "label": "Customer No","property": "CustNo"},
+          {"type": "text", "label": "Customer Name","property": "CustName"},
+          {"type": "text", "label": "Agreement No","property": "AgrmntNo"},
+          {"type": "date", "label": "Maturity Date","property": "MaturityDt"}
+        ],
+        "querystring": {
+          "name": "viewRoPotentialMainInfo"
+        }
+      }
+    ]
+  }
+  

@@ -1,70 +1,81 @@
 {
-    "title": "",
-    "subsection": [
-      {
-        "subSectionId": "AgrMainInformationId",
-        "subSectionTitle": "Main Information",
-        "mainInfoPath": "/Generic/GetDataViewBySQL",
-        "mainInfo": [
-          {
-            "type": "link",
-            "label": "Application No",
-            "property": "AppNo",
-            "name": "AppNo",
-            "path": "/View/AppView",
-            "target" : "_blank",
-            "param": [
-              {
-                "type": "AppId",
-                "property": "AppId"
-              }
-            ]
-          },
-          {
-            "type": "text",
-            "label": "Number of Collateral",
-            "property": "NumOfColl"
-          },
-          {
-            "type": "link",
-            "label": "Agreement No",
-            "property": "AgrmntNo",
-            "name": "AgrmntNo",
-            "path": "/View/AgrmntView",
-            "target" : "_blank",
-            "param": [
-              {
-                "type": "AgrmntId",
-                "property": "AgrmntId"
-              }
-            ]
-          }, 
-          {
-            "type": "text",
-            "label": "Customer Name",
-            "property": "CustName"
-          },
-          {
-            "type": "text",
-            "label": "Original Office",
-            "property": "OfficeName"
-          },
-          {
-            "type": "text",
-            "label": "Tenor",
-            "property": "Tenor"
-          },
-          {
-            "type": "callback",
-            "key": "ViewProdOffering",
-            "label": "Product Offering Name",
-            "property": "ProdOfferingName"
-          }
-        ],
-        "querystring": {
-          "name": "viewAgrMainInfo"
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "AgrMainInformationId",
+      "subSectionTitle": "Main Information",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "link",
+          "label": "Application No",
+          "property": "AppNo",
+          "name": "AppNo",
+          "environment": "LOSR3WEB",
+          "path": "/View/AppView",
+          "target": "_blank",
+          "param": [
+            {
+              "type": "AppId",
+              "property": "AppId"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Number of Collateral",
+          "property": "NumOfColl"
+        },
+        {
+          "type": "callback",
+          "key": "ViewProdOffering",
+          "label": "Product Offering Name",
+          "property": "ProdOfferingName"
+        },
+        {
+          "type": "link",
+          "label": "Agreement No",
+          "property": "AgrmntNo",
+          "name": "AgrmntNo",
+          "path": "/View/AgrmntView",
+          "target": "_blank",
+          "param": [
+            {
+              "type": "AgrmntId",
+              "property": "AgrmntId"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Customer Name",
+          "property": "CustName"
+        },
+        {
+          "type": "text",
+          "label": "Original Office",
+          "property": "OfficeName"
+        },
+        {
+          "type": "text",
+          "label": "Tenor",
+          "property": "Tenor"
+        },
+        {
+          "type": "text",
+          "label": "Agreement Current Step",
+          "property": "CurrStep"
+        },
+        {
+          "type": "text",
+          "label": "Agreement Last Step",
+          "property": "LastStep"
         }
+      ],
+      "querystring": {
+        "name": "viewAgrMainInfo"
       }
-    ]
-  }
-  
+    }
+  ]
+}
+

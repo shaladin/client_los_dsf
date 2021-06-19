@@ -18,13 +18,9 @@ export class ViewLeadDataComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params['LeadId'];
     });
-    this.GetLeadAssetByLeadIdUrl = URLConstant.GetLeadAssetByLeadId;
-    this.GetLeadByLeadIdUrl = URLConstant.GetLeadByLeadId;
   }
-  LeadId: string;
+  LeadId: number;
   viewLeadAppData : UcViewGenericObj = new UcViewGenericObj();
-  GetLeadAssetByLeadIdUrl : string;
-  GetLeadByLeadIdUrl : string;
   leadAssetObj : LeadAssetObj;
   leadObj : LeadObj;
   tempLeadAssetObj : any;
@@ -40,14 +36,14 @@ export class ViewLeadDataComponent implements OnInit {
     this.leadAssetObj.LeadId = this.LeadId;
 
     this.leadObj = new LeadObj();
-    this.leadObj.LeadId = this.LeadId;
+    this.leadObj.LeadId = Number(this.LeadId);
     var leadObj = { Id: this.LeadId };
-    this.http.post(this.GetLeadByLeadIdUrl, leadObj).subscribe(
+    this.http.post(URLConstant.GetLeadByLeadId, leadObj).subscribe(
       response => {
         this.tempLeadObj = response;      
       });
     var leadAssetObj = { Id: this.LeadId };
-    this.http.post(this.GetLeadAssetByLeadIdUrl, leadAssetObj).subscribe(
+    this.http.post(URLConstant.GetLeadAssetByLeadId, leadAssetObj).subscribe(
       response => {
         this.tempLeadAssetObj = response;     
       });

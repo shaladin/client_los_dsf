@@ -18,10 +18,10 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 export class LeadUpdateComponent implements OnInit {
   @ViewChild(UcpagingComponent) ucpaging;
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  
+
   constructor(
-    private http: HttpClient, 
-    private toastr: NGXToastrService, 
+    private http: HttpClient,
+    private toastr: NGXToastrService,
     private router: Router) { }
 
   ngOnInit() {
@@ -29,24 +29,22 @@ export class LeadUpdateComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchLeadUpdate.json";
   }
 
-  rejectLead(event)
-  {
-    if (confirm("Are you sure to reject this Lead?"))
-    {
-      var leadReject = new LeadForRejectObj;
+  rejectLead(event) {
+    if (confirm("Are you sure to reject this Lead?")) {
+      let leadReject = new LeadForRejectObj;
       leadReject.LeadStat = CommonConstant.LeadStatReject;
       leadReject.LeadStep = CommonConstant.LeadStatReject;
       leadReject.LeadId = event.RowObj.LeadId;
       leadReject.WfTaskListId = event.RowObj.WfTaskListId;
-      
+
       this.http.post(URLConstant.RejectLead, leadReject).subscribe(
-          response => {
-            this.toastr.successMessage(response["Message"]);
-            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_UPDATE_PAGING],{});
+        response => {
+          this.toastr.successMessage(response["Message"]);
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_UPDATE_PAGING], {});
           });
-          }
-        );
+        }
+      );
     }
   }
 }

@@ -15,7 +15,6 @@ export class ApplicationViewComponent implements OnInit {
   AppId: number;
   arrValue = [];
   CustType: string = "";
-  AppCustObj: any;
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   IsCustomer : boolean = true;
   IsGuarantor : boolean = true;

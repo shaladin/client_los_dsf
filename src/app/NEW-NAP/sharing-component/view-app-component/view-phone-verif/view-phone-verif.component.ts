@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: "view-phone-verif",
@@ -9,15 +10,11 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   providers: [NGXToastrService]
 })
 export class ViewPhoneVerifComponent implements OnInit {
-  getAppUrl: any;
-  getPhoneVerifSubjUrl: any;
-  @Input() appId: any;
+  @Input() appId: number;
   appObj = {
-    AppId: 0,
-    Id:0
+    Id: 0
   };
-  AppObj: any;
-  phoneVerifObj: any;
+  phoneVerifObj: Array<any> = new Array<any>();
 
   constructor(private http: HttpClient) {
     //this.route.queryParams.subscribe(params => {
@@ -27,22 +24,15 @@ export class ViewPhoneVerifComponent implements OnInit {
     //});
   }
 
-  initUrl() {
-    this.getAppUrl = URLConstant.GetAppById;
-    this.getPhoneVerifSubjUrl = URLConstant.GetAppPhoneVerifSubjectListByAppId;
-  }
-
   async ngOnInit(): Promise<void> {
-    this.initUrl();
-    this.appObj.AppId = this.appId;
     this.appObj.Id = this.appId;
     this.GetPhnVerfSubjData();
   }
 
   GetPhnVerfSubjData() {
-    this.http.post(this.getPhoneVerifSubjUrl, this.appObj).subscribe(
+    this.http.post(URLConstant.GetAppPhoneVerifSubjectListByAppId, this.appObj).subscribe(
       (response) => {
-        this.phoneVerifObj = response;
+        this.phoneVerifObj = response[CommonConstant.ReturnObj];
       }
     );
   }

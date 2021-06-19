@@ -6,6 +6,7 @@ import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
 import { CalcProvisionFee } from 'app/shared/model/AppFee/CalcProvisionFee.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-fee-FL4W',
@@ -17,18 +18,24 @@ export class FeeFL4WComponent implements OnInit {
   @Input() AppId : number;
   @Input() ParentForm : FormGroup;
   @Input() identifier : string;
+  @Input() ProdOfferingCode: string;
   
   appFeeObj : AppFeeObj = new AppFeeObj();
   listAppFeeObj : Array<AppFeeObj> = new Array<AppFeeObj>();
   isSubmitted : boolean;
-  TempProvisionSource : any;
+  TempProvisionSource : Array<KeyValueObj>;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
   ) { }
 
   async ngOnInit(): Promise<void> {
-    await this.LoadAppFeeData(this.AppId);
+    if (this.AppId != null) {
+      await this.LoadAppFeeData(this.AppId);
+    }
+    else if (this.ProdOfferingCode != null) {
+      await this.LoadAppFeeDataForTrialCalc(this.ProdOfferingCode);
+    }
     // this.LoadCalcBaseDDL();
     this.CalculateTotalFeeAndCaptlzAmt()
   }
@@ -53,6 +60,39 @@ export class FeeFL4WComponent implements OnInit {
       (response) => {
         this.listAppFeeObj = response[CommonConstant.ReturnObj];
         for (let i = 0; i < this.listAppFeeObj.length ; i++) {
+
+          var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
+          fa_AppFee.push(this.addFeeControl(this.listAppFeeObj[i]));
+          // this.AppFeeForm.push(this.addFeeControl(this.listAppFeeObj[i]));
+        }
+
+        this.PatchProvisionFeeValue();
+        this.ProvisionFeeInput_FocusOut();
+      }
+    );
+  }
+
+  async LoadAppFeeDataForTrialCalc(ProdOfferingCode: string) {
+    var RefMasterTypeCodeProvisionSource = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeProvisionSource
+    }
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, RefMasterTypeCodeProvisionSource).subscribe(
+      (response) => {
+        this.TempProvisionSource = response[CommonConstant.ReturnObj];
+      });
+
+    var reqObj = {
+      ProdOfferingCode: this.ProdOfferingCode,
+      LobCode: this.ParentForm.get("LobCode").value,
+      OfficeCode: this.ParentForm.get("OfficeCode").value,
+      Tenor: this.ParentForm.controls["Tenor"].value,
+      TotalAssetPrice: this.ParentForm.controls["AssetPriceAmt"].value
+    }
+
+    await this.http.post(URLConstant.GetListAppFeeForTrialCalc, reqObj).toPromise().then(
+      (response) => {
+        this.listAppFeeObj = response[CommonConstant.ReturnObj];
+        for (let i = 0; i < this.listAppFeeObj.length; i++) {
 
           var fa_AppFee = this.ParentForm.get(this.identifier) as FormArray
           fa_AppFee.push(this.addFeeControl(this.listAppFeeObj[i]));

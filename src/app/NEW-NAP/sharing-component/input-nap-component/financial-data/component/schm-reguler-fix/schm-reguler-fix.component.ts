@@ -11,6 +11,8 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { String } from 'typescript-string-operations';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { CalcRegularFixObjForTrialCalc } from 'app/shared/model/AppFinData/CalcRegularFixObjForTrialCalc.Model';
+import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 
 @Component({
   selector: 'app-schm-reguler-fix',
@@ -18,17 +20,20 @@ import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMas
 })
 export class SchmRegulerFixComponent implements OnInit {
   @Input() AppId: number;
+  @Input() InstAmt: number;
   @Input() ParentForm: FormGroup;
   @Output() RefreshSubsidy = new EventEmitter();
   @Input() BizTemplateCode: string;
+  @Input() TrialCalc: boolean;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
-  listInstallment: any;
-  responseCalc: any;
+  calcRegFixObjForTrialCalc: CalcRegularFixObjForTrialCalc = new CalcRegularFixObjForTrialCalc();
+  listInstallment: Array<InstallmentObj>;
   PriceLabel: string = "Asset Price";
+  IsTrialCalc: boolean = false;
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -39,13 +44,29 @@ export class SchmRegulerFixComponent implements OnInit {
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
 
-    if(this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA){
-      this.PriceLabel = "Financing Amount";
+    if (this.AppId != null) {
+
+      if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
+        this.PriceLabel = "Financing Amount";
+      }
+      this.http.post(URLConstant.GetAppInstSchldTableByAppId, { AppId: this.AppId }).subscribe(
+        (response) => {
+          this.listInstallment = response['InstallmentTable'];
+        });
+      this.IsTrialCalc = false;
+    }
+    else if (this.TrialCalc != null && this.TrialCalc) {
+      this.IsTrialCalc = true;
+    }
+    if (this.InstAmt != 0) {
+      this.ParentForm.patchValue({
+        InstAmt: this.InstAmt
+      });
     }
   }
 
   LoadDDLRateType() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeRateType  }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeRateType }).subscribe(
       (response) => {
         this.RateTypeOptions = response[CommonConstant.ReturnObj];
       }
@@ -59,7 +80,7 @@ export class SchmRegulerFixComponent implements OnInit {
         this.CalcBaseOptions = response[CommonConstant.ReturnObj];
         this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.MappingCode.indexOf(CommonConstant.InstSchmRegularFix) !== -1);
 
-        if(this.CalcBaseOptions.length == 1){
+        if (this.CalcBaseOptions.length == 1) {
           this.ParentForm.patchValue({
             CalcBase: this.CalcBaseOptions[0].MasterCode
           });
@@ -70,19 +91,19 @@ export class SchmRegulerFixComponent implements OnInit {
   }
 
   LoadDDLGracePeriodType() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGracePeriodType  }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGracePeriodType }).subscribe(
       (response) => {
         this.GracePeriodeTypeOptions = response[CommonConstant.ReturnObj];
       }
     );
   }
 
-  Calculate(){
-    if(this.ParentForm.getRawValue().CalcBase == ''){
+  Calculate() {
+    if (this.ParentForm.getRawValue().CalcBase == '') {
       this.toastr.warningMessage(ExceptionConstant.CHOOSE_CALCULATE_BASE);
       return;
     }
-    if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnInst && this.ParentForm.getRawValue().InstAmt <= 0){
+    if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnInst && this.ParentForm.getRawValue().InstAmt <= 0) {
       this.toastr.warningMessage(ExceptionConstant.INST_AMOUNT_MUST_HIGHER_THAN + " 0");
       return;
     }
@@ -102,59 +123,106 @@ export class SchmRegulerFixComponent implements OnInit {
       return;  
     }
 
-    if(this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
-        && this.ParentForm.controls.IsSubsidyRateExist.value == true 
-        && this.ParentForm.getRawValue().EffectiveRatePrcnt > this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt)
-    {
-      this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_GREATER_THAN_SELL_SUPPL_RATE, this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt));    
-      return;  
+    if (this.ParentForm.getRawValue().CalcBase == CommonConstant.FinDataCalcBaseOnRate
+      && this.ParentForm.controls.IsSubsidyRateExist.value == true
+      && this.ParentForm.getRawValue().EffectiveRatePrcnt > this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt) {
+      this.toastr.warningMessage(String.Format(ExceptionConstant.EFF_RATE_CANNOT_GREATER_THAN_SELL_SUPPL_RATE, this.ParentForm.getRawValue().SellSupplEffectiveRatePrcnt));
+      return;
     }
 
+    if (this.ParentForm.controls.DownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+      this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "Down Payment");
+      return;
+    }
     if (this.ValidateFee() == false) {
       return;
     }
 
-    this.calcRegFixObj = this.ParentForm.getRawValue();
-    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentRegularFix, this.calcRegFixObj).subscribe(
-      (response) => {
-        this.listInstallment = response.InstallmentTable;
-        this.ParentForm.patchValue({
-          TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
-          TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+    if (!this.IsTrialCalc) {
+      this.calcRegFixObj = this.ParentForm.getRawValue();
+      this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentRegularFix, this.calcRegFixObj).subscribe(
+        (response) => {
+          this.listInstallment = response.InstallmentTable;
+          this.ParentForm.patchValue({
+            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
 
-          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
-          FlatRatePrcnt: response.FlatRatePrcnt,
-          InstAmt: response.InstAmt,
+            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+            FlatRatePrcnt: response.FlatRatePrcnt,
+            InstAmt: response.InstAmt,
 
-          GrossYieldPrcnt: response.GrossYieldPrcnt,
+            GrossYieldPrcnt: response.GrossYieldPrcnt,
 
-          TotalInterestAmt: response.TotalInterestAmt,
-          TotalAR: response.TotalARAmt,
+            TotalInterestAmt: response.TotalInterestAmt,
+            TotalAR: response.TotalARAmt,
 
-          NtfAmt: response.NtfAmt,
-          ApvAmt: response.ApvAmt,
+            NtfAmt: response.NtfAmt,
+            ApvAmt: response.ApvAmt,
 
-          TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
-          LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+            TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+            LifeInsCptlzAmt: response.LifeInsCptlzAmt,
 
-          DownPaymentGrossAmt: response.DownPaymentGrossAmt,
-          DownPaymentNettAmt: response.DownPaymentNettAmt,
+            DownPaymentGrossAmt: response.DownPaymentGrossAmt,
+            DownPaymentNettAmt: response.DownPaymentNettAmt,
 
-          SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
-          CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
-          AppSupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt
-        })
-        this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
-        this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
-        this.SetSupplEffectiveRateInput(response.CommissionAmtFromDiffRate);
-        this.SetInstallmentTable();
-        this.SetNeedReCalculate(false);
+            SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
+            CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
+            AppSupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt
+          })
+          this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
+          this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
+          this.SetSupplEffectiveRateInput(response.CommissionAmtFromDiffRate);
+          this.SetInstallmentTable();
+          this.SetNeedReCalculate(false);
 
-        if(this.ParentForm.controls.IsSubsidyRateExist.value == true){
-          this.RefreshSubsidy.emit();
+          if (this.ParentForm.controls.IsSubsidyRateExist.value == true) {
+            this.RefreshSubsidy.emit();
+          }
         }
-      }
-    );
+      );
+    } else {
+      this.calcRegFixObjForTrialCalc = this.ParentForm.getRawValue();
+      this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentRegularFixForTrialCalc, this.calcRegFixObjForTrialCalc).subscribe(
+        (response) => {
+          this.listInstallment = response.InstallmentTable;
+          this.ParentForm.patchValue({
+            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+
+            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+            FlatRatePrcnt: response.FlatRatePrcnt,
+            InstAmt: response.InstAmt,
+
+            GrossYieldPrcnt: response.GrossYieldPrcnt,
+
+            TotalInterestAmt: response.TotalInterestAmt,
+            TotalAR: response.TotalARAmt,
+
+            NtfAmt: response.NtfAmt,
+            ApvAmt: response.ApvAmt,
+
+            TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+            LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+
+            DownPaymentGrossAmt: response.DownPaymentGrossAmt,
+            DownPaymentNettAmt: response.DownPaymentNettAmt,
+
+            SubsidyAmtFromDiffRate: response.SubsidyAmtFromDiffRate,
+            CommissionAmtFromDiffRate: response.CommissionAmtFromDiffRate,
+            AppSupplEffectiveRatePrcnt: response.AppSupplEffectiveRatePrcnt
+          })
+          this.SetSubsidyAmtFromDiffRateInput(response.SubsidyAmtFromDiffRate);
+          this.SetCommissionAmtFromDiffRateInput(response.CommissionAmtFromDiffRate);
+          this.SetSupplEffectiveRateInput(response.CommissionAmtFromDiffRate);
+          this.SetInstallmentTable();
+          this.SetNeedReCalculate(false);
+
+          if (this.ParentForm.controls.IsSubsidyRateExist.value == true) {
+            this.RefreshSubsidy.emit();
+          }
+        }
+      );
+    }
   }
 
   SetInstallmentTable() {
@@ -190,40 +258,40 @@ export class SchmRegulerFixComponent implements OnInit {
     this.SetNeedReCalculate(true);
   }
 
-  Rate_Keyup(event: KeyboardEvent){
+  Rate_Keyup(event: KeyboardEvent) {
     this.SetNeedReCalculate(true);
-    if(event.keyCode >= 48 && event.keyCode <= 57 && this.ParentForm.get("CommissionAmtFromDiffRate").value > 0)
+    if (event.keyCode >= 48 && event.keyCode <= 57 && this.ParentForm.get("CommissionAmtFromDiffRate").value > 0)
       this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
   }
 
-  Rate_Paste(event: ClipboardEvent){
+  Rate_Paste(event: ClipboardEvent) {
     this.SetNeedReCalculate(true);
     this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
   }
 
-  SupplEffectiveRatePrcnt_FocusOut(){
+  SupplEffectiveRatePrcnt_FocusOut() {
     this.SetCommissionAmtFromDiffRateInput(0);
     this.SetNeedReCalculate(true);
   }
 
-  SupplRate_Keyup(event: KeyboardEvent){
+  SupplRate_Keyup(event: KeyboardEvent) {
     this.SetNeedReCalculate(true);
-    if(event.keyCode >= 48 && event.keyCode <= 57 && this.ParentForm.get("CommissionAmtFromDiffRate").value > 0)
+    if (event.keyCode >= 48 && event.keyCode <= 57 && this.ParentForm.get("CommissionAmtFromDiffRate").value > 0)
       this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
   }
 
-  SupplRate_Paste(event: ClipboardEvent){
+  SupplRate_Paste(event: ClipboardEvent) {
     this.SetNeedReCalculate(true);
     this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
   }
 
-  InstallmentAmount_Keyup(event: KeyboardEvent){
+  InstallmentAmount_Keyup(event: KeyboardEvent) {
     this.SetNeedReCalculate(true);
-    if(event.keyCode >= 48 && event.keyCode <= 57 && this.ParentForm.get("CommissionAmtFromDiffRate").value > 0)
+    if (event.keyCode >= 48 && event.keyCode <= 57 && this.ParentForm.get("CommissionAmtFromDiffRate").value > 0)
       this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
   }
 
-  InstallmentAmount_Paste(event: ClipboardEvent){
+  InstallmentAmount_Paste(event: ClipboardEvent) {
     this.SetNeedReCalculate(true);
     this.ParentForm.get("CommissionAmtFromDiffRate").patchValue(0);
   }
@@ -233,64 +301,64 @@ export class SchmRegulerFixComponent implements OnInit {
     this.SetNeedReCalculate(true);
   }
 
-  SetSubsidyAmtFromDiffRateInput(subsidyAmtFromDiffRate){
-    if(subsidyAmtFromDiffRate > 0){
+  SetSubsidyAmtFromDiffRateInput(subsidyAmtFromDiffRate) {
+    if (subsidyAmtFromDiffRate > 0) {
       this.ParentForm.patchValue({
         CommissionAmtFromDiffRate: 0
       });
       this.ParentForm.get("CommissionAmtFromDiffRate").disable();
     }
-    else{
-      if(this.ParentForm.controls.IsSubsidyRateExist.value == false){
-        this.ParentForm.get("CommissionAmtFromDiffRate").enable(); 
-      }
-    }
-  }
-
-  CommissionAmtFromDiffRate_FocusOut(event){
-    this.SetCommissionAmtFromDiffRateInput(this.ParentForm.get("CommissionAmtFromDiffRate").value);
-    this.SetSupplEffectiveRateInput(this.ParentForm.get("CommissionAmtFromDiffRate").value);
-    this.SetNeedReCalculate(true);
-  }
-
-  SetCommissionAmtFromDiffRateInput(commissionAmtFromDiffRate){
-    if(commissionAmtFromDiffRate > 0){
-      this.ParentForm.patchValue({
-        SubsidyAmtFromDiffRate: 0
-      });
-      if(this.ParentForm.controls.IsSubsidyRateExist.value == false){
+    else {
+      if (this.ParentForm.controls.IsSubsidyRateExist.value == false) {
         this.ParentForm.get("CommissionAmtFromDiffRate").enable();
       }
     }
   }
 
-  SetSupplEffectiveRateInput(commissionAmtFromDiffRate){
-    if(commissionAmtFromDiffRate > 0){
-      this.ParentForm.get("AppSupplEffectiveRatePrcnt").disable(); 
-    }else{
-      this.ParentForm.get("AppSupplEffectiveRatePrcnt").enable(); 
+  CommissionAmtFromDiffRate_FocusOut(event) {
+    this.SetCommissionAmtFromDiffRateInput(this.ParentForm.get("CommissionAmtFromDiffRate").value);
+    this.SetSupplEffectiveRateInput(this.ParentForm.get("CommissionAmtFromDiffRate").value);
+    this.SetNeedReCalculate(true);
+  }
+
+  SetCommissionAmtFromDiffRateInput(commissionAmtFromDiffRate) {
+    if (commissionAmtFromDiffRate > 0) {
+      this.ParentForm.patchValue({
+        SubsidyAmtFromDiffRate: 0
+      });
+      if (this.ParentForm.controls.IsSubsidyRateExist.value == false) {
+        this.ParentForm.get("CommissionAmtFromDiffRate").enable();
+      }
     }
   }
 
-  CalcBaseChanged(event){
+  SetSupplEffectiveRateInput(commissionAmtFromDiffRate) {
+    if (commissionAmtFromDiffRate > 0) {
+      this.ParentForm.get("AppSupplEffectiveRatePrcnt").disable();
+    } else {
+      this.ParentForm.get("AppSupplEffectiveRatePrcnt").enable();
+    }
+  }
+
+  CalcBaseChanged(event) {
     this.SetEnableDisableInputByCalcBase(event.target.value);
     this.SetNeedReCalculate(true);
   }
 
-  SetEnableDisableInputByCalcBase(calcBase){
-    if(calcBase == CommonConstant.FinDataCalcBaseOnRate){
+  SetEnableDisableInputByCalcBase(calcBase) {
+    if (calcBase == CommonConstant.FinDataCalcBaseOnRate) {
       this.ParentForm.get("RateType").enable();
       this.ParentForm.get("EffectiveRatePrcnt").enable();
       this.ParentForm.get("InstAmt").disable();
-    }else if(calcBase == CommonConstant.FinDataCalcBaseOnInst){
+    } else if (calcBase == CommonConstant.FinDataCalcBaseOnInst) {
       this.ParentForm.get("RateType").disable();
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").enable();
-    }else if(calcBase == CommonConstant.FinDataCalcBaseOnCommission){
+    } else if (calcBase == CommonConstant.FinDataCalcBaseOnCommission) {
       this.ParentForm.get("RateType").disable();
       this.ParentForm.get("EffectiveRatePrcnt").disable();
       this.ParentForm.get("InstAmt").disable();
-    }else{
+    } else {
       this.ParentForm.get("RateType").enable();
       this.ParentForm.get("EffectiveRatePrcnt").enable();
       this.ParentForm.get("InstAmt").enable();

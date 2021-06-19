@@ -1,0 +1,214 @@
+<div formGroupName="{{identifier}}">
+    <lib-ucSubsection [id]="'jobDataId'" [title]="'Job Data'" [panel]="'jobData'"></lib-ucSubsection>
+    <div id="jobData">
+      <div>
+        <div class="form-group row">
+          <label class="col-md-2" for="custModel" translate>Customer Model</label>
+          <div class="col-md-4">
+            <select [attr.disabled]="isLockMode == true ? true : null" class="form-control" id="custModel" formControlName="CustModelCode" (change)="CustModelChanged(true)"
+            [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].CustModelCode.invalid }">
+              <option *ngFor="let item of CustModelObj" [value]="item.Key">
+                {{item.Value}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div *ngIf="custModelCode == 'PROF'">
+          <div class="form-group row">
+            <label class="col-md-2 adins-required-label" for="professionName" translate>Profession Name</label>
+            <div class="col-md-4">
+              <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupProfessionObj" [parentForm]="parentForm" [identifier]="'lookupProfessionJobData'" (lookup)="GetProfession($event)"></lib-uclookupgeneric>
+            </div>
+            <!-- <label class="col-md-2 adins-required-label" for="industryType" translate>Industry Type</label>
+            <div class="col-md-4">
+              <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupIndustryTypeObj" [parentForm]="parentForm" [identifier]="'lookupIndustryType'" (lookup)="GetIndustryType($event)"></lib-uclookupgeneric>
+            </div> -->
+            <label class="col-md-2 adins-required-label" *ngIf="custModelCode != 'NONPROF'" translate>Economic Sector SLIK</label>
+              <div class="col-md-4" *ngIf="custModelCode != 'NONPROF'">
+                <lib-uclookupgeneric *ngIf="IsLookupIndustryTypeReady" [enjiForm]="enjiForm"
+                  [lookupInput]="InputLookupIndustryTypeObj" [parentForm]="parentForm"
+                  [identifier]="'lookupIndustryType'" (lookup)="GetIndustryType($event)">
+                </lib-uclookupgeneric>
+              </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-2" for="professionalNo" translate>Professional No</label>
+            <div class="col-md-4">
+              <input [attr.disabled]="isLockMode == true ? true : null" type="text" class="form-control" id="professionalNo" formControlName="ProfessionalNo"
+              [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].ProfessionalNo.invalid }">
+              <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].ProfessionalNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>       
+            </div>
+            <label class="col-md-2" for="establishmentDt" translate>Establishment Date</label>
+            <div class="col-md-4">
+              <input [attr.disabled]="isLockMode == true ? true : null" type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" id="establishmentDt" class="form-control" formControlName="EstablishmentDt">
+              <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].EstablishmentDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>       
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-2" for="jobTitleName" translate>Job Title Name</label>
+            <div class="col-md-4">
+              <input [attr.disabled]="isLockMode == true ? true : null" type="text" class="form-control" id="jobTitleName" formControlName="JobTitleName"
+              [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].JobTitleName.invalid }">
+              <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].JobTitleName" [submit]="enjiForm.submitted"></lib-uc-show-errors>       
+            </div>
+          </div>
+          <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForJobData" [enjiForm]="enjiForm" [identifier]="'jobDataAddr'" [UCAddrForm]="parentForm"></lib-ucaddress>
+          <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'jobDataAddr'" [default]="jobDataAddrObj" [inputField]="inputFieldJobDataObj" [showPhn3]="false"></lib-ucaddress> -->
+        </div>
+        <div *ngIf="custModelCode == 'EMP'">
+          <div class="form-group row">
+            <label class="col-md-2 adins-required-label" for="professionName" translate>Profession Name</label>
+            <div class="col-md-4">
+              <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupProfessionObj" [parentForm]="parentForm" [identifier]="'lookupProfessionJobData'" (lookup)="GetProfession($event)"></lib-uclookupgeneric>
+            </div>
+            <label class="col-md-2" for="internalEmp" translate>Internal Employee</label>
+            <div class="col-md-4">
+              <input [attr.disabled]="isLockMode == true ? true : null" type="checkbox" id="internalEmp" data-md-icheck formControlName="IsMfEmp">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-2 adins-required-label" for="companyName" translate>Company Name</label>
+            <div class="col-md-4">
+              <input [attr.disabled]="isLockMode == true ? true : null" type="text" class="form-control" id="companyName" formControlName="CompanyName"
+              [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].CompanyName.invalid }">
+              <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].CompanyName" [submit]="enjiForm.submitted"></lib-uc-show-errors>       
+            </div>
+            <label class="col-md-2 adins-required-label" *ngIf="custModelCode != 'NONPROF'" translate>Economic Sector SLIK</label>
+            <div class="col-md-4" *ngIf="custModelCode != 'NONPROF'">
+              <lib-uclookupgeneric *ngIf="IsLookupIndustryTypeReady" [enjiForm]="enjiForm"
+                [lookupInput]="InputLookupIndustryTypeObj" [parentForm]="parentForm"
+                [identifier]="'lookupIndustryType'" (lookup)="GetIndustryType($event)">
+              </lib-uclookupgeneric>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-2" for="jobPosition" translate>Job Position</label>
+            <div class="col-md-4">
+              <select [attr.disabled]="isLockMode == true ? true : null" class="form-control" id="jobPosition" formControlName="MrJobPositionCode">
+                <option *ngFor="let item of JobPositionObj" [value]="item.Key">
+                  {{item.Value}}
+                </option>
+              </select>
+            </div>
+            <label class="col-md-2" for="companyScale" translate>Company Scale</label>
+            <div class="col-md-4">
+              <select [attr.disabled]="isLockMode == true ? true : null" class="form-control" id="companyScale" formControlName="MrCompanyScaleCode">
+                <option *ngFor="let item of CompanyScaleObj" [value]="item.Key">
+                  {{item.Value}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-2" for="jobTitleName" translate>Job Title Name</label>
+            <div class="col-md-4">
+              <input [attr.disabled]="isLockMode == true ? true : null" type="text" class="form-control" id="jobTitleName" formControlName="JobTitleName"
+              [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].JobTitleName.invalid }">
+              <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].JobTitleName" [submit]="enjiForm.submitted"></lib-uc-show-errors>       
+            </div>
+            <label class="col-md-2" for="numOfEmp" translate>Number of Employee</label>
+            <div class="col-md-2">
+              <input [attr.disabled]="isLockMode == true ? true : null" type="number" min="0" class="form-control" id="numOfEmp" formControlName="NumOfEmployee"
+              [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].NumOfEmployee.invalid }">
+              <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].NumOfEmployee" [submit]="enjiForm.submitted"></lib-uc-show-errors>       
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-2" id="jobStatus" name="jobStatus" for="jobStatus" translate>Job Status</label>
+            <div class="col-md-4">
+              <select [attr.disabled]="isLockMode == true ? true : null" class="form-control" id="jobStatus" formControlName="MrJobStatCode">
+                <option *ngFor="let item of JobStatObj" [value]="item.Key">
+                  {{item.Value}}
+                </option>
+              </select>
+            </div>
+            <label class="col-md-2" for="establishmentDt" translate>Establishment Date</label>
+            <div class="col-md-4">
+              <input [attr.disabled]="isLockMode == true ? true : null" type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" id="establishmentDt" class="form-control" formControlName="EstablishmentDt">
+            </div>
+          </div>
+          <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForJobData" [enjiForm]="enjiForm" [identifier]="'jobDataAddr'" [UCAddrForm]="parentForm"></lib-ucaddress>
+          <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'jobDataAddr'" [default]="jobDataAddrObj" [inputField]="inputFieldJobDataObj" [showPhn3]="false"></lib-ucaddress> -->
+        </div>
+        <div *ngIf="custModelCode == 'SME'">
+          <div class="form-group row">
+            <label class="col-md-2 adins-required-label" for="professionName" translate>Profession Name</label>
+            <div class="col-md-4">
+              <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupProfessionObj" [parentForm]="parentForm" [identifier]="'lookupProfessionJobData'" (lookup)="GetProfession($event)"></lib-uclookupgeneric>
+            </div>
+            <label class="col-md-2" for="numOfEmp" translate>Number of Employee</label>
+            <div class="col-md-2">
+              <input [attr.disabled]="isLockMode == true ? true : null" type="number" min="0" class="form-control" id="numOfEmp" formControlName="NumOfEmployee"
+              [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].NumOfEmployee.invalid }">
+              <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].NumOfEmployee" [submit]="enjiForm.submitted"></lib-uc-show-errors>       
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-2 adins-required-label" for="companyName" translate>Company Name</label>
+            <div class="col-md-4">
+              <input [attr.disabled]="isLockMode == true ? true : null" type="text" class="form-control" id="companyName" formControlName="CompanyName"
+              [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].CompanyName.invalid }">
+              <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].CompanyName" [submit]="enjiForm.submitted"></lib-uc-show-errors>       
+            </div>
+            <label class="col-md-2 adins-required-label" *ngIf="custModelCode != 'NONPROF'" translate>Economic Sector SLIK</label>
+              <div class="col-md-4" *ngIf="custModelCode != 'NONPROF'">
+                <lib-uclookupgeneric *ngIf="IsLookupIndustryTypeReady" [enjiForm]="enjiForm"
+                  [lookupInput]="InputLookupIndustryTypeObj" [parentForm]="parentForm"
+                  [identifier]="'lookupIndustryType'" (lookup)="GetIndustryType($event)">
+                </lib-uclookupgeneric>
+              </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-2" for="jobPosition" translate>Job Position</label>
+            <div class="col-md-4">
+              <select [attr.disabled]="isLockMode == true ? true : null" class="form-control" id="jobPosition" formControlName="MrJobPositionCode">
+                <option *ngFor="let item of JobPositionObj" [value]="item.Key">
+                  {{item.Value}}
+                </option>
+              </select>
+            </div>
+            <label class="col-md-2" for="companyScale" translate>Company Scale</label>
+            <div class="col-md-4">
+              <select [attr.disabled]="isLockMode == true ? true : null" class="form-control" id="companyScale" formControlName="MrCompanyScaleCode">
+                <option *ngFor="let item of CompanyScaleObj" [value]="item.Key">
+                  {{item.Value}}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-2" for="jobTitleName" translate>Job Title Name</label>
+            <div class="col-md-4">
+              <input [attr.disabled]="isLockMode == true ? true : null" type="text" class="form-control" id="jobTitleName" formControlName="JobTitleName"
+              [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].JobTitleName.invalid }">
+              <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].JobTitleName" [submit]="enjiForm.submitted"></lib-uc-show-errors>       
+            </div>
+            <label class="col-md-2" for="establishmentDt" translate>Establishment Date</label>
+            <div class="col-md-4">
+              <input [attr.disabled]="isLockMode == true ? true : null" type="date" max="{{MaxDate | date:'yyyy-MM-dd'}}" id="establishmentDt" class="form-control" formControlName="EstablishmentDt">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-2" for="investmentType" translate>Investment Type</label>
+            <div class="col-md-4">
+              <mat-radio-group [attr.disabled]="isLockMode == true ? true : null" formControlName="MrInvestmentTypeCode">
+                <mat-radio-button class="custom-control custom-radio display-inline-block" *ngFor="let item of InvestmentTypeObj" [value]="item.Key">
+                  {{item.Value}}
+                </mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+          <lib-ucaddress #UcAddrGrp [addressObj]="inputAddressObjForJobData" [enjiForm]="enjiForm" [identifier]="'jobDataAddr'" [UCAddrForm]="parentForm"></lib-ucaddress>
+          <!-- <lib-ucaddress #UcAddrGrp [showSubsection]="false" [UCAddrForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'jobDataAddr'" [default]="jobDataAddrObj" [inputField]="inputFieldJobDataObj" [showPhn3]="false"></lib-ucaddress> -->
+        </div>
+        <div *ngIf="custModelCode == 'NONPROF'">
+          <div class="form-group row">
+            <label class="col-md-2 adins-required-label" for="professionName" translate>Profession Name</label>
+            <div class="col-md-4">
+              <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupProfessionObj" [parentForm]="parentForm" [identifier]="'lookupProfessionJobData'" (lookup)="GetProfession($event)"></lib-uclookupgeneric>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

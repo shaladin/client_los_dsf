@@ -1,0 +1,110 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "CustMainInfoHeaderId",
+        "subSectionTitle": "Mou Detail",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Virtual Account",
+            "property": "virtualAccNo"
+          },
+          {
+            "type": "text",
+            "label": "Currency",
+            "property": "currency"
+          },
+          {
+            "type": "text",
+            "label": "Way Of Payment",
+            "property": "wop"
+          },
+          {
+            "type": "text",
+            "label": "TOP Days",
+            "property": "topDays"
+          },
+          {
+            "type": "text",
+            "label": "TOP Interest Rate (%)",
+            "property": "topInterestRatePrcnt"
+          },
+          {
+            "type": "text",
+            "label": "Payment Frequency",
+            "property": "payFreq"
+          },
+          {
+            "type": "text",
+            "label": "Interest Rate (%)",
+            "property": "interestRatePrcnt"
+          },
+          {
+            "type": "text",
+            "label": "Extend Rate (%)",
+            "property": "extendRatePrcnt"
+          },
+          {
+            "type": "text",
+            "label": "Maximum Month For Extend",
+            "property": "maximumMonthForExtend"
+          },
+          {
+            "type": "text",
+            "label": "Maximum Extend Times",
+            "property": "maximumExtendTimes"
+          },
+          {
+            "type": "text",
+            "label": "Spare Day To Pay",
+            "property": "spareDayToPay"
+          },
+          {
+            "type": "text",
+            "label": "Asset Condition",
+            "property": "assetCondition"
+          },
+          {
+            "type": "text",
+            "label": "Principal Paid In Extend (%)",
+            "property": "principalPaidInExtendPrcntgChange"
+          },
+          {
+            "type": "text",
+            "label": "Delaer Code",
+            "property": "dealerCode"
+          },
+          {
+            "type": "text",
+            "label": "Delaer Customer No",
+            "property": "dealerCustNo"
+          },
+          {
+            "type": "text",
+            "label": "Manufacturer Code",
+            "property": "manufacturerCode"
+          },
+          {
+            "type": "text",
+            "label": "Manufacturer Customer No",
+            "property": "manufacturerCustNo"
+          },
+          {
+            "type": "text",
+            "label": "LC Rate (%)",
+            "property": "lcRate"
+          },
+          {
+            "type": "text",
+            "label": "Notes",
+            "property": "notes"
+          }
+        ],
+        "querystring": {
+          "name": "viewChangeMouDetailFinancing"
+        }
+      }
+    ]
+  }

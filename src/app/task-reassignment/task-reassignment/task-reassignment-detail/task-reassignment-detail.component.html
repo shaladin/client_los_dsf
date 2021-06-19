@@ -1,0 +1,55 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <form class="form form-horizontal" [formGroup]="TaskReassignmentForm" (ngSubmit)="TaskReassignmentForm.valid && SaveForm()"
+          #enjiForm="ngForm">
+          <lib-ucSubsection [id]="'TaskReassignmentDetailId'" [title]="'Task Reassignment Detail'" [panel]="'TaskReassignmentDetailSection'">
+          </lib-ucSubsection>
+          <div id="TaskReassignmentDetailSection">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Transaction No</label>
+                  <label class="col-md-8" translate>{{TaskReassignmentForm.controls.WfRefNo.value}}</label>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Workflow Name</label>
+                  <label class="col-md-8">{{TaskReassignmentForm.controls.WfName.value}}</label>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Activity Name</label>
+                  <label class="col-md-8">{{WfActivityName}}</label>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Current User</label>
+                  <label class="col-md-8">{{TaskReassignmentForm.controls.OldCurrentUser.value}}</label>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4" translate>Assign To</label>
+                  <div class="col-md-8">
+                    <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupObj"
+                      [parentForm]="TaskReassignmentForm" [identifier]="'User'" *ngIf="IsReady"
+                      (lookup)="GetTargetUser($event)">
+                    </lib-uclookupgeneric>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-left: -20px; margin-right: -20px;">
+              <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady" (result)="SaveForm()" #ApprovalComponent></lib-ucapprovalcreate>
+            </div>
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate>
+                <i class="ft-x"></i> Cancel
+              </button>
+              <button type="submit" class="btn btn-raised btn-primary">
+                <i class="fa fa-check-square"></i> Save
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

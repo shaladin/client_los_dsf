@@ -154,7 +154,7 @@ export class FinancialPersonalComponent implements OnInit {
     this.AppCustPersonalFinData.AppCustPersonalId = this.AppCustPersonalId;
 
     let request = {
-      ListAppCustFinDataAttrObj: this.CustAttrRequest,
+      ListAppCustAttrObj: this.CustAttrRequest,
       AppCustPersonalFinDataObj: this.AppCustPersonalFinData,
       AttrGroups: this.AttrGroups
     }

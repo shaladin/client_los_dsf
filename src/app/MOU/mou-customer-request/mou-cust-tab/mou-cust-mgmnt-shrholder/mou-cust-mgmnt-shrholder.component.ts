@@ -15,6 +15,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-mou-cust-mgmnt-shrholder',
@@ -27,43 +29,35 @@ export class MouCustMgmntShrholderComponent implements OnInit {
 
   @Input() listShareholder: Array<AppCustCompanyMgmntShrholderObj> = new Array<AppCustCompanyMgmntShrholderObj>();
 
-  @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() callbackSubmit: EventEmitter<Array<AppCustCompanyMgmntShrholderObj>> = new EventEmitter();
 
-  mode: any;
-  currentEditedIndex: any;
-  selectedCustNo: any;
-  selectedIndustryTypeCode: any;
+  mode: string;
+  currentEditedIndex: number;
+  selectedCustNo: string;
+  selectedIndustryTypeCode: string;
 
   closeResult: any;
   appCustCompanyMgmntShrholderObj: AppCustCompanyMgmntShrholderObj;
 
-  refMasterObj = {
-    RefMasterTypeCode: ""
-  };
+  InputLookupCustomerObj: InputLookupObj;
+  InputLookupIndustryTypeObj: InputLookupObj;
 
-  industryTypeObj = {
-    IndustryTypeCode: ""
-  };
-
-  InputLookupCustomerObj: any;
-  InputLookupIndustryTypeObj: any;
-
-  CustTypeObj: any;
-  defaultCustType: any;
-  GenderObj: any;
-  defaultGender: any;
-  IdTypeObj: any;
-  defaultIdType: any;
-  JobPositionObj: any;
-  defaultJobPosition: any;
-  CompanyTypeObj: any;
-  defaultCompanyType: any;
-  industryTypeName: any;
+  CustTypeObj: Array<KeyValueObj>;
+  defaultCustType: string;
+  GenderObj: Array<KeyValueObj>;
+  defaultGender: string;
+  IdTypeObj: Array<KeyValueObj>;
+  defaultIdType: string;
+  JobPositionObj: Array<KeyValueObj>;
+  defaultJobPosition: string;
+  CompanyTypeObj: Array<KeyValueObj>;
+  defaultCompanyType: string;
+  industryTypeName: string;
   isCust: boolean = false;
-  selectedCustTypeName: any;
-  selectedJobPositionName: any;
-  defaultCustTypeName: any;
-  defaultJobPositionName: any;
+  selectedCustTypeName: string;
+  selectedJobPositionName: string;
+  defaultCustTypeName: string;
+  defaultJobPositionName: string;
 
 
 
@@ -97,7 +91,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
 
   }
 
-  UserAccess: any;
+  UserAccess: CurrentUserContext;
   MaxDate: Date;
   Max17YO: Date;
   ngOnInit() {
@@ -194,7 +188,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     this.open(content);
   }
 
-  edit(i, content) {
+  edit(i: number, content) {
     this.clearForm();
     this.mode = "edit";
     this.currentEditedIndex = i;
@@ -313,7 +307,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     if (event.MrCustTypeCode == CommonConstant.CustTypePersonal) {
       url = URLConstant.GetCustPersonalForCopyMgmntShrholderByCustId;
     }
-    if (event.MrCustTypeCode == CommonConstant.CustTypeCompany) {
+    else if (event.MrCustTypeCode == CommonConstant.CustTypeCompany) {
       url = URLConstant.GetCustCompanyForCopyMgmntShrholderByCustId;
     }
 
@@ -450,8 +444,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     this.selectedIndustryTypeCode = event.IndustryTypeCode;
   }
 
-  setIndustryTypeName(industryTypeCode) {
-    this.industryTypeObj.IndustryTypeCode = industryTypeCode;
+  setIndustryTypeName(industryTypeCode: string) {
     this.http.post(URLConstant.GetRefIndustryTypeByCode, {Code: industryTypeCode}).subscribe(
       (response) => {
         this.InputLookupIndustryTypeObj.nameSelect = response["IndustryTypeName"];
@@ -508,8 +501,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   }
 
   bindCustTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).subscribe(
       (response) => {
         this.CustTypeObj = response[CommonConstant.ReturnObj];
         if (this.CustTypeObj.length > 0) {
@@ -522,8 +514,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   }
 
   bindGenderObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).subscribe(
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
@@ -534,8 +525,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   }
 
   bindIdTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeIdType;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
       (response) => {
         this.IdTypeObj = response[CommonConstant.ReturnObj];
         if (this.IdTypeObj.length > 0) {
@@ -546,8 +536,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   }
 
   bindJobPositionObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeJobPosition;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition }).subscribe(
       (response) => {
         this.JobPositionObj = response[CommonConstant.ReturnObj];
         if (this.JobPositionObj.length > 0) {
@@ -559,8 +548,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
   }
 
   bindCompanyTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCompanyType;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCompanyType }).subscribe(
       (response) => {
         this.CompanyTypeObj = response[CommonConstant.ReturnObj];
         if (this.CompanyTypeObj.length > 0) {
@@ -579,7 +567,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     });
   }
 
-  private getDismissReason(reason: any): string {
+  private getDismissReason(reason): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {

@@ -1,9 +1,9 @@
 export class LeadCustSocmedObj{
-    LeadCustSocmedId: any;
-    LeadCustId: any;
-    MrSocmedCode: any;
-    MrSocmedName: any;
-    SocmedId: any;
-    RowVersion: any;
+    LeadCustSocmedId: number;
+    LeadCustId: number;
+    MrSocmedCode: string;
+    MrSocmedName: string;
+    SocmedId: number;
+    RowVersion: string;
     constructor() { this.LeadCustSocmedId = 0, this.RowVersion = "" }
 }

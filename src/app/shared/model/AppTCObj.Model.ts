@@ -3,18 +3,18 @@ export class AppTCObj{
     AppId: number;
     TcName : string;
     TcCode: string;
-    PriorTo: any;
+    PriorTo: string;
     IsChecked: boolean;
     IsMandatory: boolean;
-    PromisedDt: any;
-    CheckedDt: any;
+    PromisedDt: Date;
+    CheckedDt: Date;
     Notes: string;
-    ExpiredDt: any;
+    ExpiredDt: Date;
     IsAdditional: boolean;
     IsExpDtMandatory: boolean;
     IsWaivable: boolean;
     IsWaived: boolean;
-    RowVersion: any;
+    RowVersion: string;
     constructor() { 
         this.RowVersion = "";
     }

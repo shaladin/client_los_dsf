@@ -20,8 +20,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   BizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-  inputObj: { taskId: any; instanceId: any; approvalBaseUrl: any; };
-  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   ApvReqId: number;
   taskId: number;
   InputApvObj: UcInputApprovalObj;
@@ -29,6 +28,7 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   TrxNo: string;
   IsReady: boolean = false;
+  arrValue = [];
   constructor(private router: Router, private route: ActivatedRoute, private toastr: NGXToastrService, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
 
@@ -44,6 +44,7 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.arrValue.push(this.TrxNo);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewOfferingValidityCheckingApproval.json";
     this.initInputApprovalObj();
   }
@@ -79,7 +80,7 @@ export class OfferingValidityCheckingApprovalDetailComponent implements OnInit {
     AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_OFFERING_VALIDITY_APPRV_PAGING],{ "BizTemplateCode": this.BizTemplateCode});
   }
 
-  GetCallBack(ev: any) {
+  GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }

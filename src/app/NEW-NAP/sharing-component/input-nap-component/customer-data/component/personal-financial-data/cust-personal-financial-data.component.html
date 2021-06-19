@@ -6,13 +6,13 @@
       <div class="form-group row">
         <label class="col-md-2 adins-required-label" for="monthlyIncome" translate>Monthly Income </label>
         <div class="col-md-4">
-          <input type="" currencyMask id="monthlyIncome" class="form-control" formControlName="MonthlyIncomeAmt" [options]="{ allowNegative: false}" [(ngModel)]="appCustPersonalFinDataObj.MonthlyIncomeAmt"
+          <input [attr.disabled]="isLockMode" type="" currencyMask id="monthlyIncome" class="form-control" formControlName="MonthlyIncomeAmt" [options]="{ allowNegative: false}" [(ngModel)]="appCustPersonalFinDataObj.MonthlyIncomeAmt"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MonthlyIncomeAmt.invalid }" (change)="ChangeTotalMonthly()" (keyup)="ChangeTotalMonthly()">
           <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MonthlyIncomeAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
         <label class="col-md-2" for="monthlyExpense" translate>Monthly Expense </label>
         <div class="col-md-4">
-          <input type="" currencyMask id="monthlyExpense" class="form-control" formControlName="MonthlyExpenseAmt" [options]="{ allowNegative: false}" [(ngModel)]="appCustPersonalFinDataObj.MonthlyExpenseAmt"
+          <input [attr.disabled]="isLockMode" type="" currencyMask id="monthlyExpense" class="form-control" formControlName="MonthlyExpenseAmt" [options]="{ allowNegative: false}" [(ngModel)]="appCustPersonalFinDataObj.MonthlyExpenseAmt"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MonthlyExpenseAmt.invalid }" (change)="ChangeTotalMonthly()" (keyup)="ChangeTotalMonthly()">
           <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MonthlyExpenseAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
@@ -20,7 +20,7 @@
       <div class="form-group row">
         <label class="col-md-2" for="sourceOfIncome" translate>Source of Income </label>
         <div class="col-md-4">
-          <select class="form-control" id="sourceOfIncome" formControlName="MrSourceOfIncomeTypeCode" [(ngModel)]="appCustPersonalFinDataObj.MrSourceOfIncomeTypeCode">
+          <select [attr.disabled]="isLockMode" class="form-control" id="sourceOfIncome" formControlName="MrSourceOfIncomeTypeCode" [(ngModel)]="appCustPersonalFinDataObj.MrSourceOfIncomeTypeCode">
             <option *ngFor="let item of SourceOfIncomeObj" [value]="item.Key">
               {{item.Value}}
             </option>
@@ -28,7 +28,7 @@
         </div>
         <label class="col-md-2" for="monthlyInstallment" translate>Monthly Installment </label>
         <div class="col-md-4">
-          <input type="" currencyMask id="monthlyInstallmentAmt" class="form-control" formControlName="MonthlyInstallmentAmt" [options]="{ allowNegative: false}" [(ngModel)]="appCustPersonalFinDataObj.MonthlyInstallmentAmt"
+          <input [attr.disabled]="isLockMode" type="" currencyMask id="monthlyInstallmentAmt" class="form-control" formControlName="MonthlyInstallmentAmt" [options]="{ allowNegative: false}" [(ngModel)]="appCustPersonalFinDataObj.MonthlyInstallmentAmt"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].MonthlyInstallmentAmt.invalid }" (change)="ChangeTotalMonthly()" (keyup)="ChangeTotalMonthly()">
           <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].MonthlyInstallmentAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>
@@ -36,13 +36,13 @@
       <div class="form-group row" *ngIf="isMarried == true">
         <label class="col-md-2" translate>Join Income </label>
         <div class="col-md-4">
-          <input class="border-primary" type="checkbox" data-md-icheck formControlName="IsJoinIncome" (change)="setSpouseMonthlyIncome()" [(ngModel)]="appCustPersonalFinDataObj.IsJoinIncome"/>
+          <input [attr.disabled]="isLockMode" class="border-primary" type="checkbox" data-md-icheck formControlName="IsJoinIncome" (change)="setSpouseMonthlyIncome()" [(ngModel)]="appCustPersonalFinDataObj.IsJoinIncome"/>
         </div>
       </div>
       <div class="form-group row" *ngIf="parentForm.controls[identifier]['controls'].IsJoinIncome.value == true && isMarried">
         <label class="col-md-2" for="spouseMonthlyIncome" translate>Spouse Monthly Income </label>
         <div class="col-md-4">
-          <input type="" currencyMask id="spouseMonthlyIncome" class="form-control" formControlName="SpouseMonthlyIncomeAmt" [options]="{ allowNegative: false}" [(ngModel)]="appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt"
+          <input [attr.disabled]="isLockMode" type="" currencyMask id="spouseMonthlyIncome" class="form-control" formControlName="SpouseMonthlyIncomeAmt" [options]="{ allowNegative: false}" [(ngModel)]="appCustPersonalFinDataObj.SpouseMonthlyIncomeAmt"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'].SpouseMonthlyIncomeAmt.invalid }" (change)="ChangeTotalMonthly()" (keyup)="ChangeTotalMonthly()">
           <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'].SpouseMonthlyIncomeAmt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
         </div>

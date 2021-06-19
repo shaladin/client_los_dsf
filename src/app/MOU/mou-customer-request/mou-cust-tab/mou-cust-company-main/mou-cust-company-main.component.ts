@@ -18,6 +18,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ResListKeyValueObj } from 'app/shared/model/Response/Generic/ResListKeyValueObj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-mou-cust-company-main',
@@ -31,9 +32,9 @@ export class MouCustCompanyMainComponent implements OnInit {
   @Input() MouCustId;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() custDataCompanyObj: MouCustCompanyDataObj = new MouCustCompanyDataObj();
-  @Input() custType: any;
+  @Input() custType: string;
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
   AppObj: AppObj = new AppObj();
 
@@ -43,16 +44,14 @@ export class MouCustCompanyMainComponent implements OnInit {
   refIndustryObj = {
     IndustryTypeCode: ""
   };
-  selectedCustNo: any;
-  selectedIndustryTypeCode: any;
+  selectedCustNo: string;
   custDataObj: CustDataObj;
 
-  InputLookupCustomerObj: any;
-  InputLookupIndustryTypeObj: any;
-  IdTypeObj: any;
-  CompanyTypeObj: any;
+  InputLookupCustomerObj: InputLookupObj;
+  InputLookupIndustryTypeObj: InputLookupObj;
+  CompanyTypeObj: Array<KeyValueObj> = new Array();
   CustModelObj: Array<KeyValueObj> = new Array<KeyValueObj>();
-  UserAccess: any;
+  UserAccess: CurrentUserContext;
   MaxDate: Date;
   custModelReqObj: ReqRefMasterByTypeCodeAndMappingCodeObj;
 

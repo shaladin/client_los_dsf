@@ -4,6 +4,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditReview/CrdRvwDiffAppToInPrcAppCustObj.Model';
 import { ResponseCrdRvwDiffAppToInPrcAppCustObj } from 'app/shared/model/CreditReview/ResponseCrdRvwDiffAppToInPrcAppCustObj.Model';
+import { NapAppModel } from 'app/shared/model/NapApp.Model';
 
 @Component({
   selector: 'app-crd-rvw-diff-with-in-process-app',
@@ -51,7 +52,7 @@ export class CrdRvwDiffWithInProcessAppComponent implements OnInit {
   }
 
   async ClickLinkApp(AppNo: string) {
-    await this.http.post<any>(URLConstant.GetAppByAppNo, { TrxNo: AppNo }).toPromise().then(
+    await this.http.post<NapAppModel>(URLConstant.GetAppByAppNo, { TrxNo: AppNo }).toPromise().then(
       (response) => {
         AdInsHelper.OpenAppViewByAppId(response.AppId);
       }

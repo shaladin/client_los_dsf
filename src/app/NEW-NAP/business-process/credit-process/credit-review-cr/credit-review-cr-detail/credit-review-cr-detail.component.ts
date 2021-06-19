@@ -22,6 +22,9 @@ import { ToastrService } from 'ngx-toastr';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { TypeResultObj } from 'app/shared/model/TypeResult/TypeResultObj.Model';
+import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
 
 @Component({
   selector: 'app-credit-review-cr-detail',
@@ -40,7 +43,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   appId: number = 0;
   wfTaskListId: number = 0;
   isReturnOn: boolean = false;
-  UserAccess: any;
+  UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   Arr: FormArray;
   BizTemplateCode: string = "";
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
@@ -90,7 +93,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
   initData() {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
-    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.Arr = this.FormObj.get('arr') as FormArray;
   }
 
@@ -109,7 +111,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
     this.IsReady = true;
   }
 
-  responseListTypeCodes: Array<any> = new Array();
+  responseListTypeCodes: Array<TypeResultObj> = new Array();
   async GetListDeviation(){    
     await this.http.post(URLConstant.GetListDeviationTypeByAppNo, {TrxNo: this.appNo}).toPromise().then(
       (response) => {
@@ -171,10 +173,9 @@ export class CreditReviewCrDetailComponent implements OnInit {
   }
 
   async ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
+    wfClaimObj.pUserID = this.UserAccess.UserName;
 
     await this.http.post(URLConstant.ClaimTask, wfClaimObj).toPromise().then(
       () => {
@@ -199,7 +200,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   }
 
   //#region DDL Data
-  DDLData: { [id: string]: Array<{ Key: string, Value: string }> } = {};
+  DDLData: { [id: string]: Array<KeyValueObj> } = {};
   readonly DDLRecomendation: string = "RECOMENDED";
   async BindDDLRecommendation() {
     let Obj: ReqGetByTypeCodeObj = { RefReasonTypeCode: CommonConstant.RefReasonTypeCodeCrdReview };
@@ -237,8 +238,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   }
 
   async BindAppvAmt() {
-    let Obj = { Id: this.appId };
-    await this.http.post(URLConstant.GetAppFinDataByAppId, Obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppFinDataByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.FormObj.patchValue({
           AppvAmt: response["ApvAmt"]
@@ -309,17 +309,17 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   PlafondAmt: number = 0;
   initInputApprovalObj(manualDevList = null) {
-    var Attributes = [];
-    var attribute1 = {
-      "AttributeName": "Approval Amount",
-      "AttributeValue": this.PlafondAmt
+    var Attributes: Array<ResultAttrObj> = new Array();
+    var attribute1: ResultAttrObj = {
+      AttributeName: "Approval Amount",
+      AttributeValue: this.PlafondAmt.toString()
     };
     Attributes.push(attribute1);
 
-    var listTypeCode = [];
-    var TypeCode = {
-      "TypeCode": "CRD_APV_CF_TYPE",
-      "Attributes": Attributes,
+    var listTypeCode: Array<TypeResultObj> = new Array();
+    var TypeCode: TypeResultObj = {
+      TypeCode: "CRD_APV_CF_TYPE",
+      Attributes: Attributes,
     };
     listTypeCode.push(TypeCode);
 
@@ -403,7 +403,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
       });
   }
 
-  BindAppCrdRvwDObj(objArr: any) {
+  BindAppCrdRvwDObj(objArr: Array<any>) {
     let AppCrdRvwDObjs = new Array();
     for (let i = 0; i < objArr.length; i++) {
       let temp = new AppCrdRvwDObj();

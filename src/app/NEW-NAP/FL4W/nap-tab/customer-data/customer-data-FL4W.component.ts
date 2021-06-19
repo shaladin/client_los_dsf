@@ -29,6 +29,7 @@ import { AppCustCompanyMgmntShrholderObj } from 'app/shared/model/AppCustCompany
 import { AppCustCompanyLegalDocObj } from 'app/shared/model/AppCustCompanyLegalDocObj.Model';
 import { InputAddressObj } from 'app/shared/model/InputAddressObj.Model';
 import { AppCustCompanyContactPersonObj } from 'app/shared/model/AppCustCompanyContactPersonObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-customer-data-FL4W',
@@ -54,17 +55,11 @@ export class CustomerDataFL4WComponent implements OnInit {
     CopyFromMailing: ['']
   });
 
-  @Input() appId: any;
+  @Input() appId: number;
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   cancel: boolean = true;
-  refMasterObj = {
-    RefMasterTypeCode: "",
-  };
-  countryObj = {
-    CountryCode: ""
-  };
   custDataObj: CustDataObj;
   custDataPersonalObj: CustDataPersonalObj = new CustDataPersonalObj();
   custDataCompanyObj: CustDataCompanyObj = new CustDataCompanyObj();
@@ -74,19 +69,19 @@ export class CustomerDataFL4WComponent implements OnInit {
   inputFieldLegalCompanyObj: InputFieldObj;
   residenceAddrObj: AddrObj;
   inputFieldResidenceObj: InputFieldObj;
-  copyFromResidence: any;
+  copyFromResidence: string;
   mailingAddrObj: AddrObj;
   inputFieldMailingObj: InputFieldObj;
-  copyFromMailing: any;
+  copyFromMailing: string;
   mailingAddrCompanyObj: AddrObj;
   inputFieldMailingCompanyObj: InputFieldObj;
-  copyFromMailingCompany: any;
-  appCustPersonalId: any;
+  copyFromMailingCompany: string;
+  appCustPersonalId: number;
   listAppCustPersonalContactInformation: Array<AppCustPersonalContactPersonObj> = new Array<AppCustPersonalContactPersonObj>();inputAddressObjForLegal: InputAddressObj;
   inputAddressObjForResidence: InputAddressObj;
-  inputAddressObjForMailing: any;
+  inputAddressObjForMailing: InputAddressObj;
   inputAddressObjForCoyLegal: InputAddressObj;
-  inputAddressObjForCoyMailing: any;
+  inputAddressObjForCoyMailing: InputAddressObj;
 ;
   listAppCustBankAcc: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
   listAppCustBankAccCompany: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
@@ -94,19 +89,16 @@ export class CustomerDataFL4WComponent implements OnInit {
   listContactPersonCompany: Array<AppCustCompanyContactPersonObj> = new Array<AppCustCompanyContactPersonObj>();
   listLegalDoc: Array<AppCustCompanyLegalDocObj> = new Array<AppCustCompanyLegalDocObj>();
   isBindDataDone: boolean = false;
-  getRefMasterUrl: any;
-  addEditCustDataPersonalUrl: any;
-  getCustDataUrl: any;
 
-  CustTypeObj: any;
-  copyToResidenceTypeObj: any = [
+  CustTypeObj: Array<KeyValueObj>;
+  copyToResidenceTypeObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
     },
   ];
 
-  copyToMailingTypeObj: any = [
+  copyToMailingTypeObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
@@ -117,15 +109,15 @@ export class CustomerDataFL4WComponent implements OnInit {
     }
   ];
 
-  copyToMailingCompanyTypeObj: any = [
+  copyToMailingCompanyTypeObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
     }
   ];
 
-  defCustModelCode: any;
-  MrCustTypeCode: any;
+  defCustModelCode: string;
+  MrCustTypeCode: string;
   isSocmedValid: boolean = true;
   isMarried: boolean = false;
   IsSpouseExist: boolean = false;
@@ -167,7 +159,6 @@ export class CustomerDataFL4WComponent implements OnInit {
     this.inputAddressObjForCoyMailing.showPhn3 = false;
 
     this.cancel = this.showCancel;
-    this.initUrl();
     this.bindCustTypeObj();
     this.initAddrObj();
     await this.getCustData();
@@ -204,7 +195,7 @@ export class CustomerDataFL4WComponent implements OnInit {
         return;
       }
 
-      this.http.post(this.addEditCustDataPersonalUrl, this.custDataPersonalObj).subscribe(
+      this.http.post(URLConstant.AddEditCustDataPersonal, this.custDataPersonalObj).subscribe(
         (response) => {
           if (response["StatusCode"] == 200) {
             this.toastr.successMessage(response["message"]);
@@ -822,7 +813,7 @@ export class CustomerDataFL4WComponent implements OnInit {
     // this.custDataObj = new CustDataObj();
     // this.custDataObj.AppId = this.appId;
     var custDataObj = { Id: this.appId };
-    await this.http.post(this.getCustDataUrl, custDataObj).toPromise().then(
+    await this.http.post(URLConstant.GetCustDataByAppId, custDataObj).toPromise().then(
       (response) => {
         if (response["AppCustObj"]["AppCustId"] > 0) {
           if (response["AppCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
@@ -1271,15 +1262,8 @@ export class CustomerDataFL4WComponent implements OnInit {
     }
   }
 
-  initUrl() {
-    this.addEditCustDataPersonalUrl = URLConstant.AddEditCustDataPersonal;
-    this.getCustDataUrl = URLConstant.GetCustDataByAppId;
-    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-  }
-
   bindCustTypeObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustType;
-    this.http.post(this.getRefMasterUrl, this.refMasterObj).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).subscribe(
       (response) => {
         this.CustTypeObj = response[CommonConstant.ReturnObj];
         if (this.CustTypeObj.length > 0) {

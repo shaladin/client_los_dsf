@@ -28,6 +28,9 @@ import { String } from 'typescript-string-operations';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
+import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
+import { AssetTypeSerialNoLabelObj } from 'app/shared/model/SerialNo/AssetTypeSerialNoLabelObj.Model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { AppCustPersonalObj } from 'app/shared/model/AppCustPersonalObj.Model';
 
 @Component({
@@ -43,7 +46,7 @@ export class CollateralDetailComponent implements OnInit {
   currentChassisNo: any;
   LastRequestedDate: any;
   IsIntegrator: boolean = false;
-  ThirdPartyRsltHId: any = "";
+  ThirdPartyRsltHId: number = 0;
   @ViewChild('LookupCollateralExisting') set content(content: UclookupgenericComponent) {
     if (content) { // initially setter gets called with undefined
       this.ucLookupCollateralExisting = content;
@@ -53,11 +56,11 @@ export class CollateralDetailComponent implements OnInit {
   @Input() isSingleAsset = true;
   @Input() AppId: number = 0;
   @Input() AppCollateralId: number = 0;
-  @Output() outputValue: EventEmitter<number> = new EventEmitter<any>();
+  @Output() outputValue: EventEmitter<number> = new EventEmitter<number>();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   bizTemplateCode: string = "";
 
-  AppCollateralAttrObj: any;
+  AppCollateralAttrObj: Array<AppCollateralAttrCustomObj>;
   ListAttrAnswer = [];
   inputLookupExistColl: InputLookupObj = new InputLookupObj();
   inputLookupColl: InputLookupObj = new InputLookupObj();
@@ -77,15 +80,14 @@ export class CollateralDetailComponent implements OnInit {
   appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
   appCollateralObj: AppCollateralObj = new AppCollateralObj();
   editAppCollateralObj: AppCollateralObj = new AppCollateralObj();
-  collateralRegistrationObj: any;
-  editCollateralRegistrationObj: any;
+  collateralRegistrationObj: AppCollateralRegistrationObj;
+  editCollateralRegistrationObj: AppCollateralRegistrationObj;
   criteriaList: Array<CriteriaObj>;
   criteriaObj: CriteriaObj;
   items: FormArray;
-  SerialNoList: any;
+  SerialNoList: Array<AssetTypeSerialNoLabelObj>;
   isUsed: boolean = true;
   isCopy: boolean = true;
-  // isExisting: boolean = false;
   AddCollForm = this.fb.group({
     AppCollateralId: [''],
     FullAssetCode: ['', Validators.required],
@@ -132,7 +134,7 @@ export class CollateralDetailComponent implements OnInit {
   AssetTypeCode: string = "";
   inputAddressObjForLegal: InputAddressObj;
   inputAddressObjForLoc: InputAddressObj;
-  appAssetId: any = 0;
+  appAssetId: number = 0;
   isDiffWithRefAttr: boolean;
   AppCustData: AppCustObj;
   IntegratorCheckBySystemGsValue: string = "0";
@@ -181,19 +183,11 @@ export class CollateralDetailComponent implements OnInit {
     }
     this.GenerateAppCollateralAttr(false);
     this.GetGS();
-    // this.AddCollForm.controls.AssetTypeCode.disable();
   }
 
   initUcLookup() {
     this.SetInputLookupCollExisting();
     this.SetInputLookupColl();
-
-    // this.criteriaList = new Array();
-    // this.criteriaObj = new CriteriaObj();
-    // this.criteriaObj.restriction = AdInsConstant.RestrictionEq;
-    // this.criteriaObj.propName = 'apctrl.ASSET_TYPE_CODE';
-    // this.criteriaObj.value = this.AssetTypeCode;
-    // this.criteriaList.push(this.criteriaObj);
   }
 
   SetInputLookupCollExisting() {
@@ -251,7 +245,7 @@ export class CollateralDetailComponent implements OnInit {
     );
   }
   HitAPI() {
-    if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '') {
+    if (this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == '' || this.items.controls[this.indexChassis]['controls']['SerialNoValue'].value == null) {
       this.toastr.warningMessage("Please Input Chassis No !");
     }
     else {
@@ -492,12 +486,6 @@ export class CollateralDetailComponent implements OnInit {
               DocNotes: response[CommonConstant.ReturnObj][i].DocNotes,
               RowVersion: "",
             }) as FormGroup;
-            // if(this.isExisting){
-            //   assetDocumentDetail.controls.DocNo.disable();
-            //   assetDocumentDetail.controls.IsReceived.disable();
-            //   assetDocumentDetail.controls.ACDExpiredDt.disable();
-            //   assetDocumentDetail.controls.DocNotes.disable(); 
-            // }
             ListDoc.push(assetDocumentDetail);
           }
         }
@@ -524,7 +512,7 @@ export class CollateralDetailComponent implements OnInit {
       });
   }
 
-  async getAppCollData(AppId: number = 0, AppCollateralId: number = 0, IsExisting: boolean = false, IsFromLookup: boolean = false, fouExistObj: any = null) {
+  async getAppCollData(AppId: number = 0, AppCollateralId: number = 0, IsExisting: boolean = false, IsFromLookup: boolean = false, fouExistObj: object = null) {
     if (IsExisting) {
       this.AddCollForm.patchValue({
         AppCollateralId: this.AppCollateralId,
@@ -536,10 +524,6 @@ export class CollateralDetailComponent implements OnInit {
         CollateralValueAmt: fouExistObj["CollateralPriceAmt"],
         CollateralNotes: fouExistObj["Notes"],
         AssetTaxDt: fouExistObj["AssetTaxDate"] ? formatDate(fouExistObj["AssetTaxDate"], 'yyyy-MM-dd', 'en-US') : "",
-        // IsMainCollateral: this.appCollateralObj.IsMainCollateral,
-
-        // CollateralPrcnt: fouExistObj["CollateralPrcnt"],
-        // di hardcode dulu karena di foundation collateral belum ada field manufacturing year
         ManufacturingYear: "2020",
 
         OwnerName: fouExistObj["OwnerName"],
@@ -550,7 +534,6 @@ export class CollateralDetailComponent implements OnInit {
         UserName: fouExistObj["Username"],
         MrUserRelationshipCode: fouExistObj["MrUserRelationshipCode"],
         SelfOwner: fouExistObj["MrOwnerRelationshipCode"] == "SELF" ? true : false
-        // RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
       });
 
       if (this.AddCollForm.controls.MrUserRelationshipCode.value == "SELF") {
@@ -619,10 +602,6 @@ export class CollateralDetailComponent implements OnInit {
           if (!IsExisting) {
             if (this.appCollateralObj.AppCollateralId != 0) {
               this.mode = "edit";
-              // if(this.collateralRegistrationObj.MrUserRelationshipCode == 'SELF'){
-              //   this.AddCollForm.controls.UserName.disable();
-              //   this.AddCollForm.controls.MrUserRelationshipCode.disable();
-              // }
             } else {
               if (this.mode == "add") {
                 this.editAppCollateralObj = response['AppCollateral'];
@@ -802,7 +781,7 @@ export class CollateralDetailComponent implements OnInit {
     //#endregion
   }
 
-  async onItemChange(AssetTypeCode: string, IsChange: boolean = true, isFou: boolean = false, fouExistingObj: any = null) {
+  async onItemChange(AssetTypeCode: string, IsChange: boolean = true, isFou: boolean = false, fouExistingObj: object = null) {
     let arrAddCrit = new Array();
     let addCrit = new CriteriaObj();
     addCrit.DataType = "text";
@@ -820,12 +799,12 @@ export class CollateralDetailComponent implements OnInit {
     }
 
     await this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: AssetTypeCode }).toPromise().then(
-      async (response: any) => {
+      async (response: GenericListObj) => {
         while (this.items.length) {
           this.items.removeAt(0);
         }
 
-        this.SerialNoList = response[CommonConstant.ReturnObj];
+        this.SerialNoList = response.ReturnObject;
         for (var i = 0; i < this.SerialNoList.length; i++) {
           var eachDataDetail = this.fb.group({
             SerialNoLabel: [this.SerialNoList[i].SerialNoLabel],

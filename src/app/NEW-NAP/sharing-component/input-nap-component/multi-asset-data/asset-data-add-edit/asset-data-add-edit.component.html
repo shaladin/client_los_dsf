@@ -85,7 +85,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group row">
-                      <label class="col-md-4 adInsLabel" translate>Asset Condition</label>
+                      <label class="col-md-4 adInsLabel" [ngClass]="{'adins-required-label': isUsed}"  translate>Asset Condition</label>
                       <div class="col-md-8">
                         <select class="form-control adInsInput" style="width: auto"
                           formControlName="MrAssetConditionCode" (change)="UcAddressHandler()"
@@ -146,11 +146,12 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group row">
-                      <label class="col-md-4 adInsLabel" translate>Asset Usage</label>
+                      <label class="col-md-4 adins-required-label" translate>Asset Usage</label>
                       <div class="col-md-8">
                         <select class="form-control" id="assetUsage" formControlName="AssetUsage"
                           (change)="assetUsageHandler()"
                           [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.AssetUsage.invalid }">
+                          <option value="">-Select One-</option>
                           <option *ngFor="let item of returnAssetUsageObj" [value]="item.Key">
                             {{item.Value}}
                           </option>
@@ -175,21 +176,21 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label class="col-md-4" [ngClass]="{ 'adins-required-label': AssetDataForm.controls.MrAssetConditionCode.value == AssetUsed }" translate>BPKB City Issuer</label>
-                      <div class="col-md-8">
-                        <div class="input-group">
-                          <input type="text" class="form-control" formControlName="TaxCityIssuer" [readonly]="true"
-                            [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.TaxCityIssuer.invalid }" />
-                          <div class="input-group-append">
-                            <span class="input-group-btn">
-                              <button class="btn btn-raised btn-primary" type="button" (click)="showModalTaxCityIssuer()">
-                                <i class="ft-search"></i>
-                              </button>
-                            </span>
-                          </div>
-                        </div>
-                        <lib-uc-show-errors [control]="AssetDataForm.controls.TaxCityIssuer" [submit]="enjiForm.submitted">
-                        </lib-uc-show-errors>
+                      <label class="col-md-4" translate  [ngClass]="{'adins-required-label': isUsed}" >BPKB City Issuer</label>
+                      <div class="col-md-8 input-group">
+                        <!-- <input type="text" class="form-control" formControlName="TaxCityIssuer" [readonly]="true"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.TaxCityIssuer.invalid }" />
+                        <div class="input-group-append">
+                          <span class="input-group-btn">
+                            <button class="btn btn-raised btn-primary" type="button" (click)="showModalTaxCityIssuer()">
+                              <i class="ft-search"></i>
+                            </button>
+                          </span>
+                        </div> -->
+                        <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupCityIssuerObj"
+                      [identifier]="'DistrictCode'" [enjiForm]='enjiForm' [parentForm]='AssetDataForm'
+                      (lookup)="SetBpkbCity($event)">
+                    </lib-uclookupgeneric>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -219,6 +220,22 @@
                           </div>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="IsUseDigitalization == '1' && IntegratorCheckBySystemGsValue == '0'">
+                <lib-ucSubsection [id]="'FraudCheckingId'" [title]="'Fraud Checking'" [panel]="'fraudChecking'">
+                </lib-ucSubsection>
+                <div [id]="fraudChecking">
+                  <div class="form-group row">
+                    <label class="col-md-2" translate>RAPINDO</label>
+                    <div class="col-md-8">
+                      <button type="button" name="hitAPI" id="add" (click)="HitAPI()"
+                        class="btn btn-raised btn-primary">
+                        HIT RAPINDO
+                      </button>
+                      <label *ngIf="LastRequestedDate != ''" class="col-md-4" translate>{{LastRequestedDate}}</label>
                     </div>
                   </div>
                 </div>

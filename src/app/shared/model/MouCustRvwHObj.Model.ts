@@ -1,10 +1,10 @@
 export class MouCustRvwHObj{
-    MouCustRvwHId: any;
-    MouCustId: any;
-    CrdAnalystEmpNo: any;
-    SubmitDt: any;
-    CrdRvwStat: any;
-    ReturnNotes: any; 
-    RowVersion: any;
+    MouCustRvwHId: number;
+    MouCustId: number;
+    CrdAnalystEmpNo: string;
+    SubmitDt: Date;
+    CrdRvwStat: string;
+    ReturnNotes: string 
+    RowVersion: string;
  
 }

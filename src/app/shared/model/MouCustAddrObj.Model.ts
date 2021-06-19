@@ -20,7 +20,7 @@ export class MouCustAddrObj {
     FaxArea: string;
     Fax: string;
     FullAddr: string;
-    RowVersion: any;
+    RowVersion: string;
 
     constructor() { this.MouCustAddrId = 0; }
 }

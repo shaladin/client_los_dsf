@@ -6,8 +6,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-customer-doc-printing-paging',
@@ -16,7 +16,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 export class CustomerDocPrintingPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   CustNoObj: GenericObj = new GenericObj();
-  user: any;
+  user: CurrentUserContext;
 
   constructor(private router: Router, private http: HttpClient, private cookieService: CookieService) { }
   ngOnInit() {
@@ -24,16 +24,10 @@ export class CustomerDocPrintingPagingComponent implements OnInit {
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchCustomerDocPrinting.json";
 
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-
-    if (this.user.MrOfficeTypeCode != "HO") {
-      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_UNAUTHORIZED_PAGE], {});
-      return;
-    }
   }
 
   getEvent(event) {
     if (event.Key == "customer") {
-      var link: string;
       this.CustNoObj.CustNo = event.RowObj.CustNo;
       this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
         response => {

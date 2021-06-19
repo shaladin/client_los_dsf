@@ -105,7 +105,7 @@ export class NapCustMainDataComponent implements OnInit {
   }
   
   Back() {
-    AdInsHelper.RedirectUrl(this.router,["/Nap/MainData/NAP1/Paging"], { "BizTemplateCode": this.bizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING], { "BizTemplateCode": this.bizTemplateCode });
   }
 
 

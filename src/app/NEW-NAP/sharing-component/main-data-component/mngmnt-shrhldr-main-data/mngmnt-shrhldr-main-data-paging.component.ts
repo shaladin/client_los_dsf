@@ -23,7 +23,6 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
   isDetail: boolean = false;
   inputGridObj: InputGridObj;
   listMgmntShrholder: Array<any> = new Array();
-  resultData: Array<any> = new Array();
   closeResult: string;
   appCustId: number;
   inputMode: string = "ADD";
@@ -46,7 +45,31 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
     this.appCustId = null; 
   }
 
-  saveAndContinue() {
+  CekRelationshipCode(){
+    let flag: boolean = false;
+
+    for (let index = 0; index < this.listMgmntShrholder.length; index++) {
+      const element = this.listMgmntShrholder[index];
+      if (element.IsExistingCust && element.MrCustRelationshipCode == "") {
+        flag = true;
+        this.toastr.warningMessage("Please input Cust Relationship for " + element.CustName);
+      }
+    }
+    return flag;
+  }
+
+  async saveAndContinue() {
+    await this.http.post(URLConstant.CheckAppCustShareholderMandatoryData, {AppId: this.appId}).toPromise().then(
+      (response) => {
+        if(response["StatusCode"] != 200){          
+          this.toastr.warningMessage(response["Message"]);
+          return;
+        }
+      }
+    );
+
+    if(this.CekRelationshipCode()) return;
+    
     if(this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x=>x.IsOwner == true) == null){
       this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_OWNER_DATA)
       return;

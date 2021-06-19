@@ -24,5 +24,5 @@ export const environment = {
   WfR3Url: 'http://r3impl-appsvr.ad-ins.com/WORKFLOW_OPL/',
   ChipperKeyLocalStorage: "AdInsFOU2020OKOK", // 256 bit atau 16 karakter
   ChipperKeyCookie: "AdInsFOU12345678", // 256 bit atau 16 karakter & harus sama dengan BE
-  Module:"LOS"
+  Module: "LOS"
 };

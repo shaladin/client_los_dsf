@@ -10,8 +10,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-edit-mou-customer',
@@ -23,28 +23,22 @@ export class EditMouCustomerComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   CustNoObj: GenericObj = new GenericObj();
   arrCrit: Array<CriteriaObj>;
-  user: any;
+  user: CurrentUserContext;
 
   constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) { }
 
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_UNAUTHORIZED_PAGE],{});
-      return;
-    }
-    else {
-      this.inputPagingObj._url = "./assets/ucpaging/searchEditMouCustomer.json";
-      this.inputPagingObj.pagingJson = "./assets/ucpaging/searchEditMouCustomer.json";
-      this.arrCrit = new Array<CriteriaObj>();
-      var critObj = new CriteriaObj();
-      critObj.restriction = AdInsConstant.RestrictionEq;
-      critObj.propName = 'MOU.MOU_STAT';
-      critObj.value = 'RTN';
-      this.arrCrit.push(critObj);
-      this.inputPagingObj.addCritInput = this.arrCrit;
-    }
+    this.inputPagingObj._url = "./assets/ucpaging/searchEditMouCustomer.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/searchEditMouCustomer.json";
+    this.arrCrit = new Array<CriteriaObj>();
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionEq;
+    critObj.propName = 'MOU.MOU_STAT';
+    critObj.value = 'RTN';
+    this.arrCrit.push(critObj);
+    this.inputPagingObj.addCritInput = this.arrCrit;
   }
 
   getEvent(event) {

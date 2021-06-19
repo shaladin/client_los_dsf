@@ -1,0 +1,5 @@
+<lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
+ 
+<lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj"  *ngIf="IsReady"></lib-ucapprovalgeneralinfo>
+
+<lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)" (onCancel)="onCancelClick()"></lib-ucapprovalR3>

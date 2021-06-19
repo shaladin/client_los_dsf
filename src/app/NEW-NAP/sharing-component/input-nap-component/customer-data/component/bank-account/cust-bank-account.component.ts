@@ -13,11 +13,14 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-cust-bank-account',
   templateUrl: './cust-bank-account.component.html',
-  styleUrls: [],
+  styles: [
+    '.disabledLink { color: #ccc; pointer-events:none;}'
+  ],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
@@ -25,14 +28,14 @@ import { CookieService } from 'ngx-cookie';
 export class CustBankAccountComponent implements OnInit {
 
   @Input() listBankAcc: Array<AppCustBankAccObj> = new Array<AppCustBankAccObj>();
-
+  @Input() isLockMode: boolean = false;
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 
-  mode: any;
-  currentEditedIndex: any;
-  selectedBankCode: any;
+  mode: string;
+  currentEditedIndex: number;
+  selectedBankCode: string;
 
-  closeResult: any;
+  closeResult: string;
   appCustBankAccObj: AppCustBankAccObj;
   refMasterObj = {
     RefMasterTypeCode: ""
@@ -41,11 +44,10 @@ export class CustBankAccountComponent implements OnInit {
     RefBankId: 0,
     BankCode: ""
   };
-  RefBankObj: any;
-  MonthObj: any;
-  defaultMonth: any;
-  InputLookupBankObj: any;
-  selectedBankName: any;
+  MonthObj: Array<KeyValueObj>;
+  defaultMonth: string;
+  InputLookupBankObj: InputLookupObj;
+  selectedBankName: string;
 
 
 
@@ -190,7 +192,7 @@ export class CustBankAccountComponent implements OnInit {
 
   setBankName(bankCode) {
     this.bankObj.BankCode = bankCode;
-    this.http.post(environment.FoundationR3Url + URLConstant.GetRefBankByBankCodeAsync, {Code: bankCode}).subscribe(
+    this.http.post(URLConstant.GetRefBankByBankCodeAsync, {Code: bankCode}).subscribe(
       (response) => {
         this.InputLookupBankObj.nameSelect = response["BankName"];
         this.InputLookupBankObj.jsonSelect = response;

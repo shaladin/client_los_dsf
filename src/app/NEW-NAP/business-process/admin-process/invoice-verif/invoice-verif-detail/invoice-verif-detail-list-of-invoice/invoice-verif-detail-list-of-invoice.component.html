@@ -1,0 +1,141 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header header-title">
+      </div><br>
+      <div class="card-body">
+        <div class="px-3">
+          <form class="form form-horizontal" [formGroup]="InvoiceForm" #enjiForm="ngForm">
+            <lib-ucSubsection [id]="'ListOfInvoiceId'" [title]="'List Of Invoice'" [panel]="'ListOfInvoice'">
+            </lib-ucSubsection>
+            <div class="form-body" id="ListOfInvoice" formArrayName="Invoices">
+              <div *ngIf ="MrMouTypeCode=='FACTORING'">
+              <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                  <tr class="table-header">
+                    <th style="text-align: center;"><span translate class="thead-header text-left">No</span></th>
+                    <th style="text-align: center;"><span translate class="thead-header text-right">Invoice No</span>
+                    </th>
+                    <th style="text-align: left;"><span translate class="thead-header text-left">Customer
+                        Factoring</span></th>
+                    <th style="text-align: right;"><span translate class="thead-header text-right">Invoice Amount</span>
+                    </th>
+                    <th style="text-align: center;"><span translate class="thead-header">Invoice Date</span></th>
+                    <th style="text-align: left;"><span translate class="thead-header">Verification</span></th>
+                    <th><span translate class="thead-header">Notes</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr [formGroupName]="i" *ngFor="let item of InvoiceForm.controls['Invoices']['controls']; let i = index">
+                    <td class="text-center">{{i + 1}}</td>
+                    <td class="text-center">{{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceNo.value}}
+                    </td>
+                    <td class="text-left">{{InvoiceForm.controls["Invoices"].controls[i].controls.CustName.value}}</td>
+                    <td class="text-right">
+                      {{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceAmt.value | number}}</td>
+                    <td class="text-center">
+                      {{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceDt.value | date : 'dd-MMM-yyyy' }}
+                    </td>
+                    <td><select class="form-control adInsInput" style="width: auto" formControlName="Verification"
+                        (change)="Calculate(i)">
+                        <option *ngFor="let sr of listVerificationStatus" value="{{sr.Key}}">
+                          {{sr.Value}}</option>
+                      </select></td>
+                    <td><textarea type="text" class="form-control adInsInput" formControlName="InvoiceNotes"></textarea>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              </div>
+
+              <div *ngIf ="MrMouTypeCode!='FACTORING'">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th style="text-align: center;"><span translate class="thead-header text-left">No</span></th>
+                      <th style="text-align: center;"><span translate class="thead-header text-right">Invoice No</span>
+                      </th>
+                      <th style="text-align: right;"><span translate class="thead-header text-right">Invoice Amount</span>
+                      </th>
+                      <th style="text-align: center;"><span translate class="thead-header">Invoice Date</span></th>
+                      <th style="text-align: left;"><span translate class="thead-header">Verification</span></th>
+                      <th><span translate class="thead-header">Notes</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr [formGroupName]="i" *ngFor="let item of InvoiceForm.controls['Invoices']['controls']; let i = index">
+                      <td class="text-center">{{i + 1}}</td>
+                      <td class="text-center">{{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceNo.value}}
+                      </td>
+                      <td class="text-right">
+                        {{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceAmt.value | number}}</td>
+                      <td class="text-center">
+                        {{InvoiceForm.controls["Invoices"].controls[i].controls.InvoiceDt.value | date : 'dd-MMM-yyyy' }}
+                      </td>
+                      <td><select class="form-control adInsInput" style="width: auto" formControlName="Verification"
+                          (change)="Calculate(i)">
+                          <option *ngFor="let sr of listVerificationStatus" value="{{sr.Key}}">
+                            {{sr.Value}}</option>
+                        </select></td>
+                      <td><textarea type="text" class="form-control adInsInput" formControlName="InvoiceNotes"></textarea>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+            </div>
+
+            <lib-ucSubsection [id]="'VerificationInfoId'" [title]="'Verification Info'" [panel]="'VerificationInfo'">
+            </lib-ucSubsection>
+            <div class="form-body" id="VerificationInfo">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row">
+                    <label class="col-md-6" translate>OS Plafond Amount</label>
+                    <label class="col-md-6">{{OsPlafondAmt | number}}</label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6" translate>Verified By</label>
+                    <label class="col-md-6">{{Username}}</label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6" translate>Verification Date</label>
+                    <label class="col-md-6">{{BusinessDate | date : 'dd-MMM-yyyy'}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <lib-ucSubsection [id]="'DisbInfoId'" [title]="'DISBURSE'" [panel]="'DisbInfo'">
+            </lib-ucSubsection>
+            <div class="form-body" id="DisbInfo">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row">
+                    <label class="col-md-6" translate>Disburse To</label>
+                    <label class="col-md-6">{{AccName}}</label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6" translate>Bank Name</label>
+                    <label class="col-md-6">{{BankName}}</label>
+                  </div>
+                  <div class="row">
+                    <label class="col-md-6" translate>Account No</label>
+                    <label class="col-md-6">{{AccNo}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-actions right">
+              <button type="button" class="btn btn-raised btn-raised btn-warning mr-1" (click)="Cancel()">
+                <i class="ft-x"></i> Cancel
+              </button>
+              <button type="button" class="btn btn-raised btn-primary" (click)="SaveData()">
+                <i class="fa fa-check-square-o"></i> Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

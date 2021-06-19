@@ -12,7 +12,6 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   templateUrl: './invoice-view.component.html'
 })
 export class InvoiceViewComponent implements OnInit {
-  inputPagingObj: any;
   invoiceDataList: Object;
   @Input() AppId: number;
 
@@ -28,8 +27,7 @@ export class InvoiceViewComponent implements OnInit {
     var obj = {
       Id: this.AppId
     }
-    var getListUrl = URLConstant.GetListAppInvoiceFctrByAppId;
-    this.http.post(getListUrl, obj).subscribe(
+    this.http.post(URLConstant.GetListAppInvoiceFctrByAppId, obj).subscribe(
       (response) => {
         this.invoiceDataList = response['AppInvoiceFctrObjs'];
 

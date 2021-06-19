@@ -9,23 +9,19 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
   providers: [NGXToastrService]
 })
 export class ViewAgrmntSummaryComponent implements OnInit {
-  @Input() agrmntId: any;
+  @Input() agrmntId: number;
   totalRsvFund: number;
-  agrmntObj = {
-    Id: 0,
-  };
-  totalInsPremi: any;
+  totalInsPremi: number;
   SummaryObj: any;
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    this.agrmntObj.Id = this.agrmntId;
     this.GetAgrmntSummary();
   }
 
   GetAgrmntSummary() {
-    this.http.post(URLConstant.GetAgrmtSummaryByAgrmntId, this.agrmntObj).subscribe(
+    this.http.post(URLConstant.GetAgrmtSummaryByAgrmntId, { Id: this.agrmntId }).subscribe(
       (response) => {
         this.SummaryObj = response;
         if (this.SummaryObj.AppIns != null) {

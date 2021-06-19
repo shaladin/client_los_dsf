@@ -1,8 +1,8 @@
 export class RefEmpLeaveMngmntObj {
-    refEmpLeaveMngmntId: any;
-    refEmpId: any;
+    refEmpLeaveMngmntId: number;
+    refEmpId: number;
     startDt: Date;
     endDt: Date;
-    isPassed: any;
+    isPassed: boolean;
     constructor() { this.refEmpLeaveMngmntId = 0 }
 }

@@ -40,7 +40,7 @@ export class ReturnHandlingComRsvfundPagingComponent implements OnInit {
     return critObjs;
   }
 
-  GetCallBack(ev: any) {
+  GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.prodOfferingCode, ev.RowObj.prodOfferingVersion);
     }

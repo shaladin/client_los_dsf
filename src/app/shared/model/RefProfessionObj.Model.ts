@@ -1,10 +1,10 @@
 export class RefProfessionObj {
-    RefProfessionId: any;
-    ProfessionCode: any;
-    ProfessionName: any;
-    MrCustModelCode: any;
-    RegRptCode: any;
-    RowVersion: any;
+    RefProfessionId: number;
+    ProfessionCode: string;
+    ProfessionName: string;
+    MrCustModelCode: string;
+    RegRptCode: string;
+    RowVersion: string;
     constructor() { this.RefProfessionId = 0, this.RowVersion = "" }
   }
   

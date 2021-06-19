@@ -20,7 +20,6 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 export class PagingComponent implements OnInit {
 
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: any;
   BizTemplateCode: string;
 
   constructor(

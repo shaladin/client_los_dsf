@@ -9,7 +9,7 @@ export class ReturnHandlingDObj {
   ReturnHandlingExecNotes: string;
   WfTaskListId: number;
   AppId: number;
-  RowVersion: any;
+  RowVersion: string;
 
   constructor() {
     this.RowVersion = "";
