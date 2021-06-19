@@ -21,11 +21,9 @@ export class FinancialPersonalComponent implements OnInit {
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
 
   IsDetail: boolean = false;
-  // AttrGroup: string = CommonConstant.AttrGroupCustPersonalFinData;
   AttrGroups: Array<string> = [
     CommonConstant.AttrGroupCustPersonalFinDataIncome,
-    CommonConstant.AttrGroupCustPersonalFinDataExpense,
-    CommonConstant.AttrGroupCustPersonalFinDataOther
+    CommonConstant.AttrGroupCustPersonalFinDataExpense
   ];
   AppCustPersonalFinData: AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
   CustAttrRequest: Array<Object> = new Array<Object>();
