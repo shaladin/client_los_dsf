@@ -32,6 +32,7 @@ import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
 import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-application-data',
@@ -165,13 +166,15 @@ export class ApplicationDataComponent implements OnInit {
     private toastr: NGXToastrService,
     private modalService: NgbModal,
     private route: ActivatedRoute,
-    private cookieService: CookieService) {
+    private cookieService: CookieService,
+    private spinner: NgxSpinnerService) {
     this.route.queryParams.subscribe(params => {
       this.appId = params["AppId"];
     });
   }
 
   async ngOnInit() {
+    this.spinner.show();
     if (this.BizTemplateCode == CommonConstant.OPL) {
       this.NapAppModelForm.controls.InterestType.clearValidators();
       this.NapAppModelForm.controls.InterestType.updateValueAndValidity();
@@ -180,7 +183,6 @@ export class ApplicationDataComponent implements OnInit {
     this.defaultSlikSecEcoCode = CommonConstant.DefaultSlikSecEcoCode;
     this.ListCrossAppObj["appId"] = this.appId;
     this.ListCrossAppObj["result"] = [];
-    this.getAppModelInfo();
 
     this.applicationDDLitems = [];
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustType);
@@ -191,6 +193,7 @@ export class ApplicationDataComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCharacteristicCredit);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWayOfRestructure);
     this.getAppSrcData();
+    setTimeout(() => { this.getAppModelInfo() }, 2000);
 
     let AppObj = {
       Id: this.appId
@@ -423,6 +426,7 @@ export class ApplicationDataComponent implements OnInit {
         this.initDdlMrFirstInstType();
         this.initDdlPayFreq();
         this.getPayFregData();
+        this.spinner.hide();
       }
     );
   }
