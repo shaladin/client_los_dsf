@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, ElementRef } from '@angular/core';
+import { Component, ViewChild, OnInit, ElementRef, SkipSelf } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient } from '@angular/common/http';
@@ -39,7 +39,7 @@ export class LoginPageComponent implements OnInit {
       }
     });
 
-    if (localStorage.getItem(CommonConstant.USER_ACCESS) != null) {
+    if (AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS) != null) {
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD], {});
     }
   }
