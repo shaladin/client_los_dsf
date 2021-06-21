@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, ElementRef, SkipSelf } from '@angular/core';
+import { Component, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from "@angular/router";
 import { HttpClient } from '@angular/common/http';
