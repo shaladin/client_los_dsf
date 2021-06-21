@@ -16,6 +16,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResAppCustForListCustMainDataObj, ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-cust-confirmation-detail',
@@ -27,7 +28,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   arrValue = [];
   AgrmntId: number;
   AppId: number;
-  TaskListId: any;
+  TaskListId: string;
   AgrmntNo: string;
   VerfResultList = new Array<VerfResultHObj>();
   CustNoObj: GenericObj = new GenericObj();
@@ -36,7 +37,6 @@ export class CustConfirmationDetailComponent implements OnInit {
   verfResultObj: VerfResultObj = new VerfResultObj();
   CustCnfrmObj: CustCnfrmObj = new CustCnfrmObj();
   BizTemplateCode: string;
-  link: any;
 
   readonly ViewLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_VIEW;
   readonly DetailLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_DETAIL;
@@ -65,8 +65,14 @@ export class CustConfirmationDetailComponent implements OnInit {
   async ngOnInit() {
     this.claimTask();
     this.arrValue.push(this.AgrmntId);
+    if (this.BizTemplateCode == CommonConstant.CFNA) {
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustConfirmInfoCFNA.json";
+      this.viewGenericObj.viewEnvironment = environment.losUrl;
+      this.viewGenericObj.whereValue = this.arrValue;
+    } else {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustConfirmInfo.json";
-    this.viewGenericObj.whereValue = this.arrValue;
+    }
+
 
     await this.GetVerfResult();
   }

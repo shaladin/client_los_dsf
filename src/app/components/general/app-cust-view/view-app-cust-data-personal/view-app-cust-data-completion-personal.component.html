@@ -85,7 +85,82 @@
     <!--Section Emergency Contact-->
     <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewEmergencyContactObj"></lib-ucviewgeneric>
     <!--Section Fin Data-->
-    <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewFinDataObj"></lib-ucviewgeneric>
+    <div class="px-3">
+        <div class="pull-right">
+            <button *ngIf="IsShowCustFinDataDetail" type="button" class="backButton" translate (click)="hideDetailCustFinData()"><i class="fa fa-arrow-left"></i> Back</button>
+        </div>
+        <lib-ucSubsection [id]="'MainInfo'" [title]="'Financial Data '+TitleCustFinDataSuffix" [panel]="'FinId'">
+        </lib-ucSubsection>
+        <form class="form form-horizontal" id="FinId">
+            
+            <div id="ListCustFinData" class="mb-3" *ngIf="!IsShowCustFinDataDetail"> 
+                <table class="table table-stripped table-bordered">
+                <thead>
+                    <tr class="table-header">
+                    <th class="text-center" translate>Date</th>
+                    <th class="text-center" translate>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of ListCustPersonalFinData; let i = index">
+                    <td class="text-center">{{item.DateAsOf | date: 'dd-MMM-yyyy'}}</td>
+                    <td class="text-center"><a href="javascript:;" (click)="showDetailCustFinData(i)"><i class="ft-edit-2 font-medium-3 mr-2"></i></a></td>
+                    </tr>
+                    <tr *ngIf="ListCustPersonalFinData?.length <= 0">
+                    <td class="text-center" colspan="2" translate>No Data Available</td>
+                    </tr>
+                </tbody>
+                </table>  
+            </div> 
+            <div class="form-body mb-3" *ngIf="IsShowCustFinDataDetail">
+                <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Monthly Income</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.MonthlyIncomeAmt != 0">{{CustPersonalFinData.MonthlyIncomeAmt | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.MonthlyIncomeAmt == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Monthly Expense</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.MonthlyExpenseAmt != 0">{{CustPersonalFinData.MonthlyExpenseAmt | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.MonthlyExpenseAmt == 0">-</label>
+                </div>
+                <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Source of Income</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.MrSourceOfIncomeTypeDescr != null">{{CustPersonalFinData.MrSourceOfIncomeTypeDescr}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.MrSourceOfIncomeTypeDescr == null">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Monthly Installment</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.MonthlyInstallmentAmt != 0">{{CustPersonalFinData.MonthlyInstallmentAmt | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.MonthlyInstallmentAmt == 0">-</label>
+                </div>
+                <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Spouse Monthly Income</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.SpouseMonthlyIncomeAmt != 0">{{CustPersonalFinData.SpouseMonthlyIncomeAmt | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.SpouseMonthlyIncomeAmt == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Join Income</label>
+                    <label class="col-md-3 adInsLabel" >{{CustPersonalFinData.IsJoinIncome ? 'Yes' : 'No'}}</label>
+                </div>
+                <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Other Income</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherIncomeAmt != 0">{{CustPersonalFinData.OtherIncomeAmt | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherIncomeAmt == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Other Monthly Installment</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherMonthlyInstAmt != 0">{{CustPersonalFinData.OtherMonthlyInstAmt | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.OtherMonthlyInstAmt == 0">-</label>
+                </div>
+                <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Total Monthly Income</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.TotalIncomeAmt != 0">{{CustPersonalFinData.TotalIncomeAmt | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.TotalIncomeAmt == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Total Monthly Expense</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.TotalMonthlyExpenseAmt != 0">{{CustPersonalFinData.TotalMonthlyExpenseAmt | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.TotalMonthlyExpenseAmt == 0">-</label>
+                </div>
+                <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Nett Monthly Income</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.NettIncomeAmt != 0">{{CustPersonalFinData.NettIncomeAmt | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustPersonalFinData.NettIncomeAmt == 0">-</label>
+                </div>
+                
+            </div>
+        </form>
+    </div>
     <!--Section Bank-->
     <div class="px-3">
         <lib-ucSubsection [id]="'BankAccountId'" [title]="'Bank Account'" [panel]="'BankAccount'">
@@ -116,7 +191,9 @@
                             <tr class="table-header">
                                 <th class="text-center"><span name='month' translate>Month</span> </th>
                                 <th class="text-center"><span name='year' translate>Year</span></th>
+                                <th class="text-center"><span name='debitTrxCount' translate>Debit Transaction Count</span></th>
                                 <th class="text-right"><span name='debit' translate>Debit</span></th>
+                                <th class="text-center"><span name='creditTrxCount' translate>Credit Transaction Count</span></th>
                                 <th class="text-right"><span name='credit' translate>Credit</span></th>
                                 <th class="text-right"><span name='balanceAmt' translate>Balance Amount</span></th>
                             </tr>
@@ -127,6 +204,15 @@
                                 </tr>
                             </tbody>
                             <tbody>
+                                <tr>
+                                    <td style="text-align: center;">Beginning Balance</td>
+                                    <td style="text-align: left;"></td>
+                                    <td style="text-align: center;"></td>
+                                    <td style="text-align: left;"></td>
+                                    <td style="text-align: center;"></td>
+                                    <td style="text-align: left;"></td>
+                                    <td style="text-align: right;">{{item.BegBalanceAmt | number:'.2':'en-US'}}</td>
+                                </tr>
                             <ng-container *ngFor="let item of appCustBankAccObjs[i].ListAppCustBankAccStmntObj">
                                 <tr>
                                     <td class="text-center">{{item.Month}}</td>

@@ -4,7 +4,7 @@ import { AppGuarantorCompanyObj } from "./AppGuarantorCompanyObj.Model";
 export class GuarantorCompanyObj {
     AppGuarantorObj: AppGuarantorObj;
     AppGuarantorCompanyObj: AppGuarantorCompanyObj;
-    RowVersion: any;
+    RowVersion: string;
 
     constructor() { 
         this.AppGuarantorObj = new AppGuarantorObj(); 

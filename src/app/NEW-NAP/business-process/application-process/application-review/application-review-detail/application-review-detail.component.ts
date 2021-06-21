@@ -22,6 +22,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { CookieService } from 'ngx-cookie';
 import { UcDropdownListCallbackObj, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
@@ -41,7 +42,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
   appId: number = 0;
   wfTaskListId: number = 0;
   isReturnOn: boolean = false;
-  UserAccess: any;
+  UserAccess: CurrentUserContext;
   Arr: FormArray;
   BizTemplateCode: string = "";
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
@@ -372,7 +373,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
     );
   }
 
-  BindAppCrdRvwDObj(objArr: any) {
+  BindAppCrdRvwDObj(objArr) {
     let AppCrdRvwDObjs = new Array();
     for (let i = 0; i < objArr.length; i++) {
       let temp = new AppCrdRvwDObj();

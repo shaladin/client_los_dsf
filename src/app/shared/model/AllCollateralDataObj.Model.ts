@@ -6,8 +6,8 @@ import { AppCollateralAttrObj } from "./AppCollateralAttrObj.Model";
 export class AllCollateralDataObj {
   AppCollateralObj: AppCollateralObj;
   AppCollateralRegistrationObj: AppCollateralRegistrationObj;
-  AppCollateralAttrObj: any;
-  RowVersion: any;
+  AppCollateralAttrObj: AppCollateralAttrObj;
+  RowVersion: string;
 
   constructor() {
 

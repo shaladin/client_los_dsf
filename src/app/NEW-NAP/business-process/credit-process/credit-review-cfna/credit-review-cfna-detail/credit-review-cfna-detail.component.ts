@@ -22,6 +22,10 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
+import { TypeResultObj } from 'app/shared/model/TypeResult/TypeResultObj.Model';
 
 @Component({
   selector: 'app-credit-review-cfna-detail',
@@ -30,7 +34,7 @@ import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCode
 export class CreditReviewCfnaDetailComponent implements OnInit {
 
   appId: number = 0;
-  wfTaskListId: number;
+  wfTaskListId: number = 0;
   ManualDeviationData;
   isExistedManualDeviationData;
   apvBaseUrl = environment.ApprovalR3Url;
@@ -41,21 +45,16 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
   BizTemplateCode: string = "";
   isDmsReady: boolean;
   dmsObj: DMSObj;
-  appNo: any;
+  appNo: string;
   custNo: string;
   IsUseDigitalization: string;
   IsViewReady: boolean = false;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   RFAInfo: Object = new Object();
 
-  // ReturnForm = this.fb.group({
-  //   ReturnReason: [''],
-  //   ReturnReasonDesc: [''],
-  //   ReturnExecNotes: [''],
-  // });
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   private createComponent: UcapprovalcreateComponent;
-  responseListTypeCodes: Array<any>;
+  responseListTypeCodes: Array<TypeResultObj> = new Array();
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) {
       // initially setter gets called with undefined
@@ -99,9 +98,7 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
     this.DDLRecommendation = new Array();
     this.DDLReasonReturn = new Array();
     this.AppStepIndex = 0;
-    this.CustTypeCode = "";
     this.Arr = this.FormObj.get('arr') as FormArray;
-    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.ManualDeviationData = new Array();
     this.isExistedManualDeviationData = false;
     this.isReturnOn = false;
@@ -115,20 +112,18 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
     "DEVC": 3,
     "APV": 4,
   };
-  CustTypeCode;
-  Arr;
-  UserAccess;
-  ResponseExistCreditReview;
-  DDLRecommendation;
-  DDLReasonReturn;
+  CustTypeCode: string = "";
+  Arr: FormArray;
+  UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+  ResponseExistCreditReview: AppCrdRvwHObj;
+  DDLRecommendation: Array<KeyValueObj>;
+  DDLReasonReturn: Array<KeyValueObj>;
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   async ngOnInit() : Promise<void> {
     this.ClaimTask();
     this.InitData();
     await this.GetAppNo();
-    var appObj = new AppObj();
-    appObj.AppNo = this.AppNo;
     await this.http.post(URLConstant.GetListDeviationTypeByAppNo, { TrxNo: this.AppNo }).toPromise().then(
       (response) => {
         this.responseListTypeCodes = response['ApvTypecodes'];
@@ -156,9 +151,8 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
     if(this.SysConfigResultObj.ConfigValue == '1'){
       this.isDmsReady = false;
       this.dmsObj = new DMSObj();
-      let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-      this.dmsObj.User = currentUserContext.UserName;
-      this.dmsObj.Role = currentUserContext.RoleCode;
+      this.dmsObj.User = this.UserAccess.UserName;
+      this.dmsObj.Role = this.UserAccess.RoleCode;
       this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
       var appObj = { Id: this.appId };
   
@@ -195,8 +189,7 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
   }
 
   async GetAppNo() {
-    var obj = { Id: this.appId };
-    await this.http.post<NapAppModel>(URLConstant.GetAppById, obj).toPromise().then(
+    await this.http.post<NapAppModel>(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
       (response) => {
         if (response != undefined)
           this.GetCreditScoring(response["AppNo"]);
@@ -205,8 +198,7 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
   }
 
   GetCreditScoring(appNo: string) {
-    var obj = { ScoringResultH: { TrxNo: appNo } };
-    this.http.post(URLConstant.GetLatestScoringResultHByTrxSourceNo, obj).toPromise().then(
+    this.http.post(URLConstant.GetLatestScoringResultHByTrxSourceNo, { TrxNo: appNo }).toPromise().then(
       (response) => {
         if (response["ScoringResultHObj"] != null) {
           var ScoringResult: ScoringResultHObj = response["ScoringResultHObj"];
@@ -222,12 +214,7 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
   }
 
   async GetAppCustData() {
-    var obj = {
-      Id: this.appId,
-      RowVersion: ""
-    };
-
-    await this.http.post(URLConstant.GetAppCustByAppId, obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppCustByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.CustTypeCode = response["MrCustTypeCode"];
       });
@@ -250,16 +237,14 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
   }
 
   async BindAppvAmt() {
-    var Obj = { Id: this.appId };
-    await this.http.post(URLConstant.GetAppFinDataByAppId, Obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppFinDataByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
         this.apvAmt = response["ApvAmt"]
       });
   }
 
   async GetExistingCreditReviewData() {
-    let Obj = { Id: this.appId };
-    await this.http.post(URLConstant.GetAppCrdRvwById, Obj).toPromise().then(
+    await this.http.post(URLConstant.GetAppCrdRvwById, { Id: this.appId }).toPromise().then(
       (response) => {
         this.ResponseExistCreditReview = response["appCrdRvwHObj"];
         if (this.ResponseExistCreditReview.appCrdRvwDObjs != null) {
@@ -442,26 +427,26 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
 
 
   ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
+    wfClaimObj.pUserID = this.UserAccess.UserName;
 
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       (response) => {
       });
   }
   initInputApprovalObj(manualDevList = null){  
-    var Attributes = []
-    var attribute1 = {
-      "AttributeName": "Approval Amount",
-      "AttributeValue": this.apvAmt
-    }; 
+    var Attributes: Array<ResultAttrObj> = new Array();
+    var attribute1: ResultAttrObj = {
+      AttributeName: "Approval Amount",
+      AttributeValue: this.apvAmt.toString()
+    };
     Attributes.push(attribute1);
-    var listTypeCode = [];
-    var TypeCode = {
-      "TypeCode": "CRD_APV_CF_TYPE",
-      "Attributes": Attributes,
+
+    var listTypeCode: Array<TypeResultObj> = new Array();
+    var TypeCode: TypeResultObj = {
+      TypeCode: "CRD_APV_CF_TYPE",
+      Attributes: Attributes,
     };
     listTypeCode.push(TypeCode);
 
@@ -471,10 +456,9 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
     }
     if(manualDevList != null){
       listTypeCode = listTypeCode.concat(manualDevList);
-     }
-     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
-    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
+    }
+    this.InputObj.RequestedBy = this.UserAccess.UserName;
+    this.InputObj.OfficeCode = this.UserAccess.OfficeCode;
     this.InputObj.ApvTypecodes = listTypeCode;
     this.InputObj.EnvUrl = environment.FoundationR3Url;
     this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
@@ -495,8 +479,6 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
   }
 
   async GetIsUseDigitalization() {
-    var generalSettingObj = new GeneralSettingObj();
-    generalSettingObj.GsCode = CommonConstant.GSCodeIsUseDigitalization;
     await this.http.post(URLConstant.GetGeneralSettingValueByCode, {Code: CommonConstant.GSCodeIsUseDigitalization}).toPromise().then(
       (response: GeneralSettingObj) => {
         this.IsUseDigitalization = response.GsValue;

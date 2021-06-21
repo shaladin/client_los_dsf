@@ -10,6 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqMouForEditConfirmCancelObj } from 'app/shared/model/Request/MOU/ReqMouForEditConfirmCancelObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-mou-cancel',
@@ -18,7 +19,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 export class MouCancelComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   CustNoObj: GenericObj = new GenericObj();
-  user: any;
+  user: CurrentUserContext;
 
   constructor(
     private http: HttpClient,
@@ -30,14 +31,8 @@ export class MouCancelComponent implements OnInit {
   ngOnInit() {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-    if (this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_UNAUTHORIZED_PAGE],{});
-      return;
-    }
-    else {
-      this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouCancel.json";
-      this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouCancel.json";
-    }
+    this.inputPagingObj._url = "./assets/ucpaging/mou/searchMouCancel.json";
+    this.inputPagingObj.pagingJson = "./assets/ucpaging/mou/searchMouCancel.json";
   }
 
   getEvent(event) {
@@ -59,7 +54,7 @@ export class MouCancelComponent implements OnInit {
           response => {
             this.toastr.successMessage(response["Message"]);
             this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-              AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_CANCEL],{});
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_CANCEL], {});
             });
           }
         );

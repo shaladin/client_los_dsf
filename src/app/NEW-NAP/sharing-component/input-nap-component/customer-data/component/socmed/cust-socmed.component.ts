@@ -7,20 +7,23 @@ import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-cust-socmed',
   templateUrl: './cust-socmed.component.html',
-  styleUrls: [],
+  styles:[
+    '.disabledLink { color: #ccc; pointer-events:none;}'
+  ],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
 export class CustSocmedComponent implements OnInit {
-
+  @Input() isLockMode: boolean = false;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() appCustSocmedObjs: Array<AppCustSocmedObj>;
 
   refMasterObj = {
@@ -28,9 +31,9 @@ export class CustSocmedComponent implements OnInit {
   };
   custDataObj: CustDataObj;
 
-  SocmedObj: any;
-  defaultSocmedCode: any;
-  defaultSocmedName: any;
+  SocmedObj: Array<KeyValueObj>;
+  defaultSocmedCode: string;
+  defaultSocmedName: string;
 
 
 

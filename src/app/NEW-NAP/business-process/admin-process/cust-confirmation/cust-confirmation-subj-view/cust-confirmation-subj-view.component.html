@@ -19,22 +19,23 @@
           <div class="col-md-6">
             <div class="row">
               <label class="label-control col-md-6" translate>Application No</label>
-              <label class="label-control col-md-6"><a href="javascript:void(0);"
-                  (click)="openUrl('application')">{{ AppObj?.AppNo }}</a></label>
+              <label class="label-control col-md-6"><a href="javascript:void(0);" (click)="openUrl('application')">{{
+                  AppObj?.AppNo }}</a></label>
             </div>
             <div class="row">
               <label class="label-control col-md-6" translate>Agreement No</label>
-              <label class="label-control col-md-6"><a href="javascript:void(0);"
-                  (click)="openUrl('agreement')">{{ AgrmntObj?.AgrmntNo }}</a></label>
+              <label class="label-control col-md-6"><a href="javascript:void(0);" (click)="openUrl('agreement')">{{
+                  AgrmntObj?.AgrmntNo }}</a></label>
             </div>
             <div class="row">
-              <label class="label-control col-md-6" translate>Customer No</label> 
-              <label class="label-control col-md-6"><a (click)="openUrl('customer')"style="color: #299699; cursor: pointer;">{{ AgrmntObj?.CustNo }}</a></label>  
+              <label class="label-control col-md-6" translate>Customer No</label>
+              <label class="label-control col-md-6"><a (click)="openUrl('customer')"
+                  style="color: #299699; cursor: pointer;">{{ AgrmntObj?.CustNo }}</a></label>
             </div>
             <div class="row" *ngIf="AgrmntObj?.LeadId != null">
               <label class="label-control col-md-6" translate>Lead No</label>
-              <label class="label-control col-md-6"><a href="javascript:void(0);"
-                  (click)="openUrl('lead')">{{ LeadObj?.LeadNo }}</a></label>
+              <label class="label-control col-md-6"><a href="javascript:void(0);" (click)="openUrl('lead')">{{
+                  LeadObj?.LeadNo }}</a></label>
             </div>
           </div>
           <div class="col-md-6">
@@ -171,7 +172,8 @@
       <form>
         <div class="form-body" *ngFor="let QuestionGrpList of VerfResultDListObj; let i = index">
           <h4 class="form-section card-title" translate>
-            <i class="ft-file-text"></i>{{QuestionGrpList.VerfQuestionGrpName}}</h4>
+            <i class="ft-file-text"></i>{{QuestionGrpList.VerfQuestionGrpName}}
+          </h4>
           <div class="form-group row" *ngFor="let QRList of QuestionGrpList.VerResultList; let j = index">
             <label class="col-md-3" translate>{{QRList.VerfQuestionText}} </label>
             <label class="col-md-5" translate>{{QRList.Answer}} </label>

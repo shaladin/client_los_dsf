@@ -1,13 +1,14 @@
 export class AppLoanPurposeObj{
-    AppLoanPurposeId: any;
-    AppId: any;
-    MrLoanPurposeCode: any;
+    AppLoanPurposeId: number;
+    AppId: number;
+    MrLoanPurposeCode: string;
+    MrLoanPurposeDescr: string; 
     IsDisburseToCust: boolean;
-    SupplCode: any;
-    SupplName: any;
-    BudgetPlanAmt: any;
-    SelfFinancingAmt: any;
-    FinancingAmt: any;
-    RowVersion: any;
+    SupplCode: string;
+    SupplName: string;
+    BudgetPlanAmt: number;
+    SelfFinancingAmt: number;
+    FinancingAmt: number;
+    RowVersion: string;
     constructor() { this.AppLoanPurposeId=0 ,this.RowVersion = ""; }
 }

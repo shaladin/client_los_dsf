@@ -14,91 +14,118 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { RegexService } from 'app/shared/services/regex.services';
+import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-cust-personal-main-data',
   templateUrl: './cust-personal-main-data.component.html',
   styleUrls: [],
-  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
-
+  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }],
+  providers: [RegexService]
 })
 
 export class CustPersonalMainDataComponent implements OnInit {
 
+  @Input() isLockLookupCust: boolean = false;
+  @Input() isLockMode: boolean = false;
   @Input() appId;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() custDataPersonalObj: CustDataPersonalObj = new CustDataPersonalObj();
-  @Input() custType: any;
+  @Input() custType: string;
   @Input() IsSpouseExist: boolean = false;
   @Input() bizTemplateCode: string = "";
   @Output() callbackCopyCust: EventEmitter<any> = new EventEmitter();
-  @Output() isMarried: EventEmitter<any> = new EventEmitter();
+  @Output() isMarried: EventEmitter<boolean> = new EventEmitter();
   @Output() spouseObj: EventEmitter<any> = new EventEmitter();
 
-  refMasterObj = {
-    RefMasterTypeCode: "",
-  };
-  countryObj = {
-    CountryCode: ""
-  };
-  selectedCustNo: any;
-  selectedNationalityCountryCode: any;
+  selectedCustNo: string;
+  selectedNationalityCountryCode: string;
   custDataObj: CustDataObj;
 
-  InputLookupCustomerObj: any;
-  InputLookupCountryObj: any;
-  CustTypeObj: any;
-  IdTypeObj: any;
-  GenderObj: any;
-  MaritalStatObj: any;
-  NationalityObj: any;
-  EducationObj: any;
-  ReligionObj: any;
+  InputLookupCustomerObj: InputLookupObj;
+  InputLookupCountryObj: InputLookupObj;
+  IdTypeObj: Array<RefMasterObj>;
+  GenderObj: Array<KeyValueObj>;
+  MaritalStatObj: Array<KeyValueObj>;
+  NationalityObj: Array<RefMasterObj>;
+  EducationObj: Array<KeyValueObj>;
+  ReligionObj: Array<KeyValueObj>;
 
-  getRefMasterUrl: any;
-  getCountryUrl: any;
-  UserAccess: any;
+  UserAccess: CurrentUserContext;
   MaxDate: Date;
   constructor(
     private fb: FormBuilder,
-    private http: HttpClient, private cookieService: CookieService) {
+    private http: HttpClient, 
+    private cookieService: CookieService,
+    private regexService: RegexService) {
 
   }
 
   async ngOnInit(): Promise<void> {
+    this.customPattern = new Array<CustomPatternObj>();
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess.BusinessDt;
 
+    if (this.isLockMode) {
+      this.parentForm.addControl(this.identifier, this.fb.group({
+        CustFullName: [''],
+        MrIdTypeCode: [''],
+        MrGenderCode: [''],
+        IdNo: [''],
+        MotherMaidenName: [''],
+        IdExpiredDt: [''],
+        MrMaritalStatCode: [''],
+        BirthPlace: [''],
+        BirthDt: [''],
+        MrNationalityCode: [''],
+        TaxIdNo: [''],
+        MobilePhnNo1: [''],
+        MrEducationCode: [''],
+        MobilePhnNo2: [''],
+        MrReligionCode: [''],
+        MobilePhnNo3: [''],
+        IsVip: [false],
+        Email1: [''],
+        FamilyCardNo: [''],
+        Email2: [''],
+        NoOfResidence: [''],
+        Email3: [''],
+        NoOfDependents: ['0'],
+      }));
+    } else {
+      this.parentForm.addControl(this.identifier, this.fb.group({
+        CustFullName: ['', [Validators.required, Validators.maxLength(500)]],
+        MrIdTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
+        MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
+        IdNo: ['', [Validators.required, Validators.maxLength(50)]],
+        MotherMaidenName: ['', [Validators.required, Validators.maxLength(500)]],
+        IdExpiredDt: [''],
+        MrMaritalStatCode: ['', [Validators.required, Validators.maxLength(50)]],
+        BirthPlace: ['', [Validators.required, Validators.maxLength(100)]],
+        BirthDt: ['', [Validators.required]],
+        MrNationalityCode: ['', Validators.maxLength(50)],
+        TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
+        MobilePhnNo1: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+        MrEducationCode: ['', Validators.maxLength(50)],
+        MobilePhnNo2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+        MrReligionCode: ['', Validators.maxLength(50)],
+        MobilePhnNo3: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
+        IsVip: [false],
+        Email1: ['', [Validators.maxLength(100), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+        FamilyCardNo: ['', Validators.maxLength(50)],
+        Email2: ['', [Validators.maxLength(50), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+        NoOfResidence: ['', [Validators.maxLength(4)]],
+        Email3: ['', [Validators.maxLength(50), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+        NoOfDependents: ['0', [Validators.pattern("^[0-9]+$")]],
+      }));
+    }
 
-    this.parentForm.addControl(this.identifier, this.fb.group({
-      CustFullName: ['', [Validators.required, Validators.maxLength(500)]],
-      MrIdTypeCode: ['', [Validators.required, Validators.maxLength(50)]],
-      MrGenderCode: ['', [Validators.required, Validators.maxLength(50)]],
-      IdNo: ['', [Validators.required, Validators.maxLength(50)]],
-      MotherMaidenName: ['', [Validators.required, Validators.maxLength(500)]],
-      IdExpiredDt: [''],
-      MrMaritalStatCode: ['', [Validators.required, Validators.maxLength(50)]],
-      BirthPlace: ['', [Validators.required, Validators.maxLength(100)]],
-      BirthDt: ['', [Validators.required]],
-      MrNationalityCode: ['', Validators.maxLength(50)],
-      TaxIdNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]],
-      MobilePhnNo1: ['', [Validators.required, Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
-      MrEducationCode: ['', Validators.maxLength(50)],
-      MobilePhnNo2: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
-      MrReligionCode: ['', Validators.maxLength(50)],
-      MobilePhnNo3: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
-      IsVip: [false],
-      Email1: ['', [Validators.maxLength(100), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
-      FamilyCardNo: ['', Validators.maxLength(50)],
-      Email2: ['', [Validators.maxLength(50), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
-      NoOfResidence: ['', [Validators.maxLength(4)]],
-      Email3: ['', [Validators.maxLength(50), Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
-      NoOfDependents: ['0', [Validators.pattern("^[0-9]+$")]],
-    }));
-
-    this.initUrl();
     this.initLookup();
     await this.bindAllRefMasterObj();
     this.bindCustData();
@@ -181,10 +208,8 @@ export class CustPersonalMainDataComponent implements OnInit {
     this.InputLookupCustomerObj.addCritInput = arrCrit;
   }
 
-  setCountryName(countryCode) {
-    this.countryObj.CountryCode = countryCode;
-
-    this.http.post(this.getCountryUrl, {Code: countryCode}).subscribe(
+  setCountryName(countryCode: string) {
+    this.http.post(URLConstant.GetRefCountryByCountryCode, {Code: countryCode}).subscribe(
       (response) => {
         this.InputLookupCountryObj.nameSelect = response["CountryName"];
         this.InputLookupCountryObj.jsonSelect = response;
@@ -238,11 +263,6 @@ export class CustPersonalMainDataComponent implements OnInit {
     }
   }
 
-  initUrl() {
-    this.getRefMasterUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
-    this.getCountryUrl = URLConstant.GetRefCountryByCountryCode;
-  }
-
   initLookup() {
     this.InputLookupCustomerObj = new InputLookupObj();
     this.InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
@@ -250,7 +270,13 @@ export class CustPersonalMainDataComponent implements OnInit {
     this.InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
+
+    if(this.isLockLookupCust){
+      this.InputLookupCustomerObj.isReadonly = true;
+    }else{
     this.InputLookupCustomerObj.isReadonly = false;
+    }
+    
     this.setCriteriaLookupCustomer(CommonConstant.CustTypePersonal);
 
     this.InputLookupCountryObj = new InputLookupObj();
@@ -261,6 +287,10 @@ export class CustPersonalMainDataComponent implements OnInit {
     this.InputLookupCountryObj.genericJson = "./assets/uclookup/lookupCountry.json";
     this.InputLookupCountryObj.isRequired = false;
 
+    if (this.isLockMode) {
+      this.InputLookupCountryObj.isDisable = true;
+      this.InputLookupCountryObj.isRequired = false;
+    }
   }
 
   async bindAllRefMasterObj() {
@@ -294,6 +324,7 @@ export class CustPersonalMainDataComponent implements OnInit {
       idExpiredDate.clearValidators();
     }
     idExpiredDate.updateValueAndValidity();
+    this.setValidatorPattern();
   }
 
   async bindIdTypeObj() {    
@@ -307,13 +338,15 @@ export class CustPersonalMainDataComponent implements OnInit {
           });
         }
         this.clearExpDt();
+        if (this.IdTypeObj != undefined) {
+          this.getInitPattern();
+        }
       }
     );
   }
 
   async bindGenderObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeGender;
-    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).toPromise().then(
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
@@ -326,8 +359,7 @@ export class CustPersonalMainDataComponent implements OnInit {
   }
 
   async bindMaritalStatObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeMaritalStat;
-    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMaritalStat }).toPromise().then(
       (response) => {
         this.MaritalStatObj = response[CommonConstant.ReturnObj];
         if (this.MaritalStatObj.length > 0) {
@@ -359,8 +391,7 @@ export class CustPersonalMainDataComponent implements OnInit {
   }
 
   async bindEducationObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeEducation;
-    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeEducation }).toPromise().then(
       (response) => {
         this.EducationObj = response[CommonConstant.ReturnObj];
         if (this.EducationObj.length > 0) {
@@ -373,8 +404,7 @@ export class CustPersonalMainDataComponent implements OnInit {
   }
 
   async bindReligionObj() {
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeReligion;
-    await this.http.post(this.getRefMasterUrl, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeReligion }).toPromise().then(
       (response) => {
         this.ReligionObj = response[CommonConstant.ReturnObj];
         if (this.ReligionObj.length > 0) {
@@ -474,4 +504,72 @@ export class CustPersonalMainDataComponent implements OnInit {
       this.isMarried.emit(false);
     }
   }
+
+  //START URS-LOS-041
+  controlNameIdNo: string = 'IdNo';
+  controlNameIdType: string = 'MrIdTypeCode';
+  customPattern: Array<CustomPatternObj>;
+  resultPattern: Array<KeyValueObj>;
+
+  getInitPattern() {
+    this.regexService.getListPattern().subscribe(
+      response => {
+        this.resultPattern = response[CommonConstant.ReturnObj];
+        if (this.resultPattern != undefined) {
+          for (let i = 0; i < this.resultPattern.length; i++) {
+            let patternObj: CustomPatternObj = new CustomPatternObj();
+            let pattern: string = this.resultPattern[i].Value;
+
+            patternObj.pattern = pattern;
+            patternObj.invalidMsg = this.regexService.getErrMessage(pattern);
+            this.customPattern.push(patternObj);
+          }
+          this.setValidatorPattern();
+        }
+      }
+    );
+  }
+  // setValidatorPattern(){
+  //   let idTypeValue: string;
+
+  //   idTypeValue = this.parentForm.controls[this.identifier]['controls'][this.controlNameIdType].value;
+
+  //   if (this.resultPattern != undefined) {
+  //     var result = this.resultPattern.find(x => x.Key == idTypeValue)
+
+  //     if (result != undefined) {
+  //       var pattern = result.Value;
+  //       if (pattern != undefined) {
+  //         this.setValidator(pattern);
+  //       }
+  //     }
+  //   }
+  // }
+
+  setValidatorPattern() {
+    let idTypeValue: string;
+    idTypeValue = this.parentForm.controls[this.identifier]['controls'][this.controlNameIdType].value;
+    var pattern: string = '';
+    if (idTypeValue != undefined) {
+      if (this.resultPattern != undefined) {
+        var result = this.resultPattern.find(x => x.Key == idTypeValue)
+        if (result != undefined) {
+          pattern = result.Value;
+        }
+      }
+    }
+    this.setValidator(pattern);
+  }
+
+  setValidator(pattern: string) {
+    if (pattern != undefined) {
+      if (this.isLockMode) {
+        this.parentForm.controls[this.identifier]['controls'][this.controlNameIdNo].setValidators([Validators.required, Validators.pattern(pattern)]);
+        this.parentForm.controls[this.identifier]['controls'][this.controlNameIdNo].updateValueAndValidity();
+      }
+
+    }
+  }
+  //END OF URS-LOS-041
+
 }

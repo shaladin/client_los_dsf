@@ -35,7 +35,7 @@ export class DocPickupRequestDetailComponent implements OnInit {
   srvyTaskObj: SrvyTaskObj;
 
   appCustAddrListObj: Array<AppCustAddrObj> = new Array<AppCustAddrObj>();
-  listCustAddr: any;
+  listCustAddr: Array<AppCustAddrObj>;
   custAddr: AppCustAddrObj;
 
   DocPickupReqForm = this.fb.group({
@@ -72,7 +72,7 @@ export class DocPickupRequestDetailComponent implements OnInit {
     });
   }
 
-  changeAddress(address: any) {
+  changeAddress(address) {
     this.DocPickupReqForm.patchValue({
       AddressValue: address['Value']
     });

@@ -9,7 +9,6 @@ export class AppInquiryComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
 
   constructor() { }
-  arrCrit: any;
 
   ngOnInit() {
     this.inputPagingObj._url = "./assets/ucpaging/searchAppInquiry.json";

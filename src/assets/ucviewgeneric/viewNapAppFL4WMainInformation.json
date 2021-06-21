@@ -1,97 +1,103 @@
 {
-    "title": "",
-    "subsection": [
-      {
-        "subSectionId": "NewApplication",
-        "subSectionTitle": "Main Information",
-        "mainInfoPath": "/Generic/GetDataViewBySQL",
-        "mainInfo": [
-          {
-            "type": "link",
-            "label": "Application No",
-            "property": "AppNo",
-            "name": "AppNo",
-            "environment": "LOSR3WEB",
-            "path" : "VIEW_APP", 
-            "target" : "_blank", 
-            "param" : [ 
-                {
-                    "type" : "AppId", 
-                    "property" : "AppId" 
-                }
-            ]
-          },
-          {
-            "type": "text",
-            "label": "Original Office",
-            "property": "OriOfficeName"
-          },
-          {
-            "type": "text",
-            "label": "Lessee Name",
-            "property": "CustName"
-          },
-          {
-            "type": "callback",
-            "key": "ViewProdOffering",
-            "label": "Product Offering", 
-            "property": "ProdOfferingName"
-          },
-          {
-            "type": "text",
-            "label": "Tenor",
-            "property": "Tenor"
-          },
-          {
-            "type": "text",
-            "label": "Total Asset", 
-            "property": "TotalAsset"
-          },
-          {
-            "type": "link",
-            "label": "Mou No",
-            "property": "MouCustNo",
-            "name": "MouCustNo",
-            "isHide": true,
-            "environment": "LOSR3WEB",
-            "path": "VIEW_MOU_CUST",
-            "target": "_blank",
-            "param": [
-              {
-                "type": "MouCustId",
-                "property": "MouCustId"
-              }
-            ]
-          },
-          {
-            "type": "text",
-            "label": "Customer Model",
-            "property": "MrCustModelDescr"
-          },
-          {
-            "type": "text",
-            "label": "Application Status",
-            "property": "Stat"
-          },
-          {
-            "type": "text",
-            "label": "Application Current Step",
-            "property": "CurrStep"
-          },
-          {
-            "type": "text",
-            "label": "Application Last Step",
-            "property": "LastStep"
-          },
-          {
-            "type": "text",
-            "label": "Customer Checking Step",
-            "property": "CustCheckingStep"
-          }
-        ],
-        "querystring": {
-          "name": "viewNapAppFL4WMainInformation"
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "NewApplication",
+      "subSectionTitle": "Main Information",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "link",
+          "label": "Application No",
+          "property": "AppNo",
+          "name": "AppNo",
+          "environment": "LOSR3WEB",
+          "path": "VIEW_APP",
+          "target": "_blank",
+          "param": [
+            {
+              "type": "AppId",
+              "property": "AppId"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Original Office",
+          "property": "OriOfficeName"
+        },
+        {
+          "type": "text",
+          "label": "Lessee Name",
+          "property": "CustName"
+        },
+        {
+          "type": "callback",
+          "key": "ViewProdOffering",
+          "label": "Product Offering",
+          "property": "ProdOfferingName"
+        },
+        {
+          "type": "text",
+          "label": "Tenor",
+          "property": "Tenor"
+        },
+        {
+          "type": "text",
+          "label": "Total Asset",
+          "property": "TotalAsset"
+        },
+        {
+          "type": "link",
+          "label": "Mou No",
+          "property": "MouCustNo",
+          "name": "MouCustNo",
+          "isHide": true,
+          "environment": "LOSR3WEB",
+          "path": "VIEW_MOU_CUST",
+          "target": "_blank",
+          "param": [
+            {
+              "type": "MouCustId",
+              "property": "MouCustId"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "label": "Customer Model",
+          "property": "MrCustModelDescr"
+        },
+        {
+          "type": "text",
+          "label": "Application Status",
+          "property": "Stat"
+        },
+        {
+          "type": "text",
+          "label": "Application Current Step",
+          "property": "CurrStep"
+        },
+        {
+          "type": "text",
+          "label": "Application Last Step",
+          "property": "LastStep"
+        },
+        {
+          "type": "text",
+          "label": "Customer Checking Step",
+          "property": "CustCheckingStep"
+        },
+        {
+          "type": "callback",
+          "key": "HighligtComment",
+          "label": "Highligt Comment",
+          "property": "Comment"
         }
+      ],
+      "querystring": {
+        "name": "viewNapAppFL4WMainInformation"
       }
-    ]
-  }
+    }
+  ]
+}

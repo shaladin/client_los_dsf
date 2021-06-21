@@ -4,6 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { AppAssetFinancialDataObj } from 'app/shared/model/AppAssetFinancialData,Model';
+import { OutputCalcFinancialCofObj } from 'app/shared/model/OutputCalcFinancialCof.Model';
+import { OutputCalcFinancialOplObj } from 'app/shared/model/OutputCalcFinancialOpl.Model';
+import { ResAssetFinancialRuleObj } from 'app/shared/model/ResAssetFinancialRule.Model';
 
 @Component({
   selector: 'app-fin-data-opl-detail',
@@ -71,13 +76,13 @@ export class FinancialDataOplEditComponent implements OnInit {
     //this.FinancialDataForm.controls["SecurityDepositAmt"].disable();
   }
 
-  AppFinDataObj: any;
+  AppFinDataObj: AppAssetFinancialDataObj;
   async getAssetFinData() {
     var appAssetObj = {
       Id: this.AppAssetId,
     };
     await this.http.post(URLConstant.GetAppFinDataOplByAppAssetId, appAssetObj).toPromise().then(
-      (response) => {
+      (response: AppAssetFinancialDataObj) => {
         this.AppFinDataObj = response;
         this.FinancialDataForm.patchValue({
           SecurityDepositAmt: this.AppFinDataObj.AppAssetRentDataOplObj.SecurityDepositAmt,
@@ -117,13 +122,13 @@ export class FinancialDataOplEditComponent implements OnInit {
       });
   }
 
-  AppFinDataRuleObj: any;
+  AppFinDataRuleObj: ResAssetFinancialRuleObj;
   async getAssetFinDataRule() {
     var appAssetObj = {
       Id: this.AppAssetId,
     };
     await this.http.post(URLConstant.GetFinancialRuleOpl, appAssetObj).toPromise().then(
-      (response) => {
+      (response: ResAssetFinancialRuleObj) => {
         this.AppFinDataRuleObj = response;
         this.FinancialDataForm.patchValue({
           ResidualValuePrcnt: this.AppFinDataRuleObj.ResultResidualValueRule.ResidualValuePrcnt,
@@ -230,7 +235,7 @@ export class FinancialDataOplEditComponent implements OnInit {
     //});
   }
 
-  CalculatedObj: any;
+  CalculatedObj: OutputCalcFinancialOplObj;
   CalculateRental(isRental: boolean) {
     if (this.isCalculateCof == false) {
       this.toastr.warningMessage("Please Calculate COF First");
@@ -239,8 +244,8 @@ export class FinancialDataOplEditComponent implements OnInit {
       var cashFlow = new Array();
       this.CashFlowItemObj.forEach((o) => {
         var amt = {
-          MrCashFlowItemCode : "",
-          InitialAmt : 0
+          MrCashFlowItemCode: "",
+          InitialAmt: 0
         };
         if (o.Key == CommonConstant.CashFlowItemMasterCodeFeeCptlz) {
           amt.InitialAmt = this.FinancialDataForm.controls.TotalFeeCapitalizedAmt.value;
@@ -306,7 +311,7 @@ export class FinancialDataOplEditComponent implements OnInit {
           AppCashFlowItemObjs: cashFlow
         };
         this.http.post(URLConstant.CalculateFinancialOpl, CalculateRentalObj).subscribe(
-          (response) => {
+          (response: OutputCalcFinancialOplObj) => {
             this.CalculatedObj = response;
             this.FinancialDataForm.patchValue({
               TotalOperatingCostAmt: this.CalculatedObj.TotalCost,
@@ -356,7 +361,7 @@ export class FinancialDataOplEditComponent implements OnInit {
           AppCashFlowItemObjs: cashFlow
         };
         this.http.post(URLConstant.CalculateFinancialOpl, CalculateObj).subscribe(
-          (response) => {
+          (response: OutputCalcFinancialOplObj) => {
             this.CalculatedObj = response;
             this.FinancialDataForm.patchValue({
               TotalOperatingCostAmt: this.CalculatedObj.TotalCost,
@@ -383,7 +388,7 @@ export class FinancialDataOplEditComponent implements OnInit {
     }
   }
 
-  CalculatedCofObj: any;
+  CalculatedCofObj: OutputCalcFinancialCofObj;
   CalculateCOF() {
     var CalculateRentalObj = {
       CofPrincipalAmt: this.FinancialDataForm.controls.CofPrincipal.value,
@@ -395,7 +400,7 @@ export class FinancialDataOplEditComponent implements OnInit {
       ResidualValueAmt: this.FinancialDataForm.controls.ResidualValueAmt.value
     };
     this.http.post(URLConstant.CalculateCOFOpl, CalculateRentalObj).subscribe(
-      (response) => {
+      (response: OutputCalcFinancialCofObj) => {
         this.CalculatedCofObj = response;
         this.FinancialDataForm.patchValue({
           CofAmt: this.CalculatedCofObj.CofAmt
@@ -415,7 +420,7 @@ export class FinancialDataOplEditComponent implements OnInit {
     this.getRefMasterCashFlowItem();
   }
 
-  ResidualTypeObj: any;
+  ResidualTypeObj: Array<KeyValueObj>;
   getRefMasterResidualType() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeResidualType;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
@@ -431,7 +436,7 @@ export class FinancialDataOplEditComponent implements OnInit {
     );
   }
 
-  OperatingMarginObj: any;
+  OperatingMarginObj: Array<KeyValueObj>;
   getRefMasterOperatingMarginType() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeOperatingMargin;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(
@@ -447,7 +452,7 @@ export class FinancialDataOplEditComponent implements OnInit {
     );
   }
 
-  CashFlowItemObj: any;
+  CashFlowItemObj: Array<KeyValueObj>;
   getRefMasterCashFlowItem() {
     this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCashflowItem;
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).subscribe(

@@ -18,6 +18,7 @@ import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigRes
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -37,7 +38,7 @@ export class NapDetailFormComponent implements OnInit {
   ResponseReturnInfoObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
-  ListAsset: any;
+  ListAsset: Array<AppAssetObj>;
   showCancel: boolean = true;
   IsLastStep: boolean = false;
   ReturnHandlingHId: number = 0;

@@ -23,7 +23,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   BizTemplateCode: string;
-  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
   constructor(private route: ActivatedRoute, private toastr: NGXToastrService, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) {
@@ -72,7 +72,7 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
 
   }
 
-  CallbackHandler(ev: any) {
+  CallbackHandler(ev) {
     var ApvReqObj = new ApprovalObj();
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
@@ -100,7 +100,8 @@ export class OfferingValidityCheckingApprovalPagingComponent implements OnInit {
       if (String.Format("{0:L}", ev.RowObj.MainUserId) != String.Format("{0:L}", this.userContext.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
-        ApvReqObj.TaskId = ev.RowObj.TaskId
+        ApvReqObj.TaskId = ev.RowObj.TaskId;
+        ApvReqObj.UsernameMemberId = ev.RowObj.MainUsernameMemberId;
         this.httpClient.post(URLConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);

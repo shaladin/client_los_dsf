@@ -34,9 +34,9 @@ export class CustJobDataFL4WComponent implements OnInit {
 
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() appCustPersonalJobDataObj: AppCustPersonalJobDataObj = new AppCustPersonalJobDataObj();
-  @Input() custModelCode: any;
+  @Input() custModelCode: string;
   @ViewChild('LookupProfession') ucLookupProfession: UclookupgenericComponent;
   refMasterObj = {
     RefMasterTypeCode: "",
@@ -53,14 +53,14 @@ export class CustJobDataFL4WComponent implements OnInit {
   jobDataAddrObj: AddrObj;
   inputFieldJobDataObj: InputFieldObj;
 
-  InputLookupProfessionObj: any;
-  selectedProfessionCode: any;
-  InputLookupIndustryTypeObj: any;
-  selectedIndustryTypeCode: any;
-  JobPositionObj: any;
-  JobStatObj: any;
-  CompanyScaleObj: any;
-  InvestmentTypeObj: any;
+  InputLookupProfessionObj: InputLookupObj;
+  selectedProfessionCode: string;
+  InputLookupIndustryTypeObj: InputLookupObj;
+  selectedIndustryTypeCode: string;
+  JobPositionObj: Array<KeyValueObj>;
+  JobStatObj: Array<KeyValueObj>;
+  CompanyScaleObj: Array<KeyValueObj>;
+  InvestmentTypeObj: Array<KeyValueObj>;
   CustModelObj: Array<KeyValueObj> = new Array<KeyValueObj>();
   businessDt: Date = new Date();
   inputAddressObjForJobData: InputAddressObj;

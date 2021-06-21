@@ -13,7 +13,7 @@ import { MouCustCompanyFinDataObj } from 'app/shared/model/MouCustCompanyFinData
 export class MouCustCompanyFinancialComponent implements OnInit {
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() MouCustCompanyFinDataObj: MouCustCompanyFinDataObj = new MouCustCompanyFinDataObj();
 
   constructor(

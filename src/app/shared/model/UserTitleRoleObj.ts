@@ -1,8 +1,8 @@
 export class UserTitleRoleObj {
-  userTitleRoleId: any;
-  refRoleId: any;
-  isActive: any;
-  empPositionId: any;
+  userTitleRoleId: number;
+  refRoleId: number;
+  isActive: boolean;
+  empPositionId: number;
   
   constructor() { this.userTitleRoleId = 0 }
 }

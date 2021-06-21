@@ -1,0 +1,31 @@
+<div class="row text-left">
+  <div class="col-md-12">
+      <div class="card">
+          <div class="card-body">
+              <div class="card-header header-title" style="margin-bottom: 10px;">
+                  <div class="row">
+                      <div class="col-md-8">
+                          <h4 class="card-title" id="horz-layout-colored-controls" translate> MOU Freeze Unfreeze View
+                          </h4>
+                      </div>
+                      <div class="col-md-4">
+                          <div class="float-right" style="padding-right: 15px;">
+                              <button type="button" style="margin-bottom: 0;" class="btn btn-raised btn-warning mr-1"
+                                  [routerLink]="['/Mou/FreezeUnfreeze/Inquiry']" translate>
+                                  <i class="ft-x"></i> Cancel
+                              </button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)">
+              </lib-ucviewgeneric>
+              <br />
+
+              <lib-ucviewgeneric [viewGenericObj]="viewGenericTrxObj" (callback)="GetCallBack($event)">
+              </lib-ucviewgeneric>
+              <br />
+          </div>
+      </div>
+  </div>

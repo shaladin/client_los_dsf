@@ -34,7 +34,7 @@ export class DocumentPagingComponent implements OnInit {
     this.inputPagingObj.addCritInput.push(critLobObj);
   }
 
-  GetCallback(ev: any) {
+  GetCallback(ev) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }

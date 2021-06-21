@@ -1,8 +1,39 @@
 export class AppDataObj {
-    AppId: any;
-    RowVersion: any;
-
-    constructor() { 
-        this.RowVersion = ""; 
-    }
+    AppId: number;
+    MouCustId: number;
+    SrvyOrderNo: string;
+    MrSalesRecommendCode: string;
+    OriOfficeCode: string;
+    OriOfficeName: string;
+    SalesNotes: string;
+    SalesOfficerNo: string;
+    SalesHeadNo: string;
+    SalesOfficerName: string;
+    SalesHeadName: string;
+    MrInstTypeCode: string;
+    TopDays: number;
+    TopBased: string;
+    Tenor: number;
+    NumOfInst: number;
+    MrInstSchemeCode: string;
+    IsDisclosed: boolean;
+    PaidBy: string;
+    RecourseType: string;
+    MrAppSourceCode: string;
+    MrWopCode: string;
+    PayFreqCode: string;
+    MrSingleInstCalcMthdCode: string;
+    ProdOfferingCode: string;
+    InterestType: string;
+    AppRowVersion: string;
+    AppFinDataRowVersion: string;
+    AppFctrRowVersion: string;
+    AppFinDataId: number;
+    AppFctrId: number;
+    CharaCredit: string;
+    PrevAgrNo: string;
+    WayRestructure: string;
+    MrSlikSecEcoCode: string;
+    MrSlikSecEcoDescr: string;
+    AppDlrFncngId: number;
 }

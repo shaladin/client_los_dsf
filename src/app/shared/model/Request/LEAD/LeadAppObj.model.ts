@@ -1,6 +1,6 @@
 export class LeadAppObj{
     LeadAppId: number;
-    LeadId: any;
+    LeadId: number;
     TaskListId : number;
     CurrCode: string;
     CurrName: string;

@@ -44,12 +44,12 @@
     {
       "type": "text",
       "position": "center",
-      "property": "DistrictCode"
+      "property": "provDistrictCode"
     },
     {
       "type": "text",
       "position": "left",
-      "property": "DistrictName"
+      "property": "provDistrictName"
     },
     {
       "type": "action",
@@ -57,11 +57,11 @@
       "action": [
         {
           "type": "select",
-          "property": "DistrictCode"
+          "property": "provDistrictCode"
         }
       ]
     }
   ],
-  "propertyId": "DistrictCode",
-  "propertyName": "DistrictName"
+  "propertyId": "provDistrictCode",
+  "propertyName": "provDistrictName"
 }

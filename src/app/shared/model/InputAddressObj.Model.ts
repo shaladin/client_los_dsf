@@ -1,6 +1,7 @@
 import { InputFieldObj } from './InputFieldObj.Model';
 import {NgForm, FormGroup} from '@angular/forms';
 import { environment } from 'environments/environment';
+import { AddrObj } from './AddrObj.Model';
 
 export class InputAddressObj {
     enjiForm: NgForm;

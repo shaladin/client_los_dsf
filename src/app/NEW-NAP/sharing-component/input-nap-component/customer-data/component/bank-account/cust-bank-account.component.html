@@ -2,7 +2,7 @@
 </lib-ucSubsection>
 <div id="bankAccount">
   <div class="form-actions right">
-    <button type="button" (click)="add(content)" class="btn btn-raised btn-primary" translate>
+    <button *ngIf="!isLockMode" type="button" (click)="add(content)" class="btn btn-raised btn-primary" translate>
       <i class="fa fa-check-square-o"></i> Add
     </button>
   </div>
@@ -43,10 +43,10 @@
           <span *ngIf="item.IsBankStmnt == false">No</span> 
         </td>
         <td>
-          <a class="success p-0" (click)="edit(i, content)">
+          <a [ngClass]="{'disabledLink': isLockMode}" class="success p-0" (click)="edit(i, content)">
             <i class="ft-edit-2 font-medium-3 mr-2"></i>
           </a>
-          <a class="warning p-0" (click)="delete(i)">
+          <a [ngClass]="{'disabledLink': isLockMode}" class="warning p-0" (click)="delete(i)">
             <i class="ft-trash-2 font-medium-3 mr-2"></i>
           </a>
         </td>

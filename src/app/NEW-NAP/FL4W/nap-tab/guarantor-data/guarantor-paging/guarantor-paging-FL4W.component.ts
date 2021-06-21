@@ -21,16 +21,15 @@ export class GuarantorPagingFL4WComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   inputGridObj: InputGridObj;
-  result: any = new Array();
-  ListCustNoPersonal : any = new Array();
-  ListCustNoCompany : any = new Array();
+  result: Array<AppGuarantorObj> = new Array();
+  ListCustNoPersonal : Array<string> = new Array();
+  ListCustNoCompany : Array<string> = new Array();
   closeResult: string;
   AppGuarantorId: number;
   MrGuarantorTypeCode: string;
   mode: string;
   appWizardObj: AppWizardObj;
   closeChk: any;
-  MrCustRelationshipCode: any = new Array();
 
   constructor(private http: HttpClient, private modalService: NgbModal, private toastr: NGXToastrService) {
   }

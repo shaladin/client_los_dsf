@@ -33,10 +33,10 @@ export class NapCustMainDataComponent implements OnInit {
   MrCustTypeCode: string = "PERSONAL";
   NapObj: AppObj = new AppObj();
   IsMultiAsset: string;
-  ListAsset: any;
   isMarried: boolean = false;
   bizTemplateCode: string;
   appCustId: number = 0;
+  from:string;
   IsViewReady: boolean = false;
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
 
@@ -61,6 +61,10 @@ export class NapCustMainDataComponent implements OnInit {
       }
       if (params["WfTaskListId"] != null) {
         this.wfTaskListId = params["WfTaskListId"];
+      }
+      if(params["from"]!= null)
+      {
+        this.from = params["from"];
       }
     });
   }

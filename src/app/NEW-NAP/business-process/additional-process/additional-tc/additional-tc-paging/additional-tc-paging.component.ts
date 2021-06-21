@@ -38,7 +38,7 @@ export class AdditionalTcPagingComponent implements OnInit {
     this.isReady = true;
   }
 
-  getEvent(event: any) {
+  getEvent(event) {
     if (event.Key === "Application") {
       AdInsHelper.OpenAppViewByAppId(event.RowObj.AppId);
     }

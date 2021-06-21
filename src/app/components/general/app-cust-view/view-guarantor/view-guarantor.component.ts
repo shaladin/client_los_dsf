@@ -18,10 +18,10 @@ export class GuarantorComponent implements OnInit {
   listAppGuarantorPersonal : Array<AppGuarantorPersonalObj> = new Array<AppGuarantorPersonalObj>();
   listAppGuarantorCompany : Array<AppGuarantorCompanyObj> = new Array<AppGuarantorCompanyObj>();
   listAppGuarantor : Array<AppGuarantorObj> = new Array<AppGuarantorObj>();
-  guarantorPersonal: any;
-  guarantorPersonalFiltered: any;
-  guarantorCompany: any;
-  guarantorCompanyFiltered: any;
+  guarantorPersonal: AppGuarantorPersonalObj;
+  guarantorPersonalFiltered: Array<AppGuarantorPersonalObj> = new Array<AppGuarantorPersonalObj>();
+  guarantorCompany: AppGuarantorCompanyObj;
+  guarantorCompanyFiltered: Array<AppGuarantorCompanyObj> = new Array<AppGuarantorCompanyObj>();
   closeResult: any;
   constructor(private http: HttpClient, private modalService: NgbModal) { }
 

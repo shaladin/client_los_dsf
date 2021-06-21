@@ -1,13 +1,13 @@
 export class NapAppCrossObj {
 
-    AppCrossId: any;
-    AppId: any;
-    CrossAgrmntNo: any;
-    CrossAppNo: any;
-    CustName: any;
-    MaturityDt: any;
-    ContractStat: any;
-    RowVersion: any;
+    AppCrossId: number;
+    AppId: number;
+    CrossAgrmntNo: string;
+    CrossAppNo: string;
+    CustName: string;
+    MaturityDt: Date;
+    ContractStat: string;
+    RowVersion: string;
 
     constructor() {
         this.AppCrossId = 0;

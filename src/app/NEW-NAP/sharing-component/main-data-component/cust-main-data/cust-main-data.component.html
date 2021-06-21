@@ -35,6 +35,10 @@
                     *ngIf="this.InputLookupCustObj.isReady" [parentForm]="CustMainDataForm"
                     [identifier]="'lookupCustomer'" (lookup)="copyCustomerEvent($event)" #LookupExistingCust>
                   </lib-uclookupgeneric>
+                  <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="InputLookupCustCoyObj"
+                    *ngIf="this.InputLookupCustCoyObj.isReady" [parentForm]="CustMainDataForm"
+                    [identifier]="'lookupCustomerCoy'" (lookup)="copyCustomerEvent($event)" #LookupExistingCustCoy>
+                  </lib-uclookupgeneric>
                 </div>
               </div>
             </div>
@@ -101,7 +105,7 @@
                   <input [attr.readonly]="isExisting ? 'true' : null" type="text" class="form-control"
                     formControlName="IdNo"
                     [ngClass]="{'is-invalid': enjiForm.submitted && CustMainDataForm.controls.IdNo.invalid}">
-                  <lib-uc-show-errors [control]="CustMainDataForm.controls.IdNo" [submit]="enjiForm.submitted">
+                  <lib-uc-show-errors [customPattern]="customPattern" [control]="CustMainDataForm.controls.IdNo" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
               </div>
@@ -215,7 +219,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6" *ngIf="MrCustTypeCode == 'COMPANY'">
               <div class="form-group row">
                 <label class="col-md-4 adins-required-label" translate>Establishment Date</label>
                 <div class="col-md-8">

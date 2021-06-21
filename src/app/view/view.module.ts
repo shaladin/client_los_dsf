@@ -31,7 +31,6 @@ import { TabAnalysisResultComponent } from "./app-view/tab-analysis-result/tab-a
 import { TabApplicationComponent } from "./app-view/tab-application/tab-application.component";
 import { TabAppDataComponent } from "./app-view/tab-application-data/tab-app-data.component";
 import { TabCommissionComponent } from "./app-view/tab-commission/tab-commission.component";
-import { TabDeviationComponent } from "./app-view/tab-deviation/tab-deviation.component";
 import { TabReferantorComponent } from "./app-view/tab-referantor/tab-referantor.component";
 // import { ViewAppCustDataCompanyComponent } from "./app-view/view-app-cust-data-company/view-app-cust-data-company.component";
 import { ViewAppScoreGradeDsrComponent } from "./app-view/view-app-score-grade-dsr/view-app-score-grade-dsr.component";
@@ -50,7 +49,6 @@ import { ViewSurveyTaskListComponent } from "./app-view/view-survey-task-list/vi
 import { InvoiceViewComponent } from "./app-view/invoice/invoice-view/invoice-view.component";
 import { InvoiceDetailComponent } from "./app-view/invoice/invoice-detail/invoice-detail.component";
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
-import { NewApplicationDataComponent } from "./app-view/application-data/new-application-data.component";
 import { ListDataCommissionComponent } from "./app-view/tab-commission/list-data-commission/list-data-commission.component";
 // import { AgrMainInfoComponent } from "./agr-main-info/agr-main-info.component";
 // import { AgreementViewContainerComponent } from "./agr-view/agreement-view-container.component";
@@ -90,6 +88,8 @@ import { AppCustViewComponentsModule } from "app/components/general/app-cust-vie
 import { SharedModule } from "app/shared/shared.module";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { MouMainInfoComponent } from './mou-main-info/mou-main-info.component';
+import { TabDeviationComponent } from "./app-view/tab-deviation/tab-deviation.component";
+import { NewApplicationDataComponent } from "./app-view/application-data/new-application-data.component";
 // import { ShowErrorsComponent } ../NEW-NAP/view/app-view/app-view.componentors.component";
 
 @NgModule({
@@ -127,7 +127,6 @@ import { MouMainInfoComponent } from './mou-main-info/mou-main-info.component';
     AppInsuranceComponent,
     AppInsuranceDetailComponent,
     AppTcComponent,
-    NewApplicationDataComponent,
     ApprovalHistComponent,
     InvoiceDataFctrComponent,
     LifeInsuranceComponent,
@@ -135,7 +134,6 @@ import { MouMainInfoComponent } from './mou-main-info/mou-main-info.component';
     TabApplicationComponent,
     TabAppDataComponent,
     TabCommissionComponent,
-    TabDeviationComponent,
     TabReferantorComponent,
     ViewAppScoreGradeDsrComponent,
     ViewAppScoreGradeDukcapilComponent,
@@ -153,6 +151,8 @@ import { MouMainInfoComponent } from './mou-main-info/mou-main-info.component';
     InvoiceViewComponent,
     InvoiceDetailComponent ,
     ListDataCommissionComponent,
+    TabDeviationComponent,
+    NewApplicationDataComponent,
     //agrmnt
     AgrMainInfoComponent,
     AgreementViewContainerComponent,

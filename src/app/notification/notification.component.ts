@@ -16,9 +16,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 })
 export class NotificationComponent implements OnInit {
 
-  type: any = 'success';
+  type: string = 'success';
   notificationObj: NotificationObj;
-  apiUrl: any;
+  apiUrl: string;
   foundationUrl: string = environment.FoundationR3Url;
   payload: any;
 

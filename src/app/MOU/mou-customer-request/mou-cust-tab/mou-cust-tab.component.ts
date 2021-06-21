@@ -35,6 +35,7 @@ import { String } from 'typescript-string-operations';
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-mou-cust-tab',
@@ -50,12 +51,11 @@ export class MouCustTabComponent implements OnInit {
   isUseDigitalization: string;
   generalSettingObj: GenericListByCodeObj;
   returnGeneralSettingObj: Array<ResGeneralSettingObj>;
-  mouObj: MouCustObj = new MouCustObj();
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
   latestCustDataObj: AppCustCompareObj;
-  thirdPartyRsltHId: any;
-  latestReqDtCheckIntegrator: any;
-  reqLatestJson: any;
+  thirdPartyRsltHId: number;
+  latestReqDtCheckIntegrator: Date;
+  reqLatestJson: string;
 
   CustDataForm = this.fb.group({
     CopyFromResidence: [''],
@@ -68,7 +68,7 @@ export class MouCustTabComponent implements OnInit {
 
   @Input() MouCustId: number;
   @Input() showCancel: boolean = true;
-  @Output() outputTab: EventEmitter<any> = new EventEmitter();
+  @Output() outputTab: EventEmitter<string> = new EventEmitter();
   @Output() ResponseMouCust: EventEmitter<any> = new EventEmitter(); t
 
   countryObj = {
@@ -83,23 +83,23 @@ export class MouCustTabComponent implements OnInit {
   inputFieldLegalCompanyObj: InputFieldObj;
   residenceAddrObj: AddrObj;
   inputFieldResidenceObj: InputFieldObj;
-  copyFromResidence: any;
+  copyFromResidence: string;
   mailingAddrObj: AddrObj;
   inputFieldMailingObj: InputFieldObj;
-  copyFromMailing: any;
+  copyFromMailing: string;
   mailingAddrCompanyObj: AddrObj;
   inputFieldMailingCompanyObj: InputFieldObj;
-  copyFromMailingCompany: any;
+  copyFromMailingCompany: string;
   MouCustPersonalId: number = 0;
   MouCustAddrId: number;
   MouCustFinDataId: number = 0;
   MouCustPersonalJobDataId: number = 0;
   MouCustAddrLegalId: number = 0;
   MouCustAddrResidenceId: number = 0;
-  MouCustAddrMailingId: number= 0;
+  MouCustAddrMailingId: number = 0;
   MouCustCompanyId: number = 0;
   listMouCustPersonalContactInformation: Array<MouCustPersonalContactPersonObj> = new Array<MouCustPersonalContactPersonObj>();
-  returnMouObj: any;
+  returnMouObj: MouCustObj;
 
   listMouCustBankAcc: Array<MouCustBankAccObj> = new Array<MouCustBankAccObj>();
   listMouCustBankAccCompany: Array<MouCustBankAccObj> = new Array<MouCustBankAccObj>();
@@ -107,17 +107,16 @@ export class MouCustTabComponent implements OnInit {
   listContactPersonCompany: Array<MouCustPersonalContactPersonObj> = new Array<MouCustPersonalContactPersonObj>();
   listLegalDoc: Array<MouCustCompanyLegalDocObj> = new Array<MouCustCompanyLegalDocObj>();
   isBindDataDone: boolean = false;
-  getCustDataUrl: any;
 
-  CustTypeObj: any;
-  copyToResidenceTypeObj: any = [
+  CustTypeObj: Array<KeyValueObj>;
+  copyToResidenceTypeObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
     },
   ];
 
-  copyToMailingTypeObj: any = [
+  copyToMailingTypeObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
@@ -128,7 +127,7 @@ export class MouCustTabComponent implements OnInit {
     }
   ];
 
-  copyToMailingCompanyTypeObj: any = [
+  copyToMailingCompanyTypeObj: Array<KeyValueObj> = [
     {
       Key: "LEGAL",
       Value: "Legal"
@@ -136,7 +135,7 @@ export class MouCustTabComponent implements OnInit {
   ];
 
   defCustModelCode: string;
-  MrCustTypeCode: any;
+  MrCustTypeCode: string;
   isMarried: boolean = true;
   spouseGender: string = "";
   isSpouseOk: boolean = true;
@@ -186,27 +185,26 @@ export class MouCustTabComponent implements OnInit {
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt || this.isExpiredDate) return;
       if (this.isSpouseOk) {
         if (this.confirmFraudCheck()) {
-          if(this.MouCustPersonalId == 0){
-          this.http.post(URLConstant.AddMouCustPersonalData, this.custDataPersonalObj).subscribe(
-            (response) => {
-              if (response["StatusCode"] == 200) {
-                this.toastr.successMessage(response["message"]);
-                this.ResponseMouCust.emit({ StatusCode: "200" });
-                this.EmitToMainComp();
+          if (this.MouCustPersonalId == 0) {
+            this.http.post(URLConstant.AddMouCustPersonalData, this.custDataPersonalObj).subscribe(
+              (response) => {
+                if (response["StatusCode"] == 200) {
+                  this.toastr.successMessage(response["message"]);
+                  this.ResponseMouCust.emit({ StatusCode: "200" });
+                  this.EmitToMainComp();
+                }
+                else {
+                  response["ErrorMessages"].forEach((message: string) => {
+                    this.toastr.warningMessage(message["Message"]);
+                  });
+                }
+              },
+              (error) => {
+                console.log(error);
               }
-              else {
-                response["ErrorMessages"].forEach((message: string) => {
-                  this.toastr.warningMessage(message["Message"]);
-                });
-              }
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
+            );
           }
-          else
-          {
+          else {
             this.http.post(URLConstant.EditMouCustPersonalData, this.custDataPersonalObj).subscribe(
               (response) => {
                 if (response["StatusCode"] == 200) {
@@ -272,31 +270,30 @@ export class MouCustTabComponent implements OnInit {
       }
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
       if (this.confirmFraudCheck()) {
-      if(this.MouCustCompanyId == 0){
-        this.http.post(URLConstant.AddMouCustCompanyData, this.custDataCompanyObj).subscribe(
-          (response) => {
-            this.ResponseMouCust.emit({ StatusCode: "200" });
-            this.toastr.successMessage(response["message"]);
-            this.EmitToMainComp();
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-      }
-      else
-      {
-        this.http.post(URLConstant.EditMouCustCompanyData, this.custDataCompanyObj).subscribe(
-          (response) => {
-            this.ResponseMouCust.emit({ StatusCode: "200" });
-            this.toastr.successMessage(response["message"]);
-            this.EmitToMainComp();
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-      }
+        if (this.MouCustCompanyId == 0) {
+          this.http.post(URLConstant.AddMouCustCompanyData, this.custDataCompanyObj).subscribe(
+            (response) => {
+              this.ResponseMouCust.emit({ StatusCode: "200" });
+              this.toastr.successMessage(response["message"]);
+              this.EmitToMainComp();
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        }
+        else {
+          this.http.post(URLConstant.EditMouCustCompanyData, this.custDataCompanyObj).subscribe(
+            (response) => {
+              this.ResponseMouCust.emit({ StatusCode: "200" });
+              this.toastr.successMessage(response["message"]);
+              this.EmitToMainComp();
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        }
       }
     }
   }
@@ -412,7 +409,7 @@ export class MouCustTabComponent implements OnInit {
       this.custDataCompanyObj.MouCustObj.TaxIdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
       this.custDataCompanyObj.MouCustObj.IsVip = this.CustDataCompanyForm.controls["companyMainData"]["controls"].IsVip.value;
       this.custDataCompanyObj.MouCustObj.MouCustId = this.MouCustId;
-      
+
 
       if (this.custDataCompanyObj.MouCustObj.CustNo != "" && this.custDataCompanyObj.MouCustObj.CustNo != undefined) {
         this.custDataCompanyObj.MouCustObj.IsExistingCust = true;
@@ -431,7 +428,7 @@ export class MouCustTabComponent implements OnInit {
     this.custDataCompanyObj.MouCustCompanyObj.EstablishmentDt = this.CustDataCompanyForm.controls["companyMainData"]["controls"].EstablishmentDt.value;
     this.CekDt(this.custDataCompanyObj.MouCustCompanyObj.EstablishmentDt, ExceptionConstant.DateErrorMessageEstablishmentDate);
     this.custDataCompanyObj.MouCustCompanyObj.MouCustId = this.MouCustId;
-    if(this.MouCustCompanyId != 0 ){
+    if (this.MouCustCompanyId != 0) {
       this.custDataCompanyObj.MouCustCompanyObj.MouCustCompanyId = this.MouCustCompanyId;
     }
   }
@@ -458,8 +455,8 @@ export class MouCustTabComponent implements OnInit {
     this.custDataPersonalObj.MouCustPersonalObj.NoOfResidence = this.CustDataForm.controls["PersonalMain"]["controls"].NoOfResidence.value;
     this.custDataPersonalObj.MouCustPersonalObj.NoOfDependents = this.CustDataForm.controls["PersonalMain"]["controls"].NoOfDependents.value;
     this.custDataPersonalObj.MouCustPersonalObj.MouCustId = this.MouCustId;
-    if(this.MouCustPersonalId != 0){
-    this.custDataPersonalObj.MouCustPersonalObj.MouCustPersonalId = this.MouCustPersonalId;
+    if (this.MouCustPersonalId != 0) {
+      this.custDataPersonalObj.MouCustPersonalObj.MouCustPersonalId = this.MouCustPersonalId;
     }
   }
 
@@ -483,7 +480,7 @@ export class MouCustTabComponent implements OnInit {
       this.custDataPersonalObj.MouCustAddrLegalObj.Fax = this.CustDataForm.controls["legalAddr"]["controls"].Fax.value;
       this.custDataPersonalObj.MouCustAddrLegalObj.SubZipcode = this.CustDataForm.controls["legalAddr"]["controls"].SubZipcode.value;
       this.custDataPersonalObj.MouCustAddrLegalObj.MouCustId = this.MouCustId;
-      if(this.MouCustAddrLegalId != 0){
+      if (this.MouCustAddrLegalId != 0) {
         this.custDataPersonalObj.MouCustAddrLegalObj.MouCustAddrId = this.MouCustAddrLegalId;
       }
     }
@@ -506,7 +503,7 @@ export class MouCustTabComponent implements OnInit {
       this.custDataCompanyObj.MouCustAddrLegalObj.FaxArea = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].FaxArea.value;
       this.custDataCompanyObj.MouCustAddrLegalObj.Fax = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].Fax.value;
       this.custDataCompanyObj.MouCustAddrLegalObj.SubZipcode = this.CustDataCompanyForm.controls["legalAddrCompany"]["controls"].SubZipcode.value;
-      if(this.MouCustAddrLegalId != 0){
+      if (this.MouCustAddrLegalId != 0) {
         this.custDataCompanyObj.MouCustAddrLegalObj.MouCustAddrId = this.MouCustAddrLegalId;
       }
     }
@@ -532,9 +529,9 @@ export class MouCustTabComponent implements OnInit {
     this.custDataPersonalObj.MouCustAddrResidenceObj.MrHouseOwnershipCode = this.CustDataForm.controls["residenceAddr"]["controls"].MrHouseOwnershipCode.value;
     this.custDataPersonalObj.MouCustAddrResidenceObj.SubZipcode = this.CustDataForm.controls["residenceAddr"]["controls"].SubZipcode.value;
     this.custDataPersonalObj.MouCustAddrResidenceObj.MouCustId = this.MouCustId;
-      if(this.MouCustAddrResidenceId != 0){
-        this.custDataPersonalObj.MouCustAddrResidenceObj.MouCustAddrId = this.MouCustAddrResidenceId;
-      }
+    if (this.MouCustAddrResidenceId != 0) {
+      this.custDataPersonalObj.MouCustAddrResidenceObj.MouCustAddrId = this.MouCustAddrResidenceId;
+    }
   }
 
   setMouCustAddrMailing() {
@@ -557,7 +554,7 @@ export class MouCustTabComponent implements OnInit {
       this.custDataPersonalObj.MouCustAddrMailingObj.Fax = this.CustDataForm.controls["mailingAddr"]["controls"].Fax.value;
       this.custDataPersonalObj.MouCustAddrMailingObj.SubZipcode = this.CustDataForm.controls["mailingAddr"]["controls"].SubZipcode.value;
       this.custDataPersonalObj.MouCustAddrMailingObj.MouCustId = this.MouCustId;
-      if(this.MouCustAddrMailingId != 0){
+      if (this.MouCustAddrMailingId != 0) {
         this.custDataPersonalObj.MouCustAddrMailingObj.MouCustAddrId = this.MouCustAddrMailingId;
       }
     }
@@ -580,7 +577,7 @@ export class MouCustTabComponent implements OnInit {
       this.custDataCompanyObj.MouCustAddrMailingObj.FaxArea = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].FaxArea.value;
       this.custDataCompanyObj.MouCustAddrMailingObj.Fax = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].Fax.value;
       this.custDataCompanyObj.MouCustAddrMailingObj.SubZipcode = this.CustDataCompanyForm.controls["mailingAddrCompany"]["controls"].SubZipcode.value;
-      if(this.MouCustAddrMailingId != 0){
+      if (this.MouCustAddrMailingId != 0) {
         this.custDataCompanyObj.MouCustAddrMailingObj.MouCustAddrId = this.MouCustAddrMailingId;
       }
     }
@@ -605,7 +602,7 @@ export class MouCustTabComponent implements OnInit {
     this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustAddrJobObj.FaxArea = this.CustDataForm.controls["jobDataAddr"]["controls"].FaxArea.value;
     this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustAddrJobObj.Fax = this.CustDataForm.controls["jobDataAddr"]["controls"].Fax.value;
     this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustAddrJobObj.MouCustId = this.MouCustId;
-    if(this.MouCustAddrId != 0){
+    if (this.MouCustAddrId != 0) {
       this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustAddrJobObj.MouCustAddrId = this.MouCustAddrId;
     }
   }
@@ -617,7 +614,7 @@ export class MouCustTabComponent implements OnInit {
     this.custDataPersonalObj.MouCustPersonalFinDataObj.MonthlyInstallmentAmt = this.CustDataForm.controls["financialData"]["controls"].MonthlyInstallmentAmt.value;
     this.custDataPersonalObj.MouCustPersonalFinDataObj.IsJoinIncome = this.CustDataForm.controls["financialData"]["controls"].IsJoinIncome.value;
     this.custDataPersonalObj.MouCustPersonalFinDataObj.SpouseMonthlyIncomeAmt = this.CustDataForm.controls["financialData"]["controls"].SpouseMonthlyIncomeAmt.value;
-    if(this.MouCustFinDataId != 0){
+    if (this.MouCustFinDataId != 0) {
       this.custDataPersonalObj.MouCustPersonalFinDataObj.MouCustPersonalFinDataId = this.MouCustFinDataId;
       this.custDataPersonalObj.MouCustPersonalFinDataObj.MouCustPersonalId = this.MouCustPersonalId;
     }
@@ -649,9 +646,9 @@ export class MouCustTabComponent implements OnInit {
     this.custDataCompanyObj.MouCustCompanyFinDataObj.LongTemrLiablts = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].LongTemrLiablts.value;
     this.custDataCompanyObj.MouCustCompanyFinDataObj.ShareholderEquity = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].ShareholderEquity.value;
     this.custDataCompanyObj.MouCustCompanyFinDataObj.CurrRatio = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].CurrRatio.value;
-    if(this.MouCustFinDataId != 0){
+    if (this.MouCustFinDataId != 0) {
       this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustCompanyFinDataId = this.MouCustFinDataId;
-      this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustCompanyId = this.MouCustCompanyId;
+      this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustId = this.MouCustCompanyId;
     }
   }
 
@@ -698,9 +695,9 @@ export class MouCustTabComponent implements OnInit {
     if (this.custDataPersonalObj.MouCustObj.CustModelCode == CommonConstant.CustModelNonProfessional) {
       this.custDataPersonalObj.MouCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
     }
-    if(this.MouCustPersonalJobDataId != 0){
-    this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustPersonalId = this.MouCustPersonalId;
-    this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustPersonalJobDataId = this.MouCustPersonalJobDataId;
+    if (this.MouCustPersonalJobDataId != 0) {
+      this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustPersonalId = this.MouCustPersonalId;
+      this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustPersonalJobDataId = this.MouCustPersonalJobDataId;
     }
     this.CekDt(this.custDataPersonalObj.MouCustPersonalJobDataObj.EstablishmentDt, ExceptionConstant.DateErrorMessageEstablishmentDate);
   }
@@ -935,7 +932,7 @@ export class MouCustTabComponent implements OnInit {
   }
 
   async getCustData() {
-    await this.http.post(URLConstant.GetMouCustByMouCustId, { "Id": this.MouCustId }).toPromise().then(
+    await this.http.post(URLConstant.GetMouCustByMouCustId, { Id: this.MouCustId }).toPromise().then(
       (response) => {
         if (response["MouCustObj"]["MouCustId"] > 0) {
           if (response["MouCustObj"]["MrCustTypeCode"] == CommonConstant.CustTypePersonal) {
@@ -954,7 +951,7 @@ export class MouCustTabComponent implements OnInit {
             this.custDataPersonalObj.MouCustSocmedObjs = response["MouCustSocmedObjs"];
             this.custDataPersonalObj.MouCustGrpObjs = response["MouCustGrpObjs"];
 
-            
+
             if (this.custDataPersonalObj.MouCustObj.MouCustId != 0) {
               this.defCustModelCode = this.custDataPersonalObj.MouCustObj.CustModelCode;
             }
@@ -1226,6 +1223,15 @@ export class MouCustTabComponent implements OnInit {
   CopyCustomer(event) {
     this.copyAddrFromLookup(event);
 
+    if (event["CustPersonalObj"] != undefined) {
+      if (event["CustPersonalObj"]["MrMaritalStatCode"] == CommonConstant.MasteCodeMartialStatsMarried) {
+        this.isMarried = true;
+      }
+      else {
+        this.isMarried = false;
+      }
+    }
+
     if (event["CustPersonalContactPersonObjs"] != undefined) {
       this.listMouCustPersonalContactInformation = event["CustPersonalContactPersonObjs"];
       this.CheckSpouseExist();
@@ -1415,7 +1421,7 @@ export class MouCustTabComponent implements OnInit {
   }
 
   async bindCustTypeObj() {
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { 'RefMasterTypeCode': CommonConstant.RefMasterTypeCodeCustType }).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustType }).toPromise().then(
       (response) => {
         this.CustTypeObj = response[CommonConstant.ReturnObj];
       }
@@ -1478,7 +1484,7 @@ export class MouCustTabComponent implements OnInit {
         (response) => {
           this.toastr.successMessage(response["message"]);
           this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-            (response : ResThirdPartyRsltHObj) => {
+            (response: ResThirdPartyRsltHObj) => {
               this.latestReqDtCheckIntegrator = response.ReqDt;
               this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
               this.reqLatestJson = JSON.parse(response.ReqJson);
@@ -1522,31 +1528,29 @@ export class MouCustTabComponent implements OnInit {
 
         var gsNeedCheckBySystem = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIntegratorCheckBySystem);
         var gsUseDigitalization = this.returnGeneralSettingObj.find(x => x.GsCode == CommonConstant.GSCodeIsUseDigitalization);
-        
-        if(gsNeedCheckBySystem != undefined){
+
+        if (gsNeedCheckBySystem != undefined) {
           this.isNeedCheckBySystem = gsNeedCheckBySystem.GsValue;
-        }else{
+        } else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIntegratorCheckBySystem));
         }
 
-        if(gsUseDigitalization != undefined){
+        if (gsUseDigitalization != undefined) {
           this.isUseDigitalization = gsUseDigitalization.GsValue;
-        }else{
+        } else {
           this.toastr.warningMessage(String.Format(ExceptionConstant.GS_CODE_NOT_FOUND, CommonConstant.GSCodeIsUseDigitalization));
         }
-        this.mouObj = new MouCustObj();
-        this.mouObj.MouCustId = this.MouCustId;
         this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
-          (response) => {
+          (response: MouCustObj) => {
             this.returnMouObj = response;
 
             this.thirdPartyObj = new ThirdPartyResultHForFraudChckObj();
             this.thirdPartyObj.TrxTypeCode = CommonConstant.MOU_TRX_TYPE_CODE;
             this.thirdPartyObj.TrxNo = this.returnMouObj["MouCustNo"];
             this.thirdPartyObj.FraudCheckType = CommonConstant.FRAUD_CHCK_CUST;
-            if(this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0"){
+            if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
               this.http.post(URLConstant.GetThirdPartyResultHForFraudChecking, this.thirdPartyObj).subscribe(
-                (response : ResThirdPartyRsltHObj) => {
+                (response: ResThirdPartyRsltHObj) => {
                   if (response != null) {
                     this.latestReqDtCheckIntegrator = response.ReqDt;
                     this.thirdPartyRsltHId = response.ThirdPartyRsltHId;
@@ -1584,6 +1588,8 @@ export class MouCustTabComponent implements OnInit {
     );
   }
   confirmFraudCheck() {
+    if (this.isUseDigitalization == "0") return true;
+
     let inputCustObj = new AppCustCompareObj();
 
     if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
@@ -1621,9 +1627,9 @@ export class MouCustTabComponent implements OnInit {
     else if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
       inputCustObj.CustName = this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value;
       inputCustObj.IdNo = this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value;
-      if ((this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") 
-      && (this.latestCustDataObj.TaxNo != this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value 
-      || this.latestCustDataObj.CustName != this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value)) {
+      if ((this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0")
+        && (this.latestCustDataObj.TaxNo != this.CustDataCompanyForm.controls["companyMainData"]["controls"].TaxIdNo.value
+          || this.latestCustDataObj.CustName != this.CustDataCompanyForm.controls["lookupCustomerCompany"]["controls"].value.value)) {
         if (confirm("Recent Customer Main Data different with previous data. Are you sure want to submit without fraud check ?")) {
           return true;
         }

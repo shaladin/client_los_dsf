@@ -1,6 +1,6 @@
 export class InstallmentObj {
     InstSeqNo: number
-    DueDate: string
+    DueDt: string
     InstAmt: number
     PrincipalAmt: number
     InterestAmt: number

@@ -1,0 +1,40 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "FraudVerifResultId",
+        "subSectionTitle": "Fraud Verification Result",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Verification By",
+            "property": "VerifyByName"
+          },
+          {
+            "type": "",
+            "label": "",
+            "property": ""
+          },
+          {
+            "type": "date",
+            "label": "Verification Date",
+            "property": "VerifyDt"
+          },
+          {
+            "type": "",
+            "label": "",
+            "property": ""
+          },
+          {
+            "type": "text",
+            "label": "Verification Notes",
+            "property": "Notes"
+          }
+        ],
+        "querystring": {
+          "name": "viewFraudVerifResult"
+        }
+      }
+    ]
+  }

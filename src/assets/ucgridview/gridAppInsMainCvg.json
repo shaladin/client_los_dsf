@@ -41,6 +41,18 @@
             "position": "center",
             "label": "Additional Premi To Insco",
             "name": "TotalInscoAddPremiAmt"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Paid By",
+            "name": "MrInsPaidByCode"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Capitalized",
+            "name": "IsCapitalized"
         }
     ],
     "bodyList": [
@@ -78,6 +90,16 @@
             "type": "decimal",
             "position": "center",
             "property": "TotalInscoAddPremiAmt"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "MrInsPaidByCode"
+        },
+        {
+            "type": "boolean",
+            "position": "center",
+            "property": "IsCapitalized"
         }
     ]
 }

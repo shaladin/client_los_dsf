@@ -12,6 +12,7 @@ import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
 import { UcapprovalcreateComponent } from '@adins/ucapprovalcreate';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-sharing-pre-go-live-request-for-approval',
@@ -19,10 +20,9 @@ import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCode
 })
 export class PreGoLiveRequestForApprovalComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  AppId: any;
-  itemApprovedBy: any;
-  AgrmntNo: any;
-  itemReason: any;
+  AppId: number;
+  AgrmntNo: string;
+  itemReason: Array<KeyValueObj>;
 
   RFAPreGoLive: any;
   RFAInfo: Object = new Object();

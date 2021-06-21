@@ -6,6 +6,15 @@
         <form class="form form-horizontal" [formGroup]="CommissionForm" (ngSubmit)="CommissionForm.valid && SaveForm()"
           #enjiForm="ngForm">
           <div class="form-body">
+            <div class="form-group row">
+              <label class="col-md-4 adInsLabel" translate>Allocation Type</label>
+              <div class="col-md-8">
+                <select style="width:50%" class="form-control" (change)="inputTypeChange($event.target.value)">
+                  <option value="Amount">Amount</option>
+                  <option value="Percentage">Percentage</option>
+                </select>
+              </div>
+            </div>
             <app-form-commission-generate #Form1 *ngIf="OnForm1" [hidden]="HideForm1" [DictMaxIncomeForm]="DictRemainingIncomeForm" [enjiForm]="enjiForm" (update)="GetData()"
               [parentForm]="CommissionForm" [identifier]="identifierSupplier" [FormInputObj]="FormInputObjSupplier">
             </app-form-commission-generate>

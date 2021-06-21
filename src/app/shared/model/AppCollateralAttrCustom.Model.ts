@@ -7,6 +7,7 @@ export class AppCollateralAttrCustomObj {
   AttrLength: number;
   AttrTypeCode: string;
   AttrInputType: string;
+  AttrQuestionValue: Array<string>;
   AttrGroup: string;
   RsvField1: string;
   RsvField2: string;

@@ -1,0 +1,15 @@
+<form class="form-horizontal" [formGroup]="FinDataForm" (ngSubmit)="FinDataForm.valid" #enjiForm="ngForm">
+  <app-fee-dlfn *ngIf="IsParentLoaded" [AppId]="AppId" [ParentForm]="FinDataForm" [identifier]="'AppFee'"></app-fee-dlfn>
+  <app-single-inst-dlfn *ngIf="IsParentLoaded && FinDataForm.controls.MrInstTypeCode.value == 'SINGLE'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-single-inst-dlfn>
+  <app-schm-regular-fix-dlfn *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'RF' && FinDataForm.controls.MrInstTypeCode.value == 'MULTIPLE'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-regular-fix-dlfn>
+  <app-schm-even-principal-dlfn *ngIf="IsParentLoaded && FinDataForm.controls.MrInstSchemeCode.value == 'EP' && FinDataForm.controls.MrInstTypeCode.value == 'MULTIPLE'" [AppId]="AppId" [ParentForm]="FinDataForm"></app-schm-even-principal-dlfn>
+  <div class="form-inline-right">
+    <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+      <i class="ft-x"></i> Cancel
+    </button>
+    <button type="submit" class="btn btn-raised btn-primary" translate type="button" tabindex="0"
+      (click)="SaveAndContinue()">
+      Save
+    </button>
+  </div>
+</form>

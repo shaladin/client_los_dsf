@@ -3,10 +3,10 @@ export class PreGoLiveMainObj {
     AgrmntId : number;
     AgrmntDt : Date;
     EffectiveDt : Date;
-    Notes : any;
-    IsNeedApproval : any;
-    ApprovalStat : any;
-    RowVersion : any;
+    Notes : string;
+    IsNeedApproval : boolean;
+    ApprovalStat : string;
+    RowVersion : string;
     
     constructor() {
         this.PreGoLiveId = 0;

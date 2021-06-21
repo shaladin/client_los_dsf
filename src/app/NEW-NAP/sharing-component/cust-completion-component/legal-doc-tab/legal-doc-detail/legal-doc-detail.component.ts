@@ -52,7 +52,7 @@ export class LegalDocDetailComponent implements OnInit {
     private toastr: NGXToastrService,
     public formValidate: FormValidateService, private cookieService: CookieService) {
   }
-  
+
   isDataExist: boolean = false;
   ngOnInit() {
     this.ddlMrLegalDocTypeObj.isSelectOutput = true;
@@ -108,7 +108,7 @@ export class LegalDocDetailComponent implements OnInit {
     );
   }
 
-  ChangeLegalDocType(ev : string, ForEdit: boolean = false) {
+  ChangeLegalDocType(ev: string, ForEdit: boolean = false) {
     this.http.post(URLConstant.GetDocIsExpDtMandatory, { Code: ev }).subscribe(
       (response) => {
         this.IsExpDateMandatory = response["IsExpDtMandatory"];
@@ -135,16 +135,42 @@ export class LegalDocDetailComponent implements OnInit {
     this.OutputTab.emit();
   }
 
+  CekDtValidity() {
+    let flag = false;
+
+    let bzDt = new Date(this.MaxBusinessDt);
+    let issueDt = new Date(this.LegalDocForm.get("DocDt").value);
+    let expDt = new Date(this.LegalDocForm.get("DocExpiredDt").value);
+    if (bzDt > expDt && bzDt != expDt) {
+      this.toastr.warningMessage(ExceptionConstant.EXPIRED_DATE_CANNOT_LESS_THAN + this.MaxBusinessDt);
+      flag = false;
+    }
+
+    bzDt.setDate(bzDt.getDate() + 1);
+    if (bzDt < issueDt && bzDt != issueDt) {
+      this.toastr.warningMessage(ExceptionConstant.ISSUED_DATE_CANNOT_MORE_THAN + this.MaxBusinessDt);
+      flag = false;
+    }
+
+    if (issueDt.getDate() > expDt.getDate()) {
+      this.toastr.warningMessage(ExceptionConstant.ISSUED_DATE_CANNOT_MORE_THAN_EXP_DT);
+      flag = true;
+    }
+
+    return flag;
+  }
+
   SaveForm() {
-    if( this.datePipe.transform(this.LegalDocForm.controls.DocDt.value, "yyyy-MM-dd") > this.datePipe.transform(this.MaxBusinessDt, "yyyy-MM-dd") ){
+    if (this.datePipe.transform(this.LegalDocForm.controls.DocDt.value, "yyyy-MM-dd") > this.datePipe.transform(this.MaxBusinessDt, "yyyy-MM-dd")) {
       this.toastr.warningMessage(ExceptionConstant.ISSUED_DATE_CANNOT_MORE_THAN + this.datePipe.transform(this.MaxBusinessDt, 'MMMM d, y'));
       return;
-   } 
+    }
 
     if (this.AppCustCompanyLegalDoc.AppCustCompanyLegalDocId == 0 && this.ListAppCustCompanyLegalDoc.find(x => x.MrLegalDocTypeCode == this.LegalDocForm.controls.MrLegalDocTypeCode.value)) {
       let ErrorOutput = this.LegalDocTypeObj.find(x => x.Key == this.LegalDocForm.controls.MrLegalDocTypeCode.value);
       this.toastr.warningMessage("There's Already " + ErrorOutput.Value + " Document")
     } else {
+      if (this.CekDtValidity()) return;
       this.AppCustCompanyLegalDocObj = this.LegalDocForm.value;
       this.AppCustCompanyLegalDocObj.MrLegalDocTypeCode = this.LegalDocForm.controls.MrLegalDocTypeCode.value;
       this.AppCustCompanyLegalDocObj.AppCustCompanyId = this.AppCustCompanyId;

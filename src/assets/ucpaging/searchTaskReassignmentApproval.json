@@ -1,0 +1,196 @@
+{
+  "title": "Task Reassignment Approval",
+  "exportExcel": false,
+  "component": [
+    {
+      "type": "textbox",
+      "name": "T.TASK_REASSIGNMENT_TRX_NO",
+      "id": "TaskReassignmentId",
+      "value": "",
+      "label": "Task Reassignment No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "T.OLD_CURRENT_USER",
+      "id": "OldCurrentUserId",
+      "value": "",
+      "label": "Current User",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "T.WF_REF_NO",
+      "id": "TransactionNoId",
+      "value": "",
+      "label": "Transaction No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "T.WF_ACTIVITY_CODE",
+      "id": "WfCodeId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "isQueryIn": true,
+      "url": "",
+      "path": "/TaskReassignment/GetKeyValueActivityNameForTaskReassignmentPaging",
+      "label": "Activity Name",
+      "items": [],
+      "itemsUrl": []
+    },
+    {
+      "type": "textbox",
+      "name": "WF.USERNAME",
+      "id": "UsernameId",
+      "value": "",
+      "label": "Claim By",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "WF.OFFICE_CODE",
+      "id": "OfficeCodeId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "isQueryIn": true,
+      "url": "",
+      "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
+      "label": "Office Name",
+      "items": [],
+      "itemsUrl": []
+    }
+  ],
+  "querystring": {
+    "name": "searchTaskReassignmentApproval"
+  },
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Claim By",
+      "name": "WF.USERNAME"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Office",
+      "name": "WF.OFFICE_CODE"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Task Reassignment No",
+      "name": "WF.TRANSACTION_CODE"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "Transaction No",
+      "name": "T.WF_REF_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Current User",
+      "name": "T.OLD_CURRENT_USER"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Activity Name",
+      "name": "WF.ACT_CODE"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Process"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Hold"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Take Back"
+    }
+  ],
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "Username"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "OfficeName"
+    },
+    {
+      "type": "link",
+      "position": "center",
+      "property": "TransactionCode",
+      "target": "_blank",
+      "path": "/TaskReassignment/View",
+      "param": [
+        {
+          "type": "TaskReassignmentTrxId",
+          "property": "TaskReassignmentTrxId"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "TransactionNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "OldCurrentUser"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "RefMasterName"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "callback",
+          "key": "Process"
+        }
+      ]
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "callback",
+          "key": "HoldTask"
+        }
+      ]
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "callback",
+          "key": "TakeBack"
+        }
+      ]
+    }
+  ]
+}

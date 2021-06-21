@@ -24,6 +24,7 @@ import { AppCommissionDObj } from 'app/shared/model/AppCommissionDObj.Model';
 import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
 import { ReqGetAppCommissionRuleObj } from 'app/shared/model/AppCommissionRsvFund/ReqGetAppCommissionRuleObj.Model';
 import { ReqTaxObj } from 'app/shared/model/AppCommissionRsvFund/ReqTaxObj.Model';
+import { AppReservedFundObj } from 'app/shared/model/AppReservedFundObj.model';
 
 @Component({
   selector: 'app-commission-v2',
@@ -40,7 +41,7 @@ export class CommissionV2Component implements OnInit {
   @Input() maxAllocAmt: number = 0;
   @Input() totalExpenseAmt: number = 0;
   @Input() totalRsvFundAmt: number = 0;
-  @Input() DictMaxIncomeForm: any = {};
+  @Input() DictMaxIncomeForm: object = {};
   @Input() BizTemplateCode: string;
   @Input() ListResultRefundIncomeInfo: Array<ResultRefundObj>;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
@@ -67,9 +68,9 @@ export class CommissionV2Component implements OnInit {
   identifierSupplier: string = CommonConstant.CommissionIdentifierSupplier;
   identifierSupplierEmp: string = CommonConstant.CommissionIdentifierSupplierEmp;
   identifierReferantor: string = CommonConstant.CommissionIdentifierReferantor;
-  FormInputObjSupplier: any = {};
-  FormInputObjSupplierEmp: any = {};
-  FormInputObjReferantor: any = {};
+  FormInputObjSupplier: object = {};
+  FormInputObjSupplierEmp: object = {};
+  FormInputObjReferantor: object = {};
   CommissionForm = this.fb.group({});
 
   OnForm1: boolean = false;
@@ -129,7 +130,7 @@ export class CommissionV2Component implements OnInit {
     }
   }
 
-  DictRemainingIncomeForm: any = {};
+  DictRemainingIncomeForm: object = {};
   async GetListAppReservedFundByAppId(){
     for (let index = 0; index < this.ListResultRefundIncomeInfo.length; index++) {
       const element = this.ListResultRefundIncomeInfo[index];
@@ -142,7 +143,7 @@ export class CommissionV2Component implements OnInit {
     await this.http.post(URLConstant.GetListAppReservedFundByAppId, {Id: this.AppId}).toPromise().then(
       (response)=>{
         // console.log(response);
-        let tempObj: Array<any> = response[CommonConstant.ReturnObj];
+        let tempObj: Array<AppReservedFundObj> = response[CommonConstant.ReturnObj];
         // console.log(tempObj);
         for (let index = 0; index < tempObj.length; index++) {
           const element = tempObj[index];
@@ -186,7 +187,7 @@ export class CommissionV2Component implements OnInit {
   ContentObjSupplier = new Array();
   ContentObjSupplierEmp = new Array();
   ContentObjReferantor = new Array();
-  DictSupplierCode: any = {};
+  DictSupplierCode: object = {};
   GetDDLContent(ReturnObject, content: string) {
     if (content == CommonConstant.ContentReferantor) {
       if (ReturnObject.AppId == null) return;
@@ -227,9 +228,9 @@ export class CommissionV2Component implements OnInit {
     }
   }
 
-  RuleSupplierData: any = {};
-  RuleSupplierEmpData: any = {};
-  RuleReferantorData: any = {};
+  RuleSupplierData: object = {};
+  RuleSupplierEmpData: object = {};
+  RuleReferantorData: object = {};
   async GetRuleDataForForm() {
     let obj: ReqGetAppCommissionRuleObj = { AppId: this.AppId, BizTemplateCode: this.BizTemplateCode };
     await this.http.post(URLConstant.GetAppCommissionRule, obj).toPromise().then(
@@ -275,7 +276,7 @@ export class CommissionV2Component implements OnInit {
       this.RuleSupplierData[supplCode] = listTempObj;
     }
     if (contentType == CommonConstant.ContentSupplierEmp) {
-      var DictJobPosition: any = {};
+      var DictJobPosition: object = {};
       var tempJobPosition: string = "";
       var listJobPosition = new Array();
       for (var i = 0; i < tempObj.AllocationFrom.length; i++) {
@@ -360,7 +361,7 @@ export class CommissionV2Component implements OnInit {
     this.IsCalculated = false;
   }
 
-  DictTotalIncomeForm: any = {};
+  DictTotalIncomeForm: object = {};
   ListAllocFromForDict: Array<string> = new Array();
   CalculateTotal() {
     console.log("CALCULATE ME");
@@ -626,5 +627,10 @@ export class CommissionV2Component implements OnInit {
 
   Cancel() {
     this.outputCancel.emit();
+  }
+  inputTypeChange(event: any) {
+    this.FormAdd1.UpdateInputType(event);
+    this.FormAdd2.UpdateInputType(event);
+    this.FormAdd3.UpdateInputType(event);
   }
 }

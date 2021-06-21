@@ -1,0 +1,10 @@
+<lib-ucaddtotemp *ngIf="TempPagingObj.isReady" [tempPagingObj]="TempPagingObj" (callback)="CallbackTempPaging($event)">
+</lib-ucaddtotemp>
+
+<div class="card-header" *ngIf="ListSelectedRo && ListSelectedRo.length > 0">
+  <div class="text-right">
+    <button type="submit" (click)="onClickExecute()" class="btn btn-raised btn-primary" translate>
+      <i class="ft-check"></i> Execute to Excel
+    </button>
+  </div>
+</div>

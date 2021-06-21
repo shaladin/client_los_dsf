@@ -12,6 +12,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'app-nap-paging',
@@ -19,8 +20,8 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class NapPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  arrCrit: any;
-  userAccess: any;
+  arrCrit: Array<CriteriaObj>;
+  userAccess: CurrentUserContext;
 
   constructor(
     private http: HttpClient,

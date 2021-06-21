@@ -13,6 +13,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { NapAppModel } from 'app/shared/model/NapApp.Model';
 
 @Component({
   selector: 'app-po-entry',
@@ -32,7 +33,6 @@ export class PoEntryComponent implements OnInit {
   BusinessDt: Date;
   vendorBankAccList: Array<Object>;
 
-  AppData: any;
   Date: Date;
   ExpirationDate: string;
   arrValue = [];
@@ -130,15 +130,14 @@ export class PoEntryComponent implements OnInit {
 
     }
     this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-      (response) => {
-        this.AppData = response;
+      (response: NapAppModel) => {
         let GetProduct = new GenericObj();
-        GetProduct.Code = this.AppData["ProdOfferingCode"]
+        GetProduct.Code = response["ProdOfferingCode"]
         this.httpClient.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
           (response2) => {
             this.httpClient.post(URLConstant.GetProdOfferingDByProdOfferingHIdAndCompCode, { ProdOfferingHId: response2.Id, RefProdCompntCode: CommonConstant.RefProdCompntCodeCrApvResExpDays }).subscribe(
               (response) => {
-                var a = formatDate(this.AppData["ApvDt"], 'yyyy-MM-dd', 'en-US');
+                var a = formatDate(response["ApvDt"], 'yyyy-MM-dd', 'en-US');
                 this.Date = new Date(a);
                 this.Date.setDate(this.Date.getDate() + parseInt(response["CompntValue"]));
 
@@ -171,15 +170,14 @@ export class PoEntryComponent implements OnInit {
     }
     this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
-        this.AppData = response;
         let GetProduct = new GenericObj();
-        GetProduct.Code  = this.AppData["ProdOfferingCode"]
+        GetProduct.Code  = response["ProdOfferingCode"]
         this.httpClient.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
           (response2) => {
             var datePipe = new DatePipe("locale");
             this.httpClient.post(URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode, { ProdOfferingHId: response2.Id, RefProdCompntGrpCode: ["OTHR"] }).subscribe(
               (response) => {
-                var a = formatDate(this.AppData["ApvDt"], 'yyyy-MM-dd', 'en-US');
+                var a = formatDate(response["ApvDt"], 'yyyy-MM-dd', 'en-US');
                 this.Date = new Date(a);
                 this.Date.setDate(this.Date.getDate() + parseInt(response["ReturnObject"]["ProdOffComponents"][0]["Components"][1]["CompntValue"]));
                 this.ExpirationDate = formatDate(this.Date, 'yyyy-MM-dd', 'en-US');

@@ -19,6 +19,7 @@ import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ResProdOfferingVersionObj } from 'app/shared/model/Response/Product/ResProdOfferingObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { ProdOfferingObj } from 'app/shared/model/Product/ProdOfferingObj.model';
 
 @Component({
   selector: 'app-prod-ho-deact-detail',
@@ -34,7 +35,7 @@ export class ProdHoDeactDetailComponent implements OnInit {
   }
   ProdId: number;
   ProdHId: number;
-  ProdOfferVer: any;
+  ProdOfferVer: Array<ProdOfferingObj>;
   IsReady: boolean;
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   ReqProdDeactObj: ReqProductDeactivationObj = new ReqProductDeactivationObj();
@@ -81,8 +82,8 @@ export class ProdHoDeactDetailComponent implements OnInit {
       }
     );
       this.initInputApprovalObj();
-
   }
+
   initInputApprovalObj(){      
     let Attributes = [{}] 
     let TypeCode = {

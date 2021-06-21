@@ -1,60 +1,60 @@
 {
-    "title": "",
-    "subsection": [
-      {
-        "subSectionId": "FinancialInfoId",
-        "subSectionTitle": "Financial Information",
-        "mainInfoPath": "/Generic/GetDataViewBySQL",
-        "mainInfo": [
-          {
-            "type": "currency",
-            "label": "Total Asset Price",
-            "property": "TotalAssetPriceAmt"
-          },
-          {
-            "type": "currency",
-            "label": "DP Asset Paid by Customer",
-            "property": "DPAssetPaidByCust"
-          },
-          {
-            "type": "currency",
-            "label": "Subsidy DP from Dealer",
-            "property": "SubsidyDPFromDealer"
-          },
-          {
-            "type": "currency",
-            "label": "First Installment in Advance",
-            "property": "InstAmt"
-          },
-          {
-            "type": "currency",
-            "label": "Total Insurance Premi",
-            "property": "TotalInsCustAmt"
-          },
-          {
-            "type": "currency",
-            "label": "Total Life Insurance Premi",
-            "property": "TotalLifeInstCustAmt"
-          },
-          {
-            "type": "currency",
-            "label": "Total Fee",
-            "property": "TotalFeeAmt"
-          },
-          {
-            "type": "currency",
-            "label": "TDP Paid at MF",
-            "property": "TDPPaid"
-          },
-          {
-            "type": "currency",
-            "label": "Total Purchase Order Amount",
-            "property": "TotalPurchaseOrderAmt"
-          }
-        ],
-        "querystring": {
-          "name": "viewADFinancialInfo"
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "FinancialInfoId",
+      "subSectionTitle": "Financial Information",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "currency",
+          "label": "Total Asset Price",
+          "property": "TotalAssetPriceAmt"
+        },
+        {
+          "type": "currency",
+          "label": "DP Asset Paid by Customer",
+          "property": "DPAssetPaidByCust"
+        },
+        {
+          "type": "currency",
+          "label": "Subsidy DP from Dealer",
+          "property": "SubsidyDPFromDealer"
+        },
+        {
+          "type": "currency",
+          "label": "First Installment in Advance",
+          "property": "InstAmt"
+        },
+        {
+          "type": "currency",
+          "label": "Total Insurance Premi",
+          "property": "TotalInsCustAmt"
+        },
+        {
+          "type": "currency",
+          "label": "Total Life Insurance Premi",
+          "property": "TotalLifeInstCustAmt"
+        },
+        {
+          "type": "currency",
+          "label": "Total Fee",
+          "property": "TotalFeeAmt"
+        },
+        {
+          "type": "currency",
+          "label": "TDP Paid at MF",
+          "property": "TDPPaid"
+        },
+        {
+          "type": "currency",
+          "label": "Total Purchase Order Amount",
+          "property": "TotalPurchaseOrderAmt"
         }
+      ],
+      "querystring": {
+        "name": "viewADFinancialInfo"
       }
-    ]
-  }
+    }
+  ]
+}

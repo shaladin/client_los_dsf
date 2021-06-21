@@ -17,7 +17,7 @@ import { CookieService } from 'ngx-cookie';
 })
 export class CustomerSelfVerificationComponent implements OnInit {
   private stepper: Stepper;
-  LeadId: any;
+  LeadId: number;
   LobCode: string;
   LeadStep: string = 'SVR';
   isCustData: boolean;
@@ -30,7 +30,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
   constructor(private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params["LeadId"];
-      if (this.LeadId == null || this.LeadId == undefined) this.LeadId = "1";
+      if (this.LeadId == null || this.LeadId == undefined) this.LeadId = 1;
 
       this.WfTaskListId = params["WfTaskListId"];
       if (this.WfTaskListId == null || this.WfTaskListId == undefined) this.WfTaskListId = 0;

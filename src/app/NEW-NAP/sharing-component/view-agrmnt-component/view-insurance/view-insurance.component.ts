@@ -7,6 +7,7 @@ import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
+import { AppAssetCollateralForInsuranceObj } from 'app/shared/model/AppAssetCollateralForInsurance.Model';
 
 @Component({
   selector: 'agrmnt-view-insurance',
@@ -16,22 +17,17 @@ export class ViewAgrmntInsuranceComponent implements OnInit {
   @Input() agrmntId: number = 0;
   AppId: number = 0;
   AppAssetId: number = 0;
-  appInsObjs: any;
-  appCollObjs: any;
   custTotalPremi: number;
   totalCapitalizedAmt: number;
   totalCustPaidAmt: number;
-  ResponseAppDetailData: any;
   PaidAmtByCust: number = 0;
   InsCpltzAmt: number  = 0;
   InsDiscAmt: number  = 0;
   TotalPremiumToCust: number  = 0;
   link: string = 'false';
 
-  inputGridObj: any;
-  result : any = new Array();
-  resultData : any;
-  closeResult: any; 
+  inputGridObj: InputGridObj;
+  result : Array<AppAssetCollateralForInsuranceObj> = new Array();
   appAssetObj: AppAssetObj = new AppAssetObj();
   gridAssetDataObj: InputGridObj = new InputGridObj();
   listAppAssetObj: any;
