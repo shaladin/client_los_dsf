@@ -7,6 +7,7 @@
     "start": "ng serve",
     "large-serve": "node --max_old_space_size=2048 ./node_modules/@angular/cli/bin/ng serve",
     "build": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --prod --aot --base-href /LOSR3/",
+    "dev": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=dev --base-href /LOS_DEV/",
     "sit": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=sit --base-href /LOS_SIT_CY6/",
     "demo": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=demo_env --base-href /LOS_DEMO/",
     "integration": "node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --configuration=integration_env --base-href /LOS_INTEGRATION/",
