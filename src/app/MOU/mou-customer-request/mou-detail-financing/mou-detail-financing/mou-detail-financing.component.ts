@@ -253,6 +253,7 @@ export class MouDetailFinancingComponent implements OnInit {
     this.InputLookupLinkSupplGradingObj.genericJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkSupplGradingObj.isReadonly = false;
     this.InputLookupLinkSupplGradingObj.isRequired = false;
+    this.InputLookupLinkSupplGradingObj.title = 'Supplier Grading';
 
     this.InputLookupLinkManufacturerObj = new InputLookupObj();
     this.InputLookupLinkManufacturerObj.urlJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
