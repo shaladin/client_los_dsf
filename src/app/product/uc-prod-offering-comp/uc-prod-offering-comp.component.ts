@@ -304,9 +304,24 @@ export class UcProdOfferingCompComponent implements OnInit {
   }
   DownloadRule(CompntValue, CompntValueDesc) {
     this.DlRuleObj.RuleSetName = CompntValue;
-    this.http.post(URLConstant.DownloadProductRule, this.DlRuleObj, { responseType: 'blob' }).subscribe(
+    this.http.post(URLConstant.DownloadProductRule, this.DlRuleObj).subscribe(
       response => {
-        saveAs(response, CompntValueDesc + '.xlsx');
+        // saveAs(response, CompntValueDesc + '.xls');
+        let linkSource: string = "";
+        let fileName: string = "";
+
+        let type = response["ReturnObject"][0].Key.substring(response["ReturnObject"][0].Key.length - 4);
+        if(type == ".xls"){
+          linkSource = 'data:application/xls;base64,' + response["ReturnObject"][0].Value;
+        }else {
+          linkSource = 'data:application/xlsx;base64,' + response["ReturnObject"][0].Value;
+        }
+        fileName = response["ReturnObject"][0].Key;
+        
+        const downloadLink = document.createElement("a");
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName;
+        downloadLink.click();
       }
     );
   }
