@@ -965,7 +965,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
         this.setLeadCustPersonalJobData();
         this.setLeadCustPersonalFinData();
         if (this.confirmFraudCheck()) {
-          this.http.post(URLConstant.EditLeadCust, this.leadInputObj).subscribe(
+          this.http.post(URLConstant.AddLeadCust, this.leadInputObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               this.outputTab.emit({ stepMode: "next" });
@@ -1256,7 +1256,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
   }
 
   setValidatorForUpdate() {
-    if (this.typePage == "update") {
+    if (this.typePage == "update" || this.typePage == "edit") {
       this.IsSimpleLeadUpdate = true;
       this.CustomerDataForm.controls['Gender'].setValidators([Validators.required]);
       this.CustomerDataForm.controls['Gender'].updateValueAndValidity();
