@@ -23,14 +23,14 @@
         "name": "C.TAX_ID_NO",
         "id": "TaxIdNoId",
         "value": "",
-        "label": "Npwp No",
+        "label": "NPWP No",
         "placeholder": ""
       },{
         "type": "textbox",
         "name": "CGC.CUST_NAME",
         "id": "MemberGroupNAmeId",
         "value": "",
-        "label": "Cust Group Name",
+        "label": "Customer Group Name",
         "placeholder": ""
       }
     ],
@@ -63,7 +63,7 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Cust Group Name",
+            "label": "Customer Group Name",
             "name": "CGC.CUST_NAME"
         },
         {
