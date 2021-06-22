@@ -30,7 +30,7 @@
         "name": "CGC.CUST_NAME",
         "id": "MemberGroupNAmeId",
         "value": "",
-        "label": "Cust Group Name",
+        "label": "Customer Group Name",
         "placeholder": ""
       }
     ],
@@ -63,7 +63,7 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "Cust Group Name",
+            "label": "Customer Group Name",
             "name": "CGC.CUST_NAME"
         },
         {
