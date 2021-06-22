@@ -269,6 +269,7 @@ export class MouCustTabComponent implements OnInit {
         }
       }
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
+      console.log(this.MouCustCompanyId);
       if (this.confirmFraudCheck()) {
         if (this.MouCustCompanyId == 0) {
           this.http.post(URLConstant.AddMouCustCompanyData, this.custDataCompanyObj).subscribe(
@@ -648,7 +649,7 @@ export class MouCustTabComponent implements OnInit {
     this.custDataCompanyObj.MouCustCompanyFinDataObj.CurrRatio = this.CustDataCompanyForm.controls["financialDataCompany"]["controls"].CurrRatio.value;
     if (this.MouCustFinDataId != 0) {
       this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustCompanyFinDataId = this.MouCustFinDataId;
-      this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustId = this.MouCustCompanyId;
+      this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustCompanyId = this.MouCustCompanyId;
     }
   }
 
