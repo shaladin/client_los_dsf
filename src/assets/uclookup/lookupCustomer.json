@@ -23,7 +23,7 @@
         "name": "C.TAX_ID_NO",
         "id": "TaxIdNoId",
         "value": "",
-        "label": "Npwp No",
+        "label": "NPWP No",
         "placeholder": ""
       },{
         "type": "textbox",
