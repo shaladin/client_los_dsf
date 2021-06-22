@@ -39,6 +39,7 @@ export class MouReviewDlfnComponent implements OnInit {
   ScoreResult: number;
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
+  RFAInfo: Object = new Object();
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) {
@@ -93,7 +94,7 @@ export class MouReviewDlfnComponent implements OnInit {
       }
     );
 
-    await this.http.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.REF_REASON_MOU_GENERAL }).toPromise().then(
+    await this.http.post(URLConstant.GetListActiveRefReason, { RefReasonTypeCode: CommonConstant.REF_REASON_MOU_FINANCING }).toPromise().then(
       (response) => {
         this.listReason = response[CommonConstant.ReturnObj];
         this.MouReviewDataForm.patchValue({
@@ -119,25 +120,25 @@ export class MouReviewDlfnComponent implements OnInit {
   }
 
   Submit() {
-    this.ApprovalCreateOutput = this.createComponent.output();
-    if (this.ApprovalCreateOutput != undefined) {
-      this.mouCustObj.MouCustId = this.MouCustId;
-      var SubmitMouRvwObj = {
-        WfTaskListId: this.WfTaskListId,
-        MouCust: this.mouCustObj,
-        PlafondAmt: this.PlafondAmt,
-        RequestRFAObj: this.ApprovalCreateOutput
-      }
-      this.http.post(URLConstant.SubmitMouReviewNew, SubmitMouRvwObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
-        })
+    this.RFAInfo = {RFAInfo: this.MouReviewDataForm.controls.RFAInfo.value};
+    this.mouCustObj.MouCustId = this.MouCustId;
+    this.PlafondAmt = this.PlafondAmt;
+
+    let submitMouReviewObj = {
+      WfTaskListId: this.WfTaskListId,
+      MouCust: this.mouCustObj,
+      PlafondAmt: this.PlafondAmt,
+      RequestRFAObj: this.RFAInfo
     }
+    this.http.post(URLConstant.SubmitMouReviewNew, submitMouReviewObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.MOU_CUST_RVW_PAGING], {});
+      })
   }
 
   Return() {
-    var mouObj = { MouCustId: this.MouCustId, WfTaskListId: this.WfTaskListId }
+    var mouObj = { TaskListId: this.WfTaskListId};
     this.http.post(URLConstant.ReturnMouReview, mouObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
@@ -145,15 +146,6 @@ export class MouReviewDlfnComponent implements OnInit {
       })
   }
 
-  GetCallBack(event) {
-    if (event.Key == "customer") {
-      var custObj = { CustNo: this.resultData['CustNo'] };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        });
-    }
-  }
   initInputApprovalObj() {
     this.InputObj = new UcInputRFAObj(this.cookieService);
     var Attributes = []
@@ -169,23 +161,12 @@ export class MouReviewDlfnComponent implements OnInit {
     Attributes.push(attribute1);
     Attributes.push(attribute2);
     var TypeCode = {
-      "TypeCode": "MOUC_GEN_APV_TYPE",
+      "TypeCode": "MOUC_DLFN_APV_TYPE",
       "Attributes": Attributes,
     };
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
-    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
-    this.InputObj.EnvUrl = environment.FoundationR3Url;
-    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
-    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
-    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
-    this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
-    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
-    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_MOU_APV_GENERAL;
-    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_MOU_APV_GENERAL;
+    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_MOU_APV_DLFN;
+    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_MOU_APV_DLFN;
     this.InputObj.Reason = this.listReason;
     this.InputObj.TrxNo = this.resultData["MouCustNo"]
     this.IsReady = true;
