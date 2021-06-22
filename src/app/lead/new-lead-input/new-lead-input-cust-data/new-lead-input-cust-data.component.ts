@@ -165,8 +165,9 @@ export class NewLeadInputCustDataComponent implements OnInit {
     this.inputAddressObjForLegalAddr.title = "Legal Address";
     this.inputAddressObjForLegalAddr.showPhn3 = false;
     this.inputAddressObjForLegalAddr.showOwnership = false;
+    if(this.typePage != "update"){
     this.inputAddressObjForLegalAddr.isRequired = false;
-
+    }
     this.inputAddressObjForLegalAddr.inputField.inputLookupObj.isRequired = false;
 
 
@@ -320,7 +321,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
       let obj = {
         Id: this.CopyFrom
       }
-      this.http.post(URLConstant.GetLeadCustByLeadId, obj).subscribe(
+      await this.http.post(URLConstant.GetLeadCustByLeadId, obj).toPromise().then(
         (response: LeadCustObj) => {
           this.resLeadCustObj = response;
           this.CustomerDataForm.patchValue({
@@ -511,7 +512,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
       let obj = {
         Id: this.LeadId
       }
-      this.http.post(URLConstant.GetLeadCustByLeadId, obj).subscribe(
+      await this.http.post(URLConstant.GetLeadCustByLeadId, obj).toPromise().then(
         (response: LeadCustObj) => {
           this.resLeadCustObj = response;
 
@@ -523,7 +524,6 @@ export class NewLeadInputCustDataComponent implements OnInit {
               IdNo: this.resLeadCustObj.IdNo,
               Npwp: this.resLeadCustObj.TaxIdNo,
             });
-
             this.CustModelKey = this.resLeadCustObj.MrCustModelCode;
             let arrAddCrit = new Array();
             let addCrit = new CriteriaObj();
@@ -746,17 +746,31 @@ export class NewLeadInputCustDataComponent implements OnInit {
     if (pattern != undefined) {
       if (this.CustomerDataForm.controls.MrIdTypeCode.value == 'EKTP') {
         if (pattern != "") {
-          this.CustomerDataForm.controls.IdNo.setValidators([Validators.pattern(pattern)]);
+          if(this.typePage == "update"){
+            this.CustomerDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern(pattern)]);
+          }else{
+            this.CustomerDataForm.controls.IdNo.setValidators([Validators.pattern(pattern)]);
+          }
         } else {
-          this.CustomerDataForm.controls.IdNo.setValidators([Validators.pattern("^[0-9]+$")]);
+          if(this.typePage == "update"){
+            this.CustomerDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+          }else{
+            this.CustomerDataForm.controls.IdNo.setValidators([Validators.pattern("^[0-9]+$")]);
+          }
         }
       }
       else {
         this.CustomerDataForm.controls.IdNo.clearValidators();
+        if(this.typePage == "update"){
+          this.CustomerDataForm.controls.IdNo.setValidators([Validators.required]);
+        }
       }
       this.CustomerDataForm.controls.IdNo.updateValueAndValidity();
     } else {
       this.CustomerDataForm.controls.IdNo.clearValidators();
+      if(this.typePage == "update"){
+        this.CustomerDataForm.controls.IdNo.setValidators([Validators.required]);
+      }
       this.CustomerDataForm.controls.IdNo.updateValueAndValidity();
     }
   }
@@ -930,7 +944,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
   }
 
   SaveForm() {
-    if (this.typePage == "edit" || this.typePage == "update") {
+    if (this.typePage == "edit") {
       if (this.resLeadCustObj.LeadCustId != 0) {
         this.leadInputObj = new LeadInputObj();
         this.leadInputObj.LeadCustObj.LeadCustId = this.resLeadCustObj.LeadCustId;
@@ -948,7 +962,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
         this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
         this.setLeadCustPersonalFinData();
         if (this.confirmFraudCheck()) {
-          this.http.post(URLConstant.EditLeadCust, this.leadInputObj).subscribe(
+          this.http.post(URLConstant.EditSimpleLeadCust, this.leadInputObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               this.outputTab.emit({ stepMode: "next" });
@@ -965,7 +979,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
         this.setLeadCustPersonalJobData();
         this.setLeadCustPersonalFinData();
         if (this.confirmFraudCheck()) {
-          this.http.post(URLConstant.AddLeadCust, this.leadInputObj).subscribe(
+          this.http.post(URLConstant.AddSimpleLeadCust, this.leadInputObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
               this.outputTab.emit({ stepMode: "next" });
@@ -973,6 +987,30 @@ export class NewLeadInputCustDataComponent implements OnInit {
           );
         }
       }
+    }else if(this.typePage ="update"){
+      this.leadInputObj = new LeadInputObj();
+        this.leadInputObj.LeadCustObj.LeadCustId = this.resLeadCustObj.LeadCustId;
+        this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
+        this.setLeadCust();
+        this.leadInputObj.LeadCustPersonalObj.RowVersion = this.resLeadCustPersonalObj.RowVersion;
+        this.setLeadCustPersonal();
+        this.setLeadCustSocmed();
+        this.leadInputObj.LeadCustLegalAddrObj.RowVersion = this.resLeadCustAddrLegalObj.RowVersion;
+        this.setLegalAddr();
+        this.leadInputObj.LeadCustResidenceAddrObj.RowVersion = this.resLeadCustAddrResObj.RowVersion;
+        this.setResidenceAddr();
+        this.leadInputObj.LeadCustPersonalJobDataObj.RowVersion = this.resLeadCustPersonalJobDataObj.RowVersion;
+        this.setLeadCustPersonalJobData();
+        this.leadInputObj.LeadCustPersonalFinDataObj.RowVersion = this.resLeadCustPersonalFinDataObj.RowVersion;
+        this.setLeadCustPersonalFinData();
+        if (this.confirmFraudCheck()) {
+          this.http.post(URLConstant.EditSimpleLeadCustTypeUpdate, this.leadInputObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              this.outputTab.emit({ stepMode: "next" });
+            }
+          );
+        }
     }
     else {
       this.leadInputObj = new LeadInputObj();
@@ -984,7 +1022,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
       this.setLeadCustPersonalJobData();
       this.setLeadCustPersonalFinData();
       if (this.confirmFraudCheck()) {
-        this.http.post(URLConstant.AddLeadCust, this.leadInputObj).subscribe(
+        this.http.post(URLConstant.AddSimpleLeadCust, this.leadInputObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
             this.outputTab.emit({ stepMode: "next" });
@@ -1014,10 +1052,10 @@ export class NewLeadInputCustDataComponent implements OnInit {
       (response: LeadCustObj) => {
         this.resLeadCustObj = response;
         if (this.resLeadCustObj.LeadCustId != 0) {
+          if(this.typePage != 'update'){
           this.typePage = "edit";
+          }
           this.CopyFrom = null;
-        }
-        if (this.resLeadCustObj.LeadCustId != 0) {
           this.CustomerDataForm.patchValue({
             CustName: this.resLeadCustObj.CustName,
             MrIdTypeCode: this.resLeadCustObj.MrIdTypeCode,
@@ -1256,7 +1294,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
   }
 
   setValidatorForUpdate() {
-    if (this.typePage == "update" || this.typePage == "edit") {
+    if (this.typePage == "update") {
       this.IsSimpleLeadUpdate = true;
       this.CustomerDataForm.controls['Gender'].setValidators([Validators.required]);
       this.CustomerDataForm.controls['Gender'].updateValueAndValidity();
@@ -1270,6 +1308,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
       this.CustomerDataForm.controls['IdNo'].updateValueAndValidity();
       this.CustomerDataForm.controls['MrMaritalStatCode'].setValidators([Validators.required]);
       this.CustomerDataForm.controls['MrMaritalStatCode'].updateValueAndValidity();
+      // this.inputAddressObjForLegalAddr.isRequired = true;
     }
   }
 
