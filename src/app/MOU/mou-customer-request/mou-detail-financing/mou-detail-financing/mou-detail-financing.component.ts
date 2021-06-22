@@ -253,6 +253,7 @@ export class MouDetailFinancingComponent implements OnInit {
     this.InputLookupLinkSupplGradingObj.genericJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkSupplGradingObj.isReadonly = false;
     this.InputLookupLinkSupplGradingObj.isRequired = false;
+    this.InputLookupLinkSupplGradingObj.title = "Supplier Grading";
 
     this.InputLookupLinkManufacturerObj = new InputLookupObj();
     this.InputLookupLinkManufacturerObj.urlJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
@@ -262,6 +263,7 @@ export class MouDetailFinancingComponent implements OnInit {
     this.InputLookupLinkManufacturerObj.genericJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkManufacturerObj.isReadonly = false;
     this.InputLookupLinkManufacturerObj.isRequired = false;
+    this.InputLookupLinkManufacturerObj.title = "Link Manufacturer";
 
     this.InputLookupManufacturerObj = new InputLookupObj();
     this.InputLookupManufacturerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
@@ -271,6 +273,7 @@ export class MouDetailFinancingComponent implements OnInit {
     this.InputLookupManufacturerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupManufacturerObj.isReadonly = false;
     this.InputLookupManufacturerObj.isRequired = true;
+    this.InputLookupManufacturerObj.title = "Manufacturer";
   }
 
   LinkManufacturerEvent(event) {
