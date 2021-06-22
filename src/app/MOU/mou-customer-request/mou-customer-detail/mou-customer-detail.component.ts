@@ -14,6 +14,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { CustObj } from 'app/shared/model/CustObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { MouMainInfoComponent } from 'app/MOU/mou-main-info/mou-main-info.component';
 
 @Component({
   selector: 'app-mou-customer-detail',
@@ -27,6 +28,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   @ViewChild("MouTcGeneral") public mouTcGeneral: MouCustTcComponent;
   @ViewChild("MouTcFactoring") public mouTcFactoring: MouCustTcComponent;
   @ViewChild("MouTcFinancing") public mouTcFinancing: MouCustTcComponent;
+  @ViewChild("viewMouMainInfo") viewMouMainInfo: MouMainInfoComponent;
   mouType: string;
   mouCustId: number;
   currentStepIndex: number;
@@ -154,6 +156,8 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       this.stepperFinancing.to(idx);
     }
     this.currentStepIndex = idx;
+
+    this.viewMouMainInfo.ReloadUcViewGeneric();
   }
 
   saveMouTc() {
@@ -324,6 +328,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       default:
         break;
     }
+    this.viewMouMainInfo.ReloadUcViewGeneric();
   }
   
   endOfTab() {
