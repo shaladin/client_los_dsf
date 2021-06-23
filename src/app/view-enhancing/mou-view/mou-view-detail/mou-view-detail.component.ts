@@ -68,20 +68,6 @@ export class MouViewDetailComponent implements OnInit {
         this.IsRevolving = this.mouCust.IsRevolving;
         this.MouType = this.mouCust.MrMouTypeCode;
 
-        var DisbAmt = 0;
-        this.http.post(URLConstant.GetOsPlatfondAmtMouR2ByMouCustId, mouCustObj).subscribe(
-          (response) => {
-            this.OsPlatfonAmtR2 = response;
-            if (this.OsPlatfonAmtR2 === null || this.OsPlatfonAmtR2 === undefined) {
-              DisbAmt = 0
-            }
-            else { DisbAmt = this.OsPlatfonAmtR2.OsPlafondMouAmt; }
-            this.http.post(URLConstant.GetAllNtfAppAmtByMouCustId, mouCustObj).subscribe(
-              (responseNtfAmt) => {
-                this.RealisationAmt = DisbAmt + responseNtfAmt["ReturnObject"];
-              }
-            )
-          });
         if (this.MouType == CommonConstant.GENERAL) {
           this.mouCustClause = response["MouCustClauseObj"];
           this.AssetTypeCode = this.mouCustClause.AssetTypeCode;
