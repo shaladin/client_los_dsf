@@ -48,7 +48,7 @@ export class MouViewComponent implements OnInit {
   ngOnInit() {
     this.mouCustObj = new MouCustObj();
     this.mouCustObj.MouCustId = this.MouCustId;
-    this.http.post(this.getMouCustByIdUrl, { Id: this.MouCustId }).subscribe(
+    this.http.post(URLConstant.GetMouCustDataByMouCustId, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
         this.MrMouTypeCode = this.resultData['MrMouTypeCode'];

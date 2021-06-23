@@ -159,7 +159,6 @@ export class MouCustTabComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.latestCustDataObj = new AppCustCompareObj();
-    console.log("help");
     this.GetGS();
     await this.bindCustTypeObj();
     this.initAddrObj();
@@ -269,6 +268,7 @@ export class MouCustTabComponent implements OnInit {
         }
       }
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
+      console.log(this.MouCustCompanyId);
       if (this.confirmFraudCheck()) {
         if (this.MouCustCompanyId == 0) {
           this.http.post(URLConstant.AddMouCustCompanyData, this.custDataCompanyObj).subscribe(
@@ -649,6 +649,7 @@ export class MouCustTabComponent implements OnInit {
     if (this.MouCustFinDataId != 0) {
       this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustCompanyFinDataId = this.MouCustFinDataId;
       this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustId = this.MouCustCompanyId;
+      this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustCompanyId = this.MouCustCompanyId;
     }
   }
 
@@ -998,7 +999,6 @@ export class MouCustTabComponent implements OnInit {
             this.setAddrLegalObj(CommonConstant.CustTypeCompany);
             this.setAddrMailingObj(CommonConstant.CustTypeCompany);
 
-            console.log(response);
             this.MouCustCompanyId = this.custDataCompanyObj.MouCustCompanyObj.MouCustCompanyId;
             this.MouCustFinDataId = this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustCompanyFinDataId;
             this.MouCustAddrLegalId = this.custDataCompanyObj.MouCustAddrLegalObj.MouCustAddrId;

@@ -173,7 +173,7 @@ export class CommonConstant {
   
   public static REF_REASON_MOU_GENERAL = "MOUC_GEN_RVW";
   public static REF_REASON_MOU_FACTORING = "MOUC_FCTR_RVW";
-  public static REF_REASON_MOU_FINANCING = "MOUC_FIN_RVW"
+  public static REF_REASON_MOU_FINANCING = "MOUC_FIN_RVW";
 
   //LEAD - TELEMARKETING
   public static REF_REASON_RO_POTENTIAL = "RO_POTENTIAL";
@@ -696,6 +696,7 @@ export class CommonConstant {
 
   //Approval
   public static SCHM_CODE_MOU_APV_GENERAL = "MOUC_GEN_APV";
+  public static SCHM_CODE_MOU_APV_DLFN = "MOUC_DLFN_APV";
   public static SCHM_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV";
   public static SCHM_CODE_APV_PRE_GO_LIVE = "PRE_GLV_APV_CF";
   public static SCHM_CODE_MOU_FRZ_UNFRZ = "MOU_FRZ_UNFRZ";
@@ -706,6 +707,7 @@ export class CommonConstant {
   public static SCHM_CODE_CHG_MOU_APV = "CHG_MOU_APV";
 
   public static CAT_CODE_MOU_APV_GENERAL = "MOUC_GEN_APV";
+  public static CAT_CODE_MOU_APV_DLFN = "MOUC_DLFN_APV";
   public static CAT_CODE_MOU_APV_FACTORING = "MOUC_FCTR_APV";
   public static CAT_CODE_PRE_GO_LIVE_APV = "PRE_GPV_APV";
   public static CAT_CODE_CRD_APV = "CRD_APV";

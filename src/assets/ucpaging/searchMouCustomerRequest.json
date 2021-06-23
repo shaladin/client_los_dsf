@@ -58,24 +58,6 @@
             "itemsUrl": []
         },
         {
-            "type": "datepicker",
-            "name": "MOU_CUST_DT",
-            "id": "GreaterMouDtId",
-            "value": "",
-            "label": "Mou Date From",
-            "restriction": "gte",
-            "datatype": "date"
-        },
-        {
-            "type": "datepicker",
-            "name": "MOU_CUST_DT",
-            "id": "LessMouDtId",
-            "value": "",
-            "label": "Mou Date To",
-            "restriction": "lte",
-            "datatype": "date"
-        },
-        {
             "type": "textbox",
             "name": "REF_NO",
             "id": "RefNoId",
@@ -99,12 +81,6 @@
             "position": "left",
             "label": "CUSTOMER NAME",
             "name": "CUST_NAME"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "MOU DATE",
-            "name": "MOU_CUST_DT"
         },
         {
             "type": "sort",
@@ -142,11 +118,6 @@
             "type": "callback",
             "position": "left",
             "property": "CustName"
-        },
-        {
-            "type": "date",
-            "position": "center",
-            "property": "MouCustDt"
         },
         {
             "type": "text",
