@@ -150,11 +150,11 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   }
 
   onChangePlafondType(){
-    if(this.MOUMainInfoForm.value.PlafondType == "BOCLLTR"){
+    if(this.MOUMainInfoForm.value.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOCLLTR){
       this.MOUMainInfoForm.controls.PlafondAmt.clearValidators();
     }
     
-    if(this.MOUMainInfoForm.value.PlafondType == "BOAMT"){
+    if(this.MOUMainInfoForm.value.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT){
       this.MOUMainInfoForm.controls.PlafondAmt.setValidators([Validators.required, Validators.min(1.00)]);
     }
 

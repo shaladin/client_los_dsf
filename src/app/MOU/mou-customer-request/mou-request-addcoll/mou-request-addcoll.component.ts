@@ -1111,23 +1111,11 @@ export class MouRequestAddcollComponent implements OnInit {
     }
 
     if(this.mouCustObj.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT){
-      console.log(this.returnMouCust.PlafondAmt);
-      if(sumCollateralValue <= this.returnMouCust.PlafondAmt){
-        this.toastr.errorMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
+      if(sumCollateralValue < this.returnMouCust.PlafondAmt){
+        this.toastr.warningMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
         return;
       }
     }
-
-    if (this.mouCustObj.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOCLLTR){
-      console.log(this.returnMouCust.PlafondAmt);
-    }
-
-    // if (this.mouCustObj.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOCLLTR) {
-    //   if (sumCollateralValue != this.returnMouCust.PlafondAmt) {
-    //     this.toastr.errorMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
-    //     return;
-    //   }
-    // }
 
     if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
       if (!this.IsCalledIntegrator) {
