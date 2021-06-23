@@ -795,7 +795,10 @@ export class URLConstant {
 
   // LEAD
   public static AddLeadCust = environment.losUrl + "/LeadCust/AddLeadCust";
+  public static AddSimpleLeadCust = environment.losUrl + "/LeadCust/AddSimpleLeadCust";
   public static EditLeadCust = environment.losUrl + "/LeadCust/EditLeadCust";
+  public static EditSimpleLeadCust = environment.losUrl + "/LeadCust/EditSimpleLeadCust";
+  public static EditSimpleLeadCustTypeUpdate = environment.losUrl + "/LeadCust/EditSimpleLeadCustTypeUpdate";
   public static AddLeadData = environment.losUrl + "/Lead/AddLeadData";
   public static EditLeadData = environment.losUrl + "/Lead/EditLeadData";
   public static GetLeadMonitoringByUploadMonitoringNoAndTrxType = environment.losUrl + "/Lead/GetLeadMonitoringByUploadMonitoringNoAndTrxType";

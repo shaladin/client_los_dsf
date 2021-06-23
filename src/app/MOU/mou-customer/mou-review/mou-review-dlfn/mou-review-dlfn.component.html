@@ -10,7 +10,7 @@
             </div>
           </div>
         </div> 
-        <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric> 
+        <app-mou-main-info [MouCustId]="MouCustId"></app-mou-main-info>
         <div class="px-3">
           <mat-tab-group>
             <mat-tab label="MOU Detail">
@@ -38,11 +38,11 @@
                 <app-dms-iframe [dmsObj]="dmsObj" [showButton]="false"></app-dms-iframe>
               </ng-template>
             </mat-tab>
-            <mat-tab label="Survey">
+            <!-- <mat-tab label="Survey">
               <ng-template matTabContent>
                 <app-mou-view-survey [MouCustId]="MouCustId"></app-mou-view-survey>
               </ng-template>
-            </mat-tab>
+            </mat-tab> -->
             <mat-tab label="Third Party Checking">
               <ng-template matTabContent>
                 <app-mou-view-third-party [MouCustId]="MouCustId"></app-mou-view-third-party>
@@ -58,7 +58,7 @@
           <p> &nbsp; <span style="display: block;"> <br> </span> &nbsp; </p>
           <form class="form form-horizontal" [formGroup]="MouReviewDataForm" (ngSubmit)="MouReviewDataForm.valid && Submit()"
             #enjiForm="ngForm">
-            <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady" (result)="Submit($event)" #ApprovalComponent></lib-ucapprovalcreate>
+            <lib-ucapprovalcreate [parentForm]= "MouReviewDataForm" [InputObj]="InputObj" *ngIf="IsReady" (result)="Submit($event)" #ApprovalComponent></lib-ucapprovalcreate>
             <div class="card">
               <div class="card-body">
                 <div class="px-3"> 

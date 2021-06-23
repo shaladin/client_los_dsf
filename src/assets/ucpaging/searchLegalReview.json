@@ -58,24 +58,6 @@
       "itemsUrl": []
     },
     {
-      "type": "datepicker",
-      "name": "MC.MOU_CUST_DT",
-      "id": "CustDtIdGte",
-      "value": "",
-      "label": "Mou Date From",
-      "restriction": "gte",
-      "datatype": "date"
-    },
-    {
-      "type": "datepicker",
-      "name": "MC.MOU_CUST_DT",
-      "id": "CustDtIdLte",
-      "value": "",
-      "label": "Mou Date To",
-      "restriction": "lte",
-      "datatype": "date"
-    },
-    {
       "type": "dropdown",
       "name": "WTL.CLAIM_STAT",
       "id": "ActiveStatusId",
@@ -129,12 +111,6 @@
       "position": "left",
       "label": "CUSTOMER NAME",
       "name": "MC.CUST_NAME"
-    },
-    {
-      "type": "sort",
-      "position": "center",
-      "label": "MOU DATE",
-      "name": "MC.MOU_CUST_DT"
     },
     {
       "type": "sort",
@@ -204,11 +180,6 @@
       "key": "customer",
       "position": "left",
       "property": "CustName"
-    },
-    {
-      "type": "date",
-      "position": "center",
-      "property": "MouCustDt"
     },
     {
       "type": "date",

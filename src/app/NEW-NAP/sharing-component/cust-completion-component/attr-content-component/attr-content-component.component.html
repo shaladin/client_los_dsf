@@ -38,6 +38,7 @@
             <div class="col-md-9" *ngIf="attr.IsMandatory == false" style="padding-right: 0; display: inline-block;">
               <select class="form-control adInsInput" formControlName="AttrValue"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }">
+                <option value = "">Select One</option>
                 <option *ngFor="let valueItem of SplitAttrListValue(attr.AttrValue)"
                   [value]="valueItem">
                   {{valueItem}}
@@ -49,7 +50,7 @@
             <div class="col-md-9" *ngIf="attr.IsMandatory == true" style="padding-right: 0; display: inline-block;">
               <select class="form-control adInsInput" formControlName="AttrValue"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }">
-                <option value = "">-Select One-</option>
+                <option value = "">Select One</option>
                 <option *ngFor="let valueItem of SplitAttrListValue(attr.AttrValue)"
                   [value]="valueItem">
                   {{valueItem}}
