@@ -52,9 +52,9 @@ export class PefindoViewComponent implements OnInit {
         this.PefindoObj.IdNo = response['IdNo'];
         this.PefindoObj.MrCustTypeCode = response['MrCustTypeCode'];
         this.PefindoObj.MrIdTypeCode = response['MrIdTypeCode'];
-        this.PefindoObj.TaxIdNo = response['TaxIdNo'];        
+        this.PefindoObj.TaxIdNo = response['TaxIdNo'];       
 
-        this.PefindoObj.MrCustTypeCode = "COMPANY";
+        
         if(this.PefindoObj.MrCustTypeCode == "PERSONAL"){
           this.isPersonal = true;
         }else{
