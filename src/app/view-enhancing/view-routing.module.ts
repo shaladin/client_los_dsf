@@ -61,6 +61,10 @@ const routes: Routes = [
             {
                 path: PathConstant.VIEW_CHANGE_MOU,
                 loadChildren: './change-mou-view/change-mou-view.module#ChangeMouViewModule'
+            },
+            {
+                path: PathConstant.VIEW_PEFINDO,
+                loadChildren: './pefindo-view/pefindo-view.module#PefindoViewModule'
             }
         ]
     }

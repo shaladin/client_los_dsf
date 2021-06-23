@@ -420,7 +420,7 @@ export class ApplicationReviewDetailComponent implements OnInit {
   }
 
   OpenPefindoView(){
-    window.open(NavigationConstant.PEFINDO_VIEW + "?AppId=" + this.appId, "_blank");
+    window.open(environment.losR3Web + NavigationConstant.PEFINDO_VIEW + "?AppId=" + this.appId, "_blank");
   }
   //#endregion
 }

@@ -149,7 +149,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
     
     await this.http.post(URLConstant.GetListMouByAppIdAndMouTypeDF, { AppId: this.resultData.AppId, MouType: CommonConstant.FINANCING }).subscribe(
       (response: any) => {
-        this.allMouCust = response;
+        this.allMouCust = response[CommonConstant.ReturnObj];
         var MouCustId;
         if (this.mode == 'edit') {
           MouCustId = this.resultData.MouCustId
