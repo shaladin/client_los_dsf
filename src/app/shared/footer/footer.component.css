@@ -2,6 +2,11 @@
     padding-bottom: 10px;
 }
 
+.footer-index{
+    position: relative;
+    z-index: 2;
+}
+
 /* ini buat slalu di tengah */
 .footer-container-mid{
     position: fixed;
