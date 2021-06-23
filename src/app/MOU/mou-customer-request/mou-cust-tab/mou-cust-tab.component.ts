@@ -268,7 +268,6 @@ export class MouCustTabComponent implements OnInit {
         }
       }
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
-      console.log(this.MouCustCompanyId);
       if (this.confirmFraudCheck()) {
         if (this.MouCustCompanyId == 0) {
           this.http.post(URLConstant.AddMouCustCompanyData, this.custDataCompanyObj).subscribe(
