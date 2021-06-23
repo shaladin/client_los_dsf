@@ -100,6 +100,7 @@ export class NapDetailFormComponent implements OnInit {
             this.stepper.to(this.AppStepIndex);
           }else{
             this.AppStepIndex = this.AppStep[response.AppCurrStep];
+            this.MouCustId = response.MouCustId;
             this.stepper.to(this.AppStepIndex);
             if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
               this.initDms();
@@ -145,6 +146,8 @@ export class NapDetailFormComponent implements OnInit {
           }
 
           let mouId = this.NapObj.MouCustId;
+          this.MouCustId = this.NapObj.MouCustId;
+          console.log(this.NapObj.MouCustId);
           if (mouId != null && mouId != 0) {
             let mouObj = { Id: mouId };
             this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
@@ -258,12 +261,14 @@ export class NapDetailFormComponent implements OnInit {
 
   async LastStepHandler() {
     let reqObj: SubmitNapObj = new SubmitNapObj();
-
-    let MouCustObj = {
-      "MouCustId": this.MouCustId
+    if(this.MouCustId == null){
+      await this.http.post(URLConstant.GetMouCustByAppId, { Id: this.appId }).toPromise().then(
+        (response) => {
+          this.MouCustId = response["MouCustId"]
+        });
     }
     let IsInValid;
-    await this.http.post(URLConstant.CheckIsMouFreeze, MouCustObj).toPromise().then(
+    await this.http.post(URLConstant.CheckIsMouFreeze, {MouCustId : this.MouCustId}).toPromise().then(
       (response) => {
         IsInValid = response["IsFreeze"]
       });
