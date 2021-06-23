@@ -299,13 +299,11 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  stepHandlerFinancing(response) {
+  async stepHandlerFinancing(response) {
     switch (response["StatusCode"].toString()) {
       case "200":
-        if (this.currentStepIndex != 5){
           this.stepperFinancing.next();
           this.currentStepIndex++;
-        }
         break;
 
       case "-1":
@@ -323,6 +321,9 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         break;
       default:
         break;
+    }
+    if(this.currentStepIndex == 6){
+      await this.initDms();
     }
   }
   
