@@ -1109,12 +1109,25 @@ export class MouRequestAddcollComponent implements OnInit {
         sumCollateralValue += this.listCollateralData[i].CollateralPortionAmt;
       }
     }
-    if (this.mouCustObj.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOCLLTR) {
-      if (sumCollateralValue != this.returnMouCust.PlafondAmt) {
-        this.toastr.errorMessage(ExceptionConstant.COLL_VALUE_MUST_EQUALS_PLAFOND_AMT);
+
+    if(this.mouCustObj.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT){
+      console.log(this.returnMouCust.PlafondAmt);
+      if(sumCollateralValue <= this.returnMouCust.PlafondAmt){
+        this.toastr.errorMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
         return;
       }
     }
+
+    if (this.mouCustObj.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOCLLTR){
+      console.log(this.returnMouCust.PlafondAmt);
+    }
+
+    // if (this.mouCustObj.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOCLLTR) {
+    //   if (sumCollateralValue != this.returnMouCust.PlafondAmt) {
+    //     this.toastr.errorMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
+    //     return;
+    //   }
+    // }
 
     if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
       if (!this.IsCalledIntegrator) {
