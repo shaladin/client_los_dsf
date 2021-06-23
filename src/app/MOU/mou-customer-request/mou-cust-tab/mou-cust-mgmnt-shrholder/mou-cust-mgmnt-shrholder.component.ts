@@ -296,6 +296,7 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     this.initLookup();
     this.setValidator(this.defaultCustType);
     this.isCust = false;
+    this.onChangeIdType();
   }
 
   CopyCustomer(event) {
@@ -558,6 +559,19 @@ export class MouCustMgmntShrholderComponent implements OnInit {
     );
   }
 
+  onChangeIdType() {
+    if(this.CustShareholderForm.value.MrIdTypeCode == CommonConstant.MrIdTypeCodeNPWP){
+      this.CustShareholderForm.controls.IdNo.setValidators([Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
+    }
+    else if(this.CustShareholderForm.value.MrIdTypeCode == CommonConstant.MrIdTypeCodeEKTP){
+      this.CustShareholderForm.controls.IdNo.setValidators([Validators.maxLength(50), Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+    }
+    else{
+      this.CustShareholderForm.controls.IdNo.setValidators(Validators.maxLength(50));
+    }
+    this.CustShareholderForm.controls.IdNo.updateValueAndValidity();
+  }
+
 
   open(content) {
     this.modalService.open(content).result.then((result) => {
@@ -587,5 +601,6 @@ export class MouCustMgmntShrholderComponent implements OnInit {
         IdExpiredDt: ''
       });
     }
+    this.onChangeIdType();
   }
 }
