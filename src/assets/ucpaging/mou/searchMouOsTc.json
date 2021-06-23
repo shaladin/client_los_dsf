@@ -55,12 +55,6 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "MOU DATE",
-            "name": "MouCustDt"
-        },
-        {
-            "type": "sort",
-            "position": "center",
             "label": "EXPIRED DATE",
             "name": "EndDt"
         },
@@ -107,11 +101,6 @@
             "key": "customer",
             "position": "left",
             "property": "CustName"
-        },
-        {
-            "type": "date",
-            "position": "center",
-            "property": "MouCustDt"
         },
         {
             "type": "date",
