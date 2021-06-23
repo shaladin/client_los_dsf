@@ -36,6 +36,7 @@ import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCode
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { MouCustPersonalFinDataObj } from 'app/shared/model/MouCustPersonalFinDataObj.Model';
 
 @Component({
   selector: 'app-mou-cust-tab',
@@ -268,7 +269,6 @@ export class MouCustTabComponent implements OnInit {
         }
       }
       if (this.isExpiredBirthDt || this.isExpiredEstablishmentDt) return;
-      console.log(this.MouCustCompanyId);
       if (this.confirmFraudCheck()) {
         if (this.MouCustCompanyId == 0) {
           this.http.post(URLConstant.AddMouCustCompanyData, this.custDataCompanyObj).subscribe(
@@ -1247,6 +1247,14 @@ export class MouCustTabComponent implements OnInit {
         TotalMonthlyIncome: TotalMonthlyIncome,
         TotalMonthlyExpense: TotalMonthlyExpense,
         NettMonthlyIncome: TotalMonthlyIncome - TotalMonthlyExpense
+      });
+    } else {
+      this.custDataPersonalObj.MouCustPersonalFinDataObj = new MouCustPersonalFinDataObj();
+      this.custDataPersonalObj.MouCustPersonalFinDataObj.MrSourceOfIncomeTypeCode = "SALARY";
+      this.CustDataForm.controls["financialData"].patchValue({
+        TotalMonthlyIncome: 0,
+        TotalMonthlyExpense: 0,
+        NettMonthlyIncome: 0
       });
     }
 
