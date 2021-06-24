@@ -91,7 +91,7 @@
                       [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                 </div>
-                <div class="form-group row">
+                <div class="form-group row">     
                   <label class="col-md-2 adins-required-label" for="custCvgAmt" translate>Coverage Amount</label>
                   <div class="col-md-4">
                     <input type="" currencyMask id="custCvgAmt" class="form-control" formControlName="CustCvgAmt"
@@ -170,14 +170,18 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2 adins-required-label" for="cvgAmt" translate>Coverage Amount</label>
+                  <label class="col-md-2 adins-required-label" for="assetRegion" translate>Asset Region</label>
                   <div class="col-md-4">
-                    <input type="" currencyMask id="cvgAmt" class="form-control width-75-per" formControlName="CvgAmt"
-                      [options]="{ allowNegative: false }"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CvgAmt.invalid }"
-                      (ngModelChange)="CvgAmtChanged($event)">
-                    <lib-uc-show-errors [control]="InsuranceDataForm.controls.CvgAmt" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
+                    <select class="form-control width-75-per" id="assetRegion" formControlName="InsAssetRegion"
+                      (change)="AssetRegionChanged($event)"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsAssetRegion.invalid }">
+                      <option value="">-Select One-</option>
+                      <option *ngFor="let item of insAssetRegionObj" [value]="item.Key">
+                        {{item.Value}}
+                      </option>
+                    </select>
+                    <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsAssetRegion"
+                      [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
                   <label class="col-md-2 adins-required-label" for="insuredBy" translate>Insco Branch Name</label>
                   <div class="col-md-4">
@@ -194,6 +198,15 @@
                   </div>
                 </div>
                 <div class="form-group row">
+                  <label class="col-md-2 adins-required-label" for="cvgAmt" translate>Coverage Amount</label>
+                  <div class="col-md-4">
+                    <input type="" currencyMask id="cvgAmt" class="form-control width-75-per" formControlName="CvgAmt"
+                      [options]="{ allowNegative: false }"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CvgAmt.invalid }"
+                      (ngModelChange)="CvgAmtChanged($event)">
+                    <lib-uc-show-errors [control]="InsuranceDataForm.controls.CvgAmt" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
                   <label class="col-md-2 adins-required-label" for="coverPeriod" translate>Cover Period</label>
                   <div class="col-md-4">
                     <select class="form-control width-75-per" id="coverPeriod" formControlName="InsAssetCoverPeriod"
@@ -207,15 +220,6 @@
                     <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsAssetCoverPeriod"
                       [submit]="enjiForm.submitted"></lib-uc-show-errors>
                   </div>
-                  <label class="col-md-2 adins-required-label" for="insLength" translate>Insurance Length</label>
-                  <div class="col-md-4">
-                    <input type="number" id="insLength" min="minInsLength" max="maxInsLength"
-                      class="form-control adInsInput width-25-per" formControlName="InsLength"
-                      (change)="InsLengthChanged($event)"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsLength.invalid}">
-                    <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsLength" [submit]="enjiForm.submitted">
-                    </lib-uc-show-errors>
-                  </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-md-2" for="notes" translate>Insurance Notes</label>
@@ -223,6 +227,15 @@
                     <textarea rows="5" id="notes" class="form-control" formControlName="Notes"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.Notes.invalid }"></textarea>
                     <lib-uc-show-errors [control]="InsuranceDataForm.controls.Notes" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2 adins-required-label" for="insLength" translate>Insurance Length</label>
+                  <div class="col-md-4">
+                    <input type="number" id="insLength" min="minInsLength" max="maxInsLength"
+                      class="form-control adInsInput width-25-per" formControlName="InsLength"
+                      (change)="InsLengthChanged($event)"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsLength.invalid}">
+                    <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsLength" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
                 </div>
