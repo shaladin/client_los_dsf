@@ -277,7 +277,7 @@ export class CustMainDataComponent implements OnInit {
     this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCustObj.pagingJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
     this.InputLookupCustObj.genericJson = "./assets/uclookup/lookUpExistingCustPersonal.Json";
-    this.InputLookupCustObj.isReadonly = (this.bizTemplateCode == CommonConstant.CFNA);
+    this.InputLookupCustObj.isReadonly = false;
     this.InputLookupCustObj.isRequired = true;
 
     this.InputLookupCustCoyObj.urlJson = "./assets/uclookup/lookUpExistingCustCompany.json";
@@ -285,7 +285,7 @@ export class CustMainDataComponent implements OnInit {
     this.InputLookupCustCoyObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupCustCoyObj.pagingJson = "./assets/uclookup/lookUpExistingCustCompany.json";
     this.InputLookupCustCoyObj.genericJson = "./assets/uclookup/lookUpExistingCustCompany.json";
-    this.InputLookupCustCoyObj.isReadonly = (this.bizTemplateCode == CommonConstant.CFNA);
+    this.InputLookupCustCoyObj.isReadonly = false;
     this.InputLookupCustCoyObj.isRequired = true;
     this.InputLookupCustCoyObj.nameSelect = "";
 
