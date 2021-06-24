@@ -99,12 +99,12 @@ export class MouDetailFinancingComponent implements OnInit {
         this.mrMouCustTypeCode = response.MrCustTypeCode;
         var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         var suppCrit = new Array();
-        var critSuppObj = new CriteriaObj();
-        critSuppObj.DataType = 'text';
-        critSuppObj.restriction = AdInsConstant.RestrictionEq;
-        critSuppObj.propName = 'ro.OFFICE_CODE';
-        critSuppObj.value = currentUserContext[CommonConstant.OFFICE_CODE];
-        suppCrit.push(critSuppObj);
+        // var critSuppObj = new CriteriaObj();
+        // critSuppObj.DataType = 'text';
+        // critSuppObj.restriction = AdInsConstant.RestrictionEq;
+        // critSuppObj.propName = 'ro.OFFICE_CODE';
+        // critSuppObj.value = currentUserContext[CommonConstant.OFFICE_CODE];
+        // suppCrit.push(critSuppObj);
 
         if (this.mrMouCustTypeCode == "COMPANY") {
           var criteriaObj = new CriteriaObj();
