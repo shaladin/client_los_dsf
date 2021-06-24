@@ -1109,9 +1109,10 @@ export class MouRequestAddcollComponent implements OnInit {
         sumCollateralValue += this.listCollateralData[i].CollateralPortionAmt;
       }
     }
-    if (this.mouCustObj.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOCLLTR) {
-      if (sumCollateralValue != this.returnMouCust.PlafondAmt) {
-        this.toastr.errorMessage(ExceptionConstant.COLL_VALUE_MUST_EQUALS_PLAFOND_AMT);
+
+    if(this.mouCustObj.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT){
+      if(sumCollateralValue < this.returnMouCust.PlafondAmt){
+        this.toastr.warningMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
         return;
       }
     }
