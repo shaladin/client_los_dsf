@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angu
 import { FormCommissionGenerateComponent } from '../commission-v2/form-commission-generate/form-commission-generate.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, FormArray } from '@angular/forms';
+import { FormBuilder, FormArray, FormGroup } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AppAssetDetailObj } from 'app/shared/model/AppAsset/AppAssetDetailObj.Model';
@@ -454,35 +454,41 @@ export class CommissionCfnaComponent implements OnInit {
   }
 
   GetCalcTaxData(identifier: string, listVendorCode: Array<string>, listVendorEmpNo: Array<string>, listTrxAmt: Array<Array<number>>) {
-    for (var i = 0; i < this.CommissionForm.value[identifier].length; i++) {
-      if (this.CommissionForm.value[identifier][i].ContentName != "") {
+    const tempDataList = this.CommissionForm.get(identifier) as FormArray;
+    for (var i = 0; i < tempDataList.length; i++) {
+      const tempData = tempDataList.get(i.toString()) as FormGroup;
+      const ContentName = tempData.get("ContentName").value;
+      if (ContentName != "") {
         var tempListTrxAmt: Array<number> = new Array<number>();
         var totalCommAmt: number = 0;
-        for (var j = 0; j < this.CommissionForm.value[identifier][i].ListAllocated.length; j++) {
-
-          if (this.DictTotalIncomeForm[this.CommissionForm.value[identifier][i].ListAllocated[j].AllocationFrom] == undefined) {
-            // console.log("kosong");
-            this.DictTotalIncomeForm[this.CommissionForm.value[identifier][i].ListAllocated[j].AllocationFrom] = 0;
-            this.ListAllocFromForDict.push(this.CommissionForm.value[identifier][i].ListAllocated[j].AllocationFrom);
+        const tempListAllocated = tempData.get("ListAllocated") as FormArray;
+        for (var j = 0; j < tempListAllocated.length; j++) {
+          const tempListAllocIdxAt = tempListAllocated.get(j.toString()) as FormGroup;
+          const AllocFrom = tempListAllocIdxAt.get("AllocationFrom").value;
+          const AllocAmt = tempListAllocIdxAt.get("AllocationAmount").value;
+          if (this.DictTotalIncomeForm[AllocFrom] == undefined) {
+            this.DictTotalIncomeForm[AllocFrom] = 0;
+            this.ListAllocFromForDict.push(AllocFrom);
           }
-          this.DictTotalIncomeForm[this.CommissionForm.value[identifier][i].ListAllocated[j].AllocationFrom] += this.CommissionForm.value[identifier][i].ListAllocated[j].AllocationAmount;
+          this.DictTotalIncomeForm[AllocFrom] += AllocAmt;
 
-          tempListTrxAmt.push(this.CommissionForm.value[identifier][i].ListAllocated[j].AllocationAmount);
-          totalCommAmt += this.CommissionForm.value[identifier][i].ListAllocated[j].AllocationAmount;
+          tempListTrxAmt.push(AllocAmt);
+          totalCommAmt += AllocAmt;
         }
         listTrxAmt.push(tempListTrxAmt);
         if (totalCommAmt == 0) {
           this.IsCalculated = false;
-          this.toastr.warningMessage("Please Allocate at least 1 item for " + this.CommissionForm.value[identifier][i].ContentName);
+          this.toastr.warningMessage("Please Allocate at least 1 item for " + ContentName);
           return true;
         }
 
         if (identifier == this.identifierSupplierEmp) {
-          listVendorCode.push(this.CommissionForm.value[identifier][i].SupplCode);
-          listVendorEmpNo.push(this.CommissionForm.value[identifier][i].ContentName);
+          const SupplCode = tempData.get("SupplCode").value;
+          listVendorCode.push(SupplCode);
+          listVendorEmpNo.push(ContentName);
 
         } else {
-          listVendorCode.push(this.CommissionForm.value[identifier][i].ContentName);
+          listVendorCode.push(ContentName);
           listVendorEmpNo.push("-");
         }
       } else {
@@ -603,12 +609,11 @@ export class CommissionCfnaComponent implements OnInit {
   }
 
   GetListAppCommObj(identifier: string, listAppCommissionHAddObj: Array<AppCommissionHObj>, listAppCommissionHEditObj: Array<AppCommissionHObj>) {
-    let listData = this.CommissionForm.get(identifier) as FormArray;
-    // console.log(listData);
-    for (var i = 0; i < listData.value.length; i++) {
+    const listData = this.CommissionForm.get(identifier) as FormArray;
+    for (var i = 0; i < listData.length; i++) {
       var tempData = new AppCommissionHObj();
-      var temp = listData.value[i];
-      if (temp.ContentName == "") continue;
+      const temp = listData.get(i.toString()) as FormGroup;
+      if (temp.get("ContentName").value == "") continue;
       if (identifier == this.identifierSupplier) tempData = this.PatchAppCommHData(temp, CommonConstant.CommissionReceipientTypeCodeSupplier);
       if (identifier == this.identifierSupplierEmp) tempData = this.PatchAppCommHData(temp, CommonConstant.CommissionReceipientTypeCodeSupplierEmp);
       if (identifier == this.identifierReferantor) tempData = this.PatchAppCommHData(temp, CommonConstant.CommissionReceipientTypeCodeReferantor);
@@ -620,56 +625,57 @@ export class CommissionCfnaComponent implements OnInit {
     }
   }
 
-  PatchAppCommHData(AppCommH: any, CommReceipientTypeCode: string) {
+  PatchAppCommHData(AppCommH: FormGroup, CommReceipientTypeCode: string) {
+    console.log(AppCommH);
     var temp = new AppCommissionHObj();
-    if (AppCommH.AppCommissionHId != 0) temp.AppCommissionHId = AppCommH.AppCommissionHId;
+    if (AppCommH.get("AppCommissionHId").value != 0) temp.AppCommissionHId = AppCommH.get("AppCommissionHId").value;
     temp.AppId = this.AppId;
-    temp.BankAccNo = AppCommH.BankAccountNo;
-    temp.BankAccName = AppCommH.BankAccountName;
-    temp.BankCode = AppCommH.BankCode;
-    temp.BankName = AppCommH.BankName;
-    temp.BankBranch = AppCommH.BankBranch;
-    temp.TaxAmt = AppCommH.TotalTaxAmount;
-    temp.VatAmt = AppCommH.TotalVATAmount;
-    temp.PenaltyAmt = AppCommH.TotalPenaltyAmount;
-    temp.TotalCommissionAfterTaxAmt = AppCommH.TotalCommisionAmount - (AppCommH.TotalTaxAmount + AppCommH.TotalVATAmount);
-    temp.TotalCommissionAmt = AppCommH.TotalCommisionAmount;
-    temp.TotalExpenseAmt = AppCommH.TotalExpenseAmount;
-    temp.TotalDisburseAmt = AppCommH.TotalDisburseAmount;
+    temp.BankAccNo = AppCommH.get("BankAccountNo").value;
+    temp.BankAccName = AppCommH.get("BankAccountName").value;
+    temp.BankCode = AppCommH.get("BankCode").value;
+    temp.BankName = AppCommH.get("BankName").value;
+    temp.BankBranch = AppCommH.get("BankBranch").value;
+    temp.TaxAmt = AppCommH.get("TotalTaxAmount").value;
+    temp.VatAmt = AppCommH.get("TotalVATAmount").value;
+    temp.PenaltyAmt = AppCommH.get("TotalPenaltyAmount").value;
+    temp.TotalCommissionAfterTaxAmt = AppCommH.get("TotalCommisionAmount").value - (AppCommH.get("TotalTaxAmount").value + AppCommH.get("TotalVATAmount").value);
+    temp.TotalCommissionAmt = AppCommH.get("TotalCommisionAmount").value;
+    temp.TotalExpenseAmt = AppCommH.get("TotalExpenseAmount").value;
+    temp.TotalDisburseAmt = AppCommH.get("TotalDisburseAmount").value;
     temp.MrCommissionRecipientTypeCode = CommReceipientTypeCode;
-    temp.CommissionRecipientRefNo = AppCommH.ContentName;
-    temp.MrTaxKindCode = AppCommH.MrIdTypeCode;
-    temp.MrTaxCalcMethodCode = AppCommH.MrTaxCalcMethodCode;
-    temp.TaxpayerNo = AppCommH.TaxpayerNo;
-    temp.RowVersion = AppCommH.RowVersion;
+    temp.CommissionRecipientRefNo = AppCommH.get("ContentName").value;
+    temp.MrTaxKindCode = AppCommH.get("MrTaxKindCode").value;
+    temp.MrTaxCalcMethodCode = AppCommH.get("MrTaxCalcMethodCode").value;
+    temp.TaxpayerNo = AppCommH.get("TaxpayerNo").value;
+    temp.RowVersion = AppCommH.get("RowVersion").value;
     if (CommReceipientTypeCode == CommonConstant.CommissionReceipientTypeCodeSupplierEmp) {
-      temp.ReservedField1 = AppCommH.SupplCode;
-      temp.ReservedField2 = AppCommH.MrSupplEmpPositionCodeDesc;
+      temp.ReservedField1 = AppCommH.get("SupplCode").value;
+      temp.ReservedField2 = AppCommH.get("MrSupplEmpPositionCodeDesc").value;
     }
     temp.ListappCommissionDObj = this.PatchAppCommDData(AppCommH);
     return temp;
   }
 
-  PatchAppCommDData(AppCommH: any) {
+  PatchAppCommDData(AppCommH: FormGroup) {
     var listAppCommissionDObj = new Array();
-    var temp = AppCommH.ListAllocated;
+    const temp = AppCommH.get("ListAllocated") as FormArray;
     for (var i = 0; i < temp.length; i++) {
-      var tempObj = temp[i];
+      const tempObj = temp.get(i.toString()) as FormGroup;
       var tempAppCommissionDObj = new AppCommissionDObj();
-      if (tempObj.AppCommissionDId != 0) {
-        tempAppCommissionDObj.AppCommissionHId = tempObj.AppCommissionHId;
-        tempAppCommissionDObj.AppCommissionDId = tempObj.AppCommissionDId;
+      if (tempObj.get("AppCommissionDId").value != 0) {
+        tempAppCommissionDObj.AppCommissionHId = tempObj.get("AppCommissionHId").value;
+        tempAppCommissionDObj.AppCommissionDId = tempObj.get("AppCommissionDId").value;
       } else {
         tempAppCommissionDObj.AppCommissionDId = 0;
       }
-      tempAppCommissionDObj.MrCommissionSourceCode = tempObj.AllocationFrom;
-      tempAppCommissionDObj.CommissionAmt = tempObj.AllocationAmount;
-      tempAppCommissionDObj.TaxAmt = tempObj.TaxAmt;
-      tempAppCommissionDObj.VatAmt = tempObj.VatAmt;
-      tempAppCommissionDObj.PenaltyAmt = tempObj.PenaltyAmt;
-      tempAppCommissionDObj.RefundAmt = this.DictMaxIncomeForm[tempObj.AllocationFrom].RefundAmount;
-      tempAppCommissionDObj.CommissionAmtAfterTax = tempObj.AllocationAmount - (tempObj.TaxAmt + tempObj.VatAmt);
-      tempAppCommissionDObj.RowVersion = tempObj.RowVersion;
+      tempAppCommissionDObj.MrCommissionSourceCode = tempObj.get("AllocationFrom").value;
+      tempAppCommissionDObj.CommissionAmt = tempObj.get("AllocationAmount").value;
+      tempAppCommissionDObj.TaxAmt = tempObj.get("TaxAmt").value;
+      tempAppCommissionDObj.VatAmt = tempObj.get("VatAmt").value;
+      tempAppCommissionDObj.PenaltyAmt = tempObj.get("PenaltyAmt").value;
+      tempAppCommissionDObj.RefundAmt = this.DictMaxIncomeForm[tempObj.get("AllocationFrom").value].RefundAmount;
+      tempAppCommissionDObj.CommissionAmtAfterTax = tempObj.get("AllocationAmount").value - (tempObj.get("TaxAmt").value + tempObj.get("VatAmt").value);
+      tempAppCommissionDObj.RowVersion = tempObj.get("RowVersion").value;
       listAppCommissionDObj.push(tempAppCommissionDObj);
     }
     return listAppCommissionDObj;
