@@ -1,120 +1,160 @@
 <div *ngIf="IsFormReady" formGroupName="AttrList">
-
-  <lib-ucSubsection [id]="'AttributeListId'" [title]="title" [panel]="'AttributeList'">
-  </lib-ucSubsection>
-  <div id="AttributeList">
-    <div class="form-body">
-      <div class="form-group row" *ngFor="let attr of RefAttrList; let i = index">
-        <div class="row col-md-12" *ngIf="attr.AttrInputType == 'T'" [formGroupName]="attr.AttrCode" style="margin: 0;">
-          <label class="col-md-3 adInsLabel " style="padding-left: 0;"
-            [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
-            translate>{{attr.AttrName}}</label>
-          <div class="col-md-9" style="padding-right: 0; display: inline-block;">
-            <input type="text" class="form-control adInsInput" formControlName="AttrValue"
-              maxlength="{{attr.AttrLength}}"
-              [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }" />
-            <lib-uc-show-errors
-              [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
-              [submit]="enjiForm.submitted"></lib-uc-show-errors>
-          </div>
-        </div>
-        <div class="row col-md-12" *ngIf="attr.AttrInputType == 'N'" [formGroupName]="attr.AttrCode" style="margin: 0;">
-          <label class="col-md-3 adInsLabel " style="padding-left: 0"
-            [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
-            translate>{{attr.AttrName}}</label>
-          <div class="col-md-9" style="padding-right: 0; display: inline-block;">
-            <input currencyMask type="" class="form-control adInsInput" formControlName="AttrValue"
-              [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }"
-              [options]="{align: 'right'}" (focusout)="CalculateAmt(attr.AttrGroup, $event.target.value, i)"/>
-            <lib-uc-show-errors
-              [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
-              [submit]="enjiForm.submitted"></lib-uc-show-errors>
-          </div>
-        </div>
-        <div class="row col-md-12" *ngIf="attr.AttrInputType == 'L'" [formGroupName]="attr.AttrCode" style="margin: 0;">
-          <label class="col-md-3 adInsLabel " style="padding-left: 0;"
-            [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
-            translate>{{attr.AttrName}}</label>
-            <div class="col-md-9" *ngIf="attr.IsMandatory == false" style="padding-right: 0; display: inline-block;">
-              <select class="form-control adInsInput" formControlName="AttrValue"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }">
-                <option value = "">Select One</option>
-                <option *ngFor="let valueItem of SplitAttrListValue(attr.AttrValue)"
-                  [value]="valueItem">
-                  {{valueItem}}
-                </option>
-              </select>
-              <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
+  <div *ngIf="!AttrGroups.includes(AttrGroupCustPersonalFinDataIncome) && !AttrGroups.includes(AttrGroupCustPersonalFinDataExpense)">
+    <lib-ucSubsection [id]="'AttributeListId'" [title]="title" [panel]="'AttributeList'">
+    </lib-ucSubsection>
+    <div id="AttributeList">
+      <div class="form-body">
+        <div class="form-group row" *ngFor="let attr of RefAttrList; let i = index">
+          <div class="row col-md-12" *ngIf="attr.AttrInputType == 'T'" [formGroupName]="attr.AttrCode" style="margin: 0;">
+            <label class="col-md-3 adInsLabel " style="padding-left: 0;"
+              [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
+              translate>{{attr.AttrName}}</label>
+            <div class="col-md-9" style="padding-right: 0; display: inline-block;">
+              <input type="text" class="form-control adInsInput" formControlName="AttrValue"
+                maxlength="{{attr.AttrLength}}"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }" />
+              <lib-uc-show-errors
+                [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
                 [submit]="enjiForm.submitted"></lib-uc-show-errors>
             </div>
-            <div class="col-md-9" *ngIf="attr.IsMandatory == true" style="padding-right: 0; display: inline-block;">
-              <select class="form-control adInsInput" formControlName="AttrValue"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }">
-                <option value = "">Select One</option>
-                <option *ngFor="let valueItem of SplitAttrListValue(attr.AttrValue)"
-                  [value]="valueItem">
-                  {{valueItem}}
-                </option>
-              </select>
-              <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
+          </div>
+          <div class="row col-md-12" *ngIf="attr.AttrInputType == 'N'" [formGroupName]="attr.AttrCode" style="margin: 0;">
+            <label class="col-md-3 adInsLabel " style="padding-left: 0"
+              [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
+              translate>{{attr.AttrName}}</label>
+            <div class="col-md-9" style="padding-right: 0; display: inline-block;">
+              <input currencyMask type="" class="form-control adInsInput" formControlName="AttrValue"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }"
+                [options]="{align: 'right'}" (focusout)="CalculateAmt(attr.AttrGroup, $event.target.value, i)"/>
+              <lib-uc-show-errors
+                [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
                 [submit]="enjiForm.submitted"></lib-uc-show-errors>
             </div>
-        </div>
-        <div class="row col-md-12" *ngIf="attr.AttrInputType == 'TA'" [formGroupName]="attr.AttrCode"
-          style="margin: 0;">
-          <label class="col-md-3 adInsLabel " style="padding-left: 0;"
-            [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
-            translate>{{attr.AttrName}}</label>
-          <div class="col-md-9" style="padding-right: 0; display: inline-block;">
-            <textarea class="form-control adInsInput" formControlName="AttrValue"
-              [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }"></textarea>
-            <lib-uc-show-errors
-              [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
-              [submit]="enjiForm.submitted"></lib-uc-show-errors>
           </div>
-        </div>
-        <div class="row col-md-12" *ngIf="attr.AttrInputType == 'D'" [formGroupName]="attr.AttrCode" style="margin: 0;">
-          <label class="col-md-3 adInsLabel " style="padding-left: 0;"
-            [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
-            translate>{{attr.AttrName}}</label>
-          <div class="col-md-9" style="padding-right: 0; display: inline-block;">
-            <input type="date" class="form-control adInsInput" formControlName="AttrValue"
-              [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }" />
-            <lib-uc-show-errors
-              [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
-              [submit]="enjiForm.submitted"></lib-uc-show-errors>
+          <div class="row col-md-12" *ngIf="attr.AttrInputType == 'L'" [formGroupName]="attr.AttrCode" style="margin: 0;">
+            <label class="col-md-3 adInsLabel " style="padding-left: 0;"
+              [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
+              translate>{{attr.AttrName}}</label>
+              <div class="col-md-9" *ngIf="attr.IsMandatory == false" style="padding-right: 0; display: inline-block;">
+                <select class="form-control adInsInput" formControlName="AttrValue"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }">
+                  <option *ngFor="let valueItem of SplitAttrListValue(attr.AttrValue)"
+                    [value]="valueItem">
+                    {{valueItem}}
+                  </option>
+                </select>
+                <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
+                  [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>
+              <div class="col-md-9" *ngIf="attr.IsMandatory == true" style="padding-right: 0; display: inline-block;">
+                <select class="form-control adInsInput" formControlName="AttrValue"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }">
+                  <option value = "">-Select One-</option>
+                  <option *ngFor="let valueItem of SplitAttrListValue(attr.AttrValue)"
+                    [value]="valueItem">
+                    {{valueItem}}
+                  </option>
+                </select>
+                <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
+                  [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>
           </div>
-        </div>
-        <div class="row col-md-12" *ngIf="attr.AttrInputType == 'P'" [formGroupName]="attr.AttrCode" style="margin: 0;">
-          <label class="col-md-3 adInsLabel " style="padding-left: 0; "
-            [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
-            translate>{{attr.AttrName}}</label>
-          <div class="col-md-9" style="padding-right: 0; display: inline-block;">
-            <input type="" currencyMask class="form-control adInsInput" formControlName="AttrValue"
-              [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }"
-              [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }" />
-            <lib-uc-show-errors
-              [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
-              [submit]="enjiForm.submitted"></lib-uc-show-errors>
+          <div class="row col-md-12" *ngIf="attr.AttrInputType == 'TA'" [formGroupName]="attr.AttrCode"
+            style="margin: 0;">
+            <label class="col-md-3 adInsLabel " style="padding-left: 0;"
+              [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
+              translate>{{attr.AttrName}}</label>
+            <div class="col-md-9" style="padding-right: 0; display: inline-block;">
+              <textarea class="form-control adInsInput" formControlName="AttrValue"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }"></textarea>
+              <lib-uc-show-errors
+                [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
+                [submit]="enjiForm.submitted"></lib-uc-show-errors>
+            </div>
           </div>
-        </div>
-        <div class="row col-md-12" *ngIf="attr.AttrInputType == 'RM'" [formGroupName]="attr.AttrCode"
-          style="margin: 0;">
-          <label class="col-md-3 adInsLabel " style="padding-left: 0;"
-            [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
-            translate>{{attr.AttrName}}</label>
-          <div class="col-md-9" style="padding-right: 0; display: inline-block;">
-            <lib-uclookupgeneric [lookupInput]="ListInputLookUpObj[0][attr['AttrCode']]"
-              [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'lookup'+ attr.AttrCode"
-              (lookup)=getLookUp($event,attr.AttrCode)>
-            </lib-uclookupgeneric>
-            <lib-uc-show-errors
-              [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
-              [submit]="enjiForm.submitted"></lib-uc-show-errors>
+          <div class="row col-md-12" *ngIf="attr.AttrInputType == 'D'" [formGroupName]="attr.AttrCode" style="margin: 0;">
+            <label class="col-md-3 adInsLabel " style="padding-left: 0;"
+              [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
+              translate>{{attr.AttrName}}</label>
+            <div class="col-md-9" style="padding-right: 0; display: inline-block;">
+              <input type="date" class="form-control adInsInput" formControlName="AttrValue"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }" />
+              <lib-uc-show-errors
+                [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
+                [submit]="enjiForm.submitted"></lib-uc-show-errors>
+            </div>
+          </div>
+          <div class="row col-md-12" *ngIf="attr.AttrInputType == 'P'" [formGroupName]="attr.AttrCode" style="margin: 0;">
+            <label class="col-md-3 adInsLabel " style="padding-left: 0; "
+              [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
+              translate>{{attr.AttrName}}</label>
+            <div class="col-md-9" style="padding-right: 0; display: inline-block;">
+              <input type="" currencyMask class="form-control adInsInput" formControlName="AttrValue"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }"
+                [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: true, allowZero:true, precision: 6, nullable: false }" />
+              <lib-uc-show-errors
+                [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
+                [submit]="enjiForm.submitted"></lib-uc-show-errors>
+            </div>
+          </div>
+          <div class="row col-md-12" *ngIf="attr.AttrInputType == 'RM'" [formGroupName]="attr.AttrCode"
+            style="margin: 0;">
+            <label class="col-md-3 adInsLabel " style="padding-left: 0;"
+              [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
+              translate>{{attr.AttrName}}</label>
+            <div class="col-md-9" style="padding-right: 0; display: inline-block;">
+              <lib-uclookupgeneric [lookupInput]="ListInputLookUpObj[0][attr['AttrCode']]"
+                [parentForm]="parentForm" [enjiForm]="enjiForm" [identifier]="'lookup'+ attr.AttrCode"
+                (lookup)=getLookUp($event,attr.AttrCode)>
+              </lib-uclookupgeneric>
+              <lib-uc-show-errors
+                [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
+                [submit]="enjiForm.submitted"></lib-uc-show-errors>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
+  
+  <div *ngIf="AttrGroups.includes(AttrGroupCustPersonalFinDataIncome) || AttrGroups.includes(AttrGroupCustPersonalFinDataExpense)">
+    <div class="form-group row">
+      <div class="col-md-6 mb-1">
+        <div class="form-group row">
+          <ng-container *ngFor="let attr of RefAttrList; let i = index">
+            <ng-container *ngIf="attr.AttrGroup === AttrGroupCustPersonalFinDataIncome" [formGroupName]="attr.AttrCode">
+              <label class="col-md-4 mb-1 adInsLabel"
+                [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
+                translate>{{attr.AttrName}}</label>
+              <div class="col-md-8 mb-1">
+                <input currencyMask type="" class="form-control adInsInput" formControlName="AttrValue"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }"
+                  [options]="{align: 'right'}" (focusout)="CalculateAmt(attr.AttrGroup, $event.target.value, i)"/>
+                <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
+                  [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-md-6 mb-1">
+        <div class="form-group row">
+          <ng-container *ngFor="let attr of RefAttrList; let i = index">
+            <ng-container *ngIf="attr.AttrGroup === AttrGroupCustPersonalFinDataExpense" [formGroupName]="attr.AttrCode">
+              <label class="col-md-4 mb-1 adInsLabel"
+                [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
+                translate>{{attr.AttrName}}</label>
+              <div class="col-md-8 mb-1">
+                <input currencyMask type="" class="form-control adInsInput" formControlName="AttrValue"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }"
+                  [options]="{align: 'right'}" (focusout)="CalculateAmt(attr.AttrGroup, $event.target.value, i)"/>
+                <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
+                  [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

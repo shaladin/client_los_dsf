@@ -35,6 +35,8 @@ export class AttrContentComponentComponent implements OnInit {
   IsFormReady: boolean = false;
   tempLookup = {};
   AttrContent: AttrContent;
+  AttrGroupCustPersonalFinDataIncome: string = CommonConstant.AttrGroupCustPersonalFinDataIncome;
+  AttrGroupCustPersonalFinDataExpense: string = CommonConstant.AttrGroupCustPersonalFinDataExpense;
 
   constructor(private httpClient: HttpClient,
     private fb: FormBuilder) { }
@@ -303,10 +305,10 @@ export class AttrContentComponentComponent implements OnInit {
   }
 
   CalculateAmt(attrGroup: string, amount: string, index: number) {
-    if(attrGroup === CommonConstant.AttrGroupCustPersonalFinDataIncome) {
+    if(attrGroup === this.AttrGroupCustPersonalFinDataIncome) {
       this.IncomeAmt.emit({Index: index, Amount: parseFloat(amount.replace(/,/g, ''))});
     }
-    else if(attrGroup === CommonConstant.AttrGroupCustPersonalFinDataExpense) {
+    else if(attrGroup === this.AttrGroupCustPersonalFinDataExpense) {
       this.ExpenseAmt.emit({Index: index, Amount: parseFloat(amount.replace(/,/g, ''))});
     }
   }
