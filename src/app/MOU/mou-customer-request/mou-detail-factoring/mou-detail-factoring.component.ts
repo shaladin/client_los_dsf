@@ -318,7 +318,7 @@ export class MouDetailFactoringComponent implements OnInit {
     critSuppObj.restriction = AdInsConstant.RestrictionEq;
     critSuppObj.propName = 'ro.OFFICE_CODE';
     critSuppObj.value = currentUserContext[CommonConstant.OFFICE_CODE];;
-    suppCrit.push(critSuppObj);
+    //suppCrit.push(critSuppObj);
 
     this.inputLookupObj = new InputLookupObj();
     this.inputLookupObj.isReady = false;
