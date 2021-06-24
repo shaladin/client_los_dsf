@@ -47,7 +47,7 @@ export class AppCustAssetComponent implements OnInit {
 
   GetAppCustAssetData(){
     this.spinner.show();
-    this.http.post(URLConstant.GetListAppCustAssetByAppCustId, { AppCustId: this.AppCustId }).toPromise().then(
+    this.http.post(URLConstant.GetListAppCustAssetByAppCustId, { Id: this.AppCustId }).toPromise().then(
       (response) => {
         this.inputGridObj.resultData = {
           Data: []
@@ -99,7 +99,7 @@ export class AppCustAssetComponent implements OnInit {
   DeleteAppCustAsset(appCustAssetId){
     var confirmation = confirm("Are you sure to delete this data ?");
     if(confirmation){
-      this.http.post(URLConstant.DeleteAppCustAsset, { AppCustAssetId: appCustAssetId }).toPromise().then(
+      this.http.post(URLConstant.DeleteAppCustAsset, { Id: appCustAssetId }).toPromise().then(
         (response) => {
           if(response["StatusCode"] == 200){
             this.toastr.successMessage(response["Message"]);
