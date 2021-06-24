@@ -118,7 +118,7 @@ export class MouViewDetailComponent implements OnInit {
           this.Notes = this.mouCustFctr.Notes;
 
           var objVendor = {
-            VendorCode: this.mouCustFctr.VendorCode
+            Code: this.mouCustFctr.VendorCode
           }
           this.http.post(URLConstant.GetVendorByVendorCode, objVendor).subscribe(
             (responseLink) => {

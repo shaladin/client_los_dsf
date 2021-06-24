@@ -110,9 +110,6 @@
     </div>
 
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
-      <label class="col-md-2 adInsLabel" translate>Listed Customer Factoring</label>
-      <label *ngIf="IsListedCust == true" class="col-md-4 adInsLabel" translate>Yes </label>
-      <label *ngIf="IsListedCust == false" class="col-md-4 adInsLabel" translate>No </label>
       <label class="col-md-2 adInsLabel" translate>Notes</label>
       <label *ngIf="Notes == '' || Notes == null" class="col-md-4 adInsLabel" translate>-</label>
       <label *ngIf="Notes != '' && Notes != null" class="col-md-4 adInsLabel" translate>{{Notes}}</label>
