@@ -23,7 +23,7 @@ export class AttrContentComponentComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Input() identifier: string;
   @Input() AttrGroup: string;
-  @Input() AttrGroups: Array<string>;
+  @Input() AttrGroups: Array<string> = [];
   @Input() AppCustId: number;
   @Input() title: string;
   @Output() IncomeAmt: EventEmitter<{Index: number, Amount: number}> = new EventEmitter();

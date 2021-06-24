@@ -23,6 +23,7 @@ export class AppCommissionHObj{
     ListappCommissionDObj: Array<AppCommissionDObj>;
     AppCommissionDs: Array<AppCommissionDObj>;
     RowVersion: string;
+    MrIdTypeCode: string;
     ReservedField1: string;
     ReservedField2: string;
     ReservedField3: string;
