@@ -238,7 +238,7 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
     critSuppObj.restriction = AdInsConstant.RestrictionEq;
     critSuppObj.propName = 'ro.OFFICE_CODE';
     critSuppObj.value = currentUserContext[CommonConstant.OFFICE_CODE];;
-    suppCrit.push(critSuppObj);
+    //suppCrit.push(critSuppObj);
 
 
     this.InputLookupLinkSupplGradingObj.urlJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
