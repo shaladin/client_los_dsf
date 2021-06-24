@@ -34,12 +34,14 @@ export class FormCommissionGenerateComponent implements OnInit {
     private http: HttpClient,
     private toastr: NGXToastrService,) { }
 
+  readonly AllocTypeAmt: string = CommonConstant.AllocTypeAmt;
+  readonly AllocTypePerc: string = CommonConstant.AllocTypePerc;
+
   arr: FormArray;
   DDLContentName: Array<any>;
   tempDDLContentName: Array<any>;
   lenDDLContentName: number = 0;
   totalDDLContentData: number = 0;
-  AllocationType: string = "Amount";
   initData() {
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     this.arr = this.parentForm.get(this.identifier) as FormArray;
@@ -255,7 +257,7 @@ export class FormCommissionGenerateComponent implements OnInit {
       TotalCommisionAmount += allocAmt;
       this.parentForm.controls[this.identifier]["controls"][formIdx].controls.ListAllocated.push(eachAllocationDetail);
 
-      this.UpdateInputType(this.AllocationType);
+      this.UpdateInputType();
     }
 
     // patch total
@@ -347,7 +349,6 @@ export class FormCommissionGenerateComponent implements OnInit {
     var ddlObj = this.parentForm.controls[this.identifier]["controls"][idxForm].controls.DropDownList.value[idxDefault];
 
     if (ddlObj != undefined || ddlObj != null) {
-      console.log(this.parentForm.controls[this.identifier]["controls"][idxForm]);
       this.parentForm.controls[this.identifier]["controls"][idxForm].patchValue({
         BankAccountNo: ddlObj.Key,
         BankAccountName: ddlObj.Value,
@@ -481,7 +482,7 @@ export class FormCommissionGenerateComponent implements OnInit {
     }
   }
 
-  PatchDataExisting(appCommObj: any) {
+  PatchDataExisting(appCommObj: AppCommissionHObj) {
     this.AddNewDataForm();
     let idxDDLContent = this.DDLContentName.findIndex(x => x.Key == appCommObj.CommissionRecipientRefNo);
     let indexFormObj = this.parentForm.value[this.identifier].length - 1;
@@ -580,7 +581,8 @@ export class FormCommissionGenerateComponent implements OnInit {
     this.DataEmit.emit();
   }
 
-  UpdateInputType(type: any) {
+  UpdateInputType() {
+    const AllocType: string = this.parentForm.get("AllocType").value;
     let indexFormObj = this.parentForm.value[this.identifier].length - 1;
     if (indexFormObj > -1) {
       let MaxIdxComponent = this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"].length;
@@ -588,8 +590,7 @@ export class FormCommissionGenerateComponent implements OnInit {
         var AllocationBehaviour = this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"][i].controls.AllocationBehaviour.value;
         var index = this.parentForm.controls[this.identifier]["controls"].length;
         if (AllocationBehaviour != "LOCK") {
-          this.AllocationType = type;
-          if (type == "Amount") {
+          if (AllocType == this.AllocTypeAmt) {
             if (index > 0) {
               for (var j = 0; j < index; j++) {
                 this.parentForm.controls[this.identifier]["controls"][j].controls.ListAllocated["controls"][i].controls.AllocationAmount.enable();

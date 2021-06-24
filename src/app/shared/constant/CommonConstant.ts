@@ -442,6 +442,9 @@ export class CommonConstant {
   public static MessagePassData = "PASS";
   public static MessageDel = "DEL";
 
+  public static AllocTypeAmt = "Amount";
+  public static AllocTypePerc = "Percentage";
+  
   // VERIFY STAT
   public static Reject = "REJECT";
   public static Verify = "VERIFY";

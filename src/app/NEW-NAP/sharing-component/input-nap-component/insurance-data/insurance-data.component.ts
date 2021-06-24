@@ -99,6 +99,7 @@ export class InsuranceDataComponent implements OnInit {
   InsuranceDataForm = this.fb.group({
     InsAssetCoveredBy: ['', [Validators.required, Validators.maxLength(50)]],
     InsAssetCoverPeriod: ['', [Validators.required, Validators.maxLength(50)]],
+    InsAssetPaidBy: ['', [Validators.required, Validators.maxLength(50)]],
     InscoBranchCode: ['', [Validators.required, Validators.maxLength(100)]],
     InscoBranchName: [''],
     CustInscoBranchName: ['', [Validators.required, Validators.maxLength(100)]],
@@ -243,7 +244,12 @@ export class InsuranceDataComponent implements OnInit {
       this.saveObj.AppInsObjObj.AppCollateralId = this.appCollateralId;
     }
 
+    if (insuredBy == CommonConstant.InsuredByOffSystem) {
+      this.saveObj.AppInsObjObj.InsAssetPaidBy = CommonConstant.InsPaidByCustomer;
+    }
+
     if (insuredBy == CommonConstant.InsuredByCustomer) {
+      this.saveObj.AppInsObjObj.InsAssetPaidBy = CommonConstant.InsPaidByCustomer;
       this.saveObj.AppInsObjObj.CustInscoBranchName = this.InsuranceDataForm.controls.CustInscoBranchName.value;
       this.saveObj.AppInsObjObj.InsPolicyNo = this.InsuranceDataForm.controls.InsPolicyNo.value;
       this.saveObj.AppInsObjObj.InsPolicyName = this.InsuranceDataForm.controls.InsPolicyName.value;
@@ -254,6 +260,7 @@ export class InsuranceDataComponent implements OnInit {
     }
 
     if (insuredBy == CommonConstant.InsuredByCompany) {
+      this.saveObj.AppInsObjObj.InsAssetPaidBy = this.InsuranceDataForm.controls.InsAssetPaidBy.value;
       this.saveObj.AppInsObjObj.InscoBranchCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
       this.saveObj.AppInsObjObj.InscoBranchName = this.InsuranceDataForm.controls.InscoBranchName.value;
       this.saveObj.AppInsObjObj.InsAssetCoverPeriod = this.InsuranceDataForm.controls.InsAssetCoverPeriod.value;
@@ -354,6 +361,7 @@ export class InsuranceDataComponent implements OnInit {
     }
 
     if (insuredBy == CommonConstant.InsuredByCustomerCompany) {
+      this.saveObj.AppInsObjObj.InsAssetPaidBy = this.InsuranceDataForm.controls.InsAssetPaidBy.value;
       this.saveObj.AppInsObjObj.InscoBranchCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
       this.saveObj.AppInsObjObj.InscoBranchName = this.InsuranceDataForm.controls.InscoBranchName.value;
       this.saveObj.AppInsObjObj.InsAssetCoverPeriod = this.InsuranceDataForm.controls.InsAssetCoverPeriod.value;
@@ -511,6 +519,12 @@ export class InsuranceDataComponent implements OnInit {
         var custDiscAmt = 0;
         var capitalised = 0;
 
+        if (this.InsuranceDataForm.controls.InsAssetPaidBy.value == "CO") {
+          custDiscAmt = this.calcInsObj.TotalMainPremiAmt + this.calcInsObj.TotalAdditionalPremiAmt + this.calcInsObj.TotalFeeAmt;
+          this.InsuranceDataForm.patchValue({
+            InsCpltzAmt: 0
+          });
+        }
         // cek ins paid by AtCost to calculate DiscountAmt & capitalised
         if (this.calcInsObj.InsCoverage.length) for (let resInsCovItem of this.calcInsObj.InsCoverage) {
           let currReq = this.InsuranceDataForm.controls['AppInsMainCvgs']['controls'].find(i => i['controls']['YearNo'].value === resInsCovItem.YearNo);
@@ -587,6 +601,10 @@ export class InsuranceDataComponent implements OnInit {
     if (appInsMainCvgObj == undefined) {
       if (this.InsuranceDataForm.controls.InscoBranchCode.value == "") {
         this.toastr.warningMessage(ExceptionConstant.CHOOSE_INSCO_BRANCH);
+        return;
+      }
+      if (this.InsuranceDataForm.controls.InsAssetPaidBy.value == "") {
+        this.toastr.warningMessage(ExceptionConstant.CHOOSE_PAID_BY);
         return;
       }
       if (this.InsuranceDataForm.controls.InsAssetRegion.value == "") {
@@ -860,8 +878,6 @@ export class InsuranceDataComponent implements OnInit {
                 // InscoAddPremiRate: inscoAddPremiRate,
                 InscoAddPremiRate: this.ruleObj["RateToInsco"][i],
                 InscoAddPremiAmt: 0,
-                // StdAddPremiRate: this.ruleObj.BaseRate[index]
-                StdAddPremiRate: this.ruleObj["BaseRate"][i],
                 SeatCount: 0
               });
               (group.controls.AppInsAddCvgs as FormArray).push(control);
@@ -887,7 +903,6 @@ export class InsuranceDataComponent implements OnInit {
           BaseCalculation: this.ruleObj.BaseCalc[index],
           InscoAddPremiRate: inscoAddPremiRate,
           InscoAddPremiAmt: 0,
-          StdAddPremiRate: this.ruleObj.BaseRate[index],
           SeatCount: 0,
         });
 
@@ -965,7 +980,6 @@ export class InsuranceDataComponent implements OnInit {
                 BaseCalculation: this.ruleObj.BaseCalc[index],
                 InscoAddPremiRate: inscoAddPremiRate,
                 InscoAddPremiAmt: check == undefined ? 0 : check.InscoAddPremiAmt,
-                StdAddPremiRate: this.ruleObj.BaseRate[index],
                 SeatCount: 0,
               });
               (group.controls.AppInsAddCvgs as FormArray).push(control);
@@ -999,7 +1013,6 @@ export class InsuranceDataComponent implements OnInit {
           BaseCalculation: this.ruleObj.BaseCalc[index],
           InscoAddPremiRate: inscoAddPremiRate,
           InscoAddPremiAmt: check == undefined ? 0 : check.InscoAddPremiAmt,
-          StdAddPremiRate: this.ruleObj.BaseRate[index],
           SeatCount: seatCount
         });
         (group.controls.AppInsAddCvgs as FormArray).push(control);
@@ -1129,6 +1142,11 @@ export class InsuranceDataComponent implements OnInit {
     this.isGenerate = false;
   }
 
+  InsAssetPaidByChanged(event) {
+    this.setPaidByInput(event.target.value);
+    this.isGenerate = false;
+  }
+
   InsLengthChanged() {
     this.isGenerate = false;
   }
@@ -1167,6 +1185,20 @@ export class InsuranceDataComponent implements OnInit {
       }
     }
 
+  }
+
+  setPaidByInput(paidBy) {
+    if (paidBy == CommonConstant.InsPaidByAtCost) {
+      this.InsuranceDataForm.controls.TotalCustDiscAmt.disable();
+      this.InsuranceDataForm.controls.IsFullCapitalizedAmount.disable();
+      this.InsuranceDataForm.controls.InsCpltzAmt.disable();
+    } else {
+      this.InsuranceDataForm.controls.TotalCustDiscAmt.enable();
+      this.InsuranceDataForm.controls.IsFullCapitalizedAmount.enable();
+      this.InsuranceDataForm.controls.InsCpltzAmt.enable();
+      this.BindCapitalize();
+      this.IsFullCapitalizedAmount();
+    }
   }
 
   setTenorCustCompany(tenor) {
@@ -1289,6 +1321,8 @@ export class InsuranceDataComponent implements OnInit {
       this.InsuranceDataForm.controls.InsPolicyName.updateValueAndValidity();
       this.InsuranceDataForm.controls.CustCoverStartDt.clearValidators();
       this.InsuranceDataForm.controls.CustCoverStartDt.updateValueAndValidity();
+      this.InsuranceDataForm.controls.InsAssetPaidBy.clearValidators();
+      this.InsuranceDataForm.controls.InsAssetPaidBy.updateValueAndValidity();
       this.InsuranceDataForm.controls.EndDt.clearValidators();
       this.InsuranceDataForm.controls.EndDt.updateValueAndValidity();
       this.InsuranceDataForm.controls.Notes.clearValidators();
@@ -1316,6 +1350,8 @@ export class InsuranceDataComponent implements OnInit {
       this.InsuranceDataForm.controls.InsPolicyNo.updateValueAndValidity();
       this.InsuranceDataForm.controls.InsPolicyName.setValidators(Validators.maxLength(100));
       this.InsuranceDataForm.controls.InsPolicyName.updateValueAndValidity();
+      this.InsuranceDataForm.controls.InsAssetPaidBy.clearValidators();
+      this.InsuranceDataForm.controls.InsAssetPaidBy.updateValueAndValidity();
       this.InsuranceDataForm.controls.CustCoverStartDt.setValidators(Validators.required);
       this.InsuranceDataForm.controls.CustCoverStartDt.updateValueAndValidity();
       this.InsuranceDataForm.controls.EndDt.setValidators(Validators.required);
@@ -1324,7 +1360,8 @@ export class InsuranceDataComponent implements OnInit {
       this.InsuranceDataForm.controls.CustNotes.updateValueAndValidity();
       this.InsuranceDataForm.controls.CustCvgAmt.setValidators(Validators.required);
       this.InsuranceDataForm.controls.CustCvgAmt.updateValueAndValidity();
-
+      this.InsuranceDataForm.controls.InsAssetPaidBy.clearValidators();
+      this.InsuranceDataForm.controls.InsAssetPaidBy.updateValueAndValidity();
       this.InsuranceDataForm.controls.InsAssetCoverPeriod.clearValidators();
       this.InsuranceDataForm.controls.InsAssetCoverPeriod.updateValueAndValidity();
       this.InsuranceDataForm.controls.InsLength.clearValidators();
@@ -1342,6 +1379,8 @@ export class InsuranceDataComponent implements OnInit {
     }
 
     if (insuredBy == CommonConstant.InsuredByCompany) {
+      this.InsuranceDataForm.controls.InsAssetPaidBy.setValidators([Validators.required, Validators.maxLength(50)]);
+      this.InsuranceDataForm.controls.InsAssetPaidBy.updateValueAndValidity();
       this.InsuranceDataForm.controls.InsAssetCoverPeriod.setValidators([Validators.required, Validators.maxLength(50)]);
       this.InsuranceDataForm.controls.InsAssetCoverPeriod.updateValueAndValidity();
       this.setInsLengthValidator(this.InsuranceDataForm.controls.InsAssetCoverPeriod.value);
@@ -1373,6 +1412,8 @@ export class InsuranceDataComponent implements OnInit {
     }
 
     if (insuredBy == CommonConstant.InsuredByCustomerCompany) {
+      this.InsuranceDataForm.controls.InsAssetPaidBy.setValidators([Validators.required, Validators.maxLength(50)]);
+      this.InsuranceDataForm.controls.InsAssetPaidBy.updateValueAndValidity();
       this.InsuranceDataForm.controls.InsAssetCoverPeriod.setValidators([Validators.required, Validators.maxLength(50)]);
       this.InsuranceDataForm.controls.InsAssetCoverPeriod.updateValueAndValidity();
       this.setInsLengthValidator(this.InsuranceDataForm.controls.InsAssetCoverPeriod.value);
@@ -1473,33 +1514,6 @@ export class InsuranceDataComponent implements OnInit {
         });
       }
 
-      if (insuredBy == CommonConstant.InsuredByCompany) {
-        this.InsuranceDataForm.patchValue({
-          InsAssetCoveredBy: insuredBy,
-          InscoBranchCode: this.appInsObjObj.InscoBranchCode,
-          InscoBranchName: this.appInsObjObj.InscoBranchName,
-          InsAssetCoverPeriod: this.appInsObjObj.InsAssetCoverPeriod,
-          InsAssetRegion: this.appInsObjObj.InsAssetRegion,
-          InsLength: this.appInsObjObj.InsLength,
-          Notes: this.appInsObjObj.Notes,
-          TotalCustMainPremiAmt: this.appInsObjObj.TotalCustMainPremiAmt,
-          TotalCustAddPremiAmt: this.appInsObjObj.TotalCustAddPremiAmt,
-          TotalInscoMainPremiAmt: this.appInsObjObj.TotalInscoMainPremiAmt,
-          TotalInscoAddPremiAmt: this.appInsObjObj.TotalInscoAddPremiAmt,
-          InsCpltzAmt: this.appInsObjObj.InsCpltzAmt,
-          InscoAdminFeeAmt: this.appInsObjObj.InscoAdminFeeAmt,
-          CustAdminFeeAmt: this.appInsObjObj.CustAdminFeeAmt,
-          CustStampDutyFeeAmt: this.appInsObjObj.CustStampDutyFee,
-          CvgAmt: this.appInsObjObj.CvgAmt,
-          TotalCustFeeAmt: this.appInsObjObj.CustAdminFeeAmt + this.appInsObjObj.CustStampDutyFee,
-          TotalInscoFeeAmt: this.appInsObjObj.InscoAdminFeeAmt + this.appInsObjObj.InscoStampDutyFee,
-          TotalCustDiscAmt: this.appInsObjObj.TotalCustDiscAmt,
-          PayPeriodToInsco: this.appInsObjObj.PayPeriodToInsco
-        });
-        this.setInsLengthValidator(this.appInsObjObj.InsAssetCoverPeriod);
-        await this.GenerateInsurance(this.appInsMainCvgObj);
-      }
-
       if (insuredBy == CommonConstant.InsuredByCustomerCompany) {
         this.InsuranceDataForm.patchValue({
           InsAssetCoveredBy: insuredBy,
@@ -1507,6 +1521,7 @@ export class InsuranceDataComponent implements OnInit {
           InscoBranchName: this.appInsObjObj.InscoBranchName,
           InsAssetCoverPeriod: this.appInsObjObj.InsAssetCoverPeriod,
           InsAssetRegion: this.appInsObjObj.InsAssetRegion,
+          InsAssetPaidBy: this.appInsObjObj.InsAssetPaidBy,
           InsLength: this.appInsObjObj.InsLength,
           Notes: this.appInsObjObj.Notes,
           TotalCustMainPremiAmt: this.appInsObjObj.TotalCustMainPremiAmt,
@@ -1530,6 +1545,36 @@ export class InsuranceDataComponent implements OnInit {
           TotalCustDiscAmt: this.appInsObjObj.TotalCustDiscAmt,
           PayPeriodToInsco: this.appInsObjObj.PayPeriodToInsco
         });
+        this.setPaidByInput(this.appInsObjObj.InsAssetPaidBy);
+        this.setInsLengthValidator(this.appInsObjObj.InsAssetCoverPeriod);
+        await this.GenerateInsurance(this.appInsMainCvgObj);
+      }
+
+      if (insuredBy == CommonConstant.InsuredByCompany) {
+        this.InsuranceDataForm.patchValue({
+          InsAssetCoveredBy: insuredBy,
+          InscoBranchCode: this.appInsObjObj.InscoBranchCode,
+          InscoBranchName: this.appInsObjObj.InscoBranchName,
+          InsAssetPaidBy: this.appInsObjObj.InsAssetPaidBy,
+          InsAssetCoverPeriod: this.appInsObjObj.InsAssetCoverPeriod,
+          InsAssetRegion: this.appInsObjObj.InsAssetRegion,
+          InsLength: this.appInsObjObj.InsLength,
+          Notes: this.appInsObjObj.Notes,
+          TotalCustMainPremiAmt: this.appInsObjObj.TotalCustMainPremiAmt,
+          TotalCustAddPremiAmt: this.appInsObjObj.TotalCustAddPremiAmt,
+          TotalInscoMainPremiAmt: this.appInsObjObj.TotalInscoMainPremiAmt,
+          TotalInscoAddPremiAmt: this.appInsObjObj.TotalInscoAddPremiAmt,
+          InsCpltzAmt: this.appInsObjObj.InsCpltzAmt,
+          InscoAdminFeeAmt: this.appInsObjObj.InscoAdminFeeAmt,
+          CustAdminFeeAmt: this.appInsObjObj.CustAdminFeeAmt,
+          CustStampDutyFeeAmt: this.appInsObjObj.CustStampDutyFee,
+          CvgAmt: this.appInsObjObj.CvgAmt,
+          TotalCustFeeAmt: this.appInsObjObj.CustAdminFeeAmt + this.appInsObjObj.CustStampDutyFee,
+          TotalInscoFeeAmt: this.appInsObjObj.InscoAdminFeeAmt + this.appInsObjObj.InscoStampDutyFee,
+          TotalCustDiscAmt: this.appInsObjObj.TotalCustDiscAmt,
+          PayPeriodToInsco: this.appInsObjObj.PayPeriodToInsco
+        });
+        this.setPaidByInput(this.appInsObjObj.InsAssetPaidBy);
         this.setInsLengthValidator(this.appInsObjObj.InsAssetCoverPeriod);
         await this.GenerateInsurance(this.appInsMainCvgObj);
       }

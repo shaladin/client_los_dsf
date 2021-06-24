@@ -38,16 +38,25 @@
         <label class="col-md-3 adInsLabel" for="MrInstTypeCode_SingleInstCalcMthd" translate>Installment Type /
           Calculate Method</label>
         <div class="col-md-5">
-          <select type="text" class="form-control adInsInput" formControlName="MrInstTypeCode"
-            (change)="instTypeHandler()"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrInstTypeCode.invalid }">
-            <option *ngFor="let item of instTypeList" [value]="item.Key">{{item.Value}}</option>
-          </select>
-          <select *ngIf="IsSingleIns" style="border-left: 1px solid grey" type="text" class="form-control adInsInput"
-            formControlName="SingleInstCalcMthd"
-            [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.SingleInstCalcMthd.invalid }">
-            <option *ngFor="let item of singleInstCalcMthdList?.ReturnObject" [value]="item.Key">{{item.Value}}</option>
-          </select>
+          <div class="row">
+            <div class="col-md-6">
+              <select type="text" class="form-control adInsInput" formControlName="MrInstTypeCode"
+                (change)="instTypeHandler()"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrInstTypeCode.invalid }">
+                <option *ngFor="let item of instTypeList" [value]="item.Key">{{item.Value}}</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <select *ngIf="IsSingleIns" style="border-left: 1px solid grey" type="text" class="form-control adInsInput"
+                formControlName="SingleInstCalcMthd"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.SingleInstCalcMthd.invalid }">
+                <option *ngFor="let item of singleInstCalcMthdList" [value]="item.Key">{{item.Value}}</option>
+              </select>
+            </div>
+          </div>
+            
+            
+          
         </div>
       </div>
       <div *ngIf="IsSingleIns" class="form-group row">

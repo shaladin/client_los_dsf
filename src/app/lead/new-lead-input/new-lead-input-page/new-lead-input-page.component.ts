@@ -9,6 +9,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
+import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { environment } from 'environments/environment';
@@ -30,8 +31,12 @@ export class NewLeadInputPageComponent implements OnInit {
   viewLeadHeaderMainInfo: UcViewGenericObj = new UcViewGenericObj();
   pageType: string;
   dmsObj: DMSObj;
+  SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   @ViewChild("LeadMainInfo", { read: ViewContainerRef }) leadMainInfo: ViewContainerRef;
   AppStepIndex: number = 1;
+  customObj: any;
+  isDmsReady: boolean = false;
+  isDmsData: boolean;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -56,17 +61,25 @@ export class NewLeadInputPageComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await this.http.post(URLConstant.GetLeadByLeadId, { Id: this.LeadId }).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
-        let currentUserContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-        this.dmsObj = new DMSObj();
-        this.dmsObj.User = currentUserContext.UserName;
-        this.dmsObj.Role = currentUserContext.RoleCode;
-        this.dmsObj.ViewCode = CommonConstant.DmsViewCodeLead;
-        this.dmsObj.MetadataParent = null;
-        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsLeadId, response["LeadNo"]));
-        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+        this.SysConfigResultObj = response
       });
+      await this.http.post(URLConstant.GetLeadByLeadId, { Id: this.LeadId }).toPromise().then(
+        (response) => {
+          let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+          if (this.SysConfigResultObj.ConfigValue == '1') {
+            this.dmsObj = new DMSObj();
+            this.dmsObj.User = currentUserContext.UserName;
+            this.dmsObj.Role = currentUserContext.RoleCode;
+            this.dmsObj.ViewCode = CommonConstant.DmsViewCodeLead;
+            this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, response["LeadNo"]));
+            this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsLeadId, response["LeadNo"]));
+            this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
+            this.isDmsReady = true;
+          }
+          console.log('dmsobj = ', JSON.stringify(this.dmsObj));
+        });
 
     if (this.TaskListId > 0) {
       this.claimTask();
@@ -96,14 +109,19 @@ export class NewLeadInputPageComponent implements OnInit {
     if (type == "custData") {
       this.isCustData = true;
       this.isLeadData = false;
+      this.isDmsData = false;
       this.AppStepIndex = 1;
     }
     if (type == "leadData") {
       this.isCustData = false;
       this.isLeadData = true;
+      this.isDmsData = false;
       this.AppStepIndex = 2;
     }
     if (type == "uploadDocument") {
+      this.isCustData = false;
+      this.isLeadData = false;
+      this.isDmsData = true;
       this.AppStepIndex = 3;
     }
   }
@@ -143,10 +161,14 @@ export class NewLeadInputPageComponent implements OnInit {
           }
         }
         else if (this.AppStepIndex == 3) {
-          this.EnterTab("")
+          this.customObj = ev;
+          if (this.SysConfigResultObj.ConfigValue == '0') {
+            this.endOfTab()
+          } else {
+            this.EnterTab("uploadDocument")
+          }
+
         }
-
-
 
       }
       else {
@@ -173,7 +195,6 @@ export class NewLeadInputPageComponent implements OnInit {
       });
   }
   endOfTab() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
+  this.cancelHandler();
   }
-
 }

@@ -20,7 +20,6 @@ export class FinancialCompanyComponent implements OnInit {
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
   
   IsDetail: boolean = false;
-  // AttrGroup: string = CommonConstant.AttrGroupCustCompanyFinData;
   AttrGroups: Array<string> = [
     CommonConstant.AttrGroupCustCompanyFinDataIncome,
     CommonConstant.AttrGroupCustCompanyFinDataExpense,

@@ -472,7 +472,7 @@ export class CustMainDataComponent implements OnInit {
       this.custModelReqObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustModel;
       this.custModelReqObj.MappingCode = this.MrCustTypeCode;
       this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, this.custModelReqObj).subscribe(
-        (response: ResListKeyValueObj) => {
+        (response : ResListKeyValueObj) => {
           this.CustModelObj = response[CommonConstant.ReturnObj];
         }
       );
@@ -493,71 +493,66 @@ export class CustMainDataComponent implements OnInit {
       this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
       this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
       this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
-      this.CustMainDataForm.controls.EstablishmentDt.clearValidators();
-      this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
     } else {
       if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
         this.CustMainDataForm.patchValue({
           IsSigner: false,
         });
-        this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required]);
-        this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
-        if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
-          this.CustMainDataForm.controls.EstablishmentDt.setValidators(Validators.required);
-          this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
-        }
-        this.CustMainDataForm.controls.MrCompanyTypeCode.setValidators(Validators.required);
-        this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
-
-        this.CustMainDataForm.controls.MrCustModelCode.clearValidators();
-        this.CustMainDataForm.controls.MotherMaidenName.clearValidators();
-        this.CustMainDataForm.controls.BirthPlace.clearValidators();
-        this.CustMainDataForm.controls.BirthDt.clearValidators();
-        this.CustMainDataForm.controls.MrIdTypeCode.clearValidators();
-        this.CustMainDataForm.controls.MrGenderCode.clearValidators();
-        this.CustMainDataForm.controls.MrMaritalStatCode.clearValidators();
-        this.CustMainDataForm.controls.IdNo.clearValidators();
-        this.CustMainDataForm.controls.MobilePhnNo1.clearValidators();
-        this.CustMainDataForm.controls.Email1.clearValidators();
       }
-
-      if (this.isIncludeCustRelation) {
-        this.getCustRelationship();
-        this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
-        this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
-
-      }
-      else {
-        this.CustMainDataForm.controls.MrCustRelationshipCode.clearValidators();
-        this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
-      }
-
-      if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
-        if (custType == CommonConstant.CustTypePersonal) {
-          this.CustMainDataForm.controls.MrJobPositionCode.setValidators(Validators.required);
-          this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
-        } else {
-          this.CustMainDataForm.controls.MrJobPositionCode.clearValidators();
-          this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
-
-        }
-      }
-
-      this.CustMainDataForm.controls.MrCustModelCode.updateValueAndValidity();
-      this.CustMainDataForm.controls.MotherMaidenName.updateValueAndValidity();
-      this.CustMainDataForm.controls.BirthDt.updateValueAndValidity();
-      this.CustMainDataForm.controls.BirthPlace.updateValueAndValidity();
-      this.CustMainDataForm.controls.MrIdTypeCode.updateValueAndValidity();
-      this.CustMainDataForm.controls.MrGenderCode.updateValueAndValidity();
-      this.CustMainDataForm.controls.MrMaritalStatCode.updateValueAndValidity();
-      this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
-      this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
-      this.CustMainDataForm.controls.IdNo.updateValueAndValidity();
+      this.CustMainDataForm.controls.TaxIdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
       this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
-      this.CustMainDataForm.controls.MobilePhnNo1.updateValueAndValidity();
-      this.CustMainDataForm.controls.Email1.updateValueAndValidity();
-      this.setLookup(custType, true);
+
+      this.CustMainDataForm.controls.MrCompanyTypeCode.setValidators(Validators.required);
+      this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
+
+      this.CustMainDataForm.controls.MrCustModelCode.clearValidators();
+      this.CustMainDataForm.controls.MotherMaidenName.clearValidators();
+      this.CustMainDataForm.controls.BirthPlace.clearValidators();
+      this.CustMainDataForm.controls.BirthDt.clearValidators();
+      this.CustMainDataForm.controls.MrIdTypeCode.clearValidators();
+      this.CustMainDataForm.controls.MrGenderCode.clearValidators();
+      this.CustMainDataForm.controls.MrMaritalStatCode.clearValidators();
+      this.CustMainDataForm.controls.IdNo.clearValidators();
+      this.CustMainDataForm.controls.MobilePhnNo1.clearValidators();
+      this.CustMainDataForm.controls.Email1.clearValidators();
     }
+
+    if (this.isIncludeCustRelation) {
+      this.getCustRelationship();
+      this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
+      this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
+
+    }
+    else {
+      this.CustMainDataForm.controls.MrCustRelationshipCode.clearValidators();
+      this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
+    }
+
+    if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
+      if (custType == CommonConstant.CustTypePersonal) {
+        this.CustMainDataForm.controls.MrJobPositionCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
+      } else {
+        this.CustMainDataForm.controls.MrJobPositionCode.clearValidators();
+        this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
+
+      }
+    }
+
+    this.CustMainDataForm.controls.MrCustModelCode.updateValueAndValidity();
+    this.CustMainDataForm.controls.MotherMaidenName.updateValueAndValidity();
+    this.CustMainDataForm.controls.BirthDt.updateValueAndValidity();
+    this.CustMainDataForm.controls.BirthPlace.updateValueAndValidity();
+    this.CustMainDataForm.controls.MrIdTypeCode.updateValueAndValidity();
+    this.CustMainDataForm.controls.MrGenderCode.updateValueAndValidity();
+    this.CustMainDataForm.controls.MrMaritalStatCode.updateValueAndValidity();
+    this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
+    this.CustMainDataForm.controls.MrCompanyTypeCode.updateValueAndValidity();
+    this.CustMainDataForm.controls.IdNo.updateValueAndValidity();
+    this.CustMainDataForm.controls.TaxIdNo.updateValueAndValidity();
+    this.CustMainDataForm.controls.MobilePhnNo1.updateValueAndValidity();
+    this.CustMainDataForm.controls.Email1.updateValueAndValidity();
+    this.setLookup(custType, true);
   }
 
   async copyAgrmntParentEvent(event) {
@@ -1451,5 +1446,15 @@ export class CustMainDataComponent implements OnInit {
     }
 
     return response;
+  }
+  public findInvalidControls() {
+    const invalid = [];
+    const controls = this.CustMainDataForm.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
+    }
+    console.log(invalid);
   }
 }

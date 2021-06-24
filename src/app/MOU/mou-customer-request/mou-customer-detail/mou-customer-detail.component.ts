@@ -269,7 +269,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       default:
         break;
     }
-
+    this.viewMouMainInfo.ReloadUcViewGeneric();
     if(this.currentStepIndex == 5){
       await this.initDms();
     }
@@ -298,6 +298,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       default:
         break;
     }
+    this.viewMouMainInfo.ReloadUcViewGeneric();
     if(this.currentStepIndex == 6){
       await this.initDms();
     }
