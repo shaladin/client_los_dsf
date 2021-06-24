@@ -55,7 +55,7 @@ export class TeleVerifDetailComponent implements OnInit {
   }
   async claimTask() {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
+    let wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(

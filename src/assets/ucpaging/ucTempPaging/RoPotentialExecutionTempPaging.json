@@ -1,0 +1,77 @@
+{
+    "title": "RO Potential Execution",
+    "keyProperty": "RoPotentialId",
+    "keyPropCriteria": "ROP.RO_POTENTIAL_ID",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "ROP.CUST_NO",
+            "id": "CustNoId",
+            "value": "",
+            "label": "Customer No.",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "ROP.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "ROP.AGRMNT_NO",
+            "id": "AgrmntNoId",
+            "value": "",
+            "label": "Agreement No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "ROP.RO_POTENTIAL_NO",
+            "id": "RoPotentialNoId",
+            "value": "",
+            "label": "Ro Potential No.",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "GROP.BATCH_NO",
+            "id": "BatchNoId",
+            "value": "",
+            "label": "Batch No.",
+            "placeholder": "Placeholder"
+        }
+    ],
+  "querystring": {
+    "name": "searchRoPotentialExecutionTempPaging"
+  },
+    "headerList": [
+        {"type": "sort","position": "center","label": "Customer No","name": "AC.CUST_NO"},
+        {"type": "sort","position": "left","label": "Customer Name","name": "AC.CUST_NAME"},
+        {"type": "sort","position": "center","label": "Agreement No","name": "AG.AGRMNT_NO"},
+        {"type": "sort","position": "center","label": "RO Potential No","name": "ROP.RO_POTENTIAL_NO"},
+        {"type": "sort","position": "center","label": "Batch No","name": "GROP.BATCH_NO"}
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustNo"
+        },
+        {"type": "text", "position": "left", "property": "CustName"},
+        {
+            "type": "link",
+            "position": "center",
+            "property": "AgrmntNo",
+            "target" : "_blank",
+            "path": "/View/AgrmntView",
+            "param": [
+                {"type": "AgrmntId", "property": "AgrmntId"}
+            ]
+        },
+        {"type": "text", "position": "center", "property": "RoPotentialNo"},
+        {"type": "text", "position": "center", "property": "BatchNo"}
+    ]
+}

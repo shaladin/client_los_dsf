@@ -18,14 +18,16 @@ export class AppCustObj {
     IsGuarantor: boolean;
     IsShareholder: boolean;
     IsCompletion: boolean;
+    IsAffiliateWithMF: boolean;
     MrCustRelationshipCode: string;
     MrCustRelationshipDescr: string;
     VipNotes: string;
     Age: number;
-    RowVersion: any;
+    MobilePhnNo1: string;
+    RowVersion: string;
 
-    constructor() { 
-        this.AppCustId = 0; 
+    constructor() {
+        this.AppCustId = 0;
         this.AppId = 0;
         this.CustNo = "";
         this.CustName = "";
@@ -42,7 +44,9 @@ export class AppCustObj {
         this.IsGuarantor = false;
         this.IsShareholder = false;
         this.IsCompletion = false;
+        this.IsAffiliateWithMF = false;
         this.MrCustRelationshipCode = "";
         this.VipNotes = "";
+        this.MobilePhnNo1 = "";
     }
 }

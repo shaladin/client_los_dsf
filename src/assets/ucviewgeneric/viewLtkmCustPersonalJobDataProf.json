@@ -1,0 +1,51 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "CustPersonalJobDataProfId",
+        "subSectionTitle": "Job Data",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Customer Model",
+            "property": "CustModelName"
+          },
+          {
+            "type": "",
+            "label": "",
+            "property": ""
+          },
+          {
+            "type": "text",
+            "label": "Profession",
+            "property": "ProfessionName"
+          },
+          {
+            "type": "text",
+            "label": "Industry Type",
+            "property": "IndustryTypeName"
+          },
+          {
+            "type": "text",
+            "label": "Professional No",
+            "property": "ProfessionalNo"
+          },
+          {
+            "type": "date",
+            "label": "Establishment Date",
+            "property": "EstablishmentDt"
+          },
+          {
+            "type": "text",
+            "label": "Job Address",
+            "property": "JobAddr"
+          }
+        ],
+        "querystring": {
+          "name": "viewLtkmCustPersonalJobDataProf"
+        }
+      }
+    ]
+  }
+  

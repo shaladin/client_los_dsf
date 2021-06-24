@@ -15,25 +15,24 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqListMouCustLglReviewObj } from 'app/shared/model/Request/MOU/ReqListMouCustLglReviewObj.model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { MouCustLglReviewObj } from 'app/shared/model/MouCustLglReviewObj.Model';
 
 @Component({
   selector: 'app-legal-review-detail',
   templateUrl: './legal-review-detail.component.html',
   providers: [NGXToastrService]
 })
+
 export class LegalReviewDetailComponent implements OnInit {
 
   MouCustId: number;
-  WfTaskListId: any;
-  responseObj: any;
-  responseRefMasterObj: any;
-  responseMouTcObj: any;
+  WfTaskListId: number;
+  responseRefMasterObj: Array<KeyValueObj>;
   items: FormArray;
   isItemsReady: boolean = false;
   termConditions: FormArray;
-  link: any;
-  mouCustObj: any;
-  resultData: any;
+  resultData: MouCustObj;
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
   LegalForm = this.fb.group(
     {
@@ -42,7 +41,7 @@ export class LegalReviewDetailComponent implements OnInit {
     }
   );
   @ViewChild("MouTc") public mouTc: MouCustTcComponent;
-  responseMouObj: Array<any> = new Array<any>();
+  responseMouObj: Array<MouCustLglReviewObj> = new Array<MouCustLglReviewObj>();
   UploadViewlink: string;
   Uploadlink: string;
   Viewlink: string;
@@ -73,8 +72,6 @@ export class LegalReviewDetailComponent implements OnInit {
 
     this.items = this.LegalForm.get('items') as FormArray;
     this.termConditions = this.LegalForm.get('termConditions') as FormArray;
-    this.mouCustObj = new MouCustObj();
-    this.mouCustObj.MouCustId = this.MouCustId;    
     this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         this.resultData = response;
@@ -96,16 +93,16 @@ export class LegalReviewDetailComponent implements OnInit {
         this.responseMouObj = response['ReturnObject'];
 
         var refLglReviewObj: ReqRefMasterByTypeCodeAndMappingCodeObj = { RefMasterTypeCode: CommonConstant.RefMasterTypeLegalReview, MappingCode: null };
-        this.http.post(URLConstant.GetListActiveRefMaster, refLglReviewObj).subscribe(
+        this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, refLglReviewObj).subscribe(
           (response) => {
             var lengthDataReturnObj = response[CommonConstant.ReturnObj].length;
             this.responseRefMasterObj = response[CommonConstant.ReturnObj];
             for (var i = 0; i < lengthDataReturnObj; i++) {
               var eachDataDetail = this.fb.group({
-                ReviewComponentName: [response[CommonConstant.ReturnObj][i].Descr],
-                ReviewComponentValue: [response[CommonConstant.ReturnObj][i].MasterCode],
-                RowVersion: [this.SearchLegalReview(response[CommonConstant.ReturnObj][i].MasterCode, true)],
-                values: [this.SearchLegalReview(response[CommonConstant.ReturnObj][i].MasterCode, false), [Validators.required]]
+                ReviewComponentName: [response[CommonConstant.ReturnObj][i].Value],
+                ReviewComponentValue: [response[CommonConstant.ReturnObj][i].Key],
+                RowVersion: [this.SearchLegalReview(response[CommonConstant.ReturnObj][i].Key, true)],
+                values: [this.SearchLegalReview(response[CommonConstant.ReturnObj][i].Key, false), [Validators.required]]
               }) as FormGroup;
               this.items.push(eachDataDetail);
             }
@@ -140,7 +137,7 @@ export class LegalReviewDetailComponent implements OnInit {
     return '';
   }
 
-  SaveData(formObj: any, isSubmit: boolean) {
+  SaveData(formObj: FormGroup, isSubmit: boolean) {
     if (this.LegalForm.valid) {
       var mouObj = new ReqListMouCustLglReviewObj();
       for (let index = 0; index < this.responseRefMasterObj.length; index++) {

@@ -163,7 +163,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
           this.ReturnHandlingForm.controls["MrReturnTaskCode"].disable();
         }else if (this.returnHandlingHObj.ReturnFromTrxType == CommonConstant.VerfTrxTypeCodeInvoice) {
           this.ReturnHandlingForm.patchValue({
-            MrReturnTaskCode: CommonConstant.ReturnHandlingInvoice
+            MrReturnTaskCode: CommonConstant.ReturnHandlingEditApp
           });
           this.ReturnHandlingForm.controls["MrReturnTaskCode"].disable();
         }
@@ -219,7 +219,7 @@ export class ReturnHandlingDetailComponent implements OnInit {
     );
   }
 
-  GetCallBack(event: any) {
+  GetCallBack(event) {
     if(event.Key === "Application") {
       AdInsHelper.OpenAppViewByAppId(event.ViewObj.AppId);
     }

@@ -31,14 +31,22 @@ import { ReturnHandlingNewEditAppPagingComponent } from './return-handling/retur
 import { AdditionalTcPagingComponent } from './additional-tc/additional-tc-paging/additional-tc-paging.component';
 import { AdditionalTcDetailComponent } from './additional-tc/additional-tc-detail/additional-tc-detail.component';
 import { ReturnHandlingEditCustPagingComponent } from './return-handling/return-handling-edit-cust-paging/return-handling-edit-cust-paging.component';
-import { ReturnHandlingInvoicePagingComponent } from './return-handling/return-handling-invoice-paging/return-handling-invoice-paging.component';
-import { ReturnHandlingInvoiceDetailComponent } from './return-handling/return-handling-invoice-detail/return-handling-invoice-detail.component';
 import { AppCancelPagingComponent } from './app-cancel/paging/app-cancel-paging.component';
 import { AppCancelDetailComponent } from './app-cancel/detail/app-cancel-detail.component';
 import { AppAssetCancelPagingComponent } from './app-asset-cancel/paging/app-asset-cancel-paging.component';
 import { AppAssetCancelDetailComponent } from './app-asset-cancel/detail/app-asset-cancel-detail.component';
 import { DocPickupRequestPagingComponent } from './doc-pickup-request/doc-pickup-request-paging/doc-pickup-request-paging/doc-pickup-request-paging.component';
 import { DocPickupRequestDetailComponent } from './doc-pickup-request/doc-pickup-request-detail/doc-pickup-request-detail/doc-pickup-request-detail.component';
+import { EditAppAfterApprovalApprovalDetailComponent } from './edit-app-after-approval/edit-app-after-approval-approval-detail/edit-app-after-approval-approval-detail.component';
+import { CopyCanAppMultiBlComponent } from './copy-can-app-multi-bl/copy-can-app-multi-bl.component';
+import { CopyCanAppMultiBlDetailComponent } from './copy-can-app-multi-bl-detail/copy-can-app-multi-bl-detail.component';
+import { EditAppAfterApprovalApprovalPagingComponent } from './edit-app-after-approval/edit-app-after-approval-approval-paging/edit-app-after-approval-approval-paging.component';
+import { EditAppAfterApprovalDetailComponent } from './edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-detail.component';
+import { EditAppAfterApprovalViewComponent } from './edit-app-after-approval-view/edit-app-after-approval-view.component';
+import { EditAppAfterApprovalInquiryComponent } from './edit-app-after-approval-inquiry/edit-app-after-approval-inquiry.component';
+import { EditAppAfterApprovalPagingComponent } from './edit-app-after-approval/edit-app-after-approval-paging/edit-app-after-approval-paging.component';
+import { CreditApprovalResultExtensionApprovalDetailComponent } from './credit-apv-result-ext/approval/detail/detail.component';
+import { CreditApprovalResultExtensionApprovalPagingComponent } from './credit-apv-result-ext/approval/paging/paging.component';
 
 
 const routes: Routes = [
@@ -64,6 +72,20 @@ const routes: Routes = [
         component: AssetInquiryComponent,
         data: {
           title: 'Credit Approval Result Extension Asset Inquiry'
+        }
+      },
+      {
+        path: PathConstant.CRD_APPR_RES_EXT_APPRVL_PAGING,
+        component: CreditApprovalResultExtensionApprovalPagingComponent,
+        data: {
+          title: 'Credit Approval Result Extension Approval Paging'
+        }
+      },
+      {
+        path: PathConstant.CRD_APPR_RES_EXT_APPRVL_DETAIL,
+        component: CreditApprovalResultExtensionApprovalDetailComponent,
+        data: {
+          title: 'Credit Approval Result Extension Approval Detail'
         }
       },
       {
@@ -109,14 +131,14 @@ const routes: Routes = [
         }
       },
       {
-        path: 'ReturnHandling/NAP4',
+        path: PathConstant.RETURN_HANDLING_NAP4,
         component: ReturnHandlingEditNap4Component,
         data: {
           title: 'Return Handling Edit NAP 4'
         },
       },
       {
-        path: 'ReturnHandling/NAP2',
+        path: PathConstant.RETURN_HANDLING_NAP2,
         component: ReturnHandlingNewEditAppPagingComponent,
         data: {
           title: 'Return Handling Edit NAP2 Paging'
@@ -257,20 +279,6 @@ const routes: Routes = [
         }
       },
       {
-        path: PathConstant.RETURN_HANDLING_INVOICE_PAGING,
-        component: ReturnHandlingInvoicePagingComponent,
-        data: {
-          title: 'Return Handling Invoice Paging'
-        }
-      },
-      {
-        path: PathConstant.RETURN_HANDLING_INVOICE_DETAIL,
-        component: ReturnHandlingInvoiceDetailComponent,
-        data: {
-          title: 'Return Handling Invoice Detail'
-        }
-      },
-      {
         path: PathConstant.APP_CAN_PAGING,
         component: AppCancelPagingComponent,
         data: {
@@ -311,7 +319,50 @@ const routes: Routes = [
         data: {
           title: 'Doc Pickup Request Detail'
         }
-      }
+      },
+      {
+        path: PathConstant.EDIT_APP_AFT_APV_PAGING,
+        component: EditAppAfterApprovalPagingComponent,
+        data: {title: 'Edit Application After Approval Request Paging'}
+      },
+      {
+        path: PathConstant.EDIT_APP_AFT_APV_INQUIRY,
+        component: EditAppAfterApprovalInquiryComponent,
+        data: {title: 'Edit Application After Approval Request Inquiry'}
+      },
+      {
+        path: PathConstant.EDIT_APP_AFT_APV_VIEW,
+        component: EditAppAfterApprovalViewComponent,
+        data: {title: 'Edit Application After Approval Request View'}
+      },
+      {
+        path: PathConstant.EDIT_APP_AFT_APV_DETAIL,
+        component: EditAppAfterApprovalDetailComponent,
+        data: {title: 'Edit Application After Approval Request Detail'}
+      },
+      {
+        path: PathConstant.EDIT_APP_AFT_APV_APPRV_PAGING,
+        component: EditAppAfterApprovalApprovalPagingComponent,
+        data: {title: 'Edit Application After Approval - Approval Paging'}
+      },
+      {
+        path: PathConstant.EDIT_APP_AFT_APV_APPRV_DETAIL,
+        component: EditAppAfterApprovalApprovalDetailComponent,
+        data: {title: 'Edit Application After Approval - Approval Detail'}
+      },
+      {
+        path: PathConstant.COPY_CANCEL_APP_CROSS_BL,
+        component: CopyCanAppMultiBlComponent,
+        data: {
+          title: 'Copy From Cancelled Application'
+        }
+      },{
+        path: PathConstant.COPY_CANCEL_APP_CROSS_BL_DETAIL,
+        component: CopyCanAppMultiBlDetailComponent,
+        data: {
+          title: 'Copy From Cancelled Application Detail'
+        }
+      },
     ]
   }
 ];

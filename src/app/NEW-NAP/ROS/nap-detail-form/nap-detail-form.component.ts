@@ -10,7 +10,6 @@ import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
@@ -19,6 +18,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -27,26 +27,25 @@ import { NgxSpinnerService } from 'ngx-spinner';
   providers: [NGXToastrService]
 })
 export class NapDetailFormComponent implements OnInit {
-
   @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
   private stepperPersonal: Stepper;
   private stepperCompany: Stepper;
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
-  viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
   IsMultiAsset: string;
-  ListAsset: any;
+  ListAsset: Array<AppAssetObj>;
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
   custType: string = CommonConstant.CustTypeCompany;
-  token: any = localStorage.getItem(CommonConstant.TOKEN);
+  token: string = localStorage.getItem(CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
-  bizTemplateCode: string;
+  bizTemplateCode: string = CommonConstant.OPL;
   isReady:boolean = false;
+  IsViewReady: boolean = false;
 
   AppStep = {
     "CMPLTN":1,
@@ -67,6 +66,7 @@ export class NapDetailFormComponent implements OnInit {
   dmsObj: DMSObj;
   appNo: string;
   isDmsReady: boolean = false;
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
 
   constructor(
     private route: ActivatedRoute,
@@ -90,38 +90,38 @@ export class NapDetailFormComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 1;
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapDetailMainData.json";
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
 
     // this.ChangeStepper();
+
+    await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
+      async (response: AppObj) => {
+        if (response) {
+          this.NapObj = response;
+          if (this.NapObj.MrCustTypeCode != null) {
+            this.custType = this.NapObj.MrCustTypeCode;
+          }
+        }
+      });
 
     if (this.ReturnHandlingHId > 0) {
       this.ChangeStepper();
       this.ChooseStep(this.AppStepIndex);
     }
     else {
-      var appObj = { Id: this.appId };
-      this.http.post(URLConstant.GetAppById, appObj).subscribe(
-        (response: AppObj) => {
-          if (response) {
-            this.NapObj = response;
-            if (this.NapObj.MrCustTypeCode != null)
-              this.custType = this.NapObj.MrCustTypeCode;
-            if(response.AppCurrStep == CommonConstant.AppStepUplDoc){
-              this.initDms();
-            }
-            this.ChangeStepper();
-            this.bizTemplateCode = this.NapObj.BizTemplateCode;
-            this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
-            this.ChooseStep(this.AppStepIndex);
-            this.isReady = true;
-          }
-        });
+      if (this.NapObj.AppCurrStep == CommonConstant.AppStepUplDoc) {
+        await this.initDms();
+      }
+      this.ChangeStepper();
+      this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
+      this.ChooseStep(this.AppStepIndex);
     }
+    this.isReady = true;
+    this.IsViewReady = true;
     this.MakeViewReturnInfoObj();
   }
 
@@ -352,7 +352,7 @@ export class NapDetailFormComponent implements OnInit {
         this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: CommonConstant.CF4W });
+            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING], { BizTemplateCode: CommonConstant.OPL });
           }
         )
       }

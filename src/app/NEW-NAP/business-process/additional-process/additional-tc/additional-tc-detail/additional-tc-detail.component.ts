@@ -7,6 +7,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { environment } from 'environments/environment';
@@ -21,11 +22,13 @@ export class AdditionalTcDetailComponent implements OnInit {
   AppTcId: number = 0;
   Index: number;
   
-  ListTc: Array<any> = new Array<any>();
+  ListTc: Array<AppTCObj> = new Array();
 
-  TcObj: any;
+  TcObj: AppTCObj;
 
   IsSecondDetail: boolean = false;
+
+  TcName: string;
   
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
 
@@ -72,7 +75,7 @@ export class AdditionalTcDetailComponent implements OnInit {
     };
 
     await this.http.post(URLConstant.GetListTCbyAppId, requestAppId).toPromise().then(
-      (response: any) => {
+      (response) => {
         this.ListTc = response["AppTcs"];
       }
     );
@@ -112,6 +115,8 @@ export class AdditionalTcDetailComponent implements OnInit {
     this.InputLookupTcObj.idSelect = this.TcObj.TcCode;
     this.InputLookupTcObj.nameSelect = this.TcObj.TcName;
 
+    this.TcName = this.TcObj.TcName;
+
     this.TcForm.patchValue({
       TcCode: this.TcObj.TcCode,
       PriorTo: this.TcObj.PriorTo,
@@ -127,6 +132,7 @@ export class AdditionalTcDetailComponent implements OnInit {
   }
 
   SetTc(event: any) {
+    this.TcName = event.TcName;
     this.TcForm.patchValue({
       TcCode: event.TcCode
     });
@@ -154,7 +160,7 @@ export class AdditionalTcDetailComponent implements OnInit {
       AppId: this.AppId,
       AppTcId: this.AppTcId,
       TcCode: this.TcForm.value.TcCode,
-      TcName: this.TcObj.TcName,
+      TcName: this.TcName,
       PriorTo: this.TcForm.value.PriorTo,
       IsMandatory: this.TcForm.value.IsMandatory
     };
@@ -169,7 +175,7 @@ export class AdditionalTcDetailComponent implements OnInit {
     );
   }
 
-  GetCallBack(event: any) {
+  GetCallBack(event) {
     if(event.Key === "Application") {
       AdInsHelper.OpenAppViewByAppId(event.ViewObj.AppId);
     }

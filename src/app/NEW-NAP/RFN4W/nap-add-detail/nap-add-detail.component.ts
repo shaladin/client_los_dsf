@@ -19,6 +19,7 @@ import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigRes
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -38,7 +39,7 @@ export class NapAddDetailComponent implements OnInit {
   ResponseReturnInfoObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
-  ListAsset: any;
+  ListAsset: Array<AppAssetObj>;
   showCancel: boolean = true;
   IsLastStep: boolean = false;
   ReturnHandlingHId: number = 0;
@@ -100,32 +101,28 @@ export class NapAddDetailComponent implements OnInit {
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
 
+    await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
+      async (response: AppObj) => {
+        if (response) {
+          this.NapObj = response;
+          if (this.NapObj.MrCustTypeCode != null)
+            this.custType = this.NapObj.MrCustTypeCode;
+        }
+      });
+
     if (this.ReturnHandlingHId > 0) {
       this.ChangeStepper();
-      this.ChooseStep(this.AppStepIndex);   
-      this.IsDataReady = true; 
+      this.ChooseStep(this.AppStepIndex);
     }
     else {
-      var appObj = { Id: this.appId };
-      this.http.post(URLConstant.GetAppById, appObj).subscribe(
-        (response: AppObj) => {
-          if (response) {
-            this.NapObj = response;
-            if (this.NapObj.MrCustTypeCode != null)
-              this.custType = this.NapObj.MrCustTypeCode;
-
-            if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
-              this.initDms();
-            }
-            this.ChangeStepper();
-            this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
-            this.ChooseStep(this.AppStepIndex);
-            this.IsDataReady = true;
-          }
-        }
-      );
-    };
-    
+      if (this.NapObj.AppCurrStep == CommonConstant.AppStepUplDoc) {
+        await this.initDms();
+      }
+      this.ChangeStepper();
+      this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
+      this.ChooseStep(this.AppStepIndex);
+    }
+    this.IsDataReady = true;    
     await this.GetCustMainData();
     
     this.MakeViewReturnInfoObj();
@@ -424,4 +421,18 @@ export class NapAddDetailComponent implements OnInit {
       this.NextStep(CommonConstant.AppStepShr);
     }
   }
+
+  GetCallback(ev) {
+    if(ev.Key == "HighligtComment"){
+      var link : string;
+      var custObj = { CustNo: ev.ViewObj.CustNo };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        }
+      );
+  }else{
+    AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+  }}
+
 }

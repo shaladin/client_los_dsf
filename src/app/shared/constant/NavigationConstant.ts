@@ -19,6 +19,7 @@ export class NavigationConstant {
   public static CONTENT_PAGE_SELF_VERIF = PathConstant.CONTENT_ROUTES_PAGES + "/" + PathConstant.CONTENT_PAGE_SELF_VERIF; //"/Pages/SelfVerification"
   public static FORMS_REPORT = "/" + PathConstant.LR_FORMS + "/" + PathConstant.REPORT; //'/Forms/Report'
   public static INTEGRATION_LOS_ERR_DATA_MONITORING = "/" + PathConstant.LR_INTEGRATION + "/" + PathConstant.LOS_ERR_DATA_MONITORING; //'/Integration/LosErrorDataMonitoring'
+  public static PAGES_CHANGE_PASSWORD = "/" + PathConstant.LR_PAGES + "/" + PathConstant.CONTENT_PAGE_CHANGE_PASSWORD; //'/Pages/ChangePassword'
 
   //#region Inquiry
   public static APP_INQUIRY = "/" + PathConstant.LR_INQUIRY + "/" + PathConstant.APP_INQUIRY; //'/Inquiry/AppInquiry'
@@ -67,15 +68,24 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_RETURN_HANDLING_SRVY = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_SRVY; //"/Nap/AddProcess/ReturnHandling/Survey"
   public static NAP_ADD_PRCS_ADD_TC_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.ADD_TC_PAGING; //"/Nap/AddProcess/addtc/paging"
   public static NAP_ADD_PRCS_ADD_TC_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.ADD_TC_DETAIL; //"/Nap/AddProcess/addtc/detail"
-  public static NAP_ADD_PRCS_RETURN_HANDLING_INVOICE_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_INVOICE_PAGING; //"/Nap/AddProcess/ReturnHandling/Invoice/Paging"
-  public static NAP_ADD_PRCS_RETURN_HANDLING_INVOICE_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_INVOICE_DETAIL; //"/Nap/AddProcess/ReturnHandling/Invoice/Detail"
   public static NAP_ADD_PRCS_APP_CAN_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.APP_CAN_PAGING; //"/Nap/AddProcess/AppCancel/Paging"
   public static NAP_ADD_PRCS_APP_CAN_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.APP_CAN_DETAIL;
   public static NAP_ADD_PRCS_APP_ASSET_CAN_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.APP_ASSET_CAN_PAGING; //"/Nap/AddProcess/AppAssetCancel/Paging"
-  public static NAP_ADD_PRCS_APP_ASSET_CAN_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.APP_ASSET_CAN_DETAIL; 
+  public static NAP_ADD_PRCS_APP_ASSET_CAN_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.APP_ASSET_CAN_DETAIL; //"/Nap/AddProcess/AppAssetCancel/Detail"
   public static NAP_ADD_PRCS_DOC_PICKUP_REQUEST_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.DOC_PICKUP_REQUEST_PAGING; //"/Nap/AddProcess/DocumentPickupRequest/Paging"
   public static NAP_ADD_PRCS_DOC_PICKUP_REQUEST_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.DOC_PICKUP_REQUEST_DETAIL;//"/Nap/AddProcess/DocumentPickupRequest/Detail"
-  public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP4_PAGING; //"/Nap/AddProcess/"
+  public static NAP_ADD_PRCS_CRD_APPR_RES_EXT_APPRVL_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.CRD_APPR_RES_EXT_APPRVL_PAGING;//"/Nap/AddProcess/CreditApvResultExtApproval/Paging"
+  public static NAP_ADD_PRCS_CRD_APPR_RES_EXT_APPRVL_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.CRD_APPR_RES_EXT_APPRVL_DETAIL;//"/Nap/AddProcess/CreditApvResultExtApproval/Detail"
+  public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_PAGING;//"/Nap/AddProcess/EditAppAftApv/Paging"
+  public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_DETAIL;//"/Nap/AddProcess/EditAppAftApv/Detail"
+  public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_VIEW = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_VIEW;//"/Nap/AddProcess/EditAppAftApv/View"
+  public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_APPRV_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_APPRV_PAGING;//"/Nap/AddProcess/EditAppAftApv/Approval/Paging"
+  public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_APPRV_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_APPRV_DETAIL;//"/Nap/AddProcess/EditAppAftApv/Approval/Detail"
+  public static NAP_ADD_PRCS_EDIT_APP_AFT_APV_INQUIRY = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.EDIT_APP_AFT_APV_INQUIRY;//"/Nap/AddProcess/EditAppAftApv/Inquiry"
+  public static NAP_ADD_PRCS_RETURN_HANDLING_NAP2 = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP2;//"/Nap/AddProcess/ReturnHandling/NAP2"
+  public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4 = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP4;//"/Nap/AddProcess/ReturnHandling/NAP4"
+  public static NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP2_PAGING; //"NAP/AddProcess/ReturnHandling/NAP2" 
+  public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP4_PAGING; //"/Nap/AddProcess/ReturnHandling/NAP4"
   //#endregion
 
   //#region AdminProcess
@@ -120,8 +130,8 @@ export class NavigationConstant {
   public static NAP_ADM_PRCS_DOC_CHECK_LIST_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DOC_CHECK_LIST_DETAIL; //'/Nap/AdminProcess/DocChecklist/Detail'
   public static NAP_ADM_PRCS_DOC_CHECK_LIST_APPRV_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DOC_CHECK_LIST_APPRV_PAGING; //'/Nap/AdminProcess/DocChecklist/Approval/Paging'
   public static NAP_ADM_PRCS_DOC_CHECK_LIST_APPRV_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.DOC_CHECK_LIST_APPRV_DETAIL; //'/Nap/AdminProcess/DocChecklist/Approval/Detail'
-  public static NAP_ADM_PRCS_ASSET_ALLOC_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.ASSET_ALLOC_PAGING; //'/Nap/AdminProcess/DocChecklist/Approval/Paging'
-  public static NAP_ADM_PRCS_ASSET_ALLOC_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.ASSET_ALLOC_DETAIL;
+  public static NAP_ADM_PRCS_ASSET_ALLOC_PAGING = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.ASSET_ALLOC_PAGING; //'/Nap/AdminProcess/AssetAllocation/Paging'
+  public static NAP_ADM_PRCS_ASSET_ALLOC_DETAIL = "/" + NavigationConstant.NAP_ADM_PRCS_HEADER + "/" + PathConstant.ASSET_ALLOC_DETAIL; //'/Nap/AdminProcess/AssetAllocation/Detail'
   //#endregion
 
   //#region CreditProcess
@@ -147,6 +157,7 @@ export class NavigationConstant {
   public static NAP_CRD_PRCS_PHN_VRF_PAGING = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_PAGING; //"/Nap/CreditProcess/PhoneVerification/Paging"
   public static NAP_CRD_PRCS_PHN_VRF_SUBJECT = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_SUBJECT; //"/Nap/CreditProcess/PhoneVerification/Subject"
   public static NAP_CRD_PRCS_PHN_VRF_SUBJECT_VERIF = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_SUBJECT_VERIF; //"/Nap/CreditProcess/PhoneVerification/Subject/Verif"
+  public static NAP_CRD_PRCS_PHN_VRF_SUBJECT_VIEW = "/" + NavigationConstant.NAP_CRD_PRCS_HEADER + "/" + PathConstant.PHN_VRF_SUBJECT_VIEW; //"/Nap/CreditProcess/PhoneVerification/Subject/View"
   //#endregion
 
   //#region CF2W
@@ -155,6 +166,15 @@ export class NavigationConstant {
   public static NAP_CF2W_HEADER = PathConstant.LR_NAP + "/" + PathConstant.NAP_CF2W; //'Nap/CF2W'
   public static NAP_CF2W_PAGING = "/" + NavigationConstant.NAP_CF2W_HEADER + "/" + PathConstant.PAGING; //'/Nap/CF2W/Paging'
   public static NAP_CF2W_ADD_DETAIL = "/" + NavigationConstant.NAP_CF2W_HEADER + "/" + PathConstant.ADD_DETAIL; //"Nap/CF2W/Add/Detail"
+  //#endregion
+
+  //#region DLFN
+  public static NAP_DLFN_HEADER = PathConstant.LR_NAP + "/" + PathConstant.NAP_DLFN; //'Nap/DLFN'
+  public static NAP_DLFN_PAGING = "/" + NavigationConstant.NAP_DLFN_HEADER + "/" + PathConstant.PAGING; //"/Nap/DLFN/Paging"
+  public static NAP_DLFN_ADD = "/" + NavigationConstant.NAP_DLFN_HEADER + "/" + PathConstant.ADD; //"/Nap/DLFN/Add"
+  public static NAP_DLFN_ADD_DETAIL = "/" + NavigationConstant.NAP_DLFN_HEADER + "/" + PathConstant.ADD_DETAIL; //"/Nap/DLFN/Add/Detail"
+  public static NAP_DLFN_NAP1 = "/" + NavigationConstant.NAP_DLFN_HEADER + "/" + PathConstant.NAP1; //"/Nap/DLFN/NAP1"
+  public static NAP_DLFN_NAP2 = "/" + NavigationConstant.NAP_DLFN_HEADER + "/" + PathConstant.NAP2; //"/Nap/DLFN/NAP2"
   //#endregion
 
   //#region CF4W
@@ -218,6 +238,8 @@ export class NavigationConstant {
   public static NAP_SHARING_FROM_MOU_DETAIL = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP_FROM_MOU_DETAIL; //"/Nap/Sharing/NapFromMou/Detail"
   public static NAP_SHARING_FROM_LEAD_PAGING = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP_FROM_LEAD_PAGING; //"/Nap/Sharing/NapFromLead/Paging"
   public static NAP_SHARING_FROM_LEAD_DETAIL = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP_FROM_LEAD_DETAIL; //"/Nap/Sharing/NapFromLead/Detail"
+  public static NAP_SHARING_FROM_SIMPLE_LEAD_PAGING = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP_SIMPLE_LEAD_PAGING; //"/Nap/Sharing/NapFromSimpleLead/Paging"
+  public static NAP_SHARING_FROM_SIMPLE_LEAD_DETAIL = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP_SIMPLE_LEAD_DETAIL; //"/Nap/Sharing/NapFromSimpleLead/Detail"
   public static NAP1_SHARING_FROM_LEAD_PAGING = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP1_FROM_LEAD_PAGING; //"/Nap/Sharing/Nap1FromLead/Paging"
   public static NAP1_SHARING_FROM_LEAD_DETAIL = "/" + NavigationConstant.NAP_SHARING_HEADER + "/" + PathConstant.NAP1_FROM_LEAD_DETAIL; //"/Nap/Sharing/Nap1FromLead/Detail"
   //#endregion
@@ -243,7 +265,6 @@ export class NavigationConstant {
   //#endregion
 
   //#region MOU
-  public static MOU_UNAUTHORIZED_PAGE = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_UNAUTHORIZED_PAGE; //"/Mou/UnauthorizedPage"
   public static MOU_CUST_CANCEL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_CANCEL; //'/Mou/Cust/Cancel'
   public static MOU_CUST_INQUIRY = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_INQUIRY; //'/Mou/Cust/Inquiry'
   public static MOU_CUST_DOC_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_DOC_PAGING; //'/Mou/CustomerDoc/Paging'
@@ -256,6 +277,7 @@ export class NavigationConstant {
   public static MOU_CUST_RVW_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_RVW_FCTR; //'/Mou/Cust/ReviewFactoring'
   public static MOU_CUST_RVW_GENERAL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_RVW_GENERAL; //'/Mou/Cust/ReviewGeneral'
   public static MOU_CUST_APPRV_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_APPRV_FCTR; //'/Mou/Cust/ApprovalFactoring'
+  public static MOU_CUST_RVW_DFLN = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_RVW_DFLN; //'/Mou/Cust/ReviewDLFN'
   public static MOU_CUST_APPRV_GENERAL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_APPRV_GENERAL; //'/Mou/Cust/ApprovalGeneral'
   public static MOU_REQ_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_REQ_PAGING; //"/Mou/Request/Paging"
   public static MOU_REQ_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_REQ_DETAIL; //'/Mou/Request/Detail'
@@ -273,6 +295,36 @@ export class NavigationConstant {
   public static MOU_CUST_OUTSTANDING_TC_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_CUST_OUTSTANDING_TC_DETAIL; //"/Mou/Cust/OutstandingTC/Detail"
   //#endregion
 
+  //#region MOU FREEZE
+  public static MOU_FREEZE_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_FREEZE_PAGING; //"/Mou/FreezeUnfreeze/Paging"
+  public static MOU_FREEZE_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_FREEZE_DETAIL; //"/Mou/FreezeUnfreeze/Detail"
+  public static MOU_FREEZE_INQUIRY = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_FREEZE_INQUIRY; //"/Mou/FreezeUnfreeze/Inquiry"
+  public static MOU_FREEZE_VIEW = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_FREEZE_VIEW; //"/Mou/FreezeUnfreeze/View"
+  public static MOU_FREEZE_APV_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_FREEZE_APV_PAGING; //"/Mou/FreezeUnfreezeApv/Paging"
+  public static MOU_FREEZE_APV_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.MOU_FREEZE_APV_DETAIL; //"/Mou/FreezeUnfreezeApv/Detail"
+  //#endregion
+
+  //#region CHANGE MOU
+  public static CHANGE_MOU_REQ_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_REQ_PAGING; //"/Mou/ChangeMouRequest/Paging"
+  public static CHANGE_MOU_REQ_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_REQ_DETAIL; //"/Mou/ChangeMouRequest/Detail"
+  public static CHANGE_MOU_REQ_DETAIL_CUSTOMER = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_REQ_DETAIL_CUST; //"/Mou/ChangeMouRequest/Detail/Customer"
+  public static CHANGE_MOU_RVW_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RVW_PAGING; //"/Mou/ChangeMou/ReviewPaging"
+  public static CHANGE_MOU_RVW_DETAIL_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RVW_DETAIL_FCTR; //"/Mou/ChangeMou/ReviewDetailFctr"
+  public static CHANGE_MOU_RVW_DETAIL_FIN = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RVW_DETAIL_FIN; //"/Mou/ChangeMou/ReviewFinancing"
+  public static CHANGE_MOU_RVW_DETAIL_GEN = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RVW_DETAIL_GEN; //"/Mou/ChangeMou/ReviewDetailGen"
+  public static CHANGE_MOU_APV_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_APV_PAGING; //"/Mou/ChangeMou/ApvPaging"
+  public static CHANGE_MOU_APV_DETAIL_GEN = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_APV_DETAIL_GEN; //"/Mou/ChangeMou/ApvDetailGen"
+  public static CHANGE_MOU_APV_DETAIL_FCTR = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_APV_DETAIL_FCTR; //"/Mou/ChangeMou/ApvDetailFctr"
+  public static CHANGE_MOU_APV_DETAIL_FIN = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_APV_DETAIL_FIN; //"/Mou/ChangeMou/ApvDetailFinancing"
+  public static CHANGE_MOU_EXEC_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_EXEC_PAGING; //"/Mou/ChangeMou/ExecPaging"
+  public static CHANGE_MOU_EXEC_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_EXEC_DETAIL; //"/Mou/ChangeMou/ExecDetail"
+  public static CHANGE_MOU_CANCEL = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_CANCEL; //"/Mou/ChangeMou/Cancel"
+  public static CHANGE_MOU_RTN_PAGING = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RTN_PAGING; //"/Mou/ChangeMou/ReturnPaging"
+  public static CHANGE_MOU_RTN_DETAIL = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_RTN_DETAIL; //"/Mou/ChangeMou/ReturnDetail"
+  public static CHANGE_MOU_REQ_ADD_COLL = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_REQ_ADD_COLL; //"/Mou/ChangeMou/RequestAddColl"
+  public static CHANGE_MOU_INQUIRY = "/" + PathConstant.LR_MOU + "/" + PathConstant.CHANGE_MOU_INQUIRY; //"/Mou/ChangeMou/Inquiry"
+  //#endregion
+
   //#region LEAD
   public static LEAD_CANCEL = "/" + PathConstant.LR_LEAD + "/" + PathConstant.CANCEL; //'/Lead/Cancel'
   public static LEAD_INQUIRY = "/" + PathConstant.LR_LEAD + "/" + PathConstant.LEAD_INQUIRY; //'/Lead/LeadInquiry'
@@ -288,11 +340,48 @@ export class NavigationConstant {
   public static LEAD_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.LEAD_PAGING; //"/Lead/Lead/Paging"
   public static LEAD_INPUT_PAGE = "/" + PathConstant.LR_LEAD + "/" + PathConstant.LEAD_INPUT_PAGE; //"/Lead/LeadInput/Page"
   public static LEAD_VERIF = "/" + PathConstant.LR_LEAD + "/" + PathConstant.VERIF; //'/Lead/Verif'
+  public static SIMPLE_LEAD_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_PAGING; //'/Lead/SimpleLead/Paging'
+  public static SIMPLE_LEAD_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_DETAIL; //'/Lead/SimpleLead/Detail'
+  public static SIMPLE_LEAD_MAIN_INFO = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_MAIN_INFO; //'/Lead/SimpleLead/MainInfo'
+  public static SIMPLE_LEAD_FRAUD_VERIF_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_FRAUD_VERIF_PAGING; //'/Lead/SimpleLeadFraudVerif/Paging'
+  public static SIMPLE_LEAD_FRAUD_VERIF_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_FRAUD_VERIF_DETAIL; //'/Lead/SimpleLeadFraudVerif/Detail'
+  public static SIMPLE_LEAD_RVW_MONITORING_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_RVW_MONITORING_PAGING; //'/Lead/SimpleLead/ReviewMonitoring/Paging'
+  public static SIMPLE_LEAD_UPD_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.SIMPLE_LEAD_UPD_PAGING; //'/Lead/SimpleLeadUpdate/Paging'
+  public static LEAD_POTENTIAL_RO_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_PAGING; //'/Lead/PotentialRo/Paging'
+  public static LEAD_POTENTIAL_RO_EXEC = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_EXEC; //'/Lead/PotentialRo/Execution'
+  public static LEAD_POTENTIAL_RO_INQUIRY = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_INQUIRY; //'/Lead/PotentialRo/Inquiry'
+  public static LEAD_POTENTIAL_RO_VIEW = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_VIEW; //'/Lead/PotentialRo/View'
+  public static LEAD_POTENTIAL_RO_TEL_OFFER_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_TEL_OFFER_PAGING; //'/Lead/PotentialRo/RoTelemkOffer/Paging'
+  public static LEAD_POTENTIAL_RO_TEL_OFFER_DETAIL = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_TEL_OFFER_DETAIL; //'/Lead/PotentialRo/RoTelemkOffer/Detail'
+  public static LEAD_POTENTIAL_RO_TEL_OFFER_VERIF = "/" + PathConstant.LR_LEAD + "/" + PathConstant.POTENTIAL_RO_TEL_OFFER_VERIF; //'/Lead/PotentialRo/RoTelemkOffer/Verif'
+
+
+  //#endregion
+
+  //#region LTKM
+  public static LTKM_REQ = "/" + PathConstant.LR_LTKM + "/" + PathConstant.REQ; //'/Ltkm/Request'
+  public static LTKM_INQUIRY = "/" + PathConstant.LR_LTKM + "/" + PathConstant.INQUIRY; //'/Ltkm/Inquiry'
+  public static LTKM_VIEW = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VIEW; //'/Ltkm/View'
+  public static LTKM_VERIFY_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_PAGING; //'/Ltkm/Verify/Paging'
+  public static LTKM_VERIFY_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_DETAIL; //'/Ltkm/Verify/Detail'
+  public static LTKM_VERIFY_APV_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_APV_PAGING; //'/Ltkm/VerifyApproval/Paging'
+  public static LTKM_VERIFY_APV_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstant.VERIFY_APV_DETAIL; //'/Ltkm/VerifyApproval/Detail'
+  public static LTKM_RTN_HANDLING_PAGING = "/" + PathConstant.LR_LTKM + "/" + PathConstant.RTN_HANDLING_PAGING; //'/Ltkm/ReturnHandling/Paging'
+  public static LTKM_RTN_HANDLING_DETAIL = "/" + PathConstant.LR_LTKM + "/" + PathConstant.RTN_HANDLING_DETAIL; //'/Ltkm/ReturnHandling/Detail'
+  //#endregion
+
+  //#region Task Reassignment
+  public static TASK_REASSIGN_PAGING = "/" + PathConstant.LR_TASK_REASSIGN + "/" + PathConstant.PAGING; //'/TaskReassignment/Paging'
+  public static TASK_REASSIGN_DETAIL = "/" + PathConstant.LR_TASK_REASSIGN + "/" + PathConstant.DETAIL; //'/TaskReassignment/Detail'
+  public static TASK_REASSIGN_VIEW = "/" + PathConstant.LR_TASK_REASSIGN + "/" + PathConstant.VIEW; //'/TaskReassignment/View'
+  public static TASK_REASSIGN_INQUIRY = "/" + PathConstant.LR_TASK_REASSIGN + "/" + PathConstant.INQUIRY; //'/TaskReassignment/Inquiry'
+  public static TASK_REASSIGN_APV_PAGING = "/" + PathConstant.LR_TASK_REASSIGN + "/" + PathConstant.TASK_REASSIGN_APV_PAGING; //'/TaskReassignment/TaskReassignmentApproval/Paging'
+  public static TASK_REASSIGN_APV_DETAIL = "/" + PathConstant.LR_TASK_REASSIGN + "/" + PathConstant.TASK_REASSIGN_APV_DETAIL; //'/TaskReassignment/TaskReassignmentApproval/Detail'
   //#endregion
 
   //Application Process
   public static NAP_APP_PRCS_HEADER = PathConstant.LR_NAP + "/" + PathConstant.NAP_APP_PRCS; //'Nap/ApplicationProcess'
-  public static NAP_APP_PRCS_CRD_APPRV_PAGING = "/" + NavigationConstant.NAP_APP_PRCS_HEADER+"/"+PathConstant.APP_APPRV_PAGING; //"/Nap/ApplicationProcess/ApplicationApproval/Paging"
+  public static NAP_APP_PRCS_CRD_APPRV_PAGING = "/" + NavigationConstant.NAP_APP_PRCS_HEADER + "/" + PathConstant.APP_APPRV_PAGING; //"/Nap/ApplicationProcess/ApplicationApproval/Paging"
   public static NAP_APP_PRCS_CRD_APPRV_DETAIL = "/" + NavigationConstant.NAP_APP_PRCS_HEADER + "/" + PathConstant.APP_APPRV_DETAIL; //"/Nap/ApplicationProcess/ApplicationApproval/Detail"
   public static NAP_APP_PRCS_CRD_RVW_PAGING = "/" + NavigationConstant.NAP_APP_PRCS_HEADER + "/" + PathConstant.APP_RVW_PAGING; //"/Nap/ApplicationProcess/ApplicationReview/Paging"
   public static NAP_APP_PRCS_CRD_RVW_DETAIL = "/" + NavigationConstant.NAP_APP_PRCS_HEADER + "/" + PathConstant.APP_RVW_DETAIL; //"/Nap/ApplicationProcess/ApplicationReview/Detail"
@@ -301,6 +390,10 @@ export class NavigationConstant {
   //#region REQUISITION DECISION
   public static REQUISITION_DECISION_PAGING = "/" + PathConstant.REQUISITION_DECISION + "/" + PathConstant.PAGING_LOWERCASE; //'/requisitiondecision/paging'
   public static REQUISITION_DECISION_DETAIL = "/" + PathConstant.REQUISITION_DECISION + "/" + PathConstant.DETAIL_LOWERCASE; //'/requisitiondecision/detail'
+  //#endregion
+
+  //#region UNAUTHORIZED
+  public static UNAUTHORIZE_PAGE = "/" + PathConstant.UNAUTHORIZED; //"/Unauthorized"
   //#endregion
 
   //PRODUCT
@@ -316,7 +409,7 @@ export class NavigationConstant {
   public static PRODUCT_OFFERING_DEACTIVATE_APPRV_DETAIL = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.OFFERING_DEACTIVATE_APPRV_DETAIL; //'/Product/OfferingDeactivateApproval/Detail'
   public static PRODUCT_HO_DEACTIVATE = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.HO_DEACTIVATE; //'/Product/HODeactivate'
   public static PRODUCT_HO_DEACTIVATE_APPRV = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.HO_DEACTIVATE_APPRV; //'/Product/HODeactivateApproval'
-  public static PRODUCT_HO_DEACTIVATE_DETAIL= "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.HO_DEACTIVATE_EDIT; //'/Product/HODeactivate/Detail
+  public static PRODUCT_HO_DEACTIVATE_DETAIL = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.HO_DEACTIVATE_EDIT; //'/Product/HODeactivate/Detail'
   public static PRODUCT_HO_DEACTIVATE_APPRV_DETAIL = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.HO_DEACTIVATE_APPRV_DETAIL; //'/Product/HODeactivateApproval/Detail'
   public static PRODUCT_HO_ADD = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.HO_ADD; //'/Product/HOAdd'
   public static PRODUCT_HO_ADD_DETAIL = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.HO_ADD_DETAIL; //'/Product/HOAddDetail'
@@ -330,6 +423,9 @@ export class NavigationConstant {
   public static PROD_OFFERING_ADD = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.PROD_OFFERING_ADD; //'/Product/ProdOffering/add'
   public static PROD_OFFERING_ADD_DETAIL = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.PROD_OFFERING_ADD_DETAIL; //'/Product/ProdOffering/AddDetail'
   public static PROD_OFFERING_RTN_PAGING = "/" + PathConstant.LR_PRODUCT + "/" + PathConstant.PROD_OFFERING_RTN_PAGING; //'/Product/ProdOffering/ReturnPaging'
+
+  //#region TRIAL
+  public static TRIAL_CALC = "/" + PathConstant.LR_TRIAL_CALC + "/" + PathConstant.TRIAL_CALC; //'/TrialCalculation/Trial-Calculation'
   
   //#region Pefindo View
   public static PEFINDO_VIEW = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_PEFINDO + "/" + PathConstant.PEFINDO_VIEW;

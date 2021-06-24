@@ -1,3 +1,4 @@
+import { LeadCustSocmedObj } from "../../LeadCustSocmedObj.Model";
 import { LeadCustAddrObj } from "./LeadCustAddrObj.model";
 import { LeadCustObj } from "./LeadCustObj.model";
 import { LeadCustPersonalFinDataObj } from "./LeadCustPersonalFinDataObj.model";
@@ -11,7 +12,7 @@ export class ReqInputLeadCustPersonalObj{
     LeadCustResidenceAddrObj: LeadCustAddrObj;
     LeadCustPersonalFinDataObj: LeadCustPersonalFinDataObj;
     LeadCustPersonalJobDataObj: LeadCustPersonalJobDataObj;
-    LeadCustSocmedObj: any;
+    LeadCustSocmedObj: Array<LeadCustSocmedObj>;
     WfTaskListId: number;
     RowVersion: string;
 
@@ -22,7 +23,7 @@ export class ReqInputLeadCustPersonalObj{
         this.LeadCustResidenceAddrObj = new LeadCustAddrObj();
         this.LeadCustPersonalFinDataObj = new LeadCustPersonalFinDataObj();
         this.LeadCustPersonalJobDataObj = new LeadCustPersonalJobDataObj();
-        this.LeadCustSocmedObj = new Array();
+        this.LeadCustSocmedObj = new Array<LeadCustSocmedObj>();
         this.WfTaskListId= 0;
         this.RowVersion = ""; 
     }

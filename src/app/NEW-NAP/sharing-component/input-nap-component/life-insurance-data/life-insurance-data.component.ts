@@ -12,6 +12,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { AppLifeInsRuleObj } from 'app/shared/model/AppLifeIns/AppLifeInsRuleObj.Model';
 import { ReqGetVendorByCategoryCodeAndOfficeCodeObj } from 'app/shared/model/Request/Vendor/ReqVendor.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-life-insurance-data',
@@ -21,19 +22,17 @@ import { ReqGetVendorByCategoryCodeAndOfficeCodeObj } from 'app/shared/model/Req
 })
 export class LifeInsuranceDataComponent implements OnInit {
 
-  @Input() AppId: any;
+  @Input() AppId: number;
   @Input() showCancel: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
-  inputGridObj: any;
-  show: any;
+  show: boolean;
   LifeInsObj: LifeInsObj = new LifeInsObj();
   LifeInsDObj: LifeInsDObj;
-  IsChecked: any;
+  IsChecked: boolean;
   mode: string = "add";
   ListObj: Array<LifeInsDObj> = new Array<LifeInsDObj>();
-  AppLifeInsD: any = new Array();
   result: LifeInsObj = new LifeInsObj();
 
   minInsLength: number = 1;
@@ -59,8 +58,8 @@ export class LifeInsuranceDataComponent implements OnInit {
   });
 
   LifeInscoBranchName: Array<object>;
-  MrLifeInsPaidMethodCode: any;
-  AppLifeInsHId: any;
+  MrLifeInsPaidMethodCode: Array<KeyValueObj>;
+  AppLifeInsHId: number;
 
   async ngOnInit(): Promise<void> {
     await this.initPaidMethod();

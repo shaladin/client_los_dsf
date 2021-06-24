@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -27,6 +27,7 @@ export class AppViewComponent implements OnInit {
   arrValue = [];
   CustType: string = "";
   AppCustObj: any;
+  @ViewChild("mainInfoContainerA", { read: ViewContainerRef }) mainInfoContainer: ViewContainerRef;
   IsCustomer: boolean = true;
   IsGuarantor: boolean = true;
   IsReferantor: boolean = true;
@@ -206,6 +207,8 @@ export class AppViewComponent implements OnInit {
       this.IsSurveyResult = false;
       this.IsAnalysisResult = false;
       this.IsCustomerOpl = false;
+      this.IsLifeInsurance = false;
+      this.IsApprovalHist = false;
     }
     else if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
       this.IsAsset = false;
@@ -269,6 +272,16 @@ export class AppViewComponent implements OnInit {
       this.IsInsurance = false;
       this.IsLifeInsurance = false;
       this.IsMultiCollateral = false;
+    }
+    else if (this.bizTemplateCode == CommonConstant.DF) {
+      this.IsGuarantor = false;
+      this.IsReferantor = false;
+      this.IsAsset = false;
+      this.IsMultiInsurance = false;
+      this.IsInsurance = false;
+      this.IsLifeInsurance = false;
+      this.IsMultiCollateral = false;
+      this.IsMultiAsset = false;
     }
   }
 

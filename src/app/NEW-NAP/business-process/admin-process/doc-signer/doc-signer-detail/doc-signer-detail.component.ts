@@ -17,6 +17,9 @@ import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Mod
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
+import { ResAppCustPersonalAndSpouseDataObj } from 'app/shared/model/ResAppCustPersonalAndSpouseDataObj.Model';
 
 @Component({
   selector: 'app-doc-signer-detail',
@@ -27,10 +30,7 @@ export class DocSignerDetailComponent implements OnInit {
   WfTaskListId: number = 0;
   AppId: number;
   AgrmntId: number;
-  ResponseAppAssetObj: any;
-  result2: any;
-  ResponseAppCustObj: any;
-  ResponseAgrmntSignerObj: any;
+  ResponseAgrmntSignerObj: AgrmntSignerObj;
   SupplCode: string;
   OfficeCode: string;
   CustNo: string;
@@ -40,7 +40,7 @@ export class DocSignerDetailComponent implements OnInit {
   inputLookupAppCustCompanyShareHolder1Obj: InputLookupObj = new InputLookupObj();
   agrmntSignerObj: AgrmntSignerObj = new AgrmntSignerObj();
   mode: string;
-  ResponseAppCustDataObj: any;
+  ResponseAppCustDataObj: ResAppCustPersonalAndSpouseDataObj;
   MrCustTypeCode: string = CommonConstant.CustTypeCompany;
   CustFullName: string;
   ContactPersonName: string;
@@ -101,20 +101,26 @@ export class DocSignerDetailComponent implements OnInit {
     await this.GetCustMainData();
 
     await this.http.post(URLConstant.GetAgrmntByAgrmntId, agrmntObj).toPromise().then(
-      (response) => {
-        this.result2 = response;
-        this.OfficeCode = this.result2.OfficeCode;
-        this.CustNo = this.result2.CustNo;
+      (response: AgrmntObj) => {
+        this.OfficeCode = response.OfficeCode;
+        this.CustNo = response.CustNo;
       });
 
     await this.http.post(URLConstant.GetAppAssetDataByAppId, appObj).toPromise().then(
-      (response) => {
-        this.ResponseAppAssetObj = response;
-        this.SupplCode = this.ResponseAppAssetObj.SupplCode;
+      (response: AppAssetObj) => {
+        this.SupplCode = response.SupplCode;
       });
 
+    if (this.BizTemplateCode == CommonConstant.DF)
+    {
+      await this.http.post(URLConstant.GetAppDlrFinByAppId, {Id: this.AppId}).toPromise().then(
+        (response) => {
+          this.SupplCode = response["DealerCode"];
+        });
+    }  
+
     await this.http.post(URLConstant.GetAgrmntSignerByAgrmntId, agrmntObj).toPromise().then(
-      (response) => {
+      (response: AgrmntSignerObj) => {
         this.ResponseAgrmntSignerObj = response;
         if (this.ResponseAgrmntSignerObj.AgrmntSignerId == 0) {
           this.mode = "add";
@@ -166,15 +172,14 @@ export class DocSignerDetailComponent implements OnInit {
     reqObj.Id = this.AppId;
     await this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, reqObj).toPromise().then(
       async (response) => {
-        this.ResponseAppCustObj = response;
-        if (this.ResponseAppCustObj.AppCustObj != undefined) {
-          this.MrCustTypeCode = this.ResponseAppCustObj.AppCustObj.MrCustTypeCode;
+        if (response["AppCustObj"] != undefined) {
+          this.MrCustTypeCode = response.AppCustObj.MrCustTypeCode;
           if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
             var appObj = {
               Id: this.AppId
             }
             await this.http.post(URLConstant.GetAppCustPersonalDataAndSpouseByAppId, appObj).toPromise().then(
-              (response) => {
+              (response: ResAppCustPersonalAndSpouseDataObj) => {
                 this.ResponseAppCustDataObj = response;
                 this.CustFullName = this.ResponseAppCustDataObj.CustFullName;
                 this.ContactPersonName = this.ResponseAppCustDataObj.ContactPersonName;
@@ -206,6 +211,17 @@ export class DocSignerDetailComponent implements OnInit {
     this.inputLookupBranchEmpObj.pagingJson = "./assets/uclookup/lookupBranchEmp.json";
     this.inputLookupBranchEmpObj.genericJson = "./assets/uclookup/lookupBranchEmp.json";
     this.inputLookupBranchEmpObj.addCritInput = new Array();
+
+    if(this.BizTemplateCode == CommonConstant.DF){
+      this.inputLookupAppCustCompanyShareHolder1Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
+      this.inputLookupAppCustCompanyShareHolder1Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
+      this.inputLookupAppCustCompanyShareHolder1Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSignerDF.json";
+    }
+    else{
+      this.inputLookupAppCustCompanyShareHolder1Obj.urlJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+      this.inputLookupAppCustCompanyShareHolder1Obj.pagingJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+      this.inputLookupAppCustCompanyShareHolder1Obj.genericJson = "./assets/uclookup/lookupAppCustCompanyShareholderForSigner.json";
+    }
 
     var crit1Obj = new CriteriaObj();
     crit1Obj.propName = 'V.VENDOR_CODE';
@@ -251,11 +267,21 @@ export class DocSignerDetailComponent implements OnInit {
     crit4Obj.restriction = AdInsConstant.RestrictionEq;
     crit4Obj.value = this.AppId.toString();
 
+    var custCompanyCrit2: CriteriaObj = new CriteriaObj();
+    custCompanyCrit2.DataType = "text";
+    custCompanyCrit2.propName = "ACCMS.MR_CUST_TYPE_CODE";
+    custCompanyCrit2.restriction = AdInsConstant.RestrictionEq;
+    custCompanyCrit2.value = CommonConstant.CustTypePersonal;
+
     this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput.push(crit4Obj);
+    this.inputLookupAppCustCompanyShareHolder1Obj.addCritInput.push(custCompanyCrit2);
 
     if (this.ResponseAgrmntSignerObj != null) {
       this.inputLookupBranchEmpObj.jsonSelect = { VendorEmpName: this.ResponseAgrmntSignerObj.SupplBranchEmpName };
       this.inputLookupOfficeEmp1Obj.jsonSelect = { OfficeEmpName: this.ResponseAgrmntSignerObj.MfEmpName1 };
+      this.DocSignerForm.patchValue({
+        MrJobPositionMfEmpNo1Name : this.ResponseAgrmntSignerObj.MrJobPositionMfEmpNo1Name
+      });
       this.inputLookupOfficeEmp2Obj.jsonSelect = { OfficeEmpName: this.ResponseAgrmntSignerObj.MfEmpName2 };
       this.inputLookupAppCustCompanyShareHolder1Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder1Name };
     }

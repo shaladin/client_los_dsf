@@ -10,6 +10,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-application-agreement-cancellation-detail',
@@ -18,28 +19,30 @@ import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCode
 export class ApplicationAgreementCancellationDetailComponent implements OnInit {
 
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  AppId: any;
-  AgrmntId: any;
-  AppAgrmntCancelObj: any;
+  AppId: number;
+  AgrmntId: number;
+  AppAgrmntCancelObj: AppAgrmntCancelObj;
   BizTemplateCode : string;
   MainInfoForm = this.fb.group({
     ReasonCode: ['', Validators.required],
     CancelNotes: ['', Validators.required]
   });
-  itemReasonCode: any;
-  ReasonCode: any;
+  itemReasonCode: Array<KeyValueObj>;
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
-      this.AppId = params["AppId"];
-      this.AgrmntId = params["AgrmntId"];
-      this.BizTemplateCode = params["BizTemplateCode"];
+      if (params["AppId"] != null) {        
+        this.AppId = params["AppId"];
+      }
+      if (params["AgrmntId"] != null) {
+        this.AgrmntId = params["AgrmntId"];
+      }
+      if (params["BizTemplateCode"] != null) {
+        this.BizTemplateCode = params["BizTemplateCode"];
+      }
     });
-    if (this.AgrmntId == "AgrmntId") {
-      this.AgrmntId = -1;
-    }
   }
 
   ngOnInit() {
@@ -68,11 +71,11 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
 
     this.http.post(URLConstant.AddAppAgrmntCancel, this.AppAgrmntCancelObj).subscribe((response) => {
       this.toastr.successMessage(response['message']);
-      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_AGRMNT_ACT_PAGING], { BizTemplateCode: this.BizTemplateCode });
+      AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_AGRMNT_CANCEL_PAGING], { BizTemplateCode: this.BizTemplateCode });
     });
   }
 
-  GetCallBack(ev: any) {
+  GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }

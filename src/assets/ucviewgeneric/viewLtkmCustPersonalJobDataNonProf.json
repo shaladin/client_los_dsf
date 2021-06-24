@@ -1,0 +1,31 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "CustPersonalJobDataNonProfId",
+        "subSectionTitle": "Job Data",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Customer Model",
+            "property": "CustModelName"
+          },
+          {
+            "type": "",
+            "label": "",
+            "property": ""
+          },
+          {
+            "type": "text",
+            "label": "Profession",
+            "property": "ProfessionName"
+          }
+        ],
+        "querystring": {
+          "name": "viewLtkmCustPersonalJobDataNonProf"
+        }
+      }
+    ]
+  }
+  

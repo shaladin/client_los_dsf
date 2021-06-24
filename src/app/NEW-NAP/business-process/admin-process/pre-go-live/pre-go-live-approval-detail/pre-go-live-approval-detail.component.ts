@@ -19,39 +19,26 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ReqGetRfaLogByTrxNoAndApvCategoryObj } from 'app/shared/model/Request/NAP/PreGoLive/ReqGetRfaLogByTrxNoAndApvCategoryObj.model';
+import { AgrmntMasterXObj } from 'app/shared/model/AgrmntMasterXObj.Model';
+import { RfaObj } from 'app/shared/model/Approval/RfaObj.Model';
+import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
+import { ProdOfferingDObj } from 'app/shared/model/Product/ProdOfferingDObj.model';
+import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
+import { AgrmntFinDataObj } from 'app/shared/model/AgrmntFinData.Model';
 
 @Component({
   selector: 'app-pre-go-live-approval-detail',
   templateUrl: './pre-go-live-approval-detail.component.html'
 })
 export class PreGoLiveApprovalDetailComponent implements OnInit {
-  inputObj: { taskId: any; instanceId: any; approvalBaseUrl: string; };
   viewObj: string;
-  TrxNo: any;
-  AgrmntNo: any;
-  result: any;
-  result2: any;
-  result3: any;
-  result4: any;
-  result5: any;
-  result6: any;
+  TrxNo: string;
+  AgrmntNo: string;
+  result: AgrmntObj;
+  result4: NapAppModel;
   arrValue = [];
   TCList: any;
-  AppNo: any;
-  NumOfAsset: any;
-  Tenor: any;
-  InstAmt: any;
-  DeliveryDt: any;
-  ProdOfferingName: any;
-  WayOfFinancing: any;
-  CustNo: any;
-  CustName: any;
-  OfficeName: any;
-  PurposeOfFinancing: any;
-  ProdOfferingCode: string;
-  ProdOfferingVersion: string;
-  LeadNo: string;
-  MouNo: string;
   identifier: string = "TCList";
   IsApvReady: boolean = false;
   outstandingTcObj: any;
@@ -60,14 +47,13 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   count1: number = 0;
   ListRfaLogObj: any;
   listPreGoLiveAppvrObj: Array<any> = new Array<any>();
-  CustNoObj: GenericObj = new GenericObj();
 
-  AppId: any;
-  AgrmntId: any;
+  AppId: number;
+  AgrmntId: number;
   token = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
-  LeadId: string;
+  LeadId: number;
   bizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
-  MouCustId: any;
+  MouCustId: number;
   ApvReqId: number;
   taskId: number;
   InputApvObj: UcInputApprovalObj;
@@ -79,7 +65,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.AgrmntId = params["AgrmntId"];
       this.AppId = params["AppId"];
-      this.TrxNo = params["TrxNo"];
+      this.TrxNo = params["TrxNo"]; //AgrmntNo
       this.taskId = params["TaskId"];
       this.ApvReqId = params["ApvReqId"];
 
@@ -97,7 +83,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
     reqGetRfaLogByTrxNoAndApvCategoryObj.ApvCategory = CommonConstant.ApvCategoryPreGoLive;
     this.http.post(URLConstant.GetRfaLogByTrxNoAndApvCategory, reqGetRfaLogByTrxNoAndApvCategoryObj).subscribe(
       (response) => {
-        this.result = response;
         this.ListRfaLogObj = response["ListRfaLogObj"];
         for (let i = 0; i < this.ListRfaLogObj.length; i++) {
           this.listPreGoLiveAppvrObj[i] = {
@@ -115,104 +100,6 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
         this.TCList = response["AppTcs"];
       });
 
-    var Obj = {
-      TrxNo: this.TrxNo, // AgrmntNo
-      RowVersion: ""
-    }
-
-
-    this.http.post(URLConstant.GetAgrmntByAgrmntNo, Obj).subscribe(
-      (response) => {
-        this.result = response;
-        this.AgrmntNo = this.result.AgrmntNo;
-        this.CustNo = this.result.CustNo;
-        this.CustName = this.result.CustName;
-        this.OfficeName = this.result.OfficeName;
-        this.NumOfAsset = this.result.NumOfAsset;
-        this.Tenor = this.result.Tenor;
-        this.ProdOfferingName = this.result.ProdOfferingName;
-        this.ProdOfferingCode = this.result.ProdOfferingCode;
-        this.ProdOfferingVersion = this.result.ProdOfferingVersion;
-        var Obj2: ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj = new ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj();
-        Obj2 = {
-          ProdOfferingCode: this.result.ProdOfferingCode,
-          RefProdCompntCode: CommonConstant.RefProdCompntCodeWayOfFinancing
-        }
-        this.http.post(URLConstant.GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode, Obj2).subscribe(
-          (response) => {
-            this.result2 = response;
-            this.WayOfFinancing = this.result2.CompntValueDesc;
-          }
-        );
-
-        var Obj3: ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj = new ReqGetProdOffDByProdOffCodeAndProdCompntCodeObj();
-        Obj3 = {
-          ProdOfferingCode: this.result.ProdOfferingCode,
-          RefProdCompntCode: CommonConstant.RefProdCompntCodePurposeOfFinancing
-        }
-        this.http.post(URLConstant.GetCurrentProdOfferingDByProdOfferingCodeAndRefProdCompntCode, Obj3).subscribe(
-          (response) => {
-            this.result3 = response;
-            this.PurposeOfFinancing = this.result3.CompntValueDesc;
-          }
-        );
-
-
-        var Obj4 = {
-          Id: this.result.AppId,
-          RowVersion: ""
-        }
-        this.http.post(URLConstant.GetAppById, Obj4).subscribe(
-          (response) => {
-            this.result4 = response;
-            this.AppNo = this.result4.AppNo;
-
-            if (this.result4.LeadId != null || this.result4.LeadId != undefined) {
-              this.http.post(URLConstant.GetLeadByLeadId, { Id: this.result4.LeadId }).subscribe(
-                (response) => {
-                  this.LeadNo = response["LeadNo"];
-                  this.LeadId = response["LeadId"];
-                }
-              );
-            }
-
-            this.http.post(URLConstant.GetMouCustByAppId, Obj4).subscribe(
-              (response) => {
-                this.MouNo = response["MouCustNo"];
-                this.MouCustId = response["MouCustId"];
-              }
-            );
-
-
-          }
-
-        );
-
-
-        var Obj5 = {
-          Id: this.result.AgrmntId,
-          RowVersion: ""
-        }
-        this.http.post(URLConstant.GetDeliveryOrderHByAgrmntId, Obj5).subscribe(
-          (response) => {
-            this.result5 = response;
-            this.DeliveryDt = formatDate(this.result5.DeliveryDt, 'yyyy-MM-dd', 'en-US');
-
-          }
-        );
-
-        var agrmntObj = {
-          Id: this.result.AgrmntId
-        }
-        this.http.post(URLConstant.GetAgrmntFinDataByAgrmntId, agrmntObj).subscribe(
-          (response) => {
-            this.result6 = response;
-            this.InstAmt = this.result6.InstAmt;
-          }
-        );
-
-      }
-    );
     this.initInputApprovalObj();
   }
 
@@ -221,31 +108,9 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
       () => {
       },
       (error) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": this.bizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING], { "BizTemplateCode": this.bizTemplateCode });
       }
     )
-  }
-
-  //nanti bakalan ke View, sementara kek gini dlu
-
-  OpenView(key: string) {
-    if (key == 'app') {
-      AdInsHelper.OpenAppViewByAppId(this.AppId);
-    } else if (key == 'agrmnt') {
-      AdInsHelper.OpenAgrmntViewByAgrmntId(this.AgrmntId);
-    } else if (key == 'lead') {
-      AdInsHelper.OpenLeadViewByLeadId(this.LeadId);
-    } else if (key == 'mou') {
-      AdInsHelper.OpenMOUCustViewByMouCustId(this.MouCustId);
-    } else if (key == 'cust') {
-      this.CustNoObj.CustNo = this.CustNo;
-      this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"])
-        });
-    } else if (key == 'prod') {
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(this.ProdOfferingCode, this.ProdOfferingVersion);
-    }
   }
 
   onAvailableNextTask() {
@@ -253,7 +118,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    this.outstandingTcObj = new OutstandingTcObj(); 
+    this.outstandingTcObj = new OutstandingTcObj();
     this.listAppTCObj = new ListAppTCObj();
     this.listAppTCObj.AppTCObj = new Array();
  
@@ -288,15 +153,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
   }
 
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING],{ "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
-  }
-
-  openView(custNo) {
-    this.CustNoObj.CustNo = custNo;
-    this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
-      response => {
-        AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-      });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_APPRVL_PAGING], { "BizTemplateCode": localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE) });
   }
 
   initInputApprovalObj() {
@@ -312,7 +169,7 @@ export class PreGoLiveApprovalDetailComponent implements OnInit {
 
     this.InputApvObj = new UcInputApprovalObj();
     this.InputApvObj.TaskId = this.taskId;
-    this.InputApvObj.TrxNo = this.AgrmntNo;
+    this.InputApvObj.TrxNo = this.TrxNo;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.IsReady = true;
   }

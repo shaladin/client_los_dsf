@@ -33,6 +33,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CustomPatternObj } from 'app/shared/model/library/CustomPatternObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
 
 @Component({
   selector: 'app-collateral-add-edit',
@@ -126,11 +127,8 @@ export class CollateralAddEditComponent implements OnInit {
   @ViewChild("CityIssuerModal", { read: ViewContainerRef }) cityIssuerModal: ViewContainerRef;
   @ViewChild("enjiForm") enjiForm: NgForm;
   items: FormArray;
-  SerialNoList: any;
+  SerialNoList: Array<AssetTypeSerialNoLabelCustomObj>;
 
-  appObj = {
-    Id: 0,
-  };
   isDiffWithRefAttr: any;
   AddCollForm = this.fb.group({
     Collateral: ['New'],
@@ -345,8 +343,7 @@ export class CollateralAddEditComponent implements OnInit {
   }
 
   GetListAddr() {
-    this.appObj.Id = this.AppId;
-    this.http.post(URLConstant.GetListAppCustAddrByAppId, this.appObj).toPromise().then(
+    this.http.post(URLConstant.GetListAppCustAddrByAppId, { Id: this.AppId }).toPromise().then(
       (response) => {
         this.AppCustAddrObj = response[CommonConstant.ReturnObj];
         this.AddCollForm.patchValue({
@@ -691,9 +688,12 @@ export class CollateralAddEditComponent implements OnInit {
         this.collateralPortionHandler();
         this.AddCollForm.removeControl("AssetAccessoriesObjs");
         this.AddCollForm.addControl("AssetAccessoriesObjs", this.fb.array([]));
-        this.AddCollForm.patchValue({
-          AssetCategoryCode: this.returnAppCollateralObj.AssetCategoryCode
-        });
+        if(this.returnAppCollateralObj != undefined)
+        {
+            this.AddCollForm.patchValue({
+            AssetCategoryCode: this.returnAppCollateralObj.AssetCategoryCode
+          });
+        }
         this.inputLookupObj = new InputLookupObj();
         this.inputLookupObj.isReady = false;
         this.inputLookupObj.urlJson = "./assets/uclookup/Collateral/lookupCollateralType.json";
@@ -868,7 +868,14 @@ export class CollateralAddEditComponent implements OnInit {
     const fullAssetCode = this.AddCollForm.controls["FullAssetCode"].value;
     const assetType = this.AddCollForm.controls["AssetTypeCode"].value;
     var serialNoForm = this.items.controls[0] as FormGroup;
-    const serialNo1 = serialNoForm.controls["SerialNoValue"].value;
+    
+    let serialNo1: [];
+
+    if(serialNoForm != undefined)
+    {
+      serialNo1 = serialNoForm.controls["SerialNoValue"].value;
+    }
+
     const currCollPrcnt = this.AddCollForm.controls["CollPercentage"].value;
     const collValueAmt = this.AddCollForm.controls["CollateralValueAmt"].value;
 

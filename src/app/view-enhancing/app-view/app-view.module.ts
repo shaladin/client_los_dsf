@@ -42,12 +42,14 @@ import { ViewSurveyTaskListComponent } from "./view-survey-task-list/view-survey
 import { ViewAssetDataComponent } from "./view-asset-data/view-asset-data.component";
 import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
 import { SharedModule } from "app/shared/shared.module";
-import { TabDeviationComponent } from './tab-deviation/tab-deviation.component';
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { ViewAssetExpenseComponent } from './view-asset-expense/view-asset-expense.component';
 import { ViewSurveyComponent } from './view-survey/view-survey.component';
 import { AppCustDataPersonalOplComponent } from './app-cust-data/app-cust-data-personal-opl/app-cust-data-personal-opl.component';
 import { AppCustDataCompanyOplComponent } from './app-cust-data/app-cust-data-company-opl/app-cust-data-company-opl.component';
+import { ViewSharingComponentModule } from "app/NEW-NAP/sharing-component/view-app-component/view-sharing-component.module";
+import { TabDeviationComponent } from "./tab-deviation/tab-deviation.component";
+import { AppViewInsuranceDetailComponent } from "./app-insurance/app-insurance-detail/app-insurance-detail.component";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HttpClient } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
@@ -78,6 +80,7 @@ export function createTranslateLoader(http: HttpClient) {
         UcapprovalHistoryModule,
         UcShowErrorsModule,
         AppCustViewComponentsModule,
+        ViewSharingComponentModule,
         SharedModule,
         TranslateModule.forRoot({
             loader: {
@@ -117,6 +120,7 @@ export function createTranslateLoader(http: HttpClient) {
         ViewSurveyComponent,
         AppCustDataPersonalOplComponent,
         AppCustDataCompanyOplComponent,
+        AppViewInsuranceDetailComponent,
     ],
     entryComponents: [
         UclookupgenericComponent,

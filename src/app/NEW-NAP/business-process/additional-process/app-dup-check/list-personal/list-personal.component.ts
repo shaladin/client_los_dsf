@@ -27,7 +27,6 @@ export class ListPersonalComponent implements OnInit {
   ListCustomerDuplicate: any;
   ListNegativeCust: any;
   ListAppCustDuplicate: any;
-  RowVersion: any;
 
 
   constructor(
@@ -57,7 +56,6 @@ export class ListPersonalComponent implements OnInit {
     this.http.post(URLConstant.GetCustDataByAppId, appObj).subscribe(
       response => {
         this.AppCustObj = response['AppCustObj'];
-        this.RowVersion = response['AppCustObj'].RowVersion;
         this.AppCustPersonalObj = response['AppCustPersonalObj'];
         this.AppCustAddrObj = response['AppCustAddrLegalObj'];
 
@@ -71,7 +69,8 @@ export class ListPersonalComponent implements OnInit {
         requestDupCheck.BirthDt = this.AppCustPersonalObj.BirthDt;
         requestDupCheck.MotherMaidenName = this.AppCustPersonalObj.MotherMaidenName;
         requestDupCheck.MobilePhnNo1 = this.AppCustPersonalObj.MobilePhnNo1;
-        requestDupCheck.RowVersion = this.RowVersion;
+        requestDupCheck.RowVersion = response['AppCustObj'].RowVersion;
+        requestDupCheck.AppId = this.AppId;
 
         //List Cust Duplicate And List Negative Cust Duplicate Checking
         this.http.post(URLConstant.GetCustomerAndNegativeCustDuplicateCheck, requestDupCheck).subscribe(

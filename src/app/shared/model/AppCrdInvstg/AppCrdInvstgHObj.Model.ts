@@ -8,7 +8,7 @@ export class AppCrdInvstgHObj {
     CrdInvstgStat: string;
     ReturnNotes: string;
     AppCrdInvstgDObjs: Array<AppCrdInvstgDObj>;
-    RowVersion: any;
+    RowVersion: string;
 
     constructor() {
         this.AppCrdInvstgDObjs = new Array<AppCrdInvstgDObj>();

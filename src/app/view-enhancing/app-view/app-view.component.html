@@ -18,15 +18,19 @@
           <mat-tab-group (selectedTabChange)="tabChangeEvent($event)">
             <mat-tab *ngIf="IsCustomer" label="Customer">
               <ng-template matTabContent>
-                <app-view-app-cust-data-personal [appId]="AppId" *ngIf="CustType=='PERSONAL'"></app-view-app-cust-data-personal>
-                <app-view-app-cust-data-company [appId]="AppId" [BizTemplateCode]="bizTemplateCode" *ngIf="CustType=='COMPANY'"></app-view-app-cust-data-company>
+                <app-view-app-cust-data-personal [appId]="AppId" *ngIf="CustType=='PERSONAL'">
+                </app-view-app-cust-data-personal>
+                <app-view-app-cust-data-company [appId]="AppId" [BizTemplateCode]="bizTemplateCode"
+                  *ngIf="CustType=='COMPANY'"></app-view-app-cust-data-company>
               </ng-template>
             </mat-tab>
 
             <mat-tab *ngIf="IsCustomerOpl" label="Customer">
               <ng-template matTabContent>
-                <app-app-cust-data-personal-opl [appId]="AppId" *ngIf="CustType=='PERSONAL'"></app-app-cust-data-personal-opl>
-                <app-app-cust-data-company-opl [appId]="AppId" *ngIf="CustType=='COMPANY'"></app-app-cust-data-company-opl>
+                <app-app-cust-data-personal-opl [appId]="AppId" *ngIf="CustType=='PERSONAL'">
+                </app-app-cust-data-personal-opl>
+                <app-app-cust-data-company-opl [appId]="AppId" *ngIf="CustType=='COMPANY'">
+                </app-app-cust-data-company-opl>
               </ng-template>
             </mat-tab>
 
@@ -77,7 +81,7 @@
                 <app-view-collateral-data [appId]="AppId"></app-view-collateral-data>
               </ng-template>
             </mat-tab>
-            
+
             <mat-tab *ngIf="IsMultiCollateral" label="Collateral Data">
               <ng-template matTabContent>
                 <app-view-collateral-multi-asset [appId]="AppId"></app-view-collateral-multi-asset>
@@ -152,7 +156,13 @@
 
             <mat-tab *ngIf="IsApprovalHist" label="Approval History">
               <ng-template matTabContent>
-                <app-approval-hist [BizTemplateCode]="bizTemplateCode" [AppNo]="AppNo" [AppId]="AppId"></app-approval-hist>
+                <app-approval-hist [BizTemplateCode]="bizTemplateCode" [AppNo]="AppNo" [AppId]="AppId">
+                </app-approval-hist>
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="Highlight Comment">
+              <ng-template matTabContent>
+                <app-view-highlight-comment [appId]="AppId"></app-view-highlight-comment>
               </ng-template>
             </mat-tab>
 

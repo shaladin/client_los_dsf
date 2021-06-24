@@ -1,13 +1,15 @@
+import { AppReservedFundObj } from "./AppReservedFundObj.model";
+
 export class AllAppReservedFundObj {
   AppId: number;
-  RequestAppReservedFundObjs: any;
-  RowVersion: any;
+  RequestAppReservedFundObjs: Array<AppReservedFundObj>;
+  RowVersion: string;
   ReturnHandlingHId : number;
   ReturnHandlingExecNotes : string;
   WfTaskIdListId : number;
   IsPersonal: boolean;
-  GrossYield: any;
-  TotalReservedFundAmt: any;
+  GrossYield: number;
+  TotalReservedFundAmt: number;
 
   constructor() {
     this.AppId = 0;

@@ -10,7 +10,7 @@ import { RefAttr } from 'app/shared/model/CustCompletion/RefAttr.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { ReqRefAttrByAttrGroupObj } from 'app/shared/model/Request/RefAttr/ReqRefAttrByAttrGroupObj.model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
-import { ResGetListAppCustAttrContentObj } from 'app/shared/model/Response/NAP/NAP 4/ResGetListAppCustAttrContentObj.model';
+import { ResGetAppCustAttrContentObj, ResGetListAppCustAttrContentObj } from 'app/shared/model/Response/NAP/NAP 4/ResGetListAppCustAttrContentObj.model';
 import { environment } from 'environments/environment';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 @Component({
@@ -29,12 +29,14 @@ export class AttrContentComponentComponent implements OnInit {
   @Output() IncomeAmt: EventEmitter<{Index: number, Amount: number}> = new EventEmitter();
   @Output() ExpenseAmt: EventEmitter<{Index: number, Amount: number}> = new EventEmitter();
   
-  ListAttrContent: Array<any> = new Array<any>();
+  ListAttrContent: Array<ResGetAppCustAttrContentObj> = new Array();
   RefAttrList: Array<RefAttr> = new Array<RefAttr>();
   ListInputLookUpObj = new Array();
   IsFormReady: boolean = false;
   tempLookup = {};
   AttrContent: AttrContent;
+  AttrGroupCustPersonalFinDataIncome: string = CommonConstant.AttrGroupCustPersonalFinDataIncome;
+  AttrGroupCustPersonalFinDataExpense: string = CommonConstant.AttrGroupCustPersonalFinDataExpense;
 
   constructor(private httpClient: HttpClient,
     private fb: FormBuilder) { }
@@ -142,7 +144,12 @@ export class AttrContentComponentComponent implements OnInit {
       }
       else if (refAttr.AttrInputType == 'L') {
         var temp = refAttr.AttrValue.split(";");
-        formGroupObject["AttrValue"] = [temp[0]];
+        if(refAttr.IsMandatory == false){
+          formGroupObject["AttrValue"] = [temp[0]];
+        }
+        else{
+            formGroupObject["AttrValue"] = [""];
+        }
       }
       else if (refAttr.AttrInputType == 'P' || refAttr.AttrInputType == 'N') {
         formGroupObject["AttrValue"] = [0];
@@ -222,7 +229,12 @@ export class AttrContentComponentComponent implements OnInit {
       }
       else if (refAttr.AttrInputType == 'L') {
         var temp = refAttr.AttrValue.split(";");
-        formGroupObject["AttrValue"] = [temp[0]];
+        if(refAttr.IsMandatory == false){
+          formGroupObject["AttrValue"] = [temp[0]];
+        }
+        else{
+            formGroupObject["AttrValue"] = [""];
+        }
       }
       else if (refAttr.AttrInputType == 'P' || refAttr.AttrInputType == 'N') {
         formGroupObject["AttrValue"] = [0];
@@ -293,10 +305,10 @@ export class AttrContentComponentComponent implements OnInit {
   }
 
   CalculateAmt(attrGroup: string, amount: string, index: number) {
-    if(attrGroup === CommonConstant.AttrGroupCustPersonalFinDataIncome) {
+    if(attrGroup === this.AttrGroupCustPersonalFinDataIncome) {
       this.IncomeAmt.emit({Index: index, Amount: parseFloat(amount.replace(/,/g, ''))});
     }
-    else if(attrGroup === CommonConstant.AttrGroupCustPersonalFinDataExpense) {
+    else if(attrGroup === this.AttrGroupCustPersonalFinDataExpense) {
       this.ExpenseAmt.emit({Index: index, Amount: parseFloat(amount.replace(/,/g, ''))});
     }
   }

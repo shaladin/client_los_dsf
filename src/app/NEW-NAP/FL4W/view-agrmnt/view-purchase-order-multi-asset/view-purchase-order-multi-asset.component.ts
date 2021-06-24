@@ -1,6 +1,8 @@
 import { Output, EventEmitter, OnInit, Component, Input } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { URLConstant } from "app/shared/constant/URLConstant";
+import { PurchaseOrderHObj } from "app/shared/model/PurchaseOrderHObj.Model";
+
 import { CommonConstant } from "app/shared/constant/CommonConstant";
 
 @Component({
@@ -11,10 +13,8 @@ export class ViewPurchaseOrderMultiAssetComponent implements OnInit {
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
   @Input() agrmntId: number = 0;
 
-  inputGridObj: any;
   isView: boolean;
-  listPurchaseOrder: any;
-  MrCustRelationshipCode: any = new Array();
+  listPurchaseOrder: PurchaseOrderHObj;
   tempSupplCode: string;
   tempPurchaseOrderHId: number;
 

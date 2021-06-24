@@ -9,19 +9,19 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
-import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { environment } from 'environments/environment';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-application-approval-detail',
   templateUrl: './application-approval-detail.component.html',
 })
 export class ApplicationApprovalDetailComponent implements OnInit {
-
   appId: number = 0;
   ApvReqId: number = 0;
   mrCustTypeCode: string;
@@ -37,6 +37,7 @@ export class ApplicationApprovalDetailComponent implements OnInit {
   readonly CustTypeCompany: string = CommonConstant.CustTypeCompany;
   readonly PefindoLink: string = NavigationConstant.PEFINDO_VIEW;
   IsCrdApvReady: boolean = false;
+  
   constructor(private toastr: NGXToastrService,
     private route: ActivatedRoute,
     private router: Router,
@@ -73,7 +74,6 @@ export class ApplicationApprovalDetailComponent implements OnInit {
   }
 
   getCrdHist(AppNo) {
-
     this.http.post(URLConstant.GetRfaLogByTrxNo, { TrxNo: AppNo }).subscribe(
       (response) => {
         for (let i = 0; i < response['ListRfaLogObj'].length; i++) {
@@ -92,6 +92,7 @@ export class ApplicationApprovalDetailComponent implements OnInit {
 
   crdRvwCustInfoObj: CrdRvwCustInfoObj = new CrdRvwCustInfoObj();
   isShow: boolean = false;
+  captureStat: string = "";
   async GetCrdRvwCustInfoByAppId() {
     await this.http.post<CrdRvwCustInfoObj>(URLConstant.GetCrdRvwCustInfoByAppId, { Id: this.appId }).toPromise().then(
       (response) => {
@@ -99,12 +100,21 @@ export class ApplicationApprovalDetailComponent implements OnInit {
         this.isShow = true;
       }
     );
+
+    let refMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCaptureStat,
+      MasterCode: this.crdRvwCustInfoObj.CaptureStat
+    };
+    await this.http.post<KeyValueObj>(URLConstant.GetKvpRefMasterByRefMasterTypeCodeAndMasterCode, refMaster).toPromise().then(
+      (response) => {
+        this.captureStat = response.Value;
+      }
+    );
   }
 
   HoldTask(obj: ApprovalObj) {
     this.http.post(URLConstant.ApvHoldTaskUrl, obj).subscribe(
-      (response) => {
-      },
+      (response) => { },
       (error) => {
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       }
@@ -115,8 +125,7 @@ export class ApplicationApprovalDetailComponent implements OnInit {
   InputApprovalHistoryObj : UcInputApprovalHistoryObj;
   UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
-  initInputApprovalObj(){
-
+  initInputApprovalObj() {
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
@@ -128,7 +137,6 @@ export class ApplicationApprovalDetailComponent implements OnInit {
     this.InputApprovalHistoryObj.RequestId = this.ApvReqId;
 
     this.InputApvObj = new UcInputApprovalObj();
-    console.log(this.AppObj.AppNo);
     this.InputApvObj.TaskId = this.taskId;
     this.InputApvObj.TrxNo =  this.AppObj.AppNo;
     this.InputApvObj.RequestId = this.ApvReqId;
@@ -140,31 +148,25 @@ export class ApplicationApprovalDetailComponent implements OnInit {
     // let appObj = new AppObj();
     // appObj.AppId = this.appId
     var appObj = { Id: this.appId };
-    await this.http.post<AppObj>(URLConstant.GetAppById, appObj).toPromise().then(
-      (response) => {
-        this.AppObj = response;
-        this.getCrdHist(this.AppObj.AppNo);
-      });
+    await this.http.post<AppObj>(URLConstant.GetAppById, appObj).toPromise().then((response) => {
+      this.AppObj = response;
+      this.getCrdHist(this.AppObj.AppNo);
+    });
   }
 
   onApprovalSubmited(event) {
-
     let ReqApvCustomObj = {
       AppId: this.appId,
       Tasks: event.Tasks
     }
 
-    this.http.post(URLConstant.Approval, ReqApvCustomObj).subscribe(
-      (response)=>{
-        this.toastr.successMessage(response["Message"]);
-        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
-      });    
-    
+    this.http.post(URLConstant.Approval, ReqApvCustomObj).subscribe((response) => {
+      this.toastr.successMessage(response["Message"]);
+      AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+    });
   }
 
-  onAvailableNextTask() {
-
-  }
+  // onAvailableNextTask() { }
   
   onCancelClick() {    
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_APP_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
@@ -177,7 +179,7 @@ export class ApplicationApprovalDetailComponent implements OnInit {
   }
   
   OpenPefindoView(){
-    window.open(NavigationConstant.PEFINDO_VIEW + "?AppId=" + this.appId, "_blank");
+    window.open(environment.losR3Web + NavigationConstant.PEFINDO_VIEW + "?AppId=" + this.appId, "_blank");
   }
   //#endregion
 }

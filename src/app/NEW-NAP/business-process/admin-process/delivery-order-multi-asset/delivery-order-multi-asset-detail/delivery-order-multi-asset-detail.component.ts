@@ -18,6 +18,9 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetDOMultiAssetInformationObj } from 'app/shared/model/Request/DeliveryOrder/ReqGetDOMultiAssetInformationObj.model';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
+import { AssetListForDOMultiAssetObj } from 'app/shared/model/AssetListForDOMultiAssetObj.Model';
 
 @Component({
   selector: 'app-delivery-order-multi-asset-detail',
@@ -27,13 +30,13 @@ import { ReqGetDOMultiAssetInformationObj } from 'app/shared/model/Request/Deliv
 export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   appId: number;
   agrmntId: number;
-  doList: any;
-  doAssetList: any;
+  doList: Array<DeliveryOrderHObj>;
+  doAssetList: Array<AssetListForDOMultiAssetObj>;
   custType: string;
   licensePlateAttr: string;
   isCreateDOInvalid: boolean;
   createDOInvalidMsg: string;
-  arrValue: Array<any> = new Array<any>();
+  arrValue: Array<number> = new Array();
   wfTaskListId: number;
   isFinal: boolean;
   isHideDP: boolean = true;
@@ -171,10 +174,9 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
           if (mouId != null && mouId != "") {
-            let mouObj = { Id: mouId };
-            this.httpClient.post(URLConstant.GetMouCustById, mouObj).subscribe(
-              result => {
-                this.mouCustNo = result['MouCustNo'];
+            this.httpClient.post(URLConstant.GetMouCustById, { Id: mouId }).subscribe(
+              (result: MouCustObj) => {
+                this.mouCustNo = result.MouCustNo;
                 this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
                 this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
                 this.isDmsReady = true;

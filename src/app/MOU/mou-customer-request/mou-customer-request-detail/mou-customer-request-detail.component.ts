@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Location, DatePipe } from '@angular/common';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
-import { environment } from 'environments/environment';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { RefOfficeObj } from 'app/shared/model/RefOfficeObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -15,6 +14,9 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { CustObj } from 'app/shared/model/CustObj.Model';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -34,6 +36,8 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   custUrl: string;
   RevolvingTypeList: Array<KeyValueObj> = new Array<KeyValueObj>();
   CustNoObj: GenericObj = new GenericObj();
+  plafondTypeObj: Array<RefMasterObj>;
+  datePipe = new DatePipe("en-US");
 
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
@@ -42,11 +46,12 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     EndDt: ['', [Validators.required]],
     RefNo: [''],
     IsRevolving: [false],
-    PlafondAmt: ['', [Validators.required, Validators.min(1.00)]],
+    PlafondAmt: [0, [Validators.required, Validators.min(1.00)]],
     MouStat: ['NEW', [Validators.required]],
     MrMouTypeCode: ['', [Validators.required]],
     RowVersion: [''],
-    MrRevolvingTypeCode: ['']
+    MrRevolvingTypeCode: [''],
+    PlafondType:['']
   });
 
   constructor(
@@ -73,6 +78,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.bindAllRefMasterObj();
     this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.MOU_REVOLVING_TYPE }).subscribe(
       (response) => {
         this.RevolvingTypeList = response[CommonConstant.ReturnObj];
@@ -95,30 +101,19 @@ export class MouCustomerRequestDetailComponent implements OnInit {
 
     this.inputLookupCust = new InputLookupObj();
     this.inputLookupCust.urlJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
-    this.inputLookupCust.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    this.inputLookupCust.urlEnviPaging = environment.FoundationR3Url;
     this.inputLookupCust.pagingJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
     this.inputLookupCust.genericJson = "./assets/uclookup/MOU/lookupCust_MOURequest.json";
-
-    this.inputLookupCust.ddlEnvironments = [
-      {
-        name: "A.MR_CUST_TYPE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     var refOffice = new RefOfficeObj();
     refOffice.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.httpClient.post(URLConstant.GetRefOfficeByOfficeCode, {Code : refOffice.OfficeCode}).subscribe(
-      (response: any) => {
+      (response: RefOfficeObj) => {
         this.refOfficeId = response.RefOfficeId;
       });
 
     if (this.pageType == "edit" || this.pageType == "return") {
-      var mouCust = new MouCustObj();
-      mouCust.MouCustId = this.mouCustId;
       this.httpClient.post(URLConstant.GetMouCustById, { Id: this.mouCustId }).subscribe(
-        (response: any) => {
+        (response) => {
           response["StartDt"] = datePipe.transform(response["StartDt"], "yyyy-MM-dd");
           response["EndDt"] = datePipe.transform(response["EndDt"], "yyyy-MM-dd");
           this.MOUMainInfoForm.patchValue({
@@ -126,12 +121,16 @@ export class MouCustomerRequestDetailComponent implements OnInit {
           });
           this.CustNoObj.CustNo = response['CustNo'];
           this.httpClient.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
-            (response: any) => {
-              this.custId = response['CustId'];
+            (response: CustObj) => {
+              this.custId = response.CustId;
             });
 
           if (response["MrRevolvingTypeCode"] == null) {
             this.MOUMainInfoForm.controls.MrRevolvingTypeCode.setValue(this.RevolvingTypeList[0].Key);
+          }
+
+          if (response["PlafondType"] != null) {
+            this.MOUMainInfoForm.controls.PlafondType.setValue(response["PlafondType"]);
           }
         });
     }
@@ -150,11 +149,31 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       });
   }
 
+  onChangePlafondType(){
+    if(this.MOUMainInfoForm.value.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOCLLTR){
+      this.MOUMainInfoForm.controls.PlafondAmt.clearValidators();
+    }
+    
+    if(this.MOUMainInfoForm.value.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT){
+      this.MOUMainInfoForm.controls.PlafondAmt.setValidators([Validators.required, Validators.min(1.00)]);
+    }
+
+    this.MOUMainInfoForm.controls.PlafondAmt.updateValueAndValidity();
+  }
+
   Back(): void {
     AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_REQ_PAGING],{});
   }
 
   Save() {
+    if( this.MOUMainInfoForm.controls.StartDt.value > this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
+      this.toastr.warningMessage(ExceptionConstant.START_DATE_CANNOT_MORE_THAN + this.datePipe.transform(this.businessDt, 'MMMM d, y') );
+     return
+   } 
+   if(this.MOUMainInfoForm.controls.EndDt.value< this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
+     this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y')  );
+    return;
+   }
     var mouCustFormData = this.MOUMainInfoForm.value;
     if (!this.MOUMainInfoForm.controls.IsRevolving.value) {
       mouCustFormData["MrRevolvingTypeCode"] = null;
@@ -162,15 +181,15 @@ export class MouCustomerRequestDetailComponent implements OnInit {
 
     if (this.pageType == "add") {
       this.httpClient.post(URLConstant.AddMouCust, mouCustFormData).subscribe(
-        (response: any) => {
+        (response: GenericObj) => {
           this.toastr.successMessage(response["Message"]);
-          var mouCustId = response["Id"];
+          var mouCustId = response.Id;
           AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustId, MOUType: this.mouType });
         });
     }
     else if (this.pageType == "edit" || this.pageType == "return") {
       this.httpClient.post(URLConstant.EditMouCust, mouCustFormData).subscribe(
-        (response: any) => {
+        (response) => {
           this.toastr.successMessage(response["Message"]);
           if(this.pageType == "return"){
             AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_DETAIL],{ mouCustId: mouCustFormData.MouCustId, MOUType: this.mouType, mode : "return" });    
@@ -187,6 +206,33 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       AdInsHelper.OpenMOUCustViewByMouCustId(this.mouCustId);
     } else if (key == "cust") {
       AdInsHelper.OpenCustomerViewByCustId(this.custId);
+    }
+  }
+
+  bindAllRefMasterObj(){
+    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodePlafonType}).subscribe(
+      (response) => {
+        this.plafondTypeObj = response["RefMasterObjs"];
+
+        if(this.plafondTypeObj.length > 0){
+          var idxDefault = this.plafondTypeObj.findIndex(x => x.ReserveField2 == CommonConstant.DEFAULT);
+          this.MOUMainInfoForm.patchValue({
+            PlafondType: this.plafondTypeObj[idxDefault].MasterCode
+          });
+        }
+      }
+    );
+  }
+
+  checkStartDate(ev){ 
+    if( this.datePipe.transform(ev.target.value, "yyyy-MM-dd") > this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
+       this.toastr.warningMessage(ExceptionConstant.START_DATE_CANNOT_MORE_THAN + this.datePipe.transform(this.businessDt, 'MMMM d, y'));
+    } 
+  }
+
+  checkEndDate(ev){
+    if(ev.target.value < this.datePipe.transform(this.businessDt, "yyyy-MM-dd") ){
+       this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LESS_THAN +  this.datePipe.transform(this.businessDt, 'MMMM d, y'));
     }
   }
 }

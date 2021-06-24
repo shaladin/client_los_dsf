@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { HttpClient } from '@angular/common/http';
@@ -14,10 +14,9 @@ export class AgrMainInfoComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   @Input() arrValue = [];
   isReady: boolean = false;
- 
+
   constructor(
-    private router: Router,
-    private http: HttpClient ) { }
+    private router: Router, private http: HttpClient, private route: ActivatedRoute) { }
 
   async ngOnInit() {
     this.viewGenericObj.whereValue = this.arrValue;
@@ -26,10 +25,13 @@ export class AgrMainInfoComponent implements OnInit {
         let appId = response['AppId'];
         await this.http.post(URLConstant.GetAppById, { Id: appId }).subscribe(
           (response) => {
-            if(response['BizTemplateCode'] == CommonConstant.FL4W){
+            if (response['BizTemplateCode'] == CommonConstant.FL4W) {
               this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrFL4WMainInfo.json";
             }
-            else{
+            else if (response['BizTemplateCode'] == CommonConstant.CFNA) {
+              this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoCfna.json";
+            }
+            else {
               this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfo.json";
             }
             this.isReady = true;
@@ -37,10 +39,10 @@ export class AgrMainInfoComponent implements OnInit {
       }
     );
   }
-  
-  GetCallBack(ev: any){
-    if(ev.Key == "ViewProdOffering"){ 
-      AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
+
+  GetCallBack(ev: any) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }
   }
 }

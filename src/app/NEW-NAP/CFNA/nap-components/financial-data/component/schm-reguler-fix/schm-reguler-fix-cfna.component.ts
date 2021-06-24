@@ -17,16 +17,15 @@ import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMas
   templateUrl: './schm-reguler-fix-cfna.component.html',
 })
 export class SchmRegulerFixCFNAComponent implements OnInit {
-  @Input() AppId: number;
+  @Input() AppId: number = 0;
   @Input() ParentForm: FormGroup;
   @Output() RefreshSubsidy = new EventEmitter();
+  @Input() TrialCalc: boolean = false;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
-  calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
   listInstallment: any;
-  responseCalc: any;
   result: AppObj = new AppObj();
   PriceLabel: string = "Financing Amount";
 
@@ -38,13 +37,16 @@ export class SchmRegulerFixCFNAComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
-    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-      (response) => {
-        this.result = response;
-        if (this.result.BizTemplateCode == CommonConstant.CFRFN4W) {
-          this.PriceLabel = "Financing Amount";
-        }
-      });
+    if (this.AppId != 0) {
+      this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
+        (response) => {
+          this.result = response;
+          if (this.result.BizTemplateCode == CommonConstant.CFRFN4W) {
+            this.PriceLabel = "Financing Amount";
+          }
+        });
+      this.TrialCalc = false;
+    }
   }
 
   LoadDDLRateType() {
@@ -109,8 +111,7 @@ export class SchmRegulerFixCFNAComponent implements OnInit {
       return;
     }
 
-    this.calcRegFixObj = this.ParentForm.getRawValue();
-    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentRegularFix, this.calcRegFixObj).subscribe(
+    this.http.post<ResponseCalculateObj>(this.GetUrlCalc(), this.ParentForm.getRawValue()).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
@@ -149,6 +150,11 @@ export class SchmRegulerFixCFNAComponent implements OnInit {
         }
       }
     );
+  }
+
+  GetUrlCalc(): string {
+    if (!this.TrialCalc) return URLConstant.CalculateInstallmentRegularFix;
+    return URLConstant.CalculateInstallmentRegularFixForTrialCalc;
   }
 
   SetInstallmentTable() {

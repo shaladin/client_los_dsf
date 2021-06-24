@@ -7,6 +7,7 @@ import { AppCustPersonalJobDataObj } from "./AppCustPersonalJobDataObj.Model";
 import { AppCustSocmedObj } from "./AppCustSocmedObj.Model";
 import { AppCustGrpObj } from "./AppCustGrpObj.Model";
 import { AppCustBankAccObj } from "./AppCustBankAccObj.Model";
+import { AppCustAssetObj } from "./AppCustAsset/AppCustAssetObj.Model";
 
 
 export class CustDataPersonalObj {
@@ -21,7 +22,8 @@ export class CustDataPersonalObj {
     AppCustPersonalJobDataObj: AppCustPersonalJobDataObj;
     AppCustSocmedObjs: Array<AppCustSocmedObj>;
     AppCustGrpObjs: Array<AppCustGrpObj>;
-    RowVersion: any;
+    AppCustAssetList: Array<AppCustAssetObj>;
+    RowVersion: string;
 
     constructor() { 
         this.AppCustObj = new AppCustObj(); 

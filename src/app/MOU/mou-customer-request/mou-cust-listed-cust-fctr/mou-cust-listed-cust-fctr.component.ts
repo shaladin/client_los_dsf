@@ -18,14 +18,16 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
   selector: 'app-mou-cust-listed-cust-fctr',
   templateUrl: './mou-cust-listed-cust-fctr.component.html'
 })
+
 export class MouCustListedCustFctrComponent implements OnInit {
   @Input() MouCustId: number;
   @Input() IsListedCustFctr: boolean;
   @Output() OutputData: EventEmitter<any> = new EventEmitter();
+  @Output() OutputIsListedCust: EventEmitter<any> = new EventEmitter();
   listedCusts: Array<MouCustListedCustFctrObj>;
   inputLookupObj: InputLookupObj;
   CustNoObj: GenericObj = new GenericObj();
-  dictLookup: {[key: string]: any;} = {};
+  dictLookup: {[key: string]: InputLookupObj;} = {};
   InputLookupCustomerObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
 
   MouCustIsListedForm = this.fb.group({
@@ -117,7 +119,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
           var mouListedFctr = new MouCustListedCustFctrObj();
           mouListedFctr.MouListedCustFctrId = custFctrId;
           this.httpClient.post(URLConstant.DeleteMouCustListedCustFctr, { Id: custFctrId}).subscribe(
-            (response: any) => {
+            (response) => {
               this.toastr.successMessage(response["Message"]);
             }
           );
@@ -149,16 +151,8 @@ export class MouCustListedCustFctrComponent implements OnInit {
   initLookup(){
     var InputLookupCustomerObj = new InputLookupObj();
     InputLookupCustomerObj.urlJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
-    InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
     InputLookupCustomerObj.pagingJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
     InputLookupCustomerObj.genericJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
-    InputLookupCustomerObj.ddlEnvironments = [
-      {
-        name: "A.MR_CUST_TYPE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
 
     return InputLookupCustomerObj;
   }
@@ -195,8 +189,13 @@ export class MouCustListedCustFctrComponent implements OnInit {
       CustNo: event.CustNo,
       CustName: event.CustName,
       MrCustTypeCode: event.MrCustTypeCode,
+      MrCustTypeDescr: event.CustTypeView
     });    
     var MouCustListedCustFctrObjs = this.MouCustIsListedForm.get("ListCust") as FormArray;
     this.OutputData.emit(MouCustListedCustFctrObjs.getRawValue());
+  }
+
+  changeIsListedCust(){
+    this.OutputIsListedCust.emit(this.MouCustIsListedForm.get("IsListedCust"));
   }
 }

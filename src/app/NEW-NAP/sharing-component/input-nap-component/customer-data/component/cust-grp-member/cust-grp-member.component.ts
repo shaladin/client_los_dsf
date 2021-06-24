@@ -1,6 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { environment } from 'environments/environment';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { FormBuilder, Validators, NgForm, FormGroup, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -10,20 +8,24 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { CustObj } from 'app/shared/model/CustObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-cust-grp-member',
   templateUrl: './cust-grp-member.component.html',
-  styleUrls: [],
+  styles:[
+    '.disabledLink { color: #ccc; pointer-events:none;}'
+  ],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 
 })
 
 export class CustGrpMemberComponent implements OnInit {
-
+  @Input() isLockMode: boolean = false;
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() appCustGrpObjs: Array<AppCustGrpObj>;
 
   refMasterObj = {
@@ -31,24 +33,21 @@ export class CustGrpMemberComponent implements OnInit {
   };
   custDataObj: CustDataObj;
 
-  dictLookup: {[key: string]: any;} = {};
+  dictLookup: {[key: string]: InputLookupObj;} = {};
 
   CustRelationshipObjs: [{
-    list: []  
+    list: Array<KeyValueObj>  
   }] = [{list: []}];
 
-  CustRelationshipPersonalObj: any;
-  CustRelationshipCompanyObj: any;
-  defaultCustRelationshipPersonalCode: any;
-  defaultCustRelationshipCompanyCode: any;
+  CustRelationshipPersonalObj: Array<KeyValueObj>;
+  CustRelationshipCompanyObj: Array<KeyValueObj>;
+  defaultCustRelationshipPersonalCode: string;
+  defaultCustRelationshipCompanyCode: string;
 
   InputLookupCustomerObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   lookupCustomerIdentifiers: Array<string> = new Array<string>();
 
   CustNoObj: GenericObj = new GenericObj();
-
-  custMasterObj: any;
-
 
   constructor(
     private fb: FormBuilder, 
@@ -107,17 +106,8 @@ export class CustGrpMemberComponent implements OnInit {
   initLookup(){
     var InputLookupCustomerObj = new InputLookupObj();
     InputLookupCustomerObj.urlJson = "./assets/uclookup/lookupCustGrp.json";
-    InputLookupCustomerObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-    InputLookupCustomerObj.urlEnviPaging = environment.FoundationR3Url;
     InputLookupCustomerObj.pagingJson = "./assets/uclookup/lookupCustGrp.json";
     InputLookupCustomerObj.genericJson = "./assets/uclookup/lookupCustGrp.json";
-
-    InputLookupCustomerObj.ddlEnvironments = [
-      {
-        name: "C.MR_CUST_TYPE_CODE",
-        environment: environment.FoundationR3Url
-      },
-    ];
 
     return InputLookupCustomerObj;
   }
@@ -170,47 +160,68 @@ export class CustGrpMemberComponent implements OnInit {
   }
 
   addGroup(appCustGrpObj : AppCustGrpObj, i){
-    if(appCustGrpObj == undefined){
-      return this.fb.group({
-        No: [i],
-        CustNo: ['', [Validators.required, Validators.maxLength(50)]],
-        CustName: [''],
-        MrCustRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
-        CustGrpNotes: ['', [Validators.maxLength(4000)]],
-        //IsReversible: [false]
-      })
+    if(this.isLockMode){
+      if(appCustGrpObj == undefined){
+        return this.fb.group({
+          No: [i],
+          CustNo: [''],
+          CustName: [''],
+          MrCustRelationshipCode: [''],
+          CustGrpNotes: [''],
+          //IsReversible: [false]
+        })
+      }else{
+        return this.fb.group({
+          No: [i],
+          CustNo: [appCustGrpObj.CustNo],
+          CustName: [''],
+          MrCustRelationshipCode: [appCustGrpObj.MrCustRelationshipCode],
+          CustGrpNotes: [appCustGrpObj.CustGrpNotes],
+          //IsReversible: [appCustGrpObj.IsReversible == null ? false : appCustGrpObj.IsReversible],
+        })
+      }
     }else{
-      return this.fb.group({
-        No: [i],
-        CustNo: [appCustGrpObj.CustNo, [Validators.required, Validators.maxLength(50)]],
-        CustName: [''],
-        MrCustRelationshipCode: [appCustGrpObj.MrCustRelationshipCode, [Validators.required, Validators.maxLength(50)]],
-        CustGrpNotes: [appCustGrpObj.CustGrpNotes, [Validators.maxLength(4000)]],
-        //IsReversible: [appCustGrpObj.IsReversible == null ? false : appCustGrpObj.IsReversible],
-      })
-    } 
+      if(appCustGrpObj == undefined){
+        return this.fb.group({
+          No: [i],
+          CustNo: ['', [Validators.required, Validators.maxLength(50)]],
+          CustName: [''],
+          MrCustRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
+          CustGrpNotes: ['', [Validators.maxLength(4000)]],
+          //IsReversible: [false]
+        })
+      }else{
+        return this.fb.group({
+          No: [i],
+          CustNo: [appCustGrpObj.CustNo, [Validators.required, Validators.maxLength(50)]],
+          CustName: [''],
+          MrCustRelationshipCode: [appCustGrpObj.MrCustRelationshipCode, [Validators.required, Validators.maxLength(50)]],
+          CustGrpNotes: [appCustGrpObj.CustGrpNotes, [Validators.maxLength(4000)]],
+          //IsReversible: [appCustGrpObj.IsReversible == null ? false : appCustGrpObj.IsReversible],
+        })
+      } 
+    }
   }
 
   async setCustNameAndCustRelationship(i, custNo){
     this.CustNoObj.CustNo = custNo;
     await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
-      (response) => {
-        this.custMasterObj = response;
-        this.dictLookup[i].nameSelect = response["CustName"];
+      (response: CustObj) => {
+        this.dictLookup[i].nameSelect = response.CustName;
         this.dictLookup[i].jsonSelect = response;
         this.InputLookupCustomerObjs[i].jsonSelect = response;
         
-        if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+        if(response.MrCustTypeCode == CommonConstant.CustTypePersonal){
           this.CustRelationshipObjs.push({list : this.CustRelationshipPersonalObj});
         }
 
-        if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+        if(response.MrCustTypeCode == CommonConstant.CustTypeCompany){
           this.CustRelationshipObjs.push({list : this.CustRelationshipCompanyObj});
         }
 
         this.parentForm.controls[this.identifier]["controls"][i].patchValue({
           CustNo: custNo,
-          CustName: response["CustName"]
+          CustName: response.CustName,
         });
       });
   }

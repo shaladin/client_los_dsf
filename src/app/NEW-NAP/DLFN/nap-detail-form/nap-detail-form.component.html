@@ -1,0 +1,119 @@
+<div class="col-md-12 text-left">
+  <div class="card">
+    <div class="px-3">
+      <div class="form-action pull-right">
+        <button *ngIf="ReturnHandlingHId > 0" type="button" class="btn btn-raised btn-warning margin-r-5"
+          [routerLink]="['/Nap/AddProcess/ReturnHandling/EditAppPaging']" [queryParams]="{BizTemplateCode:'CFNA'}"
+          translate>
+          <i class="ft-x"></i> Cancel
+        </button>
+      </div>
+    </div>
+    <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallback($event)" #viewMainProd>
+    </lib-ucviewgeneric>
+    <div class="card-body">
+      <div class="px-3">
+        <div class="card" *ngIf="ReturnHandlingHId > 0">
+          <lib-ucSubsection [id]="'formReturnInfoId'" [title]="'Return Handling'" [panel]="'formReturnInfo'">
+          </lib-ucSubsection>
+          <div class="form-body" *ngIf="ReturnHandlingHId > 0 && OnFormReturnInfo" [id]="'formReturnInfo'">
+            <form class="form form-horizontal" [formGroup]="FormReturnObj" (ngSubmit)="FormReturnObj.valid"
+              #enjiForm="ngForm">
+              <div class="form-body">
+                <div class="form-group row">
+                  <div class="form-group col-md-2">
+                    <label class="adInsLabel">Return Notes</label>
+                  </div>
+                  <div class="col-md-4">
+                    <label class="adInsLabel">{{ ResponseReturnInfoObj.ReturnHandlingNotes }}</label>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label class="adInsLabel">Return Execution Notes</label>
+                  </div>
+                  <div class="col-md-4">
+                    <textarea type="textarea" row="5" class="form-control" formControlName="ReturnExecNotes"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && FormReturnObj.controls.ReturnExecNotes.invalid}"></textarea>
+                    <lib-uc-show-errors [control]="ReturnExecNotes" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div id="stepper1" class="bs-stepper">
+          <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
+            <!-- your steps here -->
+            <div class="step" data-target="#application-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="application-tab"
+                id="application-tab-trigger" [disabled]="!(AppStepIndex >= 1)" (click)="ChangeTab('APP')">
+                <span class="bs-stepper-circle">1</span>
+                <span class="bs-stepper-label">Application Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#invoice-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="invoice-tab" id="invoice-tab-trigger"
+                [disabled]="!(AppStepIndex >= 2)" (click)="ChangeTab('INVOICE')">
+                <span class="bs-stepper-circle">2</span>
+                <span class="bs-stepper-label">Invoice Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#financial-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="financial-tab"
+                id="financial-tab-trigger" [disabled]="!(AppStepIndex >= 3)" (click)="ChangeTab('FIN')">
+                <span class="bs-stepper-circle">3</span>
+                <span class="bs-stepper-label">Financial Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#TC-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="TC-tab" id="TC-tab-trigger"
+                [disabled]="!(AppStepIndex >= 4)" (click)="ChangeTab('TC')">
+                <span class="bs-stepper-circle">4</span>
+                <span class="bs-stepper-label">Term & Conditions</span>
+              </button>
+            </div>
+          </div>
+          <br><br>
+          <div class="bs-stepper-content">
+            <!-- your steps content here -->
+            <div id="application-tab" class="content" role="tabpanel" aria-labelledby="application-tab-trigger">
+              <app-application-data-dlfn *ngIf="AppStepIndex == 1" [AppId]="appId"
+                (outputTab)="NextStep('INVOICE')" (outputCancel)="Cancel()"></app-application-data-dlfn>
+            </div>
+            <div id="invoice-tab" class="content" role="tabpanel" aria-labelledby="invoice-tab-trigger">
+              <app-invoice-data-dlfn *ngIf="AppStepIndex == 2" [AppId]="appId" (outputTab)="NextStep('FIN')" (outputCancel)="Cancel()">
+              </app-invoice-data-dlfn>
+            </div>
+            <div id="financial-tab" class="content" role="tabpanel" aria-labelledby="financial-tab-trigger">
+              <app-financial-data-dlfn *ngIf="AppStepIndex == 3" [AppId]=appId (outputTab)="NextStep('TC')" (outputCancel)="Cancel()">
+              </app-financial-data-dlfn>
+            </div>
+            <div id="TC-tab" class="content" role="tabpanel" aria-labelledby="TC-tab-trigger">
+              <app-tc-data *ngIf="AppStepIndex == 4" [AppId]="appId" (outputTab)="LastStepHandler()" (outputCancel)="Cancel()" [showCancel]="'true'"></app-tc-data>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<!-- <div class="col-md-12">
+  <div class="form-action pull-right">
+  </div>
+  <div class="card" *ngIf="ReturnHandlingHId > 0">
+    <div class="card-body">
+      <div class="px-3">
+        <div class="form-action pull-right">
+          <button *ngIf="ReturnHandlingHId > 0 && IsLastStep" type="button" (click)="Submit()"
+            class="btn btn-raised btn-primary">
+            <i class="far fa-check-square"></i> Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

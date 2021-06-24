@@ -98,7 +98,7 @@
               <div class="form-group row">
                 <label class="col-md-2" for="idType" translate>Id Type</label>
                 <div class="col-md-4">
-                  <select class="form-control" id="idType" formControlName="MrIdTypeCode"
+                  <select (change)=onChangeIdType() class="form-control" id="idType" formControlName="MrIdTypeCode"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.MrIdTypeCode.invalid }">
                     <option *ngFor="let item of IdTypeObj" [value]="item.Key">
                       {{item.Value}}
@@ -113,7 +113,7 @@
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.BirthPlace" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <div class="col-md-2">
-                  <input type="date" class="form-control" formControlName="BirthDt" id="birthDt" [max]="businessDt | date: 'yyyy-MM-dd'" onkeypress="return false;"
+                  <input type="date" class="form-control" formControlName="BirthDt" id="birthDt" [max]="businessDt | date: 'yyyy-MM-dd'"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && CustShareholderForm.controls.BirthDt.invalid}">
                   <lib-uc-show-errors [control]="CustShareholderForm.controls.BirthDt" [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
@@ -205,7 +205,7 @@
                 </div>
                 <label class="col-md-2" for="establishmentDt" translate>Establishment Date</label>
                 <div class="col-md-4">
-                  <input type="date" id="establishmentDt" class="form-control" [max]="businessDt | date: 'yyyy-MM-dd'" onkeypress="return false;" formControlName="EstablishmentDt">
+                  <input type="date" id="establishmentDt" class="form-control" [max]="businessDt | date: 'yyyy-MM-dd'" formControlName="EstablishmentDt">
                 </div>
               </div>
               <div class="form-group row">

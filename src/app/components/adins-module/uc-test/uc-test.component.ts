@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef, Inject, Renderer2, Eve
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, NgForm } from '@angular/forms';
-import { formatDate } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { DOCUMENT } from '@angular/platform-browser';
 import { trigger, transition, style, animate, state } from '@angular/animations';
 import { ToastrService } from 'ngx-toastr';
@@ -12,12 +12,13 @@ import { KeyValueReportObj } from '@adins/ucsearch/lib/model/KeyValueReport.mode
 import { RequestCriteriaObj } from 'app/shared/model/RequestCriteriaObj.model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-uc-test',
   templateUrl: './uc-test.component.html',
   styleUrls: ['./uc-test.component.css'],
-  providers: [ExcelService],
+  providers: [ExcelService, DatePipe],
   animations: [
     trigger('changeDivSize', [
       state('initial', style({
@@ -70,12 +71,14 @@ export class UcTestComponent implements OnInit {
 
   ExportType: number = 0;
 
-  pageNow: any = 1;
+  pageNow: number = 1;
   configuration: any;
   exportData: any;
   ExcelData: any;
   isDataLoaded: boolean = false;
   isHidden: boolean = false;
+  BisDt: string;
+  dateWrong: boolean = false;
 
   currentState = 'initial';
 
@@ -85,8 +88,11 @@ export class UcTestComponent implements OnInit {
   amount = 0;
   apiUrl: string;
   arrCrit: any;
+  searchForm: NgForm;
+
   constructor(private http: HttpClient, private excelService: ExcelService, private _renderer2: Renderer2,
-    @Inject(DOCUMENT) private _document, public toastr: ToastrService) {
+    @Inject(DOCUMENT) private _document, public toastr: ToastrService, private cookieService: CookieService,
+    private datePipe: DatePipe) {
   }
 
   changeState() {
@@ -108,6 +114,8 @@ export class UcTestComponent implements OnInit {
         `;
     this._renderer2.appendChild(this._document.body, js);
 
+    let value = this.cookieService.get('BusinessDateRaw');
+    this.BisDt = this.DecryptString(value, "AdInsFOU12345678");
     this.initiateForm();
   }
 
@@ -176,30 +184,48 @@ export class UcTestComponent implements OnInit {
         //pengecekan tanggal
         if (data.component[i].type == "datepicker") {
           if (data.component[i].value.includes("BD")) {
-            let llsBD = localStorage.getItem("BusinessDateRaw");
             let businessDate = new Date();
-            if (llsBD != null) {
-              businessDate = new Date(llsBD);
+            if (this.BisDt != null) {
+              businessDate = new Date(this.BisDt);
             }
             var operator = data.component[i].value.charAt(2);
             var dateShow = new Date();
             if (operator == "-") {
               var tempMinus = data.component[i].value.split("-", 2);
               var numDay = parseInt(tempMinus[1]);
-              dateShow.setDate(businessDate.getDate() - numDay);
+              businessDate.setDate(businessDate.getDate() - numDay);
             }
             else if (operator == "+") {
               var tempMinus = data.component[i].value.split("+", 2);
               var numDay = parseInt(tempMinus[1]);
-              dateShow.setDate(businessDate.getDate() + numDay);
-            } else {
-              dateShow = businessDate;
+              businessDate.setDate(businessDate.getDate() + numDay);
             }
+            dateShow = businessDate;
             var dateText = formatDate(dateShow, 'yyyy-MM-dd', 'en-US')
             data.component[i].value = dateText;
           }
+
+          if(data.component[i].restriction != undefined && data.component[i].restriction != ""){
+            if (data.component[i].restriction.toUpperCase() == "GT") {//&& (data.component[i].minDate != undefined || data.component[i].minDate != "")
+              let minDate = new Date(this.datePipe.transform(data.component[i].minDate, 'yyyy-MM-dd'));
+              minDate.setDate(minDate.getDate() + 1);
+              data.component[i].minDate = minDate;
+              } else if (data.component[i].restriction.toUpperCase() == "LT") {
+                let maxDate = new Date(this.datePipe.transform(data.component[i].maxDate, 'yyyy-MM-dd'));
+              maxDate.setDate(maxDate.getDate() - 1);
+              data.component[i].maxDate = maxDate;
+            }
+          }
         }
       }
+
+      setTimeout(() => {
+        for (let j = 0; j < this.countForm; j++) {
+          if (data.component[j].isEvent == true && this.configuration.component[j].itemsUrl.length == 1) {
+            this.onChangeEvent(data.component[j].itemsUrl[0].Key, data.component[j]);
+          }
+        }
+      }, 1000);
     });
   }
 
@@ -211,12 +237,15 @@ export class UcTestComponent implements OnInit {
     return this.http.post(url, criteria);
   }
 
-  test(ev) {
-    console.log(ev.valid);
-  }
-
-  searchClick(ev) {
-    console.log(ev);
+  searchClick() {
+    // for(let i=0;i<this.countForm;i++){
+    //   if(this.configuration.component[i].type == "datepicker"){
+    //     if ((i != (this.countForm-1)) && (this.configuration.component[i].name != this.configuration.component[i+1].name)){
+    //       this.checkInputDate(this.configuration.component[i]);
+    //     }
+    //   }
+    // }
+    // if(this.dateWrong) return;
 
     let order = null;
     if (this.configuration.orderby != null) {
@@ -229,9 +258,8 @@ export class UcTestComponent implements OnInit {
     this.search(this.apiUrl, this.pageNow, this.pageSize, order, this.arrCrit);
   }
 
-  reset(ev: NgForm) {
-    ev.resetForm();
-
+  reset() {
+    this.searchForm.resetForm();
     this.ExportType = this.ExportTypeList[0].key;
     this.initiateForm();
   }
@@ -258,7 +286,7 @@ export class UcTestComponent implements OnInit {
       let critObj = new CriteriaObj();
       let component = this.myForm.nativeElement[i];
 
-      // popup message if required
+      // // popup message if required
       // if (component.getAttribute('data-required') != null && component.getAttribute('data-required') == "true") {
       //   let val = component.value.trim();
       //   if (val == "") {
@@ -416,6 +444,11 @@ export class UcTestComponent implements OnInit {
     request.orderBy = null;
     request.criteria = [];
     request.queryString = this.configuration.querystring;
+    if (!this.searchInput.isJoinExAPI) {
+      request.integrationObj = null;
+    } else {
+      request.integrationObj = this.searchInput.integrationObj;
+    }
 
     this.http.post(this.apiUrl, request).subscribe(
       response => {
@@ -456,6 +489,13 @@ export class UcTestComponent implements OnInit {
               for (let y = 0; y < this.searchInput.ddlEnvironments.length; y++) {
                 if (jsonComp[j].name == this.searchInput.ddlEnvironments[y].name) {
                   jsonComp[j].fullpath = this.searchInput.ddlEnvironments[y].environment + jsonComp[j].path;
+                  break;
+                }
+              }
+            } else if (this.searchInput.listEnvironments != undefined && this.searchInput.listEnvironments.length != 0) {
+              for (let y = 0; y < this.searchInput.listEnvironments.length; y++) {
+                if (jsonComp.component[j].environment == this.searchInput.listEnvironments[y].environment) {
+                  jsonComp.component[j].fullpath = this.searchInput.listEnvironments[y].url + jsonComp.component[j].path;
                   break;
                 }
               }
@@ -583,5 +623,69 @@ export class UcTestComponent implements OnInit {
     }
     return condition;
 
+  }
+
+  private DecryptString(chipperText: string, chipperKey: string) {
+    if (
+      chipperKey == undefined || chipperKey.trim() == '' ||
+      chipperText == undefined || chipperText.trim() == ''
+    ) return chipperText;
+    var chipperKeyArr = CryptoJS.enc.Utf8.parse(chipperKey);
+    var iv = CryptoJS.lib.WordArray.create([0x00, 0x00, 0x00, 0x00]);
+    var decrypted = CryptoJS.AES.decrypt(chipperText, chipperKeyArr, { iv: iv });
+    var plainText = decrypted.toString(CryptoJS.enc.Utf8);
+    return plainText;
+  }
+
+  checkInputDate(component: any) {
+    let minDateVal;
+    let maxDateVal;
+    let label;
+    let errorMessage = new Array<string>();
+
+    let MinComponent = this.configuration.component.find(x => x.name == component.name && (x.restriction.toUpperCase() == "GTE")) == undefined ? this.configuration.component.find(x => x.name == component.name && (x.restriction.toUpperCase() == "GT")) : this.configuration.component.find(x => x.name == component.name && (x.restriction.toUpperCase() == "GTE"));
+    if (MinComponent != undefined) {
+      minDateVal = this.myForm.nativeElement[MinComponent.id].min == "" ? null : new Date(this.myForm.nativeElement[MinComponent.id].min);
+      label = MinComponent.label.split(">", 2);
+      if(minDateVal != null){
+        if (MinComponent.restriction.toUpperCase() == "GT") {
+          minDateVal.setDate(minDateVal.getDate() - 1);
+          errorMessage.push(" must be greater than ");
+        } else if (MinComponent.restriction.toUpperCase() == "GTE") {
+          errorMessage.push(" must be greater than or equals to ");
+        }
+      }
+    }
+
+    let MaxComponent = this.configuration.component.find(x => x.name == component.name && (x.restriction.toUpperCase() == "LTE")) == undefined ? this.configuration.component.find(x => x.name == component.name && (x.restriction.toUpperCase() == "LT")) : this.configuration.component.find(x => x.name == component.name && (x.restriction.toUpperCase() == "LTE"));
+    if (MaxComponent != undefined) {
+      maxDateVal = this.myForm.nativeElement[MaxComponent.id].max == "" ? null : new Date(this.myForm.nativeElement[MaxComponent.id].max);
+      label = MaxComponent.label.split("<", 2);
+      if(maxDateVal != null){
+        if (MaxComponent.restriction.toUpperCase() == "LT") {
+          maxDateVal.setDate(maxDateVal.getDate() + 1);
+          errorMessage.push(" must be less than ");
+        } else if (MaxComponent.restriction.toUpperCase() == "LTE") {
+          errorMessage.push(" must be less than or equals to ");
+        }
+      }
+    }
+
+    if (minDateVal != null && maxDateVal == null && new Date(this.myForm.nativeElement[MinComponent.id].value) < minDateVal) {
+      this.toastr.warning(label[0] + errorMessage[0] + formatDate(minDateVal, 'dd MMMM yyyy', 'en-US') + ".")
+      this.dateWrong = true;
+    } else if (maxDateVal != null && minDateVal == null && new Date(this.myForm.nativeElement[MaxComponent.id].value) > maxDateVal) {
+      this.toastr.warning(label[0] + errorMessage[0] + formatDate(maxDateVal, 'dd MMMM yyyy', 'en-US') + ".")
+      this.dateWrong = true;
+    } else if (minDateVal != null && maxDateVal != null) {
+      if (new Date(this.myForm.nativeElement[MaxComponent.id].value) > maxDateVal || new Date(this.myForm.nativeElement[MinComponent.id].value) < minDateVal) {
+        this.toastr.warning(label[0] + errorMessage[0] + formatDate(minDateVal, 'dd MMMM yyyy', 'en-US') + " and" + errorMessage[1] + formatDate(maxDateVal, 'dd MMMM yyyy', 'en-US') + ".")
+        this.dateWrong = true;
+      } else {
+        this.dateWrong = false;
+      }
+    } else {
+      this.dateWrong = false;
+    }
   }
 }

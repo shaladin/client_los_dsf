@@ -1,11 +1,11 @@
 export class GeneralSettingObj {
-  GeneralSettingId: any;
-  GsCode: any;
-  GsName: any;
-  GsValue: any;
-  GsDescr: any;
-  RefModuleId: any;
-  ModuleCode: any;
+  GeneralSettingId: number;
+  GsCode: string;
+  GsName: string;
+  GsValue: string;
+  GsDescr: string;
+  RefModuleId: number;
+  ModuleCode: string;
   ListGsCode : Array<string>;
   constructor() { this.GeneralSettingId = 0; this.ListGsCode = new Array();}
 }

@@ -27,7 +27,7 @@ export class CustCompletionOplDetailComponent implements OnInit {
   AppId: number;
   wfTaskListId: number;
   BizTemplateCode: string = "OPL";
-  addObj: any = {};
+  addObj: object = {};
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
   });

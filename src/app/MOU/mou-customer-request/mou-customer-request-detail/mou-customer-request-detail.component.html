@@ -22,20 +22,13 @@
                     (click)="OpenView('mou')">{{MOUMainInfoForm.controls.MouCustNo.value}}</a>
                 </div>
               </div>
-              <!-- <div class="form-group row">
-                <label class="col-md-3 adInsLabel" for="CustName" translate>Customer Name</label>
-              <div class="col-md-4" *ngIf="pageType == 'add'">
-                <lib-uclookupgeneric [lookupInput]="inputLookupCust" [parentForm]='MOUMainInfoForm' [enjiForm]='enjiForm' [identifier]="'CustLookup'"
-                    (lookup)="getCustLookupResponse($event)"></lib-uclookupgeneric>
-              </div> -->
               <div class="form-group row">
                 <label class="col-md-3 adInsLabel adins-required-label" for="StartDtEndDt" translate>Start Date -
                   End Date</label>
                 <div class="col-md-3">
                   <input type="date" class="form-control adInsInput" formControlName="StartDt"
-                    [max]="businessDt | date: 'yyyy-MM-dd'"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.StartDt.invalid }"
-                    onkeypress="return false;" />
+                    [max]="businessDt | date: 'yyyy-MM-dd'"(focusout) ="checkStartDate($event)"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.StartDt.invalid }" />
                   <lib-uc-show-errors [control]="MOUMainInfoForm.controls.StartDt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -44,9 +37,8 @@
                 </div>
                 <div class="col-md-3">
                   <input type="date" class="form-control adInsInput" formControlName="EndDt"
-                    [min]="this.MOUMainInfoForm.controls.StartDt.value | date: 'yyyy-MM-dd'"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.EndDt.invalid }"
-                    onkeypress="return false;" />
+                    [min]="businessDt | date: 'yyyy-MM-dd'"(focusout) ="checkEndDate($event)"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.EndDt.invalid }"/>
                   <lib-uc-show-errors [control]="MOUMainInfoForm.controls.EndDt" [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </div>
@@ -76,7 +68,19 @@
                 </select>
               </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row" *ngIf="mouType != 'GENERAL'">
+              <label class="col-md-3 adInsLabel adins-required-label" for="PlafondType" translate>Plafond
+                Type</label>
+              <div class="col-md-4">
+                <select class="form-control" id="plafondType" formControlName="PlafondType" (change)="onChangePlafondType()"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.PlafondType.invalid }">
+                <option *ngFor="let item of plafondTypeObj" [value]="item.MasterCode">
+                  {{item.Descr}}
+                </option>
+              </select>
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="MOUMainInfoForm.controls.PlafondType.value == 'BOAMT'">
               <label class="col-md-3 adInsLabel adins-required-label" for="PlafondAmt" translate>Plafond
                 Amount</label>
               <div class="col-md-4">

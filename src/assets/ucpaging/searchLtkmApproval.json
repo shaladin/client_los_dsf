@@ -1,0 +1,206 @@
+{
+  "title": "Ltkm Approval Paging",
+  "exportExcel": true,
+  "component": [
+    {
+      "type": "textbox",
+      "name": "LC.CUST_NO",
+      "id": "CustNo",
+      "value": "",
+      "label": "Customer No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "LC.CUST_NAME",
+      "id": "CustName",
+      "value": "",
+      "label": "Customer Name",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "LR.LTKM_NO",
+      "id": "LtkmNoId",
+      "value": "",
+      "label": "LTKM NO",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "LC.ID_NO",
+      "id": "IdNo",
+      "value": "",
+      "label": "Id No",
+      "placeholder": "Placeholder"
+    },
+    {
+      "type": "textbox",
+      "name": "ATL.CURRENT_USER_ID",
+      "id": "CurrentUserId",
+      "value": "",
+      "label": "Claim By",
+      "placeholder": "Placeholder"
+    }
+  ],
+  "headerList": [
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "Claim By",
+      "name": "CurrentUser"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "CUSTOMER NO",
+      "name": "LC.CUST_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "CUSTOMER NAME",
+      "name": "LC.CUST_NAME"
+    },
+    {
+      "type": "sort",
+      "position": "center",
+      "label": "LTKM NO",
+      "name": "LR.LTKM_NO"
+    },
+    {
+      "type": "sort",
+      "position": "left",
+      "label": "ID NO",
+      "name": "LC.ID_NO"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Process"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Hold"
+    },
+    {
+      "type": "label",
+      "position": "center",
+      "label": "Take Back"
+    }
+  ],
+  "querystring": {
+    "name": "searchLtkmApprval"
+  },
+  "bodyList": [
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CurrentUser"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
+                {
+                  "property": "MrCustTypeCode",
+                  "value": "PERSONAL",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "link",
+                "position": "left",
+                "property": "CustNo",
+                "path": "VIEW_FOU_CUST_PERSONAL_DETAIL",
+                "target": "_blank",
+                "param": [
+                  {
+                    "type": "CustId",
+                    "property": "CustId"
+                  }
+                ]
+              },
+              "isHide": false
+            },
+            {
+              "conditions": [
+                {
+                  "property": "MrCustTypeCode",
+                  "value": "COMPANY",
+                  "restriction": "EQ"
+                }
+              ],
+              "result": {
+                "type": "link",
+                "position": "left",
+                "property": "CustNo",
+                "path": "VIEW_FOU_CUST_COY_DETAIL",
+                "target": "_blank",
+                "param": [
+                  {
+                    "type": "CustId",
+                    "property": "CustId"
+                  }
+                ]
+              },
+              "isHide": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "CustName"
+    },
+    {
+      "type": "callback",
+      "key": "ltkmno",
+      "position": "left",
+      "property": "LtkmNo"
+    },
+    {
+      "type": "text",
+      "position": "left",
+      "property": "IdNo"
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "callback",
+          "key": "Process"
+        }
+      ]
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "callback",
+          "key": "HoldTask"
+        }
+      ]
+    },
+    {
+      "type": "action",
+      "position": "center",
+      "action": [
+        {
+          "type": "callback",
+          "key": "TakeBack"
+        }
+      ]
+    }
+  ]
+}

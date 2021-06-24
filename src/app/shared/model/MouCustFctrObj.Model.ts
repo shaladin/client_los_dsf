@@ -1,22 +1,27 @@
 export class MouCustFctrObj {
-    MouCustFctrId: any;
-    MouCustId: any;
-    MrRecourseTypeCode: any;
-    IsDisclosed: any;
-    WopCode: any;
-    MrPaidByCode: any;
-    MrInstTypeCode: any;
-    SingleInstCalcMthd: any;
-    TopDays: any;
-    TenorFrom: any;
-    TenorTo: any;
-    PayFreqCode: any;
-    MrInstSchmCode: any;
-    InterestRatePrcnt: any;
-    RetentionPrcnt: any;
-    IsListedCust: any;
-    Notes: any;
-    CurrCode: any;
-    RowVersion: any;
+    MouCustFctrId: number;
+    MouCustId: number;
+    MrRecourseTypeCode: string;
+    IsDisclosed: boolean;
+    WopCode: string;
+    MrPaidByCode: string;
+    MrInstTypeCode: string;
+    SingleInstCalcMthd: string;
+    TopDays: number;
+    TenorFrom: number;
+    TenorTo: number;
+    PayFreqCode: string;
+    MrInstSchmCode: string;
+    InterestRatePrcnt: string;
+    RetentionPrcnt: string;
+    IsListedCust: boolean;
+    Notes: string;
+    CurrCode: string;
+    VendorCode: string;
+    InstTypeDescr: string;
+    RowVersion: string;
+    MrFirstInstTypeCode: string;
+    DownPaymentFromPrcnt: number;
+    DownPaymentToPrcnt: number;
     constructor(){ this.MouCustFctrId = 0; this.RowVersion = '' }
 }

@@ -14,6 +14,8 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Model';
+import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
 
 @Component({
   selector: 'app-lead-input-page',
@@ -31,12 +33,14 @@ export class LeadInputPageComponent implements OnInit {
   viewLeadHeaderMainInfo: UcViewGenericObj = new UcViewGenericObj();
   pageType: string;
   dmsObj: DMSObj;
-  SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
+  SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
   @ViewChild("LeadMainInfo", { read: ViewContainerRef }) leadMainInfo: ViewContainerRef;
   AppStepIndex: number = 1;
   customObj: any;
   isDmsReady: boolean = false;
   isDmsData: boolean;
+
+
   constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["LeadId"] != null) {
@@ -59,15 +63,15 @@ export class LeadInputPageComponent implements OnInit {
     });
   }
 
-  async ngOnInit() : Promise<void> {
-    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+  async ngOnInit(): Promise<void> {
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
       });
     await this.http.post(URLConstant.GetLeadByLeadId, { Id: this.LeadId }).toPromise().then(
       (response) => {
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-        if(this.SysConfigResultObj.ConfigValue == '1'){
+        if (this.SysConfigResultObj.ConfigValue == '1') {
           this.dmsObj = new DMSObj();
           this.dmsObj.User = currentUserContext.UserName;
           this.dmsObj.Role = currentUserContext.RoleCode;
@@ -83,12 +87,6 @@ export class LeadInputPageComponent implements OnInit {
       this.claimTask();
     }
     this.viewLeadHeaderMainInfo.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
-    this.viewLeadHeaderMainInfo.ddlEnvironments = [
-      {
-        name: "LeadNo",
-        environment: environment.losR3Web
-      },
-    ];
     this.stepper = new Stepper(document.querySelector('#stepper1'), {
       linear: false,
       animation: true
@@ -125,7 +123,7 @@ export class LeadInputPageComponent implements OnInit {
   }
 
   editMainInfoHandler() {
-    var modeName: string;
+    let modeName: string;
     if (this.pageType == undefined) {
       modeName = "edit";
     }
@@ -160,12 +158,12 @@ export class LeadInputPageComponent implements OnInit {
         }
         else if (this.AppStepIndex == 3) {
           this.customObj = ev;
-          if(this.SysConfigResultObj.ConfigValue == '0'){
+          if (this.SysConfigResultObj.ConfigValue == '0') {
             this.endOfTab()
-          }else{
+          } else {
             this.EnterTab("uploadDocument")
           }
-         
+
         }
 
       }
@@ -187,7 +185,7 @@ export class LeadInputPageComponent implements OnInit {
 
   async claimTask() {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.TaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
+    let wfClaimObj = { pWFTaskListID: this.TaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
     this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       () => {
       });
@@ -200,7 +198,18 @@ export class LeadInputPageComponent implements OnInit {
         this.http.post(URLConstant.GetLeadAppByLeadId, { Id: this.customObj.LeadInputLeadDataObj.LeadAppObj.LeadId }).subscribe(
           (response) => {
             this.customObj.LeadInputLeadDataObj.LeadAppObj.RowVersion = response["RowVersion"];
-            this.http.post(this.customObj.urlPost, this.customObj.LeadInputLeadDataObj).subscribe(
+            let urlPost = this.customObj.urlPost;
+
+            //Dari DSF
+            if (this.customObj.typePage != "edit" || this.customObj.typePage != "update") {
+              if (this.customObj["lobKta"] != undefined) {
+                if (this.customObj.lobKta.includes(this.customObj.returnLobCode) == true) {
+                  urlPost = URLConstant.SubmitWorkflowLeadInputKta;
+                }
+              }
+            }
+
+            this.http.post(urlPost, this.customObj.LeadInputLeadDataObj).subscribe(
               () => {
                 this.cancelHandler();
               }

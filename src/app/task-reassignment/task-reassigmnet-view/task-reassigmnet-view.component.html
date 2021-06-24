@@ -1,0 +1,54 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="px-3">
+        <lib-ucSubsection [id]="'TaskReassignmentDetailId'" [title]="'Task Reassignment Detail'" [panel]="'TaskReassignmentDetailSection'">
+        </lib-ucSubsection>
+        <div id="TaskReassignmentDetailSection">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-md-4" translate>Task Reassignment No.</label>
+                <label class="col-md-8" translate>{{TaskReassignmentObj.TaskReassignmentTrxNo}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4" translate>Transaction No.</label>
+                <label class="col-md-8" translate>{{TaskReassignmentObj.WfRefNo}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4" translate>Old Current User</label>
+                <label class="col-md-8">{{TaskReassignmentObj.OldCurrentUser}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4" translate>Current User</label>
+                <label class="col-md-8">{{TaskReassignmentObj.CurrentUser}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4" translate>Approval Date</label>
+                <label class="col-md-8">{{TaskReassignmentObj.ApvDt == null ? '-': TaskReassignmentObj.ApvDt | date: 'dd-MMM-yyyy'}}</label>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label class="col-md-4" translate>Office</label>
+                <label class="col-md-8" translate>{{TaskReassignmentObj.OfficeName}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4" translate>Workflow Name</label>
+                <label class="col-md-8" translate>{{TaskReassignmentObj.WfName}}</label>
+              </div> 
+              <div class="form-group row">
+                <label class="col-md-4" translate>Activity Name</label>
+                <label class="col-md-8">{{TaskReassignmentObj.WfActivityName}}</label>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4" translate>Status</label>
+                <label class="col-md-8">{{TaskReassignmentObj.TaskReassignmentStat}}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

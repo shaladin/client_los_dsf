@@ -14,6 +14,8 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { ResultRefundObj } from 'app/shared/model/AppFinData/ResultRefund.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { AppFeeObj } from 'app/shared/model/AppFeeObj.Model';
+import { AppCommissionHObj } from 'app/shared/model/AppCommissionHObj.Model';
 
 @Component({
   selector: "reserved-fund",
@@ -21,12 +23,6 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
   providers: [NGXToastrService]
 })
 export class ReservedFundComponent implements OnInit {
-
-  getAppFeeUrl: any;
-  getAppRsvFundUrl: any;
-  getAppRsvFundRuleUrl: any;
-  // getMaxAllocAmtRsvFundUrl: any;
-
   RsvForm = this.fb.group({
     ReservedFundObjs: this.fb.array([])
   });
@@ -36,27 +32,27 @@ export class ReservedFundComponent implements OnInit {
   @Input() maxAllocAmt: number = 0;
   @Input() totalExpenseAmt: number = 0;
   @Input() totalRsvFundAmt: number = 0;
-  @Input() DictMaxIncomeForm: any = {};
+  @Input() DictMaxIncomeForm: object = {};
   @Input() ListResultRefundIncomeInfo: Array<ResultRefundObj>;
   @Output() outputTab: EventEmitter<AllAppReservedFundObj> = new EventEmitter();
   @Output() outputDictRemaining: EventEmitter<any> = new EventEmitter();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
-  @Output() outputUpdateRemainingAlloc: EventEmitter<any> = new EventEmitter();
+  @Output() outputUpdateRemainingAlloc: EventEmitter<number> = new EventEmitter();
 
   appReservedFundObjs: Array<AppReservedFundObj>;
   allAppReservedFundObj: AllAppReservedFundObj = new AllAppReservedFundObj();
   isCalculated: boolean = false;
-  uppingRate: any;
-  insuranceIncome: any;
-  lifeInsuranceIncome: any;
-  appFeeObj: any;
+  // uppingRate: number;
+  // insuranceIncome: number;
+  // lifeInsuranceIncome: any;
+  appFeeObj: Array<AppFeeObj>;
   ruleObj: any;
   calcGrossYieldObj: any;
   // maxAllocatedAmt: any;
-  remainingAllocatedAmt: any;
+  remainingAllocatedAmt: number;
   // totalRsvFundAmt: number = 0;
-  totalRsvFundAmtWhenSave: any;
-  grossYield: any;
+  totalRsvFundAmtWhenSave: number;
+  grossYield: number;
   show: boolean = false;
   maxAllocatedRefundAmt: number = 0;
   // totalExpenseAmt: number = 0;
@@ -69,16 +65,8 @@ export class ReservedFundComponent implements OnInit {
     });
   }
 
-  initUrl() {
-    this.getAppFeeUrl = URLConstant.GetListAppFeeByAppId;
-    this.getAppRsvFundUrl = URLConstant.GetListAppReservedFundByAppId;
-    this.getAppRsvFundRuleUrl = URLConstant.CreateRsvFundRule;
-    // this.getMaxAllocAmtRsvFundUrl = URLConstant.CreateMaxAllocAmtRsvFund;
-  }
-
   async ngOnInit() {
     this.allAppReservedFundObj = new AllAppReservedFundObj();
-    this.initUrl();
     var appObj = {
       Id: this.ReturnHandlingHObj.AppId
     };
@@ -147,19 +135,19 @@ export class ReservedFundComponent implements OnInit {
     }
   }
 
-  GetAppFinData(appObj) {
-    this.http.post(URLConstant.GetIncomeInfoRsvFund, appObj).subscribe(
-      (response) => {
-        this.uppingRate = response["DiffRateAmt"];
-        this.insuranceIncome = response["TotalInsCustAmt"] - response["TotalInsInscoAmt"];
-        this.lifeInsuranceIncome = response["TotalLifeInsCustAmt"] - response["TotalLifeInsInscoAmt"];
-        this.maxAllocatedRefundAmt = response["MaxAllocatedRefundAmt"];
-        this.totalExpenseAmt = response["TotalExpenseAmt"];
-        this.totalRsvFundAmt = response["ReservedFundAllocatedAmt"];
-        this.calculatedRemainingAmt();
-      }
-    );
-  }
+  // GetAppFinData(appObj) {
+  //   this.http.post(URLConstant.GetIncomeInfoRsvFund, appObj).subscribe(
+  //     (response) => {
+  //       this.uppingRate = response["DiffRateAmt"];
+  //       this.insuranceIncome = response["TotalInsCustAmt"] - response["TotalInsInscoAmt"];
+  //       this.lifeInsuranceIncome = response["TotalLifeInsCustAmt"] - response["TotalLifeInsInscoAmt"];
+  //       this.maxAllocatedRefundAmt = response["MaxAllocatedRefundAmt"];
+  //       this.totalExpenseAmt = response["TotalExpenseAmt"];
+  //       this.totalRsvFundAmt = response["ReservedFundAllocatedAmt"];
+  //       this.calculatedRemainingAmt();
+  //     }
+  //   );
+  // }
 
   calculatedRemainingAmt() {
     this.remainingAllocatedAmt = this.maxAllocAmt - this.totalExpenseAmt - this.totalRsvFundAmt;
@@ -167,7 +155,7 @@ export class ReservedFundComponent implements OnInit {
     this.outputUpdateRemainingAlloc.emit(this.totalRsvFundAmt);
   }
 
-  DictRemainingIncomeForm: any = {};
+  DictRemainingIncomeForm: object = {};
   async GetAppCommissionData(appObj) {
     for (let index = 0; index < this.ListResultRefundIncomeInfo.length; index++) {
       const element = this.ListResultRefundIncomeInfo[index];
@@ -179,7 +167,7 @@ export class ReservedFundComponent implements OnInit {
     }
     await this.http.post(URLConstant.GetAppCommissionDataForEditByAppId, appObj).toPromise().then(
       (response) => {
-        let tempObj: Array<any> = response[CommonConstant.ReturnObj];
+        let tempObj: Array<AppCommissionHObj> = response[CommonConstant.ReturnObj];
         // console.log(tempObj);
         for (let index = 0; index < tempObj.length; index++) {
           const element = tempObj[index];
@@ -199,7 +187,7 @@ export class ReservedFundComponent implements OnInit {
   }
 
   GetAppFee(appObj) {
-    this.http.post(this.getAppFeeUrl, appObj).subscribe(
+    this.http.post(URLConstant.GetListAppFeeByAppId, appObj).subscribe(
       (response) => {
         this.appFeeObj = response[CommonConstant.ReturnObj];
 
@@ -227,7 +215,7 @@ export class ReservedFundComponent implements OnInit {
   // }
 
   GetAppRsvFundRule(appObj) {
-    this.http.post(this.getAppRsvFundRuleUrl, appObj).subscribe(
+    this.http.post(URLConstant.CreateRsvFundRule, appObj).subscribe(
       (response) => {
         this.ruleObj = response[CommonConstant.ReturnObj];
         this.appReservedFundObjs = new Array<AppReservedFundObj>();

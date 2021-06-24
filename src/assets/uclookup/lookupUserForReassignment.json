@@ -1,0 +1,49 @@
+{
+    "url": "",
+    "title":"Lookup - User List",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "U.USERNAME",
+        "id": "UsernameId",
+        "value": "",
+        "label": "Username",
+        "placeholder": ""
+      }
+    ],
+    "querystring": {
+        "name": "lookupUserForReassignment"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Username",
+            "name": "U.USERNAME"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Select"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "left",
+            "property": "Username"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "Username"
+                }
+            ]
+        }
+    ],
+    "propertyId": "Username",
+    "propertyName": "Username"
+}

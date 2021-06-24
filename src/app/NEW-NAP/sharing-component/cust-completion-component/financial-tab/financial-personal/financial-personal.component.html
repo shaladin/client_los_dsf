@@ -4,6 +4,7 @@
       <div class="px-3">
         <form class="form form-horizontal" [formGroup]="FinancialForm" (ngSubmit)="FinancialForm.valid && SaveForm()"
           #enjiForm="ngForm">
+
           <lib-ucSubsection [id]="'FinancialId'" [title]="'Financial Information'" [panel]="'Financial'">
           </lib-ucSubsection>
           <div id="Financial">
@@ -48,13 +49,8 @@
                     <input type="checkbox" formControlName="IsJoinIncome" (change)="CalculateFinData()"/>
                   </div>
                 </div>
-                <div class="form-group row">
-                  <label class="col-md-4" translate>Total Monthly Income</label>
-                  <div class="col-md-8" style="text-align: right;">
-                    <label>{{FinancialForm.controls.TotalIncomeAmt.value | number:'.2':'en-US' }}</label>
-                  </div>
-                </div>
               </div>
+
               <div class="col-md-6">
                 <div class="form-group row">
                   <label class="col-md-4" translate>Monthly Expense</label>
@@ -96,26 +92,38 @@
                     </lib-uc-show-errors>
                   </div>
                 </div>
+              </div>
+
+              <div class="col-md-12">
+                <app-attr-content-component [title]="'Financial Attribute Information'" [AppCustId]="AppCustId" [enjiForm]="enjiForm"
+                  [parentForm]="FinancialForm" [identifier]="'AttrList'" [AttrGroups]="AttrGroups"
+                  (IncomeAmt)="CalculateIncomeAmt($event)" (ExpenseAmt)="CalculateExpenseAmt($event)"></app-attr-content-component>
+              </div>
+
+              <div class="col-md-12">
                 <div class="form-group row">
-                  <label class="col-md-4" translate>Nett Monthly Income</label>
-                  <div class="col-md-8" style="text-align: right;">
+                  <label class="col-md-2" translate>Total Monthly Income</label>
+                  <div class="col-md-4" style="text-align: right;">
+                    <label>{{FinancialForm.controls.TotalIncomeAmt.value | number:'.2':'en-US' }}</label>
+                  </div>
+                  <label class="col-md-2" translate>Nett Monthly Income</label>
+                  <div class="col-md-4" style="text-align: right;">
                     <label>{{FinancialForm.controls.NettIncomeAmt.value | number:'.2':'en-US' }}</label>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <app-attr-content-component [title]="'Financial Attribute Information'" [AppCustId]="AppCustId" [enjiForm]="enjiForm"
-            [parentForm]="FinancialForm" [identifier]="'AttrList'" [AttrGroups]="AttrGroups"
-            (IncomeAmt)="CalculateIncomeAmt($event)" (ExpenseAmt)="CalculateExpenseAmt($event)"></app-attr-content-component>
-            <!-- [AttrGroup]="AttrGroup" -->
+          
           <app-bank-section [AppCustId]="AppCustId" [AppCustBankAccList]="AppCustBankAccList" (OutputObj)="GetEvent($event)"></app-bank-section>
+          
           <div class="form-actions right" *ngIf="!IsDetail">
             <button type="submit" (click)="formValidate.scrollIfFormHasErrors(FinancialForm)"
               class="btn btn-raised btn-primary" translate>
               <i class="fa fa-check-square"></i> Save & Continue
             </button>
           </div>
+
         </form>
       </div>
     </div>

@@ -1,0 +1,33 @@
+<lib-ucSubsection [id]="'listobjectId'" [title]="'Survey List'" [panel]="'listobject'">
+</lib-ucSubsection>
+<div id="listobject">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th class="text-center">NO</th>
+        <th class="text-center">SURVEY</th>
+        <th class="text-center">DATE</th>
+        <th class="text-center">TIME</th>
+        <th class="text-center">TYPE</th>
+        <th class="text-center">NOTES</th>
+        <th class="text-center">VIEW</th>
+      </tr>
+    </thead>
+    <tbody *ngIf = "phoneVerifObj.length == 0">
+      <tr>
+        <td colspan="100%">No Data Available</td>
+      </tr>
+    </tbody>
+    <tbody>
+      <tr *ngFor="let item of phoneVerifObj; let i = index" >
+        <td class="text-center">{{i + 1}}</td>
+        <td class="text-left">{{item.MrVerfObjectCode}}</td>
+        <td class="text-center">{{item.VerfDt | date: 'dd-MM-yyyy'}}</td>
+        <td class="text-center">{{item.VerfDt | date:'HH:mm'}}</td>
+        <td class="text-left">{{item.PhnType}}</td>
+        <td class="text-left">{{item.Notes}}</td>
+        <td><a href="javascript:void(0);" (click)="View(item.VerfResultHId, item.MrVerfObjectCode)">View</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

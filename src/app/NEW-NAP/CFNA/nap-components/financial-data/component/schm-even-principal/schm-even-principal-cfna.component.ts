@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { ResponseCalculateObj } from 'app/shared/model/AppFinData/ResponseCalculateObj.Model';
-import { CalcEvenPrincipleObj } from 'app/shared/model/AppFinData/CalcEvenPrincipleObj.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
@@ -18,15 +17,14 @@ import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMas
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class SchmEvenPrincipalCFNAComponent implements OnInit {
-  @Input() AppId: number;
+  @Input() AppId: number = 0;
   @Input() ParentForm: FormGroup;
+  @Input() TrialCalc: boolean = false;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
-  calcEvenPrincipleObj: CalcEvenPrincipleObj = new CalcEvenPrincipleObj();
   listInstallment: any;
-  responseCalc: any;
   result: AppObj = new AppObj();
   PriceLabel: string = "Financing Amount";
 
@@ -38,13 +36,16 @@ export class SchmEvenPrincipalCFNAComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
-    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-      (response) => {
-        this.result = response;
-        if (this.result.BizTemplateCode == CommonConstant.CFRFN4W) {
-          this.PriceLabel = "Financing Amount";
-        }
-      });
+    if (this.AppId != null) {
+      this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
+        (response) => {
+          this.result = response;
+          if (this.result.BizTemplateCode == CommonConstant.CFRFN4W) {
+            this.PriceLabel = "Financing Amount";
+          }
+        });
+      this.TrialCalc = false;
+    }
   }
 
   LoadDDLRateType() {
@@ -112,10 +113,8 @@ export class SchmEvenPrincipalCFNAComponent implements OnInit {
     if (this.ValidateFee() == false) {
       return;
     }
-    this.calcEvenPrincipleObj = this.ParentForm.getRawValue();
-
-
-    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentEvenPrincipal, this.calcEvenPrincipleObj).subscribe(
+    var calcEvenPrincipleObj = this.ParentForm.getRawValue();
+    this.http.post<ResponseCalculateObj>(this.GetUrlCalc(), calcEvenPrincipleObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
         this.ParentForm.patchValue({
@@ -146,6 +145,11 @@ export class SchmEvenPrincipalCFNAComponent implements OnInit {
 
       }
     );
+  }
+
+  GetUrlCalc(): string {
+    if (!this.TrialCalc) return URLConstant.CalculateInstallmentEvenPrincipal;
+    return URLConstant.CalculateInstallmentEvenPrincipalForTrialCalc;
   }
 
   SetNeedReCalculate(value: boolean) {

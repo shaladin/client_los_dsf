@@ -61,24 +61,6 @@
             "criteriaPropValue": ""
         },
         {
-            "type": "datepicker",
-            "name": "MC.MOU_CUST_DT",
-            "id": "GreaterMouDtId",
-            "value": "",
-            "label": "Mou Date From",
-            "restriction": "gte",
-            "datatype": "date"
-        },
-        {
-            "type": "datepicker",
-            "name": "MC.MOU_CUST_DT",
-            "id": "LessMouDtId",
-            "value": "",
-            "label": "Mou Date To",
-            "restriction": "lte",
-            "datatype": "date"
-        },
-        {
             "type": "currency",
             "name": "MC.PLAFOND_AMT",
             "id": "GreaterPlafondAmt",
@@ -140,12 +122,6 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "MOU DATE",
-            "name": "MouCustDt"
-        },
-        {
-            "type": "sort",
-            "position": "center",
             "label": "EXPIRED DATE",
             "name": "EndDt"
         },
@@ -203,11 +179,6 @@
             "key": "customer",
             "position": "left",
             "property": "CustName"
-        },
-        {
-            "type": "date",
-            "position": "center",
-            "property": "MouCustDt"
         },
         {
             "type": "date",

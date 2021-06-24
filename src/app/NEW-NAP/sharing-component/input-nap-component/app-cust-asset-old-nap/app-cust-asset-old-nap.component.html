@@ -1,0 +1,64 @@
+<lib-ucSubsection [id]="'CustomerAssetId'" [title]="'Customer Asset'" [panel]="'CustomerAssetSection'">
+</lib-ucSubsection>
+<div id="CustomerAssetSection">
+  <div class="col-md-12" style="padding: 0; text-align: right; display: inline-block;">
+    <span class="mr-1">
+      <button type="button" class="addButton" (click)="AddAppCustAsset()" translate>
+        <i class="ft-plus-circle"></i> Add
+      </button>
+    </span>
+  </div>
+  <div>
+    <table class="table table-responsive-md text-center table-hover">
+      <thead>
+        <tr class="table-header">
+          <th style="text-align: center;">
+            <span class="thead-header" translate>Customer Asset Type</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" translate>Asset Description</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" translate>Asset Value</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" translate>Asset Quantity</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" translate>Total</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" translate>Action</span>
+          </th>
+          <th style="text-align: center;">
+            <span class="thead-header" translate>Delete</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf="ListAppCustAsset.length == 0">
+        <tr>
+          <td colspan="100%">No Data Available</td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="ListAppCustAsset.length > 0">
+        <tr *ngFor="let item of ListAppCustAsset; index as i">
+          <td style="text-align: left;">{{item.MrCustAssetTypeDescr}}</td>
+          <td style="text-align: left;">{{item.AssetDescr}}</td>
+          <td style="text-align: right;">{{ item.AssetValue | currency : "USD" : "" }}</td>
+          <td style="text-align: center;">{{item.AssetQty}}</td>
+          <td style="text-align: right;">{{ item.AssetTotalValue | currency : "USD" : "" }}</td>
+          <td>
+            <a (click)="EditAppCustAsset(i)">
+              <i class="fas fa-pencil-alt"></i>
+            </a>
+          </td>
+          <td>
+            <a class="danger p-0" (click)="DeleteAppCustAsset(i)">
+              <i class="ft-trash-2 font-medium-3 mr-2"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

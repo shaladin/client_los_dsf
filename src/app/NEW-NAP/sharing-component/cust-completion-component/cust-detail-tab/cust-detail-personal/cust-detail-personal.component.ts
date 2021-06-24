@@ -29,7 +29,7 @@ export class CustDetailPersonalComponent implements OnInit {
   CustFullName: string;
   NationalityCountryCode: string;
   Country: GeneralSettingObj = new GeneralSettingObj();
-  LocalCountry: any;
+  LocalCountryCountryCode: string;
   AppCustObj: AppCustObj = new AppCustObj();
   AppCustPersonalObj: AppCustPersonalObj = new AppCustPersonalObj();
   AppCustGrpObj: AppCustGrpObj = new AppCustGrpObj();
@@ -112,7 +112,7 @@ export class CustDetailPersonalComponent implements OnInit {
 
         this.http.post(URLConstant.GetRefCountryByCountryCode, { Code: this.Country.GsValue }).subscribe(
           (response) => {
-            this.LocalCountry = response;
+            this.LocalCountryCountryCode = response["CountryCode"];
             this.lookupCountryObj.isReady = true;
           });
       });
@@ -225,7 +225,7 @@ export class CustDetailPersonalComponent implements OnInit {
     this.AppCustPersonalObj.CustPrefixName = this.CustDetailForm.controls.CustPrefixName.value;
     this.AppCustPersonalObj.CustSuffixName = this.CustDetailForm.controls.CustSuffixName.value;
     this.AppCustPersonalObj.MrNationalityCode = this.CustDetailForm.controls.MrNationalityCode.value;
-    this.AppCustPersonalObj.NationalityCountryCode = this.isLocal ? this.LocalCountry.CountryCode : this.NationalityCountryCode;
+    this.AppCustPersonalObj.NationalityCountryCode = this.isLocal ? this.LocalCountryCountryCode : this.NationalityCountryCode;
     this.AppCustPersonalObj.MrEducationCode = this.CustDetailForm.controls.MrEducationCode.value;
     this.AppCustPersonalObj.MrReligionCode = this.CustDetailForm.controls.MrReligionCode.value;
     this.AppCustPersonalObj.MrSalutationCode = this.CustDetailForm.controls.MrSalutationCode.value;

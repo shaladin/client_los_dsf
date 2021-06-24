@@ -1,15 +1,23 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { forkJoin } from 'rxjs';
 import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
 import { MouCustListedCustFctrComponent } from '../mou-cust-listed-cust-fctr/mou-cust-listed-cust-fctr.component';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { MouCustListedCustFctrObj } from 'app/shared/model/MouCustListedCustFctrObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { RefPayFreqObj } from 'app/shared/model/RefPayFreqObj.model';
+import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
+import { environment } from 'environments/environment';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
 
 @Component({
   selector: 'app-mou-detail-factoring',
@@ -18,21 +26,26 @@ import { MouCustListedCustFctrObj } from 'app/shared/model/MouCustListedCustFctr
 export class MouDetailFactoringComponent implements OnInit {
   @Input() MouCustId: number;
   @Output() ResponseMouCustFactoring: EventEmitter<any> = new EventEmitter();
-  @ViewChild(MouCustListedCustFctrComponent) MouListedFctrComp: MouCustListedCustFctrComponent;
-  recourseTypeList: any;
-  wopList: any;
-  paidByList: any;
-  instTypeList: any;
-  singleInstCalcMthdList: any;
-  payFreqList: any;
-  instSchmList: any;
-  currencyList: any;
+  @ViewChild(MouCustListedCustFctrComponent) 
+  user: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+  isWithoutRecourse: boolean
+  MouListedFctrComp: MouCustListedCustFctrComponent;
+  recourseTypeList: Array<KeyValueObj>;
+  wopList: Array<KeyValueObj>;
+  paidByList: Array<KeyValueObj>;
+  instTypeList: Array<KeyValueObj>;
+  singleInstCalcMthdList: Array<KeyValueObj>;
+  payFreqList: Array<RefPayFreqObj>; 
+  instSchmList: Array<KeyValueObj>;
+  currencyList: Array<KeyValueObj>;
   isListedFctr: boolean;
   shouldComponentLoad: boolean;
   isTenorInvalid: boolean;
   tenorInvalidMsg: string;
   private mode: string = "add";
   IsSingleIns: boolean = true;
+  inputLookupObj: InputLookupObj;
+  inputLookupCustObj: InputLookupObj;
 
   MouDetailFactoringForm = this.fb.group({
     MouCustFctrId: [0, [Validators.required]],
@@ -43,7 +56,7 @@ export class MouDetailFactoringComponent implements OnInit {
     MrPaidByCode: [''],
     MrInstTypeCode: [''],
     SingleInstCalcMthd: [''],
-    TopDays: ['', [Validators.min(0)]],
+    TopDays: ['', [Validators.required, Validators.min(1)]],
     TenorFrom: ['', [Validators.min(0)]],
     TenorTo: ['', [Validators.min(0)]],
     PayFreqCode: [''],
@@ -53,19 +66,31 @@ export class MouDetailFactoringComponent implements OnInit {
     IsListedCust: [false],
     Notes: [''],
     CurrCode: ['', [Validators.required]],
-    RowVersion: ['']
+    RowVersion: [''],
+    VendorCode: [''],
+    VendorName: [''],
+    VendorId: [''],
+    CustNo: [''],
+    CustName: [''],
+    MrCustTypeCode: [''],
+    VirtualAccNo: ['', [Validators.maxLength(50), Validators.pattern("^[0-9]+$")]],
   });
   
   constructor(
     private httpClient: HttpClient,
     private toastr: NGXToastrService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cdref: ChangeDetectorRef,
+    private cookieService: CookieService
   ) { 
     this.isListedFctr = false;
     this.shouldComponentLoad = false;
   }
 
   ngOnInit() {
+    this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.bindUcLookup();
+
     var rmRecourseType = new RefMasterObj();
     rmRecourseType.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeRecourseType;
     let getRecourseType = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmRecourseType);
@@ -81,8 +106,6 @@ export class MouDetailFactoringComponent implements OnInit {
     var rmSingleInstCalcMethod = new RefMasterObj();
     rmSingleInstCalcMethod.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeSingleInstCalcMethod;
     let getSingleInstCalcMethod = this.httpClient.post(URLConstant.GetRefMasterListKeyValueActiveByCode, rmSingleInstCalcMethod);
-    // var rmPayFreq = new RefMasterObj();
-    // rmPayFreq.RefMasterTypeCode = "PAY_FREQ";
     let getPayFreq = this.httpClient.post(URLConstant.GetListActiveRefPayFreq, null);
     var rmInstSchm = new RefMasterObj();
     rmInstSchm.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeInstSchm;
@@ -93,25 +116,25 @@ export class MouDetailFactoringComponent implements OnInit {
     mouCustFctr.MouCustId = this.MouCustId;
     let getMouFctr = this.httpClient.post(URLConstant.GetMouCustFctrByMouCustId, { Id: this.MouCustId });
     forkJoin([getRecourseType, getWop, getPaidBy, getInstType, getSingleInstCalcMethod, getPayFreq, getInstSchm, getCurrency, getMouFctr]).subscribe(
-      (response) => {
-        this.recourseTypeList = response[0];
-        this.wopList = response[1];
-        this.paidByList = response[2];
-        this.instTypeList = response[3];
-        this.singleInstCalcMthdList = response[4];
-        this.payFreqList = response[5];
-        this.instSchmList = response[6];
-        this.currencyList = response[7];
+      (response: any) => {
+        this.recourseTypeList = response[0].ReturnObject;
+        this.wopList = response[1].ReturnObject; 
+        this.paidByList = response[2].ReturnObject;
+        this.instTypeList = response[3].ReturnObject;
+        this.singleInstCalcMthdList = response[4].ReturnObject;
+        this.payFreqList = response[5].ReturnObject;
+        this.instSchmList = response[6].ReturnObject;
+        this.currencyList = response[7].ReturnObject;
         var mouFctrData = response[8];
         this.MouDetailFactoringForm.patchValue({
-          MrRecourseTypeCode: this.recourseTypeList.ReturnObject[0].Key,
-          WopCode: this.wopList.ReturnObject[0].Key,
-          MrPaidByCode: this.paidByList.ReturnObject[0].Key,
-          MrInstTypeCode: this.instTypeList.ReturnObject[0].Key,
-          SingleInstCalcMthd: this.singleInstCalcMthdList.ReturnObject[0].Key,
-          PayFreqCode: this.payFreqList.ReturnObject[0].PayFreqCode,
-          MrInstSchmCode: this.instSchmList.ReturnObject[0].Key,
-          CurrCode: this.currencyList.ReturnObject[0].Key
+          MrRecourseTypeCode: this.recourseTypeList[0].Key,
+          WopCode: this.wopList[0].Key,
+          MrPaidByCode: this.paidByList[0].Key,
+          MrInstTypeCode: this.instTypeList[0].Key,
+          SingleInstCalcMthd: this.singleInstCalcMthdList[0].Key,
+          PayFreqCode: this.payFreqList[0].PayFreqCode,
+          MrInstSchmCode: this.instSchmList[0].Key,
+          CurrCode: this.currencyList[0].Key
         });
         this.isListedFctr = mouFctrData["IsListedCust"];
         if(mouFctrData["MouCustFctrId"] != 0){
@@ -125,6 +148,7 @@ export class MouDetailFactoringComponent implements OnInit {
             MouCustId: this.MouCustId
           });
         }
+        this.OnChangeRecourseType(this.recourseTypeList[0].Key);
         this.CheckPaidBy(this.MouDetailFactoringForm.controls.MrPaidByCode.value);
         this.instTypeHandler();
         this.shouldComponentLoad = true;
@@ -142,8 +166,9 @@ export class MouDetailFactoringComponent implements OnInit {
       this.MouDetailFactoringForm.controls["PayFreqCode"].disable();
       this.MouDetailFactoringForm.controls["MrInstSchmCode"].disable();
       this.MouDetailFactoringForm.controls["SingleInstCalcMthd"].enable();
+      this.MouDetailFactoringForm.controls["TopDays"].setValidators([Validators.required, Validators.min(1)]);
       this.MouDetailFactoringForm.patchValue({
-        SingleInstCalcMthd: this.singleInstCalcMthdList.ReturnObject[0].Key
+        SingleInstCalcMthd: this.singleInstCalcMthdList[0].Key
       });
     }
     else if(value == CommonConstant.MULTIPLE_INST_TYPE){
@@ -151,22 +176,26 @@ export class MouDetailFactoringComponent implements OnInit {
       this.MouDetailFactoringForm.controls["PayFreqCode"].enable();
       this.MouDetailFactoringForm.controls["MrInstSchmCode"].enable();
       this.MouDetailFactoringForm.controls["SingleInstCalcMthd"].disable();
+      this.MouDetailFactoringForm.controls["TopDays"].clearValidators();
       this.MouDetailFactoringForm.patchValue({
-        SingleInstCalcMthd : ''
+        SingleInstCalcMthd : '',
+        TopDays: ''
       });
     }
   }
 
-  Save(enjiForm){
+  Save(){
     var formData = this.MouDetailFactoringForm.getRawValue();
     var url;
 
-    formData.IsListedCust = this.MouListedFctrComp.MouCustIsListedForm.controls["IsListedCust"].value;
-    if(formData.IsListedCust){
-      if(!this.MouListedFctrComp.MouCustIsListedForm.controls["ListCust"] || this.MouListedFctrComp.MouCustIsListedForm.controls["ListCust"]["controls"]["length"] <= 0){
-        this.toastr.warningMessage("At Least 1 Listed Customer Factoring Needed To Submit");
-        return false;
-      }
+    if (this.isWithoutRecourse) {
+      formData.IsListedCust = this.MouListedFctrComp.MouCustIsListedForm.controls["IsListedCust"].value;
+      if(formData.IsListedCust){
+        if(!this.MouListedFctrComp.MouCustIsListedForm.controls["ListCust"] || this.MouListedFctrComp.MouCustIsListedForm.controls["ListCust"]["controls"]["length"] <= 0){
+          this.toastr.warningMessage("At Least 1 Listed Customer Factoring Needed To Submit");
+          return false;
+        }
+    }
     }
 
     if(this.IsSingleIns){
@@ -188,6 +217,14 @@ export class MouDetailFactoringComponent implements OnInit {
       }
     }
     
+    if (this.isWithoutRecourse === false) {
+      if (this.listedCusts.length > 0) {
+        formData.IsListedCust = true
+      }
+      else {
+        formData.IsListedCust = false
+      }
+    }
 
     if(this.mode == "add"){
       url = URLConstant.AddMouCustFctr;
@@ -208,10 +245,6 @@ export class MouDetailFactoringComponent implements OnInit {
         });
   }
 
-  // back(){
-  //   this.ResponseMouCustFactoring.emit({StatusCode: "-2"});
-  // }
-
   CheckPaidBy(value: string){
     if(value == CommonConstant.PAID_BY_CUST_FCTR){
       this.MouDetailFactoringForm.controls.IsDisclosed.disable();
@@ -225,8 +258,120 @@ export class MouDetailFactoringComponent implements OnInit {
   
   listedCusts: Array<MouCustListedCustFctrObj> = new Array<MouCustListedCustFctrObj>();
   GetDataListCustFctr(ev) {
-    // console.log(ev);
     this.listedCusts = ev;
     console.log(this.listedCusts);
+  }
+
+  GetIsListedCust(ev){
+    this.isListedFctr = ev.value;
+  }
+
+  ngAfterContentChecked() {
+    this.cdref.detectChanges();
+  }
+
+  OnChangeRecourseType(recourseType: string) {
+    if (recourseType === CommonConstant.WITH_RECOURSE_TYPE) {
+      this.isWithoutRecourse = false
+
+      this.inputLookupCustObj = new InputLookupObj();
+      this.inputLookupCustObj.isReady = false;
+      this.inputLookupCustObj.isRequired = false;
+      this.inputLookupCustObj.urlJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
+      this.inputLookupCustObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+      this.inputLookupCustObj.urlEnviPaging = environment.FoundationR3Url;
+      this.inputLookupCustObj.pagingJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
+      this.inputLookupCustObj.genericJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
+      this.inputLookupCustObj.ddlEnvironments = [
+        {
+          name: "A.MR_CUST_TYPE_CODE",
+          environment: environment.FoundationR3Url
+        }
+      ];
+      this.inputLookupCustObj.isReady = true;
+
+      this.httpClient.post<Array<MouCustListedCustFctrObj>>(URLConstant.GetListMouCustListedCustFctrByMouCustId, { MouCustId: this.MouCustId }).subscribe(
+        (response) => {
+          this.listedCusts = response;
+
+          if (this.listedCusts.length > 0) {
+            this.MouDetailFactoringForm.patchValue({
+              CustNo: this.listedCusts[0].CustNo
+            });
+
+            this.inputLookupCustObj.nameSelect = this.listedCusts[0].CustNo
+            this.inputLookupCustObj.jsonSelect = { CustNo: this.listedCusts[0].CustName };
+            this.setCustName(this.listedCusts[0].CustNo, this.listedCusts[0].MouListedCustFctrId)
+          }
+        })
+    }
+    else if (recourseType === CommonConstant.WITHOUT_RECOURSE_TYPE) {
+      this.isWithoutRecourse = true
+    }
+  }
+
+  bindUcLookup() {
+    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    var suppCrit = new Array();
+    var critSuppObj = new CriteriaObj();
+    critSuppObj.DataType = 'text';
+    critSuppObj.restriction = AdInsConstant.RestrictionEq;
+    critSuppObj.propName = 'ro.OFFICE_CODE';
+    critSuppObj.value = currentUserContext[CommonConstant.OFFICE_CODE];;
+    suppCrit.push(critSuppObj);
+
+    this.inputLookupObj = new InputLookupObj();
+    this.inputLookupObj.isReady = false;
+    this.inputLookupObj.urlJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
+    this.inputLookupObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.inputLookupObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
+    this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
+    this.inputLookupObj.isReadonly = false;
+    this.inputLookupObj.isRequired = false;
+    this.inputLookupObj.addCritInput = suppCrit;
+    this.inputLookupObj.isReady = true;
+  }
+
+  SetSupplier(e) {
+    this.MouDetailFactoringForm.patchValue({
+      VendorCode: e.VendorCode,
+      VendorName: e.VendorName,
+      VendorId: e.VendorId
+    });
+  }
+
+  SetCustomer(e) {
+    this.MouDetailFactoringForm.patchValue({
+      CustNo: e.CustNo
+    });
+
+    this.setCustName(e.CustNo)
+  }
+
+  setCustName(custNo: string, MouListedCustFctrId?: number) {
+    this.httpClient.post(URLConstant.GetCustByCustNo, { CustNo: custNo }).subscribe((response) => {
+
+      this.MouDetailFactoringForm.patchValue({
+        CustName: response["CustName"],
+        MrCustTypeCode: response["MrCustTypeCode"]
+      });
+
+      let obj: MouCustListedCustFctrObj = new MouCustListedCustFctrObj()
+
+      if (MouListedCustFctrId !== null || MouListedCustFctrId !== 0) {
+        obj.MouListedCustFctrId = MouListedCustFctrId
+      }
+      else {
+        obj.MouListedCustFctrId = 0
+      }
+
+      obj.MouCustId = this.MouCustId
+      obj.CustNo = response["CustNo"]
+      obj.CustName = response["CustName"]
+      obj.MrCustTypeCode = response["MrCustTypeCode"]
+
+      this.listedCusts.push(obj)
+    });
   }
 }

@@ -11,6 +11,7 @@ import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
  
 @Component({
   selector: 'app-cust-bank-account-FL4W',
@@ -24,11 +25,11 @@ export class CustBankAccountFL4WComponent implements OnInit {
 
   @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
 
-  mode: any;
-  currentEditedIndex: any;
-  selectedBankCode: any;
+  mode: string;
+  currentEditedIndex: number;
+  selectedBankCode: string;
 
-  closeResult: any;
+  closeResult: string;
   appCustBankAccObj: AppCustBankAccObj;
   refMasterObj = {
     RefMasterTypeCode: ""
@@ -37,11 +38,10 @@ export class CustBankAccountFL4WComponent implements OnInit {
     RefBankId: 0,
     BankCode: ""
   };
-  RefBankObj: any;
-  MonthObj: any;
-  defaultMonth: any;
-  InputLookupBankObj: any;
-  selectedBankName: any;
+  MonthObj: Array<KeyValueObj>;
+  defaultMonth: string;
+  InputLookupBankObj: InputLookupObj;
+  selectedBankName: string;
 
 
 
@@ -228,7 +228,6 @@ export class CustBankAccountFL4WComponent implements OnInit {
   }
 
   initLookup() {
-    this.InputLookupBankObj = new InputLookupObj();
     this.InputLookupBankObj.urlJson = "./assets/uclookup/lookupBank.json";
     this.InputLookupBankObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
     this.InputLookupBankObj.urlEnviPaging = environment.FoundationR3Url;

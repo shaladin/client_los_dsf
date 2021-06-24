@@ -1,0 +1,24 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "viewRoPotentialMainInfoId",
+        "subSectionTitle": "Main Information",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {"type": "text", "label": "RO Potential No","property": "RoPotentialNo"},
+          {"type": "text", "label": "Batch No","property": "BatchNo"},
+          {"type": "text", "label": "Customer No","property": "CustNo"},
+          {"type": "text", "label": "Customer Name","property": "CustName"},
+          {"type": "text", "label": "Agreement No","property": "AgrmntNo"},
+          {"type": "text", "label": "RO Potential Last Step","property": "RoPotentialLastStepDescr"},
+          {"type": "date", "label": "Promise To Loan Date","property": "PromiseToLoanDt"},
+          {"type": "text", "label": "RO Potential Status","property": "RoPotentialStatDescr"}
+        ],
+        "querystring": {
+          "name": "viewRoPotentialMainInfo"
+        }
+      }
+    ]
+  }
+  

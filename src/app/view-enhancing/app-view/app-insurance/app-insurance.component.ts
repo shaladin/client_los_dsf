@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { AppInsuranceDetailComponent } from './app-insurance-detail/app-insurance-detail.component';
+import { AppViewInsuranceDetailComponent } from './app-insurance-detail/app-insurance-detail.component';
 import { AppAssetDataDetailComponent } from '../app-asset-data/app-asset-data-detail/app-asset-data-detail.component';
 
 @Component({
@@ -54,7 +54,7 @@ export class AppInsuranceComponent implements OnInit {
   }
 
   viewDetailCollateralHandler(appInsObjId){
-    const modalInsDetail = this.modalService.open(AppInsuranceDetailComponent);
+    const modalInsDetail = this.modalService.open(AppViewInsuranceDetailComponent);
     modalInsDetail.componentInstance.AppInsObjId = appInsObjId;
     modalInsDetail.result.then().catch((error) => {
     });

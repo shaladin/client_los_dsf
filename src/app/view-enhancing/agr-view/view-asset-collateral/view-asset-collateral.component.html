@@ -1,3 +1,4 @@
+<div *ngIf="IsHidden">
   <lib-ucSubsection [id]="'AssetListId'" [title]="'ASSET LIST'" [panel]="'AssetListSection'"></lib-ucSubsection>
   <div id="AssetListSection">
     <div class="col-md-12">
@@ -83,10 +84,15 @@
             <td  class="text-left">{{item.SerialNo2}}</td>
             <td  class="text-left">{{item.SerialNo3}}</td>
             <td class="text-center">
-              <a (click)="viewDetailHandler(item.AppCollateralId)" class="success p-0"><i class="ft-edit-2 font-medium-3 mr-2"></i></a>
+              <a (click)="viewDetailCollateralHandler(item.AppCollateralId)"><i class="fas fa-pencil-alt"></i></a>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
+</div>  
+<div *ngIf="!IsHidden">
+  <app-view-app-collateral-single [agrmntId]="agrmntId" [AppCollateralId]="AppCollateralId" (outputTab)="getValue($event)" [isMulti]="true">
+  </app-view-app-collateral-single>
+</div>

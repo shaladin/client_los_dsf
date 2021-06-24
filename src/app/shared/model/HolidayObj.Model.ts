@@ -1,8 +1,8 @@
 export class HolidayObj {
-    holidaySchmHId: any;
-    holidaySchmName: any;
-    holidaySchmCode: any;
-    isActive: any;
+    holidaySchmHId: number;
+    holidaySchmName: string;
+    holidaySchmCode: string;
+    isActive: boolean;
 
     constructor() { this.holidaySchmHId = 0; }
 }

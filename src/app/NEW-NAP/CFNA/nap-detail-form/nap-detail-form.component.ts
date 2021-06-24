@@ -37,11 +37,11 @@ export class NapDetailFormComponent implements OnInit {
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
   IsMultiAsset: string;
-  ListAsset: any;
+  // ListAsset: any;
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
   custType: string = CommonConstant.CustTypeCompany;
-  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   BizTemplateCode: string = CommonConstant.CFNA;
@@ -70,7 +70,7 @@ export class NapDetailFormComponent implements OnInit {
   IsDataReady: boolean = false;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
-  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
+  readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING;
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -108,29 +108,28 @@ export class NapDetailFormComponent implements OnInit {
 
     // this.ChangeStepper();
 
+    await this.http.post(URLConstant.GetAppById, { Id: this.appId }).toPromise().then(
+      async (response: AppObj) => {
+        if (response) {
+          this.NapObj = response;
+          if (this.NapObj.MrCustTypeCode != null)
+            this.custType = this.NapObj.MrCustTypeCode;
+        }
+      });
+
     if (this.ReturnHandlingHId > 0) {
       this.ChangeStepper();
       this.ChooseStep(this.AppStepIndex);
-      this.IsDataReady = true;
     }
     else {
-      var appObj = { Id: this.appId };
-      this.http.post(URLConstant.GetAppById, appObj).subscribe(
-        (response: AppObj) => {
-          if (response) {
-            this.NapObj = response;
-            if (this.NapObj.MrCustTypeCode != null)
-              this.custType = this.NapObj.MrCustTypeCode;
-            if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
-              this.initDms();
-            }
-            this.ChangeStepper();
-            this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
-            this.ChooseStep(this.AppStepIndex);
-            this.IsDataReady = true;
-          }
-        });
+      if (this.NapObj.AppCurrStep == CommonConstant.AppStepUplDoc) {
+        await this.initDms();
+      }
+      this.ChangeStepper();
+      this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
+      this.ChooseStep(this.AppStepIndex);
     }
+    this.IsDataReady = true;
     this.MakeViewReturnInfoObj();
   }
 
@@ -365,7 +364,7 @@ export class NapDetailFormComponent implements OnInit {
       this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING], { BizTemplateCode: CommonConstant.CFNA });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING], { BizTemplateCode: CommonConstant.CFNA });
         }
       )
     }

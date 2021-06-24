@@ -17,8 +17,7 @@ export class PurchaseOrderViewComponent implements OnInit {
   POInfo: UcViewGenericObj = new UcViewGenericObj();
   ADFinancialInfo: UcViewGenericObj = new UcViewGenericObj();
   ARFinancialInfo: UcViewGenericObj = new UcViewGenericObj();
-  MrFirstInstTypeCode;
-  ResponseAppAssetData;
+  MrFirstInstTypeCode: string;
   ResponsePurchaseOrderHData;
   PurchaseOrderHId: number;
   AgrmntId: number;

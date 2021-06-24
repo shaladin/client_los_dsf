@@ -23,7 +23,7 @@ export class DupCheckMdSubjListComponent implements OnInit {
   wfTaskListId: number;
   viewMainInfoObj: UcViewGenericObj = new UcViewGenericObj();
   gridSubjectObj: InputGridObj = new InputGridObj();
-  addObj: any = {};
+  addObj: object = {};
 
   constructor(
     private http: HttpClient,
@@ -55,11 +55,6 @@ export class DupCheckMdSubjListComponent implements OnInit {
     this.addObj["AppId"] = this.appId;
     this.addObj["WfTaskListId"] = this.wfTaskListId;
     this.viewMainInfoObj.viewInput = "./assets/ucviewgeneric/viewDupCheckSubject.json";
-    this.viewMainInfoObj.ddlEnvironments = [
-      { name: "AppNo", environment: environment.losR3Web },
-      { name: "MouCustNo", environment: environment.losR3Web },
-      { name: "LeadNo", environment: environment.losR3Web },
-    ];
   }
 
   getSubjectList() {

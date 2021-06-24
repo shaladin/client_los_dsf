@@ -216,7 +216,6 @@ export class UcProdOfferingCompComponent implements OnInit {
 
     this.http.post(URLConstant.GetProductOfferingComponentGrouped, ProdOfferingComponent).toPromise().then(
       async (response) => {
-        console.log(response);
         for (var i = 0; i < response[CommonConstant.ReturnObj]["ProdOffComponents"].length; i++) {
           var group = response[CommonConstant.ReturnObj]["ProdOffComponents"][i];
           var fa_group = this.FormProdOfferingComp.controls['groups'] as FormArray;
@@ -287,6 +286,11 @@ export class UcProdOfferingCompComponent implements OnInit {
             OfferingCompntValueDesc: selectedText.join(", ")
           });
         }
+        if(this.FormProdOfferingComp.controls["groups"].controls[i].controls["components"].controls[j].controls.ProdCompntType.value == "DT"){
+          this.FormProdOfferingComp.controls["groups"].controls[i].controls["components"].controls[j].patchValue({
+            OfferingCompntValueDesc : this.FormProdOfferingComp.controls["groups"].controls[i].controls["components"].controls[j].controls.OfferingCompntValue.value
+          });
+        }
         this.list.push(Object.assign({}, ...formProdOfferingComp.controls.groups.controls[i].controls["components"].controls[j].getRawValue()));
       }
     }
@@ -300,9 +304,24 @@ export class UcProdOfferingCompComponent implements OnInit {
   }
   DownloadRule(CompntValue, CompntValueDesc) {
     this.DlRuleObj.RuleSetName = CompntValue;
-    this.http.post(URLConstant.DownloadProductRule, this.DlRuleObj, { responseType: 'blob' }).subscribe(
+    this.http.post(URLConstant.DownloadProductRule, this.DlRuleObj).subscribe(
       response => {
-        saveAs(response, CompntValueDesc + '.xlsx');
+        // saveAs(response, CompntValueDesc + '.xls');
+        let linkSource: string = "";
+        let fileName: string = "";
+
+        let type = response["ReturnObject"][0].Key.substring(response["ReturnObject"][0].Key.length - 4);
+        if(type == ".xls"){
+          linkSource = 'data:application/xls;base64,' + response["ReturnObject"][0].Value;
+        }else {
+          linkSource = 'data:application/xlsx;base64,' + response["ReturnObject"][0].Value;
+        }
+        fileName = response["ReturnObject"][0].Key;
+        
+        const downloadLink = document.createElement("a");
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName;
+        downloadLink.click();
       }
     );
   }

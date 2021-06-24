@@ -3,19 +3,17 @@
     <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"> </lib-ucviewgeneric>
     <div class="card-body">
       <div class="px-3">
-        <app-crd-rvw-cust-info *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
+        <app-crd-rvw-cust-info *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [captureStat]="captureStat">
         </app-crd-rvw-cust-info>
         <app-crd-rvw-fam-guar *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
         </app-crd-rvw-fam-guar>
         <app-crd-rvw-legal-doc *ngIf="isShow && crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany"
           [AppCustCompanyId]="crdRvwCustInfoObj.AppCustCompanyId"></app-crd-rvw-legal-doc>
-       
-
         <app-app-rvw-summary-asset *ngIf="isShow" [AppId]="appId"></app-app-rvw-summary-asset>
         <app-tab-deviation [AppId]="appId" [IsEditManualDeviation]="false"></app-tab-deviation>
-
       </div>
     </div>
+
     <div class="ng-star-inserted">
       <div class="row margin-bot-15">
         <div class="col-md-12">
@@ -36,7 +34,6 @@
       </div>
     </div>
     
-
     <!-- <lib-ucapproval [inputObj]="inputObj" [showCancel]="'true'" (onCancel)="onCancelClick()" (nextTask)="onAvailableNextTask()" (result)="onApprovalSubmited($event)">
     </lib-ucapproval>  -->
 
@@ -50,6 +47,5 @@
 
     <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"
       (onCancel)="onCancelClick()"></lib-ucapprovalR3>
-    
   </div>
 </div>

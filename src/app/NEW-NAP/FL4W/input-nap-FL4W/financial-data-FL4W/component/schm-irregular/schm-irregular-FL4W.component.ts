@@ -9,6 +9,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { CalcIrregularObjForTrialCalc } from 'app/shared/model/AppFinData/CalcIrregularObjForTrialCalc.Model';
 
 @Component({
   selector: 'app-schm-irregular-FL4W',
@@ -18,23 +19,28 @@ export class SchmIrregularFL4WComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
   @Input() NumOfInst: number;
+  @Input() TrialCalc: boolean;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcIrregularObj: CalcIrregularObj = new CalcIrregularObj();
+  calcIrregularObjForTrialCalc: CalcIrregularObjForTrialCalc = new CalcIrregularObjForTrialCalc();
   listInstallment: any;
-  responseCalc: any;
   result: AppObj = new AppObj();
   PriceLabel: string= "Asset Price";
+  IsTrialCalc: boolean = false;
 
-  constructor(private fb: FormBuilder,
+  constructor(
+  private fb: FormBuilder,
     private http: HttpClient,
-    private toastr: NGXToastrService) { }
+    private toastr: NGXToastrService
+    ) { }
 
   ngOnInit() {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.SetEntryInstallment();
+    if (this.AppId != null) {
     this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.result = response;
@@ -42,6 +48,11 @@ export class SchmIrregularFL4WComponent implements OnInit {
           this.PriceLabel = "Financing Amount";
         }
       });
+      this.IsTrialCalc = false;
+    }
+    else if (this.TrialCalc != null && this.TrialCalc) {
+      this.IsTrialCalc = true;
+    }
   }
 
   LoadDDLRateType() {
@@ -111,6 +122,7 @@ export class SchmIrregularFL4WComponent implements OnInit {
     if(this.ValidateFee() == false){
       return;
     }
+    if (!this.IsTrialCalc) {
     this.http.post<ResponseCalculateObj>(URLConstant.CalculateIrregular, this.calcIrregularObj).subscribe(
       (response) => {
         this.listInstallment = response.InstallmentTable;
@@ -143,6 +155,42 @@ export class SchmIrregularFL4WComponent implements OnInit {
         this.SetNeedReCalculate(false);
       }
     );
+  } else {
+      this.calcIrregularObjForTrialCalc = this.ParentForm.value;
+      this.calcIrregularObjForTrialCalc["IsRecalculate"] = false;
+      this.http.post<ResponseCalculateObj>(URLConstant.CalculateIrregularForTrialCalc, this.calcIrregularObjForTrialCalc).subscribe(
+        (response) => {
+          this.listInstallment = response.InstallmentTable;
+
+          this.ParentForm.patchValue({
+            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+
+            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+            FlatRatePrcnt: response.FlatRatePrcnt,
+            InstAmt: response.InstAmt,
+
+            GrossYieldPrcnt: response.GrossYieldPrcnt,
+
+            TotalInterestAmt: response.TotalInterestAmt,
+            TotalAR: response.TotalARAmt,
+
+            NtfAmt: response.NtfAmt,
+            ApvAmt: response.ApvAmt,
+
+            TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+            LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+
+            DownPaymentGrossAmt: response.DownPaymentGrossAmt,
+            DownPaymentNettAmt: response.DownPaymentNettAmt
+
+          })
+
+          this.SetInstallmentTable();
+          this.SetNeedReCalculate(false);
+        }
+      );
+    }
   }
 
   EffectiveRatePrcntInput_FocusOut() {

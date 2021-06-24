@@ -15,12 +15,6 @@
         {
             "type": "label",
             "position": "left",
-            "label": "Paid By",
-            "name": "PaidBy"
-        },
-        {
-            "type": "label",
-            "position": "left",
             "label": "Insurance Company",
             "name": "InscoName"
         },
@@ -73,11 +67,6 @@
             "type": "text",
             "position": "left",
             "property": "InsuredBy"
-        },
-        {
-            "type": "text",
-            "position": "left",
-            "property": "PaidBy"
         },
         {
             "type": "text",

@@ -1,0 +1,30 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "LtkmCustEmrgncCntctId",
+        "subSectionTitle": "Emergency Contact",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {"type": "text", "label": "Contact Person Name", "property": "ContactPersonName"},
+          {"type": "text", "label": "Gender", "property": "MrGenderDescr"},
+          {"type": "text", "label": "Id Type", "property": "MrIdTypeDescr"},
+          {"type": "text", "label": "Birth Place", "property": "BirthPlace"},
+          {"type": "text", "label": "Id No", "property": "IdNo"},
+          {"type": "date", "label": "Birth Date", "property": "BirthDt"},
+          {"type": "date", "label": "Id Expired Date", "property": "IdExipedDt"},
+          {"type": "text", "label": "Customer Relationship", "property": "MrCustRelationshipDescr"},
+          {"type": "text", "label": "Mobile Phone 1", "property": "MobilePhone1"},
+          {"type": "text", "label": "Mobile Phone 2", "property": "MobilePhone2"},
+          {"type": "text", "label": "Email", "property": "Email"},
+          {"type": "text", "label": "Phone 1", "property": "Phone1"},
+          {"type": "text", "label": "Phone 2", "property": "Phone2"},
+          {"type": "text", "label": "Phone 3", "property": "Phone3"},
+          {"type": "text", "label": "Address", "property": "Addr"}
+        ],
+        "querystring": {
+          "name": "viewLtkmCustEmrgncCntct"
+        }
+      }
+    ]
+  }

@@ -14,6 +14,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { CustObj } from 'app/shared/model/CustObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { MouMainInfoComponent } from 'app/MOU/mou-main-info/mou-main-info.component';
 
 @Component({
   selector: 'app-mou-customer-detail',
@@ -23,17 +24,18 @@ import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigRes
 export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   private stepperGeneral: Stepper;
   private stepperFactoring: Stepper;
+  private stepperFinancing: Stepper;
   @ViewChild("MouTcGeneral") public mouTcGeneral: MouCustTcComponent;
   @ViewChild("MouTcFactoring") public mouTcFactoring: MouCustTcComponent;
+  @ViewChild("MouTcFinancing") public mouTcFinancing: MouCustTcComponent;
+  @ViewChild("viewMouMainInfo") viewMouMainInfo: MouMainInfoComponent;
   mouType: string;
   mouCustId: number;
   currentStepIndex: number;
   mode: string;
   pageType: string;
   pageTitle: string;
-  link: any;
   resultData: MouCustObj;
-  mouCustObject: MouCustObj = new MouCustObj();
   UploadViewlink: string;
   Uploadlink: string;
   Viewlink: string;
@@ -60,7 +62,6 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       }
     });
     this.currentStepIndex = 1;
-    // this.currentStepIndex = 5; //buat DMS Test sementara
   }
 
   async ngOnInit() : Promise<void> {
@@ -68,7 +69,6 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       (response) => {
         this.SysConfigResultObj = response
       });
-    this.mouCustObject.MouCustId = this.mouCustId;
     await this.httpClient.post(URLConstant.GetMouCustById, { Id: this.mouCustId }).toPromise().then(
       (response: MouCustObj) => {
         this.resultData = response;
@@ -78,6 +78,17 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         else if (this.resultData.MrMouTypeCode == CommonConstant.FACTORING) {
           this.pageTitle = "MOU Factoring";
         }
+        else if (this.resultData.MrMouTypeCode == CommonConstant.FINANCING) {
+          this.pageTitle = "MOU Financing";
+        }
+        let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+        this.dmsObj = new DMSObj();
+        this.dmsObj.User = currentUserContext.UserName;
+        this.dmsObj.Role = currentUserContext.RoleCode;
+        this.dmsObj.ViewCode = CommonConstant.DmsViewCodeMou;
+        this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsNoCust, this.resultData['CustNo']));
+        this.dmsObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.resultData.MouCustNo));
+        this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
       }
     );
   }
@@ -119,24 +130,14 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       });
       this.stepperFactoring.to(this.currentStepIndex);
     }
+    else{
+      this.stepperFinancing = new Stepper(document.querySelector('#stepperFinancing'), {
+        linear: false,
+        animation: true
+      });
+      this.stepperFinancing.to(this.currentStepIndex);
+    }
   }
-
-
-  // mouDetailGeneral(e){
-  //   this.stepHandler(e);
-  // }
-
-  // mouDetailFactoring(e){
-  //   this.stepHandler(e);
-  // }
-
-  // mouCustFee(e){
-  //   this.stepHandler(e);
-  // }
-
-  // mouAddColl(e){
-  //   this.stepHandler(e);
-  // }
 
   getModeDetail(e) {
     if (e != null) {
@@ -151,12 +152,13 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
     else if (this.mouType == CommonConstant.FACTORING) {
       this.stepperFactoring.to(idx);
     }
+    else if (this.mouType == CommonConstant.FINANCING) {
+      this.stepperFinancing.to(idx);
+    }
     this.currentStepIndex = idx;
-  }
 
-  // mouCustTc(e){
-  //   this.stepHandler(e);
-  // }
+    this.viewMouMainInfo.ReloadUcViewGeneric();
+  }
 
   saveMouTc() {
     if (this.mouType == CommonConstant.GENERAL) {
@@ -171,6 +173,12 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
         this.endOfTab()
       }  
     }
+    else if (this.mouType == CommonConstant.FINANCING) {
+      this.mouTcFinancing.Save();
+      if(this.SysConfigResultObj.ConfigValue == '0'){
+        this.endOfTab()
+      }  
+    }
   }
 
   backFromMouTc() {
@@ -179,6 +187,9 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
     }
     else if (this.mouType == CommonConstant.FACTORING) {
       this.stepHandlerFactoring({ StatusCode: "-1" });
+    }
+    else if (this.mouType == CommonConstant.FINANCING) {
+      this.stepHandlerFinancing({ StatusCode: "-1" });
     }
   }
 
@@ -189,6 +200,10 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
     }
     else if (this.mouType == CommonConstant.FACTORING) {
       this.stepperFactoring.previous();
+      this.currentStepIndex--;
+    }
+    else if (this.mouType == CommonConstant.FINANCING) {
+      this.stepperFinancing.previous();
       this.currentStepIndex--;
     }
   }
@@ -212,7 +227,8 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
   }
 
   submitHandler() {
-    if ((this.mouType == CommonConstant.GENERAL && this.currentStepIndex >= 4) || (this.mouType == CommonConstant.FACTORING && this.currentStepIndex >= 5)) {
+    if ((this.mouType == CommonConstant.GENERAL && this.currentStepIndex >= 4) || (this.mouType == CommonConstant.FACTORING && this.currentStepIndex >= 5) || (this.mouType == CommonConstant.FINANCING && this.currentStepIndex >= 5)) {
+      
       var mouObj = { Id: this.mouCustId }
       this.httpClient.post(URLConstant.SubmitWorkflowMouRequest, mouObj).subscribe(
         () => {
@@ -253,7 +269,7 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       default:
         break;
     }
-
+    this.viewMouMainInfo.ReloadUcViewGeneric();
     if(this.currentStepIndex == 5){
       await this.initDms();
     }
@@ -282,6 +298,36 @@ export class MouCustomerDetailComponent implements OnInit, AfterViewInit {
       default:
         break;
     }
+    this.viewMouMainInfo.ReloadUcViewGeneric();
+    if(this.currentStepIndex == 6){
+      await this.initDms();
+    }
+  }
+
+  async stepHandlerFinancing(response) {
+    switch (response["StatusCode"].toString()) {
+      case "200":
+          this.stepperFinancing.next();
+          this.currentStepIndex++;
+        break;
+
+      case "-1":
+        this.stepperFinancing.previous();
+        this.currentStepIndex--;
+        break;
+
+      case "-2":
+        if (this.pageType == "return") {
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_EDIT_CUST_PAGING],{});
+        }
+        else {
+          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_REQ_PAGING],{});
+        }
+        break;
+      default:
+        break;
+    }
+    this.viewMouMainInfo.ReloadUcViewGeneric();
     if(this.currentStepIndex == 6){
       await this.initDms();
     }

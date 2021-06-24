@@ -11,6 +11,7 @@
         "isFromURL": true,
         "ddlType": "one",
         "url": "",
+        "environment": "FOU",
         "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
         "items": [],
         "itemsUrl": [],

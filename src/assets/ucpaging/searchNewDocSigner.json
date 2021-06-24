@@ -34,9 +34,9 @@
             "placeholder": "Placeholder"
         }
     ],
-  "querystring": {
-    "name": "searchNewDocSigner"
-  },
+    "querystring": {
+        "name": "searchNewDocSigner"
+    },
     "headerList": [
         {
             "type": "sort",
@@ -74,16 +74,16 @@
             "position": "center",
             "property": "AppNo",
             "target": "_blank",
-            "path" : "VIEW_APP", 
-            "param" : [ 
+            "path": "VIEW_APP",
+            "param": [
                 {
-                    "type" : "AppId", 
-                    "property" : "AppId" 
+                    "type": "AppId",
+                    "property": "AppId"
                 }
             ]
         },
         {
-            "type" : "callback",
+            "type": "callback",
             "position": "center",
             "property": "AgrmntNo",
             "key": "agrmnt"

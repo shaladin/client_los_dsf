@@ -125,7 +125,7 @@ export class PreGoLiveOplDetailComponent implements OnInit {
     }
 
     this.http.post(URLConstant.SubmitPreGoLiveOpl, requestPreGoLiveObj).subscribe(
-      (response: any) => {
+      (response) => {
         this.toastr.successMessage("");
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PGL_OPL_PAGING], { BizTemplateCode: "OPL" });
       }

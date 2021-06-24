@@ -2,7 +2,7 @@
 </lib-ucSubsection>
 <div id="custGrp">
   <div class="form-actions right">
-    <button type="button" name="add" id="add" (click)="addCustGrp()" class="btn btn-raised btn-primary"
+    <button [hidden]="isLockMode" type="button" name="add" id="add" (click)="addCustGrp()" class="btn btn-raised btn-primary"
       *ngIf = "parentForm.controls[identifier]['controls'].length == 0" translate>
       Add
     </button>
@@ -32,7 +32,7 @@
           <td [formGroupName]="i">
             <lib-uclookupgeneric [enjiForm]="enjiForm" [lookupInput]="dictLookup[parentForm.controls[identifier]['controls'][i]['controls'].No.value]" [parentForm]="parentForm" [identifier]="'lookupCustomerForGrp' + parentForm.controls[identifier]['controls'][i]['controls'].No.value" (lookup)="CopyCustomer($event, i)"></lib-uclookupgeneric>
           </td>
-          <td [formGroupName]="i" class="text-center"><select class="form-control" formControlName="MrCustRelationshipCode"
+          <td [formGroupName]="i" class="text-center"><select [attr.disabled]="isLockMode" class="form-control" formControlName="MrCustRelationshipCode"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][i]['controls'].MrCustRelationshipCode.invalid }">
             <option *ngFor="let item of CustRelationshipObjs[i]?.list" value="{{item.Key}}">
               {{item.Value}}
@@ -41,7 +41,7 @@
           <lib-uc-show-errors class="text-left" [control]="parentForm.controls[identifier]['controls'][i]['controls'].MrCustRelationshipCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>            
           </td>
           <td [formGroupName]="i" class="text-center">
-            <textarea rows="5" class="form-control" formControlName="CustGrpNotes"
+            <textarea [attr.disabled]="isLockMode" rows="5" class="form-control" formControlName="CustGrpNotes"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][i]['controls'].CustGrpNotes.invalid }"></textarea>
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][i]['controls'].CustGrpNotes" [submit]="enjiForm.submitted"></lib-uc-show-errors>            
           </td>
@@ -50,7 +50,7 @@
             <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][i]['controls'].IsReversible" [submit]="enjiForm.submitted"></lib-uc-show-errors>            
           </td-->
           <td [formGroupName]="i">
-            <a class="danger p-0" (click)="deleteCustGrp(i)">
+            <a [ngClass]="{'disabledLink': isLockMode}" class="danger p-0" (click)="deleteCustGrp(i)">
               <i class="ft-trash-2 font-medium-3 mr-2"></i>
             </a>
           </td>

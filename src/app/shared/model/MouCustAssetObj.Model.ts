@@ -1,7 +1,7 @@
 export class MouCustAssetObj{
-    MouCustAssetId: any;
-    MouCustId: any;
-    FullAssetCode: any;
-    FullAssetName: any; 
+    MouCustAssetId: number;
+    MouCustId: number;
+    FullAssetCode: string;
+    FullAssetName: string; 
     constructor(){ this.MouCustAssetId = 0; }
 }
