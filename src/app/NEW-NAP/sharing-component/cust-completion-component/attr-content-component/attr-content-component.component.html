@@ -1,5 +1,5 @@
 <div *ngIf="IsFormReady" formGroupName="AttrList">
-  <div *ngIf="!AttrGroups.includes(AttrGroupCustPersonalFinDataIncome) && !AttrGroups.includes(AttrGroupCustPersonalFinDataExpense)">
+  <div *ngIf="AttrGroup !== undefined || (!AttrGroups.includes(AttrGroupCustPersonalFinDataIncome) && !AttrGroups.includes(AttrGroupCustPersonalFinDataExpense))">
     <lib-ucSubsection [id]="'AttributeListId'" [title]="title" [panel]="'AttributeList'">
     </lib-ucSubsection>
     <div id="AttributeList">
