@@ -418,14 +418,7 @@ export class InvoiceDataComponent implements OnInit {
 
   SaveForm(enjiForm: NgForm) {
     console.log("saveform");
-    let tempCheck: number;
     if(this.dataobj.length == 0){
-      tempCheck = 0
-    }
-    else {
-      tempCheck = this.dataobj.AppInvoiceFctrList.length;
-    }
-    if(tempCheck == 0){
       this.toastr.warningMessage("Please Add Invoice First");
     }
     if (enjiForm.value.LookupCustomerFactoringNameDisbTo != undefined) {
