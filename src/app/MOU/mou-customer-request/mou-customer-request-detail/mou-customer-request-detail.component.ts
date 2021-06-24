@@ -46,7 +46,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     EndDt: ['', [Validators.required]],
     RefNo: [''],
     IsRevolving: [false],
-    PlafondAmt: ['', [Validators.required, Validators.min(1.00)]],
+    PlafondAmt: [0, [Validators.required, Validators.min(1.00)]],
     MouStat: ['NEW', [Validators.required]],
     MrMouTypeCode: ['', [Validators.required]],
     RowVersion: [''],
@@ -147,6 +147,18 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
       () => {
       });
+  }
+
+  onChangePlafondType(){
+    if(this.MOUMainInfoForm.value.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOCLLTR){
+      this.MOUMainInfoForm.controls.PlafondAmt.clearValidators();
+    }
+    
+    if(this.MOUMainInfoForm.value.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT){
+      this.MOUMainInfoForm.controls.PlafondAmt.setValidators([Validators.required, Validators.min(1.00)]);
+    }
+
+    this.MOUMainInfoForm.controls.PlafondAmt.updateValueAndValidity();
   }
 
   Back(): void {

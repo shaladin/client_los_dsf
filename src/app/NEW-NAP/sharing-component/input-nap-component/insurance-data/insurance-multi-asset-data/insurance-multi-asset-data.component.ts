@@ -838,6 +838,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           return;
         }
         // group sum insurace for dropdown premium Type AMT
+        this.insRateAddCvgRuleTplObjs = response["InsRateAddCvgRuleTplObjs"];
         this.groupAddCvrSumInsuredDropDown = {};
         this.isUsingSeatCount = false;
         let InsRateAddCvgRuleObjs = response['InsRateAddCvgRuleObjs'];
