@@ -265,7 +265,7 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
 
   GetVendorName(vendorCode) {
     var vendorObj = {
-      VendorCode: vendorCode
+      Code: vendorCode
     };
     this.httpClient.post(URLConstant.GetVendorByVendorCode, vendorObj).toPromise().then(
       (response) => {
