@@ -418,6 +418,16 @@ export class InvoiceDataComponent implements OnInit {
 
   SaveForm(enjiForm: NgForm) {
     console.log("saveform");
+    let tempCheck: number;
+    if(this.dataobj.length == 0){
+      tempCheck = 0
+    }
+    else {
+      tempCheck = this.dataobj.AppInvoiceFctrList.length;
+    }
+    if(tempCheck == 0){
+      this.toastr.warningMessage("Please Add Invoice First");
+    }
     if (enjiForm.value.LookupCustomerFactoringNameDisbTo != undefined) {
       if (enjiForm.value.LookupCustomerFactoringNameDisbTo.value == undefined && this.InvoiceForm.controls["DisburseTo"].value == CommonConstant.RefMasterMasterCodeCustFctr) {
         this.toastr.warningMessage("Please select at least one customer name");
