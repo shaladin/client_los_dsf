@@ -74,6 +74,7 @@ export class CustMainDataComponent implements OnInit {
   LeadId: number;
   LeadNo: string;
 
+  MrCustModelCode: string = "";
   agrmntParentNo: string = "";
   isExisting: boolean = false;
   isUcAddressReady: boolean = false;
@@ -468,6 +469,7 @@ export class CustMainDataComponent implements OnInit {
 
   custTypeChange(custType: string = CommonConstant.CustTypePersonal, FirstInit: boolean = false) {
     this.MrCustTypeCode = custType;
+    this.MrCustModelCode = "";
     this.CustMainDataForm.controls.MrCustTypeCode.setValue(this.MrCustTypeCode);
 
     if (!FirstInit) {
@@ -600,23 +602,6 @@ export class CustMainDataComponent implements OnInit {
   }
 
   ChangeIdType(IdType: string) {
-    this.CustMainDataForm.controls.IdExpiredDt.patchValue("");
-    this.CustMainDataForm.controls.IdNo.patchValue("");
-
-    if (IdType == "KITAS" || IdType == "SIM") {
-      this.CustMainDataForm.controls.IdExpiredDt.setValidators([Validators.required]);
-    } else {
-      this.CustMainDataForm.controls.IdExpiredDt.clearValidators();
-    }
-
-    if (IdType == "NPWP"){
-      this.CustMainDataForm.controls.IdNo.setValidators([Validators.minLength(15), Validators.maxLength(15), Validators.required, Validators.pattern("^[0-9]+$")]);
-    } else {
-      this.CustMainDataForm.controls.IdNo.clearValidators();
-      this.CustMainDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
-    }
-
-    this.CustMainDataForm.controls.IdExpiredDt.updateValueAndValidity();
     this.setValidatorPattern();
   }
 
@@ -722,6 +707,7 @@ export class CustMainDataComponent implements OnInit {
 
       this.InputLookupCustObj.nameSelect = CustObj.CustName;
       this.InputLookupCustObj.jsonSelect = { CustName: CustObj.CustName };
+      this.MrCustModelCode = CustObj.MrCustModelCode;
       if (!IsCopyCust) this.rowVersionAppCust = CustObj.RowVersion;
     }
 
@@ -767,6 +753,7 @@ export class CustMainDataComponent implements OnInit {
       this.InputLookupCustCoyObj.nameSelect = CustObj.CustName;
       this.InputLookupCustCoyObj.jsonSelect = { CustName: CustObj.CustName };
       if (!IsCopyCust) this.rowVersionAppCust = CustObj.RowVersion;
+      this.MrCustModelCode = CustObj.MrCustModelCode;
     }
 
     if (CustCompanyObj != undefined) {
@@ -845,6 +832,7 @@ export class CustMainDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustObj.AppId = this.appId;
     this.custDataPersonalObj.AppCustObj.AppCustId = this.appCustId != null ? this.appCustId : 0;
     this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.AppCustId = this.appCustId ? this.appCustId : 0;
+    this.custDataPersonalObj.AppCustObj.MrCustModelCode = this.MrCustModelCode;
 
     if (this.isIncludeCustRelation)
       this.custDataPersonalObj.AppCustObj.MrCustRelationshipCode = this.CustMainDataForm.controls.MrCustRelationshipCode.value;
@@ -902,6 +890,7 @@ export class CustMainDataComponent implements OnInit {
     this.custDataCompanyObj.AppCustObj.IsExistingCust = this.isExisting;
     this.custDataCompanyObj.AppCustObj.AppCustId = this.appCustId != null ? this.appCustId : 0;
     this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.AppCustId = this.appCustId != null ? this.appCustId : 0;
+    this.custDataCompanyObj.AppCustObj.MrCustModelCode = this.MrCustModelCode;
 
     if (this.isIncludeCustRelation)
       this.custDataCompanyObj.AppCustObj.MrCustRelationshipCode = this.CustMainDataForm.controls.MrCustRelationshipCode.value;
