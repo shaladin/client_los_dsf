@@ -98,7 +98,6 @@ export class LtkmOtherInfoComponent implements OnInit {
     }
 
     if (this.CustOtherInfo != null) {
-      console.log('richard check ni chad');
       this.InputDebitorGroupLookupObj.nameSelect = this.CustOtherInfo.LbppmsDebtGrpLbppDescr;
       this.InputDebitorBusinessScaleLookupObj.nameSelect = this.CustOtherInfo.LbppmsBizSclLbppDescr;
       this.InputCounterpartCategoryLookupObj.nameSelect = this.CustOtherInfo.LbppmsCntrprtLbppDescr;

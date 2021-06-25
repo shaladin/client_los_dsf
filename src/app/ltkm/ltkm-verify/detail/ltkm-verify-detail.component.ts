@@ -214,9 +214,9 @@ export class LtkmVerifyDetailComponent implements OnInit {
                 break;
         }
     }
-
+    RFAInfo: Object = new Object();
     SaveForm() {
-        console.log('richard check here');
+        this.RFAInfo = {RFAInfo: this.FormObj.controls.RFAInfo.value};
         var temp = this.FormObj.value;
         var tempLtkmReqSubmitVerify = this.ltkmReq;
         tempLtkmReqSubmitVerify.LtkmStep = CommonConstant.LtkmStepApproval;
@@ -228,7 +228,7 @@ export class LtkmVerifyDetailComponent implements OnInit {
             LtkmCustId: this.LtkmCustId,
             Notes: temp.Notes,
             WfTaskListId: this.wfTaskListId,
-            RequestRFAObj: this.ApprovalCreateOutput
+            RequestRFAObj: this.RFAInfo
         }
         this.http.post(URLConstant.SubmitLtkmVerify, apiObj).subscribe(
             (response) => {
@@ -281,21 +281,11 @@ export class LtkmVerifyDetailComponent implements OnInit {
             "TypeCode": "AML_APV_TYPE",
             "Attributes": Attributes,
         };
-        this.InputObj.RequestedBy = this.UserAccess.UserName;
-        this.InputObj.OfficeCode = this.UserAccess.OfficeCode;
         this.InputObj.ApvTypecodes = [TypeCode];
-        this.InputObj.EnvUrl = environment.FoundationR3Url;
-        this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
-        this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
-        this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-        this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
-        this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
-        this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-        this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
         this.InputObj.CategoryCode = CommonConstant.CAT_CODE_AML_APV;
         this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_AML_APV;
         this.InputObj.Reason = this.DDLReason;
-        this.InputObj.TrxNo = this.LtkmNo //richard
+        this.InputObj.TrxNo = this.LtkmNo
         this.IsReady = true;
     }
     cancel() {

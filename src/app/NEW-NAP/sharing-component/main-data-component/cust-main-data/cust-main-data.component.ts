@@ -1099,7 +1099,6 @@ export class CustMainDataComponent implements OnInit {
   //END OF URS-LOS-041
 
   async getCustDataByLead() {
-    console.log('richard check');
     //get lead
 
     let resp4 = await this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { LeadId: this.LeadId }).toPromise();
