@@ -744,6 +744,7 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   onItemChange(value, UserChange: boolean = false) {
+    this.getRefAssetDocList(value);
     this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: value }).subscribe(
       (response: GenericListObj) => {
         while (this.items.length) {
