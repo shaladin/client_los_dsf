@@ -29,7 +29,7 @@ export class CustDetailPersonalComponent implements OnInit {
   CustFullName: string;
   NationalityCountryCode: string;
   Country: GeneralSettingObj = new GeneralSettingObj();
-  LocalCountryCountryCode: string;
+  LocalCountry: any;
   AppCustObj: AppCustObj = new AppCustObj();
   AppCustPersonalObj: AppCustPersonalObj = new AppCustPersonalObj();
   AppCustGrpObj: AppCustGrpObj = new AppCustGrpObj();
@@ -112,7 +112,7 @@ export class CustDetailPersonalComponent implements OnInit {
 
         this.http.post(URLConstant.GetRefCountryByCountryCode, { Code: this.Country.GsValue }).subscribe(
           (response) => {
-            this.LocalCountryCountryCode = response["CountryCode"];
+            this.LocalCountry = response;
             this.lookupCountryObj.isReady = true;
           });
       });
@@ -180,7 +180,7 @@ export class CustDetailPersonalComponent implements OnInit {
           MrEducationCode: response.AppCustPersonalObj.MrEducationCode != null ? response.AppCustPersonalObj.MrEducationCode : this.EducationObj[0].Key,
           MrReligionCode: response.AppCustPersonalObj.MrReligionCode != null ? response.AppCustPersonalObj.MrReligionCode : this.ReligionObj[0].Key,
           MrSalutationCode: response.AppCustPersonalObj.MrSalutationCode != null ? response.AppCustPersonalObj.MrSalutationCode : this.SalutationObj[0].Key
-        }) 
+        })
         this.AppCustObj.RowVersion = response.AppCustObj.RowVersion;
         this.AppCustPersonalObj.RowVersion = response.AppCustPersonalObj.RowVersion;
         if (response.AppCustGrpObj != null && response.AppCustGrpObj.CustNo != "") {
@@ -225,7 +225,7 @@ export class CustDetailPersonalComponent implements OnInit {
     this.AppCustPersonalObj.CustPrefixName = this.CustDetailForm.controls.CustPrefixName.value;
     this.AppCustPersonalObj.CustSuffixName = this.CustDetailForm.controls.CustSuffixName.value;
     this.AppCustPersonalObj.MrNationalityCode = this.CustDetailForm.controls.MrNationalityCode.value;
-    this.AppCustPersonalObj.NationalityCountryCode = this.isLocal ? this.LocalCountryCountryCode : this.NationalityCountryCode;
+    this.AppCustPersonalObj.NationalityCountryCode = this.isLocal ? this.LocalCountry.CountryCode : this.NationalityCountryCode;
     this.AppCustPersonalObj.MrEducationCode = this.CustDetailForm.controls.MrEducationCode.value;
     this.AppCustPersonalObj.MrReligionCode = this.CustDetailForm.controls.MrReligionCode.value;
     this.AppCustPersonalObj.MrSalutationCode = this.CustDetailForm.controls.MrSalutationCode.value;
