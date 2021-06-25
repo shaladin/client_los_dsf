@@ -1,18 +1,19 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
-import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model'; 
-
+import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 @Component({
   selector: 'app-ltkm-mi',
   templateUrl: './ltkm-mi.component.html'
 })
 export class LtkMainInfoComponent implements OnInit {
-
+  private viewGeneric: UcviewgenericComponent;
+  @ViewChild('viewGeneric') set content(content: UcviewgenericComponent) {
+    if (content) { // initially setter gets called with undefined
+      this.viewGeneric = content;
+    }
+  }
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   @Input() arrValue = []; //ltkmcustid
 
@@ -20,8 +21,10 @@ export class LtkMainInfoComponent implements OnInit {
 
   ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewLtkmMainInfo.json";
-    this.viewGenericObj.viewEnvironment = environment.losUrl;
-    this.viewGenericObj.whereValue = this.arrValue;
+  }
+
+  ReloadUcViewGeneric() {
+    this.viewGeneric.initiateForm();
   }
 
   GetCallBack(ev: any) {

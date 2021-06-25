@@ -427,7 +427,6 @@ export class LtkmReturnHandlingComponent implements OnInit {
     }
 
     Cancel() {
-        //richard now here
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.DASHBOARD]);
     }
 
