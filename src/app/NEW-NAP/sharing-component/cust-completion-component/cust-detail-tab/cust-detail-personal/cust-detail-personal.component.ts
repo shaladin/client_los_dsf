@@ -180,7 +180,7 @@ export class CustDetailPersonalComponent implements OnInit {
           MrEducationCode: response.AppCustPersonalObj.MrEducationCode != null ? response.AppCustPersonalObj.MrEducationCode : this.EducationObj[0].Key,
           MrReligionCode: response.AppCustPersonalObj.MrReligionCode != null ? response.AppCustPersonalObj.MrReligionCode : this.ReligionObj[0].Key,
           MrSalutationCode: response.AppCustPersonalObj.MrSalutationCode != null ? response.AppCustPersonalObj.MrSalutationCode : this.SalutationObj[0].Key
-        })
+        }) 
         this.AppCustObj.RowVersion = response.AppCustObj.RowVersion;
         this.AppCustPersonalObj.RowVersion = response.AppCustPersonalObj.RowVersion;
         if (response.AppCustGrpObj != null && response.AppCustGrpObj.CustNo != "") {
@@ -194,7 +194,7 @@ export class CustDetailPersonalComponent implements OnInit {
             });
         }
 
-        this.VIPCheck();
+        this.VIPCheck(this.CustDetailForm.controls.IsVip.value);
 
         if(response.AppCustPersonalObj.NationalityCountryCode != null){
           this.NationalityCountryCode = response.AppCustPersonalObj.NationalityCountryCode
