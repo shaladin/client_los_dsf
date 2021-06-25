@@ -224,7 +224,7 @@ export class MouCustJobDataComponent implements OnInit {
         CustModelCode: this.custModelCode,
         ProfessionalNo: this.MouCustPersonalJobDataObj.ProfessionalNo,
         EstablishmentDt: this.MouCustPersonalJobDataObj.EstablishmentDt != undefined ? formatDate(this.MouCustPersonalJobDataObj.EstablishmentDt, 'yyyy-MM-dd', 'en-US') : '',
-        JobTitleName: this.MouCustPersonalJobDataObj.MrJobTitleCode,
+        JobTitleName: this.MouCustPersonalJobDataObj.JobTitleName,
         IsMfEmp: this.MouCustPersonalJobDataObj.IsMfEmp,
         CompanyName: this.MouCustPersonalJobDataObj.CompanyName,
         MrJobPositionCode: this.MouCustPersonalJobDataObj.MrJobPositionCode,

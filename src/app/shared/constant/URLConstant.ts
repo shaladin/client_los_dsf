@@ -649,6 +649,8 @@ export class URLConstant {
   public static GetMouCustDlrFindById = environment.losUrl + "/MouCust/GetMouCustDlrFindById";
   public static UpdatePlafondCollateralAmtMouCust = environment.losUrl + "/MouCust/UpdatePlafondCollateralAmtMouCust";
 
+  public static GetMouCustListAddrByMouCustId = environment.losUrl + "/MouCustAddr/GetMouCustListAddrByMouCustId";
+
   // MOU CUST DUPCHECK
   public static GetMouCustDuplicateCheck = environment.losUrl + "/MouCustDupCheck/GetMouCustDuplicateCheck";
   public static GetMouSpouseDuplicateCheck = environment.losUrl + "/MouCustDupCheck/GetMouSpouseDuplicateCheck";
