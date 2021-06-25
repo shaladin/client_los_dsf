@@ -34,6 +34,7 @@ import { formatDate } from '@angular/common';
 import { RegexService } from 'app/shared/services/regex.services';
 import { AssetTypeSerialNoLabelObj } from 'app/shared/model/SerialNo/AssetTypeSerialNoLabelObj.Model';
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { MouCustAddrObj } from 'app/shared/model/MouCustAddrObj.Model';
 
 @Component({
   selector: 'app-mou-request-addcoll',
@@ -79,6 +80,7 @@ export class MouRequestAddcollComponent implements OnInit {
   inputLookupObj: InputLookupObj;
   criteriaList: Array<CriteriaObj>;
   criteriaObj: CriteriaObj;
+  listMouCustAddrObj: Array<MouCustAddrObj> = new Array();
 
   legalAddrObj: AddrObj;
   inputFieldLegalObj: InputFieldObj;
@@ -99,6 +101,10 @@ export class MouRequestAddcollComponent implements OnInit {
     {
       Key: "LEGAL",
       Value: "Legal"
+    },
+    {
+      Key: "MAILING",
+      Value: "Mailing"
     },
   ];
 
@@ -122,6 +128,7 @@ export class MouRequestAddcollComponent implements OnInit {
     MouCustCollateralId: [''],
     MouCustCollateralRegistrationId: [''],
     CopyFromLegal: [''],
+    CopyToOwnerLocation: [''],
     AssetTypeCode: ['', [Validators.required]],
     CollateralValueAmt: [0, [Validators.required]],
     CollateralPrcnt: [0, [Validators.required, Validators.min(0), Validators.max(this.maxPrcnt)]],
@@ -166,6 +173,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.items = this.AddCollForm.get('items') as FormArray;
     this.bindUcLookup()
     this.initAddrObj();
+    this.GetMouCustListAddrByMouCustId();
     await this.getInitPattern();
     this.bindMouData();
     this.bindUcAddToTempData();
@@ -216,7 +224,6 @@ export class MouRequestAddcollComponent implements OnInit {
         if (this.OwnerRelationshipObj.length > 0) {
           this.AddCollForm.patchValue({
             OwnerRelationship: this.OwnerRelationshipObj[0].Key,
-            CopyFromLegal: this.copyToLocationObj[0].Key
           });
         }
       }
@@ -255,6 +262,14 @@ export class MouRequestAddcollComponent implements OnInit {
         this.setValidatorPattern(this.IdTypeList[0].Key);
       })
 
+  }
+
+  GetMouCustListAddrByMouCustId() {
+    this.http.post(URLConstant.GetMouCustListAddrByMouCustId, { Id: this.MouCustId }).subscribe(
+      (response: GenericListObj) => {
+        this.listMouCustAddrObj = response.ReturnObject;
+      }
+    )
   }
 
   CollateralPortionTypeChange() {
@@ -297,6 +312,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.checkSelfOwnerColl();
   }
 
+  isSelfCust: boolean = false;
   checkSelfOwnerColl() {
     if (this.AddCollForm.controls.SelfOwner.value) {
       this.AddCollForm.controls.OwnerName.disable();
@@ -305,6 +321,7 @@ export class MouRequestAddcollComponent implements OnInit {
       this.AddCollForm.controls.MrIdType.disable();
       this.AddCollForm.controls.OwnerIdNo.disable();
       this.AddCollForm.controls.legalAddr.disable();
+      this.isSelfCust = true
       return;
     }
     this.AddCollForm.controls.OwnerName.enable();
@@ -313,6 +330,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.AddCollForm.controls.MrIdType.enable();
     this.AddCollForm.controls.OwnerIdNo.enable();
     this.AddCollForm.controls.legalAddr.enable();
+    this.isSelfCust = false
   }
 
   UpdateValueCollateralPortionAmt() {
@@ -443,6 +461,7 @@ export class MouRequestAddcollComponent implements OnInit {
       MouCustCollateralId: 0,
       MouCustCollateralRegistrationId: 0,
       CopyFromLegal: '',
+      CopyToOwnerLocation: '',
       AssetTypeCode: this.CollTypeList[0].Key,
       CollateralValueAmt: 0,
       CollateralPrcnt: 0,
@@ -518,6 +537,7 @@ export class MouRequestAddcollComponent implements OnInit {
       this.bindUcLookup();
       this.updateUcLookup(this.CollTypeList[0].Value, true, pageType);
       this.AddCollForm.controls.CopyFromLegal.enable();
+      this.AddCollForm.controls.CopyToOwnerLocation.enable();
       this.AddCollForm.controls.AssetTypeCode.enable();
       this.AddCollForm.controls.CollateralValueAmt.enable();
       this.AddCollForm.controls.FullAssetCode.enable();
@@ -661,6 +681,7 @@ export class MouRequestAddcollComponent implements OnInit {
           this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: this.collateralRegistrationObj.OwnerZipcode };
 
           this.AddCollForm.controls.CopyFromLegal.disable();
+          this.AddCollForm.controls.CopyToOwnerLocation.disable();
           this.AddCollForm.controls.CollateralValueAmt.disable();
           this.AddCollForm.controls.FullAssetCode.disable();
           this.AddCollForm.controls.AssetCategoryCode.disable();
@@ -853,27 +874,57 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   copyToLocation() {
-    this.locationAddrObj.Addr = this.AddCollForm.controls["legalAddr"]["controls"].Addr.value;
-    this.locationAddrObj.AreaCode1 = this.AddCollForm.controls["legalAddr"]["controls"].AreaCode1.value;
-    this.locationAddrObj.AreaCode2 = this.AddCollForm.controls["legalAddr"]["controls"].AreaCode2.value;
-    this.locationAddrObj.AreaCode3 = this.AddCollForm.controls["legalAddr"]["controls"].AreaCode3.value;
-    this.locationAddrObj.AreaCode4 = this.AddCollForm.controls["legalAddr"]["controls"].AreaCode4.value;
-    this.locationAddrObj.City = this.AddCollForm.controls["legalAddr"]["controls"].City.value;
-    this.locationAddrObj.Fax = this.AddCollForm.controls["legalAddr"]["controls"].Fax.value;
-    this.locationAddrObj.FaxArea = this.AddCollForm.controls["legalAddr"]["controls"].FaxArea.value;
-    this.locationAddrObj.Phn1 = this.AddCollForm.controls["legalAddr"]["controls"].Phn1.value;
-    this.locationAddrObj.Phn2 = this.AddCollForm.controls["legalAddr"]["controls"].Phn2.value;
-    this.locationAddrObj.PhnArea1 = this.AddCollForm.controls["legalAddr"]["controls"].PhnArea1.value;
-    this.locationAddrObj.PhnArea2 = this.AddCollForm.controls["legalAddr"]["controls"].PhnArea2.value;
-    this.locationAddrObj.PhnExt1 = this.AddCollForm.controls["legalAddr"]["controls"].PhnExt1.value;
-    this.locationAddrObj.PhnExt2 = this.AddCollForm.controls["legalAddr"]["controls"].PhnExt2.value;
-    this.locationAddrObj.SubZipcode = this.AddCollForm.controls["legalAddr"]["controls"].SubZipcode.value;
+    let tempSelectedCopyAddr = this.AddCollForm.get("CopyFromLegal").value;
+    let tempAddr: MouCustAddrObj = this.listMouCustAddrObj.find(x => x.MrCustAddrTypeCode == tempSelectedCopyAddr);
+    if(tempAddr == null) return;
+    this.locationAddrObj.Addr = tempAddr.Addr;
+    this.locationAddrObj.AreaCode1 = tempAddr.AreaCode1;
+    this.locationAddrObj.AreaCode2 = tempAddr.AreaCode2;
+    this.locationAddrObj.AreaCode3 = tempAddr.AreaCode3;
+    this.locationAddrObj.AreaCode4 = tempAddr.AreaCode4;
+    this.locationAddrObj.City = tempAddr.City;
+    this.locationAddrObj.Fax = tempAddr.Fax;
+    this.locationAddrObj.FaxArea = tempAddr.FaxArea;
+    this.locationAddrObj.Phn1 = tempAddr.Phn1;
+    this.locationAddrObj.Phn2 = tempAddr.Phn2;
+    this.locationAddrObj.PhnArea1 = tempAddr.PhnArea1;
+    this.locationAddrObj.PhnArea2 = tempAddr.PhnArea2;
+    this.locationAddrObj.PhnExt1 = tempAddr.PhnExt1;
+    this.locationAddrObj.PhnExt2 = tempAddr.PhnExt2;
+    this.locationAddrObj.SubZipcode = tempAddr.SubZipcode;
 
-    this.inputFieldLocationObj.inputLookupObj.nameSelect = this.AddCollForm.controls["legalAddrZipcode"]["controls"].value.value;
-    this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: this.AddCollForm.controls["legalAddrZipcode"]["controls"].value.value };
+    this.inputFieldLocationObj.inputLookupObj.nameSelect = tempAddr.Zipcode;
+    this.inputFieldLocationObj.inputLookupObj.jsonSelect = { Zipcode: tempAddr.Zipcode };
 
     this.inputAddressObjForLocAddr.default = this.locationAddrObj;
     this.inputAddressObjForLocAddr.inputField = this.inputFieldLocationObj;
+  }
+
+  copyToLocationOwner() {
+    let tempSelectedCopyAddr = this.AddCollForm.get("CopyToOwnerLocation").value;
+    let tempAddr: MouCustAddrObj = this.listMouCustAddrObj.find(x => x.MrCustAddrTypeCode == tempSelectedCopyAddr);
+    if(tempAddr == null) return;
+    this.legalAddrObj.Addr = tempAddr.Addr;
+    this.legalAddrObj.AreaCode1 = tempAddr.AreaCode1;
+    this.legalAddrObj.AreaCode2 = tempAddr.AreaCode2;
+    this.legalAddrObj.AreaCode3 = tempAddr.AreaCode3;
+    this.legalAddrObj.AreaCode4 = tempAddr.AreaCode4;
+    this.legalAddrObj.City = tempAddr.City;
+    this.legalAddrObj.Fax = tempAddr.Fax;
+    this.legalAddrObj.FaxArea = tempAddr.FaxArea;
+    this.legalAddrObj.Phn1 = tempAddr.Phn1;
+    this.legalAddrObj.Phn2 = tempAddr.Phn2;
+    this.legalAddrObj.PhnArea1 = tempAddr.PhnArea1;
+    this.legalAddrObj.PhnArea2 = tempAddr.PhnArea2;
+    this.legalAddrObj.PhnExt1 = tempAddr.PhnExt1;
+    this.legalAddrObj.PhnExt2 = tempAddr.PhnExt2;
+    this.legalAddrObj.SubZipcode = tempAddr.SubZipcode;
+
+    this.inputFieldLegalObj.inputLookupObj.nameSelect = tempAddr.Zipcode;
+    this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: tempAddr.Zipcode };
+
+    this.inputAddressObjForLegalAddr.default = this.legalAddrObj;
+    this.inputAddressObjForLegalAddr.inputField = this.inputFieldLegalObj;
   }
 
   editData(MouCustCollId, isAddEdit) {
@@ -885,6 +936,7 @@ export class MouRequestAddcollComponent implements OnInit {
       this.type = "AddExisting";
       this.AddCollForm.controls.AssetTypeCode.disable();
       this.AddCollForm.controls.CopyFromLegal.disable();
+      this.AddCollForm.controls.CopyToOwnerLocation.disable();
       this.AddCollForm.controls.CollateralValueAmt.disable();
       this.AddCollForm.controls.FullAssetCode.disable();
       this.AddCollForm.controls.AssetCategoryCode.disable();
@@ -1047,6 +1099,7 @@ export class MouRequestAddcollComponent implements OnInit {
       MouCustCollateralId: [''],
       MouCustCollateralRegistrationId: [''],
       CopyFromLegal: [''],
+      CopyToOwnerLocation: [''],
       AssetTypeCode: ['', [Validators.required]],
       CollateralValueAmt: [0, [Validators.required]],
       CollateralPrcnt: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
