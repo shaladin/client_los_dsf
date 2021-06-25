@@ -22,8 +22,8 @@ export class MouViewAddcollComponent implements OnInit {
   @Input() MouCustId: number;
 
   listCollateralData: any;
-  isView:boolean = false;
-  listMouCustCollateralDocObj: ListMouCustCollateralDocObj = new ListMouCustCollateralDocObj();
+  isView: boolean = false;
+  listMouCustCollateralDocObj: Array<any>;
   mouCustCollateralDoc: MouCustCollateralDocObj = new MouCustCollateralDocObj();
   mouCustCollateralObj: MouCustCollateralObj;
   mouCustCollateralRegistrationObj: MouCustCollateralRegistrationObj;
@@ -43,9 +43,9 @@ export class MouViewAddcollComponent implements OnInit {
 
   AddCollDataForm = this.fb.group({
   })
-  ViewColl(MouCustCollateralId){
+  ViewColl(MouCustCollateralId) {
+    this.listMouCustCollateralDocObj = new Array<any>();
     this.isView = true;
-    this.listMouCustCollateralDocObj.MouCustCollateralDocObj = new Array();
     var collObj = { Id: MouCustCollateralId };
     console.log(MouCustCollateralId);
     this.http.post(URLConstant.GetListMouCustCollateralDocsByMouCustCollateralId, { Id: MouCustCollateralId }).subscribe(
@@ -56,21 +56,23 @@ export class MouViewAddcollComponent implements OnInit {
         if (MouCustCollateralDocs["length"] > 0) {
 
           for (var i = 0; i < MouCustCollateralDocs.length; i++) {
-            if(MouCustCollateralId==MouCustCollateralDocs[i].MouCustCollateralId){
+            if (MouCustCollateralId == MouCustCollateralDocs[i].MouCustCollateralId) {
 
-            this.mouCustCollateralDoc = new MouCustCollateralDocObj();
-            this.mouCustCollateralDoc.DocCode = MouCustCollateralDocs[i].DocCode;
-            this.mouCustCollateralDoc.DocNo = MouCustCollateralDocs[i].DocNo;
-            this.mouCustCollateralDoc.ExpiredDt = new Date(formatDate(MouCustCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'));
-            this.mouCustCollateralDoc.DocNotes = MouCustCollateralDocs[i].DocNotes;
-            this.mouCustCollateralDoc.IsReceived =  MouCustCollateralDocs[i].IsReceived;
-            this.listMouCustCollateralDocObj.MouCustCollateralDocObj.push(this.mouCustCollateralDoc);
+              var MouCustCollateralDocObj = {
+                DocCode: MouCustCollateralDocs[i].DocCode,
+                DocNo: MouCustCollateralDocs[i].DocNo,
+                ExpiredDt: formatDate(MouCustCollateralDocs[i].ExpiredDt, 'yyyy-MM-dd', 'en-US'),
+                DocNotes: MouCustCollateralDocs[i].DocNotes,
+                IsReceived: MouCustCollateralDocs[i].IsReceived
+              }
+              this.listMouCustCollateralDocObj.push(MouCustCollateralDocObj);
+            }
           }
-          }}
-       
+        }
+
       });
 
-    
+
     this.http.post(URLConstant.GetMouCustCollateralDataForUpdateByMouCustCollateralId, collObj).subscribe(
       (response) => {
 
@@ -83,7 +85,7 @@ export class MouViewAddcollComponent implements OnInit {
 
   }
 
-  Back(){
+  Back() {
     this.isView = false;
   }
 }
