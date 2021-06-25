@@ -174,7 +174,6 @@ export class CustMainDataComponent implements OnInit {
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
 
-    await this.initcustMainDataMode();
     await this.setLookup();
 
     this.legalAddrObj = new AddrObj();
@@ -206,8 +205,10 @@ export class CustMainDataComponent implements OnInit {
     }
 
     if (this.inputMode != 'ADD' && isUseLead == false) {
-      this.getCustMainData();
+      await this.getCustMainData();
     }
+
+    await this.initcustMainDataMode();
   }
 
   async initcustMainDataMode() {
@@ -254,6 +255,7 @@ export class CustMainDataComponent implements OnInit {
         this.isIncludeCustRelation = false;
         this.subjectTitle = this.bizTemplateCode == CommonConstant.FL4W ? 'Lessee' : 'Customer';
     }
+    this.CustMainDataForm.updateValueAndValidity();
   }
 
   AppCustData: AppCustObj = new AppCustObj();
@@ -442,10 +444,10 @@ export class CustMainDataComponent implements OnInit {
     this.MrCustRelationshipCodeObj.splice(idxSpouse, 1)
   }
 
-  getCustMainData() {
+  async getCustMainData() {
     let reqObj: GenericObj = new GenericObj();
     reqObj.Id = this.appCustId;
-    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppCustId, reqObj).subscribe(
+    await this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppCustId, reqObj).toPromise().then(
       async (response) => {
         if (response.AppCustObj) {
           if (!this.appCustId) this.appCustId = response.AppCustObj.AppCustId
