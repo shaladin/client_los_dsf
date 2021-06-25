@@ -190,10 +190,16 @@ export class InvoiceDataComponent implements OnInit {
           this.AppCustId = responseAppCust["AppCustId"];
           this.httpClient.post(URLConstant.GetListAppCustBankAccByAppCustId, appCustObj).subscribe(
             (response) => {
-              this.BankAccs = response["AppCustBankAccObjs"];
+              this.BankAccs = response[CommonConstant.ReturnObj].AppCustBankAccObjs;
               this.InvoiceForm.patchValue({
-                BankAccountNo: this.BankAccs[0].key
+                BankAccountNo: this.BankAccs[0].BankAccNo
               });
+              let event = {
+                target: {
+                  value: this.BankAccs[0].BankAccNo
+                }
+              }
+              this.ChangeBankAcc(event);
             }
           )
         }
