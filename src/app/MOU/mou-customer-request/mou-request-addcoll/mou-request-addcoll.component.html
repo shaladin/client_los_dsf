@@ -238,6 +238,13 @@
     </lib-ucSubsection>
     <div id="AddCollOwner">
       <div class="form-group row">
+        <label class="col-md-2" for="SelfOwner" translate>Self Owner</label>
+        <div class="col-md-8">
+          <mat-checkbox formControlName="SelfOwner" (change)="CopyUserForSelfOwner()">
+          </mat-checkbox>
+        </div>
+      </div>
+      <div class="form-group row">
         <label class="col-md-2 adins-required-label" translate>Owner Name</label>
         <div class="col-md-3">
           <input type="text" class="form-control" formControlName="OwnerName"
@@ -469,6 +476,13 @@
     <lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Collateral Owner'" [panel]="'AddCollOwner'">
     </lib-ucSubsection>
     <div id="AddCollOwner">
+      <div class="form-group row">
+        <label class="col-md-2" for="SelfOwner" translate>Self Owner</label>
+        <div class="col-md-8">
+          <mat-checkbox formControlName="SelfOwner" (change)="CopyUserForSelfOwner()">
+          </mat-checkbox>
+        </div>
+      </div>
       <div class="form-group row">
         <label class="col-md-2 adins-required-label" translate>Owner Name</label>
         <div class="col-md-3">

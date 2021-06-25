@@ -132,6 +132,7 @@ export class MouRequestAddcollComponent implements OnInit {
     OwnerIdNo: ['', [Validators.required]],
     MrIdType: ['', [Validators.required]],
     Notes: [''],
+    SelfOwner: [false],
     RowVersionCollateral: [''],
     RowVersionCollateralRegistration: [''],
     items: this.fb.array([]),
@@ -269,6 +270,49 @@ export class MouRequestAddcollComponent implements OnInit {
       this.AddCollForm.controls["CollateralPrcnt"].setValidators([Validators.required, Validators.min(0), Validators.max(100)]);
       this.AddCollForm.controls["CollateralPrcnt"].updateValueAndValidity();
     }
+  }
+
+  async CopyUserForSelfOwner() {
+    if (this.AddCollForm.controls.SelfOwner.value) {
+      await this.http.post(URLConstant.GetMouCustByMouCustId, { Id: this.MouCustId }).toPromise().then(
+        (response) => {
+          var CustObj = response["MouCustObj"];
+          var CustAddrObj = response["MouCustAddrLegalObj"];
+          
+          this.AddCollForm.patchValue({
+            OwnerName: CustObj.CustName,
+            OwnerRelationship: "SELF",
+            MrIdType: CustObj.MrIdTypeCode,
+            OwnerIdNo: CustObj.IdNo,
+            // OwnerMobilePhnNo: typeof (response['AppCustPersonalObj']) != 'undefined' ? response['AppCustPersonalObj']['MobilePhnNo1'] : ''
+          })
+          // let OwnerAddrObj = CustAddrObj;
+          this.inputFieldLegalObj.inputLookupObj.nameSelect = CustAddrObj.Zipcode;
+          this.inputFieldLegalObj.inputLookupObj.jsonSelect = { Zipcode: CustAddrObj.Zipcode };
+          this.inputAddressObjForLegalAddr.default = CustAddrObj;
+          this.inputAddressObjForLegalAddr.inputField = this.inputFieldLegalObj;
+        }
+      )
+    }
+    this.checkSelfOwnerColl();
+  }
+
+  checkSelfOwnerColl() {
+    if (this.AddCollForm.controls.SelfOwner.value) {
+      this.AddCollForm.controls.OwnerName.disable();
+      this.AddCollForm.controls.OwnerRelationship.disable();
+      // this.AddCollForm.controls.OwnerMobilePhnNo.disable();
+      this.AddCollForm.controls.MrIdType.disable();
+      this.AddCollForm.controls.OwnerIdNo.disable();
+      this.AddCollForm.controls.legalAddr.disable();
+      return;
+    }
+    this.AddCollForm.controls.OwnerName.enable();
+    this.AddCollForm.controls.OwnerRelationship.enable();
+    // this.AddCollForm.controls.OwnerMobilePhnNo.enable();
+    this.AddCollForm.controls.MrIdType.enable();
+    this.AddCollForm.controls.OwnerIdNo.enable();
+    this.AddCollForm.controls.legalAddr.enable();
   }
 
   UpdateValueCollateralPortionAmt() {
@@ -941,10 +985,12 @@ export class MouRequestAddcollComponent implements OnInit {
           OwnerIdNo: this.collateralRegistrationObj.OwnerIdNo,
           MrIdType: this.collateralRegistrationObj.MrIdTypeCode,
           OwnerRelationship: this.collateralRegistrationObj.MrOwnerRelationshipCode,
+          SelfOwner: this.collateralRegistrationObj.MrOwnerRelationshipCode == "SELF" ? true : false,
           Notes: this.collateralRegistrationObj.Notes,
           RowVersionCollateralRegistration: this.collateralRegistrationObj.RowVersion
         });
 
+        this.checkSelfOwnerColl();
         this.setValidatorPattern(this.collateralRegistrationObj.MrIdTypeCode);
 
         this.AddCollForm.controls.MrCollateralConditionCode.disable();
@@ -1016,6 +1062,7 @@ export class MouRequestAddcollComponent implements OnInit {
       SerialNo3: [''],
       SerialNo4: [''],
       SerialNo5: [''],
+      SelfOwner: [false],
       RowVersionCollateral: [''],
       RowVersionCollateralRegistration: [''],
       items: this.fb.array([]),
