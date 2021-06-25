@@ -90,7 +90,7 @@
             "action": [
                 {
                     "type": "edit",
-                    "path": "/Nap/AddProcess/CopyCancelledApplicationCrossBl/Detail",
+                    "path": "NAP_ADD_PRCS_COPY_CANCEL_APP_CROSS_BL_DETAIL",
                     "param": [
                         {
                             "type": "AppId",
