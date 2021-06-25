@@ -1120,21 +1120,23 @@ export class MouRequestAddcollComponent implements OnInit {
     if (this.isUseDigitalization == "1" && this.isNeedCheckBySystem == "0") {
       if (!this.IsCalledIntegrator) {
         if (confirm("Continue without integrator ?")) {
-          this.ResponseMouAddColl.emit({ StatusCode: "200" });
+          this.UpdatePlafondAmt(sumCollateralValue);
         }
       } else {
         this.http.post(URLConstant.CheckMouCustCollateralIntegrator, mouCustObjForAddTrxData).toPromise().then(
           (response) => {
+            this.UpdatePlafondAmt(sumCollateralValue);
             this.toastr.successMessage("Success !");
-            this.ResponseMouAddColl.emit({ StatusCode: "200" });
-
           }
         );
       }
     }
     else {
-      this.ResponseMouAddColl.emit({ StatusCode: "200" });
+      this.UpdatePlafondAmt(sumCollateralValue);
     }
+  }
+
+  UpdatePlafondAmt(sumCollateralValue: number){
     this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         var mouCustObjForSave = response;
@@ -1143,9 +1145,9 @@ export class MouRequestAddcollComponent implements OnInit {
           (response) => {
             this.toastr.successMessage(response["message"]);
             this.bindMouData();
+            this.ResponseMouAddColl.emit({ StatusCode: "200" });
           });
       });
-
   }
 
   back() {
