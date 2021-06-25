@@ -74,7 +74,6 @@ export class MouCustJobDataComponent implements OnInit {
   inputAddressObjForJobData: InputAddressObj;
 
   ngOnInit() {
-    console.log(this.MouCustPersonalJobDataObj);
     this.inputAddressObjForJobData = new InputAddressObj();
     this.inputAddressObjForJobData.showPhn3 = false;
     this.inputAddressObjForJobData.showSubsection = false;
