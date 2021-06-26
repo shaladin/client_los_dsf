@@ -1,6 +1,6 @@
 import { formatDate } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -9,7 +9,7 @@ import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustCompanyFinDataObj } from 'app/shared/model/AppCustCompanyFinDataObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
-
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-financial-company',
   templateUrl: './financial-company.component.html',
@@ -30,6 +30,12 @@ export class FinancialCompanyComponent implements OnInit {
   CustAttrRequest: Array<Object> = new Array<Object>();
   MrSourceOfIncomeTypeObj: Array<KeyValueObj> = new Array();
   AppCustBankAccList: Array<AppCustBankAccObj> = new Array();
+
+  @ViewChild('ModalCoyFinData') ModalCoyFinData;
+  ListAppCustCoyFinData : Array<AppCustCompanyFinDataObj> = [];
+  IsAddFinData: boolean = true;
+  currentCustFinDataIndex: number;
+  currentModal: any;
 
   FinancialForm = this.fb.group({
     AppCustCompanyFinDataId: [0],
@@ -64,48 +70,106 @@ export class FinancialCompanyComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    public formValidate: FormValidateService) { }
+    public formValidate: FormValidateService,
+    private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.GetFinData();
+    // this.GetFinData();
+    this.GetListFinData();
   }
 
   isDataExist: boolean = false;
-  GetFinData(){
-    this.http.post<AppCustCompanyFinDataObj>(URLConstant.GetAppCustCompanyFinDataByAppCustId, { Id: this.AppCustId }).subscribe(
-      async (response) => {
-        if(response.AppCustCompanyFinDataId != 0){
-          this.isDataExist = true;
-          this.FinancialForm.patchValue({
-            GrossMonthlyIncomeAmt: response.GrossMonthlyIncomeAmt,
-            ReturnOfInvestmentPrcnt: response.ReturnOfInvestmentPrcnt,
-            ReturnOfAssetPrcnt: response.ReturnOfAssetPrcnt,
-            CurrentRatioPrcnt: response.CurrentRatioPrcnt,
-            InvTurnOverPrcnt: response.InvTurnOverPrcnt,
-            GrowthPrcnt: response.GrowthPrcnt,
-            OthMonthlyInstAmt: response.OthMonthlyInstAmt,
-            Revenue: response.Revenue,
-            ProfitBeforeTax: response.ProfitBeforeTax,
-            NetFixedAsset: response.NetFixedAsset,
-            CurrLiablts: response.CurrLiablts,
-            ShareholderEquity: response.ShareholderEquity,
-            GrossMonthlyExpenseAmt: response.GrossMonthlyExpenseAmt,
-            ReturnOfEquityPrcnt: response.ReturnOfEquityPrcnt,
-            ProfitMarginPrcnt: response.ProfitMarginPrcnt,
-            DebtEquityRatioPrcnt: response.DebtEquityRatioPrcnt,
-            ArTurnOverPrcnt: response.ArTurnOverPrcnt,
-            WorkingCapitalAmt: response.WorkingCapitalAmt,
-            DateAsOf: response.DateAsOf != null? formatDate(response.DateAsOf, 'yyyy-MM-dd', 'en-US') : "",
-            OprCost: response.OprCost,
-            CurrAsset: response.CurrAsset,
-            TotalAsset: response.TotalAsset,
-            LongTermLiablts: response.LongTermLiablts,
-            CurrRatio: response.CurrRatio,
-            RowVersion: response.RowVersion
-          });
-        }
+  // GetFinData(){
+  //   this.http.post<AppCustCompanyFinDataObj>(URLConstant.GetAppCustCompanyFinDataByAppCustId, { Id: this.AppCustId }).subscribe(
+  //     async (response) => {
+  //       if(response.AppCustCompanyFinDataId != 0){
+  //         this.isDataExist = true;
+  //         this.FinancialForm.patchValue({
+  //           GrossMonthlyIncomeAmt: response.GrossMonthlyIncomeAmt,
+  //           ReturnOfInvestmentPrcnt: response.ReturnOfInvestmentPrcnt,
+  //           ReturnOfAssetPrcnt: response.ReturnOfAssetPrcnt,
+  //           CurrentRatioPrcnt: response.CurrentRatioPrcnt,
+  //           InvTurnOverPrcnt: response.InvTurnOverPrcnt,
+  //           GrowthPrcnt: response.GrowthPrcnt,
+  //           OthMonthlyInstAmt: response.OthMonthlyInstAmt,
+  //           Revenue: response.Revenue,
+  //           ProfitBeforeTax: response.ProfitBeforeTax,
+  //           NetFixedAsset: response.NetFixedAsset,
+  //           CurrLiablts: response.CurrLiablts,
+  //           ShareholderEquity: response.ShareholderEquity,
+  //           GrossMonthlyExpenseAmt: response.GrossMonthlyExpenseAmt,
+  //           ReturnOfEquityPrcnt: response.ReturnOfEquityPrcnt,
+  //           ProfitMarginPrcnt: response.ProfitMarginPrcnt,
+  //           DebtEquityRatioPrcnt: response.DebtEquityRatioPrcnt,
+  //           ArTurnOverPrcnt: response.ArTurnOverPrcnt,
+  //           WorkingCapitalAmt: response.WorkingCapitalAmt,
+  //           DateAsOf: response.DateAsOf != null? formatDate(response.DateAsOf, 'yyyy-MM-dd', 'en-US') : "",
+  //           OprCost: response.OprCost,
+  //           CurrAsset: response.CurrAsset,
+  //           TotalAsset: response.TotalAsset,
+  //           LongTermLiablts: response.LongTermLiablts,
+  //           CurrRatio: response.CurrRatio,
+  //           RowVersion: response.RowVersion
+  //         });
+  //       }
+  //     }
+  //   );
+  // }
+
+  GetListFinData()
+  {
+    this.http.post<AppCustCompanyFinDataObj>(URLConstant.GetListAppCustCompanyFinDataByAppCustId, { AppCustId: this.AppCustId }).subscribe(
+      (response) => {
+        this.ListAppCustCoyFinData = response['ListAppCustCompanyFinData'];
       }
     );
+  }
+
+  GetFinData(currentCustFinDataIndex:number)
+  {
+    this.IsAddFinData = false;
+    this.currentCustFinDataIndex = currentCustFinDataIndex;
+    let custFinData:AppCustCompanyFinDataObj = this.ListAppCustCoyFinData[this.currentCustFinDataIndex];
+    if(!custFinData) 
+    {
+      custFinData = new AppCustCompanyFinDataObj();
+      this.IsAddFinData = true;
+    }
+    this.FinancialForm.patchValue({
+      AppCustCompanyFinDataId: custFinData.AppCustCompanyFinDataId,
+      AppCustId: this.AppCustId,
+      GrossMonthlyIncomeAmt: custFinData.GrossMonthlyIncomeAmt,
+      ReturnOfInvestmentPrcnt: custFinData.ReturnOfInvestmentPrcnt,
+      ReturnOfAssetPrcnt: custFinData.ReturnOfAssetPrcnt,
+      CurrentRatioPrcnt: custFinData.CurrentRatioPrcnt,
+      InvTurnOverPrcnt: custFinData.InvTurnOverPrcnt,
+      GrowthPrcnt: custFinData.GrowthPrcnt,
+      OthMonthlyInstAmt: custFinData.OthMonthlyInstAmt,
+      Revenue: custFinData.Revenue,
+      ProfitBeforeTax: custFinData.ProfitBeforeTax,
+      NetFixedAsset: custFinData.NetFixedAsset,
+      CurrLiablts: custFinData.CurrLiablts,
+      ShareholderEquity: custFinData.ShareholderEquity,
+      GrossMonthlyExpenseAmt: custFinData.GrossMonthlyExpenseAmt,
+      ReturnOfEquityPrcnt: custFinData.ReturnOfEquityPrcnt,
+      ProfitMarginPrcnt: custFinData.ProfitMarginPrcnt,
+      DebtEquityRatioPrcnt: custFinData.DebtEquityRatioPrcnt,
+      ArTurnOverPrcnt: custFinData.ArTurnOverPrcnt,
+      WorkingCapitalAmt: custFinData.WorkingCapitalAmt,
+      DateAsOf: custFinData.DateAsOf != null? formatDate(custFinData.DateAsOf, 'yyyy-MM-dd', 'en-US') : "",
+      OprCost: custFinData.OprCost,
+      CurrAsset: custFinData.CurrAsset,
+      TotalAsset: custFinData.TotalAsset,
+      LongTermLiablts: custFinData.LongTermLiablts,
+      CurrRatio: custFinData.CurrRatio,
+      RowVersion: custFinData.RowVersion
+    });
+
+    if(this.IsAddFinData) this.FinancialForm.controls['DateAsOf'].setValidators([Validators.required]);
+    else this.FinancialForm.controls['DateAsOf'].clearValidators();
+    this.FinancialForm.controls['DateAsOf'].updateValueAndValidity();
+
+    this.currentModal = this.modalService.open(this.ModalCoyFinData, {ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false});
   }
 
   GetEvent(event) {
@@ -132,6 +196,18 @@ export class FinancialCompanyComponent implements OnInit {
 
       }  
     }
+  }
+
+  async SaveAppCustPersonalFinData()
+  {
+    if (!this.FinancialForm.valid) return;
+
+    await this.http.post(URLConstant.AddEditAppCustCompanyFinData, {AppCustCompanyFinDataObj: this.FinancialForm.value}).toPromise().then(
+      (response) => {
+        if(this.currentModal) this.currentModal.close();
+      }
+    );
+    await this.GetListFinData();
   }
 
   SaveForm() {
