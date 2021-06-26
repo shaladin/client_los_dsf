@@ -86,8 +86,6 @@ export class TaskReassignmentApprovalDetailComponent implements OnInit {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.TASK_REASSIGN_APV_PAGING],{});
       }
     );
-
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.TASK_REASSIGN_APV_PAGING], { });
   }
 
   onCancelClick() {
