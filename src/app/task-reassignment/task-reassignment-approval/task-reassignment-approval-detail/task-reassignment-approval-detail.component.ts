@@ -83,7 +83,7 @@ export class TaskReassignmentApprovalDetailComponent implements OnInit {
 
     this.http.post(URLConstant.TaskReassignmentApproval, ReqTaskReassignmentApvCustomObj).subscribe(
       () => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.MOU_CUST_APPRV],{});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.TASK_REASSIGN_APV_PAGING],{});
       }
     );
 
