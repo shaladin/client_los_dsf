@@ -162,6 +162,10 @@
           "path": "/Ltkm/Verify/Detail",
           "param": [
             {
+              "type": "LtkmCustId",
+              "property": "LtkmCustId"
+            },
+            {
               "type": "WfTaskListId",
               "property": "WfTaskListId"
             },
@@ -172,10 +176,6 @@
             {
               "type": "MrCustTypeCode",
               "property": "MrCustTypeCode"
-            },
-            {
-              "type": "LtkmCustId",
-              "property": "LtkmCustId"
             }
           ]
         }
