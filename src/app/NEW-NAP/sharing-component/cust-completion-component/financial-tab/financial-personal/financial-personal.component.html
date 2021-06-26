@@ -95,12 +95,6 @@
               </div>
 
               <div class="col-md-12">
-                <app-attr-content-component [title]="'Financial Attribute Information'" [AppCustId]="AppCustId" [enjiForm]="enjiForm"
-                  [parentForm]="FinancialForm" [identifier]="'AttrList'" [AttrGroups]="AttrGroups"
-                  (IncomeAmt)="CalculateIncomeAmt($event)" (ExpenseAmt)="CalculateExpenseAmt($event)"></app-attr-content-component>
-              </div>
-
-              <div class="col-md-12">
                 <div class="form-group row">
                   <label class="col-md-2" translate>Total Monthly Income</label>
                   <div class="col-md-4" style="text-align: right;">
@@ -111,6 +105,12 @@
                     <label>{{FinancialForm.controls.NettIncomeAmt.value | number:'.2':'en-US' }}</label>
                   </div>
                 </div>
+              </div>
+
+              <div class="col-md-12">
+                <app-attr-content-component [title]="'Financial Attribute Information'" [AppCustId]="AppCustId" [enjiForm]="enjiForm"
+                  [parentForm]="FinancialForm" [identifier]="'AttrList'" [AttrGroups]="AttrGroups"
+                  (IncomeAmt)="CalculateIncomeAmt($event)" (ExpenseAmt)="CalculateExpenseAmt($event)"></app-attr-content-component>
               </div>
             </div>
           </div>
