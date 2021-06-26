@@ -22,8 +22,10 @@ export class FinancialPersonalComponent implements OnInit {
 
   IsDetail: boolean = false;
   AttrGroups: Array<string> = [
+    CommonConstant.AttrGroupCustPersonalFinData,
     CommonConstant.AttrGroupCustPersonalFinDataIncome,
-    CommonConstant.AttrGroupCustPersonalFinDataExpense
+    CommonConstant.AttrGroupCustPersonalFinDataExpense,
+    CommonConstant.AttrGroupCustPersonalFinDataOther
   ];
   AppCustPersonalFinData: AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
   CustAttrRequest: Array<Object> = new Array<Object>();
@@ -154,7 +156,7 @@ export class FinancialPersonalComponent implements OnInit {
     this.AppCustPersonalFinData.AppCustPersonalId = this.AppCustPersonalId;
 
     let request = {
-      ListAppCustAttrObj: this.CustAttrRequest,
+      ListAppCustFinDataAttrObj: this.CustAttrRequest,
       AppCustPersonalFinDataObj: this.AppCustPersonalFinData,
       AttrGroups: this.AttrGroups
     }

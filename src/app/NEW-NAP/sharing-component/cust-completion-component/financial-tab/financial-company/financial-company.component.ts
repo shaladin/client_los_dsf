@@ -21,6 +21,7 @@ export class FinancialCompanyComponent implements OnInit {
   
   IsDetail: boolean = false;
   AttrGroups: Array<string> = [
+    CommonConstant.AttrGroupCustCompanyFinData,
     CommonConstant.AttrGroupCustCompanyFinDataIncome,
     CommonConstant.AttrGroupCustCompanyFinDataExpense,
     CommonConstant.AttrGroupCustCompanyFinDataOther

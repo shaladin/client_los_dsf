@@ -194,7 +194,6 @@ export class InvoiceDataComponent implements OnInit {
               this.InvoiceForm.patchValue({
                 BankAccountNo: this.BankAccs[0].BankAccNo
               });
-
               let event = {
                 target: {
                   value: this.BankAccs[0].BankAccNo
