@@ -260,6 +260,10 @@
                                     {
                                         "type": "ChangeMouTrxId",
                                         "property": "ChangeMouTrxId"
+                                    },
+                                    {
+                                        "type": "ChangeMouCustId",
+                                        "property": "ChangeMouCustId"
                                     }
                                 ]
                             },
@@ -298,6 +302,10 @@
                                     {
                                         "type": "ChangeMouTrxId",
                                         "property": "ChangeMouTrxId"
+                                    },
+                                    {
+                                        "type": "ChangeMouCustId",
+                                        "property": "ChangeMouCustId"
                                     }
                                 ]
                             },

@@ -122,9 +122,16 @@ export class ChangeMouApprovalFactoringComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    this.toastr.successMessage("Success");
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CHANGE_MOU_APV_PAGING], {});
+    let ReqMouApvCustomObj = {
+      Tasks: event.Tasks
+    };
 
+    this.http.post(URLConstant.MouApproval, ReqMouApvCustomObj).subscribe(
+      () => {
+        this.toastr.successMessage("Success");
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CHANGE_MOU_APV_PAGING], {});
+      }
+    );
   }
   onCancelClick() {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CHANGE_MOU_APV_PAGING], {});
