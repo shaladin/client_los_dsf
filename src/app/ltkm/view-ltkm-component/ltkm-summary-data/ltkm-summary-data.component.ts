@@ -26,7 +26,8 @@ export class ViewLtkmSummaryDataComponent implements OnInit {
         this.http.post(URLConstant.GetSummaryByLtkmCustId, { Id: this.LtkmCustId }).pipe()
             .subscribe(
                 (response) => {
-                    this.SummaryLtkmObj = response["ReturnObject"];
+                    // this.SummaryLtkmObj = response["ReturnObject"];
+                    this.SummaryLtkmObj = response;
                 }
             );
     }
