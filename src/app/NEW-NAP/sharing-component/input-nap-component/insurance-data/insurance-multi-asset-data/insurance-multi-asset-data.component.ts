@@ -402,6 +402,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           this.BindMultiInsGridData();
           formDirective.resetForm();
           this.PageState = 'Paging';
+          this.falseValue();
         });
     } else {
       this.http.post(URLConstant.EditInsuranceDataMultiAsset, this.saveObj).subscribe(
@@ -410,6 +411,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           this.BindMultiInsGridData();
           formDirective.resetForm();
           this.PageState = 'Paging';
+          this.falseValue();
         });
     }
   }
@@ -417,6 +419,13 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   Cancel() {
     this.BindMultiInsGridData();
     this.PageState = 'Paging';
+    this.falseValue();
+  }
+
+  falseValue(){
+    this.isGenerate = false;
+    this.isCalculate = false;
+    this.showGenerate = false;
   }
 
   setSaveObj(insuredBy) {
@@ -666,6 +675,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   async CalculateInsurance() {
+    if(!this.isGenerate){
+      this.toastr.warningMessage(ExceptionConstant.CLICK_GENERATE_INSURANCE);
+      return;
+    }
     if (!this.InsuranceDataForm.controls["AppInsMainCvgs"].valid) return;
     var reqObj = new RequestCalcInsObj();
     for (let i = 0; i < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"].length; i++) {
@@ -818,6 +831,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       // if(!this.InsuranceDataForm.valid){
       //   return;
       // }
+    }
+    if (this.InsuranceDataForm.controls.CvgAmt.value == 0) {
+      this.toastr.warningMessage(ExceptionConstant.COVERAGE_CANT_0_LESS);
+      return;
     }
     var reqObj = new InsuranceDataInsRateRuleObj();
     reqObj.InscoCode = this.InsuranceDataForm.controls.InscoBranchCode.value;
@@ -1458,10 +1475,10 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
   }
 
   InsuredByChanged(event) {
-    this.setValidator(event.target.value);
+    this.setValidator(event.target.value, true);
   }
 
-  setValidator(insuredBy) {
+  setValidator(insuredBy, isNotFromDB: boolean = false) {
     if (insuredBy == CommonConstant.InsuredByOffSystem) {
       this.InsuranceDataForm.patchValue({
         // InsAssetCoveredBy: '',
@@ -1537,6 +1554,11 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     }
 
     if (insuredBy == CommonConstant.InsuredByCustomer) {
+      if(isNotFromDB){
+        this.InsuranceDataForm.patchValue({
+          CustCvgAmt: this.totalAssetPriceAmt
+        });
+      }
       this.InsuranceDataForm.controls.CustInscoBranchName.setValidators([Validators.required, Validators.maxLength(100)]);
       this.InsuranceDataForm.controls.CustInscoBranchName.updateValueAndValidity();
       this.InsuranceDataForm.controls.InsPolicyNo.setValidators(Validators.maxLength(50));
@@ -1569,6 +1591,11 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     }
 
     if (insuredBy == CommonConstant.InsuredByCompany) {
+      if(isNotFromDB){
+        this.InsuranceDataForm.patchValue({
+          CvgAmt: this.totalAssetPriceAmt
+        });
+      }
       this.InsuranceDataForm.controls.InsAssetCoverPeriod.setValidators([Validators.required, Validators.maxLength(50)]);
       this.InsuranceDataForm.controls.InsAssetCoverPeriod.updateValueAndValidity();
       this.setInsLengthValidator(this.InsuranceDataForm.controls.InsAssetCoverPeriod.value);
@@ -1598,6 +1625,12 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     }
 
     if (insuredBy == CommonConstant.InsuredByCustomerCompany) {
+      if(isNotFromDB){
+        this.InsuranceDataForm.patchValue({
+          CvgAmt: this.totalAssetPriceAmt,
+          CustCvgAmt: this.totalAssetPriceAmt
+        });
+      }
       this.InsuranceDataForm.controls.InsAssetCoverPeriod.setValidators([Validators.required, Validators.maxLength(50)]);
       this.InsuranceDataForm.controls.InsAssetCoverPeriod.updateValueAndValidity();
       this.setInsLengthValidator(this.InsuranceDataForm.controls.InsAssetCoverPeriod.value);
@@ -1652,13 +1685,18 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         } else {
           this.totalAssetPriceAmt = this.appCollateralObj.CollateralValueAmt
         }
-
-        if (this.appFinDataObj != undefined) {
           this.InsuranceDataForm.patchValue({
             CvgAmt: this.totalAssetPriceAmt,
             CustCvgAmt: this.totalAssetPriceAmt
           });
-        }
+        
+
+        // if (this.appFinDataObj != undefined) {
+        //   this.InsuranceDataForm.patchValue({
+        //     CvgAmt: this.totalAssetPriceAmt,
+        //     CustCvgAmt: this.totalAssetPriceAmt
+        //   });
+        // }
         if (this.appAssetObj != undefined) {
           this.AppAssetId = this.appCollateralObj.AppAssetId;
         }
