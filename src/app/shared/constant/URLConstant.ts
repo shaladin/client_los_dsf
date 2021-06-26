@@ -1707,4 +1707,7 @@ export class URLConstant {
 
   //PEFINDO
   public static GetPefindoCustomReport = environment.losUrl + "/Pefindo/GetCustomReport";
+
+  //Task Reassignment
+  public static TaskReassignmentApproval = environment.losUrl + "/Approval/TaskReassignmentApproval";
 }
