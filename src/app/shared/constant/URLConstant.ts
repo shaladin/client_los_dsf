@@ -843,7 +843,8 @@ export class URLConstant {
   public static GetAppCustPersonalContactPersonsByAppCustPersonalId = environment.losUrl + "/AppCustPersonalContactPerson/GetAppCustPersonalContactPersonsByAppCustPersonalId";
   public static DeleteAppCustPersonalContactPerson = environment.losUrl + "/AppCustPersonalContactPerson/DeleteAppCustPersonalContactPerson";
   public static GetAppCustPersonalDataAndSpouseByAppId = environment.losUrl + "/AppCust/GetAppCustPersonalDataAndSpouseByAppCustId";
-
+  public static GetAppCustPersonalByAppCustId = environment.losUrl + "/AppCust/GetAppCustPersonalByAppCustId";
+  
   //CUST DATA COMPANY
   public static GetCustDataForViewByAppId = environment.losUrl + "/AppCust/GetCustDataForViewByAppId";
   public static GetCustDataPersonalForViewByAppId = environment.losUrl + "/AppCust/GetCustDataPersonalForViewByAppId";
@@ -1327,6 +1328,7 @@ export class URLConstant {
   public static GetAppCustPersonalFinDataByAppCustPersonalId = environment.losUrl + "/AppCustPersonalFinData/GetAppCustPersonalFinDataByAppCustPersonalId";
   public static AddAppCustPersonalFinData = environment.losUrl + "/AppCustPersonalFinData/AddAppCustPersonalFinData";
   public static EditAppCustPersonalFinData = environment.losUrl + "/AppCustPersonalFinData/EditAppCustPersonalFinData";
+  public static DeleteAppCustPersonalFinData = environment.losUrl + "/AppCustPersonalFinData/DeleteAppCustPersonalFinData";
 
   //Verf Question Answer
   public static GetVerfQuestionAnswerListByVerfSchemeCode = environment.FoundationR3Url + "/VerfQuestionAnswer/GetVerfQuestionAnswerListByVerfSchemeCode"

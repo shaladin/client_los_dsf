@@ -139,19 +139,55 @@ export class MouDetailFactoringComponent implements OnInit {
         if(mouFctrData["MouCustFctrId"] != 0){
           this.mode = "edit";
           this.MouDetailFactoringForm.patchValue({
-            ...mouFctrData
+            // ...mouFctrData
+            MouCustFctrId: mouFctrData["MouCustFctrId"],
+            MouCustId: mouFctrData["MouCustId"],
+            MrRecourseTypeCode: mouFctrData["MrRecourseTypeCode"],
+            IsDisclosed: mouFctrData["IsDisclosed"],
+            WopCode: mouFctrData["WopCode"],
+            MrPaidByCode: mouFctrData["MrPaidByCode"],
+            MrInstTypeCode: mouFctrData["MrInstTypeCode"],
+            SingleInstCalcMthd: mouFctrData["SingleInstCalcMthd"],
+            TopDays: mouFctrData["TopDays"],
+            TenorFrom: mouFctrData["TenorFrom"],
+            TenorTo: mouFctrData["TenorTo"],
+            PayFreqCode: mouFctrData["PayFreqCode"],
+            MrInstSchmCode: mouFctrData["MrInstSchmCode"],
+            InterestRatePrcnt: mouFctrData["InterestRatePrcnt"],
+            RetentionPrcnt: mouFctrData["RetentionPrcnt"],
+            IsListedCust: mouFctrData["IsListedCust"],
+            Notes: mouFctrData["Notes"],
+            CurrCode: mouFctrData["CurrCode"],
+            RowVersion: mouFctrData["RowVersion"],
+            VendorCode: mouFctrData["VendorCode"],
+            VendorName: mouFctrData["VendorName"],
+            VendorId: mouFctrData["VendorId"],
+            CustNo: mouFctrData["CustNo"],
+            CustName: mouFctrData["CustName"],
+            MrCustTypeCode: mouFctrData["MrCustTypeCode"],
+            VirtualAccNo: mouFctrData["VirtualAccNo"]
           });
+
+          var objVendor = {
+            Code: mouFctrData["VendorCode"]
+          }
+          this.httpClient.post(URLConstant.GetVendorByVendorCode, objVendor).subscribe(
+            (responseVendor) => {
+              this.inputLookupObj.nameSelect = responseVendor["VendorName"];
+              this.inputLookupObj.jsonSelect = { VendorName: responseVendor["VendorName"] , VendorCode: responseVendor["VendorCode"] };
+            }
+          )
         }
         else{
           this.MouDetailFactoringForm.patchValue({
             MouCustId: this.MouCustId
           });
         }
-        console.log("here");
-        this.OnChangeRecourseType(this.recourseTypeList[0].Key);
+        this.isWithoutRecourse = false
         this.CheckPaidBy(this.MouDetailFactoringForm.controls.MrPaidByCode.value);
         this.instTypeHandler();
         this.shouldComponentLoad = true;
+        this.OnChangeRecourseType(this.MouDetailFactoringForm.controls.MrRecourseTypeCode.value)
       });
   }
 
@@ -295,17 +331,17 @@ export class MouDetailFactoringComponent implements OnInit {
       ];
       this.inputLookupCustObj.isReady = true;
 
-      this.httpClient.post<Array<MouCustListedCustFctrObj>>(URLConstant.GetListMouCustListedCustFctrByMouCustId, { Id: this.MouCustId }).subscribe(
+      this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { Id: this.MouCustId }).subscribe(
         (response) => {
-          this.listedCusts = response;
+          this.listedCusts = response[CommonConstant.ReturnObj];
 
           if (this.listedCusts.length > 0) {
             this.MouDetailFactoringForm.patchValue({
               CustNo: this.listedCusts[0].CustNo
             });
 
-            this.inputLookupCustObj.nameSelect = this.listedCusts[0].CustNo
-            this.inputLookupCustObj.jsonSelect = { CustNo: this.listedCusts[0].CustName };
+            this.inputLookupCustObj.nameSelect = this.listedCusts[0].CustName;
+            this.inputLookupCustObj.jsonSelect = { CustNo: this.listedCusts[0].CustNo , CustName: this.listedCusts[0].CustName };
             this.setCustName(this.listedCusts[0].CustNo, this.listedCusts[0].MouListedCustFctrId)
           }
         })
