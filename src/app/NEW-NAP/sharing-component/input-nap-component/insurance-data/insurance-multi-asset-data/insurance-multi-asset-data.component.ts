@@ -482,8 +482,8 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       this.saveObj.AppInsObjObj.TotalCustDiscAmt = this.InsuranceDataForm.controls.TotalCustDiscAmt.value;
       this.saveObj.AppInsObjObj.TotalInsCustAmt = this.saveObj.AppInsObjObj.TotalCustMainPremiAmt + this.saveObj.AppInsObjObj.TotalCustAddPremiAmt + this.InsuranceDataForm.controls.TotalCustFeeAmt.value - this.saveObj.AppInsObjObj.TotalCustDiscAmt;
       this.saveObj.AppInsObjObj.TotalInsInscoAmt = this.saveObj.AppInsObjObj.TotalInscoMainPremiAmt + this.saveObj.AppInsObjObj.TotalInscoAddPremiAmt + this.InsuranceDataForm.controls.TotalInscoFeeAmt.value - this.saveObj.AppInsObjObj.TotalInscoDiscAmt;
-      this.saveObj.AppInsObjObj.StartDt = new Date(this.businessDt);
-      this.saveObj.AppInsObjObj.EndDt = new Date(this.businessDt);
+      this.saveObj.AppInsObjObj.StartDt = this.setDateWithoutTimezone(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
+      this.saveObj.AppInsObjObj.EndDt = this.setDateWithoutTimezone(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
       this.saveObj.AppInsObjObj.EndDt.setMonth(this.saveObj.AppInsObjObj.EndDt.getMonth() + this.saveObj.AppInsObjObj.InsLength);
       this.saveObj.AppInsObjObj.PayPeriodToInsco = this.InsuranceDataForm.controls.PayPeriodToInsco.value;
 
@@ -497,9 +497,9 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         insCoverage.Tenor = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].Tenor.value;
         insCoverage.MrMainCvgTypeCode = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].MrMainCvgTypeCode.value;
 
-        insCoverage.StartDt = new Date(this.businessDt);
+        insCoverage.StartDt = this.setDateWithoutTimezone(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
         insCoverage.StartDt.setMonth(insCoverage.StartDt.getMonth() + addedTenor);
-        insCoverage.EndDt = new Date(this.businessDt);
+        insCoverage.EndDt = this.setDateWithoutTimezone(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
         insCoverage.EndDt.setMonth(insCoverage.EndDt.getMonth() + addedTenor + insCoverage.Tenor);
 
         addedTenor += insCoverage.Tenor;
@@ -582,16 +582,13 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       this.saveObj.AppInsObjObj.TotalCustDiscAmt = this.InsuranceDataForm.controls.TotalCustDiscAmt.value;
       this.saveObj.AppInsObjObj.TotalInsCustAmt = this.saveObj.AppInsObjObj.TotalCustMainPremiAmt + this.saveObj.AppInsObjObj.TotalCustAddPremiAmt + this.InsuranceDataForm.controls.TotalCustFeeAmt.value - this.saveObj.AppInsObjObj.TotalCustDiscAmt;
       this.saveObj.AppInsObjObj.TotalInsInscoAmt = this.saveObj.AppInsObjObj.TotalInscoMainPremiAmt + this.saveObj.AppInsObjObj.TotalInscoAddPremiAmt + this.InsuranceDataForm.controls.TotalInscoFeeAmt.value - this.saveObj.AppInsObjObj.TotalInscoDiscAmt;
-      this.saveObj.AppInsObjObj.StartDt = new Date(this.businessDt);
-      this.saveObj.AppInsObjObj.EndDt = new Date(this.businessDt);
-      this.saveObj.AppInsObjObj.EndDt.setMonth(this.saveObj.AppInsObjObj.EndDt.getMonth() + this.saveObj.AppInsObjObj.InsLength);
       this.saveObj.AppInsObjObj.CustInscoBranchName = this.InsuranceDataForm.controls.CustInscoBranchName.value;
       this.saveObj.AppInsObjObj.InsPolicyNo = this.InsuranceDataForm.controls.InsPolicyNo.value;
       this.saveObj.AppInsObjObj.InsPolicyName = this.InsuranceDataForm.controls.InsPolicyName.value;
       this.saveObj.AppInsObjObj.CustCvgAmt = this.InsuranceDataForm.controls.CustCvgAmt.value;
       this.saveObj.AppInsObjObj.CustCoverStartDt = this.InsuranceDataForm.controls.CustCoverStartDt.value;
-      this.saveObj.AppInsObjObj.StartDt = new Date(this.InsuranceDataForm.controls.EndDt.value);
-      this.saveObj.AppInsObjObj.EndDt = new Date(this.InsuranceDataForm.controls.EndDt.value);
+      this.saveObj.AppInsObjObj.StartDt = this.setDateWithoutTimezone(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
+      this.saveObj.AppInsObjObj.EndDt = this.setDateWithoutTimezone(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
       this.saveObj.AppInsObjObj.EndDt.setMonth(this.saveObj.AppInsObjObj.EndDt.getMonth() + this.saveObj.AppInsObjObj.InsLength);
       this.saveObj.AppInsObjObj.CustNotes = this.InsuranceDataForm.controls.CustNotes.value;
       this.saveObj.AppInsObjObj.PayPeriodToInsco = this.InsuranceDataForm.controls.PayPeriodToInsco.value;
@@ -604,9 +601,9 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         insCoverage.Tenor = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].Tenor.value;
         insCoverage.MrMainCvgTypeCode = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].MrMainCvgTypeCode.value;
         insCoverage.MrInsPaidByCode = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].MrInsPaidByCode.value;
-        insCoverage.StartDt = new Date(this.saveObj.AppInsObjObj.EndDt);
+        insCoverage.StartDt = this.setDateWithoutTimezone(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
         insCoverage.StartDt.setMonth(insCoverage.StartDt.getMonth() + addedTenor);
-        insCoverage.EndDt = new Date(this.saveObj.AppInsObjObj.EndDt);
+        insCoverage.EndDt = this.setDateWithoutTimezone(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
         insCoverage.EndDt.setMonth(insCoverage.EndDt.getMonth() + addedTenor + insCoverage.Tenor);
 
         addedTenor += insCoverage.Tenor;
@@ -791,6 +788,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
           reqObj.InsCoverage.push(insCoverage);
         }
         this.isCalculate = true;
+        this.checkPaidBy();
       }
     );
     this.BindCapitalize();
@@ -885,6 +883,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         }
         this.bindInsFeeBehaviorRuleObj();
         this.showGenerate = true;
+        this.checkPaidBy();
       }
     );
     this.BindCapitalize();
@@ -1267,8 +1266,23 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         IsCapitalized: false,
       });
     }
+    this.checkPaidBy();
   }
 
+  IsAllPaidByCust: boolean = true;
+  checkPaidBy() {
+    this.IsAllPaidByCust = true;
+    let tempListAppInsMainCvgs = this.InsuranceDataForm.get("AppInsMainCvgs") as FormArray;
+    let totalDiscAmt: number = 0;
+    for (let index = 0; index < tempListAppInsMainCvgs.length; index++) {
+      const element = tempListAppInsMainCvgs.get(index.toString()) as FormGroup;
+      if (element.get("MrInsPaidByCode").value == CommonConstant.InsPaidByAtCost) {
+        totalDiscAmt += (element.get("CustMainPremiAmt").value + element.get("TotalCustAddPremiAmt").value);
+        this.IsAllPaidByCust = false;
+      }
+    }
+    this.InsuranceDataForm.get("TotalCustDiscAmt").patchValue(totalDiscAmt);
+  }
 
   IsAddCvgChanged() {
     this.isCalculate = false;
@@ -1377,12 +1391,13 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
   setInsLengthTenorCustCompany(tenor) {
     var months;
-    var endDt = new Date(this.InsuranceDataForm.controls.EndDt.value);
+    var endDt: Date = new Date(this.setDateWithoutTimezone(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW)));
+    endDt.setMonth(endDt.getMonth() + tenor);
 
     //Calculate the differences between the start and end dates
-    var yearsDifference = endDt.getFullYear() - this.businessDt.getFullYear();
-    var monthsDifference = endDt.getMonth() - this.businessDt.getMonth();
-    var daysDifference = endDt.getDate() - this.businessDt.getDate();
+    var yearsDifference: number = endDt.getFullYear() - this.businessDt.getFullYear();
+    var monthsDifference: number = endDt.getMonth() - this.businessDt.getMonth();
+    var daysDifference: number = endDt.getDate() - this.businessDt.getDate();
 
     var monthCorrection = 0;
     if (daysDifference > 0) {
@@ -1391,8 +1406,15 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
 
     months = (yearsDifference * 12 + monthsDifference + monthCorrection);
 
-    tenor = tenor - months;
-    return tenor;
+    // tenor = tenor - months;
+    return months;
+  }
+
+  setDateWithoutTimezone(inputDate) {
+    var date = new Date(inputDate);
+    date.setHours(0, 0, 0, 0);
+    var userTimezoneOffset = date.getTimezoneOffset() * 60000;
+    return new Date(date.getTime() - userTimezoneOffset);
   }
 
   setInsLengthDefaultValue(coverPeriod) {
