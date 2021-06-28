@@ -41,6 +41,11 @@ export class NapDetailPagingComponent implements OnInit {
     critObj.value = "NAPD_MD_" + this.bizTemplateCode;
     this.arrCrit.push(critObj);
 
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'a.BIZ_TEMPLATE_CODE';
+    critObj.value = this.bizTemplateCode;
+    this.arrCrit.push(critObj);
     // var critObj2 = new CriteriaObj();
     // critObj2.restriction = AdInsConstant.RestrictionNotIn;
     // critObj2.propName = 'a.APP_CURR_STEP';
