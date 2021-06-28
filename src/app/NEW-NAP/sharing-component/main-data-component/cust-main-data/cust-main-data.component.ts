@@ -173,7 +173,7 @@ export class CustMainDataComponent implements OnInit {
     this.ddlIdTypeObj.customValue = "Descr";
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
-
+    await this.initcustMainDataMode();
     await this.setLookup();
 
     this.legalAddrObj = new AddrObj();
@@ -208,7 +208,7 @@ export class CustMainDataComponent implements OnInit {
       await this.getCustMainData();
     }
 
-    await this.initcustMainDataMode();
+    
   }
 
   async initcustMainDataMode() {

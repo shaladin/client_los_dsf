@@ -24,7 +24,7 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
   appId: number = 0;
   verfResultHId: any;
   IsViewReady: boolean = false;
-
+  BizTemplateCode = "";
   appObj = {
     AppId: 0,
   };
@@ -69,6 +69,8 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
     var appObj = { Id: this.appId };
     await this.http.post<AppObj>(URLConstant.GetAppById, appObj).toPromise().then(
       (response) => {
+        console.log(response);
+        this.BizTemplateCode = response.BizTemplateCode;
         this.verfResObj.TrxRefNo = response.AppNo;
         this.IsViewReady = true;
       }
