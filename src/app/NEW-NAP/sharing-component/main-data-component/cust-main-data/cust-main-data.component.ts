@@ -174,6 +174,7 @@ export class CustMainDataComponent implements OnInit {
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
 
+    await this.initcustMainDataMode();
     await this.setLookup();
 
     this.legalAddrObj = new AddrObj();
@@ -208,7 +209,7 @@ export class CustMainDataComponent implements OnInit {
       await this.getCustMainData();
     }
 
-    await this.initcustMainDataMode();
+    
   }
 
   async initcustMainDataMode() {
@@ -222,6 +223,7 @@ export class CustMainDataComponent implements OnInit {
         this.custDataObj.IsCustomer = true;
         this.subjectTitle = this.bizTemplateCode == CommonConstant.FL4W ? 'Lessee' : 'Customer';
         this.CustMainDataForm.controls.MrCustRelationshipCode.clearValidators();
+        this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
         break;
       case CommonConstant.CustMainDataModeGuarantor:
         this.isIncludeCustRelation = true;
@@ -229,6 +231,8 @@ export class CustMainDataComponent implements OnInit {
         this.subjectTitle = 'Guarantor';
         this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
+        this.CustMainDataForm.controls.MrGenderCode.updateValueAndValidity();
         await this.GetAppCustMainDataByAppId();
         break;
       case CommonConstant.CustMainDataModeFamily:
@@ -237,6 +241,8 @@ export class CustMainDataComponent implements OnInit {
         this.subjectTitle = 'Family';
         this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
+        this.CustMainDataForm.controls.MrGenderCode.updateValueAndValidity();
         await this.GetAppCustMainDataByAppId();
         break;
       case CommonConstant.CustMainDataModeMgmntShrholder:
@@ -246,16 +252,21 @@ export class CustMainDataComponent implements OnInit {
         if(this.MrCustTypeCode == CommonConstant.CustTypeCompany){
           //note: dari html cmn company yang ditampilkan
           this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
+          this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
         }
         this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.CustMainDataForm.controls.MrJobPositionCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
+        this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
         await this.GetAppCustMainDataByAppId();
         break;
       default:
         this.isIncludeCustRelation = false;
         this.subjectTitle = this.bizTemplateCode == CommonConstant.FL4W ? 'Lessee' : 'Customer';
     }
-    this.CustMainDataForm.updateValueAndValidity();
+    if (this.isIncludeCustRelation) {
+      await this.getCustRelationship();
+    }
   }
 
   AppCustData: AppCustObj = new AppCustObj();
@@ -271,7 +282,7 @@ export class CustMainDataComponent implements OnInit {
     );
   }
 
-  setLookup(custType: string = CommonConstant.CustTypePersonal, isChange: boolean = false) {
+  async setLookup(custType: string = CommonConstant.CustTypePersonal, isChange: boolean = false) {
     if (custType == CommonConstant.CustTypePersonal) {
       this.InputLookupCustObj.isDisable = false;
       this.InputLookupCustCoyObj.isDisable = true;
@@ -402,14 +413,11 @@ export class CustMainDataComponent implements OnInit {
         }
       }
     }
-    if (this.isIncludeCustRelation) {
-      await this.getCustRelationship();
-    }
   }
 
-  getCustRelationship() {
+  async getCustRelationship() {
     if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
-      if (this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal) {
+      if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
         var refCustRelObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
           RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
           MappingCode: CommonConstant.CustTypePersonal,
@@ -463,8 +471,15 @@ export class CustMainDataComponent implements OnInit {
             this.disableInput();
           }
           this.setValidatorPattern();
-        } else
+        } else {
           this.custTypeChange(CommonConstant.CustTypePersonal, true);
+        }
+          
+        if(this.MrCustTypeCode == CommonConstant.CustTypeCompany && this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder){
+          //note: dari html cmn company yang ditampilkan
+          this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
+          this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
+        }
       }
     );
   }
@@ -542,6 +557,8 @@ export class CustMainDataComponent implements OnInit {
       } else {
         this.CustMainDataForm.controls.MrJobPositionCode.clearValidators();
         this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
+        this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
+        this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
 
       }
     }
@@ -834,7 +851,6 @@ export class CustMainDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustObj.AppId = this.appId;
     this.custDataPersonalObj.AppCustObj.AppCustId = this.appCustId != null ? this.appCustId : 0;
     this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.AppCustId = this.appCustId ? this.appCustId : 0;
-    this.custDataPersonalObj.AppCustObj.MrCustModelCode = this.MrCustModelCode;
 
     if (this.isIncludeCustRelation)
       this.custDataPersonalObj.AppCustObj.MrCustRelationshipCode = this.CustMainDataForm.controls.MrCustRelationshipCode.value;

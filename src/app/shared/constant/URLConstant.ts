@@ -762,6 +762,8 @@ export class URLConstant {
   
   //CUST DATA COMPANY
   public static AddEditCustDataCompany = environment.losUrl + "/AppCust/AddEditCustDataCompany";
+  public static GetListAppCustCompanyFinDataByAppCustId = environment.losUrl + "/AppCustCompanyFinData/GetListAppCustCompanyFinDataByAppCustId";
+  public static AddEditAppCustCompanyFinData = environment.losUrl + "/AppCustCompanyFinData/AddEditAppCustCompanyFinData";
 
   //DELIVERY ORDER
   public static SubmitDeliveryOrderData = environment.losUrl + "/DeliveryOrder/SubmitDeliveryOrderData";
@@ -829,6 +831,8 @@ export class URLConstant {
 
   // LEAD CUST PERSONAL FIN DATA
   public static GetLeadCustPersonalFinDataByLeadCustPersonalId = environment.losUrl + "/LeadCustPersonalFinData/GetLeadCustPersonalFinDataByLeadCustPersonalId";
+  public static GetListAppCustPersonalFinDataByAppCustPersonalId = environment.losUrl + "/AppCustPersonalFinData/GetListAppCustPersonalFinDataByAppCustPersonalId";
+  public static AddEditAppCustPersonalFinData = environment.losUrl + "/AppCustPersonalFinData/AddEditAppCustPersonalFinData";
 
   // LEAD CUST PERSONAL JOB DATA
   public static GetLeadCustPersonalJobDataByLeadCustPersonalId = environment.losUrl + "/LeadCustPersonalJobData/GetLeadCustPersonalJobDataByLeadCustPersonalId";
