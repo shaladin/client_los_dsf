@@ -589,6 +589,7 @@ export class URLConstant {
   public static AddChangeMouCustCollateral = environment.losUrl + "/ChangeMou/AddChangeMouCustCollateralData";
   public static AddEditChangeMouCustFctr = environment.losUrl + "/ChangeMou/AddEditChangeMouCustFctr";
   public static GetLatestChangeMouCustVersionById = environment.losUrl + "/ChangeMou/GetLatestChangeMouCustVersionById";
+  public static GetChangeMouByMouCustIdStatusNew = environment.losUrl + "/ChangeMou/GetChangeMouByMouCustIdStatusNew";
   public static GetChangeMouCustClauseByMouCustId = environment.losUrl + "/ChangeMou/GetChangeMouCustClauseByMouCustId";
   public static GetChangeMouCustAssetByMouCustId = environment.losUrl + "/ChangeMou/GetChangeMouCustAssetByMouCustId";
   public static GetChangeMouCustCollateralByChangeMouCustId = environment.losUrl + "/ChangeMou/GetChangeMouCustCollateralByChangeMouCustId";
@@ -648,6 +649,8 @@ export class URLConstant {
   public static AddEditMouCustDlrFin = environment.losUrl + "/MouCust/AddMouCustDlrFind";
   public static GetMouCustDlrFindById = environment.losUrl + "/MouCust/GetMouCustDlrFindById";
   public static UpdatePlafondCollateralAmtMouCust = environment.losUrl + "/MouCust/UpdatePlafondCollateralAmtMouCust";
+
+  public static GetMouCustListAddrByMouCustId = environment.losUrl + "/MouCustAddr/GetMouCustListAddrByMouCustId";
 
   // MOU CUST DUPCHECK
   public static GetMouCustDuplicateCheck = environment.losUrl + "/MouCustDupCheck/GetMouCustDuplicateCheck";
@@ -797,7 +800,10 @@ export class URLConstant {
 
   // LEAD
   public static AddLeadCust = environment.losUrl + "/LeadCust/AddLeadCust";
+  public static AddSimpleLeadCust = environment.losUrl + "/LeadCust/AddSimpleLeadCust";
   public static EditLeadCust = environment.losUrl + "/LeadCust/EditLeadCust";
+  public static EditSimpleLeadCust = environment.losUrl + "/LeadCust/EditSimpleLeadCust";
+  public static EditSimpleLeadCustTypeUpdate = environment.losUrl + "/LeadCust/EditSimpleLeadCustTypeUpdate";
   public static AddLeadData = environment.losUrl + "/Lead/AddLeadData";
   public static EditLeadData = environment.losUrl + "/Lead/EditLeadData";
   public static GetLeadMonitoringByUploadMonitoringNoAndTrxType = environment.losUrl + "/Lead/GetLeadMonitoringByUploadMonitoringNoAndTrxType";
@@ -1706,4 +1712,7 @@ export class URLConstant {
 
   //PEFINDO
   public static GetPefindoCustomReport = environment.losUrl + "/Pefindo/GetCustomReport";
+
+  //Task Reassignment
+  public static TaskReassignmentApproval = environment.losUrl + "/Approval/TaskReassignmentApproval";
 }

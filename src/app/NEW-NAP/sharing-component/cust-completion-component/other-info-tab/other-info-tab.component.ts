@@ -48,6 +48,7 @@ export class OtherInfoTabComponent implements OnInit {
   IsLookupReady: boolean;
   AppCustId: number;
   AttrGroup: string;
+  AttrGroups: Array<string> = [];
   ResponseCustOtherInfo: AppCustOtherInfoObj;
   appCustOtherInfo: AppCustOtherInfoObj;
   custAttrRequest = new Array<Object>();

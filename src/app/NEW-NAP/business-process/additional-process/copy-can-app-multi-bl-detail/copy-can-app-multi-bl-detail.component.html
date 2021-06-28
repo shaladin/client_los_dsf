@@ -26,14 +26,14 @@
                 </div>
               </div>
               <div class="form-group row">
-                  <label class="col-md-3 adInsLabel">Copy Application From </label>
+                <label class="col-md-3 adInsLabel">Copy Application From </label>
                 <div class="col-md-4">
                   <label class=" adInsLabel">{{this.AppNo}} </label>
                 </div>
               </div>
 
               <div class="form-group row">
-                  <label class="col-md-3 adInsLabel adins-required-label" translate>Line Of Business </label>
+                <label class="col-md-3 adInsLabel adins-required-label" translate>Line Of Business </label>
                 <div class="col-md-4">
                   <select class="form-control adInsInput" formControlName="LobCode" (change)="LobChanged($event)"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppForm.controls.LobCode.invalid }">
@@ -48,7 +48,7 @@
               </div>
 
               <div class="form-group row">
-                  <label class="col-md-3 adInsLabel adins-required-label">Product Offering Name </label>
+                <label class="col-md-3 adInsLabel adins-required-label">Product Offering Name </label>
                 <div class="col-md-4" *ngIf="!isCopyData">
                   <lib-uclookupgeneric [lookupInput]="inputLookupObjName" [parentForm]='NapAppForm'
                     [enjiForm]='enjiForm' [identifier]="'ProductOfferingNameIdentifier'" #LookupOffering
@@ -68,7 +68,8 @@
                 <i class="fa fa-arrow-circle-left"></i> testData
               </button> -->
               <button type="button" class="btn btn-raised btn-warning mr-1"
-                [routerLink]="['/Nap/AddProcess/CopyCancelledAppDsf']" [queryParams]="{LobCode:'CF4W'}" translate>
+                [routerLink]="['/Nap/AddProcess/CopyCancelledApplicationCrossBl']"
+                [queryParams]="{IsNapVersionMainData:'true'}" translate>
                 <i class="fa fa-arrow-circle-left"></i> Cancel
               </button>
               <button type="submit" class="btn btn-raised btn-primary">

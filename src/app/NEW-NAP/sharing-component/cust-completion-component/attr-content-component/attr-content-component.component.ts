@@ -23,7 +23,7 @@ export class AttrContentComponentComponent implements OnInit {
   @Input() parentForm: FormGroup;
   @Input() identifier: string;
   @Input() AttrGroup: string;
-  @Input() AttrGroups: Array<string>;
+  @Input() AttrGroups: Array<string> = [];
   @Input() AppCustId: number;
   @Input() title: string;
   @Output() IncomeAmt: EventEmitter<{Index: number, Amount: number}> = new EventEmitter();
@@ -35,6 +35,10 @@ export class AttrContentComponentComponent implements OnInit {
   IsFormReady: boolean = false;
   tempLookup = {};
   AttrContent: AttrContent;
+  AttrGroupCustPersonalFinData:string = CommonConstant.AttrGroupCustPersonalFinData;
+  AttrGroupCustPersonalFinDataIncome: string = CommonConstant.AttrGroupCustPersonalFinDataIncome;
+  AttrGroupCustPersonalFinDataExpense: string = CommonConstant.AttrGroupCustPersonalFinDataExpense;
+  AttrGroupCustPersonalFinDataOther: string = CommonConstant.AttrGroupCustPersonalFinDataOther;
 
   constructor(private httpClient: HttpClient,
     private fb: FormBuilder) { }
@@ -44,9 +48,9 @@ export class AttrContentComponentComponent implements OnInit {
       let custGrp: ReqRefAttrByAttrGroupObj = new ReqRefAttrByAttrGroupObj();
       custGrp.AttrGroup = this.AttrGroup;
       await this.httpClient.post(URLConstant.GetListAppCustAttrContentByAppCustIdAndAttrGroup, { AppCustId: this.AppCustId, AttrGroup: this.AttrGroup }).toPromise().then(
-        (response : ResGetListAppCustAttrContentObj) => {
+        async (response : ResGetListAppCustAttrContentObj) => {
           this.ListAttrContent = response.ResponseAppCustAttrContentObjs;
-          this.httpClient.post<Array<RefAttr>>(URLConstant.GetListActiveRefAttrByAttrGroup, custGrp).subscribe(
+          await this.httpClient.post<Array<RefAttr>>(URLConstant.GetListActiveRefAttrByAttrGroup, custGrp).toPromise().then(
             async (response) => {
               this.RefAttrList = response[CommonConstant.ReturnObj];
               var parentFormGroup = new Object();
@@ -81,11 +85,11 @@ export class AttrContentComponentComponent implements OnInit {
     }
     else if(this.AttrGroups !== undefined) {
       await this.httpClient.post(URLConstant.GetListAppCustFinDataAttrContentByAppCustIdAndListAttrGroup, { AppCustId: this.AppCustId, AttrGroups: this.AttrGroups }).toPromise().then(
-        (response) => {
+        async (response) => {
           this.ListAttrContent = response[CommonConstant.ReturnObj];
           var parentFormGroup = new Object();
           
-          this.httpClient.post<Array<RefAttr>>(URLConstant.GetListActiveRefAttrByListAttrGroup, { AttrGroups: this.AttrGroups }).subscribe(
+          await this.httpClient.post<Array<RefAttr>>(URLConstant.GetListActiveRefAttrByListAttrGroup, { AttrGroups: this.AttrGroups }).toPromise().then(
             async (response) => {
               this.RefAttrList = response[CommonConstant.ReturnObj];
 
@@ -119,7 +123,9 @@ export class AttrContentComponentComponent implements OnInit {
         }
       );
     }
+    console.log(this.RefAttrList)
   }
+
 
   SplitAttrListValue(value: string) {
     return value.split(";");
@@ -303,10 +309,10 @@ export class AttrContentComponentComponent implements OnInit {
   }
 
   CalculateAmt(attrGroup: string, amount: string, index: number) {
-    if(attrGroup === CommonConstant.AttrGroupCustPersonalFinDataIncome) {
+    if(attrGroup === this.AttrGroupCustPersonalFinDataIncome) {
       this.IncomeAmt.emit({Index: index, Amount: parseFloat(amount.replace(/,/g, ''))});
     }
-    else if(attrGroup === CommonConstant.AttrGroupCustPersonalFinDataExpense) {
+    else if(attrGroup === this.AttrGroupCustPersonalFinDataExpense) {
       this.ExpenseAmt.emit({Index: index, Amount: parseFloat(amount.replace(/,/g, ''))});
     }
   }

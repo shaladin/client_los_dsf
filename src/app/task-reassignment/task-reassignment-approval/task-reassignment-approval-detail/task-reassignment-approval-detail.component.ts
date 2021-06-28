@@ -76,7 +76,16 @@ export class TaskReassignmentApprovalDetailComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.TASK_REASSIGN_APV_PAGING], { });
+
+    let ReqTaskReassignmentApvCustomObj = {
+      Tasks: event.Tasks
+    }
+
+    this.http.post(URLConstant.TaskReassignmentApproval, ReqTaskReassignmentApvCustomObj).subscribe(
+      () => {
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.TASK_REASSIGN_APV_PAGING],{});
+      }
+    );
   }
 
   onCancelClick() {

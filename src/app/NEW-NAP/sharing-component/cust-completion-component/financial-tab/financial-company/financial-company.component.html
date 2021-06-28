@@ -113,8 +113,7 @@
                       <input type="" currencyMask class="form-control" formControlName="GrowthPrcnt"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialForm.controls.GrowthPrcnt.invalid}"
                         [options]="{suffix:'%', max:100, allowNegative: false}">
-                      <lib-uc-show-errors [control]="FinancialForm.controls.GrowthPrcnt"
-                        [submit]="enjiForm.submitted">
+                      <lib-uc-show-errors [control]="FinancialForm.controls.GrowthPrcnt" [submit]="enjiForm.submitted">
                       </lib-uc-show-errors>
                     </div>
                   </div>
@@ -172,8 +171,7 @@
                       <input type="" currencyMask class="form-control" formControlName="CurrLiablts"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialForm.controls.CurrLiablts.invalid}"
                         [options]="{allowNegative: false}">
-                      <lib-uc-show-errors [control]="FinancialForm.controls.CurrLiablts"
-                        [submit]="enjiForm.submitted">
+                      <lib-uc-show-errors [control]="FinancialForm.controls.CurrLiablts" [submit]="enjiForm.submitted">
                       </lib-uc-show-errors>
                     </div>
                   </div>
@@ -292,8 +290,7 @@
                       <input type="" currencyMask class="form-control" formControlName="TotalAsset"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && FinancialForm.controls.TotalAsset.invalid}"
                         [options]="{allowNegative: false}">
-                      <lib-uc-show-errors [control]="FinancialForm.controls.TotalAsset"
-                        [submit]="enjiForm.submitted">
+                      <lib-uc-show-errors [control]="FinancialForm.controls.TotalAsset" [submit]="enjiForm.submitted">
                       </lib-uc-show-errors>
                     </div>
                   </div>
@@ -460,6 +457,7 @@
                   </div>
                 </div>
               </div>
+              
               <div class="col-md-6">
                 <div class="form-group row">
                   <label class="col-md-4" translate>Monthly Expense</label>
@@ -584,18 +582,21 @@
               </div>
             </div>
           </div> -->
+
           <app-attr-content-component [title]="'Financial Attribute Information'" [AppCustId]="AppCustId"
             [enjiForm]="enjiForm" [parentForm]="FinancialForm" [identifier]="'AttrList'" [AttrGroups]="AttrGroups">
           </app-attr-content-component>
-          <!-- [AttrGroup]="AttrGroup" -->
+
           <app-bank-section [AppCustId]="AppCustId" [AppCustBankAccList]="AppCustBankAccList"
             (OutputObj)="GetEvent($event)"></app-bank-section>
+
           <div class="form-actions right" *ngIf="!IsDetail">
             <button type="submit" (click)="formValidate.scrollIfFormHasErrors(FinancialForm)"
               class="btn btn-raised btn-primary" translate>
               <i class="fa fa-check-square"></i> Save & Continue
             </button>
           </div>
+
         </form>
       </div>
     </div>

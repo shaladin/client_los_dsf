@@ -29,7 +29,7 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
   MouCustId: number;
   TrxNo: string;
   WfTaskListId: number;
-  MouType: string = "FINANCING";
+  MouType: string = "GENERAL";
   PlafondAmt: number;
   MrCustTypeCode: string;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
@@ -87,7 +87,7 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
 
     await this.http
       .post(URLConstant.GetListActiveRefReason, {
-        RefReasonTypeCode: CommonConstant.REF_REASON_MOU_FACTORING,
+        RefReasonTypeCode: CommonConstant.REF_REASON_MOU_GENERAL,
       })
       .toPromise()
       .then((response) => {
@@ -119,8 +119,7 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
   }
 
   Submit() {
-    this.ApprovalCreateOutput = this.createComponent.output();
-    if (this.ApprovalCreateOutput != undefined) {
+    this.ApprovalCreateOutput = {RFAInfo: this.MouReviewDataForm.controls.RFAInfo.value};
       this.mouCustObj.MouCustId = this.MouCustId;
       this.PlafondAmt = this.PlafondAmt;
 
@@ -140,7 +139,6 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
             {}
           );
         });
-    }
   }
 
   Return() {

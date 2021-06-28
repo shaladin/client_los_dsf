@@ -425,7 +425,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
   }
 
   GetBank(event) {
-    this.selectedBankCode = event.bankCode;
+    this.selectedBankCode = event.BankCode;
   }
 
   BackToHeader() {

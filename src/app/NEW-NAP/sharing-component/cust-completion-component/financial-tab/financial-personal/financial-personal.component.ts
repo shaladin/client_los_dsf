@@ -23,8 +23,8 @@ export class FinancialPersonalComponent implements OnInit {
   @Output() OutputTab: EventEmitter<object> = new EventEmitter();
 
   IsDetail: boolean = false;
-  // AttrGroup: string = CommonConstant.AttrGroupCustPersonalFinData;
   AttrGroups: Array<string> = [
+    CommonConstant.AttrGroupCustPersonalFinData,
     CommonConstant.AttrGroupCustPersonalFinDataIncome,
     CommonConstant.AttrGroupCustPersonalFinDataExpense,
     CommonConstant.AttrGroupCustPersonalFinDataOther
@@ -214,7 +214,7 @@ export class FinancialPersonalComponent implements OnInit {
     this.AppCustPersonalFinData.AppCustPersonalId = this.AppCustPersonalId;
 
     let request = {
-      ListAppCustAttrObj: this.CustAttrRequest,
+      ListAppCustFinDataAttrObj: this.CustAttrRequest,
       AppCustPersonalFinDataObj: this.AppCustPersonalFinData,
       AttrGroups: this.AttrGroups
     }

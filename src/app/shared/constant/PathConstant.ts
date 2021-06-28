@@ -154,8 +154,8 @@ export class PathConstant {
     public static RETURN_HANDLING_EDIT_CUST_PAGING = PathConstant.RETURN_HANDLING + "/editcustpaging";
     public static RETURN_HANDLING_SRVY = PathConstant.RETURN_HANDLING + "/Survey";
     public static RETURN_HANDLING_SRVY_VERIF_PAGING = PathConstant.RETURN_HANDLING + "/SurveyVerif" + PathConstant.PAGING;
-    public static RETURN_HANDLING_NAP2 = PathConstant.RETURN_HANDLING + PathConstant.NAP2;
-    public static RETURN_HANDLING_NAP4 = PathConstant.RETURN_HANDLING + PathConstant.NAP4;
+    public static RETURN_HANDLING_NAP2 = PathConstant.RETURN_HANDLING + "/" + PathConstant.NAP2;
+    public static RETURN_HANDLING_NAP4 = PathConstant.RETURN_HANDLING + "/" + PathConstant.NAP4;
     public static APP_DUP_CHECK = "AppDupCheck";
     public static APP_EXIST_DATA = "ApplicantExistingData";
     public static APP_DUP_CHECK_PAGING = PathConstant.APP_DUP_CHECK + "/" + PathConstant.PAGING;

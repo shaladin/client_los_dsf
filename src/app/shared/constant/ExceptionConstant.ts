@@ -40,7 +40,8 @@ export class ExceptionConstant {
     public static TOTAL_RESERVED_FUND_AMOUNT_MUST_LEST_THAN = "Total Reserved Fund Amount Must be Less Than ";
     public static EFF_RATE_CANNOT_LESS_THAN_STD_RATE = "Effective Rate cannot be less than Standard Rate.";
     public static EFF_RATE_CANNOT_GREATER_THAN_STD_RATE = "Effective Rate cannot be greater than Standard Rate.";
-    public static COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT = "Collateral Value can not be less than equals Plafond Amount.";
+    public static COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT = "Collateral Value can not be less than Plafond Amount.";
+    public static COLL_VALUE_CANNOT_LESS_THAN_EQUALS_PLAFOND_AMT = "Collateral Value can not be less than or equals Plafond Amount.";
     public static COLL_VALUE_MUST_EQUALS_PLAFOND_AMT = "Collateral Value must equals Plafond Amount.";
     public static REF_ATTR_CHANGE = "Ref Attribute have changed, Please refresh to get latest ref attribute";
 
@@ -164,6 +165,7 @@ export class ExceptionConstant {
     public static PRODUCT_HAS = "This Product has ";
     public static MOU_DT_MUST_GREATER_THAN_BUSINESS_DT = "MOU Date Must be Greater than Equal D - 1 Business Date";
     public static START_DT_MUST_GREATER_THAN_EQUAL_BUSINESS_DT = "Start Date Must be Greater than Equal Business Date";
+    public static COVERAGE_CANT_0_LESS = "Coverage Amount Cant be 0 or less";
     
 }
 

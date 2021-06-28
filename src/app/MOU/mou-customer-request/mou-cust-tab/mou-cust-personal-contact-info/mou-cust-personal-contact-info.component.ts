@@ -185,6 +185,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     this.selectedProfessionCode = this.listContactPersonPersonal[i].MrJobProfessionCode;
     this.setProfessionName(this.listContactPersonPersonal[i].MrJobProfessionCode);
     this.CheckSpouse();
+    this.getInitPattern();
     this.open(content);
   }
 
@@ -227,6 +228,13 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     this.initLookup();
     this.initContactPersonAddrObj();
     this.CheckSpouse();
+    if (this.defaultIdType != undefined) {
+      this.ContactInfoPersonalForm.patchValue({
+        MrIdTypeCode: this.defaultIdType
+      });
+      this.getInitPattern();
+    }
+    
   }
 
   setAppCustPersonalContactPerson() {
@@ -357,6 +365,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
         if (this.IdTypeObj.length > 0) {
           this.defaultIdType = this.IdTypeObj[0].Key;
         }
+        console.log(this.defaultIdType);
       }
     );
   }
@@ -435,6 +444,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
     this.regexService.getListPattern().subscribe(
       response => {
         this.resultPattern = response[CommonConstant.ReturnObj];
+        console.log(this.resultPattern);
         if(this.resultPattern != undefined)
         {
           for (let i = 0; i < this.resultPattern.length; i++) {
@@ -469,7 +479,7 @@ export class MouCustPersonalContactInfoComponent implements OnInit {
 
   setValidator(pattern: string) {
     if (pattern != undefined) {
-      this.ContactInfoPersonalForm.controls[this.controlNameIdNo].setValidators(Validators.pattern(pattern));
+      this.ContactInfoPersonalForm.controls[this.controlNameIdNo].setValidators([Validators.pattern(pattern)]);
       this.ContactInfoPersonalForm.controls[this.controlNameIdNo].updateValueAndValidity();
     }
   }

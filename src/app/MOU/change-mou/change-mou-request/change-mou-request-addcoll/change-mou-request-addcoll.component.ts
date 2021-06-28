@@ -64,7 +64,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
   locationAddrObj: AddrObj;
   inputFieldLocationObj: InputFieldObj;
 
-  collateralObj: MouCustCollateralObj; 
+  collateralObj: ChangeMouCustCollateralObj; 
   collateralRegistrationObj: any;
 
   listCollExisting: Array<string> = new Array<string>();
@@ -235,7 +235,6 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
   }
 
   updateUcLookup(value, firstBind, type) {
-    console.log("VALUE" + value)
     this.criteriaList = new Array();
     if (value != null && type != "AddExisting") {
       this.criteriaObj = new CriteriaObj();
@@ -428,7 +427,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
             });
 
           this.AddCollForm.patchValue({
-            ChangeMouCustCollateralId: this.collateralObj.MouCustCollateralId,
+            ChangeMouCustCollateralId: this.collateralObj.ChangeMouCustCollateralId,
             AssetTypeCode: this.collateralObj.AssetTypeCode,
             FullAssetCode: this.collateralObj.FullAssetCode,
             FullAssetName: this.collateralObj.FullAssetName,
@@ -542,7 +541,6 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
   }
 
   SaveAddEdit() {
-    console.log("DEBUG");
     this.setCollateralObjForSave();
     this.listMouCustCollateralDocObj.MouCustCollateralDocObj = new Array();
 
@@ -584,8 +582,8 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
     this.changeMouCustCollateralRegistrationObj = new ChangeMouCustCollateralRegistrationObj();
 
     if (this.collateralObj != null) {
-      this.changeMouCustCollateralObj.ChangeMouCustCollateralId = this.collateralObj.MouCustCollateralId;
-      this.changeMouCustCollateralObj.ChangeMouCustId = this.collateralObj.MouCustId;
+      this.changeMouCustCollateralObj.ChangeMouCustCollateralId = this.collateralObj.ChangeMouCustCollateralId
+      this.changeMouCustCollateralObj.ChangeMouCustId = this.collateralObj.ChangeMouCustId;
       this.changeMouCustCollateralRegistrationObj = this.collateralRegistrationObj;
     }
     
@@ -617,6 +615,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
 
     this.changeMouCustCollateralObj.CollateralValueAmt = this.AddCollForm.controls.CollateralValueAmt.value;
     this.changeMouCustCollateralObj.CollateralPrcnt = this.AddCollForm.controls.CollateralPrcnt.value;
+    this.changeMouCustCollateralObj.CollateralPortionAmt = (this.AddCollForm.controls.CollateralValueAmt.value * this.AddCollForm.controls.CollateralPrcnt.value)/100
     this.changeMouCustCollateralObj.CollateralNotes = this.AddCollForm.controls.Notes.value;
     this.changeMouCustCollateralObj.ManufacturingYear = this.AddCollForm.controls.ManufacturingYear.value;
 
@@ -748,7 +747,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
           });
 
         this.AddCollForm.patchValue({
-          ChangeMouCustCollateralId: this.collateralObj.MouCustCollateralId,
+          ChangeMouCustCollateralId: this.collateralObj.ChangeMouCustCollateralId,
           AssetTypeCode: this.collateralObj.AssetTypeCode,
           FullAssetCode: this.collateralObj.FullAssetCode,
           FullAssetName: this.collateralObj.FullAssetName,
@@ -876,12 +875,13 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
   }
 
   SaveExistingCollateral() {
+    let collateralPortionAmt: number = (this.AddCollForm.controls.CollateralValueAmt.value * this.AddCollForm.controls.CollateralPrcnt.value)/100;
     var existingChangeMouCustCollateralObj = {
       ChangeMouCustCollateral: {
         CollateralNo: this.collateralObj.CollateralNo,
         ChangeMouCustId: this.ChangeMouCustId,
         CollateralPrcnt: this.AddCollForm.controls.CollateralPrcnt.value,
-        CollateralPortionAmt: 0.00
+        CollateralPortionAmt: collateralPortionAmt
       }
     }
    
@@ -917,6 +917,19 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
   }
 
   next() {
+    let sumCollateralValue: number = 0;
+    for (let i = 0; i < this.listCollateralData.length; i++) {
+      if (this.listCollateralData[i].CollateralPortionAmt != null) {
+        sumCollateralValue += this.listCollateralData[i].CollateralPortionAmt;
+      }
+    }
+
+    if(this.returnMouCust.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT){
+      if(sumCollateralValue < this.returnMouCust.PlafondAmt){
+        this.toastr.warningMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
+        return;
+      }
+    }
     this.ResponseMouAddColl.emit({ StatusCode: "200" });
   }
 
@@ -927,7 +940,6 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
   }
 
   getRefAssetDocList(isInit: boolean) {
-    console.log("REF ASSDOC")
     this.http.post(URLConstant.GetRefAssetDocList, { AssetTypeCode: this.AddCollForm.controls.AssetTypeCode.value }).subscribe(
       (response) => {
         console.log("getRefAssetDocList: " + JSON.stringify(response));
@@ -951,7 +963,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
         if (isInit) {
           if (this.type == "AddExisting") {
             this.setMouCustCollateralDoc(
-              this.collateralObj.MouCustCollateralId
+              this.collateralObj.ChangeMouCustCollateralId
             );
           } else {
             this.setMouCustCollateralDoc(

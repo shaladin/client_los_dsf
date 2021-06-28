@@ -28,7 +28,7 @@ export class TaskReassignmentDetailComponent implements OnInit {
   WfTaskListId: number;
   WfActivityName: string;
   InputLookupObj: InputLookupObj;
-  InputObj: UcInputRFAObj;
+  InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   DDLRecomendation: any;
   IsReady: boolean;
   WfRoleCode: string;
@@ -100,6 +100,7 @@ export class TaskReassignmentDetailComponent implements OnInit {
       })
     ).toPromise().then(
       (response) => {
+
         this.DDLRecomendation = response[1][CommonConstant.ReturnObj];
 
         var criteriaList = new Array<CriteriaObj>();
@@ -123,35 +124,15 @@ export class TaskReassignmentDetailComponent implements OnInit {
         criteriaList.push(criteriaObj);
         this.InputLookupObj.addCritInput = criteriaList;
 
-        this.InputObj = new UcInputRFAObj(this.cookieService);
-        var Attributes = [];
-        var TypeCode = {
-          "TypeCode": "RASGN_APV_TYPE",
-          "Attributes": Attributes,
-        };
-        var currentUserContext : CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-        this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
-        this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
-        this.InputObj.ApvTypecodes = [TypeCode];
-        this.InputObj.EnvUrl = environment.FoundationR3Url;
-        this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
-        this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
-        this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-        this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
-        this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
-        this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-        this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
-        this.InputObj.CategoryCode = CommonConstant.CAT_CODE_TASK_RASGN;
-        this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_RASGN_APV_SCHM;
-        this.InputObj.Reason = this.DDLRecomendation;
-        this.InputObj.TrxNo = "-";
-        this.IsReady = true;
+        this.initInputApprovalObj();
       }
     ).catch(
       (error) => {
         console.log(error);
       }
     );
+
+
   }
 
   GetTargetUser(e) {
@@ -166,7 +147,7 @@ export class TaskReassignmentDetailComponent implements OnInit {
 
   SaveForm() {
     var obj = this.TaskReassignmentForm.value;
-    obj["RequestRFAObj"] = this.createComponent.output();
+    obj["RequestRFAObj"] = {RFAInfo: this.TaskReassignmentForm.controls.RFAInfo.value};
     if (obj["RequestRFAObj"] != undefined) {
       this.http.post(URLConstant.SubmitTaskReassignment, obj).toPromise().then(
         (response) => {
@@ -179,5 +160,20 @@ export class TaskReassignmentDetailComponent implements OnInit {
         }
       );
     }
+  }
+
+  initInputApprovalObj() {
+    
+    var Attributes = [];
+    var TypeCode = {
+      "TypeCode": "RASGN_APV_TYPE",
+      "Attributes": Attributes,
+    };
+    this.InputObj.ApvTypecodes = [TypeCode];
+    this.InputObj.CategoryCode = CommonConstant.CAT_CODE_TASK_RASGN;
+    this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_RASGN_APV_SCHM;
+    this.InputObj.Reason = this.DDLRecomendation;
+    this.InputObj.TrxNo = "-";
+    this.IsReady = true;
   }
 }

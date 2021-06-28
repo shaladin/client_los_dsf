@@ -36,6 +36,7 @@ import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCode
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 import { ResThirdPartyRsltHObj } from 'app/shared/model/Response/ThirdPartyResult/ResThirdPartyRsltHObj.model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { MouCustPersonalFinDataObj } from 'app/shared/model/MouCustPersonalFinDataObj.Model';
 
 @Component({
   selector: 'app-mou-cust-tab',
@@ -159,7 +160,6 @@ export class MouCustTabComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.latestCustDataObj = new AppCustCompareObj();
-    console.log("help");
     this.GetGS();
     await this.bindCustTypeObj();
     this.initAddrObj();
@@ -649,6 +649,7 @@ export class MouCustTabComponent implements OnInit {
     if (this.MouCustFinDataId != 0) {
       this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustCompanyFinDataId = this.MouCustFinDataId;
       this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustId = this.MouCustCompanyId;
+      this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustCompanyId = this.MouCustCompanyId;
     }
   }
 
@@ -660,7 +661,7 @@ export class MouCustTabComponent implements OnInit {
       this.custDataPersonalObj.MouCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
       this.custDataPersonalObj.MouCustPersonalJobDataObj.ProfessionalNo = this.CustDataForm.controls["jobData"]["controls"].ProfessionalNo.value;
       this.custDataPersonalObj.MouCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-      this.custDataPersonalObj.MouCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+      this.custDataPersonalObj.MouCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
       this.setMouCustAddrJob();
     }
 
@@ -668,7 +669,7 @@ export class MouCustTabComponent implements OnInit {
       this.custDataPersonalObj.MouCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
       this.custDataPersonalObj.MouCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
       this.custDataPersonalObj.MouCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-      this.custDataPersonalObj.MouCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+      this.custDataPersonalObj.MouCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
       this.custDataPersonalObj.MouCustPersonalJobDataObj.IsMfEmp = this.CustDataForm.controls["jobData"]["controls"].IsMfEmp.value;
       this.custDataPersonalObj.MouCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
       this.custDataPersonalObj.MouCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
@@ -682,7 +683,7 @@ export class MouCustTabComponent implements OnInit {
       this.custDataPersonalObj.MouCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
       this.custDataPersonalObj.MouCustPersonalJobDataObj.IndustryTypeCode = this.custJobDataComponent.selectedIndustryTypeCode;
       this.custDataPersonalObj.MouCustPersonalJobDataObj.EstablishmentDt = this.CustDataForm.controls["jobData"]["controls"].EstablishmentDt.value;
-      this.custDataPersonalObj.MouCustPersonalJobDataObj.MrJobTitleCode = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
+      this.custDataPersonalObj.MouCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
       this.custDataPersonalObj.MouCustPersonalJobDataObj.CompanyName = this.CustDataForm.controls["jobData"]["controls"].CompanyName.value;
       this.custDataPersonalObj.MouCustPersonalJobDataObj.MrJobPositionCode = this.CustDataForm.controls["jobData"]["controls"].MrJobPositionCode.value;
       this.custDataPersonalObj.MouCustPersonalJobDataObj.MrCompanyScaleCode = this.CustDataForm.controls["jobData"]["controls"].MrCompanyScaleCode.value;
@@ -694,6 +695,7 @@ export class MouCustTabComponent implements OnInit {
 
     if (this.custDataPersonalObj.MouCustObj.CustModelCode == CommonConstant.CustModelNonProfessional) {
       this.custDataPersonalObj.MouCustPersonalJobDataObj.MrProfessionCode = this.custJobDataComponent.selectedProfessionCode;
+      this.custDataPersonalObj.MouCustPersonalJobDataObj.JobTitleName = this.CustDataForm.controls["jobData"]["controls"].JobTitleName.value;
     }
     if (this.MouCustPersonalJobDataId != 0) {
       this.custDataPersonalObj.MouCustPersonalJobDataObj.MouCustPersonalId = this.MouCustPersonalId;
@@ -998,7 +1000,6 @@ export class MouCustTabComponent implements OnInit {
             this.setAddrLegalObj(CommonConstant.CustTypeCompany);
             this.setAddrMailingObj(CommonConstant.CustTypeCompany);
 
-            console.log(response);
             this.MouCustCompanyId = this.custDataCompanyObj.MouCustCompanyObj.MouCustCompanyId;
             this.MouCustFinDataId = this.custDataCompanyObj.MouCustCompanyFinDataObj.MouCustCompanyFinDataId;
             this.MouCustAddrLegalId = this.custDataCompanyObj.MouCustAddrLegalObj.MouCustAddrId;
@@ -1247,6 +1248,14 @@ export class MouCustTabComponent implements OnInit {
         TotalMonthlyIncome: TotalMonthlyIncome,
         TotalMonthlyExpense: TotalMonthlyExpense,
         NettMonthlyIncome: TotalMonthlyIncome - TotalMonthlyExpense
+      });
+    } else {
+      this.custDataPersonalObj.MouCustPersonalFinDataObj = new MouCustPersonalFinDataObj();
+      this.custDataPersonalObj.MouCustPersonalFinDataObj.MrSourceOfIncomeTypeCode = "SALARY";
+      this.CustDataForm.controls["financialData"].patchValue({
+        TotalMonthlyIncome: 0,
+        TotalMonthlyExpense: 0,
+        NettMonthlyIncome: 0
       });
     }
 

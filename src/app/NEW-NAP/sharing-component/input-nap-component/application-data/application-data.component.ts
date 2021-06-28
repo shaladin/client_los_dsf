@@ -27,7 +27,6 @@ import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMast
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResRefEmpObj } from 'app/shared/model/Response/RefEmp/ResRefEmpObj.model';
 import { MouCustDlrFinObj } from 'app/shared/model/moucustdlrfin.model';
-import { ReqCalculatePlafondAgrmntXObj } from 'app/shared/model/ReqCalculatePlafondAgrmntXObj.Model';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
 import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
@@ -408,10 +407,10 @@ export class ApplicationDataComponent implements OnInit {
         }
         this.makeNewLookupCriteria();
         this.getInterestTypeCode();
+        this.initMailingAddress();
 
         if (this.BizTemplateCode != CommonConstant.OPL) {
           this.getInterestTypeCode();
-          this.initMailingAddress();
           this.GetCrossInfoData();
         }
         else {
@@ -898,7 +897,6 @@ export class ApplicationDataComponent implements OnInit {
   IsAddrReady: boolean = false;
   async initMailingAddress() {
     this.mailingAddrObj = new AddrObj();
-    this.inputAddressObj = new InputAddressObj();
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
     this.inputAddressObj.showSubsection = false;
 
@@ -1001,9 +999,10 @@ export class ApplicationDataComponent implements OnInit {
                 "BankAccName": this.selectedBankAcc.BankAccName,
               };
             }
-          })
-      });
-
+          }
+        );
+      }
+    );
   }
 
   GetListAppCustBankAcc(appCustId: number) {
@@ -1013,7 +1012,8 @@ export class ApplicationDataComponent implements OnInit {
     this.http.post<any>(URLConstant.GetListAppCustBankAccByAppCustId, obj).subscribe(
       (response) => {
         this.listCustBankAcc = response.AppCustBankAccObjs;
-      });
+      }
+    );
   }
 
   setBankAcc(event) {
@@ -1069,7 +1069,8 @@ export class ApplicationDataComponent implements OnInit {
               this.isTenorValid = true;
             }
           }
-        })
+        }
+      );
     }
     else {
       this.isFromMouCust = false;
@@ -1103,8 +1104,8 @@ export class ApplicationDataComponent implements OnInit {
           this.TenorFrom = this.mouCustFctr.TenorFrom;
           this.TenorTo = this.mouCustFctr.TenorTo;
         }
-      })
-
+      }
+    );
   }
 
   selectedBank(event) {
@@ -1140,6 +1141,5 @@ export class ApplicationDataComponent implements OnInit {
         }
       );
     }
-
   }
 }

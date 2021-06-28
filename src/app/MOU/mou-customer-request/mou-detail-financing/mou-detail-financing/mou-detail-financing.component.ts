@@ -99,12 +99,12 @@ export class MouDetailFinancingComponent implements OnInit {
         this.mrMouCustTypeCode = response.MrCustTypeCode;
         var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         var suppCrit = new Array();
-        var critSuppObj = new CriteriaObj();
-        critSuppObj.DataType = 'text';
-        critSuppObj.restriction = AdInsConstant.RestrictionEq;
-        critSuppObj.propName = 'ro.OFFICE_CODE';
-        critSuppObj.value = currentUserContext[CommonConstant.OFFICE_CODE];
-        suppCrit.push(critSuppObj);
+        // var critSuppObj = new CriteriaObj();
+        // critSuppObj.DataType = 'text';
+        // critSuppObj.restriction = AdInsConstant.RestrictionEq;
+        // critSuppObj.propName = 'ro.OFFICE_CODE';
+        // critSuppObj.value = currentUserContext[CommonConstant.OFFICE_CODE];
+        // suppCrit.push(critSuppObj);
 
         if (this.mrMouCustTypeCode == "COMPANY") {
           var criteriaObj = new CriteriaObj();
@@ -253,6 +253,7 @@ export class MouDetailFinancingComponent implements OnInit {
     this.InputLookupLinkSupplGradingObj.genericJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkSupplGradingObj.isReadonly = false;
     this.InputLookupLinkSupplGradingObj.isRequired = false;
+    this.InputLookupLinkSupplGradingObj.title = "Link Supplier Grading";
 
     this.InputLookupLinkManufacturerObj = new InputLookupObj();
     this.InputLookupLinkManufacturerObj.urlJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
@@ -262,6 +263,7 @@ export class MouDetailFinancingComponent implements OnInit {
     this.InputLookupLinkManufacturerObj.genericJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.InputLookupLinkManufacturerObj.isReadonly = false;
     this.InputLookupLinkManufacturerObj.isRequired = false;
+    this.InputLookupLinkManufacturerObj.title = "Link Manufacturer";
 
     this.InputLookupManufacturerObj = new InputLookupObj();
     this.InputLookupManufacturerObj.urlJson = "./assets/uclookup/lookupCustomer.json";
@@ -271,6 +273,7 @@ export class MouDetailFinancingComponent implements OnInit {
     this.InputLookupManufacturerObj.genericJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupManufacturerObj.isReadonly = false;
     this.InputLookupManufacturerObj.isRequired = true;
+    this.InputLookupManufacturerObj.title = "Manufacture";
   }
 
   LinkManufacturerEvent(event) {

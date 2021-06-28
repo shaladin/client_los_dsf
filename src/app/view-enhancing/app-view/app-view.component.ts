@@ -272,6 +272,7 @@ export class AppViewComponent implements OnInit {
       this.IsInsurance = false;
       this.IsLifeInsurance = false;
       this.IsMultiCollateral = false;
+      this.IsPefindoResult = false;
     }
     else if (this.bizTemplateCode == CommonConstant.DF) {
       this.IsGuarantor = false;
