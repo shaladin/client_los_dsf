@@ -987,7 +987,7 @@ export class NewLeadInputCustDataComponent implements OnInit {
           );
         }
       }
-    }else if(this.typePage ="update"){
+    }else if(this.typePage =="update"){
       this.leadInputObj = new LeadInputObj();
         this.leadInputObj.LeadCustObj.LeadCustId = this.resLeadCustObj.LeadCustId;
         this.leadInputObj.LeadCustObj.RowVersion = this.resLeadCustObj.RowVersion;
