@@ -31,8 +31,6 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { ReqGetVendorByCategoryCodeAndOfficeCodeObj } from 'app/shared/model/Request/Vendor/ReqVendor.model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
-import { NumberFormat } from 'xlsx/types';
-import { NumberValueAccessor } from '@angular/forms/src/directives';
 
 @Component({
   selector: 'app-insurance-data',
@@ -1025,7 +1023,7 @@ export class InsuranceDataComponent implements OnInit {
     this.isCalculate = false;
   }
 
-  IsMainCvgChaged(event, i: NumberValueAccessor) {
+  IsMainCvgChaged(event, i: number) {
     this.isCalculate = false;
     if (i != undefined && this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"]["MrInsPaidByCode"].value == CommonConstant.InsPaidByAtCost) {
       this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i].patchValue({
