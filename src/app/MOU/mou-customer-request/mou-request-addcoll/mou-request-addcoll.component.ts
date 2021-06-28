@@ -452,6 +452,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.inputAddressObjForLegalAddr.showPhn3 = false;
     this.inputAddressObjForLegalAddr.showFax = false;
     this.inputAddressObjForLocAddr = new InputAddressObj();
+    this.inputAddressObjForLocAddr.showSubsection = false;
     this.inputAddressObjForLocAddr.showPhn1 = false;
     this.inputAddressObjForLocAddr.showPhn2 = false;
     this.inputAddressObjForLocAddr.showPhn3 = false;
