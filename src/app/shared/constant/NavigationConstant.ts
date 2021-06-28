@@ -433,4 +433,8 @@ export class NavigationConstant {
   //#region Pefindo View
   public static PEFINDO_VIEW = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_PEFINDO + "/" + PathConstant.PEFINDO_VIEW;
   //#endregion
+
+  //Setting
+  public static SETTING_APP_SOURCE_PAGING = "/" + PathConstant.SETTING + "/" + PathConstant.APP_SRC_PAGING; //'/Setting/AppSource/Paging'
+  //EndSettings
 }

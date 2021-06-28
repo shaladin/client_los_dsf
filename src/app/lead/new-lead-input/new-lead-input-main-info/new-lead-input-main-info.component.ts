@@ -122,10 +122,10 @@ export class NewLeadInputMainInfoComponent implements OnInit {
     //   });
     let userContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     let objectLead = {
-      Id: userContext.OfficeId,
+      Code: userContext.OfficeCode,
       RowVersion: ""
     };
-
+    console.log(userContext);
     this.http.post(URLConstant.GetListKvpRefAppSrcForAppOrLead, objectLead).subscribe(
       (response) => {
         this.listLeadSource = response[CommonConstant.ReturnObj];

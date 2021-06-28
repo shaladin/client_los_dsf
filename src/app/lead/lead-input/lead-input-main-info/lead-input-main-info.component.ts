@@ -228,9 +228,9 @@ export class LeadInputMainInfoComponent implements OnInit {
     //   });
 
     let obj = {
-      Id: userContext.OfficeId
+      Code: userContext.OfficeCode,
     };
-
+    console.log(userContext);
     this.http.post(URLConstant.GetListKvpRefAppSrcForAppOrLead, obj).subscribe(
       (response) => {
         this.listLeadSource = response[CommonConstant.ReturnObj];

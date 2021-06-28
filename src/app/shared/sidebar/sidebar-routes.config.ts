@@ -532,4 +532,10 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.TASK_REASSIGN_APV_PAGING, Title: 'Task Reassignment Approval', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
     ], Params: []
   },
+  {
+    Path: '', Title: 'Settings', Icon: 'ft-home', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+    Submenu: [
+      { Path: NavigationConstant.SETTING_APP_SOURCE_PAGING, Title: "Application Source", Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
+    ], Params: []
+  },
 ];

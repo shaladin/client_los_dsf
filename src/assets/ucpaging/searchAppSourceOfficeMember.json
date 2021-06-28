@@ -1,0 +1,67 @@
+{
+    "title": "Application Source Office Member",
+    "exportExcel": false,
+    "component": [
+      {
+        "type": "textbox",
+        "name": "RO.OFFICE_CODE",
+        "id": "OfficeCode",
+        "value": "",
+        "label": "Office Code",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "RO.OFFICE_NAME",
+        "id": "OfficeName",
+        "value": "",
+        "label": "Office Name",
+        "placeholder": "Placeholder"
+      }
+    ],
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Office Code",
+        "name": "RO.OFFICE_CODE"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Office Name",
+        "name": "RO.OFFICE_NAME"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Delete"
+      }
+    ],
+    "querystring": {
+      "name":"searchAppSourceOfficeMember"
+    },
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "OfficeCode"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "OfficeName"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+            {
+                "type": "delete",
+                "property": "RefAppSrcOfficeMbrId"
+            }
+        ]
+    }
+    ]
+  }
+  

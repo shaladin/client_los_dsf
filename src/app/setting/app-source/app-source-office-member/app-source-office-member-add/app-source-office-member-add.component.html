@@ -1,0 +1,18 @@
+<lib-ucviewgeneric [viewGenericObj]="viewGenericObj"> </lib-ucviewgeneric>
+<div class="card">
+  <div class="card-body">
+    <lib-ucaddtotemp *ngIf="tempPagingObj.isReady" [tempPagingObj]="tempPagingObj" (callback)="getListTemp($event)">
+    </lib-ucaddtotemp>
+    <div class="card-header">
+      <div class="text-right">
+        <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="['/Setting/AppSource/OfficeMember/Paging']" skipLocationChange
+          [queryParams]="{RefAppSrcId : RefAppSrcId}" translate>
+          <i class="far fa-window-close"></i> Cancel
+        </button>
+        <button type="submit" (click)="SaveAppSourceOfficeMember()" class="btn btn-raised btn-primary" translate>
+          <i class="far fa-check-square"></i> Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
