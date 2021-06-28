@@ -61,7 +61,7 @@
         </app-new-lead-input-cust-data>
       </div>
       <div id="lead-data-tab" class="content" role="tabpanel" aria-labelledby="lead-data-tab-trigger">
-        <app-new-lead-input-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)">
+        <app-new-lead-input-lead-data *ngIf="isLeadData == true" (outputTab)="getValue($event)" [isEndOfTab]= "SysConfigResultObj?.ConfigValue">
         </app-new-lead-input-lead-data>
       </div>
       <div id="upload-data-tab" class="content" role="tabpanel" aria-labelledby="upload-data-tab-trigger">
