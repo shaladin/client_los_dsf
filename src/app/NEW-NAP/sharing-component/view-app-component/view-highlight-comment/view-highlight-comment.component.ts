@@ -86,7 +86,6 @@ export class ViewHighlightCommentComponent implements OnInit {
     );
   }
   GetListCustHighlightComment() {
-    console.log('richard check');
     this.listCustHighlightCommentObj = new Array<CustHighlightCommentObj>()
     var reqObjForAppCustHighlightComment = {
       AppId: this.appId

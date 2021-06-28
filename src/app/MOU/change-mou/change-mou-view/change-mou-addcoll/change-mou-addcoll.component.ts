@@ -12,6 +12,7 @@ import { ResMouCollForMouViewObj } from 'app/shared/model/Response/MOU/ResMouCol
 })
 export class ChangeMouAddcollComponent implements OnInit {
   @Input() MouCustId: number;
+  @Input() ChangeMouTrxId: number;
 
   listCollateralData: Array<ResMouCollForMouViewObj>;
 
@@ -19,7 +20,8 @@ export class ChangeMouAddcollComponent implements OnInit {
 
 
   ngOnInit() {
-    var mouCustObj = { Id: this.MouCustId }
+    var mouCustObj = { Id: this.ChangeMouTrxId }
+
     this.http.post(URLConstant.GetChangeMouCustCollateralForChangeMouViewByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.listCollateralData = response['ReturnObject'];

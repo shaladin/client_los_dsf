@@ -26,10 +26,9 @@ import { AdInsConstant } from 'app/shared/AdInstConstant';
 export class MouDetailFactoringComponent implements OnInit {
   @Input() MouCustId: number;
   @Output() ResponseMouCustFactoring: EventEmitter<any> = new EventEmitter();
-  @ViewChild(MouCustListedCustFctrComponent) 
   user: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
   isWithoutRecourse: boolean
-  MouListedFctrComp: MouCustListedCustFctrComponent;
+  @ViewChild(MouCustListedCustFctrComponent) MouListedFctrComp: MouCustListedCustFctrComponent;
   recourseTypeList: Array<KeyValueObj>;
   wopList: Array<KeyValueObj>;
   paidByList: Array<KeyValueObj>;
@@ -148,6 +147,7 @@ export class MouDetailFactoringComponent implements OnInit {
             MouCustId: this.MouCustId
           });
         }
+        console.log("here");
         this.OnChangeRecourseType(this.recourseTypeList[0].Key);
         this.CheckPaidBy(this.MouDetailFactoringForm.controls.MrPaidByCode.value);
         this.instTypeHandler();
@@ -249,6 +249,11 @@ export class MouDetailFactoringComponent implements OnInit {
     if(value == CommonConstant.PAID_BY_CUST_FCTR){
       this.MouDetailFactoringForm.controls.IsDisclosed.disable();
       this.MouDetailFactoringForm.controls.IsDisclosed.setValue(true);
+      this.MouDetailFactoringForm.patchValue({
+        MrRecourseTypeCode: CommonConstant.WITHOUT_RECOURSE_TYPE
+      });
+      this.OnChangeRecourseType(CommonConstant.WITHOUT_RECOURSE_TYPE);
+      
     }else if(value == CommonConstant.PAID_BY_CUST){
       this.MouDetailFactoringForm.controls.IsDisclosed.enable();
       this.MouDetailFactoringForm.controls.IsDisclosed.setValue(false);
@@ -290,7 +295,7 @@ export class MouDetailFactoringComponent implements OnInit {
       ];
       this.inputLookupCustObj.isReady = true;
 
-      this.httpClient.post<Array<MouCustListedCustFctrObj>>(URLConstant.GetListMouCustListedCustFctrByMouCustId, { MouCustId: this.MouCustId }).subscribe(
+      this.httpClient.post<Array<MouCustListedCustFctrObj>>(URLConstant.GetListMouCustListedCustFctrByMouCustId, { Id: this.MouCustId }).subscribe(
         (response) => {
           this.listedCusts = response;
 

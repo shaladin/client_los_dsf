@@ -73,31 +73,24 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe((params) => {
-      console.log("68");
-      console.log(params);
       if (params["mode"] != null) {
         this.pageType = params["mode"];
       }
-      console.log("73");
       if (params["MouCustId"] != null) {
         this.mouCustId = params["MouCustId"];
       }
-      console.log("77");
       if (params["changeMouTrxNo"] != null) {
         this.changeMouTrxNo = params["changeMouTrxNo"];
       }
       if (params["ChangeMouStatus"] != null) {
         this.ChangeMouStatus = params["ChangeMouStatus"];
       }
-      console.log("81");
       if (params["ChangeMouCustId"] != null) {
         this.ChangeMouCustId = params["ChangeMouCustId"];
       }
-      console.log("84");
       if (params["MrMouTypeCode"] != null) {
         this.mouType = params["MrMouTypeCode"];
       }
-      console.log("85");
       if (params["WfTaskListId"] != null)
         this.WfTaskListId = params["WfTaskListId"];
         
@@ -107,8 +100,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    console.log(this.mouType)
+  async ngOnInit() {
     var datePipe = new DatePipe("en-US");
 
     var userContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -117,6 +109,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     if (this.pageType == "return") {
        this.ClaimTask();
     }
+
     //bind data dropdown
     this.http
       .post(URLConstant.GetRefMasterListKeyValueActiveByCode, {
@@ -217,6 +210,28 @@ export class ChangeMouRequestDetailComponent implements OnInit {
       });
       this.CheckMouChangeType(this.mouType);
     }
+
+    var obj = {Id: this.mouCustId}
+    await this.http.post(URLConstant.GetChangeMouByMouCustIdStatusNew, obj).toPromise().then(
+      (response) => {
+        console.log(response)
+        if(response["ChangeMouTrxId"] != 0)
+        {
+          this.changeMouTrxNo = response["ChangeMouTrxNo"];
+          this.ChangeMouCustId = response["ChangeMouCustId"];
+          this.ChangeMouStatus = response["Status"];
+          this.ChangeMouTrxId = response["ChangeMouTrxId"];
+          
+          this.router.navigate(
+            [
+              NavigationConstant.CHANGE_MOU_REQ_DETAIL_CUSTOMER,
+              this.MOUMainInfoForm.controls.MrMouTypeCode.value,
+            ],
+            { queryParams: { mouCustId: this.mouCustId , mode: this.pageType, ChangeMouTrxId: this.ChangeMouTrxId, changeMouTrxNo : this.changeMouTrxNo , ChangeMouCustId : this.ChangeMouCustId, ChangeMouStatus : this.ChangeMouStatus , WfTaskListId: this.WfTaskListId} }
+          );
+        }   
+      }
+    );
   }
 
   
@@ -271,7 +286,8 @@ export class ChangeMouRequestDetailComponent implements OnInit {
      return;
     }
 
-    if (this.pageType == "edit") {
+    if (this.pageType == "edit") 
+    {
       mouCustFormData["RefOfficeId"] = this.refOfficeId;
       mouCustFormData["Status"] = "NEW";
       mouCustFormData[
@@ -280,7 +296,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
       mouCustFormData["Version"] = 0;
       mouCustFormData["RequestDate"] = this.businessDt;
 
-      this.httpClient
+        this.httpClient
         .post(URLConstant.AddChangeMou, mouCustFormData)
         .subscribe((response) => {
           this.toastr.successMessage(response["Message"]);
@@ -303,9 +319,9 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     }else{
       this.toastr.successMessage("Success");
       this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_DETAIL_CUSTOMER, this.MOUMainInfoForm.controls.MrMouTypeCode.value,],
-        { queryParams: { mouCustId: this.mouCustId, ChangeMouTrxId: this.ChangeMouTrxId, mode: this.pageType, WfTaskListId: this.WfTaskListId} }
+        { queryParams: { mouCustId: this.mouCustId, ChangeMouTrxId: this.ChangeMouTrxId, mode: this.pageType, WfTaskListId: this.WfTaskListId, ChangeMouCustId : this.ChangeMouCustId} }
       );
-    }
+     }
     
   }
 }

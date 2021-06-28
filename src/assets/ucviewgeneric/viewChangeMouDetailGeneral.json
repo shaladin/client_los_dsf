@@ -2,7 +2,7 @@
     "title": "",
     "subsection": [
       {
-        "subSectionId": "CustMainInfoHeaderId",
+        "subSectionId": "CustMainDetailHeaderId",
         "subSectionTitle": "Mou Detail",
         "mainInfoPath": "/Generic/GetDataViewBySQL",
         "mainInfo": [

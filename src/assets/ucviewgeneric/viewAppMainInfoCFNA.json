@@ -41,6 +41,11 @@
         },
         {
           "type": "text",
+          "label": "Customer Model",
+          "property": "CustModel"
+        },
+        {
+          "type": "text",
           "label": "Customer Name",
           "property": "CustName"
         },

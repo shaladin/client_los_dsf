@@ -74,6 +74,7 @@ export class CustMainDataComponent implements OnInit {
   LeadId: number;
   LeadNo: string;
 
+  MrCustModelCode: string = "";
   agrmntParentNo: string = "";
   isExisting: boolean = false;
   isUcAddressReady: boolean = false;
@@ -205,8 +206,10 @@ export class CustMainDataComponent implements OnInit {
     }
 
     if (this.inputMode != 'ADD' && isUseLead == false) {
-      this.getCustMainData();
+      await this.getCustMainData();
     }
+
+    
   }
 
   async initcustMainDataMode() {
@@ -220,6 +223,7 @@ export class CustMainDataComponent implements OnInit {
         this.custDataObj.IsCustomer = true;
         this.subjectTitle = this.bizTemplateCode == CommonConstant.FL4W ? 'Lessee' : 'Customer';
         this.CustMainDataForm.controls.MrCustRelationshipCode.clearValidators();
+        this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
         break;
       case CommonConstant.CustMainDataModeGuarantor:
         this.isIncludeCustRelation = true;
@@ -227,6 +231,8 @@ export class CustMainDataComponent implements OnInit {
         this.subjectTitle = 'Guarantor';
         this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
+        this.CustMainDataForm.controls.MrGenderCode.updateValueAndValidity();
         await this.GetAppCustMainDataByAppId();
         break;
       case CommonConstant.CustMainDataModeFamily:
@@ -235,6 +241,8 @@ export class CustMainDataComponent implements OnInit {
         this.subjectTitle = 'Family';
         this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
+        this.CustMainDataForm.controls.MrGenderCode.updateValueAndValidity();
         await this.GetAppCustMainDataByAppId();
         break;
       case CommonConstant.CustMainDataModeMgmntShrholder:
@@ -244,14 +252,20 @@ export class CustMainDataComponent implements OnInit {
         if(this.MrCustTypeCode == CommonConstant.CustTypeCompany){
           //note: dari html cmn company yang ditampilkan
           this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
+          this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
         }
         this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.CustMainDataForm.controls.MrJobPositionCode.setValidators(Validators.required);
+        this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
+        this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
         await this.GetAppCustMainDataByAppId();
         break;
       default:
         this.isIncludeCustRelation = false;
         this.subjectTitle = this.bizTemplateCode == CommonConstant.FL4W ? 'Lessee' : 'Customer';
+    }
+    if (this.isIncludeCustRelation) {
+      await this.getCustRelationship();
     }
   }
 
@@ -268,7 +282,7 @@ export class CustMainDataComponent implements OnInit {
     );
   }
 
-  setLookup(custType: string = CommonConstant.CustTypePersonal, isChange: boolean = false) {
+  async setLookup(custType: string = CommonConstant.CustTypePersonal, isChange: boolean = false) {
     if (custType == CommonConstant.CustTypePersonal) {
       this.InputLookupCustObj.isDisable = false;
       this.InputLookupCustCoyObj.isDisable = true;
@@ -399,14 +413,11 @@ export class CustMainDataComponent implements OnInit {
         }
       }
     }
-    if (this.isIncludeCustRelation) {
-      await this.getCustRelationship();
-    }
   }
 
-  getCustRelationship() {
+  async getCustRelationship() {
     if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
-      if (this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal) {
+      if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
         var refCustRelObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
           RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
           MappingCode: CommonConstant.CustTypePersonal,
@@ -441,10 +452,10 @@ export class CustMainDataComponent implements OnInit {
     this.MrCustRelationshipCodeObj.splice(idxSpouse, 1)
   }
 
-  getCustMainData() {
+  async getCustMainData() {
     let reqObj: GenericObj = new GenericObj();
     reqObj.Id = this.appCustId;
-    this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppCustId, reqObj).subscribe(
+    await this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppCustId, reqObj).toPromise().then(
       async (response) => {
         if (response.AppCustObj) {
           if (!this.appCustId) this.appCustId = response.AppCustObj.AppCustId
@@ -460,14 +471,22 @@ export class CustMainDataComponent implements OnInit {
             this.disableInput();
           }
           this.setValidatorPattern();
-        } else
+        } else {
           this.custTypeChange(CommonConstant.CustTypePersonal, true);
+        }
+          
+        if(this.MrCustTypeCode == CommonConstant.CustTypeCompany && this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder){
+          //note: dari html cmn company yang ditampilkan
+          this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
+          this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
+        }
       }
     );
   }
 
   custTypeChange(custType: string = CommonConstant.CustTypePersonal, FirstInit: boolean = false) {
     this.MrCustTypeCode = custType;
+    this.MrCustModelCode = "";
     this.CustMainDataForm.controls.MrCustTypeCode.setValue(this.MrCustTypeCode);
 
     if (!FirstInit) {
@@ -538,6 +557,8 @@ export class CustMainDataComponent implements OnInit {
       } else {
         this.CustMainDataForm.controls.MrJobPositionCode.clearValidators();
         this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
+        this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
+        this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
 
       }
     }
@@ -600,23 +621,6 @@ export class CustMainDataComponent implements OnInit {
   }
 
   ChangeIdType(IdType: string) {
-    this.CustMainDataForm.controls.IdExpiredDt.patchValue("");
-    this.CustMainDataForm.controls.IdNo.patchValue("");
-
-    if (IdType == "KITAS" || IdType == "SIM") {
-      this.CustMainDataForm.controls.IdExpiredDt.setValidators([Validators.required]);
-    } else {
-      this.CustMainDataForm.controls.IdExpiredDt.clearValidators();
-    }
-
-    if (IdType == "NPWP"){
-      this.CustMainDataForm.controls.IdNo.setValidators([Validators.minLength(15), Validators.maxLength(15), Validators.required, Validators.pattern("^[0-9]+$")]);
-    } else {
-      this.CustMainDataForm.controls.IdNo.clearValidators();
-      this.CustMainDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
-    }
-
-    this.CustMainDataForm.controls.IdExpiredDt.updateValueAndValidity();
     this.setValidatorPattern();
   }
 
@@ -722,6 +726,7 @@ export class CustMainDataComponent implements OnInit {
 
       this.InputLookupCustObj.nameSelect = CustObj.CustName;
       this.InputLookupCustObj.jsonSelect = { CustName: CustObj.CustName };
+      this.MrCustModelCode = CustObj.MrCustModelCode;
       if (!IsCopyCust) this.rowVersionAppCust = CustObj.RowVersion;
     }
 
@@ -767,6 +772,7 @@ export class CustMainDataComponent implements OnInit {
       this.InputLookupCustCoyObj.nameSelect = CustObj.CustName;
       this.InputLookupCustCoyObj.jsonSelect = { CustName: CustObj.CustName };
       if (!IsCopyCust) this.rowVersionAppCust = CustObj.RowVersion;
+      this.MrCustModelCode = CustObj.MrCustModelCode;
     }
 
     if (CustCompanyObj != undefined) {
@@ -902,6 +908,7 @@ export class CustMainDataComponent implements OnInit {
     this.custDataCompanyObj.AppCustObj.IsExistingCust = this.isExisting;
     this.custDataCompanyObj.AppCustObj.AppCustId = this.appCustId != null ? this.appCustId : 0;
     this.custDataCompanyObj.AppCustCompanyMgmntShrholderObj.AppCustId = this.appCustId != null ? this.appCustId : 0;
+    this.custDataCompanyObj.AppCustObj.MrCustModelCode = this.MrCustModelCode;
 
     if (this.isIncludeCustRelation)
       this.custDataCompanyObj.AppCustObj.MrCustRelationshipCode = this.CustMainDataForm.controls.MrCustRelationshipCode.value;
@@ -1098,7 +1105,6 @@ export class CustMainDataComponent implements OnInit {
   //END OF URS-LOS-041
 
   async getCustDataByLead() {
-    console.log('richard check');
     //get lead
 
     let resp4 = await this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { LeadId: this.LeadId }).toPromise();

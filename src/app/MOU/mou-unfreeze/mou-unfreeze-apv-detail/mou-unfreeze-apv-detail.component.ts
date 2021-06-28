@@ -5,7 +5,7 @@ import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
 import { AdInsConstant } from "app/shared/AdInstConstant";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
-import { ApprovalObj } from "app/shared/model/Approval/ApprovalObj.Model"; 
+import { ApprovalObj } from "app/shared/model/Approval/ApprovalObj.Model";
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
@@ -20,13 +20,13 @@ import { environment } from "environments/environment";
 
 export class MouUnfreezeApvDetailComponent implements OnInit {
   TrxId: number;
-  TrxNo : string;
+  TrxNo: string;
   taskId: number;
   instanceId: number;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  InputApvObj : UcInputApprovalObj;
-  InputApprovalHistoryObj : UcInputApprovalHistoryObj;
-  UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
+  InputApvObj: UcInputApprovalObj;
+  InputApprovalHistoryObj: UcInputApprovalHistoryObj;
+  UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
   ApvReqId: number;
   constructor(
@@ -61,14 +61,25 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
   HoldTask(obj: ApprovalObj) {
     this.http
       .post(AdInsConstant.ApvHoldTaskUrl, obj)
-      .subscribe((response) => {});
+      .subscribe((response) => { });
   }
 
-  onAvailableNextTask(event) {}
+  onAvailableNextTask(event) { }
 
   onApprovalSubmited(event) {
-    this.toastr.successMessage("Success");
-    this.router.navigate([NavigationConstant.MOU_FREEZE_APV_PAGING]);
+
+    let ReqMouApvCustomObj = {
+      Tasks: event.Tasks
+    }
+
+    this.http.post(URLConstant.MouApproval, ReqMouApvCustomObj).subscribe(
+      () => {
+        this.toastr.successMessage("Success");
+        this.router.navigate([NavigationConstant.MOU_FREEZE_APV_PAGING]);
+      }
+    );
+
+
   }
 
   onCancelClick() {
@@ -78,13 +89,13 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
   GetCallBack(e) {
   }
 
-  initInputApprovalObj(){
+  initInputApprovalObj() {
 
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
     this.UcInputApprovalGeneralInfoObj.TaskId = this.taskId;
-    
+
     this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
     this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
     this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
@@ -102,7 +113,7 @@ export class MouUnfreezeApvDetailComponent implements OnInit {
     this.InputApvObj.RequestId = this.ApvReqId;
     this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
     this.InputApvObj.TrxNo = this.TrxNo;
-    this.IsReady = true; 
+    this.IsReady = true;
   }
 
 }

@@ -120,8 +120,8 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
   }
 
   Submit() {
-    this.ApprovalCreateOutput = this.createComponent.output();
-    if (this.ApprovalCreateOutput != undefined) {
+    this.ApprovalCreateOutput = {RFAInfo: this.MouReviewDataForm.controls.RFAInfo.value};
+
       this.mouCustObj.MouCustId = this.MouCustId;
       this.PlafondAmt = this.PlafondAmt;
       this.changeMouTrxObj.ChangeMouTrxId = this.ChangeMouTrxId;
@@ -144,7 +144,6 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
             {}
           );
         });
-    }
   }
 
   Return() {

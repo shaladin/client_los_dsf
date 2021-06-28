@@ -28,6 +28,7 @@ import { LeadViewModule } from "./lead-view/lead-view.module";
 import { ChangeMouViewModule } from "./change-mou-view/change-mou-view.module";
 import { POViewModule } from "./purchase-order-view/purchase-order-view.module";
 import { SurveyViewModule } from "./survey-view-prototype/survey-view.module";
+import { AppViewInsuranceDetailComponent } from "./app-view/app-insurance/app-insurance-detail/app-insurance-detail.component";
 
 
 @NgModule({
@@ -72,6 +73,7 @@ import { SurveyViewModule } from "./survey-view-prototype/survey-view.module";
     UcviewgenericComponent,
     UcgridviewComponent,
     UcapprovalhistComponent,
+    AppViewInsuranceDetailComponent
   ],
   exports: [
     MouMainInfoComponent

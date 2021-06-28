@@ -62,7 +62,7 @@ export class ChangeMouCancelComponent implements OnInit {
         });
     } else if (event.Key == "cancel") {
       if (confirm("Are you sure to cancel this?")) {
-      
+        console.log(event)
         var mouCancel = new ChangeMouCustConfirmCancelObj();
         mouCancel.Status = CommonConstant.MouStatCancel;
         mouCancel.ChangeMouTrxId = event.RowObj.ChangeMouTrxId;

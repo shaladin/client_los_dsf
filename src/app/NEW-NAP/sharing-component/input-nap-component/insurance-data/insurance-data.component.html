@@ -143,7 +143,7 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2 adins-required-label" for="paidBy" translate>Paid By</label>
+                  <!-- <label class="col-md-2 adins-required-label" for="paidBy" translate>Paid By</label>
                   <div class="col-md-4">
                     <select class="form-control width-75-per" id="paidBy" formControlName="InsAssetPaidBy"
                       (change)="InsAssetPaidByChanged($event)"
@@ -155,7 +155,7 @@
                     </select>
                     <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsAssetPaidBy"
                       [submit]="enjiForm.submitted"></lib-uc-show-errors>
-                  </div>
+                  </div> -->
                   <label class="col-md-2 adins-required-label" for="payPeriodToInsco" translate>Payment Type</label>
                   <div class="col-md-4">
                     <select class="form-control width-75-per" id="payPeriodToInsco" formControlName="PayPeriodToInsco"
@@ -533,8 +533,17 @@
                 </div>
                 <div class="form-group row">
                   <label class="col-md-4" style="font-size: 90%" for="discAmt" translate>Discount</label>
-                  <label class="col-md-4 text-right" style="font-size: 90%"
-                    translate>{{InsuranceDataForm.controls.TotalCustDiscAmt.value | number:'.2':'en-US'}}</label>
+                  <div class="col-md-4">
+                    <input type="" currencyMask id="TotalCustDiscAmt" style="float: right;" class="form-control width-75-per"
+                      formControlName="TotalCustDiscAmt" [readonly]="!IsAllPaidByCust"
+                      [options]="{ allowNegative: false }"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.TotalCustDiscAmt.invalid }">
+                    <lib-uc-show-errors [control]="InsuranceDataForm.controls.TotalCustDiscAmt"
+                      [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                  <!-- <label class="col-md-4 text-right" style="font-size: 90%"
+                    translate>{{InsuranceDataForm.controls.TotalCustDiscAmt.value | number:'.2':'en-US'}}</label> -->
                 </div>
                 <div class="form-group row">
                   <label class="col-md-4" style="font-size: 90%" translate>Total Premium to Customer after
