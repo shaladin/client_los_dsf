@@ -912,7 +912,6 @@ export class InsuranceDataComponent implements OnInit {
   }
 
   addGroupFromDB(insMainCvg: AppInsMainCvgObj, ManufYearDiff) {
-    console.log(insMainCvg);
     let currPaidByBhv = this.paidByBhv.find(i => i.PaidByYearNo == insMainCvg.YearNo);
     var group = this.fb.group({
       YearNo: insMainCvg.YearNo,
@@ -1039,19 +1038,15 @@ export class InsuranceDataComponent implements OnInit {
   IsAllPaidByCust: boolean = true;
   checkPaidBy() {
     this.IsAllPaidByCust = true;
-    console.log(this.InsuranceDataForm);
     let tempListAppInsMainCvgs = this.InsuranceDataForm.get("AppInsMainCvgs") as FormArray;
-    console.log(tempListAppInsMainCvgs);
     let totalDiscAmt: number = 0;
     for (let index = 0; index < tempListAppInsMainCvgs.length; index++) {
       const element = tempListAppInsMainCvgs.get(index.toString()) as FormGroup;
-      console.log(element);
       if (element.get("MrInsPaidByCode").value == CommonConstant.InsPaidByAtCost) {
         totalDiscAmt += (element.get("CustMainPremiAmt").value + element.get("TotalCustAddPremiAmt").value);
         this.IsAllPaidByCust = false;
       }
     }
-    console.log(this.IsAllPaidByCust);
     this.InsuranceDataForm.get("TotalCustDiscAmt").patchValue(totalDiscAmt);
   }
 
