@@ -11,6 +11,7 @@ export class AppCustPersonalFinDataObj {
     OtherMonthlyInstallmentAmt: number;
     TotalIncomeAmt: number;
     NettIncomeAmt: number;
+    NettProfitMonthlyAmt: number;
     DateAsOf: Date;
     RowVersion: string;
 

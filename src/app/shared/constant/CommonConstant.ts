@@ -616,6 +616,7 @@ export class CommonConstant {
 
   //Martial Status
   public static MasteCodeMartialStatsMarried = "MARRIED";
+  public static MasteCodeMartialStatsSingle = "SINGLE";
 
   //Relationship Code
   public static MasteCodeRelationshipSpouse = "SPOUSE";
