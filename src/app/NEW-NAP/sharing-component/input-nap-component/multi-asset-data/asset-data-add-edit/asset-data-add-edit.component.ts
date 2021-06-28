@@ -1145,7 +1145,7 @@ export class AssetDataAddEditComponent implements OnInit {
 
   SetBpkbCity(event) {
     this.AssetDataForm.patchValue({
-      TaxCityIssuer: event.provDistrictCode,
+      TaxCityIssuer: event.DistrictCode,
     });
   }
 
