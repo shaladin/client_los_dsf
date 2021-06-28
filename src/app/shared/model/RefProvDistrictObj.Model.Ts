@@ -3,6 +3,7 @@
 export class RefProvDistrictObj {
     refProvDistrictId: number;
     provDistrictCode: string;
+    ProvDistrictName: string;
     name: string;
     districtSandiBi: string;
     parentId: number;
