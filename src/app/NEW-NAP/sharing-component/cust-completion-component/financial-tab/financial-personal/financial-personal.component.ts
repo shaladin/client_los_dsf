@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -8,7 +8,9 @@ import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { AppCustPersonalFinDataObj } from 'app/shared/model/AppCustPersonalFinDataObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { FormValidateService } from 'app/shared/services/formValidate.service';
-
+import { DatePipe } from '@angular/common';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 @Component({
   selector: 'app-financial-personal',
   templateUrl: './financial-personal.component.html',
@@ -28,6 +30,13 @@ export class FinancialPersonalComponent implements OnInit {
     CommonConstant.AttrGroupCustPersonalFinDataOther
   ];
   AppCustPersonalFinData: AppCustPersonalFinDataObj = new AppCustPersonalFinDataObj();
+
+  @ViewChild('ModalPersonalFinData') ModalPersonalFinData;
+  ListAppCustPersonalFinData: Array<AppCustPersonalFinDataObj> = [];
+  IsAddFinData: boolean = true;
+  currentCustFinDataIndex: number;
+  currentModal: any;
+
   CustAttrRequest: Array<Object> = new Array<Object>();
   MrSourceOfIncomeTypeObj: Array<KeyValueObj> = new Array();
   AppCustBankAccList: Array<AppCustBankAccObj> = new Array();
@@ -37,6 +46,7 @@ export class FinancialPersonalComponent implements OnInit {
   TotalExpenseListAmt: number = 0;
 
   FinancialForm = this.fb.group({
+    AppCustPersonalFinDataId: [0],
     AppCustPersonalId: [0],
     MonthlyIncomeAmt: ['', Validators.required],
     MrSourceOfIncomeTypeCode: [''],
@@ -48,17 +58,20 @@ export class FinancialPersonalComponent implements OnInit {
     SpouseMonthlyIncomeAmt: [0],
     TotalIncomeAmt: [0],
     NettIncomeAmt: [0],
+    DateAsOf: [0],
     RowVersion: ['']
   })
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
-    public formValidate: FormValidateService) { }
+    public formValidate: FormValidateService,
+    private modalService: NgbModal) { }
 
   async ngOnInit() {
     await this.GetRefMaster();
-    await this.GetFinData();
+    // await this.GetFinData();
+    await this.GetListFinData();
   }
 
   GetRefMaster() {
@@ -73,26 +86,66 @@ export class FinancialPersonalComponent implements OnInit {
   }
 
   isDataExist: boolean = false;
-  GetFinData() {
-    this.http.post<AppCustPersonalFinDataObj>(URLConstant.GetAppCustPersonalFinDataByAppCustPersonalId, { Id: this.AppCustPersonalId }).subscribe(
-      async (response) => {
-        if (response.AppCustPersonalFinDataId != 0) {
-          this.isDataExist = true;
-          await this.FinancialForm.patchValue({
-            MonthlyIncomeAmt: response.MonthlyIncomeAmt,
-            MrSourceOfIncomeTypeCode: response.MrSourceOfIncomeTypeCode,
-            OtherIncomeAmt: response.OtherIncomeAmt,
-            IsJoinIncome: response.IsJoinIncome,
-            MonthlyExpenseAmt: response.MonthlyExpenseAmt,
-            MonthlyInstallmentAmt: response.MonthlyInstallmentAmt,
-            OtherMonthlyInstAmt: response.OtherMonthlyInstallmentAmt,
-            SpouseMonthlyIncomeAmt: response.SpouseMonthlyIncomeAmt,
-            RowVersion: response.RowVersion
-          });
-          await this.CalculateFinData();
-        }
+  // GetFinData() {
+  //   this.http.post<AppCustPersonalFinDataObj>(URLConstant.GetAppCustPersonalFinDataByAppCustPersonalId, { Id: this.AppCustPersonalId }).subscribe(
+  //     async (response) => {
+  //       if (response.AppCustPersonalFinDataId != 0) {
+  //         this.isDataExist = true;
+  //         await this.FinancialForm.patchValue({
+  //           MonthlyIncomeAmt: response.MonthlyIncomeAmt,
+  //           MrSourceOfIncomeTypeCode: response.MrSourceOfIncomeTypeCode,
+  //           OtherIncomeAmt: response.OtherIncomeAmt,
+  //           IsJoinIncome: response.IsJoinIncome,
+  //           MonthlyExpenseAmt: response.MonthlyExpenseAmt,
+  //           MonthlyInstallmentAmt: response.MonthlyInstallmentAmt,
+  //           OtherMonthlyInstAmt: response.OtherMonthlyInstallmentAmt,
+  //           SpouseMonthlyIncomeAmt: response.SpouseMonthlyIncomeAmt,
+  //           RowVersion: response.RowVersion
+  //         });
+  //         await this.CalculateFinData();
+  //       }
+  //     }
+  //   );
+  // }
+
+  GetListFinData() {
+    this.http.post<AppCustPersonalFinDataObj>(URLConstant.GetListAppCustPersonalFinDataByAppCustPersonalId, { Id: this.AppCustPersonalId }).subscribe(
+      (response) => {
+        this.ListAppCustPersonalFinData = response['ListAppCustPersonalFinData'];
       }
     );
+  }
+
+  GetFinData(currentCustFinDataIndex: number) {
+    this.IsAddFinData = false;
+    this.currentCustFinDataIndex = currentCustFinDataIndex;
+    let custFinData: AppCustPersonalFinDataObj = this.ListAppCustPersonalFinData[this.currentCustFinDataIndex];
+    let datePipe = new DatePipe("en-US");
+    if (!custFinData) {
+      custFinData = new AppCustPersonalFinDataObj();
+      this.IsAddFinData = true;
+    }
+    this.FinancialForm.patchValue({
+      AppCustPersonalFinDataId: custFinData.AppCustPersonalFinDataId,
+      AppCustPersonalId: this.AppCustPersonalId,
+      MonthlyIncomeAmt: custFinData.MonthlyIncomeAmt,
+      MrSourceOfIncomeTypeCode: custFinData.MrSourceOfIncomeTypeCode,
+      OtherIncomeAmt: custFinData.OtherIncomeAmt,
+      IsJoinIncome: custFinData.IsJoinIncome,
+      MonthlyExpenseAmt: custFinData.MonthlyExpenseAmt,
+      MonthlyInstallmentAmt: custFinData.MonthlyInstallmentAmt,
+      OtherMonthlyInstAmt: custFinData.OtherMonthlyInstallmentAmt,
+      SpouseMonthlyIncomeAmt: custFinData.SpouseMonthlyIncomeAmt,
+      DateAsOf: custFinData.DateAsOf ? datePipe.transform(custFinData.DateAsOf, 'yyyy-MM-dd') : '',
+      RowVersion: custFinData.RowVersion
+    });
+    this.CalculateFinData();
+
+    if (this.IsAddFinData) this.FinancialForm.controls['DateAsOf'].setValidators([Validators.required]);
+    else this.FinancialForm.controls['DateAsOf'].clearValidators();
+    this.FinancialForm.controls['DateAsOf'].updateValueAndValidity();
+
+    this.currentModal = this.modalService.open(this.ModalPersonalFinData, { ariaLabelledBy: 'modal-basic-title', backdrop: 'static', keyboard: false });
   }
 
   GetEvent(event) {
@@ -152,6 +205,11 @@ export class FinancialPersonalComponent implements OnInit {
       this.SetAttrContent();
     }
 
+    if (!this.ListAppCustPersonalFinData.length) {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_INPUT_FIN_DATA);
+      return;
+    }
+
     this.AppCustPersonalFinData = this.FinancialForm.value;
     this.AppCustPersonalFinData.AppCustPersonalId = this.AppCustPersonalId;
 
@@ -175,6 +233,18 @@ export class FinancialPersonalComponent implements OnInit {
         }
       );
     }
+  }
+
+  async SaveAppCustPersonalFinData() {
+    if (!this.FinancialForm.valid) return;
+
+    await this.http.post(URLConstant.AddEditAppCustPersonalFinData, { AppCustPersonalFinDataObj: this.FinancialForm.value }).toPromise().then(
+      (response) => {
+        if (this.currentModal) this.currentModal.close();
+      }
+    );
+
+    await this.GetListFinData();
   }
 
   CalculateIncomeAmt(event: any) {

@@ -209,6 +209,7 @@ export class CustMainDataComponent implements OnInit {
       await this.getCustMainData();
     }
 
+    
   }
 
   async initcustMainDataMode() {
