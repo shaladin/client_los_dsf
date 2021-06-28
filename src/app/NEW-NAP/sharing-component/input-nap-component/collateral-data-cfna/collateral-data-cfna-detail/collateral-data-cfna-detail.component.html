@@ -344,7 +344,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4 adins-required-label" translate>Owner Mobile Phone No</label>
+                    <label class="col-md-4 adins-required-label" [ngClass]="{'adins-required-label' : AppCustData.MrCustTypeCode == 'PERSONAL' }" translate>Owner Mobile Phone No</label>
                     <div class="col-md-8">
                       <input type="text" class="form-control" formControlName="OwnerMobilePhnNo"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerMobilePhnNo.invalid }">

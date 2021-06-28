@@ -3,7 +3,7 @@
   "component": [
     {
       "type": "textbox",
-      "name": "PROV_DISTRICT_CODE",
+      "name": "A.PROV_DISTRICT_CODE",
       "id": "districtCode",
       "value": "",
       "label": "District Code",
@@ -11,7 +11,7 @@
     },
     {
       "type": "textbox",
-      "name": "PROV_DISTRICT_NAME",
+      "name": "A.PROV_DISTRICT_NAME",
       "id": "districtName",
       "value": "",
       "label": "District Name",
@@ -26,13 +26,13 @@
       "type": "sort",
       "position": "center",
       "label": "District Code",
-      "name": "DistrictCode"
+      "name": "A.PROV_DISTRICT_CODE"
     },
     {
       "type": "sort",
       "position": "left",
       "label": "District Name",
-      "name": "DistrictName"
+      "name": "A.PROV_DISTRICT_NAME"
     },
     {
       "type": "label",
@@ -44,12 +44,12 @@
     {
       "type": "text",
       "position": "center",
-      "property": "provDistrictCode"
+      "property": "DistrictCode"
     },
     {
       "type": "text",
       "position": "left",
-      "property": "provDistrictName"
+      "property": "DistrictName"
     },
     {
       "type": "action",
@@ -57,11 +57,11 @@
       "action": [
         {
           "type": "select",
-          "property": "provDistrictCode"
+          "property": "DistrictCode"
         }
       ]
     }
   ],
-  "propertyId": "provDistrictCode",
-  "propertyName": "provDistrictName"
+  "propertyId": "DistrictCode",
+  "propertyName": "DistrictName"
 }

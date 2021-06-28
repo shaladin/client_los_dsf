@@ -2020,7 +2020,7 @@ export class AssetDataComponent implements OnInit {
           TaxCityIssuer: this.DistrictObj.provDistrictCode
         });
         this.InputLookupCityIssuerObj.jsonSelect = this.DistrictObj;
-        this.InputLookupCityIssuerObj.nameSelect = this.DistrictObj.name;
+        this.InputLookupCityIssuerObj.nameSelect = this.DistrictObj.ProvDistrictName;
       }
     );
   }

@@ -589,6 +589,7 @@ export class URLConstant {
   public static AddChangeMouCustCollateral = environment.losUrl + "/ChangeMou/AddChangeMouCustCollateralData";
   public static AddEditChangeMouCustFctr = environment.losUrl + "/ChangeMou/AddEditChangeMouCustFctr";
   public static GetLatestChangeMouCustVersionById = environment.losUrl + "/ChangeMou/GetLatestChangeMouCustVersionById";
+  public static GetChangeMouByMouCustIdStatusNew = environment.losUrl + "/ChangeMou/GetChangeMouByMouCustIdStatusNew";
   public static GetChangeMouCustClauseByMouCustId = environment.losUrl + "/ChangeMou/GetChangeMouCustClauseByMouCustId";
   public static GetChangeMouCustAssetByMouCustId = environment.losUrl + "/ChangeMou/GetChangeMouCustAssetByMouCustId";
   public static GetChangeMouCustCollateralByChangeMouCustId = environment.losUrl + "/ChangeMou/GetChangeMouCustCollateralByChangeMouCustId";
@@ -761,6 +762,8 @@ export class URLConstant {
   
   //CUST DATA COMPANY
   public static AddEditCustDataCompany = environment.losUrl + "/AppCust/AddEditCustDataCompany";
+  public static GetListAppCustCompanyFinDataByAppCustId = environment.losUrl + "/AppCustCompanyFinData/GetListAppCustCompanyFinDataByAppCustId";
+  public static AddEditAppCustCompanyFinData = environment.losUrl + "/AppCustCompanyFinData/AddEditAppCustCompanyFinData";
 
   //DELIVERY ORDER
   public static SubmitDeliveryOrderData = environment.losUrl + "/DeliveryOrder/SubmitDeliveryOrderData";
@@ -828,6 +831,8 @@ export class URLConstant {
 
   // LEAD CUST PERSONAL FIN DATA
   public static GetLeadCustPersonalFinDataByLeadCustPersonalId = environment.losUrl + "/LeadCustPersonalFinData/GetLeadCustPersonalFinDataByLeadCustPersonalId";
+  public static GetListAppCustPersonalFinDataByAppCustPersonalId = environment.losUrl + "/AppCustPersonalFinData/GetListAppCustPersonalFinDataByAppCustPersonalId";
+  public static AddEditAppCustPersonalFinData = environment.losUrl + "/AppCustPersonalFinData/AddEditAppCustPersonalFinData";
 
   // LEAD CUST PERSONAL JOB DATA
   public static GetLeadCustPersonalJobDataByLeadCustPersonalId = environment.losUrl + "/LeadCustPersonalJobData/GetLeadCustPersonalJobDataByLeadCustPersonalId";
@@ -1502,6 +1507,7 @@ export class URLConstant {
   // Credit Approval
   public static Approval = environment.losUrl + "/Approval/Approval";
   public static MouApproval = environment.losUrl + "/Approval/MouApproval";
+  public static LtkmApproval = environment.losUrl + "/Approval/LtkmApproval";
   public static ProdHOApproval = environment.losUrl + "/Approval/ProdHOApproval";
   public static ProdOfferingApproval = environment.losUrl + "/Approval/ProdOfferingApproval";
   public static PreGoLiveApproval = environment.losUrl + "/Approval/PreGoLiveApproval";
@@ -1706,4 +1712,7 @@ export class URLConstant {
 
   //PEFINDO
   public static GetPefindoCustomReport = environment.losUrl + "/Pefindo/GetCustomReport";
+
+  //Task Reassignment
+  public static TaskReassignmentApproval = environment.losUrl + "/Approval/TaskReassignmentApproval";
 }

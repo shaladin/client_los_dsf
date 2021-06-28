@@ -57,14 +57,14 @@ export class MouRequestAddcollComponent implements OnInit {
   returnGeneralSettingObj: Array<ResGeneralSettingObj>;
   isNeedCheckBySystem: string;
   isUseDigitalization: string;
-  thirdPartyRsltHId: number = 0; 
+  thirdPartyRsltHId: number = 0;
   controlNameIdNo: string = 'OwnerIdNo';
   resultPattern: Array<KeyValueObj>;
   customPattern: CustomPatternObj[];
   IdTypeObj: Array<KeyValueObj> = new Array<KeyValueObj>();
 
   @ViewChild('LookupCollateral') set content(content: UclookupgenericComponent) {
-    if (content) { 
+    if (content) {
       this.ucLookupCollateral = content;
     }
   }
@@ -217,8 +217,8 @@ export class MouRequestAddcollComponent implements OnInit {
             });
         }
       });
-      
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship}).subscribe(
+
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship }).subscribe(
       (response) => {
         this.OwnerRelationshipObj = response[CommonConstant.ReturnObj];
         if (this.OwnerRelationshipObj.length > 0) {
@@ -245,7 +245,7 @@ export class MouRequestAddcollComponent implements OnInit {
 
     var assetObj = {};
     this.http.post(URLConstant.GetListAssetTypeByCode, assetObj).subscribe(
-      (response) => {      
+      (response) => {
         this.CollTypeList = response['ReturnObject'];
         this.AddCollForm.patchValue({
           AssetTypeCode: this.CollTypeList[0].Key
@@ -253,7 +253,7 @@ export class MouRequestAddcollComponent implements OnInit {
         this.onItemChange(this.CollTypeList[0].Key);
       })
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode,  { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
       (response) => {
         this.IdTypeList = response['ReturnObject'];
         this.AddCollForm.patchValue({
@@ -293,7 +293,7 @@ export class MouRequestAddcollComponent implements OnInit {
         (response) => {
           var CustObj = response["MouCustObj"];
           var CustAddrObj = response["MouCustAddrLegalObj"];
-          
+
           this.AddCollForm.patchValue({
             OwnerName: CustObj.CustName,
             OwnerRelationship: "SELF",
@@ -452,6 +452,7 @@ export class MouRequestAddcollComponent implements OnInit {
     this.inputAddressObjForLegalAddr.showPhn3 = false;
     this.inputAddressObjForLegalAddr.showFax = false;
     this.inputAddressObjForLocAddr = new InputAddressObj();
+    this.inputAddressObjForLocAddr.showSubsection = false;
     this.inputAddressObjForLocAddr.showPhn1 = false;
     this.inputAddressObjForLocAddr.showPhn2 = false;
     this.inputAddressObjForLocAddr.showPhn3 = false;
@@ -526,6 +527,11 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   open(pageType) {
+    if (pageType == 'AddExisting' && this.listCollateralData.length < 1) {
+      this.toastr.warningMessage(ExceptionConstant.NO_EXISTING_COLL);
+      return;
+    }
+
     this.ResetForm();
 
     this.AddCollForm.controls.MrCollateralConditionCode.disable();
@@ -744,6 +750,7 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   onItemChange(value, UserChange: boolean = false) {
+    this.getRefAssetDocList(value);
     this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, { Code: value }).subscribe(
       (response: GenericListObj) => {
         while (this.items.length) {
@@ -876,7 +883,7 @@ export class MouRequestAddcollComponent implements OnInit {
   copyToLocation() {
     let tempSelectedCopyAddr = this.AddCollForm.get("CopyFromLegal").value;
     let tempAddr: MouCustAddrObj = this.listMouCustAddrObj.find(x => x.MrCustAddrTypeCode == tempSelectedCopyAddr);
-    if(tempAddr == null) return;
+    if (tempAddr == null) return;
     this.locationAddrObj.Addr = tempAddr.Addr;
     this.locationAddrObj.AreaCode1 = tempAddr.AreaCode1;
     this.locationAddrObj.AreaCode2 = tempAddr.AreaCode2;
@@ -903,7 +910,7 @@ export class MouRequestAddcollComponent implements OnInit {
   copyToLocationOwner() {
     let tempSelectedCopyAddr = this.AddCollForm.get("CopyToOwnerLocation").value;
     let tempAddr: MouCustAddrObj = this.listMouCustAddrObj.find(x => x.MrCustAddrTypeCode == tempSelectedCopyAddr);
-    if(tempAddr == null) return;
+    if (tempAddr == null) return;
     this.legalAddrObj.Addr = tempAddr.Addr;
     this.legalAddrObj.AreaCode1 = tempAddr.AreaCode1;
     this.legalAddrObj.AreaCode2 = tempAddr.AreaCode2;
@@ -1210,8 +1217,8 @@ export class MouRequestAddcollComponent implements OnInit {
       }
     }
 
-    if(this.mouCustObj.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT){
-      if(sumCollateralValue < this.returnMouCust.PlafondAmt){
+    if (this.mouCustObj.PlafondType == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOAMT) {
+      if (sumCollateralValue < this.returnMouCust.PlafondAmt) {
         this.toastr.warningMessage(ExceptionConstant.COLL_VALUE_CANNOT_LESS_THAN_PLAFOND_AMT);
         return;
       }
@@ -1236,7 +1243,7 @@ export class MouRequestAddcollComponent implements OnInit {
     }
   }
 
-  UpdatePlafondAmt(sumCollateralValue: number){
+  UpdatePlafondAmt(sumCollateralValue: number) {
     this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).subscribe(
       (response: MouCustObj) => {
         var mouCustObjForSave = response;
@@ -1295,8 +1302,8 @@ export class MouRequestAddcollComponent implements OnInit {
   }
 
   getRefAssetDocList(AssetTypeCode) {
-    
-    this.http.post(URLConstant.GetRefAssetDocList, {Code: AssetTypeCode}).subscribe(
+
+    this.http.post(URLConstant.GetRefAssetDocList, { Code: AssetTypeCode }).subscribe(
       (response) => {
         console.log("getRefAssetDocList: " + JSON.stringify(response));
         if (response[CommonConstant.ReturnObj].length > 0) {

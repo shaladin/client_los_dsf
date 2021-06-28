@@ -158,7 +158,15 @@ export class LtkmApprovalDetailComponent implements OnInit {
     }
 
     onApprovalSubmited(event) {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LTKM_VERIFY_APV_PAGING], {  });
+        let ReqLtkmApvCustomObj = {
+            Tasks: event.Tasks
+        }
+
+        this.http.post(URLConstant.LtkmApproval, ReqLtkmApvCustomObj).subscribe(
+            () => {
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LTKM_VERIFY_APV_PAGING], {});
+            }
+        );
     }
 
     onCancelClick() {
@@ -178,16 +186,9 @@ export class LtkmApprovalDetailComponent implements OnInit {
 
         this.InputApvObj = new UcInputApprovalObj();
         this.InputApvObj.TaskId = this.taskId;
-        this.InputApvObj.EnvUrl = environment.FoundationR3Url;
-        this.InputApvObj.PathUrlGetLevelVoting = URLConstant.GetLevelVoting;
-        this.InputApvObj.PathUrlGetPossibleResult = URLConstant.GetPossibleResult;
-        this.InputApvObj.PathUrlSubmitApproval = URLConstant.SubmitApproval;
-        this.InputApvObj.PathUrlGetNextNodeMember = URLConstant.GetNextNodeMember;
-        this.InputApvObj.PathUrlGetReasonActive = URLConstant.GetRefReasonActive;
-        this.InputApvObj.PathUrlGetChangeFinalLevel = URLConstant.GetCanChangeMinFinalLevel;
         this.InputApvObj.TrxNo = this.LtkmNo;
-        this.InputApvObj.PathUrlGetHistory = URLConstant.GetTaskHistory;
         this.InputApvObj.RequestId = this.ApvReqId;
+
         this.IsReady = true;
     }
 

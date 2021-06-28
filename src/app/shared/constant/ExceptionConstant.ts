@@ -165,6 +165,7 @@ export class ExceptionConstant {
     public static PRODUCT_HAS = "This Product has ";
     public static MOU_DT_MUST_GREATER_THAN_BUSINESS_DT = "MOU Date Must be Greater than Equal D - 1 Business Date";
     public static START_DT_MUST_GREATER_THAN_EQUAL_BUSINESS_DT = "Start Date Must be Greater than Equal Business Date";
+    public static COVERAGE_CANT_0_LESS = "Coverage Amount Cant be 0 or less";
     
 }
 
