@@ -568,7 +568,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeAdditionalInterestPaidBy = "ADDITIONAL_INTEREST_PAID_BY";
   public static RefMasterTypeCodeRegularExpression = "REGULAR_EXPRESSION";
   public static RefMasterTypeCodeLob = "LOB";
-
+  public static RefMasterTypeCodeAppSrcType = "APP_SRC_TYPE";
   // REF MASTER MASTER CODE
   public static RefMasterMasterCodeCust = "CUST";
   public static RefMasterMasterCodeCustFctr = "CUST_FCTR";

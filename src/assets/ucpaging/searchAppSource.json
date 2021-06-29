@@ -1,0 +1,200 @@
+{
+    "title": "Application Source",
+    "exportExcel": false,
+    "component": [
+      {
+        "type": "textbox",
+        "name": "RAS.APP_SRC_CODE",
+        "id": "appSrcCode",
+        "value": "",
+        "label": "Application Source Code",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type": "textbox",
+        "name": "RAS.APP_SRC_NAME",
+        "id": "appSrcName",
+        "value": "",
+        "label": "Application Source Name",
+        "placeholder": "Placeholder"
+      },
+      {
+        "type" : "dropdown",
+        "label" : "Application Source Type",
+        "name" : "RAS.MR_APP_SRC_TYPE_CODE",
+        "id" : "appSrcType",
+        "value" : "",
+        "datatype" : "text",
+        "isSelectOne" : false,
+        "items" : [],
+        "isFromURL" : true, 
+        "url" : "", 
+        "path": "/RefMaster/GetListKeyValueActiveByCode",
+        "itemsUrl" : [], 
+        "criteriaPropName" : "RefMasterTypeCode",
+        "criteriaPropValue" : "APP_SRC_TYPE"
+    },
+    {
+        "type": "dropdown",
+        "name": "RAS.IS_ACTIVE",
+        "id": "isActive",
+        "value": "",
+        "placeholder": "Placeholder",
+        "isFromURL": false,
+        "isSelectOne" : false,
+        "url": "",
+        "label": "Active Status",
+        "items": [
+            {
+                "key": "1",
+                "value": "Yes"
+            },
+            {
+                "key": "0",
+                "value": "No"
+            }
+        ],
+        "itemsUrl": []
+    },
+    {
+        "type" : "datepicker",
+        "datatype": "date",
+        "name" : "RAS.PERIOD_FROM",
+        "id" : "periodFrom",
+        "value" : "",
+        "restriction": "gte",
+        "label" : "Period From <=",
+        "placeholder": "Placeholder"
+    },
+    {
+        "type" : "datepicker",
+        "datatype": "date",
+        "name" : "RAS.PERIOD_TO",
+        "id" : "periodTo",
+        "value" : "",
+        "restriction": "lte",
+        "label" : "Period To >=",
+        "placeholder": "Placeholder"
+    }
+    ],
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Application Source Code",
+        "name": "RAS.APP_SRC_CODE"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Application Source Name",
+        "name": "RAS.APP_SRC_NAME"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Application Source Type",
+        "name": "RM.DESCR"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Active Status",
+        "name": "RAS.IS_ACTIVE"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Period From",
+        "name": "RAS.PERIOD_FROM"
+      },
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Period To",
+        "name": "RAS.PERIOD_TO"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Office Member"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Edit"
+      }
+    ],
+    "querystring": {
+      "name":"searchAppSource"
+    },
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "appSrcCode"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "appSrcName"
+      },
+      {
+        "type": "text",
+        "position": "center",
+        "property": "appSrcType"
+      },
+      {
+        "type": "boolean",
+        "position": "center",
+        "property": "isActive"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "periodFrom"
+      },
+      {
+        "type": "date",
+        "position": "center",
+        "property": "periodTo"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "edit",
+            "path": "/Setting/AppSource/OfficeMember/Paging",
+            "param": [
+              {
+                "type": "RefAppSrcId",
+                "property": "refAppSrcId"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "edit",
+            "path": "/Setting/AppSource/Detail",
+            "param": [
+              {
+                "type": "RefAppSrcId",
+                "property": "refAppSrcId"
+              },
+              {
+                "type": "mode",
+                "property": "Edit"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+  

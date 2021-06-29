@@ -1,0 +1,52 @@
+{
+    "title": "Office Member Add Search",
+    "keyProperty": "OfficeCode",
+    "keyPropCriteria": "OFFICE_CODE",
+    "component": [
+        {
+            "type": "textbox",
+            "name": "OFFICE_CODE",
+            "id": "OfficeCodeId",
+            "value": "",
+            "label": "Office Code",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "OFFICE_NAME",
+            "id": "OfficeNameId",
+            "value": "",
+            "label": "Office Name",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "name": "refAppSrcOfficeMbrTempPaging"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Office Code",
+            "name": "OFFICE_CODE"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Office Name",
+            "name": "OFFICE_NAME"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "OfficeCode"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "OfficeName"
+        }
+    ]
+}

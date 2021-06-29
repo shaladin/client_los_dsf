@@ -104,8 +104,8 @@ export class URLConstant {
 
   // Ref App Src
   public static GetListKvpActiveRefAppSrc = environment.losUrl + "/RefAppSrc/GetListKvpActiveRefAppSrc";
-  public static GetListKvpRefAppSrcForAppOrLead = environment.FoundationR3Url + "/RefAppSrc/GetListKvpRefAppSrcForAppOrLead";
-  public static GetListKvpRefAppSrc = environment.FoundationR3Url + "/RefAppSrc/GetListKvpRefAppSrc";
+  public static GetListKvpRefAppSrcForAppOrLead = environment.losUrl + "/RefAppSrc/GetListKvpRefAppSrcForAppOrLead";
+  public static GetListKvpRefAppSrc = environment.losUrl + "/RefAppSrc/GetListKvpRefAppSrc";
 
   public static GetListProduct = "http://creator_websvr:7272/NEW_FINANCING/api/Catalog/getPopularViewByCriteria";
   public static Login = "/Authenticate/Login";
@@ -1717,4 +1717,12 @@ export class URLConstant {
 
   //Task Reassignment
   public static TaskReassignmentApproval = environment.losUrl + "/Approval/TaskReassignmentApproval";
+
+  //Application Source
+  public static AddRefAppSrc = environment.losUrl + "/RefAppSrc/AddRefAppSrc";
+  public static AddRefAppSrcOfficeMbr = environment.losUrl + "/RefAppSrc/AddRefAppSrcOfficeMbr";
+  public static DeleteRefAppSrcOfficeMbr = "/RefAppSrc/DeleteRefAppSrcOfficeMbr";
+  public static EditRefAppSrc = environment.losUrl + "/RefAppSrc/EditRefAppSrc";
+  public static GetRefAppSrcByRefAppSrcId = environment.losUrl + "/RefAppSrc/GetRefAppSrcByRefAppSrcId";
+  public static GetListRefAppSrcOfficeMbrByRefAppSrcId = environment.losUrl + "/RefAppSrc/GetListRefAppSrcOfficeMbrByRefAppSrcId";
 }

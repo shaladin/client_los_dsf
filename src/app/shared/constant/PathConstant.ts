@@ -17,6 +17,7 @@ export class PathConstant {
     public static LR_TRIAL_CALC = "TrialCalculation";
     public static LR_TASK_REASSIGN = "TaskReassignment";
     public static UNAUTHORIZED = "Unauthorized";
+    public static SETTING = "Setting";
     //#endregion
 
     //#region Common-Path
@@ -575,4 +576,9 @@ public static REQUISITION_DECISION = "requisitiondecision";
     //#region PEFINDO
     public static PEFINDO_VIEW = "PefindoView";
     //#endregion
+
+    //setting
+    public static APP_SRC = "AppSource";
+    public static APP_SRC_PAGING = PathConstant.APP_SRC + "/" + PathConstant.PAGING;
+    //endSetting
 }

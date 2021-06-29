@@ -36,7 +36,7 @@ export class NewLeadInputComponent implements OnInit {
       },
       {
         name: "L.MR_LEAD_SOURCE_CODE",
-        environment: environment.FoundationR3Url
+        environment: environment.losUrl
       }
     ];
   }
