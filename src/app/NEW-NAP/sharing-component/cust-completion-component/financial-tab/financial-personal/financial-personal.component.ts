@@ -68,6 +68,11 @@ export class FinancialPersonalComponent implements OnInit {
     RowVersion: ['']
   })
 
+  AppCustAttrListForm = this.fb.group({
+  });
+
+
+
   constructor(private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,
@@ -233,7 +238,7 @@ export class FinancialPersonalComponent implements OnInit {
   }
 
   SetAttrContent() {
-    var formValue = this.FinancialForm['controls']['AttrList'].value;
+    var formValue = this.AppCustAttrListForm['controls']['AttrList'].value;
     this.CustAttrRequest = new Array<Object>();
 
     if (Object.keys(formValue).length > 0 && formValue.constructor === Object) {
@@ -253,7 +258,7 @@ export class FinancialPersonalComponent implements OnInit {
   }
 
   SaveForm() {
-    if (this.FinancialForm.get('AttrList') != undefined) {
+    if (this.AppCustAttrListForm.get('AttrList') != undefined) {
       this.SetAttrContent();
     }
 
@@ -262,12 +267,12 @@ export class FinancialPersonalComponent implements OnInit {
       return;
     }
 
-    this.AppCustPersonalFinData = this.FinancialForm.value;
-    this.AppCustPersonalFinData.AppCustPersonalId = this.AppCustPersonalId;
+    // this.AppCustPersonalFinData = this.AppCustAttrListForm.value;
+    // this.AppCustPersonalFinData.AppCustPersonalId = this.AppCustPersonalId;
 
     let request = {
       ListAppCustFinDataAttrObj: this.CustAttrRequest,
-      AppCustPersonalFinDataObj: this.AppCustPersonalFinData,
+      // AppCustPersonalFinDataObj: this.AppCustPersonalFinData,
       AttrGroups: this.AttrGroups
     }
     if (!this.isDataExist) {

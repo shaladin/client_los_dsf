@@ -37,6 +37,9 @@ export class FinancialCompanyComponent implements OnInit {
   currentCustFinDataIndex: number;
   currentModal: any;
 
+  AppCustAttrListForm = this.fb.group({
+  });
+
   FinancialForm = this.fb.group({
     AppCustCompanyFinDataId: [0],
     AppCustId: [0],
@@ -179,7 +182,7 @@ export class FinancialCompanyComponent implements OnInit {
   }
 
   SetAttrContent(){
-    var formValue = this.FinancialForm['controls']['AttrList'].value;
+    var formValue = this.AppCustAttrListForm['controls']['AttrList'].value;
     this.CustAttrRequest = new Array<Object>();
      
     if(Object.keys(formValue).length > 0 && formValue.constructor === Object){
@@ -211,17 +214,16 @@ export class FinancialCompanyComponent implements OnInit {
   }
 
   SaveForm() {
-    if (this.FinancialForm.get('AttrList') != undefined) {
+    if (this.AppCustAttrListForm.get('AttrList') != undefined) {
       this.SetAttrContent();
     }
     
-    this.AppCustCompanyFinData = this.FinancialForm.value;
-    this.AppCustCompanyFinData.GrossProfitAmt = this.AppCustCompanyFinData.GrossMonthlyIncomeAmt - this.AppCustCompanyFinData.GrossMonthlyExpenseAmt;
-    this.AppCustCompanyFinData.AppCustId = this.AppCustId;
+    // this.AppCustCompanyFinData = this.AppCustAttrListForm.value;
+    // this.AppCustCompanyFinData.GrossProfitAmt = this.AppCustCompanyFinData.GrossMonthlyIncomeAmt - this.AppCustCompanyFinData.GrossMonthlyExpenseAmt;
+    // this.AppCustCompanyFinData.AppCustId = this.AppCustId;
 
     let request = {
       ListAppCustFinDataAttrObj: this.CustAttrRequest,
-      AppCustCompanyFinDataObj: this.AppCustCompanyFinData,
       AttrGroups: this.AttrGroups
     }
     
