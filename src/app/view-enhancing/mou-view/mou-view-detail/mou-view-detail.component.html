@@ -36,6 +36,7 @@
       <label *ngIf="WopCode == 'CASH'" class="col-md-4 adInsLabel" translate>Cash </label>
       <label *ngIf="WopCode == 'PICKUP'" class="col-md-4 adInsLabel" translate>Pick-Up </label>
       <label *ngIf="WopCode == 'BANK'" class="col-md-4 adInsLabel" translate>Bank Transfer </label>
+      <label *ngIf="WopCode == 'AD'" class="col-md-4 adInsLabel" translate>Auto Debit </label>
       <label *ngIf="WopCode == 'PDC'" class="col-md-4 adInsLabel" translate>{{WopCode}} </label>
     </div>
 
@@ -54,14 +55,6 @@
       <label class="col-md-2 adInsLabel" translate>Interest Rate (%)</label>
       <label class="col-md-4 adInsLabel" translate>{{InterestRatePrcnt}}%</label>
 
-    </div>
-    <div *ngIf="MouType == 'FACTORING'" class="form-group row">
-
-      <label class="col-md-2 adInsLabel" translate>Tenor From</label>
-      <label class="col-md-4 adInsLabel" translate>{{TenorFrom}} &nbsp;&nbsp;&nbsp;&nbsp; to &nbsp;&nbsp;&nbsp;&nbsp;
-        {{TenorTo}}</label>
-      <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
-      <label class="col-md-4 adInsLabel" translate>{{PayFreqCode}}</label>
     </div>
 
     <div *ngIf="MouType == 'GENERAL'" class="form-group row">
