@@ -52,7 +52,7 @@ export class AppCustAssetDetailComponent implements OnInit {
     );
     if(this.AppCustAssetId && this.AppCustAssetId > 0){
       this.Mode = "EDIT"
-      this.httpClient.post(URLConstant.GetAppCustAssetByAppCustAssetId, { AppCustAssetId: this.AppCustAssetId }).toPromise().then(
+      this.httpClient.post(URLConstant.GetAppCustAssetByAppCustAssetId, { Id: this.AppCustAssetId }).toPromise().then(
         (response) => {
           this.CustAssetForm.patchValue({
             AppCustAssetId: response["AppCustAssetId"],
