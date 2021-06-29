@@ -112,6 +112,7 @@ export class JobTabComponent implements OnInit {
   })
   IsNeedIntegrator: boolean = false;
   IsWellKnownBeforeChanged: boolean = true;
+  IsReady: boolean = false;
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -145,7 +146,7 @@ export class JobTabComponent implements OnInit {
     );
 
     if (this.CustModelCode != CommonConstant.CustModelNonProfessional) {
-      this.SetDropdown();
+      await this.SetDropdown();
     }
 
     this.InputJobAddrObj.title = "Job Address";
@@ -167,7 +168,7 @@ export class JobTabComponent implements OnInit {
     this.InputFieldOthBizObj.inputLookupObj.isRequired = false;
     this.InputOthBizAddrObj.inputField = this.InputFieldOthBizObj;
 
-    this.GetData();
+    await this.GetData();
   }
 
   async GetCustMainData() {
@@ -216,9 +217,9 @@ export class JobTabComponent implements OnInit {
   }
 
   isDataEdit: boolean = false;
-  GetData() {
+  async GetData() {
     var datePipe = new DatePipe("en-US");
-    this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustId }).subscribe(
+    await this.http.post<ResponseJobDataPersonalObj>(URLConstant.GetAppCustPersonalJobData, { Id: this.AppCustId }).toPromise().then(
       (response) => {
         if (response.AppCustPersonalJobDataObj != null) {
           this.isDataEdit = true;
@@ -290,6 +291,7 @@ export class JobTabComponent implements OnInit {
           });
         }
         this.isUcAddrReady = true;
+        this.IsReady = true;
       },
       error => {
         console.log(error);
@@ -516,45 +518,33 @@ export class JobTabComponent implements OnInit {
     this.JobDataForm.updateValueAndValidity();
   }
 
-  SetDropdown() {
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCoyScale }).subscribe(
+  async SetDropdown() {
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCoyScale }).toPromise().then(
       (response) => {
         this.CompanyScaleObj = response[CommonConstant.ReturnObj];
-        this.JobDataForm.patchValue({
-          MrCoyScaleCode: this.CompanyScaleObj[0].Key
-        });
       }
     );
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition }).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobPosition }).toPromise().then(
       (response) => {
         this.JobPositionObj = response[CommonConstant.ReturnObj];
-        this.JobDataForm.patchValue({
-          MrJobPositionCode: this.JobPositionObj[0].Key
-        });
       }
     );
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobStat }).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeJobStat }).toPromise().then(
       (response) => {
         this.JobStatObj = response[CommonConstant.ReturnObj];
-        this.JobDataForm.patchValue({
-          MrJobStatCode: this.JobStatObj[0].Key
-        });
       }
     );
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInvestmentType }).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInvestmentType }).toPromise().then(
       (response) => {
         this.InvestmentTypeObj = response[CommonConstant.ReturnObj];
-        this.JobDataForm.patchValue({
-          MrInvestmentTypeCode: this.InvestmentTypeObj[0].Key
-        });
       }
     );
   }
 
-  InitLookup() {
+  async InitLookup() {
     this.InputLookupProfessionObj.urlJson = "./assets/uclookup/lookupProfession.json";
     this.InputLookupProfessionObj.urlEnviPaging = environment.FoundationR3Url;
     this.InputLookupProfessionObj.pagingJson = "./assets/uclookup/lookupProfession.json";
