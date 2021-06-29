@@ -1,10 +1,29 @@
-<p>TESTT</p>
-<!-- <lib-ucSubsection [id]="'ApvRecommendationId'" [title]="'Approval Recommendation'"
-              [panel]="'ApvRecommendation'">
-            </lib-ucSubsection>
-            <div class="form-body" id="ApvRecommendation" formArrayName="ApvRecommendation">
-              <div [formGroupName]="i" *ngFor="let item of MouReviewDataForm.controls.ApvRecommendation['controls']; let i = index" class="form-group row">
-                <label class="col-md-2 adins-required-label">{{MouReviewDataForm.value.ApvRecommendation[i].RecommendationName}}</label>
-
-              </div>
-            </div> -->
+<lib-ucSubsection *ngIf = "listRecommendationIsReady" [id]="'ApvRecommendationId'" [title]="'Approval Recommendation'"[panel]="'ApvRecommendation'"></lib-ucSubsection>
+<div class="card">
+  <div class="card-body">
+    <div class="px-3">
+      <div class="row mt-md-n1">
+        <div *ngFor="let item of listRecommendationObj" class="col-md-6">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="adins-label">{{item.QuestionName}}</label>
+            </div>
+            <div class="col-md-6">
+              <label class="adins-label">{{item.QuestionResult}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>        
+<!-- <div *ngFor="let item of listRecommendationObj" class="col-md-6">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="adins-label">{{item.QuestionName}}</label>
+            </div>
+            <div class="col-md-6">
+              <label class="adins-label">{{item.QuestionResult}}</label>
+            </div>
+          </div>
+        </div> -->

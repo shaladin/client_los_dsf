@@ -1,26 +1,30 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-mou-view-approval-recommendation',
   templateUrl: './mou-view-approval-recommendation.component.html'
 })
 export class MouViewApprovalRecommendationComponent implements OnInit {
-  listRecommendationObj: any;
+  @Input() MouCustNo: string;
+  ReqByTrxNo: GenericObj = new GenericObj();
+  listRecommendationObj: any = "";
+  listRecommendationIsReady: boolean = false;
 
   MouReviewDataForm = this.fb.group({
     ApvRecommendation: this.fb.array([])
   })
   constructor(private fb: FormBuilder, private http: HttpClient) { }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.ReqByTrxNo.TrxNo = this.MouCustNo;
     // var listRec = this.MouReviewDataForm.get("ApvRecommendation") as FormArray;
-    var apvRecommendObj = { SchemeCode: 'MOUC_GEN_APV' }
-    this.http.post(URLConstant.GetRecommendations, apvRecommendObj).subscribe(
+    await this.http.post(URLConstant.GetAdtQuestionByTrxNo, this.ReqByTrxNo).toPromise().then(
       (response) => {
-        this.listRecommendationObj = response;
+        this.listRecommendationObj = response["ReturnObject"];
         // for (let i = 0; i < this.listRecommendationObj["length"]; i++) {
         //   var ApvRecommendation = this.fb.group({
         //     RefRecommendationId: this.listRecommendationObj[i].RefRecommendationId,
@@ -31,6 +35,7 @@ export class MouViewApprovalRecommendationComponent implements OnInit {
         //   // listRec.push(ApvRecommendation);
         // }
       })
+      this.listRecommendationIsReady = true;
       console.log("INIII");
       console.log(this.listRecommendationObj);
   }
