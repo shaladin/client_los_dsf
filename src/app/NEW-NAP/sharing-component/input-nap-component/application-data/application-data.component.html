@@ -172,17 +172,17 @@
                   <label class="col-md-4 adInsLabel" translate>Way of Payment</label>
                   <div class="col-md-8">
                     <lib-ucdropdownlist [dropdownListObj]="ddlMrWopObj" [parentForm]="NapAppModelForm"
-                      [enjiForm]="enjiForm" [identifier]="'MrWopCode'"></lib-ucdropdownlist>
+                      [enjiForm]="enjiForm" [identifier]="'MrWopCode'" (callback)="setBankAccDDL($event)"></lib-ucdropdownlist>
                   </div>
                 </div>
 
                 <div class="form-group row adins-required"
-                  *ngIf="this.NapAppModelForm.controls.MrWopCode.value == 'AUTOCOLLECTION'">
+                  *ngIf="NapAppModelForm.controls.MrWopCode.value == WopAutoDebit">
                   <!-- Customer Bank Account -->
                   <label class="col-md-4 adInsLabel"> Customer Bank Account </label>
                   <div class="col-md-8">
                     <select class="form-control adInsInput" style="width: 50%" formControlName="CustBankAcc"
-                      (change)="selectedBank($event.target.value)"
+                      (change)="selectedBank()"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.CustBankAcc.invalid }">
                       <option value="">-Select One-</option>
                       <option *ngFor="let item of listCustBankAcc" [value]="item.AppCustBankAccId">
