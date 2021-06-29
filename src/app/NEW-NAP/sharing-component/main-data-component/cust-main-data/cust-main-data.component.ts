@@ -173,7 +173,6 @@ export class CustMainDataComponent implements OnInit {
     this.ddlIdTypeObj.customValue = "Descr";
     this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MaxDate = this.UserAccess[CommonConstant.BUSINESS_DT];
-
     await this.initcustMainDataMode();
     await this.setLookup();
 
@@ -223,7 +222,6 @@ export class CustMainDataComponent implements OnInit {
         this.custDataObj.IsCustomer = true;
         this.subjectTitle = this.bizTemplateCode == CommonConstant.FL4W ? 'Lessee' : 'Customer';
         this.CustMainDataForm.controls.MrCustRelationshipCode.clearValidators();
-        this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
         break;
       case CommonConstant.CustMainDataModeGuarantor:
         this.isIncludeCustRelation = true;
@@ -231,8 +229,6 @@ export class CustMainDataComponent implements OnInit {
         this.subjectTitle = 'Guarantor';
         this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
-        this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
-        this.CustMainDataForm.controls.MrGenderCode.updateValueAndValidity();
         await this.GetAppCustMainDataByAppId();
         break;
       case CommonConstant.CustMainDataModeFamily:
@@ -241,8 +237,6 @@ export class CustMainDataComponent implements OnInit {
         this.subjectTitle = 'Family';
         this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.CustMainDataForm.controls.MrGenderCode.setValidators(Validators.required);
-        this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
-        this.CustMainDataForm.controls.MrGenderCode.updateValueAndValidity();
         await this.GetAppCustMainDataByAppId();
         break;
       case CommonConstant.CustMainDataModeMgmntShrholder:
@@ -252,21 +246,16 @@ export class CustMainDataComponent implements OnInit {
         if(this.MrCustTypeCode == CommonConstant.CustTypeCompany){
           //note: dari html cmn company yang ditampilkan
           this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
-          this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
         }
         this.CustMainDataForm.controls.MrCustRelationshipCode.setValidators(Validators.required);
         this.CustMainDataForm.controls.MrJobPositionCode.setValidators(Validators.required);
-        this.CustMainDataForm.controls.MrCustRelationshipCode.updateValueAndValidity();
-        this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
         await this.GetAppCustMainDataByAppId();
         break;
       default:
         this.isIncludeCustRelation = false;
         this.subjectTitle = this.bizTemplateCode == CommonConstant.FL4W ? 'Lessee' : 'Customer';
     }
-    if (this.isIncludeCustRelation) {
-      await this.getCustRelationship();
-    }
+    this.CustMainDataForm.updateValueAndValidity();
   }
 
   AppCustData: AppCustObj = new AppCustObj();
@@ -282,7 +271,7 @@ export class CustMainDataComponent implements OnInit {
     );
   }
 
-  async setLookup(custType: string = CommonConstant.CustTypePersonal, isChange: boolean = false) {
+  setLookup(custType: string = CommonConstant.CustTypePersonal, isChange: boolean = false) {
     if (custType == CommonConstant.CustTypePersonal) {
       this.InputLookupCustObj.isDisable = false;
       this.InputLookupCustCoyObj.isDisable = true;
@@ -413,11 +402,14 @@ export class CustMainDataComponent implements OnInit {
         }
       }
     }
+    if (this.isIncludeCustRelation) {
+      await this.getCustRelationship();
+    }
   }
 
-  async getCustRelationship() {
+  getCustRelationship() {
     if (this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
-      if (this.MrCustTypeCode == CommonConstant.CustTypePersonal) {
+      if (this.CustMainDataForm.controls.MrCustTypeCode.value == CommonConstant.CustTypePersonal) {
         var refCustRelObj: ReqRefMasterByTypeCodeAndMappingCodeObj = {
           RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGuarCompanyRelationship,
           MappingCode: CommonConstant.CustTypePersonal,
@@ -471,15 +463,8 @@ export class CustMainDataComponent implements OnInit {
             this.disableInput();
           }
           this.setValidatorPattern();
-        } else {
+        } else
           this.custTypeChange(CommonConstant.CustTypePersonal, true);
-        }
-          
-        if(this.MrCustTypeCode == CommonConstant.CustTypeCompany && this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder){
-          //note: dari html cmn company yang ditampilkan
-          this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
-          this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
-        }
       }
     );
   }
@@ -557,8 +542,6 @@ export class CustMainDataComponent implements OnInit {
       } else {
         this.CustMainDataForm.controls.MrJobPositionCode.clearValidators();
         this.CustMainDataForm.controls.MrJobPositionCode.updateValueAndValidity();
-        this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
-        this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
 
       }
     }
@@ -672,10 +655,10 @@ export class CustMainDataComponent implements OnInit {
 
   disableInput() {
     this.isExisting = true;
-    this.CustMainDataForm.controls.MrGenderCode.disable();
-    this.CustMainDataForm.controls.MrIdTypeCode.disable();
-    this.CustMainDataForm.controls.MrMaritalStatCode.disable();
-    this.CustMainDataForm.controls.MrCustModelCode.disable();
+    //this.CustMainDataForm.controls.MrGenderCode.disable();
+    //this.CustMainDataForm.controls.MrIdTypeCode.disable();
+    //this.CustMainDataForm.controls.MrMaritalStatCode.disable();
+    //this.CustMainDataForm.controls.MrCustModelCode.disable();
     this.inputAddressObj.isReadonly = true;
     this.InputLookupCustObj.isReadonly = true;
     this.inputAddressObj.inputField.inputLookupObj.isReadonly = true;
@@ -684,10 +667,10 @@ export class CustMainDataComponent implements OnInit {
 
   enableInput() {
     this.isExisting = false;
-    this.CustMainDataForm.controls.MrGenderCode.enable();
-    this.CustMainDataForm.controls.MrIdTypeCode.enable();
-    this.CustMainDataForm.controls.MrMaritalStatCode.enable();
-    this.CustMainDataForm.controls.MrCustModelCode.enable();
+    //this.CustMainDataForm.controls.MrGenderCode.enable();
+    //this.CustMainDataForm.controls.MrIdTypeCode.enable();
+    //this.CustMainDataForm.controls.MrMaritalStatCode.enable();
+    //this.CustMainDataForm.controls.MrCustModelCode.enable();
     this.inputAddressObj.isReadonly = false;
     this.InputLookupCustObj.isReadonly = false;
     this.InputLookupCustCoyObj.isReadonly = false;
@@ -851,6 +834,7 @@ export class CustMainDataComponent implements OnInit {
     this.custDataPersonalObj.AppCustObj.AppId = this.appId;
     this.custDataPersonalObj.AppCustObj.AppCustId = this.appCustId != null ? this.appCustId : 0;
     this.custDataPersonalObj.AppCustCompanyMgmntShrholderObj.AppCustId = this.appCustId ? this.appCustId : 0;
+    this.custDataPersonalObj.AppCustObj.MrCustModelCode = this.MrCustModelCode;
 
     if (this.isIncludeCustRelation)
       this.custDataPersonalObj.AppCustObj.MrCustRelationshipCode = this.CustMainDataForm.controls.MrCustRelationshipCode.value;
@@ -971,6 +955,8 @@ export class CustMainDataComponent implements OnInit {
     let d2 = new Date(this.MaxDate);
     max17Yodt.setFullYear(d2.getFullYear() - 17);
 
+    console.log(this.CustMainDataForm);
+    console.log(this.CustMainDataForm.controls.MrCustModelCode.errors);
     if (d1 > max17Yodt) {
       this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
       return;
@@ -1041,6 +1027,7 @@ export class CustMainDataComponent implements OnInit {
         );
       }
     }
+    
   }
 
   cancel() {
