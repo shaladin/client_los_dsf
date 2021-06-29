@@ -80,7 +80,7 @@ export class FinancialPersonalComponent implements OnInit {
     private modalService: NgbModal) { }
 
   async ngOnInit() {
-    this.http.post<AppCustPersonalObj>(URLConstant.GetAppCustPersonalByAppCustId, { Id: this.AppCustId }).subscribe(
+    await this.http.post<AppCustPersonalObj>(URLConstant.GetAppCustPersonalByAppCustId, { Id: this.AppCustId }).toPromise().then(
       (response) => {
         if (!response || response.MrMaritalStatCode == null) {
           this.mrMaritalStatCode = CommonConstant.MasteCodeMartialStatsSingle;
@@ -108,7 +108,7 @@ export class FinancialPersonalComponent implements OnInit {
 
   isDataExist: boolean = false;
 
-  GetListFinData() {
+  async GetListFinData() {
     this.http.post<AppCustPersonalFinDataObj>(URLConstant.GetListAppCustPersonalFinDataByAppCustPersonalId, { Id: this.AppCustPersonalId }).subscribe(
       (response) => {
         this.ListAppCustPersonalFinData = response['ListAppCustPersonalFinData'];

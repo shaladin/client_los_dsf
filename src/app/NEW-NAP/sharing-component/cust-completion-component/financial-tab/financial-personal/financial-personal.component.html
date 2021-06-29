@@ -177,8 +177,7 @@
           #enjiForm="ngForm">
 
           <app-attr-content-component [title]="'Financial Attribute Information'" [AppCustId]="AppCustId"
-            [enjiForm]="enjiForm" [parentForm]="AppCustAttrListForm" [identifier]="'AttrList'" [AttrGroups]="AttrGroups"
-            (IncomeAmt)="CalculateIncomeAmt($event)" (ExpenseAmt)="CalculateExpenseAmt($event)">
+            [enjiForm]="enjiForm" [parentForm]="AppCustAttrListForm" [identifier]="'AttrList'" [AttrGroups]="AttrGroups">
           </app-attr-content-component>
           <!-- [AttrGroup]="AttrGroup" -->
           <app-bank-section [AppCustId]="AppCustId" [AppCustBankAccList]="AppCustBankAccList"
