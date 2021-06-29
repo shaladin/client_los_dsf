@@ -28,7 +28,7 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
     CancelNotes: ['', Validators.required]
   });
   itemReasonCode: Array<KeyValueObj>;
-
+  arrValue = [];
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
@@ -46,7 +46,9 @@ export class ApplicationAgreementCancellationDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.arrValue.push(this.AppId);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewApplicationAgreementCancellation.json";
+    this.viewGenericObj.whereValue = this.arrValue;
 
     var refReasonObj: ReqGetByTypeCodeObj = {
       RefReasonTypeCode: CommonConstant.RefReasonTypeCodeAppAgrCncl
