@@ -55,6 +55,9 @@ export class PhoneVerificationSubjectViewComponent implements OnInit {
       if (params["Name"] != null) {        
         this.subjectName = params["Name"];
       }
+      if (params["VerfResultHId"] != null) {        
+        this.verfResultHId = params["VerfResultHId"];
+      }
     });
   }
 
