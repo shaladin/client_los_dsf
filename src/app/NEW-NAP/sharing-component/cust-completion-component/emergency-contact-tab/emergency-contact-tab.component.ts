@@ -70,7 +70,7 @@ export class EmergencyContactTabComponent implements OnInit {
     public formValidate: FormValidateService, private cookieService: CookieService) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.customPattern = new Array<CustomPatternObj>();
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = UserAccess.BusinessDt;
@@ -99,12 +99,12 @@ export class EmergencyContactTabComponent implements OnInit {
     this.InputUcAddressObj.showFax = false;
     this.isUcAddressReady = true;
 
-    this.setDropdown();
-    this.getData();
+    await this.setDropdown();
+    await this.getData();
   }
 
-  setDropdown() {
-    this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeIdType }).subscribe(
+  async setDropdown() {
+    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeIdType }).toPromise().then(
       (response) => {
         this.IdTypeObj = response[CommonConstant.RefMasterObjs];
         if (this.IdTypeObj.length > 0) {
@@ -117,7 +117,7 @@ export class EmergencyContactTabComponent implements OnInit {
         }
       });
 
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).subscribe(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).toPromise().then(
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
         if (this.GenderObj.length > 0) {
@@ -129,19 +129,19 @@ export class EmergencyContactTabComponent implements OnInit {
 
     let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
     tempReq.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
-    this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).subscribe(
+    await this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, tempReq).toPromise().then(
       async (response) => {
         this.MrCustRelationshipObj = response[CommonConstant.ReturnObj];
         if (!this.IsMarried) {
           await this.removeSpouse();
         }
-        await this.EmergencyContactForm.patchValue({
+        this.EmergencyContactForm.patchValue({
           MrCustRelationshipCode: this.MrCustRelationshipObj[0].Key
         });
       }
     );
 
-    this.http.post(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { Id: this.AppCustId }).subscribe(
+    await this.http.post(URLConstant.GetListAppCustAddrDataForCopyByAppCustId, { Id: this.AppCustId }).toPromise().then(
       (response) => {
         this.copyAddressFromObj = response[CommonConstant.ReturnObj];
         this.EmergencyContactForm.patchValue({ CopyAddrFrom: this.copyAddressFromObj[0]['AppCustAddrId'] });
@@ -149,8 +149,8 @@ export class EmergencyContactTabComponent implements OnInit {
   }
 
   isDataExist: boolean = false;
-  getData() {
-    this.http.post<AppCustEmrgncCntctObj>(URLConstant.GetAppCustEmrgncCntctByAppCustId, { Id: this.AppCustId }).subscribe(
+  async getData() {
+    await this.http.post<AppCustEmrgncCntctObj>(URLConstant.GetAppCustEmrgncCntctByAppCustId, { Id: this.AppCustId }).toPromise().then(
       (response) => {
         if (response.AppCustEmrgncCntctId != 0) {
           this.isDataExist = true;
