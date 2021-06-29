@@ -24,7 +24,10 @@
           "label": "Sales Notes",
           "property": "SalesNotes"
         }
-      ]
+      ],
+      "querystring": {
+        "name": "viewTabApplicationInfo_SalesInfoId"
+      }
     },
     {
       "subSectionId": "AppsInfoId",
