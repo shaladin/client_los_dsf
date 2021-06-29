@@ -23,7 +23,7 @@ export class AppCustAssetOldNapDetailComponent implements OnInit {
   CustAssetForm = this.fb.group({
     AppCustAssetId: [0],
     AppCustId: [0],
-    MrCustAssetTypeId: ['', [Validators.required]],
+    MrCustAssetTypeCode: ['', [Validators.required]],
     AssetDescr: [''],
     AssetValue: [0],
     AssetQty: [0],
@@ -56,7 +56,7 @@ export class AppCustAssetOldNapDetailComponent implements OnInit {
       this.CustAssetForm.patchValue({
         AppCustAssetId: this.AppCustAssetObj.AppCustAssetId,
         AppCustId: this.AppCustAssetObj.AppCustId,
-        MrCustAssetTypeId: this.AppCustAssetObj.MrCustAssetTypeId,
+        MrCustAssetTypeCode: this.AppCustAssetObj.MrCustAssetTypeCode,
         AssetDescr: this.AppCustAssetObj.AssetDescr,
         AssetValue: this.AppCustAssetObj.AssetValue,
         AssetQty: this.AppCustAssetObj.AssetQty,

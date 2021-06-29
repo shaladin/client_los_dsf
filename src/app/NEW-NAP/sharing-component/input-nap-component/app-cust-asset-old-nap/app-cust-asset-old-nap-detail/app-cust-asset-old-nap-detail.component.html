@@ -11,13 +11,13 @@
       <div class="form-body">
         <div id="MouCustFeeSection">
           <div class="form-group row adins-required">
-            <label class="col-md-4 adInsLabel" for="MrCustAssetTypeId" translate>Customer Asset Type</label>
+            <label class="col-md-4 adInsLabel" for="MrCustAssetTypeCode" translate>Customer Asset Type</label>
             <div class="col-md-8">
-              <select class="form-control adInsInput" style="width: 100%;" formControlName="MrCustAssetTypeId"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && CustAssetForm.controls.MrCustAssetTypeId.invalid }">
+              <select class="form-control adInsInput" style="width: 100%;" formControlName="MrCustAssetTypeCode"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && CustAssetForm.controls.MrCustAssetTypeCode.invalid }">
                 <option *ngFor="let item of CustAssetTypeList" [value]="item.Key">{{item.Value}}</option>
               </select>
-              <lib-uc-show-errors [control]="CustAssetForm.controls.MrCustAssetTypeId" [submit]="enjiForm.submitted">
+              <lib-uc-show-errors [control]="CustAssetForm.controls.MrCustAssetTypeCode" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
           </div>
