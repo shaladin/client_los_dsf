@@ -179,7 +179,11 @@ export class AttrContentComponentComponent implements OnInit {
     }
 
     if (refAttr.IsMandatory == true && refAttr.AttrInputType != 'T') {
-      formGroupObject["AttrValue"].push(Validators.required)
+      if(refAttr.AttrInputType == 'N'){
+        formGroupObject["AttrValue"].push([Validators.required, Validators.min(1.00)])
+      }else{
+        formGroupObject["AttrValue"].push(Validators.required)
+      }
     }
     parentFormGroup[refAttr.AttrCode] = this.fb.group(formGroupObject);
 
@@ -265,7 +269,11 @@ export class AttrContentComponentComponent implements OnInit {
     }
 
     if (refAttr.IsMandatory == true && refAttr.AttrInputType != 'T') {
-      formGroupObject["AttrValue"].push(Validators.required)
+      if(refAttr.AttrInputType == 'N'){
+        formGroupObject["AttrValue"].push([Validators.required, Validators.min(1.00)])
+      }else{
+        formGroupObject["AttrValue"].push(Validators.required)
+      }
     }
     parentFormGroup[refAttr.AttrCode] = this.fb.group(formGroupObject);
 
