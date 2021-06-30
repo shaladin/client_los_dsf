@@ -79,7 +79,7 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
       return false;
     }
 
-    if(this.listMgmntShrholder.length > 0 && this.listMgmntShrholder.find(x=>x.MrCustModelCode == null || x.MrCustModelCode == "") != null){
+    if(this.listMgmntShrholder.length > 0 && this.listMgmntShrholder.find(x=>x.MrCustModelCode == null || x.MrCustModelCode == "") == null){
       this.toastr.warningMessage(ExceptionConstant.COMPLETE_SHAREHOLDER_COMPANY_MODEL)
       return;
     }
