@@ -69,7 +69,7 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
     );
 
     if(this.CekRelationshipCode()) return;
-    
+
     if(this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x=>x.IsOwner == true) == null){
       this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_OWNER_DATA)
       return;
@@ -79,7 +79,7 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
       return false;
     }
 
-    if(this.listMgmntShrholder.length > 0 && this.listMgmntShrholder.find(x=>x.MrCustModelCode == null || x.MrCustModelCode == "") == null){
+    if(this.listMgmntShrholder.length > 0 && (this.listMgmntShrholder.find(x=>x.MrCustModelCode == null || x.MrCustModelCode == "") != null)){
       this.toastr.warningMessage(ExceptionConstant.COMPLETE_SHAREHOLDER_COMPANY_MODEL)
       return;
     }
