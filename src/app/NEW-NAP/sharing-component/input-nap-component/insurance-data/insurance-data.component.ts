@@ -290,8 +290,9 @@ export class InsuranceDataComponent implements OnInit {
       this.saveObj.AppInsObjObj.EndDt.setMonth(this.saveObj.AppInsObjObj.EndDt.getMonth() + this.saveObj.AppInsObjObj.InsLength);
       this.saveObj.AppInsObjObj.PayPeriodToInsco = this.InsuranceDataForm.controls.PayPeriodToInsco.value;
 
-      var addedTenor = 0;
-
+      let startDt = new Date(this.saveObj.AppInsObjObj.StartDt);
+      let totalTenor = this.saveObj.AppInsObjObj.InsLength;
+      let mainCvgEndDt: Date = new Date(startDt);
       for (let i = 0; i < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"].length; i++) {
         var insCoverage = new AppInsMainCvgObj();
         insCoverage.YearNo = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].YearNo.value;
@@ -300,12 +301,18 @@ export class InsuranceDataComponent implements OnInit {
         insCoverage.Tenor = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].Tenor.value;
         insCoverage.MrMainCvgTypeCode = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].MrMainCvgTypeCode.value;
 
-        insCoverage.StartDt = this.setDateWithoutTimezone(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
-        insCoverage.StartDt.setMonth(insCoverage.StartDt.getMonth() + addedTenor);
-        insCoverage.EndDt = this.setDateWithoutTimezone(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
-        insCoverage.EndDt.setMonth(insCoverage.EndDt.getMonth() + addedTenor + insCoverage.Tenor);
+        insCoverage.StartDt = startDt;
+        let tenorAdded: number = 12;
+        if (totalTenor < 12) tenorAdded = totalTenor;
+        mainCvgEndDt.setMonth(mainCvgEndDt.getMonth() + totalTenor);
+        insCoverage.EndDt = mainCvgEndDt;
 
-        addedTenor += insCoverage.Tenor;
+        totalTenor -= 12;
+        if (totalTenor > 12) {
+          startDt = new Date(mainCvgEndDt);
+          startDt.setDate(startDt.getDate() + 1);
+          mainCvgEndDt = new Date(startDt);
+        }
 
         insCoverage.IsMainIns = true;
         insCoverage.SumInsuredPrcnt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].SumInsuredPrcnt.value;
@@ -391,27 +398,35 @@ export class InsuranceDataComponent implements OnInit {
       this.saveObj.AppInsObjObj.InsPolicyName = this.InsuranceDataForm.controls.InsPolicyName.value;
       this.saveObj.AppInsObjObj.CustCvgAmt = this.InsuranceDataForm.controls.CustCvgAmt.value;
       this.saveObj.AppInsObjObj.CustCoverStartDt = this.InsuranceDataForm.controls.CustCoverStartDt.value;
-      this.saveObj.AppInsObjObj.StartDt = this.InsuranceDataForm.get("EndDt").value;
-      this.saveObj.AppInsObjObj.StartDt.setDate(this.saveObj.AppInsObjObj.StartDt.getDate() + 1);
-      this.saveObj.AppInsObjObj.EndDt = this.saveObj.AppInsObjObj.StartDt;
-      this.saveObj.AppInsObjObj.EndDt.setMonth(this.saveObj.AppInsObjObj.EndDt.getMonth() + this.saveObj.AppInsObjObj.InsLength);
+      let startDt: Date = new Date(this.InsuranceDataForm.get("EndDt").value);
+      startDt.setDate(startDt.getDate() + 1);
+      this.saveObj.AppInsObjObj.StartDt = startDt;
+      let endDt: Date = new Date(startDt);
+      endDt.setMonth(endDt.getMonth() + this.saveObj.AppInsObjObj.InsLength);
+      this.saveObj.AppInsObjObj.EndDt = endDt;
       this.saveObj.AppInsObjObj.CustNotes = this.InsuranceDataForm.controls.CustNotes.value;
       this.saveObj.AppInsObjObj.PayPeriodToInsco = this.InsuranceDataForm.controls.PayPeriodToInsco.value;
 
-      var addedTenor = 0;
-
+      let totalTenor = this.saveObj.AppInsObjObj.InsLength;
+      let mainCvgEndDt: Date = new Date(startDt);
       for (let i = 0; i < this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"].length; i++) {
         var insCoverage = new AppInsMainCvgObj();
         insCoverage.YearNo = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].YearNo.value;
         insCoverage.Tenor = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].Tenor.value;
         insCoverage.MrMainCvgTypeCode = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].MrMainCvgTypeCode.value;
 
-        insCoverage.StartDt = this.setDateWithoutTimezone(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
-        insCoverage.StartDt.setMonth(insCoverage.StartDt.getMonth() + addedTenor);
-        insCoverage.EndDt = this.setDateWithoutTimezone(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
-        insCoverage.EndDt.setMonth(insCoverage.EndDt.getMonth() + addedTenor + insCoverage.Tenor);
+        insCoverage.StartDt = startDt;
+        let tenorAdded: number = 12;
+        if (totalTenor < 12) tenorAdded = totalTenor;
+        mainCvgEndDt.setMonth(mainCvgEndDt.getMonth() + totalTenor);
+        insCoverage.EndDt = mainCvgEndDt;
 
-        addedTenor += insCoverage.Tenor;
+        totalTenor -= 12;
+        if (totalTenor > 12) {
+          startDt = new Date(mainCvgEndDt);
+          startDt.setDate(startDt.getDate() + 1);
+          mainCvgEndDt = new Date(startDt);
+        }
 
         insCoverage.IsMainIns = true;
         insCoverage.SumInsuredPrcnt = this.InsuranceDataForm.controls["AppInsMainCvgs"]["controls"][i]["controls"].SumInsuredPrcnt.value;
