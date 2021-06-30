@@ -1253,6 +1253,7 @@ export class URLConstant {
   // List Approver
   public static GetApprovedBy = environment.ApprovalR3Url + "/api/RFAWeb/GetApprovedBy/";
   public static GetRecommendations = environment.ApprovalR3Url + "/api/RFAWeb/GetRecommendations/";
+  public static GetAdtQuestionByTrxNo = environment.FoundationR3Url + "/Approval/GetAdtQuestionByTrxNo"
 
   public static ApvHoldTaskUrl = environment.FoundationR3Url + "/Approval/Hold";
   public static ApvTakeBackTaskUrl = environment.FoundationR3Url + "/Approval/TakeBack";
