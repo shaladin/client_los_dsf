@@ -27,7 +27,7 @@ export class MouDetailFactoringComponent implements OnInit {
   @Input() MouCustId: number;
   @Output() ResponseMouCustFactoring: EventEmitter<any> = new EventEmitter();
   user: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-  isWithoutRecourse: boolean
+  isRecourse: boolean
   @ViewChild(MouCustListedCustFctrComponent) MouListedFctrComp: MouCustListedCustFctrComponent;
   recourseTypeList: Array<KeyValueObj>;
   wopList: Array<KeyValueObj>;
@@ -177,15 +177,23 @@ export class MouDetailFactoringComponent implements OnInit {
               this.inputLookupObj.jsonSelect = { VendorName: responseVendor["VendorName"] , VendorCode: responseVendor["VendorCode"] };
             }
           )
+
+          // var custFactoringObj = {
+          //   CustNo: mouFctrData["CustNo"]
+          // }
+          // this.httpClient.post(URLConstant.GetCustByCustNo, custFactoringObj).subscribe(
+          //   (responseVendor) => {
+          //     this.inputLookupObj.nameSelect = responseVendor["CustName"];
+          //     this.inputLookupObj.jsonSelect = { VendorName: responseVendor["CustName"] , VendorCode: responseVendor["CustNo"] };
+          //   }
+          // )
         }
         else{
           this.MouDetailFactoringForm.patchValue({
             MouCustId: this.MouCustId
           });
         }
-        this.isWithoutRecourse = false
-        this.CheckPaidBy(this.MouDetailFactoringForm.controls.MrPaidByCode.value);
-        this.instTypeHandler();
+        this.isRecourse = true;
         this.shouldComponentLoad = true;
         this.OnChangeRecourseType(this.MouDetailFactoringForm.controls.MrRecourseTypeCode.value)
       });
@@ -224,7 +232,7 @@ export class MouDetailFactoringComponent implements OnInit {
     var formData = this.MouDetailFactoringForm.getRawValue();
     var url;
 
-    if (this.isWithoutRecourse) {
+    if (this.isRecourse) {
       formData.IsListedCust = this.MouListedFctrComp.MouCustIsListedForm.controls["IsListedCust"].value;
       if(formData.IsListedCust){
         if(!this.MouListedFctrComp.MouCustIsListedForm.controls["ListCust"] || this.MouListedFctrComp.MouCustIsListedForm.controls["ListCust"]["controls"]["length"] <= 0){
@@ -253,7 +261,7 @@ export class MouDetailFactoringComponent implements OnInit {
       }
     }
     
-    if (this.isWithoutRecourse === false) {
+    if (this.isRecourse === true) {
       if (this.listedCusts.length > 0) {
         formData.IsListedCust = true
       }
@@ -273,28 +281,10 @@ export class MouDetailFactoringComponent implements OnInit {
       (response) => {
         this.ResponseMouCustFactoring.emit(response);
       });
-
-    if (this.listedCusts.length > 0 && formData.IsListedCust)
-      this.httpClient.post(URLConstant.AddorEditListMouCustListedCustFctr, { ListMouCustListedCustFctrs: this.listedCusts }).subscribe(
-        (response) => {
-          console.log(response);
-        });
-  }
-
-  CheckPaidBy(value: string){
-    if(value == CommonConstant.PAID_BY_CUST_FCTR){
-      this.MouDetailFactoringForm.controls.IsDisclosed.disable();
-      this.MouDetailFactoringForm.controls.IsDisclosed.setValue(true);
-      this.MouDetailFactoringForm.patchValue({
-        MrRecourseTypeCode: CommonConstant.WITHOUT_RECOURSE_TYPE
+    this.httpClient.post(URLConstant.AddorEditListMouCustListedCustFctr, { MouCustId : this.MouCustId, ListMouCustListedCustFctrs: this.listedCusts }).subscribe(
+      (response) => {
+        console.log(response);
       });
-      this.OnChangeRecourseType(CommonConstant.WITHOUT_RECOURSE_TYPE);
-      
-    }else if(value == CommonConstant.PAID_BY_CUST){
-      this.MouDetailFactoringForm.controls.IsDisclosed.enable();
-      this.MouDetailFactoringForm.controls.IsDisclosed.setValue(false);
-    }
-    this.MouDetailFactoringForm.updateValueAndValidity();
   }
   
   listedCusts: Array<MouCustListedCustFctrObj> = new Array<MouCustListedCustFctrObj>();
@@ -313,42 +303,52 @@ export class MouDetailFactoringComponent implements OnInit {
 
   OnChangeRecourseType(recourseType: string) {
     if (recourseType === CommonConstant.WITH_RECOURSE_TYPE) {
-      this.isWithoutRecourse = false
-
-      this.inputLookupCustObj = new InputLookupObj();
-      this.inputLookupCustObj.isReady = false;
       this.inputLookupCustObj.isRequired = false;
-      this.inputLookupCustObj.urlJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
-      this.inputLookupCustObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
-      this.inputLookupCustObj.urlEnviPaging = environment.FoundationR3Url;
-      this.inputLookupCustObj.pagingJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
-      this.inputLookupCustObj.genericJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
-      this.inputLookupCustObj.ddlEnvironments = [
-        {
-          name: "A.MR_CUST_TYPE_CODE",
-          environment: environment.FoundationR3Url
-        }
-      ];
+      this.inputLookupCustObj.isReady = false;
+      this.isRecourse = true;
+      this.MouDetailFactoringForm.patchValue({
+        MrPaidByCode: CommonConstant.PAID_BY_CUST
+      });
+      this.MouDetailFactoringForm.controls.MrPaidByCode.disable();
+      this.MouDetailFactoringForm.controls.MrInstTypeCode.enable();
+      this.MouDetailFactoringForm.controls.IsDisclosed.enable();
+      this.MouDetailFactoringForm.controls.IsDisclosed.setValue(false);
+      
+      this.MouDetailFactoringForm.updateValueAndValidity();
+      
+    }
+    else if (recourseType === CommonConstant.WITHOUT_RECOURSE_TYPE) {
+      this.inputLookupCustObj.isRequired = true;
       this.inputLookupCustObj.isReady = true;
+      
+      this.isRecourse = false;
+      this.MouDetailFactoringForm.patchValue({
+        MrPaidByCode: CommonConstant.PAID_BY_CUST_FCTR,
+        MrInstTypeCode: CommonConstant.SINGLE_INST_TYPE
+      });
+      this.MouDetailFactoringForm.controls.MrPaidByCode.disable();
+      this.MouDetailFactoringForm.controls.MrInstTypeCode.disable();
+      this.MouDetailFactoringForm.controls.IsDisclosed.disable();
+      this.MouDetailFactoringForm.controls.IsDisclosed.setValue(true);
+      this.MouDetailFactoringForm.updateValueAndValidity();
 
       this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { Id: this.MouCustId }).subscribe(
         (response) => {
-          this.listedCusts = response[CommonConstant.ReturnObj];
+          this.listedCusts = new Array<MouCustListedCustFctrObj>();
+          var listedCusts = response[CommonConstant.ReturnObj];
 
-          if (this.listedCusts.length > 0) {
+          if (listedCusts.length > 0) {
             this.MouDetailFactoringForm.patchValue({
-              CustNo: this.listedCusts[0].CustNo
+              CustNo: listedCusts[0].CustNo
             });
 
-            this.inputLookupCustObj.nameSelect = this.listedCusts[0].CustName;
-            this.inputLookupCustObj.jsonSelect = { CustNo: this.listedCusts[0].CustNo , CustName: this.listedCusts[0].CustName };
-            this.setCustName(this.listedCusts[0].CustNo, this.listedCusts[0].MouListedCustFctrId)
+            this.inputLookupCustObj.nameSelect = listedCusts[0].CustName;
+            this.inputLookupCustObj.jsonSelect = { CustNo: listedCusts[0].CustNo , CustName: listedCusts[0].CustName };
+            this.setCustName(listedCusts[0].CustNo, listedCusts[0].MouListedCustFctrId)
           }
         })
     }
-    else if (recourseType === CommonConstant.WITHOUT_RECOURSE_TYPE) {
-      this.isWithoutRecourse = true
-    }
+    this.instTypeHandler();
   }
 
   bindUcLookup() {
@@ -369,9 +369,27 @@ export class MouDetailFactoringComponent implements OnInit {
     this.inputLookupObj.pagingJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.inputLookupObj.genericJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
     this.inputLookupObj.isReadonly = false;
-    this.inputLookupObj.isRequired = false;
+    this.inputLookupObj.isRequired = true;
     this.inputLookupObj.addCritInput = suppCrit;
     this.inputLookupObj.isReady = true;
+    this.initLookupCustFactoring();
+  }
+
+  initLookupCustFactoring(){
+    this.inputLookupCustObj = new InputLookupObj();
+    this.inputLookupCustObj.isReady = false;
+    this.inputLookupCustObj.isRequired = false;
+    this.inputLookupCustObj.urlJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
+    this.inputLookupCustObj.urlQryPaging = "/Generic/GetPagingObjectBySQL";
+    this.inputLookupCustObj.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupCustObj.pagingJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
+    this.inputLookupCustObj.genericJson = "./assets/uclookup/MOU/lookupCust_MOUListCustFctr.json";
+    this.inputLookupCustObj.ddlEnvironments = [
+      {
+        name: "A.MR_CUST_TYPE_CODE",
+        environment: environment.FoundationR3Url
+      }
+    ];
   }
 
   SetSupplier(e) {
@@ -414,5 +432,15 @@ export class MouDetailFactoringComponent implements OnInit {
 
       this.listedCusts.push(obj)
     });
+  }
+  public findInvalidControls() {
+    const invalid = [];
+    const controls = this.MouDetailFactoringForm.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
+    }
+    console.log(invalid);
   }
 }

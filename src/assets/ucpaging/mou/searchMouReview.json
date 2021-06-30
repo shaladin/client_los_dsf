@@ -180,7 +180,7 @@
         {
             "type": "text",
             "position": "center",
-            "property": "MrMouTypeCode"
+            "property": "MouTypeName"
         },
         {
             "type": "action",
