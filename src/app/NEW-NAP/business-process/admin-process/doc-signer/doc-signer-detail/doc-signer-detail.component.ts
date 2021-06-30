@@ -269,7 +269,7 @@ export class DocSignerDetailComponent implements OnInit {
 
     var custCompanyCrit2: CriteriaObj = new CriteriaObj();
     custCompanyCrit2.DataType = "text";
-    custCompanyCrit2.propName = "ACCMS.MR_CUST_TYPE_CODE";
+    custCompanyCrit2.propName = "AC.MR_CUST_TYPE_CODE";
     custCompanyCrit2.restriction = AdInsConstant.RestrictionEq;
     custCompanyCrit2.value = CommonConstant.CustTypePersonal;
 
