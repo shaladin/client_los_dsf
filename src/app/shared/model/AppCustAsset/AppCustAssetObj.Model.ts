@@ -1,7 +1,7 @@
 export class AppCustAssetObj {
     AppCustAssetId: number; 
     AppCustId: number;
-    MrCustAssetTypeId: string;
+    MrCustAssetTypeCode: string;
     MrCustAssetTypeDescr: string;
     AssetDescr: string;
     AssetValue: number;

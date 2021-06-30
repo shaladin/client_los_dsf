@@ -672,10 +672,10 @@ export class CustMainDataComponent implements OnInit {
 
   disableInput() {
     this.isExisting = true;
-    this.CustMainDataForm.controls.MrGenderCode.disable();
-    this.CustMainDataForm.controls.MrIdTypeCode.disable();
-    this.CustMainDataForm.controls.MrMaritalStatCode.disable();
-    this.CustMainDataForm.controls.MrCustModelCode.disable();
+    // this.CustMainDataForm.controls.MrGenderCode.disable();
+    // this.CustMainDataForm.controls.MrIdTypeCode.disable();
+    // this.CustMainDataForm.controls.MrMaritalStatCode.disable();
+    // this.CustMainDataForm.controls.MrCustModelCode.disable();
     this.inputAddressObj.isReadonly = true;
     this.InputLookupCustObj.isReadonly = true;
     this.inputAddressObj.inputField.inputLookupObj.isReadonly = true;
@@ -684,10 +684,10 @@ export class CustMainDataComponent implements OnInit {
 
   enableInput() {
     this.isExisting = false;
-    this.CustMainDataForm.controls.MrGenderCode.enable();
-    this.CustMainDataForm.controls.MrIdTypeCode.enable();
-    this.CustMainDataForm.controls.MrMaritalStatCode.enable();
-    this.CustMainDataForm.controls.MrCustModelCode.enable();
+    // this.CustMainDataForm.controls.MrGenderCode.enable();
+    // this.CustMainDataForm.controls.MrIdTypeCode.enable();
+    // this.CustMainDataForm.controls.MrMaritalStatCode.enable();
+    // this.CustMainDataForm.controls.MrCustModelCode.enable();
     this.inputAddressObj.isReadonly = false;
     this.InputLookupCustObj.isReadonly = false;
     this.InputLookupCustCoyObj.isReadonly = false;

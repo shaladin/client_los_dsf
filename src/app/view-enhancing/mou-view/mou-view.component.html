@@ -63,6 +63,11 @@
                 <app-mou-view-freeze-unfreeze-history [MouCustId]="MouCustId"></app-mou-view-freeze-unfreeze-history>
               </ng-template>
             </mat-tab>
+            <mat-tab label="Approval Recommendation">
+              <ng-template matTabContent>
+                <app-mou-view-approval-recommendation [MouCustNo] = "MouCustNo"></app-mou-view-approval-recommendation>
+              </ng-template>
+            </mat-tab>
 
           </mat-tab-group>
         </div>

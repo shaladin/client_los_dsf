@@ -22,7 +22,7 @@ export class AppCustAssetDetailComponent implements OnInit {
   CustAssetForm = this.fb.group({
     AppCustAssetId: [0],
     AppCustId: [0],
-    MrCustAssetTypeId: ['', [Validators.required]],
+    MrCustAssetTypeCode: ['', [Validators.required]],
     AssetDescr: [''],
     AssetValue: [0, [Validators.required, Validators.min(1)]],
     AssetQty: [0, [Validators.required, Validators.min(1)]],
@@ -52,12 +52,12 @@ export class AppCustAssetDetailComponent implements OnInit {
     );
     if(this.AppCustAssetId && this.AppCustAssetId > 0){
       this.Mode = "EDIT"
-      this.httpClient.post(URLConstant.GetAppCustAssetByAppCustAssetId, { AppCustAssetId: this.AppCustAssetId }).toPromise().then(
+      this.httpClient.post(URLConstant.GetAppCustAssetByAppCustAssetId, { Id: this.AppCustAssetId }).toPromise().then(
         (response) => {
           this.CustAssetForm.patchValue({
             AppCustAssetId: response["AppCustAssetId"],
             AppCustId: response["AppCustId"],
-            MrCustAssetTypeId: response["MrCustAssetTypeId"],
+            MrCustAssetTypeCode: response["MrCustAssetTypeCode"],
             AssetDescr: response["AssetDescr"],
             AssetValue: response["AssetValue"],
             AssetQty: response["AssetQty"],

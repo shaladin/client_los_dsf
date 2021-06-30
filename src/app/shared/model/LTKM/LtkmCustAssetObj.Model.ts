@@ -1,7 +1,7 @@
 export class LtkmCustAssetObj {
     LtkmCustAssetId: number;
     LtkmCustId: number;
-    MrCustAssetTypeId: string;
+    MrCustAssetTypeCode: string;
     MrCustAssetTypeDescr: string;
     AssetDescr: string;
     AssetValue: number;

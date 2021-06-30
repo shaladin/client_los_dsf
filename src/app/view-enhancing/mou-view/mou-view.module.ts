@@ -32,6 +32,7 @@ import { MouViewChangeMouHistoryComponent } from "./mou-view-change-mou-history/
 import { MouViewFreezeUnfreezeHistoryComponent } from "./mou-view-freeze-unfreeze-history/mou-view-freeze-unfreeze-history.component";
 import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { ViewModule } from "../view.module";
+import { MouViewApprovalRecommendationComponent } from "./mou-view-approval-recommendation/mou-view-approval-recommendation.component";
 @NgModule({
     imports: [
         MouViewRoutingModule,
@@ -68,7 +69,8 @@ import { ViewModule } from "../view.module";
         MouViewSurveyComponent,
         MouViewTcComponent,
         MouViewChangeMouHistoryComponent,
-        MouViewFreezeUnfreezeHistoryComponent
+        MouViewFreezeUnfreezeHistoryComponent,
+        MouViewApprovalRecommendationComponent
     ],
     entryComponents: [
         UclookupgenericComponent,
