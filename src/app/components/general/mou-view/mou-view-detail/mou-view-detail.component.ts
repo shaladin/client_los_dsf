@@ -5,6 +5,8 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { MouCustDlrFinObj } from 'app/shared/model/moucustdlrfin.Model';
 import { ResMouCustObj } from 'app/shared/model/Response/MOU/MouCust/ResMouCustObj.model';
 import { ResMouCustClauseObj } from 'app/shared/model/Response/MOU/MouCust/ResMouCustClauseObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-mou-view-detail',
@@ -14,6 +16,7 @@ export class MouViewDetailComponent implements OnInit {
   @Input() MouCustId: number;
   @Input() MouType: string;
 
+  ReqByIdObj: GenericObj = new GenericObj();
   MouCustClauseId: number;
   CurrCode: string;
   AssetTypeCode: string;
@@ -41,6 +44,8 @@ export class MouViewDetailComponent implements OnInit {
   mouCust: ResMouCustObj;
   mouCustClause: ResMouCustClauseObj;
   mouCustFctr: any;
+  listedCustFctrIsReady: boolean = false;
+  listedCustFctr: Array<any>;
   listAssetData: Array<any>;
   MrPaidByCode: string;
   SingleInstCalcMthd: string;
@@ -50,8 +55,13 @@ export class MouViewDetailComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    var mouCustObj = { Id: this.MouCustId };
-    this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
+    this.ReqByIdObj.Id = this.MouCustId ;
+    
+    if(this.MouType == 'FACTORING'){
+    this.getListedMouCustFctr(this.ReqByIdObj);
+    }
+
+    this.http.post(URLConstant.GetMouCustDataByMouCustId, this.ReqByIdObj).subscribe(
       (response) => {
 
         this.mouCust = response["MouCustObj"];
@@ -107,7 +117,7 @@ export class MouViewDetailComponent implements OnInit {
         }
         else if (this.MouType == CommonConstant.FINANCING)
         {
-        this.http.post(URLConstant.GetMouCustDlrFindById, mouCustObj).subscribe(
+        this.http.post(URLConstant.GetMouCustDlrFindById, this.ReqByIdObj).subscribe(
           (responses) => {
             console.log(responses)
             this.MouCustDlrFindData.WopCode = responses["WopCode"];
@@ -133,9 +143,31 @@ export class MouViewDetailComponent implements OnInit {
       })
       
       
-    this.http.post(URLConstant.GetMouCustAssetByMouCustId, mouCustObj).subscribe(
+    this.http.post(URLConstant.GetMouCustAssetByMouCustId, this.ReqByIdObj).subscribe(
       (response) => {
         this.listAssetData = response[CommonConstant.ReturnObj];
       });
+  }
+
+  getListedMouCustFctr(ReqByIdObj){
+    this.http.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, ReqByIdObj).subscribe(
+      (response) => {
+        this.listedCustFctr = response[CommonConstant.ReturnObj];
+        this.listedCustFctrIsReady = true;
+    });
+  }
+
+  openView(custNo) {
+    this.ReqByIdObj.CustNo = custNo;
+    this.http.post(URLConstant.GetCustByCustNo, this.ReqByIdObj).subscribe(
+      response => {
+        if(response["MrCustTypeCode"] == 'PERSONAL'){
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        }
+        else if(response["MrCustTypeCode"] == 'COMPANY'){
+          AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+        }
+      }
+    );
   }
 }
