@@ -100,7 +100,7 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
       return;
     }
     
-    // this.outputTab.emit();
+    this.outputTab.emit();
   }
 
   cancel() {
