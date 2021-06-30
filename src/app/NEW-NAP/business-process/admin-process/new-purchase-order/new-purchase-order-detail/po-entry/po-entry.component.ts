@@ -130,14 +130,14 @@ export class PoEntryComponent implements OnInit {
 
     }
     this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-      (response: NapAppModel) => {
+      (response1: NapAppModel) => {
         let GetProduct = new GenericObj();
-        GetProduct.Code = response["ProdOfferingCode"]
+        GetProduct.Code = response1["ProdOfferingCode"]
         this.httpClient.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
           (response2) => {
             this.httpClient.post(URLConstant.GetProdOfferingDByProdOfferingHIdAndCompCode, { ProdOfferingHId: response2.Id, RefProdCompntCode: CommonConstant.RefProdCompntCodeCrApvResExpDays }).subscribe(
               (response) => {
-                var a = formatDate(response["ApvDt"], 'yyyy-MM-dd', 'en-US');
+                var a = formatDate(response1["ApvDt"], 'yyyy-MM-dd', 'en-US');
                 this.Date = new Date(a);
                 this.Date.setDate(this.Date.getDate() + parseInt(response["CompntValue"]));
 
@@ -169,17 +169,18 @@ export class PoEntryComponent implements OnInit {
       }
     }
     this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-      (response) => {
+      (response1) => {
         let GetProduct = new GenericObj();
-        GetProduct.Code  = response["ProdOfferingCode"]
+        GetProduct.Code  = response1["ProdOfferingCode"]
         this.httpClient.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
           (response2) => {
             var datePipe = new DatePipe("locale");
-            this.httpClient.post(URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode, { ProdOfferingHId: response2.Id, RefProdCompntGrpCode: ["OTHR"] }).subscribe(
+            this.httpClient.post(URLConstant.GetListProdOfferingDByProdOfferingHIdAndProdCompntGrpCode, { ProdOfferingHId: response2.Id, GroupCodes: ["OTHR"] }).subscribe(
               (response) => {
-                var a = formatDate(response["ApvDt"], 'yyyy-MM-dd', 'en-US');
+                var a = formatDate(response1["ApvDt"], 'yyyy-MM-dd', 'en-US');
                 this.Date = new Date(a);
-                this.Date.setDate(this.Date.getDate() + parseInt(response["ReturnObject"]["ProdOffComponents"][0]["Components"][1]["CompntValue"]));
+                let date = response["ReturnObject"]["ProdOffComponents"][0]["Components"].find(x => x.RefProdCompntCode == CommonConstant.RefProdCompntCodeCrApvResExpDays);
+                this.Date.setDate(this.Date.getDate() + parseInt(date.CompntValue));
                 this.ExpirationDate = formatDate(this.Date, 'yyyy-MM-dd', 'en-US');
                 this.PODetailForm.patchValue({
                   PurchaseOrderExpiredDt: datePipe.transform(this.Date, "yyyy-MM-dd")
