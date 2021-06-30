@@ -25,6 +25,8 @@ export class MouApprovalGeneralComponent implements OnInit {
   taskId: number;
   instanceId: number;
   MouType: string = CommonConstant.GENERAL;
+  isReadyMrMouTypeCode: boolean = false;
+  MrMouTypeCode: string = "";
   inputObj: ApvViewInfo;
   resultData: MouCustObj;
   mouCustObject: MouCustObj = new MouCustObj();
@@ -58,6 +60,8 @@ export class MouApprovalGeneralComponent implements OnInit {
       (response: MouCustObj) => {
         this.resultData = response;
         this.MrCustTypeCode = response.MrCustTypeCode;
+        this.MrMouTypeCode = response.MrMouTypeCode;
+        this.isReadyMrMouTypeCode = true;
         let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
         if(this.SysConfigResultObj.ConfigValue == '1'){
           this.dmsObj = new DMSObj();
