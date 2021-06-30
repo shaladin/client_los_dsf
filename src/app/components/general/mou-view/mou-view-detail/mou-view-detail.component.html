@@ -136,8 +136,13 @@
           <label class="col-md-2 adInsLabel" translate>Currency </label>
           <label class="col-md-4 adInsLabel" translate>{{CurrCode}}</label>
           
-          <label class="col-md-2 adInsLabel" translate>WoP </label>
-          <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.WopCode}} </label>
+          <label class="col-md-2 adInsLabel" translate>WoP</label>
+          <label  *ngIf="MouCustDlrFindData.WopCode == 'AD'" class="col-md-4 adInsLabel" translate>Auto Debit </label>
+          <label  *ngIf="MouCustDlrFindData.WopCode == 'CA'" class="col-md-4 adInsLabel" translate>Cash </label>
+          <label  *ngIf="MouCustDlrFindData.WopCode == 'PICK'" class="col-md-4 adInsLabel" translate>Pick-Up </label>
+          <label  *ngIf="MouCustDlrFindData.WopCode == 'BT'" class="col-md-4 adInsLabel" translate>Bank Transfer </label>
+          <label  *ngIf="MouCustDlrFindData.WopCode == 'PDC'" class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.WopCode}} </label>
+          <label  *ngIf="MouCustDlrFindData.WopCode != 'PDC' && MouCustDlrFindData.WopCode !='AD' && MouCustDlrFindData.WopCode != 'CA' && MouCustDlrFindData.WopCode != 'PICK' && MouCustDlrFindData.WopCode != 'BT'" class="col-md-4 adInsLabel" translate> </label>
         </div>
         <div class="form-group row">
           <label class="col-md-2 adInsLabel" translate>Term of Payment (in Days) </label>
@@ -176,17 +181,17 @@
         </div>
         <div class="form-group row">
           <label class="col-md-2 adInsLabel" translate>Link Manufacturer </label>
-          <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.ManufacturerCode}}</label>
+          <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.ManufacturerName}}</label>
           
           <label class="col-md-2 adInsLabel" translate>Manufacturer</label>
-          <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.ManufacturerCustNo}} </label>
+          <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.ManufacturerCustName}} </label>
         </div>
         <div class="form-group row">
           <label class="col-md-2 adInsLabel" translate>Link Suppl Grading</label>
-          <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.DealerCode}}</label>
+          <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.DealerName}}</label>
           
           <label class="col-md-2 adInsLabel" translate>Customer</label>
-          <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.DealerCustNo}} </label>
+          <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.DealerCustName}} </label>
         </div>
         <div class="form-group row">
           <label class="col-md-2 adInsLabel" translate>Lc Rate (%)</label>

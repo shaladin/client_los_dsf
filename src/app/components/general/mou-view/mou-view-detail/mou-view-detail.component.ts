@@ -7,6 +7,7 @@ import { ResMouCustObj } from 'app/shared/model/Response/MOU/MouCust/ResMouCustO
 import { ResMouCustClauseObj } from 'app/shared/model/Response/MOU/MouCust/ResMouCustClauseObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ResGetMouCustDlrFindByIdObj } from 'app/shared/model/Response/MOU/MouCust/ResGetMouCustDlrFindByIdObj.model';
 
 @Component({
   selector: 'app-mou-view-detail',
@@ -50,7 +51,7 @@ export class MouViewDetailComponent implements OnInit {
   MrPaidByCode: string;
   SingleInstCalcMthd: string;
   LinkSupplier:any = "-";
-  MouCustDlrFindData: MouCustDlrFinObj = new MouCustDlrFinObj();
+  MouCustDlrFindData: ResGetMouCustDlrFindByIdObj = new ResGetMouCustDlrFindByIdObj();
 
   constructor(private http: HttpClient) { }
 
@@ -117,7 +118,7 @@ export class MouViewDetailComponent implements OnInit {
         }
         else if (this.MouType == CommonConstant.FINANCING)
         {
-        this.http.post(URLConstant.GetMouCustDlrFindById, this.ReqByIdObj).subscribe(
+        this.http.post(URLConstant.GetMouCustDlrWithCustVendorNameFindById, this.ReqByIdObj).subscribe(
           (responses) => {
             console.log(responses)
             this.MouCustDlrFindData.WopCode = responses["WopCode"];
@@ -138,6 +139,10 @@ export class MouViewDetailComponent implements OnInit {
             this.MouCustDlrFindData.DealerCustNo = responses["DealerCustNo"];
             this.MouCustDlrFindData.Notes = responses["Notes"];
             this.MouCustDlrFindData.MaximumExtendTimes = responses["MaximumExtendTimes"];
+            this.MouCustDlrFindData.DealerName = responses["DealerName"];
+            this.MouCustDlrFindData.DealerCustName = responses["DealerCustName"];
+            this.MouCustDlrFindData.ManufacturerName = responses["ManufacturerName"];
+            this.MouCustDlrFindData.ManufacturerCustName = responses["ManufacturerCustName"];
           })
         }
       })
