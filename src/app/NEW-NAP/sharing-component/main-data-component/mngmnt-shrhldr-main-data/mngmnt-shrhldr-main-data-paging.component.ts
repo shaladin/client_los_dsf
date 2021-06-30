@@ -79,6 +79,16 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
       return false;
     }
 
+    if(this.listMgmntShrholder.length > 0 && this.listMgmntShrholder.find(x=>x.MrCustModelCode == null || x.MrCustModelCode == "") != null){
+      this.toastr.warningMessage(ExceptionConstant.COMPLETE_SHAREHOLDER_COMPANY_MODEL)
+      return;
+    }
+
+    if(this.listMgmntShrholder.length > 0 && this.listMgmntShrholder.find(x=>x.MrCustRelationshipCode == null || x.MrCustRelationshipCode == "") != null){
+      this.toastr.warningMessage(ExceptionConstant.MUST_COMPLETE_SHAREHOLDER_DATA)
+      return;
+    }
+
     var totalSharePrcnt = 0;
 
     for(let i = 0; i < this.listMgmntShrholder.length; i++){
@@ -90,7 +100,7 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
       return;
     }
     
-    this.outputTab.emit();
+    // this.outputTab.emit();
   }
 
   cancel() {

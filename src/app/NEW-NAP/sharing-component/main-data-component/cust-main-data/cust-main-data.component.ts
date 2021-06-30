@@ -1009,6 +1009,11 @@ export class CustMainDataComponent implements OnInit {
       }
     }
     else {
+      if(this.MrCustModelCode == "")
+      {
+        this.toastr.warningMessage(ExceptionConstant.COMPLETE_SHAREHOLDER_COMPANY_MODEL)
+        return;
+      }
       this.setDataCustomerCompanyForSave();
       console.log(this.custDataCompanyObj);
       if (this.appCustId == null || this.appCustId == 0) {
