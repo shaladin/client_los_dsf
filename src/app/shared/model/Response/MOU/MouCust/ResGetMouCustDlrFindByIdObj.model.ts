@@ -2,6 +2,7 @@ export class ResGetMouCustDlrFindByIdObj {
     MouCustDlrFncngId: number;
     MouCustId: number;
     WopCode: string;
+    WopName: string;
     TopDays: number;
     TopInterestRatePrcnt: number;
     PayFreqCode: string;
@@ -31,6 +32,7 @@ export class ResGetMouCustDlrFindByIdObj {
         this.MouCustDlrFncngId = 0;
         this.MouCustId = 0;
         this.WopCode = "";
+        this.WopName = "";
         this.TopDays = 0;
         this.TopInterestRatePrcnt = 0;
         this.PayFreqCode = "";

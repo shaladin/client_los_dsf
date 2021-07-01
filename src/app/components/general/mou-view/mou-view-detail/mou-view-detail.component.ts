@@ -31,7 +31,7 @@ export class MouViewDetailComponent implements OnInit {
   TenorFrom: number;
   TenorTo: number;
 
-  WopCode: string;
+  WopName: string;
   PlafondAmt: number;
   IsRevolving: boolean;
   TopDays: number;
@@ -99,7 +99,7 @@ export class MouViewDetailComponent implements OnInit {
           this.DownPaymentToPrcnt = this.mouCustFctr.DownPaymentToPrcnt;
           this.TenorFrom = this.mouCustFctr.TenorFrom;
           this.TenorTo = this.mouCustFctr.TenorTo;
-          this.WopCode = this.mouCustFctr.WopCode;
+          this.WopName = this.mouCustFctr.WopName;
           this.TopDays = this.mouCustFctr.TopDays;
           this.InterestRatePrcnt = this.mouCustFctr.InterestRatePrcnt;
           this.RetentionPrcnt = this.mouCustFctr.RetentionPrcnt;
@@ -120,8 +120,7 @@ export class MouViewDetailComponent implements OnInit {
         {
         this.http.post(URLConstant.GetMouCustDlrWithCustVendorNameFindById, this.ReqByIdObj).subscribe(
           (responses) => {
-            console.log(responses)
-            this.MouCustDlrFindData.WopCode = responses["WopCode"];
+            this.MouCustDlrFindData.WopName = responses["WopName"];
             this.MouCustDlrFindData.TopDays = responses["TopDays"];
             this.MouCustDlrFindData.TopInterestRatePrcnt = responses["TopInterestRatePrcnt"];
             this.MouCustDlrFindData.PayFreqCode = responses["PayFreqCode"];

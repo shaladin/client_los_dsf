@@ -59,12 +59,7 @@
     
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>WoP</label>
-      <label  *ngIf="WopCode == 'AD'" class="col-md-4 adInsLabel" translate>Auto Debit </label>
-      <label  *ngIf="WopCode == 'CA'" class="col-md-4 adInsLabel" translate>Cash </label>
-      <label  *ngIf="WopCode == 'PICK'" class="col-md-4 adInsLabel" translate>Pick-Up </label>
-      <label  *ngIf="WopCode == 'BT'" class="col-md-4 adInsLabel" translate>Bank Transfer </label>
-      <label  *ngIf="WopCode == 'PDC'" class="col-md-4 adInsLabel" translate>{{WopCode}} </label>
-      <label  *ngIf="WopCode != 'PDC' && WopCode !='AD' && WopCode != 'CA' && WopCode != 'PICK' && WopCode != 'BT'" class="col-md-4 adInsLabel" translate> </label>
+      <label class="col-md-4 adInsLabel" translate>{{WopName}}</label>
 
       <label class="col-md-2 adInsLabel" translate>Paid By</label>
       <label class="col-md-4 adInsLabel" translate>{{MrPaidByCode}}</label>
@@ -137,12 +132,7 @@
           <label class="col-md-4 adInsLabel" translate>{{CurrCode}}</label>
           
           <label class="col-md-2 adInsLabel" translate>WoP</label>
-          <label  *ngIf="MouCustDlrFindData.WopCode == 'AD'" class="col-md-4 adInsLabel" translate>Auto Debit </label>
-          <label  *ngIf="MouCustDlrFindData.WopCode == 'CA'" class="col-md-4 adInsLabel" translate>Cash </label>
-          <label  *ngIf="MouCustDlrFindData.WopCode == 'PICK'" class="col-md-4 adInsLabel" translate>Pick-Up </label>
-          <label  *ngIf="MouCustDlrFindData.WopCode == 'BT'" class="col-md-4 adInsLabel" translate>Bank Transfer </label>
-          <label  *ngIf="MouCustDlrFindData.WopCode == 'PDC'" class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.WopCode}} </label>
-          <label  *ngIf="MouCustDlrFindData.WopCode != 'PDC' && MouCustDlrFindData.WopCode !='AD' && MouCustDlrFindData.WopCode != 'CA' && MouCustDlrFindData.WopCode != 'PICK' && MouCustDlrFindData.WopCode != 'BT'" class="col-md-4 adInsLabel" translate> </label>
+          <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.WopName}}</label>
         </div>
         <div class="form-group row">
           <label class="col-md-2 adInsLabel" translate>Term of Payment (in Days) </label>
