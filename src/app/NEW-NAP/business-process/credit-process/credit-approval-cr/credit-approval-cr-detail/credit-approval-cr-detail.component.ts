@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
+import { ViewHighlightCommentComponent } from 'app/NEW-NAP/sharing-component/view-app-component/view-highlight-comment/view-highlight-comment.component';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
@@ -9,12 +10,14 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { CrdRvwCustInfoObj } from 'app/shared/model/CreditReview/CrdRvwCustInfoObj.Model';
+import { CustHighlightCommentObj } from 'app/shared/model/CustHighlightCommentObj.Model';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { UcInputApprovalGeneralInfoObj } from 'app/shared/model/UcInputApprovalGeneralInfoObj.model';
 import { UcInputApprovalHistoryObj } from 'app/shared/model/UcInputApprovalHistoryObj.Model';
 import { UcInputApprovalObj } from 'app/shared/model/UcInputApprovalObj.Model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-credit-approval-cr-detail',
@@ -34,10 +37,21 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   AppObj: AppObj;
   IsViewReady: boolean = false;
   getEvent: Array<any> = new Array();
+  custHighlightCommentObj: CustHighlightCommentObj = null;
+
+  private viewHighlightCommentComponent: ViewHighlightCommentComponent;
+  @ViewChild(ViewHighlightCommentComponent) set content(
+    content: ViewHighlightCommentComponent
+  ) {
+    if (content) {
+      // initially setter gets called with undefined
+      this.viewHighlightCommentComponent = content;
+    }
+  };
 
   readonly CustTypePersonal: string = CommonConstant.CustTypePersonal;
   readonly CustTypeCompany: string = CommonConstant.CustTypeCompany;
-  
+
   constructor(private toastr: NGXToastrService,
     private route: ActivatedRoute,
     private router: Router,
@@ -66,7 +80,7 @@ export class CreditApprovalCrDetailComponent implements OnInit {
       this.HoldTask(ApvHoldObj);
     });
   }
-  
+
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
@@ -92,22 +106,22 @@ export class CreditApprovalCrDetailComponent implements OnInit {
       (response) => {
       },
       (error) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       }
     )
   }
 
-  InputApvObj : UcInputApprovalObj;
-  InputApprovalHistoryObj : UcInputApprovalHistoryObj;
-  UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
+  InputApvObj: UcInputApprovalObj;
+  InputApprovalHistoryObj: UcInputApprovalHistoryObj;
+  UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
-  initInputApprovalObj(){
+  initInputApprovalObj() {
 
     this.UcInputApprovalGeneralInfoObj = new UcInputApprovalGeneralInfoObj();
     this.UcInputApprovalGeneralInfoObj.EnvUrl = environment.FoundationR3Url;
     this.UcInputApprovalGeneralInfoObj.PathUrl = "/Approval/GetSingleTaskInfo";
     this.UcInputApprovalGeneralInfoObj.TaskId = this.inputObj.taskId;
-    
+
     this.InputApprovalHistoryObj = new UcInputApprovalHistoryObj();
     this.InputApprovalHistoryObj.EnvUrl = environment.FoundationR3Url;
     this.InputApprovalHistoryObj.PathUrl = "/Approval/GetTaskHistory";
@@ -115,7 +129,7 @@ export class CreditApprovalCrDetailComponent implements OnInit {
 
     this.InputApvObj = new UcInputApprovalObj();
     this.InputApvObj.TaskId = this.inputObj.taskId;
-    this.InputApvObj.TrxNo =  this.AppObj.AppNo;
+    this.InputApvObj.TrxNo = this.AppObj.AppNo;
     this.InputApvObj.RequestId = this.ApvReqId;
     this.IsReady = true;
   }
@@ -136,10 +150,22 @@ export class CreditApprovalCrDetailComponent implements OnInit {
       AppId: this.appId,
       Tasks: event.Tasks
     }
+    let postList = new Array<any>();
 
-    this.http.post(URLConstant.Approval, ReqApvCustomObj).subscribe(
-      (response)=>{
-        this.toastr.successMessage(response["Message"]);
+    postList.push(this.http.post(URLConstant.Approval, ReqApvCustomObj));
+
+    if (this.viewHighlightCommentComponent != undefined) {
+      if (!this.viewHighlightCommentComponent.checkIsEmptyOrNot()) {
+        this.viewHighlightCommentComponent.SaveComment();
+        if (this.custHighlightCommentObj !== null) {
+          postList.push(this.http.post(URLConstant.AddAppCustHighlightComment, this.custHighlightCommentObj));
+        }
+      }
+    }
+
+    forkJoin(postList).subscribe(
+      (response) => {
+        this.toastr.successMessage(response[0]["Message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_PAGING], { "BizTemplateCode": this.BizTemplateCode });
       });
   }
@@ -147,9 +173,13 @@ export class CreditApprovalCrDetailComponent implements OnInit {
   onAvailableNextTask() {
 
   }
-  
+
+  GetCommnet(event) {
+    this.custHighlightCommentObj = event;
+  }
+
   onCancelClick() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_CRD_APPRV_CR_PAGING], { "BizTemplateCode": this.BizTemplateCode });
   }
   //#endregion
 }
