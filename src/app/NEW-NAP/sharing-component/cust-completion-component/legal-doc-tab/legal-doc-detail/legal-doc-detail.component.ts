@@ -141,8 +141,6 @@ export class LegalDocDetailComponent implements OnInit {
     let bzDt = new Date(this.MaxBusinessDt);
     let issueDt = new Date(this.LegalDocForm.get("DocDt").value);
     let expDt = new Date(this.LegalDocForm.get("DocExpiredDt").value);
-    console.log(issueDt);
-    console.log(expDt);
     if (bzDt > expDt && bzDt != expDt) {
       this.toastr.warningMessage(ExceptionConstant.EXPIRED_DATE_CANNOT_LESS_THAN + this.MaxBusinessDt);
       flag = true;
