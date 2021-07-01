@@ -84,7 +84,7 @@ export class MouExecutionDetailComponent implements OnInit {
         });
       });
 
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouRequest.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeader.json";
   }
 
   Back() {
