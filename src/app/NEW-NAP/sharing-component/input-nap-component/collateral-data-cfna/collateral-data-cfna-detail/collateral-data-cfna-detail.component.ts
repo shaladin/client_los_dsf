@@ -416,7 +416,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   }
 
   getRefAssetDocList(isInit: boolean) {
-    this.http.post(URLConstant.GetRefAssetDocList, { AssetTypeCode: this.AssetTypeCode }).subscribe(
+    this.http.post(URLConstant.GetRefAssetDocList, { Code: this.AddCollForm.get("AssetTypeCode").value }).subscribe(
       (response) => {
         console.log("getRefAssetDocList: " + JSON.stringify(response));
         if (response[CommonConstant.ReturnObj].length > 0) {
