@@ -93,7 +93,7 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
     this.httpClient.post(URLConstant.GetMouCustByAppId, request).subscribe((responseMou) => {
       this.PlafondAmt = responseMou["PlafondAmt"];
       this.MrMouTypeCode = responseMou["MrMouTypeCode"];
-
+      
       if (this.MrMouTypeCode == CommonConstant.FACTORING) {
         this.httpClient.post(URLConstant.GetListAppInvoiceFctrByAppId, request).subscribe((response) => {
           this.listInvoice = response["AppInvoiceFctrObjs"];
@@ -131,7 +131,7 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
       InvoiceNo: obj.InvoiceNo,
       CustName: obj.CustomerFactoringName,
       InvoiceAmt: obj.InvoiceAmt,
-      Verification: this.listVerificationStatus[0].Key,
+      Verification: obj.IsApproved == true ? CommonConstant.InvoiceStatApv : CommonConstant.InvoiceStatRjc,
       InvoiceNotes: obj.Notes,
       InvoiceDt: obj.InvoiceDueDt,
       RowVersion: obj.RowVersion,
@@ -157,6 +157,7 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
       this.listInvoice[i].RowVersion = item.get("RowVersion").value;
     }
     var request = { Invoices: this.listInvoice, TaskListId: this.WfTaskListId, IsDF: true };
+
     this.httpClient.post(URLConstant.UpdateAppInvoiceDlfn, request).subscribe(() => {
       this.outputTab.emit();
     });

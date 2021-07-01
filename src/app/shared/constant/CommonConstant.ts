@@ -852,6 +852,10 @@ export class CommonConstant {
   public static AppStatCancel = "CAN";
   public static AppStatReject = "RJC";
   
+  //INVOICE STAT
+  public static InvoiceStatApv = "APV";
+  public static InvoiceStatRjc = "RJC";
+
   //WOP
   public static WopAutoDebit = "AD";  
   
