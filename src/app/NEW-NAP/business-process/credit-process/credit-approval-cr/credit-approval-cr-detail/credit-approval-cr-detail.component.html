@@ -2,26 +2,28 @@
   <div class="card">
     <app-app-main-info [AppId]="appId" [BizTemplateCode]="BizTemplateCode" *ngIf="IsViewReady"></app-app-main-info>
     <div class="card-body">
-      <div class="px-3">
-        <app-crd-rvw-cust-info *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [captureStat]="captureStat">
+      <div class="px-3" *ngIf="isShow">
+        <app-crd-rvw-cust-info [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj" [captureStat]="captureStat">
         </app-crd-rvw-cust-info>
-        <app-crd-rvw-fam-guar *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
+        <app-crd-rvw-fam-guar [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
         </app-crd-rvw-fam-guar>
-        <app-crd-rvw-legal-doc *ngIf="isShow && crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" [AppCustCompanyId]="crdRvwCustInfoObj.AppCustCompanyId"></app-crd-rvw-legal-doc>
-        
+        <app-crd-rvw-legal-doc *ngIf="crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany"
+          [AppCustCompanyId]="crdRvwCustInfoObj.AppCustCompanyId"></app-crd-rvw-legal-doc>
+
         <app-crd-rvw-third-party-checking *ngIf="AppObj.AppNo != ''" [AppNo]="AppObj.AppNo">
         </app-crd-rvw-third-party-checking>
-        <app-crd-rvw-app-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId">
+        <app-crd-rvw-app-info [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId">
         </app-crd-rvw-app-info>
-        <app-crd-rvw-asset *ngIf="isShow" [crdRvwCustInfoObj]="crdRvwCustInfoObj"> </app-crd-rvw-asset>
-        <app-crd-rvw-additional-coll *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        <app-crd-rvw-asset [crdRvwCustInfoObj]="crdRvwCustInfoObj"> </app-crd-rvw-asset>
+
+        <app-crd-rvw-additional-coll [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-additional-coll>
-        <app-crd-rvw-cmo-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        <app-crd-rvw-cmo-info [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-cmo-info>
-        <app-crd-rvw-dealer-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
+        <app-crd-rvw-dealer-info [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId">
         </app-crd-rvw-dealer-info>
-        <app-tab-deviation [AppId]="appId" [IsEditManualDeviation]="false"></app-tab-deviation>   
-        
+        <app-tab-deviation [AppId]="appId" [IsEditManualDeviation]="false"></app-tab-deviation>
+
       </div>
     </div>
     <div class="ng-star-inserted">
@@ -29,20 +31,23 @@
         <div class="col-md-12">
           <div class="card">
             <div class="card-body">
-              <div class="px-3">
-                <app-approval-hist [AppNo]="AppObj.AppNo"  [AppId]="appId"></app-approval-hist>
+              <div class="px-3" *ngIf="isShow">
+                <app-approval-hist [AppNo]="AppObj.AppNo" [AppId]="appId"></app-approval-hist>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-        
+
     <!-- <lib-ucapproval [inputObj]="inputObj" [showCancel]="'true'" (onCancel)="onCancelClick()" (nextTask)="onAvailableNextTask()" (result)="onApprovalSubmited($event)">
     </lib-ucapproval>  -->
-    
-    <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj"  *ngIf="IsReady"></lib-ucapprovalgeneralinfo>
+    <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady"></lib-ucapprovalgeneralinfo>
 
-    <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"  (onCancel)="onCancelClick()"></lib-ucapprovalR3>
+    <app-view-highlight-comment [appId]="appId" (outputTab)="GetCommnet($event)"></app-view-highlight-comment>
+    <br />
+
+    <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"
+      (onCancel)="onCancelClick()"></lib-ucapprovalR3>
   </div>
 </div>

@@ -21,11 +21,13 @@
       "isFromURL": true,
       "ddlType": "all",
       "url": "",
-      "environment": "LOS",
-      "path":"/MouCust/GetListKeyValueMouType",
+      "environment": "FOU",
+      "path":"/RefMaster/GetListKeyValueActiveByCode",
       "label": "Mou Type",
       "items": [],
-      "itemsUrl": []
+      "itemsUrl": [],   
+      "criteriaPropName": "RefMasterTypeCode",
+      "criteriaPropValue": "MOU_TYPE"
     },
     {
       "type": "textbox",

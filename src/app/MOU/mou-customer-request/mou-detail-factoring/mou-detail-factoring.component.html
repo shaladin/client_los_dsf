@@ -48,7 +48,6 @@
         <label class="col-md-3 adInsLabel adins-required-label" for="MrPaidByCode" translate>Paid By</label>
         <div class="col-md-4">
           <select class="form-control adInsInput" formControlName="MrPaidByCode"
-            (change)="CheckPaidBy($event.target.value)"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrPaidByCode.invalid }">
             <option *ngFor="let item of paidByList" [value]="item.Key">{{item.Value}}</option>
           </select>
@@ -149,20 +148,20 @@
         </div>
       </div>
       <div class="form-group row">
-        <label class="col-md-3 adinsLabel" for="LinkSupplier" translate>Link Supplier </label>
+        <label class="col-md-3 adins-required-label" for="LinkSupplier" translate>Link Supplier </label>
         <div class="col-md-3">
           <lib-uclookupgeneric *ngIf="inputLookupObj?.isReady" [lookupInput]="inputLookupObj"
-            [parentForm]='MouDetailFactoringForm' [enjiForm]='enjiForm' [identifier]="'lookupSupp'" #LookupSupplier
+            [parentForm]='MouDetailFactoringForm' [enjiForm]='enjiForm' [identifier]="'lookupSupp'" 
             (lookup)="SetSupplier($event)">
           </lib-uclookupgeneric>
         </div>
       </div>
-      <div class="form-group row" *ngIf="!isWithoutRecourse">
-        <label class="col-md-3 adinsLabel" for="LinkCustomer" translate>Link Customer
+      <div class="form-group row" [hidden]="isRecourse">
+        <label class="col-md-3 adins-required-label" for="LinkCustomer" translate>Link Customer
           Factoring</label>
         <div class="col-md-3">
-          <lib-uclookupgeneric *ngIf="inputLookupCustObj?.isReady" [lookupInput]="inputLookupCustObj"
-            [parentForm]='MouDetailFactoringForm' [enjiForm]='enjiForm' [identifier]="'lookupCust'" #LookupCustomer
+          <lib-uclookupgeneric [lookupInput]="inputLookupCustObj"
+            [parentForm]='MouDetailFactoringForm' [enjiForm]='enjiForm' [identifier]="'lookupCust'" 
             (lookup)="SetCustomer($event)">
           </lib-uclookupgeneric>
         </div>
@@ -177,7 +176,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="isWithoutRecourse">
+  <div *ngIf="isRecourse">
     <app-mou-cust-listed-cust-fctr *ngIf="shouldComponentLoad" [MouCustId]="MouCustId" [IsListedCustFctr]="isListedFctr"
     (OutputData)="GetDataListCustFctr($event)">
     </app-mou-cust-listed-cust-fctr>
@@ -185,6 +184,9 @@
   
   <div class="col-md-12" style="padding: 0; text-align: right;">
     <div class="form-actions right">
+      <!-- <button type="button" class="btn btn-raised btn-primary" translate (click)="findInvalidControls()">
+        <i class="far fa-check-square"></i> Test
+      </button> -->
       <button type="submit" class="btn btn-raised btn-primary" translate>
         <i class="far fa-check-square"></i> Save
       </button>

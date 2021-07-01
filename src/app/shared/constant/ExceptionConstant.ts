@@ -109,7 +109,9 @@ export class ExceptionConstant {
     public static TOTAL_SHARE_MUST_100 = "Total Share % must be 100%";
     public static CANT_CHOOSE_ALREADY_SELFCUST_FOR_THIS_NAP = "This Customer already self customer for this NAP";
     public static SUPPLIER_BANK_ACC_NOT_SET = "Please input a valid Bank Account Data for this supplier";
-    public static MUST_COMPLETE_FAMILY_DATA = "Please complete customer family data"
+    public static MUST_COMPLETE_FAMILY_DATA = "Please complete customer family data";
+    public static COMPLETE_SHAREHOLDER_COMPANY_MODEL = "Please complete all shareholder company model";
+    public static MUST_COMPLETE_SHAREHOLDER_DATA = "Please complete all shareholder data";
 
     public static GS_CODE_NOT_FOUND = "General Setting {0} not found.";
     
