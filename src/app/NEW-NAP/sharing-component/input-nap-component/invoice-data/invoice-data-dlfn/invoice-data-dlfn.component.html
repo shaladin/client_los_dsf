@@ -210,7 +210,7 @@
                       (change)="ChangeDisburseTo($event)">
                       <option value="">-Select One-</option>
                       <option *ngFor="let item of disburseTos" value="{{item.MasterCode}}">
-                        {{item.Descr}}  </option>
+                        {{item.Descr}} </option>
                     </select>
                     <lib-uc-show-errors [control]="InvoiceForm.controls.DisburseTo" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
