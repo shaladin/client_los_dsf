@@ -31,7 +31,7 @@
           </p>
           <form class="form form-horizontal" [formGroup]="MouReviewDataForm"
             (ngSubmit)="MouReviewDataForm.valid && Submit()" #enjiForm="ngForm">
-            <lib-ucapprovalcreate [parentForm]= "MouReviewDataForm" [InputObj]="InputObj" *ngIf="IsReady" (result)="Submit($event)" #ApprovalComponent>
+            <lib-ucapprovalcreate [parentForm]= "MouReviewDataForm" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady" (result)="Submit($event)" #ApprovalComponent>
             </lib-ucapprovalcreate>
 
             <div class="card">

@@ -14,9 +14,11 @@ import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { RefLobObj } from 'app/shared/model/RefLobObj.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-nap-from-simple-lead-detail',
@@ -30,6 +32,7 @@ export class NapFromSimpleLeadDetailComponent implements OnInit {
   ProductOfferingNameIdentifier;
   leadId: number;
   listRefLob: Array<RefMasterObj>;
+  listRefLobObj: Array<RefLobObj>;
   NapAppForm = this.fb.group({
     MouCustId: [''],
     LeadId: [''],
@@ -78,7 +81,7 @@ export class NapFromSimpleLeadDetailComponent implements OnInit {
     RsvField2: [''],
     RsvField3: [''],
     RsvField4: [''],
-    RsvField5: ['']
+    RsvField5: [''],
   });
 
   inputLookupObjCopyProduct;
@@ -109,15 +112,16 @@ export class NapFromSimpleLeadDetailComponent implements OnInit {
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.bizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
 
-    await this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, {Code: CommonConstant.RefMasterTypeCodeLob}).toPromise().then(
-      (response) => {
-        this.listRefLob = response[CommonConstant.RefMasterObjs];
-        this.NapAppForm.patchValue({
-          LobCode: response[CommonConstant.RefMasterObjs][0]['MasterCode'],
-          LobName: response[CommonConstant.RefMasterObjs][0]['Descr']
-        });
-      });
+    let listhttpPost = new Array<any>();
+    listhttpPost.push(this.http.post(URLConstant.GetListActiveRefMasterByRefMasterTypeCode, { Code: CommonConstant.RefMasterTypeCodeLob }));
+    listhttpPost.push(this.http.post(URLConstant.GetListRefLob, {}));
 
+    await forkJoin(listhttpPost).toPromise().then(
+      (response) => {
+        this.listRefLob = response[0][CommonConstant.RefMasterObjs];
+        this.listRefLobObj = response[1][CommonConstant.ReturnObj];
+      }
+    )
     this.MakeLookUpObj();
     await this.GetLead();
     this.NapAppForm.patchValue({
@@ -128,11 +132,11 @@ export class NapFromSimpleLeadDetailComponent implements OnInit {
   }
 
   LobChanged() {
-    let refLob = this.NapAppForm.controls["LobCode"].value; 
+    let refLob = this.listRefLobObj.find((x) => x.LobCode == this.NapAppForm.controls["LobCode"].value);
     if (refLob == undefined) {
       this.bizTemplateCode = null;
     } else {
-      this.bizTemplateCode = refLob
+      this.bizTemplateCode = refLob.BlCode;
     }
     this.arrAddCrit = new Array();
 
@@ -170,7 +174,7 @@ export class NapFromSimpleLeadDetailComponent implements OnInit {
   MakeLookUpObj() {
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
-    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL; 
+    this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
     this.inputLookupObjName.urlEnviPaging = environment.losUrl;
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
@@ -189,7 +193,7 @@ export class NapFromSimpleLeadDetailComponent implements OnInit {
 
   async GetLead() {
 
-    await this.http.post(URLConstant.GetLeadByLeadId, {Id: this.leadId}).toPromise().then(
+    await this.http.post(URLConstant.GetLeadByLeadId, { Id: this.leadId }).toPromise().then(
       (response) => {
         this.leadObj = response as LeadObj;
         this.NapAppForm.patchValue({
@@ -237,19 +241,19 @@ export class NapFromSimpleLeadDetailComponent implements OnInit {
       (response) => {
         this.toastr.successMessage(response["message"]);
         if (this.bizTemplateCode == CommonConstant.CF4W) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": response["AppId"], "from" : "SMPLLEAD" });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CF4W_NAP1], { "AppId": response["AppId"], "from": "SMPLLEAD" });
         }
         if (this.bizTemplateCode == CommonConstant.FL4W) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": response["AppId"], "from" : "SMPLLEAD" });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FL4W_NAP1], { "AppId": response["AppId"], "from": "SMPLLEAD" });
         }
         if (this.bizTemplateCode == CommonConstant.CFRFN4W) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response["AppId"], "from" : "SMPLLEAD" });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_NAP1], { "AppId": response["AppId"], "from": "SMPLLEAD" });
         }
         if (this.bizTemplateCode == CommonConstant.FCTR) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": response["AppId"], "from" : "SMPLLEAD" });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_FCTR_NAP1], { "AppId": response["AppId"], "from": "SMPLLEAD" });
         }
         if (this.bizTemplateCode == CommonConstant.CFNA) {
-          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": response["AppId"], "from" : "SMPLLEAD" });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": response["AppId"], "from": "SMPLLEAD" });
         }
       });
 
