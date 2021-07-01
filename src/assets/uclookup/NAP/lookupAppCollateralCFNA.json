@@ -10,12 +10,22 @@
         "placeholder": "PlaceHolder"
       },
       {
-        "type": "textbox",
+        "type": "currency",
         "name": "CO.COLLATERAL_PRICE_AMT",
         "id": "CollateralValueAmtId",
-        "value": "",
-        "label": "Amount",
-        "placeholder": "PlaceHolder"
+        "value": "0",
+        "label": "Amount >=",
+        "restriction": "gte",
+        "datatype": "numeric"
+      },
+      {
+        "type": "currency",
+        "name": "CO.COLLATERAL_PRICE_AMT",
+        "id": "CollateralValueAmtId",
+        "value": "9999999999",
+        "label": "Amount <=",
+        "restriction": "lte",
+        "datatype": "numeric"
       }
     ],
   "querystring": {

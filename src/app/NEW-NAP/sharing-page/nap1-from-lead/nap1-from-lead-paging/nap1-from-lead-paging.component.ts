@@ -47,7 +47,7 @@ export class Nap1FromLeadPagingComponent implements OnInit {
   makeCriteria() {
     var critObj = new CriteriaObj();
     critObj.restriction = AdInsConstant.RestrictionLike;
-    critObj.propName = 'RL.LOB_CODE';
+    critObj.propName = 'RL.BIZ_TMPLT_CODE';
     critObj.value = this.BizTemplateCode;
     this.arrCrit.push(critObj);
 

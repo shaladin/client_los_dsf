@@ -249,7 +249,7 @@
         {
             "type": "text",
             "position": "left",
-            "property": "MrMouTypeCode"
+            "property": "MouTypeName"
         },
         {
             "type": "action",

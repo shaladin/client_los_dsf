@@ -30,7 +30,7 @@
             "name": "AG.PROD_OFFERING_NAME",
             "id": "ProdOfferingNameId",
             "value": "",
-            "label": "Prod Offering Name",
+            "label": "Product Offering Name",
             "placeholder": "Placeholder"
         }
     ],

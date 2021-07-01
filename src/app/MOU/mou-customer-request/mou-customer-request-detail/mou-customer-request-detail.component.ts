@@ -17,6 +17,7 @@ import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { CustObj } from 'app/shared/model/CustObj.Model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -92,6 +93,7 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     if (this.WfTaskListId > 0)
       this.claimTask();
 
+    this.GetMouTypeDesc();
     var datePipe = new DatePipe("en-US");
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     if (currentUserContext != null && currentUserContext != undefined) {
@@ -140,6 +142,19 @@ export class MouCustomerRequestDetailComponent implements OnInit {
       });
     }
   }
+
+  mouTypeDesc: string = "";
+  GetMouTypeDesc() {
+    var obj: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMouType,
+      MasterCode: this.mouType
+    };
+    this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, obj).subscribe(
+      (response: RefMasterObj) => {
+        this.mouTypeDesc = response.Descr;
+      });
+  }
+
 
   async claimTask() {
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
