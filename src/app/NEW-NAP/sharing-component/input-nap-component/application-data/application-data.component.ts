@@ -203,6 +203,7 @@ export class ApplicationDataComponent implements OnInit {
 
         this.http.post(URLConstant.GetListMouCustByCustNo, {CustNo: this.CustNo, StartDt: this.user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL}).subscribe(
           (response) => {
+            console.log(response);
             this.resMouCustObj = response[CommonConstant.ReturnObj];
           }
         );
@@ -1018,8 +1019,9 @@ export class ApplicationDataComponent implements OnInit {
 
   setTenorOnChange(event) {
     if (event != 'null') {
+      console.log(event);
       this.isFromMouCust = true;
-      let mouCustObj = { MouCustId: event }
+      let mouCustObj = { Id: event }
       this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
         (response) => {
           this.mouCust = response["MouCustObj"];
@@ -1066,7 +1068,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   setTenor(event) {
-    let mouCustObj = { MouCustId: event }
+    let mouCustObj = { Id: event }
     this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.mouCust = response["MouCustObj"];

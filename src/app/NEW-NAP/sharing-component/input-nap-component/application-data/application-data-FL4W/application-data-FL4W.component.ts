@@ -266,7 +266,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   getLeadSrcCodeByLeadId(leadId: number) {
-    this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { LeadId: leadId }).subscribe(
+    this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { Id: leadId }).subscribe(
       resp => {
         this.NapAppModelForm.patchValue({
           MrAppSourceCode: resp.MrLeadSourceCode
@@ -855,7 +855,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   setTenorOnChange(event) {
     if (event != 'null') {
       this.isFromMouCust = true;
-      var mouCustObj = { MouCustId: event }
+      var mouCustObj = { Id: event }
       this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
         (response) => {
           this.mouCust = response["MouCustObj"];
@@ -904,7 +904,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
   setTenor(event) {
 
-    var mouCustObj = { MouCustId: event }
+    var mouCustObj = { Id: event }
     this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.mouCust = response["MouCustObj"];
