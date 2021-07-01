@@ -406,10 +406,14 @@ export class CustMainDataComponent implements OnInit {
 
     if (this.DictRefMaster[this.MasterCustType].length != 0) {
       let custType = this.DictRefMaster[this.MasterCustType][0].Key
-      await this.CustMainDataForm.controls.MrCustTypeCode.patchValue(custType);
+
       if (this.from == 'SMPLLEAD') {
+        await this.CustMainDataForm.controls.MrCustTypeCode.patchValue(CommonConstant.CustTypePersonal);
         this.DictRefMaster[this.MasterCustType] = this.DictRefMaster[this.MasterCustType].filter(x => x.Key == custType);
+      } else {
+        await this.CustMainDataForm.controls.MrCustTypeCode.patchValue(custType);
       }
+
     }
   }
 
@@ -1007,8 +1011,7 @@ export class CustMainDataComponent implements OnInit {
       }
     }
     else {
-      if(this.MrCustModelCode == "")
-      {
+      if (this.MrCustModelCode == "") {
         this.toastr.warningMessage(ExceptionConstant.COMPLETE_SHAREHOLDER_COMPANY_MODEL)
         return;
       }
