@@ -51,8 +51,9 @@ export class PoEntryComponent implements OnInit {
       SupplName: [''],
       BankAccNo: [''],
       TotalDisburse: [0],
-      Notes: [''],
-      PurchaseOrderExpiredDt: ['', [Validators.required]]
+      Notes: ['',[Validators.required]],
+      PurchaseOrderExpiredDt: ['', [Validators.required]],
+      RowVersion: ['']
     });
   }
 
@@ -119,7 +120,8 @@ export class PoEntryComponent implements OnInit {
             BankAccNo: this.VendorBankAcc.BankAccountNo,
             TotalDisburse: this.PurchaseOrderH.TotalPurchaseOrderAmt,
             Notes: this.PurchaseOrderH.Notes,
-            PurchaseOrderExpiredDt: datePipe.transform(this.PurchaseOrderH.PurchaseOrderExpiredDt, "yyyy-MM-dd")
+            PurchaseOrderExpiredDt: datePipe.transform(this.PurchaseOrderH.PurchaseOrderExpiredDt, "yyyy-MM-dd"),
+            RowVersion: this.PurchaseOrderH.RowVersion
           });
         }
       ).catch(
@@ -246,6 +248,7 @@ export class PoEntryComponent implements OnInit {
       requestPurchaseOrderH.Notes = this.PODetailForm.controls.Notes.value;
       requestPurchaseOrderH.NumOfExtension = this.PurchaseOrderH.NumOfExtension;
       requestPurchaseOrderH.MouNo = this.PurchaseOrderH.MouNo;
+      requestPurchaseOrderH.RowVersion = this.PODetailForm.controls.RowVersion.value;
 
       for (const item of this.PurchaseOrderH.PurchaseOrderDList) {
         var purchaseOrderDObj = new PurchaseOrderDObj();
