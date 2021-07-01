@@ -7,6 +7,7 @@ import { ResMouCustObj } from 'app/shared/model/Response/MOU/MouCust/ResMouCustO
 import { ResMouCustClauseObj } from 'app/shared/model/Response/MOU/MouCust/ResMouCustClauseObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ResGetMouCustDlrFindByIdObj } from 'app/shared/model/Response/MOU/MouCust/ResGetMouCustDlrFindByIdObj.model';
 
 @Component({
   selector: 'app-mou-view-detail',
@@ -30,7 +31,7 @@ export class MouViewDetailComponent implements OnInit {
   TenorFrom: number;
   TenorTo: number;
 
-  WopCode: string;
+  WopName: string;
   PlafondAmt: number;
   IsRevolving: boolean;
   TopDays: number;
@@ -50,7 +51,7 @@ export class MouViewDetailComponent implements OnInit {
   MrPaidByCode: string;
   SingleInstCalcMthd: string;
   LinkSupplier:any = "-";
-  MouCustDlrFindData: MouCustDlrFinObj = new MouCustDlrFinObj();
+  MouCustDlrFindData: ResGetMouCustDlrFindByIdObj = new ResGetMouCustDlrFindByIdObj();
 
   constructor(private http: HttpClient) { }
 
@@ -98,7 +99,7 @@ export class MouViewDetailComponent implements OnInit {
           this.DownPaymentToPrcnt = this.mouCustFctr.DownPaymentToPrcnt;
           this.TenorFrom = this.mouCustFctr.TenorFrom;
           this.TenorTo = this.mouCustFctr.TenorTo;
-          this.WopCode = this.mouCustFctr.WopCode;
+          this.WopName = this.mouCustFctr.WopName;
           this.TopDays = this.mouCustFctr.TopDays;
           this.InterestRatePrcnt = this.mouCustFctr.InterestRatePrcnt;
           this.RetentionPrcnt = this.mouCustFctr.RetentionPrcnt;
@@ -117,10 +118,9 @@ export class MouViewDetailComponent implements OnInit {
         }
         else if (this.MouType == CommonConstant.FINANCING)
         {
-        this.http.post(URLConstant.GetMouCustDlrFindById, this.ReqByIdObj).subscribe(
+        this.http.post(URLConstant.GetMouCustDlrWithCustVendorNameFindById, this.ReqByIdObj).subscribe(
           (responses) => {
-            console.log(responses)
-            this.MouCustDlrFindData.WopCode = responses["WopCode"];
+            this.MouCustDlrFindData.WopName = responses["WopName"];
             this.MouCustDlrFindData.TopDays = responses["TopDays"];
             this.MouCustDlrFindData.TopInterestRatePrcnt = responses["TopInterestRatePrcnt"];
             this.MouCustDlrFindData.PayFreqCode = responses["PayFreqCode"];
@@ -138,6 +138,10 @@ export class MouViewDetailComponent implements OnInit {
             this.MouCustDlrFindData.DealerCustNo = responses["DealerCustNo"];
             this.MouCustDlrFindData.Notes = responses["Notes"];
             this.MouCustDlrFindData.MaximumExtendTimes = responses["MaximumExtendTimes"];
+            this.MouCustDlrFindData.DealerName = responses["DealerName"];
+            this.MouCustDlrFindData.DealerCustName = responses["DealerCustName"];
+            this.MouCustDlrFindData.ManufacturerName = responses["ManufacturerName"];
+            this.MouCustDlrFindData.ManufacturerCustName = responses["ManufacturerCustName"];
           })
         }
       })
