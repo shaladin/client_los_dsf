@@ -209,7 +209,7 @@ export class CustMainDataComponent implements OnInit {
       await this.getCustMainData();
     }
 
-    
+
   }
 
   async initcustMainDataMode() {
@@ -249,7 +249,7 @@ export class CustMainDataComponent implements OnInit {
         this.isIncludeCustRelation = true;
         this.custDataObj.IsShareholder = true;
         this.subjectTitle = 'Shareholder';
-        if(this.MrCustTypeCode == CommonConstant.CustTypeCompany){
+        if (this.MrCustTypeCode == CommonConstant.CustTypeCompany) {
           //note: dari html cmn company yang ditampilkan
           this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
           this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
@@ -404,14 +404,16 @@ export class CustMainDataComponent implements OnInit {
         }
       });
 
-    if (this.DictRefMaster[this.MasterCustType].length != 0) await this.CustMainDataForm.controls.MrCustTypeCode.patchValue(this.DictRefMaster[this.MasterCustType][0].Key);
-    if (this.DictRefMaster[this.MasterCustType].length != 0 && this.from == 'SMPLLEAD') {
-      this.CustMainDataForm.controls.MrCustTypeCode.patchValue(CommonConstant.CustTypePersonal)
-      for (var i = 0; this.DictRefMaster[this.MasterCustType].length != 0; i++) {
-        if (this.DictRefMaster[this.MasterCustType][i].Key != CommonConstant.CustTypePersonal) {
-          this.DictRefMaster[this.MasterCustType].splice(i, 1);
-        }
+    if (this.DictRefMaster[this.MasterCustType].length != 0) {
+      let custType = this.DictRefMaster[this.MasterCustType][0].Key
+
+      if (this.from == 'SMPLLEAD') {
+        await this.CustMainDataForm.controls.MrCustTypeCode.patchValue(CommonConstant.CustTypePersonal);
+        this.DictRefMaster[this.MasterCustType] = this.DictRefMaster[this.MasterCustType].filter(x => x.Key == custType);
+      } else {
+        await this.CustMainDataForm.controls.MrCustTypeCode.patchValue(custType);
       }
+
     }
   }
 
@@ -474,8 +476,8 @@ export class CustMainDataComponent implements OnInit {
         } else {
           this.custTypeChange(CommonConstant.CustTypePersonal, true);
         }
-          
-        if(this.MrCustTypeCode == CommonConstant.CustTypeCompany && this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder){
+
+        if (this.MrCustTypeCode == CommonConstant.CustTypeCompany && this.custMainDataMode == CommonConstant.CustMainDataModeMgmntShrholder) {
           //note: dari html cmn company yang ditampilkan
           this.CustMainDataForm.controls.EstablishmentDt.setValidators([Validators.required]);
           this.CustMainDataForm.controls.EstablishmentDt.updateValueAndValidity();
@@ -494,7 +496,7 @@ export class CustMainDataComponent implements OnInit {
       this.custModelReqObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustModel;
       this.custModelReqObj.MappingCode = this.MrCustTypeCode;
       this.http.post(URLConstant.GetListActiveRefMasterWithMappingCodeAll, this.custModelReqObj).subscribe(
-        (response : ResListKeyValueObj) => {
+        (response: ResListKeyValueObj) => {
           this.CustModelObj = response[CommonConstant.ReturnObj];
         }
       );
@@ -1009,8 +1011,7 @@ export class CustMainDataComponent implements OnInit {
       }
     }
     else {
-      if(this.MrCustModelCode == "")
-      {
+      if (this.MrCustModelCode == "") {
         this.toastr.warningMessage(ExceptionConstant.COMPLETE_SHAREHOLDER_COMPANY_MODEL)
         return;
       }

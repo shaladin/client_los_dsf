@@ -101,9 +101,9 @@
 
                 <div class="form-group row" *ngIf="BizTemplateCode == 'FL4W'">
                   <!-- MOU Cust -->
-                  <label class="col-md-2 adInsLabel" translate>MOU Customer</label>
-                  <div class="col-md-4">
-                    <select class="form-control adInsInput" style="width: auto"
+                  <label class="col-md-4 adInsLabel" translate>MOU Customer</label>
+                  <div class="col-md-8">
+                    <select class="form-control adInsInput" style="width: 100%"
                       (click)="setTenorOnChange($event.target.value)" formControlName="MouCustId">
                       <option value=null>None</option>
                       <option *ngFor="let it of resMouCustObj" [value]="it.Key">

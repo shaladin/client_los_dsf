@@ -143,13 +143,13 @@ export class LegalDocDetailComponent implements OnInit {
     let expDt = new Date(this.LegalDocForm.get("DocExpiredDt").value);
     if (bzDt > expDt && bzDt != expDt) {
       this.toastr.warningMessage(ExceptionConstant.EXPIRED_DATE_CANNOT_LESS_THAN + this.MaxBusinessDt);
-      flag = false;
+      flag = true;
     }
 
     bzDt.setDate(bzDt.getDate() + 1);
     if (bzDt < issueDt && bzDt != issueDt) {
       this.toastr.warningMessage(ExceptionConstant.ISSUED_DATE_CANNOT_MORE_THAN + this.MaxBusinessDt);
-      flag = false;
+      flag = true;
     }
 
     if (issueDt.getDate() > expDt.getDate()) {

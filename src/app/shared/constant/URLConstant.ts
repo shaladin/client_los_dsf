@@ -741,8 +741,8 @@ export class URLConstant {
   public static GetListActiveLob = environment.FoundationR3Url + "/RefLob/GetListKeyValueActiveByCode";
 
   //CUST
-  public static GetCustByCustNo = environment.FoundationR3Url + "/Cust/GetCustByCustNo";  
-  public static GetCustByCustId = environment.FoundationR3Url + "/Cust/GetCustByCustId";  
+  public static GetCustByCustNo = environment.FoundationR3Url + "/Cust/GetCustByCustNo";
+  public static GetCustByCustId = environment.FoundationR3Url + "/Cust/GetCustByCustId";
   public static GetCustPersonalByCustId = environment.FoundationR3Url + "/CustPersonal/GetCustPersonalByCustId";
   public static GetCustCompanyByCustId = environment.FoundationR3Url + "/CustCompany/GetCustCompanyByCustId";
   public static GetCustAddrByMrCustAddrType = environment.FoundationR3Url + "/CustAddr/GetCustAddrByMrCustAddrType";
@@ -760,7 +760,7 @@ export class URLConstant {
   public static GetAppCustHighlightCommentByAppNo = environment.losUrl + "/AppCust/GetAppCustHighlightCommentByAppNo";
   public static GetAppCustHighlightCommentByAppId = environment.losUrl + "/AppCust/GetAppCustHighlightCommentByAppId";
 
-  
+
   //CUST DATA COMPANY
   public static AddEditCustDataCompany = environment.losUrl + "/AppCust/AddEditCustDataCompany";
   public static GetListAppCustCompanyFinDataByAppCustId = environment.losUrl + "/AppCustCompanyFinData/GetListAppCustCompanyFinDataByAppCustId";
@@ -845,7 +845,7 @@ export class URLConstant {
   public static DeleteAppCustPersonalContactPerson = environment.losUrl + "/AppCustPersonalContactPerson/DeleteAppCustPersonalContactPerson";
   public static GetAppCustPersonalDataAndSpouseByAppId = environment.losUrl + "/AppCust/GetAppCustPersonalDataAndSpouseByAppCustId";
   public static GetAppCustPersonalByAppCustId = environment.losUrl + "/AppCust/GetAppCustPersonalByAppCustId";
-  
+
   //CUST DATA COMPANY
   public static GetCustDataForViewByAppId = environment.losUrl + "/AppCust/GetCustDataForViewByAppId";
   public static GetCustDataPersonalForViewByAppId = environment.losUrl + "/AppCust/GetCustDataPersonalForViewByAppId";
@@ -1035,6 +1035,7 @@ export class URLConstant {
   //APP INSURANCE
   public static ExecuteInsRateRule = environment.losUrl + "/AppIns/ExecuteInsRateRule";
   public static CalculateInsurance = environment.losUrl + "/AppIns/CalculateInsurance";
+  public static GetCuCoInsLength = environment.losUrl + "/AppIns/GetCuCoInsLength";
 
   //AGREEMENT DOC
   public static GetListAgrmntDocByAgrmntId = environment.losUrl + "/AgrmntDoc/GetListAgrmntDocByAgrmntId"
@@ -1654,6 +1655,8 @@ export class URLConstant {
   public static GetRefBehaviourByBehaviourTypeCode = environment.losUrl + "/RefBehaviour/GetRefBehaviourByBehaviourTypeCode";
 
   //REF LOB
+  public static GetRefLobByLobCode = environment.FoundationR3Url + "/RefLob/GetRefLobByLobCode";
+  public static GetListRefLob = environment.FoundationR3Url + "/RefLob/GetListRefLob";
   public static GetListKvpInstSchmByLobCode = environment.losUrl + "/InstSchmMap/GetListKvpInstSchmByLobCode";
   public static GetKvpRefFinMapByLobCode = environment.losUrl + "/RefFinMap/GetKvpRefFinMapByLobCode";
 

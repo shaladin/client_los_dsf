@@ -286,7 +286,7 @@ export class DocSignerDetailComponent implements OnInit {
       this.inputLookupAppCustCompanyShareHolder1Obj.jsonSelect = { MgmntShrholderName: this.ResponseAgrmntSignerObj.AppCustCompanyMgmntShrholder1Name };
     }
 
-    if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.FCTR) {
+    if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.FCTR || this.BizTemplateCode == CommonConstant.DF) {
       this.inputLookupBranchEmpObj.isRequired = false;
       this.isHidden = true;
     }

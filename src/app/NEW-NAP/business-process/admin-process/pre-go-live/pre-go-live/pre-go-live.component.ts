@@ -76,7 +76,7 @@ export class PreGoLiveComponent implements OnInit {
   IsGSAddInerestExists: boolean = false;
   ListRmAddInterestPaidByCode: Array<KeyValueObj>;
   BizTemplateCode: string = "";
-
+  businessDt: any;
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PGL_PAGING;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -96,6 +96,7 @@ export class PreGoLiveComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void>{
+    this.businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     let reqGetRfaLogByTrxNoAndApvCategoryObj = new ReqGetRfaLogByTrxNoAndApvCategoryObj();
     reqGetRfaLogByTrxNoAndApvCategoryObj.TrxNo = this.AgrmntNo;
     reqGetRfaLogByTrxNoAndApvCategoryObj.ApvCategory = CommonConstant.ApvCategoryPreGoLive;
