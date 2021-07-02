@@ -164,23 +164,22 @@
           </div>
         </div>
       </div>
-    </div>
-    <br>
-
-    <!-- Question Answer  -->
-    <div *ngIf="IsVerfDetail">
-      <form>
-        <div class="form-body" *ngFor="let QuestionGrpList of VerfResultDListObj; let i = index">
-          <h4 class="form-section card-title" translate>
-            <i class="ft-file-text"></i>{{QuestionGrpList.VerfQuestionGrpName}}
-          </h4>
-          <div class="form-group row" *ngFor="let QRList of QuestionGrpList.VerResultList; let j = index">
-            <label class="col-md-3" translate>{{QRList.VerfQuestionText}} </label>
-            <label class="col-md-5" translate>{{QRList.Answer}} </label>
-            <label class="col-md-4" translate>{{QRList.Notes}} </label>
+      <br>
+      <!-- Question Answer  -->
+      <div *ngIf="IsVerfDetail">
+        <form>
+          <div class="form-body" *ngFor="let QuestionGrpList of VerfResultDListObj; let i = index">
+            <h4 class="form-section card-title" translate>
+              <i class="ft-file-text"></i>{{QuestionGrpList.VerfQuestionGrpName}}
+            </h4>
+            <div class="form-group row" *ngFor="let QRList of QuestionGrpList.VerResultList; let j = index">
+              <label class="col-md-3" translate>{{QRList.VerfQuestionText}} </label>
+              <label class="col-md-5" translate>{{QRList.Answer}} </label>
+              <label class="col-md-4" translate>{{QRList.Notes}} </label>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </div>
