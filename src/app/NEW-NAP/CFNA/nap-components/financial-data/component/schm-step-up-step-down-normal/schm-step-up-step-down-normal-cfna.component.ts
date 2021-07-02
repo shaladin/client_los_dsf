@@ -36,7 +36,7 @@ export class SchmStepUpStepDownNormalCFNAComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadDDLStepUpStepDownInputType();
-    if (this.AppId != null) {
+    if (this.AppId != 0) {
       this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
         (response) => {
           this.result = response;
