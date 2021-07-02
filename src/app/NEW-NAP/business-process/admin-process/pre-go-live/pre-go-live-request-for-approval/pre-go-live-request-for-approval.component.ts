@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { FormBuilder, Validators, FormArray, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { RFAPreGoLiveObj } from 'app/shared/model/RFAPreGoLiveObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
@@ -31,6 +31,7 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   InputObj: UcInputRFAObj = new UcInputRFAObj(this.cookieService);
   IsReady: boolean;
+  BizTemplateCode: string;
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) {
@@ -54,8 +55,14 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
   });
 
   async ngOnInit() {
+    await this.GetBizTemplateCode();
+    if(this.BizTemplateCode == CommonConstant.FCTR) {
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLiveApprovalFCTR.json";
+    }
+    else {
+      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLiveApproval.json";
+    }
 
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLiveApproval.json";
     await this.LoadRefReason();
     this.initInputApprovalObj();
   }
@@ -108,6 +115,18 @@ export class PreGoLiveRequestForApprovalComponent implements OnInit {
     this.InputObj.Reason = this.itemReason;
     this.InputObj.TrxNo = this.AgrmntNo
     this.IsReady = true;
+  }
+
+  async GetBizTemplateCode(){
+    await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
+      (response) => {
+          this.BizTemplateCode = response['BizTemplateCode'];
+      }
+    ).catch(
+        (error) => {
+            console.log(error);
+        }
+    );
   }
 
 }

@@ -38,6 +38,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
   RequestRFAObj: any;
   private createComponent: UcapprovalcreateComponent;
   ApprovalCreateOutput: any;
+  RFAInfo: Object = new Object();
 
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
     if (content) {
@@ -66,8 +67,9 @@ export class CreditApvResultExtDetailComponent implements OnInit {
 
   SaveForm() {
     this.ApprovalCreateOutput = this.createComponent.output();
+    this.RFAInfo = {RFAInfo: this.CrdApvRestExtForm.controls.RFAInfo.value};
     if (this.ApprovalCreateOutput != undefined) {
-      this.RequestRFAObj = this.ApprovalCreateOutput;
+      // this.RequestRFAObj = this.ApprovalCreateOutput;
 
       let obj = {
         AppId: this.AppId,
@@ -76,7 +78,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
 
       let sendObj = {
         RequestPurchaseOrderExtensionObj: obj,
-        RequestRFAObj: this.RequestRFAObj
+        RequestRFAObj: this.RFAInfo
       }
 
       this.http.post(URLConstant.SubmitReqNewExpDateApv, sendObj).subscribe(
@@ -103,7 +105,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
       }
     );
 
-    await this.http.post(URLConstant.GetAppById, { AppId: this.AppId }).toPromise().then(
+    await this.http.post(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
       response => {
         this.AppNo = response["AppNo"]
       }
@@ -143,18 +145,7 @@ export class CreditApvResultExtDetailComponent implements OnInit {
       "TypeCode": "CR_APV_RES_EXP_TYPE",
       "Attributes": Attributes,
     };
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
-    this.InputObj.OfficeCode = currentUserContext[CommonConstant.OFFICE_CODE];
     this.InputObj.ApvTypecodes = [TypeCode];
-    this.InputObj.EnvUrl = environment.FoundationR3Url;
-    this.InputObj.PathUrlGetSchemeBySchemeCode = URLConstant.GetSchemesBySchemeCode;
-    this.InputObj.PathUrlGetCategoryByCategoryCode = URLConstant.GetRefSingleCategoryByCategoryCode;
-    this.InputObj.PathUrlGetAdtQuestion = URLConstant.GetRefAdtQuestion;
-    this.InputObj.PathUrlGetPossibleMemberAndAttributeExType = URLConstant.GetPossibleMemberAndAttributeExType;
-    this.InputObj.PathUrlGetApprovalReturnHistory = URLConstant.GetApprovalReturnHistory;
-    this.InputObj.PathUrlCreateNewRFA = URLConstant.CreateNewRFA;
-    this.InputObj.PathUrlCreateJumpRFA = URLConstant.CreateJumpRFA;
     this.InputObj.CategoryCode = CommonConstant.CAT_CODE_APV_RES_EXP_D;
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CR_APV_RES_EXP_D;
     this.InputObj.Reason = this.listReason;
