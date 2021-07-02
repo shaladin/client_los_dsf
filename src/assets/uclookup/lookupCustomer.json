@@ -17,6 +17,21 @@
         "value": "",
         "label": "Customer Name",
         "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "C.TAX_ID_NO",
+        "id": "TaxIdNoId",
+        "value": "",
+        "label": "NPWP No",
+        "placeholder": ""
+      },{
+        "type": "textbox",
+        "name": "CGC.CUST_NAME",
+        "id": "MemberGroupNAmeId",
+        "value": "",
+        "label": "Customer Group Name",
+        "placeholder": ""
       }
     ],
     "querystring": {
@@ -46,6 +61,12 @@
             "name": "B.ADDR"
         },
         {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Group Name",
+            "name": "CGC.CUST_NAME"
+        },
+        {
             "type": "label",
             "position": "center",
             "label": "Select"
@@ -66,6 +87,11 @@
             "type": "text",
             "position": "left",
             "property": "FullAddr"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustGroupName"
         },
         {
             "type": "action",

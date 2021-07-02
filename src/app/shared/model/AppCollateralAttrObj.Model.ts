@@ -1,9 +1,9 @@
 export class AppCollateralAttrObj{
-    AppCollateralAttrId: any;
-    AppCollateralId: any;
-    CollateralAttrCode: any;
-    CollateralAttrName: any;
-    AttrValue: any;
-    RowVersion: any;
+    AppCollateralAttrId: number;
+    AppCollateralId: number;
+    CollateralAttrCode: string;
+    CollateralAttrName: string;
+    AttrValue: string;
+    RowVersion: string;
     constructor() { this.AppCollateralAttrId = 0, this.RowVersion = "" }
 }

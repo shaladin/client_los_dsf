@@ -7,6 +7,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ViewAppCustDetailComponent } from '../view-app-cust-detail/view-app-cust-detail.component';
 import { ResAppCustAddrForViewObj, ResAppCustCompletionObj, ResAppCustForViewObj, ResAppCustGrpForViewObj, ResCustDataPersonalForViewObj } from 'app/shared/model/Response/View/ResCustDataForViewObj.model';
 import { ResAppCustBankAccForViewObj } from 'app/shared/model/Response/View/ResAppCustBankAccForViewObj.model';
+import { AppCustSocmedObj } from 'app/shared/model/AppCustSocmedObj.Model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-view-app-cust-data-completion-personal',
@@ -23,7 +25,6 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
   viewJobDataEmpObj:  UcViewGenericObj = new UcViewGenericObj();
   viewJobDataSmeObj:  UcViewGenericObj = new UcViewGenericObj();
   viewJobDataNonProfObj:  UcViewGenericObj = new UcViewGenericObj();
-  viewFinDataObj:  UcViewGenericObj = new UcViewGenericObj();
   viewEmergencyContactObj:  UcViewGenericObj = new UcViewGenericObj();
 
   customerTitle: string;
@@ -42,6 +43,12 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
   appCustBankAccObjs: Array<ResAppCustBankAccForViewObj> = new Array<ResAppCustBankAccForViewObj>();
   appCustGrpObjs: Array<ResAppCustGrpForViewObj> = new Array<ResAppCustGrpForViewObj>();
   appCustFamilyObjs: Array<ResAppCustCompletionObj> = new Array<ResAppCustCompletionObj>();
+
+  TitleCustFinDataSuffix:string = '';
+  IsShowCustFinDataDetail:boolean = false;
+  ListCustPersonalFinData : Array<object> = new Array<object>();
+  CustPersonalFinData : object;
+  currentCustFinDataIndex: number;
 
   constructor(private http: HttpClient, private modalService: NgbModal) {
   }
@@ -68,10 +75,6 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
     this.viewJobDataNonProfObj.viewInput = "./assets/ucviewgeneric/viewAppCustPersonalJobDataNonProf.json";
     this.viewJobDataNonProfObj.viewEnvironment = environment.losUrl;
     this.viewJobDataNonProfObj.whereValue = this.arrValue;
-
-    this.viewFinDataObj.viewInput = "./assets/ucviewgeneric/viewAppCustPersonalFinData.json";
-    this.viewFinDataObj.viewEnvironment = environment.losUrl;
-    this.viewFinDataObj.whereValue = this.arrValue;
 
     this.viewEmergencyContactObj.viewInput = "./assets/ucviewgeneric/viewAppCustEmrgncCntct.json";
     this.viewEmergencyContactObj.viewEnvironment = environment.losUrl;
@@ -100,6 +103,7 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
         this.appCustBankAccObjs = response.ListAppCustBankAccObj;
         this.appCustGrpObjs = response.ListAppCustGrpObj;
         this.appCustFamilyObjs = response.ListAppCustFamilyObj;
+        this.ListCustPersonalFinData = response["AppCustPersonalFinDataObjs"];
 
         // filter family yg punya relationship
         if(this.appCustFamilyObjs && this.appCustFamilyObjs.length > 0) {
@@ -140,5 +144,20 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
   closeDetailHandler()
   {
     this.isShowDetail = false;
+  }
+  
+  showDetailCustFinData(index:number){
+    let datePipe = new DatePipe("en-US");
+    this.currentCustFinDataIndex = index;
+    this.CustPersonalFinData = this.ListCustPersonalFinData[this.currentCustFinDataIndex];
+    this.TitleCustFinDataSuffix = 'Date as of '+datePipe.transform(this.CustPersonalFinData['DateAsOf'], 'dd-MMM-yyyy')
+    this.IsShowCustFinDataDetail = true;
+  }
+  
+  hideDetailCustFinData()
+  {
+    this.TitleCustFinDataSuffix = '';
+    this.IsShowCustFinDataDetail = false;
+    this.CustPersonalFinData = null;
   }
 }

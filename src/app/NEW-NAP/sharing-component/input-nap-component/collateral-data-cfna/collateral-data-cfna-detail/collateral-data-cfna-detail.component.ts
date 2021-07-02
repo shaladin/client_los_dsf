@@ -29,6 +29,9 @@ import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { String } from 'typescript-string-operations';
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
+import { AppCollateralRegistrationObj } from 'app/shared/model/AppCollateralRegistrationObj.Model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { AssetTypeSerialNoLabelCustomObj } from 'app/shared/model/AssetTypeSerialNoLabelCustomObj.Model';
 
 @Component({
   selector: 'app-collateral-data-cfna-detail',
@@ -41,7 +44,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   @Input() isSingleAsset = true;
   @Input() AppId: number = 0;
   @Input() AppCollateralId: number = 0;
-  @Output() outputValue: EventEmitter<number> = new EventEmitter<any>();
+  @Output() outputValue: EventEmitter<number> = new EventEmitter<number>();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
   inputLookupExistColl: InputLookupObj = new InputLookupObj();
@@ -54,7 +57,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
 
   isAssetAttrReady: boolean = false;
   AppCollateralAttrObjs: Array<AppCollateralAttrCustomObj>;
-  AppCollateralAttrObj:any;
+  AppCollateralAttrObj: Array<AppCollateralAttrCustomObj>;
   AppCustObj: AppCustObj = new AppCustObj();
   AppCustAddrObj: AppCustAddrObj = new AppCustAddrObj();
   AppCustCompanyObj: AppCustCompanyObj = new AppCustCompanyObj();
@@ -64,12 +67,12 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   appCollateralDoc: AppCollateralDocObj = new AppCollateralDocObj();
   appCollateralObj: AppCollateralObj = new AppCollateralObj();
   editAppCollateralObj: AppCollateralObj = new AppCollateralObj();
-  collateralRegistrationObj: any;
-  editCollateralRegistrationObj: any;
+  collateralRegistrationObj: AppCollateralRegistrationObj;
+  editCollateralRegistrationObj: AppCollateralRegistrationObj;
   criteriaList: Array<CriteriaObj>;
   criteriaObj: CriteriaObj;
   items: FormArray;
-  SerialNoList: any;
+  SerialNoList: Array<AssetTypeSerialNoLabelCustomObj>;
   isUsed: boolean = true;
   isCopy: boolean = true;
   isExisting : boolean = false;
@@ -148,7 +151,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     this.GetLegalAddr();
     this.initUcLookup();
     await this.initDropdownList();
-    this.getAppData();
+    await this.getAppData();
 
     if (this.mode == "edit") {
       await this.getAppCollData(0, this.AppCollateralId, false, false, new Object());
@@ -350,8 +353,8 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     }
   }
 
-  getAppData() {
-    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
+  async getAppData() {
+    await this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
       (response: AppObj) => {
         this.AppData = response;
         this.http.post(URLConstant.GetAppCustByAppId, { Id: this.AppId }).toPromise().then(
@@ -372,6 +375,11 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
               this.inputLookupExistColl.addCritInput = this.criteriaList;
             }
             this.inputLookupExistColl.isReady = true;
+
+            if(this.AppCustData.MrCustTypeCode == CommonConstant.CustTypeCompany){
+              this.AddCollForm.controls.OwnerMobilePhnNo.clearValidators();
+              this.AddCollForm.controls.OwnerMobilePhnNo.updateValueAndValidity();
+            }
           }
         ).catch(
           (error) => {
@@ -408,7 +416,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   }
 
   getRefAssetDocList(isInit: boolean) {
-    this.http.post(URLConstant.GetRefAssetDocList, { AssetTypeCode: this.AssetTypeCode }).subscribe(
+    this.http.post(URLConstant.GetRefAssetDocList, { Code: this.AddCollForm.get("AssetTypeCode").value }).subscribe(
       (response) => {
         console.log("getRefAssetDocList: " + JSON.stringify(response));
         if (response[CommonConstant.ReturnObj].length > 0) {
@@ -735,7 +743,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     }
 
     this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {Code: AssetTypeCode }).subscribe(
-      (response: any) => {
+      (response: GenericListObj) => {
         while (this.items.length) {
           this.items.removeAt(0);
         }
@@ -1002,6 +1010,9 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     for (const key in this.appCollateralDataObj.AppCollateralRegistrationObj) {
       console.log(key + ": " + this.appCollateralDataObj.AppCollateralRegistrationObj[key]);
       if(key === "Id" || key === "AppCollateralRegistrationId" || key === "AppCollateralId" || key === "RowVersion" || key === "Notes"){
+        continue;
+      }
+      if(key === "OwnerMobilePhnNo" && this.AppCustData.MrCustTypeCode == CommonConstant.CustTypeCompany){
         continue;
       }
       if(!this.appCollateralDataObj.AppCollateralRegistrationObj[key]){

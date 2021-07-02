@@ -1,0 +1,262 @@
+<div class="row text-left">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="px-3">
+          <div class="card-header header-title">
+            <div class="row">
+              <div class="col-md-8">
+                <h4 class="card-title" id="horz-layout-colored-controls" translate> Edit App After Approval Detail </h4>
+              </div>
+            </div>
+          </div>
+
+          <form class="form form-horizontal" [formGroup]="EditAppForm" #formDirective="ngForm" (ngSubmit)="EditAppForm.valid  && SaveForm()"
+            #enjiForm="ngForm">
+            <app-agr-main-info [arrValue]="arrValue"></app-agr-main-info>
+
+            <div *ngIf="isDetail">
+              <lib-ucSubsection [id]="'AssetListId'" [title]="'Asset List'" [panel]="'AssetList'">
+              </lib-ucSubsection>
+              <div class="form-body" id="AssetList">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th class="text-left"><span translate class="thead-header">Asset Name</span></th>
+                      <th class="text-left"><span translate class="thead-header">Supplier Branch</span></th>
+                      <th class="text-left"><span translate class="thead-header">Serial No 1</span></th>
+                      <th class="text-left"><span translate class="thead-header">Serial No 2</span></th>
+                      <th class="text-left"><span translate class="thead-header">Serial No 3</span></th>
+                      <th class="text-left"><span translate class="thead-header">Serial No 4</span></th>
+                      <th class="text-left"><span translate class="thead-header">Serial No 5</span></th>
+                      <th class="text-center"><span translate class="thead-header">Edit</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of agrmntDataForEditAppAftApv.AppAssetObjs; let i = index">
+                      <td class="text-left">{{item.FullAssetName}}</td>
+                      <td class="text-left">{{item.SupplName}}</td>
+                      <td class="text-left">{{item.SerialNo1}}</td>
+                      <td class="text-left">{{item.SerialNo2}}</td>
+                      <td class="text-left">{{item.SerialNo3}}</td>
+                      <td class="text-left">{{item.SerialNo4}}</td>
+                      <td class="text-left">{{item.SerialNo5}}</td>
+                      <a class="success p-0" (click)="editAssetData(item)">
+                        <i class="ft-edit-2 font-medium-3 mr-2"></i>
+                      </a>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <lib-ucSubsection [id]="'SupplierListId'" [title]="'Supplier List'" [panel]="'SupplierList'">
+              </lib-ucSubsection>
+              <div class="form-body" id="SupplierList">
+                <table class="table table-responsive-md text-center table-hover">
+                  <thead>
+                    <tr class="table-header">
+                      <th class="text-left"><span translate class="thead-header">Supplier Code</span></th>
+                      <th class="text-left"><span translate class="thead-header">Supplier Name</span></th>
+                      <th class="text-left"><span translate class="thead-header">Purchase Order No</span></th>
+                      <th class="text-center"><span translate class="thead-header">Edit</span></th>
+                    </tr>
+                  </thead>
+                  <tbody *ngIf = "agrmntDataForEditAppAftApv.PurchaseOrderHObjs?.length == 0">
+                    <tr>
+                        <td colspan="100%">No Data Available</td>
+                    </tr>
+                </tbody>
+                  <tbody>
+                    <tr *ngFor="let item of agrmntDataForEditAppAftApv.PurchaseOrderHObjs; let i = index">
+                      <td class="text-left">{{item.SupplCode}}</td>
+                      <td class="text-left">{{item.SupplName}}</td>
+                      <td class="text-left">{{item.PurchaseOrderNo}}</td>
+                      <a class="success p-0" (click)="editPoData(item)">
+                        <i class="ft-edit-2 font-medium-3 mr-2"></i>
+                      </a>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+                <lib-ucSubsection [id]="'SupplierCommissionId'" [title]="'Supplier Commission Data'" [panel]="'SupplierCommission'">
+                </lib-ucSubsection>
+                <div formArrayName="SupplierCommissionList">
+                  <div class="form-body" id="SupplierCommission">
+                    <div *ngFor="let CommData of EditAppForm.controls['SupplierCommissionList']['controls']; let i = index" [formGroupName]="i">
+                      <div [formGroupName]="i" class="row">
+                        <div class="col-md-6">
+                          <div class="row">
+                            <label class="col-md-6 adInsLabel"> Supplier Name</label>
+                            <label class="col-md-6 adInsLabel"> {{CommData.controls.CommissionRecipientRefNoDesc.value}} </label>
+                          </div>
+                          <div class="row">
+                            <label class="col-md-6 adInsLabel"> Supplier Bank Account</label>
+                            <div class="col-md-6">
+                                <select class="form-control adInsInput" (change)="CommBankAccHandler($event, CommData,'SUPPL')" [value]="CommData.controls.CurrentVendorBankAccId.value">
+                                  <option *ngFor="let item of listTempVba[CommData.controls.AgrmntCommissionHId.value]" 
+                                   [value]="item.VendorBankAccId">{{item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo}}</option>
+                                </select>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <label class="col-md-6 adInsLabel"> Total Commission Amount</label>
+                            <label class="col-md-6 adInsLabel"> {{CommData.controls.TotalCommissionAmt.value | number:'.2':'en-US'}} </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <lib-ucSubsection [id]="" [title]="'Supplier Employee Commission Data'" [panel]="'SupplierEmpCommission'">
+                </lib-ucSubsection>
+                <div formArrayName="SupplierEmpCommissionList">
+                  <div class="form-body" id="SupplierEmpCommission">
+                    <div *ngFor="let CommData of EditAppForm.controls['SupplierEmpCommissionList']['controls']; let i = index">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="row">
+                            <label class="col-md-6 adInsLabel"> Supplier Employee Name</label>
+                            <div class="col-md-6">
+                              <!-- <select class="form-control adInsInput" (change)="SupplEmpHandler($event, CommData, i)" [value]="CommData.controls.CommissionRecipientRefNo.value">
+                              <option *ngFor="let item of ContentObjSupplierEmp" [value]="item.Key">{{item.Value}}</option>
+                              </select> -->
+                              <lib-uclookupgeneric width-75-per [lookupInput]="InputLookupSupplEmpObjs[CommData.controls.AgrmntCommissionHId.value]"
+                              [identifier]="'lookupSupplEmp' + CommData.controls.AgrmntCommissionHId.value" [enjiForm]='enjiForm' [parentForm]='EditAppForm' (lookup)="SetSupplEmpVbaData($event, CommData, i)">
+                              </lib-uclookupgeneric>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <label class="col-md-6 adInsLabel"> Supplier Employee Position</label>
+                            <label class="col-md-6 adInsLabel"> {{CommData.controls.CommissionRecipientPositionDesc.value}} </label>
+                          </div>
+                          <div class="row">
+                            <label class="col-md-6 adInsLabel"> Supplier Name</label>
+                            <label class="col-md-6 adInsLabel"> {{CommData.controls.SupplierName.value}} </label>
+                          </div>
+                          <div class="row">
+                            <label class="col-md-6 adInsLabel"> Supplier Employee Bank Account</label>
+                            <div class="col-md-6">
+                              <select class="form-control adInsInput" (change)="CommBankAccHandler($event, CommData,'SUPPLEMP')" [value]="CommData.controls.CurrentVendorBankAccId.value">
+                              <option *ngFor="let item of listTempVba[CommData.controls.AgrmntCommissionHId.value]" [value]="item.VendorBankAccId">{{item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo}}</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <label class="col-md-6 adInsLabel"> Total Commission Amount</label>
+                            <label class="col-md-6 adInsLabel"> {{CommData.controls.TotalCommissionAmt.value | number:'.2':'en-US'}} </label>
+                          </div>
+                          <br><br>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <lib-ucSubsection [id]="" [title]="'Referantor Commission Data'" [panel]="'ReferantorCommission'">
+                </lib-ucSubsection>
+                <div class="form-body" id="ReferantorCommission">
+                  <div *ngFor="let CommData of EditAppForm.controls['SupplierReferantorCommissionList']['controls']; let i = index">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="row">
+                          <label class="col-md-6 adInsLabel"> Referantor Name</label>
+                          <label class="col-md-6 adInsLabel"> {{CommData.controls.CommissionRecipientRefNoDesc.value}} </label>
+                        </div>
+                        <div class="row">
+                          <label class="col-md-6 adInsLabel"> Referantor Bank Account</label>
+                          <div class="col-md-6">
+                            <select class="form-control adInsInput" (change)="CommBankAccHandler($event, CommData,'REF')" [value]="CommData.controls.CurrentVendorBankAccId.value">
+                              <option *ngFor="let item of listTempVba[CommData.controls.AgrmntCommissionHId.value]" [value]="item.VendorBankAccId">{{item.BankName + ' - ' + item.BankAccountName  + ' - ' + item.BankAccountNo}}</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <label class="col-md-6 adInsLabel"> Total Commission Amount</label>
+                          <label class="col-md-6 adInsLabel"> {{CommData.controls.TotalCommissionAmt.value | number:'.2':'en-US'}} </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              
+
+              <lib-ucSubsection [id]= "" [title]="'Notes'" [panel]="'divNotes'">
+              </lib-ucSubsection>
+              <div class="form-body" id="divNotes">
+                <div class="form-group row">
+                  <label class="col-md-2 adins-required-label" translate>Edit Notes</label>
+                  <div class="col-md-4">
+                    <textarea type="text" class="form-control adInsInput" formControlName="Notes"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && EditAppForm.controls.Notes.invalid }"></textarea>
+                    <lib-uc-show-errors [control]="EditAppForm.controls.Notes" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div>
+              <br>
+
+              <!-- <lib-ucSubsection [id]="rfaId" [title]="'Request For Approval'" [panel]="'rfa'">
+              </lib-ucSubsection>
+              <div class="form-body" id="rfa">
+                <div class="form-group row">
+                  <label class="col-md-2 adins-required-label">Approver</label>
+                  <div class="col-md-4">
+                    <lib-ucapproveby [apvBaseUrl]="apvBaseUrl" [parentForm]="EditAppForm" [identifier]="'Approver'"
+                                     [schemeCode]="'CRD_APV_CF'" [enjiForm]="enjiForm" [isRequired]="'true'">
+                    </lib-ucapproveby>
+                    <lib-uc-show-errors [control]="Approver" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  </div>
+                  <label class="col-md-2 adins-required-label" translate>Approval Notes</label>
+                  <div class="col-md-4">
+                    <textarea type="text" class="form-control adInsInput" formControlName="ApprovalNotes"
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && EditAppForm.controls.ApprovalNotes.invalid }"></textarea>
+                    <lib-uc-show-errors [control]="EditAppForm.controls.ApprovalNotes" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
+                  </div>
+                </div>
+              </div> -->
+
+              <lib-ucapprovalcreate [InputObj]="InputObj" [enjiForm]="enjiForm" *ngIf="IsReady" (result)="SaveForm($event)" #ApprovalComponent></lib-ucapprovalcreate>
+
+              <div class="card">
+                <div class="card-body">
+                  <div class="px-3">
+                    <div class="form-actions right">
+                      <button type="button"  class="btn btn-raised btn-warning mr-1" (click)="CancelClick()" translate>
+                          <i class="ft-x"></i> Cancel
+                      </button>
+                      <button type="submit"
+                          class="btn btn-raised btn-primary" translate>
+                          <i class="far fa-check-square"></i> Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+
+            <div *ngIf="isEditAssetData">
+              <app-edit-app-after-approval-asset-data [AppAssetObj]= "selectedAppAssetObj"
+              [AppCollateralObj] = "selectedAppCollateralObj"
+              [AppCollateralRegistrationObj] = "selectedAppCollateralRegistrationObj"
+              [ListAppAssetAttrObjs] = "selectedListAppAssetAttrObjs"
+              [EditedAssetData] = "listEditedAssetData"
+              (outputPage)="getPage($event)">
+            </app-edit-app-after-approval-asset-data>
+            </div>
+
+            <div *ngIf="isEditPoData">
+              <app-edit-app-after-approval-purchase-order-data [PurchaseOrderHObj]="selectedPurchaseOrderHObj"
+                (outputPage)="getPage($event)"></app-edit-app-after-approval-purchase-order-data>
+            </div>
+          
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

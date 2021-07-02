@@ -1,7 +1,7 @@
-
 <div class="card-body">
   <div class="px-3" *ngIf="IsReady">
-    <lib-ucSubsection [id]="'OutstandingAmountInfo' + exposureType + 'Id'" [title]="'Outstanding Amount'" [panel]="'OutstandingAmountInfo' + exposureType">
+    <lib-ucSubsection [id]="'OutstandingAmountInfo' + exposureType + 'Id'" [title]="'Outstanding Amount'"
+      [panel]="'OutstandingAmountInfo' + exposureType">
     </lib-ucSubsection>
     <div [id]="'OutstandingAmountInfo' + exposureType">
       <div class="row">
@@ -31,13 +31,14 @@
             </div>
           </div>
         </div>
-    
+
         <div class="col-md-6 ">
         </div>
       </div>
     </div>
-    
-    <lib-ucSubsection [id]="'MaximumAmountInfo' + exposureType + 'Id'" [title]="'Maximum Amount'" [panel]="'MaximumAmountInfo' + exposureType">
+
+    <lib-ucSubsection [id]="'MaximumAmountInfo' + exposureType + 'Id'" [title]="'Maximum Amount'"
+      [panel]="'MaximumAmountInfo' + exposureType">
     </lib-ucSubsection>
     <div [id]="'MaximumAmountInfo' + exposureType">
       <div class="row">
@@ -59,7 +60,7 @@
             </div>
           </div>
         </div>
-    
+
         <div class="col-md-6 ">
           <div class="row">
             <div class="col-md-6">
@@ -81,7 +82,8 @@
       </div>
     </div>
 
-    <lib-ucSubsection [id]="'NumberOfInfo' + exposureType + 'Id'" [title]="'Number Of'" [panel]="'NumberOfInfo' + exposureType">
+    <lib-ucSubsection [id]="'NumberOfInfo' + exposureType + 'Id'" [title]="'Number Of'"
+      [panel]="'NumberOfInfo' + exposureType">
     </lib-ucSubsection>
     <div [id]="'NumberOfInfo' + exposureType">
       <div class="row">
@@ -127,7 +129,7 @@
             </div>
           </div>
         </div>
-    
+
         <div class="col-md-6">
           <div class="row">
             <div class="col-md-6">
@@ -173,30 +175,71 @@
       </div>
     </div>
 
-    <lib-ucSubsection [id]="'BucketInfo' + exposureType + 'Id'" [title]="'Bucket'" [panel]="'BucketInfo' + exposureType">
+    <lib-ucSubsection [id]="'BucketInfo' + exposureType + 'Id'" [title]="'Bucket'"
+      [panel]="'BucketInfo' + exposureType">
     </lib-ucSubsection>
     <div [id]="'BucketInfo' + exposureType">
-      <table class="table table-responsive-md text-center table-hover">
-        <tr class="table-header">
-          <th style="text-align: left;">
-            <span name='Bucket' translate>
-              <label class="label-control"> Bucket </label>
-            </span>
-          </th>
-          <td style="text-align: right;" *ngFor="let item of ListCrdRvwCustBucketObj; let i = index;">
-            <span translate>
-              <label class="label-control"> {{item.BucketRange}} </label>
-            </span>
-          </td>
-        </tr>
-        <tr>
-          <th style="text-align: left;" translate> Total Past Due </th>
-          <td style="text-align: right;" *ngFor="let item of ListCrdRvwCustBucketObj; let i = index;"> {{item.Value | number:'.2':'en-US'}} </td>
-        </tr>
-      </table>
+      <div class="row">
+        <div class="col-md-6">
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th style="text-align: left;">
+                  <span class="thead-header" name='Bucket' translate>Bucket</span>
+                </th>
+                <th style="text-align: center;">
+                  <span class="thead-header" name='TotalPastDue' translate>Total Past Due</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody *ngIf="ListCrdRvwCustBucketObj.length == 0">
+              <tr>
+                <td colspan="100%">No Data Available</td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr *ngFor="let item of ListCrdRvwCustBucketObj; let i = index; let odd = odd;">
+                <span *ngIf="odd">
+                  <td style="text-align: left;"> {{item.BucketRange}} </td>
+                  <td style="text-align: right;"> {{item.Value | number:'.2':'en-US'}} </td>
+                </span>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-md-6" *ngIf="ListCrdRvwCustBucketObj.length > 0">
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th style="text-align: left;">
+                  <span class="thead-header" name='Bucket' translate>Bucket</span>
+                </th>
+                <th style="text-align: center;">
+                  <span class="thead-header" name='TotalPastDue' translate>Total Past Due</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody *ngIf="ListCrdRvwCustBucketObj.length == 0">
+              <tr>
+                <td colspan="100%">No Data Available</td>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr *ngFor="let item of ListCrdRvwCustBucketObj; let i = index; let even = even;">
+                <span *ngIf="even">
+                  <td style="text-align: left;"> {{item.BucketRange}} </td>
+                  <td style="text-align: right;"> {{item.Value | number:'.2':'en-US'}} </td>
+                </span>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
-    <lib-ucSubsection [id]="'ApplicationAgreementListInfo' + exposureType + 'Id'" [title]="'Application / Agreement List'" [panel]="'ApplicationAgreementListInfo' + exposureType">
+    <lib-ucSubsection [id]="'ApplicationAgreementListInfo' + exposureType + 'Id'"
+      [title]="'Application / Agreement List'" [panel]="'ApplicationAgreementListInfo' + exposureType">
     </lib-ucSubsection>
     <div [id]="'ApplicationAgreementListInfo' + exposureType">
       <table class="table table-responsive-md text-center table-hover">

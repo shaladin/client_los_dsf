@@ -13,7 +13,7 @@ import { CcContactInformationTabComponent } from './cc-contact-information-tab/c
 import { OtherInfoTabComponent } from './other-info-tab/other-info-tab.component';
 import { AttrContentComponentComponent } from './attr-content-component/attr-content-component.component';
 import { BankSectionComponent } from './financial-tab/bank-section/bank-section.component';
-import { NgxCurrencyModule } from "ngx-currency";
+import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
 import { LegalDocTabComponent } from "./legal-doc-tab/legal-doc-tab.component";
 import { LegalDocDetailComponent } from "./legal-doc-tab/legal-doc-detail/legal-doc-detail.component";
 import { FinancialCompanyComponent } from "./financial-tab/financial-company/financial-company.component";
@@ -31,7 +31,8 @@ export const customCurrencyMaskConfig = {
     prefix: "",
     suffix: "",
     thousands: ",",
-    nullable: false
+    nullable: false,
+    inputMode: CurrencyMaskInputMode.FINANCIAL
 };
 @NgModule({
     exports: [

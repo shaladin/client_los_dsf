@@ -13,6 +13,16 @@
     <strong class="fa-stack-1x" style="color: white; font-size: 50%;">{{AppScoreGradeDsrObj?.ScoreValue}}</strong>
   </span>
 </div>
+<div *ngIf="AppScoreGradeDsrObj?.AppScoreGradeId == 0" class="row">
+  <span class="fa-stack fa-4x">
+    <span class="fa fa-stack-1x"></span>
+    <strong class="fa-stack-1x"></strong>
+  </span>
+  <span class="fa-stack fa-4x">
+    <i class="fa fa-circle fa-stack-2x" [ngStyle]="{'color': 'RED'}"></i>
+    <strong class="fa-stack-1x" style="color: white; font-size: 50%;"></strong>
+  </span>
+</div>
 <br>
 <div *ngIf="AppScoreGradeDsrObj?.AppScoreGradeId > 0" class="row">
   <div class="col-md-6">

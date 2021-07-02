@@ -1,0 +1,137 @@
+{
+    "url": "",
+    "title":"Lookup - Agreement Parent",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "A.AGRMNT_NO",
+        "id": "agrmntNoId",
+        "value": "",
+        "label": "Agreement No",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "APP.APP_NO",
+        "id": "appNoId",
+        "value": "",
+        "label": "Application No",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "A.CUST_NAME",
+        "id": "custNameId",
+        "value": "",
+        "label": "Customer Name",
+        "placeholder": ""
+      },
+      {
+        "type": "textbox",
+        "name": "A.PROD_OFFERING_NAME",
+        "id": "prodOfferingNameId",
+        "value": "",
+        "label": "Product Offering",
+        "placeholder": ""
+      },
+      {
+        "type": "datepicker",
+        "datatype": "date",
+        "name": "A.GO_LIVE_DT",
+        "id": "goliveDatelteId",
+        "value": "",
+        "restriction": "Lte",
+        "label": "Golive Date <=",
+        "placeholder": ""
+      },
+      {
+        "type": "datepicker",
+        "datatype": "date",
+        "name": "A.GO_LIVE_DT",
+        "id": "goliveDategteId",
+        "value": "",
+        "restriction": "Gte",
+        "label": "Golive Date <=",
+        "placeholder": ""
+      }
+    ],
+    "querystring": {
+        "name": "lookupAgrmntParent"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "AGREEMENT NO",
+            "name": "A.AGRMNT_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "APPLICATION NO",
+            "name": "APP.APP_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "A.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "PRODUCT OFFERING",
+            "name": "A.PROD_OFFERING_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "GOLIVE DATE",
+            "name": "A.GO_LIVE_DT"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "SELECT"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AgrmntNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "AppNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ProdOfferingName"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "GoLiveDt"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "select",
+                    "property": "AgrmntNo"
+                }
+            ]
+        }
+    ],
+    "propertyId": "AgrmntNo",
+    "propertyName": "AgrmntNo"
+}

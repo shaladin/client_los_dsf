@@ -1,17 +1,17 @@
 export class AgrmntDocObj {
-AgrmntDocId: any;
-AgrmntId : any;
-DocCode: any;
-DocNo: any;
-DocName: any;
-DocDt: any;
-DocNotes: any;
-LastPrintByEmpNo: any;
-NumOfDocPrinted: any;
-MrDocObjectCode: any;
-IsNeedToBePrinted: any;
-LastPrintDt: any;
-RowVersion:any;
+AgrmntDocId: number;
+AgrmntId : number;
+DocCode: string;
+DocNo: string;
+DocName: string;
+DocDt: Date;
+DocNotes: string;
+LastPrintByEmpNo: string;
+NumOfDocPrinted: number;
+MrDocObjectCode: string;
+IsNeedToBePrinted: boolean;
+LastPrintDt: Date;
+RowVersion: string;
 constructor()
 { }
 }  

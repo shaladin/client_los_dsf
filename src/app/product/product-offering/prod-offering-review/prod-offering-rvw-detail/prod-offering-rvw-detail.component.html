@@ -3,9 +3,9 @@
 <div class="card">
   <div class="card-body">
     <div class="px-3">
-      <form class="form form-horizontal" [formGroup]="FormObj" (ngSubmit)="FormObj.valid &&SaveForm()">
+      <form class="form form-horizontal" [formGroup]="FormObj" (ngSubmit)="FormObj.valid &&SaveForm()" #enjiForm="ngForm">
         <div class="form-body">
-          <lib-ucapprovalcreate [parentForm]="FormObj" [InputObj]="InputObj" *ngIf="IsReady" (result)="SaveForm($event)" (callback) ="tesOutput($event)" #ApprovalComponent></lib-ucapprovalcreate>
+          <lib-ucapprovalcreate [parentForm]="FormObj" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady" (result)="SaveForm($event)" (callback) ="tesOutput($event)" #ApprovalComponent></lib-ucapprovalcreate>
           <div class="form-actions right">
             <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" skipLocationChange translate>
               <i class="ft-x"></i> Cancel

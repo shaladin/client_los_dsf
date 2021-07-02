@@ -16,7 +16,7 @@ export class InputLookupAddr{
     isReadonly: boolean 
     isReady: boolean
     ddlEnvironments : any
-    title: any;
+    title: string;
 
     constructor()
     {

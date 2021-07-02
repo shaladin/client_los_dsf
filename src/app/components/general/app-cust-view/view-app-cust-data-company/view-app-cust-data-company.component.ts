@@ -58,7 +58,7 @@ export class ViewAppCustDataCompanyComponent implements OnInit {
   }
 
   async getCustData() {
-    var reqObj = {AppId: this.appId}
+    var reqObj = {AppId: this.appId, IsForNapCompletionVersion: true }
     await this.http.post(URLConstant.GetCustDataCompanyForViewByAppId, reqObj).toPromise().then(
       (response : ResCustDataCompanyForViewObj) => {
         this.appCustObj = response.AppCustObj;

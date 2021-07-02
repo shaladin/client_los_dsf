@@ -9,6 +9,7 @@ export class AppInvoiceFctrObj {
     InvoiceStat: string;
     IsApproved: boolean;
     Notes: string;
+    DisbAmt: number;
     RowVersion: string;
     constructor() {
         this.AppInvoiceFctrId = 0;

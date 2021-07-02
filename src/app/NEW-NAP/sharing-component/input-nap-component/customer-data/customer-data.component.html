@@ -93,6 +93,8 @@
           </app-cust-personal-financial-data>
           <app-cust-bank-account (callbackSubmit)="getAppCustBankAcc($event)" [listBankAcc]="listAppCustBankAcc">
           </app-cust-bank-account>
+          <app-app-cust-asset-old-nap [AppCustId]="AppCustId" (ResponseAppCustAsset)="GetAppCustAsset($event)">
+          </app-app-cust-asset-old-nap>
           <app-cust-job-data [custModelCode]="defCustModelCode"
             [appCustPersonalJobDataObj]="custDataPersonalObj.AppCustPersonalJobDataObj" [enjiForm]="enjiForm"
             [parentForm]="CustDataForm" [identifier]="'jobData'"></app-cust-job-data>
@@ -181,6 +183,8 @@
           </app-cust-company-financial-data>
           <app-cust-bank-account (callbackSubmit)="getAppCustBankAccCompany($event)"
             [listBankAcc]="listAppCustBankAccCompany"></app-cust-bank-account>
+          <app-app-cust-asset-old-nap [AppCustId]="AppCustId" (ResponseAppCustAsset)="GetAppCustAsset($event)">
+          </app-app-cust-asset-old-nap>
           <app-cust-legal-doc (callbackSubmit)="getAppCustLegalDoc($event)" [listLegalDoc]="listLegalDoc">
           </app-cust-legal-doc>
           <app-cust-grp-member [appCustGrpObjs]="custDataCompanyObj.AppCustGrpObjs" [enjiForm]="enjiFormCompany"

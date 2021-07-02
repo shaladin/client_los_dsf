@@ -39,12 +39,10 @@ export class NapAddDetailComponent implements OnInit {
   ResponseReturnInfoObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
-  ListAsset: any;
   custType: string = CommonConstant.CustTypeCompany;
   stepperMode: string = CommonConstant.CustTypeCompany;
   showCancel: boolean = true;
-  getApp: any;
-  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   isMainCustMarried: boolean = false;
@@ -96,9 +94,9 @@ export class NapAddDetailComponent implements OnInit {
     };
   }
 
-  async ngOnInit() : Promise<void> {
+  async ngOnInit(): Promise<void> {
     //check DMS
-    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
     });
@@ -110,7 +108,7 @@ export class NapAddDetailComponent implements OnInit {
       this.IsDataReady = true;
     }
     else {
-      var appObj = { Id: this.appId };
+      let appObj = { Id: this.appId };
       this.http.post(URLConstant.GetAppById, appObj).subscribe(
         (response: AppObj) => {
           if (response) {
@@ -138,8 +136,7 @@ export class NapAddDetailComponent implements OnInit {
     reqObj.Id = this.appId;
     this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, reqObj).subscribe(
       (response) => {
-        if (response.AppCustObj) 
-        {
+        if (response.AppCustObj) {
           this.isMainCustMarried = response.AppCustPersonalObj != undefined && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried ? true : false;
         }
       }
@@ -147,14 +144,14 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   async initDms() {
-    if(this.SysConfigResultObj.ConfigValue == '1'){
+    if (this.SysConfigResultObj.ConfigValue == '1') {
       this.isDmsReady = false;
       this.dmsObj = new DMSObj();
       let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
       this.dmsObj.User = currentUserContext.UserName;
       this.dmsObj.Role = currentUserContext.RoleCode;
       this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-      var appObj = { Id: this.appId };
+      let appObj = { Id: this.appId };
       this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
         response => {
           this.appNo = this.NapObj.AppNo;
@@ -168,7 +165,7 @@ export class NapAddDetailComponent implements OnInit {
           else {
             this.dmsObj.MetadataParent = null;
           }
-  
+
           let mouId = this.NapObj.MouCustId;
           if (mouId != null && mouId != 0) {
             let mouObj = { Id: mouId };
@@ -185,7 +182,7 @@ export class NapAddDetailComponent implements OnInit {
           }
         }
       );
-    }  
+    }
   }
 
   Cancel() {
@@ -260,7 +257,7 @@ export class NapAddDetailComponent implements OnInit {
       ReqByIdAndCodeObj.Id = this.ReturnHandlingHId;
       ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingEditApp;
       this.http.post(URLConstant.GetLastReturnHandlingDByReturnHandlingHIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
-        (response : ResReturnHandlingDObj) => {
+        (response: ResReturnHandlingDObj) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
             ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
@@ -294,10 +291,10 @@ export class NapAddDetailComponent implements OnInit {
     )
   }
 
-  CheckIsUseDms(){
-    if(this.SysConfigResultObj.ConfigValue == '1'){
+  CheckIsUseDms() {
+    if (this.SysConfigResultObj.ConfigValue == '1') {
       this.NextStep(CommonConstant.AppStepUplDoc);
-    }else{
+    } else {
       this.LastStepHandler();
     }
   }
@@ -376,7 +373,7 @@ export class NapAddDetailComponent implements OnInit {
 
   Submit() {
     if (this.ReturnHandlingHId > 0) {
-      var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+      let ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
       ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
       ReturnHandlingResult.ReturnHandlingHId = this.ResponseReturnInfoObj.ReturnHandlingHId;
       ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
@@ -396,12 +393,12 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   CheckCustType(ev) {
-    this.isMainCustMarried = ev.MrMaritalStatCode != undefined && ev.MrMaritalStatCode == 'MARRIED'? true : false;
-    this.custType = ev.MrCustTypeCode != undefined? ev.MrCustTypeCode : CommonConstant.CustTypePersonal;    this.ChangeStepper();
+    this.isMainCustMarried = ev.MrMaritalStatCode != undefined && ev.MrMaritalStatCode == 'MARRIED' ? true : false;
+    this.custType = ev.MrCustTypeCode != undefined ? ev.MrCustTypeCode : CommonConstant.CustTypePersonal; this.ChangeStepper();
 
-    if(this.custType == CommonConstant.CustTypePersonal){
+    if (this.custType == CommonConstant.CustTypePersonal) {
       this.NextStep(CommonConstant.AppStepFamily);
-    }else{
+    } else {
       this.NextStep(CommonConstant.AppStepShr);
     }
   }

@@ -67,7 +67,7 @@ export class DocChecklistApprovalPagingComponent implements OnInit {
     this.inputPagingObj.addCritInput.push(critObj);
   }
 
-  GetCallBack(ev: any) {
+  GetCallBack(ev) {
     var ApvReqObj = new ApprovalObj();
     if (ev.Key == "Process") {
       if (String.Format("{0:L}", ev.RowObj.CurrentUser) != String.Format("{0:L}", this.userContext.UserName)) {

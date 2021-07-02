@@ -1,0 +1,354 @@
+<app-view-ltkm-cust-detail *ngIf="isShowDetail && !isPopupDetail"
+ [LtkmCustId]="detailLtkmCustId" [MrCustTypeCode]="detailMrCustTypeCode" [CustomerTitle]="detailCustomerTitle" [IsPopup]="false"
+ (CloseDetail)="closeDetailHandler(event)"
+ >
+</app-view-ltkm-cust-detail>
+<div *ngIf="!isShowDetail">
+    <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewMainDataObj"></lib-ucviewgeneric>
+    <div class="px-3">
+        <lib-ucSubsection [id]="'CustAddrId'" [title]="customerTitle+' Address'" [panel]="'CustAddress'">
+        </lib-ucSubsection>
+        <div id="CustAddress">
+            <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                <tr class="table-header">
+                    <th class="text-left"><span name='addrType' translate>Address Type</span> </th>
+                    <th class="text-left"><span name='fullAddr' translate>Address</span></th>
+                    <th class="text-left"><span name='houseOwnership' translate>Building Ownership</span></th>
+                    <th class="text-center"><span name='phoneNo1' translate>Phone (Fix Line) 1</span></th>
+                    <th class="text-center"><span name='phoneNo2' translate>Phone (Fix Line) 2</span></th>
+                </tr>
+                </thead>
+                <tbody *ngIf = "ltkmCustAddrForViewObjs?.length == 0">
+                    <tr>
+                        <td colspan="100%">No Data Available</td>
+                    </tr>
+                </tbody>
+                <tbody>
+                <ng-container *ngFor="let item of ltkmCustAddrForViewObjs">
+                    <tr>
+                    <td class="text-left">{{item.CustAddrTypeName ? item.CustAddrTypeName: '-'}}</td>
+                    <td class="text-left">{{item.FullAddr ? item.FullAddr : '-'}}</td>
+                    <td class="text-left">{{ item.HouseOwnershipName ? item.HouseOwnershipName : '-'}}</td>
+                    <td class="text-center">{{item.PhoneNo ? item.PhoneNo : "-"}}</td>
+                    <td class="text-center">{{item.PhoneNo2 ? item.PhoneNo2 : "-"}}</td>
+                    </tr> 
+                </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="px-3" *ngIf="!isDetail">
+        <lib-ucSubsection [id]="'CustShareholderId'" [title]="'Management / Shareholder'" [panel]="'CustShareholder'">
+        </lib-ucSubsection>
+        <div id="CustShareholder">
+            <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                <tr class="table-header">
+                    <th class="text-left"><span name='No' translate>No</span> </th>
+                    <th class="text-left"><span name='ShareholderName' translate>Shareholder Name</span> </th>
+                    <th class="text-left"><span name='ShareholderType' translate>Shareholder Type</span></th>
+                    <th class="text-left"><span name='ShareholderRelationship' translate>Shareholder Relationship</span></th>
+                    <th class="text-center"><span name='EstablishmentDate' translate>Establishment Date</span></th>
+                    <th class="text-right"><span name='SharePercent' translate>Share Percent</span></th>
+                    <th class="text-center"><span name='IsSigner' translate>Is Signer</span></th>
+                    <th class="text-center"><span name='IsOwner' translate>Is Owner</span></th>
+                    <th class="text-center"><span name='IsActive' translate>Is Active</span></th>
+                    <th class="text-center"><span translate >View</span></th>
+                </tr>
+                </thead>
+                <tbody *ngIf = "ltkmCustCompanyMgmntShrholderObjs?.length == 0">
+                    <tr>
+                        <td colspan="100%">No Data Available</td>
+                    </tr>
+                </tbody>
+                <tbody>
+                <ng-container *ngFor="let item of ltkmCustCompanyMgmntShrholderObjs; let i=index">
+                    <tr>
+                    <td class="text-center">{{i + 1}}</td>
+                    <td class="text-left">{{item.MgmntShrholderName}}</td>
+                    <td class="text-left">{{item.CustTypeName}}</td>
+                    <td class="text-left">{{item.MrCustRelationshipDescr}}</td>
+                    <td class="text-center">{{ (item.MrCustTypeCode == 'COMPANY' ? item.EstablishmentDt : item.BirthDt) | date: 'dd-MMMM-yyyy'}}</td>
+                    <td class="text-right">{{item.SharePrcnt | number:'.2':'en-US'}}</td>
+                    <td class="text-center">{{item.IsSigner ? 'Yes' : 'No'}}</td>
+                    <td class="text-center">{{item.IsOwner ? 'Yes' : 'No'}}</td>
+                    <td class="text-center">{{item.IsActive ? 'Yes' : 'No'}}</td>
+                    <td class="text-center">
+                        <a (click)="viewDetailShareholderHandler(item.LtkmCustId, item.MrCustTypeCode)" class="success p-0"><i class="ft-edit-2 font-medium-3 mr-2"></i></a>
+                    </td>
+                    </tr>
+                </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewAppCustCompanyContactPersonObj"></lib-ucviewgeneric>
+ 
+    <div class="px-3">
+        <div class="pull-right">
+            <button *ngIf="IsShowDetailCustFin" type="button" class="backButton" translate (click)="hideDetailCustFinData()"><i class="fa fa-arrow-left"></i> Back</button>
+        </div>
+        <lib-ucSubsection [id]="'MainInfo'" [title]="'Financial Data '+TitleCustFinSuffix" [panel]="'FinId'">
+        </lib-ucSubsection>
+        <form class="form form-horizontal" id="FinId">
+
+        <div id="ListCustFinData" class="mb-3 mt-3" *ngIf="!IsShowDetailCustFin"> 
+            <table class="table table-stripped table-bordered" id="FinId">
+                <thead>
+                <tr class="table-header">
+                    <th class="text-center" translate>Date</th>
+                    <th class="text-center" translate>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of ListCustCoyFinData; let i = index">
+                    <td class="text-center">{{item.DateAsOf | date: 'dd-MMM-yyyy'}}</td>
+                    <td class="text-center"><a href="javascript:;" (click)="showDetailCustFinData(i)"><i class="ft-edit-2 font-medium-3 mr-2"></i></a></td>
+                </tr>
+                <tr *ngIf="ListCustCoyFinData?.length <= 0">
+                    <td class="text-center" colspan="2" translate>No Data Available</td>
+                </tr>
+                </tbody>
+            </table>  
+        </div> 
+        <div class="form-body mb-3" *ngIf="IsShowDetailCustFin">
+            <div class="form-group row ">
+                <label class="col-md-3 adInsLabel" translate>Monthly Income</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrossMonthlyIncomeAmt != 0">{{CustCoyFinData.GrossMonthlyIncomeAmt | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrossMonthlyIncomeAmt == 0">-</label>
+                <label class="col-md-3 adInsLabel" translate>Monthly Expense</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrossMonthlyExpenseAmt != 0">{{CustCoyFinData.GrossMonthlyExpenseAmt | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrossMonthlyExpenseAmt == 0">-</label>
+            </div>
+            <div class="form-group row ">
+                <label class="col-md-3 adInsLabel" translate>Return Of Investment (%)</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfInvestmentPrcnt != 0">{{CustCoyFinData.ReturnOfInvestmentPrcnt | number:'.2':'en-US'}} %</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfInvestmentPrcnt == 0">-</label>
+                <label class="col-md-3 adInsLabel" translate>Return Of Equity (%)</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfEquityPrcnt != 0">{{CustCoyFinData.ReturnOfEquityPrcnt | number:'.2':'en-US'}} %</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfEquityPrcnt == 0">-</label>
+            </div>
+            <div class="form-group row ">
+                <label class="col-md-3 adInsLabel" translate>Return Of Asset (%)</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfAssetPrcnt != 0">{{CustCoyFinData.ReturnOfAssetPrcnt | number:'.2':'en-US'}} %</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfAssetPrcnt == 0">-</label>
+                <label class="col-md-3 adInsLabel" translate>Profit Margin (%)</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ProfitMarginPrcnt != 0">{{CustCoyFinData.ProfitMarginPrcnt | number:'.2':'en-US'}} %</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ProfitMarginPrcnt == 0">-</label>
+            </div>
+            <div class="form-group row ">
+                <label class="col-md-3 adInsLabel" translate>Current Ratio (%)</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrentRatioPrcnt != 0">{{CustCoyFinData.CurrentRatioPrcnt | number:'.2':'en-US'}} %</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrentRatioPrcnt == 0">-</label>
+                <label class="col-md-3 adInsLabel" translate>Debt Equity (%)</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.DebtEquityRatioPrcnt != 0">{{CustCoyFinData.DebtEquityRatioPrcnt | number:'.2':'en-US'}} %</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.DebtEquityRatioPrcnt == 0">-</label>
+            </div>
+            <div class="form-group row ">
+                <label class="col-md-3 adInsLabel" translate>Inventory Turn Over (%)</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.InvTurnOverPrcnt != 0">{{CustCoyFinData.InvTurnOverPrcnt | number:'.2':'en-US'}} %</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.InvTurnOverPrcnt == 0">-</label>
+                <label class="col-md-3 adInsLabel" translate>Ar Turn Over (%)</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ArTurnOverPrcnt != 0">{{CustCoyFinData.ArTurnOverPrcnt | number:'.2':'en-US'}} %</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ArTurnOverPrcnt == 0">-</label>
+            </div>
+            <div class="form-group row ">
+                <label class="col-md-3 adInsLabel" translate>Growth (%)</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrowthPrcnt != 0">{{CustCoyFinData.GrowthPrcnt | number:'.2':'en-US'}} %</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrowthPrcnt == 0">-</label>
+                <label class="col-md-3 adInsLabel" translate>Working Capital (Amt)</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.WorkingCapitalAmt != 0">{{CustCoyFinData.WorkingCapitalAmt | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.WorkingCapitalAmt == 0">-</label>
+            </div>
+            <div class="form-group row ">
+                <label class="col-md-3 adInsLabel" translate>Other Monthly Installment</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OthMonthlyInstAmt != 0">{{CustCoyFinData.OthMonthlyInstAmt | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OthMonthlyInstAmt == 0">-</label>
+                <label class="col-md-3 adInsLabel" translate>Date As Of</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.DateAsOf != null">{{CustCoyFinData.DateAsOf | date: 'dd-MMM-yyyy'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.DateAsOf == null">-</label>
+            </div>
+            <div class="form-group row ">
+                <label class="col-md-3 adInsLabel" translate>Revenue</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.Revenue != 0">{{CustCoyFinData.Revenue | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.Revenue == 0">-</label>
+                <label class="col-md-3 adInsLabel" translate>Operation Cost</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OprCost != 0">{{CustCoyFinData.OprCost | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OprCost == 0">-</label>
+            </div>
+            <div class="form-group row ">
+                <label class="col-md-3 adInsLabel" translate>Profit Before Tax</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ProfitBeforeTax != 0">{{CustCoyFinData.ProfitBeforeTax | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ProfitBeforeTax == 0">-</label>
+                <label class="col-md-3 adInsLabel" translate>Current Asset</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrAsset != 0">{{CustCoyFinData.CurrAsset | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrAsset == 0">-</label>
+            </div>
+            <div class="form-group row ">
+                <label class="col-md-3 adInsLabel" translate>Net Fixed Asset</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.NetFixedAsset != 0">{{CustCoyFinData.NetFixedAsset | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.NetFixedAsset == 0">-</label>
+                <label class="col-md-3 adInsLabel" translate>Total Asset</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.TotalAsset != 0">{{CustCoyFinData.TotalAsset | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.TotalAsset == 0">-</label>
+            </div>
+            <div class="form-group row ">
+                <label class="col-md-3 adInsLabel" translate>Current Liabilities</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrLiablts != 0">{{CustCoyFinData.CurrLiablts | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrLiablts == 0">-</label>
+                <label class="col-md-3 adInsLabel" translate>Long Term Liabilities</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.LongTermLiablts != 0">{{CustCoyFinData.LongTermLiablts | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.LongTermLiablts == 0">-</label>
+            </div>
+            <div class="form-group row ">
+                <label class="col-md-3 adInsLabel" translate>Shareholder Equity</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ShareholderEquity != 0">{{CustCoyFinData.ShareholderEquity | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ShareholderEquity == 0">-</label>
+                <label class="col-md-3 adInsLabel" translate>Current Ratio</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrRatio != 0">{{CustCoyFinData.CurrRatio | number:'.2':'en-US'}}</label>
+                <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrRatio == 0">-</label>
+            </div>
+        </div>
+        
+        </form>
+    </div>
+
+
+
+    <div class="px-3">
+        <lib-ucSubsection [id]="'BankAccountId'" [title]="'Bank Account'" [panel]="'BankAccount'">
+        </lib-ucSubsection>
+        <div id="BankAccount">
+            <div *ngFor="let item of ltkmCustBankAccObjs; let i=index">
+                <lib-ucSubsection [id]="'BankAccInfo' + i + 'id'" [title]="item.BankInfo" [panel]="'BankAccInfo' + i">
+                </lib-ucSubsection>
+                <div [id]="'BankAccInfo' + i">
+                    <div class="form-body">
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="label-control" translate> Bank Branch </label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="label-control" translate> {{item.BankBranch}}
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-responsive-md text-center table-hover">
+                        <thead>
+                        <tr class="table-header">
+                            <th class="text-center"><span name='month' translate>Month</span> </th>
+                            <th class="text-center"><span name='year' translate>Year</span></th>
+                            <th class="text-center"><span name='debitTrxCount' translate>Debit Transaction Count</span></th>
+                            <th class="text-right"><span name='debit' translate>Debit</span></th>
+                            <th class="text-center"><span name='creditTrxCount' translate>Credit Transaction Count</span></th>
+                            <th class="text-right"><span name='credit' translate>Credit</span></th>
+                            <th class="text-right"><span name='balanceAmt' translate>Balance Amount</span></th>
+                        </tr>
+                        </thead>
+                        <tbody *ngIf = "ltkmCustBankAccObjs[i].LtkmCustBankStmntObjs?.length == 0">
+                            <tr>
+                            <td colspan="100%">No Data Available</td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;">Beginning Balance</td>
+                                <td style="text-align: left;"></td>
+                                <td style="text-align: center;"></td>
+                                <td style="text-align: left;"></td>
+                                <td style="text-align: center;"></td>
+                                <td style="text-align: left;"></td>
+                                <td style="text-align: right;">{{item.BegBalanceAmt | number:'.2':'en-US'}}</td>
+                              </tr>
+                        <ng-container *ngFor="let item of ltkmCustBankAccObjs[i].LtkmCustBankStmntObjs">
+                            <tr>
+                                <td class="text-center">{{item.MonthName}}</td>
+                                <td class="text-center">{{item.Year}}</td>
+                                <td class="text-center">{{item.DebitTrxCount}}</td>
+                                <td class="text-right">{{item.DebitAmt | number:'.2':'en-US'}}</td>
+                                <td class="text-center">{{item.CreditTrxCount}}</td>
+                                <td class="text-right">{{item.CreditAmt | number:'.2':'en-US'}}</td>
+                                <td class="text-right">{{item.BalanceAmt | number:'.2':'en-US'}}</td>
+                            </tr>
+                        </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="px-3">
+        <lib-ucSubsection [id]="'CustLegalDocId'" [title]="'Legal Document'" [panel]="'CustLegalDoc'">
+        </lib-ucSubsection>
+        <div id="CustLegalDoc">
+            <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                <tr class="table-header">
+                    <th class="text-left"><span name='LegalDocName' translate>Legal Document Type</span></th>
+                    <th class="text-center"><span name='DocNo' translate>Document No</span></th>
+                    <th class="text-center"><span name='DocDt' translate>Issued Date</span></th>
+                    <th class="text-center"><span name='DocExpiredDt' translate>Expired Date</span></th>
+                    <th class="text-left"><span name='ReleaseBy' translate>Notary Name</span></th>
+                </tr>
+                </thead>
+                <tbody *ngIf = "ltkmCustCompanyLegalDocObjs?.length == 0">
+                    <tr>
+                        <td colspan="100%">No Data Available</td>
+                    </tr>
+                </tbody>
+                <tbody>
+                <ng-container *ngFor="let item of ltkmCustCompanyLegalDocObjs; let i=index">
+                    <tr>
+                        <td style="text-align: left;">{{item.LegalDocName}}</td>
+                        <td style="text-align: center;">{{item.DocNo}}</td>
+                        <td style="text-align: center;">{{item.DocDt | date: 'dd-MMMM-yyyy'}}</td>
+                        <td style="text-align: center;">{{item.DocExpiredDt | date: 'dd-MMMM-yyyy'}}</td>
+                        <td style="text-align: left;">{{item.NotaryName}}</td>
+                    </tr>
+                </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="px-3">
+        <lib-ucSubsection [id]="'CustGrpId'" [title]="'Customer Group Member'" [panel]="'CustGrp'">
+        </lib-ucSubsection>
+        <div id="CustGrp">
+            <table class="table table-responsive-md text-center table-hover">
+                <thead>
+                <tr class="table-header">
+                    <th class="text-center"><span name='no' translate>No</span> </th>
+                    <th class="text-left"><span name='custName' translate>Customer Name</span></th>
+                    <th class="text-center"><span name='relationship' translate>Customer Relationship</span></th>
+                    <th class="text-center"><span name='notes' translate>Notes</span></th>
+                </tr>
+                </thead>
+                <tbody *ngIf = "ltkmCustGrpObjs?.length == 0">
+                    <tr>
+                        <td colspan="100%">No Data Available</td>
+                    </tr>
+                </tbody>
+                <tbody>
+                <ng-container *ngFor="let item of ltkmCustGrpObjs; let i=index">
+                    <tr>
+                        <td class="text-center">{{i + 1}}</td>
+                        <td class="text-left">{{item.CustName}}</td>
+                        <td class="text-center">{{item.RelationshipName}}</td>
+                        <td class="text-center">{{item.CustGrpNotes}}</td>
+                    </tr>
+                </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+

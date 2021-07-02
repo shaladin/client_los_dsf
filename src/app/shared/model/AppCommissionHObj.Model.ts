@@ -21,12 +21,14 @@ export class AppCommissionHObj{
     PenaltyAmt: number;
     TaxpayerNo: string;
     ListappCommissionDObj: Array<AppCommissionDObj>;
+    AppCommissionDs: Array<AppCommissionDObj>;
     RowVersion: string;
-    ReservedField1: any;
-    ReservedField2: any;
-    ReservedField3: any;
-    ReservedField4: any;
-    ReservedField5: any;
+    MrIdTypeCode: string;
+    ReservedField1: string;
+    ReservedField2: string;
+    ReservedField3: string;
+    ReservedField4: string;
+    ReservedField5: string;
 
     constructor(){
         this.AppCommissionHId = 0;

@@ -8,6 +8,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { CustObj } from 'app/shared/model/CustObj.Model';
 
 @Component({
   selector: 'app-cust-grp-member-FL4W',
@@ -21,31 +23,25 @@ export class CustGrpMemberFL4WComponent implements OnInit {
 
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
-  @Input() identifier: any;
+  @Input() identifier: string;
   @Input() appCustGrpObjs: Array<AppCustGrpObj>;
 
-  refMasterObj = {
-    RefMasterTypeCode: "",
-  };
   custDataObj: CustDataObj;
 
-  dictLookup: {[key: string]: any;} = {};
+  dictLookup: {[key: string]: InputLookupObj;} = {};
 
   CustRelationshipObjs: [{
-    list: []  
+    list: Array<KeyValueObj>
   }] = [{list: []}];
 
-  CustRelationshipPersonalObj: any;
-  CustRelationshipCompanyObj: any;
-  defaultCustRelationshipPersonalCode: any;
-  defaultCustRelationshipCompanyCode: any;
+  CustRelationshipPersonalObj: Array<KeyValueObj>;
+  CustRelationshipCompanyObj: Array<KeyValueObj>;
+  defaultCustRelationshipPersonalCode: string;
+  defaultCustRelationshipCompanyCode: string;
 
   InputLookupCustomerObjs: Array<InputLookupObj> = new Array<InputLookupObj>();
   lookupCustomerIdentifiers: Array<string> = new Array<string>();
   CustNoObj: GenericObj = new GenericObj();
-
-  custMasterObj: any;
-
 
   constructor(
     private fb: FormBuilder, 
@@ -182,31 +178,29 @@ export class CustGrpMemberFL4WComponent implements OnInit {
   async setCustNameAndCustRelationship(i, custNo){
     this.CustNoObj.CustNo = custNo;
     await this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).toPromise().then(
-      (response) => {
-        this.custMasterObj = response;
-        this.dictLookup[i].nameSelect = response["CustName"];
+      (response: CustObj) => {
+        this.dictLookup[i].nameSelect = response.CustName;
         this.dictLookup[i].jsonSelect = response;
         this.InputLookupCustomerObjs[i].jsonSelect = response;
         
-        if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+        if(response.MrCustTypeCode == CommonConstant.CustTypePersonal){
           this.CustRelationshipObjs.push({list : this.CustRelationshipPersonalObj});
         }
 
-        if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+        if(response.MrCustTypeCode == CommonConstant.CustTypeCompany){
           this.CustRelationshipObjs.push({list : this.CustRelationshipCompanyObj});
         }
 
         this.parentForm.controls[this.identifier]["controls"][i].patchValue({
           CustNo: custNo,
-          CustName: response["CustName"]
+          CustName: response.CustName
         });
       });
   }
   
 
   async bindCustRelationshipPersonalObj(){
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustPersonalRelationship;
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeCustPersonalRelationship }).toPromise().then(
       (response) => {
         this.CustRelationshipPersonalObj = response[CommonConstant.ReturnObj];
         if(this.CustRelationshipPersonalObj.length > 0){
@@ -217,8 +211,7 @@ export class CustGrpMemberFL4WComponent implements OnInit {
   }
 
   async bindCustRelationshipCompanyObj(){
-    this.refMasterObj.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeCustCompanyRelationship;
-    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.refMasterObj).toPromise().then(
+    await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, {RefMasterTypeCode : CommonConstant.RefMasterTypeCodeCustCompanyRelationship}).toPromise().then(
       (response) => {
         this.CustRelationshipCompanyObj = response[CommonConstant.ReturnObj];
         if(this.CustRelationshipCompanyObj.length > 0){

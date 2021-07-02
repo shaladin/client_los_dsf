@@ -1,30 +1,32 @@
 import { ResAppCustBankAccForViewObj } from "./ResAppCustBankAccForViewObj.model";
 
 export class ResCustDataPersonalForViewObj {
-    AppCustObj : ResAppCustForViewObj;
-    ListAppCustAddrObj : Array<ResAppCustAddrForViewObj>;
-    ListAppCustBankAccObj : Array<ResAppCustBankAccForViewObj>;
-    ListAppCustGrpObj : Array<ResAppCustGrpForViewObj>;
-    ListAppCustFamilyObj : Array<ResAppCustCompletionObj>;
+    AppCustObj: ResAppCustForViewObj;
+    ListAppCustAddrObj: Array<ResAppCustAddrForViewObj>;
+    ListAppCustBankAccObj: Array<ResAppCustBankAccForViewObj>;
+    ListAppCustGrpObj: Array<ResAppCustGrpForViewObj>;
+    ListAppCustFamilyObj: Array<ResAppCustCompletionObj>;
+    ListAppCustPersonalFinDataObjs: Array<ResAppCustPersonalFinDataForViewObj>;
 
-    constructor(){
+    constructor() {
         this.AppCustObj = new ResAppCustForViewObj();
         this.ListAppCustAddrObj = new Array<ResAppCustAddrForViewObj>();
         this.ListAppCustBankAccObj = new Array<ResAppCustBankAccForViewObj>();
         this.ListAppCustGrpObj = new Array<ResAppCustGrpForViewObj>();
         this.ListAppCustFamilyObj = new Array<ResAppCustCompletionObj>();
+        this.ListAppCustPersonalFinDataObjs = new Array<ResAppCustPersonalFinDataForViewObj>();
     }
 }
 
 export class ResCustDataCompanyForViewObj {
-    AppCustObj : ResAppCustForViewObj;
-    ListAppCustAddrObj : Array<ResAppCustAddrForViewObj>;
-    ListAppCustBankAccObj : Array<ResAppCustBankAccForViewObj>;
-    ListAppCustGrpObj : Array<ResAppCustGrpForViewObj>;
-    ListAppCustCompanyMgmntShrholderObj : Array<ResAppCustCompanyMgmntShrholderForViewObj>;
-    ListAppCustCompanyLegalDocObj : Array<ResAppCustCompanyLegalDocForViewObj>;
+    AppCustObj: ResAppCustForViewObj;
+    ListAppCustAddrObj: Array<ResAppCustAddrForViewObj>;
+    ListAppCustBankAccObj: Array<ResAppCustBankAccForViewObj>;
+    ListAppCustGrpObj: Array<ResAppCustGrpForViewObj>;
+    ListAppCustCompanyMgmntShrholderObj: Array<ResAppCustCompanyMgmntShrholderForViewObj>;
+    ListAppCustCompanyLegalDocObj: Array<ResAppCustCompanyLegalDocForViewObj>;
 
-    constructor(){
+    constructor() {
         this.AppCustObj = new ResAppCustForViewObj();
         this.ListAppCustAddrObj = new Array<ResAppCustAddrForViewObj>();
         this.ListAppCustBankAccObj = new Array<ResAppCustBankAccForViewObj>();
@@ -35,13 +37,13 @@ export class ResCustDataCompanyForViewObj {
 }
 
 export class ResAppCustForViewObj {
-    AppCustId : number;
-    IsFamily : boolean;
-    IsGuarantor : boolean;
-    IsShareholder : boolean;
-    MrCustModelCode : string;
+    AppCustId: number;
+    IsFamily: boolean;
+    IsGuarantor: boolean;
+    IsShareholder: boolean;
+    MrCustModelCode: string;
 
-    constructor(){
+    constructor() {
         this.AppCustId = 0;
         this.IsFamily = false;
         this.IsGuarantor = false;
@@ -51,13 +53,13 @@ export class ResAppCustForViewObj {
 }
 
 export class ResAppCustAddrForViewObj {
-    CustAddrTypeName : string;
-    FullAddr : string;
-    HouseOwnershipName : string;
-    PhoneNo : string;
-    PhoneNo2 : string;
+    CustAddrTypeName: string;
+    FullAddr: string;
+    HouseOwnershipName: string;
+    PhoneNo: string;
+    PhoneNo2: string;
 
-    constructor(){
+    constructor() {
         this.CustAddrTypeName = "";
         this.FullAddr = "";
         this.HouseOwnershipName = "";
@@ -67,13 +69,13 @@ export class ResAppCustAddrForViewObj {
 }
 
 export class ResAppCustBankAccStmntForViewObj {
-    Month : string;
-    Year : string;
-    DebitAmt : number;
-    CreditAmt : number;
-    BalanceAmt : number;
+    Month: string;
+    Year: string;
+    DebitAmt: number;
+    CreditAmt: number;
+    BalanceAmt: number;
 
-    constructor(){
+    constructor() {
         this.Month = "";
         this.Year = "";
         this.DebitAmt = 0;
@@ -83,11 +85,11 @@ export class ResAppCustBankAccStmntForViewObj {
 }
 
 export class ResAppCustGrpForViewObj {
-    CustName : string;
-    CustNo : string;
-    ApplicantNo : string;
+    CustName: string;
+    CustNo: string;
+    ApplicantNo: string;
 
-    constructor(){
+    constructor() {
         this.CustName = "";
         this.CustNo = "";
         this.ApplicantNo = "";
@@ -95,14 +97,14 @@ export class ResAppCustGrpForViewObj {
 }
 
 export class ResAppCustCompletionObj {
-    AppCustId : number;
-    CustName : string;
+    AppCustId: number;
+    CustName: string;
     MrCustTypeCode: string;
-    MrCustRelationshipDescr : string;
-    BirthPlace : string;
-    BirthDt : Date;
+    MrCustRelationshipDescr: string;
+    BirthPlace: string;
+    BirthDt: Date;
 
-    constructor(){
+    constructor() {
         this.AppCustId = 0;
         this.CustName = "";
         this.MrCustTypeCode = "";
@@ -113,21 +115,21 @@ export class ResAppCustCompletionObj {
 }
 
 export class ResAppCustCompanyMgmntShrholderForViewObj {
-    AppCustId : number;
-    SharePrcnt : number;
-    EstablishmentDt : Date;
-    BirthDt : Date;
-    JobPositionName : string;
-    CustTypeName : string;
-    MrCustRelationshipDescr : string;
-    MgmntShrholderName : string;
-    MrCustTypeCode : string;
-    TaxIdNo : string;
-    IsSigner : boolean;
-    IsOwner : boolean;
-    IsActive : boolean;
+    AppCustId: number;
+    SharePrcnt: number;
+    EstablishmentDt: Date;
+    BirthDt: Date;
+    JobPositionName: string;
+    CustTypeName: string;
+    MrCustRelationshipDescr: string;
+    MgmntShrholderName: string;
+    MrCustTypeCode: string;
+    TaxIdNo: string;
+    IsSigner: boolean;
+    IsOwner: boolean;
+    IsActive: boolean;
 
-    constructor(){
+    constructor() {
         this.AppCustId = 0;
         this.SharePrcnt = 0;
         this.EstablishmentDt = new Date();
@@ -145,15 +147,33 @@ export class ResAppCustCompanyMgmntShrholderForViewObj {
 }
 
 export class ResAppCustCompanyLegalDocForViewObj {
-    DocDt : Date;
-    DocExpiredDt : Date;
-    LegalDocName : string;
-    DocNo : string;
+    DocDt: Date;
+    DocExpiredDt: Date;
+    LegalDocName: string;
+    DocNo: string;
 
-    constructor(){
+    constructor() {
         this.DocDt = new Date();
         this.DocExpiredDt = new Date();
         this.LegalDocName = "";
         this.DocNo = "";
     }
+}
+
+export class ResAppCustPersonalFinDataForViewObj {
+    AppCustPersonalFinDataId: number;
+    AppCustPersonalId: number;
+    MonthlyIncomeAmt: number;
+    MonthlyExpenseAmt: number;
+    MonthlyInstallmentAmt: number;
+    MrSourceOfIncomeTypeCode: string;
+    MrSourceOfIncomeTypeDescr: string;
+    SpouseMonthlyIncomeAmt: number;
+    IsJoinIncome: boolean;
+    OtherIncomeAmt: number;
+    OtherMonthlyInstAmt: number;
+    TotalIncomeAmt: number;
+    TotalMonthlyExpenseAmt: number;
+    NettIncomeAmt: number;
+    DateAsOf: Date;
 }

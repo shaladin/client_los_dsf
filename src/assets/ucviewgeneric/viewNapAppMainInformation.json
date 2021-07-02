@@ -16,9 +16,9 @@
           "path": "VIEW_APP",
           "target": "_blank",
           "param": [
-            { 
+            {
               "type": "AppId",
-              "property": "AppId" 
+              "property": "AppId"
             }
           ]
         },
@@ -60,35 +60,35 @@
           "property": "Tenor"
         },
         {
-          "type" : "switch", 
-          "case" : [ 
+          "type": "switch",
+          "case": [
             {
-              "conditions" : [ 
+              "conditions": [
                 {
-                  "property" : "BizTemplateCode", 
-                  "value" : "CFRFN4W",
+                  "property": "BizTemplateCode",
+                  "value": "CFRFN4W",
                   "restriction": "EQ"
                 }
               ],
-                "result" : {
-                  "type": "text",
-                  "label": "Collateral Data",
-                  "property": "CollateralData"
+              "result": {
+                "type": "text",
+                "label": "Collateral Data",
+                "property": "CollateralData"
               }
             },
             {
-              "conditions" : [ 
+              "conditions": [
                 {
-                  "property" : "BizTemplateCode", 
-                  "value" : "CFRFN4W",
+                  "property": "BizTemplateCode",
+                  "value": "CFRFN4W",
                   "restriction": "NEQ"
                 }
               ],
-                "result" : {
-                  "type": "text",
-                  "label": "Asset Data",
-                  "property": "AssetData"
-                }
+              "result": {
+                "type": "text",
+                "label": "Asset Data",
+                "property": "AssetData"
+              }
             }
           ]
         },
@@ -103,9 +103,9 @@
           "path": "VIEW_LEAD",
           "target": "_blank",
           "param": [
-            { 
+            {
               "type": "LeadId",
-              "property": "LeadId" 
+              "property": "LeadId"
             }
           ]
         },
@@ -133,6 +133,11 @@
           "type": "text",
           "label": "Customer Checking Step",
           "property": "CustCheckingStep"
+        },
+        {
+          "type": "text",
+          "label": "Highlight Comment",
+          "property": "Comment"
         }
       ],
       "querystring": {

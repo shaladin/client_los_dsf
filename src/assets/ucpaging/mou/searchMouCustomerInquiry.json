@@ -4,7 +4,7 @@
     "component": [
         {
             "type": "textbox",
-            "name": "MOU_CUST_NO",
+            "name": "M.MOU_CUST_NO",
             "id": "MouCustNoId",
             "value": "",
             "label": "Mou No",
@@ -13,7 +13,7 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "MR_MOU_TYPE_CODE",
+            "name": "M.MR_MOU_TYPE_CODE",
             "id": "MrMouTypeCode",
             "value": "",
             "placeholder": "Placeholder",
@@ -30,7 +30,7 @@
         },
         {
             "type": "textbox",
-            "name": "CUST_NAME",
+            "name": "M.CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "Customer Name",
@@ -38,7 +38,7 @@
         },
         {
             "type": "dropdown",
-            "name": "IS_REVOLVING",
+            "name": "M.IS_REVOLVING",
             "id": "IsRevolvingId",
             "label": "Revolving",
             "value": "",
@@ -61,26 +61,8 @@
             "criteriaPropValue": ""
         },
         {
-            "type": "datepicker",
-            "name": "MOU_CUST_DT",
-            "id": "GreaterMouDtId",
-            "value": "",
-            "label": "Mou Date From",
-            "restriction": "gte",
-            "datatype": "date"
-        },
-        {
-            "type": "datepicker",
-            "name": "MOU_CUST_DT",
-            "id": "LessMouDtId",
-            "value": "",
-            "label": "Mou Date To",
-            "restriction": "lte",
-            "datatype": "date"
-        },
-        {
             "type": "textbox",
-            "name": "PLAFOND_AMT",
+            "name": "M.PLAFOND_AMT",
             "id": "GreaterPlafondAmt",
             "value": "",
             "label": "Plafond Amount From",
@@ -89,7 +71,7 @@
         },
         {
             "type": "textbox",
-            "name": "PLAFOND_AMT",
+            "name": "M.PLAFOND_AMT",
             "id": "LessPlafondAmt",
             "value": "",
             "label": "Plafond Amount To",
@@ -99,7 +81,7 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "MOU_STAT",
+            "name": "M.MOU_STAT",
             "id": "StatusCode",
             "value": "",
             "placeholder": "Placeholder",
@@ -134,12 +116,6 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "MOU DATE",
-            "name": "MouCustDt"
-        },
-        {
-            "type": "sort",
-            "position": "center",
             "label": "EXPIRED DATE",
             "name": "EndDt"
         },
@@ -159,13 +135,13 @@
             "type": "sort",
             "position": "center",
             "label": "MOU STATUS",
-            "name": "MOU_STAT"
+            "name": "M.MOU_STAT"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "MOU TYPE",
-            "name": "MR_MOU_TYPE_CODE"
+            "name": "M.MR_MOU_TYPE_CODE"
         }
     ],
     "bodyList": [
@@ -191,11 +167,6 @@
         {
             "type": "date",
             "position": "center",
-            "property": "MouCustDt"
-        },
-        {
-            "type": "date",
-            "position": "center",
             "property": "EndDt"
         },
         {
@@ -216,7 +187,7 @@
         {
             "type": "text",
             "position": "left",
-            "property": "MrMouTypeCode"
+            "property": "MouTypeName"
         }
     ]
 }

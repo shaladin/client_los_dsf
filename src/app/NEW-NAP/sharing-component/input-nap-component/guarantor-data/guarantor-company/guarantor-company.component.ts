@@ -54,7 +54,7 @@ export class GuarantorCompanyComponent implements OnInit {
   listLegalDoc: Array<AppGuarantorCompanyLegalDocObj> = new Array<AppGuarantorCompanyLegalDocObj>();
   DocObjs: any;
   defLegalDocType: string;
-  appLegalDoc: any = new Array();
+  appLegalDoc: Array<any> = new Array();
   isReady: boolean = false;
   tempCustNo: string;
   isContactMandatory: boolean = false;

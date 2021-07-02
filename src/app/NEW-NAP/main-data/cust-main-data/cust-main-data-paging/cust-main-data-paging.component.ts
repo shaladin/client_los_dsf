@@ -11,6 +11,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 
 @Component({
   selector: 'cust-main-data-paging',
@@ -20,7 +21,7 @@ export class CustMainDataPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   arrCrit: Array<CriteriaObj>;
   bizTemplateCode: string;
-  userAccess: any;
+  userAccess: CurrentUserContext;
   token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   
   constructor(
@@ -38,6 +39,12 @@ export class CustMainDataPagingComponent implements OnInit {
     critObj.restriction = AdInsConstant.RestrictionLike;
     critObj.propName = 'WTL.ACT_CODE';
     critObj.value = "CUST_MD_" + this.bizTemplateCode;
+    this.arrCrit.push(critObj);
+
+    var critObj = new CriteriaObj();
+    critObj.restriction = AdInsConstant.RestrictionLike;
+    critObj.propName = 'a.BIZ_TEMPLATE_CODE';
+    critObj.value = this.bizTemplateCode;
     this.arrCrit.push(critObj);
 
     // var critObj2 = new CriteriaObj();
@@ -93,8 +100,11 @@ export class CustMainDataPagingComponent implements OnInit {
           AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFNA_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId });
           break;
         case CommonConstant.OPL:
-          AdInsHelper.RedirectUrl(this.router, ["Nap/OPL/NAP1"], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ROS_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId, "IsMainData": true });
           break;
+        case CommonConstant.DF :
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_NAP1], { "AppId": ev.RowObj.AppId, "WfTaskListId": ev.RowObj.WfTaskListId});
+        break;
       }
     }
   }

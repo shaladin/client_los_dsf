@@ -1,11 +1,11 @@
 export class WorkingHourSchmDObj {
-    workingHourSchmDId: any;
-    workingHourSchmHId: any;
-    workingHourSchmDay: any;
-    workingHourFrom1: any;
-    workingHourTo1: any;
-    workingHourFrom2: any;
-    workingHourTo2: any;
+    workingHourSchmDId: number;
+    workingHourSchmHId: number;
+    workingHourSchmDay: string;
+    workingHourFrom1: string;
+    workingHourTo1: string;
+    workingHourFrom2: string;
+    workingHourTo2: string;
 
     constructor() { this.workingHourSchmDId = 0 }
 }

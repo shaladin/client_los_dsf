@@ -38,11 +38,11 @@ export class NapDetailFormComponent implements OnInit {
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
   IsMultiAsset: string;
-  ListAsset: any;
+  // ListAsset: any;
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
   custType: string = CommonConstant.CustTypeCompany;
-  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   BizTemplateCode: string = CommonConstant.CFNA;

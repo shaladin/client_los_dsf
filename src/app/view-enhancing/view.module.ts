@@ -16,10 +16,20 @@ import { UcgridviewModule, UcgridviewComponent } from "@adins/ucgridview";
 import { UcapprovalhistModule, UcapprovalhistComponent } from "@adins/ucapprovalhist";
 import { UcShowErrorsModule } from "@adins/uc-show-errors";
 import { ViewRoutingModule } from "./view-routing.module";
-import { ViewInsuranceDetailComponent } from "./agr-view/view-insurance-detail/view-insurance-detail.component";
-import { AppInsuranceDetailComponent } from "./app-view/app-insurance/app-insurance-detail/app-insurance-detail.component";
 import { LeadMainInfoComponent } from "./lead-main-info/lead-main-info.component";
 import { MouMainInfoComponent } from './mou-main-info/mou-main-info.component';
+import { NGXToastrService } from "app/components/extra/toastr/toastr.service";
+import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
+import { AppCustViewComponentsModule } from "app/components/general/app-cust-view/app-cust-view.components.module";
+import { SharedModule } from "app/shared/shared.module";
+import { AgrViewModule } from "./agr-view/agr-view.module";
+import { AppViewModule } from "./app-view/app-view.module";
+import { LeadViewModule } from "./lead-view/lead-view.module";
+import { ChangeMouViewModule } from "./change-mou-view/change-mou-view.module";
+import { POViewModule } from "./purchase-order-view/purchase-order-view.module";
+import { SurveyViewModule } from "./survey-view-prototype/survey-view.module";
+import { AppViewInsuranceDetailComponent } from "./app-view/app-insurance/app-insurance-detail/app-insurance-detail.component";
+
 
 @NgModule({
   imports: [
@@ -40,20 +50,30 @@ import { MouMainInfoComponent } from './mou-main-info/mou-main-info.component';
     UcSubsectionModule,
     SharingComponentModule,
     UcapprovalhistModule,
-    UcShowErrorsModule
+    UcShowErrorsModule,
+    UcapprovalHistoryModule,
+    AppCustViewComponentsModule,
+    SharedModule,
+    AgrViewModule,
+    AppViewModule,
+    ChangeMouViewModule,
+    LeadViewModule,
+    POViewModule,
+    SurveyViewModule,
   ],
   declarations: [
-    ViewInsuranceDetailComponent,
-    AppInsuranceDetailComponent,
     LeadMainInfoComponent,
-    MouMainInfoComponent
+    MouMainInfoComponent,
   ],
+  providers: [
+    NGXToastrService
+],
   entryComponents: [
     UclookupgenericComponent,
     UcviewgenericComponent,
     UcgridviewComponent,
     UcapprovalhistComponent,
-    AppInsuranceDetailComponent
+    AppViewInsuranceDetailComponent
   ],
   exports: [
     MouMainInfoComponent

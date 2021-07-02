@@ -6,6 +6,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 
 @Component({
   selector: 'app-mou-main-info',
@@ -42,15 +43,21 @@ export class MouMainInfoComponent implements OnInit {
     this.viewGeneric.initiateForm();
   }
 
-  GetCallBack(ev: any) {
+  GetCallBack(ev) {
     if (ev.Key == "customer") {
-      if (!this.MouCustObj.IsExistingCust) {
+      if (!ev.ViewObj.IsExistingCust) {
         AdInsHelper.OpenMOUCustViewByMouCustId(this.MouCustId);
       } else {
-        this.CustNoObj.CustNo = this.MouCustObj.CustNo;
+        this.CustNoObj.CustNo = ev.ViewObj.CustNo;
         this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
           responseCust => {
-            AdInsHelper.OpenCustomerViewByCustId(responseCust["CustId"]);
+            if(responseCust['MrCustTypeCode'] == CommonConstant.CustTypeCompany){
+              AdInsHelper.OpenCustomerCoyViewByCustId(responseCust["CustId"]);
+            }
+            
+            if(responseCust['MrCustTypeCode'] == CommonConstant.CustTypePersonal){
+              AdInsHelper.OpenCustomerViewByCustId(responseCust["CustId"]);
+            }
           });
       }
     }

@@ -1,0 +1,104 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "AgrMainInformationId",
+        "subSectionTitle": "Main Information",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "link",
+            "label": "Application No",
+            "property": "AppNo",
+            "name": "AppNo",
+            "path": "/View/AppView",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "AppId",
+                "property": "AppId"
+              }
+            ]
+          },
+          {
+            "type": "link",
+            "label": "Lead No",
+            "property": "LeadNo",
+            "name": "LeadNo",
+            "isHide": true,
+            "path": "/View/Lead",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "LeadId",
+                "property": "LeadId"
+              }
+            ]
+          },
+          {
+            "type": "link",
+            "label": "Agreement No",
+            "property": "AgrmntNo",
+            "name": "AgrmntNo",
+            "path": "/View/AgrmntView",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "AgrmntId",
+                "property": "AgrmntId"
+              }
+            ]
+          },
+          {
+            "type": "link",
+            "label": "Mou No",
+            "isHide": true,
+            "property": "MouCustNo",
+            "name": "MouCustNo",
+            "path": "/View/Mou/CustView",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "MouCustId",
+                "property": "MouCustId"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "label": "Original Office",
+            "property": "OfficeName"
+          },
+          {
+            "type": "text",
+            "label": "Customer Name",
+            "property": "CustName"
+          },
+          {
+            "type": "callback",
+            "label": "Product Offering Name",
+            "key": "ViewProdOffering",
+            "property": "ProdOfferingName"
+          },
+          {
+            "type": "text",
+            "label": "Tenor",
+            "property": "Tenor"
+          },
+          {
+            "type": "text",
+            "label": "Agreement Current Step",
+            "property": "CurrStep"
+          },
+          {
+            "type": "text",
+            "label": "Agreement Last Step",
+            "property": "LastStep"
+          }
+        ],
+        "querystring": {
+          "name": "viewAgrMainInfoPreGoLiveCFNA"
+        }
+      }
+    ]
+  }

@@ -1,0 +1,106 @@
+<div>
+  <div class="px-3">
+    <div *ngIf="!isView">
+      <lib-ucSubsection [id]="'CustAddrId'" [title]="'Customer Highlight Comment'" [panel]="'CustAddress'">
+      </lib-ucSubsection>
+      <div id="CustAddress">
+        <table class="table table-responsive-md text-center table-hover">
+          <thead>
+            <tr class="table-header">
+              <th class="text-left"><span class="thead-header" name='addrType' translate>Input By</span> </th>
+              <th class="text-center"><span class="thead-header" name='fullAddr' translate>Input Date</span></th>
+              <th class="text-center"><span class="thead-header" name='phoneNo' translate>Comment</span></th>
+              <th class="text-center"><span class="thead-header" name='houseOwnership' translate>View</span></th>
+            </tr>
+          </thead>
+
+          <tbody *ngIf="listCustHighlightCommentObj?.length == 0">
+            <tr>
+              <td colspan="100%">No Data Available</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <ng-container *ngFor="let item of listCustHighlightCommentObj; let idx = index">
+              <tr>
+                <td class="text-left">{{item.InputBy}}</td>
+                <td class="text-center">{{item.InputDt | date: 'dd-MMM-yyyy'}}</td>
+                <td class="text-center" *ngIf="item.Comment.length > 100">{{item.Comment.substring(0, 100)}} ...</td>
+                <td class="text-center" *ngIf="item.Comment.length <= 100">{{item.Comment}}</td>
+                <td class="text-center">
+                  <a class="success p-0" (click)="ViewHiglight(idx)">
+                    <i class="ft-edit-2 font-medium-3 mr-2"></i>
+                  </a>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+
+      <form class="form form-horizontal" [formGroup]="HighlightCommenForm" #enjiForm="ngForm" novalidate
+        (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
+        <lib-ucSubsection [id]="'HighlightCommenId'" [title]="'Highlight Comment'" [panel]="'HighlightCommenSection'">
+        </lib-ucSubsection>
+        <div id="HighlightCommenSection">
+          <div class="form-body">
+
+            <div class="form-group row">
+              <label class="col-md-3 adInsLabel" for="Notes" translate>Comment</label>
+              <div class="col-md-4">
+                <textarea class="form-control adInsInput" formControlName="Notes"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && HighlightCommenForm.controls.Notes.invalid }">
+              </textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="col-md-12" style="padding: 0; text-align: right;">
+        <div class="form-actions right">
+          <button type="submit" class="btn btn-raised btn-primary">
+            <i class="far fa-check-square"></i> Save
+          </button>
+
+          <button type="button" (click)="SaveCommnet()" class="btn btn-raised btn-primary" translate>
+            <i class="fa fa-check-square-o"></i> Save Comment
+          </button>
+
+
+        </div>
+      </div> -->
+      </form>
+
+    </div>
+
+    <div class="px-3" *ngIf="isView">
+      <lib-ucSubsection [id]="'CustHCDetailId'" [title]="'Customer Highlight Comment Detail'" [panel]="'CustHCDetail'">
+      </lib-ucSubsection>
+      <div id="CustHCDetail">
+        <div class="form-body">
+          <div class="form-group row">
+            <label class="col-md-3 adInsLabel" for="Notes" translate>Input By</label>
+            <div class="col-md-9">
+              <label class="col-md-9 adInsLabel" for="Notes" translate>{{InputBy}}</label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 adInsLabel" for="Notes" translate>Input Date</label>
+            <div class="col-md-9">
+              <label class="col-md-9 adInsLabel" for="Notes" translate>{{InputDt | date: 'yyyy-MM-dd'}}</label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 adInsLabel" for="Notes" translate>Comment</label>
+            <div class="col-md-9">
+              <label class="col-md-9 adInsLabel" for="Notes" translate>{{Comment}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="button" (click)="Back()" class="btn btn-raised btn-warning" translate>
+        <i class="fa fa-check-square-o"></i> Back
+      </button>
+    </div>
+
+  </div>
+</div>

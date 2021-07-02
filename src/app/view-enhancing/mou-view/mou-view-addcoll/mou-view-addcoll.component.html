@@ -1,7 +1,7 @@
 <form class="form form-horizontal" [formGroup]="AddCollDataForm" (ngSubmit)="AddCollDataForm.valid" #enjiForm="ngForm">
   <lib-ucSubsection [id]="'AddCollDataId'" [title]="'Collateral'" [panel]="'AddCollData'">
   </lib-ucSubsection>
-  <div class="form-body" id="AddCollData">
+  <div class="form-body" id="AddCollData" *ngIf="!isView">
     <table class="table table-responsive-md text-center table-hover">
       <thead>
         <tr class="table-header">
@@ -15,6 +15,14 @@
           </th>
           <th><span style="float: right;" class="thead-header" name='CollPrice' translate>COLLATERAL PRICE</span>
           </th>
+          <th><span style="float: center;" class="thead-header" name='ChassisNo' translate>CHASSIS NO</span>
+          </th>
+          <th><span style="float: center;" class="thead-header" name='EngineNo' translate>ENGINE NO</span>
+          </th>
+          <th><span style="float: center;" class="thead-header" name='LicensePlateNo' translate>LICENSE PLATE NO</span>
+          </th>
+          <th><span style="float: center;" class="thead-header" name='ViewDetail' translate>VIEW DETAIL</span>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -24,8 +32,152 @@
           <td align="left">{{item.OwnerName}}</td>
           <td align="center">{{item.CollateralStat}}</td>
           <td align="right">{{item.CollateralValueAmt | number}}</td>
+          <td align="center">{{item.SerialNo1}}</td>
+          <td align="center">{{item.SerialNo2}}</td>
+          <td align="center">{{item.SerialNo3}}</td>
+          <td align="center">
+            <a class="success p-0" (click)="ViewColl(item.MouCustCollateralId)">
+              <i class="ft-edit-2 font-medium-3 mr-2"></i>
+            </a>
+          </td>
         </tr>
       </tbody>
     </table>
+  </div>
+
+  <div class="form-body" id="AddCollDetailData" *ngIf="isView">
+    <button type="button" (click)="Back()" class="btn btn-raised btn-warning" translate>
+      <i class="fa fa-check-square-o"></i> Back
+    </button>
+
+    <lib-ucSubsection [id]="'AddCollDocumentId'" [title]="'Collateral Document'" [panel]="'AddCollDocument'">
+    </lib-ucSubsection>
+    <div id="AddCollDocument">
+      <div class="form-body">
+        <table class="table table-responsive-md text-center table-hover">
+          <thead>
+            <tr class="table-header">
+              <th><span translate class="thead-header">Document</span></th>
+              <th><span translate class="thead-header">Recieved</span></th>
+              <th><span translate class="thead-header">Document No</span></th>
+              <th><span translate class="thead-header">Expired Date</span></th>
+              <th><span translate class="thead-header">Document Notes</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of listMouCustCollateralDocObj; let i = index">
+              <td>{{item.DocCode}}</td>
+              <td>
+                {{item.IsReceived}}
+              </td>
+              <td>
+                {{item.DocNo}}
+              </td>
+              <td>
+                {{item.ExpiredDt}}
+              </td>
+              <td>
+                {{item.DocNotes}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <lib-ucSubsection [id]="'AddCollOwnerId'" [title]="'Collateral User'" [panel]="'AddCollUser'">
+    </lib-ucSubsection>
+    <div id="AddCollUser">
+      <div class="form-group row">
+        <label class="col-md-2 adInsLabel" translate> Collateral User Name</label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.UserName}}</label>
+        <label class="col-md-2 adInsLabel" translate> Collateral User Relationship</label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.MrUserRelationshipCode}} </label>
+      </div>
+    </div>
+
+    <lib-ucSubsection [id]="'AddCollOwnerid'" [title]="'Collateral Owner'" [panel]="'AddCollOwner'">
+    </lib-ucSubsection>
+    <div id="AddCollOwner">
+      <div class="form-group row">
+        <label class="col-md-2 adInsLabel" translate>Owner Name</label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.OwnerName}}</label>
+        <label class="col-md-2 adInsLabel" translate>Owner Address</label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.OwnerAddr}} </label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2 adInsLabel" translate>Owner Relationship</label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.MrOwnerRelationshipCode}}</label>
+        <label class="col-md-2 adInsLabel" translate>RT / RW</label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.OwnerAreaCode3 }} /
+          {{collateralRegistrationObj.OwnerAreaCode4}} </label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2 adInsLabel" translate> Id Type </label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.MrIdTypeCode}}</label>
+        <label class="col-md-2 adInsLabel" translate> Kelurahan </label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.OwnerAreaCode2}} </label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2 adInsLabel" translate> Owner Id No </label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.OwnerIdNo}}</label>
+        <label class="col-md-2 adInsLabel" translate> Kecamatan </label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.OwnerAreaCode1}} </label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2 adInsLabel" translate> Mobile Phone No </label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.OwnerMobilePhnNo}}</label>
+        <label class="col-md-2 adInsLabel" translate> City </label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.OwnerCity}} </label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2 adInsLabel" translate> </label>
+        <label class="col-md-4 adInsLabel" translate></label>
+        <label class="col-md-2 adInsLabel" translate> Zip Code </label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.OwnerZipcode}} </label>
+      </div>
+    </div>
+
+    <lib-ucSubsection [id]="'AddCollLocationId'" [title]="'Collateral Location'" [panel]="'AddCollLocation'">
+    </lib-ucSubsection>
+    <div id="AddCollLocation">
+      <div class="form-group row">
+        <label class="col-md-2 adInsLabel" translate> Address </label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.LocationAddr}}</label>
+        <label class="col-md-2 adInsLabel" translate></label>
+        <label class="col-md-4 adInsLabel" translate></label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2 adInsLabel" translate> RT / RW </label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.LocationAreaCode3}} /
+          {{collateralRegistrationObj.LocationAreaCode4 }}</label>
+        <label class="col-md-2 adInsLabel" translate></label>
+        <label class="col-md-4 adInsLabel" translate></label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2 adInsLabel" translate> Kelurahan </label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.LocationAreaCode2}}</label>
+        <label class="col-md-2 adInsLabel" translate></label>
+        <label class="col-md-4 adInsLabel" translate></label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2 adInsLabel" translate> Kecamatan </label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.LocationAreaCode1}}</label>
+        <label class="col-md-2 adInsLabel" translate></label>
+        <label class="col-md-4 adInsLabel" translate></label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2 adInsLabel" translate> City </label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.LocationCity}}</label>
+        <label class="col-md-2 adInsLabel" translate></label>
+        <label class="col-md-4 adInsLabel" translate></label>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-2 adInsLabel" translate> Zip Code </label>
+        <label class="col-md-4 adInsLabel" translate>{{collateralRegistrationObj.LocationZipcode}}</label>
+        <label class="col-md-2 adInsLabel" translate></label>
+        <label class="col-md-4 adInsLabel" translate></label>
+      </div>
+    </div>
   </div>
 </form>

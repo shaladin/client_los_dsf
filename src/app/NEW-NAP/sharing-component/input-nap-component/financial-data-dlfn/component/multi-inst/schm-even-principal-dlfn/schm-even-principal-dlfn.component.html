@@ -1,0 +1,334 @@
+<lib-ucSubsection [id]="'FinData_FinDataId'" [title]="'Financial Data'" [panel]="'FinData_FinData'">
+</lib-ucSubsection>
+<div id="FinData_FinData">
+  <form [formGroup]="ParentForm" #enjiForm="ngForm">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label>Installment Type</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.InstTypeName.value}}</label>
+            </div>
+            <div class="col-md-3 form-inline">
+              <label>Invoice Date</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.InvcDt.value | date : 'dd-MMM-yyyy'}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label>Installment Scheme</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.InstSchemeName.value}}</label>
+            </div>
+            <div class="col-md-3 form-inline">
+              <label>Maturity Date</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.MaturityDate.value | date: 'dd-MMM-yyyy'}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label>Num Of Inst</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.NumOfInst.value}}</label>
+            </div>
+            <div class="col-md-3 form-inline">
+              <label class="adins-required-label">Estimation Effective Date</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <input type="date" class="form-control" formControlName="EstEffDt" (focusout)="EstEffDtFocusOut($event)"
+                required [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EstEffDt.invalid}">
+              <lib-uc-show-errors [control]="ParentForm.controls.EstEffDt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label>Total Invoice Amount</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TotalInvcAmt.value | number : '1.2-2'}}</label>
+            </div>
+            <!-- <div class="col-md-3 form-inline">
+              <label>Retention Amount / Percent</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{(ParentForm.controls.TotalRetentionAmt.value | number : '1.2-2') + ' / ' +
+                (ParentForm.controls.RetentionPrcnt.value | number : '1.2-2')}}</label>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label>Total Fee</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TotalFeeAmt.value | number : '1.2-2'}}</label>
+            </div>
+            <!-- <div class="col-md-3 form-inline">
+              <label>Total Fee Capitalized</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TotalFeeCptlzAmt.value | number : '1.2-2'}}</label>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <!-- <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label>Total Insurance</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TotalInsCustAmt.value | number : '1.2-2'}}</label>
+            </div>
+            <div class="col-md-3 form-inline">
+              <label>Total Insurance Capitalized</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.InsCptlzAmt.value | number : '1.2-2'}}</label>
+            </div>
+          </div>
+        </div>
+      </div> -->
+      <br />
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label>NTF</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.NtfAmt.value | number : '1.2-2'}}</label>
+            </div>
+            <div class="col-md-3 form-inline">
+              <label>Rounding</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <input type="" class="form-control full-width" formControlName="RoundingAmt"
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.RoundingAmt.invalid}"
+                (keyup)="SetNeedReCalculate(true)" currencyMask>
+              <lib-uc-show-errors [control]="ParentForm.controls.RoundingAmt" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label>Rate Type</label>
+            </div>
+            <div class="col-md-3 form-inline">
+              <select formControlName="RateType" class="form-control full-width" (change)="SetNeedReCalculate(true)">
+                <option value="">--Select--</option>
+                <option *ngFor="let m of RateTypeOptions" value={{m.Key}}>{{m.Value}}</option>
+              </select>
+              <lib-uc-show-errors [control]="ParentForm.controls.RateType" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+            <div class="col-md-3 form-inline">
+              <label>Total Interest</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TotalInterestAmt.value | number : '1.2-2'}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label>Effective Rate</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <div class="row">
+                <div class="col-md-6">
+                  <input type="" class="form-control full-width" formControlName="EffectiveRatePrcnt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EffectiveRatePrcnt.invalid}"
+                    [readonly]="ParentForm.controls.RateType.value != 'EFCTV' || ParentForm.controls.EffectiveRateBhv.value == 'LOCK'"
+                    (focusout)="EffectiveRatePrcntInput_FocusOut()" (keyup)="SetNeedReCalculate(true)" currencyMask>
+                  <lib-uc-show-errors [control]="ParentForm.controls.EffectiveRatePrcnt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+                <div class="col-md-6">
+                  <input type="" class="form-control full-width" formControlName="FlatRatePrcnt"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.FlatRatePrcnt.invalid}"
+                    [readonly]="ParentForm.controls.RateType.value != 'FLT'" (keyup)="SetNeedReCalculate(true)"
+                    currencyMask>
+                  <lib-uc-show-errors [control]="ParentForm.controls.FlatRatePrcnt" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 form-inline">
+              <label>Total AR</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TotalAR.value | number : '1.2-2'}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label>Gross Yield</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '.6'}}%</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label>Grace Period</label>
+            </div>
+            <div class="col-md-1 form-inline form-inline-right">
+              <input type="number" class="form-control full-width" formControlName="GracePeriod" disabled
+                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.GracePeriod.invalid}"
+                (keyup)="SetNeedReCalculate(true)">
+              <lib-uc-show-errors [control]="ParentForm.controls.GracePeriod" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+            <div class="col-md-2 form-inline">
+              <select formControlName="MrGracePeriodTypeCode" class="form-control full-width"
+                (change)="SetNeedReCalculate(true)" disabled>
+                <option value="">--Select--</option>
+                <option *ngFor="let m of GracePeriodeTypeOptions" value={{m.Key}}>{{m.Value}}</option>
+              </select>
+              <lib-uc-show-errors [control]="ParentForm.controls.MrGracePeriodTypeCode" [submit]="enjiForm.submitted">
+              </lib-uc-show-errors>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label>Top Interest Rate</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TopInterestRatePrcnt.value | number : '1.2-2'}}%</label>
+            </div>
+            <div class="col-md-3 form-inline">
+              <label>Total Top Amount</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TotalTopAmount.value | number : '1.2-2'}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-3 form-inline">
+              <label>Term of Payment (Days)</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TopDays.value}}</label>
+            </div>
+            <div class="col-md-3 form-inline">
+              <label>Total Disburse</label>
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TotalDisbAmt.value | number : '1.2-2'}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+    </div>
+
+    <div class="form-inline-right">
+      <button class="btn btn-raised btn-primary margin-r-5" translate type="button" tabindex="0"
+        (click)="CalculateInstallment()">
+        Calculate Installment
+      </button>
+    </div>
+
+    <div *ngIf="listInstallment">
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromTypeName" translate>
+                No
+              </span>
+            </th>
+            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyFromValueName" translate>
+                Installment Amount
+              </span>
+            </th>
+            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyAllocName" translate>
+                Principal Amount
+              </span>
+            </th>
+            <th style="text-align: center;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>
+                Interest Amount
+              </span>
+            </th>
+            <th style="text-align: center;"><span class="thead-header" name="SubsidyPrcnt" translate>
+                Os Principal Amount
+              </span>
+            </th>
+            <th style="text-align: center;"><span class="thead-header" name="SubsidyAmt" translate>
+                Os Interest Amount
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngIf="listInstallment.length == 0">
+          <tr>
+            <td colspan="100%">No Data Available</td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="listInstallment.length > 0">
+          <tr *ngFor="let item of listInstallment; let i = index">
+            <td style="text-align: center;">{{item.InstSeqNo}}</td>
+            <td style="text-align: right;">{{item.InstAmt | number : '1.2-2'}}</td>
+            <td style="text-align: right;">{{item.PrincipalAmt | number : '1.2-2'}}</td>
+            <td style="text-align: right;">{{item.InterestAmt| number : '1.2-2'}}</td>
+            <td style="text-align: right;">{{item.OsPrincipalAmt| number : '1.2-2'}}</td>
+            <td style="text-align: right;">{{item.OsInterestAmt| number : '1.2-2'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </form>
+</div>

@@ -101,17 +101,16 @@
               <div class="col-md-3 form-inline form-inline-right">
                 <label>{{ParentForm.controls.DownPaymentNettAmt.value | number : '1.2-2'}}</label>
               </div>
-              <!-- <div class="col-md-3 form-inline">
-              <label translate>TDP Paid at MF</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <input type="" class="form-control full-width" formControlName="TdpPaidCoyAmt"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.TdpPaidCoyAmt.invalid}"
-                (keyup)="SetNeedReCalculate(true)"
-                currencyMask>
-              <lib-uc-show-errors [control]="ParentForm.controls.TdpPaidCoyAmt" [submit]="enjiForm.submitted">
-              </lib-uc-show-errors>
-            </div> -->
+              <div class="col-md-3 form-inline">
+                <label translate>TDP Paid at MF</label>
+              </div>
+              <div class="col-md-3 form-inline form-inline-right">
+                <input type="" class="form-control full-width" formControlName="TdpPaidCoyAmt"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.TdpPaidCoyAmt.invalid}"
+                  (keyup)="SetNeedReCalculate(true)" currencyMask>
+                <lib-uc-show-errors [control]="ParentForm.controls.TdpPaidCoyAmt" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
+              </div>
             </div>
           </div>
         </div>
@@ -195,7 +194,8 @@
             <div class="col-md-3 form-inline" *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'">
               <label translate>Supplier Rate</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right" *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'">
+            <div class="col-md-3 form-inline form-inline-right"
+              *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'">
               <label>{{ParentForm.controls.AppSupplEffectiveRatePrcnt.value | number : '1.2-2'}}</label>
             </div>
             <!-- <div class="col-md-3 form-inline">
@@ -213,7 +213,7 @@
         </div>
       </div>
 
-      <div class="row">
+      <div *ngIf="!IsTrialCalc" class="row">
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
@@ -250,10 +250,10 @@
               <lib-uc-show-errors [control]="ParentForm.controls.InstAmt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
-            <div class="col-md-3 form-inline" *ngIf="BizTemplateCode == 'FL4W'">
+            <div class="col-md-3 form-inline" *ngIf="BizTemplateCode == 'FL4W' && !IsTrialCalc">
               <label translate>Residual Value Amount</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right" *ngIf="BizTemplateCode == 'FL4W'">
+            <div class="col-md-3 form-inline form-inline-right" *ngIf="BizTemplateCode == 'FL4W' && !IsTrialCalc">
               <input type="" class="form-control full-width" formControlName="ResidualValueAmt"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.ResidualValueAmt.invalid}"
                 (keyup)="SetNeedReCalculate(true)" currencyMask>
@@ -299,11 +299,11 @@
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalInterestAmt.value | number : '1.2-2'}}</label>
             </div>
-            <div class="col-md-3 form-inline">
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline">
               <label translate>Gross Yield</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '1.2-2'}}%</label>
+            <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline form-inline-right">
+              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '.6'}}%</label>
             </div>
           </div>
         </div>
@@ -360,7 +360,8 @@
       </table>
     </div>
     <div *ngIf="ParentForm.controls.ListEntryInst['controls'].length > 0" class="form-inline-right">
-      <button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="CalculateAmortization()" translate>
+      <button class="btn btn-raised btn-primary" translate type="button" tabindex="0" (click)="CalculateAmortization()"
+        translate>
         Calculate Amortization
       </button>
     </div>

@@ -15,6 +15,7 @@ import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { AppCustCompletionObj } from 'app/shared/model/CustCompletion/AppCustCompletionObj.Model';
 
 @Component({
   selector: 'app-cust-completion-detail',
@@ -24,11 +25,11 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 export class CustCompletionDetailComponent implements OnInit {
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   inputGridObj: InputGridObj = new InputGridObj();
-  listCustCompletion: Array<any> = new Array();
+  listCustCompletion: Array<AppCustCompletionObj> = new Array();
   AppId: number;
   wfTaskListId: number;
   BizTemplateCode: string;
-  addObj: any = {};
+  addObj: object = {};
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
   });
@@ -149,7 +150,7 @@ export class CustCompletionDetailComponent implements OnInit {
       this.http.post(URLConstant.EditReturnHandlingD, ReturnHandlingResult).subscribe(
         (response) => {
           this.toastr.successMessage(response["message"]);
-          AdInsHelper.RedirectUrl(this.router, ["/Nap/AddProcess/ReturnHandling/EditAppPaging"], { BizTemplateCode: this.BizTemplateCode });
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING], { BizTemplateCode: this.BizTemplateCode });
         }
       )
     }

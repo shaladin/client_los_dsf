@@ -1,0 +1,85 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "CustMainDetailHeaderId",
+        "subSectionTitle": "Mou Detail",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "text",
+            "label": "Virtual Account",
+            "property": "virtualAccNo"
+          },
+          {
+            "type": "text",
+            "label": "Currency",
+            "property": "currency"
+          },
+          {
+            "type": "text",
+            "label": "Way Of Payment",
+            "property": "wop"
+          },
+          {
+            "type": "text",
+            "label": "Resource Type",
+            "property": "resourceType"
+          },
+          {
+            "type": "text",
+            "label": "Padi By",
+            "property": "paidBy"
+          },
+          {
+            "type": "boolean",
+            "label": "Disclosed",
+            "property": "isDisclosed"
+          },
+          {
+            "type": "text",
+            "label": "Calculation Method",
+            "property": "calcMethod"
+          },
+          {
+            "type": "text",
+            "label": "Installment Type",
+            "property": "instType"
+          },
+          {
+            "type": "text",
+            "label": "TOP Days",
+            "property": "topDays"
+          },
+          {
+            "type": "text",
+            "label": "Payment Frequency",
+            "property": "payFreq"
+          },
+          {
+            "type": "text",
+            "label": "Interest Rate (%)",
+            "property": "interestRatePrcnt"
+          },
+          {
+            "type": "text",
+            "label": "Retention (%)",
+            "property": "retentionPrcnt"
+          },
+          {
+            "type": "text",
+            "label": "Vendor Name",
+            "property": "vendorName"
+          },
+          {
+            "type": "text",
+            "label": "Notes",
+            "property": "notes"
+          }
+        ],
+        "querystring": {
+          "name": "viewChangeMouDetailFactoring"
+        }
+      }
+    ]
+  }

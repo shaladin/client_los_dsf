@@ -117,9 +117,9 @@
                     <div *ngFor="let ruleItem of item.controls.ListAllocated.controls; let idx = index">
                       <div class="form-group row" [formGroupName]="idx"
                         *ngIf="ruleItem.controls.TotalListAllocatedDivided.value > idx">
-                        <label class="col-md-4 adInsLabel" translate> {{ruleItem.controls.AllocationFromDesc.value}}
+                        <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFromDesc.value}} (Amt/%)
                         </label>
-                        <div class="col-md-8" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
+                        <div class="col-md-4" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
                           <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
                             class="form-control adInsInput text-right"
                             formControlName="AllocationAmount" (change)="ChangeDataLabel(i)" (keyup)="ChangeDataLabel(i)">
@@ -131,6 +131,21 @@
                           <lib-uc-show-errors [control]="ruleItem.controls.AllocationAmount"
                             [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </div>
+                        <label class="col-md-1 adInsLabel">/</label>
+                        <div class="col-md-3" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
+                            <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
+                            class="form-control adInsInput  text-right"
+                            formControlName="AllocationPercentage" 
+                            (focusout)="ChangeAllocAmountBasedOnPercentage(i)">
+                            <input type="" currencyMask class="form-control adInsInput" 
+                            (focusout)="ChangeAllocAmountBasedOnPercentage(i)" 
+                            formControlName="AllocationPercentage" 
+                            *ngSwitchCase="'DEF'" class="form-control adInsInput  text-right"
+                            [ngClass]="{ 'is-invalid': enjiForm.submitted && ruleItem.controls.AllocationPercentage.invalid }"
+                            [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }"/>
+                          <lib-uc-show-errors [control]="ruleItem.controls.AllocationPercentage" 
+                          [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -139,9 +154,9 @@
                     <div *ngFor="let ruleItem of item.controls.ListAllocated.controls; let idx = index">
                       <div class="form-group row" [formGroupName]="idx"
                         *ngIf="ruleItem.controls.TotalListAllocatedDivided.value <= idx">
-                        <label class="col-md-4 adInsLabel" translate> {{ruleItem.controls.AllocationFromDesc.value}}
+                        <label class="col-md-4 adInsLabel"> {{ruleItem.controls.AllocationFromDesc.value}} (Amt/%)
                         </label>
-                        <div class="col-md-8" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
+                        <div class="col-md-4" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
                           <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
                             class="form-control adInsInput  text-right"
                             formControlName="AllocationAmount" (change)="ChangeDataLabel(i)" (keyup)="ChangeDataLabel(i)">
@@ -152,11 +167,30 @@
                           <lib-uc-show-errors [control]="ruleItem.controls.AllocationAmount"
                             [submit]="enjiForm.submitted"></lib-uc-show-errors>
                         </div>
+                        <label class="col-md-1 adInsLabel">/</label>
+                        <div class="col-md-3" [ngSwitch]="ruleItem.controls.AllocationBehaviour.value">
+                          <input type="text" currencyMask *ngSwitchCase="'LOCK'" readonly
+                          class="form-control adInsInput  text-right"
+                          formControlName="AllocationPercentage" 
+                          (focusout)="ChangeAllocAmountBasedOnPercentage(i)">
+                          <input type="" currencyMask class="form-control adInsInput" 
+                          (focusout)="ChangeAllocAmountBasedOnPercentage(i)" 
+                          formControlName="AllocationPercentage" 
+                          *ngSwitchCase="'DEF'" class="form-control adInsInput  text-right"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && ruleItem.controls.AllocationPercentage.invalid }"
+                          [options]="{ thousands: ',', decimal: '.', align: 'right', allowNegative: false, allowZero:true, precision: 6, nullable: false }"/>
+                        <lib-uc-show-errors [control]="ruleItem.controls.AllocationPercentage" 
+                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        </div>
                       </div>
                     </div>
                   </div>
   
                 </div>
+              </div>
+              <div class="form-group" *ngIf="item.controls.TotalCommisionAmount.value == 0" >
+                <label  style="color: red;">
+                  Please complete rule setting first for {{FormInputObj['labelName']}} Name : {{item.controls.ContentNameValue.value}} </label>
               </div>
             </div>
           <!-- </div> -->

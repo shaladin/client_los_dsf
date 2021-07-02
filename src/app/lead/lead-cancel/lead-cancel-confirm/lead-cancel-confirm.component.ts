@@ -12,6 +12,7 @@ import { FormValidateService } from 'app/shared/services/formValidate.service';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericListByIdObj } from 'app/shared/model/Generic/GenericListByIdObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-lead-cancel-confirm',
@@ -24,10 +25,8 @@ export class LeadCancelConfirmComponent implements OnInit {
     CancelReason: ['', Validators.required],
     Notes: ['']
   });
-  GetListKeyValueActiveByCode = URLConstant.GetRefMasterListKeyValueActiveByCode;
-  ItemCancelReason: any;
+  ItemCancelReason: Array<KeyValueObj>;
   deletedArr = new Array();
-  EditListLeadForCancelByListLeadId = URLConstant.EditListLeadForCancelByListLeadId;
   tempWfTaskListArr = new Array();
   leadUrl: string;
   tempLeadIds: string;
@@ -63,8 +62,8 @@ export class LeadCancelConfirmComponent implements OnInit {
         this.responseObj = response['ReturnObject'];
       }
     );
-    var tempDdlObj = { "RefMasterTypeCode": "LEAD_CANCEL_REASON" };
-    this.http.post(this.GetListKeyValueActiveByCode, tempDdlObj).subscribe(
+    let tempDdlObj = { "RefMasterTypeCode": "LEAD_CANCEL_REASON" };
+    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, tempDdlObj).subscribe(
       response => {
         this.ItemCancelReason = response['ReturnObject'];
         this.LeadConfirmCancelForm.patchValue({
@@ -78,8 +77,8 @@ export class LeadCancelConfirmComponent implements OnInit {
   deleteFromTemp(leadId) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
       this.deletedArr.push(leadId);
-      var idxToDel = 0;
-      for (var i = 0; i < this.responseObj.length; i++) {
+      let idxToDel = 0;
+      for (let i = 0; i < this.responseObj.length; i++) {
         if (this.responseObj[i]['LeadId'] == leadId) {
           idxToDel = i;
           break;
@@ -91,21 +90,21 @@ export class LeadCancelConfirmComponent implements OnInit {
 
   SaveLeadConfirmCancel() {
     if (this.responseObj.length > 0) {
-      var leadObj: LeadConfirmCancelObj = new LeadConfirmCancelObj();
+      let leadObj: LeadConfirmCancelObj = new LeadConfirmCancelObj();
       leadObj.LeadStat = CommonConstant.LeadStatCancel;
       leadObj.LeadStep = CommonConstant.LeadStepCancel;
       leadObj.MrCancelReasonCode = this.LeadConfirmCancelForm.controls.CancelReason.value;
       leadObj.Notes = this.LeadConfirmCancelForm.controls.Notes.value;
-      var tempId = new Array();
-      for (var i = 0; i < this.responseObj.length; i++) {
+      let tempId = new Array();
+      for (let i = 0; i < this.responseObj.length; i++) {
         tempId.push(this.responseObj[i]['LeadId']);
       }
       leadObj.ListLeadId = tempId;
       leadObj.ListWfTaskListId = this.tempWfTaskListArr;
-      this.http.post(this.EditListLeadForCancelByListLeadId, leadObj).subscribe(
+      this.http.post(URLConstant.EditListLeadForCancelByListLeadId, leadObj).subscribe(
         response => {
           this.toastr.successMessage(response["Message"]);
-          AdInsHelper.RedirectUrl(this.router,[NavigationConstant.LEAD_CANCEL],{});
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_CANCEL], {});
         }
       );
     }

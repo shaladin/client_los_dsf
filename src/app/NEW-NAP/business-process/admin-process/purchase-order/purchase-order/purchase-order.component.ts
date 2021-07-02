@@ -14,6 +14,9 @@ import { forkJoin } from 'rxjs';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { ToastrService } from 'ngx-toastr';
+import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 
 @Component({
   selector: 'app-purchase-order',
@@ -24,7 +27,7 @@ export class PurchaseOrderComponent implements OnInit {
   lobCode: string;
   AppId: number;
   AgrmntId: number;
-  TaskListId: any;
+  TaskListId: number;
   arrValue: Array<number> = [];
   AppAssetList = [];
   tcForm: FormGroup = this.fb.group({
@@ -38,8 +41,12 @@ export class PurchaseOrderComponent implements OnInit {
   mouCustNo: string;
   isDmsAppReady: boolean;
   SysConfigResultObj : ResSysConfigResultObj = new ResSysConfigResultObj();
+  isNeedExtension: boolean = false;
+  businessDt: Date;
+  AppObj: AppObj = new AppObj();
+  toastRef: any;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService, private toastrSvc: ToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.AppId = params["AppId"];
@@ -57,6 +64,8 @@ export class PurchaseOrderComponent implements OnInit {
   }
 
   async ngOnInit() {
+    await this.CheckApvResultExp();
+
     this.arrValue.push(this.AgrmntId);
     var appAssetObj = {
       Id: this.AgrmntId
@@ -114,10 +123,9 @@ export class PurchaseOrderComponent implements OnInit {
   
           this.dmsObj.Option.push(new DMSLabelValueObj(CommonConstant.DmsOverideSecurity, CommonConstant.DmsOverideUploadView));
           if (mouId != null && mouId != "") {
-            let mouObj = { Id: mouId };
-            this.http.post(URLConstant.GetMouCustById, mouObj).subscribe(
-              result => {
-                this.mouCustNo = result['MouCustNo'];
+            this.http.post(URLConstant.GetMouCustById, { Id: mouId }).subscribe(
+              (result: MouCustObj) => {
+                this.mouCustNo = result.MouCustNo;
                 this.dmsObj.MetadataParent.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
                 this.dmsAppObj.MetadataObject.push(new DMSLabelValueObj(CommonConstant.DmsMouId, this.mouCustNo));
                 this.isDmsReady = true;
@@ -132,10 +140,45 @@ export class PurchaseOrderComponent implements OnInit {
     }
   }
 
-  testData() {
+  ngOnDestroy() {
+    if(this.toastRef != undefined && this.toastRef != null){
+      this.toastrSvc.clear(this.toastRef.toastId);
+    }
   }
 
+  async GetAppData() {
+    await this.http.post<AppObj>(URLConstant.GetAppById, {Id : this.AppId}).toPromise().then(
+      (response) => {
+        this.AppObj = response;
+      }
+    );
+  }
+  async CheckApvResultExp() {
+    //get bis date
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
+    await this.GetAppData();
+    if (this.AppObj.CrdApvResultExpDt != null && this.AppObj.CrdApvResultExpDt != undefined) {
+      if (this.businessDt > new Date(this.AppObj.CrdApvResultExpDt)) {
+        this.isNeedExtension = true;
+        this.toastRef = this.toastrSvc.error(null, "Need Extension", {
+          disableTimeOut: true,
+          tapToDismiss: false,
+          closeButton: true
+        });
+      }
+    }
+  }
+
+  testData() {}
+
   SaveForm() {
+
+    if(this.isNeedExtension){
+      this.toastr.typeErrorCustom("Need Extension");
+      return;
+    }
+
     var IsSave = false;
     if (this.AppAssetList.length != 0) {
       for (let i = 0; i < this.AppAssetList.length; i++) {
@@ -165,7 +208,6 @@ export class PurchaseOrderComponent implements OnInit {
         });
     }
   }
-
   Cancel() {
     var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PO_PAGING], { "BizTemplateCode": BizTemplateCode });

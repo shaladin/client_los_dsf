@@ -21,16 +21,20 @@ import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ResGetListRefEmpForLookupObj } from 'app/shared/model/Response/RefEmp/ResRefEmpObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { LeadForLookupObj } from 'app/shared/model/LeadForLookupObj.Model';
 
 @Component({
   selector: 'app-lead-input-main-info',
   templateUrl: './lead-input-main-info.component.html'
 })
 export class LeadInputMainInfoComponent implements OnInit {
-  user: any;
-  LeadId: any;
-  returnLead: any;
-  responseLead: any;
+  user: CurrentUserContext;
+  LeadId: number;
+  returnLead: LeadObj;
+  responseLead: GenericObj;
   leadObj: LeadObj;
   addLeadObj: ReqAddLeadObj = new ReqAddLeadObj();
   editLeadObj: ReqEditLeadObj = new ReqEditLeadObj();
@@ -39,18 +43,18 @@ export class LeadInputMainInfoComponent implements OnInit {
   surveyorNameLookUpObj: InputLookupObj;
   salesNameLookUpObj: InputLookupObj;
   agencyLookUpObj: InputLookupObj;
-  tempCmoUsername: any;
-  tempSurveyorUsername: any;
-  tempSalesUsername: any;
-  tempAgencyCode: any;
-  listRefOffice: Array<any>;
+  tempCmoUsername: string;
+  tempSurveyorUsername: string;
+  tempSalesUsername: string;
+  tempAgencyCode: string;
+  listRefOffice: Array<KeyValueObj>;
   refOfficeObj: RefOfficeObj;
-  listRefLob: Array<any>;
+  listRefLob: Array<KeyValueObj>;
   refLobObj: RefLobObj;
   leadSource: RefMasterObj;
-  listLeadSource: Array<any>;
+  listLeadSource: Array<KeyValueObj>;
   vendorObj: VendorObj;
-  returnVendorObj: any;
+  returnVendorObj: VendorObj;
   pageType: string = "add";
   leadPersonalLookUpObj: InputLookupObj;
   cmoObj: RefEmpForLookupObj;
@@ -59,11 +63,11 @@ export class LeadInputMainInfoComponent implements OnInit {
   returnSurveyorObj: ResGetListRefEmpForLookupObj;
   salesObj: RefEmpForLookupObj;
   returnSalesObj: ResGetListRefEmpForLookupObj;
-  leadIdExist: any;
+  leadIdExist: number;
   getExistLeadObj: LeadObj;
-  returnExistLead: any;
+  returnExistLead: LeadObj;
   vendorExistObj: VendorObj;
-  returnVendorExistObj: any;
+  returnVendorExistObj: VendorObj;
   cmoExistObj: RefEmpForLookupObj;
   returnCmoExistObj: ResGetListRefEmpForLookupObj;
   surveyorExistObj: RefEmpForLookupObj;
@@ -71,7 +75,7 @@ export class LeadInputMainInfoComponent implements OnInit {
   salesExistObj: RefEmpForLookupObj;
   returnSalesExistObj: ResGetListRefEmpForLookupObj;
   leadExistObj: LeadObj;
-  returnLeadExistObj: any;
+  returnLeadExistObj: LeadForLookupObj;
   critObj: CriteriaObj = new CriteriaObj();
   arrCrit: Array<CriteriaObj> = new Array<CriteriaObj>();
   MainInfoForm = this.fb.group({
@@ -82,7 +86,6 @@ export class LeadInputMainInfoComponent implements OnInit {
     LobCode: ['', [Validators.required]],
     LeadSource: ['', [Validators.required]],
   });
-  leadUrl: any;
   WfTaskListId: number;
   isCopyButtonDisabled: boolean = true;
 
@@ -139,9 +142,9 @@ export class LeadInputMainInfoComponent implements OnInit {
   copyLead() {
     this.getExistLeadObj = new LeadObj();
     this.getExistLeadObj.LeadId = this.leadIdExist;
-    var getExistLeadObj = { Id: this.leadIdExist };
+    let getExistLeadObj = { Id: this.leadIdExist };
     this.http.post(URLConstant.GetLeadByLeadId, getExistLeadObj).subscribe(
-      (response) => {
+      (response: LeadObj) => {
         this.returnExistLead = response;
         this.MainInfoForm.patchValue({
           OfficeCode: this.returnExistLead.OriOfficeCode,
@@ -155,13 +158,13 @@ export class LeadInputMainInfoComponent implements OnInit {
         this.vendorExistObj = new VendorObj();
         this.vendorExistObj.VendorCode = this.returnExistLead.AgencyCode;
         this.http.post(URLConstant.GetVendorByVendorCode, { Code: this.returnExistLead.AgencyCode }).subscribe(
-          (response) => {
+          (response: VendorObj) => {
             this.returnVendorExistObj = response;
             this.agencyLookUpObj.nameSelect = this.returnVendorExistObj.VendorName;
             this.agencyLookUpObj.jsonSelect = this.returnVendorExistObj;
             this.tempAgencyCode = this.returnVendorExistObj.VendorCode;
           });
-          
+
         this.tempCmoUsername = this.returnExistLead.CmoUsername;
         this.tempSurveyorUsername = this.returnExistLead.SurveyorUsername;
         this.tempSalesUsername = this.returnExistLead.TeleMarketingUsername;
@@ -213,20 +216,32 @@ export class LeadInputMainInfoComponent implements OnInit {
         });
       });
 
-    this.leadSource = new RefMasterObj();
-    this.leadSource.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeLeadSource;
-    this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.leadSource).subscribe(
+
+    let userContext: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+
+    // this.leadSource = new RefMasterObj();
+    // this.leadSource.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeLeadSource;
+    // this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, this.leadSource).subscribe(
+    //   (response) => {
+    //     this.listLeadSource = response[CommonConstant.ReturnObj];
+    //     this.MainInfoForm.patchValue({ LeadSource: response[CommonConstant.ReturnObj][0]['Key'] });
+    //   });
+
+    let obj = {
+      Code: userContext.OfficeCode,
+    };
+    console.log(userContext);
+    this.http.post(URLConstant.GetListKvpRefAppSrcForAppOrLead, obj).subscribe(
       (response) => {
         this.listLeadSource = response[CommonConstant.ReturnObj];
-        this.MainInfoForm.patchValue({ LeadSource: response[CommonConstant.ReturnObj][0]['Key'] });
       });
 
     if (this.pageType == "edit" || this.pageType == "update") {
       this.getLeadObj = new LeadObj();
       this.getLeadObj.LeadId = this.LeadId;
-      var getLeadObj = { Id: this.LeadId };
+      let getLeadObj = { Id: this.LeadId };
       this.http.post(URLConstant.GetLeadByLeadId, getLeadObj).subscribe(
-        (response) => {
+        (response: LeadObj) => {
           this.returnLead = response;
           this.MainInfoForm.patchValue({
             OfficeCode: this.returnLead.OriOfficeCode,
@@ -241,9 +256,9 @@ export class LeadInputMainInfoComponent implements OnInit {
           if (this.returnLead.LeadCopyId != null) {
             this.leadExistObj = new LeadObj();
             this.leadExistObj.LeadId = this.returnLead.LeadCopyId;
-            var leadExistObj = { Id: this.returnLead.LeadCopyId };
+            let leadExistObj = { Id: this.returnLead.LeadCopyId };
             this.http.post(URLConstant.GetLeadPersonalForLookupCopy, leadExistObj).subscribe(
-              (response) => {
+              (response: LeadForLookupObj) => {
                 this.returnLeadExistObj = response;
               });
           }
@@ -251,7 +266,7 @@ export class LeadInputMainInfoComponent implements OnInit {
           this.vendorObj = new VendorObj();
           this.vendorObj.VendorCode = this.returnLead.AgencyCode;
           this.http.post(URLConstant.GetVendorByVendorCode, { Code: this.returnLead.AgencyCode }).subscribe(
-            (response) => {
+            (response: VendorObj) => {
               this.returnVendorObj = response;
               this.agencyLookUpObj.nameSelect = this.returnVendorObj.VendorName;
               this.agencyLookUpObj.jsonSelect = this.returnVendorObj;
@@ -300,7 +315,7 @@ export class LeadInputMainInfoComponent implements OnInit {
     this.leadPersonalLookUpObj.urlEnviPaging = environment.losUrl;
     this.leadPersonalLookUpObj.pagingJson = "./assets/uclookup/lookupLeadPersonal.json";
     this.leadPersonalLookUpObj.genericJson = "./assets/uclookup/lookupLeadPersonal.json";
-    if(this.user.MrOfficeTypeCode != "CG" && this.user.MrOfficeTypeCode != CommonConstant.HeadOffice){
+    if (this.user.MrOfficeTypeCode != "CG" && this.user.MrOfficeTypeCode != CommonConstant.HeadOffice) {
       this.critObj.restriction = AdInsConstant.RestrictionEq;
       this.critObj.propName = 'L.ORI_OFFICE_CODE';
       this.critObj.value = this.user.OfficeCode;
@@ -404,7 +419,7 @@ export class LeadInputMainInfoComponent implements OnInit {
         this.http.post(URLConstant.EditLead, this.editLeadObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["message"]);
-            if(isNext){
+            if (isNext) {
               if (this.pageType == "edit") {
                 AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_INPUT_PAGE], { "LeadId": this.LeadId, "mode": this.pageType });
               }
@@ -412,7 +427,7 @@ export class LeadInputMainInfoComponent implements OnInit {
                 AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_INPUT_PAGE], { "LeadId": this.LeadId, "mode": this.pageType, "WfTaskListId": this.WfTaskListId });
               }
             }
-            else{
+            else {
               if (this.pageType == "edit") {
                 AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_PAGING], {});
               }
@@ -425,14 +440,14 @@ export class LeadInputMainInfoComponent implements OnInit {
       } else {
         this.setLeadObj(this.addLeadObj);
         this.http.post(URLConstant.AddLead, this.addLeadObj).subscribe(
-          (response) => {
+          (response: GenericObj) => {
             this.responseLead = response;
             this.LeadId = this.responseLead.Id;
             this.toastr.successMessage(response["message"]);
-            if(isNext){
+            if (isNext) {
               AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_INPUT_PAGE], { "LeadId": this.LeadId, "CopyFrom": this.leadIdExist });
             }
-            else{
+            else {
               AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_PAGING], {});
             }
           }

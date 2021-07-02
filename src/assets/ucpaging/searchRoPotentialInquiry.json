@@ -1,0 +1,162 @@
+{
+    "title": "RO Potential Inquiry",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "ROP.CUST_NO",
+            "id": "CustNoId",
+            "value": "",
+            "label": "Customer No.",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "ROP.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "ROP.AGRMNT_NO",
+            "id": "AgrmntNoId",
+            "value": "",
+            "label": "Agreement No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "ROP.RO_POTENTIAL_NO",
+            "id": "RoPotentialNoId",
+            "value": "",
+            "label": "Ro Potential No.",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "ROP.RO_POTENTIAL_LAST_STEP",
+            "id": "RoPotentialLastStepId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+            "label": "Ro Potential Last Step",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "StatusGrpCode",
+            "criteriaPropValue": "RO_POTENTIAL_LAST_STEP"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "ROP.RO_POTENTIAL_STAT",
+            "id": "RoPotentialStatId",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
+            "label": "Ro Potential Stat",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "StatusGrpCode",
+            "criteriaPropValue": "RO_POTENTIAL_STAT"
+        }
+    ],
+    "querystring": {
+        "name": "searchRoPotentialInquiry"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "RO Potential No",
+            "name": "ROP.RO_POTENTIAL_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Customer No",
+            "name": "ROP.CUST_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "Customer Name",
+            "name": "ROP.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Agreement No",
+            "name": "ROP.AGRMNT_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "RO Potential Last Step",
+            "name": "RS_STEP.DESCR"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "RO Potential Stat",
+            "name": "RS_STAT.DESCR"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "link",
+            "position": "center",
+            "property": "RoPotentialNo",
+            "target": "_blank",
+            "path": "/Lead/PotentialRo/View",
+            "param": [
+                {
+                    "type": "RoPotentialNo",
+                    "property": "RoPotentialNo"
+                }
+            ]
+        },
+        {
+            "type": "callback",
+            "position": "center",
+            "property": "CustNo",
+            "key": "customer"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "AgrmntNo",
+            "target": "_blank",
+            "path": "VIEW_AGRMNT",
+            "param": [
+                {
+                    "type": "AgrmntId",
+                    "property": "AgrmntId"
+                }
+            ]
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "RoPotentialLastStepDescr"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "RoPotentialStatDescr"
+        }
+    ]
+}

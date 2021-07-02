@@ -9,7 +9,7 @@
               <div class="px-3">
                 <form class="form form-horizontal" [formGroup]="FormObj" (ngSubmit)="FormObj.valid && SaveForm()" #enjiForm="ngForm"> 
                   <div class="form-body">
-                    <lib-ucapprovalcreate [parentForm]="FormObj" [InputObj]="InputObj" *ngIf="IsReady" #ApprovalComponent ></lib-ucapprovalcreate>
+                    <lib-ucapprovalcreate [parentForm]="FormObj" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady" #ApprovalComponent ></lib-ucapprovalcreate>
                     <div class="form-actions right">
                       <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]" translate>
                         <i class="ft-x"></i> Cancel

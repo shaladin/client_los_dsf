@@ -163,17 +163,17 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-2 adins-required-label" for="paidBy" translate>Paid By</label>
+                    <label class="col-md-2 adins-required-label" for="assetRegion" translate>Asset Region</label>
                     <div class="col-md-4">
-                      <select class="form-control width-75-per" id="paidBy" formControlName="InsAssetPaidBy"
-                        (change)="InsAssetPaidByChanged($event)"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsAssetPaidBy.invalid }">
+                      <select class="form-control width-75-per" id="assetRegion" formControlName="InsAssetRegion"
+                        (change)="AssetRegionChanged($event)"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsAssetRegion.invalid }">
                         <option value="">-Select One-</option>
-                        <option *ngFor="let item of paidByObj" [value]="item.Key">
+                        <option *ngFor="let item of insAssetRegionObj" [value]="item.Key">
                           {{item.Value}}
                         </option>
                       </select>
-                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsAssetPaidBy"
+                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsAssetRegion"
                         [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
                     <label class="col-md-2 adins-required-label" for="payPeriodToInsco" translate>Payment Type</label>
@@ -190,18 +190,14 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-2 adins-required-label" for="assetRegion" translate>Asset Region</label>
+                    <label class="col-md-2 adins-required-label" for="cvgAmt" translate>Coverage Amount</label>
                     <div class="col-md-4">
-                      <select class="form-control width-75-per" id="assetRegion" formControlName="InsAssetRegion"
-                        (change)="AssetRegionChanged($event)"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsAssetRegion.invalid }">
-                        <option value="">-Select One-</option>
-                        <option *ngFor="let item of insAssetRegionObj" [value]="item.Key">
-                          {{item.Value}}
-                        </option>
-                      </select>
-                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsAssetRegion"
-                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                      <input type="" currencyMask id="cvgAmt" class="form-control width-75-per" formControlName="CvgAmt"
+                        [options]="{ allowNegative: false }"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CvgAmt.invalid }"
+                        (ngModelChange)="CvgAmtChanged($event)">
+                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.CvgAmt" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
                     </div>
                     <label class="col-md-2 adins-required-label" for="insuredBy" translate>Insco Branch Name</label>
                     <div class="col-md-4">
@@ -218,15 +214,6 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-2 adins-required-label" for="cvgAmt" translate>Coverage Amount</label>
-                    <div class="col-md-4">
-                      <input type="" currencyMask id="cvgAmt" class="form-control" formControlName="CvgAmt"
-                        [options]="{ allowNegative: false }"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CvgAmt.invalid }"
-                        (ngModelChange)="CvgAmtChanged($event)">
-                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.CvgAmt" [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors>
-                    </div>
                     <label class="col-md-2 adins-required-label" for="coverPeriod" translate>Cover Period</label>
                     <div class="col-md-4">
                       <select class="form-control width-75-per" id="coverPeriod" formControlName="InsAssetCoverPeriod"
@@ -240,15 +227,6 @@
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsAssetCoverPeriod"
                         [submit]="enjiForm.submitted"></lib-uc-show-errors>
                     </div>
-                  </div>
-                  <div class="form-group row">
-                    <label class="col-md-2" for="notes" translate>Insurance Notes</label>
-                    <div class="col-md-4">
-                      <textarea rows="5" id="notes" class="form-control" formControlName="Notes"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.Notes.invalid }"></textarea>
-                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.Notes" [submit]="enjiForm.submitted">
-                      </lib-uc-show-errors>
-                    </div>
                     <label class="col-md-2 adins-required-label" for="insLength" translate>Insurance Length</label>
                     <div class="col-md-4">
                       <input type="number" id="insLength" min="minInsLength" max="maxInsLength"
@@ -257,6 +235,15 @@
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsLength.invalid}">
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsLength"
                         [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-2" for="notes" translate>Insurance Notes</label>
+                    <div class="col-md-4">
+                      <textarea rows="5" id="notes" class="form-control" formControlName="Notes"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.Notes.invalid }"></textarea>
+                      <lib-uc-show-errors [control]="InsuranceDataForm.controls.Notes" [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
                     </div>
                   </div>
                   <div class="form-actions right">
@@ -275,7 +262,7 @@
                     <label class="col-md-2" for="adminFee" translate>Admin Fee</label>
                     <div class="col-md-4">
                       <input type="" currencyMask id="adminFee" class="form-control" formControlName="CustAdminFeeAmt"
-                        [options]="{ allowNegative: false }"
+                        [attr.readonly]="adminFeeLock ? 'true' : null" [options]="{ allowNegative: false }"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CustAdminFeeAmt.invalid }"
                         (ngModelChange)="CustAdminFeeAmtChanged($event)">
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.CustAdminFeeAmt"
@@ -285,8 +272,9 @@
                   <div class="form-group row">
                     <label class="col-md-2" for="adminFee" translate>Customer Stampduty Fee</label>
                     <div class="col-md-4">
-                      <input type="" currencyMask id="adminFee" class="form-control" formControlName="CustStampDutyFeeAmt"
-                        [options]="{ allowNegative: false }"
+                      <input type="" currencyMask id="adminFee" class="form-control"
+                        formControlName="CustStampDutyFeeAmt" [options]="{ allowNegative: false }"
+                        [attr.readonly]="stampdutyFeeLock ? 'true' : null"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.CustStampDutyFeeAmt.invalid }"
                         (ngModelChange)="CustAdminFeeAmtChanged($event)">
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.CustStampDutyFeeAmt"
@@ -339,17 +327,47 @@
                     <table class="table table-responsive-md text-center table-hover">
                       <thead>
                         <tr>
+                          <th class="text-center width-5-per" *ngIf="isYearlyCapitalized"><span translate
+                              class="thead-header">Capitalized</span>
+                          </th>
+                          <th class="text-center width-5-per"><span translate class="thead-header">Paid By</span></th>
                           <th class="text-center width-5-per"><span translate class="thead-header">Year Num</span></th>
-                          <th class="text-center width-5-per"><span translate class="thead-header"># of Month</span></th>
-                          <th class="text-center width-5-per"><span translate class="thead-header">Sum Insured(%)</span></th>
+                          <th class="text-center width-5-per"><span translate class="thead-header"># of Month</span>
+                          </th>
+                          <th class="text-center width-5-per"><span translate class="thead-header">Sum Insured(%)</span>
+                          </th>
                           <th class="text-center"><span translate class="thead-header">Main Coverage Type</span></th>
                           <th class="text-center"><span translate class="thead-header"></span></th>
+                          <th class="text-center" *ngIf="isUsingSeatCount"><span translate class="thead-header"></span>
+                          </th>
                           <th class="text-center"><span translate class="thead-header">Rate</span></th>
                           <th class="text-center"><span translate class="thead-header">Main Premium Amount</span></th>
                         </tr>
                       </thead>
                       <tbody *ngFor="let item of InsuranceDataForm.controls.AppInsMainCvgs.controls;let i = index">
                         <tr [formGroupName]="i">
+                          <td class="text-center" *ngIf="isYearlyCapitalized">
+                          <div class="form-group-row">
+                            <input type="checkbox" class="checkboxLabel" formControlName="IsCapitalized"
+                              (change)="IsMainCvgChaged($event, i)"
+                              [attr.disabled]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.MrInsPaidByCode.value == 'CO' ? 'true' : null">
+                          </div>
+                          </td>
+                          <td class="text-center">
+                            <div class="form-group-row">
+                              <select class="form-control" formControlName="MrInsPaidByCode"
+                                (change)="IsMainCvgChaged($event, i)"
+                                [attr.disabled]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.isPaidByLock.value ? 'true' : null"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.MrInsPaidByCode.invalid }">
+                                <option *ngFor="let item of paidByObj; let idx = index" [value]="item.Key">
+                                  {{item.Value}}
+                                </option>
+                              </select>
+                              <lib-uc-show-errors
+                                [control]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.MrInsPaidByCode"
+                                [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                            </div>
+                          </td>
                           <td class="text-center">
                             {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.YearNo.value}}
                           </td>
@@ -357,7 +375,15 @@
                             {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.Tenor.value}}
                           </td>
                           <td class="text-center">
-                            {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.SumInsuredPrcnt.value}}
+                            <div class="form-group-row">
+                              <input type="" currencyMask class="form-control text-right"
+                                formControlName="SumInsuredPrcnt" (ngModelChange)="IsMainCvgChaged($event, i)"
+                                [options]="{ allowNegative: false }"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.SumInsuredPrcnt.invalid }">
+                            </div>
+                            <lib-uc-show-errors
+                              [control]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.SumInsuredPrcnt"
+                              [submit]="enjiForm.submitted"></lib-uc-show-errors>
                           </td>
                           <td class="text-center">
                             <div class="form-group-row">
@@ -374,15 +400,20 @@
                             </div>
                           </td>
                           <td></td>
+                          <td *ngIf="isUsingSeatCount"></td>
                           <td class="text-center">
-                            {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.CustMainPremiRate.value | number:'.6':'en-US'}}
+                            {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.CustMainPremiRate.value |
+                            number:'.6':'en-US'}}
                             %
                           </td>
                           <td class="text-center">
-                            {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.CustMainPremiAmt.value | number:'.2':'en-US'}}
+                            {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.CustMainPremiAmt.value |
+                            number:'.2':'en-US'}}
                           </td>
                         </tr>
                         <tr [formGroupName]="i">
+                          <td *ngIf="isYearlyCapitalized"></td>
+                          <td></td>
                           <td></td>
                           <td></td>
                           <td></td>
@@ -391,6 +422,9 @@
                           </td>
                           <td class="text-center">
                             <label style="font-weight:bold">Sum Insured Amount</label>
+                          </td>
+                          <td class="text-center" *ngIf="isUsingSeatCount">
+                            <label style="font-weight:bold">Seat Count</label>
                           </td>
                           <td class="text-center">
                             <label style="font-weight:bold">Rate</label>
@@ -402,6 +436,8 @@
                         <tr
                           *ngFor="let item of InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls; let j=index"
                           [formGroupName]="i">
+                          <td *ngIf="isYearlyCapitalized"></td>
+                          <td></td>
                           <td></td>
                           <td></td>
                           <td></td>
@@ -421,42 +457,62 @@
                             <div formArrayName="AppInsAddCvgs" class="form-group-row">
                               <div [formGroupName]="j">
                                 <select class="form-control" formControlName="SumInsuredAmt"
-                                  (change)="SumInsuredAmtAddCvgChanged($event, i, j)"
-                                  [hidden]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.MrAddCvgTypeCode.value != 'TPL'
-                                            || InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.Value.value == false">
-                                  <option *ngFor="let item of sumInsuredAmtObj" [value]="item">
-                                    {{item | number:'.2':'en-US'}}
+                                  *ngIf="groupAddCvrSumInsuredDropDown[InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.MrAddCvgTypeCode.value] && InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.Value.value"
+                                  (change)="SumInsuredAmtAddCvgChanged($event, i, j)">
+                                  <option
+                                    *ngFor="let item of groupAddCvrSumInsuredDropDown[InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.MrAddCvgTypeCode.value]"
+                                    [value]="item.SumInsuredAmt">
+                                    {{item.SumInsuredAmt | number:'.2':'en-US'}}
                                   </option>
                                 </select>
                               </div>
                             </div>
                           </td>
+                          <td *ngIf="isUsingSeatCount" formArrayName="AppInsAddCvgs">
+                            <div class="form-group-row" [formGroupName]="j"
+                              *ngIf="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.Value.value && AddCvgNeedSeatCount.includes(InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.MrAddCvgTypeCode.value)">
+                              <input type="number" class="form-control text-center" formControlName="SeatCount" min="0"
+                                (ngModelChange)="SeatCountChange()"
+                                [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.SeatCount.invalid }">
+                            </div>
+                            <lib-uc-show-errors
+                              [control]="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.SeatCount"
+                              [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                          </td>
                           <td class="text-center">
                             <span
                               *ngIf="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.PremiumType.value == 'AMT'">
-                              {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.CustAddPremiRate.value | number:'.2':'en-US'}}
+                              {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.CustAddPremiRate.value
+                              | number:'.2':'en-US'}}
                             </span>
                             <span
                               *ngIf="InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.PremiumType.value == 'PRCNT'">
-                              {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.CustAddPremiRate.value | number:'.6':'en-US'}}
+                              {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.CustAddPremiRate.value
+                              | number:'.6':'en-US'}}
                               %
                             </span>
                           </td>
                           <td class="text-center">
-                            {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.CustAddPremiAmt.value | number:'.2':'en-US'}}
+                            {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.AppInsAddCvgs.controls[j].controls.CustAddPremiAmt.value
+                            | number:'.2':'en-US'}}
                           </td>
                         </tr>
                         <tr [formGroupName]="i">
+                          <td *ngIf="isYearlyCapitalized"></td>
                           <td></td>
                           <td></td>
                           <td></td>
                           <td></td>
                           <td></td>
+                          <td></td>
+                          <td *ngIf="isUsingSeatCount"></td>
                           <td class="text-center">
                             <label class="col-md-12" style="font-weight:bold">Total Premium per Year</label>
                           </td>
                           <td class="text-center">
-                            {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.CustMainPremiAmt.value + InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.TotalCustAddPremiAmt.value | number:'.2':'en-US'}}
+                            {{InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.CustMainPremiAmt.value +
+                            InsuranceDataForm.controls.AppInsMainCvgs.controls[i].controls.TotalCustAddPremiAmt.value |
+                            number:'.2':'en-US'}}
                           </td>
                         </tr>
                       </tbody>
@@ -484,37 +540,48 @@
                   <div class="form-group row">
                     <label class="col-md-4" style="font-size: 90%" translate>Total Premium to Customer</label>
                     <label class="col-md-4 text-right" style="font-size: 90%"
-                      translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value + InsuranceDataForm.controls.TotalCustAddPremiAmt.value + InsuranceDataForm.controls.TotalCustFeeAmt.value | number:'.2':'en-US'}}</label>
+                      translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value +
+                      InsuranceDataForm.controls.TotalCustAddPremiAmt.value +
+                      InsuranceDataForm.controls.TotalCustFeeAmt.value | number:'.2':'en-US'}}</label>
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4" style="font-size: 90%" for="discAmt" translate>Discount</label>
                     <div class="col-md-4">
-                      <input type="" currencyMask id="discAmt" style="float: right;" class="form-control width-75-per"
-                        formControlName="TotalCustDiscAmt" [options]="{ allowNegative: false }" (focusout)="BindCapitalize($event)"
+                      <input type="" currencyMask id="TotalCustDiscAmt" style="float: right;" class="form-control width-75-per"
+                        formControlName="TotalCustDiscAmt" [readonly]="!IsAllPaidByCust"
+                        [options]="{ allowNegative: false }"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.TotalCustDiscAmt.invalid }">
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.TotalCustDiscAmt"
-                        [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                        [submit]="enjiForm.submitted">
+                      </lib-uc-show-errors>
                     </div>
+                    <!-- <label class="col-md-4 text-right" style="font-size: 90%"
+                      translate>{{InsuranceDataForm.controls.TotalCustDiscAmt.value
+                      | number:'.2':'en-US'}}</label> -->
                   </div>
                   <div class="form-group row">
                     <label class="col-md-4" style="font-size: 90%" translate>Total Premium to Customer after
                       Discount</label>
                     <label class="col-md-4 text-right" style="font-size: 90%"
-                      translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value + InsuranceDataForm.controls.TotalCustAddPremiAmt.value + InsuranceDataForm.controls.TotalCustFeeAmt.value - InsuranceDataForm.controls.TotalCustDiscAmt.value | number:'.2':'en-US'}}</label>
-                  </div> 
-                  <div class="form-group row">
+                      translate>{{InsuranceDataForm.controls.TotalCustMainPremiAmt.value +
+                      InsuranceDataForm.controls.TotalCustAddPremiAmt.value +
+                      InsuranceDataForm.controls.TotalCustFeeAmt.value -
+                      InsuranceDataForm.controls.TotalCustDiscAmt.value | number:'.2':'en-US'}}</label>
+                  </div>
+                  <div class="form-group row" *ngIf="!isYearlyCapitalized">
                     <label class="col-md-4" style="font-size: 90%" translate>Full Capitalized Amount</label>
                     <div class="col-md-4">
-                      <input type="checkbox" class="checkboxLabel"style="float: right; margin-right: 0" formControlName="IsFullCapitalizedAmount"  (change)="IsFullCapitalizedAmount()"> 
+                      <input type="checkbox" class="checkboxLabel" style="float: right; margin-right: 0"
+                        formControlName="IsFullCapitalizedAmount" (change)="IsFullCapitalizedAmount()">
                     </div>
-                  </div>   
+                  </div>
                   <div class="form-group row">
                     <label class="col-md-4" style="font-size: 90%" for="insCpltzAmt" translate>Capitalize
                       Amount</label>
                     <div class="col-md-4">
                       <input type="" currencyMask id="insCpltzAmt" style="float: right;"
                         class="form-control width-75-per" formControlName="InsCpltzAmt"
-                        [options]="{ allowNegative: false }"
+                        [attr.readonly]="isYearlyCapitalized ? 'true' : null" [options]="{ allowNegative: false }"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && InsuranceDataForm.controls.InsCpltzAmt.invalid }">
                       <lib-uc-show-errors [control]="InsuranceDataForm.controls.InsCpltzAmt"
                         [submit]="enjiForm.submitted"></lib-uc-show-errors>

@@ -7,6 +7,7 @@ export class AppAssetSupplEmpObj {
   MrSupplEmpPositionCodeDesc: string;
   ReportToSupplEmpNo: string;
   VendorEmpId: number;
+  SupplCode : string;
   RowVersion: string;
 
   constructor() {
@@ -18,5 +19,6 @@ export class AppAssetSupplEmpObj {
     this.ReportToSupplEmpNo = "";
     this.VendorEmpId = 0;
     this.RowVersion = "";
+    this.SupplCode = "";
   }
 }

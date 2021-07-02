@@ -18,7 +18,7 @@ import { CookieService } from 'ngx-cookie';
 export class AgreementViewContainerComponent implements OnInit {
 
   arrValue = [];
-  AgrmntId;
+  AgrmntId: number;
   BizTemplateCode: string;
   ResponseAppDetailData;
   IsReady: boolean = false;
@@ -49,7 +49,7 @@ export class AgreementViewContainerComponent implements OnInit {
   isDmsReady: boolean;
   dmsObj: DMSObj;
   agrNo: string;
-  appId: any;
+  appId: number;
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {

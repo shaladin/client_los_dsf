@@ -20,26 +20,25 @@ import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCode
 export class AppCancelDetailComponent implements OnInit {
 
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  AppId: any;
-  AppAgrmntCancelObj: any;
+  AppId: number = 0;
+  AppAgrmntCancelObj: AppAgrmntCancelObj;
   MainInfoForm = this.fb.group({
     ReasonCode: ['', Validators.required],
     CancelNotes: ['', Validators.required],
     IsContractSigned: [false, Validators.required]
   });
-  itemReasonCode: any;
-  ReasonCode: any;
   BizTemplateCode: string = "";
   ddlReason: UcDropdownListObj = new UcDropdownListObj();
-  AgrmntId: any;
+  AgrmntId: number = 0;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) {
     this.route.queryParams.subscribe(params => {
-      this.AppId = params["AppId"];
-      this.AgrmntId = params["AgrmntId"];
+      if (params["AppId"] != null) {
+        this.AppId = params["AppId"];
+      }
+      if (params["AgrmntId"] != null) {
+        this.AgrmntId = params["AgrmntId"];
+      }
     });
-    if (this.AgrmntId == "AgrmntId") {
-      this.AgrmntId = 0;
-    }
   }
 
   ngOnInit() {
@@ -73,7 +72,7 @@ export class AppCancelDetailComponent implements OnInit {
     });
   }
 
-  GetCallBack(ev: any) {
+  GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
     }

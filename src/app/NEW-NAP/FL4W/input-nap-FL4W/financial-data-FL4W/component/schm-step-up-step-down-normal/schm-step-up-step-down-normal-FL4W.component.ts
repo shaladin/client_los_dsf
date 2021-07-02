@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, ControlContainer, FormGroupDirective, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, ControlContainer, FormGroupDirective, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
@@ -10,6 +10,7 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { CalcStepUpStepDownObjForTrialCalc } from 'app/shared/model/AppFinData/CalcStepUpStepDownObjForTrialCalc.Model';
 
 @Component({
   selector: 'app-schm-step-up-step-down-normal-FL4W',
@@ -19,16 +20,18 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 export class SchmStepUpStepDownNormalFL4WComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
+  @Input() TrialCalc: boolean;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   StepUpStepDownInputOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   calcStepUpStepDownObj: CalcStepUpStepDownObj = new CalcStepUpStepDownObj();
+  calcStepUpStepDownObjForTrialCalc: CalcStepUpStepDownObjForTrialCalc = new CalcStepUpStepDownObjForTrialCalc();
   listInstallment: any;
   listAppInstStepSchm: Array<AppInstStepSchmObj> = new Array<AppInstStepSchmObj>();
-  responseCalc: any;
   result: AppObj = new AppObj();
   PriceLabel: string = "Asset Price";
+  IsTrialCalc: boolean = false;
 
   constructor(private fb: FormBuilder,
     private http: HttpClient,
@@ -38,6 +41,7 @@ export class SchmStepUpStepDownNormalFL4WComponent implements OnInit {
     this.LoadDDLRateType();
     this.LoadDDLGracePeriodType();
     this.LoadDDLStepUpStepDownInputType();
+    if (this.AppId != null) {
     this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
       (response) => {
         this.result = response;
@@ -45,6 +49,11 @@ export class SchmStepUpStepDownNormalFL4WComponent implements OnInit {
           this.PriceLabel = "Financing Amount";
         }
       });
+      this.IsTrialCalc = false;
+    }
+    else if (this.TrialCalc != null && this.TrialCalc) {
+      this.IsTrialCalc = true;
+    }
   }
 
   LoadDDLRateType() {
@@ -100,6 +109,12 @@ export class SchmStepUpStepDownNormalFL4WComponent implements OnInit {
       this.ParentForm.controls.ListEntryInst["controls"][i].patchValue({
         InstAmt: 0
       });
+      if (this.ParentForm.controls.StepUpStepDownInputType.value == CommonConstant.RefMasterTypeStepUpStepDownInputTypePrcnt)
+        this.ParentForm.controls.ListEntryInst["controls"][i]['controls']["InstAmt"].setValidators([Validators.max(100)]);
+      else
+        this.ParentForm.controls.ListEntryInst["controls"][i]['controls']["InstAmt"].clearValidators();
+
+      this.ParentForm.controls.ListEntryInst["controls"][i]['controls']["InstAmt"].updateValueAndValidity();
     }
 
     this.SetNeedReCalculate(true);
@@ -146,11 +161,11 @@ export class SchmStepUpStepDownNormalFL4WComponent implements OnInit {
     while ((this.ParentForm.controls.ListEntryInst as FormArray).length) {
       (this.ParentForm.controls.ListEntryInst as FormArray).removeAt(0);
     }
-    for (let i = 0; i < this.ParentForm.controls.NumOfStep.value; i++) {
+    for (let i = 0; i < this.ParentForm.controls.NumOfStep.value - 1; i++) {
       const group = this.fb.group({
         InstSeqNo: i + 1,
         NumOfInst: [0],
-        InstAmt: [0]
+        InstAmt: [0, this.ParentForm.controls.StepUpStepDownInputType.value == CommonConstant.RefMasterTypeStepUpStepDownInputTypePrcnt ? [Validators.max(100)] : []]
       });
       (this.ParentForm.controls.ListEntryInst as FormArray).push(group);
     }
@@ -167,12 +182,12 @@ export class SchmStepUpStepDownNormalFL4WComponent implements OnInit {
       return;
     }
 
+    if (!this.IsTrialCalc) {
     this.calcStepUpStepDownObj = this.ParentForm.value;
     this.calcStepUpStepDownObj["IsRecalculate"] = false;
     this.calcStepUpStepDownObj["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
     this.calcStepUpStepDownObj["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
     this.calcStepUpStepDownObj["InstAmt"] = 0;
-
 
     this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentStepUpStepDown, this.calcStepUpStepDownObj).subscribe(
       (response) => {
@@ -201,6 +216,41 @@ export class SchmStepUpStepDownNormalFL4WComponent implements OnInit {
         this.SetNeedReCalculate(false);
       }
     );
+  } else {
+      this.calcStepUpStepDownObjForTrialCalc = this.ParentForm.value;
+      this.calcStepUpStepDownObjForTrialCalc["IsRecalculate"] = false;
+      this.calcStepUpStepDownObjForTrialCalc["StepUpStepDownType"] = this.ParentForm.value.MrInstSchemeCode;
+      this.calcStepUpStepDownObjForTrialCalc["StepUpNormalInputType"] = this.ParentForm.value.StepUpStepDownInputType;
+      this.calcStepUpStepDownObjForTrialCalc["InstAmt"] = 0;
+
+      this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentStepUpStepDownForTrialCalc, this.calcStepUpStepDownObjForTrialCalc).subscribe(
+        (response) => {
+          this.listInstallment = response.InstallmentTable;
+          this.listAppInstStepSchm = response.AppInstStepSchmObjs;
+          this.ParentForm.patchValue({
+            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+
+            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+            FlatRatePrcnt: response.FlatRatePrcnt,
+            InstAmt: response.InstAmt,
+            GrossYieldPrcnt: response.GrossYieldPrcnt,
+            TotalInterestAmt: response.TotalInterestAmt,
+            TotalAR: response.TotalARAmt,
+            NtfAmt: response.NtfAmt,
+            ApvAmt: response.ApvAmt,
+            TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+            LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+            DownPaymentGrossAmt: response.DownPaymentGrossAmt,
+            DownPaymentNettAmt: response.DownPaymentNettAmt
+
+          });
+          this.SetInstallmentTable();
+          this.SetInstStepSchm();
+          this.SetNeedReCalculate(false);
+        }
+      );
+    }
   }
 
   SaveAndContinue() {

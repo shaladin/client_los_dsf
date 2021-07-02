@@ -12,12 +12,13 @@
   </app-collateral-data-cfna-paging>
 
   <div class="col-md-12" style="padding: 0; text-align: right;">
-    <button type="button" *ngIf="showCancel"class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
+    <button type="button" *ngIf="showCancel" class="btn btn-raised btn-warning mr-1" (click)="Cancel()" translate>
       <i class="ft-x"></i> Cancel
     </button>
     <button type="submit" class="btn btn-raised btn-primary" (click)="Next()" translate>
-      <i class="fa fa-check-square"></i> Save  
+      <i class="fa fa-check-square"></i> Save
     </button>
   </div>
 </div>
-<app-collateral-data-cfna-detail *ngIf="IsDetail" [mode]="mode" [AppId]="AppId" [AppCollateralId]="AppCollateralId" [isSingleAsset]="false" (outputValue)="CloseDetail($event)"></app-collateral-data-cfna-detail>
+<app-collateral-data-cfna-detail *ngIf="IsDetail" [mode]="mode" [AppId]="AppId" [AppCollateralId]="AppCollateralId"
+  [isSingleAsset]="false" (outputValue)="CloseDetail($event)"></app-collateral-data-cfna-detail>

@@ -10,6 +10,7 @@ import { ResponseAppCustCompletionPersonalDataObj } from 'app/shared/model/Respo
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
 import { AppCustCompletionCheckingObj } from 'app/shared/model/AppCustCompletionCheckingObj.Model';
+import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 
 @Component({
   selector: 'app-cust-completion-detail-personal',
@@ -38,7 +39,8 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
     "Job": 4,
     "Emergency": 5,
     "Financial": 6,
-    "Other": 7,
+    "CustAsset": 7,
+    "Other": 8,
   }
   ValidationMessages = {
     "Detail": "Please complete required data in tab \"Customer Detail\"",
@@ -97,10 +99,10 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
 
   Back() {
     if (this.ReturnHandlingHId != 0) {
-      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "ReturnHandlingHId": this.ReturnHandlingHId} });
+      this.router.navigate([NavigationConstant.NAP_CUST_COMPL_DETAIL], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId, "ReturnHandlingHId": this.ReturnHandlingHId} });
     }
     else {
-      this.router.navigate(["/Nap/CustCompletion/Detail"], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId} });
+      this.router.navigate([NavigationConstant.NAP_CUST_COMPL_DETAIL], { queryParams: { "AppId": this.AppId, "WfTaskListId": this.WfTaskListId} });
     }
   }
 
@@ -124,6 +126,9 @@ export class CustCompletionDetailPersonalComponent implements OnInit {
       case "Financial":
         this.stepIndex = this.CustStep["Financial"];
         break;
+      case "CustAsset":
+        this.stepIndex = this.CustStep["CustAsset"];
+      break;
       case "Other":
         this.stepIndex = this.CustStep["Other"];
         break;

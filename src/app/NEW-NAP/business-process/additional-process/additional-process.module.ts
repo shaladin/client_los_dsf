@@ -47,6 +47,22 @@ import { AppCancelPagingComponent } from "./app-cancel/paging/app-cancel-paging.
 import { AppAssetCancelPagingComponent } from "./app-asset-cancel/paging/app-asset-cancel-paging.component";
 import { DocPickupRequestPagingComponent } from './doc-pickup-request/doc-pickup-request-paging/doc-pickup-request-paging/doc-pickup-request-paging.component';
 import { DocPickupRequestDetailComponent } from './doc-pickup-request/doc-pickup-request-detail/doc-pickup-request-detail/doc-pickup-request-detail.component';
+import { EditAppAfterApprovalPagingComponent } from "./edit-app-after-approval/edit-app-after-approval-paging/edit-app-after-approval-paging.component";
+import { EditAppAfterApprovalDetailComponent } from "./edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-detail.component";
+import { EditAppAfterApprovalAssetDataComponent } from "./edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-asset-data/edit-app-after-approval-asset-data.component";
+import { EditAppAfterApprovalPurchaseOrderDataComponent } from "./edit-app-after-approval/edit-app-after-approval-detail/edit-app-after-approval-purchase-order-data/edit-app-after-approval-purchase-order-data.component";
+import { CreditApprovalResultExtensionApprovalDetailComponent } from "./credit-apv-result-ext/approval/detail/detail.component";
+import { CreditApprovalResultExtensionApprovalPagingComponent } from "./credit-apv-result-ext/approval/paging/paging.component";
+import { CopyCanAppMultiBlComponent } from "./copy-can-app-multi-bl/copy-can-app-multi-bl.component";
+import { CopyCanAppMultiBlDetailComponent } from "./copy-can-app-multi-bl-detail/copy-can-app-multi-bl-detail.component";
+import { EditAppAfterApprovalApprovalPagingComponent } from "./edit-app-after-approval/edit-app-after-approval-approval-paging/edit-app-after-approval-approval-paging.component";
+import { EditAppAfterApprovalApprovalDetailComponent } from "./edit-app-after-approval/edit-app-after-approval-approval-detail/edit-app-after-approval-approval-detail.component";
+import { EditAppAfterApprovalInquiryComponent } from "./edit-app-after-approval-inquiry/edit-app-after-approval-inquiry.component";
+import { EditAppAfterApprovalViewComponent } from "./edit-app-after-approval-view/edit-app-after-approval-view.component";
+import { UcapprovalcreateModule } from "@adins/ucapprovalcreate";
+import { UcapprovalgeneralinfoModule } from "@adins/ucapprovalgeneralinfo";
+import { UcapprovalR3Module } from "@adins/ucapproval-r3";
+import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 
 
 
@@ -74,6 +90,10 @@ export const customCurrencyMaskConfig = {
     NgxCurrencyModule.forRoot(customCurrencyMaskConfig),
     ViewAppComponentModule,
     SharedModule,
+    UcapprovalcreateModule,
+    UcapprovalR3Module,
+    UcapprovalHistoryModule,
+    UcapprovalgeneralinfoModule,
     MatTabsModule
   ],
   declarations: [
@@ -114,8 +134,19 @@ export const customCurrencyMaskConfig = {
     AppAssetCancelPagingComponent,
     AppAssetCancelDetailComponent,
     DocPickupRequestPagingComponent,
-    DocPickupRequestDetailComponent
-    
+    DocPickupRequestDetailComponent,
+    EditAppAfterApprovalPagingComponent,
+    EditAppAfterApprovalDetailComponent,
+    EditAppAfterApprovalAssetDataComponent,
+    EditAppAfterApprovalPurchaseOrderDataComponent,
+    CreditApprovalResultExtensionApprovalDetailComponent,
+    CreditApprovalResultExtensionApprovalPagingComponent,
+    CopyCanAppMultiBlComponent,
+    CopyCanAppMultiBlDetailComponent,
+    EditAppAfterApprovalApprovalPagingComponent,
+    EditAppAfterApprovalApprovalDetailComponent,
+    EditAppAfterApprovalInquiryComponent,
+    EditAppAfterApprovalViewComponent
     
   ],
   providers: [

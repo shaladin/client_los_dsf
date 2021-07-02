@@ -26,6 +26,9 @@ export class DocSignerMainInfoComponent implements OnInit {
         if (this.BizTemplateCode == CommonConstant.CFNA) {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocSignerCfna.json";
         }
+        else if(this.BizTemplateCode == CommonConstant.DF){
+          this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocSignerDLFN.json";
+        }
         else {
           this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewDocSigner.json";
         }

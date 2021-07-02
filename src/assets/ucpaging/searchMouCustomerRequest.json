@@ -4,7 +4,7 @@
     "component": [
         {
             "type": "textbox",
-            "name": "MOU_CUST_NO",
+            "name": "M.MOU_CUST_NO",
             "id": "MouCustNoId",
             "value": "",
             "label": "Mou No",
@@ -13,7 +13,7 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "MR_MOU_TYPE_CODE",
+            "name": "M.MR_MOU_TYPE_CODE",
             "id": "MouTypeId",
             "value": "",
             "placeholder": "Placeholder",
@@ -30,7 +30,7 @@
         },
         {
             "type": "textbox",
-            "name": "CUST_NAME",
+            "name": "M.CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "Customer Name",
@@ -38,7 +38,7 @@
         },
         {
             "type": "dropdown",
-            "name": "IS_REVOLVING",
+            "name": "M.IS_REVOLVING",
             "id": "IsRevolvingId",
             "label": "Revolving",
             "value": "",
@@ -58,26 +58,8 @@
             "itemsUrl": []
         },
         {
-            "type": "datepicker",
-            "name": "MOU_CUST_DT",
-            "id": "GreaterMouDtId",
-            "value": "",
-            "label": "Mou Date From",
-            "restriction": "gte",
-            "datatype": "date"
-        },
-        {
-            "type": "datepicker",
-            "name": "MOU_CUST_DT",
-            "id": "LessMouDtId",
-            "value": "",
-            "label": "Mou Date To",
-            "restriction": "lte",
-            "datatype": "date"
-        },
-        {
             "type": "textbox",
-            "name": "REF_NO",
+            "name": "M.REF_NO",
             "id": "RefNoId",
             "value": "",
             "label": "Reference No.",
@@ -92,31 +74,25 @@
             "type": "sort",
             "position": "center",
             "label": "MOU NO",
-            "name": "MOU_CUST_NO"
+            "name": "M.MOU_CUST_NO"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "CUSTOMER NAME",
-            "name": "CUST_NAME"
-        },
-        {
-            "type": "sort",
-            "position": "center",
-            "label": "MOU DATE",
-            "name": "MOU_CUST_DT"
+            "name": "M.CUST_NAME"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "REFERENCE NO.",
-            "name": "REF_NO"
+            "name": "M.REF_NO"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "MOU TYPE",
-            "name": "MR_MOU_TYPE_CODE"
+            "name": "M.MR_MOU_TYPE_CODE"
         },
         {
             "type": "label",
@@ -144,11 +120,6 @@
             "property": "CustName"
         },
         {
-            "type": "date",
-            "position": "center",
-            "property": "MouCustDt"
-        },
-        {
             "type": "text",
             "position": "center",
             "property": "RefNo"
@@ -156,7 +127,7 @@
         {
             "type": "text",
             "position": "left",
-            "property": "MrMouTypeCode"
+            "property": "MouTypeName"
         },
         {
             "type": "action",

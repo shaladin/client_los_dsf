@@ -14,7 +14,7 @@
               <div class="form-group row">
                 <!-- Sales Officer -->
                 <div class="form-group col-md-2 adins-required">
-                  <label class="adInsLabel" translate>Sales Officer </label>
+                  <label class="adInsLabel" translate>MO Officer </label>
                 </div>
                 <div class="col-md-4" *ngIf="isInputLookupObj">
                   <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='NapAppModelForm'
@@ -25,13 +25,13 @@
                     [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <!-- Sales Supervisor -->
-                <label class="col-md-2 adInsLabel" translate>Sales Supervisor </label>
+                <label class="col-md-2 adInsLabel" translate>MO Supervisor </label>
                 <label class="col-md-4 adInsLabel">{{NapAppModelForm.controls.SalesHeadName.value}} </label>
               </div>
 
               <div class="form-group row">
                 <!-- Sales Notes -->
-                <label class="col-md-2 adInsLabel" translate>Sales Notes </label>
+                <label class="col-md-2 adInsLabel" translate>MO Notes </label>
                 <div class="col-md-4">
                   <textarea class="form-control adInsInput width-75-per" id="basicTextarea" formControlName="SalesNotes"
                     rows="3"></textarea>
@@ -83,7 +83,6 @@
                 <!-- First Installment Type -->
                 <label class="col-md-2 adInsLabel" translate> First Installment Type </label>
                 <div class="col-md-4">
-                  <!-- <label class="adInsLabel"> {{FirstInstType}} </label> -->
                   <select class="form-control adInsInput" style="width: 50%" formControlName="MrFirstInstTypeCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrFirstInstTypeCode.invalid }">
                     <option value="">-Select One-</option>
@@ -114,14 +113,6 @@
                 <label class="col-md-2 adins-required-label" translate> Interest Type </label>
                 <div class="col-md-4">
                   <label class="adInsLabel"> {{NapAppModelForm.controls.InterestTypeDesc.value}} </label>
-                  <!-- <select class="form-control adInsInput" style="width: auto" formControlName="InterestType"
-                        (change)="ChangeInterestType()"
-                        [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.InterestType.invalid }">
-                        <option value="">-Select One-</option>
-                        <option *ngFor="let it of applicationDDLitems['INTRSTTYPE']" value="{{it.Key}}">
-                          {{it.Value}} </option>
-                      </select>
-                    <lib-uc-show-errors  [control]="NapAppModelForm.controls.InterestType" [submit]="enjiForm.submitted"></lib-uc-show-errors > -->
                 </div>
               </div>
 
@@ -163,14 +154,8 @@
                 <!-- Way of Payment -->
                 <label class="col-md-2 adInsLabel" translate> Way of Payment </label>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="MrWopCode"
-                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrWopCode.invalid }">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let it of applicationDDLitems['WOP']" value="{{it.Key}}">
-                      {{it.Value}} </option>
-                  </select>
-                  <lib-uc-show-errors [control]="NapAppModelForm.controls.MrWopCode" [submit]="enjiForm.submitted">
-                  </lib-uc-show-errors>
+                  <lib-ucdropdownlist [dropdownListObj]="ddlMrWopObj" [parentForm]="NapAppModelForm"
+                    [enjiForm]="enjiForm" [identifier]="'MrWopCode'" (callback)="setBankAccDDL($event)"></lib-ucdropdownlist>
                 </div>
               </div>
 
@@ -178,7 +163,7 @@
                 <!-- MOU Cust -->
                 <label class="col-md-2 adInsLabel" translate> MOU Customer </label>
                 <div class="col-md-4">
-                  <select class="form-control adInsInput" style="width: auto" formControlName="MouCustId">
+                  <select (click)="setTenorOnChange($event.target.value)"  class="form-control adInsInput" style="width: auto" formControlName="MouCustId">
                     <option value=null>None</option>
                     <option *ngFor="let it of resMouCustObj" [value]="it.Key">
                       {{it.Value}}
@@ -186,9 +171,25 @@
                   </select>
                 </div>
               </div>
-            </div>
 
-            <!-- <app-loan-object [AppId]="AppId" [mode]="mode"> </app-loan-object> -->
+              <div class="form-group row adins-required">
+                <!-- Customer Bank Account -->
+                <label class="col-md-2 adInsLabel"> Customer Bank Account </label>
+                <div class="col-md-4">
+                  <select class="form-control adInsInput" style="width: 50%" formControlName="CustBankAcc"
+                    (change)="selectedBank()"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.CustBankAcc.invalid }">
+                    <option value="">-Select One-</option>
+                    <option *ngFor="let item of listCustBankAcc" [value]="item.AppCustBankAccId">
+                      {{item.BankName}} - {{item.BankAccNo}} - {{item.BankAccName}}
+                    </option>
+                  </select>
+                  <lib-uc-show-errors [control]="NapAppModelForm.controls.CustBankAcc" [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+
+            </div>
 
             <div>
               <lib-ucSubsection [id]="'restDataId'" [title]="'Restructuring Data'" [panel]="'restData'">
@@ -316,9 +317,6 @@
               </ng-template>
             </div>
 
-
-            <!-- <app-loan-object [AppId]="AppId" [mode]="mode"> </app-loan-object> -->
-
             <lib-ucSubsection [id]="'mailingAddrId'" [title]="'Mailing Address'" [panel]="'mailingAddr'">
             </lib-ucSubsection>
             <div id="mailingAddr">
@@ -351,9 +349,6 @@
               <button type="submit" class="btn btn-raised btn-primary" translate>
                 <i class="far fa-check-square"></i> Save
               </button>
-              <!-- <button type="submit" (click)="ClickSave('next')" class="btn btn-raised btn-primary">
-                  <i class="fa fa-check-square-o"></i> Next
-                </button> -->
             </div>
 
           </form>

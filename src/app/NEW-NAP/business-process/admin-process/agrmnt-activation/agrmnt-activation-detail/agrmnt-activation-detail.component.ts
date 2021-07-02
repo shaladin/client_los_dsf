@@ -13,6 +13,10 @@ import { CookieService } from 'ngx-cookie';
 import { ReqGetAppFinDataAndFeeObj } from 'app/shared/model/Request/NAP/AgrAct/ReqAppFinDataAndFee.model';
 import { ResAgrmntActivationFinDataAndFeeObj, ResAppFeeObj, ResponseAppFinDataObj } from 'app/shared/model/Response/NAP/AgrAct/ResAgrmntActivationFinDataAndFeeObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { ToastrService } from 'ngx-toastr';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
+import { URLConstant } from 'app/shared/constant/URLConstant';
 
 @Component({
   selector: 'app-agrmnt-activation-detail',
@@ -20,7 +24,7 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
   providers: [AdminProcessService]
 })
 export class AgrmntActivationDetailComponent implements OnInit {
-  AssetObj: any;
+  AssetObj: Array<AppAssetObj>;
   AppFees: Array<ResAppFeeObj> = new Array<ResAppFeeObj>();
   AppFinData: ResponseAppFinDataObj = new ResponseAppFinDataObj();
   listSelectedId: Array<number> = new Array<number>();
@@ -36,8 +40,13 @@ export class AgrmntActivationDetailComponent implements OnInit {
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
   IsViewReady: boolean = false;
 
+  AppObj: AppObj = new AppObj();
+  businessDt: Date;
+  toastRef: any;
+  
+  isNeedExtension: boolean = false;
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_AGRMNT_ACT_PAGING;
-  constructor(private fb: FormBuilder, private toastr: NGXToastrService, private route: ActivatedRoute, private adminProcessSvc: AdminProcessService, private router: Router, private http: HttpClient, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
+  constructor(private fb: FormBuilder, private toastr: NGXToastrService, private route: ActivatedRoute, private adminProcessSvc: AdminProcessService, private router: Router, private http: HttpClient, private cookieService: CookieService, private claimTaskService: ClaimTaskService, private toastrSvc: ToastrService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.WfTaskListId = params["WFTaskListId"];
@@ -69,7 +78,9 @@ export class AgrmntActivationDetailComponent implements OnInit {
   }
 
   readonly bizCodeFl4w: string = CommonConstant.FL4W;
-  ngOnInit() {
+
+  async ngOnInit() {
+    await this.CheckApvResultExp();
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
     this.claimTaskService.ClaimTask(this.WfTaskListId);
@@ -85,6 +96,36 @@ export class AgrmntActivationDetailComponent implements OnInit {
     whereValueObj.property = "AppId";
     whereValueObj.value = this.AppId;
     this.tempPagingObj.whereValue.push(whereValueObj);
+  }
+
+  ngOnDestroy() {
+    if(this.toastRef != undefined && this.toastRef != null){
+      this.toastrSvc.clear(this.toastRef.toastId);
+    }
+  }
+
+  async GetAppData() {
+    await this.http.post < AppObj > (URLConstant.GetAppById, {Id: this.AppId}).toPromise().then(
+      (response) => {
+        this.AppObj = response;
+      }
+    );
+  }
+  async CheckApvResultExp() {
+    //get bis date
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
+    await this.GetAppData();
+    if (this.AppObj.CrdApvResultExpDt != null && this.AppObj.CrdApvResultExpDt != undefined) {
+      if (this.businessDt > new Date(this.AppObj.CrdApvResultExpDt)) {
+      this.isNeedExtension = true;
+        this.toastRef = this.toastrSvc.error(null, "Need Extension", {
+          disableTimeOut: true,
+          tapToDismiss: false,
+          closeButton: true
+        });
+      }
+    }
   }
 
   getListTemp(ev) {
@@ -116,6 +157,12 @@ export class AgrmntActivationDetailComponent implements OnInit {
   }
 
   Submit() {
+    
+    if(this.isNeedExtension){
+      this.toastr.typeErrorCustom("Need Extension");
+      return;
+    }
+
     this.markFormTouched(this.AgrmntActForm);
     if (this.listSelectedId.length == 0) {
       this.toastr.typeErrorCustom("Please select at least one Asset");

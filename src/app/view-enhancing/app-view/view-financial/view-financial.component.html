@@ -18,8 +18,8 @@
             </span>
           </th>
           <th style="text-align: left;"><span class="thead-header" name="MrSubsidySourceName" translate>Subsidy
-            Source
-          </span>
+              Source
+            </span>
           </th>
           <th style="text-align: left;"><span class="thead-header" name="MrSubsidyValueTypeName" translate>Subsidy
               Value Type
@@ -30,12 +30,12 @@
           </th>
         </tr>
       </thead>
-      <tbody *ngIf = "listSubsidy == undefined">
+      <tbody *ngIf="listSubsidy == undefined">
         <tr>
           <td colspan="100%">No Data Available</td>
         </tr>
       </tbody>
-      <tbody *ngIf = "listSubsidy != undefined">
+      <tbody *ngIf="listSubsidy != undefined">
         <tr *ngFor="let item of listSubsidy; let i = index">
           <td style="text-align: left;">{{item.MrSubsidyFromTypeName}}</td>
           <td style="text-align: left;">{{item.MrSubsidyFromValueName}}</td>
@@ -47,7 +47,7 @@
       </tbody>
     </table>
   </div>
-  
+
   <lib-ucSubsection [id]="'feeId'" [title]="'Fee'" [panel]="'fee'">
   </lib-ucSubsection>
   <div class="form-body" id="fee">
@@ -61,24 +61,110 @@
             <label class="adInsLabel" style="text-align: right;"> {{item.AppFeeAmt | number:'.2':'en-US'}} </label>
           </div>
           <div class="col-md-3">
-            <label class="adInsLabel" style="text-align: right;"> {{item.FeeTypeName + ' Capitalized Amount'}} </label>
+            <label *ngIf="appObj?.BizTemplateCode != 'DLFN'" class="adInsLabel" style="text-align: right;">
+              {{item.FeeTypeName + ' Capitalized Amount'}} </label>
           </div>
           <div class="col-md-3">
-            <label class="adInsLabel" style="text-align: right;"> {{item.FeeCapitalizeAmt | number:'.2':'en-US'}} </label>
+            <label *ngIf="appObj?.BizTemplateCode != 'DLFN'" class="adInsLabel" style="text-align: right;">
+              {{item.FeeCapitalizeAmt | number:'.2':'en-US'}} </label>
           </div>
         </div>
       </div>
     </div>
+    <div class="row" *ngIf="appObj?.BizTemplateCode == 'DLFN'">
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> Provision Fee Type </label>
+      </div>
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> {{provisionFeeType}} </label>
+      </div>
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-3">
+      </div>
+    </div>
+    <div class="row" *ngIf="appObj?.BizTemplateCode == 'DLFN'">
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> Provision Fee Calculation Base </label>
+      </div>
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> {{calcBase}} </label>
+      </div>
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-3">
+      </div>
+    </div>
   </div>
-  
+
   <lib-ucSubsection [id]="'financialDataId'" [title]="'Financial Data'" [panel]="'financialData'">
   </lib-ucSubsection>
   <div class="form-body" id="financialData">
+    <div class="row" *ngIf="appObj?.BizTemplateCode == 'DLFN'">
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> Installment Type </label>
+      </div>
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> {{instTypeDescr}} </label>
+      </div>
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> Invoice Date </label>
+      </div>
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> {{appDlrFncng?.InvcDt | date: 'dd-MMM-yyyy'}} </label>
+      </div>
+    </div>
+    <div class="row" *ngIf="appObj?.BizTemplateCode == 'DLFN'">
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> Calculation Method </label>
+      </div>
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> {{calcMethod}} </label>
+      </div>
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> Maturity Date </label>
+      </div>
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> {{appFinDataObj?.MaturityDate | date: 'dd-MMM-yyyy'}}
+        </label>
+      </div>
+    </div>
+    <div class="row" *ngIf="appObj?.BizTemplateCode == 'DLFN'">
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> Term of Payment Calculation Based </label>
+      </div>
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> {{topCalcBased}} </label>
+      </div>
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> Estimation Effective Date </label>
+      </div>
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> {{appDlrFncng?.EstEffDt | date: 'dd-MMM-yyyy'}} </label>
+      </div>
+    </div>
+    <div class="row" *ngIf="appObj?.BizTemplateCode == 'DLFN'">
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> Term of Payment (days) </label>
+      </div>
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> {{appDlrFncng?.TopDays}} </label>
+      </div>
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> Total Top Amount </label>
+      </div>
+      <div class="col-md-3">
+        <label class="adInsLabel" style="text-align: right;"> {{appDlrFncng?.TotalTopAmt | number:'.2':'en-US'}}
+        </label>
+      </div>
+    </div>
     <div class="form-group row">
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel" translate> Total Asset Price </label>
+            <label class="adInsLabel" *ngIf="appObj?.BizTemplateCode != 'DLFN' && appObj?.BizTemplateCode != 'CFNA'"> Total Asset Price </label>
+            <label class="adInsLabel" *ngIf="appObj?.BizTemplateCode == 'CFNA'"> Total Financing Amount </label>
+            <label class="adInsLabel" *ngIf="appObj?.BizTemplateCode == 'DLFN'"> Total Invoice Amount </label>
           </div>
           <div class="col-md-6">
             <label class="adInsLabel"> {{appFinDataObj?.TotalAssetPriceAmt | number:'.2':'en-US'}} </label>
@@ -155,8 +241,8 @@
       </div>
     </div>
   </div>
-  <br>
-  <div class="form-group row">
+  <br *ngIf="BizTemplateCode != 'CFNA'" >
+  <div class="form-group row" *ngIf="BizTemplateCode != 'CFNA'">
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-6">
@@ -327,7 +413,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" *ngIf="BizTemplateCode != 'CFNA'">
       <div class="row">
         <div class="col-md-6">
           <label class="adInsLabel" translate> Diff Rate Amount </label>
@@ -429,7 +515,7 @@
                   <th><span class="thead-header" translate>Gross Yield (%)</span></th>
                 </tr>
               </thead>
-  
+
               <tbody>
                 <tr *ngIf="listAsset?.length === 0">
                   <td colspan="100%">No Data Available</td>
@@ -461,7 +547,8 @@
           <div id="Summary">
             <div class="form-group row">
               <label class="col-md-3 adins-label" translate>Rental Period</label>
-              <label class="col-md-3 adins-label text-right">{{listAsset[0]?.Tenor}} / {{listAsset[0]?.FirstInstType}}</label>
+              <label class="col-md-3 adins-label text-right">{{listAsset[0]?.Tenor}} /
+                {{listAsset[0]?.FirstInstType}}</label>
               <label class="col-md-3 adins-label" translate>Total Margin</label>
               <label class="col-md-3 adins-label text-right">{{TotalMarginAmt | number:'.2':'en-US'}}</label>
             </div>
@@ -470,53 +557,56 @@
               <label class="col-md-3 adins-label" translate>Total # of Asset</label>
               <label class="col-md-3 adins-label text-right">{{listAsset[0]?.TotalAsset}}</label>
               <label class="col-md-3 adins-label" translate><b>Total Rental Amount</b></label>
-              <label class="col-md-3 adins-label text-right"><b>{{TotalCostAfterMargin | number:'.2':'en-US'}}</b></label>
+              <label class="col-md-3 adins-label text-right"><b>{{TotalCostAfterMargin |
+                  number:'.2':'en-US'}}</b></label>
             </div>
-            
+
             <div class="form-group row">
               <label class="col-md-3 adins-label" translate>Total Asset Price (After Discount + Accessory)</label>
               <label class="col-md-3 adins-label text-right">{{TotalAssetValue | number:'.2':'en-US'}}</label>
               <label class="col-md-3 adins-label" translate>Rental Amount (Per Period)</label>
               <label class="col-md-3 adins-label text-right">{{TotalRentAmtPerPeriod | number:'.2':'en-US'}}</label>
             </div>
-            
+
             <div class="form-group row">
               <label class="col-md-3 adins-label" translate>Total Asset Residual Value</label>
-              <label class="col-md-3 adins-label text-right">{{TotalAssetResidualValueAmt | number:'.2':'en-US'}}</label>
+              <label class="col-md-3 adins-label text-right">{{TotalAssetResidualValueAmt |
+                number:'.2':'en-US'}}</label>
               <label class="col-md-3 adins-label" translate>Rental Amount + VAT (Per Period)</label>
               <label class="col-md-3 adins-label text-right">{{TotalRentAfterVatAmt | number:'.2':'en-US'}}</label>
             </div>
-            
+
             <div class="form-group row">
               <label class="col-md-3 adins-label" translate>Total Depreciation</label>
               <label class="col-md-3 adins-label text-right">{{TotalDepreciationAmt | number:'.2':'en-US'}}</label>
             </div>
-            
+
             <div class="form-group row">
               <label class="col-md-3 adins-label" translate>Total Asset Expense</label>
               <label class="col-md-3 adins-label text-right">{{TotalAssetExpense | number:'.2':'en-US'}}</label>
             </div>
-            
+
             <div class="form-group row">
               <label class="col-md-3 adins-label" translate>Total COF Interest</label>
               <label class="col-md-3 adins-label text-right">{{TotalCofInterestAmt | number:'.2':'en-US'}}</label>
             </div>
-            
+
             <div class="form-group row">
               <label class="col-md-3 adins-label" translate><b>Total Cost</b></label>
-              <label class="col-md-3 adins-label text-right"><b>{{TotalCostBeforeMargin | number:'.2':'en-US'}}</b></label>
+              <label class="col-md-3 adins-label text-right"><b>{{TotalCostBeforeMargin |
+                  number:'.2':'en-US'}}</b></label>
             </div>
-            
+
             <div class="form-group row">
               <label class="col-md-3 adins-label" translate>Total Fee Non Capitalized</label>
               <label class="col-md-3 adins-label text-right">{{FeeNonCapitalized | number:'.2':'en-US'}}</label>
             </div>
-            
+
             <div class="form-group row">
               <label class="col-md-3 adins-label" translate>Total Security Deposit</label>
               <label class="col-md-3 adins-label text-right">{{TotalSecurityDepositAmt | number:'.2':'en-US'}}</label>
             </div>
-            
+
             <div class="form-group row">
               <label class="col-md-3 adins-label" translate><b>Total Paid In Advance</b></label>
               <label class="col-md-3 adins-label text-right"><b>{{TotalPaidInAdvance | number:'.2':'en-US'}}</b></label>

@@ -1,13 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'environments/environment';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { AppFinDataObj } from 'app/shared/model/AppFinData/AppFinData.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CalcRegularFixObj } from 'app/shared/model/AppFinData/CalcRegularFixObj.Model';
 import { ActivatedRoute } from '@angular/router';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { formatDate } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
@@ -24,9 +22,10 @@ export class FinancialDataFctrComponent implements OnInit {
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   appFinDataObj: AppFinDataObj = new AppFinDataObj();
   calcRegFixObj: CalcRegularFixObj = new CalcRegularFixObj();
-  listInstallment: any;
-  responseCalc: any;
   NumOfInst: number;
+  MouCustId: number;
+  MouCustFctrId: number;
+  EffectiveRatePrcnt: number;
   IsParentLoaded: boolean = false;
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
 
@@ -43,7 +42,7 @@ export class FinancialDataFctrComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.FinDataForm = this.fb.group(
       {
         AppId: this.AppId,
@@ -129,14 +128,33 @@ export class FinancialDataFctrComponent implements OnInit {
         MaxDownPaymentNettPrcnt: 0,
       }
     );
-    this.LoadAppFinData();
+    await this.LoadMouCust();
+    await this.LoadMouCustFctr();
+    await this.LoadAppFinData();
   }
 
   Cancel() {
     this.outputCancel.emit();
   }
 
-  LoadAppFinData() {
+  async LoadMouCust() {
+     await this.http.post(URLConstant.GetMouCustByAppId, { Id: this.AppId }).toPromise().then(
+      (response: any) => {
+        this.MouCustId = response.MouCustId;
+      }
+    );
+  }
+
+  async LoadMouCustFctr() {
+    await this.http.post(URLConstant.GetMouCustFctrByMouCustId, { Id: this.MouCustId }).toPromise().then(
+      (response: any) => {
+        this.MouCustFctrId = response.MouCustId;
+        this.EffectiveRatePrcnt = response.InterestRatePrcnt;
+      }
+    );
+  }
+
+  async LoadAppFinData() {
     this.http.post<AppFinDataObj>(URLConstant.GetInitAppFinDataFctrByAppId, { Id: this.AppId }).subscribe(
       (response) => {
         this.appFinDataObj = response;
@@ -157,7 +175,7 @@ export class FinancialDataFctrComponent implements OnInit {
           DownPaymentGrossAmt: this.appFinDataObj.DownPaymentGrossAmt,
           DownPaymentNettAmt: this.appFinDataObj.DownPaymentNettAmt,
 
-          EffectiveRatePrcnt: this.appFinDataObj.EffectiveRatePrcnt,
+          EffectiveRatePrcnt: this.EffectiveRatePrcnt,
           EffectiveRateBhv: this.appFinDataObj.EffectiveRateBhv,
           StdEffectiveRatePrcnt: this.appFinDataObj.StdEffectiveRatePrcnt,
 
@@ -201,7 +219,8 @@ export class FinancialDataFctrComponent implements OnInit {
           MaxBalloonAmt: this.appFinDataObj.MaxBalloonAmt,
           BalloonBhv: this.appFinDataObj.BalloonBhv,
           MinDownPaymentNettPrcnt: this.appFinDataObj.MinDownPaymentNettPrcnt,
-          MaxDownPaymentNettPrcnt: this.appFinDataObj.MaxDownPaymentNettPrcnt
+          MaxDownPaymentNettPrcnt: this.appFinDataObj.MaxDownPaymentNettPrcnt,
+          InstAmt: this.appFinDataObj.InstAmt
         });
 
         this.IsParentLoaded = true;
@@ -210,24 +229,28 @@ export class FinancialDataFctrComponent implements OnInit {
   }
 
   SaveAndContinue() {
-      var isValidGracePeriod = this.ValidateGracePeriode();
-  
-      var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;
-  
-      if (NeedReCalculate) {
-        this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_AGAIN);
-        return;
-      }
-      if (isValidGracePeriod) {
-  
-        this.http.post(URLConstant.SaveAppFinDataFctr, this.FinDataForm.getRawValue()).subscribe(
-          (response) => {
+    var isValidGracePeriod = this.ValidateGracePeriode();
+
+    var NeedReCalculate = this.FinDataForm.get("NeedReCalculate").value;
+
+    if (NeedReCalculate) {
+      this.toastr.warningMessage(ExceptionConstant.PLEASE_CALCULATE_AGAIN);
+      return;
+    }
+    if (isValidGracePeriod) {
+
+      this.http.post(URLConstant.SaveAppFinDataFctr, this.FinDataForm.getRawValue()).subscribe(
+        (response) => {
+          if (response["StatusCode"] == 200) {
             this.toastr.successMessage(response["Message"]);
             this.outputTab.emit();
+          } else {
+            this.toastr.warningMessage(response["message"]);
           }
-        );
-      }
-    
+        }
+      );
+    }
+
   }
 
   ValidateGracePeriode() {
@@ -259,7 +282,7 @@ export class FinancialDataFctrComponent implements OnInit {
     }
     else {
       if (GrossYieldPrcnt > StdGrossYieldPrcnt) {
-        this.toastr.warningMessage(ExceptionConstant.GROSS_YIELD_CANNOT_GREATER_THAN+ StdGrossYieldPrcnt + "%");
+        this.toastr.warningMessage(ExceptionConstant.GROSS_YIELD_CANNOT_GREATER_THAN + StdGrossYieldPrcnt + "%");
         valid = false;
       }
     }

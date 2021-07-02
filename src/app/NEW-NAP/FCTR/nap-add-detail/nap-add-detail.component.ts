@@ -29,7 +29,7 @@ export class NapAddDetailComponent implements OnInit {
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   private stepperPersonal: Stepper;
   private stepperCompany: Stepper;
-  
+
   AppStepIndex: number = 1;
   appId: number;
   wfTaskListId: number;
@@ -38,7 +38,6 @@ export class NapAddDetailComponent implements OnInit {
   ResponseReturnInfoObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   OnFormReturnInfo: boolean = false;
   IsMultiAsset: boolean = false;
-  ListAsset: any;
   custType: string = CommonConstant.CustTypePersonal;
   isMainCustMarried: boolean = false;
   stepperMode: string = CommonConstant.CustTypePersonal;
@@ -56,18 +55,18 @@ export class NapAddDetailComponent implements OnInit {
     "GUAR": 3,
     "APP": 4,
     "INVOICE": 5,
-    "COLL": 6,
-    "INS": 7,
-    "FIN": 8,
-    "TC": 9,
-    "UPL_DOC": 10
+    // "COLL": 6,
+    // "INS": 7,
+    "FIN": 6,
+    "TC": 7,
+    "UPL_DOC": 8
   };
   dmsObj: DMSObj;
   appNo: string;
   isDmsReady: boolean = false;
   IsDataReady: boolean = false;
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
-  
+
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING2;
   readonly BackLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private toastr: NGXToastrService, private claimTaskService: ClaimTaskService) {
@@ -83,9 +82,9 @@ export class NapAddDetailComponent implements OnInit {
     });
   }
 
-  async ngOnInit() : Promise<void> {
+  async ngOnInit(): Promise<void> {
     //check DMS
-    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
+    await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
     });
@@ -93,12 +92,12 @@ export class NapAddDetailComponent implements OnInit {
     this.AppStepIndex = 0;
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
-    var appObj = { Id: this.appId };
+    let appObj = { Id: this.appId };
     this.http.post(URLConstant.GetAppById, appObj).subscribe(
       (response: AppObj) => {
         this.NapObj = response;
         if (this.NapObj.MrCustTypeCode != null)
-        this.custType = this.NapObj.MrCustTypeCode;
+          this.custType = this.NapObj.MrCustTypeCode;
 
         if (response.AppCurrStep == CommonConstant.AppStepUplDoc) {
           this.initDms();
@@ -111,7 +110,7 @@ export class NapAddDetailComponent implements OnInit {
     );
 
     await this.GetCustMainData();
-    
+
     this.MakeViewReturnInfoObj();
   }
 
@@ -120,8 +119,7 @@ export class NapAddDetailComponent implements OnInit {
     reqObj.Id = this.appId;
     this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, reqObj).subscribe(
       (response) => {
-        if (response.AppCustObj) 
-        {
+        if (response.AppCustObj) {
           this.isMainCustMarried = response.AppCustPersonalObj != undefined && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried ? true : false;
         }
       }
@@ -137,20 +135,6 @@ export class NapAddDetailComponent implements OnInit {
       this.stepperMode = CommonConstant.CustTypePersonal;
       document.getElementById('stepperPersonal').style.display = 'block';
       document.getElementById('stepperCompany').style.display = 'none';
-      this.AppStep = {
-        "NEW": 1,
-        "CUST": 1,
-        "FAM": 2,
-        "SHR": 2,
-        "GUAR": 3,
-        "APP": 4,
-        "INVOICE": 5,
-        "COLL": 6,
-        "INS": 7,
-        "FIN": 8,
-        "TC": 9,
-        "UPL_DOC": 10
-      };
     } else if (this.custType == CommonConstant.CustTypeCompany) {
       this.stepperCompany = new Stepper(document.querySelector('#stepperCompany'), {
         linear: false,
@@ -159,20 +143,6 @@ export class NapAddDetailComponent implements OnInit {
       this.stepperMode = CommonConstant.CustTypeCompany;
       document.getElementById('stepperPersonal').style.display = 'none';
       document.getElementById('stepperCompany').style.display = 'block';
-      this.AppStep = {
-        "NEW": 1,
-        "CUST": 1,
-        "FAM": 2,
-        "SHR": 2,
-        "GUAR": 3,
-        "APP": 4,
-        "INVOICE": 5,
-        "COLL": 6,
-        "INS": 7,
-        "FIN": 8,
-        "TC": 9,
-        "UPL_DOC": 10
-      };
     }
   }
 
@@ -185,14 +155,14 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   async initDms() {
-    if(this.SysConfigResultObj.ConfigValue == '1'){
+    if (this.SysConfigResultObj.ConfigValue == '1') {
       this.isDmsReady = false;
       this.dmsObj = new DMSObj();
       let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
       this.dmsObj.User = currentUserContext.UserName;
       this.dmsObj.Role = currentUserContext.RoleCode;
       this.dmsObj.ViewCode = CommonConstant.DmsViewCodeApp;
-      var appObj = { Id: this.appId };
+      let appObj = { Id: this.appId };
       this.http.post(URLConstant.GetAppCustByAppId, appObj).subscribe(
         response => {
           this.appNo = this.NapObj.AppNo;
@@ -206,7 +176,7 @@ export class NapAddDetailComponent implements OnInit {
           else {
             this.dmsObj.MetadataParent = null;
           }
-  
+
           let mouId = this.NapObj.MouCustId;
           if (mouId != null && mouId != 0) {
             let mouObj = { Id: mouId };
@@ -223,7 +193,7 @@ export class NapAddDetailComponent implements OnInit {
           }
         }
       );
-    }  
+    }
   }
 
   Cancel() {
@@ -236,7 +206,7 @@ export class NapAddDetailComponent implements OnInit {
       ReqByIdAndCodeObj.Id = this.appId;
       ReqByIdAndCodeObj.Code = CommonConstant.ReturnHandlingEditApp;
       this.http.post(URLConstant.GetReturnHandlingDByAppIdAndMrReturnTaskCode, ReqByIdAndCodeObj).subscribe(
-        (response : ResReturnHandlingDObj) => {
+        (response: ResReturnHandlingDObj) => {
           this.ResponseReturnInfoObj = response;
           this.FormReturnObj.patchValue({
             ReturnExecNotes: this.ResponseReturnInfoObj.ReturnHandlingExecNotes
@@ -247,12 +217,12 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   CheckMultiAsset() {
-    var appObj = { Id: this.appId }
+    let appObj = { Id: this.appId }
     this.http.post(URLConstant.GetAppAssetListByAppId, appObj).subscribe(
       (response) => {
-        this.ListAsset = response['ReturnObject'];
-        if (this.ListAsset != undefined && this.ListAsset != null) {
-          if (this.ListAsset.length > 1)
+        let ListAsset = response['ReturnObject'];
+        if (ListAsset != undefined && ListAsset != null) {
+          if (ListAsset.length > 1)
             this.IsMultiAsset = true;
           else
             this.IsMultiAsset = false;
@@ -282,12 +252,12 @@ export class NapAddDetailComponent implements OnInit {
       case CommonConstant.AppStepInvoice:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepInvoice];
         break;
-      case CommonConstant.AppStepColl:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepColl];
-        break;
-      case CommonConstant.AppStepIns:
-        this.AppStepIndex = this.AppStep[CommonConstant.AppStepIns];
-        break;
+      // case CommonConstant.AppStepColl:
+      //   this.AppStepIndex = this.AppStep[CommonConstant.AppStepColl];
+      //   break;
+      // case CommonConstant.AppStepIns:
+      //   this.AppStepIndex = this.AppStep[CommonConstant.AppStepIns];
+      //   break;
       case CommonConstant.AppStepFin:
         this.AppStepIndex = this.AppStep[CommonConstant.AppStepFin];
         break;
@@ -305,11 +275,11 @@ export class NapAddDetailComponent implements OnInit {
 
   NextStep(Step) {
     this.UpdateAppStep(Step);
-  
+
     if (Step == CommonConstant.AppStepUplDoc) {
       this.initDms();
     }
-    
+
     this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.next();
@@ -329,10 +299,10 @@ export class NapAddDetailComponent implements OnInit {
     )
   }
 
-  CheckIsUseDms(){
-    if(this.SysConfigResultObj.ConfigValue == '1'){
+  CheckIsUseDms() {
+    if (this.SysConfigResultObj.ConfigValue == '1') {
       this.NextStep(CommonConstant.AppStepUplDoc);
-    }else{
+    } else {
       this.LastStepHandler();
     }
   }
@@ -355,7 +325,7 @@ export class NapAddDetailComponent implements OnInit {
 
   Submit() {
     if (this.mode == CommonConstant.ModeResultHandling) {
-      var ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
+      let ReturnHandlingResult: ReturnHandlingDObj = new ReturnHandlingDObj();
       ReturnHandlingResult.WfTaskListId = this.wfTaskListId;
       ReturnHandlingResult.ReturnHandlingHId = this.ResponseReturnInfoObj.ReturnHandlingHId;
       ReturnHandlingResult.ReturnHandlingDId = this.ResponseReturnInfoObj.ReturnHandlingDId;
@@ -372,12 +342,12 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   CheckCustType(ev) {
-    this.isMainCustMarried = ev.MrMaritalStatCode != undefined && ev.MrMaritalStatCode == 'MARRIED'? true : false;
-    this.custType = ev.MrCustTypeCode != undefined? ev.MrCustTypeCode : CommonConstant.CustTypePersonal;
+    this.isMainCustMarried = ev.MrMaritalStatCode != undefined && ev.MrMaritalStatCode == 'MARRIED' ? true : false;
+    this.custType = ev.MrCustTypeCode != undefined ? ev.MrCustTypeCode : CommonConstant.CustTypePersonal;
     this.ChangeStepper();
-    if(this.custType == CommonConstant.CustTypePersonal){
+    if (this.custType == CommonConstant.CustTypePersonal) {
       this.NextStep(CommonConstant.AppStepFamily);
-    }else{
+    } else {
       this.NextStep(CommonConstant.AppStepShr);
     }
   }

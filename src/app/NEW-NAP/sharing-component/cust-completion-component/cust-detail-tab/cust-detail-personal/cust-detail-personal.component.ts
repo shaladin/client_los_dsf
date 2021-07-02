@@ -194,7 +194,7 @@ export class CustDetailPersonalComponent implements OnInit {
             });
         }
 
-        this.VIPCheck();
+        this.VIPCheck(this.CustDetailForm.controls.IsVip.value);
 
         if(response.AppCustPersonalObj.NationalityCountryCode != null){
           this.NationalityCountryCode = response.AppCustPersonalObj.NationalityCountryCode

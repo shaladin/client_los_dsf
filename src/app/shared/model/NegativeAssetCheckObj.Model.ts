@@ -1,4 +1,5 @@
 export class NegativeAssetCheckObj{ 
+     AppId : string;
      AssetTypeCode : string;    
      SerialNo1 : string;  
      SerialNo2 : string; 

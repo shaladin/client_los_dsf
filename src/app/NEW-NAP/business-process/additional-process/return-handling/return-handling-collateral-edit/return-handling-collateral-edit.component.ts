@@ -13,6 +13,9 @@ import { ReturnHandlingDObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { AppCollateralObj } from 'app/shared/model/AppCollateralObj.Model';
 
 
 
@@ -24,11 +27,11 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 export class ReturnHandlingCollateralEditComponent implements OnInit {
 
   isReturnHandling: boolean = false;
-  appId: any;
-  returnHandlingHId: any;
-  wfTaskListId: any;
-  appCollateralObj: any;
-  AppObj: any;
+  appId: number;
+  returnHandlingHId: number;
+  wfTaskListId: number;
+  appCollateralObj: Array<AppCollateralObj>;
+  AppObj: NapAppModel;
   returnHandlingDObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   ReturnHandlingDData: ReturnHandlingDObj;
   BizTemplateCode: string;
@@ -37,11 +40,6 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   ReturnHandlingForm = this.fb.group({
     ExecNotes: ['', Validators.maxLength(4000)],
   });
-
-  appObj = {
-    AppId: 0,
-    Id: 0
-  };
 
   rtnHandlingDObj = {
     ReturnHandlingDId: 0,
@@ -75,8 +73,6 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
     this.IsViewReady = true;
     this.claimTaskService.ClaimTask(this.wfTaskListId);
-    this.appObj.AppId = this.appId;
-    this.appObj.Id = this.appId;
     await this.GetAppData();
     await this.GetAppCollateralData();
     if (this.isReturnHandling == true) {
@@ -128,7 +124,7 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   async GetAppData() {
     var appObj1 = { Id: this.appId };
     await this.http.post(URLConstant.GetAppById, appObj1).toPromise().then(
-      (response) => {
+      (response: NapAppModel) => {
 
         this.AppObj = response;
       }
@@ -148,7 +144,10 @@ export class ReturnHandlingCollateralEditComponent implements OnInit {
   }
 
   GetAppCollateralData() {
-    this.http.post(URLConstant.GetListAppCollateralByAppId, this.appObj).subscribe(
+    var obj = {
+      Id: this.appId,
+    }
+    this.http.post(URLConstant.GetListAppCollateralByAppId, obj).subscribe(
       (response) => {
         this.appCollateralObj = response[CommonConstant.ReturnObj];
       }

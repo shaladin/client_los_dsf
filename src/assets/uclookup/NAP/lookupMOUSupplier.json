@@ -1,0 +1,68 @@
+{
+    "title": "Lookup Supplier",
+    "component": [
+      {
+        "type": "textbox",
+        "name": "V.VENDOR_CODE",
+        "id": "supplierCode",
+        "value": "",
+        "label": "Supplier Code",
+        "placeholder": "Supplier Code"
+      },
+      {
+        "type": "textbox",
+        "name": "V.VENDOR_NAME",
+        "id": "supplierName",
+        "value": "",
+        "label": "Supplier Name",
+        "placeholder": "Supplier Name"
+      }
+    ],
+    "querystring": {
+      "name": "lookupMOUSupplier"
+    },
+    "headerList": [
+      {
+        "type": "sort",
+        "position": "center",
+        "label": "Supplier Code",
+        "name": "VendorCode"
+      },
+      {
+        "type": "sort",
+        "position": "left",
+        "label": "Supplier Name",
+        "name": "VendorName"
+      },
+      {
+        "type": "label",
+        "position": "center",
+        "label": "Select"
+      }
+    ],
+    "bodyList": [
+      {
+        "type": "text",
+        "position": "center",
+        "property": "VendorCode"
+      },
+      {
+        "type": "text",
+        "position": "left",
+        "property": "VendorName"
+      },
+      {
+        "type": "action",
+        "position": "center",
+        "action": [
+          {
+            "type": "select",
+            "property": "VendorCode"
+          }
+        ]
+      }
+    ],
+    "propertyId": "VendorCode",
+    "propertyName": "VendorName"
+  }
+  

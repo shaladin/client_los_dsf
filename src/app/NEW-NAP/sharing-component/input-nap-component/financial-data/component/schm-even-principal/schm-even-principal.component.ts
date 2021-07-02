@@ -10,6 +10,8 @@ import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { CalcEvenPrincipleObjForTrialCalc } from 'app/shared/model/AppFinData/CalcEvenPrincipleObjForTrialCalc.Model';
+import { InstallmentObj } from 'app/shared/model/AppFinData/InstallmentObj.Model';
 
 @Component({
   selector: 'app-schm-even-principal',
@@ -19,14 +21,16 @@ import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMas
 export class SchmEvenPrincipalComponent implements OnInit {
   @Input() AppId: number;
   @Input() ParentForm: FormGroup;
+  @Input() TrialCalc: boolean;
 
   RateTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   GracePeriodeTypeOptions: Array<KeyValueObj> = new Array<KeyValueObj>();
   CalcBaseOptions: Array<RefMasterObj> = new Array<RefMasterObj>();
   calcEvenPrincipleObj: CalcEvenPrincipleObj = new CalcEvenPrincipleObj();
-  listInstallment: any;
-  responseCalc: any;
+  calcEvenPrincipleObjForTrialCalc: CalcEvenPrincipleObjForTrialCalc = new CalcEvenPrincipleObjForTrialCalc();
+  listInstallment: Array<InstallmentObj>;
   PriceLabel: string = "Asset Price";
+  IsTrialCalc: boolean = false;
   @Input() BizTemplateCode: string;
 
   constructor(private fb: FormBuilder,
@@ -38,8 +42,18 @@ export class SchmEvenPrincipalComponent implements OnInit {
     this.LoadDDLGracePeriodType();
     this.LoadCalcBaseType();
 
-    if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
-      this.PriceLabel = "Financing Amount";
+    if (this.AppId != null) {
+      if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
+        this.PriceLabel = "Financing Amount";
+      }
+      this.http.post(URLConstant.GetAppInstSchldTableByAppId, { AppId: this.AppId }).subscribe(
+        (response) => {
+          this.listInstallment = response['InstallmentTable'];
+        });
+      this.IsTrialCalc = false;
+    }
+    else if (this.TrialCalc != null && this.TrialCalc) {
+      this.IsTrialCalc = true;
     }
   }
 
@@ -66,7 +80,7 @@ export class SchmEvenPrincipalComponent implements OnInit {
         this.CalcBaseOptions = response[CommonConstant.ReturnObj];
         this.CalcBaseOptions = this.CalcBaseOptions.filter(x => x.MappingCode.indexOf(CommonConstant.InstSchmEvenPrincipal) !== -1);
 
-        if(this.CalcBaseOptions.length == 1){
+        if (this.CalcBaseOptions.length == 1) {
           this.ParentForm.patchValue({
             CalcBase: this.CalcBaseOptions[0].MasterCode
           });
@@ -100,7 +114,7 @@ export class SchmEvenPrincipalComponent implements OnInit {
 
 
   Calculate() {
-    if(this.ParentForm.getRawValue().CalcBase == ''){
+    if (this.ParentForm.getRawValue().CalcBase == '') {
       this.toastr.warningMessage(ExceptionConstant.CHOOSE_CALCULATE_BASE);
       return;
     }
@@ -108,40 +122,80 @@ export class SchmEvenPrincipalComponent implements OnInit {
     if (this.ValidateFee() == false) {
       return;
     }
-    this.calcEvenPrincipleObj = this.ParentForm.getRawValue();
+    if (this.ParentForm.controls.DownPaymentNettAmt.value < this.ParentForm.controls.TdpPaidCoyAmt.value) {
+      this.toastr.warningMessage(ExceptionConstant.TOTAL_PAID_AT_COY_MUST_LESS_THAN + "Down Payment");
+      return;
+    }
+    if (!this.IsTrialCalc) {
+      this.calcEvenPrincipleObj = this.ParentForm.getRawValue();
 
+      this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentEvenPrincipal, this.calcEvenPrincipleObj).subscribe(
+        (response) => {
+          this.listInstallment = response.InstallmentTable;
+          this.ParentForm.patchValue({
+            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
 
-    this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentEvenPrincipal, this.calcEvenPrincipleObj).subscribe(
-      (response) => {
-        this.listInstallment = response.InstallmentTable;
-        this.ParentForm.patchValue({
-          TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
-          TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+            FlatRatePrcnt: response.FlatRatePrcnt,
+            InstAmt: response.InstAmt,
 
-          EffectiveRatePrcnt: response.EffectiveRatePrcnt,
-          FlatRatePrcnt: response.FlatRatePrcnt,
-          InstAmt: response.InstAmt,
+            GrossYieldPrcnt: response.GrossYieldPrcnt,
 
-          GrossYieldPrcnt: response.GrossYieldPrcnt,
+            TotalInterestAmt: response.TotalInterestAmt,
+            TotalAR: response.TotalARAmt,
 
-          TotalInterestAmt: response.TotalInterestAmt,
-          TotalAR: response.TotalARAmt,
+            NtfAmt: response.NtfAmt,
+            ApvAmt: response.ApvAmt,
 
-          NtfAmt: response.NtfAmt,
-          ApvAmt: response.ApvAmt,
+            TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+            LifeInsCptlzAmt: response.LifeInsCptlzAmt,
 
-          TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
-          LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+            DownPaymentGrossAmt: response.DownPaymentGrossAmt,
+            DownPaymentNettAmt: response.DownPaymentNettAmt
 
-          DownPaymentGrossAmt: response.DownPaymentGrossAmt,
-          DownPaymentNettAmt: response.DownPaymentNettAmt
+          })
+          this.SetInstallmentTable();
+          this.SetNeedReCalculate(false);
 
-        })
-        this.SetInstallmentTable();
-        this.SetNeedReCalculate(false);
+        }
+      );
+    } else {
+      this.calcEvenPrincipleObjForTrialCalc = this.ParentForm.getRawValue();
 
-      }
-    );
+      this.http.post<ResponseCalculateObj>(URLConstant.CalculateInstallmentEvenPrincipalForTrialCalc, this.calcEvenPrincipleObjForTrialCalc).subscribe(
+        (response) => {
+          this.listInstallment = response.InstallmentTable;
+          this.ParentForm.patchValue({
+            TotalDownPaymentNettAmt: response.TotalDownPaymentNettAmt, //muncul di layar
+            TotalDownPaymentGrossAmt: response.TotalDownPaymentGrossAmt, //inmemory
+
+            EffectiveRatePrcnt: response.EffectiveRatePrcnt,
+            FlatRatePrcnt: response.FlatRatePrcnt,
+            InstAmt: response.InstAmt,
+
+            GrossYieldPrcnt: response.GrossYieldPrcnt,
+
+            TotalInterestAmt: response.TotalInterestAmt,
+            TotalAR: response.TotalARAmt,
+
+            NtfAmt: response.NtfAmt,
+            ApvAmt: response.ApvAmt,
+
+            TotalLifeInsCustAmt: response.TotalLifeInsCustAmt,
+            LifeInsCptlzAmt: response.LifeInsCptlzAmt,
+
+            DownPaymentGrossAmt: response.DownPaymentGrossAmt,
+            DownPaymentNettAmt: response.DownPaymentNettAmt
+
+          })
+          this.SetInstallmentTable();
+          this.SetNeedReCalculate(false);
+
+        }
+      );
+
+    }
   }
 
   SetNeedReCalculate(value: boolean) {
@@ -218,6 +272,7 @@ export class SchmEvenPrincipalComponent implements OnInit {
     this.SetNeedReCalculate(true);
   }
 
+
   ValidateFee() {
     for (let i = 0; i < this.ParentForm.controls["AppFee"]["controls"].length; i++) {
       if (this.ParentForm.controls["AppFee"].value[i].IsCptlz == true
@@ -230,6 +285,5 @@ export class SchmEvenPrincipalComponent implements OnInit {
   }
 
   test() {
-
   }
 }

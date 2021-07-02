@@ -21,13 +21,12 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 })
 export class DocChecklistDetailComponent implements OnInit {
 
-  AppId: any;
-  result: any;
+  AppId: number;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  appTC: any;
-  TaskListId: any;
+  appTC: AppTCObj;
+  TaskListId: number;
   DocChecklistObj: DocChecklist = new DocChecklist();
-  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
 
   IsCheckedAll: boolean = false;
 
@@ -38,24 +37,13 @@ export class DocChecklistDetailComponent implements OnInit {
   ListAppTCObj: ListAppTCObj;
 
   count1: number = 0;
-  RfaLogObj: {
-    RfaNo: any
-  }
 
-  inputObj2: any
-
-  TrxNo: any;
   hasApproveFinal: boolean = false;
   hasRejectFinal: boolean = false;
   lengthListRfaLogObj: number;
   IsApvReady: boolean = false;
   isDmsReady: boolean;
   dmsObj: DMSObj;
-  agrNo: any;
-  custNo: any;
-  appNo: any;
-  dmsAppObj: DMSObj;
-  mouCustNo: any;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_DOC_CHECK_LIST_PAGING;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {

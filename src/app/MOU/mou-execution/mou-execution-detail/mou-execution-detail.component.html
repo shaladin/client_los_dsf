@@ -1,6 +1,14 @@
-<lib-ucviewgeneric [viewGenericObj]="viewGenericObj"></lib-ucviewgeneric>
 <div class="card">
   <div class="card-body">
+    <div class="card-header header-title" style="margin-bottom: 10px;"> 
+      <div class="row">
+        <div class="col-md-8">
+          <h4 class="card-title" id="horz-layout-colored-controls" translate> MOU EXECUTION
+          </h4>
+        </div>
+      </div>
+    </div> 
+    <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
     <div class="px-3">
       <lib-ucSubsection [id]="'MOUMainInfoId'" [title]="'Main Information'" [panel]="'MOUMainInfoSection'">
       </lib-ucSubsection>
@@ -10,7 +18,7 @@
           <div class="form-group row">
             <label class="col-md-3 adInsLabel adins-required-label" for="MouCustDt" translate>Mou Date</label>
             <div class="col-md-2">
-              <input type="date" class="form-control adInsInput" formControlName="MouCustDt"
+              <input type="date" class="form-control adInsInput" formControlName="MouCustDt" (focusout) ="checkMouDate($event)"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && MouExecutionForm.controls.MouCustDt.invalid }"
                 [min]="businessDtYesterday | date: 'yyyy-MM-dd'" onkeypress="return false;" />
               <lib-uc-show-errors [control]="MouExecutionForm.controls.MouCustDt" [submit]="enjiForm.submitted">
@@ -31,9 +39,9 @@
             </div>
             <div class="col-md-2">
               <input type="date" readonly class="form-control adInsInput" formControlName="EndDt"
-                [min]="this.MouExecutionForm.controls.MouCustDt.value | date: 'yyyy-MM-dd'"
+                [min]="this.MouExecutionForm.controls.StartDt.value | date: 'yyyy-MM-dd'"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && MouExecutionForm.controls.EndDt.invalid }"
-                onkeypress="return false;" />
+                (focusout) ="checkEndDate($event)" />
               <lib-uc-show-errors [control]="MouExecutionForm.controls.EndDt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>

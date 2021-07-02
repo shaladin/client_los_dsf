@@ -21,7 +21,7 @@ export class MouCustPersonalObj {
     Email1: string;
     Email2: string;
     Email3: string;
-    RowVersion: any;
+    RowVersion: string;
 
 constructor() { 
         this.MouCustPersonalId = 0;

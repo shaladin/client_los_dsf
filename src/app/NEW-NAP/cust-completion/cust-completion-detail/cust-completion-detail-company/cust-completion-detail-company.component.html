@@ -51,6 +51,109 @@
               </button>
             </div>
             <div class="line"></div>
+            <div class="step" data-target="#CustAsset-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="CustAsset-tab"
+                id="CustAsset-tab-trigger" (click)="EnterTab('CustAsset')">
+                <span class="bs-stepper-circle">6</span>
+                <span class="bs-stepper-label">Customer Asset</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#legal-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="legal-tab"
+                id="legal-tab-trigger" (click)="EnterTab('Legal')">
+                <span class="bs-stepper-circle">7</span>
+                <span class="bs-stepper-label">Legal Document</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#other-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="other-tab"
+                id="other-tab-trigger" (click)="EnterTab('Other')">
+                <span class="bs-stepper-circle">8</span>
+                <span class="bs-stepper-label">Other Attribute</span>
+              </button>
+            </div>
+          </div>
+          <br><br>
+          <div class="bs-stepper-content">
+            <div id="customer-detail-tab" class="content" role="tabpanel" aria-labelledby="customer-detail-tab-trigger">
+              <app-cust-detail-company *ngIf="stepIndex == 1" [AppCustId]="AppCustId" (OutputTab)="GetEvent($event,'Address')"> </app-cust-detail-company>
+            </div>
+            <div id="address-tab" class="content" role="tabpanel" aria-labelledby="address-tab-trigger">
+              <app-cc-address-paging *ngIf="stepIndex == 2" [AppCustId]="AppCustId" [MrCustTypeCode]="'COMPANY'" (OutputTab)="GetEvent($event, 'Shrholder')"> </app-cc-address-paging>
+            </div>
+            <div id="shrholder-tab" class="content" role="tabpanel" aria-labelledby="shrholder-tab-trigger">
+              <app-mgmnt-shrholder *ngIf="stepIndex == 3" [AppId]="AppId" (OutputTab)="GetEvent($event, 'Contact')"> </app-mgmnt-shrholder>
+            </div>
+            <div id="Contact-tab" class="content" role="tabpanel" aria-labelledby="Contact-tab-trigger">
+              <app-cc-contact-information-tab *ngIf="stepIndex == 4" [AppCustId]="AppCustId" (OutputTab)="GetEvent($event, 'Financial')"></app-cc-contact-information-tab>
+            </div>
+            <div id="Financial-tab" class="content" role="tabpanel"
+              aria-labelledby="Financial-tab-trigger">
+              <app-financial-company *ngIf="stepIndex == 5" [AppCustId]="AppCustId" (OutputTab)="GetEvent($event, 'CustAsset')"> </app-financial-company>
+            </div>
+            <div id="CustAsset-tab" class="content" role="tabpanel" aria-labelledby="CustAsset-tab-trigger">
+              <app-app-cust-asset *ngIf="stepIndex == 6" [AppCustId]="AppCustId" (ResponseAppCustAsset)="GetEvent($event, 'Legal')">
+              </app-app-cust-asset>
+            </div>
+            <div id="legal-tab" class="content" role="tabpanel" aria-labelledby="legal-tab-trigger">
+              <app-legal-doc-tab *ngIf="stepIndex == 7" [AppCustCompanyId]="AppCustCompanyId" (OutputTab)="GetEvent($event, 'Other')"> </app-legal-doc-tab>
+            </div>
+            <div id="other-tab" class="content" role="tabpanel" aria-labelledby="other-tab-trigger">
+              <app-other-info-tab [CustTypeCode]="'COMPANY'"  *ngIf="stepIndex == 8" (OutputTab)="GetEvent($event, 'Save')"> </app-other-info-tab>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div id="stepper2" class="bs-stepper">
+          <div class="bs-stepper-header" role="tablist" style="overflow-x: auto;">
+            <div class="step" data-target="#customer-detail-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="customer-detail-tab"
+                id="customer-detail-tab-trigger" (click)="EnterTab('Detail')">
+                <span class="bs-stepper-circle">1</span>
+                <span class="bs-stepper-label">Customer Detail</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#address-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="address-tab" id="address-tab-trigger" (click)="EnterTab('Address')">
+                <span class="bs-stepper-circle">2</span>
+                <span class="bs-stepper-label">Address Information</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#shrholder-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="shrholder-tab" id="shrholder-tab-trigger" (click)="EnterTab('Shrholder')">
+                <span class="bs-stepper-circle">3</span>
+                <span class="bs-stepper-label">Management / Shareholder</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#Contact-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="Contact-tab"
+                id="Contact-tab-trigger" (click)="EnterTab('Contact')">
+                <span class="bs-stepper-circle">4</span>
+                <span class="bs-stepper-label">Contact Information</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#Financial-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="Financial-tab"
+                id="Financial-tab-trigger" (click)="EnterTab('Financial')">
+                <span class="bs-stepper-circle">5</span>
+                <span class="bs-stepper-label">Financial Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
+            <div class="step" data-target="#Financial-tab">
+              <button type="button" class="step-trigger" role="tab" aria-controls="Financial-tab"
+                id="Financial-tab-trigger" (click)="EnterTab('Financial')">
+                <span class="bs-stepper-circle">5</span>
+                <span class="bs-stepper-label">Financial Data</span>
+              </button>
+            </div>
+            <div class="line"></div>
             <div class="step" data-target="#legal-tab">
               <button type="button" class="step-trigger" role="tab" aria-controls="legal-tab"
                 id="legal-tab-trigger" (click)="EnterTab('Legal')">
@@ -92,7 +195,7 @@
               <app-other-info-tab [CustTypeCode]="'COMPANY'"  *ngIf="stepIndex == 7" (OutputTab)="GetEvent($event, 'Save')"> </app-other-info-tab>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

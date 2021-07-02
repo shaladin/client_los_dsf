@@ -1,11 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { MouCustDlrFinObj } from 'app/shared/model/moucustdlrfin.model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
+import { VendorObj } from 'app/shared/model/Vendor.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-mou-view-detail',
@@ -21,13 +26,14 @@ export class MouViewDetailComponent implements OnInit {
   AssetTypeCode: string;
   MrFirstInstTypeCode: string;
   MrInterestTypeCode: string;
-  MrInstTypeCode: string;
+  MrInstTypeCode: string = "-";
   MrInstSchmCode: string;
   PayFreqCode: string;
   DownPaymentFromPrcnt: number;
   DownPaymentToPrcnt: number;
   TenorFrom: number;
   TenorTo: number;
+  IsReady: boolean = false;
 
   WopCode: string;
   PlafondAmt: number;
@@ -44,14 +50,20 @@ export class MouViewDetailComponent implements OnInit {
   mouCust: any;
   mouCustClause: any;
   mouCustFctr: any;
-  listAssetData: Array<any> = new Array();
+  OsPlatfonAmtR2: any;
+  listAssetData: Array<any>;
   MrPaidByCode: string;
-  SingleInstCalcMthd: string;
+  SingleInstCalcMthd: string = "-";
+  MouCustDlrFindData: MouCustDlrFinObj = new MouCustDlrFinObj();
+  LinkSupplier: string = "-";
+
 
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
 
-  ngOnInit() {
-    var mouCustObj = { Id: this.MouCustId}
+  async ngOnInit() {
+    this.GetListActiveRefPayFreq();
+    this.GetListKvpActiveRefCurr();
+    var mouCustObj = { Id: this.MouCustId };
     this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.mouCust = response["MouCustObj"];
@@ -60,9 +72,9 @@ export class MouViewDetailComponent implements OnInit {
         this.PlafondAmt = this.mouCust.PlafondAmt;
         this.RealisationAmt = this.mouCust.RealisationAmt;
         this.IsRevolving = this.mouCust.IsRevolving;
+        this.MouType = this.mouCust.MrMouTypeCode;
 
-        if (this.MouType == CommonConstant.GENERAL)
-        {
+        if (this.MouType == CommonConstant.GENERAL) {
           this.mouCustClause = response["MouCustClauseObj"];
           this.AssetTypeCode = this.mouCustClause.AssetTypeCode;
           this.MrInterestTypeCode = this.mouCustClause.InterestTypeDescr;
@@ -74,22 +86,22 @@ export class MouViewDetailComponent implements OnInit {
           this.TenorFrom = this.mouCustClause.TenorFrom;
           this.TenorTo = this.mouCustClause.TenorTo;
         }
-        else if (this.MouType == CommonConstant.FACTORING)
-        {
+        else if (this.MouType == CommonConstant.FACTORING) {
           this.mouCustFctr = response["MouCustFctrObj"];
           this.AssetTypeCode = this.mouCustFctr.AssetTypeCode;
           this.MrFirstInstTypeCode = this.mouCustFctr.MrFirstInstTypeCode;
           this.MrInstTypeCode = this.mouCustFctr.InstTypeDescr;
           this.MrInstSchmCode = this.mouCustFctr.MrInstSchmCode;
           this.SingleInstCalcMthd = this.mouCustFctr.SingleInstCalcMthdDescr;
-          this.MrPaidByCode =  this.mouCustFctr.PaidByDescr;
+          this.MrPaidByCode = this.mouCustFctr.PaidByDescr;
           this.PayFreqCode = this.mouCustFctr.PayFreqCode;
           this.DownPaymentFromPrcnt = this.mouCustFctr.DownPaymentFromPrcnt;
           this.DownPaymentToPrcnt = this.mouCustFctr.DownPaymentToPrcnt;
           this.TenorFrom = this.mouCustFctr.TenorFrom;
           this.TenorTo = this.mouCustFctr.TenorTo;
-          
+
           this.WopCode = this.mouCustFctr.WopCode;
+          this.GetRefMasterByRefMasterTypeCodeAndMasterCode(this.mouCustFctr.WopCode, "WopCode", CommonConstant.RefMasterTypeCodeWOP);
           this.TopDays = this.mouCustFctr.TopDays;
           this.InterestRatePrcnt = this.mouCustFctr.InterestRatePrcnt;
           this.RetentionPrcnt = this.mouCustFctr.RetentionPrcnt;
@@ -97,13 +109,103 @@ export class MouViewDetailComponent implements OnInit {
           this.IsDisclosed = this.mouCustFctr.IsDisclosed;
           this.MrRecourseTypeCode = this.mouCustFctr.MrRecourseTypeCode;
           this.Notes = this.mouCustFctr.Notes;
+
+          var objVendor = {
+            Code: this.mouCustFctr.VendorCode
+          }
+          this.http.post(URLConstant.GetVendorByVendorCode, objVendor).subscribe(
+            (responseLink) => {
+              this.LinkSupplier = responseLink["VendorName"]
+            });
+
         }
+        else if (this.MouType == CommonConstant.FINANCING) {
+          this.http.post(URLConstant.GetMouCustDlrWithCustVendorNameFindById, mouCustObj).subscribe(
+            (responses: MouCustDlrFinObj) => {
+              console.log(responses)
+              this.MouCustDlrFindData = responses;
+              this.MouCustDlrFindData.WopCode = responses["WopCode"];
+              this.MouCustDlrFindData.TopDays = responses["TopDays"];
+              this.MouCustDlrFindData.TopInterestRatePrcnt = responses["TopInterestRatePrcnt"];
+              this.MouCustDlrFindData.PayFreqCode = responses["PayFreqCode"];
+              this.MouCustDlrFindData.InterestRatePrcnt = responses["InterestRatePrcnt"];
+              this.MouCustDlrFindData.MaximumMonthsForExtend = responses["MaximumMonthsForExtend"];
+              this.MouCustDlrFindData.MaximumTimesForExtends = responses["MaximumTimesForExtends"];
+              this.MouCustDlrFindData.ExtendRatePrcnt = responses["ExtendRatePrcnt"];
+              this.MouCustDlrFindData.SpareDayToPay = responses["SpareDayToPay"];
+              this.MouCustDlrFindData.AssetCondition = responses["AssetCondition"];
+              this.MouCustDlrFindData.LcRate = responses["LcRate"];
+              this.MouCustDlrFindData.PrincipalPaidInExtendPrcntg = responses["PrincipalPaidInExtendPrcntg"];
+              this.MouCustDlrFindData.ManufacturerCode = responses["ManufacturerCode"];
+              this.MouCustDlrFindData.ManufacturerCustNo = responses["ManufacturerCustNo"];
+              this.MouCustDlrFindData.DealerCode = responses["DealerCode"];
+              this.MouCustDlrFindData.DealerCustNo = responses["DealerCustNo"];
+              this.MouCustDlrFindData.Notes = responses["Notes"];
+              this.MouCustDlrFindData.MaximumExtendTimes = responses["MaximumExtendTimes"];
+              var ObjectRefMaster = {
+                RefMasterTypeCode: CommonConstant.RefMasterTypeCodeInstType,
+                MasterCode: responses["MrInstTypeCode"]
+              }
+              this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, ObjectRefMaster).subscribe(
+                (responseRefMaster) => {
+                  this.MrInstTypeCode = responseRefMaster["Descr"];
+
+                });
+              this.GetRefMasterByRefMasterTypeCodeAndMasterCode(this.MouCustDlrFindData.WopCode, "WopCode", CommonConstant.RefMasterTypeCodeWOP);
+            })
+        }
+
       })
-    this.http.post(URLConstant.GetMouCustAssetByMouCustId, mouCustObj).subscribe(
+    await this.http.post(URLConstant.GetMouCustAssetByMouCustId, mouCustObj).toPromise().then(
       (response) => {
         this.listAssetData = response[CommonConstant.ReturnObj];
       });
-      
+
+    this.IsReady = true;
+  }
+
+  dictMasterCode: { [id: string]: string } = {};
+  GetRefMasterByRefMasterTypeCodeAndMasterCode(masterCode: string, typeVar: string, refMasterTypeCode: string) {
+    var ObjectRefMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+      RefMasterTypeCode: refMasterTypeCode,
+      MasterCode: masterCode
+    }
+    this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, ObjectRefMaster).subscribe(
+      (responseRefMaster) => {
+        this.dictMasterCode[typeVar] = responseRefMaster["Descr"];
+      });
+  }
+
+  dictRefPayFreq: { [id: string]: string } = {};
+  GetListActiveRefPayFreq() {
+    this.http.post(URLConstant.GetListActiveRefPayFreq, null).subscribe(
+      (response: GenericListObj) => {
+        for (let index = 0; index < response.ReturnObject.length; index++) {
+          const element = response.ReturnObject[index];
+          this.dictRefPayFreq[element.PayFreqCode] = element.Descr;
+        }
+      }
+    );
+  }
+
+  dictRefCurr: { [id: string]: string } = {};
+  GetListKvpActiveRefCurr() {
+    this.http.post(URLConstant.GetListKvpActiveRefCurr, null).subscribe(
+      (response: GenericKeyValueListObj) => {
+        for (let index = 0; index < response.ReturnObject.length; index++) {
+          const element = response.ReturnObject[index];
+          this.dictRefCurr[element.Key] = element.Value;
+        }
+      }
+    );
+  }
+
+  ClickLinkManufacturer(vendorCode: string) {
+    this.http.post(URLConstant.GetVendorByVendorCode, { Code: vendorCode }).subscribe(
+      (responseLink: VendorObj) => {
+        console.log(responseLink);
+        AdInsHelper.OpenVendorBranchViewByVendorId(responseLink.VendorId);
+      });
   }
 
   MouDataForm = this.fb.group({

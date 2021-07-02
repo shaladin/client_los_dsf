@@ -18,8 +18,8 @@ import { AppMainInfoComponent } from 'app/NEW-NAP/sharing-component/view-main-in
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 
 @Component({
   selector: 'app-nap-detail-form',
@@ -37,11 +37,11 @@ export class NapDetailFormComponent implements OnInit {
   viewReturnInfoObj: string = "";
   NapObj: AppObj;
   IsMultiAsset: string;
-  ListAsset: any;
+  ListAsset: Array<AppAssetObj>;
   ReturnHandlingHId: number = 0;
   showCancel: boolean = true;
   custType: string = CommonConstant.CustTypeCompany;
-  Token: any = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
+  Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   IsDataReady: boolean = false;
@@ -75,8 +75,7 @@ export class NapDetailFormComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService,
-    private spinner: NgxSpinnerService) {
+    private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -319,8 +318,6 @@ export class NapDetailFormComponent implements OnInit {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) => {
-        this.spinner.show();
-        setTimeout(() => { this.spinner.hide(); }, 1500);
       }
     )
   }

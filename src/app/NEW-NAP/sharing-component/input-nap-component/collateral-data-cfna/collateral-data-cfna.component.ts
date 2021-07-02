@@ -19,11 +19,11 @@ export class CollateralDataCfnaComponent implements OnInit {
   AppCollateralId: number = 0;
   mode: string = "add";
   IsDetail: boolean = false;
-  AppCollateral: any;
+  AppCollateral: Array<any> = new Array<any>();
   @Output() outputCancel: EventEmitter<any> = new EventEmitter();
   IsCollateral: boolean = false;
   @Input() showCancel: boolean = true;
-  constructor(private toastr : NGXToastrService, private http: HttpClient) { }
+  constructor(private toastr: NGXToastrService, private http: HttpClient) { }
 
   ngOnInit() {
     this.http.post(URLConstant.GetAppById, { Id: this.AppId }).pipe(
@@ -41,10 +41,10 @@ export class CollateralDataCfnaComponent implements OnInit {
     ).subscribe(
       (response) => {
         var isCollateralNeeded = response["CompntValue"];
-        if(isCollateralNeeded == 'Y'){
+        if (isCollateralNeeded == 'Y') {
           this.IsCollateral = true;
         }
-        else{
+        else {
           this.IsCollateral = false;
         }
       },
@@ -58,7 +58,7 @@ export class CollateralDataCfnaComponent implements OnInit {
     this.AppCollateral = ev;
   }
 
-  Cancel(){
+  Cancel() {
     this.outputCancel.emit();
   }
 
@@ -77,7 +77,7 @@ export class CollateralDataCfnaComponent implements OnInit {
   }
 
   Next() {
-    if(this.IsCollateral){
+    if (this.IsCollateral) {
       if (this.AppCollateral.length == 0) {
         this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_COLLATERAL_DATA);
       }
@@ -85,7 +85,7 @@ export class CollateralDataCfnaComponent implements OnInit {
         this.outputTab.emit();
       }
     }
-    else{
+    else {
       this.outputTab.emit();
     }
   }

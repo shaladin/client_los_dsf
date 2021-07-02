@@ -1,8 +1,8 @@
 export class ExchangeRateObj {
-    exChangeRateId: any;
-    refCurrId: any;
-    currDt: any;
-    exchangeRateAmt: any;
+    exChangeRateId: number;
+    refCurrId: number;
+    currDt: Date;
+    exchangeRateAmt: number;
 
     constructor() { this.exChangeRateId = 0; }
 }

@@ -21,39 +21,41 @@
 
           <lib-ucSubsection [id]="'DataTableId'" [title]="'Term and Condition'" [panel]="'DataTable'">
           </lib-ucSubsection>
-            <table class="table table-responsive-md text-center table-hover">
-              <thead>
-                <tr class="table-header">
-                  <th><span translate class="thead-header text-center">No</span></th>
-                  <th><span translate class="thead-header text-left">Document Name</span></th>
-                  <th><span translate class="thead-header text-center">Prior To</span></th>
-                  <th><span translate class="thead-header text-center">Required</span></th>
-                  <th><span translate class="thead-header text-center">Check</span></th>
-                  <th><span translate class="thead-header text-center">Waived</span></th>
-                  <th><span translate class="thead-header text-center">Promise Date</span></th>
-                  <th><span translate class="thead-header text-center">Expired Date</span></th>
-                  <th><span translate class="thead-header text-center">Notes</span></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of TCList; let i = index">
-                  <td style="width: 5%" class="text-center">{{i+1}}</td>
-                  <td style="width: 20%;" class="text-left">{{item.TcName}}</td>
-                  <td style="width: 10%" class="text-center">{{item.PriorTo}}</td>
-                  <td style="width: 5%"class="text-center" *ngIf="item.IsMandatory==true">Yes</td>
-                  <td style="width: 5%" class="text-center" *ngIf="item.IsMandatory==false">No</td>
-                  <td style="width: 5%"class="text-center" *ngIf="item.IsChecked==true">Yes</td>
-                  <td style="width: 5%" class="text-center" *ngIf="item.IsChecked==false">No</td>
-                  <td style="width: 5%"class="text-center" *ngIf="item.IsWaived==true">Yes</td>
-                  <td style="width: 5%" class="text-center" *ngIf="item.IsWaived==false">No</td>
-                  <td style="width: 10" class="text-center" *ngIf="item.PromisedDt != null">{{item.PromisedDt | date: 'dd-MMMM-yyyy'}}</td>
-                  <td style="width: 10%" class="text-center" *ngIf="item.PromisedDt == null">-</td>
-                  <td style="width: 10%" class="text-center" *ngIf="item.ExpiredDt != null">{{item.ExpiredDt | date: 'dd-MMMM-yyyy'}}</td>
-                  <td style="width: 10%" class="text-center" *ngIf="item.ExpiredDt == null">-</td>
-                  <td style="width: 10%" class="text-left">{{item.Notes}}</td>
-                </tr>
-              </tbody>
-            </table>
+          <table class="table table-responsive-md text-center table-hover">
+            <thead>
+              <tr class="table-header">
+                <th><span translate class="thead-header text-center">No</span></th>
+                <th><span translate class="thead-header text-left">Document Name</span></th>
+                <th><span translate class="thead-header text-center">Prior To</span></th>
+                <th><span translate class="thead-header text-center">Required</span></th>
+                <th><span translate class="thead-header text-center">Check</span></th>
+                <th><span translate class="thead-header text-center">Waived</span></th>
+                <th><span translate class="thead-header text-center">Promise Date</span></th>
+                <th><span translate class="thead-header text-center">Expired Date</span></th>
+                <th><span translate class="thead-header text-center">Notes</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of TCList; let i = index">
+                <td style="width: 5%" class="text-center">{{i+1}}</td>
+                <td style="width: 20%;" class="text-left">{{item.TcName}}</td>
+                <td style="width: 10%" class="text-center">{{item.PriorTo}}</td>
+                <td style="width: 5%" class="text-center" *ngIf="item.IsMandatory==true">Yes</td>
+                <td style="width: 5%" class="text-center" *ngIf="item.IsMandatory==false">No</td>
+                <td style="width: 5%" class="text-center" *ngIf="item.IsChecked==true">Yes</td>
+                <td style="width: 5%" class="text-center" *ngIf="item.IsChecked==false">No</td>
+                <td style="width: 5%" class="text-center" *ngIf="item.IsWaived==true">Yes</td>
+                <td style="width: 5%" class="text-center" *ngIf="item.IsWaived==false">No</td>
+                <td style="width: 10" class="text-center" *ngIf="item.PromisedDt != null">{{item.PromisedDt | date:
+                  'dd-MMMM-yyyy'}}</td>
+                <td style="width: 10%" class="text-center" *ngIf="item.PromisedDt == null">-</td>
+                <td style="width: 10%" class="text-center" *ngIf="item.ExpiredDt != null">{{item.ExpiredDt | date:
+                  'dd-MMMM-yyyy'}}</td>
+                <td style="width: 10%" class="text-center" *ngIf="item.ExpiredDt == null">-</td>
+                <td style="width: 10%" class="text-left">{{item.Notes}}</td>
+              </tr>
+            </tbody>
+          </table>
 
         </div>
       </div>
@@ -61,6 +63,7 @@
   </div>
 </div>
 
-<lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj"  *ngIf="IsReady"></lib-ucapprovalgeneralinfo>
+<lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady"></lib-ucapprovalgeneralinfo>
 
-<lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"  (onCancel)="onCancelClick()"></lib-ucapprovalR3>
+<lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"
+  (onCancel)="onCancelClick()"></lib-ucapprovalR3>

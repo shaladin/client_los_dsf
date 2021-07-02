@@ -1,16 +1,17 @@
 export class MouCustClauseObj {
-    MouCustClauseId: any;
-    MouCustId: any;
-    AssetTypeCode: any;
-    MrInterestTypeCode: any;
-    MrInstSchmCode: any;
-    MrFirstInstTypeCode: any;
-    PayFreqCode: any;
-    DownPaymentFromPrcnt: any;
-    DownPaymentToPrcnt: any;
-    TenorFrom: any;
-    TenorTo: any;
-    CurrCode: any;
-    RowVersion: any;
+    MouCustClauseId: number;
+    MouCustId: number;
+    AssetTypeCode: string;
+    MrInterestTypeCode: string;
+    MrInstSchmCode: string;
+    MrFirstInstTypeCode: string;
+    PayFreqCode: string;
+    DownPaymentFromPrcnt: number;
+    DownPaymentToPrcnt: number;
+    TenorFrom: number;
+    TenorTo: number;
+    CurrCode: string;
+    InterestTypeDescr: string;
+    RowVersion: string;
     constructor(){ this.MouCustClauseId = 0; this.RowVersion = '' }
 }

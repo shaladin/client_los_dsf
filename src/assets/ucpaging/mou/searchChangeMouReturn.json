@@ -1,0 +1,319 @@
+{
+    "title": "Change MOU Return",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "CMT.CHANGE_MOU_TRX_NO",
+            "id": "TrxNoId",
+            "value": "",
+            "label": "Transaction No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "MOU.MOU_CUST_NO",
+            "id": "MouCustNoId",
+            "value": "",
+            "label": "Mou No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "datatype": "text",
+            "name": "MOU.MR_MOU_TYPE_CODE",
+            "id": "MrMouTypeCode",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": true,
+            "ddlType": "all",
+            "url": "",
+            "path": "/RefMaster/GetListKeyValueActiveByCode",
+            "label": "Mou Type",
+            "items": [],
+            "itemsUrl": [],
+            "criteriaPropName": "RefMasterTypeCode",
+            "criteriaPropValue": "MOU_TYPE"
+        },
+        {
+            "type": "textbox",
+            "name": "MOU.CUST_NAME",
+            "id": "CustNameId",
+            "value": "",
+            "label": "Customer Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "dropdown",
+            "name": "MOU.IS_REVOLVING",
+            "id": "IsRevolvingId",
+            "label": "Revolving",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "ddlType": "all",
+            "items": [
+                {
+                    "key": true,
+                    "value": "Yes"
+                },
+                {
+                    "key": false,
+                    "value": "No"
+                }
+            ],
+            "itemsUrl": []
+        },
+        {
+            "type": "datepicker",
+            "name": "MOU.MOU_CUST_DT",
+            "id": "GreaterMouDtId",
+            "value": "",
+            "label": "Mou Date From",
+            "restriction": "gte",
+            "datatype": "date"
+        },
+        {
+            "type": "datepicker",
+            "name": "MOU.MOU_CUST_DT",
+            "id": "LessMouDtId",
+            "value": "",
+            "label": "Mou Date To",
+            "restriction": "lte",
+            "datatype": "date"
+        },
+        {
+            "type": "dropdown",
+            "name": "WTL.CLAIM_STAT",
+            "id": "ActiveStatusId",
+            "label": "Task Claim Status",
+            "value": "",
+            "placeholder": "Placeholder",
+            "isFromURL": false,
+            "ddlType": "all",
+            "items": [
+                {
+                    "key": "CLAIMED",
+                    "value": "Claimed"
+                },
+                {
+                    "key": "UNCLAIMED",
+                    "value": "Unclaimed"
+                }
+            ],
+            "itemsUrl": []
+        },
+        {
+            "type": "textbox",
+            "name": "WTL.USERNAME",
+            "id": "ClaimById",
+            "value": "",
+            "label": "Claim By",
+            "placeholder": "Placeholder"
+        }
+    ],
+    "querystring": {
+        "name": "searchChangeMouReturn"
+    },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "SLA",
+            "name": "SlaColor"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CLAIM BY",
+            "name": "WTL.USERNAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "TRANSACTION NO",
+            "name": "CMT.CHANGE_MOU_TRX_NO"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU NO",
+            "name": "MOU.MOU_CUST_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "CUSTOMER NAME",
+            "name": "MOU.CUST_NAME"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "MOU DATE",
+            "name": "MOU.MOU_CUST_DT"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "REFERENCE NO.",
+            "name": "MOU.REF_NO"
+        },
+        {
+            "type": "sort",
+            "position": "left",
+            "label": "MOU TYPE",
+            "name": "RM.DESCR"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "ACTION"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "sla",
+            "position": "center",
+            "property": "SlaColor"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "ClaimBy"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "TrxNo"
+        },
+        {
+            "type": "link",
+            "position": "center",
+            "property": "MouCustNo",
+            "path": "VIEW_MOU_CUST",
+            "target": "_blank",
+            "param": [
+                {
+                    "type": "MouCustId",
+                    "property": "MouCustId"
+                }
+            ]
+        },
+        {
+            "type": "callback",
+            "key": "customer",
+            "position": "left",
+            "property": "CustName"
+        },
+        {
+            "type": "date",
+            "position": "center",
+            "property": "MouCustDt"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "RefNo"
+        },
+        {
+            "type": "text",
+            "position": "left",
+            "property": "MouTypeName"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": true,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "CHANGE_MOU_REQ_DETAIL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "mode",
+                                        "property": "return"
+                                    },
+                                    {
+                                        "type": "MrMouTypeCode",
+                                        "property": "MrMouTypeCode"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId"
+                                    },
+                                    {
+                                        "type": "ChangeMouTrxId",
+                                        "property": "ChangeMouTrxId"
+                                    },
+                                    {
+                                        "type": "ChangeMouCustId",
+                                        "property": "ChangeMouCustId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "isUser": false,
+                                    "property": "ClaimBy",
+                                    "value": "",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "CHANGE_MOU_REQ_DETAIL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "MouCustId",
+                                        "property": "MouCustId"
+                                    },
+                                    {
+                                        "type": "mode",
+                                        "property": "return"
+                                    },
+                                    {
+                                        "type": "MrMouTypeCode",
+                                        "property": "MrMouTypeCode"
+                                    },
+                                    {
+                                        "type": "WfTaskListId",
+                                        "property": "WfTaskListId"
+                                    },
+                                    {
+                                        "type": "ChangeMouTrxId",
+                                        "property": "ChangeMouTrxId"
+                                    },
+                                    {
+                                        "type": "ChangeMouCustId",
+                                        "property": "ChangeMouCustId"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

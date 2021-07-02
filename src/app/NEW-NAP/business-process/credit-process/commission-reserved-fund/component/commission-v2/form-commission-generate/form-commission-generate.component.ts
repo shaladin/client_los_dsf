@@ -27,12 +27,15 @@ export class FormCommissionGenerateComponent implements OnInit {
   @Input() enjiForm: NgForm;
   @Input() parentForm: FormGroup;
   @Input() identifier: string;
-  @Input() FormInputObj: any = {};
-  @Input() DictMaxIncomeForm: any = {};
+  @Input() FormInputObj: object = {};
+  @Input() DictMaxIncomeForm: object = {};
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private toastr: NGXToastrService,) { }
+
+  readonly AllocTypeAmt: string = CommonConstant.AllocTypeAmt;
+  readonly AllocTypePerc: string = CommonConstant.AllocTypePerc;
 
   arr: FormArray;
   DDLContentName: Array<any>;
@@ -50,17 +53,17 @@ export class FormCommissionGenerateComponent implements OnInit {
     this.GenerateAuto();
   }
 
-  GenerateAuto(){
-    if(this.FormInputObj["isAutoGenerate"]){
-      let tempTotalData=this.lenDDLContentName;
-      for(var i=0;i<tempTotalData;i++){
+  GenerateAuto() {
+    if (this.FormInputObj["isAutoGenerate"]) {
+      let tempTotalData = this.lenDDLContentName;
+      for (var i = 0; i < tempTotalData; i++) {
         this.AddNewDataForm();
         this.NewAutoData();
       }
     }
   }
 
-  NewAutoData(){
+  NewAutoData() {
     let idxDDLContent = 0;
     let indexFormObj = this.parentForm.value[this.identifier].length - 1;
     var obj;
@@ -91,7 +94,7 @@ export class FormCommissionGenerateComponent implements OnInit {
       });
       return this.toastr.warningMessage("There no rule setting for " + code);
     }
-    
+
     this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
       ContentName: this.DDLContentName[idxDDLContent].Key,
       ContentNameValue: this.DDLContentName[idxDDLContent].Value
@@ -169,11 +172,11 @@ export class FormCommissionGenerateComponent implements OnInit {
       code = this.DDLContentName[idx].Key;
 
     }
-    
+
     // var idxTemp: number = idx;
     // if (this.FormInputObj["content"] == AdInsConstant.ContentSupplierEmp) {
-      //   idxTemp = this.FormInputObj["contentObj"].indexOf(this.FormInputObj["contentObj"].find(x => x.Key == ev.target.selectedOptions[0].value));
-      // }
+    //   idxTemp = this.FormInputObj["contentObj"].indexOf(this.FormInputObj["contentObj"].find(x => x.Key == ev.target.selectedOptions[0].value));
+    // }
     var temp = this.GetTempRuleObj(code, this.DDLContentName[idx].MrSupplEmpPositionCode);
     if (temp == undefined || temp == null) {
       this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
@@ -207,8 +210,10 @@ export class FormCommissionGenerateComponent implements OnInit {
       let behaviour: string = ruleObj[i].AllocationBehaviour;
       let maxAllocAmt: number = ruleObj[i].MaxAllocationAmount;
       let allocAmt: number = ruleObj[i].AllocationAmount;
+      let percentageAmt: number = 0;
+      let maxAllocPercentage: number = 0;
       if (this.DictMaxIncomeForm[ruleObj[i].AllocationFrom] != undefined && this.DictMaxIncomeForm[ruleObj[i].AllocationFrom] != null && this.DictMaxIncomeForm[ruleObj[i].AllocationFrom].RefundAmount > 0) {
-        if(ruleObj[i].MaxAllocationAmount > this.DictMaxIncomeForm[ruleObj[i].AllocationFrom].RefundAmount)
+        if (ruleObj[i].MaxAllocationAmount > this.DictMaxIncomeForm[ruleObj[i].AllocationFrom].RefundAmount)
           maxAllocAmt = this.DictMaxIncomeForm[ruleObj[i].AllocationFrom].RefundAmount;
 
         if (maxAllocAmt <= 0) {
@@ -218,7 +223,7 @@ export class FormCommissionGenerateComponent implements OnInit {
 
         if (allocAmt >= maxAllocAmt)
           allocAmt = maxAllocAmt;
-        
+
         if (allocAmt <= 0)
           allocAmt = 0;
 
@@ -226,6 +231,11 @@ export class FormCommissionGenerateComponent implements OnInit {
         behaviour = CommonConstant.RuleBehaviourLock;
         maxAllocAmt = 0;
         allocAmt = 0;
+      }
+      percentageAmt = (allocAmt / this.DictMaxIncomeForm[ruleObj[i].AllocationFrom].RefundAmount) * 100;
+
+      if (isNaN(percentageAmt)) {
+        percentageAmt = 0;
       }
 
       var eachAllocationDetail = this.fb.group({
@@ -236,6 +246,7 @@ export class FormCommissionGenerateComponent implements OnInit {
         AllocationFromDesc: [ruleObj[i].AllocationFromDesc],
         MaxAllocationAmount: [maxAllocAmt],
         AllocationAmount: [allocAmt, [Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.max(this.DictMaxIncomeForm[ruleObj[i].AllocationFrom].RefundAmount)]],
+        AllocationPercentage: [percentageAmt, [Validators.pattern("^[0-9]+([,.][0-9]+)?$"), Validators.max(100)]],
         AllocationBehaviour: [behaviour],
         TaxAmt: [0],
         VatAmt: [0],
@@ -246,6 +257,7 @@ export class FormCommissionGenerateComponent implements OnInit {
       TotalCommisionAmount += allocAmt;
       this.parentForm.controls[this.identifier]["controls"][formIdx].controls.ListAllocated.push(eachAllocationDetail);
 
+      this.UpdateInputType();
     }
 
     // patch total
@@ -273,13 +285,8 @@ export class FormCommissionGenerateComponent implements OnInit {
   GetDDLBankAccount(code, idx) {
     var content = this.FormInputObj["content"];
     let idxDefault = 0;
-    var obj;
     if (content == CommonConstant.ContentSupplier) {
-      obj = {
-        VendorCode: code,
-        RowVersion: ""
-      };
-      this.http.post<VendorBankAccObj>(URLConstant.GetListVendorBankAccByVendorCode, {Code : code}).subscribe(
+      this.http.post<VendorBankAccObj>(URLConstant.GetListVendorBankAccByVendorCode, { Code: code }).subscribe(
         (response) => {
           var len = response["ReturnObject"].length;
           for (var i = 0; i < len; i++) {
@@ -297,7 +304,7 @@ export class FormCommissionGenerateComponent implements OnInit {
           this.SetDefaultDDLBankAcc(idx, idxDefault);
         });
     } else if (content == CommonConstant.ContentSupplierEmp) {
-      let ReqGetListBankObj : ReqGetListBankByVendorEmpNoAndCodeObj = new ReqGetListBankByVendorEmpNoAndCodeObj();
+      let ReqGetListBankObj: ReqGetListBankByVendorEmpNoAndCodeObj = new ReqGetListBankByVendorEmpNoAndCodeObj();
       ReqGetListBankObj.VendorEmpNo = code;
       ReqGetListBankObj.VendorCode = this.parentForm.value[this.identifier][idx].SupplCode;
       this.http.post<VendorBankAccObj>(URLConstant.GetListBankByVendorEmpNoAndVendorCode, ReqGetListBankObj).subscribe(
@@ -342,7 +349,6 @@ export class FormCommissionGenerateComponent implements OnInit {
     var ddlObj = this.parentForm.controls[this.identifier]["controls"][idxForm].controls.DropDownList.value[idxDefault];
 
     if (ddlObj != undefined || ddlObj != null) {
-      console.log(this.parentForm.controls[this.identifier]["controls"][idxForm]);
       this.parentForm.controls[this.identifier]["controls"][idxForm].patchValue({
         BankAccountNo: ddlObj.Key,
         BankAccountName: ddlObj.Value,
@@ -396,8 +402,23 @@ export class FormCommissionGenerateComponent implements OnInit {
       BankName: ddlObj.BankName
     });
   }
-  
+
   ChangeDataLabel(indexFormObj) {
+    this.FormInputObj["isCalculated"] = false;
+    var len = this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated.controls.length;
+    var tempTotal = 0;
+    for (var i = 0; i < len; i++) {
+      var t: number = +this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationAmount.value;
+      tempTotal += t;
+    }
+    this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
+      TotalCommisionAmount: tempTotal
+    });
+    this.ChangeAllocPercentageBasedOnAmt(indexFormObj);
+    this.PassData();
+  }
+
+  CalcTtlCommAmtAndPassingData(indexFormObj: number) {
     this.FormInputObj["isCalculated"] = false;
     var len = this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated.controls.length;
     var tempTotal = 0;
@@ -411,9 +432,58 @@ export class FormCommissionGenerateComponent implements OnInit {
     this.PassData();
   }
 
-  PatchDataExisting(appCommObj: any) {
+  //get percentage when do input amount
+  ChangeAllocPercentageBasedOnAmt(indexFormObj: number) {
+    this.FormInputObj["isCalculated"] = false;
+    var len = this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated.controls.length;
+    for (var i = 0; i < len; i++) {
+      const getAllocationFrom = this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationFrom;
+      var getpercentage = this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationPercentage;
+      const getamount = this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationAmount;
+      var newPercent: number = 0;
+      if (getamount.value != null && getamount.value != undefined) {
+        let ttlAvailableAmt: number = 0;
+        ttlAvailableAmt = this.DictMaxIncomeForm[getAllocationFrom.value].RefundAmount;
+        if (ttlAvailableAmt != 0 && ttlAvailableAmt != undefined) {
+          newPercent = (getamount.value / ttlAvailableAmt) * 100;
+          this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"][i].patchValue({
+            AllocationPercentage: newPercent,
+          })
+        }
+      }
+    }
+  }
+
+  ChangeAllocAmountBasedOnPercentage(indexFormObj: number) {
+    this.FormInputObj["isCalculated"] = false;
+    var len = this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated.controls.length;
+    for (var i = 0; i < len; i++) {
+      const getAllocationFrom = this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationFrom;
+      const getpercentage = this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationPercentage;
+      // var getamount = this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated.controls[i].controls.AllocationAmount;
+      var newAmt: number = 0;
+      if (getpercentage.value != null && getpercentage.value != undefined) {
+        var percent: number = getpercentage.value;
+        // if(percent != 0 && percent != undefined)
+        if (percent != undefined && percent != null) {
+          let ttlAvailableAmt: number = 0;
+
+          ttlAvailableAmt = this.DictMaxIncomeForm[getAllocationFrom.value].RefundAmount;
+          if (ttlAvailableAmt != 0 && ttlAvailableAmt != undefined) {
+            newAmt = (getpercentage.value / 100) * ttlAvailableAmt;
+            this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"][i].patchValue({
+              AllocationAmount: newAmt,
+            })
+
+            this.CalcTtlCommAmtAndPassingData(indexFormObj);
+          }
+        }
+      }
+    }
+  }
+
+  PatchDataExisting(appCommObj: AppCommissionHObj) {
     this.AddNewDataForm();
-    
     let idxDDLContent = this.DDLContentName.findIndex(x => x.Key == appCommObj.CommissionRecipientRefNo);
     let indexFormObj = this.parentForm.value[this.identifier].length - 1;
     var obj;
@@ -443,7 +513,7 @@ export class FormCommissionGenerateComponent implements OnInit {
       });
       return this.toastr.warningMessage("There no rule setting for " + code);
     }
-    this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({      
+    this.parentForm.controls[this.identifier]["controls"][indexFormObj].patchValue({
       AppCommissionHId: appCommObj.AppCommissionHId,
       ContentName: this.DDLContentName[idxDDLContent].Key,
       ContentNameValue: this.DDLContentName[idxDDLContent].Value,
@@ -471,7 +541,7 @@ export class FormCommissionGenerateComponent implements OnInit {
       });
     this.GetDDLBankAccount(this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ContentName.value, indexFormObj);
     this.SetRule(code, indexFormObj, this.DDLContentName[idxDDLContent].MrSupplEmpPositionCode);
-    
+
     for (var i = 0; i < appCommObj.AppCommissionDs.length; i++) {
       let idxFromRuleObj = temp.findIndex(x => x.AllocationFrom == appCommObj.AppCommissionDs[i].MrCommissionSourceCode);
       if (idxFromRuleObj >= 0) {
@@ -488,11 +558,12 @@ export class FormCommissionGenerateComponent implements OnInit {
           PenaltyAmt: appCommObj.AppCommissionDs[i].PenaltyAmt,
           RowVersion: appCommObj.AppCommissionDs[i].RowVersion,
         })
-      } 
+      }
     }
     this.ReCalcListAllocated(indexFormObj);
     this.tempDDLContentName.push(obj);
     this.DDLContentName.splice(idxDDLContent, 1);
+    this.ChangeAllocPercentageBasedOnAmt(indexFormObj);
   }
 
   ReCalcListAllocated(indexFormObj: number) {
@@ -506,7 +577,36 @@ export class FormCommissionGenerateComponent implements OnInit {
     });
   }
 
-  PassData(){
+  PassData() {
     this.DataEmit.emit();
+  }
+
+  UpdateInputType() {
+    const AllocType: string = this.parentForm.get("AllocType").value;
+    let indexFormObj = this.parentForm.value[this.identifier].length - 1;
+    if (indexFormObj > -1) {
+      let MaxIdxComponent = this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"].length;
+      for (var i = 0; i < MaxIdxComponent; i++) {
+        var AllocationBehaviour = this.parentForm.controls[this.identifier]["controls"][indexFormObj].controls.ListAllocated["controls"][i].controls.AllocationBehaviour.value;
+        var index = this.parentForm.controls[this.identifier]["controls"].length;
+        if (AllocationBehaviour != "LOCK") {
+          if (AllocType == this.AllocTypeAmt) {
+            if (index > 0) {
+              for (var j = 0; j < index; j++) {
+                this.parentForm.controls[this.identifier]["controls"][j].controls.ListAllocated["controls"][i].controls.AllocationAmount.enable();
+                this.parentForm.controls[this.identifier]["controls"][j].controls.ListAllocated["controls"][i].controls.AllocationPercentage.disable();
+              }
+            }
+          } else {
+            if (index > 0) {
+              for (var k = 0; k < index; k++) {
+                this.parentForm.controls[this.identifier]["controls"][k].controls.ListAllocated["controls"][i].controls.AllocationAmount.disable();
+                this.parentForm.controls[this.identifier]["controls"][k].controls.ListAllocated["controls"][i].controls.AllocationPercentage.enable();
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

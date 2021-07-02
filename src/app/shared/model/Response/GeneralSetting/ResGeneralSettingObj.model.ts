@@ -1,9 +1,15 @@
 export class ResGeneralSettingObj {
+    GeneralSettingId: number;
+
     GsCode: string;
     GsName: string;
     GsValue: any;
     GsDescr: string;
     RowVersion: string;
+
+    IsUpdatable: boolean;
+    ModuleCode: string;
+    RoleCode: string;
 
     constructor() {
         this.GsCode = "";

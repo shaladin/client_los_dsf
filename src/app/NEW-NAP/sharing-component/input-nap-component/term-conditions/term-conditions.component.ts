@@ -7,6 +7,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 
 @Component({
   selector: 'app-term-conditions',
@@ -15,9 +16,7 @@ import { CookieService } from 'ngx-cookie';
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class TermConditionsComponent implements OnInit {
-  AppTcList: any = [];
-  listTempTCList: any = [];
-
+  AppTcList: Array<AppTCObj> = [];
   totalCheckAll: number = 0;
   totalMandatory: number = 0;
   @Output() OutputValueIsCheckAll: EventEmitter<any> = new EventEmitter();
@@ -41,7 +40,9 @@ export class TermConditionsComponent implements OnInit {
     this.parentForm.removeControl(this.identifier);
     this.parentForm.addControl(this.identifier, this.fb.array([]));
     var listTC = this.parentForm.get(this.identifier) as FormArray;
-    
+    while (listTC.length !== 0) {​​​​​
+      listTC.removeAt(0)
+    }​​​​​
     var appTcObj = {
       Id: this.AppId
     }
@@ -225,7 +226,7 @@ export class TermConditionsComponent implements OnInit {
             item.get("ExpiredDt").updateValueAndValidity();
           }
           else{
-            item.get("ExpiredDt").disable();
+            item.get("ExpiredDt").enable();
             item.get("ExpiredDt").clearValidators();
             item.get("ExpiredDt").updateValueAndValidity();
           }

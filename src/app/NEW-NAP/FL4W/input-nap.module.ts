@@ -20,14 +20,14 @@ import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info
 import { ViewAppComponentModule } from "../sharing-component/view-app-component/view-app-component.module";
 import { ViewSharingComponentModule } from "../sharing-component/view-app-component/view-sharing-component.module";
 import { ViewAgrmntComponent } from './view-agrmnt/view-agrmnt.component';
-import { FeeFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/fee/fee-FL4W.component";
-import { SchmBalloonFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-baloon/schm-balloon-FL4W.component";
-import { SchmEvenPrincipalFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-even-principal/schm-even-principal-FL4W.component";
-import { SchmIrregularFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-irregular/schm-irregular-FL4W.component";
-import { SchmRegulerFixFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-reguler-fix/schm-reguler-fix-FL4W.component";
-import { SchmStepUpStepDownCummulativeFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-step-up-step-down-cummulative/schm-step-up-step-down-cummulative-FL4W.component";
-import { SchmStepUpStepDownLeasingFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-step-up-step-down-leasing/schm-step-up-step-down-leasing-FL4W.component";
-import { SchmStepUpStepDownNormalFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-step-up-step-down-normal/schm-step-up-step-down-normal-FL4W.component";
+// import { FeeFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/fee/fee-FL4W.component";
+// import { SchmBalloonFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-baloon/schm-balloon-FL4W.component";
+// import { SchmEvenPrincipalFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-even-principal/schm-even-principal-FL4W.component";
+// import { SchmIrregularFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-irregular/schm-irregular-FL4W.component";
+// import { SchmRegulerFixFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-reguler-fix/schm-reguler-fix-FL4W.component";
+// import { SchmStepUpStepDownCummulativeFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-step-up-step-down-cummulative/schm-step-up-step-down-cummulative-FL4W.component";
+// import { SchmStepUpStepDownLeasingFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-step-up-step-down-leasing/schm-step-up-step-down-leasing-FL4W.component";
+// import { SchmStepUpStepDownNormalFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/schm-step-up-step-down-normal/schm-step-up-step-down-normal-FL4W.component";
 import { SubsidyFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/subsidy/subsidy-FL4W.component";
 import { SubsidyAddEditFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/component/subsidy-add-edit/subsidy-add-edit-FL4W.component";
 import { FinancialDataFL4WComponent } from "./input-nap-FL4W/financial-data-FL4W/financial-data-FL4W.component";
@@ -98,14 +98,14 @@ export const customCurrencyMaskConfig = {
     NapViewComponent,  
     NapAddDetailComponent, 
     ViewAgrmntComponent,  
-    FeeFL4WComponent,
-    SchmBalloonFL4WComponent,
-    SchmEvenPrincipalFL4WComponent,
-    SchmIrregularFL4WComponent,
-    SchmRegulerFixFL4WComponent,
-    SchmStepUpStepDownCummulativeFL4WComponent,
-    SchmStepUpStepDownLeasingFL4WComponent,
-    SchmStepUpStepDownNormalFL4WComponent,
+    // FeeFL4WComponent,
+    // SchmBalloonFL4WComponent,
+    // SchmEvenPrincipalFL4WComponent,
+    // SchmIrregularFL4WComponent,
+    // SchmRegulerFixFL4WComponent,
+    // SchmStepUpStepDownCummulativeFL4WComponent,
+    // SchmStepUpStepDownLeasingFL4WComponent,
+    // SchmStepUpStepDownNormalFL4WComponent,
     SubsidyFL4WComponent,
     SubsidyAddEditFL4WComponent,
     FinancialDataFL4WComponent,

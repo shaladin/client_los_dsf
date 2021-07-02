@@ -57,8 +57,8 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
     this.inputPagingObj._url = "./assets/ucpaging/searchReviewMonitoringLeadDetail.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchReviewMonitoringLeadDetail.json";
 
-    var arrCrit = new Array<CriteriaObj>();
-    var critObj = new CriteriaObj();
+    let arrCrit = new Array<CriteriaObj>();
+    let critObj = new CriteriaObj();
     critObj.DataType = 'test';
     critObj.propName = 'UL.UPLOAD_MONITORING_NO';
     critObj.restriction = AdInsConstant.RestrictionEq;
@@ -68,7 +68,7 @@ export class LeadMonitoringReviewDetailComponent implements OnInit {
   }
 
   uploadReview(status) {
-    var uploadObj = {
+    let uploadObj = {
       MrUploadStatusCode: status,
       TaskListId: this.taskListId,
       UploadMonitoringNo: this.UploadNo

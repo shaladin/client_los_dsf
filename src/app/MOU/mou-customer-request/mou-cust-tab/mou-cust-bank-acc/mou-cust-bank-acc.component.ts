@@ -12,6 +12,7 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { MouCustBankAccObj } from 'app/shared/model/MouCustBankAccObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
+import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
 @Component({
   selector: 'app-mou-cust-bank-acc',
@@ -22,13 +23,13 @@ import { CookieService } from 'ngx-cookie';
 export class MouCustBankAccComponent implements OnInit {
 
   @Input() listBankAcc: Array<MouCustBankAccObj> = new Array<MouCustBankAccObj>();
-  @Output() callbackSubmit: EventEmitter<any> = new EventEmitter();
+  @Output() callbackSubmit: EventEmitter<Array<MouCustBankAccObj>> = new EventEmitter();
 
-  mode: any;
-  currentEditedIndex: any;
-  selectedBankCode: any;
+  mode: string;
+  currentEditedIndex: number;
+  selectedBankCode: string;
 
-  closeResult: any;
+  closeResult: string;
   MouCustBankAccObj: MouCustBankAccObj;
   refMasterObj = {
     RefMasterTypeCode: ""
@@ -37,13 +38,10 @@ export class MouCustBankAccComponent implements OnInit {
     RefBankId: 0,
     BankCode: ""
   };
-  RefBankObj: any;
-  MonthObj: any;
-  defaultMonth: any;
-  InputLookupBankObj: any;
-  selectedBankName: any;
-
-
+  MonthObj: Array<KeyValueObj>;
+  defaultMonth: string; 
+  InputLookupBankObj: InputLookupObj;
+  selectedBankName: string;
 
   CustBankAccountForm = this.fb.group({
     BankBranch: ['', [Validators.required, Validators.maxLength(50)]],
@@ -269,7 +267,7 @@ export class MouCustBankAccComponent implements OnInit {
     });
   }
 
-  private getDismissReason(reason: any): string {
+  private getDismissReason(reason): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {

@@ -1,18 +1,71 @@
-<table class="table table-responsive-md text-center table-hover">
-  <thead>
-    <tr class="table-header">
-      <th class="text-center"><span translate class="thead-header" name='InvoiceNo'>INVOICE NO</span></th>
-      <th class="text-center"><span translate class="thead-header" name='InvoiceDueDt'>INVOICE DATE</span></th>
-      <th class="text-left"><span translate class="thead-header" name='CustomerFactoringName'>CUSTOMER NAME</span></th>
-      <th class="text-right"><span translate class="thead-header" name='InvoiceAmt'>INVOICE AMOUNT</span></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of invoiceDataList">
-      <td class="text-center"><a (click)="ToDetail(item.AppInvoiceFctrId)">{{item.InvoiceNo}}</a></td>
-      <td class="text-center">{{item.InvoiceDueDt | date: 'yyyy-MM-dd' }}</td>
-      <td class="text-left">{{item.CustomerFactoringName}}</td>
-      <td class="text-right" >{{item.InvoiceAmt | number:'.2':'en-US' }}</td>
-    </tr>
-  </tbody>
-</table>
+<div *ngIf="appObj.BizTemplateCode == 'FCTR'">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th class="text-center"><span translate class="thead-header" name='InvoiceNo'>INVOICE NO</span></th>
+        <th class="text-center"><span translate class="thead-header" name='InvoiceDueDt'>INVOICE DATE</span></th>
+        <th class="text-left"><span translate class="thead-header" name='CustomerFactoringName'>CUSTOMER NAME</span>
+        </th>
+        <th class="text-right"><span translate class="thead-header" name='InvoiceAmt'>INVOICE AMOUNT</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of invoiceDataList">
+        <td class="text-center"><a (click)="ToDetail(item.AppInvoiceFctrId)">{{item.InvoiceNo}}</a></td>
+        <td class="text-center">{{item.InvoiceDueDt | date: 'yyyy-MM-dd' }}</td>
+        <td class="text-left">{{item.CustomerFactoringName}}</td>
+        <td class="text-right">{{item.InvoiceAmt | number:'.2':'en-US' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<br>
+<div class="pull-right">
+  <button *ngIf="IsShowDetail" type="button" class="backButton" translate (click)="hideDetailInvoiceData()"><i
+      class="fa fa-arrow-left"></i> Back</button>
+</div>
+<div *ngIf="appObj.BizTemplateCode != 'FCTR' && !IsShowDetail">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th class="text-center"><span translate class="thead-header" name='InvoiceNo'>INVOICE NO</span></th>
+        <th class="text-center"><span translate class="thead-header" name='InvoiceDueDt'>INVOICE DATE</span></th>
+        <th class="text-center"><span translate class="thead-header" name='InvoiceAmt'>INVOICE AMOUNT</span></th>
+        <th class="text-center"><span translate class="thead-header" name='Detail'>ACTION</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of invoiceDataList">
+        <td class="text-center"><a (click)="ToDetail(item.AppInvoiceDlrFncngHId)">{{item.InvoiceNo}}</a></td>
+        <td class="text-center">{{item.InvoiceDueDt | date: 'yyyy-MM-dd' }}</td>
+        <td class="text-right">{{item.InvoiceAmt | number:'.2':'en-US' }}</td>
+        <td class="text-center"><a href="javascript:;" (click)="showDetailInvoiceData(item.AppInvoiceDlrFncngHId)"><i
+              class="ft-edit-2 font-medium-3 mr-2"></i></a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="IsShowDetail">
+  <table class="table table-responsive-md text-center table-hover">
+    <thead>
+      <tr class="table-header">
+        <th class="text-center"><span translate class="thead-header" name='FullAssetName'>Full Asset Name</span></th>
+        <th class="text-center"><span translate class="thead-header" name='SerialNo1'>Serial No 1</span></th>
+        <th class="text-center"><span translate class="thead-header" name='SerialNo2'>Serial No 2</span></th>
+        <th class="text-center"><span translate class="thead-header" name='SerialNo3'>Serial No 3</span></th>
+        <th class="text-center"><span translate class="thead-header" name='SerialNo4'>Serial No 4</span></th>
+        <th class="text-center"><span translate class="thead-header" name='SerialNo5'>Serial No 5</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of listAppInvoiceDlrFncngD">
+        <td class="text-center">{{item.FullAssetName}}</td>
+        <td class="text-center">{{item.SerialNo1}}</td>
+        <td class="text-center">{{item.SerialNo2}}</td>
+        <td class="text-center">{{item.SerialNo3}}</td>
+        <td class="text-center">{{item.SerialNo4}}</td>
+        <td class="text-center">{{item.SerialNo5}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
