@@ -45,7 +45,7 @@ export class NapAddDetailComponent implements OnInit {
   ReturnHandlingHId: number = 0;
   isMainCustMarried: boolean = false;
   IsDataReady: boolean = false;
-  
+
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -122,9 +122,9 @@ export class NapAddDetailComponent implements OnInit {
       this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
       this.ChooseStep(this.AppStepIndex);
     }
-    this.IsDataReady = true;    
+    this.IsDataReady = true;
     await this.GetCustMainData();
-    
+
     this.MakeViewReturnInfoObj();
   }
 
@@ -133,7 +133,7 @@ export class NapAddDetailComponent implements OnInit {
     reqObj.Id = this.appId;
     this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, reqObj).subscribe(
       (response) => {
-        if (response.AppCustObj) 
+        if (response.AppCustObj)
         {
           this.isMainCustMarried = response.AppCustPersonalObj != undefined && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried ? true : false;
         }
@@ -199,7 +199,7 @@ export class NapAddDetailComponent implements OnInit {
       this.stepperCompany.to(idxStep);
     }
   }
-  
+
   async initDms() {
     if(this.SysConfigResultObj.ConfigValue == '1'){
       this.isDmsReady = false;
@@ -222,7 +222,7 @@ export class NapAddDetailComponent implements OnInit {
           else {
             this.dmsObj.MetadataParent = null;
           }
-  
+
           let mouId = this.NapObj.MouCustId;
           if (mouId != null && mouId != 0) {
             let mouObj = { Id: mouId };
@@ -239,7 +239,7 @@ export class NapAddDetailComponent implements OnInit {
           }
         }
       );
-    } 
+    }
   }
 
   MakeViewReturnInfoObj() {
@@ -423,7 +423,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   GetCallback(ev) {
-    if(ev.Key == "HighligtComment"){
+    if(ev.Key == "HighlightComment"){
       var link : string;
       var custObj = { CustNo: ev.ViewObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(

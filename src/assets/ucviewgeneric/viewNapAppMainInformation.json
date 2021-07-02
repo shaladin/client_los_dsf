@@ -135,7 +135,8 @@
           "property": "CustCheckingStep"
         },
         {
-          "type": "text",
+          "type": "callback",
+          "key": "HighlightComment",
           "label": "Highlight Comment",
           "property": "Comment"
         }
