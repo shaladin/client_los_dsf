@@ -231,7 +231,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   View(VerifResultHid, SubjectName) {
     var link = environment.losR3Web + NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT_VIEW + "?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName;
-    this.router.navigate([]).then(() => { window.open(link, '_blank'); });
+    window.open(link, '_blank');
   }
 
   Verif(VerifResultHid, SubjectName, SubjectType, IdSource, SubjectRelation) {
