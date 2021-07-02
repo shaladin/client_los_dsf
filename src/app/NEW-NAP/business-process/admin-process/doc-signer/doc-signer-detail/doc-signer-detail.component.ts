@@ -13,10 +13,10 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
 import { ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 import { AgrmntObj } from 'app/shared/model/Agrmnt/Agrmnt.Model';
 import { ResAppCustPersonalAndSpouseDataObj } from 'app/shared/model/ResAppCustPersonalAndSpouseDataObj.Model';
@@ -50,7 +50,7 @@ export class DocSignerDetailComponent implements OnInit {
   readonly CanceLink: string = NavigationConstant.NAP_ADM_PRCS_NAP_DOC_SIGNER_PAGING;
   constructor(private fb: FormBuilder, private http: HttpClient,
     private route: ActivatedRoute, private router: Router, private toastr: NGXToastrService,
-    private cookieService: CookieService) {
+    private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params['AppId'];
       this.AgrmntId = params['AgrmntId'];
@@ -71,22 +71,11 @@ export class DocSignerDetailComponent implements OnInit {
 
   async ngOnInit() : Promise<void> {
     if (this.WfTaskListId != 0) {
-      this.ClaimTask();
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
     await this.getAllData();
     this.setLookupObj();
     await this.setDefaultShareholder();
-  }
-
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   async getAllData() {

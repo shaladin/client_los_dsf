@@ -1,4 +1,4 @@
-<lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"> </lib-ucviewgeneric>
+<lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)" *ngIf="IsReady"> </lib-ucviewgeneric>
 <div class="row text-left">
   <div class="col-md-12">
     <div class="card">

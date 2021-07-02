@@ -19,6 +19,7 @@ import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigRes
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-nap-add-detail',
@@ -73,7 +74,7 @@ export class NapAddDetailComponent implements OnInit {
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
   readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, public toastr: NGXToastrService, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, public toastr: NGXToastrService, private componentFactoryResolver: ComponentFactoryResolver, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -98,8 +99,8 @@ export class NapAddDetailComponent implements OnInit {
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms }).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response;
-      });
-    this.ClaimTask();
+    });
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.NapObj.AppId = this.appId;
     if (this.ReturnHandlingHId > 0) {
       this.ChangeStepper();
@@ -389,18 +390,6 @@ export class NapAddDetailComponent implements OnInit {
         }
       )
     }
-  }
-
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let wfClaimObj = new AppObj();
-    wfClaimObj.AppId = this.appId;
-    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
-    wfClaimObj.WfTaskListId = this.wfTaskListId;
-
-    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   CheckCustType(ev) {

@@ -2,14 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import Stepper from 'bs-stepper';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
-import { URLConstant } from 'app/shared/constant/URLConstant';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { environment } from 'environments/environment';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
-import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-tele-verif-detail',
@@ -23,7 +19,7 @@ export class TeleVerifDetailComponent implements OnInit {
   WfTaskListId: number;
 
   readonly CancelLink: string = NavigationConstant.LEAD_TELE_VERIF_PAGING;
-  constructor(private http: HttpClient, private route: ActivatedRoute, private cookieService: CookieService) {
+  constructor(private http: HttpClient, private route: ActivatedRoute, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.WfTaskListId = params["WfTaskListId"];
     })
@@ -31,7 +27,7 @@ export class TeleVerifDetailComponent implements OnInit {
 
   ngOnInit() {
     if (this.WfTaskListId > 0) {
-      this.claimTask();
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewLeadHeader.json";
 
@@ -52,15 +48,6 @@ export class TeleVerifDetailComponent implements OnInit {
       this.isCustData = false;
       this.isLeadData = true;
     }
-  }
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
   }
 
   getValue(ev) {
