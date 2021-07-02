@@ -14,9 +14,13 @@ export class MouCustDlrFinObj {
     LcRate: number;
     PrincipalPaidInExtendPrcntg: number;
     ManufacturerCode: string;
+    ManufacturerName: string;
     ManufacturerCustNo: string;
+    ManufacturerCustName: string;
     DealerCode: string;
+    DealerName: string;
     DealerCustNo: string;
+    DealerCustName: string;
     Notes: string;
     MaximumExtendTimes: number;
     MrInstTypeCode: string;
