@@ -905,6 +905,27 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       }
     );
     this.BindCapitalize();
+    this.CheckInscoBranchName();
+  }
+
+  CheckInscoBranchName() {
+    this.http.post(URLConstant.GetListCollateralAppInsObjForViewByAppId, { Id: this.appId }).subscribe(
+      (response) => {
+        for (let index = 0; index < response["ListAppInsObjForView"].length; index++) {
+          const element = response["ListAppInsObjForView"][index];
+          if (this.appInsObjObj != null && this.appInsObjObj.AppInsObjId == element.AppInsObjId) continue;
+          if (element.InsuranceCompanyCode == this.InsuranceDataForm.get("InscoBranchCode").value) {
+            this.InsuranceDataForm.patchValue({
+              CustAdminFeeAmt: 0,
+              CustStampDutyFeeAmt: 0,
+              TotalCustFeeAmt: 0,
+            });
+            this.stampdutyFeeLock = true;
+            this.adminFeeLock = true;
+            break;
+          }
+        }
+      });
   }
 
   DictInsCustRate: { [id: string]: number } = {};
@@ -1436,6 +1457,7 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
     return new Date(date.getTime() - userTimezoneOffset);
   }
 
+  insLenCust: number = 0;
   GetGetCuCoInsLength() {
     let tempForm = this.InsuranceDataForm as FormGroup;
     let tempReq: InsuranceLenObj = new InsuranceLenObj();
@@ -1453,16 +1475,18 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
         if (tempReq.MrCoverPeriod != CommonConstant.CoverPeriodOverTenor) {
           this.minInsLength = 1;
           this.maxInsLength = 9999;
-          tempInsLength.patchValue(InsuranceLen);
           tempInsLength.enable();
-          if (tempReq.MrCoverPeriod == CommonConstant.CoverPeriodFullTenor || tempReq.MrCoverPeriod == CommonConstant.CoverPeriodAnnually) tempInsLength.disable();
+          if (tempReq.MrCoverPeriod == CommonConstant.CoverPeriodFullTenor || tempReq.MrCoverPeriod == CommonConstant.CoverPeriodAnnually){
+            tempInsLength.disable();
+            tempInsLength.patchValue(InsuranceLen);
+          } 
           if (tempReq.MrCoverPeriod == CommonConstant.CoverPeriodPartialTenor) this.maxInsLength = InsuranceLen;
         } else {
           this.minInsLength = InsuranceLen + 1;
           this.maxInsLength = 9999;
-          tempInsLength.patchValue(InsuranceLen + 1);
           tempInsLength.enable();
         }
+        this.insLenCust = this.appObj.Tenor - InsuranceLen;
         tempInsLength.setValidators([Validators.required, Validators.min(this.minInsLength), Validators.max(this.maxInsLength)]);
         tempInsLength.updateValueAndValidity();
       }
