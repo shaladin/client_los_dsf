@@ -91,7 +91,7 @@
         {
           "type": "callback",
           "key": "HighlightComment",
-          "label": "Highlihgt Comment",
+          "label": "Highlight Comment",
           "property": "Comment"
         }
       ],
