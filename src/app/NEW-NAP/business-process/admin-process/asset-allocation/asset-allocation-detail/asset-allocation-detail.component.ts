@@ -24,7 +24,7 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
   
   @ViewChildren('dyna') UclookupgenericComponents: QueryList<UclookupgenericComponent>;
   // appAssetObj: Array<any>;
-  TaskListId: string;
+  TaskListId: number;
   AppAssetId: number;
   AppId: number;
   InputLookupAssetNumberObj: InputLookupObj;
