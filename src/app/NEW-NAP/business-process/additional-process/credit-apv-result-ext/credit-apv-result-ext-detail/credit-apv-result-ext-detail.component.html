@@ -45,7 +45,7 @@
                 </div>
               </div>
             </div>
-            <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady" #ApprovalComponent></lib-ucapprovalcreate>
+            <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady" [parentForm]="CrdApvRestExtForm" #ApprovalComponent></lib-ucapprovalcreate>
             <div class="form-actions right">
               <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate>
                 <i class="ft-x"></i> Cancel
