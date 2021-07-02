@@ -200,10 +200,11 @@ export class ChangeMouRequestDetailComponent implements OnInit {
               ...response,
             });
             console.log(response);
+            this.MOUMainInfoForm.controls.MrChangeMouTypeCode.disable();
           }
           this.responseChangeMouObj = response;
           this.CheckMouChangeType(this.responseChangeMouObj.MrChangeMouTypeCode);
-        });
+        });     
     } else {
       this.MOUMainInfoForm.patchValue({
         MrChangeMouTypeCode: this.mouType,
