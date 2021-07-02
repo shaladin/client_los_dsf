@@ -905,6 +905,27 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
       }
     );
     this.BindCapitalize();
+    this.CheckInscoBranchName();
+  }
+
+  CheckInscoBranchName() {
+    this.http.post(URLConstant.GetListCollateralAppInsObjForViewByAppId, { Id: this.appId }).subscribe(
+      (response) => {
+        for (let index = 0; index < response["ListAppInsObjForView"].length; index++) {
+          const element = response["ListAppInsObjForView"][index];
+          if (this.appInsObjObj != null && this.appInsObjObj.AppInsObjId == element.AppInsObjId) continue;
+          if (element.InsuranceCompanyCode == this.InsuranceDataForm.get("InscoBranchCode").value) {
+            this.InsuranceDataForm.patchValue({
+              CustAdminFeeAmt: 0,
+              CustStampDutyFeeAmt: 0,
+              TotalCustFeeAmt: 0,
+            });
+            this.stampdutyFeeLock = true;
+            this.adminFeeLock = true;
+            break;
+          }
+        }
+      });
   }
 
   DictInsCustRate: { [id: string]: number } = {};
