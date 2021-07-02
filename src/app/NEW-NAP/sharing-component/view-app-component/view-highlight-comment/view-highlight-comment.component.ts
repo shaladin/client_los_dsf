@@ -24,6 +24,7 @@ export class ViewHighlightCommentComponent implements OnInit {
 
 
   @Input() appId: number;
+  @Input() isInput: boolean = true;
   @Output() outputTab: EventEmitter<any> = new EventEmitter();
 
   // viewMainDataObj:  UcViewGenericObj = new UcViewGenericObj();

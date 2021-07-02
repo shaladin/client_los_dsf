@@ -247,7 +247,7 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   GetCallback(ev) {
-    if (ev.Key == "HighligtComment") {
+    if (ev.Key == "HighlightComment") {
       let custObj = { CustNo: ev.ViewObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {

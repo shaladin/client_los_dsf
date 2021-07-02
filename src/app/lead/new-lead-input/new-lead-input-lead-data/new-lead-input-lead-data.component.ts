@@ -344,7 +344,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
           }
         });
     }
-    
+
       this.reqLeadAssetObj = new LeadAssetObj();
       this.reqLeadAssetObj.LeadId = this.LeadId;
       let reqLeadAssetObj = { Id: this.LeadId.toString() };
@@ -804,7 +804,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
             this.postLeadData(URLConstant.EditLeadData);
           }
         }
-        
+
       }
     }
     else {
@@ -829,7 +829,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
           this.postLeadData(URLConstant.AddLeadData);
         }
       }
-      
+
     }
   }
 
@@ -852,8 +852,6 @@ export class NewLeadInputLeadDataComponent implements OnInit {
       this.typePage = "edit";
     }
     if (this.Calculate == false && this.returnLobCode != CommonConstant.CFNA) {
-      this.toastr.warningMessage("Calculate First");
-      return;
     } else {
       this.CheckSubmitForCFNA();
       if (!this.isAbleToSubmit) return;
@@ -875,9 +873,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
             this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
-                if (this.originPage == "teleVerif") {
-                  AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
-                }
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
               }
             );
           }
@@ -921,10 +917,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
             this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
-                if (this.originPage == "teleVerif") {
-                  AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
-                }
-
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
               }
             );
           }
@@ -944,10 +937,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
               this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
                 (response) => {
                   this.toastr.successMessage(response["message"]);
-                  if (this.originPage == "teleVerif") {
-                    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
-                  }
-
+                  AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
                 }
               );
             }
@@ -966,10 +956,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
           this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
             (response) => {
               this.toastr.successMessage(response["message"]);
-              if (this.originPage == "teleVerif") {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
-              }
-
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
             }
           );
         }
@@ -985,9 +972,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
             this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
               (response) => {
                 this.toastr.successMessage(response["message"]);
-                if (this.originPage == "teleVerif") {
-                  AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
-                }
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
               }
             );
           }
