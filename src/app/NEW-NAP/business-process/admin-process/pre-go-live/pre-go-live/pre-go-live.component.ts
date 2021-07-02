@@ -26,6 +26,7 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { RfaObj } from 'app/shared/model/Approval/RfaObj.Model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 
 @Component({
   selector: 'app-sharing-pre-go-live',
@@ -43,6 +44,7 @@ export class PreGoLiveComponent implements OnInit {
   PreGoLiveMainObj: PreGoLiveMainObj = new PreGoLiveMainObj();
   PreGoLiveObj: PreGoLiveObj = new PreGoLiveObj();
   AgrmntObj: AgrmntObj = new AgrmntObj();
+  ReqByIdObj: GenericObj = new GenericObj();
   Token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
 
   IsCheckedAll: boolean = false;
@@ -62,6 +64,8 @@ export class PreGoLiveComponent implements OnInit {
   ListRfaLogObj: Array<RfaObj>;
   hasApproveFinal: boolean = false;
   hasRejectFinal: boolean = false;
+  isHasPO: boolean = false;
+  checkPOReady: boolean = false;
   lengthListRfaLogObj: number;
   IsApvReady: boolean = false;
   isDmsReady: boolean;
@@ -77,6 +81,8 @@ export class PreGoLiveComponent implements OnInit {
   ListRmAddInterestPaidByCode: Array<KeyValueObj>;
   BizTemplateCode: string = "";
   businessDt: any;
+  PODt: Date = new Date();
+
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PGL_PAGING;
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
@@ -161,8 +167,21 @@ export class PreGoLiveComponent implements OnInit {
         (response) => {
           this.SysConfigResultObj = response
         });
+    await this.getPODate();
     await this.getAddInterestPaidBy();
     await this.InitDms();
+  }
+
+  async getPODate(){
+    this.ReqByIdObj.Id = this.AgrmntId;
+    this.http.post(URLConstant.GetPurchaseOrderHByAgrmntId, this.ReqByIdObj).subscribe(
+      (response: AgrmntObj) => {
+        if(response["PurchaseOrderHId"] != 0){
+          this.PODt = response["PurchaseOrderDt"];
+          this.isHasPO = true;
+        }
+      });
+    this.checkPOReady = true;
   }
 
   async InitDms() { 
