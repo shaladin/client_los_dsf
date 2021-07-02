@@ -46,7 +46,6 @@ export class AgreementViewContainerComponent implements OnInit {
   IsFinancial: boolean = true;
   IsTC: boolean = true;
   IsReservedFund: boolean = true;
-  IsInvoiceData: boolean = true;
   IsComplainHandling: boolean = true;
   IsAdditionalService: boolean = true;
   IsMulti: boolean = true;
@@ -174,7 +173,6 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsReservedFund = false;
           this.IsDeliveryOrder = false;
           this.IsPurchaseOrder = false;
-          this.IsInvoiceData = false;
           this.IsLoanData = false;
           if(!this.IsNeedPO){
             this.IsPurchaseOrder = false;
@@ -189,7 +187,6 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsReservedFund = false;
           this.IsPurchaseOrder = false;
           this.IsDeliveryOrder = false;
-          this.IsInvoiceData = false;
           this.IsMulti = false;
           this.IsCollateral = false;
         }
@@ -201,7 +198,6 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsReservedFund = false;
           this.IsAppCollateral = false;
           this.IsLoanData = false;
-          this.IsInvoiceData = false;
         }
         else if (this.BizTemplateCode == CommonConstant.FL4W) {
           this.IsAsset = false;
@@ -209,7 +205,6 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsCustomerCard = false;
           this.IsDeviation = false;
           this.IsLoanData = false;
-          this.IsInvoiceData = false;
           this.IsComplainHandling = false;
           this.IsAdditionalService = false;
           this.IsAppCollateral = false;
@@ -223,7 +218,6 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsTC = false;
           this.IsReservedFund = false;
           this.IsDeliveryOrder = false;
-          this.IsInvoiceData = false;
           this.IsCollateral = false;
           if(!this.IsNeedPO){
             this.IsPurchaseOrder = false;
