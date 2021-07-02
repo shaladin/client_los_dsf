@@ -111,7 +111,7 @@
             "type": "sort",
             "position": "center",
             "label": "EXPIRED DATE",
-            "name": "ExpDt"
+            "name": "EndDt"
         },
         {
             "type": "sort",
@@ -171,7 +171,7 @@
         {
             "type": "date",
             "position": "center",
-            "property": "ExpDt"
+            "property": "EndDt"
         },
         {
             "type": "decimal",

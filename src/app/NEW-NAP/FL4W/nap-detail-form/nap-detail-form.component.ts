@@ -45,7 +45,7 @@ export class NapDetailFormComponent implements OnInit {
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
   IsDataReady: boolean = false;
-  BizTemplateCode: string;
+  BizTemplateCode: string = CommonConstant.FL4W;
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
 
   FormReturnObj = this.fb.group({

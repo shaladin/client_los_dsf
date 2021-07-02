@@ -266,7 +266,13 @@ export class CopyCanAppMultiBlDetailComponent implements OnInit {
     let reqAddApp: ReqAddNapFromCopyObj = new ReqAddNapFromCopyObj();
     reqAddApp.AppNo = this.NapAppForm.controls['AppNo'].value;
     reqAddApp.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
-
+    reqAddApp.LobCode = this.NapAppForm.controls['LobCode'].value;
+    reqAddApp.ProdOfferingCode = this.NapAppForm.controls['ProdOfferingCode'].value;
+    reqAddApp.ProdOfferingName = this.NapAppForm.controls['ProdOfferingName'].value;
+    reqAddApp.ProdOfferingVersion = this.NapAppForm.controls['ProdOfferingVersion'].value;
+    reqAddApp.CurrCode = this.NapAppForm.controls['CurrCode'].value;
+    reqAddApp.PayFreqCode = this.NapAppForm.controls['PayFreqCode'].value;
+    reqAddApp.RefProdTypeCode = this.NapAppForm.controls['RefProdTypeCode'].value;
     this.http.post(URLConstant.AddAppFromCopyCancledApp, reqAddApp).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);

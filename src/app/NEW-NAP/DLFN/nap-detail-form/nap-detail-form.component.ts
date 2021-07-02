@@ -25,6 +25,14 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class NapDetailFormComponent implements OnInit {
   // @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
+
+  private viewMainProd: UcviewgenericComponent;
+  @ViewChild('viewMainProd') set content(content: UcviewgenericComponent) {
+    if (content) { // initially setter gets called with undefined
+      this.viewMainProd = content;
+    }
+  }
+
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
@@ -180,6 +188,7 @@ export class NapDetailFormComponent implements OnInit {
       default:
         break;
     }
+    this.viewMainProd.initiateForm();
     //  this.ucViewMainProd.initiateForm();
   }
 

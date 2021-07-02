@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { DatePipe } from '@angular/common';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 
 @Component({
   selector: 'app-mou-view-tc',
@@ -23,7 +23,20 @@ export class MouViewTcComponent implements OnInit {
     this.http.post(URLConstant.GetCustMouTcByCustMouId, mouCustObj).subscribe(
       (response) => {
         this.listTCData = response['ReturnObject'];
-      })
+      });
+    this.GetListActiveRefTc();
+  }
+
+  dictRefTc: { [id: string]: string } = {};
+  GetListActiveRefTc() {
+    this.http.post(URLConstant.GetListActiveRefTc, null).subscribe(
+      (response: GenericListObj) => {
+        for (let index = 0; index < response.ReturnObject.length; index++) {
+          const element = response.ReturnObject[index];
+          this.dictRefTc[element.TcCode] = element.TcName;
+        }
+      }
+    );
   }
 
   TCDataForm = this.fb.group({

@@ -11,6 +11,9 @@ import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { CookieService } from 'ngx-cookie';
+import { forkJoin } from 'rxjs';
 
 
 @Component({
@@ -55,22 +58,24 @@ export class ViewHighlightCommentComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private toastr: NGXToastrService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private cookieService: CookieService) {
   }
 
   async ngOnInit(): Promise<void> {
-    var reqObj = { AppId: this.appId }
-    await this.http.post(URLConstant.GetCustDataPersonalForViewByAppId, reqObj).toPromise().then(
+    let postList = new Array<any>();
+
+    postList.push(this.http.post(URLConstant.GetCustDataPersonalForViewByAppId, { AppId: this.appId }));
+    postList.push(this.http.post(URLConstant.GetAppById, { Id: this.appId }));
+
+    forkJoin(postList).subscribe(
       (response) => {
         //console.log(response);
-        this.appCustObj = response["AppCustObj"];
+        this.appCustObj = response[0]["AppCustObj"];
+        this.AppNo = response[1]["AppNo"];
         this.GetCustObj(this.appCustObj.CustNo)
-      });
-    await this.http.post(URLConstant.GetAppById, reqObj).toPromise().then(
-      (response) => {
-        //console.log(response);
-        this.AppNo = response["AppNo"];
-      });
+      }
+    );
   }
 
   GetCustObj(CustNo) {
@@ -87,7 +92,7 @@ export class ViewHighlightCommentComponent implements OnInit {
   }
   GetListCustHighlightComment() {
     this.listCustHighlightCommentObj = new Array<CustHighlightCommentObj>()
-    var reqObjForAppCustHighlightComment = {
+    let reqObjForAppCustHighlightComment = {
       AppId: this.appId
     }
 
@@ -97,12 +102,11 @@ export class ViewHighlightCommentComponent implements OnInit {
         if (this.listCustHighlightCommentObj === null) {
           this.listCustHighlightCommentObj = new Array<CustHighlightCommentObj>()
         }
-        var IdAppCustHC = 1;
-        for (var Obj of response["ReturnObject"]) {
+        for (let Obj of response["ReturnObject"]) {
           var temp = new CustHighlightCommentObj();
           temp.CustNo = Obj.CustNo;
           temp.Comment = Obj.Comment;
-          temp.CustHighlightCommentId = IdAppCustHC;
+          temp.AppCustHighlightCommentId = Obj.AppCustHighlightCommentId;
           temp.AppId = Obj.AppId;
           temp.AppNo = Obj.AppNo;
           temp.InputBy = Obj.InputBy;
@@ -115,7 +119,6 @@ export class ViewHighlightCommentComponent implements OnInit {
   }
 
   Save(enjiForm) {
-    var IdMax = this.listCustHighlightCommentObj.length;
 
     this.custHighlightCommentObj = new CustHighlightCommentObj()
     this.custHighlightCommentObj.AppId = this.appId;
@@ -124,7 +127,6 @@ export class ViewHighlightCommentComponent implements OnInit {
     this.custHighlightCommentObj.Comment = this.HighlightCommenForm.controls.Notes.value;
     this.custHighlightCommentObj.InputBy = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));;
     this.custHighlightCommentObj.InputDt = new CurrentUserContext().BusinessDt;
-    this.custHighlightCommentObj.CustHighlightCommentId = IdMax + 1;
 
     this.listCustHighlightCommentObj.push(this.custHighlightCommentObj)
 
@@ -156,20 +158,18 @@ export class ViewHighlightCommentComponent implements OnInit {
     return isEmpty;
   }
 
-  SaveCommnet() {
+  SaveComment() {
 
     // if(this.IsInput == false){
     //   this.toastr.warningMessage(ExceptionConstant.INPUT_MAX_1_COMMENT);
     //   return;
     // }
-    
-    var currentUserContext = JSON.parse(localStorage.getItem(CommonConstant.USER_ACCESS));
 
-    this.custHighlightCommentObj = new CustHighlightCommentObj()
-    //this.custHighlightCommentObj.CustId = this.CustId;20510
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+
+    this.custHighlightCommentObj = new CustHighlightCommentObj();
     this.custHighlightCommentObj.AppId = this.appId;
     this.custHighlightCommentObj.AppNo = this.AppNo;
-    //this.custHighlightCommentObj.CustNo = this.appCustObj.CustNo;
     this.custHighlightCommentObj.CustNo = this.appCustObj.CustNo;
     this.custHighlightCommentObj.Comment = this.HighlightCommenForm.controls.Notes.value;
     this.custHighlightCommentObj.InputBy = currentUserContext.UserName;
@@ -196,17 +196,15 @@ export class ViewHighlightCommentComponent implements OnInit {
     //     this.GetListCustHighlightComment(this.CustId);
     //   });
   }
-  ViewHiglight(CustHighlightCommentId) {
-    for (var any of this.listCustHighlightCommentObj) {
-      if (any.CustHighlightCommentId == CustHighlightCommentId) {
-        this.InputDt = any.InputDt;
-        this.Comment = any.Comment;
-        this.InputBy = any.InputBy;
-        this.isView = true;
-        break;
-      }
-    }
+
+  ViewHiglight(idx) {
+    let item = this.listCustHighlightCommentObj[idx];
+    this.InputDt = item.InputDt;
+    this.Comment = item.Comment;
+    this.InputBy = item.InputBy;
+    this.isView = true;
   }
+
   Back() {
     this.isView = false;
   }

@@ -118,7 +118,7 @@
         {
             "type": "sort",
             "position": "center",
-            "label": "END DATE",
+            "label": "EXPIRED DATE",
             "name": "MOU.END_DT"
         },
         {

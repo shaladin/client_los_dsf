@@ -2,7 +2,7 @@
     "title": "",
     "subsection": [
       {
-        "subSectionId": "AgrMainInformationId",
+        "subSectionId": "MainInfoId",
         "subSectionTitle": "Main Information",
         "mainInfoPath": "/Generic/GetDataViewBySQL",
         "mainInfo": [
@@ -11,8 +11,9 @@
             "label": "Application No",
             "property": "AppNo",
             "name": "AppNo",
-            "path": "/View/AppView",
+            "environment": "LOSR3WEB",
             "target": "_blank",
+            "path": "VIEW_APP",
             "param": [
               {
                 "type": "AppId",
@@ -22,40 +23,12 @@
           },
           {
             "type": "link",
-            "label": "Lead No",
-            "property": "LeadNo",
-            "name": "LeadNo",
-            "isHide": true,
-            "path": "/View/Lead",
-            "target": "_blank",
-            "param": [
-              {
-                "type": "LeadId",
-                "property": "LeadId"
-              }
-            ]
-          },
-          {
-            "type": "link",
-            "label": "Agreement No",
-            "property": "AgrmntNo",
-            "name": "AgrmntNo",
-            "path": "/View/AgrmntView",
-            "target": "_blank",
-            "param": [
-              {
-                "type": "AgrmntId",
-                "property": "AgrmntId"
-              }
-            ]
-          },
-          {
-            "type": "link",
             "label": "Mou No",
-            "isHide": true,
             "property": "MouCustNo",
             "name": "MouCustNo",
-            "path": "/View/Mou/CustView",
+            "isHide": true,
+            "environment": "LOSR3WEB",
+            "path": "VIEW_MOU_CUST",
             "target": "_blank",
             "param": [
               {
@@ -65,9 +38,15 @@
             ]
           },
           {
+            "type": "callback",
+            "label": "Agreement No",
+            "property": "AgrmntNo",
+            "key": "agrmnt"
+          },
+          {
             "type": "text",
-            "label": "Original Office",
-            "property": "OfficeName"
+            "label": "Tenor",
+            "property": "Tenor"
           },
           {
             "type": "text",
@@ -82,23 +61,29 @@
           },
           {
             "type": "text",
-            "label": "Tenor",
-            "property": "Tenor"
+            "label": "Installment Type",
+            "property": "MrInstTypeName"
           },
           {
             "type": "text",
-            "label": "Agreement Current Step",
+            "label": "Application Status",
+            "property": "Stat"
+          },
+          {
+            "type": "text",
+            "label": "Application Current Step",
             "property": "CurrStep"
           },
           {
             "type": "text",
-            "label": "Agreement Last Step",
+            "label": "Application Last Step",
             "property": "LastStep"
           }
         ],
         "querystring": {
-          "name": "viewAgrMainInfoPreGoLiveCFNA"
+          "name": "viewDocSignerDLFN"
         }
       }
     ]
   }
+  

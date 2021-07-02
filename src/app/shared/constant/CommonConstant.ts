@@ -569,6 +569,7 @@ export class CommonConstant {
   public static RefMasterTypeCodeRegularExpression = "REGULAR_EXPRESSION";
   public static RefMasterTypeCodeLob = "LOB";
   public static RefMasterTypeCodeAppSrcType = "APP_SRC_TYPE";
+  public static RefMasterTypeCodeMouType = "MOU_TYPE";
   // REF MASTER MASTER CODE
   public static RefMasterMasterCodeCust = "CUST";
   public static RefMasterMasterCodeCustFctr = "CUST_FCTR";
@@ -851,6 +852,10 @@ export class CommonConstant {
   public static AppStatCancel = "CAN";
   public static AppStatReject = "RJC";
   
+  //INVOICE STAT
+  public static InvoiceStatApv = "APV";
+  public static InvoiceStatRjc = "RJC";
+
   //WOP
   public static WopAutoDebit = "AD";  
   
