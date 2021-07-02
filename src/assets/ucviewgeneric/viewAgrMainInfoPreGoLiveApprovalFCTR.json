@@ -1,5 +1,5 @@
 {
-    "title": "",
+    "title": "Request Pre Go Live Approval",
     "subsection": [
       {
         "subSectionId": "AgrMainInformationId",
@@ -11,7 +11,8 @@
             "label": "Application No",
             "property": "AppNo",
             "name": "AppNo",
-            "path": "/View/AppView",
+            "environment": "LOSR3WEB",
+            "path": "VIEW_APP",
             "target": "_blank",
             "param": [
               {
@@ -22,25 +23,11 @@
           },
           {
             "type": "link",
-            "label": "Lead No",
-            "property": "LeadNo",
-            "name": "LeadNo",
-            "isHide": true,
-            "path": "/View/Lead",
-            "target": "_blank",
-            "param": [
-              {
-                "type": "LeadId",
-                "property": "LeadId"
-              }
-            ]
-          },
-          {
-            "type": "link",
             "label": "Agreement No",
             "property": "AgrmntNo",
             "name": "AgrmntNo",
-            "path": "/View/AgrmntView",
+            "environment": "LOSR3WEB",
+            "path": "VIEW_AGRMNT",
             "target": "_blank",
             "param": [
               {
@@ -52,10 +39,10 @@
           {
             "type": "link",
             "label": "Mou No",
-            "isHide": true,
             "property": "MouCustNo",
             "name": "MouCustNo",
-            "path": "/View/Mou/CustView",
+            "environment": "LOSR3WEB",
+            "path": "VIEW_MOU_CUST",
             "target": "_blank",
             "param": [
               {
@@ -70,7 +57,8 @@
             "property": "OfficeName"
           },
           {
-            "type": "text",
+            "type": "callback",
+            "key": "customer",
             "label": "Customer Name",
             "property": "CustName"
           },
@@ -84,21 +72,12 @@
             "type": "text",
             "label": "Tenor",
             "property": "Tenor"
-          },
-          {
-            "type": "text",
-            "label": "Agreement Current Step",
-            "property": "CurrStep"
-          },
-          {
-            "type": "text",
-            "label": "Agreement Last Step",
-            "property": "LastStep"
           }
         ],
         "querystring": {
-          "name": "viewAgrMainInfoPreGoLiveCFNA"
+          "name": "viewAgrMainInfoPreGoLiveApproval"
         }
       }
     ]
   }
+  

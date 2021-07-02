@@ -1,4 +1,3 @@
-import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
@@ -12,11 +11,10 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ResponseAppCustMainDataObj } from 'app/shared/model/ResponseAppCustMainDataObj.Model';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import Stepper from 'bs-stepper';
-import { environment } from 'environments/environment';
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-nap-cust-main-data',
@@ -53,7 +51,9 @@ export class NapCustMainDataComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    private toastr: NGXToastrService, private cookieService: CookieService) {
+    private toastr: NGXToastrService, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -70,7 +70,7 @@ export class NapCustMainDataComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.ClaimTask();
+    this.claimTaskService.ClaimTaskNapCustMainData(this.appId, this.wfTaskListId);
     this.AppStepIndex = 0;
     this.NapObj.AppId = this.appId;
     var appObj = { Id: this.appId };
@@ -173,15 +173,4 @@ export class NapCustMainDataComponent implements OnInit {
     );
   }
 
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new AppObj();
-    wfClaimObj.AppId = this.appId;
-    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
-    wfClaimObj.WfTaskListId = this.wfTaskListId;
-
-    this.http.post(URLConstant.ClaimTaskNapCustmainData, wfClaimObj).subscribe(
-      () => {
-      });
-  }
 }

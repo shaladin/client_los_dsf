@@ -59,7 +59,7 @@
         {
             "type": "sort",
             "position": "left",
-            "label": "PROD OFFERING NAME",
+            "label": "PRODUCT OFFERING NAME",
             "name": "AG.PROD_OFFERING_NAME"
         },
         {

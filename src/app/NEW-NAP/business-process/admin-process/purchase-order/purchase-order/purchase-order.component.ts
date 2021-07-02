@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -14,6 +13,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ToastrService } from 'ngx-toastr';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
@@ -46,7 +46,7 @@ export class PurchaseOrderComponent implements OnInit {
   AppObj: AppObj = new AppObj();
   toastRef: any;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private router: Router, private cookieService: CookieService, private toastrSvc: ToastrService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private toastr: NGXToastrService, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService, private toastrSvc: ToastrService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.AppId = params["AppId"];
@@ -70,7 +70,7 @@ export class PurchaseOrderComponent implements OnInit {
     var appAssetObj = {
       Id: this.AgrmntId
     }
-    this.claimTask();
+    this.claimTaskService.ClaimTask(this.TaskListId);
     this.http.post(URLConstant.GetAppAssetListByAgrmntId, appAssetObj).subscribe(
       (response) => {
         this.AppAssetList = response[CommonConstant.ReturnObj];
@@ -207,15 +207,6 @@ export class PurchaseOrderComponent implements OnInit {
           this.toastr.successMessage(response["message"]);
         });
     }
-  }
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.TaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
   }
   Cancel() {
     var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)

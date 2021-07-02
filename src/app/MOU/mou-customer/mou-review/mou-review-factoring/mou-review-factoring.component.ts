@@ -17,6 +17,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-mou-review-factoring',
@@ -51,7 +52,7 @@ export class MouReviewFactoringComponent implements OnInit {
   ApprovalCreateOutput: any;
 
   readonly CancelLink: string = NavigationConstant.MOU_CUST_RVW_PAGING;
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.MouCustId = params["MouCustId"];
       this.WfTaskListId = params["WfTaskListId"];
@@ -64,7 +65,7 @@ export class MouReviewFactoringComponent implements OnInit {
         this.SysConfigResultObj = response
       });
     if (this.WfTaskListId > 0) {
-      this.claimTask();
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
     await this.http.post(URLConstant.GetMouCustById, { Id: this.MouCustId }).toPromise().then(
       (response: MouCustObj) => {
@@ -113,14 +114,6 @@ export class MouReviewFactoringComponent implements OnInit {
     Notes: [''],
     ApvRecommendation: this.fb.array([])
   })
-
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
-  }
 
   Submit() {
     this.RFAInfo = {RFAInfo: this.MouReviewDataForm.controls.RFAInfo.value};

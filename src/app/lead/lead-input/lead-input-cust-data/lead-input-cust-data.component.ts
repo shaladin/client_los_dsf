@@ -36,6 +36,7 @@ import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMas
 import { GenericListByCodeObj } from 'app/shared/model/Generic/GenericListByCodeObj.model';
 import { ResGeneralSettingObj, ResListGeneralSettingObj } from 'app/shared/model/Response/GeneralSetting/ResGeneralSettingObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CustomPatternObj } from 'app/shared/model/CustomPatternObj.model';
 import { RegexService } from 'app/shared/services/regex.services';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
@@ -134,6 +135,7 @@ export class LeadInputCustDataComponent implements OnInit {
     private toastr: NGXToastrService,
     private fb: FormBuilder,
     private componentFactoryResolver: ComponentFactoryResolver,
+    private claimTaskService: ClaimTaskService,
     private regexService: RegexService,
     private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
@@ -194,7 +196,7 @@ export class LeadInputCustDataComponent implements OnInit {
     this.inputAddressObjForResidenceAddr.showOwnership = false;
     this.InitDms();
     if (this.WfTaskListId > 0) {
-      this.claimTask();
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
     let context = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.businessDt = new Date(context[CommonConstant.BUSINESS_DT]);
@@ -871,14 +873,6 @@ export class LeadInputCustDataComponent implements OnInit {
           });
       }
     }
-  }
-
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   async getLeadData() {

@@ -5,7 +5,6 @@ import { FormBuilder, FormArray, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'environments/environment';
 import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
 import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -22,6 +21,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 
@@ -73,7 +73,9 @@ export class CreditReviewMainComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private ref: ApplicationRef,
-    private router: Router, private cookieService: CookieService) {
+    private router: Router, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -120,7 +122,7 @@ export class CreditReviewMainComponent implements OnInit {
   DDLRecommendation: Array<KeyValueObj>;
   DDLReasonReturn: Array<KeyValueObj>;
   async ngOnInit() : Promise<void> {
-    this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.InitData();
 
     await this.GetAppNo();
@@ -427,17 +429,6 @@ export class CreditReviewMainComponent implements OnInit {
     this.FormReturnObj.controls.Reason.updateValueAndValidity();
     this.FormReturnObj.controls.Notes.updateValueAndValidity();
 
-  }
-
-
-  ClaimTask() {
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = this.UserAccess.UserName;
-
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   initInputApprovalObj(manualDevList = null) {
