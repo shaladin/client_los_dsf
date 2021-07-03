@@ -25,9 +25,9 @@ export class ViewAgrmntSummaryComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.agrmntObj.Id = this.agrmntId;
-    this.GetAgrmntSummary();
+    await this.GetAgrmntSummary();
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridInsDataView.json";
     this.inputGridObj.deleteUrl = URLConstant.DeleteAppGuarantor;
@@ -42,9 +42,10 @@ export class ViewAgrmntSummaryComponent implements OnInit {
     );
   }
 
-  GetAgrmntSummary() {
-    this.http.post(URLConstant.GetAgrmtSummaryByAgrmntId, this.agrmntObj).subscribe(
+  async GetAgrmntSummary() {
+    await this.http.post(URLConstant.GetAgrmtSummaryByAgrmntId, this.agrmntObj).toPromise().then(
       (response) => {
+        console.log(response)
         this.SummaryObj = response;
         if (this.SummaryObj.AppIns != null) {
           this.totalInsPremi = this.SummaryObj.AppIns.TotalInscoMainPremiAmt + this.SummaryObj.AppIns.TotalInscoAddPremiAmt + this.SummaryObj.AppIns.InscoAdminFeeAmt;

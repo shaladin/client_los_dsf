@@ -28,20 +28,6 @@
               "conditions": [                  
                 {
                   "property" : "BizTemplateCode",
-                  "value" : "CF4W",
-                  "restriction" : "EQ"
-                }
-              ],
-              "result": {
-                "type": "text",
-                "label": "Number Of Asset",
-                "property" : "NumOfAsset"
-              }
-            },
-            {
-              "conditions": [                  
-                {
-                  "property" : "BizTemplateCode",
                   "value" : "CFNA",
                   "restriction" : "EQ"
                 }
@@ -98,9 +84,23 @@
           ]
         },
         {
-          "type": "text",
-          "label": "Number of Asset",
-          "property": "NumOfAsset"
+          "type" : "switch", 
+          "case" : [ 
+            {
+              "conditions": [                  
+                {
+                  "property" : "BizTemplateCode",
+                  "value" : "DLFN",
+                  "restriction" : "NEQ"
+                }
+              ],
+              "result": {
+                  "type": "text",
+                  "label": "Number of Asset",
+                  "property": "NumOfAsset"
+              }
+            }
+          ]
         },
         {
           "type": "text",
