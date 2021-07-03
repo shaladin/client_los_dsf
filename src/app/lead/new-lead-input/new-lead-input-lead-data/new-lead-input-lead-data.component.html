@@ -224,11 +224,8 @@
             </div>
           </div>
           <div class="form-actions right" style="text-align: right;">
-            <button *ngIf="originPage != 'teleVerif'" type="submit" class="btn btn-raised btn-primary mr-1" (click)="save()" translate>
+            <button type="submit" class="btn btn-raised btn-primary mr-1" (click)="SaveForm()" translate>
               <i class="fa fa-check-square-o"></i> {{textButton}}
-            </button>
-            <button *ngIf="originPage == 'teleVerif' " type="submit" class="btn btn-raised btn-primary" (click)="SaveForm()" translate>
-              <i class="fa fa-check-square-o"></i> Submit
             </button>
           </div>
         </form>

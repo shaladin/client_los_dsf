@@ -5,6 +5,9 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ActivatedRoute } from '@angular/router';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 
 @Component({
   selector: 'app-invoice-verif-paging',
@@ -12,33 +15,36 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class InvoiceVerifPagingComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
-  bizTemplateCode: string;
+  BizTemplateCode: string;
   constructor(private http: HttpClient, private route: ActivatedRoute) {
     this.route.queryParams.subscribe(params => {
-      this.bizTemplateCode = params["BizTemplateCode"];
+      this.BizTemplateCode = params["BizTemplateCode"];
     });
   }
 
   ngOnInit() {
-    if (this.bizTemplateCode == "DLFN") {
+    if (this.BizTemplateCode == "DLFN") {
       this.inputPagingObj._url = "./assets/ucpaging/searchInvoiceVerifDF.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchInvoiceVerifDF.json";
     }
-    else{
+    else {
+      var arrCrit = new Array();
+      var critObj = new CriteriaObj();
+      critObj.restriction = AdInsConstant.RestrictionLike;
+      critObj.propName = 'A.BIZ_TEMPLATE_CODE';
+      critObj.value = this.BizTemplateCode;
+      arrCrit.push(critObj);
+
       this.inputPagingObj._url = "./assets/ucpaging/searchInvoiceVerif.json";
       this.inputPagingObj.pagingJson = "./assets/ucpaging/searchInvoiceVerif.json";
+      this.inputPagingObj.addCritInput = arrCrit;
     }
-    
+
   }
 
   getEvent(ev) {
-    if(ev.Key == "prodOff"){
-      let GetProduct = new GenericObj();
-      GetProduct.Code = ev.RowObj.ProdOfferingCode;
-      this.http.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).subscribe(
-        response => {
-          window.open(environment.FoundationR3Web + "/Product/OfferingView?prodOfferingHId=" + response.Id, '_blank');
-        });
+    if (ev.Key == "prodOff") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.RowObj.ProdOfferingCode, ev.RowObj.ProdOfferingVersion);
     }
   }
 }

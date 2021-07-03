@@ -53,8 +53,7 @@ export class AppMainInfoComponent implements OnInit {
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
-    } else if (ev.Key == "HighligtComment") {
-      var link: string;
+    } else if (ev.Key == "HighlightComment") {
       var custObj = { CustNo: ev.ViewObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
