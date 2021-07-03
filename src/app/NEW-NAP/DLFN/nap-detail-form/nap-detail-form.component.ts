@@ -90,7 +90,7 @@ export class NapDetailFormComponent implements OnInit {
   //---
   ngOnInit() {
     this.ClaimTask();
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFctrMainInformation.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppDlfnMainInformation.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
