@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
@@ -14,6 +13,7 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DocChecklist } from '../../../../../shared/model/DocChecklist/DocChecklist.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { CookieService } from 'ngx-cookie';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-doc-checklist-detail',
@@ -46,7 +46,7 @@ export class DocChecklistDetailComponent implements OnInit {
   dmsObj: DMSObj;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_DOC_CHECK_LIST_PAGING;
-  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService) {
+  constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.TaskListId = params["TaskListId"];
@@ -61,7 +61,7 @@ export class DocChecklistDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.claimTask();
+    this.claimTaskService.ClaimTask(this.TaskListId);
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
   }
 
@@ -164,13 +164,4 @@ export class DocChecklistDetailComponent implements OnInit {
 
   }
 
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.TaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
-  }
 }

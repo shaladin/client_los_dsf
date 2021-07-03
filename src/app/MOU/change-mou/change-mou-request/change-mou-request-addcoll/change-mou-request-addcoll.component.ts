@@ -940,11 +940,16 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
   }
 
   getRefAssetDocList(isInit: boolean) {
-    this.http.post(URLConstant.GetRefAssetDocList, { AssetTypeCode: this.AddCollForm.controls.AssetTypeCode.value }).subscribe(
+    this.http.post(URLConstant.GetRefAssetDocList, { Code: this.AddCollForm.controls.AssetTypeCode.value }).subscribe(
       (response) => {
         console.log("getRefAssetDocList: " + JSON.stringify(response));
         if (response[CommonConstant.ReturnObj].length > 0) {
           var ListDoc = this.AddCollForm.get("ListDoc") as FormArray;
+          if (ListDoc.length > 0) {
+            while (ListDoc.length !== 0) {
+              ListDoc.removeAt(0)
+            }
+          }
           for (var i = 0; i < response[CommonConstant.ReturnObj].length; i++) {
             var assetDocumentDetail = this.fb.group({
               DocCode: response[CommonConstant.ReturnObj][i].AssetDocCode,

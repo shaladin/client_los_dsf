@@ -151,6 +151,12 @@ export class ApplicationDataDlfnComponent implements OnInit {
       (response: any) => {
         this.allMouCust = response[CommonConstant.ReturnObj];
         var MouCustId;
+        if (this.resultData.AppFinDataId != 0 && this.isInit == true) {
+          this.mode = "edit";
+        }
+        else{
+          this.mode = "add";
+        }
         if (this.mode == 'edit') {
           MouCustId = this.resultData.MouCustId
           this.SalesAppInfoForm.patchValue({

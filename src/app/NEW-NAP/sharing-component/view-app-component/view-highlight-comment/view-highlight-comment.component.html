@@ -10,7 +10,7 @@
               <th class="text-left"><span class="thead-header" name='addrType' translate>Input By</span> </th>
               <th class="text-center"><span class="thead-header" name='fullAddr' translate>Input Date</span></th>
               <th class="text-center"><span class="thead-header" name='phoneNo' translate>Comment</span></th>
-              <th class="text-center"><span class="thead-header" name='houseOwnership' translate>View</span></th>
+              <th class="text-center"><span class="thead-header" name='houseOwnership' translate>View Detail</span></th>
             </tr>
           </thead>
 
@@ -38,7 +38,7 @@
       </div>
 
       <form class="form form-horizontal" [formGroup]="HighlightCommenForm" #enjiForm="ngForm" novalidate
-        (ngSubmit)="enjiForm.form.valid && Save(enjiForm)">
+        (ngSubmit)="enjiForm.form.valid && Save(enjiForm)" *ngIf="isInput">
         <lib-ucSubsection [id]="'HighlightCommenId'" [title]="'Highlight Comment'" [panel]="'HighlightCommenSection'">
         </lib-ucSubsection>
         <div id="HighlightCommenSection">

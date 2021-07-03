@@ -605,7 +605,7 @@ export class URLConstant {
   public static ReturnChangeMouReview = environment.losUrl + "/ChangeMOU/ReturnChangeMouReview";
   public static ChangeMouExecutionHumanActivity = environment.losUrl + "/ChangeMou/ChangeMouExecutionHumanActivity";
   public static SubmitChangeMouReturn = environment.losUrl + "/ChangeMou/SubmitChangeMouReturn";
-
+  public static GetChangeMouCustbyChangeMouTrxId = environment.losUrl + "/ChangeMou/GetChangeMouCustbyChangeMouTrxId";
   //CHANGE MOU CUST COLLATERAL
   public static GetChangeMouCustCollateralDocByChangeMouCustCollateralId = environment.losUrl + "/ChangeMouCustCollateral/GetChangeMouCustCollateralDocByChangeMouCustCollateralId";
   public static GetChangeMouCustCollateralForChangeMouViewByMouCustId = environment.losUrl + "/ChangeMouCustCollateral/GetChangeMouCustCollateralForChangeMouViewByMouCustId"
@@ -1516,6 +1516,7 @@ export class URLConstant {
   public static ProdHOApproval = environment.losUrl + "/Approval/ProdHOApproval";
   public static ProdOfferingApproval = environment.losUrl + "/Approval/ProdOfferingApproval";
   public static PreGoLiveApproval = environment.losUrl + "/Approval/PreGoLiveApproval";
+  public static ResultExpiredDaysApproval = environment.losUrl + "/Approval/ResultExpiredDaysApproval";
 
   // New Approval R3
   public static CreateNewRFA = "/Approval/CreateNewRFA";

@@ -29,10 +29,10 @@ export class AppMainInfoComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       if(params["AppId"] == "undefined"){
         this.AppNo = params["AppNo"]
-        
+
       }else{
         this.AppId = params["AppId"];
-        
+
       }
     })
    }
@@ -70,7 +70,7 @@ export class AppMainInfoComponent implements OnInit {
   GetCallBack(ev: any) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
-    } else if (ev.Key == "HighligtComment") {
+    } else if (ev.Key == "HighlightComment") {
       var link: string;
       var custObj = { CustNo: ev.ViewObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
