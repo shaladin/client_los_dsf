@@ -584,6 +584,7 @@ export class URLConstant {
 
   //ChangeMOu
   public static AddChangeMou = environment.losUrl + "/ChangeMou/AddChangeMou";
+  public static EditChangeMou = environment.losUrl + "/ChangeMou/EditChangeMou";
   public static AddChangeMouCustAssets = environment.losUrl + "/ChangeMou/AddChangeMouCustAsset";
   public static AddEditChangeMouCustClause = environment.losUrl + "/ChangeMou/AddEditChangeMouCustClause";
   public static AddChangeMouCustCollateral = environment.losUrl + "/ChangeMou/AddChangeMouCustCollateralData";
@@ -605,7 +606,7 @@ export class URLConstant {
   public static ReturnChangeMouReview = environment.losUrl + "/ChangeMOU/ReturnChangeMouReview";
   public static ChangeMouExecutionHumanActivity = environment.losUrl + "/ChangeMou/ChangeMouExecutionHumanActivity";
   public static SubmitChangeMouReturn = environment.losUrl + "/ChangeMou/SubmitChangeMouReturn";
-
+  public static GetChangeMouCustbyChangeMouTrxId = environment.losUrl + "/ChangeMou/GetChangeMouCustbyChangeMouTrxId";
   //CHANGE MOU CUST COLLATERAL
   public static GetChangeMouCustCollateralDocByChangeMouCustCollateralId = environment.losUrl + "/ChangeMouCustCollateral/GetChangeMouCustCollateralDocByChangeMouCustCollateralId";
   public static GetChangeMouCustCollateralForChangeMouViewByMouCustId = environment.losUrl + "/ChangeMouCustCollateral/GetChangeMouCustCollateralForChangeMouViewByMouCustId"

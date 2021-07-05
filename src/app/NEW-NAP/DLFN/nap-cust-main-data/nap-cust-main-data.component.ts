@@ -81,7 +81,7 @@ export class NapCustMainDataComponent implements OnInit {
   ngOnInit() {
     this.ClaimTask();
     this.AppStepIndex = 0;
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformation.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppMainInformationDF.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -237,7 +237,7 @@ export class NapCustMainDataComponent implements OnInit {
   // }
 
   GetCallback(ev) {
-    if (ev.Key == "HighligtComment") {
+    if (ev.Key == "HighlightComment") {
       let custObj = { CustNo: ev.ViewObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {

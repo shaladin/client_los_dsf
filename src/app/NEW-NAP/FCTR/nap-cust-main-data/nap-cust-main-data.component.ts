@@ -1,3 +1,4 @@
+import { UcviewgenericComponent } from '@adins/ucviewgeneric';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
@@ -51,7 +52,7 @@ export class NapCustMainDataComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    private toastr: NGXToastrService, 
+    private toastr: NGXToastrService,
     private cookieService: CookieService,
     private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {

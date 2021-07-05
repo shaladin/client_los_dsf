@@ -90,8 +90,8 @@
         },
         {
           "type": "callback",
-          "key": "HighligtComment",
-          "label": "Highligt Comment",
+          "key": "HighlightComment",
+          "label": "Highlight Comment",
           "property": "Comment"
         }
       ],

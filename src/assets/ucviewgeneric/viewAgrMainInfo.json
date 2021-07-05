@@ -28,20 +28,6 @@
               "conditions": [                  
                 {
                   "property" : "BizTemplateCode",
-                  "value" : "CF4W",
-                  "restriction" : "EQ"
-                }
-              ],
-              "result": {
-                "type": "text",
-                "label": "Number Of Asset",
-                "property" : "NumOfAsset"
-              }
-            },
-            {
-              "conditions": [                  
-                {
-                  "property" : "BizTemplateCode",
                   "value" : "CFNA",
                   "restriction" : "EQ"
                 }
@@ -104,8 +90,11 @@
               "conditions": [                  
                 {
                   "property" : "BizTemplateCode",
-                  "value" : "FCTR",
-                  "restriction" : "NEQ"
+                  "value": [
+                    "FCTR",
+                    "DLFN"
+                  ],
+                  "restriction" : "NIN"
                 }
               ],
               "result": {
