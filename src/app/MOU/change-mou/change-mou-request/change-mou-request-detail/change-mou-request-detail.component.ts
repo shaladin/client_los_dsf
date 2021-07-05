@@ -46,6 +46,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
   tempChangeMouCustId: number = 0;
   revolvingName = "";
   plafondName = "";
+  mouTypeName = "";
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
     MouCustNo: [""],
@@ -135,6 +136,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
       this.http
         .post(URLConstant.GetLatestChangeMouCustVersionById, mouCust)
         .subscribe((response) => {
+          console.log(response);
           if (response["Status"] == "Failed") {
             this.httpClient
               .post(URLConstant.GetMouCustById, mouCust)
@@ -163,7 +165,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
                 this.MOUMainInfoForm.patchValue({
                   ...response,
                 });
-                
+                this.GetRefmasterData();
                 var custObj = { CustNo: response["CustNo"] };
 
                 this.httpClient
@@ -204,6 +206,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
             this.MOUMainInfoForm.patchValue({
               ...response,
             });
+            this.GetRefmasterData();
             this.ChnMouVersion = response["Version"] + 1;
             console.log(response);
 
@@ -214,14 +217,13 @@ export class ChangeMouRequestDetailComponent implements OnInit {
           }
           this.responseChangeMouObj = response;
           this.CheckMouChangeType(this.responseChangeMouObj.MrChangeMouTypeCode);
-          this.GetRefmasterData();
+          
         });     
     } else {
       this.MOUMainInfoForm.patchValue({
         MrChangeMouTypeCode: this.mouType,
       });
       this.CheckMouChangeType(this.mouType);
-      this.GetRefmasterData();
     }
   }
 
@@ -254,6 +256,14 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     .subscribe((response) => {
       this.plafondName = response["Descr"];
     });
+
+    this.http
+    .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMouType, MasterCode: this.MOUMainInfoForm.controls.MrMouTypeCode.value
+    })
+    .subscribe((response) => {
+      this.mouTypeName = response["Descr"];
+    });
   }
 
   MouChangeTypeEvent(event){
@@ -265,7 +275,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
       this.MOUMainInfoForm.patchValue({
         ...this.responseChangeMouObj
       });
-
+      this.GetRefmasterData();
       this.MOUMainInfoForm.patchValue({
         MrChangeMouTypeCode: trxType,
         EndDt: formatDate(this.businessDt, 'yyyy-MM-dd', 'en-US')
