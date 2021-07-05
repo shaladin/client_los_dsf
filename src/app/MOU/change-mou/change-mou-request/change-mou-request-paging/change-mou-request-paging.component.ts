@@ -7,6 +7,7 @@ import { UcPagingObj } from "app/shared/model/UcPagingObj.Model";
 import { AdInsHelper } from "app/shared/AdInsHelper";
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
+import { CommonConstant } from "app/shared/constant/CommonConstant";
 
 @Component({
   selector: "app-change-mou-request-paging",
@@ -61,7 +62,12 @@ export class ChangeMouRequestPagingComponent implements OnInit {
       var custObj = { CustNo: ev.RowObj["CustNo"] };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         }
       );
 
