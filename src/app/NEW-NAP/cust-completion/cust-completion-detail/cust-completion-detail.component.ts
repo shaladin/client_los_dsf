@@ -36,6 +36,7 @@ export class CustCompletionDetailComponent implements OnInit {
   ReturnHandlingHId: number = 0;
   ResponseReturnInfoObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   OnFormReturnInfo: boolean = false;
+  IsDataReady: boolean = false;
   
   constructor(
     private route: ActivatedRoute,
@@ -80,6 +81,7 @@ export class CustCompletionDetailComponent implements OnInit {
 
     this.loadCustCompletionListData();
     this.claimTaskService.ClaimTask(this.wfTaskListId);
+    this.IsDataReady = true;
   }
 
   MakeViewReturnInfoObj() {
