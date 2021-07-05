@@ -21,7 +21,7 @@
             }
           ]
         },
-		{            
+		    {            
           "type" : "switch", 
           "case" : [ 
             {
@@ -83,21 +83,24 @@
             }
           ]
         },
-        {
+		    {            
           "type" : "switch", 
           "case" : [ 
             {
               "conditions": [                  
                 {
                   "property" : "BizTemplateCode",
-                  "value" : "DLFN",
-                  "restriction" : "NEQ"
+                  "value": [
+                    "FCTR",
+                    "DLFN"
+                  ],
+                  "restriction" : "NIN"
                 }
               ],
               "result": {
-                  "type": "text",
-                  "label": "Number of Asset",
-                  "property": "NumOfAsset"
+                "type": "text",
+                "label": "Number Of Asset",
+                "property" : "NumOfAsset"
               }
             }
           ]
