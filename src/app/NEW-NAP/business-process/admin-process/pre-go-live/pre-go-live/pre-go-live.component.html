@@ -12,8 +12,9 @@
             <div class="form-body" id="MainInfoForm">
               <div class="form-group row">
                 <label class="col-md-2 adins-required-label" for="AgrmntDt" translate>Agreement Date</label>
-                <div class="col-md-4">
-                  <input type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
+                <div *ngIf = "checkPOReady" class="col-md-4">
+                  <input *ngIf = "!isHasPO" type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
+                  <input *ngIf = "isHasPO" type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" max="{{PODt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="MainInfoForm.controls.AgrmntDt" [submit]="MainInfoReqForm.submitted">
                   </lib-uc-show-errors>
                 </div>
