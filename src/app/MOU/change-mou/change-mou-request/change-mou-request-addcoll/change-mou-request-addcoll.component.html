@@ -207,7 +207,7 @@
         <label class="col-md-1"></label>
         <label class="col-md-2 adins-required-label" translate>ID Type</label>
         <div class="col-md-2">
-          <select class="form-control" formControlName="MrIdType" (change)="onItemChange($event.target.value)"
+          <select class="form-control" formControlName="MrIdType"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrIdType.invalid }">
             <option *ngFor="let item of IdTypeList" [value]="item.Key">{{item.Value}}</option>
           </select>
@@ -218,7 +218,7 @@
       <div class="form-group row">
         <label class="col-md-2 adins-required-label" translate>Owner Relationship</label>
         <div class="col-md-3">
-          <select class="form-control" formControlName="OwnerRelationship" (change)="onItemChange($event.target.value)"
+          <select class="form-control" formControlName="OwnerRelationship"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerRelationship.invalid }">
             <option *ngFor="let item of OwnerRelationshipObj" [value]="item.Key">{{item.Value}}</option>
           </select>
@@ -419,7 +419,7 @@
         <label class="col-md-1"></label>
         <label class="col-md-2 adins-required-label" translate>ID Type</label>
         <div class="col-md-2">
-          <select class="form-control" formControlName="MrIdType" (change)="onItemChange($event.target.value)"
+          <select class="form-control" formControlName="MrIdType"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.MrIdType.invalid }">
             <option *ngFor="let item of IdTypeList" [value]="item.Key">{{item.Value}}</option>
           </select>
@@ -430,7 +430,7 @@
       <div class="form-group row">
         <label class="col-md-2 adins-required-label" translate>Owner Relationship</label>
         <div class="col-md-3">
-          <select class="form-control" formControlName="OwnerRelationship" (change)="onItemChange($event.target.value)"
+          <select class="form-control" formControlName="OwnerRelationship"
             [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerRelationship.invalid }">
             <option *ngFor="let item of OwnerRelationshipObj" [value]="item.Key">{{item.Value}}</option>
           </select>
