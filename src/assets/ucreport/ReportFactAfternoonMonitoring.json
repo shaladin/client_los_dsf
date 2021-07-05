@@ -1,0 +1,56 @@
+{ 
+    "title" : "REPORT FACT AFTERNOON MONITORING",
+    "reportName": "Report Fact Afternoon Monitoring",
+    "reportTemplateCode": "FACT_AFTERNOON_MONITORING",
+    "component": [ 
+        {
+            "type" : "dropdown",
+            "label" : "Client Name",
+            "name" : "CrtClientName",
+            "datatype" : "text",
+            "isSelectOne" : true,
+            "items" : [
+                {
+                "key": "KTB",
+                "value": "PT KRAMA YUDHA TIGA BERLIAN"
+            },
+            {
+                "key": "MMKSI",
+                "value": "PT MITSUBISHI MOTOR"
+            }
+            ],
+            "isFromURL" : false,
+            "url" : "", 
+            "path": "", 
+            "criteriaPropName": "", 
+            "criteriaPropValue": "", 
+            "itemsUrl" : [],
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Date As Of",
+            "name" : "LeadDtGte",
+            "value" : "BD",
+            "restriction" : "gte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Date As Of",
+            "name" : "LeadDtLte",
+            "value" : "BD+42",
+            "restriction" : "lte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        }      
+    ],
+    "exportTypeList": [
+        {
+            "key": 0,
+            "value": "PDF"
+        }
+    ]
+}
+
