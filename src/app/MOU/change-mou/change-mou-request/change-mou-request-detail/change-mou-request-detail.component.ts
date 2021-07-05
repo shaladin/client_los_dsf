@@ -209,8 +209,9 @@ export class ChangeMouRequestDetailComponent implements OnInit {
             if(response["ChangeMouStat"] == CommonConstant.ChangeMouNew || response["ChangeMouStat"] == CommonConstant.ChangeMouReturn)
             {
               this.MOUMainInfoForm.controls.MrChangeMouTypeCode.disable();
-            }
+            }    
           }
+
           this.responseChangeMouObj = response;
           this.CheckMouChangeType(this.responseChangeMouObj.MrChangeMouTypeCode);
         });     
@@ -219,6 +220,12 @@ export class ChangeMouRequestDetailComponent implements OnInit {
         MrChangeMouTypeCode: this.mouType,
       });
       this.CheckMouChangeType(this.mouType);
+    }
+
+    if(this.MOUMainInfoForm.controls.PlafondType.value == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOCLLTR)
+    {
+      this.MOUMainInfoForm.controls.PlafondAmt.clearValidators();
+      this.MOUMainInfoForm.controls.PlafondAmt.updateValueAndValidity();
     }
   }
 
