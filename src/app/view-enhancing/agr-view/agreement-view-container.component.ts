@@ -235,7 +235,6 @@ export class AgreementViewContainerComponent implements OnInit {
           this.IsCommission = false;
           this.IsReservedFund = false;
           this.IsDeviation = false;
-          this.IsInvoiceData = false;
         }
         this.IsReady = true;
       });
