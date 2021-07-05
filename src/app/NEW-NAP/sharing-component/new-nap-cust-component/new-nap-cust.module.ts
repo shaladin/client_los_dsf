@@ -11,7 +11,7 @@ import { NewNapCustAddrDetailComponent } from './component/new-nap-cust-addr/new
 import { NewNapCustBankAccComponent } from './component/new-nap-cust-bank-acc/new-nap-cust-bank-acc.component';
 import { NewNapAttrContentComponent } from './component/new-nap-other-info/new-nap-attr-content/new-nap-attr-content.component';
 import { NewNapOtherInfoComponent } from './component/new-nap-other-info/new-nap-other-info.component';
-import { NgxCurrencyModule } from "ngx-currency";
+import { CurrencyMaskInputMode, NgxCurrencyModule } from "ngx-currency";
 import { AdInsModule } from 'app/components/adins-module/adins.module';
 import { MatRadioModule } from '@angular/material';
 import { NewNapCustCompanyFullDataComponent } from './component/company/new-nap-cust-coy-full-data/new-nap-cust-coy-full-data.component';
@@ -32,7 +32,8 @@ export const customCurrencyMaskConfig = {
   prefix: "",
   suffix: "",
   thousands: ",",
-  nullable: false
+  nullable: false,
+  inputMode: CurrencyMaskInputMode.NATURAL
 };
 
 @NgModule({
