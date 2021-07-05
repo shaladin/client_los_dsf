@@ -162,7 +162,7 @@
             "type": "sort",
             "position": "left",
             "label": "MOU TYPE",
-            "name": "RM.DESCR"
+            "name": "RM.REF_MASTER_NAME"
         },
         {
             "type": "label",
