@@ -36,7 +36,7 @@
                                   Date</label>
                               <div class="col-md-3">
                                   <input type="date" class="form-control adInsInput" formControlName="EndDt"
-                                      [min]="businessDt | date: 'yyyy-MM-dd'"
+                                    min="{{businessDt | date:'yyyy-MM-dd'}}"
                                       [ngClass]="{ 'is-invalid': enjiForm.submitted && MOUMainInfoForm.controls.EndDt.invalid }"
                                        />
                                   <lib-uc-show-errors [control]="MOUMainInfoForm.controls.EndDt"
@@ -78,7 +78,7 @@
                           <div class="form-group row">
                               <label class="col-md-3 adInsLabel" for="MrRevolvingTypeCode">Revolving Type</label>
                               <div class="col-md-4">
-                                  {{MOUMainInfoForm.controls.MrRevolvingTypeCode.value}}
+                                  {{revolvingName}}
                               </div>
                           </div>
 
@@ -93,7 +93,7 @@
                               *ngIf="MOUMainInfoForm.controls.MrMouTypeCode.value != 'GENERAL'">
                               <label class="col-md-3 adInsLabel" for="MouStat">MOU Plafond Type</label>
                               <div class="col-md-4">
-                                  {{MOUMainInfoForm.controls.PlafondType.value}}
+                                  {{plafondName}}
                               </div>
                           </div>
 
