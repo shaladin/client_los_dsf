@@ -1514,6 +1514,7 @@ export class URLConstant {
   public static Approval = environment.losUrl + "/Approval/Approval";
   public static MouApproval = environment.losUrl + "/Approval/MouApproval";
   public static LtkmApproval = environment.losUrl + "/Approval/LtkmApproval";
+  public static EditAppAfterApproval = environment.losUrl + "/Approval/EditAppAfterApproval";
   public static ProdHOApproval = environment.losUrl + "/Approval/ProdHOApproval";
   public static ProdOfferingApproval = environment.losUrl + "/Approval/ProdOfferingApproval";
   public static PreGoLiveApproval = environment.losUrl + "/Approval/PreGoLiveApproval";

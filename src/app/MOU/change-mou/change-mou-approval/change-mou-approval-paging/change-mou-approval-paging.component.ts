@@ -35,17 +35,17 @@ export class ChangeMouApprovalPagingComponent implements OnInit {
     let custId: number;
     let mrCustTypeCode: string;
     if (event.Key == "customer") {
-     let CustNoObj = { CustNo : event.RowObj.CustNo };
+      let CustNoObj = { CustNo: event.RowObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, CustNoObj).subscribe(
         (response) => {
           custId = response['CustId'];
           mrCustTypeCode = response['MrCustTypeCode'];
 
-          if(mrCustTypeCode == CommonConstant.CustTypeCompany){
+          if (mrCustTypeCode == CommonConstant.CustTypeCompany) {
             AdInsHelper.OpenCustomerCoyViewByCustId(custId);
           }
-          
-          if(mrCustTypeCode == CommonConstant.CustTypePersonal){
+
+          if (mrCustTypeCode == CommonConstant.CustTypePersonal) {
             AdInsHelper.OpenCustomerViewByCustId(custId);
           }
         });
