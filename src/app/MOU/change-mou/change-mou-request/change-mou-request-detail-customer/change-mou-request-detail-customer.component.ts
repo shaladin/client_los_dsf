@@ -253,7 +253,12 @@ export class ChangeMouRequestDetailCustomerComponent
     }
     if (this.currentStepIndex >= 3) {
       this.toastr.successMessage("Success");
-      this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_PAGING]);
+      if (this.pageType == "return") {
+        this.router.navigate([NavigationConstant.CHANGE_MOU_RTN_PAGING]);
+      }
+      else{
+        this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_PAGING]);
+      }
     }
   }
 
@@ -281,7 +286,13 @@ export class ChangeMouRequestDetailCustomerComponent
     }
     if (this.currentStepIndex >= 3) {
       this.toastr.successMessage("Success");
-      this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_PAGING]);
+      this.toastr.successMessage("Success");
+      if (this.pageType == "return") {
+        this.router.navigate([NavigationConstant.CHANGE_MOU_RTN_PAGING]);
+      }
+      else{
+        this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_PAGING]);
+      }
     }
   }
 
@@ -309,7 +320,13 @@ export class ChangeMouRequestDetailCustomerComponent
     }
     if (this.currentStepIndex >= 3) {
       this.toastr.successMessage("Success");
-      this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_PAGING]);
+      this.toastr.successMessage("Success");
+      if (this.pageType == "return") {
+        this.router.navigate([NavigationConstant.CHANGE_MOU_RTN_PAGING]);
+      }
+      else{
+        this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_PAGING]);
+      }
     }
   }
 
