@@ -38,9 +38,23 @@
           ]
         },
         {
-          "type": "text",
-          "label": "Num Of Asset",
-          "property": "NumOfAsset"
+          "type": "switch",
+          "case": [
+            {
+              "conditions": [
+                {
+                "property": "BizTemplateCode",
+                "value": "FCTR",
+                "restriction": "NEQ"
+                }
+              ],
+              "result": {
+                "type": "text",
+                "label": "Num Of Asset",
+                "property": "NumOfAsset"
+              }
+            }
+          ]
         },
         {
           "type": "callback",

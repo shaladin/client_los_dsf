@@ -40,6 +40,10 @@ export class ChangeMouRequestDetailComponent implements OnInit {
   responseChangeMouObj: any;
   datePipe = new DatePipe("en-US");
   ChangeMouTrxId:number;
+  ChnMouVersion: number = 1;
+  tempNewTrx: boolean = true;
+  tempChangeMouTrxId: number = 0;
+  tempChangeMouCustId: number = 0;
 
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
@@ -199,39 +203,23 @@ export class ChangeMouRequestDetailComponent implements OnInit {
             this.MOUMainInfoForm.patchValue({
               ...response,
             });
+            this.ChnMouVersion = response["Version"] + 1;
             console.log(response);
+
+            if(response["ChangeMouStat"] == CommonConstant.ChangeMouNew || response["ChangeMouStat"] == CommonConstant.ChangeMouReturn)
+            {
+              this.MOUMainInfoForm.controls.MrChangeMouTypeCode.disable();
+            }
           }
           this.responseChangeMouObj = response;
           this.CheckMouChangeType(this.responseChangeMouObj.MrChangeMouTypeCode);
-        });
+        });     
     } else {
       this.MOUMainInfoForm.patchValue({
         MrChangeMouTypeCode: this.mouType,
       });
       this.CheckMouChangeType(this.mouType);
     }
-
-    var obj = {Id: this.mouCustId}
-    await this.http.post(URLConstant.GetChangeMouByMouCustIdStatusNew, obj).toPromise().then(
-      (response) => {
-        console.log(response)
-        if(response["ChangeMouTrxId"] != 0)
-        {
-          this.changeMouTrxNo = response["ChangeMouTrxNo"];
-          this.ChangeMouCustId = response["ChangeMouCustId"];
-          this.ChangeMouStatus = response["Status"];
-          this.ChangeMouTrxId = response["ChangeMouTrxId"];
-          
-          this.router.navigate(
-            [
-              NavigationConstant.CHANGE_MOU_REQ_DETAIL_CUSTOMER,
-              this.MOUMainInfoForm.controls.MrMouTypeCode.value,
-            ],
-            { queryParams: { mouCustId: this.mouCustId , mode: this.pageType, ChangeMouTrxId: this.ChangeMouTrxId, changeMouTrxNo : this.changeMouTrxNo , ChangeMouCustId : this.ChangeMouCustId, ChangeMouStatus : this.ChangeMouStatus , WfTaskListId: this.WfTaskListId} }
-          );
-        }   
-      }
-    );
   }
 
   
@@ -274,7 +262,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     this.location.back();
   }
 
-  Save(enjiForm) {
+  async Save(enjiForm) {
     var mouCustFormData = this.MOUMainInfoForm.getRawValue();
 
     var userContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
@@ -293,9 +281,25 @@ export class ChangeMouRequestDetailComponent implements OnInit {
       mouCustFormData[
         "TrxType"
       ] = this.MOUMainInfoForm.controls.MrChangeMouTypeCode.value;
-      mouCustFormData["Version"] = 0;
+      mouCustFormData["Version"] = this.ChnMouVersion;
       mouCustFormData["RequestDate"] = this.businessDt;
 
+      var obj = {Id: this.mouCustId}
+      await this.http.post(URLConstant.GetChangeMouByMouCustIdStatusNew, obj).toPromise().then(
+        (response) => {
+          console.log(response)
+          //Jika ada data dengan status NEW
+          if(response["ChangeMouTrxId"] != 0)
+          {
+            this.tempChangeMouCustId = response["ChangeMouCustId"];
+            this.tempChangeMouTrxId = response["ChangeMouTrxId"];
+            this.tempNewTrx = false;
+          }   
+        }
+      );
+
+      if(this.tempNewTrx == true)
+      {
         this.httpClient
         .post(URLConstant.AddChangeMou, mouCustFormData)
         .subscribe((response) => {
@@ -316,6 +320,30 @@ export class ChangeMouRequestDetailComponent implements OnInit {
             );
           }       
         });
+      }
+      else
+      {
+        mouCustFormData["ChangeMouCustId"] = this.tempChangeMouCustId;
+        mouCustFormData["ChangeMouTrxId"] = this.tempChangeMouTrxId;
+        this.httpClient
+        .post(URLConstant.EditChangeMou, mouCustFormData)
+        .subscribe((response) => {
+          this.toastr.successMessage(response["Message"]);
+          this.changeMouTrxNo = response["ChangeMouTrxNo"];
+          this.ChangeMouCustId = response["ChangeMouCustId"];
+          this.ChangeMouStatus = response["Status"];
+          this.ChangeMouTrxId = response["ChangeMouTrxId"];
+          
+            this.router.navigate(
+              [
+                NavigationConstant.CHANGE_MOU_REQ_DETAIL_CUSTOMER,
+                this.MOUMainInfoForm.controls.MrMouTypeCode.value,
+              ],
+              { queryParams: { mouCustId: this.mouCustId , mode: this.pageType , ChangeMouTrxId: this.ChangeMouTrxId, changeMouTrxNo : this.changeMouTrxNo , ChangeMouCustId : this.ChangeMouCustId, ChangeMouStatus : this.ChangeMouStatus , WfTaskListId: this.WfTaskListId} }
+            );      
+        });
+      }
+  
     }else{
       this.toastr.successMessage("Success");
       this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_DETAIL_CUSTOMER, this.MOUMainInfoForm.controls.MrMouTypeCode.value,],

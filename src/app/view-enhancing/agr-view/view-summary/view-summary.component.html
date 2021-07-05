@@ -61,7 +61,7 @@
           *ngIf="SummaryObj?.AppCustPersonalJobData">{{this.SummaryObj.AppCustPersonalJobData.MrProfessionName}}</label>
         <label class="col-md-4  adInsLabel" translate>Total Monthly Expense</label>
         <label class="col-md-2  adinslabel" translate
-          *ngIf="SummaryObj?.AppCustPersonalFinData">{{this.SummaryObj.AppCustPersonal.MonthlyExpenseAmt | number:'.2':'en-US'}}</label>
+          *ngIf="SummaryObj?.AppCustPersonalFinData">{{this.SummaryObj.AppCustPersonalFinData.MonthlyExpenseAmt | number:'.2':'en-US'}}</label>
       </div>
       <div>
         <label class="col-md-4  adInsLabel" translate>Company Name</label>
@@ -127,9 +127,14 @@
         *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.EffectiveDt | date: 'dd-MMMM-yyyy'}}</label>
     </div>
     <div>
-      <label class="col-md-2  adInsLabel" translate>Installment Scheme</label>
+      <label class="col-md-2  adInsLabel" *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode != 'DLFN'" translate>Installment Scheme</label>
       <label class="col-md-4  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.MrInstSchemeDescr}}</label>
+        *ngIf="SummaryObj?.AgrmntFinData && SummaryObj?.Agrmnt?.BizTemplateCode != 'DLFN'">{{this.SummaryObj.AgrmntFinData.MrInstSchemeDescr}}</label>
+
+      <label class="col-md-2  adInsLabel" *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'DLFN'" translate>Installment Type</label>
+      <label class="col-md-4  adinslabel" translate
+        *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'DLFN'">{{this.SummaryObj.AppDlrFncngObj.InsTypeName}}</label>
+
       <label class="col-md-2  adInsLabel" translate>Pre Go Live Date</label>
       <label class="col-md-4  adinslabel" translate
         *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.PreGoLiveDt  | date: 'dd-MMMM-yyyy'}}</label>
@@ -141,6 +146,11 @@
       <label class="col-md-2  adInsLabel" translate>Pre Go Live Notes</label>
       <label class="col-md-4  adinslabel" translate
         *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.PreGoLiveNotes}}</label>
+    </div>
+    <div *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'DLFN'">
+      <label class="col-md-2  adInsLabel" translate>Term Of Payment</label>
+      <label class="col-md-4  adinslabel" translate
+        *ngIf="SummaryObj?.AppDlrFncngObj">{{this.SummaryObj.AppDlrFncngObj.TopDays}}</label>
     </div>
   </div>
   <div *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'CF4W'">
@@ -458,124 +468,200 @@
       </div>
     </div>
   </div>
-  <lib-ucSubsection [id]="'financialId'" [title]="'Financial'" [panel]="'financial'">
-  </lib-ucSubsection>
-  <div id="financial">
-    <div>
-      <label class="col-md-4  adInsLabel" translate>Total Asset Price</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TotalAssetPriceAmt | number:'.2':'en-US'}}</label>
+  <div *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode != 'DLFN'">
+    <lib-ucSubsection [id]="'financialId'" [title]="'Financial'" [panel]="'financial'">
+    </lib-ucSubsection>
+    <div id="financial">
+      <div>
+        <label class="col-md-4  adInsLabel" translate>Total Invoice Amount</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TotalAssetPriceAmt | number:'.2':'en-US'}}</label>
+      </div>
+      <div>
+        <label class="col-md-4  adInsLabel" translate>Total Fee</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TotalFeeAmt | number:'.2':'en-US'}}</label>
+        <label class="col-md-4  adInsLabel" translate>Total Fee Capitalized</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TotalFeeCptlzAmt | number:'.2':'en-US'}}</label>
+      </div>
+      <div>
+        <label class="col-md-4  adInsLabel" translate>Total Insurance Premi</label>
+        <label class="col-md-2  adinslabel" translate>{{totalInsPremi | number:'.2':'en-US'}}</label>
+        <label class="col-md-4  adInsLabel" translate>Total Insurance Premi Capitalized</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.InsCptlzAmt | number:'.2':'en-US'}}</label>
+      </div>
+      <div>
+        <label class="col-md-4  adInsLabel" translate>Total Life Insurance Premi</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntLifeIns != undefined">{{this.SummaryObj.AgrmntLifeIns.TotalPremiFromInsco | number:'.2':'en-US'}}</label>
+        <label class="col-md-2  adinslabel" translate *ngIf="SummaryObj?.AgrmntLifeIns == undefined"></label>
+        <label class="col-md-4  adInsLabel" translate>Total Life Insurance Premi Capitalized</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.LifeInsCptlzAmt | number:'.2':'en-US'}}</label>
+      </div>
+      <div>
+        <label class="col-md-4  adInsLabel" translate>TDP</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData != undefined">{{this.SummaryObj.AgrmntFinData.TotalDownPaymentGrossAmt | number:'.2':'en-US'}}</label>
+        <label class="col-md-2  adinslabel" translate *ngIf="SummaryObj?.AgrmntFinData == undefined"></label>
+        <label class="col-md-4  adInsLabel" translate>TDP Paid at MF</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TdpPaidCoyAmt | number:'.2':'en-US'}}</label>
+      </div>
+      <div>
+        <label class="col-md-4  adInsLabel" translate>NTF</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.NtfAmt | number:'.2':'en-US'}}</label>
+        <label class="col-md-4  adInsLabel" translate>First Installment Type</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.MrFirstInstTypeDescr}}</label>
+      </div>
+      <div>
+        <label class="col-md-4  adInsLabel" translate>Effective Rate to Customer</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.EffectiveRatePrcnt}}%</label>
+        <label class="col-md-4  adInsLabel" translate>Effective Rate to Supplier</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.SupplEffectiveRatePrcnt}}%</label>
+      </div>
+      <div>
+        <label class="col-md-4  adInsLabel" translate>Flat Rate to Customer</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.FlatRatePrcnt}}</label>
+        <label class="col-md-4  adInsLabel" translate>Flat Rate to Supplier</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.SupplFlatRatePrcnt}}</label>
+      </div>
+      <div>
+        <label class="col-md-4  adInsLabel" translate>Grace Period</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.GracePeriod}}</label>
+        <label class="col-md-4  adInsLabel" translate>Rouding</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.RoundingAmt | number:'.2':'en-US'}}</label>
+      </div>
+      <div>
+        <label class="col-md-4  adInsLabel" translate>Balloon Value Amount</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.BalloonValueAmt | number:'.2':'en-US'}}</label>
+        <label class="col-md-4  adInsLabel" translate>Cummulative Tenor</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.CummulativeTenor}}</label>
+      </div>
+      <div>
+        <label class="col-md-4  adInsLabel" translate>Total Interest</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TotalInterestAmt | number:'.2':'en-US'}}</label>
+        <label class="col-md-4  adInsLabel" translate>Diff Rate Amount</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.DiffRateAmt | number:'.2':'en-US'}}</label>
+      </div>
+      <div>
+        <label class="col-md-4  adInsLabel" translate>Total AR</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TotalAr | number:'.2':'en-US'}}</label>
+        <label class="col-md-4  adInsLabel" translate>Gross Yield</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.GrossYieldPrcnt}}%</label>
+      </div>
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th translate class="text-center">Seq No</th>
+            <th translate class="text-right">Installment Amount</th>
+            <th translate class="text-right">Principal Amount</th>
+            <th translate class="text-right">Interest Amount</th>
+            <th translate class="text-right">OS Principal Amount</th>
+            <th translate class="text-right">OS Interest Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of SummaryObj?.InstallmentObjs;let i=index">
+            <td class="text-center">{{item.InstSeqNo}}</td>
+            <td class="text-right">{{item.InstAmt | number:'.2':'en-US'}}</td>
+            <td class="text-right">{{item.PrincipalAmt | number:'.2':'en-US'}}</td>
+            <td class="text-right">{{item.InterestAmt | number:'.2':'en-US'}}</td>
+            <td class="text-right">{{item.OsPrincipalAmt | number:'.2':'en-US'}}</td>
+            <td class="text-right">{{item.OsInterestAmt | number:'.2':'en-US'}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div>
-      <label class="col-md-4  adInsLabel" translate>Total Fee</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TotalFeeAmt | number:'.2':'en-US'}}</label>
-      <label class="col-md-4  adInsLabel" translate>Total Fee Capitalized</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TotalFeeCptlzAmt | number:'.2':'en-US'}}</label>
+  </div>
+
+  <div *ngIf="SummaryObj?.Agrmnt?.BizTemplateCode == 'DLFN'">
+    <lib-ucSubsection [id]="'financialId'" [title]="'Financial'" [panel]="'financial'">
+    </lib-ucSubsection>
+    <div id="financial">
+      <div>
+        <label class="col-md-4  adInsLabel" translate>Total Invoice Amount</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TotalAssetPriceAmt | number:'.2':'en-US'}}</label>
+      </div>
+      <div>
+        <label class="col-md-4  adInsLabel" translate>Total Fee</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TotalFeeAmt | number:'.2':'en-US'}}</label>
+        <label class="col-md-4  adInsLabel" translate>Total Fee Capitalized</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TotalFeeCptlzAmt | number:'.2':'en-US'}}</label>
+      </div>
+      <div>
+        <label class="col-md-4  adInsLabel" translate>NTF</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.NtfAmt | number:'.2':'en-US'}}</label>
+        <label class="col-md-4  adInsLabel" translate>First Installment Type</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.MrFirstInstTypeDescr}}</label>
+      </div>
+      <div>
+        <label class="col-md-4  adInsLabel" translate>Effective Rate to Customer</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.EffectiveRatePrcnt}}%</label>
+        <label class="col-md-4  adInsLabel" translate>Flat Rate to Customer</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.FlatRatePrcnt}}</label>
+      </div>
+      <div>
+        <label class="col-md-4  adInsLabel" translate>Grace Period</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.GracePeriod}}</label>
+        <label class="col-md-4  adInsLabel" translate>Total Interest</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TotalInterestAmt | number:'.2':'en-US'}}</label>
+      </div>
+      <div>
+        <label class="col-md-4  adInsLabel" translate>Total AR</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TotalAr | number:'.2':'en-US'}}</label>
+        <label class="col-md-4  adInsLabel" translate>Gross Yield</label>
+        <label class="col-md-2  adinslabel" translate
+          *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.GrossYieldPrcnt}}%</label>
+      </div>
+      <table class="table table-responsive-md text-center table-hover">
+        <thead>
+          <tr class="table-header">
+            <th translate class="text-center">Seq No</th>
+            <th translate class="text-right">Installment Amount</th>
+            <th translate class="text-right">Principal Amount</th>
+            <th translate class="text-right">Interest Amount</th>
+            <th translate class="text-right">OS Principal Amount</th>
+            <th translate class="text-right">OS Interest Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of SummaryObj?.InstallmentObjs;let i=index">
+            <td class="text-center">{{item.InstSeqNo}}</td>
+            <td class="text-right">{{item.InstAmt | number:'.2':'en-US'}}</td>
+            <td class="text-right">{{item.PrincipalAmt | number:'.2':'en-US'}}</td>
+            <td class="text-right">{{item.InterestAmt | number:'.2':'en-US'}}</td>
+            <td class="text-right">{{item.OsPrincipalAmt | number:'.2':'en-US'}}</td>
+            <td class="text-right">{{item.OsInterestAmt | number:'.2':'en-US'}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div>
-      <label class="col-md-4  adInsLabel" translate>Total Insurance Premi</label>
-      <label class="col-md-2  adinslabel" translate>{{totalInsPremi | number:'.2':'en-US'}}</label>
-      <label class="col-md-4  adInsLabel" translate>Total Insurance Premi Capitalized</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.InsCptlzAmt | number:'.2':'en-US'}}</label>
-    </div>
-    <div>
-      <label class="col-md-4  adInsLabel" translate>Total Life Insurance Premi</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntLifeIns != undefined">{{this.SummaryObj.AgrmntLifeIns.TotalPremiFromInsco | number:'.2':'en-US'}}</label>
-      <label class="col-md-2  adinslabel" translate *ngIf="SummaryObj?.AgrmntLifeIns == undefined"></label>
-      <label class="col-md-4  adInsLabel" translate>Total Life Insurance Premi Capitalized</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.LifeInsCptlzAmt | number:'.2':'en-US'}}</label>
-    </div>
-    <div>
-      <label class="col-md-4  adInsLabel" translate>TDP</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData != undefined">{{this.SummaryObj.AgrmntFinData.TotalDownPaymentGrossAmt | number:'.2':'en-US'}}</label>
-      <label class="col-md-2  adinslabel" translate *ngIf="SummaryObj?.AgrmntFinData == undefined"></label>
-      <label class="col-md-4  adInsLabel" translate>TDP Paid at MF</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TdpPaidCoyAmt | number:'.2':'en-US'}}</label>
-    </div>
-    <div>
-      <label class="col-md-4  adInsLabel" translate>NTF</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.NtfAmt | number:'.2':'en-US'}}</label>
-      <label class="col-md-4  adInsLabel" translate>First Installment Type</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.Agrmnt">{{this.SummaryObj.Agrmnt.MrFirstInstTypeDescr}}</label>
-    </div>
-    <div>
-      <label class="col-md-4  adInsLabel" translate>Effective Rate to Customer</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.EffectiveRatePrcnt}}</label>
-      <label class="col-md-4  adInsLabel" translate>Effective Rate to Supplier</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.SupplEffectiveRatePrcnt}}</label>
-    </div>
-    <div>
-      <label class="col-md-4  adInsLabel" translate>Flat Rate to Customer</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.FlatRatePrcnt}}</label>
-      <label class="col-md-4  adInsLabel" translate>Flat Rate to Supplier</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.SupplFlatRatePrcnt}}</label>
-    </div>
-    <div>
-      <label class="col-md-4  adInsLabel" translate>Grace Period</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.GracePeriod}}</label>
-      <label class="col-md-4  adInsLabel" translate>Rouding</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.RoundingAmt | number:'.2':'en-US'}}</label>
-    </div>
-    <div>
-      <label class="col-md-4  adInsLabel" translate>Balloon Value Amount</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.BalloonValueAmt | number:'.2':'en-US'}}</label>
-      <label class="col-md-4  adInsLabel" translate>Cummulative Tenor</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.CummulativeTenor}}</label>
-    </div>
-    <div>
-      <label class="col-md-4  adInsLabel" translate>Total Interest</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TotalInterestAmt | number:'.2':'en-US'}}</label>
-      <label class="col-md-4  adInsLabel" translate>Diff Rate Amount</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.DiffRateAmt | number:'.2':'en-US'}}</label>
-    </div>
-    <div>
-      <label class="col-md-4  adInsLabel" translate>Total AR</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.TotalAr | number:'.2':'en-US'}}</label>
-      <label class="col-md-4  adInsLabel" translate>Gross Yield</label>
-      <label class="col-md-2  adinslabel" translate
-        *ngIf="SummaryObj?.AgrmntFinData">{{this.SummaryObj.AgrmntFinData.GrossYieldPrcnt}}%</label>
-    </div>
-    <table class="table table-responsive-md text-center table-hover">
-      <thead>
-        <tr class="table-header">
-          <th translate class="text-center">Seq No</th>
-          <th translate class="text-right">Installment Amount</th>
-          <th translate class="text-right">Principal Amount</th>
-          <th translate class="text-right">Interest Amount</th>
-          <th translate class="text-right">OS Principal Amount</th>
-          <th translate class="text-right">OS Interest Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of SummaryObj?.InstallmentObjs;let i=index">
-          <td class="text-center">{{item.InstSeqNo}}</td>
-          <td class="text-right">{{item.InstAmt | number:'.2':'en-US'}}</td>
-          <td class="text-right">{{item.PrincipalAmt | number:'.2':'en-US'}}</td>
-          <td class="text-right">{{item.InterestAmt | number:'.2':'en-US'}}</td>
-          <td class="text-right">{{item.OsPrincipalAmt | number:'.2':'en-US'}}</td>
-          <td class="text-right">{{item.OsInterestAmt | number:'.2':'en-US'}}</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </div>

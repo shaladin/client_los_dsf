@@ -76,11 +76,7 @@
           "label": "Religion",
           "property": "ReligionName"
         },
-        {
-          "type": "",
-          "label": "",
-          "property": ""
-        },
+        {},
         {
           "type": "boolean",
           "label": "VIP",

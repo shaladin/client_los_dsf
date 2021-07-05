@@ -78,6 +78,8 @@ export class CommonConstant {
   //MOU STAT
   public static MouStatCancel = "CAN";
   public static MouDocSigner = "DSG";
+  public static ChangeMouNew = "NEW";
+  public static ChangeMouReturn = "RTN";
 
   //LEAD STAT
   public static LeadStatCancel = "CAN";

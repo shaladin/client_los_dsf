@@ -226,10 +226,16 @@ export class AgreementViewContainerComponent implements OnInit {
         else if (this.BizTemplateCode == CommonConstant.DF) {
           this.IsAsset = false;
           this.IsInsuranceFL4W = false;
+          this.IsInsurance = false;
           this.IsLifeInsurance = false;
           this.IsPurchaseOrder = false;
           this.IsDeliveryOrder = false;
           this.IsLoanData = false;
+          this.IsCollateral = false;
+          this.IsCommission = false;
+          this.IsReservedFund = false;
+          this.IsDeviation = false;
+          this.IsInvoiceData = false;
         }
         this.IsReady = true;
       });

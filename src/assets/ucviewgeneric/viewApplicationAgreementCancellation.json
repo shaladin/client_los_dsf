@@ -32,7 +32,7 @@
         }]
       },
       {
-        "type": "text",
+        "type": "currency",
         "label": "Installment Amount",
         "property": "InstAmt"
       },
