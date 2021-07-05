@@ -1,0 +1,76 @@
+{
+    "title": "",
+    "subsection": [
+      {
+        "subSectionId": "CustMainInfoHeaderId",
+        "subSectionTitle": "Main Info",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "link",
+            "label": "Mou No",
+            "property": "MouCustNo",
+            "name": "MouCustNo",
+            "environment": "LOSR3WEB",
+            "path": "VIEW_MOU_CUST",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "MouCustId",
+                "property": "MouCustId"
+              }
+            ]
+          },
+          {
+            "type": "callback",
+            "key": "customer",
+            "label": "Customer Name",
+            "property": "CustName"
+          },
+          {
+            "type": "date",
+            "label": "Start Date",
+            "property": "StartDt"
+          },
+          {
+            "type": "date",
+            "label": "Expired Date",
+            "property": "ChangeMouCustEndDt"
+          },
+          {
+            "type": "text",
+            "label": "Status",
+            "property": "MouStat"
+          },
+          {
+            "type": "text",
+            "label": "Ref No",
+            "property": "ChangeMouCustRefNo"
+          },
+          {
+            "type": "currency",
+            "label": "Plafond Amount",
+            "property": "ChangeMouTrxPlafondAmt"
+          },
+          {
+            "type": "text",
+            "label": "Mou Freeze",
+            "property": "IsFreeze"
+          },
+          {
+            "type": "text",
+            "label": "Plafond Type",
+            "property": "PlafondType"
+          },
+          {
+            "type": "text",
+            "label": "Mou Type",
+            "property": "MouType"
+          }
+        ],
+        "querystring": {
+          "name": "viewChangeMouHeader"
+        }
+      }
+    ]
+  }

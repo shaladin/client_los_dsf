@@ -49,7 +49,7 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
 
   ngOnInit() {
 
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeaderFactoring.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewChangeMouHeader.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -57,6 +57,7 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
+    this.viewGenericObj.whereValue = [this.changeMouCustId]
 
     var ApvHoldObj = new ApprovalObj();
     ApvHoldObj.TaskId = this.taskId; 
