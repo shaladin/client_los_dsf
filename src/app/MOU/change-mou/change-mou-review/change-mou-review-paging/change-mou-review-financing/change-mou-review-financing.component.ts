@@ -81,8 +81,13 @@ export class ChangeMouReviewFinancingComponent implements OnInit {
       .post(URLConstant.GetMouCustById, { Id: this.MouCustId })
       .toPromise()
       .then((response: MouCustObj) => {
-        this.PlafondAmt = response.PlafondAmt;
         this.MrCustTypeCode = response.MrCustTypeCode;
+      });
+    await this.http
+      .post(URLConstant.GetChangeMouCustbyChangeMouTrxId, { Id: this.ChangeMouTrxId })
+      .toPromise()
+      .then((response: MouCustObj) => {
+        this.PlafondAmt = response.PlafondAmt;
       });
 
     await this.http
@@ -96,7 +101,11 @@ export class ChangeMouReviewFinancingComponent implements OnInit {
           Reason: this.listReason[0],
         });
       });
-
+      await this.http.post(URLConstant.GetMouCustScoreByMouCustId, { Id: this.MouCustId }).toPromise().then(
+        (response) => {
+          this.ScoreResult = response["ScoreResult"];
+        }
+      );
     this.initInputApprovalObj();
   }
 
@@ -182,10 +191,16 @@ export class ChangeMouReviewFinancingComponent implements OnInit {
     this.InputObj = new UcInputRFAObj(this.cookieService);
     var Attributes = [];
     var attribute1 = {
-      AttributeName: "PlafondAmt",
-      AttributeValue: this.PlafondAmt,
+      "AttributeName": "Approval Amount",
+      "AttributeValue": this.PlafondAmt
+    };
+
+    var attribute2 = {
+      "AttributeName": "Scoring",
+      "AttributeValue": this.ScoreResult
     };
     Attributes.push(attribute1);
+    Attributes.push(attribute2);
 
     var TypeCode = {
       TypeCode: "CHG_MOU_APV_TYPE",
