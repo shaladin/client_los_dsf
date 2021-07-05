@@ -83,7 +83,7 @@ body{
 
 form label{
     letter-spacing: 0.5px !important;
-    text-transform: uppercase;
+    text-transform: uppercase !important;
 }
 
 .btn-lookup{
@@ -148,6 +148,10 @@ thead tr th {
     font-size: 12px;
 }
 
+tbody tr td {
+    text-transform: uppercase;
+}
+
 .form-section {
     text-transform: uppercase;
 }
@@ -162,6 +166,14 @@ thead tr th {
 
 .align-right{
     text-align:right;
+}
+
+.span {
+    text-transform: uppercase !important;
+}
+
+.button {
+    text-transform: uppercase !important;
 }
 
 .button-right {
@@ -344,7 +356,7 @@ aw-wizard-navigation-bar.horizontal ul.steps-indicator li a .label {
 }
 
 label {
-    text-transform: none !important;
+    text-transform: uppercase !important;
     letter-spacing: 0.5px !important;
     font-size:  1rem !important;
 }
