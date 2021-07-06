@@ -69,7 +69,7 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
       this.claimTask();
     }
     this.viewGenericObj.viewInput =
-      "./assets/ucviewgeneric/viewChangeMouHeader.json";
+      "./assets/ucviewgeneric/viewMouHeaderFactoring.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -77,7 +77,6 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
         environment: environment.losR3Web,
       },
     ];
-    this.viewGenericObj.whereValue = [this.changeMouTrxOb]
 
     await this.http
       .post(URLConstant.GetMouCustById, { Id: this.MouCustId })
