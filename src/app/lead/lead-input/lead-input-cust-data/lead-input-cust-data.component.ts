@@ -299,6 +299,7 @@ export class LeadInputCustDataComponent implements OnInit {
       (response) => {
         this.tempIdType = response[CommonConstant.ReturnObj];
         this.CustomerDataForm.patchValue({ MrIdTypeCode: response[CommonConstant.ReturnObj][0]['Key'] });
+        this.ChangeIdType(response[CommonConstant.ReturnObj][0]['Key']);
       });
 
     this.maritalStatCode = new RefMasterObj();
@@ -352,6 +353,7 @@ export class LeadInputCustDataComponent implements OnInit {
             IdNo: this.resLeadCustObj.IdNo,
             Npwp: this.resLeadCustObj.TaxIdNo,
           });
+          this.ChangeIdType(this.resLeadCustObj.MrIdTypeCode);
           this.CustModelKey = this.resLeadCustObj.MrCustModelCode;
           let arrAddCrit = new Array();
           let addCrit = new CriteriaObj();
@@ -517,7 +519,7 @@ export class LeadInputCustDataComponent implements OnInit {
               IdNo: this.resLeadCustObj.IdNo,
               Npwp: this.resLeadCustObj.TaxIdNo,
             });
-
+            this.ChangeIdType(this.resLeadCustObj.MrIdTypeCode);
             this.CustModelKey = this.resLeadCustObj.MrCustModelCode;
             let arrAddCrit = new Array();
             let addCrit = new CriteriaObj();
@@ -894,6 +896,7 @@ export class LeadInputCustDataComponent implements OnInit {
             IdNo: this.resLeadCustObj.IdNo,
             Npwp: this.resLeadCustObj.TaxIdNo,
           });
+          this.ChangeIdType(this.resLeadCustObj.MrIdTypeCode);
           this.reqLeadCustSocmedObj = new LeadCustSocmedObj();
           this.reqLeadCustSocmedObj.LeadCustId = this.resLeadCustObj.LeadCustId;
           let objListLeadCustSocmed2 = { Id: this.resLeadCustObj.LeadCustId };
@@ -1100,8 +1103,18 @@ export class LeadInputCustDataComponent implements OnInit {
   }
   //START URS-LOS-041
 
-  ChangeIdType() {
-    // this.setValidatorPattern();
+  ChangeIdType(IdType: string) {
+    this.CustomerDataForm.controls[this.controlNameIdNo].setValidators(Validators.required);
+    this.CustomerDataForm.controls[this.controlNameIdNo].updateValueAndValidity();
+
+    if (IdType == "EKTP") {
+      this.CustomerDataForm.controls[this.controlNameIdNo].setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(16), Validators.maxLength(16)]);
+      this.CustomerDataForm.controls[this.controlNameIdNo].updateValueAndValidity();
+    }
+    if (IdType == "NPWP") {
+      this.CustomerDataForm.controls[this.controlNameIdNo].setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
+      this.CustomerDataForm.controls[this.controlNameIdNo].updateValueAndValidity();
+    }
   }
 
   controlNameIdNo: string = 'IdNo';
