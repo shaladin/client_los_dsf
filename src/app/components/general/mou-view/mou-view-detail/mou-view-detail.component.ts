@@ -8,6 +8,8 @@ import { ResMouCustClauseObj } from 'app/shared/model/Response/MOU/MouCust/ResMo
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ResGetMouCustDlrFindByIdObj } from 'app/shared/model/Response/MOU/MouCust/ResGetMouCustDlrFindByIdObj.model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
 
 @Component({
   selector: 'app-mou-view-detail',
@@ -57,7 +59,8 @@ export class MouViewDetailComponent implements OnInit {
 
   ngOnInit() {
     this.ReqByIdObj.Id = this.MouCustId ;
-    
+    this.GetListActiveRefPayFreq();
+    this.GetListKvpActiveRefCurr();
     if(this.MouType == 'FACTORING'){
     this.getListedMouCustFctr(this.ReqByIdObj);
     }
@@ -153,6 +156,30 @@ export class MouViewDetailComponent implements OnInit {
       });
   }
 
+  dictRefPayFreq: { [id: string]: string } = {};
+  GetListActiveRefPayFreq() {
+    this.http.post(URLConstant.GetListActiveRefPayFreq, null).subscribe(
+      (response: GenericListObj) => {
+        for (let index = 0; index < response.ReturnObject.length; index++) {
+          const element = response.ReturnObject[index];
+          this.dictRefPayFreq[element.PayFreqCode] = element.Descr;
+        }
+      }
+    );
+  }
+  
+  dictRefCurr: { [id: string]: string } = {};
+  GetListKvpActiveRefCurr() {
+    this.http.post(URLConstant.GetListKvpActiveRefCurr, null).subscribe(
+      (response: GenericKeyValueListObj) => {
+        for (let index = 0; index < response.ReturnObject.length; index++) {
+          const element = response.ReturnObject[index];
+          this.dictRefCurr[element.Key] = element.Value;
+        }
+      }
+    );
+  }
+  
   getListedMouCustFctr(ReqByIdObj){
     this.http.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, ReqByIdObj).subscribe(
       (response) => {
