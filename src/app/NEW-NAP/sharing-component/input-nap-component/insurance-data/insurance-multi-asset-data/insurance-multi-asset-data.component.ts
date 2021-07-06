@@ -922,6 +922,9 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
             });
             this.stampdutyFeeLock = true;
             this.adminFeeLock = true;
+
+            this.InsuranceDataForm.controls.CustAdminFeeAmt.clearValidators();
+            this.InsuranceDataForm.controls.CustAdminFeeAmt.updateValueAndValidity();
             break;
           }
         }
