@@ -504,7 +504,6 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   }
 
   async getAppCollData(AppId: number = 0, AppCollateralId: number = 0, IsExisting: boolean = false, IsFromLookup: boolean, response: object) {
-    console.log(response);
     if (IsFromLookup) {
       this.AddCollForm.patchValue({
         AppCollateralId: AppCollateralId,
