@@ -504,6 +504,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   }
 
   async getAppCollData(AppId: number = 0, AppCollateralId: number = 0, IsExisting: boolean = false, IsFromLookup: boolean, response: object) {
+    console.log(response);
     if (IsFromLookup) {
       this.AddCollForm.patchValue({
         AppCollateralId: AppCollateralId,
@@ -578,7 +579,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.isExisting = true;
       this.isCopy=false;   
       this.AddCollForm.controls.AssetTypeCode.disable();
-      this.AddCollForm.controls.ManufacturingYear.disable();
+      if (response["ManufacturingYear"]) this.AddCollForm.controls.ManufacturingYear.disable();
       this.AddCollForm.controls.CollateralValueAmt.disable();
       this.AddCollForm.controls.MrCollateralUsageCode.disable();
       this.AddCollForm.controls.AssetTaxDt.disable();
