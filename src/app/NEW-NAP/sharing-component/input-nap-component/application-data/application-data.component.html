@@ -6,13 +6,13 @@
           (ngSubmit)="NapAppModelForm.valid && ClickSave()" #enjiForm="ngForm">
 
           <!-- Sales Info -->
-          <lib-ucSubsection [id]="'salesInfomationId'" [title]="'Sales Information'" [panel]="'salesInfomation'">
+          <lib-ucSubsection [id]="'salesInfomationId'" [title]="'MO Information'" [panel]="'salesInfomation'">
           </lib-ucSubsection>
           <div class="form-body" id="salesInfomation">
             <div class="form-group row">
               <!-- Sales Officer -->
               <div class="form-group col-md-2 adins-required">
-                <label class="adInsLabel" translate>MO Officer </label>
+                <label class="adInsLabel" translate>MO's Officer </label>
               </div>
               <div class="col-md-4" *ngIf="isInputLookupObj && !isSalesOfficerCode">
                 <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='NapAppModelForm' [enjiForm]='enjiForm'
@@ -24,18 +24,18 @@
               <label class="col-md-4 adInsLabel"
                 *ngIf="isSalesOfficerCode">{{NapAppModelForm.controls.SalesOfficerName.value}}</label>
               <!-- Sales Supervisor -->
-              <label class="col-md-2 adInsLabel" translate>MO Supervisor </label>
+              <label class="col-md-2 adInsLabel" translate>MO's Supervisor </label>
               <label class="col-md-4 adInsLabel"
-                *ngIf="NapAppModelForm.controls.SalesHeadName.value">{{NapAppModelForm.controls.SalesHeadName.value}}</label>
-              <label class="col-md-4 adInsLabel" *ngIf="!NapAppModelForm.controls.SalesHeadName.value"> - </label>
+                *ngIf="NapAppModelForm.controls.SalesHeadName.value" translate>{{NapAppModelForm.controls.SalesHeadName.value}}</label>
+              <label class="col-md-4 adInsLabel" *ngIf="!NapAppModelForm.controls.SalesHeadName.value" translate> - </label>
             </div>
 
             <div class="form-group row">
               <!-- Sales Notes -->
-              <label class="col-md-2 adInsLabel" translate>MO Notes</label>
+              <label class="col-md-2 adInsLabel" translate>MO's Notes</label>
               <div class="col-md-4">
                 <textarea class="form-control adInsInput width-100-per" id="basicTextarea" formControlName="SalesNotes"
-                  rows="3"></textarea>
+                  rows="3" translate></textarea>
               </div>
             </div>
           </div>

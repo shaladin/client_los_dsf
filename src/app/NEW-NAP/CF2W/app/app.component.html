@@ -6,12 +6,12 @@
           <form class="form form-horizontal" [formGroup]="appForm" (ngSubmit)="appForm.valid"
             #enjiForm="ngForm">
             <div class="form-body">
-              <lib-ucSubsection [id]="'salesInformmationId'" [title]="'Sales Information'"
+              <lib-ucSubsection [id]="'salesInformmationId'" [title]="'MO Information'"
                 [panel]="'salesInformmation'">
               </lib-ucSubsection>
               <div id="salesInformmation">
                 <div class="form-group row">
-                  <label class="col-md-2  adInsLabel" translate>Sales Officer</label>
+                  <label class="col-md-2  adInsLabel" translate>MO's Officer</label>
                   <div class="col-md-4">
                     <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='appForm' [enjiForm]='enjiForm'
                       [identifier]="'employeeIdentifier'" (lookup)="getLookupEmployeeResponse($event)">
@@ -19,24 +19,24 @@
                     <lib-uc-show-errors [control]="appForm.controls.SalesOfficerName" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
-                  <label class="col-md-2 adInsLabel" translate>Sales Supervisor </label>
-                  <label class="col-md-4 adInsLabel">{{appForm.controls.SalesHeadName.value}} </label>
+                  <label class="col-md-2 adInsLabel" translate>MO's Supervisor </label>
+                  <label class="col-md-4 adInsLabel" translate>{{appForm.controls.SalesHeadName.value}} </label>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2  adInsLabel" translate>Sales Recommendation</label>
+                  <label class="col-md-2  adInsLabel" translate>MO's Recommendation</label>
                   <div class="col-md-4">
                     <select class="form-control adInsInput" style="width: auto" formControlName="MrSalesRecommendCode"
                       [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.MrSalesRecommendCode.invalid }">
-                      <option *ngFor="let it of tempMrSalesRecommendCode" [value]="it.Key">
+                      <option *ngFor="let it of tempMrSalesRecommendCode" [value]="it.Key" translate>
                         {{it.Value}}</option>
                     </select>
                     <lib-uc-show-errors [control]="appForm.controls.MrSalesRecommendCode" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
-                  <label class="col-md-2  adInsLabel" translate>Sales Notes</label>
+                  <label class="col-md-2  adInsLabel" translate>MO's Notes</label>
                   <div class="col-md-4">
                     <textarea type="text" class="form-control adInsInput" formControlName="SalesNotes"
-                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.SalesNotes.invalid }"></textarea>
+                      [ngClass]="{ 'is-invalid': enjiForm.submitted && appForm.controls.SalesNotes.invalid }" translate></textarea>
                     <lib-uc-show-errors [control]="appForm.controls.SalesNotes" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>

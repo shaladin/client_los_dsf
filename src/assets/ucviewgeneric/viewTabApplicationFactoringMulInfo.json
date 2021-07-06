@@ -3,27 +3,27 @@
     "subsection": [
       {
         "subSectionId": "SalesInfoId",
-        "subSectionTitle": "Sales Information",
+        "subSectionTitle": "MO Information",
         "mainInfoPath": "/Generic/GetDataViewBySQL",
         "mainInfo": [
           {
             "type": "text",
-            "label": "Sales Officer",
+            "label": "MO's Officer",
             "property": "SalesOfficer"
           },
           {
             "type": "text",
-            "label": "Sales Supervisor",
+            "label": "MO's Supervisor",
             "property": "SalesSpv"
           },
           {
             "type": "text",
-            "label": "Sales Recommendation",
+            "label": "MO's Recommendation",
             "property": "SalesRecommend"
           },
           {
             "type": "text",
-            "label": "Sales Notes",
+            "label": "MO's Notes",
             "property": "SalesNotes"
           }
         ],

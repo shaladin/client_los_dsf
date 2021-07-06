@@ -8,13 +8,13 @@
           <form class="form form-horizontal" [formGroup]="NapAppModelForm"
             (ngSubmit)="NapAppModelForm.valid && ClickSave()" #enjiForm="ngForm">
             <!-- Sales Info -->
-            <lib-ucSubsection [id]="'salesInfomationId'" [title]="'Sales Information'" [panel]="'salesInfomation'">
+            <lib-ucSubsection [id]="'salesInfomationId'" [title]="'MO Information'" [panel]="'salesInfomation'">
             </lib-ucSubsection>
             <div class="form-body" id="salesInfomation">
               <div class="form-group row">
                 <!-- Sales Officer -->
                 <div class="form-group col-md-2 adins-required">
-                  <label class="adInsLabel" translate>MO Officer </label>
+                  <label class="adInsLabel" translate>MO's Officer </label>
                 </div>
                 <div class="col-md-4" *ngIf="isInputLookupObj">
                   <lib-uclookupgeneric [lookupInput]="inputLookupObj" [parentForm]='NapAppModelForm'
@@ -25,30 +25,30 @@
                     [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <!-- Sales Supervisor -->
-                <label class="col-md-2 adInsLabel" translate>MO Supervisor </label>
-                <label class="col-md-4 adInsLabel">{{NapAppModelForm.controls.SalesHeadName.value}} </label>
+                <label class="col-md-2 adInsLabel" translate>MO's Supervisor </label>
+                <label class="col-md-4 adInsLabel" translate>{{NapAppModelForm.controls.SalesHeadName.value}} </label>
               </div>
 
               <div class="form-group row">
                 <!-- Sales Recommendation -->
                 <div class="form-group col-md-2 adins-required">
-                  <label class="adInsLabel" translate>MO Recommendation </label>
+                  <label class="adInsLabel" translate>MO's Recommendation </label>
                 </div>
                 <div class="col-md-4" *ngIf="applicationDDLitems['SLS_RECOM']">
                   <select class="form-control adInsInput" style="width: auto" formControlName="MrSalesRecommendCode"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.MrSalesRecommendCode.invalid }">
-                    <option value="">-Select One-</option>
-                    <option *ngFor="let it of applicationDDLitems['SLS_RECOM']" value="{{it.Key}}">
+                    <option value="" translate>-Select One-</option>
+                    <option *ngFor="let it of applicationDDLitems['SLS_RECOM']" value="{{it.Key}}" translate>
                       {{it.Value}} </option>
                   </select>
                   <lib-uc-show-errors [control]="NapAppModelForm.controls.MrSalesRecommendCode"
                     [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
                 <!-- Sales Notes -->
-                <label class="col-md-2 adInsLabel" translate>MO Notes </label>
+                <label class="col-md-2 adInsLabel" translate>MO's Notes </label>
                 <div class="col-md-4">
                   <textarea class="form-control adInsInput width-75-per" id="basicTextarea" formControlName="SalesNotes"
-                    rows="3"></textarea>
+                    rows="3" translate></textarea>
                 </div>
               </div>
 
