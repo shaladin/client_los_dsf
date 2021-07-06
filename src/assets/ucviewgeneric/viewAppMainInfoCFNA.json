@@ -21,25 +21,6 @@
           ]
         },
         {
-          "type": "switch",
-          "case": [
-            {
-              "conditions": [
-                {
-                  "property": "BizTemplateCode",
-                  "value": "CFNA",
-                  "restriction": "NEQ"
-                }
-              ],
-              "result": {
-                "type": "text",
-                "label": "Number Of Asset",
-                "property": "NumOfAsset"
-              }
-            }
-          ]
-        },
-        {
           "type": "text",
           "label": "Customer Model",
           "property": "CustModel"
