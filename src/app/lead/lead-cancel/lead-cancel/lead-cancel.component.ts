@@ -18,7 +18,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 export class LeadCancelComponent implements OnInit {
   listSelectedId: Array<any> = new Array<any>();
   tempPagingObj: UcTempPagingObj = new UcTempPagingObj();
-  allowedStat = ['INP', 'NEW'];
+  allowedStat = ['INP', 'NEW', 'NEW_SMPL'];
   tempLeadCancelObj: LeadCancelObj;
 
   constructor(private toastr: NGXToastrService, private router: Router) { }
