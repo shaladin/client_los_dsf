@@ -86,7 +86,7 @@ export class SingleInstDlfnComponent implements OnInit {
             TotalDisbAmt: response.TotalDisbAmt,
             GrossYieldPrcnt: response.GrossYieldPrcnt
           });
-          this.TempTotalDisbAmt = response.TotalDisbAmt;
+          this.TempTotalDisbAmt = response.TotalDisbAmt + response.TotalInterestAmt;
           this.SetInstallmentTable();
           this.SetNeedReCalculate(false);
           this.CalCulateTotalTopAmount(this.AppId, response.NtfAmt);
