@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
 import { AfternoonmonitoringComponent } from './report/factoring/afternoonmonitoring/afternoonmonitoring.component';
+import { CollateralComponent } from './report/factoring/collateral/collateral.component';
 import { MorningmonitoringComponent } from './report/factoring/morningmonitoring/morningmonitoring.component';
 
 const routes: Routes = [
@@ -25,6 +26,18 @@ const routes: Routes = [
         component: AfternoonmonitoringComponent,
         data: {
           title: "Report Fact Afternoon Monitoring"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_FACT_COLLATERAL,
+        component: CollateralComponent,
+        data: {
+          title: "Report Fact Collateral"
         }
       }
     ]

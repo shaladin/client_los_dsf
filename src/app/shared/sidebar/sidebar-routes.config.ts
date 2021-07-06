@@ -322,6 +322,7 @@ export const ROUTES: RouteInfo[] = [
         Submenu: [
           { Path: NavigationConstantDsf.REPORT_FACT_MORNING_MONITORING, Title: 'Morning Monitoring', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
           { Path: NavigationConstantDsf.REPORT_FACT_AFTERNOON_MONITORING, Title: 'Afternoon Monitoring', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+          { Path: NavigationConstantDsf.REPORT_FACT_COLLATERAL, Title: 'Collateral', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
         ], Params: [] 
       }
     ], Params: []
