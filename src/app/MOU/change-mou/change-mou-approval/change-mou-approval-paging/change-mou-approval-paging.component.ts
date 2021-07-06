@@ -32,13 +32,23 @@ export class ChangeMouApprovalPagingComponent implements OnInit {
   }
 
   getEvent(event) {
+    let custId: number;
+    let mrCustTypeCode: string;
     if (event.Key == "customer") {
-      var custObj = { CustNo: event.RowObj.CustNo };
-      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
-        response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
-        }
-      );
+      let CustNoObj = { CustNo: event.RowObj.CustNo };
+      this.http.post(URLConstant.GetCustByCustNo, CustNoObj).subscribe(
+        (response) => {
+          custId = response['CustId'];
+          mrCustTypeCode = response['MrCustTypeCode'];
+
+          if (mrCustTypeCode == CommonConstant.CustTypeCompany) {
+            AdInsHelper.OpenCustomerCoyViewByCustId(custId);
+          }
+
+          if (mrCustTypeCode == CommonConstant.CustTypePersonal) {
+            AdInsHelper.OpenCustomerViewByCustId(custId);
+          }
+        });
     }
   }
 }

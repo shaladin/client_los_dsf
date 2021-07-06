@@ -259,7 +259,7 @@ export class ApplicationDataComponent implements OnInit {
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
     this.ddlPayFreqObj.customObjName = "DDLRefProdComptCode";
-    this.ddlPayFreqObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.ddlPayFreqObj.ddlType = UcDropdownListConstant.DDL_TYPE_ONE;
     this.ddlPayFreqObj.isSelectOutput = true;
     this.isDdlPayFreqReady = true;
   }

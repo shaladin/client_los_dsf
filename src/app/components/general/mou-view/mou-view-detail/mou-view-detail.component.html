@@ -36,7 +36,7 @@
   <div class="form-body" id="MouData">
     <div class="form-group row" *ngIf="MouType != 'FINANCING'">
       <label class="col-md-2 adInsLabel" translate>Currency </label>
-      <label class="col-md-2 adInsLabel" translate>{{CurrCode}} </label>
+      <label class="col-md-2 adInsLabel" translate>{{dictRefCurr[CurrCode]}} </label>
     </div>
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Plafond Amount</label>
@@ -78,7 +78,7 @@
       <label class="col-md-4 adInsLabel" translate>{{TenorFrom}} &nbsp;&nbsp;&nbsp;&nbsp; to &nbsp;&nbsp;&nbsp;&nbsp; {{TenorTo}}</label>
       
       <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
-      <label class="col-md-4 adInsLabel" translate>{{PayFreqCode}}</label>
+      <label class="col-md-4 adInsLabel" translate>{{dictRefPayFreq[PayFreqCode]}}</label>
     </div>
 
     <div *ngIf="MouType == 'GENERAL'" class="form-group row">
@@ -86,7 +86,7 @@
       <label class="col-md-4 adInsLabel" translate>{{MrInterestTypeCode}}</label>
       
       <label class="col-md-2 adInsLabel" translate>Payment Frequency </label>
-      <label class="col-md-4 adInsLabel" translate>{{PayFreqCode}} </label>
+      <label class="col-md-4 adInsLabel" translate>{{dictRefPayFreq[PayFreqCode]}} </label>
     </div>
     <div *ngIf="MouType == 'FACTORING'" class="form-group row">
       <label class="col-md-2 adInsLabel" translate>Interest Rate (%)</label>
@@ -129,7 +129,7 @@
     <div *ngIf="MouType == 'FINANCING'" >
         <div class="form-group row">
           <label class="col-md-2 adInsLabel" translate>Currency </label>
-          <label class="col-md-4 adInsLabel" translate>{{CurrCode}}</label>
+          <label class="col-md-4 adInsLabel" translate>{{dictRefCurr[CurrCode]}}</label>
           
           <label class="col-md-2 adInsLabel" translate>WoP</label>
           <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.WopName}}</label>
@@ -143,7 +143,7 @@
         </div>
         <div class="form-group row">
           <label class="col-md-2 adInsLabel" translate>Payment Frequency</label>
-          <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.PayFreqCode}}</label>
+          <label class="col-md-4 adInsLabel" translate>{{dictRefPayFreq[MouCustDlrFindData.PayFreqCode]}}</label>
           
           <label class="col-md-2 adInsLabel" translate>Interest Rate (%) </label>
           <label class="col-md-4 adInsLabel" translate>{{MouCustDlrFindData.InterestRatePrcnt}} </label>

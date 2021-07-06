@@ -11,6 +11,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { CustObj } from 'app/shared/model/CustObj.Model';
 
 @Component({
   selector: 'app-mou-customer-request',
@@ -36,12 +37,21 @@ export class MouCustomerRequestComponent implements OnInit {
   }
 
   customerView(ev) {
-    var custId: number;
+    let custId: number;
+    let mrCustTypeCode: string;
     this.CustNoObj.CustNo = ev.RowObj.CustNo;
     this.http.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
       (response) => {
         custId = response['CustId'];
-        AdInsHelper.OpenCustomerViewByCustId(custId);
+        mrCustTypeCode = response['MrCustTypeCode'];
+        
+        if(mrCustTypeCode == CommonConstant.CustTypeCompany){
+          AdInsHelper.OpenCustomerCoyViewByCustId(custId);
+        }
+        
+        if(mrCustTypeCode == CommonConstant.CustTypePersonal){
+          AdInsHelper.OpenCustomerViewByCustId(custId);
+        }
       });
   }
 }
