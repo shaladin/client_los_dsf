@@ -173,7 +173,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], { BizTemplateCode: 'FCTR' });
   }
 
   SaveData() {
@@ -201,7 +201,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
       };
   
       this.httpClient.post(URLConstant.UpdateAppInvoiceFctr, request).subscribe((response) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], { BizTemplateCode: 'FCTR' });
       });
     }
     

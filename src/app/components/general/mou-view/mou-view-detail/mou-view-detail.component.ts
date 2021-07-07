@@ -10,6 +10,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { ResGetMouCustDlrFindByIdObj } from 'app/shared/model/Response/MOU/MouCust/ResGetMouCustDlrFindByIdObj.model';
 import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
 import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
+import { VendorObj } from 'app/shared/model/Vendor.Model';
 
 @Component({
   selector: 'app-mou-view-detail',
@@ -178,6 +179,14 @@ export class MouViewDetailComponent implements OnInit {
         }
       }
     );
+  }
+  
+  ClickLinkManufacturer(vendorCode: string) {
+    this.http.post(URLConstant.GetVendorByVendorCode, { Code: vendorCode }).subscribe(
+      (responseLink: VendorObj) => {
+        console.log(responseLink);
+        AdInsHelper.OpenVendorBranchViewByVendorId(responseLink.VendorId);
+      });
   }
   
   getListedMouCustFctr(ReqByIdObj){
