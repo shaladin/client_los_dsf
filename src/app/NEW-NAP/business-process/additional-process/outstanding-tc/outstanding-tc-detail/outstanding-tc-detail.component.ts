@@ -107,7 +107,6 @@ export class OutstandingTcDetailComponent implements OnInit {
       this.appTC.TcName = this.OustandingTCForm.value.TCList[i].TcName;
       this.appTC.PriorTo = this.OustandingTCForm.value.TCList[i].PriorTo;
       this.appTC.IsChecked = this.OustandingTCForm.getRawValue().TCList[i].IsChecked;
-      this.appTC.IsWaived = this.OustandingTCForm.getRawValue().TCList[i].IsWaived;
       this.appTC.ExpiredDt = this.OustandingTCForm.getRawValue().TCList[i].ExpiredDt;
       this.appTC.IsMandatory = this.OustandingTCForm.value.TCList[i].IsMandatory;
       this.appTC.PromisedDt = this.OustandingTCForm.getRawValue().TCList[i].PromisedDt;
