@@ -47,7 +47,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
 
   revolvingName = "";
   plafondName = "";
-
+  mouTypeName = "";
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
     MouCustNo: [""],
@@ -137,6 +137,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
       this.http
         .post(URLConstant.GetLatestChangeMouCustVersionById, mouCust)
         .subscribe((response) => {
+          console.log(response);
           if (response["Status"] == "Failed") {
             this.httpClient
               .post(URLConstant.GetMouCustById, mouCust)
@@ -165,7 +166,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
                 this.MOUMainInfoForm.patchValue({
                   ...response,
                 });
-
+                this.GetRefmasterData();
                 var custObj = { CustNo: response["CustNo"] };
 
                 this.httpClient
@@ -206,6 +207,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
             this.MOUMainInfoForm.patchValue({
               ...response,
             });
+            this.GetRefmasterData();
             this.ChnMouVersion = response["Version"] + 1;
             console.log(response);
 
@@ -223,7 +225,6 @@ export class ChangeMouRequestDetailComponent implements OnInit {
         MrChangeMouTypeCode: this.mouType,
       });
       this.CheckMouChangeType(this.mouType);
-      this.GetRefmasterData();
     }
 
     if(this.MOUMainInfoForm.controls.PlafondType.value == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOCLLTR)
@@ -239,7 +240,37 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe();
+     this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe();
+  }
+  
+  GetRefmasterData(){
+    if(this.MOUMainInfoForm.controls.MrRevolvingTypeCode.value === "-"){
+      this.revolvingName = "-";
+    }
+    else{
+      this.http
+      .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
+        RefMasterTypeCode: CommonConstant.MOU_REVOLVING_TYPE, MasterCode: this.MOUMainInfoForm.controls.MrRevolvingTypeCode.value
+      })
+      .subscribe((response) => {
+          this.revolvingName = response["Descr"];
+      });
+    }
+    this.http
+    .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodePlafonType, MasterCode: this.MOUMainInfoForm.controls.PlafondType.value
+    })
+    .subscribe((response) => {
+      this.plafondName = response["Descr"];
+    });
+
+    this.http
+    .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMouType, MasterCode: this.MOUMainInfoForm.controls.MrMouTypeCode.value
+    })
+    .subscribe((response) => {
+      this.mouTypeName = response["Descr"];
+    });
   }
 
   MouChangeTypeEvent(event) {
@@ -251,7 +282,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
       this.MOUMainInfoForm.patchValue({
         ...this.responseChangeMouObj
       });
-
+      this.GetRefmasterData();
       this.MOUMainInfoForm.patchValue({
         MrChangeMouTypeCode: trxType,
         EndDt: formatDate(this.businessDt, 'yyyy-MM-dd', 'en-US')
@@ -362,27 +393,5 @@ export class ChangeMouRequestDetailComponent implements OnInit {
           );
         });
     }
-  }
-
-  GetRefmasterData(){
-    if(this.MOUMainInfoForm.controls.MrRevolvingTypeCode.value === "-"){
-      this.revolvingName = "-";
-    }
-    else{
-      this.http
-      .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
-        RefMasterTypeCode: CommonConstant.MOU_REVOLVING_TYPE, MasterCode: this.MOUMainInfoForm.controls.MrRevolvingTypeCode.value
-      })
-      .subscribe((response) => {
-          this.revolvingName = response["Descr"];
-      });
-    }
-    this.http
-    .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
-      RefMasterTypeCode: CommonConstant.RefMasterTypeCodePlafonType, MasterCode: this.MOUMainInfoForm.controls.PlafondType.value
-    })
-    .subscribe((response) => {
-      this.plafondName = response["Descr"];
-    });
   }
 }
