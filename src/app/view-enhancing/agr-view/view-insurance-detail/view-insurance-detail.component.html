@@ -59,59 +59,59 @@
               <div class="col-md-6">
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Total Main Premi to Customer </label>
-                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalCustMainPremiAmt | number:'.2':'en-US'}}
+                  <label class="col-md-6 adInsLabel"> {{appInsObjObj.TotalCustMainPremiAmt | number:'.2':'en-US'}}
                   </label>
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Total Additional Premi to Customer </label>
-                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalCustAddPremiAmt | number:'.2':'en-US'}}
+                  <label class="col-md-6 adInsLabel"> {{appInsObjObj.TotalCustAddPremiAmt | number:'.2':'en-US'}}
                   </label>
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Total Fee to Customer </label>
-                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalCustFeeAmt | number:'.2':'en-US'}} </label>
+                  <label class="col-md-6 adInsLabel"> {{appInsObjObj.TotalCustFeeAmt | number:'.2':'en-US'}} </label>
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Total Premi to Customer </label>
                   <label class="col-md-6 adInsLabel">
-                    {{appInsuranceObj.TotalCustMainPremiAmt + appInsuranceObj.TotalCustAddPremiAmt + appInsuranceObj.TotalCustFeeAmt | number:'.2':'en-US'}}
+                    {{appInsObjObj.TotalInsCustAmt | number:'.2':'en-US'}}
                   </label>
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Discount Amount </label>
-                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalCustDiscAmt | number:'.2':'en-US'}}
+                  <label class="col-md-6 adInsLabel"> {{appInsObjObj.TotalCustDiscAmt | number:'.2':'en-US'}}
                   </label>
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Total Premi to Customer after Discount</label>
-                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalCustPremiAmt | number:'.2':'en-US'}}
+                  <label class="col-md-6 adInsLabel"> {{appInsObjObj.TotalCustPremiAmt - appInsObjObj.TotalCustDiscAmt | number:'.2':'en-US'}}
                   </label>
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Capitalize Amount</label>
-                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalInsCptlzAmt | number:'.2':'en-US'}}
+                  <label class="col-md-6 adInsLabel"> {{appInsObjObj.TotalInsCptlzAmt | number:'.2':'en-US'}}
                   </label>
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Total Main Premi from Insco </label>
-                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalInscoMainPremiAmt | number:'.2':'en-US'}}
+                  <label class="col-md-6 adInsLabel"> {{appInsObjObj.TotalInscoMainPremiAmt | number:'.2':'en-US'}}
                   </label>
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Total Additional Premi from Insco </label>
-                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalInscoAddPremiAmt | number:'.2':'en-US'}}
+                  <label class="col-md-6 adInsLabel"> {{appInsObjObj.TotalInscoAddPremiAmt | number:'.2':'en-US'}}
                   </label>
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Total Fee from Insco </label>
-                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalInscoFeeAmt | number:'.2':'en-US'}}
+                  <label class="col-md-6 adInsLabel"> {{appInsObjObj.TotalInscoFeeAmt | number:'.2':'en-US'}}
                   </label>
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Total Premi from Insco </label>
-                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalInscoPremiAmt | number:'.2':'en-US'}}
+                  <label class="col-md-6 adInsLabel"> {{appInsObjObj.TotalInsInscoAmt | number:'.2':'en-US'}}
                   </label>
                 </div>
               </div>
@@ -262,22 +262,22 @@
               <div class="col-md-6">
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Total Main Premi to Customer </label>
-                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalCustMainPremiAmt | number:'.2':'en-US'}}
+                  <label class="col-md-6 adInsLabel"> {{appInsObjObj.TotalCustMainPremiAmt | number:'.2':'en-US'}}
                   </label>
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Total Additional Premi to Customer </label>
-                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalCustAddPremiAmt | number:'.2':'en-US'}}
+                  <label class="col-md-6 adInsLabel"> {{appInsObjObj.TotalCustAddPremiAmt | number:'.2':'en-US'}}
                   </label>
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Total Fee to Customer </label>
-                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalCustFeeAmt | number:'.2':'en-US'}} </label>
+                  <label class="col-md-6 adInsLabel"> {{appInsObjObj.TotalCustFeeAmt | number:'.2':'en-US'}} </label>
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Total Premi to Customer </label>
                   <label class="col-md-6 adInsLabel">
-                    {{appInsuranceObj.TotalCustMainPremiAmt + appInsuranceObj.TotalCustAddPremiAmt + appInsuranceObj.TotalCustFeeAmt | number:'.2':'en-US'}}
+                    {{appInsuranceObj.TotalInsCustAmt | number:'.2':'en-US'}}
                   </label>
                 </div>
                 <div class="row">
@@ -287,7 +287,7 @@
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Total Premi to Customer after Discount</label>
-                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalCustPremiAmt | number:'.2':'en-US'}}
+                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalCustPremiAmt - appInsuranceObj.TotalCustDiscAmt | number:'.2':'en-US'}}
                   </label>
                 </div>
                 <div class="row">
@@ -314,7 +314,7 @@
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Total Premi from Insco </label>
-                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalInscoPremiAmt | number:'.2':'en-US'}}
+                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalInsInscoAmt | number:'.2':'en-US'}}
                   </label>
                 </div>
               </div>
