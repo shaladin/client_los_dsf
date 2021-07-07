@@ -19,37 +19,37 @@
             "type": "sort",
             "position": "center",
             "label": "Trx No",
-            "name": "TRX_NO"
+            "name": "TrxNo"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Apv No",
-            "name": "APV_NO"
+            "name": "ApvNo"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Request By",
-            "name": "REQUEST_BY"
+            "name": "RequestBy"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Request Date",
-            "name": "REQUEST_DATE"
+            "name": "RequestDate"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Main User Id",
-            "name": "MAIN_USER_ID"
+            "name": "MainUserId"
         },
         {
             "type": "sort",
             "position": "center",
             "label": "Current User Id",
-            "name": "CURRENT_USER_ID"
+            "name": "CurrentUserId"
         },
         {
             "type": "label",
@@ -71,32 +71,32 @@
         {
             "type": "text",
             "position": "center",
-            "property": "TRX_NO"
+            "property": "TrxNo"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "APV_NO"
+            "property": "ApvNo"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "REQUEST_BY"
+            "property": "RequestBy"
         },
         {
             "type": "date",
             "position": "center",
-            "property": "REQUEST_DATE"
+            "property": "RequestDate"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "MAIN_USER_ID"
+            "property": "MainUserId"
         },
         {
             "type": "text",
             "position": "center",
-            "property": "CURRENT_USER_ID"
+            "property": "CurrentUserId"
         },
         {
             "type": "action",

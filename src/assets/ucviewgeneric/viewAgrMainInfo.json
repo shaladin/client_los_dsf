@@ -21,23 +21,9 @@
             }
           ]
         },
-		{            
+		    {            
           "type" : "switch", 
           "case" : [ 
-            {
-              "conditions": [                  
-                {
-                  "property" : "BizTemplateCode",
-                  "value" : "CF4W",
-                  "restriction" : "EQ"
-                }
-              ],
-              "result": {
-                "type": "text",
-                "label": "Number Of Asset",
-                "property" : "NumOfAsset"
-              }
-            },
             {
               "conditions": [                  
                 {
@@ -97,10 +83,27 @@
             }
           ]
         },
-        {
-          "type": "text",
-          "label": "Number of Asset",
-          "property": "NumOfAsset"
+		    {            
+          "type" : "switch", 
+          "case" : [ 
+            {
+              "conditions": [                  
+                {
+                  "property" : "BizTemplateCode",
+                  "value": [
+                    "FCTR",
+                    "DLFN"
+                  ],
+                  "restriction" : "NIN"
+                }
+              ],
+              "result": {
+                "type": "text",
+                "label": "Number Of Asset",
+                "property" : "NumOfAsset"
+              }
+            }
+          ]
         },
         {
           "type": "text",

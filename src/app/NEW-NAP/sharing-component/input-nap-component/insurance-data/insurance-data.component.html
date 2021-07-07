@@ -133,6 +133,8 @@
                     <lib-uc-show-errors [control]="InsuranceDataForm.controls.CustNotes" [submit]="enjiForm.submitted">
                     </lib-uc-show-errors>
                   </div>
+                  <label class="col-md-2" *ngIf="InsuranceDataForm.controls.InsAssetCoveredBy.value == 'CUCO'" for="InsLenCust" translate>Customer Insurance Length</label>
+                  <label class="col-md-4" *ngIf="InsuranceDataForm.controls.InsAssetCoveredBy.value == 'CUCO'" id="InsLenCust" translate>{{insLenCust}}</label>
                 </div>
               </div>
               <div

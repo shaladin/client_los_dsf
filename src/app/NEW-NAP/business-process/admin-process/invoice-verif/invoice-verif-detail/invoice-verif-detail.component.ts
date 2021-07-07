@@ -114,10 +114,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
         if (response.DisbInfoId != 0) {
           this.AccName = response.AccName;
           this.AccNo = response.AccNo;
-          var objectBank = {
-            BankCode: response.BankCode
-          }
-          this.httpClient.post(URLConstant.GetRefBankByBankCodeAsync, objectBank).subscribe(
+          this.httpClient.post(URLConstant.GetRefBankByBankCodeAsync, { Code: response.BankCode }).subscribe(
             (responseBank) => {
               this.BankName = responseBank["BankName"];
             });
@@ -176,7 +173,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], { BizTemplateCode: 'FCTR' });
   }
 
   SaveData() {
@@ -204,7 +201,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
       };
   
       this.httpClient.post(URLConstant.UpdateAppInvoiceFctr, request).subscribe((response) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], { BizTemplateCode: 'FCTR' });
       });
     }
     

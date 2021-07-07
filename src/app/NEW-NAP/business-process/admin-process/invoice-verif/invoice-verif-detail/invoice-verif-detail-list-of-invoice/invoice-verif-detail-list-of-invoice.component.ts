@@ -56,7 +56,8 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
       this.WfTaskListId = params["TaskListId"];
       this.TrxNo = params["TrxNo"];
     });
-    this.BusinessDate = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
+
+    this.BusinessDate = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.Username = currentUserContext[CommonConstant.USER_NAME];
   }

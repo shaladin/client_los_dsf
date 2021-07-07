@@ -568,7 +568,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
 
     if (this.typePage != "update") {
       this.LeadDataForm.controls['DownPaymentAmount'].clearValidators();
-      this.LeadDataForm.controls['DownPaymentAmount'].setValidators([Validators.required, Validators.min(1.00), Validators.max(this.AssetPrice)]);
+      //this.LeadDataForm.controls['DownPaymentAmount'].setValidators([Validators.required, Validators.min(1.00), Validators.max(this.AssetPrice)]);
       this.LeadDataForm.controls['DownPaymentAmount'].updateValueAndValidity();
     }
 
@@ -615,7 +615,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
       this.toastr.warningMessage("Fill The Tenor First!");
       return;
     }
-    if (this.LeadDataForm.controls["InstallmentAmt"].value != 0) this.LeadDataForm.patchValue({ InstallmentAmt: minAmt });
+    if (this.LeadDataForm.controls["InstallmentAmt"].value == 0) this.LeadDataForm.patchValue({ InstallmentAmt: minAmt });
     this.InstAmt = this.LeadDataForm.controls["InstallmentAmt"].value;
 
     if (this.AssetPrice <= 0) {
@@ -642,18 +642,18 @@ export class NewLeadInputLeadDataComponent implements OnInit {
     if (this.LeadDataForm.controls.InstallmentAmt.value < minAmt) {
       this.toastr.warningMessage("Installment Amount must be bigger than " + minAmt);
       return;
-    } else {
-      if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
-        this.TotalDownPayment = this.DPAmount + this.InstAmt;
-      }
-      else {
-        this.TotalDownPayment = this.DPAmount;
-      }
-      this.LeadDataForm.patchValue({
-        TotalDownPayment: this.TotalDownPayment
-      });
     }
 
+    if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
+      this.TotalDownPayment = this.DPAmount + this.InstAmt;
+    }
+    else {
+      this.TotalDownPayment = this.DPAmount;
+    }
+
+    this.LeadDataForm.patchValue({
+      TotalDownPayment: this.TotalDownPayment
+    });
     this.Calculate = true;
   }
 

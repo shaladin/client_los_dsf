@@ -47,7 +47,7 @@ export class NapDetailFormComponent implements OnInit {
   token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
-  BizTemplateCode: string = CommonConstant.CFNA;
+  BizTemplateCode: string = CommonConstant.DF;
 
   AppStep = {
     "NAPD": 1,
@@ -90,7 +90,7 @@ export class NapDetailFormComponent implements OnInit {
   //---
   ngOnInit() {
     this.ClaimTask();
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFctrMainInformation.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppDlfnMainInformation.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -225,7 +225,7 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_PAGING], {});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: this.BizTemplateCode });
   }
 
   ClaimTask() {

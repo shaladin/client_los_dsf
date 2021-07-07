@@ -78,6 +78,8 @@ export class CommonConstant {
   //MOU STAT
   public static MouStatCancel = "CAN";
   public static MouDocSigner = "DSG";
+  public static ChangeMouNew = "NEW";
+  public static ChangeMouReturn = "RTN";
 
   //LEAD STAT
   public static LeadStatCancel = "CAN";
@@ -396,6 +398,7 @@ export class CommonConstant {
   public static RefReasonTypeCodePreGlvApv = "PRE_GLV_APV";
   public static RefReasonTypeCodeCrdReview = "CRD_REVIEW";
   public static RefReasonTypeCodeLtkmVerify = "LTKM_VERIFY";
+  public static RefReasonTypeCodeEditAppAfterApproval = "EDIT_APP_AFT_APV";
   public static RefReasonTypeDocChecklist = "DCK_LIST";
   public static RefReasonTypeCodeInvoiceDataVerif = "INVOICE_DATA_VERIF";
   public static RefReasonTypeCodeProdDeactivate = "PROD_DEACT";

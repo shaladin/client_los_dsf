@@ -1241,6 +1241,7 @@ export class InsuranceDataComponent implements OnInit {
     return months;
   }
 
+  insLenCust: number = 0;
   GetGetCuCoInsLength() {
     let tempForm = this.InsuranceDataForm as FormGroup;
     let tempReq: InsuranceLenObj = new InsuranceLenObj();
@@ -1255,19 +1256,25 @@ export class InsuranceDataComponent implements OnInit {
         let InsuranceLen = response.InsuranceLen;
 
         let tempInsLength = tempForm.get("InsLength");
+        let tempPartialMinus = 0;
         if (tempReq.MrCoverPeriod != CommonConstant.CoverPeriodOverTenor) {
           this.minInsLength = 1;
           this.maxInsLength = 9999;
-          tempInsLength.patchValue(InsuranceLen);
           tempInsLength.enable();
-          if (tempReq.MrCoverPeriod == CommonConstant.CoverPeriodFullTenor || tempReq.MrCoverPeriod == CommonConstant.CoverPeriodAnnually) tempInsLength.disable();
-          if (tempReq.MrCoverPeriod == CommonConstant.CoverPeriodPartialTenor) this.maxInsLength = InsuranceLen;
+          if (tempReq.MrCoverPeriod == CommonConstant.CoverPeriodFullTenor || tempReq.MrCoverPeriod == CommonConstant.CoverPeriodAnnually){
+            tempInsLength.disable();
+            tempInsLength.patchValue(InsuranceLen);
+          } 
+          if (tempReq.MrCoverPeriod == CommonConstant.CoverPeriodPartialTenor) {
+            this.maxInsLength = InsuranceLen;
+            tempPartialMinus = 1;
+          }
         } else {
           this.minInsLength = InsuranceLen + 1;
           this.maxInsLength = 9999;
-          tempInsLength.patchValue(InsuranceLen + 1);
           tempInsLength.enable();
         }
+        this.insLenCust = this.appObj.Tenor - InsuranceLen - tempPartialMinus;
         tempInsLength.setValidators([Validators.required, Validators.min(this.minInsLength), Validators.max(this.maxInsLength)]);
         tempInsLength.updateValueAndValidity();
       }
@@ -1277,6 +1284,11 @@ export class InsuranceDataComponent implements OnInit {
   CheckInsuranceLenObj(tempReq: InsuranceLenObj): boolean {
     let flag = false;
     if (!tempReq.CustEndDt) flag = true;
+    let tempEndDt: Date = new Date(tempReq.CustEndDt);
+    if (tempEndDt < this.businessDt) {
+      this.toastr.warningMessage(ExceptionConstant.END_DATE_CANNOT_LOWER_THAN + "Business Date.");
+      flag = true;
+    }
     if (!tempReq.VendorCode) flag = true;
     if (!tempReq.MrCoverPeriod) flag = true;
     return flag;

@@ -20,8 +20,9 @@ export class TabDeviationComponent implements OnInit {
 
   @Input() AppId;
   @Input() IsEditManualDeviation: boolean = true;
-
   @Output("GetData") DataEmit: EventEmitter<any> = new EventEmitter<any>();
+  isFirstInit: boolean = false;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -50,6 +51,7 @@ export class TabDeviationComponent implements OnInit {
   tempDDLData;
   async ngOnInit() {
     this.InitData();
+    this.isFirstInit = true;
     await this.GetDeviationData();
   }
 
@@ -202,6 +204,7 @@ export class TabDeviationComponent implements OnInit {
   }
 
   AddNewForm() {
+    this.isFirstInit = false;
     if (this.FormObjManualDeviationData.value.DeviationCrit == "") return;
     var idx = this.ManualDeviationData.length;
     var temp = new DeviationResultObj();
@@ -236,7 +239,7 @@ export class TabDeviationComponent implements OnInit {
 
   PassData() {
     this.ReSeqNo();
-    this.DataEmit.emit(this.ManualDeviationData);
+    if(!this.isFirstInit) this.DataEmit.emit(this.ManualDeviationData);
   }
 
 }
