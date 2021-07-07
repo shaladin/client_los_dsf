@@ -286,6 +286,12 @@ export class AppViewComponent implements OnInit {
       this.IsLifeInsurance = false;
       this.IsMultiCollateral = false;
       this.IsMultiAsset = false;
+      this.IsCustomerOpl = false;
+      this.IsCommission = false;
+      this.IsReservedFund = false;
+      this.IsPhoneVerification = false;
+      this.IsAssetExpense = false;
+      this.IsDeviation = false;
     }
   }
 

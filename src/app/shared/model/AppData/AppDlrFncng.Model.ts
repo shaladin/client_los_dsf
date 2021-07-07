@@ -20,4 +20,5 @@ export class AppDlrFncng {
     RefundInterestAmt: number;
     RowVersion: string;
     MouCustDlrFncngId: number;
+    TotalTopAmount: number;
 }
