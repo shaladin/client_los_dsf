@@ -43,7 +43,6 @@
           "environment": "LOSR3WEB",
           "property": "MouCustNo",
           "name": "MouCustNo",
-          
           "path": "VIEW_MOU_CUST",
           "target": "_blank",
           "param": [

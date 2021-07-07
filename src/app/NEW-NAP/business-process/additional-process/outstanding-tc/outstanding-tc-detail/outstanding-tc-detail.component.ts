@@ -46,7 +46,7 @@ export class OutstandingTcDetailComponent implements OnInit {
   OustandingTCForm = this.fb.group({});
 
   async ngOnInit() : Promise<void> {
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewOutstandingTC.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
     await this.http.post<ResSysConfigResultObj>(URLConstant.GetSysConfigPncplResultByCode, { Code: CommonConstant.ConfigCodeIsUseDms}).toPromise().then(
       (response) => {
         this.SysConfigResultObj = response
@@ -127,5 +127,11 @@ export class OutstandingTcDetailComponent implements OnInit {
 
   Back() {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADD_PRCS_OUTSTANDING_TC_PAGING], { BizTemplateCode: this.BizTemplateCode });
+  }
+  
+  GetCallBack(ev) {
+    if (ev.Key == "ViewProdOffering") {
+      AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
+    }
   }
 }
