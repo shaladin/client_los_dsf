@@ -39,14 +39,15 @@
           Calculate Method</label>
         <div class="col-md-5">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
               <select type="text" class="form-control adInsInput" formControlName="MrInstTypeCode"
                 (change)="instTypeHandler()"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.MrInstTypeCode.invalid }">
                 <option *ngFor="let item of instTypeList" [value]="item.Key">{{item.Value}}</option>
               </select>
             </div>
-            <div class="col-md-6">
+            <h2 class="col-md-2 text-center">/</h2>
+            <div class="col-md-5">
               <select *ngIf="IsSingleIns" style="border-left: 1px solid grey" type="text" class="form-control adInsInput"
                 formControlName="SingleInstCalcMthd"
                 [ngClass]="{ 'is-invalid': enjiForm.submitted && MouDetailFactoringForm.controls.SingleInstCalcMthd.invalid }">
@@ -54,9 +55,6 @@
               </select>
             </div>
           </div>
-            
-            
-          
         </div>
       </div>
       <div *ngIf="IsSingleIns" class="form-group row">
