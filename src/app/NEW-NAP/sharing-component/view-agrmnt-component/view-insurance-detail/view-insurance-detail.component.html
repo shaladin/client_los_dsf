@@ -84,7 +84,7 @@
                 </div>
                 <div class="row">
                   <label class="col-md-6 adInsLabel" translate> Total Premi to Customer after Discount</label>
-                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalCustPremiAmt | number:'.2':'en-US'}}
+                  <label class="col-md-6 adInsLabel"> {{appInsuranceObj.TotalCustMainPremiAmt + appInsuranceObj.TotalCustAddPremiAmt + appInsuranceObj.TotalCustFeeAmt - appInsuranceObj.TotalCustDiscAmt | number:'.2':'en-US'}}
                   </label>
                 </div>
                 <div class="row">
