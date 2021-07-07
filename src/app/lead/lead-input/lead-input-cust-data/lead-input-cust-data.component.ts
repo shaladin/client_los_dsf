@@ -1112,6 +1112,10 @@ export class LeadInputCustDataComponent implements OnInit {
       this.CustomerDataForm.controls[this.controlNameIdNo].updateValueAndValidity();
     }
     if (IdType == "NPWP") {
+      this.CustomerDataForm.controls[this.controlNameIdNo].setValidators([Validators.required, Validators.pattern("^[0-9]+$"), Validators.minLength(15), Validators.maxLength(15)]);
+      this.CustomerDataForm.controls[this.controlNameIdNo].updateValueAndValidity();
+    }
+    if (IdType == "SIM" || IdType == "KITAS") {
       this.CustomerDataForm.controls[this.controlNameIdNo].setValidators([Validators.required, Validators.pattern("^[0-9]+$")]);
       this.CustomerDataForm.controls[this.controlNameIdNo].updateValueAndValidity();
     }
