@@ -210,7 +210,8 @@ export class FinancialDataDlfnComponent implements OnInit {
           GracePeriod: this.appFinDataObj.NumOfInst - 1,
           MrGracePeriodTypeCode: this.appFinDataObj.MrInstTypeCode == CommonConstant.InstTypeSingle ? "" : "INTEREST_ONLY",
 
-          InstAmt: this.appFinDataObj.InstAmt
+          InstAmt: this.appFinDataObj.InstAmt,
+          TotalTopAmount: this.appFinDataObj.TotalTopAmount != undefined ? this.appFinDataObj.TotalTopAmount : 0,
         });
 
         this.IsParentLoaded = true;

@@ -88,7 +88,7 @@ export class AppFinDataObj {
     MinDownPaymentNettPrcnt: number;
     MaxDownPaymentNettPrcnt: number;
     AppSupplEffectiveRatePrcnt: number;
-
+    TotalTopAmount: number
     constructor() {
     }
 }
