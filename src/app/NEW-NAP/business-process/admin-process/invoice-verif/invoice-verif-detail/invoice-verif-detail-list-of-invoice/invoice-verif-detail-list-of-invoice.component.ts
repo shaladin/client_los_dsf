@@ -112,15 +112,22 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
         this.httpClient.post(URLConstant.GetListAppInvoiceAppInvoiceDlrFncngHByAppId, { Id: this.AppId }).subscribe(
           (response) => {
             this.listInvoice = response["AppInvoiceDlrFncngHObj"];
+            var totalInvoiceDF = 0;
             for (let i = 0; i < this.listInvoice.length; i++) {
               var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
               fa_listInvoice.push(this.AddInvoiceControl(this.listInvoice[i]))
-            }
-            this.httpClient.post<ResGetAllNtfAppAmt>(URLConstant.GetAllNtfAppAmtByMouCustId, { Id : GetByMouCustId.Id }).subscribe(
-              (responseNtfAmt) => {
-                this.OsPlafondAmt = this.PlafondAmt - responseNtfAmt.NtfAmt;
+              if(this.listInvoice[i].IsApproved == true)
+              {
+                totalInvoiceDF += this.listInvoice[i].InvoiceAmt;
               }
-            )
+            }
+            // this.httpClient.post<ResGetAllNtfAppAmt>(URLConstant.GetAllNtfAppAmtByMouCustId, { Id : GetByMouCustId.Id }).subscribe(
+            //   (responseNtfAmt) => {
+            //     this.OsPlafondAmt = this.PlafondAmt - responseNtfAmt.NtfAmt;
+            //   }
+            // )
+
+            this.OsPlafondAmt = this.PlafondAmt - totalInvoiceDF;
           });
       }
     })
