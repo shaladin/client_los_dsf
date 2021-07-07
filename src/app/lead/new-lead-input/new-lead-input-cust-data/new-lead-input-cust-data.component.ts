@@ -732,12 +732,10 @@ export class NewLeadInputCustDataComponent implements OnInit {
     let pattern: string = "";
     if (idTypeValue != undefined) {
       if (this.resultPattern != undefined) {
-        if (idTypeValue == 'EKTP') {
           let result = this.resultPattern.find(x => x.Key == idTypeValue)
           if (result != undefined) {
             pattern = result.Value;
           }
-        }
       }
     }
     this.setValidator(pattern);
@@ -760,9 +758,9 @@ export class NewLeadInputCustDataComponent implements OnInit {
         }
       }
       else {
-        this.CustomerDataForm.controls.IdNo.clearValidators();
+        this.CustomerDataForm.controls.IdNo.setValidators([Validators.pattern(pattern)]);
         if(this.typePage == "update"){
-          this.CustomerDataForm.controls.IdNo.setValidators([Validators.required]);
+          this.CustomerDataForm.controls.IdNo.setValidators([Validators.required, Validators.pattern(pattern)]);
         }
       }
       this.CustomerDataForm.controls.IdNo.updateValueAndValidity();
