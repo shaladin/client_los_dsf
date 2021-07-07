@@ -22,21 +22,6 @@
           },
           {
             "type": "link",
-            "label": "Lead No",
-            "property": "LeadNo",
-            "name": "LeadNo",
-            "isHide": true,
-            "path": "/View/Lead",
-            "target": "_blank",
-            "param": [
-              {
-                "type": "LeadId",
-                "property": "LeadId"
-              }
-            ]
-          },
-          {
-            "type": "link",
             "label": "Agreement No",
             "property": "AgrmntNo",
             "name": "AgrmntNo",

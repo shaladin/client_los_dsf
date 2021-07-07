@@ -23,22 +23,6 @@
         },
         {
           "type": "link",
-          "label": "Lead No",
-          "property": "LeadNo",
-          "name": "LeadNo",
-          "isHide": true,
-          "environment": "LOSR3WEB",
-          "path": "VIEW_LEAD",
-          "target": "_blank",
-          "param": [
-            {
-              "type": "LeadId",
-              "property": "LeadId"
-            }
-          ]
-        },
-        {
-          "type": "link",
           "label": "Agreement No",
           "property": "AgrmntNo",
           "name": "AgrmntNo",
