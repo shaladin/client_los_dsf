@@ -9,7 +9,6 @@ import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { AppCrdRvwHObj } from 'app/shared/model/AppCrdRvwHObj.Model';
 import { AppCrdRvwDObj } from 'app/shared/model/AppCrdRvwDObj.Model';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
@@ -22,6 +21,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
@@ -71,6 +71,7 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router, private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService,
     private ref: ApplicationRef) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -121,7 +122,7 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
 
   readonly CancelLink: string = NavigationConstant.BACK_TO_PAGING;
   async ngOnInit() : Promise<void> {
-    this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.InitData();
     await this.GetAppNo();
     await this.http.post(URLConstant.GetListDeviationTypeByAppNo, { TrxNo: this.AppNo }).toPromise().then(
@@ -425,16 +426,6 @@ export class CreditReviewCfnaDetailComponent implements OnInit {
 
   }
 
-
-  ClaimTask() {
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = this.UserAccess.UserName;
-
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
-  }
   initInputApprovalObj(manualDevList = null){  
     var Attributes: Array<ResultAttrObj> = new Array();
     var attribute1: ResultAttrObj = {

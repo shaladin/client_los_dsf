@@ -331,7 +331,7 @@
               <label translate>Gross Yield</label>
             </div>
             <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '1.2-2'}}%</label>
+              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '.6'}}%</label>
             </div>
           </div>
         </div>
@@ -345,10 +345,10 @@
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.TotalAR.value | number : '1.2-2'}}</label>
             </div>
-            <div class="col-md-3 form-inline">
+            <div class="col-md-3 form-inline" *ngIf="BizTemplateCode != 'CFNA'">
               <label translate>Diff Rate Amount</label>
             </div>
-            <div class="col-md-3 form-inline form-inline-right">
+            <div class="col-md-3 form-inline form-inline-right" *ngIf="BizTemplateCode != 'CFNA'">
               <label>{{ParentForm.controls.DiffRateAmt.value | number : '1.2-2'}}</label>
             </div>
           </div>

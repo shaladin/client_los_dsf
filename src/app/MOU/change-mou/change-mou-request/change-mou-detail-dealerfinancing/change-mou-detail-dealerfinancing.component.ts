@@ -42,7 +42,7 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
   ManufacturerCode: string;
   ManufacturerName: string;
   AsseConditionLis: Array<KeyValueObj>;
-  MouDlrFinData: MouCustDlrFinObj; 
+  MouDlrFinData: MouCustDlrFinObj;
   ChangeMouDlrFinData: any;
   MouNo: string;
 
@@ -165,43 +165,23 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
 
         this.MouDetailFinancingForm.patchValue({
           WopCode: this.MouDlrFinData["WopCode"],
-          TopDays: this.MouDlrFinData["TopDays"],
           PayFreqCode: this.MouDlrFinData["PayFreqCode"],
-          MrInstSchmCode: this.MouDlrFinData["MrInstSchmCode"],
-          InterestRatePrcnt: this.MouDlrFinData["InterestRatePrcnt"],
-          Notes: this.MouDlrFinData["Notes"],
-          TopInterestRatePrcnt: this.MouDlrFinData["TopInterestRatePrcnt"],
-          ExtendRatePrcnt: this.MouDlrFinData["ExtendRatePrcnt"],
-          MmForExtend: this.MouDlrFinData["MaximumMonthsForExtend"],
-          PpForExtendPrcnt: this.MouDlrFinData["PrincipalPaidInExtendPrcntg"],
-          SpareDayToPay: this.MouDlrFinData["SpareDayToPay"],
-          AssetCondition: this.MouDlrFinData["AssetCondition"],
-          LcRatePrcnt: this.MouDlrFinData["LcRate"],
-          MaximumExtendTimes: this.MouDlrFinData["MaximumExtendTimes"],
+          MrInstSchmCode: this.MouDlrFinData["MrInstSchmCode"]
         });
-
-        this.ManufacturerCode = this.MouDlrFinData["ManufacturerCode"];
-        this.ManufacturerCustNo = this.MouDlrFinData["ManufacturerCustNo"];
-        this.DealerCode = this.MouDlrFinData["DealerCode"];
-        this.DealerCustNo = this.MouDlrFinData["DealerCustNo"];
-
 
         if (this.ChangeMouDlrFinData["Status"] == "Success") {
           this.MouDetailFinancingForm.patchValue({
             TopDays: this.ChangeMouDlrFinData["TopDays"],
             InterestRatePrcnt: this.ChangeMouDlrFinData["InterestRatePrcnt"],
             Notes: this.ChangeMouDlrFinData["Notes"],
-            MmForExtend: this.MouDlrFinData["MaximumMonthsForExtend"],
-            TopInterestRatePrcnt: this.ChangeMouDlrFinData[
-              "TopInterestRatePrcnt"
-            ],
+            MmForExtend: this.ChangeMouDlrFinData["MaximumMonthForExtend"],
+            TopInterestRatePrcnt: this.ChangeMouDlrFinData["TopInterestRatePrcnt"],
             ExtendRatePrcnt: this.ChangeMouDlrFinData["ExtendRatePrcnt"],
-            PpForExtendPrcnt: this.ChangeMouDlrFinData[
-              "PrincipalPaidInExtendPrcntg"
-            ],
+            PpForExtendPrcnt: this.ChangeMouDlrFinData["PrincipalPaidInExtendPrcntg"],
             SpareDayToPay: this.ChangeMouDlrFinData["SpareDayToPay"],
             AssetCondition: this.ChangeMouDlrFinData["AssetCondition"],
             LcRatePrcnt: this.ChangeMouDlrFinData["LcRate"],
+            MaximumExtendTimes: this.ChangeMouDlrFinData["MaximumExtendTimes"],
           });
 
           this.ManufacturerCode = this.ChangeMouDlrFinData["ManufacturerCode"];
@@ -209,6 +189,25 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
           this.DealerCode = this.ChangeMouDlrFinData["DealerCode"];
           this.DealerCustNo = this.ChangeMouDlrFinData["DealerCustNo"];
 
+        }else{
+          this.MouDetailFinancingForm.patchValue({
+            TopDays: this.MouDlrFinData["TopDays"],
+            InterestRatePrcnt: this.MouDlrFinData["InterestRatePrcnt"],
+            Notes: this.MouDlrFinData["Notes"],
+            TopInterestRatePrcnt: this.MouDlrFinData["TopInterestRatePrcnt"],
+            ExtendRatePrcnt: this.MouDlrFinData["ExtendRatePrcnt"],
+            MmForExtend: this.MouDlrFinData["MaximumMonthsForExtend"],
+            PpForExtendPrcnt: this.MouDlrFinData["PrincipalPaidInExtendPrcntg"],
+            SpareDayToPay: this.MouDlrFinData["SpareDayToPay"],
+            AssetCondition: this.MouDlrFinData["AssetCondition"],
+            LcRatePrcnt: this.MouDlrFinData["LcRate"],
+            MaximumExtendTimes: this.MouDlrFinData["MaximumExtendTimes"],
+          });
+
+          this.ManufacturerCode = this.MouDlrFinData["ManufacturerCode"];
+          this.ManufacturerCustNo = this.MouDlrFinData["ManufacturerCustNo"];
+          this.DealerCode = this.MouDlrFinData["DealerCode"];
+          this.DealerCustNo = this.MouDlrFinData["DealerCustNo"];
         }
         this.BidDataLookUp(this.ManufacturerCode, this.ManufacturerCustNo, this.DealerCode, this.DealerCustNo);
 
@@ -231,14 +230,14 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
   }
 
   initLookup() {
-    var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var suppCrit = new Array();
-    var critSuppObj = new CriteriaObj();
+    const currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    const suppCrit = new Array();
+    const critSuppObj = new CriteriaObj();
     critSuppObj.DataType = 'text';
     critSuppObj.restriction = AdInsConstant.RestrictionEq;
     critSuppObj.propName = 'ro.OFFICE_CODE';
-    critSuppObj.value = currentUserContext[CommonConstant.OFFICE_CODE];;
-    suppCrit.push(critSuppObj);
+    critSuppObj.value = currentUserContext[CommonConstant.OFFICE_CODE];
+    //suppCrit.push(critSuppObj);
 
 
     this.InputLookupLinkSupplGradingObj.urlJson = "./assets/uclookup/NAP/lookupMOUSupplier.json";
@@ -283,33 +282,30 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
     this.DealerCode = DealerCode;
     this.DealerCustNo = DealerCustNo;
 
-    var ManufacturerCustNoObj = { CustNo: ManufacturerCustNo };
+    const ManufacturerCustNoObj = { CustNo: ManufacturerCustNo };
     this.httpClient.post(URLConstant.GetCustByCustNo, ManufacturerCustNoObj).subscribe(
       response => {
         this.ManufacturerName = response["CustName"];
       }
     );
 
-    var DealerCustNoObj = { CustNo: DealerCustNo };
+    const DealerCustNoObj = { CustNo: DealerCustNo };
     this.httpClient.post(URLConstant.GetCustByCustNo, DealerCustNoObj).subscribe(
       response => {
         this.DealerName = response["CustName"];
       }
     );
 
-    var vendorObj = new VendorObj();
-    vendorObj.VendorCode = ManufacturerCode;
-
-    this.httpClient.post(URLConstant.GetVendorForLookup, vendorObj).subscribe(
+    const reqVendorObj = {Code : ManufacturerCode};
+    this.httpClient.post(URLConstant.GetVendorForLookup, reqVendorObj).subscribe(
       (response) => {
         this.InputLookupLinkManufacturerObj.nameSelect = response["VendorName"];
         this.InputLookupLinkManufacturerObj.jsonSelect = response;
       }
     );
 
-    var vendorObj2 = new VendorObj();
-    vendorObj2.VendorCode = DealerCode;
-    this.httpClient.post(URLConstant.GetVendorForLookup, vendorObj2).subscribe(
+    const reqVendorObj2 = {Code : DealerCode};
+    this.httpClient.post(URLConstant.GetVendorForLookup, reqVendorObj2).subscribe(
       (response) => {
         this.InputLookupLinkSupplGradingObj.nameSelect = response["VendorName"];
         this.InputLookupLinkSupplGradingObj.jsonSelect = response;
@@ -318,31 +314,30 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
   }
 
   BindData() {
-    this.ChangeMouCustDlrFindData = {
-      ChangeMouTrxId: this.ChangeMouTrxId,
-      MouCustId: this.MouCustId,
-      TopDays: this.MouDetailFinancingForm.controls.TopDays.value,
-      TopInterestRatePrcnt: this.MouDetailFinancingForm.controls.TopInterestRatePrcnt.value,
-      InterestRatePrcnt: this.MouDetailFinancingForm.controls.InterestRatePrcnt.value,
-      MaximumMonthsForExtend: this.MouDetailFinancingForm.controls.MmForExtend.value,
-      MaximumTimesForExtends: this.MouDetailFinancingForm.controls.MaximumExtendTimes.value,
-      ExtendRatePrcnt: this.MouDetailFinancingForm.controls.ExtendRatePrcnt.value,
-      SpareDayToPay: this.MouDetailFinancingForm.controls.SpareDayToPay.value,
-      AssetCondition: this.MouDetailFinancingForm.controls.AssetCondition.value,
-      LcRate: this.MouDetailFinancingForm.controls.LcRatePrcnt.value,
-      PrincipalPaidInExtendPrcntg: this.MouDetailFinancingForm.controls.PpForExtendPrcnt.value,
-      DealerCode: this.DealerCode,
-      DealerCustNo: this.DealerCustNo,
-      Notes: this.MouDetailFinancingForm.controls.Notes.value,
-      MaximumExtendTimes: this.MouDetailFinancingForm.controls.MaximumExtendTimes.value,
-      ManufacturerCode: this.ManufacturerCode,
-      ManufacturerCustNo: this.ManufacturerCustNo,
-      PayFreqCode: this.MouDetailFinancingForm.controls.PayFreqCode.value,
-      WopCode: this.MouDetailFinancingForm.controls.WopCode.value,
-      CurrCode: null,
-      MouCustDlrFncngId: 0,
-      MrInstTypeCode: null,
-      VirtualAccNo: null,
-    }
+    this.ChangeMouCustDlrFindData = new MouCustDlrFinObj();
+    this.ChangeMouCustDlrFindData.ChangeMouTrxId = this.ChangeMouTrxId;
+    this.ChangeMouCustDlrFindData.MouCustId = this.MouCustId;
+    this.ChangeMouCustDlrFindData.TopDays = this.MouDetailFinancingForm.controls.TopDays.value;
+    this.ChangeMouCustDlrFindData.TopInterestRatePrcnt = this.MouDetailFinancingForm.controls.TopInterestRatePrcnt.value;
+    this.ChangeMouCustDlrFindData.InterestRatePrcnt = this.MouDetailFinancingForm.controls.InterestRatePrcnt.value;
+    this.ChangeMouCustDlrFindData.MaximumMonthsForExtend = this.MouDetailFinancingForm.controls.MmForExtend.value;
+    this.ChangeMouCustDlrFindData.MaximumTimesForExtends = this.MouDetailFinancingForm.controls.MaximumExtendTimes.value;
+    this.ChangeMouCustDlrFindData.ExtendRatePrcnt = this.MouDetailFinancingForm.controls.ExtendRatePrcnt.value;
+    this.ChangeMouCustDlrFindData.SpareDayToPay = this.MouDetailFinancingForm.controls.SpareDayToPay.value;
+    this.ChangeMouCustDlrFindData.AssetCondition = this.MouDetailFinancingForm.controls.AssetCondition.value;
+    this.ChangeMouCustDlrFindData.LcRate = this.MouDetailFinancingForm.controls.LcRatePrcnt.value;
+    this.ChangeMouCustDlrFindData.PrincipalPaidInExtendPrcntg = this.MouDetailFinancingForm.controls.PpForExtendPrcnt.value;
+    this.ChangeMouCustDlrFindData.DealerCode = this.DealerCode;
+    this.ChangeMouCustDlrFindData.DealerCustNo = this.DealerCustNo;
+    this.ChangeMouCustDlrFindData.Notes = this.MouDetailFinancingForm.controls.Notes.value;
+    this.ChangeMouCustDlrFindData.MaximumExtendTimes = this.MouDetailFinancingForm.controls.MaximumExtendTimes.value;
+    this.ChangeMouCustDlrFindData.ManufacturerCode = this.ManufacturerCode;
+    this.ChangeMouCustDlrFindData.ManufacturerCustNo = this.ManufacturerCustNo;
+    this.ChangeMouCustDlrFindData.PayFreqCode = this.MouDetailFinancingForm.controls.PayFreqCode.value;
+    this.ChangeMouCustDlrFindData.WopCode = this.MouDetailFinancingForm.controls.WopCode.value;
+    this.ChangeMouCustDlrFindData.CurrCode = null;
+    this.ChangeMouCustDlrFindData.MouCustDlrFncngId = 0;
+    this.ChangeMouCustDlrFindData.MrInstTypeCode = null;
+    this.ChangeMouCustDlrFindData.VirtualAccNo = null;
   }
 }

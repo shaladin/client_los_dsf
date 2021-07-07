@@ -146,11 +146,9 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
       refMasterCurrency
     );
 
-    var mouCustFctr = new MouCustFctrObj();
-    mouCustFctr.MouCustId = this.MouCustId;
     let getMouFctr = this.httpClient.post(
       URLConstant.GetMouCustFctrByMouCustId,
-      mouCustFctr
+      {Id: this.MouCustId}
     );
 
     let getChangeMouFctr = this.httpClient.post(
@@ -158,11 +156,9 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
       { Id: this.MouCustId }
     );
 
-    var mouListedFctr = new MouCustListedCustFctrObj();
-    mouListedFctr.MouCustId = this.MouCustId;
     let getListedCustFctr = this.httpClient.post(
       URLConstant.GetListMouCustListedCustFctrByMouCustId,
-      mouListedFctr
+      { Id: this.MouCustId }
     );
 
     this.bindUcLookup();
@@ -265,7 +261,7 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
 
   GetVendorName(vendorCode) {
     var vendorObj = {
-      VendorCode: vendorCode
+      Code: vendorCode
     };
     this.httpClient.post(URLConstant.GetVendorByVendorCode, vendorObj).toPromise().then(
       (response) => {

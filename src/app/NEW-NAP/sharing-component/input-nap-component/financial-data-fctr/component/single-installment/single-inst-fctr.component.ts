@@ -85,12 +85,6 @@ export class SingleInstFctrComponent implements OnInit {
             GrossYieldPrcnt: response.GrossYieldPrcnt
           });
 
-          if (this.ParentForm.value.MrSingleInstCalcMthdCode == CommonConstant.SINGLE_INST_CALC_MTHD_DISKONTO) {
-            this.ParentForm.patchValue({
-              TotalDisbAmt: response.TotalDisbAmt - response.TotalInterestAmt
-            });
-          }
-
           this.SetInstallmentTable();
           this.SetNeedReCalculate(false);
         }

@@ -75,7 +75,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
     FullAssetName: [''],
     BankBranch: ['', Validators.required],
     AccName: ['', Validators.required],
-    BankAccountNo:[''],
+    BankAccountNo: [''],
     DisburseTo: ['']
   })
 
@@ -129,12 +129,12 @@ export class InvoiceDataDlfnComponent implements OnInit {
         this.InputLookupBankObj.isReady = true;
 
         this.InvoiceForm.patchValue({
-          ...response["ReturnObject"].DisbInfo
+          ...response
         });
       });
-    let objectReq : ReqRefMasterByTypeCodeAndMappingCodeObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
+    let objectReq: ReqRefMasterByTypeCodeAndMappingCodeObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
     objectReq.RefMasterTypeCode = CommonConstant.RefMasterTypeCodeDisbToDlrFncng
-    
+
     await this.httpClient.post(URLConstant.GetListActiveRefMaster, objectReq).subscribe(
       (response) => {
         this.disburseTos = response[CommonConstant.ReturnObj];
@@ -210,7 +210,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
           var custObj = {
             CustNo: responseMouCustDlrFncng["ManufacturerCustNo"]
           }
-           this.CustNo = responseMouCustDlrFncng["ManufacturerCustNo"];
+          this.CustNo = responseMouCustDlrFncng["ManufacturerCustNo"];
           this.httpClient.post(URLConstant.GetListCustBankAccByCustNo, custObj).subscribe(
             (response) => {
               this.BankAccs = response["ReturnObject"];
@@ -234,7 +234,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
     console.log("event" + event.target.value);
     if (event.target.value != '') {
       if (this.InvoiceForm.controls["DisburseTo"].value == CommonConstant.RefMasterMasterCodeVendor ||
-      this.InvoiceForm.controls["DisburseTo"].value == CommonConstant.RefMasterMasterCodeManufacturer) {
+        this.InvoiceForm.controls["DisburseTo"].value == CommonConstant.RefMasterMasterCodeManufacturer) {
         var objCust = {
           CustNo: this.CustNo
         }
@@ -413,7 +413,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
 
   DeleteInvoice(AppInvoiceDlrFncngHId: number) {
     if (confirm(ExceptionConstant.DELETE_CONFIRMATION)) {
-      let invoiceObjDEL : GenericObj = new GenericObj();
+      let invoiceObjDEL: GenericObj = new GenericObj();
       invoiceObjDEL.Id = AppInvoiceDlrFncngHId;
 
       this.httpClient.post(URLConstant.DeleteAppInvoiceDlrFncngHById, invoiceObjDEL).subscribe(
@@ -453,7 +453,7 @@ export class InvoiceDataDlfnComponent implements OnInit {
       this.toastr.warningMessage(ExceptionConstant.INVOICE_DUE_DT_CANNOT_EMPTY);
     }
     else {
-      let invoiceObj : ReqAddAppInvoiceDlrFncngHObj = new ReqAddAppInvoiceDlrFncngHObj();
+      let invoiceObj: ReqAddAppInvoiceDlrFncngHObj = new ReqAddAppInvoiceDlrFncngHObj();
       invoiceObj.InvoiceNo = this.InvoiceForm.controls.InvoiceNo.value;
       invoiceObj.InvoiceAmt = this.InvoiceForm.controls.InvoiceAmt.value;
       invoiceObj.InvoiceDueDt = this.InvoiceForm.controls.InvoiceDueDt.value;

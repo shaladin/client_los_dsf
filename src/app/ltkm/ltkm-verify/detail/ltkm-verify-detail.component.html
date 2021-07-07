@@ -61,7 +61,7 @@
                 </div>
               </div>
               <br> -->
-              <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady && !isReturnOn" #ApprovalComponent>
+              <lib-ucapprovalcreate [parentForm]= "FormObj" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady && !isReturnOn" #ApprovalComponent>
               </lib-ucapprovalcreate>
               <lib-ucSubsection *ngIf="isReturnOn" [id]="'formReturnCreditReviewId'" [title]="'Return LTKM'"
                 [panel]="'formReturnCreditReview'">

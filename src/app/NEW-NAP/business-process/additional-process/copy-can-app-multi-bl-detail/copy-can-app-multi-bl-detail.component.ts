@@ -37,7 +37,7 @@ export class CopyCanAppMultiBlDetailComponent implements OnInit {
   AppNo: string;
   AppId: number;
   LobCode: string;
-  BizTemplateCode : string;
+  BizTemplateCode: string;
 
   NapAppForm = this.fb.group({
     MouCustId: [''],
@@ -90,22 +90,22 @@ export class CopyCanAppMultiBlDetailComponent implements OnInit {
   });
 
   constructor(private fb: FormBuilder, private router: Router,
-    private http: HttpClient, private toastr: NGXToastrService,private route: ActivatedRoute, private cookieService: CookieService) {
+    private http: HttpClient, private toastr: NGXToastrService, private route: ActivatedRoute, private cookieService: CookieService) {
 
-      this.route.queryParams.subscribe(params => {
-        this.AppNo = params["AppNo"];
-        this.CurrCode = params["CurrCode"];
-        this.AppId = params["AppId"];
-        console.log(params);
+    this.route.queryParams.subscribe(params => {
+      this.AppNo = params["AppNo"];
+      this.CurrCode = params["CurrCode"];
+      this.AppId = params["AppId"];
+      console.log(params);
     })
 
-     }
+  }
 
   isCopyData: boolean = false;
   ngOnInit() {
     // Lookup Obj
     this.userAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    
+
     this.http.post(URLConstant.GetRefOfficeByOfficeCode, { Code: this.userAccess.OfficeCode }).subscribe(
       (response) => {
         if (response["IsAllowAppCreated"] == true) {
@@ -149,7 +149,7 @@ export class CopyCanAppMultiBlDetailComponent implements OnInit {
     this.inputLookupObjName = new InputLookupObj();
     this.inputLookupObjName.urlJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.urlQryPaging = URLConstant.GetPagingObjectBySQL;
-    this.inputLookupObjName.urlEnviPaging = environment.FoundationR3Url;
+    this.inputLookupObjName.urlEnviPaging = environment.losUrl;
     this.inputLookupObjName.pagingJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.genericJson = "./assets/uclookup/NAP/lookupAppName.json";
     this.inputLookupObjName.nameSelect = this.NapAppForm.controls.ProdOfferingName.value;
@@ -196,15 +196,15 @@ export class CopyCanAppMultiBlDetailComponent implements OnInit {
 
   }
 
-  GetLOBDDL(){
+  GetLOBDDL() {
 
     this.http.post(URLConstant.GetListActiveLob, {}).subscribe(
       (response) => {
         this.listRefLob = response[CommonConstant.ReturnObj];
         console.log(this.listRefLob);
-        for(let _Obj of this.listRefLob){
-          if(_Obj.Key === "FACTORING" || _Obj.Key === "DLRFNCNG" )
-          this.listRefLob = this.listRefLob.filter(obj => obj !== _Obj);
+        for (let _Obj of this.listRefLob) {
+          if (_Obj.Key === "FACTORING" || _Obj.Key === "DLRFNCNG")
+            this.listRefLob = this.listRefLob.filter(obj => obj !== _Obj);
         }
         // this.NapAppForm.patchValue({
         //   LobCode: response[CommonConstant.ReturnObj][0]['Key'],
@@ -258,19 +258,25 @@ export class CopyCanAppMultiBlDetailComponent implements OnInit {
   }
 
   SaveForm() {
-    
+
     this.NapAppForm.patchValue({
       AppNo: this.AppNo
     });
 
-    let reqAddApp : ReqAddNapFromCopyObj = new ReqAddNapFromCopyObj();
+    let reqAddApp: ReqAddNapFromCopyObj = new ReqAddNapFromCopyObj();
     reqAddApp.AppNo = this.NapAppForm.controls['AppNo'].value;
     reqAddApp.OriOfficeCode = this.NapAppForm.controls['OriOfficeCode'].value;
-    
+    reqAddApp.LobCode = this.NapAppForm.controls['LobCode'].value;
+    reqAddApp.ProdOfferingCode = this.NapAppForm.controls['ProdOfferingCode'].value;
+    reqAddApp.ProdOfferingName = this.NapAppForm.controls['ProdOfferingName'].value;
+    reqAddApp.ProdOfferingVersion = this.NapAppForm.controls['ProdOfferingVersion'].value;
+    reqAddApp.CurrCode = this.NapAppForm.controls['CurrCode'].value;
+    reqAddApp.PayFreqCode = this.NapAppForm.controls['PayFreqCode'].value;
+    reqAddApp.RefProdTypeCode = this.NapAppForm.controls['RefProdTypeCode'].value;
     this.http.post(URLConstant.AddAppFromCopyCancledApp, reqAddApp).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);
-        this.router.navigate([NavigationConstant.NAP_MAIN_DATA_NAP1_PAGING], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
+        this.router.navigate([NavigationConstant.NAP_ADD_PRCS_COPY_CANCEL_APP_CROSS_BL], { queryParams: { "IsNapVersionMainData": true } });
       });
   }
 
@@ -391,7 +397,7 @@ export class CopyCanAppMultiBlDetailComponent implements OnInit {
     arrAddCrit.push(addCritBizTempalte);
     this.inputLookupObjName.addCritInput = arrAddCrit;
     this.ucLookupOffering.setAddCritInput();
-    this.inputLookupObjName.nameSelect = "" ;
+    this.inputLookupObjName.nameSelect = "";
     this.inputLookupObjName.jsonSelect = {};
 
   }

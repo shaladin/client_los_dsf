@@ -161,13 +161,11 @@ export class MouCustGrpMbrComponent implements OnInit {
         this.dictLookup[i].nameSelect = response["CustName"];
         this.dictLookup[i].jsonSelect = response;
         this.InputLookupCustomerObjs[i].jsonSelect = response;
-        
-        if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
-          this.CustRelationshipObjs.push({list : this.CustRelationshipPersonalObj});
-        }
-
-        if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+        if(this.identifier == 'custGrpMemberCompany' || this.identifier == CommonConstant.CustTypeCompany || response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
           this.CustRelationshipObjs.push({list : this.CustRelationshipCompanyObj});
+        }
+        else{
+          this.CustRelationshipObjs.push({list : this.CustRelationshipPersonalObj});
         }
 
         this.parentForm.controls[this.identifier]["controls"][i].patchValue({

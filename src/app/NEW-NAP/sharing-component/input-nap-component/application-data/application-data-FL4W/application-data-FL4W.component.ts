@@ -30,6 +30,10 @@ import { AppObj } from 'app/shared/model/App/App.Model';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
 import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
+import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { UcDropdownListCallbackObj, UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
 
 @Component({
   selector: 'app-application-data-FL4W',
@@ -57,10 +61,8 @@ export class ApplicationDataFL4WComponent implements OnInit {
     });
   }
 
-  listCustBankAcc: any;
-  selectedBankAcc: any;
-  GetBankInfo: any;
-  responseBankAccCust: any;
+  listCustBankAcc: Array<AppCustBankAccObj>;
+  GetBankInfo: AppOtherInfoObj = new AppOtherInfoObj();
 
   isTenorValid = true;
   isFromMouCust: boolean = false;
@@ -149,12 +151,12 @@ export class ApplicationDataFL4WComponent implements OnInit {
   inputLookupEconomicSectorObj: InputLookupObj;
   resMouCustObj: Array<KeyValueObj>;
   CustNo: string;
-  ngOnInit() {
+  ddlMrWopObj: UcDropdownListObj = new UcDropdownListObj();
+  async ngOnInit() {
     this.defaultSlikSecEcoCode = CommonConstant.DefaultSlikSecEcoCode;
     this.ListCrossAppObj["appId"] = this.AppId;
     this.ListCrossAppObj["result"] = [];
     this.isInputLookupObj = false;
-    this.getAppModelInfo();
     this.applicationDDLitems = [];
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCustType);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeSlsRecom);
@@ -165,15 +167,17 @@ export class ApplicationDataFL4WComponent implements OnInit {
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeInterestTypeGeneral);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeCharacteristicCredit);
     this.getRefMasterTypeCode(CommonConstant.RefMasterTypeCodeWayOfRestructure);
+    this.initDdlMrWop();
     this.getPayFregData();
     this.getAppSrcData();
     this.GetCrossInfoData();
     this.initMailingAddress();
 
     var user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    this.http.post(URLConstant.GetAppCustByAppId, {Id: this.AppId}).subscribe(
-      (response) => {
-        this.CustNo = response["CustNo"];
+    await this.http.post(URLConstant.GetAppCustByAppId, {Id: this.AppId}).toPromise().then(
+      async (response: AppCustObj) => {
+        this.CustNo = response.CustNo;
+        await this.GetListAppCustBankAcc(response.AppCustId);
 
         this.http.post(URLConstant.GetListMouCustByCustNo, {CustNo: this.CustNo, StartDt: user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL}).subscribe(
           (response) => {
@@ -181,10 +185,20 @@ export class ApplicationDataFL4WComponent implements OnInit {
           }
         );
       });
+    this.getAppModelInfo();
   }
 
   Cancel() {
     this.outputCancel.emit();
+  }
+
+  initDdlMrWop() {
+    this.ddlMrWopObj.apiUrl = URLConstant.GetRefMasterListKeyValueActiveByCode;
+    this.ddlMrWopObj.requestObj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeWOP
+    }
+    this.ddlMrWopObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.ddlMrWopObj.isSelectOutput = true;
   }
 
   getDDLFromProdOffering(refProdCompntCode: string) {
@@ -252,7 +266,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   getLeadSrcCodeByLeadId(leadId: number) {
-    this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { LeadId: leadId }).subscribe(
+    this.http.post<LeadObj>(URLConstant.GetLeadByLeadId, { Id: leadId }).subscribe(
       resp => {
         this.NapAppModelForm.patchValue({
           MrAppSourceCode: resp.MrLeadSourceCode
@@ -332,11 +346,9 @@ export class ApplicationDataFL4WComponent implements OnInit {
           this.isFromMouCust = true;
           this.setTenor(this.resultResponse.MouCustId);
         }
-        if (this.NapAppModelForm.controls.MrWopCode.value == 'AUTOCOLLECTION') {
+        if (this.NapAppModelForm.controls.MrWopCode.value == this.WopAutoDebit) {
           this.GetBankAccCust();
           this.setBankAcc(this.NapAppModelForm.controls.MrWopCode.value)
-        } else {
-          this.GetBankAccCust();
         }
 
         this.makeNewLookupCriteria();
@@ -612,6 +624,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
       AppObj: tempAppObj,
       ListAppCrossObj: tempListAppCrossObj,
       AppFinData: tempAppFindDataObj,
+      AppOtherInfoObj: this.GetBankInfo,
       RowVersion: this.resultResponse.RowVersion
     };
 
@@ -629,7 +642,6 @@ export class ApplicationDataFL4WComponent implements OnInit {
         (response) => {
           if (response["StatusCode"] == 200) {
             this.toastr.successMessage('Save Application Data');
-            this.SaveAppOtherInfo();
             this.outputTab.emit();
           } else {
             this.toastr.warningMessage(response["message"]);
@@ -775,8 +787,21 @@ export class ApplicationDataFL4WComponent implements OnInit {
     return mailingAddr;
   }
 
-  setBankAcc(event) {
-    if (event == 'AUTOCOLLECTION') {
+  readonly WopAutoDebit: string = CommonConstant.WopAutoDebit;
+  setBankAcc(WOP: string) {
+    if (WOP == this.WopAutoDebit) {
+      this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
+      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
+    }
+    else {
+      this.NapAppModelForm.controls['CustBankAcc'].clearValidators();
+      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
+    }
+    this.NapAppModelForm.controls.CustBankAcc.updateValueAndValidity();
+  }
+
+  setBankAccDDL(event: UcDropdownListCallbackObj) {
+    if (event.selectedValue == this.WopAutoDebit) {
       this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
       this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
     }
@@ -788,79 +813,49 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
 
   GetBankAccCust() {
-    var obj = {
-      AppId: this.AppId
-    };
-    this.http.post<any>(URLConstant.GetBankAccCustByAppId, obj).subscribe( // controller tidak ada method ini
+    this.http.post<AppOtherInfoObj>(URLConstant.GetAppOtherInfoByAppId, { Id: this.AppId }).subscribe(
       (response) => {
-        this.responseBankAccCust = response
-        if (response.length > 0) {
+        this.GetBankInfo = response;
+        if (this.GetBankInfo.AppOtherInfoId != 0) {
+          let selectedBankAcc: AppCustBankAccObj = this.listCustBankAcc.find(x => x.BankAccNo == this.GetBankInfo.BankAccNo);
           this.NapAppModelForm.patchValue({
-            CustBankAcc: this.responseBankAccCust[0].AppCustBankAccId
+            CustBankAcc: selectedBankAcc.AppCustBankAccId
           });
-          this.GetBankInfo = {
-            "BankCode": this.responseBankAccCust[0].BankCode,
-            "BankBranch": this.responseBankAccCust[0].BankBranch,
-            "AppId": this.AppId,
-            "BankAccNo": this.responseBankAccCust[0].BankAccNo,
-            "BankAccName": this.responseBankAccCust[0].BankAccName,
-          };
+
+          this.GetBankInfo.BankCode = selectedBankAcc.BankCode;
+          this.GetBankInfo.BankBranch = selectedBankAcc.BankBranch;
+          this.GetBankInfo.AppId = this.AppId;
+          this.GetBankInfo.BankAccNo = selectedBankAcc.BankAccNo;
+          this.GetBankInfo.BankAccName = selectedBankAcc.BankAccName;          
         }
-
-        this.http.post<any>(URLConstant.GetAppOtherInfoByAppId, obj).subscribe(
-          (response) => {
-            this.GetBankInfo = response
-            if (this.GetBankInfo.AppId !== 0) {
-              this.selectedBankAcc = this.listCustBankAcc.find(x => x.BankAccNo === this.GetBankInfo.BankAccNo);
-              this.NapAppModelForm.patchValue({
-                CustBankAcc: this.selectedBankAcc.AppCustBankAccId
-              });
-
-              this.GetBankInfo = {
-                "BankCode": this.selectedBankAcc.BankCode,
-                "BankBranch": this.selectedBankAcc.BankBranch,
-                "AppId": this.AppId,
-                "BankAccNo": this.selectedBankAcc.BankAccNo,
-                "BankAccName": this.selectedBankAcc.BankAccName,
-              };
-            }
-          })
-      });
+      }
+    );
   }
 
-  GetListAppCustBankAcc(appCustId: number) {
-    this.http.post<any>(URLConstant.GetListAppCustBankAccByAppCustId, {Id: appCustId}).subscribe(
+  async GetListAppCustBankAcc(appCustId: number) {
+    await this.http.post<GenericListObj>(URLConstant.GetListAppCustBankAccByAppCustId, { Id: appCustId }).toPromise().then(
       (response) => {
-        this.listCustBankAcc = response.AppCustBankAccObjs;
-      });
+        this.listCustBankAcc = response.ReturnObject["AppCustBankAccObjs"];
+      }
+    );
   }
 
-  selectedBank(event) {
-    if (this.NapAppModelForm.controls.MrWopCode.value == 'AUTOCOLLECTION') {
-      this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
-      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
-    }
-    else {
-      this.NapAppModelForm.controls['CustBankAcc'].clearValidators();
-      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
-    }
-    var appOtherInfo = new AppOtherInfoObj();
-    appOtherInfo.AppId = event;
-    this.selectedBankAcc = this.listCustBankAcc.find(x => x.AppCustBankAccId == event);
-    this.GetBankInfo = {
-      "BankCode": this.selectedBankAcc.BankCode,
-      "BankBranch": this.selectedBankAcc.BankBranch,
-      "AppId": this.AppId,
-      "BankAccNo": this.selectedBankAcc.BankAccNo,
-      "BankAccName": this.selectedBankAcc.BankAccName,
-      "AdditionalInterestPaidBy": ""
-    };
+  selectedBank() {
+    if (this.NapAppModelForm.controls.MrWopCode.value != this.WopAutoDebit) return;
+
+    let custBankAccId: number = this.NapAppModelForm.get("CustBankAcc").value;
+    let selectedBankAcc: AppCustBankAccObj = this.listCustBankAcc.find(x => x.AppCustBankAccId == custBankAccId);
+    this.GetBankInfo.BankCode = selectedBankAcc.BankCode;
+    this.GetBankInfo.BankBranch = selectedBankAcc.BankBranch;
+    this.GetBankInfo.AppId = this.AppId;
+    this.GetBankInfo.BankAccNo = selectedBankAcc.BankAccNo;
+    this.GetBankInfo.BankAccName = selectedBankAcc.BankAccName; 
   }
 
   setTenorOnChange(event) {
     if (event != 'null') {
       this.isFromMouCust = true;
-      var mouCustObj = { MouCustId: event }
+      var mouCustObj = { Id: event }
       this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
         (response) => {
           this.mouCust = response["MouCustObj"];
@@ -909,7 +904,7 @@ export class ApplicationDataFL4WComponent implements OnInit {
   }
   setTenor(event) {
 
-    var mouCustObj = { MouCustId: event }
+    var mouCustObj = { Id: event }
     this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.mouCust = response["MouCustObj"];
@@ -936,34 +931,5 @@ export class ApplicationDataFL4WComponent implements OnInit {
           this.TenorTo = this.mouCustFctr.TenorTo;
         }
       })
-  }
-
-  SaveAppOtherInfo() {
-    if (this.GetBankInfo != undefined && this.GetBankInfo != null && this.GetBankInfo.BankAccName != null && this.GetBankInfo.BankAccNo != null && this.GetBankInfo.BankBranch != null && this.GetBankInfo.BankCode != null && this.GetBankInfo.AppId != 0) {
-      this.http.post(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
-        (response) => {
-          response;
-        },
-        error => {
-          console.log(error);
-        }
-      )
-    }else{
-      this.GetBankInfo = {
-        "BankCode": "",
-        "BankBranch": "",
-        "AppId": this.AppId,
-        "BankAccNo": "",
-        "BankAccName": "",
-      };
-      this.http.post(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
-        (response) => {
-          response;
-        },
-        error => {
-          console.log(error);
-        }
-      )
-    }
   }
 }

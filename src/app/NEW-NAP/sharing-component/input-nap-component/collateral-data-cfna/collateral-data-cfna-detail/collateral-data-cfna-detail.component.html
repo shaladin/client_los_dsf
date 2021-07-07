@@ -155,7 +155,7 @@
                   <label class="col-md-2" translate>RAPINDO</label>
                   <div class="col-md-8">
                     <button type="button" name="hitAPI" id="add" (click)="HitAPI()" class="btn btn-raised btn-primary">
-                      HIT RAPINDO
+                      Check Rapindo
                     </button>
                     <label *ngIf="LastRequestedDate != ''" class="col-md-4" translate>Last Requested At : {{LastRequestedDate | date: 'dd-MMMM-yyyy hh:mm:ss'}}</label>
                   </div>
@@ -344,7 +344,7 @@
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label class="col-md-4 adins-required-label" translate>Owner Mobile Phone No</label>
+                    <label class="col-md-4 adins-required-label" [ngClass]="{'adins-required-label' : AppCustData.MrCustTypeCode == 'PERSONAL' }" translate>Owner Mobile Phone No</label>
                     <div class="col-md-8">
                       <input type="text" class="form-control" formControlName="OwnerMobilePhnNo"
                         [ngClass]="{ 'is-invalid': enjiForm.submitted && AddCollForm.controls.OwnerMobilePhnNo.invalid }">

@@ -56,7 +56,8 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
       this.WfTaskListId = params["TaskListId"];
       this.TrxNo = params["TrxNo"];
     });
-    this.BusinessDate = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
+
+    this.BusinessDate = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.Username = currentUserContext[CommonConstant.USER_NAME];
   }
@@ -93,7 +94,7 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
     this.httpClient.post(URLConstant.GetMouCustByAppId, request).subscribe((responseMou) => {
       this.PlafondAmt = responseMou["PlafondAmt"];
       this.MrMouTypeCode = responseMou["MrMouTypeCode"];
-
+      
       if (this.MrMouTypeCode == CommonConstant.FACTORING) {
         this.httpClient.post(URLConstant.GetListAppInvoiceFctrByAppId, request).subscribe((response) => {
           this.listInvoice = response["AppInvoiceFctrObjs"];
@@ -112,15 +113,22 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
         this.httpClient.post(URLConstant.GetListAppInvoiceAppInvoiceDlrFncngHByAppId, { Id: this.AppId }).subscribe(
           (response) => {
             this.listInvoice = response["AppInvoiceDlrFncngHObj"];
+            var totalInvoiceDF = 0;
             for (let i = 0; i < this.listInvoice.length; i++) {
               var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
               fa_listInvoice.push(this.AddInvoiceControl(this.listInvoice[i]))
-            }
-            this.httpClient.post<ResGetAllNtfAppAmt>(URLConstant.GetAllNtfAppAmtByMouCustId, { Id : GetByMouCustId.Id }).subscribe(
-              (responseNtfAmt) => {
-                this.OsPlafondAmt = this.PlafondAmt - responseNtfAmt.NtfAmt;
+              if(this.listInvoice[i].IsApproved == true)
+              {
+                totalInvoiceDF += this.listInvoice[i].InvoiceAmt;
               }
-            )
+            }
+            // this.httpClient.post<ResGetAllNtfAppAmt>(URLConstant.GetAllNtfAppAmtByMouCustId, { Id : GetByMouCustId.Id }).subscribe(
+            //   (responseNtfAmt) => {
+            //     this.OsPlafondAmt = this.PlafondAmt - responseNtfAmt.NtfAmt;
+            //   }
+            // )
+
+            this.OsPlafondAmt = this.PlafondAmt - totalInvoiceDF;
           });
       }
     })
@@ -131,7 +139,7 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
       InvoiceNo: obj.InvoiceNo,
       CustName: obj.CustomerFactoringName,
       InvoiceAmt: obj.InvoiceAmt,
-      Verification: this.listVerificationStatus[0].Key,
+      Verification: obj.IsApproved == true ? CommonConstant.InvoiceStatApv : CommonConstant.InvoiceStatRjc,
       InvoiceNotes: obj.Notes,
       InvoiceDt: obj.InvoiceDueDt,
       RowVersion: obj.RowVersion,
@@ -157,6 +165,7 @@ export class InvoiceVerifDetailListOfInvoiceComponent implements OnInit {
       this.listInvoice[i].RowVersion = item.get("RowVersion").value;
     }
     var request = { Invoices: this.listInvoice, TaskListId: this.WfTaskListId, IsDF: true };
+
     this.httpClient.post(URLConstant.UpdateAppInvoiceDlfn, request).subscribe(() => {
       this.outputTab.emit();
     });

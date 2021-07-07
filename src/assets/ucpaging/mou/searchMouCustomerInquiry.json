@@ -4,7 +4,7 @@
     "component": [
         {
             "type": "textbox",
-            "name": "MOU_CUST_NO",
+            "name": "M.MOU_CUST_NO",
             "id": "MouCustNoId",
             "value": "",
             "label": "Mou No",
@@ -13,7 +13,7 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "MR_MOU_TYPE_CODE",
+            "name": "M.MR_MOU_TYPE_CODE",
             "id": "MrMouTypeCode",
             "value": "",
             "placeholder": "Placeholder",
@@ -30,7 +30,7 @@
         },
         {
             "type": "textbox",
-            "name": "CUST_NAME",
+            "name": "M.CUST_NAME",
             "id": "CustNameId",
             "value": "",
             "label": "Customer Name",
@@ -38,7 +38,7 @@
         },
         {
             "type": "dropdown",
-            "name": "IS_REVOLVING",
+            "name": "M.IS_REVOLVING",
             "id": "IsRevolvingId",
             "label": "Revolving",
             "value": "",
@@ -62,7 +62,7 @@
         },
         {
             "type": "textbox",
-            "name": "PLAFOND_AMT",
+            "name": "M.PLAFOND_AMT",
             "id": "GreaterPlafondAmt",
             "value": "",
             "label": "Plafond Amount From",
@@ -71,7 +71,7 @@
         },
         {
             "type": "textbox",
-            "name": "PLAFOND_AMT",
+            "name": "M.PLAFOND_AMT",
             "id": "LessPlafondAmt",
             "value": "",
             "label": "Plafond Amount To",
@@ -81,7 +81,7 @@
         {
             "type": "dropdown",
             "datatype": "text",
-            "name": "MOU_STAT",
+            "name": "M.MOU_STAT",
             "id": "StatusCode",
             "value": "",
             "placeholder": "Placeholder",
@@ -135,13 +135,13 @@
             "type": "sort",
             "position": "center",
             "label": "MOU STATUS",
-            "name": "MOU_STAT"
+            "name": "M.MOU_STAT"
         },
         {
             "type": "sort",
             "position": "left",
             "label": "MOU TYPE",
-            "name": "MR_MOU_TYPE_CODE"
+            "name": "M.MR_MOU_TYPE_CODE"
         }
     ],
     "bodyList": [
@@ -187,7 +187,7 @@
         {
             "type": "text",
             "position": "left",
-            "property": "MrMouTypeCode"
+            "property": "MouTypeName"
         }
     ]
 }

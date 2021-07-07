@@ -1,0 +1,122 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="card-header header-title">
+        <div class="row">
+          <div class="col-md-8">
+            <h4 class="form-section card-title" translate>Application Source {{mode}}</h4>
+          </div>
+        </div>
+      </div>
+      <div class="px-3">
+        <form class="form form-horizontal" [formGroup]="AppSourceForm"
+          (ngSubmit)="AppSourceForm.valid && SaveForm()" #enjiForm="ngForm">
+          <div class="form-body">
+            <lib-ucSubsection [id]="'AddEditId'" [title]="mode" [panel]="'AddEdit'">
+            </lib-ucSubsection>
+            <div id="AddEdit">
+              
+              <div class="form-group row">
+                <label class="col-md-3  adins-required-label" translate>Application Source Code</label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control" formControlName="AppSrcCode"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AppSourceForm.controls.AppSrcCode.invalid }">
+                  <lib-uc-show-errors [control]="AppSourceForm.controls.AppSrcCode"
+                    [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3  adins-required-label" translate>Application Source Name</label>
+                <div class="col-md-4">
+                  <input type="text" class="form-control" formControlName="AppSrcName"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AppSourceForm.controls.AppSrcName.invalid }">
+                  <lib-uc-show-errors [control]="AppSourceForm.controls.AppSrcName"
+                    [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3" translate>Application Source Type </label>
+                <div class="col-md-9">
+                  <select class="form-control adInsInput" formControlName="MrAppSrcTypeCode">
+                    <option *ngFor="let item of listAppSrcType" [ngValue]="item.Key">
+                      {{item.Value}}
+                    </option>
+                  </select>
+                  <lib-uc-show-errors [control]="AppSourceForm.controls.MrAppSrcTypeCode" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3" translate>Description</label>
+                <div class="col-md-4">
+                  <textarea class="form-control adInsInput" formControlName="Descr"
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AppSourceForm.controls.Descr.invalid }"></textarea>
+                  <lib-uc-show-errors [control]="AppSourceForm.controls.Descr"
+                    [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3  adins-required-label" translate>Period From</label>
+                <div class="col-md-4">
+                  <input type="date" class="form-control adInsInput" formControlName="PeriodFrom" 
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AppSourceForm.controls.PeriodFrom.invalid }" />
+                  <lib-uc-show-errors [control]="AppSourceForm.controls.PeriodFrom"
+                    [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3  adins-required-label" translate>Period To</label>
+                <div class="col-md-4">
+                  <input type="date" class="form-control adInsInput" formControlName="PeriodTo" 
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AppSourceForm.controls.PeriodTo.invalid }" />
+                  <lib-uc-show-errors [control]="AppSourceForm.controls.PeriodTo"
+                    [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-md-3  adins-required-label" translate>Max Application Approval Date</label>
+                <div class="col-md-4">
+                  <input type="date" class="form-control adInsInput" formControlName="MaxApvDt" 
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && AppSourceForm.controls.MaxApvDt.invalid }" />
+                  <lib-uc-show-errors [control]="AppSourceForm.controls.MaxApvDt"
+                    [submit]="enjiForm.submitted">
+                  </lib-uc-show-errors>
+                </div>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-3">Active Status</label>
+                <div class="col-md-9">
+                  <select class="form-control" formControlName="IsActive">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="form-actions right">
+            <button type="button" class="btn btn-raised btn-warning mr-1"
+              [routerLink]="['/Setting/AppSource/Paging']" translate>
+              <i class="far fa-window-close"></i> Cancel
+            </button>
+            <button type="submit" class="btn btn-raised btn-primary" translate>
+              <i class="far fa-check-square"></i> Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

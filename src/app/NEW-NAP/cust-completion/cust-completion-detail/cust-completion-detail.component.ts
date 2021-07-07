@@ -14,6 +14,7 @@ import { FormBuilder } from '@angular/forms';
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AppCustCompletionObj } from 'app/shared/model/CustCompletion/AppCustCompletionObj.Model';
 
 @Component({
@@ -35,6 +36,7 @@ export class CustCompletionDetailComponent implements OnInit {
   ReturnHandlingHId: number = 0;
   ResponseReturnInfoObj: ResReturnHandlingDObj = new ResReturnHandlingDObj();
   OnFormReturnInfo: boolean = false;
+  IsDataReady: boolean = false;
   
   constructor(
     private route: ActivatedRoute,
@@ -42,7 +44,8 @@ export class CustCompletionDetailComponent implements OnInit {
     private router: Router,
     private toastr: NGXToastrService, 
     private fb: FormBuilder,
-    private cookieService: CookieService) {
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
         this.AppId = params['AppId'];
@@ -77,7 +80,8 @@ export class CustCompletionDetailComponent implements OnInit {
     this.addObj["BizTemplateCode"] = this.BizTemplateCode;
 
     this.loadCustCompletionListData();
-    this.claimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
+    this.IsDataReady = true;
   }
 
   MakeViewReturnInfoObj() {
@@ -107,12 +111,6 @@ export class CustCompletionDetailComponent implements OnInit {
         this.listCustCompletion = this.inputGridObj.resultData.Data;
       }
     );
-  }
-
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.wfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME], isLoading: false };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(() => { });
   }
 
   buttonBackOnClick() {

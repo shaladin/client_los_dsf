@@ -53,9 +53,9 @@
             <div class="form-group row">
               <label class="col-md-2 adInsLabel adins-required-label" translate>ID Type</label>
               <div class="col-md-4">
-                <select class="form-control adInsInput" style="width: auto" formControlName="MrIdTypeCode" required
+                <select (change)="ChangeIdType($event.target.value)"  class="form-control adInsInput" style="width: auto" formControlName="MrIdTypeCode" required
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && CustomerDataForm.controls.MrIdTypeCode.invalid }">
-                  <option *ngFor="let it of tempIdType " [value]="it.Key">
+                  <option *ngFor="let it of tempIdType "[value]="it.Key">
                     {{it.Value}}</option>
                 </select>
                 <lib-uc-show-errors [control]="CustomerDataForm.controls.MrIdTypeCode" [submit]="enjiForm.submitted">
@@ -226,7 +226,7 @@
                   <button type="button" class="btn btn-raised btn-success mr-1"
                     [disabled]="!CustomerDataForm.valid"
                     (click)="checkIntegrator()" translate>
-                    <i class="fa fa-check-square-o"></i> Hit Integrator
+                    <i class="fa fa-check-square-o"></i> Check Integrator
                   </button>
                   <label *ngIf="this.thirdPartyRsltHId != null && this.thirdPartyRsltHId != '' " translate>Requested At {{this.latestReqDtCheckIntegrator | date: 'dd-MMMM-yyyy hh:mm:ss'}}</label>
                 </div>

@@ -4,8 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
-import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { InputLookupObj } from 'app/shared/model/InputLookupObj.Model';
@@ -15,6 +13,7 @@ import { environment } from 'environments/environment';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { UclookupgenericComponent } from '@adins/uclookupgeneric';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-asset-allocation-detail',
@@ -25,7 +24,7 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
   
   @ViewChildren('dyna') UclookupgenericComponents: QueryList<UclookupgenericComponent>;
   // appAssetObj: Array<any>;
-  TaskListId: string;
+  TaskListId: number;
   AppAssetId: number;
   AppId: number;
   InputLookupAssetNumberObj: InputLookupObj;
@@ -41,7 +40,8 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute, 
     private router: Router, 
     private toastr: NGXToastrService, 
-    private cookieService: CookieService) {
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params['AppId'];
       this.TaskListId = params['WfTaskListId'];
@@ -59,7 +59,7 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
   async ngOnInit() {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppOPLMainInformation.json";
 
-    this.claimTask();
+    this.claimTaskService.ClaimTask(this.TaskListId);
     this.getAssetAllocationData();
   }
 
@@ -112,15 +112,6 @@ export class AssetAllocationDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.TaskListId;
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
-  }
   isReady: boolean = false;
   async getAssetAllocationData() {
     var reqObj = { Id: this.AppId }

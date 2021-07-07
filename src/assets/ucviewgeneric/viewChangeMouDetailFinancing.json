@@ -2,7 +2,7 @@
     "title": "",
     "subsection": [
       {
-        "subSectionId": "CustMainInfoHeaderId",
+        "subSectionId": "CustMainDetailHeaderId",
         "subSectionTitle": "Mou Detail",
         "mainInfoPath": "/Generic/GetDataViewBySQL",
         "mainInfo": [
@@ -73,23 +73,23 @@
           },
           {
             "type": "text",
-            "label": "Delaer Code",
-            "property": "dealerCode"
+            "label": "Dealer",
+            "property": "dealer"
           },
           {
             "type": "text",
-            "label": "Delaer Customer No",
-            "property": "dealerCustNo"
+            "label": "Dealer Customer Name",
+            "property": "dealerCustName"
           },
           {
             "type": "text",
-            "label": "Manufacturer Code",
-            "property": "manufacturerCode"
+            "label": "Manufacturer",
+            "property": "manufacturer"
           },
           {
             "type": "text",
-            "label": "Manufacturer Customer No",
-            "property": "manufacturerCustNo"
+            "label": "Manufacturer Customer Name",
+            "property": "manufacturerCustName"
           },
           {
             "type": "text",

@@ -6,7 +6,6 @@ import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
 import { VerfResultObj } from 'app/shared/model/VerfResult/VerfResult.Model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { CustCnfrmObj } from 'app/shared/model/CustCnfrm/CustCnfrm.Model';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
@@ -16,6 +15,7 @@ import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResAppCustForListCustMainDataObj, ResListCustMainDataObj } from 'app/shared/model/Response/NAP/CustMainData/ResListCustMainDataObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { environment } from 'environments/environment';
 
 @Component({
@@ -28,7 +28,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   arrValue = [];
   AgrmntId: number;
   AppId: number;
-  TaskListId: string;
+  TaskListId: number;
   AgrmntNo: string;
   VerfResultList = new Array<VerfResultHObj>();
   CustNoObj: GenericObj = new GenericObj();
@@ -42,7 +42,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   readonly DetailLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_SUBJ_DETAIL;
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_PAGING;
   constructor(private route: ActivatedRoute, private http: HttpClient,
-    private router: Router, private toastr: NGXToastrService, private cookieService: CookieService) {
+    private router: Router, private toastr: NGXToastrService, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AgrmntId"] != null) {
         this.AgrmntId = params["AgrmntId"];
@@ -63,7 +63,7 @@ export class CustConfirmationDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.claimTask();
+    this.claimTaskService.ClaimTask(this.TaskListId);
     this.arrValue.push(this.AgrmntId);
     if (this.BizTemplateCode == CommonConstant.CFNA) {
       this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewCustConfirmInfoCFNA.json";
@@ -177,16 +177,6 @@ export class CustConfirmationDetailComponent implements OnInit {
       // this.toastr.successMessage("Success !");
       // this.router.navigate(["/Nap/AdminProcess/CustConfirmation/Paging"], { queryParams: { "BizTemplateCode": this.BizTemplateCode } });
     }
-  }
-
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.TaskListId;
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   GetCallBack(event) {

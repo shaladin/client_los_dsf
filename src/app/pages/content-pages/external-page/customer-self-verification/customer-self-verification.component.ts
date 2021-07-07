@@ -6,9 +6,9 @@ import Stepper from 'bs-stepper';
 import { LeadObj } from 'app/shared/model/Lead.Model';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
-import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
-import { AdInsHelper } from 'app/shared/AdInsHelper';  
+import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model'; 
 import { CookieService } from 'ngx-cookie';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 
 @Component({
   selector: 'app-customer-self-verification',
@@ -27,7 +27,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
   WfTaskListId: number;
   reason : string;
   AppStepIndex :number =1;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.LeadId = params["LeadId"];
       if (this.LeadId == null || this.LeadId == undefined) this.LeadId = 1;
@@ -53,7 +53,7 @@ export class CustomerSelfVerificationComponent implements OnInit {
           this.reason = "resubmit"; 
          }else{ 
           if (this.WfTaskListId > 0) {
-            this.claimTask();
+            this.claimTaskService.ClaimTask(this.WfTaskListId);
           }
           this.stepper = new Stepper(document.querySelector('#stepper1'), {
             linear: false,
@@ -81,15 +81,6 @@ export class CustomerSelfVerificationComponent implements OnInit {
       this.isLeadData = true;
       this.AppStepIndex = 2;
     }
-  }
-
-  async claimTask()
-  {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: "adins"};
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   getValue(ev)

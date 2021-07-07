@@ -30,7 +30,8 @@
               </div>
             </div>
 
-            <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady" #ApprovalComponent></lib-ucapprovalcreate>
+            <lib-ucapprovalcreate [InputObj]="InputObj" [enjiForm]="enjiForm" *ngIf="IsReady" [parentForm]="FreezeUnfreezeForm"
+              #ApprovalComponent></lib-ucapprovalcreate>
             <div class="form-actions right">
               <button type="button" class="btn btn-raised btn-warning mr-1"
                 [routerLink]="['/Mou/FreezeUnfreeze/Paging']" translate>

@@ -1,6 +1,14 @@
-<lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
 <div class="card">
   <div class="card-body">
+    <div class="card-header header-title" style="margin-bottom: 10px;"> 
+      <div class="row">
+        <div class="col-md-8">
+          <h4 class="card-title" id="horz-layout-colored-controls" translate> MOU EXECUTION
+          </h4>
+        </div>
+      </div>
+    </div> 
+    <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
     <div class="px-3">
       <lib-ucSubsection [id]="'MOUMainInfoId'" [title]="'Main Information'" [panel]="'MOUMainInfoSection'">
       </lib-ucSubsection>

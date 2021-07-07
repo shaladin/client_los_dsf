@@ -15,13 +15,13 @@ import { DeviationResultObj } from 'app/shared/model/DeviationResultObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
 import { ScoringResultHObj } from 'app/shared/model/ScoringResultHObj.Model';
 import { UcInputRFAObj } from 'app/shared/model/UcInputRFAObj.Model';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
 import { WorkflowApiObj } from 'app/shared/model/Workflow/WorkFlowApiObj.Model';
 import { environment } from 'environments/environment';
 import { ToastrService } from 'ngx-toastr';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { TypeResultObj } from 'app/shared/model/TypeResult/TypeResultObj.Model';
 import { ResultAttrObj } from 'app/shared/model/TypeResult/ResultAttrObj.Model';
@@ -77,7 +77,9 @@ export class CreditReviewCrDetailComponent implements OnInit {
     private http: HttpClient,
     private fb: FormBuilder,
     private router: Router,
-    public toastr: ToastrService, private cookieService: CookieService
+    public toastr: ToastrService, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
@@ -98,7 +100,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
 
   async ngOnInit() {
     this.initData();
-    await this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     await this.GetAppNo();
     await this.GetListDeviation();
     await this.BindDDLRecommendation();
@@ -108,7 +110,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
     await this.GetExistingCreditReviewData();
     await this.GetCrdRvwCustInfoByAppId();
     this.initInputApprovalObj();
-    this.IsReady = true;
   }
 
   responseListTypeCodes: Array<TypeResultObj> = new Array();
@@ -121,7 +122,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
   //#region Get Local Data
   ManualDeviationData: Array<DeviationResultObj> = new Array<DeviationResultObj>();
   BindManualDeviationData(ev) {
-    // this.IsReady = false;
+    this.IsReady = false;
     this.ref.tick();
     this.ManualDeviationData = ev;
     let manualDevList = []
@@ -169,16 +170,6 @@ export class CreditReviewCrDetailComponent implements OnInit {
           this.appNo = response.AppNo;
           await this.GetCreditScoring(response.AppNo);
         }
-      });
-  }
-
-  async ClaimTask() {
-    var wfClaimObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.wfTaskListId.toString();
-    wfClaimObj.pUserID = this.UserAccess.UserName;
-
-    await this.http.post(URLConstant.ClaimTask, wfClaimObj).toPromise().then(
-      () => {
       });
   }
 
@@ -334,6 +325,7 @@ export class CreditReviewCrDetailComponent implements OnInit {
     this.InputObj.SchemeCode = CommonConstant.SCHM_CODE_CRD_APV_CF;
     this.InputObj.Reason = this.DDLData[this.DDLRecomendation];
     this.InputObj.TrxNo = this.appNo;
+    this.IsReady = true;
   }
 
   //#region Submit

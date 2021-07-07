@@ -162,7 +162,8 @@
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-6">
-            <label class="adInsLabel" *ngIf="appObj?.BizTemplateCode != 'DLFN'"> Total Asset Price </label>
+            <label class="adInsLabel" *ngIf="appObj?.BizTemplateCode != 'DLFN' && appObj?.BizTemplateCode != 'CFNA'"> Total Asset Price </label>
+            <label class="adInsLabel" *ngIf="appObj?.BizTemplateCode == 'CFNA'"> Total Financing Amount </label>
             <label class="adInsLabel" *ngIf="appObj?.BizTemplateCode == 'DLFN'"> Total Invoice Amount </label>
           </div>
           <div class="col-md-6">
@@ -240,8 +241,8 @@
       </div>
     </div>
   </div>
-  <br>
-  <div class="form-group row">
+  <br *ngIf="BizTemplateCode != 'CFNA'" >
+  <div class="form-group row" *ngIf="BizTemplateCode != 'CFNA'">
     <div class="col-md-6">
       <div class="row">
         <div class="col-md-6">
@@ -412,7 +413,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" *ngIf="BizTemplateCode != 'CFNA'">
       <div class="row">
         <div class="col-md-6">
           <label class="adInsLabel" translate> Diff Rate Amount </label>
@@ -438,7 +439,7 @@
           <label class="adInsLabel" translate> Gross Yield </label>
         </div>
         <div class="col-md-6">
-          <label class="adInsLabel"> {{appFinDataObj?.GrossYieldPrcnt | number:'.2':'en-US'}}%</label>
+          <label class="adInsLabel"> {{appFinDataObj?.GrossYieldPrcnt | number:'.6':'en-US'}}%</label>
         </div>
       </div>
     </div>

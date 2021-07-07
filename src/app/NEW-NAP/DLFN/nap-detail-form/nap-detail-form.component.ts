@@ -25,6 +25,14 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 })
 export class NapDetailFormComponent implements OnInit {
   // @ViewChild('viewMainProd') ucViewMainProd: UcviewgenericComponent;
+
+  private viewMainProd: UcviewgenericComponent;
+  @ViewChild('viewMainProd') set content(content: UcviewgenericComponent) {
+    if (content) { // initially setter gets called with undefined
+      this.viewMainProd = content;
+    }
+  }
+
   private stepper: Stepper;
   AppStepIndex: number = 1;
   appId: number;
@@ -39,7 +47,7 @@ export class NapDetailFormComponent implements OnInit {
   token: string = AdInsHelper.GetCookie(this.cookieService, CommonConstant.TOKEN);
   IsLastStep: boolean = false;
   IsSavedTC: boolean = false;
-  BizTemplateCode: string = CommonConstant.CFNA;
+  BizTemplateCode: string = CommonConstant.DF;
 
   AppStep = {
     "NAPD": 1,
@@ -82,7 +90,7 @@ export class NapDetailFormComponent implements OnInit {
   //---
   ngOnInit() {
     this.ClaimTask();
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppFctrMainInformation.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewNapAppDlfnMainInformation.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -180,6 +188,7 @@ export class NapDetailFormComponent implements OnInit {
       default:
         break;
     }
+    this.viewMainProd.initiateForm();
     //  this.ucViewMainProd.initiateForm();
   }
 
@@ -216,7 +225,7 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_DLFN_PAGING], {});
+    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_MAIN_DATA_NAP2_PAGING], { BizTemplateCode: this.BizTemplateCode });
   }
 
   ClaimTask() {
@@ -238,7 +247,7 @@ export class NapDetailFormComponent implements OnInit {
   }
 
   GetCallback(ev) {
-    if (ev.Key == "HighligtComment") {
+    if (ev.Key == "HighlightComment") {
       let custObj = { CustNo: ev.ViewObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
         response => {

@@ -1,12 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
-import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { MouCustDlrFinObj } from 'app/shared/model/moucustdlrfin.model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
+import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
+import { VendorObj } from 'app/shared/model/Vendor.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
 
 @Component({
   selector: 'app-mou-view-detail',
@@ -57,7 +61,9 @@ export class MouViewDetailComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService) { }
 
   async ngOnInit() {
-    var mouCustObj = { Id: this.MouCustId }
+    this.GetListActiveRefPayFreq();
+    this.GetListKvpActiveRefCurr();
+    var mouCustObj = { Id: this.MouCustId };
     this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.mouCust = response["MouCustObj"];
@@ -95,6 +101,7 @@ export class MouViewDetailComponent implements OnInit {
           this.TenorTo = this.mouCustFctr.TenorTo;
 
           this.WopCode = this.mouCustFctr.WopCode;
+          this.GetRefMasterByRefMasterTypeCodeAndMasterCode(this.mouCustFctr.WopCode, "WopCode", CommonConstant.RefMasterTypeCodeWOP);
           this.TopDays = this.mouCustFctr.TopDays;
           this.InterestRatePrcnt = this.mouCustFctr.InterestRatePrcnt;
           this.RetentionPrcnt = this.mouCustFctr.RetentionPrcnt;
@@ -104,7 +111,7 @@ export class MouViewDetailComponent implements OnInit {
           this.Notes = this.mouCustFctr.Notes;
 
           var objVendor = {
-            VendorCode: this.mouCustFctr.VendorCode
+            Code: this.mouCustFctr.VendorCode
           }
           this.http.post(URLConstant.GetVendorByVendorCode, objVendor).subscribe(
             (responseLink) => {
@@ -113,9 +120,10 @@ export class MouViewDetailComponent implements OnInit {
 
         }
         else if (this.MouType == CommonConstant.FINANCING) {
-          this.http.post(URLConstant.GetMouCustDlrFindById, mouCustObj).subscribe(
-            (responses) => {
+          this.http.post(URLConstant.GetMouCustDlrWithCustVendorNameFindById, mouCustObj).subscribe(
+            (responses: MouCustDlrFinObj) => {
               console.log(responses)
+              this.MouCustDlrFindData = responses;
               this.MouCustDlrFindData.WopCode = responses["WopCode"];
               this.MouCustDlrFindData.TopDays = responses["TopDays"];
               this.MouCustDlrFindData.TopInterestRatePrcnt = responses["TopInterestRatePrcnt"];
@@ -143,6 +151,7 @@ export class MouViewDetailComponent implements OnInit {
                   this.MrInstTypeCode = responseRefMaster["Descr"];
 
                 });
+              this.GetRefMasterByRefMasterTypeCodeAndMasterCode(this.MouCustDlrFindData.WopCode, "WopCode", CommonConstant.RefMasterTypeCodeWOP);
             })
         }
 
@@ -153,6 +162,50 @@ export class MouViewDetailComponent implements OnInit {
       });
 
     this.IsReady = true;
+  }
+
+  dictMasterCode: { [id: string]: string } = {};
+  GetRefMasterByRefMasterTypeCodeAndMasterCode(masterCode: string, typeVar: string, refMasterTypeCode: string) {
+    var ObjectRefMaster: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+      RefMasterTypeCode: refMasterTypeCode,
+      MasterCode: masterCode
+    }
+    this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, ObjectRefMaster).subscribe(
+      (responseRefMaster) => {
+        this.dictMasterCode[typeVar] = responseRefMaster["Descr"];
+      });
+  }
+
+  dictRefPayFreq: { [id: string]: string } = {};
+  GetListActiveRefPayFreq() {
+    this.http.post(URLConstant.GetListActiveRefPayFreq, null).subscribe(
+      (response: GenericListObj) => {
+        for (let index = 0; index < response.ReturnObject.length; index++) {
+          const element = response.ReturnObject[index];
+          this.dictRefPayFreq[element.PayFreqCode] = element.Descr;
+        }
+      }
+    );
+  }
+
+  dictRefCurr: { [id: string]: string } = {};
+  GetListKvpActiveRefCurr() {
+    this.http.post(URLConstant.GetListKvpActiveRefCurr, null).subscribe(
+      (response: GenericKeyValueListObj) => {
+        for (let index = 0; index < response.ReturnObject.length; index++) {
+          const element = response.ReturnObject[index];
+          this.dictRefCurr[element.Key] = element.Value;
+        }
+      }
+    );
+  }
+
+  ClickLinkManufacturer(vendorCode: string) {
+    this.http.post(URLConstant.GetVendorByVendorCode, { Code: vendorCode }).subscribe(
+      (responseLink: VendorObj) => {
+        console.log(responseLink);
+        AdInsHelper.OpenVendorBranchViewByVendorId(responseLink.VendorId);
+      });
   }
 
   MouDataForm = this.fb.group({

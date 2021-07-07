@@ -12,6 +12,7 @@ import { UcInputApprovalHistoryObj } from "app/shared/model/UcInputApprovalHisto
 import { UcInputApprovalGeneralInfoObj } from "app/shared/model/UcInputApprovalGeneralInfoObj.model";
 import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
+import { CommonConstant } from "app/shared/constant/CommonConstant";
 
 @Component({
   selector: "app-change-mou-approval-financing",
@@ -100,8 +101,16 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
   }
 
   onApprovalSubmited(event) {
-    this.toastr.successMessage("Success");
-    AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CHANGE_MOU_APV_PAGING], {});
+    let ReqMouApvCustomObj = {
+      Tasks: event.Tasks
+    };
+
+    this.http.post(URLConstant.MouApproval, ReqMouApvCustomObj).subscribe(
+      () => {
+        this.toastr.successMessage("Success");
+        AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CHANGE_MOU_APV_PAGING], {});
+      }
+    );
   }
   onCancelClick() {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.CHANGE_MOU_APV_PAGING], {});
@@ -113,7 +122,12 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
       this.http
         .post(URLConstant.GetCustByCustNo, custObj)
         .subscribe((response) => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         });
     }
   }

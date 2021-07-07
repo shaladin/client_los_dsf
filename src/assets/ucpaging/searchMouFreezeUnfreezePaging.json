@@ -10,6 +10,23 @@
       "placeholder": "Placeholder"
     },
     {
+      "type": "dropdown",
+      "datatype": "text",
+      "name": "MC.MR_MOU_TYPE_CODE",
+      "id": "MrMouTypeCodeId",
+      "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "environment": "FOU",
+      "path": "/RefMaster/GetListKeyValueActiveByCode",
+      "label": "Mou Type",
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "RefMasterTypeCode",
+      "criteriaPropValue": "MOU_TYPE"
+    },
+    {
       "type": "textbox",
       "name": "MC.CUST_NAME",
       "id": "CustName",
@@ -18,12 +35,22 @@
       "placeholder": "Placeholder"
     },
     {
-      "type": "textbox",
+      "type": "dropdown",
+      "datatype": "text",
       "name": "MC.MOU_STAT",
-      "id": "MouStat",
+      "id": "StatusCode",
       "value": "",
+      "placeholder": "Placeholder",
+      "isFromURL": true,
+      "ddlType": "all",
+      "url": "",
+      "environment": "FOU",
+      "path": "/RefStatus/GetListKeyValueActiveGrpCodeByCode",
       "label": "Mou Status",
-      "placeholder": "Placeholder"
+      "items": [],
+      "itemsUrl": [],
+      "criteriaPropName": "Code",
+      "criteriaPropValue": "MOUC_STAT"
     },
     {
       "type": "dropdown",
@@ -76,6 +103,12 @@
       "name": "ISNULL(MC.IS_FREEZE,0)"
     },
     {
+      "type": "sort",
+      "position": "center",
+      "label": "MOU TYPE",
+      "name": "MrMouTypeCode"
+    },
+    {
       "type": "label",
       "position": "center",
       "label": "ACTION"
@@ -110,6 +143,11 @@
       "type": "boolean",
       "position": "center",
       "property": "IsFreeze"
+    },
+    {
+      "type": "text",
+      "position": "center",
+      "property": "MouTypeName"
     },
     {
       "type": "action",

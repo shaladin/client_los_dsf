@@ -20,10 +20,10 @@ import { ReqAddLeadObj, ReqEditLeadObj } from 'app/shared/model/Request/LEAD/Req
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
 import { ResGetListRefEmpForLookupObj } from 'app/shared/model/Response/RefEmp/ResRefEmpObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
-import { KeyValue } from '@angular/common';
 import { LeadForLookupObj } from 'app/shared/model/LeadForLookupObj.Model';
 
 @Component({
@@ -89,7 +89,7 @@ export class LeadInputMainInfoComponent implements OnInit {
   WfTaskListId: number;
   isCopyButtonDisabled: boolean = true;
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["mode"] != null) {
         this.pageType = params["mode"];
@@ -201,7 +201,7 @@ export class LeadInputMainInfoComponent implements OnInit {
 
   ngOnInit() {
     if (this.WfTaskListId > 0) {
-      this.claimTask();
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
     }
     this.user = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.MakeLookUpObj();
@@ -228,9 +228,9 @@ export class LeadInputMainInfoComponent implements OnInit {
     //   });
 
     let obj = {
-      Id: userContext.OfficeId
+      Code: userContext.OfficeCode,
     };
-
+    console.log(userContext);
     this.http.post(URLConstant.GetListKvpRefAppSrcForAppOrLead, obj).subscribe(
       (response) => {
         this.listLeadSource = response[CommonConstant.ReturnObj];
@@ -456,11 +456,4 @@ export class LeadInputMainInfoComponent implements OnInit {
     }
   }
 
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
-  }
 }

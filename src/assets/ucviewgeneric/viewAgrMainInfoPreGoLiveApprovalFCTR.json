@@ -1,0 +1,83 @@
+{
+    "title": "Request Pre Go Live Approval",
+    "subsection": [
+      {
+        "subSectionId": "AgrMainInformationId",
+        "subSectionTitle": "Main Information",
+        "mainInfoPath": "/Generic/GetDataViewBySQL",
+        "mainInfo": [
+          {
+            "type": "link",
+            "label": "Application No",
+            "property": "AppNo",
+            "name": "AppNo",
+            "environment": "LOSR3WEB",
+            "path": "VIEW_APP",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "AppId",
+                "property": "AppId"
+              }
+            ]
+          },
+          {
+            "type": "link",
+            "label": "Agreement No",
+            "property": "AgrmntNo",
+            "name": "AgrmntNo",
+            "environment": "LOSR3WEB",
+            "path": "VIEW_AGRMNT",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "AgrmntId",
+                "property": "AgrmntId"
+              }
+            ]
+          },
+          {
+            "type": "link",
+            "label": "Mou No",
+            "property": "MouCustNo",
+            "name": "MouCustNo",
+            "environment": "LOSR3WEB",
+            "path": "VIEW_MOU_CUST",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "MouCustId",
+                "property": "MouCustId"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "label": "Original Office",
+            "property": "OfficeName"
+          },
+          {
+            "type": "callback",
+            "key": "customer",
+            "label": "Customer Name",
+            "property": "CustName"
+          },
+          {
+            "type": "callback",
+            "label": "Product Offering Name",
+            "key": "ViewProdOffering",
+            "property": "ProdOfferingName"
+          },
+          {
+            "type": "text",
+            "label": "Tenor",
+            "property": "Tenor"
+          }
+        ],
+        "querystring": {
+          "name": "viewAgrMainInfoPreGoLiveApproval"
+        }
+      }
+    ]
+  }
+  

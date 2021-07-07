@@ -37,7 +37,7 @@
               </div>
             </div>
             <div style="margin-left: -20px; margin-right: -20px;">
-              <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady" (result)="SaveForm()" #ApprovalComponent></lib-ucapprovalcreate>
+              <lib-ucapprovalcreate [parentForm]= "TaskReassignmentForm" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="IsReady" (result)="SaveForm()" #ApprovalComponent></lib-ucapprovalcreate>
             </div>
             <div class="form-actions right">
               <button type="button" class="btn btn-raised btn-warning mr-1" (click)="Back()" translate>

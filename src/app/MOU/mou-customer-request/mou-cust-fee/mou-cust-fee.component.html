@@ -20,6 +20,9 @@
           <th style="text-align: left;">
             <span class="thead-header" name='FeeAmtFeePrcnt' translate>AMOUNT</span>
           </th>
+          <th style="text-align: left;">
+            <span class="thead-header" name='PaymentType' translate>PAYMENT TYPE</span>
+          </th>
           <th style="text-align: center;">
             <span class="thead-header" name='action' translate>DELETE</span>
           </th>
@@ -31,6 +34,7 @@
           <td style="text-align: left;">{{item.FeeTypeView}}</td>
           <td style="text-align: left;" *ngIf="item.FeeType == 'AMT'">{{item.FeeAmt | currency : "USD" : ""}}</td>
           <td style="text-align: left;" *ngIf="item.FeeType == 'PRCNT'">{{item.FeeAmt}} %</td>
+          <td style="text-align: left;">{{item.MouCustFeePaymentTypeView}}</td>
           <td style="text-align: center;">
             <a (click)="deleteMouCustFee(item.MouCustFeeId, i)">
               <i class="fas fa-trash"></i>

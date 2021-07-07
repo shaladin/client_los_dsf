@@ -14,9 +14,11 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { CustObj } from 'app/shared/model/CustObj.Model';
+import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 
 @Component({
   selector: 'app-mou-customer-request-detail',
@@ -61,7 +63,9 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     private httpClient: HttpClient,
     private fb: FormBuilder,
     private toastr: NGXToastrService,
-    private http: HttpClient, private cookieService: CookieService
+    private http: HttpClient, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
     this.route.queryParams.subscribe(params => {
       if (params['mode'] != null) {
@@ -89,9 +93,11 @@ export class MouCustomerRequestDetailComponent implements OnInit {
         }
       });
 
-    if (this.WfTaskListId > 0)
-      this.claimTask();
+    if (this.WfTaskListId > 0){
+      this.claimTaskService.ClaimTask(this.WfTaskListId);
+    }
 
+    this.GetMouTypeDesc();
     var datePipe = new DatePipe("en-US");
     let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     if (currentUserContext != null && currentUserContext != undefined) {
@@ -141,11 +147,15 @@ export class MouCustomerRequestDetailComponent implements OnInit {
     }
   }
 
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.WfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
+  mouTypeDesc: string = "";
+  GetMouTypeDesc() {
+    var obj: ReqRefMasterByTypeCodeAndMasterCodeObj = {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMouType,
+      MasterCode: this.mouType
+    };
+    this.http.post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, obj).subscribe(
+      (response: RefMasterObj) => {
+        this.mouTypeDesc = response.Descr;
       });
   }
 

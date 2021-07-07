@@ -1,8 +1,8 @@
-<form class="form form-horizontal" [formGroup]="BankAccStmntForm" (ngSubmit)="BankAccStmntForm.valid && SaveForm(enjiForm)"
-  #enjiForm="ngForm">
+<form class="form form-horizontal" [formGroup]="BankAccStmntForm"
+  (ngSubmit)="BankAccStmntForm.valid && SaveForm(enjiForm)" #enjiForm="ngForm">
   <span class="mr-1 pull-right" *ngIf="!IsDetail">
-    <button type="button" class="addButton" (click)="CustBankHandler('Add')"
-      style="margin-right: 0!important;" translate>
+    <button type="button" class="addButton" (click)="CustBankHandler('Add')" style="margin-right: 0!important;"
+      translate>
       <i class="ft-plus-circle"></i> Add
     </button>
   </span>
@@ -11,7 +11,8 @@
   <div id="CustBankAccSection">
     <div *ngIf="!IsDetail">
       <div class="col-md-12" style="padding: 0;">
-        <div class="col-md-12" *ngFor="let item of AppCustBankAccList; let i = index" style="padding: 0; margin-top: 20px;">
+        <div class="col-md-12" *ngFor="let item of AppCustBankAccList; let i = index"
+          style="padding: 0; margin-top: 20px;">
           <div class="col-md-12" style="padding: 0;">
             <h5 class="col-md-7" style="display: inline-block;">
               <i class="fas fa-circle" style="color: green" *ngIf="item.IsActive == true"></i>
@@ -19,10 +20,12 @@
               - {{item.BankName}} - {{item.BankBranch}} - {{item.BankAccNo}} - {{item.BankAccName}}
             </h5>
             <div class="col-md-5" style="display: inline-block; text-align: right;">
-              <button type="button" class="btn btn-raised btn-primary mr-1" (click)="CustBankHandler('Edit', AppCustBankAccList[i])" translate>
+              <button type="button" class="btn btn-raised btn-primary mr-1"
+                (click)="CustBankHandler('Edit', AppCustBankAccList[i])" translate>
                 Edit Bank Account
               </button>
-              <button type="button" class="btn btn-raised btn-warning mr-1" (click)="CustBankHandler('Delete', AppCustBankAccList[i])" translate>
+              <button type="button" class="btn btn-raised btn-warning mr-1"
+                (click)="CustBankHandler('Delete', AppCustBankAccList[i])" translate>
                 Delete Bank Account
               </button>
             </div>
@@ -106,26 +109,28 @@
               <label class="col-md-4 adins-required-label" translate>Account No</label>
               <div class="col-md-8">
                 <input type="text" class="form-control" formControlName="BankAccNo"
-                [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls.BankAccNo.invalid }">
-                <lib-uc-show-errors [control]="BankAccStmntForm.controls.BankAccNo" [submit]="enjiForm.submitted"></lib-uc-show-errors>
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls.BankAccNo.invalid }">
+                <lib-uc-show-errors [control]="BankAccStmntForm.controls.BankAccNo" [submit]="enjiForm.submitted">
+                </lib-uc-show-errors>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-md-4" translate>Is Default</label>
               <div class="col-md-8">
-                <input type="checkbox" formControlName="IsDefault" (change)="CheckDefault()"/>
+                <input type="checkbox" data-md-icheck formControlName="IsDefault" (change)="CheckDefault()" />
               </div>
             </div>
             <div class="form-group row">
               <label class="col-md-4" translate>Is Active</label>
               <div class="col-md-8">
-                <input type="checkbox" formControlName="IsActive" />
+                <input type="checkbox" data-md-icheck formControlName="IsActive" />
               </div>
             </div>
           </div>
         </div>
         <div class="col-md-12" style="text-align: right; margin-top: 10px;">
-          <button type="button" name="add" id="add" (click)="AddRowCustBankStmnt()" class="btn btn-raised btn-primary" translate>
+          <button type="button" name="add" id="add" (click)="AddRowCustBankStmnt()" class="btn btn-raised btn-primary"
+            translate>
             Add New Row
           </button>
         </div>
@@ -149,12 +154,14 @@
             <tbody *ngIf="BankAccStmntForm.controls['BankStmntObjs'].controls.length > 0">
               <tr *ngFor="let item of BankAccStmntForm.controls['BankStmntObjs'].controls;let i = index">
                 <td [formGroupName]="i"><select class="form-control" formControlName="Month"
-                  [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Month.invalid }">
+                    [ngClass]="{ 'is-invalid': enjiForm.submitted && BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Month.invalid }">
                     <option *ngFor="let item of MonthObj" value="{{item.Value}}">
                       {{item.Value}}
                     </option>
                   </select>
-                  <lib-uc-show-errors [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Month" [submit]="enjiForm.submitted">
+                  <lib-uc-show-errors
+                    [control]="BankAccStmntForm.controls['BankStmntObjs']['controls'][i]['controls'].Month"
+                    [submit]="enjiForm.submitted">
                   </lib-uc-show-errors>
                 </td>
                 <td [formGroupName]="i">
@@ -194,7 +201,7 @@
             </tbody>
           </table>
           <div class="form-actions right">
-            <button type="button" (click)="CustBankHandler('Cancel')" translate
+            <button type="reset" (click)="CustBankHandler('Cancel'); enjiForm.resetForm()" translate
               class="btn btn-raised btn-warning mr-1">
               <i class="ft-x"></i> Cancel
             </button>

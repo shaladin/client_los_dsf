@@ -44,7 +44,7 @@ export class SchmStepUpStepDownNormalComponent implements OnInit {
     this.LoadDDLStepUpStepDownInputType();
 
     if (this.AppId != null) {
-      if (this.BizTemplateCode == CommonConstant.CFRFN4W && this.BizTemplateCode == CommonConstant.CFNA) {
+      if (this.BizTemplateCode == CommonConstant.CFRFN4W || this.BizTemplateCode == CommonConstant.CFNA) {
         this.PriceLabel = "Financing Amount";
       }
       this.http.post(URLConstant.GetAppInstSchldTableByAppId, { AppId: this.AppId }).subscribe(

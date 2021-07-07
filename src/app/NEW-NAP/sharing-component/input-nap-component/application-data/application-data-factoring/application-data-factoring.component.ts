@@ -107,7 +107,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
   allCharacteristicCredit: Array<KeyValueObj>;
   responseApp: AppObj;
   responseProd: ProdOfferingDObj;
-  isInit: boolean = true;
   listCustBankAcc: Array<AppCustBankAccObj>;
   selectedBankAcc: any;
   GetBankInfo: any;
@@ -124,7 +123,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
   async ngOnInit() {
     this.defaultSlikSecEcoCode = CommonConstant.DefaultSlikSecEcoCode;
     this.isInputLookupObj = false;
-    this.loadData();
+    await this.loadData();
     this.SalesAppInfoForm.controls.NumOfInst.disable();
     this.SalesAppInfoForm.controls.MrSingleInstCalcMthdCode.disable();
     this.GetListAppCustBankAcc();
@@ -152,6 +151,12 @@ export class ApplicationDataFactoringComponent implements OnInit {
       (response) => {
         this.allMouCust = response[CommonConstant.ReturnObj];
         var MouCustId;
+        if(this.resultData.AppFinDataId != 0 && this.resultData.AppFctrId != 0 ){
+          this.mode = "edit";
+        }
+        else{
+          this.mode = "add";
+        }
         if (this.mode == 'edit') {
           MouCustId = this.resultData.MouCustId
           this.SalesAppInfoForm.patchValue({
@@ -303,11 +308,11 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
   }
   
-  async SetPayFreq(MouCustId: number, isCriteriaMake: boolean = true) {
+  async SetPayFreq(MouCustId: number, isCriteriaMake: boolean = true, isInit: boolean = true) {
     await this.http.post<MouCustFctrObj>(URLConstant.GetMouCustFctrByMouCustId, { Id: MouCustId }).toPromise().then(
       (response) => {
         this.mouCustFctrObj = response;
-        if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {
+        if (this.mouCustFctrObj.MrInstTypeCode == CommonConstant.InstTypeMultiple) {
           this.SalesAppInfoForm.patchValue({
             MrInstTypeCode: this.mouCustFctrObj.MrInstTypeCode,
             MrInstSchemeCode: this.mouCustFctrObj.MrInstSchmCode,
@@ -319,7 +324,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
           });
           console.log(this.mouCustFctrObj);
           console.log("TestObj");
-        } else if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeSingle) {
+        } else if (this.mouCustFctrObj.MrInstTypeCode == CommonConstant.InstTypeSingle) {
           this.SalesAppInfoForm.patchValue({
             MrInstTypeCode: this.mouCustFctrObj.MrInstTypeCode,
             TopDays: this.mouCustFctrObj.TopDays,
@@ -340,10 +345,14 @@ export class ApplicationDataFactoringComponent implements OnInit {
             this.allPayFreq = response;
             var PayFreqCode = null;
 
-            if (this.resultData.AppFinDataId == 0 && this.resultData.AppFctrId == 0 && this.isInit == true) {
+            if (this.resultData.AppFinDataId == 0 && this.resultData.AppFctrId == 0 && isInit == true) {
               this.mode = "add";
-            } else if (this.resultData.AppFinDataId != 0 && this.resultData.AppFctrId != 0 && this.isInit == true) {
+            } else if (this.resultData.AppFinDataId != 0 && this.resultData.AppFctrId != 0 && isInit == true) {
               this.mode = "edit";
+              this.http.post(URLConstant.GetRefPayFreqByPayFreqCode, { Code: this.resultData.PayFreqCode }).subscribe(
+                (response: RefPayFreqObj) => {
+                  this.allPayFreq = response;
+                });
               this.SalesAppInfoForm.patchValue({
                 MouCustId: this.resultData.MouCustId,
                 SalesNotes: this.resultData.SalesNotes,
@@ -370,7 +379,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
                 WayRestructure: this.resultData.WayRestructure,
                 MrSlikSecEcoCode: this.resultData.MrSlikSecEcoCode
               });
-              this.CalculateNumOfInst(false, this.SalesAppInfoForm.controls.Tenor.value);
+              this.CalculateNumOfInst();
               this.CheckInstType();
 
               if (this.SalesAppInfoForm.controls.MrWopCode.value == 'AUTOCOLLECTION') {
@@ -408,15 +417,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
 
   }
 
-  CalculateNumOfInst(IsFirstBind: boolean, tenor: number) {
-    if (this.mouCustFctrObj.MouCustFctrId != 0) {
-      if (this.mouCustFctrObj.MrInstTypeCode == CommonConstant.InstTypeMultiple) {
-        if (!IsFirstBind && tenor > this.mouCustFctrObj.TenorTo || tenor < this.mouCustFctrObj.TenorFrom) {
-          return false;
-        }
-      }
-    }
-
+  CalculateNumOfInst() {
     var numOfInst;
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {
       numOfInst = this.SalesAppInfoForm.controls.Tenor.value / this.allPayFreq.PayFreqVal;
@@ -425,6 +426,18 @@ export class ApplicationDataFactoringComponent implements OnInit {
     } else {
       this.SalesAppInfoForm.controls.NumOfInst.patchValue(1);
     }
+  }
+
+  CheckingTenor(IsFirstBind: boolean, tenor: number){
+    console.log("awawada");
+    if (this.mouCustFctrObj.MouCustFctrId != 0) {
+      if (this.mouCustFctrObj.MrInstTypeCode == CommonConstant.InstTypeMultiple) {
+        if (!IsFirstBind && tenor > this.mouCustFctrObj.TenorTo || tenor < this.mouCustFctrObj.TenorFrom) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 
   async CheckInstType() {
@@ -510,7 +523,6 @@ export class ApplicationDataFactoringComponent implements OnInit {
   }
 
   async makeNewLookupCriteria() {
-    if(!this.isInit) return;
     this.arrAddCrit = new Array<CriteriaObj>();
 
     var addCrit1 = new CriteriaObj();
@@ -601,7 +613,7 @@ export class ApplicationDataFactoringComponent implements OnInit {
         WayRestructure: null
       });
     }
-    if (this.CalculateNumOfInst(false, this.SalesAppInfoForm.controls.Tenor.value) == false) {
+    if (this.CheckingTenor(false, this.SalesAppInfoForm.controls.Tenor.value) == false) {
       this.toastr.warningMessage("Tenor must be between " + this.mouCustFctrObj.TenorFrom + " and " + this.mouCustFctrObj.TenorTo);
       return;
     }

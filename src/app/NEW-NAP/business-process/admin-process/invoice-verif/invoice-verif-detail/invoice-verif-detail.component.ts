@@ -3,8 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, Validators } from '@angular/forms';
-import { ClaimWorkflowObj } from 'app/shared/model/Workflow/ClaimWorkflowObj.Model';
-import { environment } from 'environments/environment';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
@@ -14,9 +12,11 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandlingHObj.Model';
 import { ReqGetByTypeCodeObj } from 'app/shared/model/RefReason/ReqGetByTypeCodeObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ResDisbInfo } from 'app/shared/model/Response/AppInvoice/ResAppInvoiceObj.model';
 import { AppInvoiceFctrObj } from 'app/shared/model/AppInvoiceFctrObj.Model';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-invoice-verif-detail',
@@ -53,7 +53,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
     ReasonDesc: ['']
   });
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router, private cookieService: CookieService) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private httpClient: HttpClient, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       this.AppId = params["AppId"];
       this.WfTaskListId = params["TaskListId"];
@@ -65,7 +65,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.claimTask();
+    this.claimTaskService.ClaimTask(this.WfTaskListId);
 
     await this.httpClient.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
       (response) => {
@@ -114,10 +114,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
         if (response.DisbInfoId != 0) {
           this.AccName = response.AccName;
           this.AccNo = response.AccNo;
-          var objectBank = {
-            BankCode: response.BankCode
-          }
-          this.httpClient.post(URLConstant.GetRefBankByBankCodeAsync, objectBank).subscribe(
+          this.httpClient.post(URLConstant.GetRefBankByBankCodeAsync, { Code: response.BankCode }).subscribe(
             (responseBank) => {
               this.BankName = responseBank["BankName"];
             });
@@ -176,7 +173,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
   }
 
   Cancel() {
-    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
+    AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], { BizTemplateCode: 'FCTR' });
   }
 
   SaveData() {
@@ -204,22 +201,12 @@ export class InvoiceVerifDetailComponent implements OnInit {
       };
   
       this.httpClient.post(URLConstant.UpdateAppInvoiceFctr, request).subscribe((response) => {
-        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], {});
+        AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], { BizTemplateCode: 'FCTR' });
       });
     }
     
   }
-
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj: ClaimWorkflowObj = new ClaimWorkflowObj();
-    wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
-    wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
-  }
-
+  
   GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);

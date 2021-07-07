@@ -21,7 +21,7 @@ import { AppCustAddrObj } from 'app/shared/model/AppCustAddrObj.Model';
 import { GeneralSettingObj } from 'app/shared/model/GeneralSettingObj.Model';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
-import { UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
+import { UcDropdownListCallbackObj, UcDropdownListConstant, UcDropdownListObj } from 'app/shared/model/library/UcDropdownListObj.model';
 import { ReqGetProdOffDByProdOffVersion } from 'app/shared/model/Request/Product/ReqGetProdOfferingObj.model';
 import { ReqRefMasterByTypeCodeAndMasterCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMasterCodeObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
@@ -32,6 +32,9 @@ import { MouCustClauseObj } from 'app/shared/model/MouCustClauseObj.Model';
 import { MouCustFctrObj } from 'app/shared/model/MouCustFctrObj.Model';
 import { AppCustBankAccObj } from 'app/shared/model/AppCustBankAccObj.Model';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { AppCustObj } from 'app/shared/model/AppCustObj.Model';
+import { AppOtherInfoObj } from 'app/shared/model/AppOtherInfo.Model';
 
 @Component({
   selector: 'app-application-data',
@@ -72,9 +75,8 @@ export class ApplicationDataComponent implements OnInit {
   CustNo: string;
   isProdOfrUpToDate: boolean = true;
   missingProdOfrComp: string = "";
-  listCustBankAcc: any;
-  selectedBankAcc: any;
-  GetBankInfo: any;
+  listCustBankAcc: Array<AppCustBankAccObj>;
+  GetBankInfo: AppOtherInfoObj = new AppOtherInfoObj();
   totalAgrmntMpfDt: number = 0;
   maxTenor: number = 0;
   isDdlMrAppSourceReady: boolean = false;
@@ -194,16 +196,14 @@ export class ApplicationDataComponent implements OnInit {
     this.getAppSrcData();
     setTimeout(() => { this.getAppModelInfo() }, 2000);
 
-    let AppObj = {
-      Id: this.appId
-    }
-
-    this.http.post(URLConstant.GetAppCustByAppId, AppObj).subscribe(
-      (response) => {
-        this.CustNo = response["CustNo"];
+    this.http.post(URLConstant.GetAppCustByAppId, { Id: this.appId }).subscribe(
+      (response: AppCustObj) => {
+        this.CustNo = response.CustNo;
+        this.GetListAppCustBankAcc(response.AppCustId);
 
         this.http.post(URLConstant.GetListMouCustByCustNo, {CustNo: this.CustNo, StartDt: this.user.BusinessDt, MrMouTypeCode: CommonConstant.GENERAL}).subscribe(
           (response) => {
+            console.log(response);
             this.resMouCustObj = response[CommonConstant.ReturnObj];
           }
         );
@@ -259,7 +259,7 @@ export class ApplicationDataComponent implements OnInit {
       ProdOfferingVersion: this.resultResponse.ProdOfferingVersion
     };
     this.ddlPayFreqObj.customObjName = "DDLRefProdComptCode";
-    this.ddlPayFreqObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.ddlPayFreqObj.ddlType = UcDropdownListConstant.DDL_TYPE_ONE;
     this.ddlPayFreqObj.isSelectOutput = true;
     this.isDdlPayFreqReady = true;
   }
@@ -327,7 +327,6 @@ export class ApplicationDataComponent implements OnInit {
 
   applicationDDLitems;
   resultResponse;
-  responseBankAccCust: Array<AppCustBankAccObj>;
 
   getAppModelInfo() {
     let obj = {
@@ -397,7 +396,7 @@ export class ApplicationDataComponent implements OnInit {
           MrSlikSecEcoCode: this.resultResponse.MrSlikSecEcoCode
         });
 
-        if (this.NapAppModelForm.controls.MrWopCode.value == 'AUTOCOLLECTION') {
+        if (this.NapAppModelForm.controls.MrWopCode.value == this.WopAutoDebit) {
           this.GetBankAccCust();
           this.setBankAcc(this.NapAppModelForm.controls.MrWopCode.value)
         }
@@ -464,6 +463,7 @@ export class ApplicationDataComponent implements OnInit {
       RefMasterTypeCode: CommonConstant.RefMasterTypeCodeWOP
     }
     this.ddlMrWopObj.ddlType = UcDropdownListConstant.DDL_TYPE_BLANK;
+    this.ddlMrWopObj.isSelectOutput = true;
   }
 
   initDdlMrCustNotifyOpt() {
@@ -760,6 +760,7 @@ export class ApplicationDataComponent implements OnInit {
                 ListAppCrossObj: tempListAppCrossObj,
                 AppFinData: tempAppFindDataObj,
                 AppCustMailingAddr: tempAppCustMailingAddr,
+                AppOtherInfoObj: this.GetBankInfo,
                 RowVersion: "",
               },
               TotalAgrmntMpfDt: this.totalAgrmntMpfDt,
@@ -769,7 +770,6 @@ export class ApplicationDataComponent implements OnInit {
             this.http.post(URLConstant.EditAppAddAppCross, obj.AppModelObj).subscribe(
               (response) => {
                 this.toastr.successMessage('Save Application Data');
-                this.SaveAppOtherInfo();
                 this.outputTab.emit();
               });
           }
@@ -787,6 +787,7 @@ export class ApplicationDataComponent implements OnInit {
         AppObj: tempAppObj,
         ListAppCrossObj: tempListAppCrossObj,
         AppFinData: tempAppFindDataObj,
+        AppOtherInfoObj: this.GetBankInfo,
         RowVersion: ""
       };
       // DSF
@@ -803,7 +804,6 @@ export class ApplicationDataComponent implements OnInit {
         this.http.post(URLConstant.EditAppAddAppCross, obj).subscribe(
           (response) => {
             this.toastr.successMessage('Save Application Data Success!');
-            this.SaveAppOtherInfo();
             this.outputTab.emit();
           });
       }
@@ -965,59 +965,48 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   GetBankAccCust() {
-    let obj = {
-      AppId: this.appId
-    };
-
-    this.http.post<Array<AppCustBankAccObj>>(URLConstant.GetBankAccCustByAppId, obj).subscribe(
+    this.http.post<AppOtherInfoObj>(URLConstant.GetAppOtherInfoByAppId, { Id: this.appId }).subscribe(
       (response) => {
-        this.responseBankAccCust = response
-        this.NapAppModelForm.patchValue({
-          CustBankAcc: this.responseBankAccCust[0].AppCustBankAccId
-        });
-        this.GetBankInfo = {
-          "BankCode": this.responseBankAccCust[0].BankCode,
-          "BankBranch": this.responseBankAccCust[0].BankBranch,
-          "AppId": this.appId,
-          "BankAccNo": this.responseBankAccCust[0].BankAccNo,
-          "BankAccName": this.responseBankAccCust[0].BankAccName,
-        };
-        this.http.post<any>(URLConstant.GetAppOtherInfoByAppId, obj).subscribe(
-          (response) => {
-            this.GetBankInfo = response
-            if (this.GetBankInfo.AppId !== 0) {
-              this.selectedBankAcc = this.listCustBankAcc.find(x => x.BankAccNo === this.GetBankInfo.BankAccNo);
-              this.NapAppModelForm.patchValue({
-                CustBankAcc: this.selectedBankAcc.AppCustBankAccId
-              });
+        this.GetBankInfo = response;
+        if (this.GetBankInfo.AppOtherInfoId != 0) {
+          let selectedBankAcc: AppCustBankAccObj = this.listCustBankAcc.find(x => x.BankAccNo == this.GetBankInfo.BankAccNo);
+          this.NapAppModelForm.patchValue({
+            CustBankAcc: selectedBankAcc.AppCustBankAccId
+          });
 
-              this.GetBankInfo = {
-                "BankCode": this.selectedBankAcc.BankCode,
-                "BankBranch": this.selectedBankAcc.BankBranch,
-                "AppId": this.appId,
-                "BankAccNo": this.selectedBankAcc.BankAccNo,
-                "BankAccName": this.selectedBankAcc.BankAccName,
-              };
-            }
-          }
-        );
+          this.GetBankInfo.BankCode = selectedBankAcc.BankCode;
+          this.GetBankInfo.BankBranch = selectedBankAcc.BankBranch;
+          this.GetBankInfo.AppId = this.appId;
+          this.GetBankInfo.BankAccNo = selectedBankAcc.BankAccNo;
+          this.GetBankInfo.BankAccName = selectedBankAcc.BankAccName;          
+        }
       }
     );
   }
 
   GetListAppCustBankAcc(appCustId: number) {
-    let obj = {
-      AppCustId: appCustId
-    };
-    this.http.post<any>(URLConstant.GetListAppCustBankAccByAppCustId, obj).subscribe(
+    this.http.post<GenericListObj>(URLConstant.GetListAppCustBankAccByAppCustId, { Id: appCustId }).subscribe(
       (response) => {
-        this.listCustBankAcc = response.AppCustBankAccObjs;
+        this.listCustBankAcc = response.ReturnObject["AppCustBankAccObjs"];
       }
     );
   }
 
-  setBankAcc(event) {
-    if (event == 'AUTOCOLLECTION') {
+  readonly WopAutoDebit: string = CommonConstant.WopAutoDebit;
+  setBankAcc(WOP: string) {
+    if (WOP == this.WopAutoDebit) {
+      this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
+      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
+    }
+    else {
+      this.NapAppModelForm.controls['CustBankAcc'].clearValidators();
+      this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
+    }
+    this.NapAppModelForm.controls.CustBankAcc.updateValueAndValidity();
+  }
+
+  setBankAccDDL(event: UcDropdownListCallbackObj) {
+    if (event.selectedValue == this.WopAutoDebit) {
       this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
       this.NapAppModelForm.controls["CustBankAcc"].updateValueAndValidity()
     }
@@ -1030,8 +1019,9 @@ export class ApplicationDataComponent implements OnInit {
 
   setTenorOnChange(event) {
     if (event != 'null') {
+      console.log(event);
       this.isFromMouCust = true;
-      let mouCustObj = { MouCustId: event }
+      let mouCustObj = { Id: event }
       this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
         (response) => {
           this.mouCust = response["MouCustObj"];
@@ -1078,7 +1068,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   setTenor(event) {
-    let mouCustObj = { MouCustId: event }
+    let mouCustObj = { Id: event }
     this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
       (response) => {
         this.mouCust = response["MouCustObj"];
@@ -1108,38 +1098,16 @@ export class ApplicationDataComponent implements OnInit {
     );
   }
 
-  selectedBank(event) {
-    if (this.NapAppModelForm.controls.MrWopCode.value == 'AUTOCOLLECTION') {
-      this.NapAppModelForm.controls['CustBankAcc'].setValidators([Validators.required]);
-      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity();
-    }
-    else {
-      this.NapAppModelForm.controls['CustBankAcc'].clearValidators();
-      this.NapAppModelForm.controls['CustBankAcc'].updateValueAndValidity();
-    }
-    this.selectedBankAcc = this.listCustBankAcc.find(x => x.AppCustBankAccId == event);
-    this.GetBankInfo = {
-      "BankCode": this.selectedBankAcc.BankCode,
-      "BankBranch": this.selectedBankAcc.BankBranch,
-      "AppId": this.appId,
-      "BankAccNo": this.selectedBankAcc.BankAccNo,
-      "BankAccName": this.selectedBankAcc.BankAccName
-    };
+  selectedBank() {
+    if (this.NapAppModelForm.controls.MrWopCode.value != this.WopAutoDebit) return;
+
+    let custBankAccId: number = this.NapAppModelForm.get("CustBankAcc").value;
+    let selectedBankAcc: AppCustBankAccObj = this.listCustBankAcc.find(x => x.AppCustBankAccId == custBankAccId);
+    this.GetBankInfo.BankCode = selectedBankAcc.BankCode;
+    this.GetBankInfo.BankBranch = selectedBankAcc.BankBranch;
+    this.GetBankInfo.AppId = this.appId;
+    this.GetBankInfo.BankAccNo = selectedBankAcc.BankAccNo;
+    this.GetBankInfo.BankAccName = selectedBankAcc.BankAccName; 
   }
 
-  SaveAppOtherInfo() {
-    if (this.GetBankInfo != undefined && this.GetBankInfo != null && this.GetBankInfo.BankAccName != null && this.GetBankInfo.BankAccNo != null && this.GetBankInfo.BankBranch != null && this.GetBankInfo.BankCode != null) {
-      if (this.GetBankInfo.AppId == 0) {
-        this.GetBankInfo.AppId = this.appId;
-      }
-      this.http.post(URLConstant.AddAppOtherInfo, this.GetBankInfo).subscribe(
-        (response) => {
-          response;
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    }
-  }
 }

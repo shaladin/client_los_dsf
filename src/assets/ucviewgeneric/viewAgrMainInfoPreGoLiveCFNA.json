@@ -21,11 +21,6 @@
             ]
           },
           {
-            "type": "text",
-            "label": "Agreement Parent",
-            "property": "AgrmntParentNo"
-          },
-          {
             "type": "link",
             "label": "Lead No",
             "property": "LeadNo",

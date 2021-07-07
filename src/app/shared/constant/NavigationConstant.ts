@@ -54,6 +54,8 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_CRD_APPRVL_RES_EXT_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.CRD_APPRVL_RES_EXT_PAGING; //"/Nap/AddProcess/CreditApprovalResultExt/Paging"
   public static NAP_ADD_PRCS_CRD_APPRVL_RES_EXT_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.CRD_APPRVL_RES_EXT_DETAIL; //"/Nap/AddProcess/CreditApprovalResultExt/Detail"
   public static NAP_ADD_PRCS_COPY_CANCEL_APP = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.COPY_CANCEL_APP; //'/Nap/AddProcess/CopyCancelledApplication'
+  public static NAP_ADD_PRCS_COPY_CANCEL_APP_CROSS_BL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.COPY_CANCEL_APP_CROSS_BL; //"/Nap/AddProcess/CopyCancelledApplicationCrossBl"
+  public static NAP_ADD_PRCS_COPY_CANCEL_APP_CROSS_BL_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.COPY_CANCEL_APP_CROSS_BL_DETAIL; //"/Nap/AddProcess/CopyCancelledApplicationCrossBl/Detail"
   public static NAP_ADD_PRCS_OUTSTANDING_TC_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.OUTSTANDING_TC_PAGING; //"/Nap/AddProcess/OutstandingTC/Paging"
   public static NAP_ADD_PRCS_OUTSTANDING_TC_DETAIL = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.OUTSTANDING_TC_DETAIL; //"/Nap/AddProcess/OutstandingTC/Detail"
   public static NAP_ADD_PRCS_RETURN_HANDLING_ADD_TC_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_ADD_TC_PAGING; //'/Nap/AddProcess/ReturnHandlingAddTc/Paging'
@@ -86,6 +88,7 @@ export class NavigationConstant {
   public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4 = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP4;//"/Nap/AddProcess/ReturnHandling/NAP4"
   public static NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP2_PAGING; //"NAP/AddProcess/ReturnHandling/NAP2" 
   public static NAP_ADD_PRCS_RETURN_HANDLING_NAP4_PAGING = "/" + NavigationConstant.NAP_ADD_PRCS_HEADER + "/" + PathConstant.RETURN_HANDLING_NAP4_PAGING; //"/Nap/AddProcess/ReturnHandling/NAP4"
+
   //#endregion
 
   //#region AdminProcess
@@ -426,8 +429,12 @@ export class NavigationConstant {
 
   //#region TRIAL
   public static TRIAL_CALC = "/" + PathConstant.LR_TRIAL_CALC + "/" + PathConstant.TRIAL_CALC; //'/TrialCalculation/Trial-Calculation'
-  
+
   //#region Pefindo View
   public static PEFINDO_VIEW = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_PEFINDO + "/" + PathConstant.PEFINDO_VIEW;
   //#endregion
+
+  //Setting
+  public static SETTING_APP_SOURCE_PAGING = "/" + PathConstant.SETTING + "/" + PathConstant.APP_SRC_PAGING; //'/Setting/AppSource/Paging'
+  //EndSettings
 }

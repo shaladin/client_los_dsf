@@ -195,7 +195,7 @@
               </div>
             </div>
             <div class="col-md-3 form-inline"
-              *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA' && !IsTrialCalc">
+              *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA && !IsTrialCalc'">
               <label translate>Supplier Rate</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right"
@@ -375,7 +375,7 @@
               <label translate>Gross Yield</label>
             </div>
             <div *ngIf="!IsTrialCalc" class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '1.2-2'}}%</label>
+              <label>{{ParentForm.controls.GrossYieldPrcnt.value | number : '.6'}}%</label>
             </div>
           </div>
         </div>

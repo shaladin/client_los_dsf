@@ -195,6 +195,30 @@ export class NewLeadInputPageComponent implements OnInit {
       });
   }
   endOfTab() {
-  this.cancelHandler();
+    this.http.post(URLConstant.GetLeadAssetByLeadId, { Id: this.customObj.LeadInputLeadDataObj.LeadAppObj.LeadId }).subscribe(
+      (response) => {
+        this.customObj.LeadInputLeadDataObj.LeadAssetObj.RowVersion = response["RowVersion"];
+        this.http.post(URLConstant.GetLeadAppByLeadId, { Id: this.customObj.LeadInputLeadDataObj.LeadAppObj.LeadId }).subscribe(
+          (response) => {
+            this.customObj.LeadInputLeadDataObj.LeadAppObj.RowVersion = response["RowVersion"];
+            let urlPost = this.customObj.urlPost;
+
+            //Dari DSF
+            if (this.customObj.typePage != "edit" || this.customObj.typePage != "update") {
+              if (this.customObj["lobKta"] != undefined) {
+                if (this.customObj.lobKta.includes(this.customObj.returnLobCode) == true) {
+                  urlPost = URLConstant.SubmitWorkflowSimpleLeadInput;
+                }
+              }
+            }
+            if (!this.customObj.LeadInputLeadDataObj.LeadAssetObj.FullAssetCode) this.customObj.LeadInputLeadDataObj.LeadAssetObj.FullAssetCode = "";
+            if (!this.customObj.LeadInputLeadDataObj.LeadAssetObj.FullAssetName) this.customObj.LeadInputLeadDataObj.LeadAssetObj.FullAssetName = "";
+            this.http.post(urlPost, this.customObj.LeadInputLeadDataObj).subscribe(
+              () => {
+                this.cancelHandler();
+              }
+            );
+          });
+      });
   }
 }

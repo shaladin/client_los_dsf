@@ -274,7 +274,7 @@
               </div>
               <div class="form-group row">
                 <label class="col-md-5 adins-required-label" translate>Portion Amount</label>
-                <label class="col-md-7">{{AddCollForm.controls.CollateralPortionAmt.value}}</label>
+                <label class="col-md-7">{{AddCollForm.controls.CollateralPortionAmt.value | number:'.0':'en-US'}}</label>
               </div>
               <div class="form-group row">
                 <label class="col-md-5 adins-required-label" translate>Remaining Portion Percentage (%)</label>

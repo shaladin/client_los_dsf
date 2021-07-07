@@ -18,6 +18,7 @@ import { LeadAppObj } from 'app/shared/model/LeadAppObj.Model';
 import { LeadAssetObj } from 'app/shared/model/LeadAssetObj.Model';
 import { LeadInputLeadDataObj } from 'app/shared/model/LeadInputLeadDataObj.Model';
 import { RefMasterObj } from 'app/shared/model/RefMasterObj.Model';
+import { ReqLeadInputLeadDataObj } from 'app/shared/model/Request/LEAD/ReqInputLeadDataObj.model';
 import { ThirdPartyResultHForFraudChckObj } from 'app/shared/model/ThirdPartyResultHForFraudChckObj.Model';
 import { environment } from 'environments/environment';
 
@@ -28,6 +29,7 @@ import { environment } from 'environments/environment';
 })
 export class NewLeadInputLeadDataComponent implements OnInit {
   @Input() originPage: string;
+  @Input() isEndOfTab: string = "";
   @Output() outputTab: EventEmitter<object> = new EventEmitter();
 
   typePage: string;
@@ -46,7 +48,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
   isAssetReady: boolean = false;
   InputLookupAssetObj: InputLookupObj;
   assetTypeId: string;
-  leadInputLeadDataObj: LeadInputLeadDataObj;
+  leadInputLeadDataObj: ReqLeadInputLeadDataObj;
   serial1Disabled: boolean = false;
   serial2Disabled: boolean = false;
   serial3Disabled: boolean = false;
@@ -100,6 +102,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
   isAbleToSubmit: boolean = false;
   thirdPartyRsltHId: string;
   thirdPartyObj: ThirdPartyResultHForFraudChckObj;
+  textButton: string;
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder) {
 
@@ -123,6 +126,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isEndOfTab == '0' ? this.textButton = 'Save' : this.textButton = 'Save and Continue'
     this.items = this.LeadDataForm.get('items') as FormArray;
 
     this.InputLookupAssetObj = new InputLookupObj();
@@ -340,13 +344,11 @@ export class NewLeadInputLeadDataComponent implements OnInit {
           }
         });
     }
-    if (this.typePage == "edit" || this.typePage == "update") {
+
       this.reqLeadAssetObj = new LeadAssetObj();
       this.reqLeadAssetObj.LeadId = this.LeadId;
-      let obj = {
-        Id: this.reqLeadAssetObj.LeadId
-      }
-      this.http.post(URLConstant.GetLeadAssetByLeadId, obj).subscribe(
+      let reqLeadAssetObj = { Id: this.LeadId.toString() };
+      this.http.post(URLConstant.GetLeadAssetByLeadId, reqLeadAssetObj).subscribe(
         (response: LeadAssetObj) => {
           this.resLeadAssetObj = response;
           if (this.resLeadAssetObj.MrAssetConditionCode == CommonConstant.AssetConditionUsed) {
@@ -476,7 +478,6 @@ export class NewLeadInputLeadDataComponent implements OnInit {
               });
             });
         });
-    }
 
   }
 
@@ -567,7 +568,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
 
     if (this.typePage != "update") {
       this.LeadDataForm.controls['DownPaymentAmount'].clearValidators();
-      this.LeadDataForm.controls['DownPaymentAmount'].setValidators([Validators.required, Validators.min(1.00), Validators.max(this.AssetPrice)]);
+      //this.LeadDataForm.controls['DownPaymentAmount'].setValidators([Validators.required, Validators.min(1.00), Validators.max(this.AssetPrice)]);
       this.LeadDataForm.controls['DownPaymentAmount'].updateValueAndValidity();
     }
 
@@ -614,7 +615,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
       this.toastr.warningMessage("Fill The Tenor First!");
       return;
     }
-    if (this.LeadDataForm.controls["InstallmentAmt"].value != 0) this.LeadDataForm.patchValue({ InstallmentAmt: minAmt });
+    if (this.LeadDataForm.controls["InstallmentAmt"].value == 0) this.LeadDataForm.patchValue({ InstallmentAmt: minAmt });
     this.InstAmt = this.LeadDataForm.controls["InstallmentAmt"].value;
 
     if (this.AssetPrice <= 0) {
@@ -641,18 +642,18 @@ export class NewLeadInputLeadDataComponent implements OnInit {
     if (this.LeadDataForm.controls.InstallmentAmt.value < minAmt) {
       this.toastr.warningMessage("Installment Amount must be bigger than " + minAmt);
       return;
-    } else {
-      if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
-        this.TotalDownPayment = this.DPAmount + this.InstAmt;
-      }
-      else {
-        this.TotalDownPayment = this.DPAmount;
-      }
-      this.LeadDataForm.patchValue({
-        TotalDownPayment: this.TotalDownPayment
-      });
     }
 
+    if (this.LeadDataForm.controls["MrFirstInstTypeCode"].value == CommonConstant.FirstInstTypeAdvance) {
+      this.TotalDownPayment = this.DPAmount + this.InstAmt;
+    }
+    else {
+      this.TotalDownPayment = this.DPAmount;
+    }
+
+    this.LeadDataForm.patchValue({
+      TotalDownPayment: this.TotalDownPayment
+    });
     this.Calculate = true;
   }
 
@@ -735,7 +736,23 @@ export class NewLeadInputLeadDataComponent implements OnInit {
     this.leadInputLeadDataObj.LeadAppObj.InstAmt = this.LeadDataForm.controls["InstallmentAmt"].value;
   }
 
+  postLeadData(url: string) {
+    this.http.post(url, this.leadInputLeadDataObj).subscribe(
+      (response) => {
+        this.toastr.successMessage(response["message"]);
+        if (this.originPage == "teleVerif") {
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
+        }
+        else {
+          this.SaveForm();
+        }
+      });
+  }
+
   save() {
+    if (this.resLeadAppObj.LeadAppId != 0 && this.resLeadAssetObj.LeadAssetId != 0) {
+      this.typePage = "edit";
+    }
     if (this.Calculate == false && this.returnLobCode != CommonConstant.CFNA) {
       this.toastr.warningMessage("Calculate First");
       return;
@@ -749,76 +766,70 @@ export class NewLeadInputLeadDataComponent implements OnInit {
     }
 
     if (this.typePage == "edit" || this.typePage == "update") {
-      if (this.resLeadAssetObj.LeadAssetId != 0) {
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+      if (this.resLeadAssetObj.LeadAssetId != 0 && this.lobKta.includes(this.returnLobCode) == false) {
+        this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
         this.setLeadAsset();
         this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
         this.setLeadApp();
         if (this.confirmFraudCheck()) {
-          this.http.post(URLConstant.EditLeadData, this.leadInputLeadDataObj).subscribe(
-            (response) => {
-              this.toastr.successMessage(response["message"]);
-              if (this.originPage == "teleVerif") {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
-              }
-              else if (this.typePage == "update") {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING], {});
-              }
-              else {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
-              }
-            });
+          this.postLeadData(URLConstant.EditLeadData);
         }
       }
       else {
-        if (this.LeadDataForm.controls["ManufacturingYear"].value > this.year) {
-          this.toastr.warningMessage("Manufacturing Year must be lower or equal than current year.");
-          return;
+        if (this.lobKta.includes(this.returnLobCode) == true) {
+          if (this.resLeadAppObj.LeadAppId != 0) {
+            this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
+            this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
+            this.setLeadApp();
+            this.postLeadData(URLConstant.EditLeadDataKta);
+          }
+          else {
+            this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
+            this.setLeadApp();
+            this.postLeadData(URLConstant.AddLeadDataKta);
+          }
         }
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
-        this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
-        this.setLeadAsset();
-        this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
-        this.setLeadApp();
-        if (this.confirmFraudCheck()) {
-          this.http.post(URLConstant.EditLeadData, this.leadInputLeadDataObj).subscribe(
-            (response) => {
-              this.toastr.successMessage(response["message"]);
-              if (this.originPage == "teleVerif") {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
-              }
-              else if (this.typePage == "update") {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING], {});
-              }
-              else {
-                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
-              }
-            }
-          );
+        else{
+          if (this.LeadDataForm.controls["ManufacturingYear"].value > this.year) {
+            this.toastr.warningMessage("Manufacturing Year must be lower or equal than current year.");
+            return;
+          }
+          this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
+          this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
+          this.setLeadAsset();
+          this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
+          this.setLeadApp();
+          if (this.confirmFraudCheck()) {
+            this.postLeadData(URLConstant.EditLeadData);
+          }
         }
+
       }
     }
     else {
-      this.leadInputLeadDataObj = new LeadInputLeadDataObj();
-      this.setLeadAsset();
-      this.setLeadApp();
-      if (this.confirmFraudCheck()) {
-        this.http.post(URLConstant.AddLeadData, this.leadInputLeadDataObj).subscribe(
-          (response) => {
-            this.toastr.successMessage(response["message"]);
-            if (this.originPage == "teleVerif") {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
-            }
-            else if (this.typePage == "update") {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING], {});
-            }
-            else {
-              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
-            }
-          }
-        );
+      if (this.lobKta.includes(this.returnLobCode) == true) {
+        if (this.resLeadAppObj.LeadAppId != 0) {
+          this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
+          this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
+          this.setLeadApp();
+          this.postLeadData(URLConstant.EditLeadDataKta);
+        }
+        else {
+          this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
+          this.setLeadApp();
+          this.postLeadData(URLConstant.AddLeadDataKta);
+        }
       }
+      else{
+        this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
+        this.setLeadAsset();
+        this.setLeadApp();
+        if (this.confirmFraudCheck()) {
+          this.postLeadData(URLConstant.AddLeadData);
+        }
+      }
+
     }
   }
 
@@ -837,6 +848,9 @@ export class NewLeadInputLeadDataComponent implements OnInit {
   }
 
   SaveForm() {
+    if (this.resLeadAppObj.LeadAppId != 0 && this.resLeadAssetObj.LeadAssetId != 0) {
+      this.typePage = "edit";
+    }
     if (this.Calculate == false && this.returnLobCode != CommonConstant.CFNA) {
     } else {
       this.CheckSubmitForCFNA();
@@ -846,35 +860,127 @@ export class NewLeadInputLeadDataComponent implements OnInit {
     if (this.LeadDataForm.status == CommonConstant.INVALID_FORM) {
       return;
     }
-    this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+    this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
     this.leadInputLeadDataObj.WfTaskListId = this.WfTaskListId;
     this.setLeadApp();
     if (this.typePage == "edit" || this.typePage == "update") {
       this.leadInputLeadDataObj.LeadAppObj.RowVersion = this.resLeadAppObj.RowVersion;
       if (this.resLeadAssetObj.LeadAssetId != 0) {
         this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
-      }
-      if (this.LeadDataForm.controls["ManufacturingYear"].value > this.year) {
-        this.toastr.warningMessage("Manufacturing Year must be lower or equal than current year.");
-        return;
-      }
-    }
-    this.setLeadAsset();
-    if (this.confirmFraudCheck()) {
-      this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
-        (response) => {
-          this.toastr.successMessage(response["message"]);
-          if (this.originPage == "teleVerif") {
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
-          }
-          else if (this.typePage == "update") {
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_UPD_PAGING], {});
-          }
-          else {
-            AdInsHelper.RedirectUrl(this.router, [NavigationConstant.SIMPLE_LEAD_PAGING], {});
+        this.setLeadAsset();
+        if (this.originPage == "teleVerif") {
+          if (this.confirmFraudCheck()) {
+            this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
+              }
+            );
           }
         }
-      );
+        else if (this.typePage == "update") {
+
+          this.outputTab.emit({
+            stepMode: "next",
+            LeadInputLeadDataObj: this.leadInputLeadDataObj,
+            urlPost: URLConstant.SubmitWorkflowSimpleLeadInput,
+            paging: "/Lead/SimpleLeadUpdate/Paging",
+            typePage: this.typePage,
+            originPage: this.originPage,
+            resLeadAssetObj: this.resLeadAssetObj,
+            lobKta: this.lobKta,
+            returnLobCode: this.returnLobCode,
+            WfTaskListId: this.WfTaskListId
+          });
+
+        }
+        else {
+          this.outputTab.emit({
+            stepMode: "next",
+            LeadInputLeadDataObj: this.leadInputLeadDataObj,
+            urlPost: URLConstant.SubmitWorkflowSimpleLeadInput,
+            paging: "/Lead/SimpleLead/Paging",
+            typePage: this.typePage,
+            originPage: this.originPage,
+            resLeadAssetObj: this.resLeadAssetObj,
+            lobKta: this.lobKta,
+            returnLobCode: this.returnLobCode,
+            WfTaskListId: this.WfTaskListId
+          });
+        }
+      }
+      else{
+        if (this.lobKta.includes(this.returnLobCode) == true) {
+          this.leadInputLeadDataObj.IsKta = true;
+          //this.setLeadAsset();
+          if (this.originPage == "teleVerif") {
+            this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
+              }
+            );
+          }
+          else {
+            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowSimpleLeadInput});
+          }
+        }
+        else{
+          if (this.LeadDataForm.controls["ManufacturingYear"].value > this.year) {
+            this.toastr.warningMessage("Manufacturing Year must be lower or equal than current year.");
+            return;
+          }
+          this.leadInputLeadDataObj.LeadAssetObj.RowVersion = this.resLeadAssetObj.RowVersion;
+          this.setLeadAsset();
+          if (this.originPage == "teleVerif") {
+            if (this.confirmFraudCheck()) {
+              this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
+                (response) => {
+                  this.toastr.successMessage(response["message"]);
+                  AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
+                }
+              );
+            }
+          }
+          else {
+            this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowSimpleLeadInput});
+          }
+        }
+      }
+    }
+    else{
+      if (this.lobKta.includes(this.returnLobCode) == true) {
+        this.leadInputLeadDataObj.IsKta = true;
+        //this.setLeadAsset();
+        if (this.originPage == "teleVerif") {
+          this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
+            (response) => {
+              this.toastr.successMessage(response["message"]);
+              AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
+            }
+          );
+        }
+        else {
+          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowSimpleLeadInput});
+        }
+      }
+      else {
+        this.setLeadAsset();
+        if (this.originPage == "teleVerif") {
+
+          if (this.confirmFraudCheck()) {
+            this.http.post(URLConstant.SubmitWorkflowSimpleLeadInput, this.leadInputLeadDataObj).subscribe(
+              (response) => {
+                this.toastr.successMessage(response["message"]);
+                AdInsHelper.RedirectUrl(this.router, [NavigationConstant.LEAD_TELE_VERIF_PAGING], {});
+              }
+            );
+          }
+        }
+        else {
+          this.outputTab.emit({ stepMode: "next", LeadInputLeadDataObj: this.leadInputLeadDataObj, urlPost: URLConstant.SubmitWorkflowSimpleLeadInput});
+        }
+      }
     }
   }
 
@@ -893,7 +999,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
     if (this.isNeedCheckBySystem == "0") {
       if (this.LeadDataForm.controls.items.value[0]['SerialNoLabel'] == CommonConstant.Chassis_No && this.LeadDataForm.controls.items.value[0]['SerialNoValue'] != "") {
 
-        this.leadInputLeadDataObj = new LeadInputLeadDataObj();
+        this.leadInputLeadDataObj = new ReqLeadInputLeadDataObj();
         this.setLeadAsset();
         this.http.post(URLConstant.CheckRapindo, this.leadInputLeadDataObj).subscribe(
           (response1) => {

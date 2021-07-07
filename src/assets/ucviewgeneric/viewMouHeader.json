@@ -53,7 +53,7 @@
           "property": "PlafondAmt"
         },
         {
-          "type": "boolean",
+          "type": "text",
           "label": "Mou Freeze",
           "property": "IsFreeze"
         },

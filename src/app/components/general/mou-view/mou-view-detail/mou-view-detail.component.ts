@@ -5,6 +5,12 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { MouCustDlrFinObj } from 'app/shared/model/moucustdlrfin.Model';
 import { ResMouCustObj } from 'app/shared/model/Response/MOU/MouCust/ResMouCustObj.model';
 import { ResMouCustClauseObj } from 'app/shared/model/Response/MOU/MouCust/ResMouCustClauseObj.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
+import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { ResGetMouCustDlrFindByIdObj } from 'app/shared/model/Response/MOU/MouCust/ResGetMouCustDlrFindByIdObj.model';
+import { GenericListObj } from 'app/shared/model/Generic/GenericListObj.Model';
+import { GenericKeyValueListObj } from 'app/shared/model/Generic/GenericKeyValueListObj.model';
+import { VendorObj } from 'app/shared/model/Vendor.Model';
 
 @Component({
   selector: 'app-mou-view-detail',
@@ -14,6 +20,7 @@ export class MouViewDetailComponent implements OnInit {
   @Input() MouCustId: number;
   @Input() MouType: string;
 
+  ReqByIdObj: GenericObj = new GenericObj();
   MouCustClauseId: number;
   CurrCode: string;
   AssetTypeCode: string;
@@ -27,7 +34,7 @@ export class MouViewDetailComponent implements OnInit {
   TenorFrom: number;
   TenorTo: number;
 
-  WopCode: string;
+  WopName: string;
   PlafondAmt: number;
   IsRevolving: boolean;
   TopDays: number;
@@ -41,17 +48,25 @@ export class MouViewDetailComponent implements OnInit {
   mouCust: ResMouCustObj;
   mouCustClause: ResMouCustClauseObj;
   mouCustFctr: any;
+  listedCustFctrIsReady: boolean = false;
+  listedCustFctr: Array<any>;
   listAssetData: Array<any>;
   MrPaidByCode: string;
   SingleInstCalcMthd: string;
   LinkSupplier:any = "-";
-  MouCustDlrFindData: MouCustDlrFinObj = new MouCustDlrFinObj();
+  MouCustDlrFindData: ResGetMouCustDlrFindByIdObj = new ResGetMouCustDlrFindByIdObj();
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-    var mouCustObj = { Id: this.MouCustId };
-    this.http.post(URLConstant.GetMouCustDataByMouCustId, mouCustObj).subscribe(
+    this.ReqByIdObj.Id = this.MouCustId ;
+    this.GetListActiveRefPayFreq();
+    this.GetListKvpActiveRefCurr();
+    if(this.MouType == 'FACTORING'){
+    this.getListedMouCustFctr(this.ReqByIdObj);
+    }
+
+    this.http.post(URLConstant.GetMouCustDataByMouCustId, this.ReqByIdObj).subscribe(
       (response) => {
 
         this.mouCust = response["MouCustObj"];
@@ -88,7 +103,7 @@ export class MouViewDetailComponent implements OnInit {
           this.DownPaymentToPrcnt = this.mouCustFctr.DownPaymentToPrcnt;
           this.TenorFrom = this.mouCustFctr.TenorFrom;
           this.TenorTo = this.mouCustFctr.TenorTo;
-          this.WopCode = this.mouCustFctr.WopCode;
+          this.WopName = this.mouCustFctr.WopName;
           this.TopDays = this.mouCustFctr.TopDays;
           this.InterestRatePrcnt = this.mouCustFctr.InterestRatePrcnt;
           this.RetentionPrcnt = this.mouCustFctr.RetentionPrcnt;
@@ -98,7 +113,7 @@ export class MouViewDetailComponent implements OnInit {
           this.Notes = this.mouCustFctr.Notes;
 
           var objVendor={
-            VendorCode:this.mouCustFctr.VendorCode
+            Code:this.mouCustFctr.VendorCode
           }
           this.http.post(URLConstant.GetVendorByVendorCode, objVendor).subscribe(
             (responseLink)=>{
@@ -107,10 +122,9 @@ export class MouViewDetailComponent implements OnInit {
         }
         else if (this.MouType == CommonConstant.FINANCING)
         {
-        this.http.post(URLConstant.GetMouCustDlrFindById, mouCustObj).subscribe(
+        this.http.post(URLConstant.GetMouCustDlrWithCustVendorNameFindById, this.ReqByIdObj).subscribe(
           (responses) => {
-            console.log(responses)
-            this.MouCustDlrFindData.WopCode = responses["WopCode"];
+            this.MouCustDlrFindData.WopName = responses["WopName"];
             this.MouCustDlrFindData.TopDays = responses["TopDays"];
             this.MouCustDlrFindData.TopInterestRatePrcnt = responses["TopInterestRatePrcnt"];
             this.MouCustDlrFindData.PayFreqCode = responses["PayFreqCode"];
@@ -128,14 +142,72 @@ export class MouViewDetailComponent implements OnInit {
             this.MouCustDlrFindData.DealerCustNo = responses["DealerCustNo"];
             this.MouCustDlrFindData.Notes = responses["Notes"];
             this.MouCustDlrFindData.MaximumExtendTimes = responses["MaximumExtendTimes"];
+            this.MouCustDlrFindData.DealerName = responses["DealerName"];
+            this.MouCustDlrFindData.DealerCustName = responses["DealerCustName"];
+            this.MouCustDlrFindData.ManufacturerName = responses["ManufacturerName"];
+            this.MouCustDlrFindData.ManufacturerCustName = responses["ManufacturerCustName"];
           })
         }
       })
       
       
-    this.http.post(URLConstant.GetMouCustAssetByMouCustId, mouCustObj).subscribe(
+    this.http.post(URLConstant.GetMouCustAssetByMouCustId, this.ReqByIdObj).subscribe(
       (response) => {
         this.listAssetData = response[CommonConstant.ReturnObj];
       });
+  }
+
+  dictRefPayFreq: { [id: string]: string } = {};
+  GetListActiveRefPayFreq() {
+    this.http.post(URLConstant.GetListActiveRefPayFreq, null).subscribe(
+      (response: GenericListObj) => {
+        for (let index = 0; index < response.ReturnObject.length; index++) {
+          const element = response.ReturnObject[index];
+          this.dictRefPayFreq[element.PayFreqCode] = element.Descr;
+        }
+      }
+    );
+  }
+  
+  dictRefCurr: { [id: string]: string } = {};
+  GetListKvpActiveRefCurr() {
+    this.http.post(URLConstant.GetListKvpActiveRefCurr, null).subscribe(
+      (response: GenericKeyValueListObj) => {
+        for (let index = 0; index < response.ReturnObject.length; index++) {
+          const element = response.ReturnObject[index];
+          this.dictRefCurr[element.Key] = element.Value;
+        }
+      }
+    );
+  }
+  
+  ClickLinkManufacturer(vendorCode: string) {
+    this.http.post(URLConstant.GetVendorByVendorCode, { Code: vendorCode }).subscribe(
+      (responseLink: VendorObj) => {
+        console.log(responseLink);
+        AdInsHelper.OpenVendorBranchViewByVendorId(responseLink.VendorId);
+      });
+  }
+  
+  getListedMouCustFctr(ReqByIdObj){
+    this.http.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, ReqByIdObj).subscribe(
+      (response) => {
+        this.listedCustFctr = response[CommonConstant.ReturnObj];
+        this.listedCustFctrIsReady = true;
+    });
+  }
+
+  openView(custNo) {
+    this.ReqByIdObj.CustNo = custNo;
+    this.http.post(URLConstant.GetCustByCustNo, this.ReqByIdObj).subscribe(
+      response => {
+        if(response["MrCustTypeCode"] == 'PERSONAL'){
+          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+        }
+        else if(response["MrCustTypeCode"] == 'COMPANY'){
+          AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+        }
+      }
+    );
   }
 }

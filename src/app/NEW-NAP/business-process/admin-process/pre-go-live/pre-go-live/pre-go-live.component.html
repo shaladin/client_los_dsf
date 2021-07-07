@@ -12,15 +12,16 @@
             <div class="form-body" id="MainInfoForm">
               <div class="form-group row">
                 <label class="col-md-2 adins-required-label" for="AgrmntDt" translate>Agreement Date</label>
-                <div class="col-md-4">
-                  <input type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt">
+                <div *ngIf = "checkPOReady" class="col-md-4">
+                  <input *ngIf = "!isHasPO" type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
+                  <input *ngIf = "isHasPO" type="date" id="AgrmntDt" class="form-control adInsInput name" formControlName="AgrmntCreatedDt" max="{{PODt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="MainInfoForm.controls.AgrmntDt" [submit]="MainInfoReqForm.submitted">
                   </lib-uc-show-errors>
                 </div>
                 <label class="col-md-2 adins-required-label" for="EffectiveDt" translate>Effective Date</label>
                 <div class="col-md-4">
                   <input type="date" id="EffectiveDt" class="form-control adInsInput name"
-                    formControlName="EffectiveDt">
+                    formControlName="EffectiveDt" min="{{businessDt | date:'yyyy-MM-dd'}}">
                   <lib-uc-show-errors [control]="MainInfoForm.controls.EffectiveDt"
                     [submit]="MainInfoReqForm.submitted">
                   </lib-uc-show-errors>
@@ -97,8 +98,12 @@
                 [routerLink]="[CancelLink]" translate>
                 <i class="ft-x"></i> Cancel
               </button>
-              <button *ngIf="IsCheckedAll" type="submit" class="btn btn-raised btn-primary mr-1" translate>
-                <i class="far fa-check-square"></i> Save
+              <button *ngIf="IsCheckedAll && BizTemplateCode != 'DLFN'" type="submit"
+                class="btn btn-raised btn-primary mr-1" translate>
+                <i class="far fa-check-square"></i> Submit
+              </button>
+              <button *ngIf="BizTemplateCode == 'DLFN'" type="submit" class="btn btn-raised btn-primary mr-1" translate>
+                <i class="far fa-check-square"></i> Submit
               </button>
             </div>
           </form>

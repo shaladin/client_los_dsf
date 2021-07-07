@@ -117,7 +117,7 @@
             "label": "Mou Status",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName": "StatusGrpCode",
+            "criteriaPropName": "Code",
             "criteriaPropValue": "CANCEL_CHANGE_MOU"
         }
     ],
@@ -249,7 +249,7 @@
         {
             "type": "text",
             "position": "left",
-            "property": "MrMouTypeCode"
+            "property": "MouTypeName"
         },
         {
             "type": "action",

@@ -1,5 +1,5 @@
 <div *ngIf="IsFormReady" formGroupName="AttrList">
-  <div *ngIf="!AttrGroups.includes(AttrGroupCustPersonalFinDataIncome) && !AttrGroups.includes(AttrGroupCustPersonalFinDataExpense)">
+  <div *ngIf="AttrGroup !== undefined || (!AttrGroups.includes(AttrGroupCustPersonalFinDataIncome) && !AttrGroups.includes(AttrGroupCustPersonalFinDataExpense) && !AttrGroups.includes(AttrGroupCustPersonalFinData) && !AttrGroups.includes(AttrGroupCustPersonalFinDataOther))">
     <lib-ucSubsection [id]="'AttributeListId'" [title]="title" [panel]="'AttributeList'">
     </lib-ucSubsection>
     <div id="AttributeList">
@@ -117,16 +117,18 @@
     </div>
   </div>
   
-  <div *ngIf="AttrGroups.includes(AttrGroupCustPersonalFinDataIncome) || AttrGroups.includes(AttrGroupCustPersonalFinDataExpense)">
-    <div class="form-group row">
-      <div class="col-md-6 mb-1">
+  <div *ngIf="AttrGroups.includes(AttrGroupCustPersonalFinData) || AttrGroups.includes(AttrGroupCustPersonalFinDataOther) || AttrGroups.includes(AttrGroupCustPersonalFinDataIncome) || AttrGroups.includes(AttrGroupCustPersonalFinDataExpense)">
+    <lib-ucSubsection [id]="'AttrPersonalListId'" [title]="title" [panel]="'AttributePersonalList'">
+    </lib-ucSubsection>
+    <div class="form-group row" id="AttributePersonalList">
+      <div class="col-md-12">
         <div class="form-group row">
           <ng-container *ngFor="let attr of RefAttrList; let i = index">
-            <ng-container *ngIf="attr.AttrGroup === AttrGroupCustPersonalFinDataIncome" [formGroupName]="attr.AttrCode">
-              <label class="col-md-4 mb-1 adInsLabel"
+            <ng-container *ngIf="attr.AttrGroup === AttrGroupCustPersonalFinData" [formGroupName]="attr.AttrCode">
+              <label class="col-md-3 adInsLabel"
                 [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
                 translate>{{attr.AttrName}}</label>
-              <div class="col-md-8 mb-1">
+              <div class="col-md-9">
                 <input currencyMask type="" class="form-control adInsInput" formControlName="AttrValue"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }"
                   [options]="{align: 'right'}" (focusout)="CalculateAmt(attr.AttrGroup, $event.target.value, i)"/>
@@ -137,14 +139,50 @@
           </ng-container>
         </div>
       </div>
-      <div class="col-md-6 mb-1">
+      <div class="col-md-12">
+        <div class="form-group row">
+          <ng-container *ngFor="let attr of RefAttrList; let i = index">
+            <ng-container *ngIf="attr.AttrGroup === AttrGroupCustPersonalFinDataIncome" [formGroupName]="attr.AttrCode">
+              <label class="col-md-3 adInsLabel"
+                [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
+                translate>{{attr.AttrName}}</label>
+              <div class="col-md-9">
+                <input currencyMask type="" class="form-control adInsInput" formControlName="AttrValue"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }"
+                  [options]="{align: 'right'}" (focusout)="CalculateAmt(attr.AttrGroup, $event.target.value, i)"/>
+                <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
+                  [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-md-12">
         <div class="form-group row">
           <ng-container *ngFor="let attr of RefAttrList; let i = index">
             <ng-container *ngIf="attr.AttrGroup === AttrGroupCustPersonalFinDataExpense" [formGroupName]="attr.AttrCode">
-              <label class="col-md-4 mb-1 adInsLabel"
+              <label class="col-md-3 adInsLabel"
                 [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
                 translate>{{attr.AttrName}}</label>
-              <div class="col-md-8 mb-1">
+              <div class="col-md-9">
+                <input currencyMask type="" class="form-control adInsInput" formControlName="AttrValue"
+                  [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }"
+                  [options]="{align: 'right'}" (focusout)="CalculateAmt(attr.AttrGroup, $event.target.value, i)"/>
+                <lib-uc-show-errors [control]="parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue"
+                  [submit]="enjiForm.submitted"></lib-uc-show-errors>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="form-group row">
+          <ng-container *ngFor="let attr of RefAttrList; let i = index">
+            <ng-container *ngIf="attr.AttrGroup === AttrGroupCustPersonalFinDataOther" [formGroupName]="attr.AttrCode">
+              <label class="col-md-3 adInsLabel"
+                [ngClass]="{'adins-required-label': parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.IsMandatory.value}"
+                translate>{{attr.AttrName}}</label>
+              <div class="col-md-9">
                 <input currencyMask type="" class="form-control adInsInput" formControlName="AttrValue"
                   [ngClass]="{ 'is-invalid': enjiForm.submitted && parentForm.controls[identifier]['controls'][attr['AttrCode']].controls.AttrValue.invalid }"
                   [options]="{align: 'right'}" (focusout)="CalculateAmt(attr.AttrGroup, $event.target.value, i)"/>

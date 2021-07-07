@@ -18,6 +18,7 @@ import { ReturnHandlingHObj } from 'app/shared/model/ReturnHandling/ReturnHandli
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
 import { ReqGetVerfResultObj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { PhoneVerifObj } from 'app/shared/model/PhoneVerifObj.model';
@@ -57,7 +58,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   IsViewReady: boolean = false;
   UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
 
     this.route.queryParams.subscribe(params => {
       if (params['AppId'] != null) {
@@ -76,8 +77,9 @@ export class PhoneVerificationSubjectComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
 
-    if (this.wfTaskListId != null || this.wfTaskListId != undefined)
-      this.claimTask();
+    if (this.wfTaskListId != null || this.wfTaskListId != undefined){
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
+    }
 
     await this.GetAppData();
     await this.GetVerfResultData();
@@ -231,7 +233,7 @@ export class PhoneVerificationSubjectComponent implements OnInit {
 
   View(VerifResultHid, SubjectName) {
     var link = environment.losR3Web + NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT_VIEW + "?AppId=" + this.appId + "&VerfResultHId=" + VerifResultHid + "&Name=" + SubjectName;
-    this.router.navigate([]).then(() => { window.open(link, '_blank'); });
+    window.open(link, '_blank');
   }
 
   Verif(VerifResultHid, SubjectName, SubjectType, IdSource, SubjectRelation) {
@@ -242,17 +244,6 @@ export class PhoneVerificationSubjectComponent implements OnInit {
     if (this.isReturnHandling == true) {
       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CRD_PRCS_PHN_VRF_SUBJECT_VERIF], { "AppId": this.appId, "VerfResultHId": VerifResultHid, "Name": SubjectName, "Type": SubjectType, "Relation": SubjectRelation, "Source": IdSource, "ReturnHandlingHId": this.returnHandlingHId, "WfTaskListId": this.wfTaskListId });
     }
-  }
-
-  async claimTask() {
-    var wfClaimObj = {
-      pWFTaskListID: this.wfTaskListId,
-      pUserID: this.UserAccess.UserName,
-      isLoading: false
-    };
-    this.http.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      () => {
-      });
   }
 
   back() {

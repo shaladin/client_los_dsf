@@ -39,9 +39,9 @@ export class MouCustPersonalFinancialComponent implements OnInit {
       MrSourceOfIncomeTypeCode: [''],
       IsJoinIncome: [false],
       SpouseMonthlyIncomeAmt: [0],
-      TotalMonthlyIncome: [0],
-      TotalMonthlyExpense: [0],
-      NettMonthlyIncome: [0]
+      TotalMonthlyIncome: [this.MouCustPersonalFinDataObj.MonthlyIncomeAmt + this.MouCustPersonalFinDataObj.SpouseMonthlyIncomeAmt],
+      TotalMonthlyExpense: [this.MouCustPersonalFinDataObj.MonthlyExpenseAmt + this.MouCustPersonalFinDataObj.MonthlyInstallmentAmt],
+      NettMonthlyIncome: [(this.MouCustPersonalFinDataObj.MonthlyIncomeAmt + this.MouCustPersonalFinDataObj.SpouseMonthlyIncomeAmt)-(this.MouCustPersonalFinDataObj.MonthlyExpenseAmt + this.MouCustPersonalFinDataObj.MonthlyInstallmentAmt)]
     }));
 
     this.bindSourceOfIncomeObj();

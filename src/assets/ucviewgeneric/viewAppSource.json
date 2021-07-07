@@ -1,0 +1,35 @@
+{
+    "title": "APPLICATION SOURCE",
+      "subsection": [
+        {
+          "subSectionId": "ApplicationSourceInfo",
+          "subSectionTitle": "Application Source Info",
+          "mainInfoPath": "/Generic/GetDataViewBySQL",
+          "mainInfo": [
+            {
+                "type": "text",
+                "label": "Application Source Code",
+                "property": "appSrcCode"
+            },
+            {
+                "type": "text",
+                "label": "Application Source Name",
+                "property": "appSrcName"
+            },
+            {
+                "type": "text",
+                "label": "Application Source Type",
+                "property": "appSrcType"
+            },
+            {
+                "type": "text",
+                "label": "Description",
+                "property": "descr"
+            }
+          ],
+          "querystring": {
+              "name": "viewAppSource"
+          }
+        }
+      ]
+    }

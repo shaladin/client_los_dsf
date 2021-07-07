@@ -151,7 +151,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     this.GetLegalAddr();
     this.initUcLookup();
     await this.initDropdownList();
-    this.getAppData();
+    await this.getAppData();
 
     if (this.mode == "edit") {
       await this.getAppCollData(0, this.AppCollateralId, false, false, new Object());
@@ -353,8 +353,8 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     }
   }
 
-  getAppData() {
-    this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
+  async getAppData() {
+    await this.http.post<AppObj>(URLConstant.GetAppById, { Id: this.AppId }).toPromise().then(
       (response: AppObj) => {
         this.AppData = response;
         this.http.post(URLConstant.GetAppCustByAppId, { Id: this.AppId }).toPromise().then(
@@ -375,6 +375,11 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
               this.inputLookupExistColl.addCritInput = this.criteriaList;
             }
             this.inputLookupExistColl.isReady = true;
+
+            if(this.AppCustData.MrCustTypeCode == CommonConstant.CustTypeCompany){
+              this.AddCollForm.controls.OwnerMobilePhnNo.clearValidators();
+              this.AddCollForm.controls.OwnerMobilePhnNo.updateValueAndValidity();
+            }
           }
         ).catch(
           (error) => {
@@ -411,7 +416,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
   }
 
   getRefAssetDocList(isInit: boolean) {
-    this.http.post(URLConstant.GetRefAssetDocList, { AssetTypeCode: this.AssetTypeCode }).subscribe(
+    this.http.post(URLConstant.GetRefAssetDocList, { Code: this.AddCollForm.get("AssetTypeCode").value }).subscribe(
       (response) => {
         console.log("getRefAssetDocList: " + JSON.stringify(response));
         if (response[CommonConstant.ReturnObj].length > 0) {
@@ -573,7 +578,7 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
       this.isExisting = true;
       this.isCopy=false;   
       this.AddCollForm.controls.AssetTypeCode.disable();
-      this.AddCollForm.controls.ManufacturingYear.disable();
+      if (response["ManufacturingYear"]) this.AddCollForm.controls.ManufacturingYear.disable();
       this.AddCollForm.controls.CollateralValueAmt.disable();
       this.AddCollForm.controls.MrCollateralUsageCode.disable();
       this.AddCollForm.controls.AssetTaxDt.disable();
@@ -1005,6 +1010,9 @@ export class CollateralDataCfnaDetailComponent implements OnInit {
     for (const key in this.appCollateralDataObj.AppCollateralRegistrationObj) {
       console.log(key + ": " + this.appCollateralDataObj.AppCollateralRegistrationObj[key]);
       if(key === "Id" || key === "AppCollateralRegistrationId" || key === "AppCollateralId" || key === "RowVersion" || key === "Notes"){
+        continue;
+      }
+      if(key === "OwnerMobilePhnNo" && this.AppCustData.MrCustTypeCode == CommonConstant.CustTypeCompany){
         continue;
       }
       if(!this.appCollateralDataObj.AppCollateralRegistrationObj[key]){

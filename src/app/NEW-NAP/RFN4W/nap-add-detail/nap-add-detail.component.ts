@@ -19,6 +19,7 @@ import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigRes
 import { SubmitNapObj } from 'app/shared/model/Generic/SubmitNapObj.Model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { ResReturnHandlingDObj } from 'app/shared/model/Response/ReturnHandling/ResReturnHandlingDObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AppAssetObj } from 'app/shared/model/AppAssetObj.Model';
 
 @Component({
@@ -45,7 +46,7 @@ export class NapAddDetailComponent implements OnInit {
   ReturnHandlingHId: number = 0;
   isMainCustMarried: boolean = false;
   IsDataReady: boolean = false;
-  
+
   @ViewChild('viewAppMainInfo') viewAppMainInfo: AppMainInfoComponent;
   FormReturnObj = this.fb.group({
     ReturnExecNotes: ['']
@@ -72,7 +73,7 @@ export class NapAddDetailComponent implements OnInit {
   SysConfigResultObj: ResSysConfigResultObj = new ResSysConfigResultObj();
 
   readonly CancelLink: string = NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_EDIT_APP_PAGING;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private toastr: NGXToastrService, private fb: FormBuilder, private router: Router, private cookieService: CookieService, private claimTaskService: ClaimTaskService) {
     this.route.queryParams.subscribe(params => {
       if (params["AppId"] != null) {
         this.appId = params["AppId"];
@@ -96,7 +97,7 @@ export class NapAddDetailComponent implements OnInit {
         this.SysConfigResultObj = response;
     });
 
-    this.ClaimTask();
+    this.claimTaskService.ClaimTask(this.wfTaskListId);
     this.AppStepIndex = 1;
     this.NapObj = new AppObj();
     this.NapObj.AppId = this.appId;
@@ -122,9 +123,9 @@ export class NapAddDetailComponent implements OnInit {
       this.AppStepIndex = this.AppStep[this.NapObj.AppCurrStep];
       this.ChooseStep(this.AppStepIndex);
     }
-    this.IsDataReady = true;    
+    this.IsDataReady = true;
     await this.GetCustMainData();
-    
+
     this.MakeViewReturnInfoObj();
   }
 
@@ -133,7 +134,7 @@ export class NapAddDetailComponent implements OnInit {
     reqObj.Id = this.appId;
     this.http.post<ResponseAppCustMainDataObj>(URLConstant.GetAppCustMainDataByAppId, reqObj).subscribe(
       (response) => {
-        if (response.AppCustObj) 
+        if (response.AppCustObj)
         {
           this.isMainCustMarried = response.AppCustPersonalObj != undefined && response.AppCustPersonalObj.MrMaritalStatCode == CommonConstant.MasteCodeMartialStatsMarried ? true : false;
         }
@@ -199,7 +200,7 @@ export class NapAddDetailComponent implements OnInit {
       this.stepperCompany.to(idxStep);
     }
   }
-  
+
   async initDms() {
     if(this.SysConfigResultObj.ConfigValue == '1'){
       this.isDmsReady = false;
@@ -222,7 +223,7 @@ export class NapAddDetailComponent implements OnInit {
           else {
             this.dmsObj.MetadataParent = null;
           }
-  
+
           let mouId = this.NapObj.MouCustId;
           if (mouId != null && mouId != 0) {
             let mouObj = { Id: mouId };
@@ -239,7 +240,7 @@ export class NapAddDetailComponent implements OnInit {
           }
         }
       );
-    } 
+    }
   }
 
   MakeViewReturnInfoObj() {
@@ -392,17 +393,7 @@ export class NapAddDetailComponent implements OnInit {
         })
     }
   }
-  ClaimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = new AppObj();
-    wfClaimObj.AppId = this.appId;
-    wfClaimObj.Username = currentUserContext[CommonConstant.USER_NAME];
-    wfClaimObj.WfTaskListId = this.wfTaskListId;
-    this.http.post(URLConstant.ClaimTaskNap, wfClaimObj).subscribe(
-      (response) => {
 
-      });
-  }
   Cancel() {
     let url: string = NavigationConstant.BACK_TO_PAGING;
     if(this.ReturnHandlingHId > 0){
@@ -423,7 +414,7 @@ export class NapAddDetailComponent implements OnInit {
   }
 
   GetCallback(ev) {
-    if(ev.Key == "HighligtComment"){
+    if(ev.Key == "HighlightComment"){
       var link : string;
       var custObj = { CustNo: ev.ViewObj.CustNo };
       this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(

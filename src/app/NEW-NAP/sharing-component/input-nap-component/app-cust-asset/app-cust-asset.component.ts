@@ -25,7 +25,7 @@ export class AppCustAssetComponent implements OnInit {
     private toastr: NGXToastrService,
     private modalService: NgbModal,
     private spinner: NgxSpinnerService
-  ) { 
+  ) {
     this.inputGridObj = new InputGridObj();
     this.inputGridObj.pagingJson = "./assets/ucgridview/gridAppCustAsset.json";
     this.inputGridObj.resultData = {
@@ -36,19 +36,20 @@ export class AppCustAssetComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.AppCustId && this.AppCustId > 0){
+    if (this.AppCustId && this.AppCustId > 0) {
       this.GetAppCustAssetData();
     }
   }
 
-  Continue(){
+  Continue() {
     this.ResponseAppCustAsset.emit();
   }
 
-  GetAppCustAssetData(){
+  GetAppCustAssetData() {
     this.spinner.show();
-    this.http.post(URLConstant.GetListAppCustAssetByAppCustId, { AppCustId: this.AppCustId }).toPromise().then(
+    this.http.post(URLConstant.GetListAppCustAssetByAppCustId, { Id: this.AppCustId }).toPromise().then(
       (response) => {
+        console.log(response);
         this.inputGridObj.resultData = {
           Data: []
         }
@@ -64,16 +65,16 @@ export class AppCustAssetComponent implements OnInit {
     );
   }
 
-  GetCallback(e){
-    if(e.Key == "edit"){
+  GetCallback(e) {
+    if (e.Key == "edit") {
       this.EditAppCustAsset(e.RowObj.AppCustAssetId);
     }
-    else if(e.Key == "delete"){
+    else if (e.Key == "delete") {
       this.DeleteAppCustAsset(e.RowObj.AppCustAssetId);
     }
   }
 
-  OpenModalHandler(appCustAssetId){
+  OpenModalHandler(appCustAssetId) {
     const modal = this.modalService.open(AppCustAssetDetailComponent);
     modal.componentInstance.AppCustAssetId = appCustAssetId;
     modal.componentInstance.AppCustId = this.AppCustId;
@@ -88,24 +89,24 @@ export class AppCustAssetComponent implements OnInit {
     );
   }
 
-  AddAppCustAsset(){
+  AddAppCustAsset() {
     this.OpenModalHandler(0);
   }
 
-  EditAppCustAsset(appCustAssetId){
+  EditAppCustAsset(appCustAssetId) {
     this.OpenModalHandler(appCustAssetId);
   }
 
-  DeleteAppCustAsset(appCustAssetId){
+  DeleteAppCustAsset(appCustAssetId) {
     var confirmation = confirm("Are you sure to delete this data ?");
-    if(confirmation){
-      this.http.post(URLConstant.DeleteAppCustAsset, { AppCustAssetId: appCustAssetId }).toPromise().then(
+    if (confirmation) {
+      this.http.post(URLConstant.DeleteAppCustAsset, { Id: appCustAssetId }).toPromise().then(
         (response) => {
-          if(response["StatusCode"] == 200){
+          if (response["StatusCode"] == 200) {
             this.toastr.successMessage(response["Message"]);
             this.GetAppCustAssetData();
           }
-          else{
+          else {
             this.toastr.errorMessage("Error Deleting AppCustAsset");
           }
         }

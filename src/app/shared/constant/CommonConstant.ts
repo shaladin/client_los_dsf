@@ -78,6 +78,8 @@ export class CommonConstant {
   //MOU STAT
   public static MouStatCancel = "CAN";
   public static MouDocSigner = "DSG";
+  public static ChangeMouNew = "NEW";
+  public static ChangeMouReturn = "RTN";
 
   //LEAD STAT
   public static LeadStatCancel = "CAN";
@@ -396,6 +398,7 @@ export class CommonConstant {
   public static RefReasonTypeCodePreGlvApv = "PRE_GLV_APV";
   public static RefReasonTypeCodeCrdReview = "CRD_REVIEW";
   public static RefReasonTypeCodeLtkmVerify = "LTKM_VERIFY";
+  public static RefReasonTypeCodeEditAppAfterApproval = "EDIT_APP_AFT_APV";
   public static RefReasonTypeDocChecklist = "DCK_LIST";
   public static RefReasonTypeCodeInvoiceDataVerif = "INVOICE_DATA_VERIF";
   public static RefReasonTypeCodeProdDeactivate = "PROD_DEACT";
@@ -568,7 +571,8 @@ export class CommonConstant {
   public static RefMasterTypeCodeAdditionalInterestPaidBy = "ADDITIONAL_INTEREST_PAID_BY";
   public static RefMasterTypeCodeRegularExpression = "REGULAR_EXPRESSION";
   public static RefMasterTypeCodeLob = "LOB";
-
+  public static RefMasterTypeCodeAppSrcType = "APP_SRC_TYPE";
+  public static RefMasterTypeCodeMouType = "MOU_TYPE";
   // REF MASTER MASTER CODE
   public static RefMasterMasterCodeCust = "CUST";
   public static RefMasterMasterCodeCustFctr = "CUST_FCTR";
@@ -616,6 +620,7 @@ export class CommonConstant {
 
   //Martial Status
   public static MasteCodeMartialStatsMarried = "MARRIED";
+  public static MasteCodeMartialStatsSingle = "SINGLE";
 
   //Relationship Code
   public static MasteCodeRelationshipSpouse = "SPOUSE";
@@ -849,6 +854,13 @@ export class CommonConstant {
   //APP STAT
   public static AppStatCancel = "CAN";
   public static AppStatReject = "RJC";
+  
+  //INVOICE STAT
+  public static InvoiceStatApv = "APV";
+  public static InvoiceStatRjc = "RJC";
+
+  //WOP
+  public static WopAutoDebit = "AD";  
   
   // GENERAL SETTING CODE
   public static GS_CODE_SALES_OFFICER_CODE = "SALES_OFFICER_CODE";

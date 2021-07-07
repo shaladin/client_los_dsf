@@ -4,8 +4,12 @@
             <div class="card-body">
                 <div class="card-header header-title" style="margin-bottom: 10px;">
                     <div class="row">
-                        <div class="col-md-8">
+                        <div *ngIf = "MrMouTypeCode == 'GENERAL'" class="col-md-8">
                             <h4 class="card-title" id="horz-layout-colored-controls" translate> MOU Approval - General
+                            </h4>
+                        </div>
+                        <div *ngIf = "MrMouTypeCode == 'FINANCING'"class="col-md-8">
+                            <h4 class="card-title" id="horz-layout-colored-controls" translate> MOU Approval - Dealer Financing
                             </h4>
                         </div>
                     </div>

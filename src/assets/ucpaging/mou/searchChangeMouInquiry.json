@@ -57,8 +57,8 @@
             "label": "Change Mou Status",
             "items": [],
             "itemsUrl": [],
-            "criteriaPropName": "StatusGrpCode",
-            "criteriaPropValue": "CMOU_STAT"
+            "criteriaPropName": "Code",
+            "criteriaPropValue": "CHG_MOU_STAT"
         }
     ],
     "querystring": {
@@ -137,7 +137,7 @@
         {
             "type": "text",
             "position": "left",
-            "property": "MrMouTypeCode"
+            "property": "MouTypeName"
         }
     ]
 }

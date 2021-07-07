@@ -162,7 +162,7 @@
             "type": "sort",
             "position": "left",
             "label": "MOU TYPE",
-            "name": "RM.DESCR"
+            "name": "RM.REF_MASTER_NAME"
         },
         {
             "type": "label",
@@ -218,7 +218,7 @@
         {
             "type": "text",
             "position": "left",
-            "property": "MouType"
+            "property": "MouTypeName"
         },
         {
             "type": "action",
@@ -260,6 +260,10 @@
                                     {
                                         "type": "ChangeMouTrxId",
                                         "property": "ChangeMouTrxId"
+                                    },
+                                    {
+                                        "type": "ChangeMouCustId",
+                                        "property": "ChangeMouCustId"
                                     }
                                 ]
                             },
@@ -298,6 +302,10 @@
                                     {
                                         "type": "ChangeMouTrxId",
                                         "property": "ChangeMouTrxId"
+                                    },
+                                    {
+                                        "type": "ChangeMouCustId",
+                                        "property": "ChangeMouCustId"
                                     }
                                 ]
                             },

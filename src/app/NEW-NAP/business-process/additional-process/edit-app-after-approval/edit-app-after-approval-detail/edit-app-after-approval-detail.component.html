@@ -219,7 +219,7 @@
                 </div>
               </div> -->
 
-              <lib-ucapprovalcreate [InputObj]="InputObj" *ngIf="IsReady" (result)="SaveForm($event)" #ApprovalComponent></lib-ucapprovalcreate>
+              <lib-ucapprovalcreate [parentForm]= "EditAppForm" [InputObj]="InputObj" [enjiForm]="enjiForm" *ngIf="IsReady" (result)="SaveForm($event)" #ApprovalComponent></lib-ucapprovalcreate>
 
               <div class="card">
                 <div class="card-body">

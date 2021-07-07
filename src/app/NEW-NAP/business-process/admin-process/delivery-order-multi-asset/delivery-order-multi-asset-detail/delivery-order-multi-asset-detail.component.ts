@@ -18,6 +18,7 @@ import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ResSysConfigResultObj } from 'app/shared/model/Response/ResSysConfigResultObj.model';
 import { ReqGetDOMultiAssetInformationObj } from 'app/shared/model/Request/DeliveryOrder/ReqGetDOMultiAssetInformationObj.model';
+import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
 import { DeliveryOrderHObj } from 'app/shared/model/DeliveryOrderHObj.Model';
 import { AssetListForDOMultiAssetObj } from 'app/shared/model/AssetListForDOMultiAssetObj.Model';
@@ -62,7 +63,9 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private modalService: NgbModal,
-    private spinner: NgxSpinnerService, private cookieService: CookieService
+    private spinner: NgxSpinnerService, 
+    private cookieService: CookieService,
+    private claimTaskService: ClaimTaskService
   ) {
     this.doList = new Array();
     this.doAssetList = new Array();
@@ -84,7 +87,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     this.arrValue.push(this.agrmntId);
     this.arrValue.push(this.appId);
     if (this.wfTaskListId != null || this.wfTaskListId != undefined) {
-      this.claimTask();
+      this.claimTaskService.ClaimTask(this.wfTaskListId);
     }
     let GetDoObj = new ReqGetDOMultiAssetInformationObj();
     GetDoObj.AppId = this.appId;
@@ -189,15 +192,6 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
         }
       );
     }
-  }
-
-
-  async claimTask() {
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    var wfClaimObj = { pWFTaskListID: this.wfTaskListId, pUserID: currentUserContext[CommonConstant.USER_NAME] };
-    this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe(
-      (response) => {
-      });
   }
 
   showModalDO(formArray: FormArray, mode: string, deliveryOrderHId: number) {

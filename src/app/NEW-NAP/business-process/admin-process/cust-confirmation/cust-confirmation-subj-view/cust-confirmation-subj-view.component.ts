@@ -13,6 +13,8 @@ import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.model';
 import { ReqGetVerfResult3Obj } from 'app/shared/model/VerfResult/ReqGetVerfResultObj.Model';
+import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-cust-confirmation-subj-view',
@@ -37,8 +39,11 @@ export class CustConfirmationSubjViewComponent implements OnInit {
   VerfResultDListObj = new Array<VerfResultDObj>();
   appObj: AppObj = new AppObj();
   IsVerfDetail: boolean = false;
+  BusinessDt: Date;
+  VerificationDt: Date;
+
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_CUST_CONFIRM_DETAIL;
-  constructor(private route: ActivatedRoute, private http: HttpClient) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["VerfResultHId"] != null) {
         this.VerfResultHId = params["VerfResultHId"];
@@ -62,7 +67,19 @@ export class CustConfirmationSubjViewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.GetVerifDate();
     this.GetData();
+  }
+
+  GetVerifDate(){
+    let UserAccess: CurrentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.BusinessDt = new Date(UserAccess.BusinessDt);
+    var todaydate = new Date();
+    this.VerificationDt = new Date();
+    this.VerificationDt.setDate(this.BusinessDt.getDate());
+    this.VerificationDt.setHours(todaydate.getHours());
+    this.VerificationDt.setMinutes(todaydate.getMinutes());
+    this.VerificationDt.setSeconds(todaydate.getSeconds());
   }
 
   GetData() {

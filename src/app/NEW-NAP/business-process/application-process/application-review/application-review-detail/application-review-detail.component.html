@@ -8,8 +8,8 @@
         <app-crd-rvw-fam-guar *ngIf="isShow" [appId]="appId" [crdRvwCustInfoObj]="crdRvwCustInfoObj">
         </app-crd-rvw-fam-guar>
         <app-crd-rvw-legal-doc *ngIf="isShow && crdRvwCustInfoObj.MrCustTypeCode == CustTypeCompany" [AppCustCompanyId]="crdRvwCustInfoObj.AppCustCompanyId"></app-crd-rvw-legal-doc>
-        <app-crd-rvw-third-party-checking *ngIf="appNo != ''" [AppNo]="appNo">
-        </app-crd-rvw-third-party-checking>
+        <!-- <app-crd-rvw-third-party-checking *ngIf="appNo != ''" [AppNo]="appNo">
+        </app-crd-rvw-third-party-checking> -->
         <app-crd-rvw-app-info *ngIf="isShow" [CrdRvwCustInfoId]="crdRvwCustInfoObj.CrdRvwCustInfoId" [appId]="appId" [BizTemplateCode]="BizTemplateCode">
         </app-crd-rvw-app-info>
         <app-app-rvw-summary-asset *ngIf="isShow" [AppId]="appId"></app-app-rvw-summary-asset>
@@ -43,7 +43,7 @@
             </div>
           </div>
           <br>
-          <lib-ucapprovalcreate [parentForm]="FormObj" [InputObj]="InputObj" *ngIf="!isReturnOn && IsReady" #ApprovalComponent></lib-ucapprovalcreate>
+          <lib-ucapprovalcreate [parentForm]="FormObj" [enjiForm]="enjiForm" [InputObj]="InputObj" *ngIf="!isReturnOn && IsReady" #ApprovalComponent></lib-ucapprovalcreate>
         </div>
 
         <div class="form-actions right" *ngIf="!isReturnOn">

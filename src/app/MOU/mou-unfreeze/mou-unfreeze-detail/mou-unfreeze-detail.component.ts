@@ -39,12 +39,12 @@ export class MouUnfreezeDetailComponent implements OnInit {
   selected: String;
   selectedReasonCode: String;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
-  ApprovalCreateOutput: any;
+  RFAInfo: any;
   InputObj: UcInputRFAObj;
   IsReady: Boolean = false;
   private createComponent: UcapprovalcreateComponent;
   @ViewChild('ApprovalComponent') set content(content: UcapprovalcreateComponent) {
-    if (content) { 
+    if (content) {
       // initially setter gets called with undefined
       this.createComponent = content;
     }
@@ -92,59 +92,59 @@ export class MouUnfreezeDetailComponent implements OnInit {
         });
         this.IsFreezeOld = this.result.IsFreeze;
       });
-      this.initInputApprovalObj();
+    this.initInputApprovalObj();
   }
 
   async getApv() {
- 
+
     await this.http.post(URLConstant.GetListActiveRefReason, {
       RefReasonTypeCode: CommonConstant.RefMasterTypeCodeMOUFreezeUnfreeze,
     }).toPromise().then((response) => {
       this.listReason = response[CommonConstant.ReturnObj];
-     
+
     });
   }
 
   SaveForm() {
 
-    if(this.IsFreezeOld == this.FreezeUnfreezeForm.controls['IsFreeze'].value)
-    {
+    if (this.IsFreezeOld == this.FreezeUnfreezeForm.controls['IsFreeze'].value) {
       this.toastr.warningMessage(ExceptionConstant.NO_DATA_EDITED);
       return;
     }
 
-    this.ApprovalCreateOutput = this.createComponent.output();  
+    this.RFAInfo = { RFAInfo: this.FreezeUnfreezeForm.controls.RFAInfo.value };
 
-    if(this.ApprovalCreateOutput!=undefined){
 
-    var ReqValue = this.FreezeUnfreezeForm.value;
-    this.mouFreezeTrxObj.MouCustId = ReqValue.MouCustId;
-    this.mouFreezeTrxObj.IsFreeze = ReqValue.IsFreeze;
-    this.mouFreezeTrxObj.Status = CommonConstant.MOU_FRZ_REQ;
-    this.mouFreezeTrxObj.ReqByRefUserCode = this.ReqByUserId;
-    this.mouFreezeTrxObj.ReqDt = this.businessDt;
-    this.mouFreezeTrxObj.Notes = ReqValue.Notes; 
-    this.mouFreezeTrxObj.RefReasonCode = this.ApprovalCreateOutput.RFAInfo.ReasonCode; 
-    var sendObj = {
-      RequestMouFreezeTrxObj : this.mouFreezeTrxObj, 
-      OfficeCode: this.OfficeCode,
-      RequestRFAObj:this.ApprovalCreateOutput
-    };
+    if (this.RFAInfo != undefined) {
 
-    this.http
-      .post(URLConstant.SubmitMouFreezeUnfreeze, sendObj)
-      .subscribe((response) => {
-        this.toastr.successMessage(response["message"]);
-        this.router.navigate([NavigationConstant.MOU_FREEZE_PAGING]);
-      });
+      var ReqValue = this.FreezeUnfreezeForm.value;
+      this.mouFreezeTrxObj.MouCustId = ReqValue.MouCustId;
+      this.mouFreezeTrxObj.IsFreeze = ReqValue.IsFreeze;
+      this.mouFreezeTrxObj.Status = CommonConstant.MOU_FRZ_REQ;
+      this.mouFreezeTrxObj.ReqByRefUserCode = this.ReqByUserId;
+      this.mouFreezeTrxObj.ReqDt = this.businessDt;
+      this.mouFreezeTrxObj.Notes = ReqValue.Notes;
+      this.mouFreezeTrxObj.RefReasonCode = this.RFAInfo.RFAInfo.ReasonCode;
+      var sendObj = {
+        RequestMouFreezeTrxObj: this.mouFreezeTrxObj,
+        OfficeCode: this.OfficeCode,
+        RequestRFAObj: this.RFAInfo
+      };
+
+      this.http
+        .post(URLConstant.SubmitMouFreezeUnfreeze, sendObj)
+        .subscribe((response) => {
+          this.toastr.successMessage(response["message"]);
+          this.router.navigate([NavigationConstant.MOU_FREEZE_PAGING]);
+        });
     }
   }
-  initInputApprovalObj(){
+  initInputApprovalObj() {
     this.InputObj = new UcInputRFAObj(this.cookieService);
-    let Attributes = [{}] 
+    let Attributes = [{}]
     let TypeCode = {
-      "TypeCode" : CommonConstant.APV_TYPE_MOU_FRZ_UNFRZ_APV_TYPE,
-      "Attributes" : Attributes,
+      "TypeCode": CommonConstant.APV_TYPE_MOU_FRZ_UNFRZ_APV_TYPE,
+      "Attributes": Attributes,
     }
     var currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.InputObj.RequestedBy = currentUserContext[CommonConstant.USER_NAME];
@@ -164,16 +164,22 @@ export class MouUnfreezeDetailComponent implements OnInit {
     this.InputObj.TrxNo = " ";
     this.IsReady = true;
   }
-  IsFreezeChange() {}
+  IsFreezeChange() { }
 
-  
+
   GetCallback(ev) {
-    if(ev.Key == "customer"){
+    if (ev.Key == "customer") {
       this.http.post(URLConstant.GetCustByCustNo, { CustNo: ev.ViewObj.CustNo }).subscribe(
         response => {
-          AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
         }
       );
-  }}
+    }
+  }
 
 }

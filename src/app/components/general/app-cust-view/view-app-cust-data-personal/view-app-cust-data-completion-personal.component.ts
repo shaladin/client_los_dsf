@@ -103,7 +103,7 @@ export class ViewAppCustDataCompletionPersonalComponent implements OnInit {
         this.appCustBankAccObjs = response.ListAppCustBankAccObj;
         this.appCustGrpObjs = response.ListAppCustGrpObj;
         this.appCustFamilyObjs = response.ListAppCustFamilyObj;
-        this.ListCustPersonalFinData = response["AppCustPersonalFinDataObjs"];
+        this.ListCustPersonalFinData = response["ListAppCustPersonalFinDataObjs"];
 
         // filter family yg punya relationship
         if(this.appCustFamilyObjs && this.appCustFamilyObjs.length > 0) {
