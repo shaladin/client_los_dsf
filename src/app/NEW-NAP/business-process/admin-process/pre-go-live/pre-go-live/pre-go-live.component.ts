@@ -125,30 +125,7 @@ export class PreGoLiveComponent implements OnInit {
         this.IsApvReady = true;
       });
     this.claimTaskService.ClaimTask(this.TaskListId);
-    if (this.BizTemplateCode == CommonConstant.CFNA) {
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLiveCFNA.json";
-      this.viewGenericObj.viewEnvironment = environment.losUrl;
-      this.viewGenericObj.ddlEnvironments = [
-        {
-          name: "AppNo",
-          environment: environment.losR3Web
-        },
-        {
-          name: "LeadNo",
-          environment: environment.losR3Web
-        },
-        {
-          name: "AgrmntNo",
-          environment: environment.losR3Web
-        },
-        {
-          name: "MouCustNo",
-          environment: environment.losR3Web
-        },
-      ];
-    } else {
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
-    }
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
     
     var agrmntObj = {
       Id: this.AgrmntId
