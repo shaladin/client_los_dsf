@@ -83,11 +83,11 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
       }
     }
     else if (ev.Key == "TakeBack") {
-      if (String.Format("{0:L}", ev.RowObj.MAIN_USER_ID) != String.Format("{0:L}", this.UserAccess.UserName)) {
+      if (String.Format("{0:L}", ev.RowObj.MainUserId) != String.Format("{0:L}", this.UserAccess.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_TAKE_BACK);
       } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId;
-        ApvReqObj.UsernameMemberId = ev.RowObj.MainUsernameMemberId;
+        ApvReqObj.Username = ev.RowObj.MainUserId;
         this.httpClient.post(AdInsConstant.ApvTakeBackTaskUrl, ApvReqObj).subscribe(
           (response) => {
             this.toastr.successMessage(response["Message"]);
