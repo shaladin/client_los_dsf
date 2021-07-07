@@ -198,7 +198,7 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
         CurrCode: this.currencyList[0].Key,
       });
 
-      if (this.tempChangeMouCustFctr["Status"] == "Failed") {
+      if (this.tempChangeMouCustFctr["ChangeMouCustFctrId"] == 0) {
         this.isListedFctr = mouFctrData["IsListedCust"];
 
         if (mouFctrData["MouCustFctrId"] != 0) {
@@ -306,7 +306,6 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
 
   Save(enjiForm) {
     var formData = this.MouDetailFactoringForm.getRawValue();
-    console.log(formData);
     formData.IsListedCust = false;
 
     if (this.IsSingleIns) {
