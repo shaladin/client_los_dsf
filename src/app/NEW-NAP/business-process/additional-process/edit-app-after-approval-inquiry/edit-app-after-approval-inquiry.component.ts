@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { AdInsConstant } from 'app/shared/AdInstConstant';
+import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
@@ -55,13 +56,22 @@ export class EditAppAfterApprovalInquiryComponent implements OnInit {
 
   getEvent(event) {
     if(event.Key == "customer"){
-        let reqGetCustNo : GenericObj = new GenericObj();
-        reqGetCustNo.CustNo = event.RowObj.custNo;
-        this.http.post(URLConstant.GetCustByCustNo, reqGetCustNo).subscribe(
-          response => {
-            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+      let custId: number;
+      let mrCustTypeCode: string;
+      let CustNoObj = { CustNo: event.RowObj.CustNo };
+      this.http.post(URLConstant.GetCustByCustNo, CustNoObj).subscribe(
+        (response) => {
+          custId = response['CustId'];
+          mrCustTypeCode = response['MrCustTypeCode'];
+
+          if (mrCustTypeCode == CommonConstant.CustTypeCompany) {
+            AdInsHelper.OpenCustomerCoyViewByCustId(custId);
           }
-        );
+
+          if (mrCustTypeCode == CommonConstant.CustTypePersonal) {
+            AdInsHelper.OpenCustomerViewByCustId(custId);
+          }
+        });
     }
     else if(event.Key == "editAppAftApvTrx"){
       AdInsHelper.OpenEditAppAfterApv(event.RowObj.EditAppAftApvTrxHId, event.RowObj.AgrmntId); 
