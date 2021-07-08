@@ -1,0 +1,90 @@
+{
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "CustMainDetailHeaderId",
+      "subSectionTitle": "Mou Detail",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "text",
+          "label": "Currency",
+          "property": "currency"
+        },
+        {
+          "type": "currency",
+          "label": "Plafond Amount",
+          "property": "PlafondAmt"
+        },
+        {
+          "type": "text",
+          "label": "Revolving",
+          "property": "IsRevolving"
+        },
+        {
+          "type": "text",
+          "label": "Revolving Type",
+          "property": "RevolvingType"
+        },
+        {
+          "type": "text",
+          "label": "WoP",
+          "property": "wop"
+        },
+        {
+          "type": "text",
+          "label": "Resource Type",
+          "property": "resourceType"
+        },
+        {
+          "type": "boolean",
+          "label": "Is Disclosed",
+          "property": "isDisclosed"
+        },
+        {
+          "type": "text",
+          "label": "Paid By",
+          "property": "paidBy"
+        },
+        {
+          "type": "text",
+          "label": "Installment Type",
+          "property": "instType"
+        },
+        {
+          "type": "text",
+          "label": "TOP",
+          "property": "topDays"
+        },
+        {
+          "type": "text",
+          "label": "Payment Frequency",
+          "property": "payFreq"
+        },
+        {
+          "type": "text",
+          "label": "Interest Rate (%)",
+          "property": "interestRatePrcnt"
+        },
+        {
+          "type": "text",
+          "label": "Retention (%)",
+          "property": "retentionPrcnt"
+        },
+        {
+          "type": "text",
+          "label": "Notes",
+          "property": "notes"
+        },     
+        {
+          "type": "text",
+          "label": "Calculate Method",
+          "property": "calcMethod"
+        }    
+      ],
+      "querystring": {
+        "name": "viewChangeMouDetailFactoringReqExp"
+      }
+    }
+  ]
+}
