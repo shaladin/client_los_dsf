@@ -170,12 +170,12 @@
                     </option>
                   </select>
                 </div>
-              </div>
 
-              <div class="form-group row adins-required">
                 <!-- Customer Bank Account -->
-                <label class="col-md-2 adInsLabel"> Customer Bank Account </label>
-                <div class="col-md-4">
+                <div class="form-group col-md-2 adins-required" *ngIf="NapAppModelForm.controls.MrWopCode.value == WopAutoDebit">
+                  <label class="adInsLabel"> Customer Bank Account </label>
+                </div>
+                <div class="col-md-4" *ngIf="NapAppModelForm.controls.MrWopCode.value == WopAutoDebit">
                   <select class="form-control adInsInput" style="width: 50%" formControlName="CustBankAcc"
                     (change)="selectedBank()"
                     [ngClass]="{ 'is-invalid': enjiForm.submitted && NapAppModelForm.controls.CustBankAcc.invalid }">
