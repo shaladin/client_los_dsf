@@ -20,6 +20,8 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-new-purchase-order-detail',
@@ -57,7 +59,8 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private fb: FormBuilder, 
     private cookieService: CookieService,
-    private claimTaskService: ClaimTaskService
+    private claimTaskService: ClaimTaskService,
+    private toastrSvc: ToastrService
   ) {
     this.POList = new Array<Object>();
     this.arrValue = new Array<number>();
@@ -81,6 +84,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
+    await this.CheckApvResultExp();
     this.claimTaskService.ClaimTask(this.TaskListId);
     // let appAssetObj : GenericObj = new GenericObj();
     // appAssetObj.Id = this.AgrmntId;
@@ -105,6 +109,29 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
         this.SysConfigResultObj = response
     });
     await this.InitDms();
+  }
+
+  isNeedExtension: boolean = false;
+  async CheckApvResultExp() {
+    //get bis date
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
+    let CrdApvResultExpDt: Date = null;
+    await this.http.post<AppObj>(URLConstant.GetAppById, {Id : this.AppId}).toPromise().then(
+      (response) => {
+        CrdApvResultExpDt = response.CrdApvResultExpDt;
+      }
+    );
+    if (CrdApvResultExpDt != null && CrdApvResultExpDt != undefined) {
+      if (businessDt > new Date(CrdApvResultExpDt)) {
+        this.isNeedExtension = true;
+        this.toastrSvc.error(null, "Need Extension", {
+          disableTimeOut: true,
+          tapToDismiss: false,
+          closeButton: true
+        });
+      }
+    }
   }
 
   POEntryHandler(idx) {
@@ -140,6 +167,10 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
 
   async Save() {
     var isPOResolved = true;
+    if(this.isNeedExtension){
+      this.toastr.typeErrorCustom("Need Extension");
+      return;
+    }
     for (const item of this.POList) {
       if (!item["PurchaseOrderNo"] || item["PurchaseOrderNo"] === "") {
         isPOResolved = false;

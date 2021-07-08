@@ -1,38 +1,41 @@
 <div class="row text-left">
-  <div class="col-md-12">
-      <div class="card">
-          <div class="card-header header-title" style="margin-bottom: 10px">
-              <div class="row">
-                  <div class="col-md-8">
-                      <h4 class="card-title" id="horz-layout-colored-controls" translate>
-                          Change MOU Approval - Factoring
-                      </h4>
-                  </div>
-              </div>
-          </div>
-          <div class="card-body">
-              <div class="px-3">
-                  <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)">
-                  </lib-ucviewgeneric>
-                  <mat-tab-group>
-                      <mat-tab label="MOU Detail">
-                          <ng-template matTabContent>
-                              <app-change-mou-detail [ChangeMouTrxId]="changeMouTrxId"  [MouCustId]="MouCustId" [MouType]="MouType"></app-change-mou-detail>
-                          </ng-template>
-                      </mat-tab>
-                      <mat-tab label="Collateral">
-                          <ng-template matTabContent>
-                              <app-change-mou-addcoll [ChangeMouTrxId]="ChangeMouTrxId"></app-change-mou-addcoll>
-                          </ng-template>
-                      </mat-tab>
-                  </mat-tab-group>
-                  <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady">
-                  </lib-ucapprovalgeneralinfo>
-
-                  <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"
-                      (onCancel)="onCancelClick()"></lib-ucapprovalR3>
-              </div>
-          </div>
-      </div>
-  </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header header-title" style="margin-bottom: 10px">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h4 class="card-title" id="horz-layout-colored-controls" translate>
+                            Change MOU Approval - {{pageTitle}}
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)">
+                </lib-ucviewgeneric>
+                <div class="px-3">
+                    <mat-tab-group>
+                        <mat-tab label="MOU Detail">
+                            <ng-template matTabContent>
+                                <app-change-mou-detail [ChangeMouTrxId]="changeMouTrxId" [MouCustId]="MouCustId"
+                                    [MouType]="MouType"></app-change-mou-detail>
+                            </ng-template>
+                        </mat-tab>
+                        <mat-tab label="Collateral" *ngIf="TrxType != TrxTypeReqExp">
+                            <ng-template matTabContent>
+                                <app-change-mou-addcoll [ChangeMouTrxId]="changeMouTrxId"></app-change-mou-addcoll>
+                            </ng-template>
+                        </mat-tab>
+                    </mat-tab-group>
+                    <p>
+                        &nbsp; <span style="display: block"> <br /> </span> &nbsp;
+                      </p>
+                    <lib-ucapprovalgeneralinfo [InputObj]="UcInputApprovalGeneralInfoObj" *ngIf="IsReady">
+                    </lib-ucapprovalgeneralinfo>
+                    <lib-ucapprovalR3 [InputObj]="InputApvObj" *ngIf="IsReady" (result)="onApprovalSubmited($event)"
+                        (onCancel)="onCancelClick()"></lib-ucapprovalR3>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -31,6 +31,13 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
   UcInputApprovalGeneralInfoObj: UcInputApprovalGeneralInfoObj;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
   IsReady: boolean = false;
+
+  pageTitle: string;
+  ChangeMouCustId: number;
+  MouCustId: number;
+  MouType: string;
+  TrxType: string;
+  TrxTypeReqExp:string = CommonConstant.CHANGE_MOU_TRX_TYPE_REQ_EXP;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -44,13 +51,18 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
         this.instanceId = params["InstanceId"];
         this.ApvReqId = params["ApvReqId"];
         this.TrxNo = params["TrxNo"];
+        this.pageTitle = params["PageTitle"];
+        this.ChangeMouCustId = params["ChangeMouCustId"];
+        this.MouCustId = params["MouCustId"];
+        this.MouType = params["MouType"];
+        this.TrxType = params["TrxType"];
       }
     });
   }
 
   ngOnInit() {
 
-    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewMouHeaderFactoring.json";
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewChangeMouHeader.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -58,6 +70,7 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
         environment: environment.losR3Web
       },
     ];
+    this.viewGenericObj.whereValue = [this.ChangeMouCustId]
 
     var ApvHoldObj = new ApprovalObj();
     ApvHoldObj.TaskId = this.taskId; 
