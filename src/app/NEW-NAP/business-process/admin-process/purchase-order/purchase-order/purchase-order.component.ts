@@ -17,6 +17,8 @@ import { ClaimTaskService } from 'app/shared/claimTask.service';
 import { AppObj } from 'app/shared/model/App/App.Model';
 import { ToastrService } from 'ngx-toastr';
 import { MouCustObj } from 'app/shared/model/MouCustObj.Model';
+import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
+import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 
 @Component({
   selector: 'app-purchase-order',
@@ -156,7 +158,44 @@ export class PurchaseOrderComponent implements OnInit {
     return flag;
   }
 
-  SaveForm() {
+  SetTcForm(): ListAppTCObj{    
+    let businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
+    let listAppTCObj: ListAppTCObj = new ListAppTCObj();
+    listAppTCObj.AppTCObj = new Array();
+    for (var i = 0; i < this.tcForm.value.TCList["length"]; i++) {
+      const tempAppTc = this.tcForm.getRawValue().TCList[i];
+      let appTC = new AppTCObj();
+      appTC.AppId = tempAppTc.AppId;
+      appTC.AppTcId = tempAppTc.AppTcId;
+      appTC.TcCode = tempAppTc.TcCode;
+      appTC.TcName = tempAppTc.TcName;
+      appTC.PriorTo = tempAppTc.PriorTo;
+      appTC.IsChecked = tempAppTc.IsChecked;
+      appTC.ExpiredDt = tempAppTc.ExpiredDt;
+      appTC.IsMandatory = tempAppTc.IsMandatory;
+      appTC.PromisedDt = tempAppTc.PromisedDt;
+      appTC.CheckedDt = tempAppTc.CheckedDt;
+      appTC.IsWaived = tempAppTc.IsWaived;
+      appTC.Notes = tempAppTc.Notes;
+      appTC.IsAdditional = tempAppTc.IsAdditional;
+      appTC.RowVersion = tempAppTc.RowVersion;
+
+      var prmsDt = new Date(appTC.PromisedDt);
+      var prmsDtForm = tempAppTc.PromisedDt;
+      if (appTC.IsChecked == false) {
+        if (prmsDtForm != null) {
+          if (prmsDt < businessDt) {
+            this.toastr.warningMessage("Promise Date for " + appTC.TcName + " can't be lower than Business Date");
+            return;
+          }
+        }
+      }
+      listAppTCObj.AppTCObj.push(appTC);
+    }
+
+    return listAppTCObj;
+  }
+  async SaveForm() {
     var IsSave = false;
     if (this.AppAssetList.length != 0) {
       for (let i = 0; i < this.AppAssetList.length; i++) {
@@ -176,7 +215,15 @@ export class PurchaseOrderComponent implements OnInit {
       this.toastr.typeErrorCustom("Please submit purchase order first!");
     }
 
+    let listAppTCObj: ListAppTCObj = this.SetTcForm();
     if (IsSave) {
+      await this.http.post(URLConstant.EditAppTc, {ListAppTcObj: listAppTCObj.AppTCObj}).toPromise().then(
+        (response) => {
+          // this.toastr.successMessage(response["Message"]);
+          if(response["StatusCode"] != 200){
+            throw this.toastr.errorMessage(response["Message"]);
+          }
+        });
       var workflowModel: WorkflowApiObj = new WorkflowApiObj();
       workflowModel.TaskListId = this.TaskListId;
       workflowModel.ListValue = { "AgrmntId": this.AgrmntId.toString() };
