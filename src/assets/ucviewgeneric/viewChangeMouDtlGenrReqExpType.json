@@ -43,7 +43,7 @@
           }
         ],
         "querystring": {
-          "name": "viewChangeMouDetailGeneral"
+          "name": "viewChangeMouDetailGeneralReqExp"
         }
       }
     ]

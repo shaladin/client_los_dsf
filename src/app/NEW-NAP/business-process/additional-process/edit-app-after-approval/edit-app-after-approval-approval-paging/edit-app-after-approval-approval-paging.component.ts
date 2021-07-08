@@ -11,6 +11,7 @@ import { URLConstant } from 'app/shared/constant/URLConstant';
 import { ApprovalObj } from 'app/shared/model/Approval/ApprovalObj.Model';
 import { CriteriaObj } from 'app/shared/model/CriteriaObj.model';
 import { CurrentUserContext } from 'app/shared/model/CurrentUserContext.model';
+import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { UcPagingObj } from 'app/shared/model/UcPagingObj.Model';
 import { environment } from 'environments/environment';
 import { CookieService } from 'ngx-cookie';
@@ -27,6 +28,7 @@ export class EditAppAfterApprovalApprovalPagingComponent implements OnInit {
   arrCrit: Array<CriteriaObj>;
   UserAccess: CurrentUserContext;
   BizTemplateCode: string;
+  CustNoObj: GenericObj = new GenericObj();
 
   constructor(private toastr: NGXToastrService,
               private httpClient: HttpClient,
@@ -108,6 +110,22 @@ export class EditAppAfterApprovalApprovalPagingComponent implements OnInit {
           }
         )
       }
+    }
+    else if (ev.Key == "agreement") {
+        AdInsHelper.OpenAgrmntViewByAgrmntId(ev.RowObj.AgrmntId);
+    }
+    else if (ev.Key == "customer") {
+      this.CustNoObj.CustNo = ev.RowObj.CustNo;
+      this.httpClient.post(URLConstant.GetCustByCustNo, this.CustNoObj).subscribe(
+        response => {
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
+        }
+      );
     }
     else {
       this.toastr.warningMessage(String.Format(ExceptionConstant.ERROR_NO_CALLBACK_SETTING, ev.Key));

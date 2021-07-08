@@ -131,6 +131,7 @@ export class DocChecklistDetailComponent implements OnInit {
       this.appTC.TcName = this.MainInfoForm.value.TCList[i].TcName;
       this.appTC.PriorTo = this.MainInfoForm.value.TCList[i].PriorTo;
       this.appTC.IsChecked = this.MainInfoForm.getRawValue().TCList[i].IsChecked;
+      this.appTC.IsWaived = this.MainInfoForm.getRawValue().TCList[i].IsWaived;
       this.appTC.ExpiredDt = this.MainInfoForm.getRawValue().TCList[i].ExpiredDt;
       this.appTC.IsMandatory = this.MainInfoForm.value.TCList[i].IsMandatory;
       this.appTC.PromisedDt = this.MainInfoForm.getRawValue().TCList[i].PromisedDt;

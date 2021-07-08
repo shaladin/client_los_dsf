@@ -30,12 +30,6 @@ export class EditAppAfterApprovalPagingComponent implements OnInit {
     this.inputPagingObj = new UcPagingObj();
     this.inputPagingObj._url = "./assets/ucpaging/searchEditAppAfterApproval.json";
     this.inputPagingObj.pagingJson = "./assets/ucpaging/searchEditAppAfterApproval.json";
-    this.inputPagingObj.ddlEnvironments = [
-      {
-        name: "A.ORI_OFFICE_CODE",
-        environment: environment.FoundationR3Url
-      }
-    ];
     var arrAddCrit = new Array();
     var addCrit = new CriteriaObj();
     addCrit.DataType = "text";

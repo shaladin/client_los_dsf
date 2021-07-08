@@ -48,7 +48,7 @@
       "label": "Status",
       "items": [],
       "itemsUrl": [],
-      "criteriaPropName": "StatusGrpCode",
+      "criteriaPropName": "Code",
       "criteriaPropValue": "EDIT_APP_AFT_APV_TRX_STAT"
     }
   ],

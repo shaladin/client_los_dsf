@@ -118,11 +118,11 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     }
 
     //bind data dropdown
-    this.http
+    await this.http
       .post(URLConstant.GetRefMasterListKeyValueActiveByCode, {
         RefMasterTypeCode: CommonConstant.CHANGE_MOU_TYPE,
       })
-      .subscribe((response) => {
+      .toPromise().then((response) => {
         this.ChangeMouTypeList = response[CommonConstant.ReturnObj];
         if (this.pageType != "edit") {
           this.MOUMainInfoForm.patchValue({
@@ -134,7 +134,57 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     if (this.pageType == "edit" || this.pageType == "return") {
       var mouCust = new GenericObj();
       mouCust.Id = this.mouCustId;
-      this.http
+
+      var obj = { Id: this.mouCustId }
+      await this.http.post(URLConstant.GetChangeMouByMouCustIdStatusNew, obj).toPromise().then(
+        (response) => {
+          console.log(response)
+          //Jika ada data dengan status NEW
+          if (response["ChangeMouTrxId"] != 0) {
+            this.tempChangeMouCustId = response["ChangeMouCustId"];
+            this.tempChangeMouTrxId = response["ChangeMouTrxId"];
+
+            response["EndDt"] = datePipe.transform(
+              response["EndDt"],
+              "yyyy-MM-dd"
+            );
+            if (response["IsRevolving"] == true) {
+              response["IsRevolving"] = "Yes";
+            } else {
+              response["IsRevolving"] = "No";
+            }
+
+            if (
+              response["MrRevolvingTypeCode"] == null ||
+              response["MrRevolvingTypeCode"] == ""
+            ) {
+              response["MrRevolvingTypeCode"] = "-";
+            }
+
+            if (
+              response["PlafondType"] == null ||
+              response["PlafondType"] == ""
+            ) {
+              response["PlafondType"] = "-";
+            }
+
+            this.MOUMainInfoForm.patchValue({
+              ...response,
+            });
+            this.MOUMainInfoForm.controls.MrChangeMouTypeCode.disable();
+
+            this.tempNewTrx = false;
+
+            this.responseChangeMouObj = response;
+            this.CheckMouChangeType(this.responseChangeMouObj.TrxType);
+            this.GetRefmasterData();
+          }
+        }
+      );
+
+      if(this.tempNewTrx == true)
+      {
+        this.http
         .post(URLConstant.GetLatestChangeMouCustVersionById, mouCust)
         .subscribe((response) => {
           console.log(response);
@@ -163,6 +213,13 @@ export class ChangeMouRequestDetailComponent implements OnInit {
                   response["MrRevolvingTypeCode"] = "-";
                 }
 
+                if (
+                  response["PlafondType"] == null ||
+                  response["PlafondType"] == ""
+                ) {
+                  response["PlafondType"] = "-";
+                }
+
                 this.MOUMainInfoForm.patchValue({
                   ...response,
                 });
@@ -180,6 +237,8 @@ export class ChangeMouRequestDetailComponent implements OnInit {
                     this.ChangeMouTypeList[0].Key
                   );
                 }
+
+                this.GetRefmasterData();
               });
           } else {
             response["StartDt"] = datePipe.transform(
@@ -204,12 +263,17 @@ export class ChangeMouRequestDetailComponent implements OnInit {
               response["MrRevolvingTypeCode"] = "-";
             }
 
+            if (
+              response["PlafondType"] == null ||
+              response["PlafondType"] == ""
+            ) {
+              response["PlafondType"] = "-";
+            }
+
             this.MOUMainInfoForm.patchValue({
               ...response,
             });
-            this.GetRefmasterData();
             this.ChnMouVersion = response["Version"] + 1;
-            console.log(response);
 
             if (response["ChangeMouStat"] == CommonConstant.ChangeMouNew || response["ChangeMouStat"] == CommonConstant.ChangeMouReturn) {
               this.MOUMainInfoForm.controls.MrChangeMouTypeCode.disable();
@@ -220,7 +284,10 @@ export class ChangeMouRequestDetailComponent implements OnInit {
           this.CheckMouChangeType(this.responseChangeMouObj.MrChangeMouTypeCode);
           this.GetRefmasterData();
         });
-    } else {
+      }
+    } 
+    else 
+    {
       this.MOUMainInfoForm.patchValue({
         MrChangeMouTypeCode: this.mouType,
       });
@@ -256,13 +323,20 @@ export class ChangeMouRequestDetailComponent implements OnInit {
           this.revolvingName = response["Descr"];
       });
     }
-    this.http
-    .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
-      RefMasterTypeCode: CommonConstant.RefMasterTypeCodePlafonType, MasterCode: this.MOUMainInfoForm.controls.PlafondType.value
-    })
-    .subscribe((response) => {
-      this.plafondName = response["Descr"];
-    });
+
+    if(this.MOUMainInfoForm.controls.PlafondType.value === "-"){
+      this.plafondName = "-";
+    }
+    else{
+      this.http
+      .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
+        RefMasterTypeCode: CommonConstant.RefMasterTypeCodePlafonType, MasterCode: this.MOUMainInfoForm.controls.PlafondType.value
+      })
+      .subscribe((response) => {
+        this.plafondName = response["Descr"];
+      });
+    }
+    
 
     this.http
     .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
@@ -324,19 +398,6 @@ export class ChangeMouRequestDetailComponent implements OnInit {
       ] = this.MOUMainInfoForm.controls.MrChangeMouTypeCode.value;
       mouCustFormData["Version"] = this.ChnMouVersion;
       mouCustFormData["RequestDate"] = this.businessDt;
-
-      var obj = { Id: this.mouCustId }
-      await this.http.post(URLConstant.GetChangeMouByMouCustIdStatusNew, obj).toPromise().then(
-        (response) => {
-          console.log(response)
-          //Jika ada data dengan status NEW
-          if (response["ChangeMouTrxId"] != 0) {
-            this.tempChangeMouCustId = response["ChangeMouCustId"];
-            this.tempChangeMouTrxId = response["ChangeMouTrxId"];
-            this.tempNewTrx = false;
-          }
-        }
-      );
 
       if (this.tempNewTrx == true) {
         this.httpClient

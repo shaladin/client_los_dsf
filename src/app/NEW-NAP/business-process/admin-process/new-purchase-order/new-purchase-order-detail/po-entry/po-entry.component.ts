@@ -14,6 +14,7 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { GenericObj } from 'app/shared/model/Generic/GenericObj.Model';
 import { NapAppModel } from 'app/shared/model/NapApp.Model';
+import { NGXToastrService } from 'app/components/extra/toastr/toastr.service';
 
 @Component({
   selector: 'app-po-entry',
@@ -39,7 +40,7 @@ export class PoEntryComponent implements OnInit {
 
   constructor(
     private httpClient: HttpClient,
-    private fb: FormBuilder,
+    private fb: FormBuilder, private toastr: NGXToastrService,
     public activeModal: NgbActiveModal, private cookieService: CookieService
   ) {
     this.AppLoanPurposeList = new Array<AppLoanPurposeObj>();
@@ -202,7 +203,17 @@ export class PoEntryComponent implements OnInit {
     );
   }
 
+  checkValidExpDt() {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let bzDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
+    let tempExpDt = new Date(this.ExpirationDate);
+    if (bzDt.getTime() > tempExpDt.getTime()) {
+      throw this.toastr.typeErrorCustom("Need Extension");
+    }
+  }
+
   Save() {
+    this.checkValidExpDt();
     var formValue = this.PODetailForm.value;
     var requestPurchaseOrderH = new PurchaseOrderHObj();
     var requestListPurchaseOrderD = new Array<PurchaseOrderDObj>();

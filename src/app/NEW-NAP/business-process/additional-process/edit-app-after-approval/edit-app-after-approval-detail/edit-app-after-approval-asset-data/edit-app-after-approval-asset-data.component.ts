@@ -65,7 +65,7 @@ export class EditAppAfterApprovalAssetDataComponent implements OnInit {
 
   CustType: string = "";
   IdTypeObj: Array<KeyValueObj>;
-  refMasterObj : RefMasterObj;
+  refMasterObj : RefMasterObj = new RefMasterObj();
   OwnerRelationObj: Array<KeyValueObj>;
   AppCustAddrObj: Array<AppCustAddrObj>;
   AddrObj: Array<AppCustAddrObj>;

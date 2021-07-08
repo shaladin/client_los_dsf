@@ -1,0 +1,118 @@
+{
+  "title": "",
+  "subsection": [
+    {
+      "subSectionId": "CustMainDetailHeaderId",
+      "subSectionTitle": "Mou Detail",
+      "mainInfoPath": "/Generic/GetDataViewBySQL",
+      "mainInfo": [
+        {
+          "type": "text",
+          "label": "Currency",
+          "property": "currency"
+        },
+        {
+          "type": "text",
+          "label": "Revolving",
+          "property": "IsRevolving"
+        },
+        {
+          "type": "text",
+          "label": "Revolving Type",
+          "property": "RevolvingType"
+        },
+        {
+          "type": "text",
+          "label": "WoP",
+          "property": "wop"
+        },
+        {
+          "type": "text",
+          "label": "Term Of Payment (in Days)",
+          "property": "topDays"
+        },
+        {
+          "type": "text",
+          "label": "Term Of Payment Interest Rate Percent (%)",
+          "property": "topInterestRatePrcnt"
+        },
+        {
+          "type": "text",
+          "label": "Payment Frequency",
+          "property": "payFreq"
+        },
+        {
+          "type": "text",
+          "label": "Interest Rate (%)",
+          "property": "interestRatePrcnt"
+        },
+        {
+          "type": "text",
+          "label": "Extend Rate Percent (%)",
+          "property": "extendRatePrcnt"
+        },
+        {
+          "type": "text",
+          "label": "Maximum Months For Extend",
+          "property": "maximumMonthForExtend"
+        },
+        {
+          "type": "text",
+          "label": "Maximum Extend Times",
+          "property": "maximumExtendTimes"
+        },
+        {
+          "type": "text",
+          "label": "Principal Paid For Extend (%)",
+          "property": "principalPaidInExtendPrcntgChange"
+        },
+        {
+          "type": "text",
+          "label": "Spare Day To Pay",
+          "property": "spareDayToPay"
+        },
+        {
+          "type": "text",
+          "label": "Asset Condition",
+          "property": "assetCondition"
+        },
+        {
+          "type" : "callback",
+          "label": "Link Manufacturer",
+          "property" : "manufacturerCode",
+          "key" : "manufacturer"
+        },
+        {
+          "type": "text",
+          "label": "Manufacturer",
+          "property": "manufacturerCustNo"
+        },
+        {
+          "type" : "callback",
+          "label": "Link Supplier Grading",
+          "property" : "dealerCode",
+          "key" : "dealer"
+        },
+        {
+          "type": "text",
+          "label": "Customer",
+          "property": "dealerCustNo"
+        },
+        
+        {
+          "type": "text",
+          "label": "LC Rate (%)",
+          "property": "lcRate"
+        },
+        {
+          "type": "text",
+          "label": "Notes",
+          "property": "notes"
+        }
+      ],
+      "querystring": {
+        "name": "viewChangeMouDetailFinancingReqExp"
+      }
+    }
+  ]
+}

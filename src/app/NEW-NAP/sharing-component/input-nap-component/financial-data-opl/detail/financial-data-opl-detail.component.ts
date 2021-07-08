@@ -74,6 +74,10 @@ export class FinancialDataOplEditComponent implements OnInit {
     await this.getAssetFinDataRule();
     await this.getAssetFinData();
     //this.FinancialDataForm.controls["SecurityDepositAmt"].disable();
+    this.FinancialDataForm.patchValue({
+      ResidualValueAmt: (this.FinancialDataForm.controls.TotalAssetPrice.value + this.FinancialDataForm.controls.DiscAmt.value) * this.FinancialDataForm.controls.ResidualValuePrcnt.value / 100
+    });
+    this.allCalculate();
   }
 
   AppFinDataObj: AppAssetFinancialDataObj;

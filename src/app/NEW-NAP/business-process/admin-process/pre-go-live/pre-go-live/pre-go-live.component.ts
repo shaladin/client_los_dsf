@@ -125,30 +125,7 @@ export class PreGoLiveComponent implements OnInit {
         this.IsApvReady = true;
       });
     this.claimTaskService.ClaimTask(this.TaskListId);
-    if (this.BizTemplateCode == CommonConstant.CFNA) {
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLiveCFNA.json";
-      this.viewGenericObj.viewEnvironment = environment.losUrl;
-      this.viewGenericObj.ddlEnvironments = [
-        {
-          name: "AppNo",
-          environment: environment.losR3Web
-        },
-        {
-          name: "LeadNo",
-          environment: environment.losR3Web
-        },
-        {
-          name: "AgrmntNo",
-          environment: environment.losR3Web
-        },
-        {
-          name: "MouCustNo",
-          environment: environment.losR3Web
-        },
-      ];
-    } else {
-      this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
-    }
+    this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoPreGoLive.json";
     
     var agrmntObj = {
       Id: this.AgrmntId
@@ -276,6 +253,7 @@ export class PreGoLiveComponent implements OnInit {
       this.appTC.TcName = this.MainInfoForm.value.TCList[i].TcName;
       this.appTC.PriorTo = this.MainInfoForm.value.TCList[i].PriorTo;
       this.appTC.IsChecked = this.MainInfoForm.getRawValue().TCList[i].IsChecked;
+      this.appTC.IsWaived = this.MainInfoForm.getRawValue().TCList[i].IsWaived;
       this.appTC.ExpiredDt = this.MainInfoForm.getRawValue().TCList[i].ExpiredDt;
       this.appTC.IsMandatory = this.MainInfoForm.value.TCList[i].IsMandatory;
       this.appTC.PromisedDt = this.MainInfoForm.getRawValue().TCList[i].PromisedDt;
@@ -320,6 +298,7 @@ export class PreGoLiveComponent implements OnInit {
         this.appTC.TcName = this.MainInfoForm.value.TCList[i].TcName;
         this.appTC.PriorTo = this.MainInfoForm.value.TCList[i].PriorTo;
         this.appTC.IsChecked = this.MainInfoForm.getRawValue().TCList[i].IsChecked;
+        this.appTC.IsWaived = this.MainInfoForm.getRawValue().TCList[i].IsWaived;
         this.appTC.ExpiredDt = this.MainInfoForm.getRawValue().TCList[i].ExpiredDt;
         this.appTC.IsMandatory = this.MainInfoForm.value.TCList[i].IsMandatory;
         this.appTC.PromisedDt = this.MainInfoForm.getRawValue().TCList[i].PromisedDt;
