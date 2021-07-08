@@ -325,6 +325,7 @@ export const ROUTES: RouteInfo[] = [
           { Path: NavigationConstantDsf.REPORT_FACT_COLLATERAL, Title: 'Collateral', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
           { Path: NavigationConstantDsf.REPORT_FACT_REMINDER1, Title: 'Reminder Outstanding 1 Day Later', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
           { Path: NavigationConstantDsf.REPORT_FACT_REMINDER5, Title: 'Reminder Outstanding 5 Day Later', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+          { Path: NavigationConstantDsf.REPORT_FACT_NEW_ALLOCATION_CEILING, Title: 'New Allocation Ceiling', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
         ], Params: [] 
       }
     ], Params: []

@@ -4,6 +4,7 @@ import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
 import { AfternoonmonitoringComponent } from './report/factoring/afternoonmonitoring/afternoonmonitoring.component';
 import { CollateralComponent } from './report/factoring/collateral/collateral.component';
 import { MorningmonitoringComponent } from './report/factoring/morningmonitoring/morningmonitoring.component';
+import { NewallocationceilingComponent } from './report/factoring/newallocationceiling/newallocationceiling.component';
 import { Reminder1Component } from './report/factoring/reminder1/reminder1.component';
 import { Reminder5Component } from './report/factoring/reminder5/reminder5.component';
 
@@ -64,6 +65,18 @@ const routes: Routes = [
         component: Reminder5Component,
         data: {
           title: "Report Fact Reminder5"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_FACT_NEW_ALLOCATION_CEILING,
+        component: NewallocationceilingComponent,
+        data: {
+          title: "Report Fact New Allocation Ceiling"
         }
       }
     ]

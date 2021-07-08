@@ -1,0 +1,47 @@
+{ 
+    "title" : "REPORT FACT NEW ALLOCATION CEILING ",
+    "reportName": "Report of New Allocation Ceiling",
+    "reportTemplateCode": "FACT_NEWALLOCATIONCEILING",
+    "component": [ 
+        {
+            "type" : "dropdown",
+            "label" : "Client Name",
+            "name" : "CrtClientName",
+            "datatype" : "text",
+            "isSelectOne" : true,
+            "items" : [
+                {
+                "key": "KTB",
+                "value": "PT KRAMA YUDHA TIGA BERLIAN"
+            },
+            {
+                "key": "MMKSI",
+                "value": "PT MITSUBISHI MOTOR"
+            }
+            ],
+            "isFromURL" : false,
+            "url" : "", 
+            "path": "", 
+            "criteriaPropName": "", 
+            "criteriaPropValue": "", 
+            "itemsUrl" : [],
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Date As Of",
+            "name" : "LeadDtGte",
+            "value" : "BD",
+            "restriction" : "gte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        }  
+    ],
+    "exportTypeList": [
+        {
+            "key": 0,
+            "value": "PDF"
+        }
+    ]
+}
+

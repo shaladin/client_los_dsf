@@ -8,9 +8,10 @@ import { AfternoonmonitoringComponent } from './report/factoring/afternoonmonito
 import { CollateralComponent } from './report/factoring/collateral/collateral.component';
 import { Reminder1Component } from './report/factoring/reminder1/reminder1.component';
 import { Reminder5Component } from './report/factoring/reminder5/reminder5.component';
+import { NewallocationceilingComponent } from './report/factoring/newallocationceiling/newallocationceiling.component';
 
 @NgModule({
-  declarations: [MorningmonitoringComponent, AfternoonmonitoringComponent, CollateralComponent, Reminder1Component, Reminder5Component],
+  declarations: [MorningmonitoringComponent, AfternoonmonitoringComponent, CollateralComponent, Reminder1Component, Reminder5Component, NewallocationceilingComponent],
   imports: [
     CommonModule,
     DsfRoutingModule,
