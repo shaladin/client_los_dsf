@@ -1,17 +1,18 @@
 {
-  "title": "Edit Application After Approval",
+  "title": "Edit Application After Approval Request",
   "exportExcel": false,
   "component": [
     {
       "type": "dropdown",
       "datatype": "text",
-      "name": "RO.OFFICE_CODE",
+      "name": "APP.ORI_OFFICE_CODE",
       "id": "OfficeNameId",
       "value": "",
       "placeholder": "Placeholder",
       "isFromURL": true,
       "ddlType": "all",
       "url": "",
+      "environment": "FOU",
       "path": "/RefOffice/GetListKvpActiveRefOfficeForPaging",
       "label": "Office",
       "items": [],
