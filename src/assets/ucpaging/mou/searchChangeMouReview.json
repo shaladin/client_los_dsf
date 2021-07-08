@@ -270,6 +270,10 @@
                   {
                     "type": "WfTaskListId",
                     "property": "WfTaskListId"
+                  },
+                  {
+                    "type": "TrxType",
+                    "property": "TrxType"
                   }
                 ]
               },
@@ -309,6 +313,10 @@
                   {
                     "type": "WfTaskListId",
                     "property": "WfTaskListId"
+                  },
+                  {
+                    "type": "TrxType",
+                    "property": "TrxType"
                   }
                 ]
               },
@@ -348,6 +356,10 @@
                   {
                     "type": "WfTaskListId",
                     "property": "WfTaskListId"
+                  },
+                  {
+                    "type": "TrxType",
+                    "property": "TrxType"
                   }
                 ]
               },
@@ -387,6 +399,10 @@
                   {
                     "type": "WfTaskListId",
                     "property": "WfTaskListId"
+                  },
+                  {
+                    "type": "TrxType",
+                    "property": "TrxType"
                   }
                 ]
               },
@@ -426,6 +442,10 @@
                   {
                     "type": "WfTaskListId",
                     "property": "WfTaskListId"
+                  },
+                  {
+                    "type": "TrxType",
+                    "property": "TrxType"
                   }
                 ]
               },
@@ -465,6 +485,10 @@
                   {
                     "type": "WfTaskListId",
                     "property": "WfTaskListId"
+                  },
+                  {
+                    "type": "TrxType",
+                    "property": "TrxType"
                   }
                 ]
               },

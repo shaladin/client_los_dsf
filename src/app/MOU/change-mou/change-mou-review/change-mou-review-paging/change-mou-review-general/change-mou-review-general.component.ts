@@ -37,6 +37,7 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
   ScoreResult: number;
   InputObj: UcInputRFAObj;
   IsReady: boolean;
+  TrxType: string;
   private createComponent: UcapprovalcreateComponent;
   @ViewChild("ApprovalComponent") set content(
     content: UcapprovalcreateComponent
@@ -60,6 +61,7 @@ export class ChangeMouReviewGeneralComponent implements OnInit {
       this.MouCustId = params["MouCustId"];
       this.WfTaskListId = params["WfTaskListId"];
       this.TrxNo = params["TrxNo"];
+      this.TrxType = params["TrxType"];
     });
   }
 
