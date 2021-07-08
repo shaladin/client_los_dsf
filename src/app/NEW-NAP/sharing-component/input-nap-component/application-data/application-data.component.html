@@ -316,7 +316,6 @@
               [identifier]="'Address'" [UCAddrForm]="NapAppModelForm"></lib-ucaddress>
           </div>
 
-          <div *ngIf="BizTemplateCode != 'OPL'">
             <lib-ucSubsection [id]="'restDataId'" [title]="'Restructuring Data'" [panel]="'restData'">
             </lib-ucSubsection>
             <div class="form-body" id="restData">
@@ -382,7 +381,7 @@
                 </div>
               </div>
             </div>
-          </div>
+
 
           <div class="form-actions right">
             <button *ngIf="showCancel" type="button" class="btn btn-raised btn-warning mr-1" (click)="Cancel()"
