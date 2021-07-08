@@ -116,14 +116,16 @@
         "property": "EditAppAftApvTrxNo"
       },
       {
-        "type": "text",
+        "type": "callback",
         "position": "center",
-        "property": "AgrmntNo"
+        "property": "AgrmntNo",
+        "key": "agreement"
       },
       {
-        "type": "text",
+        "type": "callback",
         "position": "center",
-        "property": "CustNo"
+        "property": "CustNo",
+        "key": "customer"
       },
       {
         "type": "text",

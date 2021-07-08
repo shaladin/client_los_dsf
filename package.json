@@ -1,6 +1,6 @@
 {
   "name": "apex",
-  "version": "1.0.0-980",
+  "version": "1.0.0-981",
   "license": "",
   "scripts": {
     "ng": "ng",
@@ -70,10 +70,10 @@
     "@swimlane/ngx-charts": "9.0.0",
     "@swimlane/ngx-datatable": "13.1.0",
     "@types/chartist": "0.9.43",
-    "@types/crypto-js": "^4.0.1",
+    "@types/crypto-js": "^4.0.2",
     "@types/d3-shape": "1.2.4",
     "@types/dragula": "2.1.33",
-    "@types/jquery": "^3.5.5",
+    "@types/jquery": "^3.5.6",
     "angular-archwizard": "^5.0.1",
     "angular-calendar": "0.26.3",
     "angular-file-uploader": "^5.0.2",

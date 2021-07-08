@@ -42,10 +42,10 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
   add() {
     this.inputMode = "ADD";
     this.isDetail = true;
-    this.appCustId = null; 
+    this.appCustId = null;
   }
 
-  CekRelationshipCode(){
+  CekRelationshipCode() {
     let flag: boolean = false;
 
     for (let index = 0; index < this.listMgmntShrholder.length; index++) {
@@ -59,47 +59,47 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
   }
 
   async saveAndContinue() {
-    await this.http.post(URLConstant.CheckAppCustShareholderMandatoryData, {AppId: this.appId}).toPromise().then(
+    await this.http.post(URLConstant.CheckAppCustShareholderMandatoryData, { AppId: this.appId }).toPromise().then(
       (response) => {
-        if(response["StatusCode"] != 200){          
+        if (response["StatusCode"] != 200) {
           this.toastr.warningMessage(response["Message"]);
           return;
         }
       }
     );
 
-    if(this.CekRelationshipCode()) return;
+    if (this.CekRelationshipCode()) return;
 
-    if(this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x=>x.IsOwner == true) == null){
+    if (this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x => x.IsOwner == true) == null) {
       this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_OWNER_DATA)
       return;
     }
-    if(this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x=>x.IsActive == true && x.IsSigner == true && x.MrCustTypeCode == CommonConstant.CustTypePersonal) == null){
+    if (this.listMgmntShrholder.length == 0 || this.listMgmntShrholder.find(x => x.IsActive == true && x.IsSigner == true && x.MrCustTypeCode == CommonConstant.CustTypePersonal) == null) {
       this.toastr.warningMessage(ExceptionConstant.MUST_INPUT_ACTIVE_SIGNER);
       return false;
     }
 
-    if(this.listMgmntShrholder.length > 0 && (this.listMgmntShrholder.find(x=>x.MrCustModelCode == null || x.MrCustModelCode == "") != null)){
-      this.toastr.warningMessage(ExceptionConstant.COMPLETE_SHAREHOLDER_COMPANY_MODEL)
-      return;
-    }
+    // if (this.listMgmntShrholder.length > 0 && (this.listMgmntShrholder.find(x => x.MrCustModelCode == null || x.MrCustModelCode == "") != null)) {
+    //   this.toastr.warningMessage(ExceptionConstant.COMPLETE_SHAREHOLDER_COMPANY_MODEL)
+    //   return;
+    // }
 
-    if(this.listMgmntShrholder.length > 0 && this.listMgmntShrholder.find(x=>x.MrCustRelationshipCode == null || x.MrCustRelationshipCode == "") != null){
+    if (this.listMgmntShrholder.length > 0 && this.listMgmntShrholder.find(x => x.MrCustRelationshipCode == null || x.MrCustRelationshipCode == "") != null) {
       this.toastr.warningMessage(ExceptionConstant.MUST_COMPLETE_SHAREHOLDER_DATA)
       return;
     }
 
     var totalSharePrcnt = 0;
 
-    for(let i = 0; i < this.listMgmntShrholder.length; i++){
+    for (let i = 0; i < this.listMgmntShrholder.length; i++) {
       totalSharePrcnt += this.listMgmntShrholder[i].SharePrcnt;
     }
 
-    if(totalSharePrcnt != 100){
+    if (totalSharePrcnt != 100) {
       this.toastr.warningMessage(ExceptionConstant.TOTAL_SHARE_MUST_100);
       return;
     }
-    
+
     this.outputTab.emit();
   }
 
@@ -110,7 +110,7 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
   event(ev) {
     if (ev.Key == "edit") {
       this.isDetail = true;
-      this.inputMode="EDIT";
+      this.inputMode = "EDIT";
       this.appCustId = ev.RowObj.AppCustId;
     }
 
@@ -131,7 +131,7 @@ export class MngmntShrhldrMainDataPagingComponent implements OnInit {
     this.custDataObj.AppId = this.appId;
     this.custDataObj.IsShareholder = true;
     this.http.post(URLConstant.GetListAppCustMainDataByAppId, this.custDataObj).subscribe(
-      (response : ResListCustMainDataObj) => {
+      (response: ResListCustMainDataObj) => {
         this.inputGridObj.resultData = {
           Data: ""
         }

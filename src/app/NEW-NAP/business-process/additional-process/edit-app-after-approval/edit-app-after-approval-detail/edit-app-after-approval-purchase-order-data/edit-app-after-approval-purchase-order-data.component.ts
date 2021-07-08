@@ -48,15 +48,14 @@ export class EditAppAfterApprovalPurchaseOrderDataComponent implements OnInit {
     }
 
     var selectedVendorBankAcc = this.PurchaseOrderHObj.VendorBankAccObjs.filter(x => x.VendorBankAccId == selectedVendorBankAccId)[0];
-
     this.PurchaseOrderHOutput = 
     {
-      PurchaseOrderHId: this.PurchaseOrderHObj.PurchaseOrderHId,
-      BankCode: selectedVendorBankAcc.BankCode,
-      BankBranch: selectedVendorBankAcc.BankBranch,
-      BankAccountNo: selectedVendorBankAcc.BankAccountNo,
-      BankAccountName: selectedVendorBankAcc.BankAccountName,
-      VendorBankAccId: selectedVendorBankAccId
+      PurchaseOrderHId: this.PurchaseOrderHObj.PurchaseOrderHId == null ? '' :this.PurchaseOrderHObj.PurchaseOrderHId,
+      BankCode: selectedVendorBankAcc.BankCode == null ? '' : selectedVendorBankAcc.BankCode,
+      BankBranch: selectedVendorBankAcc.BankBranch == null ? '' : selectedVendorBankAcc.BankBranch,
+      BankAccountNo: selectedVendorBankAcc.BankAccountNo == null ? '' : selectedVendorBankAcc.BankAccountNo,
+      BankAccountName: selectedVendorBankAcc.BankAccountName == null ? '' : selectedVendorBankAcc.BankAccountName,
+      VendorBankAccId: selectedVendorBankAccId == null ? '' : selectedVendorBankAccId
     };
   }
 
