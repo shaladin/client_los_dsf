@@ -146,11 +146,9 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
       refMasterCurrency
     );
 
-    var mouCustFctr = new MouCustFctrObj();
-    mouCustFctr.MouCustId = this.MouCustId;
     let getMouFctr = this.httpClient.post(
       URLConstant.GetMouCustFctrByMouCustId,
-      mouCustFctr
+      {Id: this.MouCustId}
     );
 
     let getChangeMouFctr = this.httpClient.post(
@@ -158,11 +156,9 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
       { Id: this.MouCustId }
     );
 
-    var mouListedFctr = new MouCustListedCustFctrObj();
-    mouListedFctr.MouCustId = this.MouCustId;
     let getListedCustFctr = this.httpClient.post(
       URLConstant.GetListMouCustListedCustFctrByMouCustId,
-      mouListedFctr
+      { Id: this.MouCustId }
     );
 
     this.bindUcLookup();
@@ -202,7 +198,7 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
         CurrCode: this.currencyList[0].Key,
       });
 
-      if (this.tempChangeMouCustFctr["Status"] == "Failed") {
+      if (this.tempChangeMouCustFctr["ChangeMouCustFctrId"] == 0) {
         this.isListedFctr = mouFctrData["IsListedCust"];
 
         if (mouFctrData["MouCustFctrId"] != 0) {
@@ -310,7 +306,6 @@ export class ChangeMouDetailFactoringComponent implements OnInit {
 
   Save(enjiForm) {
     var formData = this.MouDetailFactoringForm.getRawValue();
-    console.log(formData);
     formData.IsListedCust = false;
 
     if (this.IsSingleIns) {

@@ -918,10 +918,16 @@ export class InsuranceMultiAssetDataComponent implements OnInit {
             this.InsuranceDataForm.patchValue({
               CustAdminFeeAmt: 0,
               CustStampDutyFeeAmt: 0,
+              InscoAdminFeeAmt: 0,
+              InscoStampDutyFeeAmt: 0,
               TotalCustFeeAmt: 0,
+              TotalInscoFeeAmt: 0
             });
             this.stampdutyFeeLock = true;
             this.adminFeeLock = true;
+
+            this.InsuranceDataForm.controls.CustAdminFeeAmt.clearValidators();
+            this.InsuranceDataForm.controls.CustAdminFeeAmt.updateValueAndValidity();
             break;
           }
         }

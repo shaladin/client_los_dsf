@@ -47,7 +47,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
 
   revolvingName = "";
   plafondName = "";
-
+  mouTypeName = "";
   MOUMainInfoForm = this.fb.group({
     MouCustId: [0, [Validators.required]],
     MouCustNo: [""],
@@ -118,11 +118,11 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     }
 
     //bind data dropdown
-    this.http
+    await this.http
       .post(URLConstant.GetRefMasterListKeyValueActiveByCode, {
         RefMasterTypeCode: CommonConstant.CHANGE_MOU_TYPE,
       })
-      .subscribe((response) => {
+      .toPromise().then((response) => {
         this.ChangeMouTypeList = response[CommonConstant.ReturnObj];
         if (this.pageType != "edit") {
           this.MOUMainInfoForm.patchValue({
@@ -134,9 +134,60 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     if (this.pageType == "edit" || this.pageType == "return") {
       var mouCust = new GenericObj();
       mouCust.Id = this.mouCustId;
-      this.http
+
+      var obj = { Id: this.mouCustId }
+      await this.http.post(URLConstant.GetChangeMouByMouCustIdStatusNew, obj).toPromise().then(
+        (response) => {
+          console.log(response)
+          //Jika ada data dengan status NEW
+          if (response["ChangeMouTrxId"] != 0) {
+            this.tempChangeMouCustId = response["ChangeMouCustId"];
+            this.tempChangeMouTrxId = response["ChangeMouTrxId"];
+
+            response["EndDt"] = datePipe.transform(
+              response["EndDt"],
+              "yyyy-MM-dd"
+            );
+            if (response["IsRevolving"] == true) {
+              response["IsRevolving"] = "Yes";
+            } else {
+              response["IsRevolving"] = "No";
+            }
+
+            if (
+              response["MrRevolvingTypeCode"] == null ||
+              response["MrRevolvingTypeCode"] == ""
+            ) {
+              response["MrRevolvingTypeCode"] = "-";
+            }
+
+            if (
+              response["PlafondType"] == null ||
+              response["PlafondType"] == ""
+            ) {
+              response["PlafondType"] = "-";
+            }
+
+            this.MOUMainInfoForm.patchValue({
+              ...response,
+            });
+            this.MOUMainInfoForm.controls.MrChangeMouTypeCode.disable();
+
+            this.tempNewTrx = false;
+
+            this.responseChangeMouObj = response;
+            this.CheckMouChangeType(this.responseChangeMouObj.TrxType);
+            this.GetRefmasterData();
+          }
+        }
+      );
+
+      if(this.tempNewTrx == true)
+      {
+        this.http
         .post(URLConstant.GetLatestChangeMouCustVersionById, mouCust)
         .subscribe((response) => {
+          console.log(response);
           if (response["Status"] == "Failed") {
             this.httpClient
               .post(URLConstant.GetMouCustById, mouCust)
@@ -162,10 +213,17 @@ export class ChangeMouRequestDetailComponent implements OnInit {
                   response["MrRevolvingTypeCode"] = "-";
                 }
 
+                if (
+                  response["PlafondType"] == null ||
+                  response["PlafondType"] == ""
+                ) {
+                  response["PlafondType"] = "-";
+                }
+
                 this.MOUMainInfoForm.patchValue({
                   ...response,
                 });
-
+                this.GetRefmasterData();
                 var custObj = { CustNo: response["CustNo"] };
 
                 this.httpClient
@@ -179,6 +237,8 @@ export class ChangeMouRequestDetailComponent implements OnInit {
                     this.ChangeMouTypeList[0].Key
                   );
                 }
+
+                this.GetRefmasterData();
               });
           } else {
             response["StartDt"] = datePipe.transform(
@@ -203,11 +263,17 @@ export class ChangeMouRequestDetailComponent implements OnInit {
               response["MrRevolvingTypeCode"] = "-";
             }
 
+            if (
+              response["PlafondType"] == null ||
+              response["PlafondType"] == ""
+            ) {
+              response["PlafondType"] = "-";
+            }
+
             this.MOUMainInfoForm.patchValue({
               ...response,
             });
             this.ChnMouVersion = response["Version"] + 1;
-            console.log(response);
 
             if (response["ChangeMouStat"] == CommonConstant.ChangeMouNew || response["ChangeMouStat"] == CommonConstant.ChangeMouReturn) {
               this.MOUMainInfoForm.controls.MrChangeMouTypeCode.disable();
@@ -218,12 +284,14 @@ export class ChangeMouRequestDetailComponent implements OnInit {
           this.CheckMouChangeType(this.responseChangeMouObj.MrChangeMouTypeCode);
           this.GetRefmasterData();
         });
-    } else {
+      }
+    } 
+    else 
+    {
       this.MOUMainInfoForm.patchValue({
         MrChangeMouTypeCode: this.mouType,
       });
       this.CheckMouChangeType(this.mouType);
-      this.GetRefmasterData();
     }
 
     if(this.MOUMainInfoForm.controls.PlafondType.value == CommonConstant.MOU_CUST_PLAFOND_TYPE_BOCLLTR)
@@ -239,7 +307,44 @@ export class ChangeMouRequestDetailComponent implements OnInit {
     var wfClaimObj = new ClaimWorkflowObj();
     wfClaimObj.pWFTaskListID = this.WfTaskListId.toString();
     wfClaimObj.pUserID = currentUserContext[CommonConstant.USER_NAME];
-    this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe();
+     this.httpClient.post(URLConstant.ClaimTask, wfClaimObj).subscribe();
+  }
+  
+  GetRefmasterData(){
+    if(this.MOUMainInfoForm.controls.MrRevolvingTypeCode.value === "-"){
+      this.revolvingName = "-";
+    }
+    else{
+      this.http
+      .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
+        RefMasterTypeCode: CommonConstant.MOU_REVOLVING_TYPE, MasterCode: this.MOUMainInfoForm.controls.MrRevolvingTypeCode.value
+      })
+      .subscribe((response) => {
+          this.revolvingName = response["Descr"];
+      });
+    }
+
+    if(this.MOUMainInfoForm.controls.PlafondType.value === "-"){
+      this.plafondName = "-";
+    }
+    else{
+      this.http
+      .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
+        RefMasterTypeCode: CommonConstant.RefMasterTypeCodePlafonType, MasterCode: this.MOUMainInfoForm.controls.PlafondType.value
+      })
+      .subscribe((response) => {
+        this.plafondName = response["Descr"];
+      });
+    }
+    
+
+    this.http
+    .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
+      RefMasterTypeCode: CommonConstant.RefMasterTypeCodeMouType, MasterCode: this.MOUMainInfoForm.controls.MrMouTypeCode.value
+    })
+    .subscribe((response) => {
+      this.mouTypeName = response["Descr"];
+    });
   }
 
   MouChangeTypeEvent(event) {
@@ -251,7 +356,7 @@ export class ChangeMouRequestDetailComponent implements OnInit {
       this.MOUMainInfoForm.patchValue({
         ...this.responseChangeMouObj
       });
-
+      this.GetRefmasterData();
       this.MOUMainInfoForm.patchValue({
         MrChangeMouTypeCode: trxType,
         EndDt: formatDate(this.businessDt, 'yyyy-MM-dd', 'en-US')
@@ -293,19 +398,6 @@ export class ChangeMouRequestDetailComponent implements OnInit {
       ] = this.MOUMainInfoForm.controls.MrChangeMouTypeCode.value;
       mouCustFormData["Version"] = this.ChnMouVersion;
       mouCustFormData["RequestDate"] = this.businessDt;
-
-      var obj = { Id: this.mouCustId }
-      await this.http.post(URLConstant.GetChangeMouByMouCustIdStatusNew, obj).toPromise().then(
-        (response) => {
-          console.log(response)
-          //Jika ada data dengan status NEW
-          if (response["ChangeMouTrxId"] != 0) {
-            this.tempChangeMouCustId = response["ChangeMouCustId"];
-            this.tempChangeMouTrxId = response["ChangeMouTrxId"];
-            this.tempNewTrx = false;
-          }
-        }
-      );
 
       if (this.tempNewTrx == true) {
         this.httpClient
@@ -362,27 +454,5 @@ export class ChangeMouRequestDetailComponent implements OnInit {
           );
         });
     }
-  }
-
-  GetRefmasterData(){
-    if(this.MOUMainInfoForm.controls.MrRevolvingTypeCode.value === "-"){
-      this.revolvingName = "-";
-    }
-    else{
-      this.http
-      .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
-        RefMasterTypeCode: CommonConstant.MOU_REVOLVING_TYPE, MasterCode: this.MOUMainInfoForm.controls.MrRevolvingTypeCode.value
-      })
-      .subscribe((response) => {
-          this.revolvingName = response["Descr"];
-      });
-    }
-    this.http
-    .post(URLConstant.GetRefMasterByRefMasterTypeCodeAndMasterCode, {
-      RefMasterTypeCode: CommonConstant.RefMasterTypeCodePlafonType, MasterCode: this.MOUMainInfoForm.controls.PlafondType.value
-    })
-    .subscribe((response) => {
-      this.plafondName = response["Descr"];
-    });
   }
 }
