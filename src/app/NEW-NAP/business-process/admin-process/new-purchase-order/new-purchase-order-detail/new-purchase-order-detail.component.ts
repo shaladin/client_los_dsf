@@ -183,6 +183,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
         this.appTC.TcName = this.TcForm.value.TCList[i].TcName;
         this.appTC.PriorTo = this.TcForm.value.TCList[i].PriorTo;
         this.appTC.IsChecked = this.TcForm.getRawValue().TCList[i].IsChecked;
+        this.appTC.IsWaived = this.TcForm.getRawValue().TCList[i].IsWaived;
         this.appTC.ExpiredDt = this.TcForm.getRawValue().TCList[i].ExpiredDt;
         this.appTC.IsMandatory = this.TcForm.value.TCList[i].IsMandatory;
         this.appTC.PromisedDt = this.TcForm.getRawValue().TCList[i].PromisedDt;

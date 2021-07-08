@@ -72,6 +72,7 @@ export class InvoiceVerifDetailDFComponent implements OnInit {
             this.appTC.TcCode = this.InvoiceForm.value.TCList[i].TcCode;
             this.appTC.PriorTo = this.InvoiceForm.value.TCList[i].PriorTo;
             this.appTC.IsChecked = this.InvoiceForm.getRawValue().TCList[i].IsChecked;
+            this.appTC.IsWaived = this.InvoiceForm.getRawValue().TCList[i].IsWaived;
             this.appTC.ExpiredDt = this.InvoiceForm.getRawValue().TCList[i].ExpiredDt;
             this.appTC.IsMandatory = this.InvoiceForm.value.TCList[i].IsMandatory;
             this.appTC.PromisedDt = this.InvoiceForm.getRawValue().TCList[i].PromisedDt;
