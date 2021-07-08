@@ -615,7 +615,7 @@ export class NewLeadInputLeadDataComponent implements OnInit {
       this.toastr.warningMessage("Fill The Tenor First!");
       return;
     }
-    if (this.LeadDataForm.controls["InstallmentAmt"].value == 0) this.LeadDataForm.patchValue({ InstallmentAmt: minAmt });
+    if (this.LeadDataForm.controls["InstallmentAmt"].value == 0 || this.LeadDataForm.controls["InstallmentAmt"].value == null) this.LeadDataForm.patchValue({ InstallmentAmt: minAmt });
     this.InstAmt = this.LeadDataForm.controls["InstallmentAmt"].value;
 
     if (this.AssetPrice <= 0) {
