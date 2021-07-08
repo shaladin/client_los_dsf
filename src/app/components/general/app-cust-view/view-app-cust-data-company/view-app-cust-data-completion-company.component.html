@@ -86,8 +86,154 @@
 
     <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewAppCustCompanyContactPersonObj"></lib-ucviewgeneric>
 
-    <lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewFinDataObj"></lib-ucviewgeneric>
-    
+    <div class="px-3">
+        <div class="pull-right">
+            <button *ngIf="IsShowCustFinDataDetail" type="button" class="backButton" translate (click)="hideDetailCustFinData()"><i class="fa fa-arrow-left"></i> Back</button>
+        </div>
+        <lib-ucSubsection [id]="'MainInfo'" [title]="'Financial Data '+TitleCustFinDataSuffix" [panel]="'FinId'">
+        </lib-ucSubsection>
+        <form class="form form-horizontal" id="FinId">
+            
+            <div id="ListCustFinData" class="mb-3" *ngIf="!IsShowCustFinDataDetail"> 
+                <table class="table table-stripped table-bordered">
+                <thead>
+                    <tr class="table-header">
+                    <th class="text-center" translate>Date</th>
+                    <th class="text-center" translate>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of ListCustCoyFinData; let i = index">
+                    <td class="text-center">{{item.DateAsOf | date: 'dd-MMM-yyyy'}}</td>
+                    <td class="text-center"><a href="javascript:;" (click)="showDetailCustFinData(i)"><i class="ft-edit-2 font-medium-3 mr-2"></i></a></td>
+                    </tr>
+                    <tr *ngIf="ListCustCoyFinData?.length <= 0">
+                    <td class="text-center" colspan="2" translate>No Data Available</td>
+                    </tr>
+                </tbody>
+                </table>  
+            </div> 
+            <div class="form-body mb-3" *ngIf="IsShowCustFinDataDetail">
+                <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Gross Monthly Income Amount</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrossMonthlyIncomeAmt != 0">{{CustCoyFinData.GrossMonthlyIncomeAmt | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrossMonthlyIncomeAmt == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Gross Profit Amount</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrossProfitAmt != 0">{{CustCoyFinData.GrossProfitAmt | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrossProfitAmt == 0">-</label>
+                  </div>
+                  <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Return Of Investment Percent</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfInvestmentPrcnt != 0">{{CustCoyFinData.ReturnOfInvestmentPrcnt | number:'.2':'en-US'}} %</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfInvestmentPrcnt == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Return Of Equity Percent</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfEquityPrcnt != 0">{{CustCoyFinData.ReturnOfEquityPrcnt | number:'.2':'en-US'}} %</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfEquityPrcnt == 0">-</label>
+                  </div>
+                  <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Return Of Asset Percent</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfAssetPrcnt != 0">{{CustCoyFinData.ReturnOfAssetPrcnt | number:'.2':'en-US'}} %</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ReturnOfAssetPrcnt == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Profit Margin Percent</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ProfitMarginPrcnt != 0">{{CustCoyFinData.ProfitMarginPrcnt | number:'.2':'en-US'}} %</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ProfitMarginPrcnt == 0">-</label>
+                  </div>
+                  <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Current Ration Percent</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrentRatioPrcnt != 0">{{CustCoyFinData.CurrentRatioPrcnt | number:'.2':'en-US'}} %</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrentRatioPrcnt == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Debt Equity Ratio Percent</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.DebtEquityRatioPrcnt != 0">{{CustCoyFinData.DebtEquityRatioPrcnt | number:'.2':'en-US'}} %</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.DebtEquityRatioPrcnt == 0">-</label>
+                  </div>
+                  <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Investment Turn Over Percent</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.InvTurnOverPrcnt != 0">{{CustCoyFinData.InvTurnOverPrcnt | number:'.2':'en-US'}} %</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.InvTurnOverPrcnt == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Account Receivable Turn Over Percent</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ArTurnOverPrcnt != 0">{{CustCoyFinData.ArTurnOverPrcnt | number:'.2':'en-US'}} %</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ArTurnOverPrcnt == 0">-</label>
+                  </div>
+                  <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Growth Percent</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrowthPrcnt != 0">{{CustCoyFinData.GrowthPrcnt | number:'.2':'en-US'}} %</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.GrowthPrcnt == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Working Capital Amount</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.WorkingCapitalAmt != 0">{{CustCoyFinData.WorkingCapitalAmt | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.WorkingCapitalAmt == 0">-</label>
+                  </div>
+                  <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Other Monthly Installment Amount</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OthMonthlyInstAmt != 0">{{CustCoyFinData.OthMonthlyInstAmt | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OthMonthlyInstAmt == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Date As Of</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.DateAsOf != 0">{{CustCoyFinData.DateAsOf | date: 'dd-MMM-yyyy'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.DateAsOf == 0">-</label>
+                  </div>
+                  <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Revenue</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.Revenue != 0">{{CustCoyFinData.Revenue | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.Revenue == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Operation Cost</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OprCost != 0">{{CustCoyFinData.OprCost | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.OprCost == 0">-</label>
+                  </div>
+                  <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Profit Before Tax</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ProfitBeforeTax != 0">{{CustCoyFinData.ProfitBeforeTax | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ProfitBeforeTax == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Current Asset</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrAsset != 0">{{CustCoyFinData.CurrAsset | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrAsset == 0">-</label>
+                  </div>
+                  <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Nett Fixed Asset</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.NetFixedAsset != 0">{{CustCoyFinData.NetFixedAsset | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.NetFixedAsset == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Total Asset</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.TotalAsset != 0">{{CustCoyFinData.TotalAsset | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.TotalAsset == 0">-</label>
+                  </div>
+                  <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Current Liabilities</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrLiablts != 0">{{CustCoyFinData.CurrLiablts | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrLiablts == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Long Term Liabilities</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.LongTemrLiablts != 0">{{CustCoyFinData.LongTemrLiablts | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.LongTemrLiablts == 0">-</label>
+                  </div>
+                  <div class="form-group row ">
+                    <label class="col-md-3 adInsLabel" translate>Shareholder Equity</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ShareholderEquity != 0">{{CustCoyFinData.ShareholderEquity | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.ShareholderEquity == 0">-</label>
+                    <label class="col-md-3 adInsLabel" translate>Current Ratio</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrRatio != 0">{{CustCoyFinData.CurrRatio | number:'.2':'en-US'}}</label>
+                    <label class="col-md-3 adInsLabel" *ngIf="CustCoyFinData.CurrRatio == 0">-</label>
+                  </div>
+                
+            </div>
+        </form>
+    </div>
+    <!--Section Fin Attr-->
+    <div class="px-3" *ngIf = "responseCustAttr.length != 0">
+        <lib-ucSubsection [id]="'FinAttrInfo'" [title]="'Financial Attribute Information'" [panel]="'FinAttrInfoId'">
+        </lib-ucSubsection>
+        <div id="FinAttrInfoId" class="form-body">
+            <div class="form-group row" *ngFor="let item of responseCustAttr">
+                <label class="col-md-4 adInsLabel" translate>{{item.AttrName}}</label>
+                <label class="col-md-4 adInsLabel" *ngIf="item.AttrInputType !== 'N' && item.AttrInputType !== 'P'">
+                {{item.AttrValue}}
+                </label>
+                <label class="col-md-4 adInsLabel" *ngIf="item.AttrInputType === 'N'">
+                {{item.AttrValue | number:'.2':'en-US'}}
+                </label>
+                <label class="col-md-4 adInsLabel" *ngIf="item.AttrInputType === 'P'">
+                {{item.AttrValue | number:'.6':'en-US'}}
+                </label>
+            </div>
+        </div>
+    </div>
+
     <div class="px-3">
         <lib-ucSubsection [id]="'BankAccountId'" [title]="'Bank Account'" [panel]="'BankAccount'">
         </lib-ucSubsection>
