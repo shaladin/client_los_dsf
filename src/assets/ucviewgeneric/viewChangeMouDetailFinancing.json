@@ -8,27 +8,32 @@
         "mainInfo": [
           {
             "type": "text",
-            "label": "Virtual Account",
-            "property": "virtualAccNo"
-          },
-          {
-            "type": "text",
             "label": "Currency",
             "property": "currency"
           },
           {
             "type": "text",
-            "label": "Way Of Payment",
+            "label": "Revolving",
+            "property": "IsRevolving"
+          },
+          {
+            "type": "text",
+            "label": "Revolving Type",
+            "property": "RevolvingType"
+          },
+          {
+            "type": "text",
+            "label": "WoP",
             "property": "wop"
           },
           {
             "type": "text",
-            "label": "TOP Days",
+            "label": "Term Of Payment (in Days)",
             "property": "topDays"
           },
           {
             "type": "text",
-            "label": "TOP Interest Rate (%)",
+            "label": "Term Of Payment Interest Rate Percent (%)",
             "property": "topInterestRatePrcnt"
           },
           {
@@ -43,18 +48,23 @@
           },
           {
             "type": "text",
-            "label": "Extend Rate (%)",
+            "label": "Extend Rate Percent (%)",
             "property": "extendRatePrcnt"
           },
           {
             "type": "text",
-            "label": "Maximum Month For Extend",
+            "label": "Maximum Months For Extend",
             "property": "maximumMonthForExtend"
           },
           {
             "type": "text",
             "label": "Maximum Extend Times",
             "property": "maximumExtendTimes"
+          },
+          {
+            "type": "text",
+            "label": "Principal Paid For Extend (%)",
+            "property": "principalPaidInExtendPrcntgChange"
           },
           {
             "type": "text",
@@ -67,30 +77,28 @@
             "property": "assetCondition"
           },
           {
-            "type": "text",
-            "label": "Principal Paid In Extend (%)",
-            "property": "principalPaidInExtendPrcntgChange"
+            "type" : "callback",
+            "label": "Link Manufacturer",
+            "property" : "manufacturerCode",
+            "key" : "manufacturer"
           },
           {
             "type": "text",
-            "label": "Delaer Code",
-            "property": "dealerCode"
-          },
-          {
-            "type": "text",
-            "label": "Delaer Customer No",
-            "property": "dealerCustNo"
-          },
-          {
-            "type": "text",
-            "label": "Manufacturer Code",
-            "property": "manufacturerCode"
-          },
-          {
-            "type": "text",
-            "label": "Manufacturer Customer No",
+            "label": "Manufacturer",
             "property": "manufacturerCustNo"
           },
+          {
+            "type" : "callback",
+            "label": "Link Supplier Grading",
+            "property" : "dealerCode",
+            "key" : "dealer"
+          },
+          {
+            "type": "text",
+            "label": "Customer",
+            "property": "dealerCustNo"
+          },
+          
           {
             "type": "text",
             "label": "LC Rate (%)",

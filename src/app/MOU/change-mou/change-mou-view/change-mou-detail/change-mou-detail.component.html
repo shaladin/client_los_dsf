@@ -1,1 +1,33 @@
-<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewMainDataObj"></lib-ucviewgeneric>
+<!-- <div *ngIf="MouType == 'FACTORING' && listedCustFctrIsReady">
+    <lib-ucSubsection [id]="'MouListedCustFctr'" [title]="'Listed Cust Factoring'" [panel]="'MouData'">
+    </lib-ucSubsection>
+    <table class="table table-responsive-md text-center table-hover">
+        <thead>
+            <tr class="table-header">
+                <th><span class="thead-header" name='No' translate>NO.</span>
+                </th>
+                <th style="text-align: left;"><span class="thead-header" name='CustNo' translate>CUSTOMER NO</span>
+                </th>
+                <th style="text-align: left;"><span class="thead-header" name='CustName' translate>CUSTOMER NAME</span>
+                </th>
+                <th style="text-align: left;"><span class="thead-header" name='CustName' translate>CUSTOMER TYPE</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody *ngIf="listedCustFctr?.length == 0">
+            <tr>
+                <td colspan="100%">No Data Available</td>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr *ngFor="let item of listedCustFctr; let i = index">
+                <td>{{i+1}}</td>
+                <td style="text-align: left;"><a (click)="openView(item.CustNo)" style="color: blue">{{item.CustNo}}</a>
+                </td>
+                <td style="text-align: left;">{{item.CustName}}</td>
+                <td style="text-align: left;">{{item.MrCustTypeDescr}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div> -->
+<lib-ucviewgeneric *ngIf="isDataAlreadyLoaded == true" [viewGenericObj]="viewMainDataObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
