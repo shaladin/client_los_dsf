@@ -84,7 +84,6 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
   }
 
   async ngOnInit() {
-    await this.CheckApvResultExp();
     this.claimTaskService.ClaimTask(this.TaskListId);
     // let appAssetObj : GenericObj = new GenericObj();
     // appAssetObj.Id = this.AgrmntId;
@@ -109,29 +108,6 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
         this.SysConfigResultObj = response
     });
     await this.InitDms();
-  }
-
-  isNeedExtension: boolean = false;
-  async CheckApvResultExp() {
-    //get bis date
-    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
-    let businessDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
-    let CrdApvResultExpDt: Date = null;
-    await this.http.post<AppObj>(URLConstant.GetAppById, {Id : this.AppId}).toPromise().then(
-      (response) => {
-        CrdApvResultExpDt = response.CrdApvResultExpDt;
-      }
-    );
-    if (CrdApvResultExpDt != null && CrdApvResultExpDt != undefined) {
-      if (businessDt > new Date(CrdApvResultExpDt)) {
-        this.isNeedExtension = true;
-        this.toastrSvc.error(null, "Need Extension", {
-          disableTimeOut: true,
-          tapToDismiss: false,
-          closeButton: true
-        });
-      }
-    }
   }
 
   POEntryHandler(idx) {
@@ -165,15 +141,26 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_NEW_PO_PAGING], { "BizTemplateCode": CommonConstant.CFNA });
   }
 
-  async Save() {
-    var isPOResolved = true;
-    if(this.isNeedExtension){
-      this.toastr.typeErrorCustom("Need Extension");
-      return;
+  checkValidExpDt(ExpirationDate: Date, PoNo: string, flag: boolean): boolean {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let bzDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
+    let tempExpDt = new Date(ExpirationDate);
+    if (bzDt.getTime() > tempExpDt.getTime()) {
+      flag = false;
+      throw this.toastr.typeErrorCustom(PoNo + " Need Extension.");
     }
+    return flag;
+  }
+
+  async Save() {
+    let isPOResolved: boolean = true;
     for (const item of this.POList) {
       if (!item["PurchaseOrderNo"] || item["PurchaseOrderNo"] === "") {
         isPOResolved = false;
+        break;
+      }
+      if (item["PurchaseOrderExpiredDt"]) {
+        isPOResolved = this.checkValidExpDt(item["PurchaseOrderExpiredDt"], item["PurchaseOrderNo"], isPOResolved);
       }
     }
     if (!isPOResolved) {
