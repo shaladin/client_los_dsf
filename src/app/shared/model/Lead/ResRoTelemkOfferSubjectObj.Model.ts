@@ -14,6 +14,7 @@ export class ResRoTelemkOfferSubjectObj{
     ResultName: string;
     Notes: string;
     VerfResultHId: number;
+    AgrmntId: number;
     ListPhoneNo: Array<{PhoneNumber:string, PhoneType:string}>;
     
     constructor() {
