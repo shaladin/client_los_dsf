@@ -176,19 +176,19 @@ export class PurchaseOrderComponent implements OnInit {
       this.toastr.typeErrorCustom("Please submit purchase order first!");
     }
 
-    // if (IsSave) {
-    //   var workflowModel: WorkflowApiObj = new WorkflowApiObj();
-    //   workflowModel.TaskListId = this.TaskListId;
-    //   workflowModel.ListValue = { "AgrmntId": this.AgrmntId.toString() };
+    if (IsSave) {
+      var workflowModel: WorkflowApiObj = new WorkflowApiObj();
+      workflowModel.TaskListId = this.TaskListId;
+      workflowModel.ListValue = { "AgrmntId": this.AgrmntId.toString() };
 
 
-    //   this.http.post(URLConstant.ResumeWorkflowPurchaseOrder, workflowModel).subscribe(
-    //     (response) => {
-    //       this.AppAssetList = response[CommonConstant.ReturnObj];
-    //       AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PO_PAGING], {});
-    //       this.toastr.successMessage(response["message"]);
-    //     });
-    // }
+      this.http.post(URLConstant.ResumeWorkflowPurchaseOrder, workflowModel).subscribe(
+        (response) => {
+          this.AppAssetList = response[CommonConstant.ReturnObj];
+          AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_PO_PAGING], {});
+          this.toastr.successMessage(response["message"]);
+        });
+    }
   }
   Cancel() {
     var BizTemplateCode = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE)
