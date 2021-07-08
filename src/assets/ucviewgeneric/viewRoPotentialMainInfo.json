@@ -8,9 +8,27 @@
         "mainInfo": [
           {"type": "text", "label": "RO Potential No","property": "RoPotentialNo"},
           {"type": "text", "label": "Batch No","property": "BatchNo"},
-          {"type": "text", "label": "Customer No","property": "CustNo"},
+          {
+            "type": "callback",
+            "label": "Customer No",
+            "property": "CustNo",
+            "key": "customer"
+          },
           {"type": "text", "label": "Customer Name","property": "CustName"},
-          {"type": "text", "label": "Agreement No","property": "AgrmntNo"},
+          {
+            "type": "link",
+            "label": "Agreement No",
+            "property": "AgrmntNo",
+            "name": "AgrmntNo",
+            "path": "/View/AgrmntView",
+            "target": "_blank",
+            "param": [
+              {
+                "type": "AgrmntId",
+                "property": "AgrmntId"
+              }
+            ]
+          },
           {"type": "text", "label": "RO Potential Last Step","property": "RoPotentialLastStepDescr"},
           {"type": "date", "label": "Promise To Loan Date","property": "PromiseToLoanDt"},
           {"type": "text", "label": "RO Potential Status","property": "RoPotentialStatDescr"}
