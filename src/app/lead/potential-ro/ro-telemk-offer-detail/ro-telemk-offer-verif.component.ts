@@ -323,4 +323,20 @@ export class RoTelemkOfferVerifComponent implements OnInit {
     this.onClickCancel();
   }
 
+  OpenView(key: string) {
+    if (key == 'agr') {
+      AdInsHelper.OpenAgrmntViewByAgrmntId(this.TelemkOfferSubj.AgrmntId);
+    } else if (key == 'cust') {
+      this.http.post(URLConstant.GetCustByCustNo, { CustNo: this.TelemkOfferSubj.CustNo}).subscribe(
+        response => {
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
+            AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
+          }
+          if(response["MrCustTypeCode"] == CommonConstant.CustTypeCompany){
+            AdInsHelper.OpenCustomerCoyViewByCustId(response["CustId"]);
+          }
+        }
+      );
+    }
+  }
 }

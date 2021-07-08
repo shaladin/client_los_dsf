@@ -6,9 +6,7 @@
     </button>
   </div>
 </div>
-
-<lib-ucviewgeneric [viewGenericObj]="ViewMainDataObj"></lib-ucviewgeneric>
-
+<lib-ucviewgeneric [viewGenericObj]="ViewMainDataObj" (callback)="getEvent($event)"></lib-ucviewgeneric>
 <div class="card" *ngIf="VerifResultHObj && VerifResultHObj.VerfDt">
   <div class="card-body">
     <div class="px-3">
