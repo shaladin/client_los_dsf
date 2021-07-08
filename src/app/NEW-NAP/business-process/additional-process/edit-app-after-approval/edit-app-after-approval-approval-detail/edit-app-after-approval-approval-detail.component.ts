@@ -30,6 +30,7 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
   InputApprovalHistoryObj : UcInputApprovalHistoryObj;
   UcInputApprovalGeneralInfoObj : UcInputApprovalGeneralInfoObj;
   IsReady: boolean = false;
+  IsReadySummary: boolean = false;
   arrValue = [];
   BizTemplateCode: string = localStorage.getItem(CommonConstant.BIZ_TEMPLATE_CODE);
 
@@ -47,20 +48,21 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  async ngOnInit(): Promise<void> {
     var ApvHoldObj = new ApprovalObj()
     ApvHoldObj.TaskId = this.taskId;
 
-    this.HoldTask(ApvHoldObj);
+    await this.HoldTask(ApvHoldObj);
 
-    this.getData();
+    await this.getData();
+    this.IsReadySummary = true;
   }
 
-  getData()
+  async getData()
   {
     let reqGetEditAppAftApv : GenericObj = new GenericObj();
     reqGetEditAppAftApv.Id = this.EditAppAftApvTrxHId;
-    this.http.post(URLConstant.GetEditAppAftApvTrxForChangeSummaryByEditAppAftApvTrxHId, reqGetEditAppAftApv).subscribe(
+    await this.http.post(URLConstant.GetEditAppAftApvTrxForChangeSummaryByEditAppAftApvTrxHId, reqGetEditAppAftApv).subscribe(
       (response) => {
         this.ChangeSummaryObj = response["ReturnObject"];
         
@@ -98,7 +100,7 @@ export class EditAppAfterApprovalApprovalDetailComponent implements OnInit {
     this.IsReady = true;
   }
 
-  HoldTask(obj){
+  async HoldTask(obj){
     this.http.post(AdInsConstant.ApvHoldTaskUrl, obj).subscribe(
       (response)=>{      
     
