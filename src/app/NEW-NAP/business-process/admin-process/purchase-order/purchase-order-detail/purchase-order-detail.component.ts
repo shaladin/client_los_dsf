@@ -11,6 +11,7 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { ReqAssetDataObj } from 'app/shared/model/Request/AppAsset/ReqAppAssetObj.model';
 import { ResGetAllAssetDataForPOByAsset, ResGetAllAssetDataForPOByAssetObj } from 'app/shared/model/Response/PurchaseOrder/ResGetAllAssetDataForPO.model';
 import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
+import { CookieService } from 'ngx-cookie';
 
 @Component({
   selector: 'app-purchase-order-detail',
@@ -39,7 +40,7 @@ export class PurchaseOrderDetailComponent implements OnInit {
   TaskListId: string;
 
   readonly CancelLink: string = NavigationConstant.NAP_ADM_PRCS_PO_PO_EXT;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private toastr: NGXToastrService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private router: Router, private toastr: NGXToastrService, private cookieService: CookieService) {
     this.route.queryParams.subscribe(params => {
       if (params["AgrmntId"] != null) {
         this.AgrmntId = params["AgrmntId"];
@@ -169,8 +170,16 @@ export class PurchaseOrderDetailComponent implements OnInit {
     }
   }
 
-  async AddEditPO(POObj: any)
-  {
+  checkValidExpDt() {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let bzDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
+    let tempExpDt = new Date(this.PurchaseOrderExpiredDt);
+    if (bzDt.getTime() > tempExpDt.getTime()) {
+      throw this.toastr.typeErrorCustom("Need Extension");
+    }
+  }
+  async AddEditPO(POObj: any) {
+    this.checkValidExpDt();
     if(!this.isDataExist){      
       this.http.post(URLConstant.AddPurchaseOrder, POObj).subscribe(
         (response) => {

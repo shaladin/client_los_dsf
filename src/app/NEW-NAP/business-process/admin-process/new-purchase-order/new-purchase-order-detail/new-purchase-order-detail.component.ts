@@ -20,6 +20,8 @@ import { DMSObj } from 'app/shared/model/DMS/DMSObj.model';
 import { DMSLabelValueObj } from 'app/shared/model/DMS/DMSLabelValueObj.Model';
 import { forkJoin } from 'rxjs';
 import { ClaimTaskService } from 'app/shared/claimTask.service';
+import { AppObj } from 'app/shared/model/App/App.Model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-new-purchase-order-detail',
@@ -57,7 +59,8 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private fb: FormBuilder, 
     private cookieService: CookieService,
-    private claimTaskService: ClaimTaskService
+    private claimTaskService: ClaimTaskService,
+    private toastrSvc: ToastrService
   ) {
     this.POList = new Array<Object>();
     this.arrValue = new Array<number>();
@@ -138,11 +141,26 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
     AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_ADM_PRCS_NEW_PO_PAGING], { "BizTemplateCode": CommonConstant.CFNA });
   }
 
+  checkValidExpDt(ExpirationDate: Date, PoNo: string, flag: boolean): boolean {
+    let currentUserContext = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    let bzDt = new Date(currentUserContext[CommonConstant.BUSINESS_DT]);
+    let tempExpDt = new Date(ExpirationDate);
+    if (bzDt.getTime() > tempExpDt.getTime()) {
+      flag = false;
+      throw this.toastr.typeErrorCustom(PoNo + " Need Extension.");
+    }
+    return flag;
+  }
+
   async Save() {
-    var isPOResolved = true;
+    let isPOResolved: boolean = true;
     for (const item of this.POList) {
       if (!item["PurchaseOrderNo"] || item["PurchaseOrderNo"] === "") {
         isPOResolved = false;
+        break;
+      }
+      if (item["PurchaseOrderExpiredDt"]) {
+        isPOResolved = this.checkValidExpDt(item["PurchaseOrderExpiredDt"], item["PurchaseOrderNo"], isPOResolved);
       }
     }
     if (!isPOResolved) {
