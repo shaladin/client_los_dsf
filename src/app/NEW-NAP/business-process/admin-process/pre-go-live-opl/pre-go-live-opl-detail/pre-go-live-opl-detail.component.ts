@@ -8,7 +8,9 @@ import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CommonConstant } from 'app/shared/constant/CommonConstant';
 import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { URLConstant } from 'app/shared/constant/URLConstant';
+import { AppTCObj } from 'app/shared/model/AppTCObj.Model';
 import { InputGridObj } from 'app/shared/model/InputGridObj.Model';
+import { ListAppTCObj } from 'app/shared/model/ListAppTCObj.Model';
 import { UcViewGenericObj } from 'app/shared/model/UcViewGenericObj.model';
 import { CustomClaimWorkflowObj } from 'app/shared/model/Workflow/CustomClaimWorkflowObj.Model';
 import { environment } from 'environments/environment';
@@ -25,6 +27,9 @@ export class PreGoLiveOplDetailComponent implements OnInit {
   ApvDt: string;
   AppId: number;
   WfTaskListIds: string;
+  appTC: AppTCObj;
+  ListAppTCObj: ListAppTCObj;
+  
   
   ListAppAssetId: Array<number> = new Array<number>();
 
@@ -117,11 +122,48 @@ export class PreGoLiveOplDetailComponent implements OnInit {
       const idString = WfTaskListIdsStr[i];
       WfTaskListIdNum.push(Number.parseInt(idString));
     }
+
+    var businessDt = new Date(AdInsHelper.GetCookie(this.cookieService, CommonConstant.BUSINESS_DATE_RAW));
+    this.ListAppTCObj = new ListAppTCObj();
+    this.ListAppTCObj["ListAppTcObj"] = new Array();
+
+    for (var i = 0; i < this.PreGoLiveForm.value.TCList["length"]; i++) {
+      this.appTC = new AppTCObj();
+      this.appTC.AppId = this.PreGoLiveForm.value.TCList[i].AppId;
+      this.appTC.AppTcId = this.PreGoLiveForm.value.TCList[i].AppTcId;
+      this.appTC.TcCode = this.PreGoLiveForm.value.TCList[i].TcCode;
+      this.appTC.TcName = this.PreGoLiveForm.value.TCList[i].TcName;
+      this.appTC.PriorTo = this.PreGoLiveForm.value.TCList[i].PriorTo;
+      this.appTC.IsChecked = this.PreGoLiveForm.getRawValue().TCList[i].IsChecked;
+      this.appTC.IsWaived = this.PreGoLiveForm.getRawValue().TCList[i].IsWaived;
+      this.appTC.ExpiredDt = this.PreGoLiveForm.getRawValue().TCList[i].ExpiredDt;
+      this.appTC.IsMandatory = this.PreGoLiveForm.value.TCList[i].IsMandatory;
+      this.appTC.PromisedDt = this.PreGoLiveForm.getRawValue().TCList[i].PromisedDt;
+      this.appTC.CheckedDt = this.PreGoLiveForm.value.TCList[i].CheckedDt;
+      this.appTC.Notes = this.PreGoLiveForm.value.TCList[i].Notes;
+      this.appTC.RowVersion = this.PreGoLiveForm.value.TCList[i].RowVersion;
+
+      var prmsDt = new Date(this.appTC.PromisedDt);
+      var prmsDtForm = this.PreGoLiveForm.value.TCList[i].PromisedDt;
+
+      if (this.appTC.IsChecked == false) {
+        if (prmsDtForm != null) {
+          if (prmsDt < businessDt) {
+            this.toastr.warningMessage("Promise Date for " + this.appTC.TcName + " can't be lower than Business Date");
+            return;
+          }
+        }
+      }
+      this.ListAppTCObj["ListAppTcObj"].push(this.appTC);
+
+    }
+    
     var requestPreGoLiveObj = {
       EffDt: this.PreGoLiveForm.value.EffDt,
       Notes: this.PreGoLiveForm.value.Notes,
       AppAssetIds: this.ListAppAssetId,
-      WfTaskListIds: WfTaskListIdNum
+      WfTaskListIds: WfTaskListIdNum,
+      RListAppTcObj: this.ListAppTCObj
     }
 
     this.http.post(URLConstant.SubmitPreGoLiveOpl, requestPreGoLiveObj).subscribe(
