@@ -13,6 +13,8 @@ import { NavigationConstant } from 'app/shared/constant/NavigationConstant';
 import { KeyValueObj } from 'app/shared/model/KeyValue/KeyValueObj.model';
 import { VerfResultDObj } from 'app/shared/model/VerfResultD/VerfResultD.Model';
 import { VerfResultHObj } from 'app/shared/model/VerfResultH/VerfResultH.Model';
+import { CookieService } from 'ngx-cookie';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-ro-telemk-offer-verif',
@@ -43,20 +45,23 @@ export class RoTelemkOfferVerifComponent implements OnInit {
   reqVerfResultObj: VerifResulHDetailObj;
   verfResultData: object;
   isQuestionLoaded: boolean = false;
-
+  UserAccess: Object;
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
-    private toastr: NGXToastrService
+    private toastr: NGXToastrService,
+    private cookieService: CookieService
   ) {
     this.route.queryParams.subscribe(params => {
       this.roPotentialNo = params['RoPotentialNo'];
     });
   }
-
+  BusinessDt: Date;
   async ngOnInit() {
+    this.UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
+    this.BusinessDt = this.UserAccess[CommonConstant.BUSINESS_DT];
     await this.getTelemkOfferSubj();
     await this.bindVerfResultStat();
     await this.getQuestionList();
@@ -173,7 +178,7 @@ export class RoTelemkOfferVerifComponent implements OnInit {
     });
     this.PhoneDataForm.controls.Notes.markAsPristine();
     this.PhoneDataForm.markAsUntouched();
-
+    if (this.RmVerfResultStat.length > 0) this.PhoneDataForm.patchValue({ MrVerfResultHStatCode: this.RmVerfResultStat[0].Key });
     this.generateFormVerfQuestion();
 
     if (this.TelemkOfferSubj.ListPhoneNo.length > 0) {
@@ -182,8 +187,7 @@ export class RoTelemkOfferVerifComponent implements OnInit {
         PhnType: this.TelemkOfferSubj.ListPhoneNo[0].PhoneType
       });
     }
-
-    if (this.RmVerfResultStat.length > 0) this.PhoneDataForm.patchValue({ MrVerfResultHStatCode: this.RmVerfResultStat[0].Key });
+    
   }
 
   generateFormVerfQuestion() {
@@ -255,7 +259,7 @@ export class RoTelemkOfferVerifComponent implements OnInit {
   }
 
   setPhoneVerifData() {
-    let businessDt = new Date(localStorage.getItem(CommonConstant.BUSINESS_DATE_RAW));
+    let businessDt = new Date(this.BusinessDt);
     let todaydate = new Date();
     businessDt.setHours(todaydate.getHours(), todaydate.getMinutes(), todaydate.getSeconds());
     let usertimezone = businessDt.getTimezoneOffset() * 60000;
@@ -266,7 +270,7 @@ export class RoTelemkOfferVerifComponent implements OnInit {
     this.reqVerfResultObj.VerfResultHObj.VerfResultId = this.verfResultData['VerfResultId'];
     this.reqVerfResultObj.VerfResultHObj.VerfSchemeHId = this.QuestionObj['VerfSchemeHId'];
     this.reqVerfResultObj.VerfResultHObj.MrVerfObjectCode = CommonConstant.RefMasterMasterCodeCustomer;
-    this.reqVerfResultObj.VerfResultHObj.MrVerfSubjectRelationName = CommonConstant.RefMasterMasterCodeSelf;
+    this.reqVerfResultObj.VerfResultHObj.MrVerfSubjectRelationCode = CommonConstant.RefMasterMasterCodeSelf;
     this.reqVerfResultObj.VerfResultHObj.VerfDt = businessDt;
     this.reqVerfResultObj.VerfResultHObj.MrVerfResultHStatCode = this.PhoneDataForm.controls["MrVerfResultHStatCode"].value;
     this.reqVerfResultObj.VerfResultHObj.Phn = this.PhoneDataForm.controls["Phn"].value;
@@ -311,6 +315,12 @@ export class RoTelemkOfferVerifComponent implements OnInit {
       });
   }
 
-
+  Save(){
+    if(this.ListVerifResultHObj.length < 1){
+      this.toastr.warningMessage(ExceptionConstant.INPUT_MIN_1_HISTORY);
+      return;
+    }
+    this.onClickCancel();
+  }
 
 }
