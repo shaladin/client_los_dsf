@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { BackdoorComponent } from 'app/backdoor/backdoor.component';
 import { PathConstant } from '../constant/PathConstant';
+import { PathConstantDsf } from '../constant/PathConstantDsf';
 
 //Route for content layout with sidebar, navbar and footer.
 
@@ -67,5 +68,9 @@ export const Full_ROUTES: Routes = [
   {
     path: PathConstant.REPORT,
     loadChildren: './report/report.module#ReportModule'
+  },
+  {
+    path: PathConstantDsf.LR_DSF,
+    loadChildren: './dsf/dsf.module#DsfModule'
   }
 ];

@@ -1,0 +1,67 @@
+{ 
+    "title" : "REPORT FACT MONITORING PAGI ",
+    "reportName": "Report Fact Monitoring",
+    "reportTemplateCode": "DOC_LEAD_HUDA",
+    "component": [ 
+        {
+            "type" : "dropdown",
+            "label" : "Client Name",
+            "name" : "CrtClientName",
+            "datatype" : "text",
+            "isSelectOne" : true,
+            "items" : [
+                {
+                "key": "KTB",
+                "value": "PT KRAMA YUDHA TIGA BERLIAN"
+            },
+            {
+                "key": "MMKSI",
+                "value": "PT MITSUBISHI MOTOR"
+            }
+            ],
+            "isFromURL" : false,
+            "url" : "", 
+            "path": "", 
+            "criteriaPropName": "", 
+            "criteriaPropValue": "", 
+            "itemsUrl" : [],
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "datepicker",
+            "label" : "Date As Of",
+            "name" : "LeadDtGte",
+            "value" : "BD",
+            "restriction" : "gte",
+            "datatype" : "date",
+            "paramAssignment": 1 
+        },
+        {
+            "type" : "dropdown",
+            "label" : "Report",
+            "name" : "CrtReport",
+            "datatype" : "text",
+            "isSelectOne" : true,
+            "items" : [
+                {
+                "key": "PAGI",
+                "value": "MONITORING PAGI"
+            }
+            ],
+            "isFromURL" : false,
+            "url" : "", 
+            "path": "", 
+            "criteriaPropName": "", 
+            "criteriaPropValue": "", 
+            "itemsUrl" : [],
+            "paramAssignment": 1 
+        }        
+    ],
+    "exportTypeList": [
+        {
+            "key": 0,
+            "value": "PDF"
+        }
+    ]
+}
+

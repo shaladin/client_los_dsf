@@ -1,4 +1,5 @@
 import { NavigationConstant } from '../constant/NavigationConstant';
+import { NavigationConstantDsf } from '../constant/NavigationConstantDsf';
 import { RouteInfo } from './sidebar.metadata';
 
 //Sidebar menu Routes and data
@@ -316,6 +317,16 @@ export const ROUTES: RouteInfo[] = [
           { Path: NavigationConstant.NAP_ADD_PRCS_RETURN_HANDLING_NAP2_PAGING, Title: 'Return Handling - Edit NAP2', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [{ Attr: "BizTemplateCode", Value: "FCTR" }] }
         ], Params: []
       },
+      {
+        Path: '', Title: 'Report', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+        Submenu: [
+          { Path: NavigationConstantDsf.REPORT_FACT_MORNING_MONITORING, Title: 'Morning Monitoring', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+          { Path: NavigationConstantDsf.REPORT_FACT_AFTERNOON_MONITORING, Title: 'Afternoon Monitoring', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+          { Path: NavigationConstantDsf.REPORT_FACT_COLLATERAL, Title: 'Collateral', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+          { Path: NavigationConstantDsf.REPORT_FACT_REMINDER1, Title: 'Reminder Outstanding 1 Day Later', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+          { Path: NavigationConstantDsf.REPORT_FACT_REMINDER5, Title: 'Reminder Outstanding 5 Day Later', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+        ], Params: [] 
+      }
     ], Params: []
   },
   {
