@@ -7,6 +7,7 @@ export class ResCustDataPersonalForViewObj {
     ListAppCustGrpObj: Array<ResAppCustGrpForViewObj>;
     ListAppCustFamilyObj: Array<ResAppCustCompletionObj>;
     ListAppCustPersonalFinDataObjs: Array<ResAppCustPersonalFinDataForViewObj>;
+    ListCustFinDataAttrContent: Array<ResAppCustFinDataAttrContentForViewObj>;
 
     constructor() {
         this.AppCustObj = new ResAppCustForViewObj();
@@ -25,6 +26,8 @@ export class ResCustDataCompanyForViewObj {
     ListAppCustGrpObj: Array<ResAppCustGrpForViewObj>;
     ListAppCustCompanyMgmntShrholderObj: Array<ResAppCustCompanyMgmntShrholderForViewObj>;
     ListAppCustCompanyLegalDocObj: Array<ResAppCustCompanyLegalDocForViewObj>;
+    ListAppCustCompanyFinData: Array<ResAppCustCompanyFinDataForViewObj>;
+    ListCustFinDataAttrContent: Array<ResAppCustFinDataAttrContentForViewObj>;
 
     constructor() {
         this.AppCustObj = new ResAppCustForViewObj();
@@ -33,6 +36,8 @@ export class ResCustDataCompanyForViewObj {
         this.ListAppCustGrpObj = new Array<ResAppCustGrpForViewObj>();
         this.ListAppCustCompanyMgmntShrholderObj = new Array<ResAppCustCompanyMgmntShrholderForViewObj>();
         this.ListAppCustCompanyLegalDocObj = new Array<ResAppCustCompanyLegalDocForViewObj>();
+        this.ListAppCustCompanyFinData = new Array<ResAppCustCompanyFinDataForViewObj>();
+        this.ListCustFinDataAttrContent = new Array<ResAppCustFinDataAttrContentForViewObj>();
     }
 }
 
@@ -176,4 +181,78 @@ export class ResAppCustPersonalFinDataForViewObj {
     TotalMonthlyExpenseAmt: number;
     NettIncomeAmt: number;
     DateAsOf: Date;
+}
+
+export class ResAppCustCompanyFinDataForViewObj{
+    AppCustCompanyFinDataId: number;
+    AppCustId:number;
+    GrossMonthlyIncomeAmt:number;
+    GrossMonthlyExpenseAmt:number;
+    GrossProfitAmt:number;
+    ReturnOfInvestmentPrcnt:number;
+    ReturnOfEquityPrcnt:number;
+    ReturnOfAssetPrcnt:number;
+    ProfitMarginPrcnt:number;
+    CurrentRatioPrcnt:number
+    DebtEquityRatioPrcnt:number
+    InvTurnOverPrcnt:number;
+    ArTurnOverPrcnt: number;
+    GrowthPrcnt: number;
+    WorkingCapitalAmt:number;
+    OthMonthlyInstAmt:number;
+    DateAsOf: Date;
+    Revenue:number;
+    OprCost:number;
+    ProfitBeforeTax:number;
+    CurrAsset:number;
+    NetFixedAsset:number;
+    TotalAsset:number;
+    CurrLiablts:number;
+    LongTermLiablts:number;
+    ShareholderEquity:number;
+    CurrRatio:number;
+
+    constructor(){
+        this.AppCustCompanyFinDataId = 0;
+        this.AppCustId = 0;
+        this.GrossMonthlyIncomeAmt=0;
+        this.GrossMonthlyExpenseAmt=0;
+        this.GrossProfitAmt=0;
+        this.ReturnOfInvestmentPrcnt=0;
+        this.ReturnOfEquityPrcnt=0;
+        this.ReturnOfAssetPrcnt=0;
+        this.ProfitMarginPrcnt=0;
+        this.CurrentRatioPrcnt=0;
+        this.DebtEquityRatioPrcnt=0;
+        this.InvTurnOverPrcnt=0;
+        this.ArTurnOverPrcnt=0;
+        this.GrowthPrcnt=0;
+        this.WorkingCapitalAmt=0;
+        this.OthMonthlyInstAmt=0;
+        this.DateAsOf=new Date();
+        this.Revenue=0;
+        this.OprCost=0;
+        this.ProfitBeforeTax=0;
+        this.CurrAsset=0;
+        this.NetFixedAsset=0;
+        this.TotalAsset=0;
+        this.CurrLiablts=0;
+        this.LongTermLiablts=0;
+        this.ShareholderEquity=0;
+        this.CurrRatio=0;
+    }
+}
+
+export class ResAppCustFinDataAttrContentForViewObj{
+    AttrCode:string;
+    AttrName:string;
+    AttrValue:string;
+    AttrInputType:string;
+
+    constructor(){
+        this.AttrCode="";
+        this.AttrName="";
+        this.AttrValue="0";
+        this.AttrInputType="";
+    }
 }
