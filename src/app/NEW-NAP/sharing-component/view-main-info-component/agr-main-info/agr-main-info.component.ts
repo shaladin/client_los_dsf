@@ -23,10 +23,10 @@ export class AgrMainInfoComponent implements OnInit {
     this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfo.json";
     this.viewGenericObj.whereValue = this.arrValue;
 
-    await this.http.post(URLConstant.GetAgrmntByAgrmntId, { Id: this.arrValue[0] }).subscribe(
+    await this.http.post(URLConstant.GetAgrmntByAgrmntId, { Id: this.arrValue[0] }).toPromise().then(
       async response => {
         let appId = response['AppId'];
-        await this.http.post(URLConstant.GetAppById, { Id: appId }).subscribe(
+        await this.http.post(URLConstant.GetAppById, { Id: appId }).toPromise().then(
           (response) => {
             if(response['BizTemplateCode'] == CommonConstant.CFNA){
               this.viewGenericObj.viewInput = "./assets/ucviewgeneric/viewAgrMainInfoCfna.json";
@@ -43,6 +43,24 @@ export class AgrMainInfoComponent implements OnInit {
   GetCallBack(ev: any){
     if(ev.Key == "ViewProdOffering"){ 
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion( ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);  
+    }
+    if(ev.Key == "Customer"){
+      let custId: number;
+      let mrCustTypeCode: string;
+      let CustNoObj = { CustNo: ev.ViewObj.CustNo };
+      this.http.post(URLConstant.GetCustByCustNo, CustNoObj).subscribe(
+        (response) => {
+          custId = response['CustId'];
+          mrCustTypeCode = response['MrCustTypeCode'];
+
+          if (mrCustTypeCode == CommonConstant.CustTypeCompany) {
+            AdInsHelper.OpenCustomerCoyViewByCustId(custId);
+          }
+
+          if (mrCustTypeCode == CommonConstant.CustTypePersonal) {
+            AdInsHelper.OpenCustomerViewByCustId(custId);
+          }
+        });
     }
   }
 
