@@ -272,6 +272,10 @@
                     "property": "WfTaskListId"
                   },
                   {
+                    "type": "ChangeMouCustId",
+                    "property": "ChangeMouCustId"
+                  },
+                  {
                     "type": "TrxType",
                     "property": "TrxType"
                   }
@@ -295,7 +299,7 @@
               ],
               "result": {
                 "type": "url",
-                "path": "/Mou/ChangeMou/ReviewDetailGen",
+                "path": "/Mou/ChangeMou/ReviewDetailFctr",
                 "icon": "ft-edit-2",
                 "param": [
                   {
@@ -313,6 +317,10 @@
                   {
                     "type": "WfTaskListId",
                     "property": "WfTaskListId"
+                  },
+                  {
+                    "type": "ChangeMouCustId",
+                    "property": "ChangeMouCustId"
                   },
                   {
                     "type": "TrxType",
@@ -358,6 +366,10 @@
                     "property": "WfTaskListId"
                   },
                   {
+                    "type": "ChangeMouCustId",
+                    "property": "ChangeMouCustId"
+                  },
+                  {
                     "type": "TrxType",
                     "property": "TrxType"
                   }
@@ -399,6 +411,10 @@
                   {
                     "type": "WfTaskListId",
                     "property": "WfTaskListId"
+                  },
+                  {
+                    "type": "ChangeMouCustId",
+                    "property": "ChangeMouCustId"
                   },
                   {
                     "type": "TrxType",
@@ -444,6 +460,10 @@
                     "property": "WfTaskListId"
                   },
                   {
+                    "type": "ChangeMouCustId",
+                    "property": "ChangeMouCustId"
+                  },
+                  {
                     "type": "TrxType",
                     "property": "TrxType"
                   }
@@ -485,6 +505,10 @@
                   {
                     "type": "WfTaskListId",
                     "property": "WfTaskListId"
+                  },
+                  {
+                    "type": "ChangeMouCustId",
+                    "property": "ChangeMouCustId"
                   },
                   {
                     "type": "TrxType",
