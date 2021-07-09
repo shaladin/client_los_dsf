@@ -44,6 +44,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
   @Input() MouType: string;
   @Output() ResponseMouAddColl: EventEmitter<any> = new EventEmitter<any>();
   @Output() modeDetail: EventEmitter<any> = new EventEmitter<any>();
+  @Output() UpdateCollateral: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild(UcgridfooterComponent) UCGridFooter;
   @ViewChild(UCSearchComponent) UCSearchComponent;
   @ViewChild("LookupCollateral") ucLookupCollateral: UclookupgenericComponent;
@@ -56,7 +57,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
   changeMouCustCollateralObj: ChangeMouCustCollateralObj;
   changeMouCustCollateralRegistrationObj: ChangeMouCustCollateralRegistrationObj;
 
-  listCollateralData: any; 
+  listCollateralData: any;
   inputLookupObj: InputLookupObj;
   criteriaList: Array<CriteriaObj>;
   criteriaObj: CriteriaObj;
@@ -67,7 +68,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
   locationAddrObj: AddrObj;
   inputFieldLocationObj: InputFieldObj;
 
-  collateralObj: ChangeMouCustCollateralObj; 
+  collateralObj: ChangeMouCustCollateralObj;
   collateralRegistrationObj: any;
 
   listCollExisting: Array<string> = new Array<string>();
@@ -192,7 +193,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
           });
         }
       });
-      
+
     this.http.post(URLConstant.GetChangeMouCustCollateralByChangeMouCustId, { Id: this.ChangeMouCustId }).subscribe(
       (response: GenericListObj) => {
         if (response["ReturnObject"] != null || response["ReturnObject"].length > 0) {
@@ -428,7 +429,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
 
           this.inputLookupObj.nameSelect = this.collateralObj.FullAssetName;
           this.inputLookupObj.jsonSelect = this.collateralObj;
-          
+
           this.http.post(URLConstant.GetListSerialNoLabelByAssetTypeCode, {
             Code: this.collateralObj.AssetTypeCode
           }).subscribe(
@@ -620,6 +621,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
         this.toastr.successMessage(response["message"]);
         this.type = "Paging";
         this.ClearForm();
+        this.UpdateCollateral.emit();
       });
   }
 
@@ -632,7 +634,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
       this.changeMouCustCollateralObj.ChangeMouCustId = this.collateralObj.ChangeMouCustId;
       this.changeMouCustCollateralRegistrationObj = this.collateralRegistrationObj;
     }
-    
+
     this.changeMouCustCollateralObj.ChangeMouCustId = this.ChangeMouCustId;
     this.changeMouCustCollateralObj.MouCustId = this.MouCustId;
     this.changeMouCustCollateralObj.AssetTypeCode = this.AddCollForm.controls.AssetTypeCode.value;
@@ -934,7 +936,7 @@ export class ChangeMouRequestAddcollComponent implements OnInit {
         CollateralPortionAmt: collateralPortionAmt
       }
     }
-   
+
     this.http.post(URLConstant.AddExistingChangeMouCustCollateralData, existingChangeMouCustCollateralObj).subscribe(
       (response) => {
         this.toastr.successMessage(response["message"]);

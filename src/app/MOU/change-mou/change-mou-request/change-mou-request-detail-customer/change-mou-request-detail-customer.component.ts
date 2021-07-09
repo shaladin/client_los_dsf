@@ -11,6 +11,7 @@ import { CommonConstant } from "app/shared/constant/CommonConstant";
 import { URLConstant } from "app/shared/constant/URLConstant";
 import { UcViewGenericObj } from "app/shared/model/UcViewGenericObj.model";
 import { NavigationConstant } from "app/shared/constant/NavigationConstant";
+import {UcviewgenericComponent} from '@adins/ucviewgeneric';
 
 @Component({
   selector: "app-change-mou-request-detail-customer",
@@ -34,6 +35,12 @@ export class ChangeMouRequestDetailCustomerComponent
   pageType: string;
   pageTitle: string;
   viewGenericObj: UcViewGenericObj = new UcViewGenericObj();
+  private viewGeneric: UcviewgenericComponent;
+  @ViewChild('viewGeneric') set content(content: UcviewgenericComponent) {
+    if (content) { // initially setter gets called with undefined
+      this.viewGeneric = content;
+    }
+  }
   resultData: MouCustObj;
   ChangeMouTrxId: number;
   WfTaskListId: number;
@@ -169,7 +176,7 @@ export class ChangeMouRequestDetailCustomerComponent
 
   editMainInfoHandler() {
     if (this.pageType == "return") {
-      
+
       this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_DETAIL], {
         // queryParams: {
         //   MouCustId: this.mouCustId,
@@ -177,7 +184,7 @@ export class ChangeMouRequestDetailCustomerComponent
         //   MrMouTypeCode: this.mouType,
         //   ChangeMouTrxId: this.ChangeMouTrxId
         // },
-        queryParams: { MouCustId: this.mouCustId, ChangeMouTrxId: this.ChangeMouTrxId, mode: "return", MrMouTypeCode: this.mouType, WfTaskListId: this.WfTaskListId, ChangeMouCustId : this.ChangeMouCustId}, 
+        queryParams: { MouCustId: this.mouCustId, ChangeMouTrxId: this.ChangeMouTrxId, mode: "return", MrMouTypeCode: this.mouType, WfTaskListId: this.WfTaskListId, ChangeMouCustId : this.ChangeMouCustId},
       });
     } else {
       this.router.navigate([NavigationConstant.CHANGE_MOU_REQ_DETAIL], {
@@ -187,7 +194,7 @@ export class ChangeMouRequestDetailCustomerComponent
         //   MrMouTypeCode: this.mouType,
         //   ChangeMouTrxId: this.ChangeMouTrxId
         // },
-        queryParams: { MouCustId: this.mouCustId, ChangeMouTrxId: this.ChangeMouTrxId, mode: "edit", MrMouTypeCode: this.mouType, WfTaskListId: this.WfTaskListId, ChangeMouCustId : this.ChangeMouCustId}, 
+        queryParams: { MouCustId: this.mouCustId, ChangeMouTrxId: this.ChangeMouTrxId, mode: "edit", MrMouTypeCode: this.mouType, WfTaskListId: this.WfTaskListId, ChangeMouCustId : this.ChangeMouCustId},
       });
     }
   }
@@ -293,8 +300,11 @@ export class ChangeMouRequestDetailCustomerComponent
       }
     }
   }
+  refreshMainInfo(response) {
+    this.viewGeneric.initiateForm();
+  }
 
-  stepHandlerDealerfinancing(response) {
+    stepHandlerDealerfinancing(response) {
     switch (response["StatusCode"].toString()) {
       case "200":
         this.stepperDealerfinancing.next();

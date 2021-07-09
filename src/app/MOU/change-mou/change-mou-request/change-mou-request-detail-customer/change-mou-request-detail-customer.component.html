@@ -24,7 +24,7 @@
               </div>
 
               <div class="row">
-                  <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)">
+                  <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)" #viewGeneric>
                   </lib-ucviewgeneric>
               </div>
 
@@ -148,8 +148,8 @@
                           </div>
                           <div id="collateral-data-tab" class="content" role="tabpanel"
                               aria-labelledby="collateral-data-tab-trigger">
-                              <app-change-mou-request-addcoll *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId" [ChangeMouCustId]="ChangeMouCustId" [ChangeMouTrxNo]="changeMouTrxNo" [ChangeMouStatus]="ChangeMouStatus" 
-                                  (ResponseMouAddColl)="stepHandlerDealerfinancing($event)">
+                              <app-change-mou-request-addcoll *ngIf="currentStepIndex == 2" [MouCustId]="mouCustId" [ChangeMouCustId]="ChangeMouCustId" [ChangeMouTrxNo]="changeMouTrxNo" [ChangeMouStatus]="ChangeMouStatus"
+                                  (ResponseMouAddColl)="stepHandlerDealerfinancing($event)" (UpdateCollateral)="refreshMainInfo($event)">
                               </app-change-mou-request-addcoll>
                           </div>
 
