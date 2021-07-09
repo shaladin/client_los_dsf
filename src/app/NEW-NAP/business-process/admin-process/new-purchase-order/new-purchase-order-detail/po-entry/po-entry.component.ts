@@ -230,7 +230,7 @@ export class PoEntryComponent implements OnInit {
       requestPurchaseOrderH.PurchaseOrderHId = 0;
       requestPurchaseOrderH.PurchaseOrderNo = "";
       requestPurchaseOrderH.PurchaseOrderDt = new Date();
-      requestPurchaseOrderH.PurchaseOrderExpiredDt = formValue["PurchaseOrderExpiredDt"];
+      requestPurchaseOrderH.PurchaseOrderExpiredDt = new Date(this.ExpirationDate);
       requestPurchaseOrderH.TotalPurchaseOrderAmt = formValue["TotalDisburse"];
       requestPurchaseOrderH.AgrmntId = this.AgrmntId;
       requestPurchaseOrderH.SupplCode = this.AppLoanPurposeList[0].SupplCode;
@@ -253,7 +253,7 @@ export class PoEntryComponent implements OnInit {
       requestPurchaseOrderH.PurchaseOrderHId = this.PurchaseOrderH.PurchaseOrderHId;
       requestPurchaseOrderH.PurchaseOrderNo = this.PurchaseOrderH.PurchaseOrderNo;
       requestPurchaseOrderH.PurchaseOrderDt = this.PurchaseOrderH.PurchaseOrderDt;
-      requestPurchaseOrderH.PurchaseOrderExpiredDt = formValue["PurchaseOrderExpiredDt"];
+      requestPurchaseOrderH.PurchaseOrderExpiredDt = new Date(this.ExpirationDate);
       requestPurchaseOrderH.TotalPurchaseOrderAmt = this.PurchaseOrderH.TotalPurchaseOrderAmt;
       requestPurchaseOrderH.AgrmntId = this.PurchaseOrderH.AgrmntId;
       requestPurchaseOrderH.SupplCode = this.PurchaseOrderH.SupplCode;
