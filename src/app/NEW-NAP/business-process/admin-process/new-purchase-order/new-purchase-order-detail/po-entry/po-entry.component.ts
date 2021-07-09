@@ -132,35 +132,44 @@ export class PoEntryComponent implements OnInit {
       );
 
     }
-    this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
-      (response1: NapAppModel) => {
-        let GetProduct = new GenericObj();
-        GetProduct.Code = response1["ProdOfferingCode"]
-        this.httpClient.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
-          (response2) => {
-            this.httpClient.post(URLConstant.GetProdOfferingDByProdOfferingHIdAndCompCode, { ProdOfferingHId: response2.Id, RefProdCompntCode: CommonConstant.RefProdCompntCodeCrApvResExpDays }).subscribe(
-              (response) => {
-                var a = formatDate(response1["ApvDt"], 'yyyy-MM-dd', 'en-US');
-                this.Date = new Date(a);
-                this.Date.setDate(this.Date.getDate() + parseInt(response["CompntValue"]));
+    this.httpClient.post(URLConstant.GetPurchaseOrderExpDt, { Id: this.AppId }).subscribe(
+      (response1) => {
+        this.ExpirationDate = formatDate(response1["PurchaseOrderExpDt"], 'yyyy-MM-dd', 'en-US');
+        this.PODetailForm.patchValue({
+          PurchaseOrderExpiredDt: datePipe.transform(response1["PurchaseOrderExpDt"], "yyyy-MM-dd")
+        });
 
-                this.ExpirationDate = formatDate(this.Date, 'yyyy-MM-dd', 'en-US');
-                this.PODetailForm.patchValue({
-                  PurchaseOrderExpiredDt: datePipe.transform(this.Date, "yyyy-MM-dd")
-                });
-              },
-              (error) => {
-                console.log(error);
-              }
-            );
-          }
-        ).catch(
-        );
-      },
-      (error) => {
-        console.log(error);
       }
-    );
+    )
+    // this.httpClient.post(URLConstant.GetAppById, { Id: this.AppId }).subscribe(
+    //   (response1: NapAppModel) => {
+    //     let GetProduct = new GenericObj();
+    //     GetProduct.Code = response1["ProdOfferingCode"]
+    //     this.httpClient.post<GenericObj>(URLConstant.GetProdOfferingHByCode, GetProduct).toPromise().then(
+    //       (response2) => {
+    //         this.httpClient.post(URLConstant.GetProdOfferingDByProdOfferingHIdAndCompCode, { ProdOfferingHId: response2.Id, RefProdCompntCode: CommonConstant.RefProdCompntCodeCrApvResExpDays }).subscribe(
+    //           (response) => {
+    //             var a = formatDate(response1["ApvDt"], 'yyyy-MM-dd', 'en-US');
+    //             this.Date = new Date(a);
+    //             this.Date.setDate(this.Date.getDate() + parseInt(response["CompntValue"]));
+
+    //             this.ExpirationDate = formatDate(this.Date, 'yyyy-MM-dd', 'en-US');
+    //             this.PODetailForm.patchValue({
+    //               PurchaseOrderExpiredDt: datePipe.transform(this.Date, "yyyy-MM-dd")
+    //             });
+    //           },
+    //           (error) => {
+    //             console.log(error);
+    //           }
+    //         );
+    //       }
+    //     ).catch(
+    //     );
+    //   },
+    //   (error) => {
+    //     console.log(error);
+    //   }
+    // );
   }
 
   BankAccHandler() {
