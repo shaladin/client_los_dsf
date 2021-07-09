@@ -59,7 +59,7 @@
 
                           <div id="mou-detail-tab" class="content" role="tabpanel"
                               aria-labelledby="mou-detail-tab-trigger">
-                              <app-change-mou-detail-general *ngIf="currentStepIndex == 1" [MouCustId]="mouCustId"
+                              <app-change-mou-detail-general *ngIf="currentStepIndex == 1" [MouCustId]="mouCustId" [ChangeMouTrxId]="ChangeMouTrxId"
                                   [Mode]="mode" (ResponseMouDetailGeneral)="stepHandlerGeneral($event)">
                               </app-change-mou-detail-general>
                           </div>
@@ -101,7 +101,7 @@
 
                           <div id="mou-detail-tab" class="content" role="tabpanel"
                               aria-labelledby="mou-detail-tab-trigger">
-                              <app-change-mou-detail-factoring *ngIf="currentStepIndex == 1" [MouCustId]="mouCustId"
+                              <app-change-mou-detail-factoring *ngIf="currentStepIndex == 1" [MouCustId]="mouCustId" [ChangeMouTrxId]="ChangeMouTrxId"
                                   (ResponseMouCustFactoring)="stepHandlerFactoring($event)">
                               </app-change-mou-detail-factoring>
                           </div>

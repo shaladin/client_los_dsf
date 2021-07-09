@@ -138,8 +138,8 @@ export class ChangeMouDetailDealerFinancingComponent implements OnInit {
     );
 
     var mouCustFctr = new GenericObj();
-    mouCustFctr.Id = this.MouCustId;
-    let getChangeMouCustDlrFncg = this.httpClient.post(URLConstant.GetChangeMouCustDlrFncgByMouCustId, mouCustFctr);
+    mouCustFctr.Id = this.ChangeMouTrxId;
+    let getChangeMouCustDlrFncg = this.httpClient.post(URLConstant.GetChangeMouCustDlrFncgDetailByChangeMouTrxId, mouCustFctr);
 
     forkJoin([
       getPayFreq,

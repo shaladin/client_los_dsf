@@ -592,10 +592,13 @@ export class URLConstant {
   public static GetLatestChangeMouCustVersionById = environment.losUrl + "/ChangeMou/GetLatestChangeMouCustVersionById";
   public static GetChangeMouByMouCustIdStatusNew = environment.losUrl + "/ChangeMou/GetChangeMouByMouCustIdStatusNew";
   public static GetChangeMouCustClauseByMouCustId = environment.losUrl + "/ChangeMou/GetChangeMouCustClauseByMouCustId";
+  public static GetChangeMouCustClauseDetailByChangeMouTrxId = environment.losUrl + "/ChangeMou/GetChangeMouCustClauseDetailByChangeMouTrxId";
   public static GetChangeMouCustAssetByMouCustId = environment.losUrl + "/ChangeMou/GetChangeMouCustAssetByMouCustId";
   public static GetChangeMouCustCollateralByChangeMouCustId = environment.losUrl + "/ChangeMou/GetChangeMouCustCollateralByChangeMouCustId";
   public static GetChangeMouCustFctrByMouCustId = environment.losUrl + "/ChangeMou/GetChangeMouCustFctrByMouCustId";
+  public static GetChangeMouCustFctrDetailByChangeMouTrxId = environment.losUrl + "/ChangeMou/GetChangeMouCustFctrDetailByChangeMouTrxId";
   public static GetChangeMouCustDlrFncgByMouCustId = environment.losUrl + "/ChangeMou/GetChangeMouCustDlrFindById";
+  public static GetChangeMouCustDlrFncgDetailByChangeMouTrxId = environment.losUrl + "/ChangeMou/GetChangeMouCustDlrFncgDetailByChangeMouTrxId";
   public static AddEditChangeMouCustDlrFin = environment.losUrl + "/ChangeMou/AddEditChangeMouCustDlrFin";
   public static SubmitChangeMouReview = environment.losUrl + "/ChangeMou/SubmitChangeMouReview";
   public static SubmitWorkflowChangeMouRequest = environment.losUrl + "/ChangeMou/SubmitWorkflowChangeMouRequest";
