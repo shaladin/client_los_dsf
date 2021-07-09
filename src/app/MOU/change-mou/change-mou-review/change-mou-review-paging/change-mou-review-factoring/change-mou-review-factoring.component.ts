@@ -39,6 +39,7 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
   ScoreResult: number;
   InputObj: UcInputRFAObj;
   IsReady: boolean;
+  ChangeMouCustId: number;
   private createComponent: UcapprovalcreateComponent;
   @ViewChild("ApprovalComponent") set content(
     content: UcapprovalcreateComponent
@@ -61,6 +62,7 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
       this.MouCustId = params["MouCustId"];
       this.WfTaskListId = params["WfTaskListId"];
       this.TrxNo = params["TrxNo"];
+      this.ChangeMouCustId = params["ChangeMouCustId"];
     });
   }
 
@@ -69,7 +71,7 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
       this.claimTask();
     }
     this.viewGenericObj.viewInput =
-      "./assets/ucviewgeneric/viewMouHeaderFactoring.json";
+      "./assets/ucviewgeneric/viewChangeMouHeader.json";
     this.viewGenericObj.viewEnvironment = environment.losUrl;
     this.viewGenericObj.ddlEnvironments = [
       {
@@ -77,6 +79,7 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
         environment: environment.losR3Web,
       },
     ];
+    this.viewGenericObj.whereValue = [this.ChangeMouCustId]
 
     await this.http
       .post(URLConstant.GetMouCustById, { Id: this.MouCustId })
