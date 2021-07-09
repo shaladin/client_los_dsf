@@ -89,9 +89,9 @@ export class ChangeMouDetailComponent implements OnInit {
 
   GetCallBack(ev: any) {
     if(ev.Key == "manufacturer"){
-      this.ClickLinkManufacturer(ev.RowObj.manufacturerCode)
+      this.ClickLinkManufacturer(ev.ViewObj.manufacturerCode)
     }else if(ev.Key == "dealer"){
-      this.ClickLinkManufacturer(ev.RowObj.dealerCode)
+      this.ClickLinkManufacturer(ev.ViewObj.dealerCode)
     }
   }
   // openView(custNo) {
