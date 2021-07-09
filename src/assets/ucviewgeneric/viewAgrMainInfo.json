@@ -121,7 +121,8 @@
           ]
         },
         {
-          "type": "text",
+          "type": "callback",
+          "key": "Customer",
           "label": "Customer Name",
           "property": "CustName"
         },
