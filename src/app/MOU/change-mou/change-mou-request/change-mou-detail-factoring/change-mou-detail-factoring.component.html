@@ -46,7 +46,7 @@
                 <option *ngFor="let item of instTypeList" [value]="item.Key">{{item.Value}}</option>
               </select>
             </div>
-            <h2 class="col-md-2 text-center">/</h2>
+            <h2 class="col-md-2 text-center" *ngIf="IsSingleIns">/</h2>
             <div class="col-md-5">
               <select *ngIf="IsSingleIns" style="border-left: 1px solid grey" type="text" class="form-control adInsInput"
                 formControlName="SingleInstCalcMthd"

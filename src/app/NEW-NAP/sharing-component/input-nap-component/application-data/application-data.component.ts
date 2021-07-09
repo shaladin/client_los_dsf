@@ -798,9 +798,7 @@ export class ApplicationDataComponent implements OnInit {
         else { this.isTenorValid = true; }
       }
       if (this.isTenorValid == true) {
-        if (this.BizTemplateCode != CommonConstant.OPL) {
-          obj['AppCustMailingAddr'] = this.getMailingAddrForSave();
-        }
+        obj['AppCustMailingAddr'] = this.getMailingAddrForSave();
         this.http.post(URLConstant.EditAppAddAppCross, obj).subscribe(
           (response) => {
             this.toastr.successMessage('Save Application Data Success!');

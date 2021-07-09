@@ -14,14 +14,18 @@
             <div id="mainInfo" *ngIf="TelemkOfferSubj">
               <div class="form-group row">
                 <label class="col-md-2  adInsLabel"  translate>Customer No</label>
-                <label class="col-md-4" translate >{{TelemkOfferSubj.CustNo}}</label>
+                <a class="col-md-4" href="javascript:void(0);" (click)="OpenView('cust')">
+                  {{TelemkOfferSubj.CustNo}}
+                </a>   
                 <label class="col-md-2  adInsLabel" translate>Customer Name</label>
                 <label class="col-md-4" translate>{{TelemkOfferSubj.CustName}}</label>
               </div>
 
               <div class="form-group row">
-                <label class="col-md-2  adInsLabel"  translate>Agrmnt No</label>
-                <label class="col-md-4" translate >{{TelemkOfferSubj.AgrmntNo}}</label>
+                <label class="col-md-2  adInsLabel"  translate>Agreement No</label>
+                <a class="col-md-4" href="javascript:void(0);" (click)="OpenView('agr')">
+                  {{TelemkOfferSubj.AgrmntNo}}
+                </a>   
                 <label class="col-md-2  adInsLabel" translate>Maturity Date</label>
                 <label class="col-md-4" translate>{{TelemkOfferSubj.AgrmntMaturityDt | date: 'dd-MMMM-yyyy'}}</label>
               </div>

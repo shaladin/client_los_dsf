@@ -40,6 +40,7 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
   InputObj: UcInputRFAObj;
   IsReady: boolean;
   ChangeMouCustId: number;
+  TrxType: string;
   private createComponent: UcapprovalcreateComponent;
   @ViewChild("ApprovalComponent") set content(
     content: UcapprovalcreateComponent
@@ -63,6 +64,7 @@ export class ChangeMouReviewFactoringComponent implements OnInit {
       this.WfTaskListId = params["WfTaskListId"];
       this.TrxNo = params["TrxNo"];
       this.ChangeMouCustId = params["ChangeMouCustId"];
+      this.TrxType = params["TrxType"];
     });
   }
 

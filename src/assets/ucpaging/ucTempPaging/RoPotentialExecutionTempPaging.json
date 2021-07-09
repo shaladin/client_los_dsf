@@ -56,9 +56,10 @@
     ],
     "bodyList": [
         {
-            "type": "text",
+            "type": "callback",
             "position": "center",
-            "property": "CustNo"
+            "property": "CustNo",
+            "key": "customer"
         },
         {"type": "text", "position": "left", "property": "CustName"},
         {
