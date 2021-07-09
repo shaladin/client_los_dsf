@@ -22,6 +22,10 @@ import { CreditApprovalPagingComponent } from './credit-approval/credit-approval
 import { CreditApprovalDetailComponent } from './credit-approval/credit-approval-detail/credit-approval-detail.component';
 import { CreditApprovalCfnaPagingComponent } from './credit-approval-cfna/credit-approval-cfna-paging/credit-approval-cfna-paging.component';
 import { CreditApprovalCfnaDetailComponent } from './credit-approval-cfna/credit-approval-cfna-detail/credit-approval-cfna-detail.component';
+import { CreditReviewPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-dsf/credit-review-paging-dsf/credit-review-paging-dsf.component';
+import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
+import { CreditReviewCfnaPagingDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-cfna-dsf/credit-review-cfna-paging-dsf/credit-review-cfna-paging-dsf.component';
+import { CreditReviewDetailDsfComponent } from 'app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-dsf/credit-review-detail-dsf/credit-review-detail-dsf.component';
 
 
 const routes: Routes = [
@@ -106,6 +110,13 @@ const routes: Routes = [
           }
       },
       {
+        path: PathConstantDsf.CRD_REVIEW_DETAIL,
+        component: CreditReviewDetailDsfComponent,
+        data: {
+            title: 'Credit Review Detail Dsf'
+        }
+    },
+      {
           path: PathConstant.CRD_APPRV_CR_PAGING,
           component: CreditApprovalCrPagingComponent,
           data: {
@@ -127,6 +138,13 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.CRD_REVIEW_PAGING,
+        component: CreditReviewPagingDsfComponent,
+        data: {
+          title: 'Credit Review Paging Dsf'
+        }
+      },
+      {
         path: PathConstant.CRD_REVIEW_MAIN,
         component: CreditReviewMainComponent,
         data: {
@@ -136,6 +154,13 @@ const routes: Routes = [
       {
         path: PathConstant.CRD_REVIEW_CFNA_PAGING,
         component: CreditReviewCfnaPagingComponent,
+        data: {
+          title: 'Credit Review Paging'
+        }
+      },
+      {
+        path: PathConstantDsf.CRD_REVIEW_CFNA_PAGING,
+        component: CreditReviewCfnaPagingDsfComponent,
         data: {
           title: 'Credit Review Paging'
         }

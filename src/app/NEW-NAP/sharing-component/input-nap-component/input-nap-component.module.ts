@@ -80,6 +80,7 @@ import { AssetOplMainInfoComponent } from "./asset-opl-main-info/asset-opl-main-
 import { FinancialDataOplEditComponent } from "./financial-data-opl/detail/financial-data-opl-detail.component";
 import { FinancialDataOplComponent } from "./financial-data-opl/financial-data-opl.component";
 import { AssetDataOplComponent } from "./multi-asset-data/asset-data-opl/asset-data-opl.component";
+import { ApplicationDataDsfComponent } from "app/NEW-NAP/DSF/input-nap-component-dsf/application-data-dsf/application-data-dsf.component";
 
 export const customCurrencyMaskConfig = {     
   align: "right",     
@@ -161,7 +162,8 @@ export const customCurrencyMaskConfig = {
     AssetOplMainInfoComponent,
     FinancialDataOplEditComponent,
     FinancialDataOplComponent,
-    AssetDataOplComponent
+    AssetDataOplComponent,
+    ApplicationDataDsfComponent
     // MultiAssetLeasingComponent,
     // AssetLeasingPagingComponent,
     // AssetLeasingAddEditComponent,
@@ -250,7 +252,8 @@ export const customCurrencyMaskConfig = {
     AssetOplMainInfoComponent,
     FinancialDataOplEditComponent,
     FinancialDataOplComponent,
-    AssetDataOplComponent
+    AssetDataOplComponent,
+    ApplicationDataDsfComponent
   ],
   entryComponents: [SubsidyAddEditComponent, UclookupgenericComponent, LookupTaxCityIssuerComponent, LookupCollateralComponent],
   providers: [

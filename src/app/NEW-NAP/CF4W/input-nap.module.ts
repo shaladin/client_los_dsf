@@ -14,6 +14,8 @@ import { MainDataComponentModule } from "../sharing-component/main-data-componen
 import { NewNapCustModule } from "../sharing-component/new-nap-cust-component/new-nap-cust.module";
 import { SharedModule } from "app/shared/shared.module";
 import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info-component/view-main-info-component.module";
+import { NapDetailFormDsfComponent } from "../DSF/CF4W-dsf/nap-detail-form-dsf/nap-detail-form-dsf.component";
+import { NapCustMainDataDsfComponent } from "../DSF/CF4W-dsf/nap-cust-main-data-dsf/nap-cust-main-data-dsf.component";
 
 @NgModule({
   imports: [
@@ -32,7 +34,9 @@ import { ViewMainInfoComponentModule } from "../sharing-component/view-main-info
     NapPagingComponent,
     NapAddDetailComponent,
     NapCustMainDataComponent,
-    NapDetailFormComponent
+    NapDetailFormComponent,
+    NapCustMainDataDsfComponent,
+    NapDetailFormDsfComponent
   ],
   providers: [
     NGXToastrService

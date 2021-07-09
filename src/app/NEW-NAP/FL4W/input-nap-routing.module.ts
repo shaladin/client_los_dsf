@@ -13,6 +13,9 @@ import { ViewInsuranceDetailComponent } from '../sharing-component/view-agrmnt-c
 import { NapCustMainDataComponent } from './nap-cust-main-data/nap-cust-main-data.component';
 import { NapDetailFormComponent } from './nap-detail-form/nap-detail-form.component';
 import { PathConstant } from 'app/shared/constant/PathConstant';
+import { NapDetailFormDsfComponent } from '../DSF/FL4W-dsf/nap-detail-form-dsf/nap-detail-form-dsf.component';
+import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
+import { NapCustMainDataDsfComponent } from '../DSF/FL4W-dsf/nap-cust-main-data-dsf/nap-cust-main-data-dsf.component';
 
 const routes: Routes = [
   {
@@ -89,12 +92,26 @@ const routes: Routes = [
         }
       },
       {
+        path: PathConstantDsf.NAP1,
+        component: NapCustMainDataDsfComponent,
+        data: {
+            title: 'NAP Cust Main Data Dsf'
+        }
+      },
+      {
         path: PathConstant.NAP2,
         component: NapDetailFormComponent,
         data: {
             title: 'NAP Detail'
         }
     },
+    {
+      path: PathConstantDsf.NAP2,
+      component: NapDetailFormDsfComponent,
+      data: {
+          title: 'NAP Detail Dsf'
+      }
+  },
     ]
   }
 ];

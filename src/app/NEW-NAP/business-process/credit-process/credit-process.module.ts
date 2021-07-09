@@ -51,6 +51,9 @@ import { CreditApprovalCfnaDetailComponent } from './credit-approval-cfna/credit
 import { CustHistoryComponent } from './credit-investigation/component/cust-history/cust-history.component';
 import { TabApplicationDataComponent } from './credit-investigation/component/tab-application-data/tab-application-data.component';
 import { ViewApplicationDataMultiComponent } from './credit-investigation/component/view-application-data-multi/view-application-data-multi.component';
+import { CreditReviewPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-dsf/credit-review-paging-dsf/credit-review-paging-dsf.component";
+import { CreditReviewCfnaPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-cfna-dsf/credit-review-cfna-paging-dsf/credit-review-cfna-paging-dsf.component";
+import { CreditReviewDetailDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-dsf/credit-review-detail-dsf/credit-review-detail-dsf.component";
 
 
 export const customCurrencyMaskConfig = {
@@ -126,7 +129,10 @@ export const customCurrencyMaskConfig = {
     CreditApprovalCfnaDetailComponent,
     CustHistoryComponent,
     TabApplicationDataComponent,
-    ViewApplicationDataMultiComponent
+    ViewApplicationDataMultiComponent,
+    CreditReviewPagingDsfComponent,
+    CreditReviewCfnaPagingDsfComponent,
+    CreditReviewDetailDsfComponent
   ],
   providers: [
     NGXToastrService

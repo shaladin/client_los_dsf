@@ -49,6 +49,8 @@ import { NapDetailFormComponent } from "./nap-detail-form/nap-detail-form.compon
 import { MainDataComponentModule } from "../sharing-component/main-data-component/main-data-component.module";
 import { NewNapCustModule } from "../sharing-component/new-nap-cust-component/new-nap-cust.module";
 import { SharedModule } from "app/shared/shared.module";
+import { NapCustMainDataDsfComponent } from "../DSF/FL4W-dsf/nap-cust-main-data-dsf/nap-cust-main-data-dsf.component";
+import { NapDetailFormDsfComponent } from "../DSF/FL4W-dsf/nap-detail-form-dsf/nap-detail-form-dsf.component";
 
  
 export const customCurrencyMaskConfig = {     
@@ -115,7 +117,9 @@ export const customCurrencyMaskConfig = {
     ViewPurchaseOrderMultiAssetComponent, 
     ViewPurchaseOrderMultiAssetDetailComponent, ViewAgrmntFl4wComponent, AppInsuranceFl4wComponent, AppAssetDataFl4wComponent, ViewSummaryFl4wComponent, AppAssetDataDetailFl4wComponent,
     NapCustMainDataComponent,
-    NapDetailFormComponent
+    NapDetailFormComponent,
+    NapCustMainDataDsfComponent,
+    NapDetailFormDsfComponent
   ],
   providers: [
     NGXToastrService
