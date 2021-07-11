@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   navbarColor: 'transparent',
-  losUrl: 'http://localhost:5000',
+  losUrl: 'http://localhost:5001',
   //FoundationR3Url: 'http://localhost:5000',
   //losUrl: 'http://los-be.confins.one:8888',
   FoundationR3Url: 'http://foundation-be.confins.one:8888',

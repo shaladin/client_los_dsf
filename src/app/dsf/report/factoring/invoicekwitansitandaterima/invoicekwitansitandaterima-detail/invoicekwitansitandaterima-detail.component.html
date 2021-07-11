@@ -15,7 +15,7 @@
                     <label class="col-md-3 adInsLabel adins-required-label" translate>No Invoice</label>
                     <div class="col-md-4">
                        <input type="text" class="form-control adInsInput" formControlName="NoInvoice"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.NoInvoice.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.NoInvoice.invalid }" disabled>
                        <lib-uc-show-errors  [control]="DetailInformationForm.controls.NoInvoice" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                     </div>
                  </div>
@@ -23,7 +23,7 @@
                     <label class="col-md-3 adInsLabel adins-required-label" translate>No Kwitansi</label>
                     <div class="col-md-4">
                        <input type="text" class="form-control adInsInput" formControlName="NoKwitansi"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.NoKwitansi.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.NoKwitansi.invalid }" disabled>
                        <lib-uc-show-errors  [control]="DetailInformationForm.controls.NoKwitansi" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                     </div>
                  </div>
@@ -31,7 +31,7 @@
                     <label class="col-md-3 adInsLabel adins-required-label" translate>No Tanda Terima</label>
                     <div class="col-md-4">
                        <input type="text" class="form-control adInsInput" formControlName="NoTandaTerima"
-                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.NoTandaTerima.invalid }">
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.NoTandaTerima.invalid }" disabled>
                        <lib-uc-show-errors  [control]="DetailInformationForm.controls.NoTandaTerima" [submit]="enjiForm.submitted"></lib-uc-show-errors >
                     </div>
                  </div>

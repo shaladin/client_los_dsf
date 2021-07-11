@@ -11,6 +11,7 @@ import { NavigationConstantDsf } from 'app/shared/constant/NavigationConstantDsf
 import { ReceiptDsfObj } from 'app/dsf/model/ReceiptDsfObj.Model';
 import { URLConstantDsf } from 'app/shared/constant/URLConstantDsf';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class InvoicekwitansitandaterimaDetailComponent implements OnInit {
   inputPagingObj: UcPagingObj = new UcPagingObj();
   viewCessieDetailObj: UcViewGenericObj = new UcViewGenericObj();
   pageType: string = "add";
-  CessieNo: any;
+  CessieNo: string;
   resultData: any;
 
   receiptDsfObj: ReceiptDsfObj;
@@ -55,21 +56,32 @@ export class InvoicekwitansitandaterimaDetailComponent implements OnInit {
  
   ngOnInit() {
     this.viewCessieDetailObj.viewInput = "./assets/ucviewgeneric/viewCessieDetail.json";
+    var datePipe = new DatePipe("en-US");
     if (this.pageType == "add") {
-
+      this.receiptDsfObj = new ReceiptDsfObj();
+      this.receiptDsfObj.CessieNo = this.CessieNo;
+      this.http.post(URLConstantDsf.GenerateReceiptFormCode, this.receiptDsfObj).subscribe(
+        (response) => {
+          this.resultData = response;
+          this.DetailInformationForm.patchValue({
+            NoInvoice: this.resultData.InvoiceNo,
+            NoKwitansi: this.resultData.KwitansiNo,
+            NoTandaTerima: this.resultData.TandaTerimaNo
+          })
+        })
     }
     else if (this.pageType == "edit") {
       this.receiptDsfObj = new ReceiptDsfObj();
       this.receiptDsfObj.CessieNo = this.CessieNo;
-      this.http.post(URLConstantDsf.GetReceiptFormByCessieNo, {Id : this.receiptDsfObj.CessieNo}).subscribe(
+      this.http.post(URLConstantDsf.GetReceiptFormByCessieNo, this.receiptDsfObj).subscribe(
         (response) => {
           this.resultData = response;
           this.DetailInformationForm.patchValue({
-            NoInvoice: this.resultData.NoInvoice,
-            NoKwitansi: this.resultData.NoKwitansi,
-            NoTandaTerima: this.resultData.NoTandaTerima,
-            NoAgreementFactoring: this.resultData.NoAgreementFactoring,
-            AgreementFactoringDate: this.resultData.AgreementFactoringDate,
+            NoInvoice: this.resultData.InvoiceNo,
+            NoKwitansi: this.resultData.KwitansiNo,
+            NoTandaTerima: this.resultData.TandaTerimaNo,
+            NoAgreementFactoring: this.resultData.AgrmntFacNo,
+            AgreementFactoringDate: datePipe.transform(this.resultData.AgrmntFacDt, "yyyy-MM-dd"),
             DocumentSigner: this.resultData.DocSignCol,
             PositionSigner: this.resultData.PositionSignCol,
           })
@@ -82,13 +94,13 @@ export class InvoicekwitansitandaterimaDetailComponent implements OnInit {
     this.receiptDsfObj.RowVersion = "";
 
     this.receiptDsfObj.CessieNo = this.CessieNo;
-    this.receiptDsfObj.InvoiceNo = this.DetailInformationForm.controls[""].value;
-    this.receiptDsfObj.KwitansiNo = this.DetailInformationForm.controls[""].value;
-    this.receiptDsfObj.TandaTerimaNo = this.DetailInformationForm.controls[""].value;
-    this.receiptDsfObj.AgrmntFacNo = this.DetailInformationForm.controls[""].value;
-    this.receiptDsfObj.AgrmntFacDt = this.DetailInformationForm.controls[""].value;
-    this.receiptDsfObj.DocSignCol = this.DetailInformationForm.controls[""].value;
-    this.receiptDsfObj.PositionSignCol = this.DetailInformationForm.controls[""].value;
+    this.receiptDsfObj.InvoiceNo = this.DetailInformationForm.controls["NoInvoice"].value;
+    this.receiptDsfObj.KwitansiNo = this.DetailInformationForm.controls["NoKwitansi"].value;
+    this.receiptDsfObj.TandaTerimaNo = this.DetailInformationForm.controls["NoTandaTerima"].value;
+    this.receiptDsfObj.AgrmntFacNo = this.DetailInformationForm.controls["NoAgreementFactoring"].value;
+    this.receiptDsfObj.AgrmntFacDt = this.DetailInformationForm.controls["AgreementFactoringDate"].value;
+    this.receiptDsfObj.DocSignCol = this.DetailInformationForm.controls["DocumentSigner"].value;
+    this.receiptDsfObj.PositionSignCol = this.DetailInformationForm.controls["PositionSigner"].value;
 
     if (this.pageType == "add") {
       this.http.post(URLConstantDsf.AddReceiptForm, this.receiptDsfObj).subscribe(
@@ -100,7 +112,7 @@ export class InvoicekwitansitandaterimaDetailComponent implements OnInit {
   }
   else {
     this.receiptDsfObj.RowVersion = this.resultData.RowVersion;
-    this.http.post(URLConstantDsf.EditReceiptForm, this.receiptDsfObj).subscribe(
+    this.http.post(URLConstantDsf.AddReceiptForm, this.receiptDsfObj).subscribe(
       (response) => {
         this.toastr.successMessage(response['message']);
         AdInsHelper.RedirectUrl(this.router,[NavigationConstantDsf.REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_PAGING],{});

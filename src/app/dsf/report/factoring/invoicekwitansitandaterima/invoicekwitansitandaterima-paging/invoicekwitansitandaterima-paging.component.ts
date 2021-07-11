@@ -43,14 +43,14 @@ export class InvoicekwitansitandaterimaPagingComponent implements OnInit {
 
     let reportParamObj: ReportParamObj = new ReportParamObj();
     reportParamObj.paramKey = "CessieNo";
-    reportParamObj.paramValue = "06/CS-KTB/05/21";
+    reportParamObj.paramValue = ev.RowObj.CessieNo;
     reportParamObj.paramAssignment = 1;
     this.RdlcReport.ReportInfo.ReportParameters.push(reportParamObj);
     
     this.http.post(URLConstant.GenerateReportR3, this.RdlcReport).subscribe(
       (response) => {
         let linkSource: string = 'data:application/pdf;base64,' + response["ReportFile"];
-        let fileName: string =  "Invoice_Tanda_Terima"+"06/CS-KTB/05/21"+ ".pdf";
+        let fileName: string =  "Invoice_Kwitansi_TandaTerima_"+ev.RowObj.CessieNo+ ".pdf";
         const downloadLink = document.createElement("a");
         downloadLink.href = linkSource;
         downloadLink.download = fileName;

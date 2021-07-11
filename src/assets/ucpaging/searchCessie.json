@@ -70,8 +70,8 @@
                         {
                             "conditions": [
                                 {
-                                    "property": "ClientName",
-                                    "value": "PT KRAMA YUDHA TIGA BERLIAN",
+                                    "property": "ResultInvoice",
+                                    "value": "0",
                                     "restriction": "EQ"
                                 }
                             ],
@@ -99,8 +99,8 @@
                         {
                             "conditions": [
                                 {
-                                    "property": "ClientName",
-                                    "value": "PT. MITSUBISHI MOTOR",
+                                    "property": "ResultInvoice",
+                                    "value": "1",
                                     "restriction": "EQ"
                                 }
                             ],
@@ -130,9 +130,47 @@
             ]
         },
         {
-            "type": "callback",
+            "type": "action",
             "position": "center",
-            "property": "CessieNo"
+            "action": [
+                {
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "property": "ResultInvoice",
+                                    "value": "0",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "icon": "ft-printer",
+                                "property": "CessieNo"
+                                
+                            },
+                            "isHide": true
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "ResultInvoice",
+                                    "value": "1",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "callback",
+                                "icon": "ft-printer",
+                                "property": "CessieNo"
+                            },
+                            "isHide": false
+                        }
+                    ]
+                }
+            ]
+            
         }
     ]
 }
