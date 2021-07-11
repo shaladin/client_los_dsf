@@ -320,6 +320,7 @@ export const ROUTES: RouteInfo[] = [
       {
         Path: '', Title: 'Report', Icon: '', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
         Submenu: [
+          { Path: NavigationConstantDsf.REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_PAGING, Title: 'Print Invoice,Kwitansi,Tanda Terima', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
           { Path: NavigationConstantDsf.REPORT_FACT_MORNING_MONITORING, Title: 'Morning Monitoring', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
           { Path: NavigationConstantDsf.REPORT_FACT_AFTERNOON_MONITORING, Title: 'Afternoon Monitoring', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
           { Path: NavigationConstantDsf.REPORT_FACT_COLLATERAL, Title: 'Collateral', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},

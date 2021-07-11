@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
 import { AfternoonmonitoringComponent } from './report/factoring/afternoonmonitoring/afternoonmonitoring.component';
 import { CollateralComponent } from './report/factoring/collateral/collateral.component';
+import { InvoicekwitansitandaterimaDetailComponent } from './report/factoring/invoicekwitansitandaterima/invoicekwitansitandaterima-detail/invoicekwitansitandaterima-detail.component';
+import { InvoicekwitansitandaterimaPagingComponent } from './report/factoring/invoicekwitansitandaterima/invoicekwitansitandaterima-paging/invoicekwitansitandaterima-paging.component';
 import { MorningmonitoringComponent } from './report/factoring/morningmonitoring/morningmonitoring.component';
 import { NewallocationceilingComponent } from './report/factoring/newallocationceiling/newallocationceiling.component';
 import { Reminder1Component } from './report/factoring/reminder1/reminder1.component';
@@ -77,6 +79,30 @@ const routes: Routes = [
         component: NewallocationceilingComponent,
         data: {
           title: "Report Fact New Allocation Ceiling"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_PAGING,
+        component: InvoicekwitansitandaterimaPagingComponent,
+        data: {
+          title: "Report Fact Invoice Kwitansi Tanda Terima Paging"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.PRINT_REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL,
+        component: InvoicekwitansitandaterimaDetailComponent,
+        data: {
+          title: "Report Fact Invoice Kwitansi Tanda Terima Detail"
         }
       }
     ]

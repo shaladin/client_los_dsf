@@ -5,9 +5,9 @@
 export const environment = {
   production: false,
   navbarColor: 'transparent',
-  //losUrl: 'http://localhost:5001',
+  losUrl: 'http://localhost:5000',
   //FoundationR3Url: 'http://localhost:5000',
-  losUrl: 'http://los-be.confins.one:8888',
+  //losUrl: 'http://los-be.confins.one:8888',
   FoundationR3Url: 'http://foundation-be.confins.one:8888',
   DMSUrl : "http://sky.ad-ins.com/LiteDMS_POC/Integration/ViewDoc.aspx",
   AMSUrl : "http://r3app-server.ad-ins.com/AMS_DEMO",

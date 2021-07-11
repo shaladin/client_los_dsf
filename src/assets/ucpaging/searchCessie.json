@@ -1,0 +1,138 @@
+{
+    "title": "Search Cessie Data",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "A.CESSIE_NO",
+            "id": "CessieNo",
+            "value": "",
+            "label": "Cessie Number",
+            "placeholder": "Placeholder"
+        }
+    ],
+  "querystring": {
+    "name": "searchCessie"
+  },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Cessie Number",
+            "name": "CessieNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Client",
+            "name": "ClientName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Cessie Date",
+            "name": "CessieDate"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Entry"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Print"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CessieNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "ClientName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CessieDate"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "property": "ClientName",
+                                    "value": "PT KRAMA YUDHA TIGA BERLIAN",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "CessieID",
+                                        "property": "CessieID"
+                                    },
+                                    {
+                                        "type": "CessieNo",
+                                        "property": "CessieNo"
+                                    },
+                                    {
+                                        "type": "mode",
+                                        "property": "add"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "ClientName",
+                                    "value": "PT. MITSUBISHI MOTOR",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "CessieID",
+                                        "property": "CessieID"
+                                    },
+                                    {
+                                        "type": "CessieNo",
+                                        "property": "CessieNo"
+                                    },
+                                    {
+                                        "type": "mode",
+                                        "property": "edit"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "callback",
+            "position": "center",
+            "property": "CessieNo"
+        }
+    ]
+}

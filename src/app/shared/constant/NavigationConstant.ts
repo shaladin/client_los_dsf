@@ -1,4 +1,5 @@
 import { PathConstant } from "./PathConstant";
+import { PathConstantDsf } from "./PathConstantDsf";
 
 export class NavigationConstant {
 
@@ -334,4 +335,8 @@ export class NavigationConstant {
   //#region Pefindo View
   public static PEFINDO_VIEW = "/" + PathConstant.VIEW + "/" + PathConstant.VIEW_PEFINDO + "/" + PathConstant.PEFINDO_VIEW;
   //#endregion
+
+  //#region Self Custom
+  public static REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL;
+  //#endregion 
 }

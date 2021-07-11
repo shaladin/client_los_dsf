@@ -1,0 +1,84 @@
+<div class="col-md-12">
+  <div class="card">
+  <div class="card-body">
+   <lib-ucviewgeneric [viewGenericObj]="viewCessieDetailObj"></lib-ucviewgeneric>
+     <!-- <app-mou-main-info [MouCustId]="MouCustId"></app-mou-main-info> -->
+     <div class="px-3">
+        <div class="cessieData">
+           <form class="form form-horizontal" [formGroup]="DetailInformationForm" (ngSubmit)="DetailInformationForm.valid && SaveForm()"
+           #enjiForm="ngForm">
+           <div class="form-body">
+              <lib-ucSubsection [id]="'detailInformationId'" [title]="'Detail Information'" [panel]="'detailInformation'">
+              </lib-ucSubsection>
+              <div id="detailInformation">
+                 <div class="form-group row">
+                    <label class="col-md-3 adInsLabel adins-required-label" translate>No Invoice</label>
+                    <div class="col-md-4">
+                       <input type="text" class="form-control adInsInput" formControlName="NoInvoice"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.NoInvoice.invalid }">
+                       <lib-uc-show-errors  [control]="DetailInformationForm.controls.NoInvoice" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                 </div>
+                 <div class="form-group row">
+                    <label class="col-md-3 adInsLabel adins-required-label" translate>No Kwitansi</label>
+                    <div class="col-md-4">
+                       <input type="text" class="form-control adInsInput" formControlName="NoKwitansi"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.NoKwitansi.invalid }">
+                       <lib-uc-show-errors  [control]="DetailInformationForm.controls.NoKwitansi" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                 </div>
+                 <div class="form-group row">
+                    <label class="col-md-3 adInsLabel adins-required-label" translate>No Tanda Terima</label>
+                    <div class="col-md-4">
+                       <input type="text" class="form-control adInsInput" formControlName="NoTandaTerima"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.NoTandaTerima.invalid }">
+                       <lib-uc-show-errors  [control]="DetailInformationForm.controls.NoTandaTerima" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                 </div>
+                 <div class="form-group row">
+                    <label class="col-md-3 adInsLabel adins-required" translate>No Agreement Factoring</label>
+                    <div class="col-md-4">
+                     <input type="text" class="form-control adInsInput" formControlName="NoAgreementFactoring"
+                     [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.NoAgreementFactoring.invalid }" >
+                  <lib-uc-show-errors  [control]="DetailInformationForm.controls.NoAgreementFactoring" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                 </div>
+                 <div class="form-group row">
+                    <label class="col-md-3 adInsLabel adins-required" translate>Agreement Factoring Date</label>
+                    <div class="col-md-4">
+                       <input type="date" class="form-control adInsInput" formControlName="AgreementFactoringDate"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.AgreementFactoringDate.invalid }" >
+                       <lib-uc-show-errors  [control]="DetailInformationForm.controls.AgreementFactoringDate" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>
+                 </div>
+                 <div class="form-group row">
+                    <label class="col-md-3 adInsLabel adins-required" translate>Document Signer</label>
+                    <div class="col-md-4">
+                       <input type="text" class="form-control adInsInput" formControlName="DocumentSigner"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.DocumentSigner.invalid }">
+                       <lib-uc-show-errors  [control]="DetailInformationForm.controls.DocumentSigner" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                    </div>                    
+                 </div>
+                 <div class="form-group row">
+                  <label class="col-md-3 adInsLabel adins-required" translate>Position Signer</label>
+                  <div class="col-md-4">
+                     <input type="text" class="form-control adInsInput" formControlName="PositionSigner"
+                        [ngClass]="{ 'is-invalid': enjiForm.submitted && DetailInformationForm.controls.PositionSigner.invalid }">
+                     <lib-uc-show-errors  [control]="DetailInformationForm.controls.PositionSigner" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                  </div>
+               </div>
+                 <div class="form-actions right" style="text-align: right;">
+                    <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
+                       translate>
+                    <i class="ft-x"></i> Cancel
+                    </button>
+                    <button type="submit" class="btn btn-raised btn-primary" translate>
+                    <i class="far fa-check-square"></i> Submit
+                    </button>
+                  </div>
+              </div>
+           </div>
+          </form>
+        </div>
+     </div>
+  </div>
