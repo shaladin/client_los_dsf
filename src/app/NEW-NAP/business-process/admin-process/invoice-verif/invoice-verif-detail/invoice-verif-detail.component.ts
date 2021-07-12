@@ -125,31 +125,16 @@ export class InvoiceVerifDetailComponent implements OnInit {
       this.PlafondAmt = response["PlafondAmt"];
       this.MrMouTypeCode = response["MrMouTypeCode"];
 
-      if (this.MrMouTypeCode == CommonConstant.FACTORING) {
-        this.httpClient.post(URLConstant.GetListAppInvoiceFctrByAppId, request).subscribe((response) => {
-          this.listInvoice = response["AppInvoiceFctrObjs"];
-          var totalInvoice = 0;
-          for (let i = 0; i < this.listInvoice.length; i++) {
-            var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
-            fa_listInvoice.push(this.AddInvoiceControl(this.listInvoice[i]))
-            totalInvoice += this.listInvoice[i].InvoiceAmt;
-          }
-          this.OsPlafondAmt = this.PlafondAmt - totalInvoice;
-        });
-      }
-      else{
-        var DisbAmt = 0;
-        this.httpClient.post(URLConstant.GetListAppInvoiceXAppInvoiceDlrFncngHByAppId, {Id : this.AppId}).subscribe(
-          (response) => {
-            this.listInvoice = response["AppInvoiceDlrFncngHObj"];
-            for (let i = 0; i < this.listInvoice.length; i++) {
-              var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
-              fa_listInvoice.push(this.AddInvoiceControl(this.listInvoice[i]))
-            }
-            DisbAmt = this.listInvoice[0].DisbAmt;
-            this.OsPlafondAmt = this.PlafondAmt - DisbAmt;
-          });
-      }
+      this.httpClient.post(URLConstant.GetListAppInvoiceFctrByAppId, request).subscribe((response) => {
+        this.listInvoice = response["AppInvoiceFctrObjs"];
+        var totalInvoice = 0;
+        for (let i = 0; i < this.listInvoice.length; i++) {
+          var fa_listInvoice = this.InvoiceForm.get("Invoices") as FormArray;
+          fa_listInvoice.push(this.AddInvoiceControl(this.listInvoice[i]))
+          totalInvoice += this.listInvoice[i].InvoiceAmt;
+        }
+        this.OsPlafondAmt = this.PlafondAmt - totalInvoice;
+      });
     })
   }
 
@@ -185,7 +170,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
         this.listInvoice[i].Notes = item.get("InvoiceNotes").value;
         this.listInvoice[i].RowVersion = item.get("RowVersion").value;
       }
-  
+
       this.ReturnHandlingHData.AppId = this.AppId;
       this.ReturnHandlingHData.WfTaskListId = this.WfTaskListId;
       if(this.IsReturnOn){
@@ -193,20 +178,20 @@ export class InvoiceVerifDetailComponent implements OnInit {
         this.ReturnHandlingHData.ReturnNotes = this.InvoiceForm.controls.Notes.value;
         this.ReturnHandlingHData.ReturnFromTrxType = CommonConstant.VerfTrxTypeCodeInvoice;
       }
-  
-      var request = { 
+
+      var request = {
         Invoices: this.listInvoice,
         IsReturn: this.IsReturnOn,
         ReturnHandlingHObj : this.ReturnHandlingHData
       };
-  
+
       this.httpClient.post(URLConstant.UpdateAppInvoiceFctr, request).subscribe((response) => {
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_ADM_PRCS_INVOICE_VERIF_PAGING], { BizTemplateCode: 'FCTR' });
       });
     }
-    
+
   }
-  
+
   GetCallBack(ev) {
     if (ev.Key == "ViewProdOffering") {
       AdInsHelper.OpenProdOfferingViewByCodeAndVersion(ev.ViewObj.ProdOfferingCode, ev.ViewObj.ProdOfferingVersion);
@@ -230,7 +215,7 @@ export class InvoiceVerifDetailComponent implements OnInit {
     this.InvoiceForm.controls.Notes.updateValueAndValidity();
     this.InvoiceForm.controls.Reason.updateValueAndValidity();
   }
-  
+
   onChangeReason(ev) {
     this.InvoiceForm.patchValue({
       ReasonDesc: ev.target.selectedOptions[0].text
