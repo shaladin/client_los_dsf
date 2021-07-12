@@ -419,9 +419,11 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-md-2  adInsLabel" translate>Owner Name </label>
+                  <label class="col-md-2 adins-required-label" translate>Owner Name </label>
                   <div class="col-md-4">
-                    <input type="text" class="form-control" formControlName="OwnerName">
+                    <input type="text" class="form-control" formControlName="OwnerName" [ngClass]="{ 'is-invalid': enjiForm.submitted && AssetDataForm.controls.OwnerName.invalid}">
+                    <lib-uc-show-errors [control]="AssetDataForm.controls.OwnerName" [submit]="enjiForm.submitted">
+                    </lib-uc-show-errors>
                   </div>
                   <label class="col-md-2  adins-required-label" translate>Id Type </label>
                   <div class="col-md-4">
