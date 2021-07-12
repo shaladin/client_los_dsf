@@ -25,6 +25,7 @@ import { CrdRvwDiffWithInProcessAppComponent } from './crd-rvw-cust-info/compone
 import { CrdRvwLegalDocComponent } from './crd-rvw-legal-doc/crd-rvw-legal-doc.component';
 import { CrdRvwTableCustComponent } from './crd-rvw-fam-guar/crd-rvw-table-cust/crd-rvw-table-cust.component';
 import { AppRvwSummaryAssetComponent } from "./app-rvw-summary-asset/app-rvw-summary-asset.component";
+import { CrdRvwThirdPartyCheckingDsfComponent } from "app/NEW-NAP/DSF/credit-review-component-dsf/crd-rvw-third-party-checking-dsf/crd-rvw-third-party-checking-dsf.component";
 
 @NgModule({
     exports: [
@@ -41,8 +42,9 @@ import { AppRvwSummaryAssetComponent } from "./app-rvw-summary-asset/app-rvw-sum
         CrdRvwBankStmntComponent, 
         CrdRvwRapindoComponent,
         CrdRvwDukcapilHistComponent,
-    CrdRvwLegalDocComponent,
-    AppRvwSummaryAssetComponent
+        CrdRvwLegalDocComponent,
+        AppRvwSummaryAssetComponent,
+        CrdRvwThirdPartyCheckingDsfComponent,
     ],
     imports: [
         CommonModule,
@@ -70,8 +72,9 @@ import { AppRvwSummaryAssetComponent } from "./app-rvw-summary-asset/app-rvw-sum
         CrdRvwDiffWithMasterCustComponent,
         CrdRvwDiffWithInProcessAppComponent,
         CrdRvwLegalDocComponent,
-      CrdRvwTableCustComponent,
-      AppRvwSummaryAssetComponent
+        CrdRvwTableCustComponent,
+        AppRvwSummaryAssetComponent,
+        CrdRvwThirdPartyCheckingDsfComponent,
     ],
     providers: [
         NGXToastrService

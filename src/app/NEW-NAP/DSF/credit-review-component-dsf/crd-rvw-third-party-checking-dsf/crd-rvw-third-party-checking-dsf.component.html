@@ -1,0 +1,75 @@
+<div *ngIf="IsUseDigitalization == '1'">
+  <lib-ucSubsection [id]="'ThirdPartyId'" [title]="'Third Party Checking'" [panel]="'ThirdParty'">
+  </lib-ucSubsection>
+  <div id="ThirdParty">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6 ">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control" translate> Dukcapil </label>
+            </div>
+            <div class="col-md-6 ">
+              <label class="label-control"> {{ThirdPartyDukcapilRsltObj?.Result}} : {{ThirdPartyDukcapilRsltObj?.DiffItem}}</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control" translate> Rapindo </label>
+            </div>
+            <div class="col-md-6 ">
+              <label class="label-control"> Data Exist: {{RapindoDataObj.DataExist}}, Active: {{RapindoDataObj.DataActive}}, Not Active: {{RapindoDataObj.DataNoActive}} </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control" translate> Profind </label>
+            </div>
+            <div class="col-md-6 ">
+              <!-- <label class="label-control"> {{ThirdPartyProfindRsltObj.}} </label> -->
+            </div>
+          </div>
+        </div>
+    
+        <div class="col-md-6 ">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control" translate> Pefindo </label>
+            </div>
+            <div class="col-md-6 ">
+              <label class="label-control"> Score: {{ThirdPartyPefindoRsltObj?.Score}}, B2: {{ThirdPartyPefindoRsltObj?.Risk}}, Trend: {{ThirdPartyPefindoRsltObj?.Trend}} </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <label class="label-control" translate> SLIK </label>
+            </div>
+            <div class="col-md-6 ">
+              <label class="label-control"> Data Exist in {{ThirdPartySlikRsltObj?.DebtorCount}}, Lancar: {{ThirdPartySlikRsltObj?.PerformingCount}} </label>
+              <label class="label-control"> Dalam Perhation Khusus: {{ThirdPartySlikRsltObj?.SpecialMentionCount}} </label>
+            </div>
+          </div>
+          <div class="row">
+          <div class="col-md-4">
+            <label class="label-control" translate> Data Robot </label>
+          </div>
+          <div class="col-md-2">
+            <span id="CustIndicator" style="float: right;">
+              <i [ngClass]="dataRobotInfoObj.DataRobotIndicator == null ? 'far fa-circle' : dataRobotInfoObj.DataRobotIndicator != whiteIndicator ? 'fa fa-circle' : 'far fa-circle'"
+                [ngStyle]="{'color': dataRobotInfoObj.DataRobotIndicator == null ? '' : dataRobotInfoObj.DataRobotIndicator != whiteIndicator ? dataRobotInfoObj.DataRobotIndicator : ''}" class="font-medium-3 tooltips">
+                <span class="tooltipstext">
+                  <span *ngIf="dataRobotInfoObj.DataRobotIndicatorDescr != null && dataRobotInfoObj.DataRobotIndicatorDescr != ''"> {{dataRobotInfoObj.DataRobotIndicatorDescr}} </span>
+                  <span *ngIf="dataRobotInfoObj.DataRobotIndicatorDescr == null || dataRobotInfoObj.DataRobotIndicatorDescr == ''"> No Data </span>
+                </span>
+              </i>
+            </span>
+          </div>
+          <div class="col-md-4 ">
+            <label class="label-control"> {{dataRobotInfoObj.DataRobotIndicatorValue}} / {{dataRobotInfoObj.DataRobotIndicatorDescr}} </label>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

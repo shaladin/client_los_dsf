@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-md-12">
+    <label class="adInsLabel" style="font-weight: bold;"> Data Robot </label>
+  </div>
+</div>
+<div *ngIf="dataRobotInfoObj?.DataRobotIndicatorValue > 0" class="row">
+  <span class="fa-stack fa-4x">
+    <span class="fa fa-stack-1x"></span>
+    <strong class="fa-stack-1x"style="font-size: 15px;">{{dataRobotInfoObj?.DataRobotIndicatorDescr}}</strong>
+  </span>
+  <span class="fa-stack fa-4x">
+    <i class="fa fa-circle fa-stack-2x" [ngStyle]="{'color': dataRobotInfoObj?.DataRobotIndicator}"></i>
+    <strong class="fa-stack-1x" style="color: white; font-size: 50%;">{{dataRobotInfoObj?.DataRobotIndicatorValue}}</strong>
+  </span>
+</div>
+

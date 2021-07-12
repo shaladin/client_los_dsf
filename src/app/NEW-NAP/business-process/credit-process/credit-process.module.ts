@@ -54,6 +54,11 @@ import { ViewApplicationDataMultiComponent } from './credit-investigation/compon
 import { CreditReviewPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-dsf/credit-review-paging-dsf/credit-review-paging-dsf.component";
 import { CreditReviewCfnaPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-cfna-dsf/credit-review-cfna-paging-dsf/credit-review-cfna-paging-dsf.component";
 import { CreditReviewDetailDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-dsf/credit-review-detail-dsf/credit-review-detail-dsf.component";
+import { CreditReviewCfnaDetailDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-review-cfna-dsf/credit-review-cfna-detail-dsf/credit-review-cfna-detail-dsf.component";
+import { CreditApprovalDetailDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-approval-dsf/credit-approval-detail-dsf/credit-approval-detail-dsf.component";
+import { CreditApprovalPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-approval-dsf/credit-approval-paging-dsf/credit-approval-paging-dsf.component";
+import { CreditApprovalCfnaPagingDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-approval-cfna-dsf/credit-approval-cfna-paging-dsf/credit-approval-cfna-paging-dsf.component";
+import { CreditApprovalCfnaDetailDsfComponent } from "app/NEW-NAP/DSF/business-process-dsf/credit-process-dsf/credit-approval-cfna-dsf/credit-approval-cfna-detail-dsf/credit-approval-cfna-detail-dsf.component";
 
 
 export const customCurrencyMaskConfig = {
@@ -132,7 +137,12 @@ export const customCurrencyMaskConfig = {
     ViewApplicationDataMultiComponent,
     CreditReviewPagingDsfComponent,
     CreditReviewCfnaPagingDsfComponent,
-    CreditReviewDetailDsfComponent
+    CreditReviewDetailDsfComponent,
+    CreditReviewCfnaDetailDsfComponent,
+    CreditApprovalDetailDsfComponent,
+    CreditApprovalPagingDsfComponent,
+    CreditApprovalCfnaPagingDsfComponent,
+    CreditApprovalCfnaDetailDsfComponent
   ],
   providers: [
     NGXToastrService

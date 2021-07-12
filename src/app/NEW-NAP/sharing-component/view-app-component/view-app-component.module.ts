@@ -42,6 +42,8 @@ import { UcapprovalHistoryModule } from "@adins/ucapproval-history";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { createTranslateLoader } from "app/app.module";
 import { HttpClient } from "@angular/common/http";
+import { ViewSumamryAppCfnaDsfComponent } from "app/NEW-NAP/DSF/credit-review-component-dsf/view-app-component-dsf/view-sumamry-app-cfna-dsf/view-sumamry-app-cfna-dsf.component";
+import { ViewAppScoreGradeDatarobotDsfComponent } from "app/NEW-NAP/DSF/credit-review-component-dsf/view-app-component-dsf/view-app-score-grade-datarobot-dsf/view-app-score-grade-datarobot-dsf.component";
 
 @NgModule({
   exports: [
@@ -76,7 +78,8 @@ import { HttpClient } from "@angular/common/http";
     ViewAppScoreGradeDukcapilComponent,
     NewApplicationDataComponent,
     ViewSummaryAppCfnaComponent,
-    ViewSummaryAppROSComponent
+    ViewSummaryAppROSComponent,
+    ViewSumamryAppCfnaDsfComponent
   ],
   imports: [
     CommonModule,
@@ -126,7 +129,9 @@ import { HttpClient } from "@angular/common/http";
     ViewAppScoreGradeDsrComponent,
     ViewAppScoreGradeDukcapilComponent,
     ViewSummaryAppCfnaComponent,
-    ViewSummaryAppROSComponent
+    ViewSummaryAppROSComponent,
+    ViewSumamryAppCfnaDsfComponent,
+    ViewAppScoreGradeDatarobotDsfComponent
   ],
   providers: [
     NGXToastrService
