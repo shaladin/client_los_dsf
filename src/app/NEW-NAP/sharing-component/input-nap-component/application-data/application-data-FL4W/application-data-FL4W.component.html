@@ -7,12 +7,12 @@
 
           <form class="form form-horizontal" [formGroup]="NapAppModelForm"
             (ngSubmit)="NapAppModelForm.valid && ClickSave()" #enjiForm="ngForm">
-            <!-- Sales Info -->
-            <lib-ucSubsection [id]="'salesInfomationId'" [title]="'Sales Information'" [panel]="'salesInfomation'">
+            <!-- MO Info -->
+            <lib-ucSubsection [id]="'moInfomationId'" [title]="'MO Information'" [panel]="'moInfomation'">
             </lib-ucSubsection>
-            <div class="form-body" id="salesInfomation">
+            <div class="form-body" id="moInfomation">
               <div class="form-group row">
-                <!-- Sales Officer -->
+                <!-- MO Officer -->
                 <div class="form-group col-md-2 adins-required">
                   <label class="adInsLabel" translate>MO Officer </label>
                 </div>
@@ -24,13 +24,13 @@
                   <lib-uc-show-errors [control]="NapAppModelForm.controls.SalesOfficerName"
                     [submit]="enjiForm.submitted"></lib-uc-show-errors>
                 </div>
-                <!-- Sales Supervisor -->
+                <!-- MO Supervisor -->
                 <label class="col-md-2 adInsLabel" translate>MO Supervisor </label>
                 <label class="col-md-4 adInsLabel">{{NapAppModelForm.controls.SalesHeadName.value}} </label>
               </div>
 
               <div class="form-group row">
-                <!-- Sales Notes -->
+                <!-- MO Notes -->
                 <label class="col-md-2 adInsLabel" translate>MO Notes </label>
                 <div class="col-md-4">
                   <textarea class="form-control adInsInput width-75-per" id="basicTextarea" formControlName="SalesNotes"
