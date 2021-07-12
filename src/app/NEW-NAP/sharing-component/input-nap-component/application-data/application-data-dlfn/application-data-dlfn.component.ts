@@ -458,7 +458,6 @@ export class ApplicationDataDlfnComponent implements OnInit {
       this.SalesAppInfoForm.controls.MrWopCode.disable();
       this.SalesAppInfoForm.controls.TopDays.disable();
       this.SalesAppInfoForm.controls.IsDisclosed.disable();
-      this.SalesAppInfoForm.controls.Tenor.disable();
       if (this.mode != "edit") {
         this.SalesAppInfoForm.controls.Tenor.setValue(1);
       }
@@ -592,7 +591,7 @@ export class ApplicationDataDlfnComponent implements OnInit {
 
     if (this.salesAppInfoObj.MrInstTypeCode == CommonConstant.InstTypeSingle) {
       this.salesAppInfoObj.MrInstSchemeCode = "EP";
-      this.salesAppInfoObj.Tenor = 1;
+      //this.salesAppInfoObj.Tenor = 1;
       this.salesAppInfoObj.NumOfInst = this.salesAppInfoObj.Tenor;
       this.isSingle = true;
     } else {

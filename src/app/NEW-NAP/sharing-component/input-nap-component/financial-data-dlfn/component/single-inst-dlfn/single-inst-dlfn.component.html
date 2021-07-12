@@ -53,7 +53,8 @@
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <input type="date" class="form-control" formControlName="EstEffDt" (focusout)="EstEffDtFocusOut($event)"
-                required [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EstEffDt.invalid}">
+                required [ngClass]="{ 'is-invalid': enjiForm.submitted && ParentForm.controls.EstEffDt.invalid}"
+                [readonly]="ParentForm.controls.TopBased.value == 'INVC_DT'">
               <lib-uc-show-errors [control]="ParentForm.controls.EstEffDt" [submit]="enjiForm.submitted">
               </lib-uc-show-errors>
             </div>
@@ -89,10 +90,10 @@
               <label>{{ParentForm.controls.TotalFeeAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              Total Top Amount
+              Top Interest Rate
             </div>
             <div class="col-md-3 form-inline form-inline-right">
-              {{ParentForm.controls.TotalTopAmount.value | number : '1.2-2'}}
+              {{ParentForm.controls.TopInterestRatePrcnt.value | number : '.2'}} %
             </div>
           </div>
         </div>
@@ -124,6 +125,12 @@
             </div>
             <div class="col-md-3 form-inline form-inline-right">
               <label>{{ParentForm.controls.NtfAmt.value | number : '1.2-2'}}</label>
+            </div>
+            <div class="col-md-3 form-inline">
+              Total Top Amount
+            </div>
+            <div class="col-md-3 form-inline form-inline-right">
+              {{ParentForm.controls.TotalTopAmount.value | number : '1.2-2'}}
             </div>
             <!-- <div class="col-md-3 form-inline">
               <label>Total Insurance Capitalized</label>
