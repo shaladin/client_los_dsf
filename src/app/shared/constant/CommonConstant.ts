@@ -329,6 +329,7 @@ export class CommonConstant {
   public static AddrTypeCompany = "COMPANY";
   public static AddrTypeEmergency = "EMERGENCY";
   public static AddrTypeContactInfo = "CONTACT";
+  public static AddrTypeBiz = "BIZ";
 
   //CUST MODEL
   public static CustModelProfessional = "PROF";

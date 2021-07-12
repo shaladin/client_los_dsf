@@ -169,6 +169,9 @@ export class ExceptionConstant {
     public static MOU_DT_MUST_GREATER_THAN_BUSINESS_DT = "MOU Date Must be Greater than Equal D - 1 Business Date";
     public static START_DT_MUST_GREATER_THAN_EQUAL_BUSINESS_DT = "Start Date Must be Greater than Equal Business Date";
     public static COVERAGE_CANT_0_LESS = "Coverage Amount Cant be 0 or less";
+
+    public static PLEASE_COMPLETE_RESIDENCE_ADDRESS = "Please complete Residence Address First";
+    public static PLEASE_COMPLETE_BIZ_ADDRESS = "Please Complete Business Address First";
     
 }
 
