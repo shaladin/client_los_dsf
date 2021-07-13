@@ -21,6 +21,7 @@ import { RegexService } from 'app/shared/services/regex.services';
 import { AdInsHelper } from 'app/shared/AdInsHelper';
 import { CookieService } from 'ngx-cookie';
 import { ReqRefMasterByTypeCodeAndMappingCodeObj } from 'app/shared/model/RefMaster/ReqRefMasterByTypeCodeAndMappingCodeObj.Model';
+import { ExceptionConstant } from 'app/shared/constant/ExceptionConstant';
 
 @Component({
   selector: 'app-emergency-contact-tab',
@@ -45,17 +46,22 @@ export class EmergencyContactTabComponent implements OnInit {
   copyAddressFromObj: any;
   appCustEmrgncCntctObj: AppCustEmrgncCntctObj = new AppCustEmrgncCntctObj();
   BusinessDt: Date;
+  MaxDate: Date;
+  IsCustRelationshipReady: boolean = false;
+  IsGenderReady: boolean = false;
+  IsIdTypeReady: boolean = false;
+
 
   EmergencyContactForm = this.fb.group({
     ContactPersonName: [''],
     ContactPersonCustNo: [''],
     MrIdTypeCode: [''],
-    MrGenderCode: ['', Validators.required],
+    MrGenderCode: [''],
     IdNo: [''],
     BirthPlace: [''],
     IdExpiredDt: [''],
-    BirthDt: ['', Validators.required],
-    MrCustRelationshipCode: ['', Validators.required],
+    BirthDt: [''],
+    MrCustRelationshipCode: [''],
     MobilePhnNo1: ['', [Validators.required, Validators.pattern("^[0-9]+$")]],
     MobilePhnNo2: ['', Validators.pattern("^[0-9]+$")],
     Email: ['', Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$')],
@@ -74,6 +80,7 @@ export class EmergencyContactTabComponent implements OnInit {
     this.customPattern = new Array<CustomPatternObj>();
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = UserAccess.BusinessDt;
+    this.MaxDate = UserAccess.BusinessDt;
 
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url;
@@ -95,8 +102,10 @@ export class EmergencyContactTabComponent implements OnInit {
     this.InputLookupCustObj.isReady = true;
 
     this.InputUcAddressObj.inputField.inputLookupObj = new InputLookupObj();
+    this.InputUcAddressObj.inputField.inputLookupObj.isRequired = false;
     this.InputUcAddressObj.showSubsection = false;
     this.InputUcAddressObj.showFax = false;
+    this.InputUcAddressObj.isRequired = false;
     this.isUcAddressReady = true;
 
     await this.setDropdown();
@@ -109,9 +118,6 @@ export class EmergencyContactTabComponent implements OnInit {
         this.IdTypeObj = response[CommonConstant.RefMasterObjs];
         if (this.IdTypeObj.length > 0) {
           let idxDefault = this.IdTypeObj.findIndex(x => x["IsDefaultValue"]);
-          this.EmergencyContactForm.patchValue({
-            MrIdTypeCode: this.IdTypeObj[idxDefault]["MasterCode"]
-          });
           this.getInitPattern();
           this.ChangeIdType(this.IdTypeObj[idxDefault]["MasterCode"]);
         }
@@ -120,11 +126,6 @@ export class EmergencyContactTabComponent implements OnInit {
     await this.http.post(URLConstant.GetRefMasterListKeyValueActiveByCode, { RefMasterTypeCode: CommonConstant.RefMasterTypeCodeGender }).toPromise().then(
       (response) => {
         this.GenderObj = response[CommonConstant.ReturnObj];
-        if (this.GenderObj.length > 0) {
-          this.EmergencyContactForm.patchValue({
-            MrGenderCode: this.GenderObj[0].Key
-          });
-        }
       });
 
     let tempReq: ReqRefMasterByTypeCodeAndMappingCodeObj = new ReqRefMasterByTypeCodeAndMappingCodeObj();
@@ -135,9 +136,6 @@ export class EmergencyContactTabComponent implements OnInit {
         if (!this.IsMarried) {
           await this.removeSpouse();
         }
-        this.EmergencyContactForm.patchValue({
-          MrCustRelationshipCode: this.MrCustRelationshipObj[0].Key
-        });
       }
     );
 
@@ -155,13 +153,13 @@ export class EmergencyContactTabComponent implements OnInit {
         if (response.AppCustEmrgncCntctId != 0) {
           this.isDataExist = true;
           this.EmergencyContactForm.patchValue({
-            MrIdTypeCode: response.MrIdTypeCode,
-            MrGenderCode: response.MrGenderCode,
+            MrIdTypeCode: response.MrIdTypeCode == null? "" : response.MrIdTypeCode,
+            MrGenderCode: response.MrGenderCode == null? "" : response.MrGenderCode,
             IdNo: response.IdNo,
             BirthPlace: response.BirthPlace,
             IdExpiredDt: response.IdExpiredDt != null ? formatDate(response.IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
-            BirthDt: formatDate(response.BirthDt, 'yyyy-MM-dd', 'en-US'),
-            MrCustRelationshipCode: response.MrCustRelationshipCode,
+            BirthDt:  response.BirthDt != null ? formatDate(response.BirthDt, 'yyyy-MM-dd', 'en-US') : "",
+            MrCustRelationshipCode: response.MrCustRelationshipCode == null? "" : response.MrCustRelationshipCode,
             MobilePhnNo1: response.MobilePhnNo1,
             MobilePhnNo2: response.MobilePhnNo2,
             Email: response.Email
@@ -172,6 +170,7 @@ export class EmergencyContactTabComponent implements OnInit {
               MrGenderCode: ''
             })
           }
+          this.setValidatorPattern();
         }
         this.appCustEmrgncCntctObj.RowVersion = response["RowVersion"];
         this.InputLookupCustObj.nameSelect = response["ContactPersonName"];
@@ -198,6 +197,10 @@ export class EmergencyContactTabComponent implements OnInit {
         this.InputUcAddressObj.inputField.inputLookupObj.nameSelect = response["Zipcode"];
         this.InputUcAddressObj.inputField.inputLookupObj.jsonSelect = { Zipcode: response["Zipcode"] };
         this.InputUcAddressObj.default = this.UcAddrObj;
+
+        this.IsCustRelationshipReady = true;
+        this.IsGenderReady = true;
+        this.IsIdTypeReady = true;
       },
       error => {
         console.log(error);
@@ -234,6 +237,7 @@ export class EmergencyContactTabComponent implements OnInit {
             IdNo: response.CustObj.IdNo,
             IdExpiredDt: response.CustObj.IdExpiredDt != null ? formatDate(response.CustObj.IdExpiredDt, 'yyyy-MM-dd', 'en-US') : "",
           });
+          this.setValidatorPattern();
           this.InputLookupCustObj.nameSelect = response.CustObj.CustName;
           this.InputLookupCustObj.jsonSelect = { CustName: response.CustObj.CustName };
         }
@@ -331,6 +335,10 @@ export class EmergencyContactTabComponent implements OnInit {
     this.appCustEmrgncCntctObj.PhnExt3 = this.UcAddrObj.PhnExt3;
     this.appCustEmrgncCntctObj.Zipcode = this.EmergencyContactForm.controls["AddressZipcode"]["controls"].value.value;
 
+    if(this.checkEmergencyCustContactPerson() == false){
+      return;
+    }
+
     if (!this.isDataExist) {
       this.http.post(URLConstant.AddAppCustEmrgncCntct, this.appCustEmrgncCntctObj).subscribe(
         (response) => {
@@ -398,4 +406,37 @@ export class EmergencyContactTabComponent implements OnInit {
     }
   }
   //END OF URS-LOS-041
+
+  checkEmergencyCustContactPerson(){
+    var flag: boolean = true;
+
+    let max17Yodt = new Date(this.MaxDate);
+    let d1 = new Date(this.EmergencyContactForm.controls.BirthDt.value);
+    let d2 = new Date(this.MaxDate);
+    let d3 = new Date(this.EmergencyContactForm.controls.IdExpiredDt.value);
+    max17Yodt.setFullYear(d2.getFullYear() - 17);
+
+    if (d1 > max17Yodt) {
+      this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
+      flag = false;
+    }
+
+    if(d1 > d2){
+      this.toastr.warningMessage(ExceptionConstant.BIRTH_DATE_CANNOT_MORE_THAN + 'Business Date');
+      flag = false;
+    }
+
+    if(d2 > d3 || d2.getDate() === d3.getDate()){
+      let checkIdType = this.EmergencyContactForm.controls.MrIdTypeCode.value;
+      if(checkIdType == CommonConstant.MrIdTypeCodeEKTP || checkIdType == CommonConstant.MrIdTypeCodeNPWP || checkIdType == CommonConstant.MrIdTypeCodeAKTA){
+        flag = true;
+      }
+      else{
+        this.toastr.warningMessage(ExceptionConstant.ID_EXPIRED_DATE_CANNOT_LESS_THAN + 'Equal Business Date');
+        flag = false;
+      }
+    }
+
+    return flag;
+  }
 }
