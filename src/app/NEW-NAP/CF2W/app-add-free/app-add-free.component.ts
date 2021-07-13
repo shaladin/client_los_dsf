@@ -245,7 +245,8 @@ export class AppAddFreeComponent implements OnInit {
 
     this.http.post<GenericObj>(AddNapUrl, requestAddNapObj).subscribe(
       (response) => {
-        setTimeout(() => { this.spinner.show(); }, 10);
+        // setTimeout(() => { this.spinner.show(); }, 10);
+        setTimeout(() => {  }, 10);
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router,[NavigationConstant.NAP_CF2W_ADD_DETAIL], { "AppId": response.Id, "LobCode": this.LobCode });
       });

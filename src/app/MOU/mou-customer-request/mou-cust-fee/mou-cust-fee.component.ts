@@ -43,7 +43,7 @@ export class MouCustFeeComponent implements OnInit {
     modalMouFee.componentInstance.UsedRefFeeIdList = this.refFeeIdList;
     modalMouFee.result.then(
       (response) => {
-        this.spinner.show();
+        // this.spinner.show();
         this.httpClient.post(URLConstant.GetMouCustFeeForMouRequestByMouCustId, {Id: this.MouCustId}).subscribe(
           (response) => {
             this.mouCustFeeList = response[CommonConstant.ReturnObj];
@@ -54,7 +54,7 @@ export class MouCustFeeComponent implements OnInit {
             modalMouFee.componentInstance.UsedRefFeeIdList = this.refFeeIdList;
           }
         );
-        this.spinner.hide();
+        // this.spinner.hide();
         this.toastr.successMessage(response["message"]);
       }
     ).catch((error) => {});

@@ -132,7 +132,7 @@ export class ChangeMouCustAssetComponent implements OnInit {
     modalMouAsset.componentInstance.AssetTypeCode = this.MouCustClauseAssetForm.controls["AssetTypeCode"].value;
     modalMouAsset.result.then(
       (response) => {
-        this.spinner.show();
+        // this.spinner.show();
         this.IsAssetSelected = true;
         var mouAsset = new MouCustAssetObj();
         mouAsset.MouCustId = this.MouCustId;
@@ -142,7 +142,7 @@ export class ChangeMouCustAssetComponent implements OnInit {
         }
         this.mouAssetList.push(tempMouAsset);
 
-        this.spinner.hide();
+        // this.spinner.hide();
         this.toastr.successMessage(response["message"]);
 
         var listMou = this.parentForm.controls[this.identifier] as FormArray;

@@ -106,7 +106,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
     modalDOAppAsset.componentInstance.AppId = this.AppId;
     modalDOAppAsset.result.then(
       (response) => {
-        this.spinner.show();
+        // this.spinner.show();
         var doRequest = { Id: this.AgrmntId };
         this.httpClient.post(URLConstant.GetAssetListForDOMultiAsset, doRequest).subscribe(
           (response) => {
@@ -135,7 +135,7 @@ export class CreateDoMultiAssetComponent implements OnInit {
             }
           }
         );
-        this.spinner.hide();
+        // this.spinner.hide();
         this.toastr.successMessage(response["Message"]);
       }
     ).catch(() => {

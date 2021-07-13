@@ -315,8 +315,8 @@ export class NapDetailFormComponent implements OnInit {
     this.NapObj.AppCurrStep = Step;
     this.http.post<AppObj>(URLConstant.UpdateAppStepByAppId, this.NapObj).subscribe(
       (response) => {
-        this.spinner.show();
-        setTimeout(() => { this.spinner.hide(); }, 1500);
+        // this.spinner.show();
+        // setTimeout(() => { this.spinner.hide(); }, 1500);
       }
     )
   }

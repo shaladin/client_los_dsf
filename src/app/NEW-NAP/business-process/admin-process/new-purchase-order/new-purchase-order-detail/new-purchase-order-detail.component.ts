@@ -119,7 +119,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
     modalPOEntry.componentInstance.MouNo = this.POList[idx]["MouNo"];
     modalPOEntry.result.then(
       (response) => {
-        this.spinner.show();
+        // this.spinner.show();
         this.http.post(URLConstant.GetPurchaseOrderListForNewPOByAppId, { Id: this.AppId }).toPromise().then(
           (response) => {
             this.POList = response["PurchaseOrderForNewPOObjs"];
@@ -128,7 +128,7 @@ export class NewPurchaseOrderDetailComponent implements OnInit {
           (error) => {
           }
         );
-        this.spinner.hide();
+        // this.spinner.hide();
         this.toastr.successMessage(response["message"]);
       }
     ).catch(

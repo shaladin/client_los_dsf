@@ -205,7 +205,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
     modalCreateDO.componentInstance.DeliveryOrderHId = deliveryOrderHId;
     modalCreateDO.result.then(
       (response) => {
-        this.spinner.show();
+        // this.spinner.show();
         let GetDoObj = new ReqGetDOMultiAssetInformationObj();
         GetDoObj.AppId = this.appId;
         GetDoObj.AgrmntId = this.agrmntId;
@@ -249,7 +249,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
             this.isFinal = response[2]["IsFinal"];
           }
         );
-        this.spinner.hide();
+        // this.spinner.hide();
         this.toastr.successMessage(response["message"]);
       }
     ).catch((error) => {
@@ -282,7 +282,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
   deleteDO(deliveryOrderHId) {
     var confirmation = confirm("Are you sure to delete this data ?");
     if (confirmation == true) {
-      this.spinner.show();
+      // this.spinner.show();
       var requestObj = { Id: deliveryOrderHId }
       this.httpClient.post(URLConstant.DeleteDeliveryOrderMultiAsset, requestObj).pipe(
         map((response) => {
@@ -336,7 +336,7 @@ export class DeliveryOrderMultiAssetDetailComponent implements OnInit {
 
           this.isFinal = response[3]["IsFinal"];
 
-          this.spinner.hide();
+          // this.spinner.hide();
           this.toastr.successMessage(deleteResponse["Message"]);
         });
     }

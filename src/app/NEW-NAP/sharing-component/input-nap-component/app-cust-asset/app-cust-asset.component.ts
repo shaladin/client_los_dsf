@@ -46,7 +46,7 @@ export class AppCustAssetComponent implements OnInit {
   }
 
   GetAppCustAssetData() {
-    this.spinner.show();
+    // this.spinner.show();
     this.http.post(URLConstant.GetListAppCustAssetByAppCustId, { Id: this.AppCustId }).toPromise().then(
       (response) => {
         console.log(response);
@@ -55,12 +55,12 @@ export class AppCustAssetComponent implements OnInit {
         }
         this.inputGridObj.resultData["Data"] = new Array();
         this.inputGridObj.resultData.Data = response["AppCustAssetObjList"];
-        this.spinner.hide();
+        // this.spinner.hide();
       }
     ).catch(
       (error) => {
         console.log(error);
-        this.spinner.hide();
+        // this.spinner.hide();
       }
     );
   }

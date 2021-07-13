@@ -227,7 +227,7 @@ export class NapAddComponent implements OnInit {
 
     this.http.post<GenericObj>(AddNapUrl, requestAddNapObj).subscribe(
       (response) => {
-        setTimeout(() => { this.spinner.show(); }, 10);
+        // setTimeout(() => { this.spinner.show(); }, 10);
         this.toastr.successMessage(response["message"]);
         AdInsHelper.RedirectUrl(this.router, [NavigationConstant.NAP_CFRFN4W_ADD_DETAIL], { "AppId": response.Id });
       });
