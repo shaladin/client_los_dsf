@@ -26,28 +26,7 @@ export class CrdRvwAssetAccComponent implements OnInit {
     if(this.crdRvwCustInfoObj.BizTemplateCode == CommonConstant.CF4W){
       this.isMultiAsset = false;
     }
-
-    await this.GetAppAssetData();
-    console.log(this.listAppAssetIds);
     await this.GetListAppAssetAccessory();
-
-    this.ListAppAssetAccessory.forEach(x => {
-      // x.AssetSeqNo = this.ListAssetData.filter(y => y.AppAssetId = x.AppAssetId).map(y => y.AssetSeqNo);
-      console.log(x.AppAssetId);
-      console.log(this.ListAssetData.filter(y => y.AppAssetId = x.AppAssetId).map(y => y.AssetSeqNo));
-    })
-  }
-
-  async GetAppAssetData(){
-    let reqById: GenericObj = new GenericObj();
-    reqById.Id = this.crdRvwCustInfoObj.AppId
-    await this.http.post<Array<AppAssetObj>>(URLConstant.GetAppAssetListByAppId, reqById).toPromise().then(
-      response => {
-        this.ListAssetData = response[CommonConstant.ReturnObj];
-        console.log(this.ListAssetData);
-        this.listAppAssetIds.Ids = this.ListAssetData.map(x => x.AppAssetId);
-      }
-    )
   }
 
   async GetListAppAssetAccessory(){
@@ -55,7 +34,6 @@ export class CrdRvwAssetAccComponent implements OnInit {
     reqById.Id = this.crdRvwCustInfoObj.AppId
     await this.http.post(URLConstant.GetListAppAssetAccessoryByAppId, reqById).toPromise().then(
       response => {
-        console.log(response);
         this.ListAppAssetAccessory = response[CommonConstant.ReturnObj];
       }
     )
