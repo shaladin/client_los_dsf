@@ -590,12 +590,13 @@ export class ApplicationDataDlfnComponent implements OnInit {
     this.salesAppInfoObj.listAppCrossObj = tempListAppCrossObj;
 
     if (this.salesAppInfoObj.MrInstTypeCode == CommonConstant.InstTypeSingle) {
-      this.salesAppInfoObj.MrInstSchemeCode = "EP";
+      this.salesAppInfoObj.MrInstSchemeCode = CommonConstant.InstSchmEvenPrincipal;
       //this.salesAppInfoObj.Tenor = 1;
-      this.salesAppInfoObj.NumOfInst = this.salesAppInfoObj.Tenor;
+      // this.salesAppInfoObj.NumOfInst = this.salesAppInfoObj.Tenor;
+      this.salesAppInfoObj.NumOfInst = 1;
       this.isSingle = true;
     } else {
-      this.salesAppInfoObj.MrInstSchemeCode = this.SalesAppInfoForm.controls.MrInstSchemeCode.value;
+      this.salesAppInfoObj.MrInstSchemeCode = CommonConstant.InstSchmEvenPrincipal;
       this.salesAppInfoObj.NumOfInst = this.SalesAppInfoForm.controls.NumOfInst.value;
       this.isSingle = false;
     }
