@@ -63,14 +63,25 @@
                       <div class="form-group row" *ngIf="IsMouSelect">
                         <label class="col-md-3 adins-label" translate>Term Of Payment Interest Rate Percent (%)</label>
                         <div class="col-md-9">
-                          <label class="col-md-3 adins-label" translate>{{TopIntrstRatePrcnt}}</label>
+                          <input type="" currencyMask id="topIntrstRatePrcnt" class="form-control width-30-per"
+                          formControlName="TopIntrstRatePrcnt"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.TopIntrstRatePrcnt.invalid}">
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.TopIntrstRatePrcnt"
+                          [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
                         </div>
                       </div>
                       <div class="form-group row" *ngIf="IsMouSelect">
                         <label class="col-md-3 adins-label" translate>Interest Rate (%)</label>
                         <div class="col-md-9">
-                          <label class="col-md-3 adins-label" translate>{{IntrstRatePrcnt}}</label>
+                          <input type="" currencyMask id="intrstRatePrcnt" class="form-control width-30-per"
+                          formControlName="IntrstRatePrcnt"
+                          [ngClass]="{ 'is-invalid': enjiForm.submitted && SalesAppInfoForm.controls.IntrstRatePrcnt.invalid}">
+                        <lib-uc-show-errors [control]="SalesAppInfoForm.controls.IntrstRatePrcnt"
+                          [submit]="enjiForm.submitted">
+                        </lib-uc-show-errors>
                         </div>
+                        
                       </div>
                       <div class="form-group row">
                         <label class="col-md-3 adins-required-label" translate>Installment Type</label>
