@@ -13,6 +13,14 @@
               <label>{{ParentForm.controls.TotalAssetPriceAmt.value | number : '1.2-2'}}</label>
             </div>
           </div>
+          <div class="row" *ngIf="BizTemplateCode != 'CFRFN4W' && BizTemplateCode != 'CFNA'">
+            <div class="col-md-6 form-inline">
+              <label translate>Total Asset Accessory Price</label>
+            </div>
+            <div class="col-md-6 form-inline form-inline-right">
+              <label>{{ParentForm.controls.TotalAccessoryPriceAmt.value | number : '1.2-2'}}</label>
+            </div>
+          </div>
         </div>
       </div>
       <div class="row">
@@ -75,11 +83,11 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-3 form-inline">
-                <label *ngIf="BizTemplateCode != 'FL4W'" translate>DP Asset</label>
-                <label *ngIf="BizTemplateCode == 'FL4W'" translate>Security Deposit Asset</label>
+                <label *ngIf="BizTemplateCode != 'FL4W'" translate>DP Asset & Accessory / (%) DP</label>
+                <label *ngIf="BizTemplateCode == 'FL4W'" translate>Security Deposit Asset & Accessory / (%) DP</label>
               </div>
               <div class="col-md-3 form-inline form-inline-right">
-                <label>{{ParentForm.controls.DownPaymentGrossAmt.value | number : '1.2-2'}}</label>
+                <label>{{ParentForm.controls.DownPaymentGrossAmt.value | number : '1.2-2'}} / {{ParentForm.controls.PrcntDp.value | number : '.6'}}%</label>
               </div>
               <div class="col-md-3 form-inline">
                 <label *ngIf="BizTemplateCode != 'FL4W'" translate>TDP</label>
@@ -95,11 +103,11 @@
           <div class="col-md-12">
             <div class="row">
               <div class="col-md-3 form-inline">
-                <label *ngIf="BizTemplateCode != 'FL4W'" translate>DP Asset - Subsidy DP</label>
-                <label *ngIf="BizTemplateCode == 'FL4W'" translate>Security Deposit Asset - Security Deposit Subsidy</label>
+                <label *ngIf="BizTemplateCode != 'FL4W'" translate>DP Asset & Accessory - Subsidy DP / (%) DP Nett</label>
+                <label *ngIf="BizTemplateCode == 'FL4W'" translate>Security Deposit Asset & Accessory - Security Deposit Subsidy / (%) DP Nett</label>
               </div>
               <div class="col-md-3 form-inline form-inline-right">
-                <label>{{ParentForm.controls.DownPaymentNettAmt.value | number : '1.2-2'}}</label>
+                <label>{{ParentForm.controls.DownPaymentNettAmt.value | number : '1.2-2'}} / {{ParentForm.controls.PrcntDpNett.value | number : '.6'}}%</label>
               </div>
               <div class="col-md-3 form-inline">
                 <label>TDP Paid at Coy</label>
