@@ -94,7 +94,7 @@ export class SingleInstDlfnComponent implements OnInit {
     }
     else {
       this.calcSingleInstObj = this.ParentForm.value;
-      await this.http.post<ResponseCalculateObj>(URLConstant.CalculateSingleInst, this.calcSingleInstObj).toPromise().then(
+      await this.http.post<ResponseCalculateObj>(URLConstant.CalculateSingleInstDlfn, this.calcSingleInstObj).toPromise().then(
         async (response) => {
           this.listInstallment = response.InstallmentTable;
           this.ParentForm.patchValue({
