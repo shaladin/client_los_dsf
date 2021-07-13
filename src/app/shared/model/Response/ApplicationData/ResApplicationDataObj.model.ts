@@ -36,4 +36,6 @@ export class ResApplicationDataObj {
     MrSlikSecEcoCode: string;
     MrSlikSecEcoDescr: string;
     AppDlrFncngId: number;
+    InterestRatePrcnt: number;
+    TopInterestRatePrcnt: number;
 }

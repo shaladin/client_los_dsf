@@ -21,4 +21,6 @@ export class AppDlrFncng {
     RowVersion: string;
     MouCustDlrFncngId: number;
     TotalTopAmount: number;
+    TopInterestRatePrcnt: number;
+    InterestRatePrcnt: number;
 }
