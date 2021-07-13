@@ -1173,6 +1173,7 @@ export class URLConstant {
   public static CalculateInstallmentEvenPrincipalFctr = environment.losUrl + "/AppFinData/CalculateInstallmentEvenPrincipalFctr";
   public static CalculateInstallmentEvenPrincipalDlfn = environment.losUrl + "/AppFinData/CalculateInstallmentEvenPrincipalDlfn";
   public static CalculateSingleInst = environment.losUrl + "/AppFinData/CalculateSingleInst";
+  public static CalculateSingleInstDlfn = environment.losUrl + "/AppFinData/CalculateSingleInstDlfn";
   public static CalculateProvisionFee = environment.losUrl + "/AppFee/CalculateProvisionFee";
   public static GetOrInitAppSubsidyByAppId = environment.losUrl + "/AppSubsidy/GetOrInitAppSubsidyByAppId";
   public static GetRuleSubsidyMax = environment.losUrl + "/AppSubsidy/GetRuleSubsidyMax";
