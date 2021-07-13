@@ -41,17 +41,17 @@ export class AppCustAssetOldNapComponent implements OnInit {
   }
 
   GetAppCustAssetData(){
-    this.spinner.show();
+    // this.spinner.show();
     this.http.post(URLConstant.GetListAppCustAssetByAppCustId, { AppCustId: this.AppCustId }).toPromise().then(
       (response) => {
         this.ListAppCustAsset = response["AppCustAssetObjList"];
         console.log("ListAppCustAsset: " + JSON.stringify(this.ListAppCustAsset));
-        this.spinner.hide();
+        // this.spinner.hide();
       }
     ).catch(
       (error) => {
         console.log(error);
-        this.spinner.hide();
+        // this.spinner.hide();
       }
     );
   }

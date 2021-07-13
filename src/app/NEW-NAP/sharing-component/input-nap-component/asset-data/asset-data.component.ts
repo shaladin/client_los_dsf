@@ -132,7 +132,7 @@ export class AssetDataComponent implements OnInit {
     /*App Collateral Regist*/
     UserName: ['', Validators.maxLength(50)],
     MrUserRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
-    OwnerName: ['', Validators.maxLength(50)],
+    OwnerName: ['', [Validators.required, Validators.maxLength(50)]],
     MrIdTypeCode: ['', Validators.maxLength(50)],
     OwnerIdNo: ['', Validators.maxLength(50)],
     MrOwnerRelationshipCode: ['', [Validators.required, Validators.maxLength(50)]],
@@ -368,6 +368,7 @@ export class AssetDataComponent implements OnInit {
       this.AssetDataForm.controls.MrOwnerRelationshipCode.clearValidators();
       this.AssetDataForm.controls.selectedDpType.clearValidators();
       this.AssetDataForm.controls.MrIdTypeCode.clearValidators();
+      this.AssetDataForm.controls.OwnerName.clearValidators();
       await this.getListAllAssetData();
     }
     else {

@@ -64,14 +64,14 @@ export class CreditApprovalResultExtensionApprovalPagingComponent implements OnI
   CallBackHandler(ev) {
     var ApvReqObj = new ApprovalObj();
     if (ev.Key == "Process") {
-      if (String.Format("{0:L}", ev.RowObj.CURRENT_USER_ID) != String.Format("{0:L}", this.UserAccess.UserName)) {
+      if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.UserAccess.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_PROCESS_TASK);
       } else {
         this.router.navigate([NavigationConstant.NAP_ADD_PRCS_CRD_APPR_RES_EXT_APPRVL_DETAIL], { queryParams: { "CrdApvResultExtId": ev.RowObj.CrdApvResultExtId, "TaskId": ev.RowObj.TaskId, "InstanceId": ev.RowObj.InstanceId, "AppId": ev.RowObj.AppId, "AgrmntId": ev.RowObj.AgrmntId, "ApvReqId": ev.RowObj.ApvReqId } });
       }
     }
     else if (ev.Key == "HoldTask") {
-      if (String.Format("{0:L}", ev.RowObj.CURRENT_USER_ID) != String.Format("{0:L}", this.UserAccess.UserName)) {
+      if (String.Format("{0:L}", ev.RowObj.CurrentUserId) != String.Format("{0:L}", this.UserAccess.UserName)) {
         this.toastr.warningMessage(ExceptionConstant.NOT_ELIGIBLE_FOR_HOLD);
       } else {
         ApvReqObj.TaskId = ev.RowObj.TaskId

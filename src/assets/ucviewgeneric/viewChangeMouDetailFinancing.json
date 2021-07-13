@@ -79,26 +79,25 @@
           {
             "type" : "callback",
             "label": "Link Manufacturer",
-            "property" : "manufacturerCode",
+            "property" : "manufacturer",
             "key" : "manufacturer"
           },
           {
             "type": "text",
             "label": "Manufacturer",
-            "property": "manufacturerCustNo"
+            "property": "manufacturerCustName"
           },
           {
             "type" : "callback",
             "label": "Link Supplier Grading",
-            "property" : "dealerCode",
+            "property" : "dealer",
             "key" : "dealer"
           },
           {
             "type": "text",
             "label": "Customer",
-            "property": "dealerCustNo"
+            "property": "dealerCustName"
           },
-          
           {
             "type": "text",
             "label": "LC Rate (%)",

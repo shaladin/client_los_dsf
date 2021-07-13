@@ -131,10 +131,9 @@ export class ChangeMouApprovalFinancingComponent implements OnInit {
 
   GetCallBack(event) {
     if (event.Key == "customer") {
-      var custObj = { CustNo: this.resultData["CustNo"] };
-      this.http
-        .post(URLConstant.GetCustByCustNo, custObj)
-        .subscribe((response) => {
+      var custObj = { CustNo: event.ViewObj["CustNo"] };
+      this.http.post(URLConstant.GetCustByCustNo, custObj).subscribe(
+        response => {
           if(response["MrCustTypeCode"] == CommonConstant.CustTypePersonal){
             AdInsHelper.OpenCustomerViewByCustId(response["CustId"]);
           }

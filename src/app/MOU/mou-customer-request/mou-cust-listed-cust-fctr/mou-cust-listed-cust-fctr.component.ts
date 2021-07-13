@@ -89,7 +89,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
     modalListedFctr.componentInstance.MouCustId = this.MouCustId;
     modalListedFctr.result.then(
       (response) => {
-        this.spinner.show();
+        // this.spinner.show();
         var mouListedFctr = new MouCustListedCustFctrObj();
         mouListedFctr.MouCustId = this.MouCustId;
         this.httpClient.post(URLConstant.GetListMouCustListedCustFctrByMouCustId, { Id: this.MouCustId }).subscribe(
@@ -97,7 +97,7 @@ export class MouCustListedCustFctrComponent implements OnInit {
             this.listedCusts = response[CommonConstant.ReturnObj];
           }
         );
-        this.spinner.hide();
+        // this.spinner.hide();
         this.toastr.successMessage(response["message"]);
       }
     ).catch((error) => {});

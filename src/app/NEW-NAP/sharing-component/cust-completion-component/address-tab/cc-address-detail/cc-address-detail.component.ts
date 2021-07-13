@@ -53,6 +53,7 @@ export class CcAddressDetailComponent implements OnInit {
     this.inputAddressObj.inputField.inputLookupObj = new InputLookupObj();
     this.inputAddressObj.showSubsection = false;
     this.inputAddressObj.showOwnership = true;
+    this.inputAddressObj.requiredOwnership = true;
     if (this.MrCustTypeCode === CommonConstant.CustTypeCompany) {
       this.inputAddressObj.requiredPhn1 = true;
     }

@@ -27,6 +27,7 @@ export class URLConstant {
   // APP Application
   public static AddAppFromCopyCancledApp = environment.losUrl + "/Application/AddAppFromCopyCancledApp";
   public static AddAppMaindata = environment.losUrl + "/Application/AddAppMainData";
+  public static GetPurchaseOrderExpDt = environment.losUrl + "/Application/GetPurchaseOrderExpDt";
   public static GetAppById = environment.losUrl + "/Application/GetAppById";
   public static GetAppByAppNo = environment.losUrl + "/Application/GetAppByAppNo";
   public static GetAppDetailForTabAddEditAppById = environment.losUrl + "/Application/GetAppDetailForTabAddEditAppById";
@@ -592,10 +593,13 @@ export class URLConstant {
   public static GetLatestChangeMouCustVersionById = environment.losUrl + "/ChangeMou/GetLatestChangeMouCustVersionById";
   public static GetChangeMouByMouCustIdStatusNew = environment.losUrl + "/ChangeMou/GetChangeMouByMouCustIdStatusNew";
   public static GetChangeMouCustClauseByMouCustId = environment.losUrl + "/ChangeMou/GetChangeMouCustClauseByMouCustId";
+  public static GetChangeMouCustClauseDetailByChangeMouTrxId = environment.losUrl + "/ChangeMou/GetChangeMouCustClauseDetailByChangeMouTrxId";
   public static GetChangeMouCustAssetByMouCustId = environment.losUrl + "/ChangeMou/GetChangeMouCustAssetByMouCustId";
   public static GetChangeMouCustCollateralByChangeMouCustId = environment.losUrl + "/ChangeMou/GetChangeMouCustCollateralByChangeMouCustId";
   public static GetChangeMouCustFctrByMouCustId = environment.losUrl + "/ChangeMou/GetChangeMouCustFctrByMouCustId";
+  public static GetChangeMouCustFctrDetailByChangeMouTrxId = environment.losUrl + "/ChangeMou/GetChangeMouCustFctrDetailByChangeMouTrxId";
   public static GetChangeMouCustDlrFncgByMouCustId = environment.losUrl + "/ChangeMou/GetChangeMouCustDlrFindById";
+  public static GetChangeMouCustDlrFncgDetailByChangeMouTrxId = environment.losUrl + "/ChangeMou/GetChangeMouCustDlrFncgDetailByChangeMouTrxId";
   public static AddEditChangeMouCustDlrFin = environment.losUrl + "/ChangeMou/AddEditChangeMouCustDlrFin";
   public static SubmitChangeMouReview = environment.losUrl + "/ChangeMou/SubmitChangeMouReview";
   public static SubmitWorkflowChangeMouRequest = environment.losUrl + "/ChangeMou/SubmitWorkflowChangeMouRequest";
@@ -1169,6 +1173,7 @@ export class URLConstant {
   public static CalculateInstallmentEvenPrincipalFctr = environment.losUrl + "/AppFinData/CalculateInstallmentEvenPrincipalFctr";
   public static CalculateInstallmentEvenPrincipalDlfn = environment.losUrl + "/AppFinData/CalculateInstallmentEvenPrincipalDlfn";
   public static CalculateSingleInst = environment.losUrl + "/AppFinData/CalculateSingleInst";
+  public static CalculateSingleInstDlfn = environment.losUrl + "/AppFinData/CalculateSingleInstDlfn";
   public static CalculateProvisionFee = environment.losUrl + "/AppFee/CalculateProvisionFee";
   public static GetOrInitAppSubsidyByAppId = environment.losUrl + "/AppSubsidy/GetOrInitAppSubsidyByAppId";
   public static GetRuleSubsidyMax = environment.losUrl + "/AppSubsidy/GetRuleSubsidyMax";
@@ -1682,7 +1687,8 @@ export class URLConstant {
   public static GetProductByHId = environment.losUrl + "/Product/GetProductByHId";
   public static CopyProduct = environment.losUrl + "/Product/CopyProduct";
   public static SubmitProduct = environment.losUrl + "/Product/SubmitProduct"
-
+  public static GetListProdBranchOfficeMbrByProdOfferingHId = environment.losUrl + "/Product/GetListProdBranchOfficeMbrByProdOfferingHId";
+  
   //PRODUCT OFFERING
   public static GetProdOfferingHById = environment.losUrl + "/ProductOffering/GetProdOfferingHById";
   public static AddProdOffering = environment.losUrl + "/ProductOffering/AddProdOffering";
