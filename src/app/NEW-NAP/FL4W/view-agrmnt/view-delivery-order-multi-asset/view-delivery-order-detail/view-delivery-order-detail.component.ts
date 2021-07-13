@@ -48,7 +48,7 @@ export class ViewDeliveryOrderDetailComponent implements OnInit {
     modalMouFee.componentInstance.AppAssetId = appAssetId;
     modalMouFee.result.then(
       (response) => {
-        this.spinner.show();
+        // this.spinner.show();
         // this.spinner.hide();
       }
     ).catch((error) => {
