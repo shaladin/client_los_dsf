@@ -417,6 +417,14 @@ export const ROUTES: RouteInfo[] = [
       { Path: NavigationConstant.LEAD_VERIF, Title: 'Lead Verification', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: [] },
     ], Params: []
   },
+  {
+    Path: '', Title: 'Customer Group Plafond', Icon: 'far fa-file-alt', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
+    Submenu: [
+      { Path: NavigationConstantDsf.CUSTOMER_GROUP_PLAFOND_PAGING, Title: 'Plafond Request', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+      // { Path: NavigationConstantDsf.REPORT_FACT_MORNING_MONITORING, Title: 'Morning Monitoring', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+      // { Path: NavigationConstantDsf.REPORT_FACT_AFTERNOON_MONITORING, Title: 'Afternoon Monitoring', Icon: '', Class: '', Badge: '', BadgeClass: '', IsExternalLink: false, Submenu: [], Params: []},
+    ], Params: [] 
+  },
   //{
   //  Path: '', Title: 'Inquiry', Icon: 'ft-home', Class: 'has-sub', Badge: '', BadgeClass: '', IsExternalLink: false,
   //  Submenu: [

@@ -339,4 +339,8 @@ export class NavigationConstant {
   //#region Self Custom
   public static REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_INVOICE_KWITANSI_TANDATERIMA_DETAIL;
   //#endregion 
+
+  //#region 
+  public static CUSTOMER_GROUP_PLAFOND_DETAIL = "/" + PathConstantDsf.LR_DSF + "/" + PathConstantDsf.CUSTOMER_GROUP_PLAFOND_DETAIL;
+  //#endregion
 }

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PathConstantDsf } from 'app/shared/constant/PathConstantDsf';
+import { CustomerGroupPlafondDetailComponent } from './customer/customer-group-plafond/customer-group-plafond-detail/customer-group-plafond-detail.component';
+import { CustomerGroupPlafondPagingComponent } from './customer/customer-group-plafond/customer-group-plafond-paging/customer-group-plafond-paging.component';
 import { AfternoonmonitoringComponent } from './report/factoring/afternoonmonitoring/afternoonmonitoring.component';
 import { CollateralComponent } from './report/factoring/collateral/collateral.component';
 import { InvoicekwitansitandaterimaDetailComponent } from './report/factoring/invoicekwitansitandaterima/invoicekwitansitandaterima-detail/invoicekwitansitandaterima-detail.component';
@@ -103,6 +105,30 @@ const routes: Routes = [
         component: InvoicekwitansitandaterimaDetailComponent,
         data: {
           title: "Report Fact Invoice Kwitansi Tanda Terima Detail"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.CUSTOMER_GROUP_PLAFOND_PAGING,
+        component:  CustomerGroupPlafondPagingComponent,
+        data: {
+          title: "Customer Group Plafond Paging"
+        }
+      }
+    ]
+  },
+  {
+    path:'',
+    children: [
+      {
+        path: PathConstantDsf.CUSTOMER_GROUP_PLAFOND_DETAIL,
+        component:  CustomerGroupPlafondDetailComponent,
+        data: {
+          title: "Customer Group Plafond Detail"
         }
       }
     ]

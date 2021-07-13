@@ -1,0 +1,153 @@
+<div class="row text-left">
+  <div class="col-md-12">
+      <div class="card">
+          <div class="card-body">
+              <h4 class="form-section card-title" translate><i class="ft-file-text"></i>Customer Group Plafond Request</h4>
+              <div class="col-md-12">
+                <div class="px-3">
+                  <lib-ucviewgeneric [viewGenericObj]="viewGenericObj" (callback)="GetCallBack($event)"></lib-ucviewgeneric>
+                <br />
+                <lib-ucSubsection [id]="'existingAgreementId'" [title]="'EXISTING AGREEMENT'" [panel]="'existingAgreement'">
+                </lib-ucSubsection>
+                <div id="existingAgreement">
+                  <table class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr class="table-header">
+                        <th class="text-center"><span translate class="thead-header" name='SeqNo'>No</span></th>
+                        <th class="text-center"><span translate class="thead-header" name='AgrmntNo'>Agreement No</span></th>
+                        <th class="text-center"><span translate class="thead-header" name='CsutomerName'>Customer Name</span></th>
+                        <th class="text-center"><span translate class="thead-header" name='OutstandingAR'>Outstanding AR</span></th>
+                        <th class="text-center"><span translate class="thead-header" name='Status'>Status</span></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- <tr *ngFor="let item of AgrmntDocObj">
+                        <td>{{item.SeqNo}}</td>
+                        <td class="text-left">{{item.DocName}}</td>
+                        <td *ngIf="item.IsNeedToBePrinted == true">Yes</td>
+                        <td *ngIf="item.IsNeedToBePrinted == false">No</td>
+                        <td class="text-center">{{item.LastPrintDt | date: 'dd-MMM-yyyy'}}</td>
+                        <td class="text-left">{{item.EmpName}}</td>
+                        <td>{{item.NumOfDocPrinted}}</td>
+                        <td>
+                          <a class="primary p-0" (click)="Print(item)">
+                            <i class="font-medium-3 fa fa-print"></i>
+                          </a>
+                        </td>
+                      </tr> -->
+                    </tbody>
+                  </table>
+                </div>
+                <lib-ucSubsection [id]="'applicationinProcessId'" [title]="'APPLICATION IN PROCESS'" [panel]="'applicationinProcess'">
+                </lib-ucSubsection>
+                <div id="applicationinProcess">
+                  <table class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr class="table-header">
+                        <th class="text-center"><span translate class="thead-header" name='SeqNo'>No</span></th>
+                        <th class="text-center"><span translate class="thead-header" name='AgrmntNo'>Application No</span></th>
+                        <th class="text-center"><span translate class="thead-header" name='CustomerName'>Customer Name</span></th>
+                        <th class="text-center"><span translate class="thead-header" name='TotalNIAR'>Total NI/AR</span></th>
+                        <th class="text-center"><span translate class="thead-header" name='ApplicationStep'>Application Step</span></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- <tr *ngFor="let item of AgrmntDocObj">
+                        <td>{{item.SeqNo}}</td>
+                        <td class="text-left">{{item.DocName}}</td>
+                        <td *ngIf="item.IsNeedToBePrinted == true">Yes</td>
+                        <td *ngIf="item.IsNeedToBePrinted == false">No</td>
+                        <td class="text-center">{{item.LastPrintDt | date: 'dd-MMM-yyyy'}}</td>
+                        <td class="text-left">{{item.EmpName}}</td>
+                        <td>{{item.NumOfDocPrinted}}</td>
+                        <td>
+                          <a class="primary p-0" (click)="Print(item)">
+                            <i class="font-medium-3 fa fa-print"></i>
+                          </a>
+                        </td>
+                      </tr> -->
+                    </tbody>
+                  </table>
+                </div>
+                <lib-ucSubsection [id]="'oplAgreementId'" [title]="'OPL AGREEMENT'" [panel]="'oplAgreement'">
+                </lib-ucSubsection>
+                <div id="oplAgreement">
+                  <table class="table table-responsive-md text-center table-hover">
+                    <thead>
+                      <tr class="table-header">
+                        <th class="text-center"><span translate class="thead-header" name='SeqNo'>No</span></th>
+                        <th class="text-center"><span translate class="thead-header" name='AgrmntNo'>Agreement No</span></th>
+                        <th class="text-center"><span translate class="thead-header" name='CsutomerName'>Customer Name</span></th>
+                        <th class="text-center"><span translate class="thead-header" name='OutstandingAR'>Outstanding AR</span></th>
+                        <th class="text-center"><span translate class="thead-header" name='Status'>Status</span></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- <tr *ngFor="let item of AgrmntDocObj">
+                        <td>{{item.SeqNo}}</td>
+                        <td class="text-left">{{item.DocName}}</td>
+                        <td *ngIf="item.IsNeedToBePrinted == true">Yes</td>
+                        <td *ngIf="item.IsNeedToBePrinted == false">No</td>
+                        <td class="text-center">{{item.LastPrintDt | date: 'dd-MMM-yyyy'}}</td>
+                        <td class="text-left">{{item.EmpName}}</td>
+                        <td>{{item.NumOfDocPrinted}}</td>
+                        <td>
+                          <a class="primary p-0" (click)="Print(item)">
+                            <i class="font-medium-3 fa fa-print"></i>
+                          </a>
+                        </td>
+                      </tr> -->
+                    </tbody>
+                  </table>
+                </div>
+                <br />
+                  <div class="cessieData">
+                     <form class="form form-horizontal" [formGroup]="plafondProposalForm" (ngSubmit)="plafondProposalForm.valid && SaveForm()"
+                     #enjiForm="ngForm">
+                     <div class="form-body">
+                        <lib-ucSubsection [id]="'plafondProposalId'" [title]="'Plafond Proposal'" [panel]="'plafondProposal'">
+                        </lib-ucSubsection>
+                        <div id="plafondProposal">
+                           <div class="form-group row">
+                              <label class="col-md-3 adInsLabel adins-required-label" translate>Plafond Maximum</label>
+                              <div class="col-md-4">
+                                 <input type="text" class="form-control adInsInput" formControlName="PlafondMax"
+                                    [ngClass]="{ 'is-invalid': enjiForm.submitted && plafondProposalForm.controls.NoInvoice.invalid }">
+                                 <lib-uc-show-errors  [control]="plafondProposalForm.controls.NoInvoice" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                              </div>
+                           </div>                          
+                           <div class="form-group row">
+                              <label class="col-md-3 adInsLabel adins-required" translate>Start Plafond Date</label>
+                              <div class="col-md-4">
+                                 <input type="date" class="form-control adInsInput" formControlName="StartPlafondDate"
+                                    [ngClass]="{ 'is-invalid': enjiForm.submitted && plafondProposalForm.controls.StartPlafondDate.invalid }" >
+                                 <lib-uc-show-errors  [control]="plafondProposalForm.controls.StartPlafondDate" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                              </div>
+                           </div>
+                           <div class="form-group row">
+                            <label class="col-md-3 adInsLabel adins-required" translate>End Plafond Date</label>
+                            <div class="col-md-4">
+                               <input type="date" class="form-control adInsInput" formControlName="EndPlafondDate"
+                                  [ngClass]="{ 'is-invalid': enjiForm.submitted && plafondProposalForm.controls.EndPlafondDate.invalid }" >
+                               <lib-uc-show-errors  [control]="plafondProposalForm.controls.EndPlafondDate" [submit]="enjiForm.submitted"></lib-uc-show-errors >
+                            </div>
+                         </div>                          
+                           <div class="form-actions right" style="text-align: right;">
+                              <button type="button" class="btn btn-raised btn-warning mr-1" [routerLink]="[CancelLink]"
+                                 translate>
+                              <i class="ft-x"></i> Cancel
+                              </button>
+                              <button type="submit" class="btn btn-raised btn-primary" translate>
+                              <i class="far fa-check-square"></i> Submit
+                              </button>
+                            </div>
+                        </div>
+                     </div>
+                    </form>
+                  </div>
+               </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

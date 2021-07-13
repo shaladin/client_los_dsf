@@ -1,0 +1,207 @@
+{
+    "title": "Search Customer Group Plafond Request",
+    "exportExcel": false,
+    "component": [
+        {
+            "type": "textbox",
+            "name": "A.CUST_GRP_NO",
+            "id": "CustGrpNo",
+            "value": "",
+            "label": "Customer Parent No",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "A.TOTAL_OS_AR",
+            "id": "TotalOSAR",
+            "value": "",
+            "label": "Outstanding AR/NI",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "A.CUST_GRP_NAME",
+            "id": "CustGrpName",
+            "value": "",
+            "label": "Customer Parent Name",
+            "placeholder": "Placeholder"
+        },
+        {
+            "type": "textbox",
+            "name": "A.STATUS",
+            "id": "Status",
+            "value": "",
+            "label": "Status",
+            "placeholder": "Placeholder"
+        }
+    ],
+  "querystring": {
+    "name": "searchCessie"
+  },
+    "headerList": [
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Customer Parent No",
+            "name": "CustGrpNo"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Customer Parent Name",
+            "name": "CustGrpName"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Plafond Max",
+            "name": "PlafondMax"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Outstanding AR",
+            "name": "TotalOSAR"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Plafond Balance",
+            "name": "PlafondBalance"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Start Date",
+            "name": "DtmStart"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "End Date",
+            "name": "DtmEnd"
+        },
+        {
+            "type": "sort",
+            "position": "center",
+            "label": "Status",
+            "name": "Status"
+        },
+        {
+            "type": "label",
+            "position": "center",
+            "label": "Action"
+        }
+    ],
+    "bodyList": [
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustGrpNo"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "CustGrpName"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "PlafondMax"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "TotalOSAR"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "PlafondBalance"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "DtmStart"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "DtmEnd"
+        },
+        {
+            "type": "text",
+            "position": "center",
+            "property": "Status"
+        },
+        {
+            "type": "action",
+            "position": "center",
+            "action": [
+                {
+                    "type": "switch",
+                    "case": [
+                        {
+                            "conditions": [
+                                {
+                                    "property": "ResultInvoice",
+                                    "value": "0",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "CUSTOMER_GROUP_PLAFOND_DETAIL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "CessieID",
+                                        "property": "CessieID"
+                                    },
+                                    {
+                                        "type": "CessieNo",
+                                        "property": "CessieNo"
+                                    },
+                                    {
+                                        "type": "mode",
+                                        "property": "add"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        },
+                        {
+                            "conditions": [
+                                {
+                                    "property": "ResultInvoice",
+                                    "value": "1",
+                                    "restriction": "EQ"
+                                }
+                            ],
+                            "result": {
+                                "type": "url",
+                                "path": "CUSTOMER_GROUP_PLAFOND_DETAIL",
+                                "icon": "ft-edit-2",
+                                "param": [
+                                    {
+                                        "type": "CessieID",
+                                        "property": "CessieID"
+                                    },
+                                    {
+                                        "type": "CessieNo",
+                                        "property": "CessieNo"
+                                    },
+                                    {
+                                        "type": "mode",
+                                        "property": "edit"
+                                    }
+                                ]
+                            },
+                            "isHide": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
