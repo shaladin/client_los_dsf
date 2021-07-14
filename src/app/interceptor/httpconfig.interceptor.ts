@@ -27,7 +27,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         console.log(request);
         if (request.method == "POST" && (request.body == null || request.body.isLoading == undefined || request.body.isLoading == true)) {
-            this.spinner.show();
+            // this.spinner.show();
         }
         if (request.url != "./assets/i18n/en.json") {
             this.count++;
@@ -161,7 +161,7 @@ export class HttpConfigInterceptor implements HttpInterceptor {
                     AdInsHelper.ClearPageAccessLog(this.cookieService);
                 }
                 if (this.count == 0) {
-                    this.spinner.hide();
+                    // this.spinner.hide();
                 }
             })
         );

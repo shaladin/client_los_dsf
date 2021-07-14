@@ -175,7 +175,7 @@ export class ApplicationDataComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.spinner.show();
+    // this.spinner.show();
     if (this.BizTemplateCode == CommonConstant.OPL) {
       this.NapAppModelForm.controls.InterestType.clearValidators();
       this.NapAppModelForm.controls.InterestType.updateValueAndValidity();
@@ -424,7 +424,7 @@ export class ApplicationDataComponent implements OnInit {
         this.initDdlMrFirstInstType();
         this.initDdlPayFreq();
         this.getPayFregData();
-        this.spinner.hide();
+        // this.spinner.hide();
       }
     );
   }
