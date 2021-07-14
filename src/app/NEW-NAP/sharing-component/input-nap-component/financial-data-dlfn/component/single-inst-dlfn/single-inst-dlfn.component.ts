@@ -94,7 +94,7 @@ export class SingleInstDlfnComponent implements OnInit {
     }
     else {
       this.calcSingleInstObj = this.ParentForm.value;
-      await this.http.post<ResponseCalculateObj>(URLConstant.CalculateSingleInst, this.calcSingleInstObj).toPromise().then(
+      await this.http.post<ResponseCalculateObj>(URLConstant.CalculateSingleInstDlfn, this.calcSingleInstObj).toPromise().then(
         async (response) => {
           this.listInstallment = response.InstallmentTable;
           this.ParentForm.patchValue({
@@ -223,9 +223,7 @@ export class SingleInstDlfnComponent implements OnInit {
                   TotalTopAmount: (responseCustDlfn["TopInterestRatePrcnt"] / 100) * (responseCustDlfn["TopDays"] / DaysInYear) * NtfAmount,
                   TotalDisbAmt: this.TempTotalDisbAmt - ((responseCustDlfn["TopInterestRatePrcnt"] / 100) * (responseCustDlfn["TopDays"] / DaysInYear) * NtfAmount),
                   EffectiveRatePrcnt: interestPrcnt,
-                  InstAmt: this.TempTotalDisbAmt
-                    - (responseCustDlfn["TopInterestRatePrcnt"] / 100) * (responseCustDlfn["TopDays"] / DaysInYear) * NtfAmount
-                    + interestAmt,
+                  InstAmt: NtfAmount + interestAmt,
                   TotalInterestAmt: interestAmt
                 });
 

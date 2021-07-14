@@ -295,7 +295,7 @@ export class CustMainDataAddComponent implements OnInit {
 
     this.http.post<GenericObj>(AddNapUrl, requestAddNapObj).subscribe(
       (response) => {
-        setTimeout(() => { this.spinner.show(); }, 10);
+        // setTimeout(() => { this.spinner.show(); }, 10);
         this.toastr.successMessage(response["message"]);
         switch (this.bizTemplateCode) {
           case CommonConstant.CF4W:

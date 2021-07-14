@@ -25,10 +25,10 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-md-3 form-inline">
-              <!-- <label>Calculation Method</label> -->
+              Top Interest Rate
             </div>
             <div class="col-md-3 form-inline form-inline-right">
-              <!-- <label>{{ParentForm.controls.SingleInstCalcMthdName.value}}</label> -->
+              {{ParentForm.controls.TopInterestRatePrcnt.value | number : '.2'}} %
             </div>
             <div class="col-md-3 form-inline">
               <label>Maturity Date</label>
@@ -90,24 +90,6 @@
               <label>{{ParentForm.controls.TotalFeeAmt.value | number : '1.2-2'}}</label>
             </div>
             <div class="col-md-3 form-inline">
-              Top Interest Rate
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              {{ParentForm.controls.TopInterestRatePrcnt.value | number : '.2'}} %
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- <div class="row">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-3 form-inline">
-              <label>Total Insurance</label>
-            </div>
-            <div class="col-md-3 form-inline form-inline-right">
-              <label>{{ParentForm.controls.TotalInsCustAmt.value | number : '1.2-2'}}</label>
-            </div>
-            <div class="col-md-3 form-inline">
               <label>Total Fee Capitalized</label>
             </div>
             <div class="col-md-3 form-inline form-inline-right">
@@ -115,7 +97,7 @@
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
       <br />
       <div class="row">
         <div class="col-md-12">
