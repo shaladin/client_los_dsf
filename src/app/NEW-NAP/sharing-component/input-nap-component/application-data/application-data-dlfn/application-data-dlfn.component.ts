@@ -446,8 +446,8 @@ export class ApplicationDataDlfnComponent implements OnInit {
   async CheckInstType() {
     if (this.SalesAppInfoForm.controls.MrInstTypeCode.value == CommonConstant.InstTypeMultiple) {
       this.isSingle = false;
-      this.SalesAppInfoForm.controls.TopDays.disable();
-      this.SalesAppInfoForm.controls.TopBased.disable();
+      // this.SalesAppInfoForm.controls.TopDays.disable();
+      // this.SalesAppInfoForm.controls.TopBased.disable();
       this.SalesAppInfoForm.controls.MrInstSchemeCode.disable();
       this.SalesAppInfoForm.controls.MrWopCode.disable();
       this.SalesAppInfoForm.controls.IsDisclosed.disable();

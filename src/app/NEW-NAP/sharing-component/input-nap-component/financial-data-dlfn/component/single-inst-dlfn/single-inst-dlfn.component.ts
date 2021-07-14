@@ -223,9 +223,7 @@ export class SingleInstDlfnComponent implements OnInit {
                   TotalTopAmount: (responseCustDlfn["TopInterestRatePrcnt"] / 100) * (responseCustDlfn["TopDays"] / DaysInYear) * NtfAmount,
                   TotalDisbAmt: this.TempTotalDisbAmt - ((responseCustDlfn["TopInterestRatePrcnt"] / 100) * (responseCustDlfn["TopDays"] / DaysInYear) * NtfAmount),
                   EffectiveRatePrcnt: interestPrcnt,
-                  InstAmt: this.TempTotalDisbAmt
-                    - (responseCustDlfn["TopInterestRatePrcnt"] / 100) * (responseCustDlfn["TopDays"] / DaysInYear) * NtfAmount
-                    + interestAmt,
+                  InstAmt: NtfAmount + interestAmt,
                   TotalInterestAmt: interestAmt
                 });
 
