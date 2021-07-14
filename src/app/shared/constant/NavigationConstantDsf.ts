@@ -26,4 +26,14 @@ export class NavigationConstantDsf {
     public static NEW_LEAD_TO_BE_FOLLOW_UP_PAGING = "/" + PathConstant.LR_LEAD + "/" + PathConstantDsf.NEW_LEAD_TO_BE_FOLLOW_UP + "/" + PathConstant.PAGING; //"Lead/LeadUpdate/Paging"
     public static CUST_EDIT_MAIN_DATA_PERSONAL = "/" + PathConstantDsf.LR_CUST + "/" + PathConstantDsf.CUST_EDIT_MAIN_DATA_PERSONAL; //'/Customer/EditMainData/Personal'
     public static CUST_EDIT_MAIN_DATA_COY = "/" + PathConstantDsf.LR_CUST + "/" + PathConstantDsf.CUST_EDIT_MAIN_DATA_COY; //'/Customer/EditMainData/Company'
+
+    //#region REPORT FACT
+    public static REPORT_FACT_MONITORING = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_MONITORING;
+    public static REPORT_FACT_MORNING_MONITORING = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_MORNING_MONITORING;
+    public static REPORT_FACT_AFTERNOON_MONITORING = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_AFTERNOON_MONITORING;
+    public static REPORT_FACT_COLLATERAL = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_COLLATERAL;
+    public static REPORT_FACT_REMINDER1 = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_REMINDER1;
+    public static REPORT_FACT_REMINDER5 = "/"+ PathConstantDsf.LR_DSF + "/" + PathConstantDsf.PRINT_REPORT_FACT_REMINDER5;
+   //#endregion
 }
+ 

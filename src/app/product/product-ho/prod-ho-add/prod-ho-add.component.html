@@ -15,6 +15,15 @@
             <lib-ucSubsection [id]="'ProductHOInfoId'" [title]="'Product HO Information '+ Mode" [panel]="'ProductHOInfo'"></lib-ucSubsection>
             <div id="ProductHOInfo">
               <div class="form-body">
+
+                <div class="form-group row adins-required">
+                <div class="col-md-9">
+                    <button type="button" (click)="CopyNameFromCode()" class="btn btn-raised btn-primary" translate>
+                      <i class="fa fa-check-square-o"></i> Copy Name From Code
+                    </button>
+                  </div>
+                </div>
+
                 <div class="form-group row adins-required">
                   <label class="col-md-3 adInsLabel">Product Code </label>
                   <div class="col-md-9">
