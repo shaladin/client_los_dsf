@@ -295,7 +295,6 @@ export class NapDetailFormComponent implements OnInit {
       this.initDms();
     }
 
-    console.log("GIGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
     this.ChangeTab(Step);
     if (this.custType == CommonConstant.CustTypePersonal) {
       this.stepperPersonal.next();
