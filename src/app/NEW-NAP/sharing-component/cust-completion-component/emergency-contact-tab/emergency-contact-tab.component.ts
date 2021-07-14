@@ -46,7 +46,6 @@ export class EmergencyContactTabComponent implements OnInit {
   copyAddressFromObj: any;
   appCustEmrgncCntctObj: AppCustEmrgncCntctObj = new AppCustEmrgncCntctObj();
   BusinessDt: Date;
-  MaxDate: Date;
   IsCustRelationshipReady: boolean = false;
   IsGenderReady: boolean = false;
   IsIdTypeReady: boolean = false;
@@ -80,7 +79,6 @@ export class EmergencyContactTabComponent implements OnInit {
     this.customPattern = new Array<CustomPatternObj>();
     let UserAccess = JSON.parse(AdInsHelper.GetCookie(this.cookieService, CommonConstant.USER_ACCESS));
     this.BusinessDt = UserAccess.BusinessDt;
-    this.MaxDate = UserAccess.BusinessDt;
 
     this.InputLookupCustObj.urlJson = "./assets/uclookup/lookupCustomer.json";
     this.InputLookupCustObj.urlEnviPaging = environment.FoundationR3Url;
@@ -408,35 +406,35 @@ export class EmergencyContactTabComponent implements OnInit {
   //END OF URS-LOS-041
 
   checkEmergencyCustContactPerson(){
-    var flag: boolean = true;
+    var isValid: boolean = true;
 
-    let max17Yodt = new Date(this.MaxDate);
-    let d1 = new Date(this.EmergencyContactForm.controls.BirthDt.value);
-    let d2 = new Date(this.MaxDate);
-    let d3 = new Date(this.EmergencyContactForm.controls.IdExpiredDt.value);
-    max17Yodt.setFullYear(d2.getFullYear() - 17);
+    let max17Yodt = new Date(this.BusinessDt);
+    let birthDt = new Date(this.EmergencyContactForm.controls.BirthDt.value);
+    let tempBusinessDt = new Date(this.BusinessDt);
+    let idExpiredDt = new Date(this.EmergencyContactForm.controls.IdExpiredDt.value);
+    max17Yodt.setFullYear(tempBusinessDt.getFullYear() - 17);
 
-    if (d1 > max17Yodt) {
+    if (birthDt > max17Yodt) {
       this.toastr.warningMessage(ExceptionConstant.CUSTOMER_AGE_MUST_17_YEARS_OLD);
-      flag = false;
+      isValid = false;
     }
 
-    if(d1 > d2){
+    if(birthDt > tempBusinessDt){
       this.toastr.warningMessage(ExceptionConstant.BIRTH_DATE_CANNOT_MORE_THAN + 'Business Date');
-      flag = false;
+      isValid = false;
     }
 
-    if(d2 > d3 || d2.getDate() === d3.getDate()){
+    if(tempBusinessDt > idExpiredDt || tempBusinessDt.getDate() === idExpiredDt.getDate()){
       let checkIdType = this.EmergencyContactForm.controls.MrIdTypeCode.value;
       if(checkIdType == CommonConstant.MrIdTypeCodeEKTP || checkIdType == CommonConstant.MrIdTypeCodeNPWP || checkIdType == CommonConstant.MrIdTypeCodeAKTA){
-        flag = true;
+        isValid = true;
       }
       else{
         this.toastr.warningMessage(ExceptionConstant.ID_EXPIRED_DATE_CANNOT_LESS_THAN + 'Equal Business Date');
-        flag = false;
+        isValid = false;
       }
     }
 
-    return flag;
+    return isValid;
   }
 }
